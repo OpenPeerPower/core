@@ -1,0 +1,166 @@
+# Describes the format for available media player services
+
+turn_on:
+  description: Turn a media player power on
+  target:
+
+turn_off:
+  description: Turn a media player power off
+  target:
+
+toggle:
+  description: Toggles a media player power state
+  target:
+
+volume_up:
+  description: Turn a media player volume up
+  target:
+
+volume_down:
+  description: Turn a media player volume down
+  target:
+
+volume_mute:
+  description: Mute a media player's volume
+  target:
+  fields:
+    is_volume_muted:
+      name: Muted
+      description: True/false for mute/unmute.
+      required: true
+      example: true
+      selector:
+        boolean:
+
+volume_set:
+  description: Set a media player's volume level
+  target:
+  fields:
+    volume_level:
+      name: Level
+      description: Volume level to set as float.
+      required: true
+      example: 0.6
+      selector:
+        number:
+          min: 0
+          max: 1
+          step: 0.01
+          mode: slider
+
+media_play_pause:
+  description: Toggle media player play/pause state
+  target:
+
+media_play:
+  description: Send the media player the command for play
+  target:
+
+media_pause:
+  description: Send the media player the command for pause
+  target:
+
+media_stop:
+  description: Send the media player the stop command
+  target:
+
+media_next_track:
+  description: Send the media player the command for next track
+  target:
+
+media_previous_track:
+  description: Send the media player the command for previous track
+  target:
+
+media_seek:
+  description:
+    Send the media player the command to seek in current playing media
+  fields:
+    seek_position:
+      name: Position
+      description: Position to seek to. The format is platform dependent.
+      required: true
+      example: 100
+      selector:
+        number:
+          min: 0
+          max: 9223372036854775807
+          step: 0.01
+          mode: box
+
+play_media:
+  description: Send the media player the command for playing media
+  target:
+  fields:
+    media_content_id:
+      name: Content ID
+      description: The ID of the content to play. Platform dependent.
+      required: true
+      example: "https://home-assistant.io/images/cast/splash.png"
+      selector:
+        text:
+
+    media_content_type:
+      name: Content type
+      description:
+        The type of the content to play. Must be one of image, music, tvshow,
+        video, episode, channel or playlist.
+      required: true
+      example: "music"
+      selector:
+        text:
+
+select_source:
+  description: Send the media player the command to change input source
+  target:
+  fields:
+    source:
+      name: Source
+      description: Name of the source to switch to. Platform dependent.
+      required: true
+      example: "video1"
+      selector:
+        text:
+
+select_sound_mode:
+  description: Send the media player the command to change sound mode
+  target:
+  fields:
+    sound_mode:
+      name: Sound mode
+      description: Name of the sound mode to switch to.
+      example: "Music"
+      selector:
+        text:
+
+clear_playlist:
+  description: Send the media player the command to clear players playlist
+  target:
+
+shuffle_set:
+  description: Set shuffling state
+  target:
+  fields:
+    shuffle:
+      name: Shuffle
+      description: True/false for enabling/disabling shuffle.
+      required: true
+      example: true
+      selector:
+        boolean:
+
+repeat_set:
+  description: Set repeat mode
+  target:
+  fields:
+    repeat:
+      name: Repeat mode
+      description: Repeat mode to set (off, all, one).
+      required: true
+      example: "off"
+      selector:
+        select:
+          options:
+            - "off"
+            - "all"
+            - "one"

@@ -1,0 +1,142 @@
+"""Webhooks for Home Assistant."""
+import logging
+import secrets
+
+from aiohttp.web import Request, Response
+import voluptuous as vol
+
+from openpeerpower.components import websocket_api
+from openpeerpower.components.http.view import OpenPeerPowerView
+from openpeerpower.const import HTTP_OK
+from openpeerpower.core import callback
+from openpeerpower.helpers.network import get_url
+from openpeerpower.loader import bind_opp
+from openpeerpower.util.aiohttp import MockRequest
+
+_LOGGER = logging.getLogger(__name__)
+
+DOMAIN = "webhook"
+
+URL_WEBHOOK_PATH = "/api/webhook/{webhook_id}"
+
+WS_TYPE_LIST = "webhook/list"
+
+SCHEMA_WS_LIST = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
+    {vol.Required("type"): WS_TYPE_LIST}
+)
+
+
+@callback
+@bind_opp
+def async_register.opp, domain, name, webhook_id, handler):
+    """Register a webhook."""
+    handlers =.opp.data.setdefault(DOMAIN, {})
+
+    if webhook_id in handlers:
+        raise ValueError("Handler is already defined!")
+
+    handlers[webhook_id] = {"domain": domain, "name": name, "handler": op.dler}
+
+
+@callback
+@bind_opp
+def async_unregister.opp, webhook_id):
+    """Remove a webhook."""
+    handlers =.opp.data.setdefault(DOMAIN, {})
+    handlers.pop(webhook_id, None)
+
+
+@callback
+def async_generate_id():
+    """Generate a webhook_id."""
+    return secrets.token_hex(32)
+
+
+@callback
+@bind_opp
+def async_generate_url.opp, webhook_id):
+    """Generate the full URL for a webhook_id."""
+    return "{}{}".format(
+        get_url.opp, prefer_external=True, allow_cloud=False),
+        async_generate_path(webhook_id),
+    )
+
+
+@callback
+def async_generate_path(webhook_id):
+    """Generate the path component for a webhook_id."""
+    return URL_WEBHOOK_PATH.format(webhook_id=webhook_id)
+
+
+@bind_opp
+async def async_op.dle_webhook.opp, webhook_id, request):
+    """Handle a webhook."""
+    handlers =.opp.data.setdefault(DOMAIN, {})
+    webhook = op.dlers.get(webhook_id)
+
+    # Always respond successfully to not give away if a hook exists or not.
+    if webhook is None:
+        if isinstance(request, MockRequest):
+            received_from = request.mock_source
+        else:
+            received_from = request.remote
+
+        _LOGGER.warning(
+            "Received message for unregistered webhook %s from %s",
+            webhook_id,
+            received_from,
+        )
+        # Look at content to provide some context for received webhook
+        # Limit to 64 chars to avoid flooding the log
+        content = await request.content.read(64)
+        _LOGGER.debug("%s...", content)
+        return Response(status=HTTP_OK)
+
+    try:
+        response = await webhook["handler"].opp, webhook_id, request)
+        if response is None:
+            response = Response(status=HTTP_OK)
+        return response
+    except Exception:  # pylint: disable=broad-except
+        _LOGGER.exception("Error processing webhook %s", webhook_id)
+        return Response(status=HTTP_OK)
+
+
+async def async_setup.opp, config):
+    """Initialize the webhook component."""
+   .opp.http.register_view(WebhookView)
+   .opp.components.websocket_api.async_register_command(
+        WS_TYPE_LIST, websocket_list, SCHEMA_WS_LIST
+    )
+    return True
+
+
+class WebhookView(OpenPeerPowerView):
+    """Handle incoming webhook requests."""
+
+    url = URL_WEBHOOK_PATH
+    name = "api:webhook"
+    requires_auth = False
+    cors_allowed = True
+
+    async def _op.dle(self, request: Request, webhook_id):
+        """Handle webhook call."""
+        _LOGGER.debug("Handling webhook %s payload for %s", request.method, webhook_id)
+        opp = request.app["opp"]
+        return await async_op.dle_webhook.opp, webhook_id, request)
+
+    head = _op.dle
+    post = _op.dle
+    put = _op.dle
+
+
+@callback
+def websocket_list.opp, connection, msg):
+    """Return a list of webhooks."""
+    handlers =.opp.data.setdefault(DOMAIN, {})
+    result = [
+        {"webhook_id": webhook_id, "domain": info["domain"], "name": info["name"]}
+        for webhook_id, info in handlers.items()
+    ]
+
+    connection.send_message(websocket_api.result_message(msg["id"], result))

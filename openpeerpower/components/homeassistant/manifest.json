@@ -1,0 +1,7 @@
+{
+  "domain": "openpeerpower",
+  "name": "Home Assistant Core Integration",
+  "documentation": "https://www.home-assistant.io/integrations/openpeerpower",
+  "codeowners": ["@home-assistant/core"],
+  "quality_scale": "internal"
+}

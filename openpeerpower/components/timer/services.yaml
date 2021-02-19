@@ -1,0 +1,24 @@
+# Describes the format for available timer services
+
+start:
+  description: Start a timer
+  target:
+  fields:
+    duration:
+      description: Duration the timer requires to finish. [optional]
+      default: 0
+      example: "00:01:00 or 60"
+      selector:
+        text:
+
+pause:
+  description: Pause a timer
+  target:
+
+cancel:
+  description: Cancel a timer
+  target:
+
+finish:
+  description: Finish a timer
+  target:

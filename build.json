@@ -1,0 +1,14 @@
+{
+  "image": "openpeerpower/{arch}-openpeerpowerr",
+  "build_from": {
+    "aarch64": "openpeerpower/aarch64-openpeerpower-base:2021.02.0",
+    "armhf": "openpeerpower/armhf-openpeerpower-base:2021.02.0",
+    "armv7": "openpeerpower/armv7-openpeerpower-base:2021.02.0",
+    "amd64": "openpeerpower/amd64-openpeerpower-base:2021.02.0",
+    "i386": "openpeerpower/i386-openpeerpower-base:2021.02.0"
+  },
+  "labels": {
+    "io.opp.type": "core"
+  },
+  "version_tag": true
+}

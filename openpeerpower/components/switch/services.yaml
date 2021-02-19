@@ -1,0 +1,13 @@
+# Describes the format for available switch services
+
+turn_on:
+  description: Turn a switch on
+  target:
+
+turn_off:
+  description: Turn a switch off
+  target:
+
+toggle:
+  description: Toggles a switch state
+  target:

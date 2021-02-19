@@ -1,0 +1,4 @@
+include README.rst
+include LICENSE.md
+graft openpeerpowerr
+recursive-exclude * *.py[co]

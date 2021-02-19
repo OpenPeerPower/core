@@ -1,0 +1,9 @@
+{
+  "domain": "rflink",
+  "name": "RFLink",
+  "documentation": "https://www.home-assistant.io/integrations/rflink",
+  "requirements": ["rflink==0.0.58"],
+  "codeowners": [
+    "@javicalle"
+  ]
+}

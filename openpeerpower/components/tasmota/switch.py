@@ -1,0 +1,62 @@
+"""Support for Tasmota switches."""
+
+from openpeerpower.components import switch
+from openpeerpower.components.switch import SwitchEntity
+from openpeerpowerr.core import callback
+from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+
+from .const import DATA_REMOVE_DISCOVER_COMPONENT
+from .discovery import TASMOTA_DISCOVERY_ENTITY_NEW
+from .mixins import TasmotaAvailability, TasmotaDiscoveryUpdate
+
+
+async def async_setup_entry.opp, config_entry, async_add_entities):
+    """Set up Tasmota switch dynamically through discovery."""
+
+    @callback
+    def async_discover(tasmota_entity, discovery_op.h):
+        """Discover and add a Tasmota switch."""
+        async_add_entities(
+            [
+                TasmotaSwitch(
+                    tasmota_entity=tasmota_entity, discovery_op.h=discovery_op.h
+                )
+            ]
+        )
+
+   .opp.data[
+        DATA_REMOVE_DISCOVER_COMPONENT.format(switch.DOMAIN)
+    ] = async_dispatcher_connect(
+       .opp,
+        TASMOTA_DISCOVERY_ENTITY_NEW.format(switch.DOMAIN),
+        async_discover,
+    )
+
+
+class TasmotaSwitch(
+    TasmotaAvailability,
+    TasmotaDiscoveryUpdate,
+    SwitchEntity,
+):
+    """Representation of a Tasmota switch."""
+
+    def __init__(self, **kwds):
+        """Initialize the Tasmota switch."""
+        self._state = False
+
+        super().__init__(
+            **kwds,
+        )
+
+    @property
+    def is_on(self):
+        """Return true if device is on."""
+        return self._state
+
+    async def async_turn_on(self, **kwargs):
+        """Turn the device on."""
+        self._tasmota_entity.set_state(True)
+
+    async def async_turn_off(self, **kwargs):
+        """Turn the device off."""
+        self._tasmota_entity.set_state(False)

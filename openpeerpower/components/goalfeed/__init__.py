@@ -1,0 +1,63 @@
+"""Component for the Goalfeed service."""
+import json
+
+import pysher
+import requests
+import voluptuous as vol
+
+from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
+import openpeerpowerr.helpers.config_validation as cv
+
+# Version downgraded due to regression in library
+# For details: https://github.com/nlsdfnbch/Pysher/issues/38
+DOMAIN = "goalfeed"
+
+CONFIG_SCHEMA = vol.Schema(
+    {
+        DOMAIN: vol.Schema(
+            {
+                vol.Required(CONF_USERNAME): cv.string,
+                vol.Required(CONF_PASSWORD): cv.string,
+            }
+        )
+    },
+    extra=vol.ALLOW_EXTRA,
+)
+
+GOALFEED_HOST = "feed.goalfeed.ca"
+GOALFEED_AUTH_ENDPOINT = "https://goalfeed.ca/feed/auth"
+GOALFEED_APP_ID = "bfd4ed98c1ff22c04074"
+
+
+def setup.opp, config):
+    """Set up the Goalfeed component."""
+    conf = config[DOMAIN]
+    username = conf.get(CONF_USERNAME)
+    password = conf.get(CONF_PASSWORD)
+
+    def goal_op.dler(data):
+        """Handle goal events."""
+        goal = json.loads(json.loads(data))
+
+       .opp.bus.fire("goal", event_data=goal)
+
+    def connect_op.dler(data):
+        """Handle connection."""
+        post_data = {
+            "username": username,
+            "password": password,
+            "connection_info": data,
+        }
+        resp = requests.post(GOALFEED_AUTH_ENDPOINT, post_data, timeout=30).json()
+
+        channel = pusher.subscribe("private-goals", resp["auth"])
+        channel.bind("goal", goal_op.dler)
+
+    pusher = pysher.Pusher(
+        GOALFEED_APP_ID, secure=False, port=8080, custom_host=GOALFEED_HOST
+    )
+
+    pusher.connection.bind("pusher:connection_established", connect_op.dler)
+    pusher.connect()
+
+    return True

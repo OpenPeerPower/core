@@ -1,0 +1,6 @@
+# Patterns matched in this file will be ignored by supported search utilities
+
+# Ignore generated html and javascript files
+/openpeerpower/components/frontend/www_static/*.html
+/openpeerpower/components/frontend/www_static/*.js
+/openpeerpower/components/frontend/www_static/panels/*.html

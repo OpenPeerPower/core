@@ -1,0 +1,63 @@
+# Describes the format for available counter services
+
+decrement:
+  description: Decrement a counter
+  target:
+
+increment:
+  description: Increment a counter
+  target:
+
+reset:
+  description: Reset a counter
+  target:
+
+configure:
+  description: Change counter parameters
+  target:
+  fields:
+    minimum:
+      name: Minimum
+      description: New minimum value for the counter or None to remove minimum.
+      example: 0
+      selector:
+        number:
+          min: -9223372036854775807
+          max: 9223372036854775807
+          mode: box
+    maximum:
+      name: Maximum
+      description: New maximum value for the counter or None to remove maximum.
+      example: 100
+      selector:
+        number:
+          min: -9223372036854775807
+          max: 9223372036854775807
+          mode: box
+    step:
+      name: Step
+      description: New value for step.
+      example: 2
+      selector:
+        number:
+          min: 1
+          max: 9223372036854775807
+          mode: box
+    initial:
+      name: Initial
+      description: New value for initial.
+      example: 6
+      selector:
+        number:
+          min: 0
+          max: 9223372036854775807
+          mode: box
+    value:
+      name: Value
+      description: New state value.
+      example: 3
+      selector:
+        number:
+          min: 0
+          max: 9223372036854775807
+          mode: box

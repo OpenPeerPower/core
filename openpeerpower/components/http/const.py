@@ -1,0 +1,5 @@
+"""HTTP specific constants."""
+KEY_AUTHENTICATED = "ha_authenticated"
+KEY_OPP = "opp"
+KEY_OPP_USER = "opp_user"
+KEY_OPP_REFRESH_TOKEN_ID = "opp_refresh_token_id"

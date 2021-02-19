@@ -1,0 +1,34 @@
+clear:
+  description: Clear all log entries
+
+write:
+  description: Write log entry
+  fields:
+    message:
+      name: Message
+      description: Message to log.
+      required: true
+      example: Something went wrong
+      selector:
+        text:
+    level:
+      name: Level
+      description: "Log level: debug, info, warning, error, critical."
+      default: error
+      example: debug
+      selector:
+        select:
+          options:
+            - "debug"
+            - "info"
+            - "warning"
+            - "error"
+            - "critical"
+    logger:
+      name: Logger
+      description:
+        Logger name under which to log the message. Defaults to
+        'system_log.external'.
+      example: mycomponent.myplatform
+      selector:
+        text:

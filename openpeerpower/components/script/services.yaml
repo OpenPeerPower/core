@@ -1,0 +1,16 @@
+# Describes the format for available python_script services
+
+reload:
+  description: Reload all the available scripts
+
+turn_on:
+  description: Turn on script
+  target:
+
+turn_off:
+  description: Turn off script
+  target:
+
+toggle:
+  description: Toggle script
+  target:

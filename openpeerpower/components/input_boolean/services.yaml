@@ -1,0 +1,14 @@
+toggle:
+  description: Toggle an input boolean
+  target:
+
+turn_off:
+  description: Turn off an input boolean
+  target:
+
+turn_on:
+  description: Turn on an input boolean
+  target:
+
+reload:
+  description: Reload the input_boolean configuration
