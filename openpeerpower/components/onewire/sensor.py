@@ -369,7 +369,7 @@ def get_entities(onewirehub: OneWireHub, config):
             "The OWFS implementation of 1-Wire sensors is deprecated, "
             "and should be migrated to OWServer (on localhost:4304). "
             "If migration to OWServer is not feasible on your installation, "
-            "please raise an issue at https://github.com/home-assistant/core/issues/new"
+            "please raise an issue at https://github.com/openpeerpower/core/issues/new"
             "?title=Unable%20to%20migrate%20onewire%20from%20OWFS%20to%20OWServer",
         )
         for family_file_path in glob(os.path.join(base_dir, "*", "family")):

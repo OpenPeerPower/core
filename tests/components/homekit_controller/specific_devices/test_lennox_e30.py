@@ -1,7 +1,7 @@
 """
 Regression tests for Aqara Gateway V3.
 
-https://github.com/home-assistant/core/issues/20885
+https://github.com/openpeerpower/core/issues/20885
 """
 
 from openpeerpower.components.climate.const import (

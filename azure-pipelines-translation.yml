@@ -1,4 +1,4 @@
-# https://dev.azure.com/home-assistant
+# https://dev.azure.com/openpeerpower
 
 trigger:
   batch: true

@@ -2,7 +2,7 @@
 Helpers for Zigbee Home Automation.
 
 For more details about this component, please refer to the documentation at
-https://home-assistant.io/integrations/zha/
+https://openpeerpower.io/integrations/zha/
 """
 
 import asyncio

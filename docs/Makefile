@@ -96,9 +96,9 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/Home-Assistant.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/openpeerpower.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/Home-Assistant.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/openpeerpower.qhc"
 
 .PHONY: applehelp
 applehelp:
@@ -115,8 +115,8 @@ devhelp:
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/Home-Assistant"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/Home-Assistant"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/openpeerpower"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/openpeerpower"
 	@echo "# devhelp"
 
 .PHONY: epub

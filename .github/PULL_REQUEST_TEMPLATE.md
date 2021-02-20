@@ -119,7 +119,7 @@ To help with the load of incoming pull requests:
 
 - [ ] I have reviewed two other [open pull requests][prs] in this repository.
 
-[prs]: https://github.com/home-assistant/core/pulls?q=is%3Aopen+is%3Apr+-author%3A%40me+-draft%3Atrue+-label%3Awaiting-for-upstream+sort%3Acreated-desc+review%3Anone
+[prs]: https://github.com/openpeerpower/core/pulls?q=is%3Aopen+is%3Apr+-author%3A%40me+-draft%3Atrue+-label%3Awaiting-for-upstream+sort%3Acreated-desc+review%3Anone
 
 <!--
   Thank you for contributing <3
@@ -129,4 +129,4 @@ To help with the load of incoming pull requests:
 [dev-checklist]: https://developers.home-assistant.io/docs/en/development_checklist.html
 [manifest-docs]: https://developers.home-assistant.io/docs/en/creating_integration_manifest.html
 [quality-scale]: https://developers.home-assistant.io/docs/en/next/integration_quality_scale_index.html
-[docs-repository]: https://github.com/home-assistant/home-assistant.io
+[docs-repository]: https://github.com/openpeerpower/openpeerpower.io

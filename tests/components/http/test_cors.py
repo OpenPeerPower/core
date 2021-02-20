@@ -19,7 +19,7 @@ from openpeerpowerr.setup import async_setup_component
 
 from . import HTTP_HEADER_HA_AUTH
 
-TRUSTED_ORIGIN = "https://home-assistant.io"
+TRUSTED_ORIGIN = "https://openpeerpower.io"
 
 
 async def test_cors_middleware_loaded_by_default.opp):
@@ -36,7 +36,7 @@ async def test_cors_middleware_loaded_from_config.opp):
         await async_setup_component(
            .opp,
             "http",
-            {"http": {"cors_allowed_origins": ["http://home-assistant.io"]}},
+            {"http": {"cors_allowed_origins": ["http://openpeerpower.io"]}},
         )
 
     assert len(mock_setup.mock_calls) == 1
@@ -119,7 +119,7 @@ async def test_cors_middleware_with_cors_allowed_view.opp):
             return "test"
 
     assert await async_setup_component(
-       .opp, "http", {"http": {"cors_allowed_origins": ["http://home-assistant.io"]}}
+       .opp, "http", {"http": {"cors_allowed_origins": ["http://openpeerpower.io"]}}
     )
 
    .opp.http.register_view(MyView("/api/test", "api:test"))
@@ -135,7 +135,7 @@ async def test_cors_works_with_frontend.opp,.opp_client):
     assert await async_setup_component(
        .opp,
         "frontend",
-        {"http": {"cors_allowed_origins": ["http://home-assistant.io"]}},
+        {"http": {"cors_allowed_origins": ["http://openpeerpower.io"]}},
     )
     client = await.opp_client()
     resp = await client.get("/")

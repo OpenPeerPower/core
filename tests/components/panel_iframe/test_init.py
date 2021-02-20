@@ -8,7 +8,7 @@ from openpeerpowerr.setup import async_setup_component
 @pytest.mark.parametrize(
     "config_to_try",
     (
-        {"invalid space": {"url": "https://home-assistant.io"}},
+        {"invalid space": {"url": "https://openpeerpower.io"}},
         {"router": {"url": "not-a-url"}},
     ),
 )

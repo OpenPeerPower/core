@@ -1,7 +1,7 @@
 """
 Make sure that existing RainMachine support isn't broken.
 
-https://github.com/home-assistant/core/issues/31745
+https://github.com/openpeerpower/core/issues/31745
 """
 
 from tests.components.homekit_controller.common import (

@@ -101,16 +101,16 @@ def test_get_github_import_url():
     """Test getting github import url."""
     assert (
         importer._get_github_import_url(
-            "https://github.com/balloob/home-assistant-config/blob/main/blueprints/automation/motion_light.yaml"
+            "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml"
         )
-        == "https://raw.githubusercontent.com/balloob/home-assistant-config/main/blueprints/automation/motion_light.yaml"
+        == "https://raw.githubusercontent.com/balloob/openpeerpower-config/main/blueprints/automation/motion_light.yaml"
     )
 
     assert (
         importer._get_github_import_url(
-            "https://raw.githubusercontent.com/balloob/home-assistant-config/main/blueprints/automation/motion_light.yaml"
+            "https://raw.githubusercontent.com/balloob/openpeerpower-config/main/blueprints/automation/motion_light.yaml"
         )
-        == "https://raw.githubusercontent.com/balloob/home-assistant-config/main/blueprints/automation/motion_light.yaml"
+        == "https://raw.githubusercontent.com/balloob/openpeerpower-config/main/blueprints/automation/motion_light.yaml"
     )
 
 
@@ -179,14 +179,14 @@ async def test_fetch_blueprint_from_community_url.opp, aioclient_mock, community
 @pytest.mark.parametrize(
     "url",
     (
-        "https://raw.githubusercontent.com/balloob/home-assistant-config/main/blueprints/automation/motion_light.yaml",
-        "https://github.com/balloob/home-assistant-config/blob/main/blueprints/automation/motion_light.yaml",
+        "https://raw.githubusercontent.com/balloob/openpeerpower-config/main/blueprints/automation/motion_light.yaml",
+        "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
     ),
 )
 async def test_fetch_blueprint_from_github_url.opp, aioclient_mock, url):
     """Test fetching blueprint from url."""
     aioclient_mock.get(
-        "https://raw.githubusercontent.com/balloob/home-assistant-config/main/blueprints/automation/motion_light.yaml",
+        "https://raw.githubusercontent.com/balloob/openpeerpower-config/main/blueprints/automation/motion_light.yaml",
         text=Path(
            .opp.config.path("blueprints/automation/test_event_service.yaml")
         ).read_text(),

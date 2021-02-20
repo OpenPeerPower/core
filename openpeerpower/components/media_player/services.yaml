@@ -96,7 +96,7 @@ play_media:
       name: Content ID
       description: The ID of the content to play. Platform dependent.
       required: true
-      example: "https://home-assistant.io/images/cast/splash.png"
+      example: "https://openpeerpower.io/images/cast/splash.png"
       selector:
         text:
 

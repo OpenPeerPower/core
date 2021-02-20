@@ -1,4 +1,4 @@
-# https://dev.azure.com/home-assistant
+# https://dev.azure.com/openpeerpower
 
 trigger:
   tags:
@@ -41,7 +41,7 @@ stages:
           jq curl
 
         release="$(Build.SourceBranchName)"
-        created_by="$(curl -s https://api.github.com/repos/home-assistant/core/releases/tags/${release} | jq --raw-output '.author.login')"
+        created_by="$(curl -s https://api.github.com/repos/openpeerpower/core/releases/tags/${release} | jq --raw-output '.author.login')"
 
         if [[ "${created_by}" =~ ^(balloob|pvizeli|fabaff|robbiet480|bramkragten|frenck)$ ]]; then
           exit 0
@@ -189,7 +189,7 @@ stages:
 
         version="$(openpeerpowerRelease)"
 
-        git clone https://github.com/home-assistant/version
+        git clone https://github.com/openpeerpower/version
         cd version
 
         dev_version="$(jq --raw-output '.openpeerpowerr.default' dev.json)"
@@ -224,34 +224,34 @@ stages:
           local tag_l=$1
           local tag_r=$2
 
-          docker manifest create openpeerpower/home-assistant:${tag_l} \
+          docker manifest create openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/amd64-openpeerpowerr:${tag_r} \
             openpeerpower/i386-openpeerpowerr:${tag_r} \
             openpeerpower/armhf-openpeerpowerr:${tag_r} \
             openpeerpower/armv7-openpeerpowerr:${tag_r} \
             openpeerpower/aarch64-openpeerpowerr:${tag_r}
 
-          docker manifest annotate openpeerpower/home-assistant:${tag_l} \
+          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/amd64-openpeerpowerr:${tag_r} \
             --os linux --arch amd64
 
-          docker manifest annotate openpeerpower/home-assistant:${tag_l} \
+          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/i386-openpeerpowerr:${tag_r} \
             --os linux --arch 386
 
-          docker manifest annotate openpeerpower/home-assistant:${tag_l} \
+          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/armhf-openpeerpowerr:${tag_r} \
             --os linux --arch arm --variant=v6
 
-          docker manifest annotate openpeerpower/home-assistant:${tag_l} \
+          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/armv7-openpeerpowerr:${tag_r} \
             --os linux --arch arm --variant=v7
 
-          docker manifest annotate openpeerpower/home-assistant:${tag_l} \
+          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/aarch64-openpeerpowerr:${tag_r} \
             --os linux --arch arm64 --variant=v8
 
-          docker manifest push --purge openpeerpower/home-assistant:${tag_l}
+          docker manifest push --purge openpeerpower/openpeerpower:${tag_l}
         }
 
         docker pull openpeerpower/amd64-openpeerpowerr:$(openpeerpowerRelease)

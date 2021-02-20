@@ -361,7 +361,7 @@ class Entity(ABC):
             else:
                 extra = (
                     "Please create a bug report at "
-                    "https://github.com/home-assistant/core/issues?q=is%3Aopen+is%3Aissue"
+                    "https://github.com/openpeerpower/core/issues?q=is%3Aopen+is%3Aissue"
                 )
                 if self.platform:
                     extra += (

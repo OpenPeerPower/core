@@ -4,7 +4,7 @@ Regression tests for Aqara AR004.
 This device has a non-standard programmable stateless switch service that has a
 service-label-index despite not being linked to a service-label.
 
-https://github.com/home-assistant/core/pull/39090
+https://github.com/openpeerpower/core/pull/39090
 """
 
 from tests.common import assert_lists_same, async_get_device_automations

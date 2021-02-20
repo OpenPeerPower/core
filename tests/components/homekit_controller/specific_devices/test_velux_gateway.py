@@ -1,7 +1,7 @@
 """
 Test against characteristics captured from a Velux Gateway.
 
-https://github.com/home-assistant/core/issues/44314
+https://github.com/openpeerpower/core/issues/44314
 """
 
 from openpeerpower.components.cover import (

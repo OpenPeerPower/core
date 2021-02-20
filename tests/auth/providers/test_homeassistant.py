@@ -276,7 +276,7 @@ async def test_legacy_get_or_create_credentials.opp, legacy_data):
 async def test_race_condition_in_data_loading.opp):
     """Test race condition in the.opp_auth.Data loading.
 
-    Ref issue: https://github.com/home-assistant/core/issues/21569
+    Ref issue: https://github.com/openpeerpower/core/issues/21569
     """
     counter = 0
 

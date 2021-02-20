@@ -664,7 +664,7 @@ async def test_warn_slow_write_state.opp, caplog):
         "Updating state for comp_test.test_entity "
         "(<class 'openpeerpowerr.helpers.entity.Entity'>) "
         "took 10.000 seconds. Please create a bug report at "
-        "https://github.com/home-assistant/core/issues?"
+        "https://github.com/openpeerpower/core/issues?"
         "q=is%3Aopen+is%3Aissue+label%3A%22integration%3A+hue%22"
     ) in caplog.text
 

@@ -2,7 +2,7 @@ config/*
 config2/*
 
 tests/testing_config/deps
-tests/testing_config/home-assistant.log
+tests/testing_config/openpeerpower.log
 
 #.opp-release
 data/
@@ -113,8 +113,8 @@ docs/build
 
 # Windows Explorer
 desktop.ini
-/home-assistant.pyproj
-/home-assistant.sln
+/openpeerpower.pyproj
+/openpeerpower.sln
 /.vs/*
 
 # mypy

@@ -54,7 +54,7 @@ ATTR_HUB_NAME = "hub_name"
 WINK_AUTH_CALLBACK_PATH = "/auth/wink/callback"
 WINK_AUTH_START = "/auth/wink"
 WINK_CONFIG_FILE = ".wink.conf"
-USER_AGENT = f"Manufacturer/Home-Assistant{__version__} python/3 Wink/3"
+USER_AGENT = f"Manufacturer/openpeerpower{__version__} python/3 Wink/3"
 
 DEFAULT_CONFIG = {
     CONF_CLIENT_ID: "CLIENT_ID_HERE",

@@ -359,7 +359,7 @@ class Thermostat(ClimateEntity):
             _LOGGER.error(
                 "Model number for ecobee thermostat %s not recognized. "
                 "Please visit this link and provide the following information: "
-                "https://github.com/home-assistant/core/issues/27172 "
+                "https://github.com/openpeerpower/core/issues/27172 "
                 "Unrecognized model number: %s",
                 self.name,
                 self.thermostat["modelNumber"],

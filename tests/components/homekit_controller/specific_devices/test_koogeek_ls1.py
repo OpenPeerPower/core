@@ -59,7 +59,7 @@ async def test_recover_from_failure.opp, utcnow, failure_cls):
     """
     Test that entity actually recovers from a network connection drop.
 
-    See https://github.com/home-assistant/core/issues/18949
+    See https://github.com/openpeerpower/core/issues/18949
     """
     accessories = await setup_accessories_from_file.opp, "koogeek_ls1.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)

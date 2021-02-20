@@ -171,8 +171,8 @@ class OnvifFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         # Username and Password are optional and default empty
         # due to some cameras not allowing you to change ONVIF user settings.
-        # See https://github.com/home-assistant/core/issues/39182
-        # and https://github.com/home-assistant/core/issues/35904
+        # See https://github.com/openpeerpower/core/issues/39182
+        # and https://github.com/openpeerpower/core/issues/35904
         return self.async_show_form(
             step_id="auth",
             data_schema=vol.Schema(

@@ -1,4 +1,4 @@
-# https://dev.azure.com/home-assistant
+# https://dev.azure.com/openpeerpower
 
 trigger:
   branches:
@@ -41,7 +41,7 @@ jobs:
         if [[ "$(Build.Reason)" =~ (Schedule|Manual) ]]; then
           exit 0
         else
-          curl -s -o requirements_diff.txt https://raw.githubusercontent.com/home-assistant/core/master/requirements.txt
+          curl -s -o requirements_diff.txt https://raw.githubusercontent.com/openpeerpower/core/master/requirements.txt
         fi
       displayName: 'Prepare requirements files for Home Assistant Core wheels'
 - template: templates/azp-job-wheels.yaml@azure
@@ -61,7 +61,7 @@ jobs:
         if [[ "$(Build.Reason)" =~ (Schedule|Manual) ]]; then
           touch requirements_diff.txt
         else
-          curl -s -o requirements_diff.txt https://raw.githubusercontent.com/home-assistant/core/master/requirements_all.txt
+          curl -s -o requirements_diff.txt https://raw.githubusercontent.com/openpeerpower/core/master/requirements_all.txt
         fi
 
         requirement_files="requirements_wheels.txt requirements_diff.txt"

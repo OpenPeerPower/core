@@ -254,7 +254,7 @@ class XiaomiMotionSensor(XiaomiBinarySensor):
             _LOGGER.debug(
                 "Skipping heartbeat of the motion sensor. "
                 "It can introduce an incorrect state because of a firmware "
-                "bug (https://github.com/home-assistant/core/pull/"
+                "bug (https://github.com/openpeerpower/core/pull/"
                 "11631#issuecomment-357507744)"
             )
             return

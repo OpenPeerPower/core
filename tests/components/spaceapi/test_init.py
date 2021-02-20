@@ -13,43 +13,43 @@ from tests.common import mock_coro
 CONFIG = {
     DOMAIN: {
         "space": "Home",
-        "logo": "https://home-assistant.io/logo.png",
-        "url": "https://home-assistant.io",
+        "logo": "https://openpeerpower.io/logo.png",
+        "url": "https://openpeerpower.io",
         "location": {"address": "In your Home"},
         "contact": {"email": "hello@home-assistant.io"},
         "issue_report_channels": ["email"],
         "state": {
             "entity_id": "test.test_door",
-            "icon_open": "https://home-assistant.io/open.png",
-            "icon_closed": "https://home-assistant.io/close.png",
+            "icon_open": "https://openpeerpower.io/open.png",
+            "icon_closed": "https://openpeerpower.io/close.png",
         },
         "sensors": {
             "temperature": ["test.temp1", "test.temp2"],
             "humidity": ["test.hum1"],
         },
         "spacefed": {"spacenet": True, "spacesaml": False, "spacephone": True},
-        "cam": ["https://home-assistant.io/cam1", "https://home-assistant.io/cam2"],
+        "cam": ["https://openpeerpower.io/cam1", "https://openpeerpower.io/cam2"],
         "stream": {
-            "m4": "https://home-assistant.io/m4",
-            "mjpeg": "https://home-assistant.io/mjpeg",
-            "ustream": "https://home-assistant.io/ustream",
+            "m4": "https://openpeerpower.io/m4",
+            "mjpeg": "https://openpeerpower.io/mjpeg",
+            "ustream": "https://openpeerpower.io/ustream",
         },
         "feeds": {
-            "blog": {"url": "https://home-assistant.io/blog"},
-            "wiki": {"type": "mediawiki", "url": "https://home-assistant.io/wiki"},
-            "calendar": {"type": "ical", "url": "https://home-assistant.io/calendar"},
-            "flicker": {"url": "https://www.flickr.com/photos/home-assistant"},
+            "blog": {"url": "https://openpeerpower.io/blog"},
+            "wiki": {"type": "mediawiki", "url": "https://openpeerpower.io/wiki"},
+            "calendar": {"type": "ical", "url": "https://openpeerpower.io/calendar"},
+            "flicker": {"url": "https://www.flickr.com/photos/openpeerpower"},
         },
         "cache": {"schedule": "m.02"},
         "projects": [
-            "https://home-assistant.io/projects/1",
-            "https://home-assistant.io/projects/2",
-            "https://home-assistant.io/projects/3",
+            "https://openpeerpower.io/projects/1",
+            "https://openpeerpower.io/projects/2",
+            "https://openpeerpower.io/projects/3",
         ],
         "radio_show": [
             {
                 "name": "Radioshow",
-                "url": "https://home-assistant.io/radio",
+                "url": "https://openpeerpower.io/radio",
                 "type": "ogg",
                 "start": "2019-09-02T10:00Z",
                 "end": "2019-09-02T12:00Z",
@@ -102,31 +102,31 @@ async def test_spaceapi_get.opp, mock_client):
     assert data["location"]["lat"] == 32.87336
     assert data["location"]["lon"] == -117.22743
     assert data["state"]["open"] == "null"
-    assert data["state"]["icon"]["open"] == "https://home-assistant.io/open.png"
-    assert data["state"]["icon"]["close"] == "https://home-assistant.io/close.png"
+    assert data["state"]["icon"]["open"] == "https://openpeerpower.io/open.png"
+    assert data["state"]["icon"]["close"] == "https://openpeerpower.io/close.png"
     assert data["spacefed"]["spacenet"] == bool(1)
     assert data["spacefed"]["spacesaml"] == bool(0)
     assert data["spacefed"]["spacephone"] == bool(1)
-    assert data["cam"][0] == "https://home-assistant.io/cam1"
-    assert data["cam"][1] == "https://home-assistant.io/cam2"
-    assert data["stream"]["m4"] == "https://home-assistant.io/m4"
-    assert data["stream"]["mjpeg"] == "https://home-assistant.io/mjpeg"
-    assert data["stream"]["ustream"] == "https://home-assistant.io/ustream"
-    assert data["feeds"]["blog"]["url"] == "https://home-assistant.io/blog"
+    assert data["cam"][0] == "https://openpeerpower.io/cam1"
+    assert data["cam"][1] == "https://openpeerpower.io/cam2"
+    assert data["stream"]["m4"] == "https://openpeerpower.io/m4"
+    assert data["stream"]["mjpeg"] == "https://openpeerpower.io/mjpeg"
+    assert data["stream"]["ustream"] == "https://openpeerpower.io/ustream"
+    assert data["feeds"]["blog"]["url"] == "https://openpeerpower.io/blog"
     assert data["feeds"]["wiki"]["type"] == "mediawiki"
-    assert data["feeds"]["wiki"]["url"] == "https://home-assistant.io/wiki"
+    assert data["feeds"]["wiki"]["url"] == "https://openpeerpower.io/wiki"
     assert data["feeds"]["calendar"]["type"] == "ical"
-    assert data["feeds"]["calendar"]["url"] == "https://home-assistant.io/calendar"
+    assert data["feeds"]["calendar"]["url"] == "https://openpeerpower.io/calendar"
     assert (
         data["feeds"]["flicker"]["url"]
-        == "https://www.flickr.com/photos/home-assistant"
+        == "https://www.flickr.com/photos/openpeerpower"
     )
     assert data["cache"]["schedule"] == "m.02"
-    assert data["projects"][0] == "https://home-assistant.io/projects/1"
-    assert data["projects"][1] == "https://home-assistant.io/projects/2"
-    assert data["projects"][2] == "https://home-assistant.io/projects/3"
+    assert data["projects"][0] == "https://openpeerpower.io/projects/1"
+    assert data["projects"][1] == "https://openpeerpower.io/projects/2"
+    assert data["projects"][2] == "https://openpeerpower.io/projects/3"
     assert data["radio_show"][0]["name"] == "Radioshow"
-    assert data["radio_show"][0]["url"] == "https://home-assistant.io/radio"
+    assert data["radio_show"][0]["url"] == "https://openpeerpower.io/radio"
     assert data["radio_show"][0]["type"] == "ogg"
     assert data["radio_show"][0]["start"] == "2019-09-02T10:00Z"
     assert data["radio_show"][0]["end"] == "2019-09-02T12:00Z"

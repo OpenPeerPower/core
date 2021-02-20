@@ -13,7 +13,7 @@ NEW_VERSION = "10000.0"
 MOCK_VERSION = "10.0"
 MOCK_DEV_VERSION = "10.0.dev0"
 MOCK_HUUID = "abcdefg"
-MOCK_RESPONSE = {"version": "0.15", "release-notes": "https://home-assistant.io"}
+MOCK_RESPONSE = {"version": "0.15", "release-notes": "https://openpeerpower.io"}
 MOCK_CONFIG = {updater.DOMAIN: {"reporting": True}}
 RELEASE_NOTES = "test release notes"
 

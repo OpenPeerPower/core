@@ -22,7 +22,7 @@ RUN \
 WORKDIR /usr/src
 
 # Setup.opp-release
-RUN git clone --depth 1 https://github.com/home-assistant.opp-release \
+RUN git clone --depth 1 https://github.com/openpeerpower.opp-release \
     && pip3 install -e.opp-release/
 
 WORKDIR /workspaces

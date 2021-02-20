@@ -112,8 +112,8 @@ def test_url():
     for value in (
         "http://localhost",
         "https://localhost/test/index.html",
-        "http://home-assistant.io",
-        "http://home-assistant.io/test/",
+        "http://openpeerpower.io",
+        "http://openpeerpower.io/test/",
         "https://community.home-assistant.io/",
     ):
         assert schema(value)
@@ -420,7 +420,7 @@ def test_string_with_no_html():
         3,
         "Hello",
         "**Hello**",
-        "This has no HTML [Link](https://home-assistant.io)",
+        "This has no HTML [Link](https://openpeerpower.io)",
     ):
         schema(value)
 
