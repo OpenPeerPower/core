@@ -6,11 +6,11 @@ trigger:
     include:
       - rc
       - dev
-      - master
+      - main
 pr:
   - rc
   - dev
-  - master
+  - main
 
 resources:
   containers:
