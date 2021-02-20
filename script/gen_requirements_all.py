@@ -50,7 +50,7 @@ COMMENT_REQUIREMENTS = (
 IGNORE_PIN = ("colorlog>2.1,<3", "keyring>=9.3,<10.0", "urllib3")
 
 URL_PIN = (
-    "https://developers.home-assistant.io/docs/"
+    "https://developers.openpeerpower.io/docs/"
     "creating_platform_code_review.html#1-requirements"
 )
 

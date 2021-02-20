@@ -114,7 +114,7 @@ def test_url():
         "https://localhost/test/index.html",
         "http://openpeerpower.io",
         "http://openpeerpower.io/test/",
-        "https://community.home-assistant.io/",
+        "https://community.openpeerpower.io/",
     ):
         assert schema(value)
 

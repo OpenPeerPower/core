@@ -1,6 +1,6 @@
 {
   "domain": "syslog",
   "name": "Syslog",
-  "documentation": "https://www.home-assistant.io/integrations/syslog",
+  "documentation": "https://www.openpeerpower.io/integrations/syslog",
   "codeowners": ["@fabaff"]
 }

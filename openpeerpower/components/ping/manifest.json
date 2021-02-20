@@ -1,7 +1,7 @@
 {
   "domain": "ping",
   "name": "Ping (ICMP)",
-  "documentation": "https://www.home-assistant.io/integrations/ping",
+  "documentation": "https://www.openpeerpower.io/integrations/ping",
   "codeowners": [],
   "requirements": ["icmplib==2.0"],
   "quality_scale": "internal"

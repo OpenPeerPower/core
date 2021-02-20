@@ -93,14 +93,14 @@ async def async_setup_legacy_entry.opp, entry, async_add_entities):
             if variable in DEPRECATED_WEATHER_VARS:
                 wstr = (
                     "Nest no longer provides weather data like %s. See "
-                    "https://www.home-assistant.io/integrations/#weather "
+                    "https://www.openpeerpower.io/integrations/#weather "
                     "for a list of other weather integrations to use." % variable
                 )
             else:
                 wstr = (
                     f"{variable} is no a longer supported "
                     "monitored_conditions. See "
-                    "https://www.home-assistant.io/integrations/"
+                    "https://www.openpeerpower.io/integrations/"
                     "binary_sensor.nest/ for valid options."
                 )
             _LOGGER.error(wstr)

@@ -14,7 +14,7 @@
                 "data": {
                     "api_key": "API \u5bc6\u9470"
                 },
-                "description": "\u5c07\u9700\u8981\u8f38\u5165 16 \u4f4d\u5b57\u5143 API \u5bc6\u9470\uff0c\u8acb\u53c3\u95b1 https://www.home-assistant.io/integrations/motion_blinds/#retrieving-the-key \u4ee5\u7372\u5f97\u7372\u53d6\u5bc6\u9470\u7684\u6559\u5b78\u3002",
+                "description": "\u5c07\u9700\u8981\u8f38\u5165 16 \u4f4d\u5b57\u5143 API \u5bc6\u9470\uff0c\u8acb\u53c3\u95b1 https://www.openpeerpower.io/integrations/motion_blinds/#retrieving-the-key \u4ee5\u7372\u5f97\u7372\u53d6\u5bc6\u9470\u7684\u6559\u5b78\u3002",
                 "title": "Motion Blinds"
             },
             "select": {

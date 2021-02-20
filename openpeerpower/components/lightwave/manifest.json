@@ -1,7 +1,7 @@
 {
   "domain": "lightwave",
   "name": "Lightwave",
-  "documentation": "https://www.home-assistant.io/integrations/lightwave",
+  "documentation": "https://www.openpeerpower.io/integrations/lightwave",
   "requirements": ["lightwave==0.19"],
   "codeowners": []
 }

@@ -1,7 +1,7 @@
 {
   "domain": "tibber",
   "name": "Tibber",
-  "documentation": "https://www.home-assistant.io/integrations/tibber",
+  "documentation": "https://www.openpeerpower.io/integrations/tibber",
   "requirements": ["pyTibber==0.16.1"],
   "codeowners": ["@danielhiversen"],
   "quality_scale": "silver",

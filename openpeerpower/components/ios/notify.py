@@ -17,7 +17,7 @@ import openpeerpower.util.dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
-PUSH_URL = "https://ios-push.home-assistant.io/push"
+PUSH_URL = "https://ios-push.openpeerpower.io/push"
 
 
 # pylint: disable=invalid-name

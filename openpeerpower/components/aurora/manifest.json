@@ -1,7 +1,7 @@
 {
   "domain": "aurora",
   "name": "Aurora",
-  "documentation": "https://www.home-assistant.io/integrations/aurora",
+  "documentation": "https://www.openpeerpower.io/integrations/aurora",
   "config_flow": true,
   "codeowners": ["@djtimca"],
   "requirements": ["auroranoaa==0.0.2"]

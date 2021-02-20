@@ -1,7 +1,7 @@
 {
   "domain": "google",
   "name": "Google Calendars",
-  "documentation": "https://www.home-assistant.io/integrations/google",
+  "documentation": "https://www.openpeerpower.io/integrations/google",
   "requirements": [
     "google-api-python-client==1.6.4",
     "httplib2==0.19.0",

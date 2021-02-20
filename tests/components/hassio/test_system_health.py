@@ -18,7 +18,7 @@ async def test_oppio_system_health.opp, aioclient_mock):
     aioclient_mock.get("http://127.0.0.1/host/info", json={"result": "ok", "data": {}})
     aioclient_mock.get("http://127.0.0.1/os/info", json={"result": "ok", "data": {}})
     aioclient_mock.get("http://127.0.0.1/supervisor/ping", text="")
-    aioclient_mock.get("https://version.home-assistant.io/stable.json", text="")
+    aioclient_mock.get("https://version.openpeerpower.io/stable.json", text="")
     aioclient_mock.get(
         "http://127.0.0.1/supervisor/info", json={"result": "ok", "data": {}}
     )
@@ -73,7 +73,7 @@ async def test_oppio_system_health_with_issues.opp, aioclient_mock):
     aioclient_mock.get("http://127.0.0.1/host/info", json={"result": "ok", "data": {}})
     aioclient_mock.get("http://127.0.0.1/os/info", json={"result": "ok", "data": {}})
     aioclient_mock.get("http://127.0.0.1/supervisor/ping", text="")
-    aioclient_mock.get("https://version.home-assistant.io/stable.json", exc=ClientError)
+    aioclient_mock.get("https://version.openpeerpower.io/stable.json", exc=ClientError)
     aioclient_mock.get(
         "http://127.0.0.1/supervisor/info", json={"result": "ok", "data": {}}
     )

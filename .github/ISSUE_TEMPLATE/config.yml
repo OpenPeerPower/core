@@ -7,11 +7,11 @@ contact_links:
     url: https://github.com/openpeerpower/openpeerpower.io/issues
     about: Our documentation has its own issue tracker. Please report issues with the website there.
   - name: I have a question or need support
-    url: https://www.home-assistant.io/help
+    url: https://www.openpeerpower.io/help
     about: We use GitHub for tracking bugs, check our website for resources on getting help.
   - name: Feature Request
-    url: https://community.home-assistant.io/c/feature-requests
+    url: https://community.openpeerpower.io/c/feature-requests
     about: Please use our Community Forum for making feature requests.
   - name: I'm unsure where to go
-    url: https://www.home-assistant.io/join-chat
+    url: https://www.openpeerpower.io/join-chat
     about: If you are unsure where to go, then joining our chat is recommended; Just ask!

@@ -7,7 +7,7 @@
         },
         "error": {
             "discovery_error": "Xiaomi Aqara l\u00fc\u00fcsi avastamine nurjus, proovi kasutada OpenPeerPoweri IP-d liidesena",
-            "invalid_host": "Vigane hostinimi v\u00f5i IP aadress, lisaks vaata: https://www.home-assistant.io/integrations/xiaomi_aqara/#connection-problem",
+            "invalid_host": "Vigane hostinimi v\u00f5i IP aadress, lisaks vaata: https://www.openpeerpower.io/integrations/xiaomi_aqara/#connection-problem",
             "invalid_interface": "Sobimatu v\u00f5rguliides",
             "invalid_key": "Vigane l\u00fc\u00fcsi v\u00f5ti",
             "invalid_mac": "Vigane MAC aadress"

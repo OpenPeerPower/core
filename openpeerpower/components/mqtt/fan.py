@@ -318,7 +318,7 @@ class MqttFan(MqttEntity, FanEntity):
     # instead of speeds.
     #
     # Please review
-    # https://developers.home-assistant.io/docs/core/entity/fan/
+    # https://developers.openpeerpower.io/docs/core/entity/fan/
     #
     async def async_turn_on(
         self,

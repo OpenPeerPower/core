@@ -278,7 +278,7 @@ class AbstractOAuth2FlowHandler(config_entries.ConfigFlow, metaclass=ABCMeta):
             return self.async_abort(
                 reason="no_url_available",
                 description_placeholders={
-                    "docs_url": "https://www.home-assistant.io/more-info/no-url-available"
+                    "docs_url": "https://www.openpeerpower.io/more-info/no-url-available"
                 },
             )
 

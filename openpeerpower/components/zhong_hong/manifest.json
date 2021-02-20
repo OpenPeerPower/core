@@ -1,7 +1,7 @@
 {
   "domain": "zhong_hong",
   "name": "ZhongHong",
-  "documentation": "https://www.home-assistant.io/integrations/zhong_hong",
+  "documentation": "https://www.openpeerpower.io/integrations/zhong_hong",
   "requirements": ["zhong_hong_hvac==1.0.9"],
   "codeowners": []
 }

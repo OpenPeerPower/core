@@ -37,7 +37,7 @@ def mock_cloud_login_fixture.opp, setup_api):
     """Mock cloud is logged in."""
    .opp.data[DOMAIN].id_token = jwt.encode(
         {
-            "email": "hello@home-assistant.io",
+            "email": "hello@openpeerpower.io",
             "custom:sub-exp": "2018-01-03",
             "cognito:username": "abcdefghjkl",
         },
@@ -347,7 +347,7 @@ async def test_websocket_status(
         response = await client.receive_json()
     assert response["result"] == {
         "logged_in": True,
-        "email": "hello@home-assistant.io",
+        "email": "hello@openpeerpower.io",
         "cloud": "connected",
         "prefs": {
             "alexa_enabled": True,

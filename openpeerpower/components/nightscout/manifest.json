@@ -2,7 +2,7 @@
   "domain": "nightscout",
   "name": "Nightscout",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/nightscout",
+  "documentation": "https://www.openpeerpower.io/integrations/nightscout",
   "requirements": [
     "py-nightscout==1.2.2"
   ],

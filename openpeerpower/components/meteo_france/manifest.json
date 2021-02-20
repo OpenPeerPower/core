@@ -2,7 +2,7 @@
   "domain": "meteo_france",
   "name": "Météo-France",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/meteo_france",
+  "documentation": "https://www.openpeerpower.io/integrations/meteo_france",
   "requirements": [
     "meteofrance-api==1.0.1"
   ],

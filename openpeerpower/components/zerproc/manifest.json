@@ -2,7 +2,7 @@
   "domain": "zerproc",
   "name": "Zerproc",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/zerproc",
+  "documentation": "https://www.openpeerpower.io/integrations/zerproc",
   "requirements": [
     "pyzerproc==0.4.7"
   ],

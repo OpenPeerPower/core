@@ -1,7 +1,7 @@
 {
   "domain": "ipp",
   "name": "Internet Printing Protocol (IPP)",
-  "documentation": "https://www.home-assistant.io/integrations/ipp",
+  "documentation": "https://www.openpeerpower.io/integrations/ipp",
   "requirements": ["pyipp==0.11.0"],
   "codeowners": ["@ctalkington"],
   "config_flow": true,

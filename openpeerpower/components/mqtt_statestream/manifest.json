@@ -1,7 +1,7 @@
 {
   "domain": "mqtt_statestream",
   "name": "MQTT Statestream",
-  "documentation": "https://www.home-assistant.io/integrations/mqtt_statestream",
+  "documentation": "https://www.openpeerpower.io/integrations/mqtt_statestream",
   "dependencies": ["mqtt"],
   "codeowners": []
 }

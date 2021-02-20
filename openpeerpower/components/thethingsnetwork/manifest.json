@@ -1,6 +1,6 @@
 {
   "domain": "thethingsnetwork",
   "name": "The Things Network",
-  "documentation": "https://www.home-assistant.io/integrations/thethingsnetwork",
+  "documentation": "https://www.openpeerpower.io/integrations/thethingsnetwork",
   "codeowners": ["@fabaff"]
 }

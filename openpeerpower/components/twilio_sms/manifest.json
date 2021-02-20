@@ -1,7 +1,7 @@
 {
   "domain": "twilio_sms",
   "name": "Twilio SMS",
-  "documentation": "https://www.home-assistant.io/integrations/twilio_sms",
+  "documentation": "https://www.openpeerpower.io/integrations/twilio_sms",
   "dependencies": ["twilio"],
   "codeowners": []
 }

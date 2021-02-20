@@ -1,7 +1,7 @@
 {
   "domain": "script",
   "name": "Scripts",
-  "documentation": "https://www.home-assistant.io/integrations/script",
+  "documentation": "https://www.openpeerpower.io/integrations/script",
   "codeowners": [
     "@home-assistant/core"
   ],

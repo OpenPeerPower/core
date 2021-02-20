@@ -2,7 +2,7 @@
   "domain": "gpslogger",
   "name": "GPSLogger",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/gpslogger",
+  "documentation": "https://www.openpeerpower.io/integrations/gpslogger",
   "dependencies": ["webhook"],
   "codeowners": []
 }

@@ -2,7 +2,7 @@
   "domain": "lyric",
   "name": "Honeywell Lyric",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/lyric",
+  "documentation": "https://www.openpeerpower.io/integrations/lyric",
   "dependencies": ["http"],
   "requirements": ["aiolyric==1.0.5"],
   "codeowners": ["@timmo001"],

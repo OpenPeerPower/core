@@ -1,5 +1,5 @@
 <!-- READ THIS FIRST:
-  - If you need additional help with this template, please refer to https://www.home-assistant.io/help/reporting_issues/
+  - If you need additional help with this template, please refer to https://www.openpeerpower.io/help/reporting_issues/
   - Make sure you are running the latest version of Open Peer Power before reporting an issue: https://github.com/openpeerpower/core/releases
   - Do not report issues for integrations if you are using custom components or integrations.
   - Provide as many details as possible. Paste logs, configuration samples and code into the backticks.

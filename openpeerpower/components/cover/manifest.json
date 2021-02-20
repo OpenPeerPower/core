@@ -1,7 +1,7 @@
 {
   "domain": "cover",
   "name": "Cover",
-  "documentation": "https://www.home-assistant.io/integrations/cover",
+  "documentation": "https://www.openpeerpower.io/integrations/cover",
   "codeowners": ["@home-assistant/core"],
   "quality_scale": "internal"
 }

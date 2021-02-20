@@ -19,7 +19,7 @@ resources:
   repositories:
     - repository: azure
       type: github
-      name: "home-assistant/ci-azure"
+      name: "open-peer-power/ci-azure"
       endpoint: "openpeerpower"
 variables:
   - name: PythonMain

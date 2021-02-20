@@ -1,7 +1,7 @@
 {
   "domain": "lacrosse",
   "name": "LaCrosse",
-  "documentation": "https://www.home-assistant.io/integrations/lacrosse",
+  "documentation": "https://www.openpeerpower.io/integrations/lacrosse",
   "requirements": ["pylacrosse==0.4"],
   "codeowners": []
 }

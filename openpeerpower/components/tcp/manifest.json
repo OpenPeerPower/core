@@ -1,6 +1,6 @@
 {
   "domain": "tcp",
   "name": "TCP",
-  "documentation": "https://www.home-assistant.io/integrations/tcp",
+  "documentation": "https://www.openpeerpower.io/integrations/tcp",
   "codeowners": []
 }

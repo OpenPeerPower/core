@@ -6,6 +6,6 @@ browse_url:
       name: URL
       description: The URL to open.
       required: true
-      example: "https://www.home-assistant.io"
+      example: "https://www.openpeerpower.io"
       selector:
         text:

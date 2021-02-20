@@ -2,7 +2,7 @@
   "domain": "homekit_controller",
   "name": "HomeKit Controller",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/homekit_controller",
+  "documentation": "https://www.openpeerpower.io/integrations/homekit_controller",
   "requirements": [
     "aiohomekit==0.2.60"
   ],

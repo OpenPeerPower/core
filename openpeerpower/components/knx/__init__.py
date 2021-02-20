@@ -200,7 +200,7 @@ async def async_setup.opp, config):
     if not.opp.data[DOMAIN].xknx.devices:
         _LOGGER.warning(
             "No KNX devices are configured. Please read "
-            "https://www.home-assistant.io/blog/2020/09/17/release-115/#breaking-changes"
+            "https://www.openpeerpower.io/blog/2020/09/17/release-115/#breaking-changes"
         )
 
    .opp.services.async_register(

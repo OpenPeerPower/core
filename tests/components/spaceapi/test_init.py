@@ -16,7 +16,7 @@ CONFIG = {
         "logo": "https://openpeerpower.io/logo.png",
         "url": "https://openpeerpower.io",
         "location": {"address": "In your Home"},
-        "contact": {"email": "hello@home-assistant.io"},
+        "contact": {"email": "hello@openpeerpower.io"},
         "issue_report_channels": ["email"],
         "state": {
             "entity_id": "test.test_door",
@@ -97,7 +97,7 @@ async def test_spaceapi_get.opp, mock_client):
 
     assert data["api"] == SPACEAPI_VERSION
     assert data["space"] == "Home"
-    assert data["contact"]["email"] == "hello@home-assistant.io"
+    assert data["contact"]["email"] == "hello@openpeerpower.io"
     assert data["location"]["address"] == "In your Home"
     assert data["location"]["lat"] == 32.87336
     assert data["location"]["lon"] == -117.22743

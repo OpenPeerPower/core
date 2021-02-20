@@ -77,7 +77,7 @@ async def async_setup.opp, config):
     if config.get(CONF_ELEVATION) is not None:
         _LOGGER.warning(
             "Elevation is now configured in Open Peer Power core. "
-            "See https://www.home-assistant.io/docs/configuration/basic/"
+            "See https://www.openpeerpower.io/docs/configuration/basic/"
         )
     Sun.opp)
     return True

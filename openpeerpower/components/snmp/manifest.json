@@ -1,7 +1,7 @@
 {
   "domain": "snmp",
   "name": "SNMP",
-  "documentation": "https://www.home-assistant.io/integrations/snmp",
+  "documentation": "https://www.openpeerpower.io/integrations/snmp",
   "requirements": ["pysnmp==4.4.12"],
   "codeowners": []
 }

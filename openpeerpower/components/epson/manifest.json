@@ -2,7 +2,7 @@
   "domain": "epson",
   "name": "Epson",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/epson",
+  "documentation": "https://www.openpeerpower.io/integrations/epson",
   "requirements": ["epson-projector==0.2.3"],
   "codeowners": ["@pszafer"]
 }

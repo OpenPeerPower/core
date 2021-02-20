@@ -2,7 +2,7 @@
   "domain": "heos",
   "name": "Denon HEOS",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/heos",
+  "documentation": "https://www.openpeerpower.io/integrations/heos",
   "requirements": ["pyheos==0.7.2"],
   "ssdp": [
     {

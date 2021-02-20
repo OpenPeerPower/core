@@ -352,7 +352,7 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "home-assistant.tex",
+        "open-peer-power.tex",
         "Open Peer Power Documentation",
         "Open Peer Power Team",
         "manual",

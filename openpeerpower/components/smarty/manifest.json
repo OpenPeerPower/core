@@ -1,7 +1,7 @@
 {
   "domain": "smarty",
   "name": "Salda Smarty",
-  "documentation": "https://www.home-assistant.io/integrations/smarty",
+  "documentation": "https://www.openpeerpower.io/integrations/smarty",
   "requirements": ["pysmarty==0.8"],
   "codeowners": ["@z0mbieprocess"]
 }

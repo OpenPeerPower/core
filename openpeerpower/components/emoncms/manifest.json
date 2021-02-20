@@ -1,6 +1,6 @@
 {
   "domain": "emoncms",
   "name": "Emoncms",
-  "documentation": "https://www.home-assistant.io/integrations/emoncms",
+  "documentation": "https://www.openpeerpower.io/integrations/emoncms",
   "codeowners": ["@borpin"]
 }

@@ -1,6 +1,6 @@
 {
   "domain": "openexchangerates",
   "name": "Open Exchange Rates",
-  "documentation": "https://www.home-assistant.io/integrations/openexchangerates",
+  "documentation": "https://www.openpeerpower.io/integrations/openexchangerates",
   "codeowners": []
 }

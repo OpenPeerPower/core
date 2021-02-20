@@ -29,7 +29,7 @@
                 "data": {
                     "events": "Komadega eraldatud s\u00fcndmuste loend."
                 },
-                "description": "Lisa komaga eraldatud s\u00fcndmuse nimi igale j\u00e4lgitavale s\u00fcndmusele. P\u00e4rast nende sisestamist kasuta rakendust DoorBird, et siduda need konkreetse s\u00fcndmusega. Vaata dokumentatsiooni aadressil https://www.home-assistant.io/integrations/doorbird/#events. N\u00e4ide: somebody_pressed_the_button, motion"
+                "description": "Lisa komaga eraldatud s\u00fcndmuse nimi igale j\u00e4lgitavale s\u00fcndmusele. P\u00e4rast nende sisestamist kasuta rakendust DoorBird, et siduda need konkreetse s\u00fcndmusega. Vaata dokumentatsiooni aadressil https://www.openpeerpower.io/integrations/doorbird/#events. N\u00e4ide: somebody_pressed_the_button, motion"
             }
         }
     }

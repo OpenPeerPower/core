@@ -1,7 +1,7 @@
 {
   "domain": "discovery",
   "name": "Discovery",
-  "documentation": "https://www.home-assistant.io/integrations/discovery",
+  "documentation": "https://www.openpeerpower.io/integrations/discovery",
   "requirements": ["netdisco==2.8.2"],
   "after_dependencies": ["zeroconf"],
   "codeowners": [],

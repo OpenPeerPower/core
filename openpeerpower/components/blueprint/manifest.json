@@ -1,7 +1,7 @@
 {
   "domain": "blueprint",
   "name": "Blueprint",
-  "documentation": "https://www.home-assistant.io/integrations/blueprint",
+  "documentation": "https://www.openpeerpower.io/integrations/blueprint",
   "codeowners": [
     "@home-assistant/core"
   ],

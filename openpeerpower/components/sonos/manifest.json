@@ -2,7 +2,7 @@
   "domain": "sonos",
   "name": "Sonos",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/sonos",
+  "documentation": "https://www.openpeerpower.io/integrations/sonos",
   "requirements": ["pysonos==0.0.40"],
   "after_dependencies": ["plex"],
   "ssdp": [

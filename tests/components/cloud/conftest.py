@@ -42,7 +42,7 @@ def mock_cloud_login.opp, mock_cloud_setup):
     """Mock cloud is logged in."""
    .opp.data[const.DOMAIN].id_token = jwt.encode(
         {
-            "email": "hello@home-assistant.io",
+            "email": "hello@openpeerpower.io",
             "custom:sub-exp": "2300-01-03",
             "cognito:username": "abcdefghjkl",
         },
@@ -55,7 +55,7 @@ def mock_expired_cloud_login.opp, mock_cloud_setup):
     """Mock cloud is logged in."""
    .opp.data[const.DOMAIN].id_token = jwt.encode(
         {
-            "email": "hello@home-assistant.io",
+            "email": "hello@openpeerpower.io",
             "custom:sub-exp": "2018-01-01",
             "cognito:username": "abcdefghjkl",
         },

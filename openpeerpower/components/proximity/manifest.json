@@ -1,7 +1,7 @@
 {
   "domain": "proximity",
   "name": "Proximity",
-  "documentation": "https://www.home-assistant.io/integrations/proximity",
+  "documentation": "https://www.openpeerpower.io/integrations/proximity",
   "dependencies": ["device_tracker", "zone"],
   "codeowners": [],
   "quality_scale": "internal"

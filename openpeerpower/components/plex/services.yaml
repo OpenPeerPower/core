@@ -5,7 +5,7 @@ play_on_sonos:
       description: Entity ID of a media_player from the Sonos integration.
       example: "media_player.sonos_living_room"
     media_content_id:
-      description: The ID of the content to play. See https://www.home-assistant.io/integrations/plex/#music for details.
+      description: The ID of the content to play. See https://www.openpeerpower.io/integrations/plex/#music for details.
       example: >-
           '{ "library_name": "Music", "artist_name": "Stevie Wonder" }'
     media_content_type:

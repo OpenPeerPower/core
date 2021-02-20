@@ -3,8 +3,8 @@
         "abort": {
             "credential_error": "Fejl ved hentning af legitimationsoplysninger.",
             "no_devices_found": "Der blev ikke fundet nogen PlayStation 4-enheder p\u00e5 netv\u00e6rket.",
-            "port_987_bind_error": "Kunne ikke binde til port 987. Se [dokumentationen](https://www.home-assistant.io/components/ps4/) for yderligere oplysninger.",
-            "port_997_bind_error": "Kunne ikke binde til port 997. Se [dokumentationen](https://www.home-assistant.io/components/ps4/) for yderligere oplysninger."
+            "port_987_bind_error": "Kunne ikke binde til port 987. Se [dokumentationen](https://www.openpeerpower.io/components/ps4/) for yderligere oplysninger.",
+            "port_997_bind_error": "Kunne ikke binde til port 997. Se [dokumentationen](https://www.openpeerpower.io/components/ps4/) for yderligere oplysninger."
         },
         "error": {
             "credential_timeout": "Tjenesten for legitimationsoplysninger fik timeout. Tryk p\u00e5 send for at genstarte.",
@@ -23,7 +23,7 @@
                     "name": "Navn",
                     "region": "Omr\u00e5de"
                 },
-                "description": "Indtast dine PlayStation 4-oplysninger. For 'PIN' skal du navigere til 'Indstillinger' p\u00e5 din PlayStation 4-konsol. Naviger derefter til 'Mobile App Connection Settings' og v\u00e6lg 'Add Device'. Indtast den pinkode, der vises. Se [dokumentation](https://www.home-assistant.io/components/ps4/) for yderligere oplysninger.",
+                "description": "Indtast dine PlayStation 4-oplysninger. For 'PIN' skal du navigere til 'Indstillinger' p\u00e5 din PlayStation 4-konsol. Naviger derefter til 'Mobile App Connection Settings' og v\u00e6lg 'Add Device'. Indtast den pinkode, der vises. Se [dokumentation](https://www.openpeerpower.io/components/ps4/) for yderligere oplysninger.",
                 "title": "PlayStation 4"
             },
             "mode": {

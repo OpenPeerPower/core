@@ -1,7 +1,7 @@
 {
   "domain": "emulated_hue",
   "name": "Emulated Hue",
-  "documentation": "https://www.home-assistant.io/integrations/emulated_hue",
+  "documentation": "https://www.openpeerpower.io/integrations/emulated_hue",
   "requirements": ["aiohttp_cors==0.7.0"],
   "after_dependencies": ["http"],
   "codeowners": [],

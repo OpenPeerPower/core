@@ -1,7 +1,7 @@
 {
   "domain": "yeelight",
   "name": "Yeelight",
-  "documentation": "https://www.home-assistant.io/integrations/yeelight",
+  "documentation": "https://www.openpeerpower.io/integrations/yeelight",
   "requirements": [
     "yeelight==0.5.4"
   ],

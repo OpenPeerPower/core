@@ -16,7 +16,7 @@
                     "name": "N\u00e1zev br\u00e1ny",
                     "token": "API token"
                 },
-                "description": "Budete pot\u0159ebovat 32 znakov\u00fd API token, pokyny naleznete na https://www.home-assistant.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token. Upozor\u0148ujeme, \u017ee tento token se li\u0161\u00ed od kl\u00ed\u010de pou\u017e\u00edvan\u00e9ho v integraci Xiaomi Aqara.",
+                "description": "Budete pot\u0159ebovat 32 znakov\u00fd API token, pokyny naleznete na https://www.openpeerpower.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token. Upozor\u0148ujeme, \u017ee tento token se li\u0161\u00ed od kl\u00ed\u010de pou\u017e\u00edvan\u00e9ho v integraci Xiaomi Aqara.",
                 "title": "P\u0159ipojen\u00ed k br\u00e1n\u011b Xiaomi"
             },
             "user": {

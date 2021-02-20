@@ -16,7 +16,7 @@
                     "longitude": "Zem\u011bpisn\u00e1 d\u00e9lka",
                     "name": "Jm\u00e9no"
                 },
-                "description": "Pokud pot\u0159ebujete pomoc s nastaven\u00ed, pod\u00edvejte se na: https://www.home-assistant.io/integrations/accuweather/\n\nN\u011bkter\u00e9 senzory nejsou ve v\u00fdchoz\u00edm nastaven\u00ed povoleny. M\u016f\u017eete je povolit  po nastaven\u00ed integrace v registru entit.\nP\u0159edpov\u011b\u010f po\u010das\u00ed nen\u00ed ve v\u00fdchoz\u00edm nastaven\u00ed povolena. M\u016f\u017eete ji povolit v mo\u017enostech integrace.",
+                "description": "Pokud pot\u0159ebujete pomoc s nastaven\u00ed, pod\u00edvejte se na: https://www.openpeerpower.io/integrations/accuweather/\n\nN\u011bkter\u00e9 senzory nejsou ve v\u00fdchoz\u00edm nastaven\u00ed povoleny. M\u016f\u017eete je povolit  po nastaven\u00ed integrace v registru entit.\nP\u0159edpov\u011b\u010f po\u010das\u00ed nen\u00ed ve v\u00fdchoz\u00edm nastaven\u00ed povolena. M\u016f\u017eete ji povolit v mo\u017enostech integrace.",
                 "title": "AccuWeather"
             }
         }

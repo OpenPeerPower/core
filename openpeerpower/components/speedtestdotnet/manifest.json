@@ -2,7 +2,7 @@
   "domain": "speedtestdotnet",
   "name": "Speedtest.net",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/speedtestdotnet",
+  "documentation": "https://www.openpeerpower.io/integrations/speedtestdotnet",
   "requirements": ["speedtest-cli==2.1.2"],
   "codeowners": ["@rohankapoorcom", "@engrbm87"]
 }

@@ -1,7 +1,7 @@
 {
   "domain": "pvoutput",
   "name": "PVOutput",
-  "documentation": "https://www.home-assistant.io/integrations/pvoutput",
+  "documentation": "https://www.openpeerpower.io/integrations/pvoutput",
   "after_dependencies": ["rest"],
   "codeowners": ["@fabaff"]
 }

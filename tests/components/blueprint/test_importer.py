@@ -84,16 +84,16 @@ def test_get_community_post_import_url():
     """Test variations of generating import forum url."""
     assert (
         importer._get_community_post_import_url(
-            "https://community.home-assistant.io/t/test-topic/123"
+            "https://community.openpeerpower.io/t/test-topic/123"
         )
-        == "https://community.home-assistant.io/t/test-topic/123.json"
+        == "https://community.openpeerpower.io/t/test-topic/123.json"
     )
 
     assert (
         importer._get_community_post_import_url(
-            "https://community.home-assistant.io/t/test-topic/123/2"
+            "https://community.openpeerpower.io/t/test-topic/123/2"
         )
-        == "https://community.home-assistant.io/t/test-topic/123.json"
+        == "https://community.openpeerpower.io/t/test-topic/123.json"
     )
 
 
@@ -157,10 +157,10 @@ def test_extract_blueprint_from_community_topic_wrong_lang():
 async def test_fetch_blueprint_from_community_url.opp, aioclient_mock, community_post):
     """Test fetching blueprint from url."""
     aioclient_mock.get(
-        "https://community.home-assistant.io/t/test-topic/123.json", text=community_post
+        "https://community.openpeerpower.io/t/test-topic/123.json", text=community_post
     )
     imported_blueprint = await importer.fetch_blueprint_from_url(
-       .opp, "https://community.home-assistant.io/t/test-topic/123/2"
+       .opp, "https://community.openpeerpower.io/t/test-topic/123/2"
     )
     assert isinstance(imported_blueprint, importer.ImportedBlueprint)
     assert imported_blueprint.blueprint.domain == "automation"
@@ -171,7 +171,7 @@ async def test_fetch_blueprint_from_community_url.opp, aioclient_mock, community
     )
     assert (
         imported_blueprint.blueprint.metadata["source_url"]
-        == "https://community.home-assistant.io/t/test-topic/123/2"
+        == "https://community.openpeerpower.io/t/test-topic/123/2"
     )
     assert "gt;" not in imported_blueprint.raw_data
 

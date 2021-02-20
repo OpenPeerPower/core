@@ -1,7 +1,7 @@
 {
   "domain": "spotify",
   "name": "Spotify",
-  "documentation": "https://www.home-assistant.io/integrations/spotify",
+  "documentation": "https://www.openpeerpower.io/integrations/spotify",
   "requirements": ["spotipy==2.16.1"],
   "zeroconf": ["_spotify-connect._tcp.local."],
   "dependencies": ["http"],

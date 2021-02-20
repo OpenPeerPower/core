@@ -23,7 +23,7 @@ CONF_COMPONENT_REPORTING = "include_used_components"
 
 DOMAIN = "updater"
 
-UPDATER_URL = "https://updater.home-assistant.io/"
+UPDATER_URL = "https://updater.openpeerpower.io/"
 
 CONFIG_SCHEMA = vol.Schema(
     {

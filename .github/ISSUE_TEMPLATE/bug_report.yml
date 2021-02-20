@@ -10,7 +10,7 @@ inputs:
 
         If you have a feature or enhancement request, please use the [feature request][fr] section of our [Community Forum][fr].
 
-        [fr]: https://community.home-assistant.io/c/feature-requests
+        [fr]: https://community.openpeerpower.io/c/feature-requests
   - type: textarea
     attributes:
       label: The problem
@@ -59,12 +59,12 @@ inputs:
     attributes:
       label: Link to integration documentation on our website
       required: false
-      placeholder: "https://www.home-assistant.io/integrations/..."
+      placeholder: "https://www.openpeerpower.io/integrations/..."
       description: |
         Providing a link [to the documentation][docs] help us categorizing the
         issue, while providing a useful reference at the same time.
 
-        [docs]: https://www.home-assistant.io/integrations
+        [docs]: https://www.openpeerpower.io/integrations
 
   - type: description
     attributes:

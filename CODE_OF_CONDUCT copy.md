@@ -60,7 +60,7 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-[safety@home-assistant.io][email] or by using the report/flag feature of
+[safety@openpeerpower.io][email] or by using the report/flag feature of
 the medium used. All complaints will be reviewed and investigated promptly and
 fairly.
 
@@ -134,7 +134,7 @@ For answers to common questions about this code of conduct, see the FAQ at
 
 [coc-blog]: /blog/2017/01/21/openpeerpower-governance/
 [coc2-blog]: /blog/2020/05/25/code-of-conduct-updated/
-[email]: mailto:safety@home-assistant.io
+[email]: mailto:safety@openpeerpower.io
 [homepage]: http://contributor-covenant.org
 [mozilla]: https://github.com/mozilla/diversity
 [version]: https://www.contributor-covenant.org/version/2/0/code_of_conduct.html

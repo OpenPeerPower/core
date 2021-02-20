@@ -1,7 +1,7 @@
 {
   "domain": "mill",
   "name": "Mill",
-  "documentation": "https://www.home-assistant.io/integrations/mill",
+  "documentation": "https://www.openpeerpower.io/integrations/mill",
   "requirements": ["millheater==0.4.0"],
   "codeowners": ["@danielhiversen"],
   "config_flow": true

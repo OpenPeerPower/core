@@ -18,7 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 DOMAIN = "no_ip"
 
 # We should set a dedicated address for the user agent.
-EMAIL = "hello@home-assistant.io"
+EMAIL = "hello@openpeerpower.io"
 
 INTERVAL = timedelta(minutes=5)
 

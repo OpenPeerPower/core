@@ -1,7 +1,7 @@
 {
   "domain": "verisure",
   "name": "Verisure",
-  "documentation": "https://www.home-assistant.io/integrations/verisure",
+  "documentation": "https://www.openpeerpower.io/integrations/verisure",
   "requirements": ["jsonpath==0.82", "vsure==1.7.2"],
   "codeowners": ["@frenck"]
 }

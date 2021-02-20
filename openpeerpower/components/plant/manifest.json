@@ -1,7 +1,7 @@
 {
   "domain": "plant",
   "name": "Plant Monitor",
-  "documentation": "https://www.home-assistant.io/integrations/plant",
+  "documentation": "https://www.openpeerpower.io/integrations/plant",
   "after_dependencies": ["recorder"],
   "codeowners": [],
   "quality_scale": "internal"

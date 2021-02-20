@@ -1,9 +1,9 @@
 {
   "domain": "frontend",
   "name": "Open Peer Power Frontend",
-  "documentation": "https://www.home-assistant.io/integrations/frontend",
+  "documentation": "https://www.openpeerpower.io/integrations/frontend",
   "requirements": [
-    "home-assistant-frontend==20210208.0"
+    "open-peer-power-frontend==20210208.0"
   ],
   "dependencies": [
     "api",

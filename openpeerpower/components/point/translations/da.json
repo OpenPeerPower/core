@@ -5,7 +5,7 @@
             "authorize_url_fail": "Ukendt fejl ved generering af en autoriseret url.",
             "authorize_url_timeout": "Timeout ved generering af autoriseret url.",
             "external_setup": "Point er konfigureret med succes fra et andet flow.",
-            "no_flows": "Du skal konfigurere Point f\u00f8r du kan godkende med det. [L\u00e6s venligst vejledningen](https://www.home-assistant.io/components/point/)."
+            "no_flows": "Du skal konfigurere Point f\u00f8r du kan godkende med det. [L\u00e6s venligst vejledningen](https://www.openpeerpower.io/components/point/)."
         },
         "create_entry": {
             "default": "Godkendt med Minut mod Point enhed(er)"

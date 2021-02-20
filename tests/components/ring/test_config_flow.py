@@ -28,14 +28,14 @@ async def test_form.opp):
     ) as mock_setup_entry:
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
-            {"username": "hello@home-assistant.io", "password": "test-password"},
+            {"username": "hello@openpeerpower.io", "password": "test-password"},
         )
         await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
-    assert result2["title"] == "hello@home-assistant.io"
+    assert result2["title"] == "hello@openpeerpower.io"
     assert result2["data"] == {
-        "username": "hello@home-assistant.io",
+        "username": "hello@openpeerpower.io",
         "token": {"access_token": "mock-token"},
     }
     assert len(mock_setup.mock_calls) == 1
@@ -54,7 +54,7 @@ async def test_form_invalid_auth.opp):
     ):
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
-            {"username": "hello@home-assistant.io", "password": "test-password"},
+            {"username": "hello@openpeerpower.io", "password": "test-password"},
         )
 
     assert result2["type"] == "form"

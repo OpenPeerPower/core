@@ -1,7 +1,7 @@
 {
   "domain": "blinksticklight",
   "name": "BlinkStick",
-  "documentation": "https://www.home-assistant.io/integrations/blinksticklight",
+  "documentation": "https://www.openpeerpower.io/integrations/blinksticklight",
   "requirements": ["blinkstick==1.1.8"],
   "codeowners": []
 }

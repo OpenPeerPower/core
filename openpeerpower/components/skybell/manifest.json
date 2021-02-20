@@ -1,7 +1,7 @@
 {
   "domain": "skybell",
   "name": "SkyBell",
-  "documentation": "https://www.home-assistant.io/integrations/skybell",
+  "documentation": "https://www.openpeerpower.io/integrations/skybell",
   "requirements": ["skybellpy==0.6.3"],
   "codeowners": []
 }

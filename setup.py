@@ -11,8 +11,8 @@ PROJECT_PACKAGE_NAME = "openpeerpower"
 PROJECT_LICENSE = "Apache License 2.0"
 PROJECT_AUTHOR = "The Open Peer Power Authors"
 PROJECT_COPYRIGHT = f" 2013-{dt.now().year}, {PROJECT_AUTHOR}"
-PROJECT_URL = "https://www.home-assistant.io/"
-PROJECT_EMAIL = "hello@home-assistant.io"
+PROJECT_URL = "https://www.openpeerpower.io/"
+PROJECT_EMAIL = "hello@openpeerpower.io"
 
 PROJECT_GITHUB_USERNAME = "openpeerpower"
 PROJECT_GITHUB_REPOSITORY = "core"
@@ -24,9 +24,9 @@ GITHUB_URL = f"https://github.com/{GITHUB_PATH}"
 DOWNLOAD_URL = f"{GITHUB_URL}/archive/.opp_const.__version__}.zip"
 PROJECT_URLS = {
     "Bug Reports": f"{GITHUB_URL}/issues",
-    "Dev Docs": "https://developers.home-assistant.io/",
+    "Dev Docs": "https://developers.openpeerpower.io/",
     "Discord": "https://discordapp.com/invite/c5DvZ4e",
-    "Forum": "https://community.home-assistant.io/",
+    "Forum": "https://community.openpeerpower.io/",
 }
 
 PACKAGES = find_packages(exclude=["tests", "tests.*"])

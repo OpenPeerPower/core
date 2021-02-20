@@ -35,7 +35,7 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
-ERROR_LOG_FILENAME = "home-assistant.log"
+ERROR_LOG_FILENAME = "open-peer-power.log"
 
 #.opp.data key for logging information.
 DATA_LOGGING = "logging"

@@ -128,7 +128,7 @@ async def _test_reconnect.opp, caplog, config):
     "Handles device/service unavailable. Log a warning once when
     unavailable, log once when reconnected."
 
-    https://developers.home-assistant.io/docs/en/integration_quality_scale_index.html
+    https://developers.openpeerpower.io/docs/en/integration_quality_scale_index.html
     """
     patch_key, entity_id = _setup(config)
 

@@ -947,7 +947,7 @@ async def test_entity_control.opp: OpenPeerPowerType):
     # Turn on
     await common.async_turn_on.opp, entity_id)
     chromecast.play_media.assert_called_once_with(
-        "https://www.home-assistant.io/images/cast/splash.png", ANY
+        "https://www.openpeerpower.io/images/cast/splash.png", ANY
     )
     chromecast.quit_app.reset_mock()
 

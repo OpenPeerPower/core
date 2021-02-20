@@ -1,7 +1,7 @@
 {
   "domain": "trend",
   "name": "Trend",
-  "documentation": "https://www.home-assistant.io/integrations/trend",
+  "documentation": "https://www.openpeerpower.io/integrations/trend",
   "requirements": ["numpy==1.19.2"],
   "codeowners": [],
   "quality_scale": "internal"

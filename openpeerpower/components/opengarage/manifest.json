@@ -1,7 +1,7 @@
 {
   "domain": "opengarage",
   "name": "OpenGarage",
-  "documentation": "https://www.home-assistant.io/integrations/opengarage",
+  "documentation": "https://www.openpeerpower.io/integrations/opengarage",
   "codeowners": [
     "@danielhiversen"
   ],

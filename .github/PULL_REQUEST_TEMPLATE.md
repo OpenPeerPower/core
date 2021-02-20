@@ -76,7 +76,7 @@
 
 If user exposed functionality or configuration variables are added/changed:
 
-- [ ] Documentation added/updated for [www.home-assistant.io][docs-repository]
+- [ ] Documentation added/updated for [www.openpeerpower.io][docs-repository]
 
 If the code communicates with devices, web services, or third-party tools:
 
@@ -126,7 +126,7 @@ To help with the load of incoming pull requests:
 
   Below, some useful links you could explore:
 -->
-[dev-checklist]: https://developers.home-assistant.io/docs/en/development_checklist.html
-[manifest-docs]: https://developers.home-assistant.io/docs/en/creating_integration_manifest.html
-[quality-scale]: https://developers.home-assistant.io/docs/en/next/integration_quality_scale_index.html
+[dev-checklist]: https://developers.openpeerpower.io/docs/en/development_checklist.html
+[manifest-docs]: https://developers.openpeerpower.io/docs/en/creating_integration_manifest.html
+[quality-scale]: https://developers.openpeerpower.io/docs/en/next/integration_quality_scale_index.html
 [docs-repository]: https://github.com/openpeerpower/openpeerpower.io

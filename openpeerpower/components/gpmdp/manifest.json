@@ -1,7 +1,7 @@
 {
   "domain": "gpmdp",
   "name": "Google Play Music Desktop Player (GPMDP)",
-  "documentation": "https://www.home-assistant.io/integrations/gpmdp",
+  "documentation": "https://www.openpeerpower.io/integrations/gpmdp",
   "requirements": ["websocket-client==0.54.0"],
   "dependencies": ["configurator"],
   "codeowners": []

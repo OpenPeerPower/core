@@ -1,4 +1,4 @@
-"""Support for my.home-assistant.io redirect service."""
+"""Support for my.openpeerpower.io redirect service."""
 
 DOMAIN = "my"
 URL_PATH = "_my_redirect"

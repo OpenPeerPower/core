@@ -1,7 +1,7 @@
 {
   "domain": "onboarding",
   "name": "Open Peer Power Onboarding",
-  "documentation": "https://www.home-assistant.io/integrations/onboarding",
+  "documentation": "https://www.openpeerpower.io/integrations/onboarding",
   "after_dependencies": [
     "oppio"
   ],

@@ -1,7 +1,7 @@
 {
   "domain": "number",
   "name": "Number",
-  "documentation": "https://www.home-assistant.io/integrations/number",
+  "documentation": "https://www.openpeerpower.io/integrations/number",
   "codeowners": ["@home-assistant/core", "@Shulyaka"],
   "quality_scale": "internal"
 }

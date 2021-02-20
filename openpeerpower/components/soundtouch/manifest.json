@@ -1,7 +1,7 @@
 {
   "domain": "soundtouch",
   "name": "Bose Soundtouch",
-  "documentation": "https://www.home-assistant.io/integrations/soundtouch",
+  "documentation": "https://www.openpeerpower.io/integrations/soundtouch",
   "requirements": ["libsoundtouch==0.8"],
   "after_dependencies": ["zeroconf"],
   "codeowners": []

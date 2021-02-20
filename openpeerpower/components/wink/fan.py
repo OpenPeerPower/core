@@ -45,7 +45,7 @@ class WinkFanDevice(WinkDevice, FanEntity):
     # instead of speeds.
     #
     # Please review
-    # https://developers.home-assistant.io/docs/core/entity/fan/
+    # https://developers.openpeerpower.io/docs/core/entity/fan/
     #
     def turn_on(
         self,

@@ -16,7 +16,7 @@
                     "name": "Nom de la passerelle",
                     "token": "Jeton d'API"
                 },
-                "description": "Vous aurez besoin du jeton API, voir https://www.home-assistant.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token pour les instructions.",
+                "description": "Vous aurez besoin du jeton API, voir https://www.openpeerpower.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token pour les instructions.",
                 "title": "Se connecter \u00e0 la passerelle Xiaomi"
             },
             "user": {

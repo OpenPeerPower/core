@@ -1,6 +1,6 @@
 {
   "domain": "nfandroidtv",
   "name": "Notifications for Android TV / FireTV",
-  "documentation": "https://www.home-assistant.io/integrations/nfandroidtv",
+  "documentation": "https://www.openpeerpower.io/integrations/nfandroidtv",
   "codeowners": []
 }

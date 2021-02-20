@@ -10,9 +10,9 @@ from openpeerpower.loader import validate_custom_integration_version
 from .model import Integration
 
 DOCUMENTATION_URL_SCHEMA = "https"
-DOCUMENTATION_URL_HOST = "www.home-assistant.io"
+DOCUMENTATION_URL_HOST = "www.openpeerpower.io"
 DOCUMENTATION_URL_PATH_PREFIX = "/integrations/"
-DOCUMENTATION_URL_EXCEPTIONS = {"https://www.home-assistant.io/oppio"}
+DOCUMENTATION_URL_EXCEPTIONS = {"https://www.openpeerpower.io/oppio"}
 
 SUPPORTED_QUALITY_SCALES = ["gold", "internal", "platinum", "silver"]
 
@@ -29,7 +29,7 @@ def documentation_url(value: str) -> str:
         DOCUMENTATION_URL_PATH_PREFIX
     ):
         raise vol.Invalid(
-            "Documentation url does not begin with www.home-assistant.io/integrations"
+            "Documentation url does not begin with www.openpeerpower.io/integrations"
         )
 
     return value

@@ -22,7 +22,7 @@
                     "exclude": "IDs vu Vera Apparater d\u00e9i vun Open Peer Power ausgeschloss solle ginn.",
                     "lights": "IDs vun Apparater vu Vera Schalter d\u00e9i als Luuchten am Open Peer Power trait\u00e9iert ginn."
                 },
-                "description": "Kuck Vera Dokumentatioun fir Detailer zu den optionellle Parameter: https://www.home-assistant.io/integrations/vera/. Hiweis: All \u00c4nnerunge ginn er\u00e9ischt no engem Neistart vum Open Peer Power aktiv. Fir W\u00e4rter ze l\u00e4schen, einfach een \"Leerzeichen\" am Feld uginn.",
+                "description": "Kuck Vera Dokumentatioun fir Detailer zu den optionellle Parameter: https://www.openpeerpower.io/integrations/vera/. Hiweis: All \u00c4nnerunge ginn er\u00e9ischt no engem Neistart vum Open Peer Power aktiv. Fir W\u00e4rter ze l\u00e4schen, einfach een \"Leerzeichen\" am Feld uginn.",
                 "title": "Vera Kontroller Optiounen"
             }
         }

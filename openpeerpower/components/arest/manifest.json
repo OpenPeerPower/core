@@ -1,6 +1,6 @@
 {
   "domain": "arest",
   "name": "aREST",
-  "documentation": "https://www.home-assistant.io/integrations/arest",
+  "documentation": "https://www.openpeerpower.io/integrations/arest",
   "codeowners": ["@fabaff"]
 }

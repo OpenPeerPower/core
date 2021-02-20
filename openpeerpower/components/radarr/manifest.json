@@ -1,6 +1,6 @@
 {
   "domain": "radarr",
   "name": "Radarr",
-  "documentation": "https://www.home-assistant.io/integrations/radarr",
+  "documentation": "https://www.openpeerpower.io/integrations/radarr",
   "codeowners": []
 }

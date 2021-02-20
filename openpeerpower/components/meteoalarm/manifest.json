@@ -1,7 +1,7 @@
 {
   "domain": "meteoalarm",
   "name": "MeteoAlarm",
-  "documentation": "https://www.home-assistant.io/integrations/meteoalarm",
+  "documentation": "https://www.openpeerpower.io/integrations/meteoalarm",
   "requirements": ["meteoalertapi==0.1.6"],
   "codeowners": ["@rolfberkenbosch"]
 }

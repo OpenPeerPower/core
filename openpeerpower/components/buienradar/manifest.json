@@ -1,7 +1,7 @@
 {
   "domain": "buienradar",
   "name": "Buienradar",
-  "documentation": "https://www.home-assistant.io/integrations/buienradar",
+  "documentation": "https://www.openpeerpower.io/integrations/buienradar",
   "requirements": ["buienradar==1.0.4"],
   "codeowners": ["@mjj4791", "@ties"]
 }

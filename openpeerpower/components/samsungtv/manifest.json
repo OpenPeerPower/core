@@ -1,7 +1,7 @@
 {
   "domain": "samsungtv",
   "name": "Samsung Smart TV",
-  "documentation": "https://www.home-assistant.io/integrations/samsungtv",
+  "documentation": "https://www.openpeerpower.io/integrations/samsungtv",
   "requirements": [
     "samsungctl[websocket]==0.7.1",
     "samsungtvws==1.4.0"

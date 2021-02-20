@@ -2,7 +2,7 @@
   "domain": "zha",
   "name": "Zigbee Home Automation",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/zha",
+  "documentation": "https://www.openpeerpower.io/integrations/zha",
   "requirements": [
     "bellows==0.21.0",
     "pyserial==3.5",

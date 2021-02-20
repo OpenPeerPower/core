@@ -1,7 +1,7 @@
 {
   "domain": "enocean",
   "name": "EnOcean",
-  "documentation": "https://www.home-assistant.io/integrations/enocean",
+  "documentation": "https://www.openpeerpower.io/integrations/enocean",
   "requirements": [
     "enocean==0.50"
   ],

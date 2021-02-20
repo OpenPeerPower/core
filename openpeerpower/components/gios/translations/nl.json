@@ -14,7 +14,7 @@
                     "name": "Naam van de integratie",
                     "station_id": "ID van het meetstation"
                 },
-                "description": "GIO\u015a (Poolse hoofdinspectie van milieubescherming) luchtkwaliteitintegratie instellen. Als u hulp nodig hebt bij de configuratie, kijk dan hier: https://www.home-assistant.io/integrations/gios",
+                "description": "GIO\u015a (Poolse hoofdinspectie van milieubescherming) luchtkwaliteitintegratie instellen. Als u hulp nodig hebt bij de configuratie, kijk dan hier: https://www.openpeerpower.io/integrations/gios",
                 "title": "GIO\u015a (Poolse hoofdinspectie van milieubescherming)"
             }
         }

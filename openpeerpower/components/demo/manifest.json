@@ -1,7 +1,7 @@
 {
   "domain": "demo",
   "name": "Demo",
-  "documentation": "https://www.home-assistant.io/integrations/demo",
+  "documentation": "https://www.openpeerpower.io/integrations/demo",
   "dependencies": ["conversation", "zone", "group"],
   "codeowners": ["@home-assistant/core"],
   "quality_scale": "internal"

@@ -1,6 +1,6 @@
 {
   "domain": "ddwrt",
   "name": "DD-WRT",
-  "documentation": "https://www.home-assistant.io/integrations/ddwrt",
+  "documentation": "https://www.openpeerpower.io/integrations/ddwrt",
   "codeowners": []
 }

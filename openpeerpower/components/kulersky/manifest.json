@@ -2,7 +2,7 @@
   "domain": "kulersky",
   "name": "Kuler Sky",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/kulersky",
+  "documentation": "https://www.openpeerpower.io/integrations/kulersky",
   "requirements": [
     "pykulersky==0.4.0"
   ],

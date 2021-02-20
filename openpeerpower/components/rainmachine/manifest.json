@@ -2,7 +2,7 @@
   "domain": "rainmachine",
   "name": "RainMachine",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/rainmachine",
+  "documentation": "https://www.openpeerpower.io/integrations/rainmachine",
   "requirements": ["regenmaschine==3.0.0"],
   "codeowners": ["@bachya"]
 }

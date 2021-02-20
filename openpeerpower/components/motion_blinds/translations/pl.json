@@ -14,7 +14,7 @@
                 "data": {
                     "api_key": "Klucz API"
                 },
-                "description": "B\u0119dziesz potrzebowa\u0142 16-znakowego klucza API, instrukcje znajdziesz na https://www.home-assistant.io/integrations/motion_blinds/#retrieving-the-key",
+                "description": "B\u0119dziesz potrzebowa\u0142 16-znakowego klucza API, instrukcje znajdziesz na https://www.openpeerpower.io/integrations/motion_blinds/#retrieving-the-key",
                 "title": "Motion Blinds"
             },
             "select": {

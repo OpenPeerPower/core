@@ -1,6 +1,6 @@
 {
   "domain": "yandextts",
   "name": "Yandex TTS",
-  "documentation": "https://www.home-assistant.io/integrations/yandextts",
+  "documentation": "https://www.openpeerpower.io/integrations/yandextts",
   "codeowners": []
 }

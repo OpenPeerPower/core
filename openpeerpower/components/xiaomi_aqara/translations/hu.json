@@ -6,7 +6,7 @@
         },
         "error": {
             "discovery_error": "Nem siker\u00fclt felfedezni a Xiaomi Aqara K\u00f6zponti egys\u00e9get, pr\u00f3b\u00e1lja meg interf\u00e9szk\u00e9nt haszn\u00e1lni a OpenPeerPower futtat\u00f3 eszk\u00f6z IP-j\u00e9t",
-            "invalid_host": " , l\u00e1sd: https://www.home-assistant.io/integrations/xiaomi_aqara/#connection-problem",
+            "invalid_host": " , l\u00e1sd: https://www.openpeerpower.io/integrations/xiaomi_aqara/#connection-problem",
             "invalid_interface": "\u00c9rv\u00e9nytelen h\u00e1l\u00f3zati interf\u00e9sz",
             "invalid_key": "\u00c9rv\u00e9nytelen kulcs",
             "invalid_mac": "\u00c9rv\u00e9nytelen Mac-c\u00edm"

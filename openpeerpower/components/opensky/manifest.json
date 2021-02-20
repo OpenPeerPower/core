@@ -1,6 +1,6 @@
 {
   "domain": "opensky",
   "name": "OpenSky Network",
-  "documentation": "https://www.home-assistant.io/integrations/opensky",
+  "documentation": "https://www.openpeerpower.io/integrations/opensky",
   "codeowners": []
 }

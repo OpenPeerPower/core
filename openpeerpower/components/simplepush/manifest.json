@@ -1,7 +1,7 @@
 {
   "domain": "simplepush",
   "name": "Simplepush",
-  "documentation": "https://www.home-assistant.io/integrations/simplepush",
+  "documentation": "https://www.openpeerpower.io/integrations/simplepush",
   "requirements": ["simplepush==1.1.4"],
   "codeowners": []
 }

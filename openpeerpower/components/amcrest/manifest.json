@@ -1,7 +1,7 @@
 {
   "domain": "amcrest",
   "name": "Amcrest",
-  "documentation": "https://www.home-assistant.io/integrations/amcrest",
+  "documentation": "https://www.openpeerpower.io/integrations/amcrest",
   "requirements": ["amcrest==1.7.0"],
   "dependencies": ["ffmpeg"],
   "codeowners": ["@pnbruckner"]

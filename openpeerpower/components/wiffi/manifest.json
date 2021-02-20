@@ -2,7 +2,7 @@
   "domain": "wiffi",
   "name": "Wiffi",
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/wiffi",
+  "documentation": "https://www.openpeerpower.io/integrations/wiffi",
   "requirements": ["wiffi==1.0.1"],
   "codeowners": [
     "@mampfes"

@@ -176,8 +176,8 @@ async def test_cors_defaults.opp):
 
     assert len(mock_setup.mock_calls) == 1
     assert mock_setup.mock_calls[0][1][1] == [
-        "https://cast.home-assistant.io",
-        "https://my.home-assistant.io",
+        "https://cast.openpeerpower.io",
+        "https://my.openpeerpower.io",
     ]
 
 

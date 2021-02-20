@@ -91,7 +91,7 @@ class SmartyFan(FanEntity):
     # instead of speeds.
     #
     # Please review
-    # https://developers.home-assistant.io/docs/core/entity/fan/
+    # https://developers.openpeerpower.io/docs/core/entity/fan/
     #
     def turn_on(self, speed=None, percentage=None, preset_mode=None, **kwargs):
         """Turn on the fan."""

@@ -1,6 +1,6 @@
 {
   "domain": "picotts",
   "name": "Pico TTS",
-  "documentation": "https://www.home-assistant.io/integrations/picotts",
+  "documentation": "https://www.openpeerpower.io/integrations/picotts",
   "codeowners": []
 }

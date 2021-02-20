@@ -74,7 +74,7 @@ _LOGGER = logging.getLogger(__name__)
 
 CONF_IGNORE_CEC = "ignore_cec"
 CONF_UUID = "uuid"
-CAST_SPLASH = "https://www.home-assistant.io/images/cast/splash.png"
+CAST_SPLASH = "https://www.openpeerpower.io/images/cast/splash.png"
 
 SUPPORT_CAST = (
     SUPPORT_PAUSE

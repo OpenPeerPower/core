@@ -1,7 +1,7 @@
 {
   "domain": "homematic",
   "name": "Homematic",
-  "documentation": "https://www.home-assistant.io/integrations/homematic",
+  "documentation": "https://www.openpeerpower.io/integrations/homematic",
   "requirements": ["pyhomematic==0.1.71"],
   "codeowners": ["@pvizeli", "@danielperna84"]
 }

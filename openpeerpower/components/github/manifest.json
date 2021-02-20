@@ -1,7 +1,7 @@
 {
   "domain": "github",
   "name": "GitHub",
-  "documentation": "https://www.home-assistant.io/integrations/github",
+  "documentation": "https://www.openpeerpower.io/integrations/github",
   "requirements": ["PyGithub==1.43.8"],
   "codeowners": []
 }

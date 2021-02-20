@@ -1,7 +1,7 @@
 {
   "domain": "climate",
   "name": "Climate",
-  "documentation": "https://www.home-assistant.io/integrations/climate",
+  "documentation": "https://www.openpeerpower.io/integrations/climate",
   "codeowners": [],
   "quality_scale": "internal"
 }

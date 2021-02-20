@@ -71,7 +71,7 @@ def test_client_id_user_pass():
 
 def test_client_id_hostname():
     """Test we enforce valid hostname."""
-    assert indieauth._parse_client_id("http://www.home-assistant.io/")
+    assert indieauth._parse_client_id("http://www.openpeerpower.io/")
     assert indieauth._parse_client_id("http://[::1]")
     assert indieauth._parse_client_id("http://127.0.0.1")
     assert indieauth._parse_client_id("http://10.0.0.0")

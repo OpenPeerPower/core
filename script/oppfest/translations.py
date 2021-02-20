@@ -181,7 +181,7 @@ def gen_platform_strings_schema(config: Config, integration: Integration):
         """
         if not value.startswith(f"{integration.domain}__"):
             raise vol.Invalid(
-                f"Device class need to start with '{integration.domain}__'. Key {value} is invalid. See https://developers.home-assistant.io/docs/internationalization/core#stringssensorjson"
+                f"Device class need to start with '{integration.domain}__'. Key {value} is invalid. See https://developers.openpeerpower.io/docs/internationalization/core#stringssensorjson"
             )
 
         slug_friendly = value.replace("__", "_", 1)

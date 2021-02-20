@@ -1,7 +1,7 @@
 {
   "domain": "vultr",
   "name": "Vultr",
-  "documentation": "https://www.home-assistant.io/integrations/vultr",
+  "documentation": "https://www.openpeerpower.io/integrations/vultr",
   "requirements": ["vultr==0.1.2"],
   "codeowners": []
 }

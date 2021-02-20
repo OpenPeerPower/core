@@ -1,7 +1,7 @@
 {
   "domain": "evohome",
   "name": "Honeywell Total Connect Comfort (Europe)",
-  "documentation": "https://www.home-assistant.io/integrations/evohome",
+  "documentation": "https://www.openpeerpower.io/integrations/evohome",
   "requirements": ["evohome-async==0.3.5.post1"],
   "codeowners": ["@zxdavb"]
 }

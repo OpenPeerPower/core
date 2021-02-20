@@ -1,7 +1,7 @@
 {
   "domain": "foursquare",
   "name": "Foursquare",
-  "documentation": "https://www.home-assistant.io/integrations/foursquare",
+  "documentation": "https://www.openpeerpower.io/integrations/foursquare",
   "dependencies": ["http"],
   "codeowners": []
 }

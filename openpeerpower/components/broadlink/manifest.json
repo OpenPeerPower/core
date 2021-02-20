@@ -1,7 +1,7 @@
 {
   "domain": "broadlink",
   "name": "Broadlink",
-  "documentation": "https://www.home-assistant.io/integrations/broadlink",
+  "documentation": "https://www.openpeerpower.io/integrations/broadlink",
   "requirements": ["broadlink==0.16.0"],
   "codeowners": ["@danielhiversen", "@felipediel"],
   "config_flow": true

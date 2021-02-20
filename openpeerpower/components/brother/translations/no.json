@@ -16,7 +16,7 @@
                     "host": "Vert",
                     "type": "Skriver type"
                 },
-                "description": "Sett opp Brother skriver integrasjonen. Hvis du har problemer med konfigurasjonen, bes\u00f8k dokumentasjonen her: [https://www.home-assistant.io/integrations/brother](https://www.home-assistant.io/integrations/brother)"
+                "description": "Sett opp Brother skriver integrasjonen. Hvis du har problemer med konfigurasjonen, bes\u00f8k dokumentasjonen her: [https://www.openpeerpower.io/integrations/brother](https://www.openpeerpower.io/integrations/brother)"
             },
             "zeroconf_confirm": {
                 "data": {

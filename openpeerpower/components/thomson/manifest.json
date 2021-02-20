@@ -1,6 +1,6 @@
 {
   "domain": "thomson",
   "name": "Thomson",
-  "documentation": "https://www.home-assistant.io/integrations/thomson",
+  "documentation": "https://www.openpeerpower.io/integrations/thomson",
   "codeowners": []
 }

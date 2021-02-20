@@ -78,7 +78,7 @@ async def async_setup_legacy_entry.opp, entry, async_add_entities):
             wstr = (
                 f"{variable} is no a longer supported "
                 "monitored_conditions. See "
-                "https://www.home-assistant.io/integrations/binary_sensor.nest/ "
+                "https://www.openpeerpower.io/integrations/binary_sensor.nest/ "
                 "for valid options."
             )
             _LOGGER.error(wstr)

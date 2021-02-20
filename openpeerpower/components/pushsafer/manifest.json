@@ -1,6 +1,6 @@
 {
   "domain": "pushsafer",
   "name": "Pushsafer",
-  "documentation": "https://www.home-assistant.io/integrations/pushsafer",
+  "documentation": "https://www.openpeerpower.io/integrations/pushsafer",
   "codeowners": []
 }

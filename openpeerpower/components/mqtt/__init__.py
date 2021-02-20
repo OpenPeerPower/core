@@ -142,7 +142,7 @@ def embedded_broker_deprecated(value):
     _LOGGER.warning(
         "The embedded MQTT broker has been deprecated and will stop working"
         "after June 5th, 2019. Use an external broker instead. For"
-        "instructions, see https://www.home-assistant.io/docs/mqtt/broker"
+        "instructions, see https://www.openpeerpower.io/docs/mqtt/broker"
     )
     return value
 

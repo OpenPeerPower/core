@@ -1,7 +1,7 @@
 {
   "domain": "smarthab",
   "name": "SmartHab",
-  "documentation": "https://www.home-assistant.io/integrations/smarthab",
+  "documentation": "https://www.openpeerpower.io/integrations/smarthab",
   "config_flow": true,
   "requirements": ["smarthab==0.21"],
   "codeowners": ["@outadoc"]

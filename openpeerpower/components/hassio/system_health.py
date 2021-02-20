@@ -60,7 +60,7 @@ async def system_health_info.opp: OpenPeerPower):
     )
     information["version_api"] = system_health.async_check_can_reach_url(
        .opp,
-        f"https://version.home-assistant.io/{info.get('channel')}.json",
+        f"https://version.openpeerpower.io/{info.get('channel')}.json",
         "/oppio/system",
     )
 
