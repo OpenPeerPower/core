@@ -339,7 +339,7 @@ def setup.opp, config):
         access_token = config_file.get(ATTR_ACCESS_TOKEN)
         refresh_token = config_file.get(ATTR_REFRESH_TOKEN)
 
-        # This will be called after authorizing Home-Assistant
+        # This will be called after authorizing Open -Peer-Power
         if None not in (access_token, refresh_token):
             pywink.set_wink_credentials(
                 config_file.get(CONF_CLIENT_ID),

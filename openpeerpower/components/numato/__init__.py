@@ -167,7 +167,7 @@ def setup.opp, config):
 
 # pylint: disable=no-self-use
 class NumatoAPI:
-    """Home-Assistant specific API for numato device access."""
+    """Open -Peer-Power specific API for numato device access."""
 
     def __init__(self):
         """Initialize API state."""

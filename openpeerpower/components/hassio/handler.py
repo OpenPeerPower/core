@@ -124,7 +124,7 @@ class OppIO:
 
     @_api_bool
     def restart_openpeerpower(self):
-        """Restart Home-Assistant container.
+        """Restart Open -Peer-Power container.
 
         This method return a coroutine.
         """
@@ -132,7 +132,7 @@ class OppIO:
 
     @_api_bool
     def stop_openpeerpower(self):
-        """Stop Home-Assistant container.
+        """Stop Open -Peer-Power container.
 
         This method return a coroutine.
         """
@@ -175,7 +175,7 @@ class OppIO:
 
     @_api_bool
     def update_opp_timezone(self, timezone):
-        """Update Home-Assistant timezone data on Opp.io.
+        """Update Open -Peer-Power timezone data on Opp.io.
 
         This method return a coroutine.
         """

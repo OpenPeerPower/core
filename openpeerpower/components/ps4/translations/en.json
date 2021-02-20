@@ -15,7 +15,7 @@
         },
         "step": {
             "creds": {
-                "description": "Credentials needed. Press 'Submit' and then in the PS4 2nd Screen App, refresh devices and select the 'Home-Assistant' device to continue.",
+                "description": "Credentials needed. Press 'Submit' and then in the PS4 2nd Screen App, refresh devices and select the 'Open -Peer-Power' device to continue.",
                 "title": "PlayStation 4"
             },
             "link": {

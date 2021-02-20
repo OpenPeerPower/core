@@ -15,7 +15,7 @@
         },
         "step": {
             "creds": {
-                "description": "\u9700\u8981\u6191\u8b49\u3002\u6309\u4e0b\u300c\u50b3\u9001\u300d\u5f8c\u3001\u65bc PS4 \u7b2c\u4e8c\u756b\u9762 App\uff0c\u66f4\u65b0\u88dd\u7f6e\u4e26\u9078\u64c7\u300cHome-Assistant\u300d\u4ee5\u7e7c\u7e8c\u3002",
+                "description": "\u9700\u8981\u6191\u8b49\u3002\u6309\u4e0b\u300c\u50b3\u9001\u300d\u5f8c\u3001\u65bc PS4 \u7b2c\u4e8c\u756b\u9762 App\uff0c\u66f4\u65b0\u88dd\u7f6e\u4e26\u9078\u64c7\u300cOpen -Peer-Power\u300d\u4ee5\u7e7c\u7e8c\u3002",
                 "title": "PlayStation 4"
             },
             "link": {

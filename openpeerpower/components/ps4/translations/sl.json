@@ -13,7 +13,7 @@
         },
         "step": {
             "creds": {
-                "description": "Potrebne so poverilnice. Pritisnite 'Po\u0161lji' in nato v aplikaciji PS4 2nd Screen App, osve\u017eite naprave in izberite napravo 'Home-Assistant' za nadaljevanje.",
+                "description": "Potrebne so poverilnice. Pritisnite 'Po\u0161lji' in nato v aplikaciji PS4 2nd Screen App, osve\u017eite naprave in izberite napravo 'Open -Peer-Power' za nadaljevanje.",
                 "title": "PlayStation 4"
             },
             "link": {

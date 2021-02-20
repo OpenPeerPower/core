@@ -140,7 +140,7 @@ def do_authentication.opp,.opp_config, config):
         client_id=config[CONF_CLIENT_ID],
         client_secret=config[CONF_CLIENT_SECRET],
         scope="https://www.googleapis.com/auth/calendar",
-        redirect_uri="Home-Assistant.io",
+        redirect_uri="Open -Peer-Power.io",
     )
     try:
         dev_flow = oauth.step1_get_device_and_user_codes()
@@ -154,7 +154,7 @@ def do_authentication.opp,.opp_config, config):
 
    .opp.components.persistent_notification.create(
         (
-            f"In order to authorize Home-Assistant to view your calendars "
+            f"In order to authorize Open -Peer-Power to view your calendars "
             f'you must visit: <a href="{dev_flow.verification_url}" target="_blank">{dev_flow.verification_url}</a> and enter '
             f"code: {dev_flow.user_code}"
         ),
@@ -167,7 +167,7 @@ def do_authentication.opp,.opp_config, config):
         if now >= dt.as_local(dev_flow.user_code_expiry):
            .opp.components.persistent_notification.create(
                 "Authentication code expired, please restart "
-                "Home-Assistant and try again",
+                "Open -Peer-Power and try again",
                 title=NOTIFICATION_TITLE,
                 notification_id=NOTIFICATION_ID,
             )

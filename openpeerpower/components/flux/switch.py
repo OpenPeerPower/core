@@ -1,5 +1,5 @@
 """
-Flux for Home-Assistant.
+Flux for Open -Peer-Power.
 
 The idea was taken from https://github.com/KpaBap/hue-flux/
 """

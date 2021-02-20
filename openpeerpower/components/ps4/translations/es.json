@@ -15,7 +15,7 @@
         },
         "step": {
             "creds": {
-                "description": "Credenciales necesarias. Pulsa 'Enviar' y, a continuaci\u00f3n, en la app de segunda pantalla de PS4, actualiza la lista de dispositivos y selecciona el dispositivo 'Home-Assistant' para continuar.",
+                "description": "Credenciales necesarias. Pulsa 'Enviar' y, a continuaci\u00f3n, en la app de segunda pantalla de PS4, actualiza la lista de dispositivos y selecciona el dispositivo 'Open -Peer-Power' para continuar.",
                 "title": "PlayStation 4"
             },
             "link": {

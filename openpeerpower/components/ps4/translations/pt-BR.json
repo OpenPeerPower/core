@@ -13,7 +13,7 @@
         },
         "step": {
             "creds": {
-                "description": "Credenciais necess\u00e1rias. Pressione 'Enviar' e, em seguida, no PS4, na Tela do segundo aplicativo, atualize os dispositivos e selecione o dispositivo 'Home-Assistant' para continuar.",
+                "description": "Credenciais necess\u00e1rias. Pressione 'Enviar' e, em seguida, no PS4, na Tela do segundo aplicativo, atualize os dispositivos e selecione o dispositivo 'Open -Peer-Power' para continuar.",
                 "title": "Playstation 4"
             },
             "link": {

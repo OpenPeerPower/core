@@ -15,7 +15,7 @@
         },
         "step": {
             "creds": {
-                "description": "Wymagane s\u0105 po\u015bwiadczenia. Naci\u015bnij przycisk \"Zatwierd\u017a\", a nast\u0119pnie w aplikacji PS4 Second Screen, od\u015bwie\u017c urz\u0105dzenia i wybierz urz\u0105dzenie 'Home-Assistant', aby kontynuowa\u0107.",
+                "description": "Wymagane s\u0105 po\u015bwiadczenia. Naci\u015bnij przycisk \"Zatwierd\u017a\", a nast\u0119pnie w aplikacji PS4 Second Screen, od\u015bwie\u017c urz\u0105dzenia i wybierz urz\u0105dzenie 'Open -Peer-Power', aby kontynuowa\u0107.",
                 "title": "PlayStation 4"
             },
             "link": {
