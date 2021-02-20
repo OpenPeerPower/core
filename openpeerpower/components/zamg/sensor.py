@@ -174,7 +174,7 @@ class ZamgData:
     """The class for handling the data retrieval."""
 
     API_URL = "http://www.zamg.ac.at/ogd/"
-    API_HEADERS = {USER_AGENT: f"open-peer-power.zamg/ {__version__}"}
+    API_HEADERS = {USER_AGENT: f"openpeerpower.zamg/ {__version__}"}
 
     def __init__(self, station_id):
         """Initialize the probe."""

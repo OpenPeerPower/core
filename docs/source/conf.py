@@ -352,7 +352,7 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "open-peer-power.tex",
+        "openpeerpower.tex",
         "Open Peer Power Documentation",
         "Open Peer Power Team",
         "manual",

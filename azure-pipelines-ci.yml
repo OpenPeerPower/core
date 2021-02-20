@@ -19,7 +19,7 @@ resources:
   repositories:
     - repository: azure
       type: github
-      name: "open-peer-power/ci-azure"
+      name: "openpeerpower/ci-azure"
       endpoint: "openpeerpower"
 variables:
   - name: PythonMain

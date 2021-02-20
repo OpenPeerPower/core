@@ -54,7 +54,7 @@ SERVICE_PURGE_SCHEMA = vol.Schema(
 )
 
 DEFAULT_URL = "sqlite:///.opp_config_path}"
-DEFAULT_DB_FILE = "open-peer-power_v2.db"
+DEFAULT_DB_FILE = "openpeerpower_v2.db"
 DEFAULT_DB_INTEGRITY_CHECK = True
 DEFAULT_DB_MAX_RETRIES = 10
 DEFAULT_DB_RETRY_WAIT = 3
