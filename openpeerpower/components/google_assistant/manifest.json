@@ -4,5 +4,5 @@
   "documentation": "https://www.openpeerpower.io/integrations/google_assistant",
   "dependencies": ["http"],
   "after_dependencies": ["camera"],
-  "codeowners": ["@home-assistant/cloud"]
+  "codeowners": ["@openpeerpower/cloud"]
 }

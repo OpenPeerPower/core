@@ -48,7 +48,7 @@ views:
         entity: light.bed_light
 
     # Specify a tab icon if you want the view tab to be an icon.
-  - icon: mdi:home-assistant
+  - icon: mdi:openpeerpower
     # Title of the view. Will be used as the tooltip for tab icon
     title: Second view
     cards:

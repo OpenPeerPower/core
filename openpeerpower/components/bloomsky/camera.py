@@ -31,7 +31,7 @@ class BloomSkyCamera(Camera):
         self._url = ""
         self._last_url = ""
         # last_image will store images as they are downloaded so that the
-        # frequent updates in home-assistant don't keep poking the server
+        # frequent updates in openpeerpower don't keep poking the server
         # to download the same image over and over.
         self._last_image = ""
         self._logger = logging.getLogger(__name__)

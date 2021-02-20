@@ -61,7 +61,7 @@ dump_op._config:
   description: Dump the configuration of the Homematic IP Access Point(s).
   fields:
     config_output_path:
-      description: (Default is 'Your home-assistant config directory') Path where to store the config.
+      description: (Default is 'Your openpeerpower config directory') Path where to store the config.
       example: "/config"
     config_output_file_prefix:
       description: (Default is 'hmip-config') Name of the config file. The SGTIN of the AP will always be appended.

@@ -3,6 +3,6 @@
   "name": "Auth",
   "documentation": "https://www.openpeerpower.io/integrations/auth",
   "dependencies": ["http"],
-  "codeowners": ["@home-assistant/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

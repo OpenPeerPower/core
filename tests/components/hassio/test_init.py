@@ -91,7 +91,7 @@ async def test_setup_api_panel.opp, aioclient_mock):
 
     assert panels.get("oppio").to_response() == {
         "component_name": "custom",
-        "icon": "opp:home-assistant",
+        "icon": "opp:openpeerpower",
         "title": "Supervisor",
         "url_path": "oppio",
         "require_admin": True,

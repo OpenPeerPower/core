@@ -412,7 +412,7 @@ hole==0.5.1
 holidays==0.10.5.2
 
 # openpeerpower.components.frontend
-home-assistant-frontend==20210208.0
+openpeerpower-frontend==20210208.0
 
 # openpeerpower.components.zwave
 openpeerpower-pyozw==0.1.10

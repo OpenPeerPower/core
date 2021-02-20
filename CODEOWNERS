@@ -4,16 +4,16 @@
 # https://github.com/blog/2392-introducing-code-owners
 
 # Open Peer Power Core
-setup.py @home-assistant/core
-openpeerpower/*.py @home-assistant/core
-openpeerpower/helpers/* @home-assistant/core
-openpeerpower/util/* @home-assistant/core
+setup.py @openpeerpower/core
+openpeerpower/*.py @openpeerpower/core
+openpeerpower/helpers/* @openpeerpower/core
+openpeerpower/util/* @openpeerpower/core
 
 # Open Peer Power Supervisor
-build.json @home-assistant/supervisor
-machine/* @home-assistant/supervisor
-rootfs/* @home-assistant/supervisor
-Dockerfile @home-assistant/supervisor
+build.json @openpeerpower/supervisor
+machine/* @openpeerpower/supervisor
+rootfs/* @openpeerpower/supervisor
+Dockerfile @openpeerpower/supervisor
 
 # Other code
 openpeerpower/scripts/check_config.py @kellerza
@@ -30,7 +30,7 @@ openpeerpower/components/airly/* @bieniu
 openpeerpower/components/airnow/* @asymworks
 openpeerpower/components/airvisual/* @bachya
 openpeerpower/components/alarmdecoder/* @ajschmidt8
-openpeerpower/components/alexa/* @home-assistant/cloud @ochlocracy
+openpeerpower/components/alexa/* @openpeerpower/cloud @ochlocracy
 openpeerpower/components/almond/* @gcampax @balloob
 openpeerpower/components/alpha_vantage/* @fabaff
 openpeerpower/components/ambiclimate/* @danielhiversen
@@ -38,7 +38,7 @@ openpeerpower/components/ambient_station/* @bachya
 openpeerpower/components/amcrest/* @pnbruckner
 openpeerpower/components/androidtv/* @JeffLIrion
 openpeerpower/components/apache_kafka/* @bachya
-openpeerpower/components/api/* @home-assistant/core
+openpeerpower/components/api/* @openpeerpower/core
 openpeerpower/components/apple_tv/* @postlund
 openpeerpower/components/apprise/* @caronc
 openpeerpower/components/aprs/* @PhilRW
@@ -53,8 +53,8 @@ openpeerpower/components/atome/* @baqs
 openpeerpower/components/august/* @bdraco
 openpeerpower/components/aurora/* @djtimca
 openpeerpower/components/aurora_abb_powerone/* @davet2001
-openpeerpower/components/auth/* @home-assistant/core
-openpeerpower/components/automation/* @home-assistant/core
+openpeerpower/components/auth/* @openpeerpower/core
+openpeerpower/components/automation/* @openpeerpower/core
 openpeerpower/components/avea/* @pattyland
 openpeerpower/components/awair/* @ahayworth @danielsjf
 openpeerpower/components/axis/* @Kane610
@@ -66,7 +66,7 @@ openpeerpower/components/bitcoin/* @fabaff
 openpeerpower/components/bizkaibus/* @UgaitzEtxebarria
 openpeerpower/components/blebox/* @gadgetmobile
 openpeerpower/components/blink/* @fronzbot
-openpeerpower/components/blueprint/* @home-assistant/core
+openpeerpower/components/blueprint/* @openpeerpower/core
 openpeerpower/components/bmp280/* @belidzs
 openpeerpower/components/bmw_connected_drive/* @gerard33 @rikroe
 openpeerpower/components/bond/* @prystupa
@@ -83,18 +83,18 @@ openpeerpower/components/circuit/* @braam
 openpeerpower/components/cisco_ios/* @fbradyirl
 openpeerpower/components/cisco_mobility_express/* @fbradyirl
 openpeerpower/components/cisco_webex_teams/* @fbradyirl
-openpeerpower/components/cloud/* @home-assistant/cloud
+openpeerpower/components/cloud/* @openpeerpower/cloud
 openpeerpower/components/cloudflare/* @ludeeus @ctalkington
 openpeerpower/components/color_extractor/* @GenericStudent
 openpeerpower/components/comfoconnect/* @michaelarnauts
-openpeerpower/components/config/* @home-assistant/core
-openpeerpower/components/configurator/* @home-assistant/core
+openpeerpower/components/config/* @openpeerpower/core
+openpeerpower/components/configurator/* @openpeerpower/core
 openpeerpower/components/control4/* @lawtancool
-openpeerpower/components/conversation/* @home-assistant/core
+openpeerpower/components/conversation/* @openpeerpower/core
 openpeerpower/components/coolmaster/* @OnFreund
 openpeerpower/components/coronavirus/* @home_assistant/core
 openpeerpower/components/counter/* @fabaff
-openpeerpower/components/cover/* @home-assistant/core
+openpeerpower/components/cover/* @openpeerpower/core
 openpeerpower/components/cpuspeed/* @fabaff
 openpeerpower/components/cups/* @fabaff
 openpeerpower/components/daikin/* @fredrike
@@ -102,10 +102,10 @@ openpeerpower/components/darksky/* @fabaff
 openpeerpower/components/debugpy/* @frenck
 openpeerpower/components/deconz/* @Kane610
 openpeerpower/components/delijn/* @bollewolle @Emilv2
-openpeerpower/components/demo/* @home-assistant/core
+openpeerpower/components/demo/* @openpeerpower/core
 openpeerpower/components/denonavr/* @scarface-4711 @starkillerOG
 openpeerpower/components/derivative/* @afaucogney
-openpeerpower/components/device_automation/* @home-assistant/core
+openpeerpower/components/device_automation/* @openpeerpower/core
 openpeerpower/components/devolo_home_control/* @2Fake @Shutgun
 openpeerpower/components/dexcom/* @gagebenne
 openpeerpower/components/dhcp/* @bdraco
@@ -161,7 +161,7 @@ openpeerpower/components/fortios/* @kimfrellsen
 openpeerpower/components/foscam/* @skgsergio
 openpeerpower/components/freebox/* @op.f-fr @Quentame
 openpeerpower/components/fronius/* @nielstron
-openpeerpower/components/frontend/* @home-assistant/frontend
+openpeerpower/components/frontend/* @openpeerpower/frontend
 openpeerpower/components/garmin_connect/* @cyberjunky
 openpeerpower/components/gdacs/* @exxamalte
 openpeerpower/components/geniushub/* @zxdavb
@@ -173,18 +173,18 @@ openpeerpower/components/gitter/* @fabaff
 openpeerpower/components/glances/* @fabaff @engrbm87
 openpeerpower/components/goalzero/* @tkdrob
 openpeerpower/components/gogogate2/* @vangorra
-openpeerpower/components/google_assistant/* @home-assistant/cloud
+openpeerpower/components/google_assistant/* @openpeerpower/cloud
 openpeerpower/components/google_cloud/* @lufton
 openpeerpower/components/gpsd/* @fabaff
 openpeerpower/components/gree/* @cmroche
 openpeerpower/components/greeneye_monitor/* @jkeljo
 openpeerpower/components/griddy/* @bdraco
-openpeerpower/components/group/* @home-assistant/core
+openpeerpower/components/group/* @openpeerpower/core
 openpeerpower/components/growatt_server/* @indykoning
 openpeerpower/components/guardian/* @bachya
 openpeerpower/components/habitica/* @ASMfreaK @leikoilja
 openpeerpower/components/harmony/* @ehendrix23 @bramkragten @bdraco @mkeesey
-openpeerpower/components/oppio/* @home-assistant/supervisor
+openpeerpower/components/oppio/* @openpeerpower/supervisor
 openpeerpower/components/hdmi_cec/* @newAM
 openpeerpower/components/heatmiser/* @andylockran
 openpeerpower/components/heos/* @andrewsayre
@@ -192,21 +192,21 @@ openpeerpower/components/here_travel_time/* @eifinger
 openpeerpower/components/hikvision/* @mezz64
 openpeerpower/components/hikvisioncam/* @fbradyirl
 openpeerpower/components/hisense_aehw4a1/* @bannhead
-openpeerpower/components/history/* @home-assistant/core
+openpeerpower/components/history/* @openpeerpower/core
 openpeerpower/components/hive/* @Rendili @KJonline
 openpeerpower/components/hlk_sw16/* @jameshilliard
 openpeerpower/components/home_connect/* @DavidMStraub
-openpeerpower/components/openpeerpower/* @home-assistant/core
+openpeerpower/components/openpeerpower/* @openpeerpower/core
 openpeerpower/components/homekit/* @bdraco
 openpeerpower/components/homekit_controller/* @Jc2k
 openpeerpower/components/homematic/* @pvizeli @danielperna84
 openpeerpower/components/homematicip_cloud/* @SukramJ
-openpeerpower/components/http/* @home-assistant/core
+openpeerpower/components/http/* @openpeerpower/core
 openpeerpower/components/huawei_lte/* @scop @fphammerle
 openpeerpower/components/huawei_router/* @abmantis
 openpeerpower/components/hue/* @balloob @frenck
 openpeerpower/components/huisbaasje/* @denniss17
-openpeerpower/components/humidifier/* @home-assistant/core @Shulyaka
+openpeerpower/components/humidifier/* @openpeerpower/core @Shulyaka
 openpeerpower/components/hunterdouglas_powerview/* @bdraco
 openpeerpower/components/hvv_departures/* @vigonotion
 openpeerpower/components/hydrawise/* @ptcryan
@@ -215,17 +215,17 @@ openpeerpower/components/iammeter/* @lewei50
 openpeerpower/components/iaqualink/* @flz
 openpeerpower/components/icloud/* @Quentame @nzapponi
 openpeerpower/components/ign_sismologia/* @exxamalte
-openpeerpower/components/image/* @home-assistant/core
+openpeerpower/components/image/* @openpeerpower/core
 openpeerpower/components/incomfort/* @zxdavb
 openpeerpower/components/influxdb/* @fabaff @mdegat01
-openpeerpower/components/input_boolean/* @home-assistant/core
-openpeerpower/components/input_datetime/* @home-assistant/core
-openpeerpower/components/input_number/* @home-assistant/core
-openpeerpower/components/input_select/* @home-assistant/core
-openpeerpower/components/input_text/* @home-assistant/core
+openpeerpower/components/input_boolean/* @openpeerpower/core
+openpeerpower/components/input_datetime/* @openpeerpower/core
+openpeerpower/components/input_number/* @openpeerpower/core
+openpeerpower/components/input_select/* @openpeerpower/core
+openpeerpower/components/input_text/* @openpeerpower/core
 openpeerpower/components/insteon/* @teharris1
 openpeerpower/components/integration/* @dgomes
-openpeerpower/components/intent/* @home-assistant/core
+openpeerpower/components/intent/* @openpeerpower/core
 openpeerpower/components/intesishome/* @jnimmo
 openpeerpower/components/ios/* @robbiet480
 openpeerpower/components/iperf3/* @rohankapoorcom
@@ -253,10 +253,10 @@ openpeerpower/components/lcn/* @alengwenus
 openpeerpower/components/life360/* @pnbruckner
 openpeerpower/components/linux_battery/* @fabaff
 openpeerpower/components/local_ip/* @issacg
-openpeerpower/components/logger/* @home-assistant/core
+openpeerpower/components/logger/* @openpeerpower/core
 openpeerpower/components/logi_circle/* @evanjd
 openpeerpower/components/loopenergy/* @pavoni
-openpeerpower/components/lovelace/* @home-assistant/frontend
+openpeerpower/components/lovelace/* @openpeerpower/frontend
 openpeerpower/components/luci/* @mzdrale
 openpeerpower/components/luftdaten/* @fabaff
 openpeerpower/components/lupusec/* @majuss
@@ -289,7 +289,7 @@ openpeerpower/components/motion_blinds/* @starkillerOG
 openpeerpower/components/mpd/* @fabaff
 openpeerpower/components/mqtt/* @emontnemery
 openpeerpower/components/msteams/* @peroyvind
-openpeerpower/components/my/* @home-assistant/core
+openpeerpower/components/my/* @openpeerpower/core
 openpeerpower/components/myq/* @bdraco
 openpeerpower/components/mysensors/* @MartinHjelmare @functionpointer
 openpeerpower/components/mystrom/* @fabaff
@@ -309,7 +309,7 @@ openpeerpower/components/nissan_leaf/* @filcole
 openpeerpower/components/nmbs/* @thibmaek
 openpeerpower/components/no_ip/* @fabaff
 openpeerpower/components/noaa_tides/* @jdelaney72
-openpeerpower/components/notify/* @home-assistant/core
+openpeerpower/components/notify/* @openpeerpower/core
 openpeerpower/components/notify_events/* @matrozov @papajojo
 openpeerpower/components/notion/* @bachya
 openpeerpower/components/nsw_fuel_station/* @nickw444
@@ -317,7 +317,7 @@ openpeerpower/components/nsw_rural_fire_service_feed/* @exxamalte
 openpeerpower/components/nuheat/* @bdraco
 openpeerpower/components/nuki/* @pschmitt @pvizeli @pree
 openpeerpower/components/numato/* @clssn
-openpeerpower/components/number/* @home-assistant/core @Shulyaka
+openpeerpower/components/number/* @openpeerpower/core @Shulyaka
 openpeerpower/components/nut/* @bdraco
 openpeerpower/components/nws/* @MatthewFlamm
 openpeerpower/components/nzbget/* @chriscla
@@ -325,7 +325,7 @@ openpeerpower/components/obihai/* @dshokouhi
 openpeerpower/components/ohmconnect/* @robbiet480
 openpeerpower/components/ombi/* @larssont
 openpeerpower/components/omnilogic/* @oliver84 @djtimca @gentoosu
-openpeerpower/components/onboarding/* @home-assistant/core
+openpeerpower/components/onboarding/* @openpeerpower/core
 openpeerpower/components/ondilo_ico/* @JeromeHXP
 openpeerpower/components/onewire/* @garbled1 @epenet
 openpeerpower/components/onvif/* @hunterjm
@@ -340,10 +340,10 @@ openpeerpower/components/orangepi_gpio/* @pascallj
 openpeerpower/components/oru/* @bvlaicu
 openpeerpower/components/ovo_energy/* @timmo001
 openpeerpower/components/ozw/* @cgarwood @marcelveldt @MartinHjelmare
-openpeerpower/components/panel_custom/* @home-assistant/frontend
-openpeerpower/components/panel_iframe/* @home-assistant/frontend
+openpeerpower/components/panel_custom/* @openpeerpower/frontend
+openpeerpower/components/panel_iframe/* @openpeerpower/frontend
 openpeerpower/components/pcal9535a/* @Shulyaka
-openpeerpower/components/persistent_notification/* @home-assistant/core
+openpeerpower/components/persistent_notification/* @openpeerpower/core
 openpeerpower/components/philips_js/* @elupus
 openpeerpower/components/pi4ioe5v9xxxx/* @antonverburg
 openpeerpower/components/pi_hole/* @fabaff @johnluetke @shenxn
@@ -390,14 +390,14 @@ openpeerpower/components/roon/* @pavoni
 openpeerpower/components/rpi_gpio_pwm/* @soldag
 openpeerpower/components/rpi_power/* @shenxn @swetoast
 openpeerpower/components/ruckus_unleashed/* @gabe565
-openpeerpower/components/safe_mode/* @home-assistant/core
+openpeerpower/components/safe_mode/* @openpeerpower/core
 openpeerpower/components/saj/* @fredericvl
 openpeerpower/components/samsungtv/* @escoand
-openpeerpower/components/scene/* @home-assistant/core
+openpeerpower/components/scene/* @openpeerpower/core
 openpeerpower/components/schluter/* @prairieapps
 openpeerpower/components/scrape/* @fabaff
-openpeerpower/components/script/* @home-assistant/core
-openpeerpower/components/search/* @home-assistant/core
+openpeerpower/components/script/* @openpeerpower/core
+openpeerpower/components/search/* @openpeerpower/core
 openpeerpower/components/sense/* @kbickar
 openpeerpower/components/sensibo/* @andrey-git
 openpeerpower/components/sentry/* @dcramer @frenck
@@ -405,7 +405,7 @@ openpeerpower/components/serial/* @fabaff
 openpeerpower/components/seven_segments/* @fabaff
 openpeerpower/components/seventeentrack/* @bachya
 openpeerpower/components/sharkiq/* @ajmarks
-openpeerpower/components/shell_command/* @home-assistant/core
+openpeerpower/components/shell_command/* @openpeerpower/core
 openpeerpower/components/shelly/* @balloob @bieniu @thecode @chemelli74
 openpeerpower/components/shiftr/* @fabaff
 openpeerpower/components/shodan/* @fabaff
@@ -497,7 +497,7 @@ openpeerpower/components/unifiled/* @florisvdk
 openpeerpower/components/upb/* @gwww
 openpeerpower/components/upc_connect/* @pvizeli @fabaff
 openpeerpower/components/upcloud/* @scop
-openpeerpower/components/updater/* @home-assistant/core
+openpeerpower/components/updater/* @openpeerpower/core
 openpeerpower/components/upnp/* @StevenLooman
 openpeerpower/components/uptimerobot/* @ludeeus
 openpeerpower/components/usgs_earthquakes_feed/* @exxamalte
@@ -520,7 +520,7 @@ openpeerpower/components/waqi/* @andrey-git
 openpeerpower/components/watson_tts/* @rutkai
 openpeerpower/components/weather/* @fabaff
 openpeerpower/components/webostv/* @bendavid
-openpeerpower/components/websocket_api/* @home-assistant/core
+openpeerpower/components/websocket_api/* @openpeerpower/core
 openpeerpower/components/wemo/* @esev
 openpeerpower/components/wiffi/* @mampfes
 openpeerpower/components/wilight/* @leofig-rj
@@ -544,10 +544,10 @@ openpeerpower/components/zeroconf/* @bdraco
 openpeerpower/components/zerproc/* @emlove
 openpeerpower/components/zha/* @dmulcahey @adminiuga
 openpeerpower/components/zodiac/* @JulienTant
-openpeerpower/components/zone/* @home-assistant/core
+openpeerpower/components/zone/* @openpeerpower/core
 openpeerpower/components/zoneminder/* @rohankapoorcom
-openpeerpower/components/zwave/* @home-assistant/z-wave
-openpeerpower/components/zwave_js/* @home-assistant/z-wave
+openpeerpower/components/zwave/* @openpeerpower/z-wave
+openpeerpower/components/zwave_js/* @openpeerpower/z-wave
 
 # Individual files
 openpeerpower/components/demo/weather @fabaff

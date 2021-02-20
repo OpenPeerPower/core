@@ -5,6 +5,6 @@
   "documentation": "https://www.openpeerpower.io/integrations/image",
   "requirements": ["pillow==8.1.0"],
   "dependencies": ["http"],
-  "codeowners": ["@home-assistant/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

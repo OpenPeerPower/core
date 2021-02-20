@@ -249,7 +249,7 @@ class DlnaDmrDevice(MediaPlayerEntity):
                 _LOGGER.debug("Could not (re)subscribe")
 
     def _on_event(self, service, state_variables):
-        """State variable(s) changed, let home-assistant know."""
+        """State variable(s) changed, let openpeerpower know."""
         self.schedule_update_op.state()
 
     @property

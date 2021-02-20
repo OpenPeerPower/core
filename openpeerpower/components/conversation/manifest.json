@@ -3,6 +3,6 @@
   "name": "Conversation",
   "documentation": "https://www.openpeerpower.io/integrations/conversation",
   "dependencies": ["http"],
-  "codeowners": ["@home-assistant/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

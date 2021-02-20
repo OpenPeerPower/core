@@ -1024,7 +1024,7 @@ async def test_identify.opp):
                                     {
                                         "type": "TXT",
                                         "class": "IN",
-                                        "name": "devhome._home-assistant._tcp.local",
+                                        "name": "devhome._openpeerpower._tcp.local",
                                         "ttl": 4500,
                                         "data": [
                                             "version=0.101.0.dev0",

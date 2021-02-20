@@ -2,6 +2,6 @@
   "domain": "shell_command",
   "name": "Shell Command",
   "documentation": "https://www.openpeerpower.io/integrations/shell_command",
-  "codeowners": ["@home-assistant/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

@@ -44,7 +44,7 @@ ATTR_HOSTNAME = "hostname"
 ATTR_TYPE = "type"
 ATTR_PROPERTIES = "properties"
 
-ZEROCONF_TYPE = "_home-assistant._tcp.local."
+ZEROCONF_TYPE = "_openpeerpower._tcp.local."
 HOMEKIT_TYPES = [
     "_op.._tcp.local.",
     # Thread based devices

@@ -3,6 +3,6 @@
   "name": "Demo",
   "documentation": "https://www.openpeerpower.io/integrations/demo",
   "dependencies": ["conversation", "zone", "group"],
-  "codeowners": ["@home-assistant/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

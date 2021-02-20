@@ -5,5 +5,5 @@
   "documentation": "https://www.openpeerpower.io/integrations/zwave",
   "requirements": ["openpeerpower-pyozw==0.1.10", "pydispatcher==2.0.5"],
   "after_dependencies": ["ozw"],
-  "codeowners": ["@home-assistant/z-wave"]
+  "codeowners": ["@openpeerpower/z-wave"]
 }

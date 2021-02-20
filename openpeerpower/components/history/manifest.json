@@ -3,6 +3,6 @@
   "name": "History",
   "documentation": "https://www.openpeerpower.io/integrations/history",
   "dependencies": ["http", "recorder"],
-  "codeowners": ["@home-assistant/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

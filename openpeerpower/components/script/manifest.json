@@ -3,7 +3,7 @@
   "name": "Scripts",
   "documentation": "https://www.openpeerpower.io/integrations/script",
   "codeowners": [
-    "@home-assistant/core"
+    "@openpeerpower/core"
   ],
   "quality_scale": "internal"
 }

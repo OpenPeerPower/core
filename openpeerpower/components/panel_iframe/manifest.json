@@ -3,6 +3,6 @@
   "name": "iframe Panel",
   "documentation": "https://www.openpeerpower.io/integrations/panel_iframe",
   "dependencies": ["frontend"],
-  "codeowners": ["@home-assistant/frontend"],
+  "codeowners": ["@openpeerpower/frontend"],
   "quality_scale": "internal"
 }

@@ -339,7 +339,7 @@ async def async_setup.opp, config):
         frontend_url_path="oppio",
         webcomponent_name="oppio-main",
         sidebar_title="Supervisor",
-        sidebar_icon="opp:home-assistant",
+        sidebar_icon="opp:openpeerpower",
         js_url="/api/oppio/app/entrypoint.js",
         embed_iframe=True,
         require_admin=True,

@@ -9,7 +9,7 @@
     "camera"
   ],
   "codeowners": [
-    "@home-assistant/cloud",
+    "@openpeerpower/cloud",
     "@ochlocracy"
   ]
 }

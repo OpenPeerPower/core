@@ -19,8 +19,8 @@ resources:
   repositories:
   - repository: azure
     type: github
-    name: 'home-assistant/ci-azure'
-    endpoint: 'home-assistant'
+    name: 'openpeerpower/ci-azure'
+    endpoint: 'openpeerpower'
 
 
 jobs:

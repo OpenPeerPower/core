@@ -4,5 +4,5 @@
   "config_flow": false,
   "documentation": "https://www.openpeerpower.io/integrations/safe_mode",
   "dependencies": ["frontend", "persistent_notification", "cloud"],
-  "codeowners": ["@home-assistant/core"]
+  "codeowners": ["@openpeerpower/core"]
 }

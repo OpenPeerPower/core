@@ -11,7 +11,7 @@
     "person"
   ],
   "codeowners": [
-    "@home-assistant/core"
+    "@openpeerpower/core"
   ],
   "quality_scale": "internal"
 }

@@ -2,5 +2,5 @@
   "domain": "lovelace",
   "name": "Lovelace",
   "documentation": "https://www.openpeerpower.io/integrations/lovelace",
-  "codeowners": ["@home-assistant/frontend"]
+  "codeowners": ["@openpeerpower/frontend"]
 }

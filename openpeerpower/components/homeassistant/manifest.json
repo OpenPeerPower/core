@@ -2,6 +2,6 @@
   "domain": "openpeerpower",
   "name": "Open Peer Power Core Integration",
   "documentation": "https://www.openpeerpower.io/integrations/openpeerpower",
-  "codeowners": ["@home-assistant/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

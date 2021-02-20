@@ -193,7 +193,7 @@ async def _configure_almond_for_op.
         with async_timeout.timeout(30):
             await api.async_create_device(
                 {
-                    "kind": "io.home-assistant",
+                    "kind": "io.openpeerpower",
                     "oppUrl":.opp_url,
                     "accessToken": access_token,
                     "refreshToken": "",

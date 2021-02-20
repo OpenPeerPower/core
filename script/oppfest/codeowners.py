@@ -10,16 +10,16 @@ BASE = """
 # https://github.com/blog/2392-introducing-code-owners
 
 # Open Peer Power Core
-setup.py @home-assistant/core
-openpeerpower/*.py @home-assistant/core
-openpeerpower/helpers/* @home-assistant/core
-openpeerpower/util/* @home-assistant/core
+setup.py @openpeerpower/core
+openpeerpower/*.py @openpeerpower/core
+openpeerpower/helpers/* @openpeerpower/core
+openpeerpower/util/* @openpeerpower/core
 
 # Open Peer Power Supervisor
-build.json @home-assistant/supervisor
-machine/* @home-assistant/supervisor
-rootfs/* @home-assistant/supervisor
-Dockerfile @home-assistant/supervisor
+build.json @openpeerpower/supervisor
+machine/* @openpeerpower/supervisor
+rootfs/* @openpeerpower/supervisor
+Dockerfile @openpeerpower/supervisor
 
 # Other code
 openpeerpower/scripts/check_config.py @kellerza

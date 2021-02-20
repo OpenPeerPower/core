@@ -11,7 +11,7 @@ from tests.common import MockConfigEntry
 @pytest.fixture
 async def setup_push_receiver.opp, aioclient_mock):
     """Fixture that sets up a mocked push receiver."""
-    push_url = "https://mobile-push.home-assistant.dev/push"
+    push_url = "https://mobile-push.openpeerpower.dev/push"
 
     from datetime import datetime, timedelta
 

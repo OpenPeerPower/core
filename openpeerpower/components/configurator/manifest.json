@@ -2,6 +2,6 @@
   "domain": "configurator",
   "name": "Configurator",
   "documentation": "https://www.openpeerpower.io/integrations/configurator",
-  "codeowners": ["@home-assistant/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }
