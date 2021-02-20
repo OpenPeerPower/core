@@ -1,4 +1,4 @@
-"""Plugwise platform for Home Assistant Core."""
+"""Plugwise platform for Open Peer Power Core."""
 
 import asyncio
 from datetime import timedelta

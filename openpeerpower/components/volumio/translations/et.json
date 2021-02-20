@@ -10,7 +10,7 @@
         },
         "step": {
             "discovery_confirm": {
-                "description": "Kas soovid lisada Volumio ('{name}') Home Assistanti?",
+                "description": "Kas soovid lisada Volumio ('{name}') Open Peer Poweri?",
                 "title": "Avastatud Volumio seade"
             },
             "user": {

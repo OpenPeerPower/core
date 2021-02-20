@@ -16,7 +16,7 @@
                     "host": "IP aadress",
                     "port": ""
                 },
-                "description": "Seadista oma BleBox sidumine Home Assistant-iga.",
+                "description": "Seadista oma BleBox sidumine Open Peer Power-iga.",
                 "title": "Seadista BleBox seade"
             }
         }

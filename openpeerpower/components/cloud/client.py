@@ -25,7 +25,7 @@ from .prefs import CloudPreferences
 
 
 class CloudClient(Interface):
-    """Interface class for Home Assistant Cloud."""
+    """Interface class for Open Peer Power Cloud."""
 
     def __init__(
         self,

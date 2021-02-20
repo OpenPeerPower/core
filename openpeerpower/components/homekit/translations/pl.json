@@ -28,7 +28,7 @@
                     "include_domains": "Domeny do uwzgl\u0119dnienia",
                     "mode": "Tryb"
                 },
-                "description": "Integracja HomeKit pozwala na dost\u0119p do Twoich encji Home Assistant w HomeKit. W trybie \"Mostka\", mostki HomeKit s\u0105 ograniczone do 150 urz\u0105dze\u0144, w\u0142\u0105czaj\u0105c w to sam mostek. Je\u015bli chcesz wi\u0119cej ni\u017c dozwolona maksymalna liczba urz\u0105dze\u0144, zaleca si\u0119 u\u017cywanie wielu most\u00f3w HomeKit dla r\u00f3\u017cnych domen. Szczeg\u00f3\u0142owa konfiguracja encji jest dost\u0119pna tylko w trybie YAML dla g\u0142\u00f3wnego mostka. Dla najlepszej wydajno\u015bci oraz by zapobiec nieprzewidzianej niedost\u0119pno\u015bci urz\u0105dzenia, utw\u00f3rz i sparuj oddzieln\u0105 instancj\u0119 HomeKit w trybie akcesorium dla ka\u017cdego media playera oraz kamery.",
+                "description": "Integracja HomeKit pozwala na dost\u0119p do Twoich encji Open Peer Power w HomeKit. W trybie \"Mostka\", mostki HomeKit s\u0105 ograniczone do 150 urz\u0105dze\u0144, w\u0142\u0105czaj\u0105c w to sam mostek. Je\u015bli chcesz wi\u0119cej ni\u017c dozwolona maksymalna liczba urz\u0105dze\u0144, zaleca si\u0119 u\u017cywanie wielu most\u00f3w HomeKit dla r\u00f3\u017cnych domen. Szczeg\u00f3\u0142owa konfiguracja encji jest dost\u0119pna tylko w trybie YAML dla g\u0142\u00f3wnego mostka. Dla najlepszej wydajno\u015bci oraz by zapobiec nieprzewidzianej niedost\u0119pno\u015bci urz\u0105dzenia, utw\u00f3rz i sparuj oddzieln\u0105 instancj\u0119 HomeKit w trybie akcesorium dla ka\u017cdego media playera oraz kamery.",
                 "title": "Aktywacja HomeKit"
             }
         }

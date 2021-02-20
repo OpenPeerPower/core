@@ -1,4 +1,4 @@
-"""Test Home Assistant logging util methods."""
+"""Test Open Peer Power logging util methods."""
 import asyncio
 import logging
 import queue

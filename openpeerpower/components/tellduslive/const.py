@@ -8,7 +8,7 @@ from openpeerpower.const import (  # noqa: F401 pylint: disable=unused-import
     DEVICE_DEFAULT_NAME,
 )
 
-APPLICATION_NAME = "Home Assistant"
+APPLICATION_NAME = "Open Peer Power"
 
 DOMAIN = "tellduslive"
 

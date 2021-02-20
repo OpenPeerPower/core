@@ -10,7 +10,7 @@
         },
         "step": {
             "link": {
-                "description": "Pulsa \"Enviar\", despu\u00e9s pulsa en la flecha derecha en el router para registrar Freebox con Home Assistant\n\n![Localizaci\u00f3n del bot\u00f3n en el router](/static/images/config_freebox.png)",
+                "description": "Pulsa \"Enviar\", despu\u00e9s pulsa en la flecha derecha en el router para registrar Freebox con Open Peer Power\n\n![Localizaci\u00f3n del bot\u00f3n en el router](/static/images/config_freebox.png)",
                 "title": "Enlazar router Freebox"
             },
             "user": {

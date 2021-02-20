@@ -1,4 +1,4 @@
-"""Test Home Assistant percentage conversions."""
+"""Test Open Peer Power percentage conversions."""
 
 import math
 

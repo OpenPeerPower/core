@@ -384,8 +384,8 @@ class KodiEntity(MediaPlayerEntity):
                 )
             )
 
-        # If Home Assistant is already in a running state, start the watchdog
-        # immediately, else trigger it after Home Assistant has finished starting.
+        # If Open Peer Power is already in a running state, start the watchdog
+        # immediately, else trigger it after Open Peer Power has finished starting.
         if self.opp.state == CoreState.running:
             await start_watchdog()
         else:

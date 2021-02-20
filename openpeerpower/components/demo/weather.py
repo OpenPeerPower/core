@@ -163,7 +163,7 @@ class DemoWeather(WeatherEntity):
     @property
     def attribution(self):
         """Return the attribution."""
-        return "Powered by Home Assistant"
+        return "Powered by Open Peer Power"
 
     @property
     def forecast(self):

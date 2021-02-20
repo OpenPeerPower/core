@@ -8,7 +8,7 @@
         }
       },
       "discovery_confirm": {
-        "description": "Do you want to add Volumio (`{name}`) to Home Assistant?",
+        "description": "Do you want to add Volumio (`{name}`) to Open Peer Power?",
         "title": "Discovered Volumio"
       }
     },

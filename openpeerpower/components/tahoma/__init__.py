@@ -118,7 +118,7 @@ def setup.opp, config):
 
 
 def map_tahoma_device(tahoma_device):
-    """Map Tahoma device types to Home Assistant components."""
+    """Map Tahoma device types to Open Peer Power components."""
     return TAHOMA_TYPES.get(tahoma_device.type)
 
 

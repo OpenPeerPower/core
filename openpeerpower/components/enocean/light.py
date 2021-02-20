@@ -56,7 +56,7 @@ class EnOceanLight(EnOceanEntity, LightEntity):
     def brightness(self):
         """Brightness of the light.
 
-        This method is optional. Removing it indicates to Home Assistant
+        This method is optional. Removing it indicates to Open Peer Power
         that brightness is not supported for this light.
         """
         return self._brightness

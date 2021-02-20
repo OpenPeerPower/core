@@ -72,13 +72,13 @@ def setup.opp, config):
         return False
 
     def start_pilight_client(_):
-        """Run when Home Assistant starts."""
+        """Run when Open Peer Power starts."""
         pilight_client.start()
 
    .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_pilight_client)
 
     def stop_pilight_client(_):
-        """Run once when Home Assistant stops."""
+        """Run once when Open Peer Power stops."""
         pilight_client.stop()
 
    .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_pilight_client)

@@ -127,7 +127,7 @@ async def init_integration(
     unique_id: str = "cfe92100-67c4-11d4-a45f-f8d027761251",
     conn_error: bool = False,
 ) -> MockConfigEntry:
-    """Set up the IPP integration in Home Assistant."""
+    """Set up the IPP integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         unique_id=unique_id,

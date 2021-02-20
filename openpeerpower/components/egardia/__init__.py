@@ -116,10 +116,10 @@ def setup.opp, config):
                 server.start()
 
             def handle_stop_event(event):
-                """Handle Home Assistant stop event."""
+                """Handle Open Peer Power stop event."""
                 server.stop()
 
-            # listen to Home Assistant stop event
+            # listen to Open Peer Power stop event
            .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, handle_stop_event)
 
         except OSError:

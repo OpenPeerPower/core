@@ -96,7 +96,7 @@ class EntityPlatform:
 
         If parallel updates is set to 0, we skip the semaphore.
         If parallel updates is set to a number, we initialize the semaphore to that number.
-        The default value for parallel requests is decided based on the first entity that is added to Home Assistant.
+        The default value for parallel requests is decided based on the first entity that is added to Open Peer Power.
         It's 0 if the entity defines the async_update method, else it's 1.
         """
         if self.parallel_updates_created:

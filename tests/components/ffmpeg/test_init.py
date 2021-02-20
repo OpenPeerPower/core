@@ -1,4 +1,4 @@
-"""The tests for Home Assistant ffmpeg."""
+"""The tests for Open Peer Power ffmpeg."""
 from unittest.mock import MagicMock
 
 import openpeerpower.components.ffmpeg as ffmpeg

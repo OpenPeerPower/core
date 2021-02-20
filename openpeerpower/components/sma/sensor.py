@@ -109,7 +109,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         if not config_sensors:  # Use all sensors by default
             config_sensors = {s.name: [] for s in sensor_def}
 
-        # Prepare all Home Assistant sensor entities
+        # Prepare all Open Peer Power sensor entities
         for name, attr in config_sensors.items():
             sub_sensors = [sensor_def[s] for s in attr]
            .opp_sensors.append(SMAsensor(sensor_def[name], sub_sensors))

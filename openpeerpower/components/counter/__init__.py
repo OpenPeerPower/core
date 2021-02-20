@@ -237,7 +237,7 @@ class Counter(RestoreEntity):
         return state
 
     async def async_added_to_opp(self) -> None:
-        """Call when entity about to be added to Home Assistant."""
+        """Call when entity about to be added to Open Peer Power."""
         await super().async_added_to_opp()
         # __init__ will set self._state to self._initial, only override
         # if needed.

@@ -73,7 +73,7 @@
                     "port": "Poort",
                     "username": "Gebruikersnaam"
                 },
-                "description": "Wijzig de verbindingsgegevens van de Insteon Hub. Je moet Home Assistant opnieuw opstarten nadat je deze wijziging hebt aangebracht. Dit verandert niets aan de configuratie van de Hub zelf. Gebruik de Hub-app om de configuratie in de Hub te wijzigen.",
+                "description": "Wijzig de verbindingsgegevens van de Insteon Hub. Je moet Open Peer Power opnieuw opstarten nadat je deze wijziging hebt aangebracht. Dit verandert niets aan de configuratie van de Hub zelf. Gebruik de Hub-app om de configuratie in de Hub te wijzigen.",
                 "title": "Insteon"
             },
             "init": {

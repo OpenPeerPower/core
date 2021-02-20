@@ -3,7 +3,7 @@
         "info": {
             "alexa_enabled": "Alexa aktiv\u00e9iert",
             "can_reach_cert_server": "Zertifikat Server ereechbar",
-            "can_reach_cloud": "Home Assistant Cloud ereechbar",
+            "can_reach_cloud": "Open Peer Power Cloud ereechbar",
             "can_reach_cloud_auth": "Authentifikatioun Server ereechbar",
             "google_enabled": "Google aktiv\u00e9iert",
             "logged_in": "Ageloggt",

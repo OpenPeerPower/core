@@ -47,7 +47,7 @@ async def test_opp_numato_api_wrong_port_directions.opp, numato_fixture):
 
 
 async def test_opp_numato_api_errors.opp, numato_fixture, monkeypatch):
-    """Test whether Home Assistant numato API (re-)raises errors."""
+    """Test whether Open Peer Power numato API (re-)raises errors."""
     numato_fixture.discover()
     monkeypatch.setattr(numato_fixture.devices[0], "setup", mockup_raise)
     monkeypatch.setattr(numato_fixture.devices[0], "adc_read", mockup_raise)

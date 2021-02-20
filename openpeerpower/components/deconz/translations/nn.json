@@ -9,7 +9,7 @@
         },
         "step": {
             "link": {
-                "description": "L\u00e5s opp deCONZ-gatewayen din for \u00e5 registrere den med Home Assistant.\n\n1. G\u00e5 til systeminnstillingane til deCONZ\n2. Trykk p\u00e5 \"L\u00e5s opp gateway\"-knappen",
+                "description": "L\u00e5s opp deCONZ-gatewayen din for \u00e5 registrere den med Open Peer Power.\n\n1. G\u00e5 til systeminnstillingane til deCONZ\n2. Trykk p\u00e5 \"L\u00e5s opp gateway\"-knappen",
                 "title": "Link med deCONZ"
             }
         }

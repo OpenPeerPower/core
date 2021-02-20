@@ -170,7 +170,7 @@ class HiveEntity(Entity):
         self._unique_id = f'{self.device["hiveID"]}-{self.device["hiveType"]}'
 
     async def async_added_to_opp(self):
-        """When entity is added to Home Assistant."""
+        """When entity is added to Open Peer Power."""
         self.async_on_remove(
             async_dispatcher_connect(self.opp, DOMAIN, self.async_write_op.state)
         )

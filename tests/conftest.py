@@ -132,7 +132,7 @@ def load_registries():
 
 @pytest.fixture
 def.opp(loop, load_registries,.opp_storage, request):
-    """Fixture to provide a test instance of Home Assistant."""
+    """Fixture to provide a test instance of Open Peer Power."""
 
     def exc_op.dle(loop, context):
         """Handle exceptions by rethrowing them, which will fail the test."""
@@ -240,7 +240,7 @@ async def.opp_admin_credential.opp, local_auth):
 
 @pytest.fixture
 async def.opp_access_token.opp,.opp_admin_user,.opp_admin_credential):
-    """Return an access token to access Home Assistant."""
+    """Return an access token to access Open Peer Power."""
     await.opp.auth.async_link_user.opp_admin_user,.opp_admin_credential)
 
     refresh_token = await.opp.auth.async_create_refresh_token(
@@ -251,13 +251,13 @@ async def.opp_access_token.opp,.opp_admin_user,.opp_admin_credential):
 
 @pytest.fixture
 def.opp_owner_user.opp, local_auth):
-    """Return a Home Assistant admin user."""
+    """Return a Open Peer Power admin user."""
     return MockUser(is_owner=True).add_to_opp.opp)
 
 
 @pytest.fixture
 def.opp_admin_user.opp, local_auth):
-    """Return a Home Assistant admin user."""
+    """Return a Open Peer Power admin user."""
     admin_group =.opp.loop.run_until_complete(
        .opp.auth.async_get_group(GROUP_ID_ADMIN)
     )
@@ -266,7 +266,7 @@ def.opp_admin_user.opp, local_auth):
 
 @pytest.fixture
 def.opp_read_only_user.opp, local_auth):
-    """Return a Home Assistant read only user."""
+    """Return a Open Peer Power read only user."""
     read_only_group =.opp.loop.run_until_complete(
        .opp.auth.async_get_group(GROUP_ID_READ_ONLY)
     )
@@ -275,7 +275,7 @@ def.opp_read_only_user.opp, local_auth):
 
 @pytest.fixture
 def.opp_read_only_access_token.opp,.opp_read_only_user, local_auth):
-    """Return a Home Assistant read only user."""
+    """Return a Open Peer Power read only user."""
     credential = Credentials(
         id="mock-readonly-credential-id",
         auth_provider_type="openpeerpowerr",

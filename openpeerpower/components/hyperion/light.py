@@ -51,7 +51,7 @@ CONF_EFFECT_LIST = "effect_list"
 # As we want to preserve brightness control for effects (e.g. to reduce the
 # brightness for V4L), we need to persist the effect that is in flight, so
 # subsequent calls to turn_on will know the keep the effect enabled.
-# Unfortunately the Home Assistant UI does not easily expose a way to remove a
+# Unfortunately the Open Peer Power UI does not easily expose a way to remove a
 # selected effect (there is no 'No Effect' option by default). Instead, we
 # create a new fake effect ("Solid") that is always selected by default for
 # showing a solid color. This is the same method used by WLED.
@@ -547,7 +547,7 @@ class HyperionPriorityLight(HyperionBaseLight):
     # pylint: disable=no-self-use
     def _allow_priority_update(self, priority: Optional[Dict[str, Any]] = None) -> bool:
         """Determine whether to allow a Hyperion priority to update entity attributes."""
-        # Black is treated as 'off' (and Home Assistant does not support selecting black
+        # Black is treated as 'off' (and Open Peer Power does not support selecting black
         # from the color selector). Do not set our internal attributes if the priority is
         # 'off' (i.e. if black is active). Do this to ensure it seamlessly turns back on
         # at the correct prior color on the next 'on' call.

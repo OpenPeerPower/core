@@ -1,4 +1,4 @@
-"""Test Home Assistant location util methods."""
+"""Test Open Peer Power location util methods."""
 from unittest.mock import Mock, patch
 
 import aiohttp

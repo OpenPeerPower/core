@@ -261,7 +261,7 @@ def get_os_info.opp):
 @callback
 @bind_opp
 def get_core_info.opp):
-    """Return Home Assistant Core information from Supervisor.
+    """Return Open Peer Power Core information from Supervisor.
 
     Async friendly.
     """

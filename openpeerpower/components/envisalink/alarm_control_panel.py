@@ -125,7 +125,7 @@ class EnvisalinkAlarm(EnvisalinkDevice, AlarmControlPanelEntity):
 
     @callback
     def _update_callback(self, partition):
-        """Update Home Assistant state, if needed."""
+        """Update Open Peer Power state, if needed."""
         if partition is None or int(partition) == self._partition_number:
             self.async_write_op.state()
 

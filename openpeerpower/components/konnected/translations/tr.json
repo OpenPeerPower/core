@@ -52,7 +52,7 @@
             "options_misc": {
                 "data": {
                     "api_host": "API ana makine URL'sini ge\u00e7ersiz k\u0131l (iste\u011fe ba\u011fl\u0131)",
-                    "override_api_host": "Varsay\u0131lan Home Assistant API ana bilgisayar paneli URL'sini ge\u00e7ersiz k\u0131l"
+                    "override_api_host": "Varsay\u0131lan Open Peer Power API ana bilgisayar paneli URL'sini ge\u00e7ersiz k\u0131l"
                 }
             }
         }

@@ -28,7 +28,7 @@ CONF_DEFAULT_RECIPIENTS = "default_recipients"
 
 ATTR_SENDER = CONF_SENDER
 
-DEFAULT_SENDER = "Home Assistant"
+DEFAULT_SENDER = "Open Peer Power"
 
 _LOGGER = logging.getLogger(__name__)
 

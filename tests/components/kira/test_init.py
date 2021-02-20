@@ -1,4 +1,4 @@
-"""The tests for Home Assistant ffmpeg."""
+"""The tests for Open Peer Power ffmpeg."""
 
 import os
 import shutil

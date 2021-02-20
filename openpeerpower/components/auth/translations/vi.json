@@ -2,7 +2,7 @@
     "mfa_setup": {
         "totp": {
             "error": {
-                "invalid_code": "M\u00e3 kh\u00f4ng h\u1ee3p l\u1ec7, vui l\u00f2ng th\u1eed l\u1ea1i. N\u1ebfu b\u1ea1n g\u1eb7p l\u1ed7i n\u00e0y m\u1ed9t c\u00e1ch nh\u1ea5t qu\u00e1n, vui l\u00f2ng \u0111\u1ea3m b\u1ea3o \u0111\u1ed3ng h\u1ed3 c\u1ee7a h\u1ec7 th\u1ed1ng Home Assistant l\u00e0 ch\u00ednh x\u00e1c."
+                "invalid_code": "M\u00e3 kh\u00f4ng h\u1ee3p l\u1ec7, vui l\u00f2ng th\u1eed l\u1ea1i. N\u1ebfu b\u1ea1n g\u1eb7p l\u1ed7i n\u00e0y m\u1ed9t c\u00e1ch nh\u1ea5t qu\u00e1n, vui l\u00f2ng \u0111\u1ea3m b\u1ea3o \u0111\u1ed3ng h\u1ed3 c\u1ee7a h\u1ec7 th\u1ed1ng Open Peer Power l\u00e0 ch\u00ednh x\u00e1c."
             },
             "step": {
                 "init": {

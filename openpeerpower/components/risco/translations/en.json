@@ -27,8 +27,8 @@
                     "armed_home": "Armed Home",
                     "armed_night": "Armed Night"
                 },
-                "description": "Select what state to set your Risco alarm to when arming the Home Assistant alarm",
-                "title": "Map Home Assistant states to Risco states"
+                "description": "Select what state to set your Risco alarm to when arming the Open Peer Power alarm",
+                "title": "Map Open Peer Power states to Risco states"
             },
             "init": {
                 "data": {
@@ -47,8 +47,8 @@
                     "arm": "Armed (AWAY)",
                     "partial_arm": "Partially Armed (STAY)"
                 },
-                "description": "Select what state your Home Assistant alarm will report for every state reported by Risco",
-                "title": "Map Risco states to Home Assistant states"
+                "description": "Select what state your Open Peer Power alarm will report for every state reported by Risco",
+                "title": "Map Risco states to Open Peer Power states"
             }
         }
     }

@@ -200,10 +200,10 @@ def process_before_send(
     # Set user context to the installation UUID
     event.setdefault("user", {}).update({"id": huuid})
 
-    # Update event data with Home Assistant Context
+    # Update event data with Open Peer Power Context
     event.setdefault("contexts", {}).update(
         {
-            "Home Assistant": {
+            "Open Peer Power": {
                 "channel": channel,
                 "custom_components": "\n".join(sorted(custom_components)),
                 "integrations": "\n".join(sorted(integrations)),

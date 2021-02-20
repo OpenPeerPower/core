@@ -22,14 +22,14 @@ RE_REFERENCE = r"\[\%key:(.+)\%\]"
 
 REMOVED_TITLE_MSG = (
     "config.title key has been moved out of config and into the root of strings.json. "
-    "Starting Home Assistant 0.109 you only need to define this key in the root "
+    "Starting Open Peer Power 0.109 you only need to define this key in the root "
     "if the title needs to be different than the name of your integration in the "
     "manifest."
 )
 
 MOVED_TRANSLATIONS_DIRECTORY_MSG = (
     "The '.translations' directory has been moved, the new name is 'translations', "
-    "starting with Home Assistant 0.112 your translations will no longer "
+    "starting with Open Peer Power 0.112 your translations will no longer "
     "load if you do not move/rename this "
 )
 

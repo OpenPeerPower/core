@@ -72,7 +72,7 @@ class WemoEntity(Entity):
         raise NotImplementedError()
 
     async def async_added_to_opp(self) -> None:
-        """Wemo device added to Home Assistant."""
+        """Wemo device added to Open Peer Power."""
         # Define inside async context so we know our event loop
         self._update_lock = asyncio.Lock()
 
@@ -137,7 +137,7 @@ class WemoSubscriptionEntity(WemoEntity):
         return self._state
 
     async def async_added_to_opp(self) -> None:
-        """Wemo device added to Home Assistant."""
+        """Wemo device added to Open Peer Power."""
         await super().async_added_to_opp()
 
         registry = self.opp.data[WEMO_DOMAIN]["registry"]

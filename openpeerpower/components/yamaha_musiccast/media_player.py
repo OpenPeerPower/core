@@ -227,7 +227,7 @@ class YamahaDevice(MediaPlayerEntity):
         self._zone.update_status()
 
     def update_opp(self):
-        """Push updates to Home Assistant."""
+        """Push updates to Open Peer Power."""
         if self.entity_id:
             _LOGGER.debug("update_opp: pushing updates")
             self.schedule_update_op.state()

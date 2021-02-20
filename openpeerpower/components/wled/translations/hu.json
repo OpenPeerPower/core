@@ -13,10 +13,10 @@
                 "data": {
                     "host": "Hoszt"
                 },
-                "description": "\u00c1ll\u00edtsd be a WLED-et a Home Assistant-ba val\u00f3 integr\u00e1l\u00e1shoz."
+                "description": "\u00c1ll\u00edtsd be a WLED-et a Open Peer Power-ba val\u00f3 integr\u00e1l\u00e1shoz."
             },
             "zeroconf_confirm": {
-                "description": "Szeretn\u00e9d hozz\u00e1adni a(z) `{name}` WLED-et a Home Assistant-hoz?",
+                "description": "Szeretn\u00e9d hozz\u00e1adni a(z) `{name}` WLED-et a Open Peer Power-hoz?",
                 "title": "Felfedezett WLED eszk\u00f6z"
             }
         }

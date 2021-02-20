@@ -40,7 +40,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         if not pymitv.Discover().check_ip(host):
             _LOGGER.error("Could not find Xiaomi TV with specified IP: %s", host)
         else:
-            # Register TV with Home Assistant.
+            # Register TV with Open Peer Power.
             add_entities([XiaomiTV(host, name)])
     else:
         # Otherwise, discover TVs on network.
@@ -48,7 +48,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
 
 class XiaomiTV(MediaPlayerEntity):
-    """Represent the Xiaomi TV for Home Assistant."""
+    """Represent the Xiaomi TV for Open Peer Power."""
 
     def __init__(self, ip, name):
         """Receive IP address and name to construct class."""

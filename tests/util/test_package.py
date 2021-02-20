@@ -1,4 +1,4 @@
-"""Test Home Assistant package util methods."""
+"""Test Open Peer Power package util methods."""
 import asyncio
 import logging
 import os

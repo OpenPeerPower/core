@@ -1,1 +1,1 @@
-"""Home Assistant triggers."""
+"""Open Peer Power triggers."""

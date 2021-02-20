@@ -22,7 +22,7 @@ set_level:
   fields:
     openpeerpower.core:
       description:
-        "Example on how to change the logging level for a Home Assistant core
+        "Example on how to change the logging level for a Open Peer Power core
         components. Possible values are debug, info, warn, warning, error,
         fatal, critical"
       example: debug

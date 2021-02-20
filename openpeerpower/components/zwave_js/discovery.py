@@ -1,4 +1,4 @@
-"""Map Z-Wave nodes and values to Home Assistant entities."""
+"""Map Z-Wave nodes and values to Open Peer Power entities."""
 
 from dataclasses import dataclass
 from typing import Generator, List, Optional, Set, Union
@@ -18,7 +18,7 @@ class ZwaveDiscoveryInfo:
     node: ZwaveNode
     # the value object itself for primary value
     primary_value: ZwaveValue
-    # the home assistant platform for which an entity should be created
+    # the Open Peer Power platform for which an entity should be created
     platform: str
     # hint for the platform about this discovered entity
     platform_hint: Optional[str] = ""

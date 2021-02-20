@@ -1,4 +1,4 @@
-"""Location helpers for Home Assistant."""
+"""Location helpers for Open Peer Power."""
 
 import logging
 from typing import Optional, Sequence

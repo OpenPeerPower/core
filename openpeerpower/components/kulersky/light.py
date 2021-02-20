@@ -78,7 +78,7 @@ async def async_setup_entry(
                     # If the connection fails, either this is not a Kuler Sky
                     # light, or it's bluetooth connection is currently locked
                     # by another device. If the vendor's app is connected to
-                    # the light when home assistant tries to connect, this
+                    # the light when Open Peer Power tries to connect, this
                     # connection will fail.
                     await.opp.async_add_executor_job(check_light, light)
                 except pykulersky.PykulerskyException:

@@ -10,7 +10,7 @@
         },
         "step": {
             "link": {
-                "description": "Klik op \"Verzenden\" en tik vervolgens op de rechterpijl op de router om Freebox te registreren bij Home Assistant. \n\n ! [Locatie van knop op de router] (/ static / images / config_freebox.png)",
+                "description": "Klik op \"Verzenden\" en tik vervolgens op de rechterpijl op de router om Freebox te registreren bij Open Peer Power. \n\n ! [Locatie van knop op de router] (/ static / images / config_freebox.png)",
                 "title": "Freebox-router koppelen"
             },
             "user": {

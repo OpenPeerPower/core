@@ -1,4 +1,4 @@
-"""Test against characteristics captured from the Home Assistant HomeKit bridge running demo platforms."""
+"""Test against characteristics captured from the Open Peer Power HomeKit bridge running demo platforms."""
 
 from openpeerpower.components.fan import (
     SUPPORT_DIRECTION,
@@ -45,13 +45,13 @@ async def test_openpeerpowerr_bridge_fan_setup.opp):
     device_registry = await.opp.helpers.device_registry.async_get_registry()
 
     device = device_registry.async_get(fan.device_id)
-    assert device.manufacturer == "Home Assistant"
+    assert device.manufacturer == "Open Peer Power"
     assert device.name == "Living Room Fan"
     assert device.model == "Fan"
     assert device.sw_version == "0.104.0.dev0"
 
     bridge = device = device_registry.async_get(device.via_device_id)
-    assert bridge.manufacturer == "Home Assistant"
-    assert bridge.name == "Home Assistant Bridge"
+    assert bridge.manufacturer == "Open Peer Power"
+    assert bridge.name == "Open Peer Power Bridge"
     assert bridge.model == "Bridge"
     assert bridge.sw_version == "0.104.0.dev0"

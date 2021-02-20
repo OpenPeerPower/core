@@ -291,7 +291,7 @@ class ConfiguredDoorBird:
 
         # Register HA URL as webhook if not already, then get the ID
         if not self.webhook_is_registered(url):
-            self.device.change_favorite("http", f"Home Assistant ({event})", url)
+            self.device.change_favorite("http", f"Open Peer Power ({event})", url)
 
         fav_id = self.get_webhook_id(url)
 

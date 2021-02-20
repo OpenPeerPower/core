@@ -14,7 +14,7 @@
         },
         "step": {
             "creds": {
-                "description": "Aanmeldingsgegevens zijn nodig. Druk op 'Verzenden' en vervolgens in de PS4-app voor het 2e scherm, vernieuw apparaten en selecteer Home Assistant om door te gaan.",
+                "description": "Aanmeldingsgegevens zijn nodig. Druk op 'Verzenden' en vervolgens in de PS4-app voor het 2e scherm, vernieuw apparaten en selecteer Open Peer Power om door te gaan.",
                 "title": "PlayStation 4"
             },
             "link": {

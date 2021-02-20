@@ -89,7 +89,7 @@ class MyChevyHub(threading.Thread):
 
     Connecting to the mychevy website is done through a selenium
     webscraping process. That can only run synchronously. In order to
-    prevent blocking of other parts of Home Assistant the architecture
+    prevent blocking of other parts of Open Peer Power the architecture
     launches a polling loop in a thread.
 
     When new data is received, sensors are updated, and opp is

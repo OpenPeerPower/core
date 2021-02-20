@@ -10,7 +10,7 @@
         },
         "step": {
             "link": {
-                "description": "\u6309\u4e0b\u50b3\u9001 \"Submit\"\u3001\u63a5\u8457\u6309\u4e0b\u8def\u7531\u5668\u4e0a\u7684\u53f3\u7bad\u982d\u4ee5\u5c07 Freebox \u8a3b\u518a\u81f3 Home Assistant\u3002\n\n![Location of button on the router](/static/images/config_freebox.png)",
+                "description": "\u6309\u4e0b\u50b3\u9001 \"Submit\"\u3001\u63a5\u8457\u6309\u4e0b\u8def\u7531\u5668\u4e0a\u7684\u53f3\u7bad\u982d\u4ee5\u5c07 Freebox \u8a3b\u518a\u81f3 Open Peer Power\u3002\n\n![Location of button on the router](/static/images/config_freebox.png)",
                 "title": "\u9023\u7d50 Freebox \u8def\u7531\u5668"
             },
             "user": {

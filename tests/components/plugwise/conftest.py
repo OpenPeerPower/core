@@ -37,21 +37,21 @@ def mock_smile():
 
 @pytest.fixture(name="mock_smile_unauth")
 def mock_smile_unauth(aioclient_mock: AiohttpClientMocker) -> None:
-    """Mock the Plugwise Smile unauthorized for Home Assistant."""
+    """Mock the Plugwise Smile unauthorized for Open Peer Power."""
     aioclient_mock.get(re.compile(".*"), status=401)
     aioclient_mock.put(re.compile(".*"), status=401)
 
 
 @pytest.fixture(name="mock_smile_error")
 def mock_smile_error(aioclient_mock: AiohttpClientMocker) -> None:
-    """Mock the Plugwise Smile server failure for Home Assistant."""
+    """Mock the Plugwise Smile server failure for Open Peer Power."""
     aioclient_mock.get(re.compile(".*"), status=500)
     aioclient_mock.put(re.compile(".*"), status=500)
 
 
 @pytest.fixture(name="mock_smile_notconnect")
 def mock_smile_notconnect():
-    """Mock the Plugwise Smile general connection failure for Home Assistant."""
+    """Mock the Plugwise Smile general connection failure for Open Peer Power."""
     with patch("openpeerpower.components.plugwise.gateway.Smile") as smile_mock:
         smile_mock.InvalidAuthentication = InvalidAuthentication
         smile_mock.ConnectionFailedError = ConnectionFailedError

@@ -1,4 +1,4 @@
-"""API for Neato Botvac bound to Home Assistant OAuth."""
+"""API for Neato Botvac bound to Open Peer Power OAuth."""
 from asyncio import run_coroutine_threadsafe
 
 import pybotvac
@@ -24,7 +24,7 @@ class ConfigEntryAuth(pybotvac.OAuthSession):
         super().__init__(self.session.token, vendor=pybotvac.Neato())
 
     def refresh_tokens(self) -> str:
-        """Refresh and return new Neato Botvac tokens using Home Assistant OAuth2 session."""
+        """Refresh and return new Neato Botvac tokens using Open Peer Power OAuth2 session."""
         run_coroutine_threadsafe(
             self.session.async_ensure_token_valid(), self.opp.loop
         ).result()

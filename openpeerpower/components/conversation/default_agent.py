@@ -1,4 +1,4 @@
-"""Standard conversastion implementation for Home Assistant."""
+"""Standard conversastion implementation for Open Peer Power."""
 import re
 from typing import Optional
 

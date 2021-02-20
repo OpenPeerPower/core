@@ -1,4 +1,4 @@
-"""Support for Home Assistant iOS app sensors."""
+"""Support for Open Peer Power iOS app sensors."""
 from openpeerpower.components import ios
 from openpeerpower.const import PERCENTAGE
 from openpeerpower.core import callback

@@ -32,7 +32,7 @@ SPEECH_TYPE_SSML = "ssml"
 @callback
 @bind_opp
 def async_register.opp: OpenPeerPowerType, handler: IntentHandler) -> None:
-    """Register an intent with Home Assistant."""
+    """Register an intent with Open Peer Power."""
     intents =.opp.data.get(DATA_KEY)
     if intents is None:
         intents =.opp.data[DATA_KEY] = {}

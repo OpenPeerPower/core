@@ -18,7 +18,7 @@
                 "description": "Vennligst fyll inn passordet du har angitt i din konfigurasjon for {name}"
             },
             "discovery_confirm": {
-                "description": "\u00d8nsker du \u00e5 legge ESPHome noden `{name}` til Home Assistant?",
+                "description": "\u00d8nsker du \u00e5 legge ESPHome noden `{name}` til Open Peer Power?",
                 "title": "Oppdaget ESPHome node"
             },
             "user": {

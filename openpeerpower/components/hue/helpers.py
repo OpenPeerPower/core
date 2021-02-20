@@ -14,7 +14,7 @@ async def remove_devices(bridge, api_ids, current):
         if item_id in api_ids:
             continue
 
-        # Device is removed from Hue, so we remove it from Home Assistant
+        # Device is removed from Hue, so we remove it from Open Peer Power
         entity = current[item_id]
         removed_items.append(item_id)
         await entity.async_remove(force_remove=True)

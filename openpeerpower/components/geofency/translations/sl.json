@@ -1,7 +1,7 @@
 {
     "config": {
         "create_entry": {
-            "default": "\u010ce \u017eelite dogodke poslati v Home Assistant, morate v Geofency-ju nastaviti funkcijo webhook. \n\n Izpolnite naslednje podatke: \n\n - URL: ` {webhook_url} ` \n - Metoda: POST \n\n Za ve\u010d podrobnosti si oglejte [dokumentacijo] ( {docs_url} )."
+            "default": "\u010ce \u017eelite dogodke poslati v Open Peer Power, morate v Geofency-ju nastaviti funkcijo webhook. \n\n Izpolnite naslednje podatke: \n\n - URL: ` {webhook_url} ` \n - Metoda: POST \n\n Za ve\u010d podrobnosti si oglejte [dokumentacijo] ( {docs_url} )."
         },
         "step": {
             "user": {

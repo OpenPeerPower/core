@@ -95,7 +95,7 @@ The result payload likes
 
 Send websocket command `auth/long_lived_access_token` will create
 a long-lived access token for current user. Access token will not be saved in
-Home Assistant. User need to record the token in secure place.
+Open Peer Power. User need to record the token in secure place.
 
 {
     "id": 11,

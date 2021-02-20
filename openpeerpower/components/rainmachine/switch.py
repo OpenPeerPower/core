@@ -210,7 +210,7 @@ class RainMachineSwitch(RainMachineEntity, SwitchEntity):
 
     @property
     def unique_id(self) -> str:
-        """Return a unique, Home Assistant friendly identifier for this entity."""
+        """Return a unique, Open Peer Power friendly identifier for this entity."""
         return f"{self._unique_id}_{self._switch_type}_{self._uid}"
 
     async def _async_run_switch_coroutine(self, api_coro: Coroutine) -> None:

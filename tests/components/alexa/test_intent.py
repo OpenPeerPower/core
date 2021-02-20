@@ -24,7 +24,7 @@ NPR_NEWS_MP3_URL = "https://pd.npr.org/anon.npr-mp3/npr/news/newscast.mp3"
 
 @pytest.fixture
 def alexa_client(loop,.opp,.opp_client):
-    """Initialize a Home Assistant server for testing this module."""
+    """Initialize a Open Peer Power server for testing this module."""
 
     @callback
     def mock_service(call):
@@ -163,7 +163,7 @@ async def test_intent_launch_request_not_configured(alexa_client):
     assert req.status == 200
     data = await req.json()
     text = data.get("response", {}).get("outputSpeech", {}).get("text")
-    assert text == "This intent is not yet configured within Home Assistant."
+    assert text == "This intent is not yet configured within Open Peer Power."
 
 
 async def test_intent_request_with_slots(alexa_client):

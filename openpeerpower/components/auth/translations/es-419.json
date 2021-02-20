@@ -21,7 +21,7 @@
         },
         "totp": {
             "error": {
-                "invalid_code": "C\u00f3digo no v\u00e1lido, por favor vuelva a intentarlo. Si recibe este error constantemente, aseg\u00farese de que el reloj de su sistema Home Assistant sea exacto."
+                "invalid_code": "C\u00f3digo no v\u00e1lido, por favor vuelva a intentarlo. Si recibe este error constantemente, aseg\u00farese de que el reloj de su sistema Open Peer Power sea exacto."
             },
             "step": {
                 "init": {

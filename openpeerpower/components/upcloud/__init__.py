@@ -111,7 +111,7 @@ class UpCloudDataUpdateCoordinator(
 
 @dataclasses.dataclass
 class UpCloudOppData:
-    """Home Assistant UpCloud runtime data."""
+    """Open Peer Power UpCloud runtime data."""
 
     coordinators: Dict[str, UpCloudDataUpdateCoordinator] = dataclasses.field(
         default_factory=dict

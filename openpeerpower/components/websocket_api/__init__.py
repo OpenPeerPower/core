@@ -1,4 +1,4 @@
-"""WebSocket based API for Home Assistant."""
+"""WebSocket based API for Open Peer Power."""
 from typing import Optional, Union, cast
 
 import voluptuous as vol

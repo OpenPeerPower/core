@@ -86,7 +86,7 @@
                     "api_host": "Substitueix l'URL d'amfitri\u00f3 d'API (opcional)",
                     "blink": "Parpelleja el LED del panell quan s'envien canvis d'estat",
                     "discovery": "Respon a peticions de descobriment a la teva xarxa",
-                    "override_api_host": "Substitueix l'URL per defecte del panell d'amfitri\u00f3 de l'API de Home Assistant"
+                    "override_api_host": "Substitueix l'URL per defecte del panell d'amfitri\u00f3 de l'API de Open Peer Power"
                 },
                 "description": "Selecciona el comportament desitjat del panell",
                 "title": "Configuraci\u00f3 diversos"

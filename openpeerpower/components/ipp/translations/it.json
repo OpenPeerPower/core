@@ -23,7 +23,7 @@
                     "ssl": "Utilizza un certificato SSL",
                     "verify_ssl": "Verificare il certificato SSL"
                 },
-                "description": "Configurare la stampante tramite Internet Printing Protocol (IPP) per l'integrazione con Home Assistant.",
+                "description": "Configurare la stampante tramite Internet Printing Protocol (IPP) per l'integrazione con Open Peer Power.",
                 "title": "Collegare la stampante"
             },
             "zeroconf_confirm": {

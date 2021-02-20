@@ -86,7 +86,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
 
     if None in (latitude, longitude):
-        _LOGGER.error("Latitude or longitude not set in Home Assistant config")
+        _LOGGER.error("Latitude or longitude not set in Open Peer Power config")
         return False
 
     coordinates = {CONF_LATITUDE: float(latitude), CONF_LONGITUDE: float(longitude)}

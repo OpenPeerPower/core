@@ -1,4 +1,4 @@
-"""The tests for the Home Assistant HTTP component."""
+"""The tests for the Open Peer Power HTTP component."""
 # pylint: disable=protected-access
 from ipaddress import ip_address
 import os

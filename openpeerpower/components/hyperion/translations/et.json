@@ -23,7 +23,7 @@
                 "description": "Seadista oma Hyperion Ambilighti serveri tuvastamine"
             },
             "confirm": {
-                "description": "Kas soovid selle Hyperion Ambilighti lisada Home Assistanti?\n\n**Host:** {host}\n**Port:** {port}\n**ID**: {id}",
+                "description": "Kas soovid selle Hyperion Ambilighti lisada Open Peer Poweri?\n\n**Host:** {host}\n**Port:** {port}\n**ID**: {id}",
                 "title": "Kinnita Hyperion Ambilight teenuse lisamine"
             },
             "create_token": {

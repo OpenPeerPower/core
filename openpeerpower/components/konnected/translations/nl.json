@@ -87,7 +87,7 @@
                 "data": {
                     "api_host": "API host-URL overschrijven (optioneel)",
                     "blink": "Led knipperen bij het verzenden van statuswijziging",
-                    "override_api_host": "Overschrijf standaard Home Assistant API hostpaneel-URL"
+                    "override_api_host": "Overschrijf standaard Open Peer Power API hostpaneel-URL"
                 },
                 "description": "Selecteer het gewenste gedrag voor uw paneel",
                 "title": "Configureer Misc"

@@ -19,11 +19,11 @@
                 "title": "Proc\u00e9s de vinculaci\u00f3 complet"
             },
             "pairing_complete": {
-                "description": "El Dispositiu VIZIO SmartCast est\u00e0 connectat a Home Assistant.",
+                "description": "El Dispositiu VIZIO SmartCast est\u00e0 connectat a Open Peer Power.",
                 "title": "Vinculaci\u00f3 completada"
             },
             "pairing_complete_import": {
-                "description": "El Dispositiu VIZIO SmartCast est\u00e0 connectat a Home Assistant.\n\nEl teu [%key::common::config_flow::data::access_token%] \u00e9s '**{access_token}**'.",
+                "description": "El Dispositiu VIZIO SmartCast est\u00e0 connectat a Open Peer Power.\n\nEl teu [%key::common::config_flow::data::access_token%] \u00e9s '**{access_token}**'.",
                 "title": "Vinculaci\u00f3 completada"
             },
             "user": {

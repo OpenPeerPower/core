@@ -205,7 +205,7 @@ class RememberTheMilkConfiguration:
             self._config[profile_name][CONF_ID_MAP] = {}
 
     def get_rtm_id(self, profile_name,.opp_id):
-        """Get the RTM ids for a Home Assistant task ID.
+        """Get the RTM ids for a Open Peer Power task ID.
 
         The id of a RTM tasks consists of the tuple:
         list id, timeseries id and the task id.
@@ -217,7 +217,7 @@ class RememberTheMilkConfiguration:
         return ids[CONF_LIST_ID], ids[CONF_TIMESERIES_ID], ids[CONF_TASK_ID]
 
     def set_rtm_id(self, profile_name,.opp_id, list_id, time_series_id, rtm_task_id):
-        """Add/Update the RTM task ID for a Home Assistant task IS."""
+        """Add/Update the RTM task ID for a Open Peer Power task IS."""
         self._initialize_profile(profile_name)
         id_tuple = {
             CONF_LIST_ID: list_id,

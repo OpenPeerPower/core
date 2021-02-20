@@ -84,7 +84,7 @@ def async_generate_entity_id(
 
 
 class Entity(ABC):
-    """An abstract class for Home Assistant entities."""
+    """An abstract class for Open Peer Power entities."""
 
     # SAFE TO OVERWRITE
     # The properties and methods here are safe to overwrite when inheriting
@@ -237,7 +237,7 @@ class Entity(ABC):
         return True
 
     # DO NOT OVERWRITE
-    # These properties and methods are either managed by Home Assistant or they
+    # These properties and methods are either managed by Open Peer Power or they
     # are used to perform a very specific function. Overwriting these may
     # produce undesirable effects in the entity's operation.
 
@@ -257,7 +257,7 @@ class Entity(ABC):
         self._context_set = dt_util.utcnow()
 
     async def async_update_op.state(self, force_refresh: bool = False) -> None:
-        """Update Home Assistant with current state of entity.
+        """Update Open Peer Power with current state of entity.
 
         If force_refresh == True will update entity before setting state.
 
@@ -530,7 +530,7 @@ class Entity(ABC):
         self.async_write_op.state()
 
     async def async_remove(self, *, force_remove: bool = False) -> None:
-        """Remove entity from Home Assistant.
+        """Remove entity from Open Peer Power.
 
         If the entity has a non disabled entry in the entity registry,
         the entity's state will be set to unavailable, in the same way

@@ -156,7 +156,7 @@ class MobileAppNotificationService(BaseNotificationService):
                     if message[-1] not in [".", "?", "!"]:
                         message += "."
                     message += (
-                        " This message is generated externally to Home Assistant."
+                        " This message is generated externally to Open Peer Power."
                     )
 
                 if response.status == HTTP_TOO_MANY_REQUESTS:

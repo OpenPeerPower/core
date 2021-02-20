@@ -57,7 +57,7 @@ async def init_integration(
     rgbw: bool = False,
     skip_setup: bool = False,
 ) -> MockConfigEntry:
-    """Set up the Atag integration in Home Assistant."""
+    """Set up the Atag integration in Open Peer Power."""
 
     aioclient_mock.post(
         "http://127.0.0.1:10000/retrieve",

@@ -43,7 +43,7 @@ class ProwlNotificationService(BaseNotificationService):
         data = kwargs.get(ATTR_DATA)
         payload = {
             "apikey": self._api_key,
-            "application": "Home-Assistant",
+            "application": "Open-Peer-Power",
             "event": kwargs.get(ATTR_TITLE, ATTR_TITLE_DEFAULT),
             "description": message,
             "priority": data["priority"] if data and "priority" in data else 0,

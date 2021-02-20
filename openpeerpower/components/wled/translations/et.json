@@ -13,10 +13,10 @@
                 "data": {
                     "host": "Host"
                 },
-                "description": "Seadista WLED-i sidumine Home Assistantiga."
+                "description": "Seadista WLED-i sidumine Open Peer Poweriga."
             },
             "zeroconf_confirm": {
-                "description": "Kas soovid lisada WLED {name} Home Assistanti?",
+                "description": "Kas soovid lisada WLED {name} Open Peer Poweri?",
                 "title": "Leitud WLED seade"
             }
         }

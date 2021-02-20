@@ -1,4 +1,4 @@
-"""Home Assistant Switcher Component."""
+"""Open Peer Power Switcher Component."""
 from asyncio import QueueEmpty, TimeoutError as Asyncio_TimeoutError, wait_for
 from datetime import datetime, timedelta
 import logging
@@ -56,7 +56,7 @@ async def async_setup.opp: OpenPeerPowerType, config: Dict) -> bool:
     await v2bridge.start()
 
     async def async_stop_bridge(event: EventType) -> None:
-        """On Home Assistant stop, gracefully stop the bridge if running."""
+        """On Open Peer Power stop, gracefully stop the bridge if running."""
         await v2bridge.stop()
 
    .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_bridge)

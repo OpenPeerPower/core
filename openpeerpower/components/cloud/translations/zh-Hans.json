@@ -3,7 +3,7 @@
         "info": {
             "alexa_enabled": "\u5df2\u542f\u7528 Alexa",
             "can_reach_cert_server": "\u53ef\u8bbf\u95ee\u8bc1\u4e66\u670d\u52a1\u5668",
-            "can_reach_cloud": "\u53ef\u8bbf\u95ee Home Assistant Cloud",
+            "can_reach_cloud": "\u53ef\u8bbf\u95ee Open Peer Power Cloud",
             "can_reach_cloud_auth": "\u53ef\u8bbf\u95ee\u8ba4\u8bc1\u670d\u52a1\u5668",
             "google_enabled": "\u5df2\u542f\u7528 Google",
             "logged_in": "\u5df2\u767b\u5f55",

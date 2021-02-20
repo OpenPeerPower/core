@@ -11,7 +11,7 @@ DOMAIN = "freebox"
 
 APP_DESC = {
     "app_id": "opp",
-    "app_name": "Home Assistant",
+    "app_name": "Open Peer Power",
     "app_version": "0.106",
     "device_name": socket.gethostname(),
 }

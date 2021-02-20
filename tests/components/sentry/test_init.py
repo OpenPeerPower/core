@@ -113,7 +113,7 @@ async def test_setup_entry_with_tracing.opp: OpenPeerPower) -> None:
     ],
 )
 async def test_get_channel(version, channel) -> None:
-    """Test if channel detection works from Home Assistant version number."""
+    """Test if channel detection works from Open Peer Power version number."""
     assert get_channel(version) == channel
 
 
@@ -142,7 +142,7 @@ async def test_process_before_send.opp: OpenPeerPower):
     assert result["contexts"]
     assert result["contexts"]
 
-    ha_context = result["contexts"]["Home Assistant"]
+    ha_context = result["contexts"]["Open Peer Power"]
     assert ha_context["channel"] == "test"
     assert ha_context["custom_components"] == "fridge_opener\nironing_robot"
     assert ha_context["integrations"] == "a_integration\npuppies"

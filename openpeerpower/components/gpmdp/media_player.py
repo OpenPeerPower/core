@@ -72,7 +72,7 @@ def request_configuration.opp, config, url, add_entities_callback):
             {
                 "namespace": "connect",
                 "method": "connect",
-                "arguments": ["Home Assistant"],
+                "arguments": ["Open Peer Power"],
             }
         )
     )
@@ -95,7 +95,7 @@ def request_configuration.opp, config, url, add_entities_callback):
                     {
                         "namespace": "connect",
                         "method": "connect",
-                        "arguments": ["Home Assistant", pin],
+                        "arguments": ["Open Peer Power", pin],
                     }
                 )
             )
@@ -116,7 +116,7 @@ def request_configuration.opp, config, url, add_entities_callback):
                     {
                         "namespace": "connect",
                         "method": "connect",
-                        "arguments": ["Home Assistant", code],
+                        "arguments": ["Open Peer Power", code],
                     }
                 )
             )
@@ -197,7 +197,7 @@ class GPMDP(MediaPlayerEntity):
                     {
                         "namespace": "connect",
                         "method": "connect",
-                        "arguments": ["Home Assistant", self._authorization_code],
+                        "arguments": ["Open Peer Power", self._authorization_code],
                     }
                 )
                 self._ws.send(msg)

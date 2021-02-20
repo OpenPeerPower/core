@@ -22,7 +22,7 @@
                 "description": "Veuillez entrer votre nom d'utilisateur et votre mot de passe Kodi. Ceux-ci peuvent \u00eatre trouv\u00e9s dans Syst\u00e8me / Param\u00e8tres / R\u00e9seau / Services."
             },
             "discovery_confirm": {
-                "description": "Voulez-vous ajouter Kodi (` {name} `) \u00e0 Home Assistant ?",
+                "description": "Voulez-vous ajouter Kodi (` {name} `) \u00e0 Open Peer Power ?",
                 "title": "Kodi d\u00e9couvert"
             },
             "user": {

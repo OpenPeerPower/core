@@ -68,7 +68,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 
 class MinutPointBinarySensor(MinutPointEntity, BinarySensorEntity):
-    """The platform class required by Home Assistant."""
+    """The platform class required by Open Peer Power."""
 
     def __init__(self, point_client, device_id, device_class):
         """Initialize the binary sensor."""
@@ -79,7 +79,7 @@ class MinutPointBinarySensor(MinutPointEntity, BinarySensorEntity):
         self._is_on = None
 
     async def async_added_to_opp(self):
-        """Call when entity is added to HOme Assistant."""
+        """Call when entity is added to Open Peer Power."""
         await super().async_added_to_opp()
         self._async_unsub_hook_dispatcher_connect = async_dispatcher_connect(
             self.opp, SIGNAL_WEBHOOK, self._webhook_event

@@ -12,14 +12,14 @@ from openpeerpower.core import OpenPeerPower
 def run(args):
     """Handle ensure config commandline script."""
     parser = argparse.ArgumentParser(
-        description=("Ensure a Home Assistant config exists, creates one if necessary.")
+        description=("Ensure a Open Peer Power config exists, creates one if necessary.")
     )
     parser.add_argument(
         "-c",
         "--config",
         metavar="path_to_config_dir",
         default=config_util.get_default_config_dir(),
-        help="Directory that contains the Home Assistant configuration",
+        help="Directory that contains the Open Peer Power configuration",
     )
     parser.add_argument("--script", choices=["ensure_config"])
 

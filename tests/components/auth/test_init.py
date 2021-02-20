@@ -121,7 +121,7 @@ def test_auth_code_store_expiration():
 
 
 async def test_ws_current_user.opp,.opp_ws_client,.opp_access_token):
-    """Test the current user command with Home Assistant creds."""
+    """Test the current user command with Open Peer Power creds."""
     assert await async_setup_component.opp, "auth", {})
 
     refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)

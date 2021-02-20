@@ -18,7 +18,7 @@
                 "description": "Inserisci la password per {name} che hai impostato nella tua configurazione."
             },
             "discovery_confirm": {
-                "description": "Vuoi aggiungere il nodo ESPHome `{name}` a Home Assistant?",
+                "description": "Vuoi aggiungere il nodo ESPHome `{name}` a Open Peer Power?",
                 "title": "Trovato nodo ESPHome"
             },
             "user": {

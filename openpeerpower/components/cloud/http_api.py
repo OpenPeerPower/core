@@ -83,7 +83,7 @@ _CLOUD_ERRORS = {
     ),
     asyncio.TimeoutError: (
         HTTP_BAD_GATEWAY,
-        "Unable to reach the Home Assistant cloud.",
+        "Unable to reach the Open Peer Power cloud.",
     ),
     aiohttp.ClientError: (
         HTTP_INTERNAL_SERVER_ERROR,
@@ -211,7 +211,7 @@ class GoogleActionsSyncView(OpenPeerPowerView):
 
 
 class CloudLoginView(OpenPeerPowerView):
-    """Login to Home Assistant cloud."""
+    """Login to Open Peer Power cloud."""
 
     url = "/api/cloud/login"
     name = "api:cloud:login"
@@ -229,7 +229,7 @@ class CloudLoginView(OpenPeerPowerView):
 
 
 class CloudLogoutView(OpenPeerPowerView):
-    """Log out of the Home Assistant cloud."""
+    """Log out of the Open Peer Power cloud."""
 
     url = "/api/cloud/logout"
     name = "api:cloud:logout"
@@ -247,7 +247,7 @@ class CloudLogoutView(OpenPeerPowerView):
 
 
 class CloudRegisterView(OpenPeerPowerView):
-    """Register on the Home Assistant cloud."""
+    """Register on the Open Peer Power cloud."""
 
     url = "/api/cloud/register"
     name = "api:cloud:register"
@@ -416,7 +416,7 @@ async def websocket_update_prefs.opp, connection, msg):
             connection.send_error(
                 msg["id"],
                 "alexa_relink",
-                "Please go to the Alexa app and re-link the Home Assistant "
+                "Please go to the Alexa app and re-link the Open Peer Power "
                 "skill and then try to enable state reporting.",
             )
             return
@@ -620,7 +620,7 @@ async def alexa_sync.opp, connection, msg):
             connection.send_error(
                 msg["id"],
                 "alexa_relink",
-                "Please go to the Alexa app and re-link the Home Assistant skill.",
+                "Please go to the Alexa app and re-link the Open Peer Power skill.",
             )
             return
 

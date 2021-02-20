@@ -19,7 +19,7 @@
         "flow_title": "Apple TV: {name}",
         "step": {
             "confirm": {
-                "description": "Zamierzasz doda\u0107 Apple TV o nazwie \"{name}\" do Home Assistanta. \n\n **Aby uko\u0144czy\u0107 ca\u0142y proces, mo\u017ce by\u0107 konieczne wprowadzenie wielu kod\u00f3w PIN.** \n\nPami\u0119taj, \u017ce \"NIE\" b\u0119dziesz w stanie wy\u0142\u0105czy\u0107 Apple TV dzi\u0119ki tej integracji. Wy\u0142\u0105cza si\u0119 tylko sam odtwarzacz multimedialny w Home Assistant!",
+                "description": "Zamierzasz doda\u0107 Apple TV o nazwie \"{name}\" do Open Peer Powera. \n\n **Aby uko\u0144czy\u0107 ca\u0142y proces, mo\u017ce by\u0107 konieczne wprowadzenie wielu kod\u00f3w PIN.** \n\nPami\u0119taj, \u017ce \"NIE\" b\u0119dziesz w stanie wy\u0142\u0105czy\u0107 Apple TV dzi\u0119ki tej integracji. Wy\u0142\u0105cza si\u0119 tylko sam odtwarzacz multimedialny w Open Peer Power!",
                 "title": "Potwierdzenie dodania Apple TV"
             },
             "pair_no_pin": {
@@ -54,7 +54,7 @@
         "step": {
             "init": {
                 "data": {
-                    "start_off": "Nie w\u0142\u0105czaj urz\u0105dzenia podczas uruchamiania Home Assistanta"
+                    "start_off": "Nie w\u0142\u0105czaj urz\u0105dzenia podczas uruchamiania Open Peer Powera"
                 },
                 "description": "Skonfiguruj og\u00f3lne ustawienia urz\u0105dzenia"
             }

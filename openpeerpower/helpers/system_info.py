@@ -36,9 +36,9 @@ async def async_get_system_info.opp: OpenPeerPowerType) -> Dict[str, Any]:
 
     # Determine installation type on current data
     if info_object["docker"]:
-        info_object["installation_type"] = "Home Assistant Container"
+        info_object["installation_type"] = "Open Peer Power Container"
     elif is_virtual_env():
-        info_object["installation_type"] = "Home Assistant Core"
+        info_object["installation_type"] = "Open Peer Power Core"
 
     # Enrich with Supervisor information
     if.opp.components.oppio.is_oppio():
@@ -51,8 +51,8 @@ async def async_get_system_info.opp: OpenPeerPowerType) -> Dict[str, Any]:
         info_object[".oppis"] = host.get(".oppis")
 
         if info.get("oppos") is not None:
-            info_object["installation_type"] = "Home Assistant OS"
+            info_object["installation_type"] = "Open Peer Power OS"
         else:
-            info_object["installation_type"] = "Home Assistant Supervised"
+            info_object["installation_type"] = "Open Peer Power Supervised"
 
     return info_object

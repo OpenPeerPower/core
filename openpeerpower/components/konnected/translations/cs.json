@@ -78,7 +78,7 @@
             "options_misc": {
                 "data": {
                     "api_host": "P\u0159epsat URL adresu API hostitele (voliteln\u00e9)",
-                    "override_api_host": "P\u0159epsat v\u00fdchoz\u00ed URL adresu API hostitelsk\u00e9ho panelu Home Assistant"
+                    "override_api_host": "P\u0159epsat v\u00fdchoz\u00ed URL adresu API hostitelsk\u00e9ho panelu Open Peer Power"
                 }
             },
             "options_switch": {

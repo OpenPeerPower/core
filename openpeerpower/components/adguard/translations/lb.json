@@ -9,7 +9,7 @@
         },
         "step": {
             "oppio_confirm": {
-                "description": "W\u00ebllt dir Home Assistant konfigur\u00e9iere fir sech mam AdGuard Home ze verbannen dee vum.opp.io add-on {addon} bereet gestallt g\u00ebtt?",
+                "description": "W\u00ebllt dir Open Peer Power konfigur\u00e9iere fir sech mam AdGuard Home ze verbannen dee vum.opp.io add-on {addon} bereet gestallt g\u00ebtt?",
                 "title": "AdGuard Home via Opp.io add-on"
             },
             "user": {

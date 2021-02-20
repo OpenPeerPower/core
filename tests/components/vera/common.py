@@ -144,7 +144,7 @@ class ComponentFactory:
         if controller_config.config_source == ConfigSource.FILE:
            .opp_config[DOMAIN] = component_config
 
-        # Setup Home Assistant.
+        # Setup Open Peer Power.
         assert await async_setup_component.opp, DOMAIN,.opp_config)
         await.opp.async_block_till_done()
 

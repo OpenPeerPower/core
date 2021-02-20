@@ -13,7 +13,7 @@
         },
         "step": {
             "creds": {
-                "description": "Der kr\u00e6ves legitimationsoplysninger. Tryk p\u00e5 'Indsend' og derefter i PS4 2. sk\u00e6rm-app, opdater enheder, og v\u00e6lg 'Home Assistant'-enhed for at forts\u00e6tte.",
+                "description": "Der kr\u00e6ves legitimationsoplysninger. Tryk p\u00e5 'Indsend' og derefter i PS4 2. sk\u00e6rm-app, opdater enheder, og v\u00e6lg 'Open Peer Power'-enhed for at forts\u00e6tte.",
                 "title": "PlayStation 4"
             },
             "link": {

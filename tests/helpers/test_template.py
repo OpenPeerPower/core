@@ -1,4 +1,4 @@
-"""Test Home Assistant template helper methods."""
+"""Test Open Peer Power template helper methods."""
 from datetime import datetime
 import math
 import random
@@ -986,7 +986,7 @@ def test_regex_match.opp):
 
     tpl = template.Template(
         """
-{{ 'Home Assistant test' | regex_match('home', True) }}
+{{ 'Open Peer Power test' | regex_match('home', True) }}
             """,
        .opp,
     )
@@ -994,7 +994,7 @@ def test_regex_match.opp):
 
     tpl = template.Template(
         """
-    {{ 'Another Home Assistant test' | regex_match('Home') }}
+    {{ 'Another Open Peer Power test' | regex_match('Home') }}
                     """,
        .opp,
     )
@@ -1002,7 +1002,7 @@ def test_regex_match.opp):
 
     tpl = template.Template(
         """
-{{ ['Home Assistant test'] | regex_match('.*Assist') }}
+{{ ['Open Peer Power test'] | regex_match('.*Assist') }}
             """,
        .opp,
     )
@@ -1021,7 +1021,7 @@ def test_regex_search.opp):
 
     tpl = template.Template(
         """
-{{ 'Home Assistant test' | regex_search('home', True) }}
+{{ 'Open Peer Power test' | regex_search('home', True) }}
             """,
        .opp,
     )
@@ -1029,7 +1029,7 @@ def test_regex_search.opp):
 
     tpl = template.Template(
         """
-    {{ 'Another Home Assistant test' | regex_search('Home') }}
+    {{ 'Another Open Peer Power test' | regex_search('Home') }}
                     """,
        .opp,
     )
@@ -1037,7 +1037,7 @@ def test_regex_search.opp):
 
     tpl = template.Template(
         """
-{{ ['Home Assistant test'] | regex_search('Assist') }}
+{{ ['Open Peer Power test'] | regex_search('Assist') }}
             """,
        .opp,
     )
@@ -1060,7 +1060,7 @@ def test_regex_replace.opp):
             """,
        .opp,
     )
-    assert tpl.async_render() == ["Home Assistant test"]
+    assert tpl.async_render() == ["Open Peer Power test"]
 
 
 def test_regex_findall_index.opp):

@@ -1,4 +1,4 @@
-"""Selectors for Home Assistant."""
+"""Selectors for Open Peer Power."""
 from typing import Any, Callable, Dict, cast
 
 import voluptuous as vol

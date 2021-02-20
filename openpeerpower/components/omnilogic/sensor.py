@@ -1,4 +1,4 @@
-"""Definition and setup of the Omnilogic Sensors for Home Assistant."""
+"""Definition and setup of the Omnilogic Sensors for Open Peer Power."""
 from openpeerpower.components.sensor import DEVICE_CLASS_TEMPERATURE
 from openpeerpower.const import (
     CONCENTRATION_PARTS_PER_MILLION,

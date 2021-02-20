@@ -160,7 +160,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     add_entities(project_devices)
 
     def handle_new_task(call):
-        """Call when a user creates a new Todoist Task from Home Assistant."""
+        """Call when a user creates a new Todoist Task from Open Peer Power."""
         project_name = call.data[PROJECT_NAME]
         project_id = project_id_lookup[project_name]
 
@@ -606,7 +606,7 @@ class TodoistProjectData:
             if self.event[END] is not None:
                 self.event[END] = {DATETIME: self.event[END].strftime(DATE_STR_FORMAT)}
             else:
-                # Home Assistant gets cranky if a calendar event never ends
+                # Open Peer Power gets cranky if a calendar event never ends
                 # Let's set our "due date" to tomorrow
                 self.event[END] = {
                     DATETIME: (datetime.utcnow() + timedelta(days=1)).strftime(

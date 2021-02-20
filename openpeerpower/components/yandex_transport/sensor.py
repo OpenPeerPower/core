@@ -16,7 +16,7 @@ import openpeerpowerr.util.dt as dt_util
 _LOGGER = logging.getLogger(__name__)
 
 STOP_NAME = "stop_name"
-USER_AGENT = "Home Assistant"
+USER_AGENT = "Open Peer Power"
 ATTRIBUTION = "Data provided by maps.yandex.ru"
 
 CONF_STOP_ID = "stop_id"

@@ -1,4 +1,4 @@
-"""Provide an authentication layer for Home Assistant."""
+"""Provide an authentication layer for Open Peer Power."""
 from __future__ import annotations
 
 import asyncio
@@ -140,7 +140,7 @@ class AuthManagerFlowManager(data_entry_flow.FlowManager):
 
 
 class AuthManager:
-    """Manage the authentication for Home Assistant."""
+    """Manage the authentication for Open Peer Power."""
 
     def __init__(
         self,

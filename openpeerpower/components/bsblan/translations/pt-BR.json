@@ -2,7 +2,7 @@
     "config": {
         "step": {
             "user": {
-                "description": "Configure o seu dispositivo BSB-Lan para integrar com o Home Assistant.",
+                "description": "Configure o seu dispositivo BSB-Lan para integrar com o Open Peer Power.",
                 "title": "Conecte-se ao dispositivo BSB-Lan"
             }
         }

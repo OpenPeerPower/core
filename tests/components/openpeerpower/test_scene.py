@@ -1,4 +1,4 @@
-"""Test Home Assistant scenes."""
+"""Test Open Peer Power scenes."""
 from unittest.mock import patch
 
 import pytest

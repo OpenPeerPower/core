@@ -4,7 +4,7 @@
             "single_instance_allowed": "Al geconfigureerd. Slechts \u00e9\u00e9n configuratie mogelijk."
         },
         "create_entry": {
-            "default": "Om evenementen naar de Home Assistant te verzenden, moet u de actie \"Een webverzoek doen\" gebruiken vanuit de [IFTTT Webhook-applet]({applet_url}). \n\n Vul de volgende info in: \n\n - URL: `{webhook_url}` \n - Method: POST \n - Content Type: application/json \n\nZie [the documentation]({docs_url}) voor informatie over het configureren van automatiseringen om inkomende gegevens te verwerken."
+            "default": "Om evenementen naar de Open Peer Power te verzenden, moet u de actie \"Een webverzoek doen\" gebruiken vanuit de [IFTTT Webhook-applet]({applet_url}). \n\n Vul de volgende info in: \n\n - URL: `{webhook_url}` \n - Method: POST \n - Content Type: application/json \n\nZie [the documentation]({docs_url}) voor informatie over het configureren van automatiseringen om inkomende gegevens te verwerken."
         },
         "step": {
             "user": {

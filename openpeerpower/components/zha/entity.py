@@ -270,7 +270,7 @@ class ZhaGroupEntity(BaseZhaEntity):
         self.async_schedule_update_op.state(True)
 
     async def async_will_remove_from_opp(self) -> None:
-        """Handle removal from Home Assistant."""
+        """Handle removal from Open Peer Power."""
         await super().async_will_remove_from_opp()
         if self._async_unsub_state_changed is not None:
             self._async_unsub_state_changed()

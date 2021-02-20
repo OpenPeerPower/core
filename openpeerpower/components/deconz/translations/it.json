@@ -14,11 +14,11 @@
         "flow_title": "Gateway Zigbee deCONZ ({host})",
         "step": {
             "oppio_confirm": {
-                "description": "Vuoi configurare Home Assistant per connettersi al gateway deCONZ fornito dal componente aggiuntivo di Opp.io: {addon}?",
+                "description": "Vuoi configurare Open Peer Power per connettersi al gateway deCONZ fornito dal componente aggiuntivo di Opp.io: {addon}?",
                 "title": "Gateway Pigmee deCONZ tramite il componente aggiuntivo di Opp.io"
             },
             "link": {
-                "description": "Sblocca il tuo gateway deCONZ per registrarti con Home Assistant.\n\n1. Vai a Impostazioni deCONZ -> Gateway -> Avanzate\n2. Premere il pulsante \"Autentica app\"",
+                "description": "Sblocca il tuo gateway deCONZ per registrarti con Open Peer Power.\n\n1. Vai a Impostazioni deCONZ -> Gateway -> Avanzate\n2. Premere il pulsante \"Autentica app\"",
                 "title": "Collega con deCONZ"
             },
             "manual_input": {

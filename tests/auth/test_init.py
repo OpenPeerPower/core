@@ -1,4 +1,4 @@
-"""Tests for the Home Assistant auth module."""
+"""Tests for the Open Peer Power auth module."""
 from datetime import timedelta
 from unittest.mock import Mock, patch
 
@@ -22,7 +22,7 @@ from tests.common import CLIENT_ID, MockUser, ensure_auth_manager_loaded, flush_
 
 @pytest.fixture
 def mock_opp(loop):
-    """Home Assistant mock with minimum amount of data set to make it work with auth."""
+    """Open Peer Power mock with minimum amount of data set to make it work with auth."""
     opp = Mock()
    .opp.config.skip_pip = True
     return.opp

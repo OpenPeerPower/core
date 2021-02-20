@@ -17,11 +17,11 @@
                 "title": "Voltooi het koppelingsproces"
             },
             "pairing_complete": {
-                "description": "Uw VIZIO SmartCast-apparaat is nu verbonden met Home Assistant.",
+                "description": "Uw VIZIO SmartCast-apparaat is nu verbonden met Open Peer Power.",
                 "title": "Koppelen voltooid"
             },
             "pairing_complete_import": {
-                "description": "Uw VIZIO SmartCast-apparaat is nu verbonden met Home Assistant.\n\nUw toegangstoken is '** {access_token} **'.",
+                "description": "Uw VIZIO SmartCast-apparaat is nu verbonden met Open Peer Power.\n\nUw toegangstoken is '** {access_token} **'.",
                 "title": "Koppelen voltooid"
             },
             "user": {

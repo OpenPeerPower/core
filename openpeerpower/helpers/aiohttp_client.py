@@ -71,7 +71,7 @@ def async_create_clientsession(
     )
 
     clientsession.close = warn_use(  # type: ignore
-        clientsession.close, "closes the Home Assistant aiohttp session"
+        clientsession.close, "closes the Open Peer Power aiohttp session"
     )
 
     if auto_cleanup:
@@ -148,7 +148,7 @@ async def async_aiohttp_proxy_stream(
 def _async_register_clientsession_shutdown(
    .opp: OpenPeerPowerType, clientsession: aiohttp.ClientSession
 ) -> None:
-    """Register ClientSession close on Home Assistant shutdown.
+    """Register ClientSession close on Open Peer Power shutdown.
 
     This method must be run in the event loop.
     """

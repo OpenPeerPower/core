@@ -74,7 +74,7 @@ async def init_integration(
     data: dict = ENTRY_CONFIG,
     options: dict = ENTRY_OPTIONS,
 ) -> MockConfigEntry:
-    """Set up the NZBGet integration in Home Assistant."""
+    """Set up the NZBGet integration in Open Peer Power."""
     entry = MockConfigEntry(domain=DOMAIN, data=data, options=options)
     entry.add_to_opp.opp)
 

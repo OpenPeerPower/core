@@ -27,8 +27,8 @@
                     "armed_home": "Armada en Casa",
                     "armed_night": "Armada Noche"
                 },
-                "description": "Selecciona en qu\u00e9 estado quieres configurar la alarma Risco cuando armes la alarma de Home Assistant",
-                "title": "Mapear estados de Home Assistant a estados Risco"
+                "description": "Selecciona en qu\u00e9 estado quieres configurar la alarma Risco cuando armes la alarma de Open Peer Power",
+                "title": "Mapear estados de Open Peer Power a estados Risco"
             },
             "init": {
                 "data": {
@@ -47,8 +47,8 @@
                     "arm": "Armada (AUSENTE)",
                     "partial_arm": "Parcialmente Armada (EN CASA)"
                 },
-                "description": "Selecciona qu\u00e9 estado reportar\u00e1 la alarma de tu Home Assistant para cada estado reportado por Risco",
-                "title": "Asignar estados de Risco a estados de Home Assistant"
+                "description": "Selecciona qu\u00e9 estado reportar\u00e1 la alarma de tu Open Peer Power para cada estado reportado por Risco",
+                "title": "Asignar estados de Risco a estados de Open Peer Power"
             }
         }
     }

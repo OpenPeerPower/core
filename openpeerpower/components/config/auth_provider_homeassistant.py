@@ -1,4 +1,4 @@
-"""Offer API to configure the Home Assistant auth provider."""
+"""Offer API to configure the Open Peer Power auth provider."""
 import voluptuous as vol
 
 from openpeerpower.auth.providers import openpeerpower as auth_ha
@@ -8,7 +8,7 @@ from openpeerpower.exceptions import Unauthorized
 
 
 async def async_setup.opp):
-    """Enable the Home Assistant views."""
+    """Enable the Open Peer Power views."""
    .opp.components.websocket_api.async_register_command(websocket_create)
    .opp.components.websocket_api.async_register_command(websocket_delete)
    .opp.components.websocket_api.async_register_command(websocket_change_password)

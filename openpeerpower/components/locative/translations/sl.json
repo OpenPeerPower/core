@@ -1,7 +1,7 @@
 {
     "config": {
         "create_entry": {
-            "default": "Za po\u0161iljanje lokacij v Home Assistant, morate namestiti funkcijo webhook v aplikaciji Locative. \n\n Izpolnite naslednje podatke: \n\n - URL: ` {webhook_url} ` \n - Metoda: POST \n\n Za ve\u010d podrobnosti si oglejte [dokumentacijo] ( {docs_url} )."
+            "default": "Za po\u0161iljanje lokacij v Open Peer Power, morate namestiti funkcijo webhook v aplikaciji Locative. \n\n Izpolnite naslednje podatke: \n\n - URL: ` {webhook_url} ` \n - Metoda: POST \n\n Za ve\u010d podrobnosti si oglejte [dokumentacijo] ( {docs_url} )."
         },
         "step": {
             "user": {

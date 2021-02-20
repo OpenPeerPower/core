@@ -1,4 +1,4 @@
-"""The exceptions used by Home Assistant."""
+"""The exceptions used by Open Peer Power."""
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 
 
 class OpenPeerPowerError(Exception):
-    """General Home Assistant exception occurred."""
+    """General Open Peer Power exception occurred."""
 
 
 class InvalidEntityFormatError(OpenPeerPowerError):

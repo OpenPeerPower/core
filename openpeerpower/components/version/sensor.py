@@ -1,4 +1,4 @@
-"""Sensor that can display the current Home Assistant versions."""
+"""Sensor that can display the current Open Peer Power versions."""
 from datetime import timedelta
 
 from pyhaversion import (
@@ -95,7 +95,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 
 class VersionSensor(Entity):
-    """Representation of a Home Assistant version sensor."""
+    """Representation of a Open Peer Power version sensor."""
 
     def __init__(self, haversion, name):
         """Initialize the Version sensor."""

@@ -21,7 +21,7 @@
                 "title": "Vali HomematicIP p\u00e4\u00e4supunkt"
             },
             "link": {
-                "description": "HomematicIP registreerimiseks Home Assistanti abil vajuta p\u00e4\u00e4supunkti sinist nuppu ja nuppu Esita.\n\n ![Location of button on bridge](/static/images/config_flows/config_homematicip_cloud.png)",
+                "description": "HomematicIP registreerimiseks Open Peer Poweri abil vajuta p\u00e4\u00e4supunkti sinist nuppu ja nuppu Esita.\n\n ![Location of button on bridge](/static/images/config_flows/config_homematicip_cloud.png)",
                 "title": "Lingi p\u00e4\u00e4supunkt"
             }
         }

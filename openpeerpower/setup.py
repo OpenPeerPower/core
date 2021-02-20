@@ -1,4 +1,4 @@
-"""All methods needed to bootstrap a Home Assistant instance."""
+"""All methods needed to bootstrap a Open Peer Power instance."""
 import asyncio
 import logging.handlers
 from timeit import default_timer as timer
@@ -128,7 +128,7 @@ async def _async_process_dependencies(
 async def _async_setup_component(
    .opp: core.OpenPeerPower, domain: str, config: ConfigType
 ) -> bool:
-    """Set up a component for Home Assistant.
+    """Set up a component for Open Peer Power.
 
     This method is a coroutine.
     """

@@ -3,7 +3,7 @@
         "info": {
             "alexa_enabled": "Alexa activ\u00e9",
             "can_reach_cert_server": "Acc\u00e9der au serveur de certificats",
-            "can_reach_cloud": "Acc\u00e9der \u00e0 Home Assistant Cloud",
+            "can_reach_cloud": "Acc\u00e9der \u00e0 Open Peer Power Cloud",
             "can_reach_cloud_auth": "Acc\u00e9der au serveur d'authentification",
             "google_enabled": "Google activ\u00e9",
             "logged_in": "Connect\u00e9",

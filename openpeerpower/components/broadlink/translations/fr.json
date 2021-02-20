@@ -32,7 +32,7 @@
                 "data": {
                     "unlock": "Oui, le faire."
                 },
-                "description": "Votre appareil est verrouill\u00e9. Cela peut entra\u00eener des probl\u00e8mes d'authentification dans Home Assistant. Souhaitez-vous le d\u00e9verrouiller ?",
+                "description": "Votre appareil est verrouill\u00e9. Cela peut entra\u00eener des probl\u00e8mes d'authentification dans Open Peer Power. Souhaitez-vous le d\u00e9verrouiller ?",
                 "title": "D\u00e9verrouiller l'appareil (facultatif)"
             },
             "user": {

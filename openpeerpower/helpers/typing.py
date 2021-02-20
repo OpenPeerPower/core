@@ -1,4 +1,4 @@
-"""Typing Helpers for Home Assistant."""
+"""Typing Helpers for Open Peer Power."""
 from enum import Enum
 from typing import Any, Dict, Mapping, Optional, Tuple, Union
 

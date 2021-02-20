@@ -408,7 +408,7 @@ def async_update_segments(
     # Discard master (if present)
     current_ids.discard(-1)
 
-    # Process new segments, add them to Home Assistant
+    # Process new segments, add them to Open Peer Power
     new_entities = []
     for segment_id in segment_ids - current_ids:
         current[segment_id] = WLEDSegmentLight(entry.entry_id, coordinator, segment_id)
@@ -422,7 +422,7 @@ def async_update_segments(
     if new_entities:
         async_add_entities(new_entities)
 
-    # Process deleted segments, remove them from Home Assistant
+    # Process deleted segments, remove them from Open Peer Power
     for segment_id in current_ids - segment_ids:
         coordinator.opp.async_create_task(
             async_remove_entity(segment_id, coordinator, current)
@@ -440,7 +440,7 @@ async def async_remove_entity(
     coordinator: WLEDDataUpdateCoordinator,
     current: Dict[int, WLEDSegmentLight],
 ) -> None:
-    """Remove WLED segment light from Home Assistant."""
+    """Remove WLED segment light from Open Peer Power."""
     entity = current[index]
     await entity.async_remove(force_remove=True)
     registry = await async_get_entity_registry(coordinator.opp)

@@ -495,7 +495,7 @@ async def test_homekit_start.opp, hk_driver, device_reg):
         connections={connection},
         manufacturer="Any",
         name="Any",
-        model="Home Assistant HomeKit Bridge",
+        model="Open Peer Power HomeKit Bridge",
     )
 
    .opp.states.async_set("light.demo", "on")
@@ -1167,7 +1167,7 @@ async def test_homekit_finds_linked_humidity_sensors(
         config_entry_id=config_entry.entry_id,
         sw_version="0.16.1",
         model="Smart Brainy Clever Humidifier",
-        manufacturer="Home Assistant",
+        manufacturer="Open Peer Power",
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
 
@@ -1209,7 +1209,7 @@ async def test_homekit_finds_linked_humidity_sensors(
         ANY,
         ANY,
         {
-            "manufacturer": "Home Assistant",
+            "manufacturer": "Open Peer Power",
             "model": "Smart Brainy Clever Humidifier",
             "sw_version": "0.16.1",
             "linked_humidity_sensor": "sensor.humidifier_humidity_sensor",

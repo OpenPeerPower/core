@@ -82,7 +82,7 @@ class RoonHub:
 
 
 async def discover.opp):
-    """Connect and authenticate home assistant."""
+    """Connect and authenticate Open Peer Power."""
 
     hub = RoonHub.opp)
     servers = await hub.discover()
@@ -91,7 +91,7 @@ async def discover.opp):
 
 
 async def authenticate.opp: core.OpenPeerPower, host, servers):
-    """Connect and authenticate home assistant."""
+    """Connect and authenticate Open Peer Power."""
 
     hub = RoonHub.opp)
     (token, core_id) = await hub.authenticate(host, servers)

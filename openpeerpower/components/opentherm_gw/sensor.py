@@ -70,7 +70,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             "The following sensor entities are deprecated and may no "
             "longer behave as expected. They will be removed in a future "
             "version. You can force removal of these entities by disabling "
-            "them and restarting Home Assistant.\n%s",
+            "them and restarting Open Peer Power.\n%s",
             pformat([s.entity_id for s in deprecated_sensors]),
         )
 

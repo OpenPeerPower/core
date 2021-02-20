@@ -16,7 +16,7 @@ API_KEY = "abc123"
 
 @pytest.fixture
 async def http_client.opp, aiohttp_client):
-    """Initialize a Home Assistant Server for testing this module."""
+    """Initialize a Open Peer Power Server for testing this module."""
     await async_setup_component.opp, webhook.DOMAIN, {})
     return await aiohttp_client.opp.http.app)
 

@@ -32,7 +32,7 @@
                 "data": {
                     "unlock": "S\u00ed, hazlo."
                 },
-                "description": "Tu dispositivo est\u00e1 bloqueado. Esto puede provocar problemas de autenticaci\u00f3n en Home Assistant. \u00bfQuieres desbloquearlo?",
+                "description": "Tu dispositivo est\u00e1 bloqueado. Esto puede provocar problemas de autenticaci\u00f3n en Open Peer Power. \u00bfQuieres desbloquearlo?",
                 "title": "Desbloquear el dispositivo (opcional)"
             },
             "user": {

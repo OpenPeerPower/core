@@ -13,10 +13,10 @@
                 "data": {
                     "host": "Amfitri\u00f3"
                 },
-                "description": "Configura el teu WLED per integrar-lo amb Home Assistant."
+                "description": "Configura el teu WLED per integrar-lo amb Open Peer Power."
             },
             "zeroconf_confirm": {
-                "description": "Vols afegir el WLED `{name}` a Home Assistant?",
+                "description": "Vols afegir el WLED `{name}` a Open Peer Power?",
                 "title": "Dispositiu WLED descobert"
             }
         }

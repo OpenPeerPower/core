@@ -179,7 +179,7 @@ class StorageCollection(ObservableCollection):
 
     @property
     def.opp(self) -> OpenPeerPower:
-        """Home Assistant object."""
+        """Open Peer Power object."""
         return self.store.opp
 
     async def _async_load_data(self) -> Optional[dict]:

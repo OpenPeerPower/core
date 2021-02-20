@@ -1,6 +1,6 @@
 {
   "domain": "api",
-  "name": "Home Assistant API",
+  "name": "Open Peer Power API",
   "documentation": "https://www.home-assistant.io/integrations/api",
   "dependencies": ["http"],
   "codeowners": ["@home-assistant/core"],

@@ -66,7 +66,7 @@ def mock_config_entry() -> MockConfigEntry:
 
 
 async def init_integration.opp) -> MockConfigEntry:
-    """Set up the Ruckus Unleashed integration in Home Assistant."""
+    """Set up the Ruckus Unleashed integration in Open Peer Power."""
     entry = mock_config_entry()
     with patch(
         "openpeerpower.components.ruckus_unleashed.Ruckus.connect",

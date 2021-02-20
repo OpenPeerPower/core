@@ -1,4 +1,4 @@
-"""Auth providers for Home Assistant."""
+"""Auth providers for Open Peer Power."""
 from __future__ import annotations
 
 import importlib

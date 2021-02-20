@@ -86,7 +86,7 @@
                     "api_host": "Overstyre API-vert-URL (valgfritt)",
                     "blink": "Blink p\u00e5 LED-lampen n\u00e5r du sender statusendring",
                     "discovery": "Svar p\u00e5 oppdagelsesforesp\u00f8rsler i nettverket ditt",
-                    "override_api_host": "Overstyre standard Home Assistant API-vertspanel-URL"
+                    "override_api_host": "Overstyre standard Open Peer Power API-vertspanel-URL"
                 },
                 "description": "Vennligst velg \u00f8nsket atferd for din panel",
                 "title": "Konfigurer diverse"

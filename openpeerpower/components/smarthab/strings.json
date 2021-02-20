@@ -11,7 +11,7 @@
                     "password": "[%key:common::config_flow::data::password%]",
                     "email": "[%key:common::config_flow::data::email%]"
                 },
-                "description": "For technical reasons, be sure to use a secondary account specific to your Home Assistant setup. You can create one from the SmartHab application.",
+                "description": "For technical reasons, be sure to use a secondary account specific to your Open Peer Power setup. You can create one from the SmartHab application.",
                 "title": "Setup SmartHab"
             }
         }

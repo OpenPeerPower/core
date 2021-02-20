@@ -13,10 +13,10 @@
                 "data": {
                     "host": "Host"
                 },
-                "description": "Set up your WLED to integrate with Home Assistant."
+                "description": "Set up your WLED to integrate with Open Peer Power."
             },
             "zeroconf_confirm": {
-                "description": "Do you want to add the WLED named `{name}` to Home Assistant?",
+                "description": "Do you want to add the WLED named `{name}` to Open Peer Power?",
                 "title": "Discovered WLED device"
             }
         }

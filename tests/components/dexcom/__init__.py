@@ -20,7 +20,7 @@ GLUCOSE_READING = GlucoseReading(json.loads(load_fixture("dexcom_data.json")))
 
 
 async def init_integration.opp) -> MockConfigEntry:
-    """Set up the Dexcom integration in Home Assistant."""
+    """Set up the Dexcom integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         title="test_username",

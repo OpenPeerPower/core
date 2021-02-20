@@ -20,7 +20,7 @@ resources:
     - repository: azure
       type: github
       name: "home-assistant/ci-azure"
-      endpoint: "home-assistant"
+      endpoint: "openpeerpower"
 variables:
   - name: PythonMain
     value: "38"
@@ -165,7 +165,7 @@ stages:
           - script: |
               . venv/bin/activate
               pip install -e .
-            displayName: "Install Home Assistant"
+            displayName: "Install Open Peer Power"
           - script: |
               set -e
 
@@ -207,7 +207,7 @@ stages:
           - script: |
               . venv/bin/activate
               pip install -e .
-            displayName: "Install Home Assistant"
+            displayName: "Install Open Peer Power"
           - script: |
               . venv/bin/activate
               pylint openpeerpower

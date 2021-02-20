@@ -22,7 +22,7 @@
                 "data": {
                     "type": "Tipo di stampante"
                 },
-                "description": "Vuoi aggiungere la stampante Brother {model} con il numero seriale `{serial_number}` a Home Assistant?",
+                "description": "Vuoi aggiungere la stampante Brother {model} con il numero seriale `{serial_number}` a Open Peer Power?",
                 "title": "Trovata stampante Brother"
             }
         }

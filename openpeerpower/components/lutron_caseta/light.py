@@ -18,12 +18,12 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def to_lutron_level(level):
-    """Convert the given Home Assistant light level (0-255) to Lutron (0-100)."""
+    """Convert the given Open Peer Power light level (0-255) to Lutron (0-100)."""
     return int(round((level * 100) / 255))
 
 
 def to_opp_level(level):
-    """Convert the given Lutron (0-100) light level to Home Assistant (0-255)."""
+    """Convert the given Lutron (0-100) light level to Open Peer Power (0-255)."""
     return int((level * 255) // 100)
 
 

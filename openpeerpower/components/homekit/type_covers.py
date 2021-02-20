@@ -116,7 +116,7 @@ class GarageDoorOpener(HomeAccessory):
     async def run_op.dler(self):
         """Handle accessory driver started event.
 
-        Run inside the Home Assistant event loop.
+        Run inside the Open Peer Power event loop.
         """
         if self.linked_obstruction_sensor:
             async_track_state_change_event(

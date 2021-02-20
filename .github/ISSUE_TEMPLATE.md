@@ -1,6 +1,6 @@
 <!-- READ THIS FIRST:
   - If you need additional help with this template, please refer to https://www.home-assistant.io/help/reporting_issues/
-  - Make sure you are running the latest version of Home Assistant before reporting an issue: https://github.com/openpeerpower/core/releases
+  - Make sure you are running the latest version of Open Peer Power before reporting an issue: https://github.com/openpeerpower/core/releases
   - Do not report issues for integrations if you are using custom components or integrations.
   - Provide as many details as possible. Paste logs, configuration samples and code into the backticks.
   DO NOT DELETE ANY TEXT from this template! Otherwise, your issue may be closed without comment.
@@ -16,11 +16,11 @@
 <!--
   Provide details about the versions you are using, which helps us to reproduce
   and find the issue quicker. Version information is found in the
-  Home Assistant frontend: Configuration -> Info.
+  Open Peer Power frontend: Configuration -> Info.
 -->
 
-- Home Assistant Core release with the issue: 
-- Last working Home Assistant Core release (if known): 
+- Open Peer Power Core release with the issue: 
+- Last working Open Peer Power Core release (if known): 
 - Operating environment (OS/Container/Supervised/Core): 
 - Integration causing this issue: 
 - Link to integration documentation on our website: 

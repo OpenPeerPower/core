@@ -1,7 +1,7 @@
 {
     "config": {
         "abort": {
-            "already_configured": "Solo se puede agregar un dispositivo Atag a Home Assistant"
+            "already_configured": "Solo se puede agregar un dispositivo Atag a Open Peer Power"
         },
         "step": {
             "user": {

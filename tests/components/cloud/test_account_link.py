@@ -113,7 +113,7 @@ async def test_implementation.opp, flow_op.dler):
    .opp.data["cloud"] = None
 
     impl = account_link.CloudOAuth2Implementation.opp, "test")
-    assert impl.name == "Home Assistant Cloud"
+    assert impl.name == "Open Peer Power Cloud"
     assert impl.domain == "cloud"
 
     flow_op.dler.async_register_implementation.opp, impl)

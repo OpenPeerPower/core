@@ -193,7 +193,7 @@ class UniFiPOEClientSwitch(UniFiClient, SwitchEntity, RestoreEntity):
             self.poe_mode = self.port.poe_mode
 
     async def async_added_to_opp(self):
-        """Call when entity about to be added to Home Assistant."""
+        """Call when entity about to be added to Open Peer Power."""
         await super().async_added_to_opp()
 
         state = await self.async_get_last_state()

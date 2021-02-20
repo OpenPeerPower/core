@@ -9,7 +9,7 @@ from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE
 
 # pylint: disable=protected-access
 async def test_openpeerpowerr_location_exists() -> None:
-    """Test if Home Assistant location exists it should return True."""
+    """Test if Open Peer Power location exists it should return True."""
     opp = Mock()
     flow = config_flow.SmhiFlowHandler()
     flow.opp =.opp
@@ -117,7 +117,7 @@ async def test_flow_show_form() -> None:
     flow = config_flow.SmhiFlowHandler()
     flow.opp =.opp
 
-    # Test show form when Home Assistant config exists and
+    # Test show form when Open Peer Power config exists and
     # home is already configured, then new config is allowed
     with patch.object(
         flow, "_show_config_form", return_value=None
@@ -131,7 +131,7 @@ async def test_flow_show_form() -> None:
         await flow.async_step_user()
         assert len(config_form.mock_calls) == 1
 
-    # Test show form when Home Assistant config not and
+    # Test show form when Open Peer Power config not and
     # home is not configured
     with patch.object(
         flow, "_show_config_form", return_value=None
@@ -156,7 +156,7 @@ async def test_flow_show_form_name_exists() -> None:
     flow = config_flow.SmhiFlowHandler()
     flow.opp =.opp
     test_data = {"name": "home", CONF_LONGITUDE: "0", CONF_LATITUDE: "0"}
-    # Test show form when Home Assistant config exists and
+    # Test show form when Open Peer Power config exists and
     # home is already configured, then new config is allowed
     with patch.object(
         flow, "_show_config_form", return_value=None

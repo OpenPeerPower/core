@@ -1,4 +1,4 @@
-"""Tests Home Assistant temperature helpers."""
+"""Tests Open Peer Power temperature helpers."""
 import pytest
 
 from openpeerpower.const import (

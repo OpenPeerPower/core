@@ -6,8 +6,8 @@
         "step": {
             "user": {
                 "data": {
-                    "exclude": "Identificadors de dispositiu Vera a excloure de Home Assistant.",
-                    "lights": "Identificadors de dispositiu dels commutadors Vera a tractar com a llums a Home Assistant.",
+                    "exclude": "Identificadors de dispositiu Vera a excloure de Open Peer Power.",
+                    "lights": "Identificadors de dispositiu dels commutadors Vera a tractar com a llums a Open Peer Power.",
                     "vera_controller_url": "URL del controlador"
                 },
                 "description": "Proporciona un URL pel controlador Vera. Hauria de ser similar al seg\u00fcent: http://192.168.1.161:3480.",
@@ -19,10 +19,10 @@
         "step": {
             "init": {
                 "data": {
-                    "exclude": "Identificadors de dispositiu Vera a excloure de Home Assistant.",
-                    "lights": "Identificadors de dispositiu dels commutadors Vera a tractar com a llums a Home Assistant."
+                    "exclude": "Identificadors de dispositiu Vera a excloure de Open Peer Power.",
+                    "lights": "Identificadors de dispositiu dels commutadors Vera a tractar com a llums a Open Peer Power."
                 },
-                "description": "Consulta la documentaci\u00f3 de Vera per veure els detalls sobre els par\u00e0metres opcionals a: https://www.home-assistant.io/integrations/vera/. Nota: tots els canvis fets aqu\u00ed necessitaran un reinici de Home Assistant. Per esborrar valors, posa-hi un espai.",
+                "description": "Consulta la documentaci\u00f3 de Vera per veure els detalls sobre els par\u00e0metres opcionals a: https://www.home-assistant.io/integrations/vera/. Nota: tots els canvis fets aqu\u00ed necessitaran un reinici de Open Peer Power. Per esborrar valors, posa-hi un espai.",
                 "title": "Opcions del controlador Vera"
             }
         }

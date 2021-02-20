@@ -17,7 +17,7 @@
                 "description": "Por favor ingrese la contrase\u00f1a que estableci\u00f3 en su configuraci\u00f3n para {name} ."
             },
             "discovery_confirm": {
-                "description": "\u00bfDesea agregar el nodo ESPHome `{name}` a Home Assistant?",
+                "description": "\u00bfDesea agregar el nodo ESPHome `{name}` a Open Peer Power?",
                 "title": "Nodo ESPHome descubierto"
             },
             "user": {

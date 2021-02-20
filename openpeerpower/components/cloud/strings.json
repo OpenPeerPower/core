@@ -2,7 +2,7 @@
   "system_health": {
     "info": {
       "can_reach_cert_server": "Reach Certificate Server",
-      "can_reach_cloud": "Reach Home Assistant Cloud",
+      "can_reach_cloud": "Reach Open Peer Power Cloud",
       "can_reach_cloud_auth": "Reach Authentication Server",
       "relayer_connected": "Relayer Connected",
       "remote_connected": "Remote Connected",

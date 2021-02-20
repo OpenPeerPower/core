@@ -22,7 +22,7 @@
                 "description": "Vennligst skriv inn ditt Kodi brukernavn og passord. Disse finner du i System/Innstillinger/Nettverk/Tjenester."
             },
             "discovery_confirm": {
-                "description": "Vil du legge til Kodi ({name}) i Home Assistant?",
+                "description": "Vil du legge til Kodi ({name}) i Open Peer Power?",
                 "title": "Oppdaget Kodi"
             },
             "user": {

@@ -16,7 +16,7 @@
         "flow_title": "Apple TV: {name}",
         "step": {
             "confirm": {
-                "description": "Du bass um Punkt fir den Apple TV mam Numm \"{name}\" am  Home Assistant dob\u00e4izesetzen.\n\n**Fir de Prozess ofzeschl\u00e9issen, muss Du vill\u00e4icht m\u00e9i PIN-Coden aginn.**\n\nNot\u00e9ier w.e.g dass Du d\u00e4in Apple TV mat d\u00ebser Integratioun  *net\" ausschalten kanns. N\u00ebmmen de Mediaspiller am Home Assistant schalt aus!",
+                "description": "Du bass um Punkt fir den Apple TV mam Numm \"{name}\" am  Open Peer Power dob\u00e4izesetzen.\n\n**Fir de Prozess ofzeschl\u00e9issen, muss Du vill\u00e4icht m\u00e9i PIN-Coden aginn.**\n\nNot\u00e9ier w.e.g dass Du d\u00e4in Apple TV mat d\u00ebser Integratioun  *net\" ausschalten kanns. N\u00ebmmen de Mediaspiller am Open Peer Power schalt aus!",
                 "title": "Apple TV dob\u00e4isetzen best\u00e4tegen"
             },
             "pair_no_pin": {
@@ -50,7 +50,7 @@
         "step": {
             "init": {
                 "data": {
-                    "start_off": "Schlalt den Apparat net un wann den Home Assistant start"
+                    "start_off": "Schlalt den Apparat net un wann den Open Peer Power start"
                 },
                 "description": "Allgemeng Apparat Astellungen konfigur\u00e9ieren"
             }

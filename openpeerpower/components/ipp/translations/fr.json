@@ -23,11 +23,11 @@
                     "ssl": "L'imprimante prend en charge la communication via SSL/TLS",
                     "verify_ssl": "L'imprimante utilise un certificat SSL appropri\u00e9"
                 },
-                "description": "Configurez votre imprimante via IPP (Internet Printing Protocol) pour l'int\u00e9grer \u00e0 Home Assistant",
+                "description": "Configurez votre imprimante via IPP (Internet Printing Protocol) pour l'int\u00e9grer \u00e0 Open Peer Power",
                 "title": "Reliez votre imprimante"
             },
             "zeroconf_confirm": {
-                "description": "Voulez-vous ajouter l'imprimante `{name}` \u00e0 Home Assistant ?",
+                "description": "Voulez-vous ajouter l'imprimante `{name}` \u00e0 Open Peer Power ?",
                 "title": "Imprimante trouv\u00e9e"
             }
         }

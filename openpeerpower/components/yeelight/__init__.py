@@ -325,7 +325,7 @@ class YeelightScanner:
     def _async_start_scan(self):
         """Start scanning for Yeelight devices."""
         _LOGGER.debug("Start scanning")
-        # Use loop directly to avoid home assistant track this task
+        # Use loop directly to avoid Open Peer Power track this task
         self._scan_task = self._opp.loop.create_task(self._async_scan())
 
     @callback

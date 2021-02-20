@@ -129,14 +129,14 @@ def validate_options(value):
     ):
         _LOGGER.warning(
             "using 'value_template' for 'position_topic' is deprecated "
-            "and will be removed from Home Assistant in version 2021.6, "
+            "and will be removed from Open Peer Power in version 2021.6, "
             "please replace it with 'position_template'"
         )
 
     if CONF_TILT_INVERT_STATE in value:
         _LOGGER.warning(
             "'tilt_invert_state' is deprecated "
-            "and will be removed from Home Assistant in version 2021.6, "
+            "and will be removed from Open Peer Power in version 2021.6, "
             "please invert tilt using 'tilt_min' & 'tilt_max'"
         )
 

@@ -1,4 +1,4 @@
-"""Support to serve the Home Assistant API as WSGI application."""
+"""Support to serve the Open Peer Power API as WSGI application."""
 from contextvars import ContextVar
 from ipaddress import ip_network
 import logging
@@ -207,7 +207,7 @@ async def async_setup.opp, config):
 
 
 class OpenPeerPowerHTTP:
-    """HTTP server for Home Assistant."""
+    """HTTP server for Open Peer Power."""
 
     def __init__(
         self,
@@ -224,7 +224,7 @@ class OpenPeerPowerHTTP:
         is_ban_enabled,
         ssl_profile,
     ):
-        """Initialize the HTTP Home Assistant server."""
+        """Initialize the HTTP Open Peer Power server."""
         app = self.app = web.Application(
             middlewares=[], client_max_size=MAX_CLIENT_SIZE
         )
@@ -351,7 +351,7 @@ class OpenPeerPowerHTTP:
             context = None
 
         # Aiohttp freezes apps after start so that no changes can be made.
-        # However in Home Assistant components can be discovered after boot.
+        # However in Open Peer Power components can be discovered after boot.
         # This will now raise a RunTimeError.
         # To work around this we now prevent the router from getting frozen
         # pylint: disable=protected-access

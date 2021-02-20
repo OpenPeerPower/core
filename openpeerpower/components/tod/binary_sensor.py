@@ -41,7 +41,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the ToD sensors."""
     if.opp.config.time_zone is None:
-        _LOGGER.error("Timezone is not set in Home Assistant configuration")
+        _LOGGER.error("Timezone is not set in Open Peer Power configuration")
         return
 
     after = config[CONF_AFTER]
@@ -212,7 +212,7 @@ class TodSensor(BinarySensorEntity):
             self._time_before += timedelta(days=1)
 
     async def async_added_to_opp(self):
-        """Call when entity about to be added to Home Assistant."""
+        """Call when entity about to be added to Open Peer Power."""
         self._calculate_initial_boudary_time()
         self._calculate_next_update()
         self._point_in_time_listener(dt_util.now())

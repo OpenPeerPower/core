@@ -140,7 +140,7 @@ async def async_device_setup(
 
 
 class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
-    """Wrapper for a Shelly device with Home Assistant specific functions."""
+    """Wrapper for a Shelly device with Open Peer Power specific functions."""
 
     def __init__(self,.opp, entry, device: aioshelly.Device):
         """Initialize the Shelly device wrapper."""
@@ -262,13 +262,13 @@ class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
 
     @callback
     def _op.dle_op.stop(self, _):
-        """Handle Home Assistant stopping."""
+        """Handle Open Peer Power stopping."""
         _LOGGER.debug("Stopping ShellyDeviceWrapper for %s", self.name)
         self.shutdown()
 
 
 class ShellyDeviceRestWrapper(update_coordinator.DataUpdateCoordinator):
-    """Rest Wrapper for a Shelly device with Home Assistant specific functions."""
+    """Rest Wrapper for a Shelly device with Open Peer Power specific functions."""
 
     def __init__(self,.opp, device: aioshelly.Device):
         """Initialize the Shelly device wrapper."""

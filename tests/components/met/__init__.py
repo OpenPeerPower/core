@@ -8,7 +8,7 @@ from tests.common import MockConfigEntry
 
 
 async def init_integration.opp) -> MockConfigEntry:
-    """Set up the Met integration in Home Assistant."""
+    """Set up the Met integration in Open Peer Power."""
     entry_data = {
         CONF_NAME: "test",
         CONF_LATITUDE: 0,

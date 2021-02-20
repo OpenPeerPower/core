@@ -50,7 +50,7 @@ SERVICE_REMOVE_NODE = "remove_node"
 SERVICE_CANCEL_COMMAND = "cancel_command"
 SERVICE_SET_CONFIG_PARAMETER = "set_config_parameter"
 
-# Home Assistant Events
+# Open Peer Power Events
 EVENT_SCENE_ACTIVATED = f"{DOMAIN}.scene_activated"
 
 # Signals

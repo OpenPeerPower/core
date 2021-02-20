@@ -189,14 +189,14 @@ class Store:
 
     async def _async_callback_delayed_write(self, _now):
         """Handle a delayed write callback."""
-        # catch the case where a call is scheduled and then we stop Home Assistant
+        # catch the case where a call is scheduled and then we stop Open Peer Power
         if self.opp.state == CoreState.stopping:
             self._async_ensure_final_write_listener()
             return
         await self._async_op.dle_write_data()
 
     async def _async_callback_final_write(self, _event):
-        """Handle a write because Home Assistant is in final write state."""
+        """Handle a write because Open Peer Power is in final write state."""
         self._unsub_final_write_listener = None
         await self._async_op.dle_write_data()
 

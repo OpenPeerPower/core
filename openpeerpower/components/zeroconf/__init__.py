@@ -1,4 +1,4 @@
-"""Support for exposing Home Assistant via Zeroconf."""
+"""Support for exposing Open Peer Power via Zeroconf."""
 import fnmatch
 from functools import partial
 import ipaddress
@@ -135,7 +135,7 @@ class HaZeroconf(Zeroconf):
 
 
 async def async_setup.opp, config):
-    """Set up Zeroconf and make Home Assistant discoverable."""
+    """Set up Zeroconf and make Open Peer Power discoverable."""
     zc_config = config.get(DOMAIN, {})
     zc_args = {}
     if zc_config.get(CONF_DEFAULT_INTERFACE, DEFAULT_DEFAULT_INTERFACE):
@@ -146,7 +146,7 @@ async def async_setup.opp, config):
     zeroconf =.opp.data[DOMAIN] = await _async_get_instance.opp, **zc_args)
 
     async def _async_zeroconf_opp_start(_event):
-        """Expose Home Assistant on zeroconf when it starts.
+        """Expose Open Peer Power on zeroconf when it starts.
 
         Wait till started or otherwise HTTP is not up and running.
         """
@@ -221,7 +221,7 @@ def _register_opp_zc_service.opp, zeroconf, uuid):
         zeroconf.register_service(info)
     except NonUniqueNameException:
         _LOGGER.error(
-            "Home Assistant instance with identical name present in the local network"
+            "Open Peer Power instance with identical name present in the local network"
         )
 
 

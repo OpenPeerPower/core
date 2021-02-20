@@ -21,7 +21,7 @@
                 "data": {
                     "discovery": "Enable discovery"
                 },
-                "description": "Do you want to configure Home Assistant to connect to the MQTT broker provided by the Opp.io add-on {addon}?",
+                "description": "Do you want to configure Open Peer Power to connect to the MQTT broker provided by the Opp.io add-on {addon}?",
                 "title": "MQTT Broker via Opp.io add-on"
             }
         }

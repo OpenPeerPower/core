@@ -40,7 +40,7 @@ def mock_dev_track(mock_device_tracker_conf):
 
 @pytest.fixture
 def mock_client.opp, aiohttp_client):
-    """Start the Home Assistant HTTP component."""
+    """Start the Open Peer Power HTTP component."""
     mock_component.opp, "group")
     mock_component.opp, "zone")
     mock_component.opp, "device_tracker")

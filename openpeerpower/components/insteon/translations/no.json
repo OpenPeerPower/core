@@ -76,7 +76,7 @@
                     "port": "Port",
                     "username": "Brukernavn"
                 },
-                "description": "Endre Insteon Hub-tilkoblingsinformasjonen. Du m\u00e5 starte Home Assistant p\u00e5 nytt n\u00e5r du har gjort denne endringen. Dette endrer ikke konfigurasjonen av selve huben. For \u00e5 endre konfigurasjonen i huben bruker du hub-appen.",
+                "description": "Endre Insteon Hub-tilkoblingsinformasjonen. Du m\u00e5 starte Open Peer Power p\u00e5 nytt n\u00e5r du har gjort denne endringen. Dette endrer ikke konfigurasjonen av selve huben. For \u00e5 endre konfigurasjonen i huben bruker du hub-appen.",
                 "title": ""
             },
             "init": {

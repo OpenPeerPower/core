@@ -1,4 +1,4 @@
-"""The tests for the Home Assistant API component."""
+"""The tests for the Open Peer Power API component."""
 # pylint: disable=protected-access
 import json
 from unittest.mock import patch
@@ -17,7 +17,7 @@ from tests.common import async_mock_service
 
 @pytest.fixture
 def mock_api_client.opp,.opp_client):
-    """Start the Home Assistant HTTP component and return admin API client."""
+    """Start the Open Peer Power HTTP component and return admin API client."""
    .opp.loop.run_until_complete(async_setup_component.opp, "api", {}))
     return.opp.loop.run_until_complete.opp_client())
 

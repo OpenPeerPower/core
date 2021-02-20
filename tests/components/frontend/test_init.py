@@ -1,4 +1,4 @@
-"""The tests for Home Assistant frontend."""
+"""The tests for Open Peer Power frontend."""
 from datetime import timedelta
 import re
 from unittest.mock import patch
@@ -63,25 +63,25 @@ async def frontend_themes.opp):
 
 @pytest.fixture
 async def mock_http_client.opp, aiohttp_client, frontend):
-    """Start the Home Assistant HTTP component."""
+    """Start the Open Peer Power HTTP component."""
     return await aiohttp_client.opp.http.app)
 
 
 @pytest.fixture
 async def themes_ws_client.opp,.opp_ws_client, frontend_themes):
-    """Start the Home Assistant HTTP component."""
+    """Start the Open Peer Power HTTP component."""
     return await.opp_ws_client.opp)
 
 
 @pytest.fixture
 async def ws_client.opp,.opp_ws_client, frontend):
-    """Start the Home Assistant HTTP component."""
+    """Start the Open Peer Power HTTP component."""
     return await.opp_ws_client.opp)
 
 
 @pytest.fixture
 async def mock_http_client_with_urls.opp, aiohttp_client, ignore_frontend_deps):
-    """Start the Home Assistant HTTP component."""
+    """Start the Open Peer Power HTTP component."""
     assert await async_setup_component(
        .opp,
         "frontend",

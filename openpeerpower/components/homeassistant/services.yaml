@@ -1,16 +1,16 @@
 check_config:
   description:
-    Check the Home Assistant configuration files for errors. Errors will be
-    displayed in the Home Assistant log
+    Check the Open Peer Power configuration files for errors. Errors will be
+    displayed in the Open Peer Power log
 
 reload_core_config:
   description: Reload the core configuration
 
 restart:
-  description: Restart the Home Assistant service
+  description: Restart the Open Peer Power service
 
 set_location:
-  description: Update the Home Assistant location
+  description: Update the Open Peer Power location
   fields:
     latitude:
       name: Latitude
@@ -28,7 +28,7 @@ set_location:
         text:
 
 stop:
-  description: Stop the Home Assistant service.
+  description: Stop the Open Peer Power service.
 
 toggle:
   description: Generic service to toggle devices on/off under any domain

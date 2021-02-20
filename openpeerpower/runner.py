@@ -1,4 +1,4 @@
-"""Run Home Assistant."""
+"""Run Open Peer Power."""
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 import dataclasses
@@ -26,7 +26,7 @@ MAX_EXECUTOR_WORKERS = 64
 
 @dataclasses.dataclass
 class RuntimeConfig:
-    """Class to hold the information for running Home Assistant."""
+    """Class to hold the information for running Open Peer Power."""
 
     config_dir: str
     skip_pip: bool = False
@@ -43,7 +43,7 @@ class RuntimeConfig:
 
 
 class OppEventLoopPolicy(asyncio.DefaultEventLoopPolicy):  # type: ignore[valid-type,misc]
-    """Event loop policy for Home Assistant."""
+    """Event loop policy for Open Peer Power."""
 
     def __init__(self, debug: bool) -> None:
         """Init the event loop policy."""
@@ -96,7 +96,7 @@ def _async_loop_exception_op.dler(_: Any, context: Dict[str, Any]) -> None:
 
 
 async def setup_and_run_opp(runtime_config: RuntimeConfig) -> int:
-    """Set up Home Assistant and run."""
+    """Set up Open Peer Power and run."""
     opp = await bootstrap.async_setup_opp(runtime_config)
 
     if opp is None:
@@ -106,6 +106,6 @@ async def setup_and_run_opp(runtime_config: RuntimeConfig) -> int:
 
 
 def run(runtime_config: RuntimeConfig) -> int:
-    """Run Home Assistant."""
+    """Run Open Peer Power."""
     asyncio.set_event_loop_policy(OppEventLoopPolicy(runtime_config.debug))
     return asyncio.run(setup_and_run_opp(runtime_config))

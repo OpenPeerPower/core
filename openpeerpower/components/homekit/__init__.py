@@ -418,7 +418,7 @@ def _async_register_events_and_services.opp: OpenPeerPower):
 
 
 class HomeKit:
-    """Class to handle all actions between HomeKit and Home Assistant."""
+    """Class to handle all actions between HomeKit and Open Peer Power."""
 
     def __init__(
         self,
@@ -627,7 +627,7 @@ class HomeKit:
             connections={connection},
             manufacturer=MANUFACTURER,
             name=self._name,
-            model=f"Home Assistant HomeKit {hk_mode_name}",
+            model=f"Open Peer Power HomeKit {hk_mode_name}",
         )
 
     @callback

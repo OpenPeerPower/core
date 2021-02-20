@@ -1,4 +1,4 @@
-"""Test Home Assistant Cast."""
+"""Test Open Peer Power Cast."""
 
 from unittest.mock import patch
 

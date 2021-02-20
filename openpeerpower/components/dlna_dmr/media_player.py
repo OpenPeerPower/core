@@ -219,7 +219,7 @@ class DlnaDmrDevice(MediaPlayerEntity):
         return self._available
 
     async def _async_on_opp_stop(self, event):
-        """Event handler on Home Assistant stop."""
+        """Event handler on Open Peer Power stop."""
         async with self.opp.data[DLNA_DMR_DATA]["lock"]:
             await self._device.async_unsubscribe_services()
 
@@ -341,7 +341,7 @@ class DlnaDmrDevice(MediaPlayerEntity):
     @catch_request_errors()
     async def async_play_media(self, media_type, media_id, **kwargs):
         """Play a piece of media."""
-        title = "Home Assistant"
+        title = "Open Peer Power"
         mime_type = HOME_ASSISTANT_UPNP_MIME_TYPE_MAPPING.get(media_type, media_type)
         upnp_class = HOME_ASSISTANT_UPNP_CLASS_MAPPING.get(
             media_type, UPNP_CLASS_DEFAULT

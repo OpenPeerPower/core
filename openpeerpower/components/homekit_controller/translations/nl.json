@@ -6,7 +6,7 @@
             "already_in_progress": "De configuratiestroom voor het apparaat is al in volle gang.",
             "already_paired": "Dit accessoire is al gekoppeld aan een ander apparaat. Reset het accessoire en probeer het opnieuw.",
             "ignored_model": "HomeKit-ondersteuning voor dit model is geblokkeerd omdat er een meer functie volledige native integratie beschikbaar is.",
-            "invalid_config_entry": "Dit apparaat geeft aan dat het gereed is om te koppelen, maar er is al een conflicterend configuratie-item voor in de Home Assistant dat eerst moet worden verwijderd.",
+            "invalid_config_entry": "Dit apparaat geeft aan dat het gereed is om te koppelen, maar er is al een conflicterend configuratie-item voor in de Open Peer Power dat eerst moet worden verwijderd.",
             "invalid_properties": "Ongeldige eigenschappen aangekondigd door apparaat.",
             "no_devices": "Er zijn geen gekoppelde apparaten gevonden"
         },

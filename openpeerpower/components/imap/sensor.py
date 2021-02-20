@@ -81,7 +81,7 @@ class ImapSensor(Entity):
         self._idle_loop_task = None
 
     async def async_added_to_opp(self):
-        """Handle when an entity is about to be added to Home Assistant."""
+        """Handle when an entity is about to be added to Open Peer Power."""
         if not self.should_poll:
             self._idle_loop_task = self.opp.loop.create_task(self.idle_loop())
 

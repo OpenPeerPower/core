@@ -156,7 +156,7 @@ class OppIO:
 
     @_api_bool
     async def update_opp_api(self, http_config, refresh_token):
-        """Update Home Assistant API data on Opp.io."""
+        """Update Open Peer Power API data on Opp.io."""
         port = http_config.get(CONF_SERVER_PORT) or SERVER_PORT
         options = {
             "ssl": CONF_SSL_CERTIFICATE in http_config,

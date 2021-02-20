@@ -18,7 +18,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up the solarlog platform."""
     _LOGGER.warning(
         "Configuration of the solarlog platform in configuration.yaml is deprecated "
-        "in Home Assistant 0.119. Please remove entry from your configuration"
+        "in Open Peer Power 0.119. Please remove entry from your configuration"
     )
 
 

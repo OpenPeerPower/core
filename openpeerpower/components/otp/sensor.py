@@ -45,7 +45,7 @@ class TOTPSensor(Entity):
         self._next_expiration = None
 
     async def async_added_to_opp(self):
-        """Handle when an entity is about to be added to Home Assistant."""
+        """Handle when an entity is about to be added to Open Peer Power."""
         self._call_loop()
 
     @callback

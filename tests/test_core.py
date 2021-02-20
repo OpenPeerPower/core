@@ -1,4 +1,4 @@
-"""Test to verify that Home Assistant core works."""
+"""Test to verify that Open Peer Power core works."""
 # pylint: disable=protected-access
 import asyncio
 from datetime import datetime, timedelta
@@ -1143,7 +1143,7 @@ async def test_start_taking_too_long(loop, caplog):
         assert.opp.state == op.CoreState.running
         assert len(mock_timer.mock_calls) == 1
         assert mock_timer.mock_calls[0][1][0] is.opp
-        assert "Something is blocking Home Assistant" in caplog.text
+        assert "Something is blocking Open Peer Power" in caplog.text
 
     finally:
         await.opp.async_stop()
@@ -1335,7 +1335,7 @@ async def test_additional_data_in_core_config.opp,.opp_storage):
 
 
 async def test_start_events.opp):
-    """Test events fired when starting Home Assistant."""
+    """Test events fired when starting Open Peer Power."""
    .opp.state = op.CoreState.not_running
 
     all_events = []

@@ -1,4 +1,4 @@
-"""Test Home Assistant timeout handler."""
+"""Test Open Peer Power timeout handler."""
 import asyncio
 import time
 

@@ -89,7 +89,7 @@
                 "data": {
                     "api_host": "Preveri gostiteljski URL API (neobvezno)",
                     "blink": "Lu\u010dka LED na zaslonu utripa, ko po\u0161iljate spremembo stanja",
-                    "override_api_host": "Preglasi privzeti URL gostiteljske plo\u0161\u010de API-ja za Home Assistant"
+                    "override_api_host": "Preglasi privzeti URL gostiteljske plo\u0161\u010de API-ja za Open Peer Power"
                 },
                 "description": "Izberite \u017eeleno vedenje za va\u0161o plo\u0161\u010do",
                 "title": "Konfigurirajte Razno"

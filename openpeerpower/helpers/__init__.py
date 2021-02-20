@@ -1,4 +1,4 @@
-"""Helper methods for components within Home Assistant."""
+"""Helper methods for components within Open Peer Power."""
 import re
 from typing import TYPE_CHECKING, Any, Iterable, Sequence, Tuple
 

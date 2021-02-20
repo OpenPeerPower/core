@@ -6,7 +6,7 @@
             "already_in_progress": "Konfiguracijski tok za to napravo je \u017ee v teku.",
             "already_paired": "Ta dodatna oprema je \u017ee povezana z drugo napravo. Ponastavite dodatno opremo in poskusite znova.",
             "ignored_model": "Podpora za HomeKit za ta model je blokirana, saj je na voljo ve\u010d funkcij popolne nativne integracije.",
-            "invalid_config_entry": "Ta naprava je prikazana kot pripravljena za seznanjanje, vendar je v programu Home Assistant zanj \u017ee vpisan konfliktni vnos konfiguracije, ki ga je treba najprej odstraniti.",
+            "invalid_config_entry": "Ta naprava je prikazana kot pripravljena za seznanjanje, vendar je v programu Open Peer Power zanj \u017ee vpisan konfliktni vnos konfiguracije, ki ga je treba najprej odstraniti.",
             "no_devices": "Ni bilo mogo\u010de najti neuparjenih naprav"
         },
         "error": {

@@ -243,7 +243,7 @@ class DeconzGateway:
                 entity_id
             ):
                 # Removing an entity from the entity registry will also remove them
-                # from Home Assistant
+                # from Open Peer Power
                 entity_registry.async_remove(entity_id)
 
     @callback

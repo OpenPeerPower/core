@@ -76,7 +76,7 @@
                     "port": "Port",
                     "username": "Nom d'utilisateur"
                 },
-                "description": "Modifiez les informations de connexion Insteon Hub. Vous devez red\u00e9marrer Home Assistant apr\u00e8s avoir effectu\u00e9 cette modification. Cela ne change pas la configuration du Hub lui-m\u00eame. Pour modifier la configuration dans le Hub, utilisez l'application Hub.",
+                "description": "Modifiez les informations de connexion Insteon Hub. Vous devez red\u00e9marrer Open Peer Power apr\u00e8s avoir effectu\u00e9 cette modification. Cela ne change pas la configuration du Hub lui-m\u00eame. Pour modifier la configuration dans le Hub, utilisez l'application Hub.",
                 "title": "Insteon"
             },
             "init": {

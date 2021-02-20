@@ -177,7 +177,7 @@ class ZoneStorageCollection(collection.StorageCollection):
 
 
 async def async_setup.opp: OpenPeerPower, config: Dict) -> bool:
-    """Set up configured zones as well as Home Assistant zone if necessary."""
+    """Set up configured zones as well as Open Peer Power zone if necessary."""
     component = entity_component.EntityComponent(_LOGGER, DOMAIN,.opp)
     id_manager = collection.IDManager()
 

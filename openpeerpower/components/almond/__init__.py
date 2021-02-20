@@ -136,7 +136,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntr
                     await _configure_almond_for_op.opp, entry, api)
                 except ConfigEntryNotReady:
                     _LOGGER.warning(
-                        "Unable to configure Almond to connect to Home Assistant"
+                        "Unable to configure Almond to connect to Open Peer Power"
                     )
 
             async def almond_opp_start(_event):
@@ -155,7 +155,7 @@ async def _configure_almond_for_op.
     try:
         if entry.data["type"] == TYPE_OAUTH2:
             # If we're connecting over OAuth2, we will only set up connection
-            # with Home Assistant if we're remotely accessible.
+            # with Open Peer Power if we're remotely accessible.
            .opp_url = network.get_url.opp, allow_internal=False, prefer_cloud=True)
         else:
            .opp_url = network.get_url.opp)
@@ -163,7 +163,7 @@ async def _configure_almond_for_op.
         # If no URL is available, we're not going to configure Almond to connect to HA.
         return
 
-    _LOGGER.debug("Configuring Almond to connect to Home Assistant at %s",.opp_url)
+    _LOGGER.debug("Configuring Almond to connect to Open Peer Power at %s",.opp_url)
     store = storage.Store.opp, STORAGE_VERSION, STORAGE_KEY)
     data = await store.async_load()
 

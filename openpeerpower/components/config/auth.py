@@ -1,4 +1,4 @@
-"""Offer API to configure Home Assistant auth."""
+"""Offer API to configure Open Peer Power auth."""
 import voluptuous as vol
 
 from openpeerpower.components import websocket_api
@@ -15,7 +15,7 @@ SCHEMA_WS_DELETE = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
 
 
 async def async_setup.opp):
-    """Enable the Home Assistant views."""
+    """Enable the Open Peer Power views."""
    .opp.components.websocket_api.async_register_command(
         WS_TYPE_LIST, websocket_list, SCHEMA_WS_LIST
     )

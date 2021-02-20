@@ -9,7 +9,7 @@ from tests.common import async_mock_service
 
 
 async def test_if_fires_on_opp_start.opp):
-    """Test the firing when Home Assistant starts."""
+    """Test the firing when Open Peer Power starts."""
     calls = async_mock_service.opp, "test", "automation")
    .opp.state = CoreState.not_running
     config = {
@@ -42,7 +42,7 @@ async def test_if_fires_on_opp_start.opp):
 
 
 async def test_if_fires_on_opp_shutdown.opp):
-    """Test the firing when Home Assistant shuts down."""
+    """Test the firing when Open Peer Power shuts down."""
     calls = async_mock_service.opp, "test", "automation")
    .opp.state = CoreState.not_running
 

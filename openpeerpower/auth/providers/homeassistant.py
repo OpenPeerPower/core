@@ -1,4 +1,4 @@
-"""Home Assistant auth provider."""
+"""Open Peer Power auth provider."""
 from __future__ import annotations
 
 import asyncio
@@ -95,7 +95,7 @@ class Data:
                 self.is_legacy = True
 
                 logging.getLogger(__name__).warning(
-                    "Home Assistant auth provider is running in legacy mode "
+                    "Open Peer Power auth provider is running in legacy mode "
                     "because we detected usernames that are case-insensitive"
                     "equivalent. Please change the username: '%s'.",
                     username,
@@ -110,7 +110,7 @@ class Data:
                 self.is_legacy = True
 
                 logging.getLogger(__name__).warning(
-                    "Home Assistant auth provider is running in legacy mode "
+                    "Open Peer Power auth provider is running in legacy mode "
                     "because we detected usernames that start or end in a "
                     "space. Please change the username: '%s'.",
                     username,
@@ -213,12 +213,12 @@ class Data:
 
 @AUTH_PROVIDERS.register("openpeerpower")
 class OppAuthProvider(AuthProvider):
-    """Auth provider based on a local storage of users in Home Assistant config dir."""
+    """Auth provider based on a local storage of users in Open Peer Power config dir."""
 
-    DEFAULT_TITLE = "Home Assistant Local"
+    DEFAULT_TITLE = "Open Peer Power Local"
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        """Initialize an Home Assistant auth provider."""
+        """Initialize an Open Peer Power auth provider."""
         super().__init__(*args, **kwargs)
         self.data: Optional[Data] = None
         self._init_lock = asyncio.Lock()

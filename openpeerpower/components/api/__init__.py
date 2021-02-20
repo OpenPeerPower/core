@@ -1,4 +1,4 @@
-"""Rest API for Home Assistant."""
+"""Rest API for Open Peer Power."""
 import asyncio
 import json
 import logging

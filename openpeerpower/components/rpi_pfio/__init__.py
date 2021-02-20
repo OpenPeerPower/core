@@ -18,7 +18,7 @@ def setup.opp, config):
         PFIO.deinit()
 
     def prepare_pfio(event):
-        """Stuff to do when Home Assistant starts."""
+        """Stuff to do when Open Peer Power starts."""
        .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_pfio)
 
    .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, prepare_pfio)

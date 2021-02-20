@@ -22,7 +22,7 @@
                 "description": "Sisesta oma Kodi kasutajanimi ja salas\u00f5na. Need leiad System/Settings/Network/Services."
             },
             "discovery_confirm": {
-                "description": "Kas soovid lisada Kodi {name} Home Assistanti?",
+                "description": "Kas soovid lisada Kodi {name} Open Peer Poweri?",
                 "title": "Avastatud Kodi seadmed"
             },
             "user": {

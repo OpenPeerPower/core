@@ -18,7 +18,7 @@ async def async_init_integration(
    .opp: OpenPeerPower,
     skip_setup: bool = False,
 ) -> MockConfigEntry:
-    """Set up the myq integration in Home Assistant."""
+    """Set up the myq integration in Open Peer Power."""
 
     devices_fixture = "myq/devices.json"
     devices_json = load_fixture(devices_fixture)

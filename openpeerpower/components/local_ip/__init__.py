@@ -1,4 +1,4 @@
-"""Get the local IP address of the Home Assistant instance."""
+"""Get the local IP address of the Open Peer Power instance."""
 import voluptuous as vol
 
 from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry

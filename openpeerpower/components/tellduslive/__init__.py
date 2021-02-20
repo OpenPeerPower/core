@@ -25,7 +25,7 @@ from .const import (
     TELLDUS_DISCOVERY_NEW,
 )
 
-APPLICATION_NAME = "Home Assistant"
+APPLICATION_NAME = "Open Peer Power"
 
 _LOGGER = logging.getLogger(__name__)
 

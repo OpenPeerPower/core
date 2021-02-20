@@ -16,7 +16,7 @@
                     "host": "IP naslov",
                     "port": "Vrata"
                 },
-                "description": "Nastavite svoj BleBox za integracijo s Home Assistant.",
+                "description": "Nastavite svoj BleBox za integracijo s Open Peer Power.",
                 "title": "Nastavite napravo BleBox"
             }
         }

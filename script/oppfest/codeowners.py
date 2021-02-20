@@ -9,13 +9,13 @@ BASE = """
 # when the code that they own is touched.
 # https://github.com/blog/2392-introducing-code-owners
 
-# Home Assistant Core
+# Open Peer Power Core
 setup.py @home-assistant/core
 openpeerpower/*.py @home-assistant/core
 openpeerpower/helpers/* @home-assistant/core
 openpeerpower/util/* @home-assistant/core
 
-# Home Assistant Supervisor
+# Open Peer Power Supervisor
 build.json @home-assistant/supervisor
 machine/* @home-assistant/supervisor
 rootfs/* @home-assistant/supervisor

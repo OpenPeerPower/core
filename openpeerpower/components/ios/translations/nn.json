@@ -1,11 +1,11 @@
 {
     "config": {
         "abort": {
-            "single_instance_allowed": "Du treng berre \u00e9in Home Assistant iOS-konfigurasjon."
+            "single_instance_allowed": "Du treng berre \u00e9in Open Peer Power iOS-konfigurasjon."
         },
         "step": {
             "confirm": {
-                "description": "Vil du sette opp Home Assistant iOS-komponenten?"
+                "description": "Vil du sette opp Open Peer Power iOS-komponenten?"
             }
         }
     }

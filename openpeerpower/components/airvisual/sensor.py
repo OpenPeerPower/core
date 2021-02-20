@@ -182,7 +182,7 @@ class AirVisualGeographySensor(AirVisualEntity):
 
     @property
     def unique_id(self):
-        """Return a unique, Home Assistant friendly identifier for this entity."""
+        """Return a unique, Open Peer Power friendly identifier for this entity."""
         return f"{self._config_entry.unique_id}_{self._locale}_{self._kind}"
 
     @callback
@@ -281,7 +281,7 @@ class AirVisualNodeProSensor(AirVisualEntity):
 
     @property
     def unique_id(self):
-        """Return a unique, Home Assistant friendly identifier for this entity."""
+        """Return a unique, Open Peer Power friendly identifier for this entity."""
         return f"{self.coordinator.data['serial_number']}_{self._kind}"
 
     @callback

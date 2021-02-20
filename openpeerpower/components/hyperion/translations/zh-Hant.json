@@ -23,7 +23,7 @@
                 "description": "\u8a2d\u5b9a Hyperion Ambilight \u4f3a\u670d\u5668\u8a8d\u8b49"
             },
             "confirm": {
-                "description": "\u662f\u5426\u8981\u5c07 Hyperion Ambilight \u65b0\u589e\u81f3 Home Assistant\uff1f\n\n**\u4e3b\u6a5f\u7aef\uff1a** {host}\n**\u901a\u8a0a\u57e0\uff1a** {port}\n**ID**\uff1a {id}",
+                "description": "\u662f\u5426\u8981\u5c07 Hyperion Ambilight \u65b0\u589e\u81f3 Open Peer Power\uff1f\n\n**\u4e3b\u6a5f\u7aef\uff1a** {host}\n**\u901a\u8a0a\u57e0\uff1a** {port}\n**ID**\uff1a {id}",
                 "title": "\u78ba\u8a8d\u9644\u52a0 Hyperion Ambilight \u670d\u52d9"
             },
             "create_token": {

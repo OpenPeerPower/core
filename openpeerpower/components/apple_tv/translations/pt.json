@@ -16,7 +16,7 @@
         "flow_title": "Apple TV: {name}",
         "step": {
             "confirm": {
-                "description": "Est\u00e1 prestes a adicionar a Apple TV com o nome `{name}` ao Home Assistant.\n\n** Para completar o processo, poder\u00e1 ter que inserir v\u00e1rios c\u00f3digos PIN.**\n\nNote que *n\u00e3o* conseguir\u00e1 desligar a sua Apple TV com esta integra\u00e7\u00e3o. Apenas o media player no Home Assistant ser\u00e1 desligado!",
+                "description": "Est\u00e1 prestes a adicionar a Apple TV com o nome `{name}` ao Open Peer Power.\n\n** Para completar o processo, poder\u00e1 ter que inserir v\u00e1rios c\u00f3digos PIN.**\n\nNote que *n\u00e3o* conseguir\u00e1 desligar a sua Apple TV com esta integra\u00e7\u00e3o. Apenas o media player no Open Peer Power ser\u00e1 desligado!",
                 "title": "Confirme a adi\u00e7\u00e3o da Apple TV"
             },
             "pair_no_pin": {
@@ -51,7 +51,7 @@
         "step": {
             "init": {
                 "data": {
-                    "start_off": "N\u00e3o ligue o dispositivo ao iniciar o Home Assistant"
+                    "start_off": "N\u00e3o ligue o dispositivo ao iniciar o Open Peer Power"
                 },
                 "description": "Definir as configura\u00e7\u00f5es gerais do dispositivo"
             }

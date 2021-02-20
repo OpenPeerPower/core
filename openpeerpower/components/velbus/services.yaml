@@ -1,5 +1,5 @@
 sync_clock:
-  description: Sync the velbus modules clock to the Home Assistant clock, this is the same as the 'sync clock' from VelbusLink
+  description: Sync the velbus modules clock to the Open Peer Power clock, this is the same as the 'sync clock' from VelbusLink
 
 set_memo_text:
   description: >

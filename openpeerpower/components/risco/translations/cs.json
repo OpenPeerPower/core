@@ -27,8 +27,8 @@
                     "armed_home": "Re\u017eim domov",
                     "armed_night": "No\u010dn\u00ed re\u017eim"
                 },
-                "description": "Vyberte, do jak\u00e9ho stavu chcete nastavit alarm Risco p\u0159i aktivaci alarmu v Home Assistant",
-                "title": "Mapov\u00e1n\u00ed stav\u016f v Home Assistant na stavy v Risco"
+                "description": "Vyberte, do jak\u00e9ho stavu chcete nastavit alarm Risco p\u0159i aktivaci alarmu v Open Peer Power",
+                "title": "Mapov\u00e1n\u00ed stav\u016f v Open Peer Power na stavy v Risco"
             },
             "init": {
                 "data": {
@@ -47,8 +47,8 @@
                     "arm": "Zabezpe\u010deno (Nep\u0159\u00edtomnost)",
                     "partial_arm": "\u010c\u00e1ste\u010dn\u011b zabezpe\u010deno (Doma)"
                 },
-                "description": "Vyberte, v jak\u00e9m stavu bude v\u00e1\u0161 alarm v Home Assistant pro ka\u017ed\u00fd stav v Risco",
-                "title": "Mapov\u00e1n\u00ed stav\u016f v Risco na stavy v Home Assistant"
+                "description": "Vyberte, v jak\u00e9m stavu bude v\u00e1\u0161 alarm v Open Peer Power pro ka\u017ed\u00fd stav v Risco",
+                "title": "Mapov\u00e1n\u00ed stav\u016f v Risco na stavy v Open Peer Power"
             }
         }
     }

@@ -443,7 +443,7 @@ class KNXExposeTime:
 
 
 class KNXExposeSensor:
-    """Object to Expose Home Assistant entity to KNX bus."""
+    """Object to Expose Open Peer Power entity to KNX bus."""
 
     def __init__(self,.opp, xknx, expose_type, entity_id, attribute, default, address):
         """Initialize of Expose class."""

@@ -23,7 +23,7 @@
                 "description": "Konfigurer autorisasjon til Hyperion Ambilight-serveren"
             },
             "confirm": {
-                "description": "Vil du legge til denne Hyperion Ambilight i Home Assistant? \n\n ** Vert: ** {host}\n ** Port: ** {port}\n ** ID **: {id}",
+                "description": "Vil du legge til denne Hyperion Ambilight i Open Peer Power? \n\n ** Vert: ** {host}\n ** Port: ** {port}\n ** ID **: {id}",
                 "title": "Bekreft tillegg av Hyperion Ambilight-tjenesten"
             },
             "create_token": {

@@ -158,7 +158,7 @@ async def test_recorder_timeout(
 
 
 async def test_record_path_not_allowed.opp,.opp_client):
-    """Test where the output path is not allowed by home assistant configuration."""
+    """Test where the output path is not allowed by Open Peer Power configuration."""
     await async_setup_component.opp, "stream", {"stream": {}})
 
     # Setup demo track

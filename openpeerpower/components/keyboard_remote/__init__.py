@@ -90,7 +90,7 @@ class KeyboardRemote:
                 self.handlers_by_name[name] = op.dler
 
     def setup(self):
-        """Listen for Home Assistant start and stop events."""
+        """Listen for Open Peer Power start and stop events."""
 
         self.opp.bus.async_listen_once(
             EVENT_OPENPEERPOWER_START, self.async_start_monitoring

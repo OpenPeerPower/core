@@ -22,7 +22,7 @@
                 "data": {
                     "type": "Printeri t\u00fc\u00fcp"
                 },
-                "description": "Kas soovite lisada Home Assistanti Brotheri printeri {model} seerianumbriga \" {serial_number} \"?",
+                "description": "Kas soovite lisada Open Peer Poweri Brotheri printeri {model} seerianumbriga \" {serial_number} \"?",
                 "title": "Avastatud Brotheri printer"
             }
         }

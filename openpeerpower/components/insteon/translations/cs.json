@@ -72,7 +72,7 @@
                     "port": "Port",
                     "username": "U\u017eivatelsk\u00e9 jm\u00e9no"
                 },
-                "description": "Zm\u011b\u0148te informace o p\u0159ipojen\u00ed rozbo\u010dova\u010de Insteon. Po proveden\u00ed t\u00e9to zm\u011bny mus\u00edte Home Assistant restartovat. T\u00edm se nezm\u011bn\u00ed nastaven\u00ed samotn\u00e9ho rozbo\u010dova\u010de. Chcete-li zm\u011bnit nastaven\u00ed rozbo\u010dova\u010de, pou\u017eijte jeho aplikaci.",
+                "description": "Zm\u011b\u0148te informace o p\u0159ipojen\u00ed rozbo\u010dova\u010de Insteon. Po proveden\u00ed t\u00e9to zm\u011bny mus\u00edte Open Peer Power restartovat. T\u00edm se nezm\u011bn\u00ed nastaven\u00ed samotn\u00e9ho rozbo\u010dova\u010de. Chcete-li zm\u011bnit nastaven\u00ed rozbo\u010dova\u010de, pou\u017eijte jeho aplikaci.",
                 "title": "Insteon"
             },
             "init": {

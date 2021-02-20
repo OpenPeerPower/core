@@ -51,7 +51,7 @@ def async_update_friends(
     new_ids = set(coordinator.data.presence)
     current_ids = set(current)
 
-    # Process new favorites, add them to Home Assistant
+    # Process new favorites, add them to Open Peer Power
     new_entities = []
     for xuid in new_ids - current_ids:
         current[xuid] = [
@@ -63,7 +63,7 @@ def async_update_friends(
     if new_entities:
         async_add_entities(new_entities)
 
-    # Process deleted favorites, remove them from Home Assistant
+    # Process deleted favorites, remove them from Open Peer Power
     for xuid in current_ids - new_ids:
         coordinator.opp.async_create_task(
             async_remove_entities(xuid, coordinator, current)
@@ -75,7 +75,7 @@ async def async_remove_entities(
     coordinator: XboxUpdateCoordinator,
     current: Dict[str, XboxBinarySensorEntity],
 ) -> None:
-    """Remove friend sensors from Home Assistant."""
+    """Remove friend sensors from Open Peer Power."""
     registry = await async_get_entity_registry(coordinator.opp)
     entities = current[xuid]
     for entity in entities:

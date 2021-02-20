@@ -7,7 +7,7 @@
                 }
             },
             "zeroconf_confirm": {
-                "description": "Deseja adicionar o Elgato Key Light n\u00famero de s\u00e9rie ` {serial_number} ` ao Home Assistant?",
+                "description": "Deseja adicionar o Elgato Key Light n\u00famero de s\u00e9rie ` {serial_number} ` ao Open Peer Power?",
                 "title": "Dispositivo Elgato Key Light descoberto"
             }
         }

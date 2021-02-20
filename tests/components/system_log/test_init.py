@@ -308,7 +308,7 @@ async def async_log_error_from_test_path.opp, path, sq):
 
 
 async def test_openpeerpowerr_path.opp, simple_queue,.opp_client):
-    """Test error logged from Home Assistant path."""
+    """Test error logged from Open Peer Power path."""
     await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
     with patch(
         "openpeerpower.components.system_log.OPENPEERPOWER_PATH",

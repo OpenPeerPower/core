@@ -1,6 +1,6 @@
 {
   "domain": "oppio",
-  "name": "Home Assistant Supervisor",
+  "name": "Open Peer Power Supervisor",
   "documentation": "https://www.home-assistant.io/oppio",
   "dependencies": ["http"],
   "after_dependencies": ["panel_custom"],

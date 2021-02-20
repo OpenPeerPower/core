@@ -11,7 +11,7 @@
                     "passkey": "Cadena de clave de acceso",
                     "port": "Puerto"
                 },
-                "description": "Configure su dispositivo BSB-Lan para integrarlo con Home Assistant.",
+                "description": "Configure su dispositivo BSB-Lan para integrarlo con Open Peer Power.",
                 "title": "Con\u00e9ctese al dispositivo BSB-Lan"
             }
         }

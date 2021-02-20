@@ -63,7 +63,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 def setup.opp, config):
-    """Set up is called when Home Assistant is loading our component."""
+    """Set up is called when Open Peer Power is loading our component."""
     dominos = Dominos.opp, config)
 
     component = EntityComponent(_LOGGER, DOMAIN,.opp)

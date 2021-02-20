@@ -4,7 +4,7 @@
 # flooding the ISY with requests. To control multiple devices with a service call
 # the recommendation is to add a scene in the ISY and control that scene.
 send_raw_node_command:
-  description: Send a "raw" ISY REST Device Command to a Node using its Home Assistant Entity ID.
+  description: Send a "raw" ISY REST Device Command to a Node using its Open Peer Power Entity ID.
   fields:
     entity_id:
       description: Name of an entity to send command.
@@ -23,7 +23,7 @@ send_raw_node_command:
       example: 67
 send_node_command:
   description: >-
-    Send a command to an ISY Device using its Home Assistant entity ID. Valid commands are: beep, brighten, dim, disable,
+    Send a command to an ISY Device using its Open Peer Power entity ID. Valid commands are: beep, brighten, dim, disable,
     enable, fade_down, fade_stop, fade_up, fast_off, fast_on, and query.
   fields:
     entity_id:
@@ -110,6 +110,6 @@ run_network_resource:
       description: (Optional) If you have more than one ISY connected, provide the name of the ISY to query (as shown on the Device Registry or as the top-first node in the ISY Admin Console).  If you have the same resource name or address on multiple ISYs, omitting this will run the command on them all.
       example: "ISY"
 reload:
-  description: Reload the ISY994 connection(s) without restarting Home Assistant. Use to pick up new devices that have been added or changed on the ISY.
+  description: Reload the ISY994 connection(s) without restarting Open Peer Power. Use to pick up new devices that have been added or changed on the ISY.
 cleanup_entities:
   description: Cleanup old entities and devices no longer used by the ISY994 integrations. Useful if you've removed devices from the ISY or changed the options in the configuration to exclude additional items.

@@ -46,7 +46,7 @@
         "step": {
             "init": {
                 "data": {
-                    "start_off": "Home Assistant'\u0131 ba\u015flat\u0131rken cihaz\u0131 a\u00e7may\u0131n"
+                    "start_off": "Open Peer Power'\u0131 ba\u015flat\u0131rken cihaz\u0131 a\u00e7may\u0131n"
                 },
                 "description": "Genel cihaz ayarlar\u0131n\u0131 yap\u0131land\u0131r\u0131n"
             }

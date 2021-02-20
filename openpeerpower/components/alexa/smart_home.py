@@ -28,7 +28,7 @@ async def async_op.dle_message.opp, config, request, context=None, enabled=True)
     try:
         if not enabled:
             raise AlexaBridgeUnreachableError(
-                "Alexa API not enabled in Home Assistant configuration"
+                "Alexa API not enabled in Open Peer Power configuration"
             )
 
         if directive.has_endpoint:

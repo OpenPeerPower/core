@@ -1,6 +1,6 @@
 {
   "domain": "onboarding",
-  "name": "Home Assistant Onboarding",
+  "name": "Open Peer Power Onboarding",
   "documentation": "https://www.home-assistant.io/integrations/onboarding",
   "after_dependencies": [
     "oppio"

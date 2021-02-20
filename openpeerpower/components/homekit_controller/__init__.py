@@ -26,7 +26,7 @@ def escape_characteristic_name(char_name):
 
 
 class HomeKitEntity(Entity):
-    """Representation of a Home Assistant HomeKit device."""
+    """Representation of a Open Peer Power HomeKit device."""
 
     def __init__(self, accessory, devinfo):
         """Initialise a generic HomeKit device."""

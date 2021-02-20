@@ -623,7 +623,7 @@ class Group(Entity):
 
     @callback
     def _async_stop(self):
-        """Unregister the group from Home Assistant.
+        """Unregister the group from Open Peer Power.
 
         This method must be run in the event loop.
         """
@@ -637,7 +637,7 @@ class Group(Entity):
         self._async_update_group_state()
 
     async def async_added_to_opp(self):
-        """Handle addition to Home Assistant."""
+        """Handle addition to Open Peer Power."""
         if self.opp.state != CoreState.running:
             self.opp.bus.async_listen_once(
                 EVENT_OPENPEERPOWER_START, self._async_start
@@ -649,7 +649,7 @@ class Group(Entity):
         self._async_start_tracking()
 
     async def async_will_remove_from_opp(self):
-        """Handle removal from Home Assistant."""
+        """Handle removal from Open Peer Power."""
         self._async_stop()
 
     async def _async_state_changed_listener(self, event):

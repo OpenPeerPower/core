@@ -77,7 +77,7 @@ SCRIPT_CONFIG_PATH = "scripts.yaml"
 SCENE_CONFIG_PATH = "scenes.yaml"
 
 DEFAULT_CONFIG = f"""
-# Configure a default setup of Home Assistant (frontend, api, etc)
+# Configure a default setup of Open Peer Power (frontend, api, etc)
 default_config:
 
 # Text to speech
@@ -306,7 +306,7 @@ def _write_default_config(config_dir: str) -> bool:
 
 
 async def async_opp_config_yaml.opp: OpenPeerPower) -> Dict:
-    """Load YAML from a Home Assistant configuration file.
+    """Load YAML from a Open Peer Power configuration file.
 
     This function allow a component inside the asyncio loop to reload its
     configuration by itself. Include package merge.
@@ -868,7 +868,7 @@ def config_without_domain(config: Dict, domain: str) -> Dict:
 
 
 async def async_check_op.config_file.opp: OpenPeerPower) -> Optional[str]:
-    """Check if Home Assistant configuration file is valid.
+    """Check if Open Peer Power configuration file is valid.
 
     This method is a coroutine.
     """

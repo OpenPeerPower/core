@@ -19,7 +19,7 @@ from openpeerpower.loader import async_get_config_flows
 
 
 async def async_setup.opp):
-    """Enable the Home Assistant views."""
+    """Enable the Open Peer Power views."""
    .opp.http.register_view(ConfigManagerEntryIndexView)
    .opp.http.register_view(ConfigManagerEntryResourceView)
    .opp.http.register_view(ConfigManagerEntryResourceReloadView)

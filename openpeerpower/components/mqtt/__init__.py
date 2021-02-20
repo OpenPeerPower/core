@@ -536,7 +536,7 @@ class Subscription:
 
 
 class MQTT:
-    """Home Assistant MQTT client."""
+    """Open Peer Power MQTT client."""
 
     def __init__(
         self,
@@ -544,7 +544,7 @@ class MQTT:
         config_entry,
         conf,
     ) -> None:
-        """Initialize Home Assistant MQTT client."""
+        """Initialize Open Peer Power MQTT client."""
         # We don't import on the top because some integrations
         # should be able to optionally rely on MQTT.
         import paho.mqtt.client as mqtt  # pylint: disable=import-outside-toplevel
@@ -831,7 +831,7 @@ class MQTT:
         ):
 
             async def publish_birth_message(birth_message):
-                await self._op.started.wait()  # Wait for Home Assistant to start
+                await self._op.started.wait()  # Wait for Open Peer Power to start
                 await self._discovery_cooldown()  # Wait for MQTT discovery to cool down
                 await self.async_publish(  # pylint: disable=no-value-for-parameter
                     topic=birth_message.topic,

@@ -23,7 +23,7 @@
                     "ssl": "Benotzt ee SSL Zertifikat",
                     "verify_ssl": "SSL Zertifikat iwwerpr\u00e9iwen"
                 },
-                "description": "Konfigur\u00e9ier d\u00e4in Printer mat Internet Printing Protocol (IPP) fir en am Home Assistant z'int\u00e9gr\u00e9ieren.",
+                "description": "Konfigur\u00e9ier d\u00e4in Printer mat Internet Printing Protocol (IPP) fir en am Open Peer Power z'int\u00e9gr\u00e9ieren.",
                 "title": "\u00c4re Printer verbannen"
             },
             "zeroconf_confirm": {

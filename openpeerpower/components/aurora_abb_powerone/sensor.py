@@ -76,7 +76,7 @@ class AuroraABBSolarPVMonitorSensor(Entity):
     def update(self):
         """Fetch new state data for the sensor.
 
-        This is the only method that should fetch new data for Home Assistant.
+        This is the only method that should fetch new data for Open Peer Power.
         """
         try:
             self.client.connect()

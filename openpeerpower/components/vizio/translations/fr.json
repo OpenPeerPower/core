@@ -19,11 +19,11 @@
                 "title": "Processus de couplage complet"
             },
             "pairing_complete": {
-                "description": "Votre Appareil VIZIO Smartcast est maintenant connect\u00e9 \u00e0 Home Assistant.",
+                "description": "Votre Appareil VIZIO Smartcast est maintenant connect\u00e9 \u00e0 Open Peer Power.",
                 "title": "Appairage termin\u00e9"
             },
             "pairing_complete_import": {
-                "description": "Votre Appareil VIZIO Smartcast est maintenant connect\u00e9 \u00e0 Home Assistant.\n\nVotre Jeton d'acc\u00e8s est '**{access_token}**'.",
+                "description": "Votre Appareil VIZIO Smartcast est maintenant connect\u00e9 \u00e0 Open Peer Power.\n\nVotre Jeton d'acc\u00e8s est '**{access_token}**'.",
                 "title": "Appairage termin\u00e9"
             },
             "user": {

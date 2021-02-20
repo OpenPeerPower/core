@@ -1,4 +1,4 @@
-# Home Assistant Core, full dependency set
+# Open Peer Power Core, full dependency set
 -r requirements.txt
 
 # openpeerpower.components.aemet

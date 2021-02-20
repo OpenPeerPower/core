@@ -107,7 +107,7 @@ async def async_setup.opp, config):
     partner = conf.get(CONF_PARTNER)
 
     if.opp.config.time_zone is None:
-        _LOGGER.error("Timezone is not set in Home Assistant")
+        _LOGGER.error("Timezone is not set in Open Peer Power")
         return False
 
     timezone = str.opp.config.time_zone)

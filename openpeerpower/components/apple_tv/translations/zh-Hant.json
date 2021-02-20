@@ -19,7 +19,7 @@
         "flow_title": "Apple TV\uff1a{name}",
         "step": {
             "confirm": {
-                "description": "\u6b63\u8981\u65b0\u589e\u540d\u70ba `{name}` \u7684 Apple TV \u81f3 Home Assistant\u3002\n\n**\u6b32\u5b8c\u6210\u6b65\u9a5f\uff0c\u5fc5\u9808\u8f38\u5165\u591a\u7d44 PIN \u78bc\u3002**\n\n\u8acb\u6ce8\u610f\uff1a\u6b64\u6574\u5408\u4e26 *\u7121\u6cd5* \u9032\u884c Apple TV \u95dc\u6a5f\u7684\u52d5\u4f5c\uff0c\u50c5\u80fd\u65bc Home Assistant \u4e2d\u95dc\u9589\u5a92\u9ad4\u64ad\u653e\u5668\u529f\u80fd\uff01",
+                "description": "\u6b63\u8981\u65b0\u589e\u540d\u70ba `{name}` \u7684 Apple TV \u81f3 Open Peer Power\u3002\n\n**\u6b32\u5b8c\u6210\u6b65\u9a5f\uff0c\u5fc5\u9808\u8f38\u5165\u591a\u7d44 PIN \u78bc\u3002**\n\n\u8acb\u6ce8\u610f\uff1a\u6b64\u6574\u5408\u4e26 *\u7121\u6cd5* \u9032\u884c Apple TV \u95dc\u6a5f\u7684\u52d5\u4f5c\uff0c\u50c5\u80fd\u65bc Open Peer Power \u4e2d\u95dc\u9589\u5a92\u9ad4\u64ad\u653e\u5668\u529f\u80fd\uff01",
                 "title": "\u78ba\u8a8d\u65b0\u589e Apple TV"
             },
             "pair_no_pin": {
@@ -54,7 +54,7 @@
         "step": {
             "init": {
                 "data": {
-                    "start_off": "\u7576\u958b\u59cb Home Assistant \u6642\u4e0d\u8981\u958b\u555f\u88dd\u7f6e"
+                    "start_off": "\u7576\u958b\u59cb Open Peer Power \u6642\u4e0d\u8981\u958b\u555f\u88dd\u7f6e"
                 },
                 "description": "\u8a2d\u5b9a\u4e00\u822c\u88dd\u7f6e\u8a2d\u5b9a"
             }

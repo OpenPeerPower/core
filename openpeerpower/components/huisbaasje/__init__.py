@@ -66,7 +66,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-    # Load the client in the data of home assistant
+    # Load the client in the data of Open Peer Power
    .opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = {
         DATA_COORDINATOR: coordinator
     }

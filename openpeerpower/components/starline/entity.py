@@ -49,12 +49,12 @@ class StarlineEntity(Entity):
         self.schedule_update_op.state()
 
     async def async_added_to_opp(self):
-        """Call when entity about to be added to Home Assistant."""
+        """Call when entity about to be added to Open Peer Power."""
         await super().async_added_to_opp()
         self._unsubscribe_api = self._account.api.add_update_listener(self.update)
 
     async def async_will_remove_from_opp(self):
-        """Call when entity is being removed from Home Assistant."""
+        """Call when entity is being removed from Open Peer Power."""
         await super().async_will_remove_from_opp()
         if self._unsubscribe_api is not None:
             self._unsubscribe_api()

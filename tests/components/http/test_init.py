@@ -1,4 +1,4 @@
-"""The tests for the Home Assistant HTTP component."""
+"""The tests for the Open Peer Power HTTP component."""
 from ipaddress import ip_network
 import logging
 from unittest.mock import Mock, patch

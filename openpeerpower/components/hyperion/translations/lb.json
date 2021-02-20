@@ -22,7 +22,7 @@
                 "description": "Autorisatioun mat dengem Hyperion Ambilight Server konfigur\u00e9ieren"
             },
             "confirm": {
-                "description": "Soll d\u00ebsen Hyperion Ambilight am Home Assistant dob\u00e4i gesaat ginn?\n\n**Host:** {host}\n**Port:** {port}\n**ID**: {id}",
+                "description": "Soll d\u00ebsen Hyperion Ambilight am Open Peer Power dob\u00e4i gesaat ginn?\n\n**Host:** {host}\n**Port:** {port}\n**ID**: {id}",
                 "title": "Dob\u00e4isetzen vum Hyperion Ambilight Service best\u00e4tegen"
             },
             "create_token": {

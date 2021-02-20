@@ -40,7 +40,7 @@ async def test_form.opp):
     assert result2["data"] == {
         "username": "blink@example.com",
         "password": "example",
-        "device_id": "Home Assistant",
+        "device_id": "Open Peer Power",
         "token": None,
         "host": None,
         "account_id": None,

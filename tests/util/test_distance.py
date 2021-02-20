@@ -1,4 +1,4 @@
-"""Test Home Assistant distance utility functions."""
+"""Test Open Peer Power distance utility functions."""
 
 import pytest
 

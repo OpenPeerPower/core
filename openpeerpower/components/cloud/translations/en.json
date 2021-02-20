@@ -3,7 +3,7 @@
         "info": {
             "alexa_enabled": "Alexa Enabled",
             "can_reach_cert_server": "Reach Certificate Server",
-            "can_reach_cloud": "Reach Home Assistant Cloud",
+            "can_reach_cloud": "Reach Open Peer Power Cloud",
             "can_reach_cloud_auth": "Reach Authentication Server",
             "google_enabled": "Google Enabled",
             "logged_in": "Logged In",

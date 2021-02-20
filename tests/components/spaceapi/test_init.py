@@ -1,4 +1,4 @@
-"""The tests for the Home Assistant SpaceAPI component."""
+"""The tests for the Open Peer Power SpaceAPI component."""
 # pylint: disable=protected-access
 from unittest.mock import patch
 
@@ -71,7 +71,7 @@ SENSOR_OUTPUT = {
 
 @pytest.fixture
 def mock_client.opp,.opp_client):
-    """Start the Home Assistant HTTP component."""
+    """Start the Open Peer Power HTTP component."""
     with patch("openpeerpower.components.spaceapi", return_value=mock_coro(True)):
        .opp.loop.run_until_complete(async_setup_component.opp, "spaceapi", CONFIG))
 
@@ -89,7 +89,7 @@ def mock_client.opp,.opp_client):
 
 
 async def test_spaceapi_get.opp, mock_client):
-    """Test response after start-up Home Assistant."""
+    """Test response after start-up Open Peer Power."""
     resp = await mock_client.get(URL_API_SPACEAPI)
     assert resp.status == 200
 

@@ -14,10 +14,10 @@
                     "host": "Hostnaam of IP-adres",
                     "port": "Poortnummer"
                 },
-                "description": "Stel uw Elgato Key Light in om te integreren met Home Assistant."
+                "description": "Stel uw Elgato Key Light in om te integreren met Open Peer Power."
             },
             "zeroconf_confirm": {
-                "description": "Wilt u de Elgato Key Light met serienummer ` {serial_number} ` toevoegen aan Home Assistant?",
+                "description": "Wilt u de Elgato Key Light met serienummer ` {serial_number} ` toevoegen aan Open Peer Power?",
                 "title": "Elgato Key Light apparaat ontdekt"
             }
         }

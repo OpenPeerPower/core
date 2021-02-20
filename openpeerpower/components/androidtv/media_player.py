@@ -297,7 +297,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
     async def service_download(service):
-        """Download a file from your Android TV / Fire TV device to your Home Assistant instance."""
+        """Download a file from your Android TV / Fire TV device to your Open Peer Power instance."""
         local_path = service.data[ATTR_LOCAL_PATH]
         if not.opp.config.is_allowed_path(local_path):
             _LOGGER.warning("'%s' is not secure to load data from!", local_path)
@@ -321,7 +321,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
     async def service_upload(service):
-        """Upload a file from your Home Assistant instance to an Android TV / Fire TV device."""
+        """Upload a file from your Open Peer Power instance to an Android TV / Fire TV device."""
         local_path = service.data[ATTR_LOCAL_PATH]
         if not.opp.config.is_allowed_path(local_path):
             _LOGGER.warning("'%s' is not secure to load data from!", local_path)
@@ -622,12 +622,12 @@ class ADBDevice(MediaPlayerEntity):
 
     @adb_decorator()
     async def adb_pull(self, local_path, device_path):
-        """Download a file from your Android TV / Fire TV device to your Home Assistant instance."""
+        """Download a file from your Android TV / Fire TV device to your Open Peer Power instance."""
         await self.aftv.adb_pull(local_path, device_path)
 
     @adb_decorator()
     async def adb_push(self, local_path, device_path):
-        """Upload a file from your Home Assistant instance to an Android TV / Fire TV device."""
+        """Upload a file from your Open Peer Power instance to an Android TV / Fire TV device."""
         await self.aftv.adb_push(local_path, device_path)
 
 

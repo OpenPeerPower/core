@@ -237,7 +237,7 @@ class StubPrinter:
 class TimeWrapper:
     """Wrap the time module."""
 
-    # Class variable, only going to warn once per Home Assistant run
+    # Class variable, only going to warn once per Open Peer Power run
     warned = False
 
     # pylint: disable=no-self-use
@@ -246,7 +246,7 @@ class TimeWrapper:
         if not TimeWrapper.warned:
             TimeWrapper.warned = True
             _LOGGER.warning(
-                "Using time.sleep can reduce the performance of Home Assistant"
+                "Using time.sleep can reduce the performance of Open Peer Power"
             )
 
         time.sleep(*args, **kwargs)

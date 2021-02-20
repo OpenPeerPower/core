@@ -346,7 +346,7 @@ class Recorder(threading.Thread):
         self.opp.add_job(register)
         result =.opp_started.result()
 
-        # If shutdown happened before Home Assistant finished starting
+        # If shutdown happened before Open Peer Power finished starting
         if result is shutdown_task:
             return
 

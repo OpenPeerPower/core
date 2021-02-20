@@ -1,7 +1,7 @@
 {
     "config": {
         "create_entry": {
-            "default": "For at sende h\u00e6ndelser til Home Assistant skal du konfigurere [Webhooks med Twilio]({twilio_url}).\n\n Udfyld f\u00f8lgende oplysninger: \n\n - Webadresse: `{webhook_url}`\n - Metode: POST\n - Indholdstype: application/x-www-form-urlencoded\n\nSe [dokumentationen]({docs_url}) om hvordan du konfigurerer automatiseringer til at h\u00e5ndtere indg\u00e5ende data."
+            "default": "For at sende h\u00e6ndelser til Open Peer Power skal du konfigurere [Webhooks med Twilio]({twilio_url}).\n\n Udfyld f\u00f8lgende oplysninger: \n\n - Webadresse: `{webhook_url}`\n - Metode: POST\n - Indholdstype: application/x-www-form-urlencoded\n\nSe [dokumentationen]({docs_url}) om hvordan du konfigurerer automatiseringer til at h\u00e5ndtere indg\u00e5ende data."
         },
         "step": {
             "user": {

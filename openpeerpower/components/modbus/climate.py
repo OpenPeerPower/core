@@ -166,7 +166,7 @@ class ModbusThermostat(ClimateEntity):
 
     def set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
-        # Home Assistant expects this method.
+        # Open Peer Power expects this method.
         # We'll keep it here to avoid getting exceptions.
 
     @property

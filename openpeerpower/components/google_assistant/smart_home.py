@@ -263,8 +263,8 @@ async def async_devices_identify.opp, data: RequestData, payload):
             "isProxy": True,
             "deviceInfo": {
                 "hwVersion": "UNKNOWN_HW_VERSION",
-                "manufacturer": "Home Assistant",
-                "model": "Home Assistant",
+                "manufacturer": "Open Peer Power",
+                "model": "Open Peer Power",
                 "swVersion": __version__,
             },
         }

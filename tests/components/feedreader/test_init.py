@@ -38,7 +38,7 @@ class TestFeedreaderComponent(unittest.TestCase):
         self.addCleanup(self.tear_down_cleanup)
 
     def tear_down_cleanup(self):
-        """Clean up files and stop Home Assistant."""
+        """Clean up files and stop Open Peer Power."""
         data_file = self.opp.config.path(f"{feedreader.DOMAIN}.pickle")
         if exists(data_file):
             remove(data_file)

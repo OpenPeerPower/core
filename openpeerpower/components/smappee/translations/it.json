@@ -15,7 +15,7 @@
                 "data": {
                     "environment": "Ambiente"
                 },
-                "description": "Configura il tuo Smappee per integrarlo con Home Assistant."
+                "description": "Configura il tuo Smappee per integrarlo con Open Peer Power."
             },
             "local": {
                 "data": {
@@ -27,7 +27,7 @@
                 "title": "Scegli il metodo di autenticazione"
             },
             "zeroconf_confirm": {
-                "description": "Vuoi aggiungere il dispositivo Smappee con numero di serie `{serialnumber}` a Home Assistant?",
+                "description": "Vuoi aggiungere il dispositivo Smappee con numero di serie `{serialnumber}` a Open Peer Power?",
                 "title": "Dispositivo Smappee rilevato"
             }
         }

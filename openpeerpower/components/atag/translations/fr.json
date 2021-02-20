@@ -1,7 +1,7 @@
 {
     "config": {
         "abort": {
-            "already_configured": "Un seul appareil Atag peut \u00eatre ajout\u00e9 \u00e0 Home Assistant"
+            "already_configured": "Un seul appareil Atag peut \u00eatre ajout\u00e9 \u00e0 Open Peer Power"
         },
         "error": {
             "cannot_connect": "\u00c9chec de connexion",

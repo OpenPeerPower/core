@@ -10,7 +10,7 @@
         },
         "step": {
             "link": {
-                "description": "\u5fc5\u9808\u65bc Roon \u4e2d\u8a8d\u8b49 Home Assistant\u3002\u9ede\u9078\u50b3\u9001\u5f8c\u3001\u958b\u555f Roon Core \u61c9\u7528\u7a0b\u5f0f\u3001\u6253\u958b\u8a2d\u5b9a\u4e26\u65bc\u64f4\u5145\uff08Extensions\uff09\u4e2d\u555f\u7528 OpenPeerPower\u3002",
+                "description": "\u5fc5\u9808\u65bc Roon \u4e2d\u8a8d\u8b49 Open Peer Power\u3002\u9ede\u9078\u50b3\u9001\u5f8c\u3001\u958b\u555f Roon Core \u61c9\u7528\u7a0b\u5f0f\u3001\u6253\u958b\u8a2d\u5b9a\u4e26\u65bc\u64f4\u5145\uff08Extensions\uff09\u4e2d\u555f\u7528 OpenPeerPower\u3002",
                 "title": "\u65bc Roon \u4e2d\u8a8d\u8b49 OpenPeerPower"
             },
             "user": {

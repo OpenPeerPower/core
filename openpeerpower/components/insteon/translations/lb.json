@@ -76,7 +76,7 @@
                     "port": "Port",
                     "username": "Benotzernumm"
                 },
-                "description": "Insteon Hub Verbindungs Informatiounen \u00e4nneren. Du muss Home Assistant no der \u00c4nnerung fr\u00ebsch starten. D\u00ebst \u00e4nnert net d'Konfiguratioun vum Hub selwer. Fir d'Konfiguratioun vum Hub ze \u00e4nnere benotz d'Hub App.",
+                "description": "Insteon Hub Verbindungs Informatiounen \u00e4nneren. Du muss Open Peer Power no der \u00c4nnerung fr\u00ebsch starten. D\u00ebst \u00e4nnert net d'Konfiguratioun vum Hub selwer. Fir d'Konfiguratioun vum Hub ze \u00e4nnere benotz d'Hub App.",
                 "title": "Insteon"
             },
             "init": {

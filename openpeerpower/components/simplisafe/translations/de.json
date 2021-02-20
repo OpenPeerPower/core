@@ -19,7 +19,7 @@
             },
             "user": {
                 "data": {
-                    "code": "Code (wird in der Benutzeroberfl\u00e4che von Home Assistant verwendet)",
+                    "code": "Code (wird in der Benutzeroberfl\u00e4che von Open Peer Power verwendet)",
                     "password": "Passwort",
                     "username": "E-Mail-Adresse"
                 },
@@ -31,7 +31,7 @@
         "step": {
             "init": {
                 "data": {
-                    "code": "Code (wird in der Benutzeroberfl\u00e4che von Home Assistant verwendet)"
+                    "code": "Code (wird in der Benutzeroberfl\u00e4che von Open Peer Power verwendet)"
                 },
                 "title": "Konfigurieren Sie SimpliSafe"
             }

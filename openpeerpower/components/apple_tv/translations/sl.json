@@ -19,7 +19,7 @@
         "flow_title": "Apple TV: {name}",
         "step": {
             "confirm": {
-                "description": "V Home Assistant nameravate dodati Apple TV z imenom `{name}`.\n\n**Za dokon\u010danje postopka boste morda morali ve\u010dkrat vnesti PIN kodo**\n\nS to integracijo ne boste mogli ugasniti svojega Apple TV. Ugasnjena bosta zgolj medijski predvajalnik in Home Assistant!",
+                "description": "V Open Peer Power nameravate dodati Apple TV z imenom `{name}`.\n\n**Za dokon\u010danje postopka boste morda morali ve\u010dkrat vnesti PIN kodo**\n\nS to integracijo ne boste mogli ugasniti svojega Apple TV. Ugasnjena bosta zgolj medijski predvajalnik in Open Peer Power!",
                 "title": "Potrdite dodajanje Apple TV"
             },
             "pair_no_pin": {
@@ -54,7 +54,7 @@
         "step": {
             "init": {
                 "data": {
-                    "start_off": "Ne vkpaljajte naprave ob zagonu Home Assistant-a"
+                    "start_off": "Ne vkpaljajte naprave ob zagonu Open Peer Power-a"
                 },
                 "description": "Konfiguracija splo\u0161nih nastavitev naprave"
             }

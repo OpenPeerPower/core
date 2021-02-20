@@ -1,4 +1,4 @@
-"""Home Assistant Switcher Component Switch platform."""
+"""Open Peer Power Switcher Component Switch platform."""
 from typing import Callable, Dict
 
 from aioswitcher.api import SwitcherV2Api
@@ -105,7 +105,7 @@ async def async_setup_platform(
 
 
 class SwitcherControl(SwitchEntity):
-    """Home Assistant switch entity."""
+    """Open Peer Power switch entity."""
 
     def __init__(self, device_data: SwitcherV2Device) -> None:
         """Initialize the entity."""

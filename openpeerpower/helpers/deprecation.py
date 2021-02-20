@@ -1,4 +1,4 @@
-"""Deprecation helpers for Home Assistant."""
+"""Deprecation helpers for Open Peer Power."""
 import functools
 import inspect
 import logging

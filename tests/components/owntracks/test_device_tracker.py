@@ -41,7 +41,7 @@ TEST_ZONE_DEG_PER_M = 0.0000127
 FIVE_M = TEST_ZONE_DEG_PER_M * 5.0
 
 
-# Home Assistant Zones
+# Open Peer Power Zones
 INNER_ZONE = {
     "name": "zone",
     "latitude": TEST_ZONE_LAT + 0.1,

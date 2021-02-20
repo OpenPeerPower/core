@@ -81,7 +81,7 @@ def message():
         "testuser",
         "testpass",
         ["recip1@example.com", "testrecip@test.com"],
-        "Home Assistant",
+        "Open Peer Power",
         0,
     )
     yield mailer
@@ -150,10 +150,10 @@ def test_send_text_message.opp, message):
         '^Content-Type: text/plain; charset="us-ascii"\n'
         "MIME-Version: 1.0\n"
         "Content-Transfer-Encoding: 7bit\n"
-        "Subject: Home Assistant\n"
+        "Subject: Open Peer Power\n"
         "To: recip1@example.com,testrecip@test.com\n"
-        "From: Home Assistant <test@test.com>\n"
-        "X-Mailer: Home Assistant\n"
+        "From: Open Peer Power <test@test.com>\n"
+        "X-Mailer: Open Peer Power\n"
         "Date: [^\n]+\n"
         "Message-Id: <[^@]+@[^>]+>\n"
         "\n"

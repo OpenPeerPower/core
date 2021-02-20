@@ -126,7 +126,7 @@ class DemoLight(LightEntity):
     def available(self) -> bool:
         """Return availability."""
         # This demo light is always available, but well-behaving components
-        # should implement this to inform Home Assistant accordingly.
+        # should implement this to inform Open Peer Power accordingly.
         return self._available
 
     @property
@@ -195,7 +195,7 @@ class DemoLight(LightEntity):
             self._effect = kwargs[ATTR_EFFECT]
 
         # As we have disabled polling, we need to inform
-        # Home Assistant about updates in our state ourselves.
+        # Open Peer Power about updates in our state ourselves.
         self.async_write_op.state()
 
     async def async_turn_off(self, **kwargs) -> None:
@@ -203,5 +203,5 @@ class DemoLight(LightEntity):
         self._state = False
 
         # As we have disabled polling, we need to inform
-        # Home Assistant about updates in our state ourselves.
+        # Open Peer Power about updates in our state ourselves.
         self.async_write_op.state()

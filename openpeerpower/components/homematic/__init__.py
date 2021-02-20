@@ -252,7 +252,7 @@ def setup.opp, config):
     # Start server thread, connect to hosts, initialize to receive events
     homematic.start()
 
-    # Stops server when Home Assistant is shutting down
+    # Stops server when Open Peer Power is shutting down
    .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP,.opp.data[DATA_HOMEMATIC].stop)
 
     # Init homematic hubs
@@ -442,7 +442,7 @@ def _system_callback_op.dler.opp, config, src, *args):
             if hmdevice.EVENTNODE:
                 hmdevice.setEventCallback(callback=bound_event_callback, bequeath=True)
 
-        # Create Home Assistant entities
+        # Create Open Peer Power entities
         if addresses:
             for component_name, discovery_type in (
                 ("switch", DISCOVER_SWITCHES),
@@ -458,7 +458,7 @@ def _system_callback_op.dler.opp, config, src, *args):
                 found_devices = _get_devices.opp, discovery_type, addresses, interface)
 
                 # When devices of this type are found
-                # they are setup in Home Assistant and a discovery event is fired
+                # they are setup in Open Peer Power and a discovery event is fired
                 if found_devices:
                     discovery.load_platform(
                        .opp,

@@ -17,7 +17,7 @@
         "data": {
           "username": "[%key:common::config_flow::data::email%]",
           "password": "[%key:common::config_flow::data::password%]",
-          "code": "Code (used in Home Assistant UI)"
+          "code": "Code (used in Open Peer Power UI)"
         }
       }
     },
@@ -37,7 +37,7 @@
       "init": {
         "title": "Configure SimpliSafe",
         "data": {
-          "code": "Code (used in Home Assistant UI)"
+          "code": "Code (used in Open Peer Power UI)"
         }
       }
     }

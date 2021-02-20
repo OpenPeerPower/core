@@ -19,7 +19,7 @@
         "flow_title": "Apple TV: {name}",
         "step": {
             "confirm": {
-                "description": "Oled  Home Assistantile lisamas Apple TV-d nimega {name}.\n\n**Protsessi l\u00f5puleviimiseks pead v\u00f5ib-olla sisestama mitu PIN-koodi.**\n\nPane t\u00e4hele, et  selle sidumisega * ei saa * v\u00e4lja l\u00fclitada oma Apple TV-d. Ainult Home Assistant-i meediam\u00e4ngija l\u00fclitub v\u00e4lja!",
+                "description": "Oled  Open Peer Powerile lisamas Apple TV-d nimega {name}.\n\n**Protsessi l\u00f5puleviimiseks pead v\u00f5ib-olla sisestama mitu PIN-koodi.**\n\nPane t\u00e4hele, et  selle sidumisega * ei saa * v\u00e4lja l\u00fclitada oma Apple TV-d. Ainult Open Peer Power-i meediam\u00e4ngija l\u00fclitub v\u00e4lja!",
                 "title": "Kinnita Apple TV lisamine"
             },
             "pair_no_pin": {
@@ -54,7 +54,7 @@
         "step": {
             "init": {
                 "data": {
-                    "start_off": "\u00c4ra l\u00fclita seadet Home Assistanti k\u00e4ivitamisel sisse"
+                    "start_off": "\u00c4ra l\u00fclita seadet Open Peer Poweri k\u00e4ivitamisel sisse"
                 },
                 "description": "Seadme \u00fclds\u00e4tete seadistamine"
             }

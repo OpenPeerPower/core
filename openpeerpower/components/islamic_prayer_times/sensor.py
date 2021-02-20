@@ -1,4 +1,4 @@
-"""Platform to retrieve Islamic prayer times information for Home Assistant."""
+"""Platform to retrieve Islamic prayer times information for Open Peer Power."""
 
 from openpeerpower.const import DEVICE_CLASS_TIMESTAMP
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect

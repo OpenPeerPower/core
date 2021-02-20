@@ -85,7 +85,7 @@ class BeewiSmartclimSensor(Entity):
 
     @property
     def unique_id(self):
-        """Return a unique, Home Assistant friendly identifier for this entity."""
+        """Return a unique, Open Peer Power friendly identifier for this entity."""
         return f"{self._mac}_{self._device}"
 
     @property

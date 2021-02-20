@@ -10,7 +10,7 @@
         },
         "step": {
             "discovery_confirm": {
-                "description": "Voulez-vous ajouter Volumio (` {name} `) \u00e0 Home Assistant?",
+                "description": "Voulez-vous ajouter Volumio (` {name} `) \u00e0 Open Peer Power?",
                 "title": "Volumio d\u00e9couvert"
             },
             "user": {

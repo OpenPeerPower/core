@@ -42,7 +42,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Panasonic Blu-ray platform."""
     conf = discovery_info if discovery_info else config
 
-    # Register configured device with Home Assistant.
+    # Register configured device with Open Peer Power.
     add_entities([PanasonicBluRay(conf[CONF_HOST], conf[CONF_NAME])])
 
 

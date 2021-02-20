@@ -13,10 +13,10 @@
                 "data": {
                     "host": "Ana Bilgisayar"
                 },
-                "description": "WLED'inizi Home Assistant ile t\u00fcmle\u015ftirmek i\u00e7in ayarlay\u0131n."
+                "description": "WLED'inizi Open Peer Power ile t\u00fcmle\u015ftirmek i\u00e7in ayarlay\u0131n."
             },
             "zeroconf_confirm": {
-                "description": "Home Assistant'a '{name}' adl\u0131 WLED'i eklemek istiyor musunuz?"
+                "description": "Open Peer Power'a '{name}' adl\u0131 WLED'i eklemek istiyor musunuz?"
             }
         }
     }

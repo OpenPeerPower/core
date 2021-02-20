@@ -23,7 +23,7 @@
                     "ssl": "Uses an SSL certificate",
                     "verify_ssl": "Verify SSL certificate"
                 },
-                "description": "Set up your printer via Internet Printing Protocol (IPP) to integrate with Home Assistant.",
+                "description": "Set up your printer via Internet Printing Protocol (IPP) to integrate with Open Peer Power.",
                 "title": "Link your printer"
             },
             "zeroconf_confirm": {

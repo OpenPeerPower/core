@@ -1,4 +1,4 @@
-"""Support for functionality to have conversations with Home Assistant."""
+"""Support for functionality to have conversations with Open Peer Power."""
 import logging
 import re
 

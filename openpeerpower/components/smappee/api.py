@@ -1,4 +1,4 @@
-"""API for Smappee bound to Home Assistant OAuth."""
+"""API for Smappee bound to Open Peer Power OAuth."""
 from asyncio import run_coroutine_threadsafe
 
 from pysmappee import api
@@ -39,7 +39,7 @@ class ConfigEntrySmappeeApi(api.SmappeeApi):
         )
 
     def refresh_tokens(self) -> dict:
-        """Refresh and return new Smappee tokens using Home Assistant OAuth2 session."""
+        """Refresh and return new Smappee tokens using Open Peer Power OAuth2 session."""
         run_coroutine_threadsafe(
             self.session.async_ensure_token_valid(), self.opp.loop
         ).result()

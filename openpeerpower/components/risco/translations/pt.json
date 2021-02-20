@@ -44,7 +44,7 @@
                     "partial_arm": "Parcialmente armado (PRESENTE)"
                 },
                 "description": "Selecione o estado que o alarme do Home Assistent ir\u00e1 relatar para cada estado relatado pela Risco",
-                "title": "Associa\u00e7\u00e3o de estados do Mapa Risco e do Home Assistant"
+                "title": "Associa\u00e7\u00e3o de estados do Mapa Risco e do Open Peer Power"
             }
         }
     }

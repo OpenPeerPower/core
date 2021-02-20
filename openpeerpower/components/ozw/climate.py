@@ -108,7 +108,7 @@ HVAC_CURRENT_MAPPINGS = {
 }
 
 
-# Map Z-Wave HVAC Mode to Home Assistant value
+# Map Z-Wave HVAC Mode to Open Peer Power value
 # Note: We treat "auto" as "heat_cool" as most Z-Wave devices
 # report auto_changeover as auto without schedule support.
 ZW_HVAC_MODE_MAPPINGS = {
@@ -128,7 +128,7 @@ ZW_HVAC_MODE_MAPPINGS = {
     ThermostatMode.FULL_POWER: HVAC_MODE_HEAT,
 }
 
-# Map Home Assistant HVAC Mode to Z-Wave value
+# Map Open Peer Power HVAC Mode to Z-Wave value
 HVAC_MODE_ZW_MAPPINGS = {
     HVAC_MODE_OFF: ThermostatMode.OFF,
     HVAC_MODE_HEAT: ThermostatMode.HEAT,
@@ -348,7 +348,7 @@ class ZWaveClimateEntity(ZWaveDeviceEntity, ClimateEntity):
         )
 
     def _set_modes_and_presets(self):
-        """Convert Z-Wave Thermostat modes into Home Assistant modes and presets."""
+        """Convert Z-Wave Thermostat modes into Open Peer Power modes and presets."""
         all_modes = {}
         all_presets = {PRESET_NONE: None}
         if self.values.mode:

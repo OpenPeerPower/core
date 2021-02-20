@@ -6,7 +6,7 @@
         },
         "step": {
             "oppio_confirm": {
-                "description": "Ali \u017eelite konfigurirati Home Assistant za povezavo z Almondom, ki ga ponuja dodatek Opp.io: {addon} ?",
+                "description": "Ali \u017eelite konfigurirati Open Peer Power za povezavo z Almondom, ki ga ponuja dodatek Opp.io: {addon} ?",
                 "title": "Almond prek dodatka Opp.io"
             },
             "pick_implementation": {

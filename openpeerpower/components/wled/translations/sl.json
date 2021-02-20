@@ -9,10 +9,10 @@
                 "data": {
                     "host": "Gostitelj ali IP naslov"
                 },
-                "description": "Nastavite svoj WLED za integracijo s Home Assistant."
+                "description": "Nastavite svoj WLED za integracijo s Open Peer Power."
             },
             "zeroconf_confirm": {
-                "description": "Ali \u017eelite dodati WLED z imenom `{name}` v Home Assistant?",
+                "description": "Ali \u017eelite dodati WLED z imenom `{name}` v Open Peer Power?",
                 "title": "Odkrite WLED naprave"
             }
         }

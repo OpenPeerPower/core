@@ -27,8 +27,8 @@
                     "armed_home": "Sikret Hjemme",
                     "armed_night": "Sikret Natt"
                 },
-                "description": "Velg hvilken tilstand du vil stille Risco-alarmen til n\u00e5r du aktiverer Home Assistant-alarmen",
-                "title": "Koble Home Assistant statuser til Risco statuser"
+                "description": "Velg hvilken tilstand du vil stille Risco-alarmen til n\u00e5r du aktiverer Open Peer Power-alarmen",
+                "title": "Koble Open Peer Power statuser til Risco statuser"
             },
             "init": {
                 "data": {
@@ -47,8 +47,8 @@
                     "arm": "Sikret (BORTE)",
                     "partial_arm": "Delvis Sikret (OPPHOLD)"
                 },
-                "description": "Velg hvilken tilstand Home Assistant-alarmen skal rapportere for hver delstat som er rapportert av Risco",
-                "title": "Koble Risco statuser til Home Assistant statuser"
+                "description": "Velg hvilken tilstand Open Peer Power-alarmen skal rapportere for hver delstat som er rapportert av Risco",
+                "title": "Koble Risco statuser til Open Peer Power statuser"
             }
         }
     }

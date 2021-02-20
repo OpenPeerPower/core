@@ -175,7 +175,7 @@ async def async_unload_entry.opp, config_entry):
 
 
 def setup_opp_services.opp):
-    """Home Assistant services."""
+    """Open Peer Power services."""
 
     def change_setting(call):
         """Change an Abode system setting."""
@@ -229,7 +229,7 @@ def setup_opp_services.opp):
 
 
 async def setup_opp_events.opp):
-    """Home Assistant start and stop callbacks."""
+    """Open Peer Power start and stop callbacks."""
 
     def logout(event):
         """Logout of Abode."""

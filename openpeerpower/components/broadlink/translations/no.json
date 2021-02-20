@@ -32,7 +32,7 @@
                 "data": {
                     "unlock": "Ja, gj\u00f8r det."
                 },
-                "description": "{name} ({model} p\u00e5 {host}) er l\u00e5st. Dette kan f\u00f8re til godkjenningsproblemer i Home Assistant. Vil du l\u00e5se den opp?",
+                "description": "{name} ({model} p\u00e5 {host}) er l\u00e5st. Dette kan f\u00f8re til godkjenningsproblemer i Open Peer Power. Vil du l\u00e5se den opp?",
                 "title": "L\u00e5s opp enheten (valgfritt)"
             },
             "user": {

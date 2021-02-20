@@ -30,7 +30,7 @@ SERVER_STATUS_STATUS_ONLY = ServerStatus.new_from_json_dict(
 
 
 async def init_integration.opp) -> MockConfigEntry:
-    """Set up the Nightscout integration in Home Assistant."""
+    """Set up the Nightscout integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_URL: "https://some.url:1234"},
@@ -50,7 +50,7 @@ async def init_integration.opp) -> MockConfigEntry:
 
 
 async def init_integration_unavailable.opp) -> MockConfigEntry:
-    """Set up the Nightscout integration in Home Assistant."""
+    """Set up the Nightscout integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_URL: "https://some.url:1234"},
@@ -70,7 +70,7 @@ async def init_integration_unavailable.opp) -> MockConfigEntry:
 
 
 async def init_integration_empty_response.opp) -> MockConfigEntry:
-    """Set up the Nightscout integration in Home Assistant."""
+    """Set up the Nightscout integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_URL: "https://some.url:1234"},

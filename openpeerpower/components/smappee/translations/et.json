@@ -15,7 +15,7 @@
                 "data": {
                     "environment": "Keskkond"
                 },
-                "description": "Seadista oma Smappee Home Assistant-iga sidumiseks."
+                "description": "Seadista oma Smappee Open Peer Power-iga sidumiseks."
             },
             "local": {
                 "data": {
@@ -27,7 +27,7 @@
                 "title": "Vali tuvastusmeetod"
             },
             "zeroconf_confirm": {
-                "description": "Kas soovid lisada Home Assistanti Smappee seadme seerianumbriga \" {serial_number} \"?",
+                "description": "Kas soovid lisada Open Peer Poweri Smappee seadme seerianumbriga \" {serial_number} \"?",
                 "title": "Avastatud Smappee seade"
             }
         }

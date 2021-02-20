@@ -67,7 +67,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
     name = config[CONF_NAME]
 
-    # Every Home Assistant instance should have their own unique
+    # Every Open Peer Power instance should have their own unique
     # app parameter: https://brottsplatskartan.se/sida/api
     app = f"op-{uuid.getnode()}"
 

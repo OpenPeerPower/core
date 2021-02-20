@@ -128,7 +128,7 @@ def test_blueprint_validate():
                 },
             }
         ).validate()
-        == ["Requires at least Home Assistant 100000.0.0"]
+        == ["Requires at least Open Peer Power 100000.0.0"]
     )
 
 

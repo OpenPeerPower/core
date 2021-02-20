@@ -101,7 +101,7 @@ class AppleTVEntity(Entity):
         self._identifier = identifier
 
     async def async_added_to_opp(self):
-        """Handle when an entity is about to be added to Home Assistant."""
+        """Handle when an entity is about to be added to Open Peer Power."""
 
         @callback
         def _async_connected(atv):

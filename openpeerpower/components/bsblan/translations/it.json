@@ -16,7 +16,7 @@
                     "port": "Porta",
                     "username": "Nome utente"
                 },
-                "description": "Configura il tuo dispositivo BSB-Lan per l'integrazione con Home Assistant.",
+                "description": "Configura il tuo dispositivo BSB-Lan per l'integrazione con Open Peer Power.",
                 "title": "Collegamento al dispositivo BSB-Lan"
             }
         }

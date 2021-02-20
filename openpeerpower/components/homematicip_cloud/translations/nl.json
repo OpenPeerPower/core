@@ -21,7 +21,7 @@
                 "title": "Kies HomematicIP accesspoint"
             },
             "link": {
-                "description": "Druk op de blauwe knop op het accesspoint en de verzendknop om HomematicIP bij Home Assistant te registreren. \n\n![Locatie van knop op bridge](/static/images/config_flows/\nconfig_homematicip_cloud.png)",
+                "description": "Druk op de blauwe knop op het accesspoint en de verzendknop om HomematicIP bij Open Peer Power te registreren. \n\n![Locatie van knop op bridge](/static/images/config_flows/\nconfig_homematicip_cloud.png)",
                 "title": "Link accesspoint"
             }
         }

@@ -9,7 +9,7 @@
         },
         "step": {
             "oppio_confirm": {
-                "description": "Wilt u Home Assistant configureren om verbinding te maken met AdGuard Home van de Opp.io-add-on: {addon}?",
+                "description": "Wilt u Open Peer Power configureren om verbinding te maken met AdGuard Home van de Opp.io-add-on: {addon}?",
                 "title": "AdGuard Home via Opp.io add-on"
             },
             "user": {

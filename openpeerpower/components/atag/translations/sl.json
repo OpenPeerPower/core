@@ -1,7 +1,7 @@
 {
     "config": {
         "abort": {
-            "already_configured": "Home Assistant-u lahko dodate samo eno napravo Atag"
+            "already_configured": "Open Peer Power-u lahko dodate samo eno napravo Atag"
         },
         "step": {
             "user": {

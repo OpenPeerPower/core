@@ -1,4 +1,4 @@
-"""Open ports in your router for Home Assistant and provide statistics."""
+"""Open ports in your router for Open Peer Power and provide statistics."""
 import asyncio
 from ipaddress import ip_address
 

@@ -1,4 +1,4 @@
-"""Home Assistant trigger dispatcher."""
+"""Open Peer Power trigger dispatcher."""
 import importlib
 
 from openpeerpower.const import CONF_PLATFORM

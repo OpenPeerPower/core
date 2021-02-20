@@ -1,4 +1,4 @@
-"""Home Assistant command line scripts."""
+"""Open Peer Power command line scripts."""
 import argparse
 import asyncio
 import importlib

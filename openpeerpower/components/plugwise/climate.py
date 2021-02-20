@@ -1,4 +1,4 @@
-"""Plugwise Climate component for Home Assistant."""
+"""Plugwise Climate component for Open Peer Power."""
 
 import logging
 

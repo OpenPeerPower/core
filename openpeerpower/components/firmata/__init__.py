@@ -179,7 +179,7 @@ async def async_setup_entry(
    .opp.data[DOMAIN][config_entry.entry_id] = board
 
     async def handle_shutdown(event) -> None:
-        """Handle shutdown of board when Home Assistant shuts down."""
+        """Handle shutdown of board when Open Peer Power shuts down."""
         # Ensure board was not already removed previously before shutdown
         if config_entry.entry_id in.opp.data[DOMAIN]:
             await board.async_reset()

@@ -1,1 +1,1 @@
-"""Tests the Home Assistant workday binary sensor."""
+"""Tests the Open Peer Power workday binary sensor."""

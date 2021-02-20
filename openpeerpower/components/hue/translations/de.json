@@ -22,7 +22,7 @@
                 "title": "W\u00e4hle eine Hue Bridge"
             },
             "link": {
-                "description": "Dr\u00fccke den Knopf auf der Bridge, um Philips Hue mit Home Assistant zu verkn\u00fcpfen.\n\n![Position des Buttons auf der Bridge](/static/images/config_philips_hue.jpg)",
+                "description": "Dr\u00fccke den Knopf auf der Bridge, um Philips Hue mit Open Peer Power zu verkn\u00fcpfen.\n\n![Position des Buttons auf der Bridge](/static/images/config_philips_hue.jpg)",
                 "title": "Hub verbinden"
             },
             "manual": {

@@ -146,7 +146,7 @@ class OpenhomeDevice(MediaPlayerEntity):
                 MEDIA_TYPE_MUSIC,
             )
             return
-        track_details = {"title": "Home Assistant", "uri": media_id}
+        track_details = {"title": "Open Peer Power", "uri": media_id}
         self._device.PlayMedia(track_details)
 
     def media_pause(self):

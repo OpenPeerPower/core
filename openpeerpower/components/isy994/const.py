@@ -134,7 +134,7 @@ SUPPORTED_PROGRAM_PLATFORMS = [BINARY_SENSOR, LOCK, FAN, COVER, SWITCH]
 
 SUPPORTED_BIN_SENS_CLASSES = ["moisture", "opening", "motion", "climate"]
 
-# ISY Scenes are more like Switches than Home Assistant Scenes
+# ISY Scenes are more like Switches than Open Peer Power Scenes
 # (they can turn off, and report their state)
 ISY_GROUP_PLATFORM = SWITCH
 
@@ -203,8 +203,8 @@ UOM_INDEX = "25"
 UOM_ON_OFF = "2"
 UOM_PERCENTAGE = "51"
 
-# Do not use the Home Assistant consts for the states here - we're matching exact API
-# responses, not using them for Home Assistant states
+# Do not use the Open Peer Power consts for the states here - we're matching exact API
+# responses, not using them for Open Peer Power states
 # Insteon Types: https://www.universal-devices.com/developers/wsdk/5.0.4/1_fam.xml
 # Z-Wave Categories: https://www.universal-devices.com/developers/wsdk/5.0.4/4_fam.xml
 NODE_FILTERS = {

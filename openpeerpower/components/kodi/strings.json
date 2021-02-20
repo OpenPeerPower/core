@@ -11,7 +11,7 @@
         }
       },
       "discovery_confirm": {
-        "description": "Do you want to add Kodi (`{name}`) to Home Assistant?",
+        "description": "Do you want to add Kodi (`{name}`) to Open Peer Power?",
         "title": "Discovered Kodi"
       },
       "ws_port": {

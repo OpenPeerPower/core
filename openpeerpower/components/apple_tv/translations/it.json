@@ -19,7 +19,7 @@
         "flow_title": "Apple TV: {name}",
         "step": {
             "confirm": {
-                "description": "Stai per aggiungere l'Apple TV denominata \"{name}\" a Home Assistant. \n\n **Per completare la procedura, potrebbe essere necessario inserire pi\u00f9 codici PIN.** \n\nTieni presente che *non* sarai in grado di spegnere la tua Apple TV con questa integrazione. Solo il lettore multimediale in Home Assistant si spegner\u00e0!",
+                "description": "Stai per aggiungere l'Apple TV denominata \"{name}\" a Open Peer Power. \n\n **Per completare la procedura, potrebbe essere necessario inserire pi\u00f9 codici PIN.** \n\nTieni presente che *non* sarai in grado di spegnere la tua Apple TV con questa integrazione. Solo il lettore multimediale in Open Peer Power si spegner\u00e0!",
                 "title": "Conferma l'aggiunta di Apple TV"
             },
             "pair_no_pin": {
@@ -54,7 +54,7 @@
         "step": {
             "init": {
                 "data": {
-                    "start_off": "Non accendere il dispositivo all'avvio di Home Assistant"
+                    "start_off": "Non accendere il dispositivo all'avvio di Open Peer Power"
                 },
                 "description": "Configurare le impostazioni generali del dispositivo"
             }

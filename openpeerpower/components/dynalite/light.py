@@ -18,7 +18,7 @@ async def async_setup_entry(
 
 
 class DynaliteLight(DynaliteBase, LightEntity):
-    """Representation of a Dynalite Channel as a Home Assistant Light."""
+    """Representation of a Dynalite Channel as a Open Peer Power Light."""
 
     @property
     def brightness(self) -> int:

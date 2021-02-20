@@ -11,7 +11,7 @@
                     "email": "Adresse email",
                     "password": "Mot de passe"
                 },
-                "description": "Pour des raisons techniques, utilisez un compte sp\u00e9cifique \u00e0 Home Assistant. Vous pouvez cr\u00e9er un compte secondaire depuis l'application SmartHab.",
+                "description": "Pour des raisons techniques, utilisez un compte sp\u00e9cifique \u00e0 Open Peer Power. Vous pouvez cr\u00e9er un compte secondaire depuis l'application SmartHab.",
                 "title": "Configurer SmartHab"
             }
         }

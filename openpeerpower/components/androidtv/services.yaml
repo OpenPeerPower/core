@@ -10,7 +10,7 @@ adb_command:
       description: Either a key command or an ADB shell command.
       example: "HOME"
 download:
-  description: Download a file from your Android TV / Fire TV device to your Home Assistant instance.
+  description: Download a file from your Android TV / Fire TV device to your Open Peer Power instance.
   fields:
     entity_id:
       description: Name of Android TV / Fire TV entity.
@@ -19,10 +19,10 @@ download:
       description: The filepath on the Android TV / Fire TV device.
       example: "/storage/emulated/0/Download/example.txt"
     local_path:
-      description: The filepath on your Home Assistant instance.
+      description: The filepath on your Open Peer Power instance.
       example: "/config/www/example.txt"
 upload:
-  description: Upload a file from your Home Assistant instance to an Android TV / Fire TV device.
+  description: Upload a file from your Open Peer Power instance to an Android TV / Fire TV device.
   fields:
     entity_id:
       description: Name(s) of Android TV / Fire TV entities.
@@ -31,7 +31,7 @@ upload:
       description: The filepath on the Android TV / Fire TV device.
       example: "/storage/emulated/0/Download/example.txt"
     local_path:
-      description: The filepath on your Home Assistant instance.
+      description: The filepath on your Open Peer Power instance.
       example: "/config/www/example.txt"
 learn_sendevent:
   description: Translate a key press on a remote into ADB 'sendevent' commands.  You must press one button on the remote within 8 seconds of calling this service.

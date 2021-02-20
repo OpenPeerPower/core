@@ -9,7 +9,7 @@ from tests.common import MockConfigEntry, load_fixture
 
 
 async def init_integration.opp, skip_setup=False) -> MockConfigEntry:
-    """Set up the Brother integration in Home Assistant."""
+    """Set up the Brother integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         title="HL-L2340DW 0123456789",

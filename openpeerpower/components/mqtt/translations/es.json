@@ -21,7 +21,7 @@
                 "data": {
                     "discovery": "Habilitar descubrimiento"
                 },
-                "description": "\u00bfQuieres configurar Home Assistant para conectar con el broker de MQTT proporcionado por el complemento Opp.io {addon}?",
+                "description": "\u00bfQuieres configurar Open Peer Power para conectar con el broker de MQTT proporcionado por el complemento Opp.io {addon}?",
                 "title": "MQTT Broker a trav\u00e9s del complemento Opp.io"
             }
         }

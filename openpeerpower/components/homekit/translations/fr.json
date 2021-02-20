@@ -28,7 +28,7 @@
                     "include_domains": "Domaines \u00e0 inclure",
                     "mode": "Mode"
                 },
-                "description": "La passerelle HomeKit vous permettra d'acc\u00e9der \u00e0 vos entit\u00e9s Home Assistant dans HomeKit. Les passerelles HomeKit sont limit\u00e9es \u00e0 150 accessoires par instance, y compris la passerelle elle-m\u00eame. Si vous souhaitez connecter plus que le nombre maximum d'accessoires, il est recommand\u00e9 d'utiliser plusieurs passerelles HomeKit pour diff\u00e9rents domaines. La configuration d\u00e9taill\u00e9e des entit\u00e9s est uniquement disponible via YAML pour la passerelle principale.",
+                "description": "La passerelle HomeKit vous permettra d'acc\u00e9der \u00e0 vos entit\u00e9s Open Peer Power dans HomeKit. Les passerelles HomeKit sont limit\u00e9es \u00e0 150 accessoires par instance, y compris la passerelle elle-m\u00eame. Si vous souhaitez connecter plus que le nombre maximum d'accessoires, il est recommand\u00e9 d'utiliser plusieurs passerelles HomeKit pour diff\u00e9rents domaines. La configuration d\u00e9taill\u00e9e des entit\u00e9s est uniquement disponible via YAML pour la passerelle principale.",
                 "title": "Activer la Passerelle HomeKit"
             }
         }

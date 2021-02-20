@@ -85,7 +85,7 @@
                 "data": {
                     "api_host": "Sobrescribir URL de host de API (opcional)",
                     "blink": "Parpadea el LED del panel cuando se env\u00eda un cambio de estado",
-                    "override_api_host": "Sobrescribir la URL predeterminada del panel de host de la API de Home Assistant"
+                    "override_api_host": "Sobrescribir la URL predeterminada del panel de host de la API de Open Peer Power"
                 },
                 "description": "Seleccione el comportamiento deseado para su panel",
                 "title": "Configurar Misc"

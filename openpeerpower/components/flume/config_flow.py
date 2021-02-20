@@ -20,7 +20,7 @@ from .const import DOMAIN  # pylint:disable=unused-import
 _LOGGER = logging.getLogger(__name__)
 
 # If flume ever implements a login page for oauth
-# we can use the oauth2 support built into Home Assistant.
+# we can use the oauth2 support built into Open Peer Power.
 #
 # Currently they only implement the token endpoint
 #

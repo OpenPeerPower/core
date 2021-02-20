@@ -588,7 +588,7 @@ async def test_parallel_entry_setup.opp):
 
 async def test_integration_disabled.opp, caplog):
     """Test we can disable an integration."""
-    disabled_reason = "Dependency contains code that breaks Home Assistant"
+    disabled_reason = "Dependency contains code that breaks Open Peer Power"
     mock_integration(
        .opp,
         MockModule("test_component1", partial_manifest={"disabled": disabled_reason}),

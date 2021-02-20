@@ -76,7 +76,7 @@ def toggle.opp, entity_id=None, **service_data):
 
 
 def stop.opp):
-    """Stop Home Assistant.
+    """Stop Open Peer Power.
 
     This is a legacy helper method. Do not use it for new tests.
     """
@@ -84,7 +84,7 @@ def stop.opp):
 
 
 def restart.opp):
-    """Stop Home Assistant.
+    """Stop Open Peer Power.
 
     This is a legacy helper method. Do not use it for new tests.
     """

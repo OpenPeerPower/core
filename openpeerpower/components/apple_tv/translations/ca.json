@@ -19,7 +19,7 @@
         "flow_title": "Apple TV: {name}",
         "step": {
             "confirm": {
-                "description": "Est\u00e0s a punt d'afegir l'Apple TV amb nom \"{name}\" a Home Assistant.\n\n **Per completar el proc\u00e9s, \u00e9s possible que hagis d'introduir alguns codis PIN.** \n\n Tingues en compte que *no* pots apagar la teva Apple TV a trav\u00e9s d'aquesta integraci\u00f3. Nom\u00e9s es desactivar\u00e0 el reproductor de Home Assistant.",
+                "description": "Est\u00e0s a punt d'afegir l'Apple TV amb nom \"{name}\" a Open Peer Power.\n\n **Per completar el proc\u00e9s, \u00e9s possible que hagis d'introduir alguns codis PIN.** \n\n Tingues en compte que *no* pots apagar la teva Apple TV a trav\u00e9s d'aquesta integraci\u00f3. Nom\u00e9s es desactivar\u00e0 el reproductor de Open Peer Power.",
                 "title": "Confirma l'addici\u00f3 de l'Apple TV"
             },
             "pair_no_pin": {
@@ -54,7 +54,7 @@
         "step": {
             "init": {
                 "data": {
-                    "start_off": "No engeguis el dispositiu en iniciar Home Assistant"
+                    "start_off": "No engeguis el dispositiu en iniciar Open Peer Power"
                 },
                 "description": "Configuraci\u00f3 dels par\u00e0metres generals del dispositiu"
             }

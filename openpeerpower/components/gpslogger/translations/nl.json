@@ -4,7 +4,7 @@
             "single_instance_allowed": "Al geconfigureerd. Slechts \u00e9\u00e9n configuratie mogelijk."
         },
         "create_entry": {
-            "default": "Om evenementen naar Home Assistant te verzenden, moet u de webhook-functie instellen in GPSLogger. \n\n Vul de volgende info in: \n\n - URL: ` {webhook_url} ` \n - Methode: POST \n\n Zie [de documentatie] ( {docs_url} ) voor meer informatie."
+            "default": "Om evenementen naar Open Peer Power te verzenden, moet u de webhook-functie instellen in GPSLogger. \n\n Vul de volgende info in: \n\n - URL: ` {webhook_url} ` \n - Methode: POST \n\n Zie [de documentatie] ( {docs_url} ) voor meer informatie."
         },
         "step": {
             "user": {

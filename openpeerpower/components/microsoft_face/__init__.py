@@ -241,7 +241,7 @@ class MicrosoftFaceGroupEntity(Entity):
 
 
 class MicrosoftFace:
-    """Microsoft Face api for Home Assistant."""
+    """Microsoft Face api for Open Peer Power."""
 
     def __init__(self,.opp, server_loc, api_key, timeout, entities):
         """Initialize Microsoft Face api."""

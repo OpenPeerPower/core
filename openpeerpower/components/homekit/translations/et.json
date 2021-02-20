@@ -28,7 +28,7 @@
                     "include_domains": "Kaasatavad domeenid",
                     "mode": "Re\u017eiim"
                 },
-                "description": "HomeKiti integreerimine v\u00f5imaldab teil p\u00e4\u00e4seda juurde HomeKiti \u00fcksustele Home Assistant. Sildire\u017eiimis on HomeKit Bridges piiratud 150 lisaseadmega, sealhulgas sild ise. Kui soovid \u00fchendada rohkem lisatarvikuid, on soovitatav kasutada erinevate domeenide jaoks mitut HomeKiti silda. \u00dcksuse \u00fcksikasjalik konfiguratsioon on esmase silla jaoks saadaval ainult YAML-i kaudu. Parema tulemuse saavutamiseks ja ootamatute seadmete kadumise v\u00e4ltimiseks loo ja seo eraldi HomeKiti seade tarviku re\u017eiimis kga meediaesitaja ja kaamera jaoks.",
+                "description": "HomeKiti integreerimine v\u00f5imaldab teil p\u00e4\u00e4seda juurde HomeKiti \u00fcksustele Open Peer Power. Sildire\u017eiimis on HomeKit Bridges piiratud 150 lisaseadmega, sealhulgas sild ise. Kui soovid \u00fchendada rohkem lisatarvikuid, on soovitatav kasutada erinevate domeenide jaoks mitut HomeKiti silda. \u00dcksuse \u00fcksikasjalik konfiguratsioon on esmase silla jaoks saadaval ainult YAML-i kaudu. Parema tulemuse saavutamiseks ja ootamatute seadmete kadumise v\u00e4ltimiseks loo ja seo eraldi HomeKiti seade tarviku re\u017eiimis kga meediaesitaja ja kaamera jaoks.",
                 "title": "Aktiveeri HomeKit"
             }
         }

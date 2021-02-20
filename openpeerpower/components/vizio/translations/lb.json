@@ -19,11 +19,11 @@
                 "title": "Kopplungs Prozess ofschl\u00e9issen"
             },
             "pairing_complete": {
-                "description": "D\u00e4in VIZIO SmartCast Apparat ass elo mam Home Assistant verbonnen.",
+                "description": "D\u00e4in VIZIO SmartCast Apparat ass elo mam Open Peer Power verbonnen.",
                 "title": "Kopplung ofgeschloss"
             },
             "pairing_complete_import": {
-                "description": "D\u00e4in VIZIO SmartCast Apparat ass elo mam Home Assistant verbonnen.\n\nD\u00e4in Acc\u00e8s Jeton ass '**{access_token}**'.",
+                "description": "D\u00e4in VIZIO SmartCast Apparat ass elo mam Open Peer Power verbonnen.\n\nD\u00e4in Acc\u00e8s Jeton ass '**{access_token}**'.",
                 "title": "Kopplung ofgeschloss"
             },
             "user": {

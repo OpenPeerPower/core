@@ -12,11 +12,11 @@
                 "title": "Proceso de emparejamiento completo"
             },
             "pairing_complete": {
-                "description": "Su dispositivo VIZIO SmartCast ahora est\u00e1 conectado a Home Assistant.",
+                "description": "Su dispositivo VIZIO SmartCast ahora est\u00e1 conectado a Open Peer Power.",
                 "title": "Emparejamiento completo"
             },
             "pairing_complete_import": {
-                "description": "Su VIZIO SmartCast TV ahora est\u00e1 conectado a Home Assistant. \n\nSu token de acceso es '** {access_token} **'.",
+                "description": "Su VIZIO SmartCast TV ahora est\u00e1 conectado a Open Peer Power. \n\nSu token de acceso es '** {access_token} **'.",
                 "title": "Emparejamiento completo"
             },
             "user": {

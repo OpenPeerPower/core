@@ -72,7 +72,7 @@ async def async_init_integration(
    .opp: OpenPeerPower,
     skip_setup: bool = False,
 ):
-    """Set up the AEMET OpenData integration in Home Assistant."""
+    """Set up the AEMET OpenData integration in Open Peer Power."""
 
     with requests_mock.mock() as _m:
         aemet_requests_mock(_m)

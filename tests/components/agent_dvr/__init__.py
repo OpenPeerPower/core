@@ -13,7 +13,7 @@ async def init_integration(
     aioclient_mock: AiohttpClientMocker,
     skip_setup: bool = False,
 ) -> MockConfigEntry:
-    """Set up the Agent DVR integration in Home Assistant."""
+    """Set up the Agent DVR integration in Open Peer Power."""
 
     aioclient_mock.get(
         "http://example.local:8090/command.cgi?cmd=getStatus",

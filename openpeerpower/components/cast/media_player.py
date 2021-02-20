@@ -495,7 +495,7 @@ class CastDevice(MediaPlayerEntity):
         # If media ID is a relative URL, we serve it from HA.
         # Create a signed path.
         if media_id[0] == "/":
-            # Sign URL with Home Assistant Cast User
+            # Sign URL with Open Peer Power Cast User
             config_entries = self.opp.config_entries.async_entries(CAST_DOMAIN)
             user_id = config_entries[0].data["user_id"]
             user = await self.opp.auth.async_get_user(user_id)
@@ -795,7 +795,7 @@ class CastDevice(MediaPlayerEntity):
         self.async_set_cast_info(discover)
 
     async def _async_stop(self, event):
-        """Disconnect socket on Home Assistant stop."""
+        """Disconnect socket on Open Peer Power stop."""
         await self._async_disconnect()
 
     def _op.dle_signal_show_view(
@@ -940,5 +940,5 @@ class DynamicCastGroup:
             await self.async_tear_down()
 
     async def _async_stop(self, event):
-        """Disconnect socket on Home Assistant stop."""
+        """Disconnect socket on Open Peer Power stop."""
         await self._async_disconnect()

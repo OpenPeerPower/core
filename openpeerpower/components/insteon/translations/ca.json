@@ -76,7 +76,7 @@
                     "port": "Port",
                     "username": "Nom d'usuari"
                 },
-                "description": "Canvia la informaci\u00f3 de connexi\u00f3 de l'Insteon Hub. Has de reiniciar Home Assistant si fas canvis. Aix\u00f2 no canvia la configuraci\u00f3 del Hub en si. Per canviar la configuraci\u00f3 del Hub, utilitza la seva aplicaci\u00f3.",
+                "description": "Canvia la informaci\u00f3 de connexi\u00f3 de l'Insteon Hub. Has de reiniciar Open Peer Power si fas canvis. Aix\u00f2 no canvia la configuraci\u00f3 del Hub en si. Per canviar la configuraci\u00f3 del Hub, utilitza la seva aplicaci\u00f3.",
                 "title": "Insteon"
             },
             "init": {

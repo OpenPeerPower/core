@@ -26,7 +26,7 @@ def test_validate_version_no_key(integration: Integration):
     """Test validate version with no key."""
     validate_version(integration)
     assert (
-        "No 'version' key in the manifest file. This will cause a future version of Home Assistant to block this integration."
+        "No 'version' key in the manifest file. This will cause a future version of Open Peer Power to block this integration."
         in [x.error for x in integration.errors]
     )
 

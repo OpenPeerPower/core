@@ -1,4 +1,4 @@
-"""Adapter to wrap the rachiopy api for home assistant."""
+"""Adapter to wrap the rachiopy api for Open Peer Power."""
 import logging
 from typing import Optional
 

@@ -41,6 +41,6 @@ async def test_attributes.opp):
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == "lux"
 
     state =.opp.states.get("sensor.environment_sensor_temperature")
-    # Abodepy device JSON reports 19.5, but Home Assistant shows 19.4
+    # Abodepy device JSON reports 19.5, but Open Peer Power shows 19.4
     assert state.state == "19.4"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == TEMP_CELSIUS

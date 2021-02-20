@@ -47,7 +47,7 @@ class EcoalSwitch(SwitchEntity):
     def update(self):
         """Fetch new state data for the sensor.
 
-        This is the only method that should fetch new data for Home Assistant.
+        This is the only method that should fetch new data for Open Peer Power.
         """
         status = self._ecoal_contr.get_cached_status()
         self._state = getattr(status, self._state_attr)

@@ -10,10 +10,10 @@
                     "host": "Gostitelj ali IP naslov",
                     "port": "\u0160tevilka vrat"
                 },
-                "description": "Nastavite svojo Elgato Key Light tako, da se bo vklju\u010dila v Home Assistant."
+                "description": "Nastavite svojo Elgato Key Light tako, da se bo vklju\u010dila v Open Peer Power."
             },
             "zeroconf_confirm": {
-                "description": "Ali \u017eelite dodati Elgato Key Light s serijsko \u0161tevilko ' {serial_number} ' v Home Assistant-a?",
+                "description": "Ali \u017eelite dodati Elgato Key Light s serijsko \u0161tevilko ' {serial_number} ' v Open Peer Power-a?",
                 "title": "Odkrita naprava Elgato Key Light"
             }
         }

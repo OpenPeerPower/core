@@ -67,7 +67,7 @@ class MySensorsDevice:
         return logging.getLogger(f"{__name__}.{self.name}")
 
     async def async_will_remove_from_opp(self):
-        """Remove this entity from home assistant."""
+        """Remove this entity from Open Peer Power."""
         for platform in PLATFORM_TYPES:
             platform_str = MYSENSORS_PLATFORM_DEVICES.format(platform)
             if platform_str in self.opp.data[DOMAIN]:
@@ -103,12 +103,12 @@ class MySensorsDevice:
 
     @property
     def unique_id(self) -> str:
-        """Return a unique ID for use in home assistant."""
+        """Return a unique ID for use in Open Peer Power."""
         return f"{self.gateway_id}-{self.node_id}-{self.child_id}-{self.value_type}"
 
     @property
     def device_info(self) -> Optional[Dict[str, Any]]:
-        """Return a dict that allows home assistant to puzzle all entities belonging to a node together."""
+        """Return a dict that allows Open Peer Power to puzzle all entities belonging to a node together."""
         return {
             "identifiers": {(DOMAIN, f"{self.gateway_id}-{self.node_id}")},
             "name": self.node_name,

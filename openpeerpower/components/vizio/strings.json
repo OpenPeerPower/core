@@ -20,11 +20,11 @@
       },
       "pairing_complete": {
         "title": "Pairing Complete",
-        "description": "Your [%key:component::vizio::config::step::user::title%] is now connected to Home Assistant."
+        "description": "Your [%key:component::vizio::config::step::user::title%] is now connected to Open Peer Power."
       },
       "pairing_complete_import": {
         "title": "Pairing Complete",
-        "description": "Your [%key:component::vizio::config::step::user::title%] is now connected to Home Assistant.\n\nYour [%key:common::config_flow::data::access_token%] is '**{access_token}**'."
+        "description": "Your [%key:component::vizio::config::step::user::title%] is now connected to Open Peer Power.\n\nYour [%key:common::config_flow::data::access_token%] is '**{access_token}**'."
       }
     },
     "error": {

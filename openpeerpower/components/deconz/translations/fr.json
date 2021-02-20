@@ -14,11 +14,11 @@
         "flow_title": "Passerelle deCONZ Zigbee ({host})",
         "step": {
             "oppio_confirm": {
-                "description": "Voulez-vous configurer Home Assistant pour qu'il se connecte \u00e0 la passerelle deCONZ fournie par l'add-on.opp.io {addon} ?",
+                "description": "Voulez-vous configurer Open Peer Power pour qu'il se connecte \u00e0 la passerelle deCONZ fournie par l'add-on.opp.io {addon} ?",
                 "title": "Passerelle deCONZ Zigbee via l'add-on Opp.io"
             },
             "link": {
-                "description": "D\u00e9verrouillez votre passerelle deCONZ pour vous enregistrer avec Home Assistant. \n\n 1. Acc\u00e9dez aux param\u00e8tres avanc\u00e9s du syst\u00e8me deCONZ \n 2. Cliquez sur \"D\u00e9verrouiller la passerelle\"",
+                "description": "D\u00e9verrouillez votre passerelle deCONZ pour vous enregistrer avec Open Peer Power. \n\n 1. Acc\u00e9dez aux param\u00e8tres avanc\u00e9s du syst\u00e8me deCONZ \n 2. Cliquez sur \"D\u00e9verrouiller la passerelle\"",
                 "title": "Lien vers deCONZ"
             },
             "manual_input": {

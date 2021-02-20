@@ -1,4 +1,4 @@
-"""Test Home Assistant uuid util methods."""
+"""Test Open Peer Power uuid util methods."""
 
 import uuid
 

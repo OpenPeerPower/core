@@ -51,10 +51,10 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 
 class OppFlickAuth(AbstractFlickAuth):
-    """Implementation of AbstractFlickAuth based on a Home Assistant entity config."""
+    """Implementation of AbstractFlickAuth based on a Open Peer Power entity config."""
 
     def __init__(self,.opp: OpenPeerPower, entry: ConfigEntry):
-        """Flick authention based on a Home Assistant entity config."""
+        """Flick authention based on a Open Peer Power entity config."""
         super().__init__(aiohttp_client.async_get_clientsession.opp))
         self._entry = entry
         self._opp =.opp

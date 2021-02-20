@@ -20,7 +20,7 @@ def _get_mock_pynutclient(list_vars=None, list_ups=None):
 async def async_init_integration(
    .opp: OpenPeerPower, ups_fixture: str, resources: list
 ) -> MockConfigEntry:
-    """Set up the nexia integration in Home Assistant."""
+    """Set up the nexia integration in Open Peer Power."""
 
     ups_fixture = f"nut/{ups_fixture}.json"
     list_vars = json.loads(load_fixture(ups_fixture))

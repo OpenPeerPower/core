@@ -22,7 +22,7 @@
                 "description": "Introdueix el teu nom d'usuari i contrasenya de Kodi. Els pots trobar a Sistema/Configuraci\u00f3/Xarxa/Serveis."
             },
             "discovery_confirm": {
-                "description": "Vols afegir Kodi (`{name}`) a Home Assistant?",
+                "description": "Vols afegir Kodi (`{name}`) a Open Peer Power?",
                 "title": "Kodi descobert"
             },
             "user": {

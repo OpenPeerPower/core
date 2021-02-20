@@ -10,7 +10,7 @@
         },
         "step": {
             "discovery_confirm": {
-                "description": "Chcete p\u0159idat Volumio (`{name}`) do Home Assistant?",
+                "description": "Chcete p\u0159idat Volumio (`{name}`) do Open Peer Power?",
                 "title": "Objeven\u00e9 instance Volumio"
             },
             "user": {

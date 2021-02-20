@@ -28,7 +28,7 @@
                     "include_domains": "Domener \u00e5 inkludere",
                     "mode": "Modus"
                 },
-                "description": "HomeKit-integrasjonen gir deg tilgang til Home Assistant-enhetene dine i HomeKit. I bromodus er HomeKit Bridges begrenset til 150 tilbeh\u00f8r per forekomst inkludert selve broen. Hvis du \u00f8nsker \u00e5 bygge bro over maksimalt antall tilbeh\u00f8r, anbefales det at du bruker flere HomeKit-broer for forskjellige domener. Detaljert enhetskonfigurasjon er bare tilgjengelig via YAML. For best ytelse og for \u00e5 forhindre uventet utilgjengelighet, opprett og par sammen en egen HomeKit-forekomst i tilbeh\u00f8rsmodus for hver tv-mediaspiller og kamera.",
+                "description": "HomeKit-integrasjonen gir deg tilgang til Open Peer Power-enhetene dine i HomeKit. I bromodus er HomeKit Bridges begrenset til 150 tilbeh\u00f8r per forekomst inkludert selve broen. Hvis du \u00f8nsker \u00e5 bygge bro over maksimalt antall tilbeh\u00f8r, anbefales det at du bruker flere HomeKit-broer for forskjellige domener. Detaljert enhetskonfigurasjon er bare tilgjengelig via YAML. For best ytelse og for \u00e5 forhindre uventet utilgjengelighet, opprett og par sammen en egen HomeKit-forekomst i tilbeh\u00f8rsmodus for hver tv-mediaspiller og kamera.",
                 "title": "Aktiver HomeKit"
             }
         }

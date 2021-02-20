@@ -18,7 +18,7 @@
                 "description": "Escribe la contrase\u00f1a que hayas puesto en la configuraci\u00f3n para {name}."
             },
             "discovery_confirm": {
-                "description": "\u00bfQuieres a\u00f1adir el nodo `{name}` de ESPHome a Home Assistant?",
+                "description": "\u00bfQuieres a\u00f1adir el nodo `{name}` de ESPHome a Open Peer Power?",
                 "title": "Nodo ESPHome descubierto"
             },
             "user": {

@@ -1,4 +1,4 @@
-"""Home Assistant representation of an UPnP/IGD."""
+"""Open Peer Power representation of an UPnP/IGD."""
 from __future__ import annotations
 
 import asyncio
@@ -33,7 +33,7 @@ from .const import (
 
 
 class Device:
-    """Home Assistant representation of a UPnP/IGD device."""
+    """Open Peer Power representation of a UPnP/IGD device."""
 
     def __init__(self, igd_device):
         """Initialize UPnP/IGD device."""

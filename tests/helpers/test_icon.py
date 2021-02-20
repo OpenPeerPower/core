@@ -1,4 +1,4 @@
-"""Test Home Assistant icon util methods."""
+"""Test Open Peer Power icon util methods."""
 
 
 def test_battery_icon():

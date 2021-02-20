@@ -23,11 +23,11 @@
                     "ssl": "Printer ondersteunt communicatie via SSL / TLS",
                     "verify_ssl": "Printer gebruikt een correct SSL-certificaat"
                 },
-                "description": "Stel uw printer in via Internet Printing Protocol (IPP) om te integreren met Home Assistant.",
+                "description": "Stel uw printer in via Internet Printing Protocol (IPP) om te integreren met Open Peer Power.",
                 "title": "Koppel uw printer"
             },
             "zeroconf_confirm": {
-                "description": "Wilt u de printer met de naam ' {name} ' toevoegen aan Home Assistant?",
+                "description": "Wilt u de printer met de naam ' {name} ' toevoegen aan Open Peer Power?",
                 "title": "Gedetecteerde printer"
             }
         }

@@ -1,4 +1,4 @@
-"""Support for Home Assistant Cloud binary sensors."""
+"""Support for Open Peer Power Cloud binary sensors."""
 import asyncio
 
 from openpeerpower.components.binary_sensor import (

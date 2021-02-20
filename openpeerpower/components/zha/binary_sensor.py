@@ -31,7 +31,7 @@ from .core.const import (
 from .core.registries import ZHA_ENTITIES
 from .entity import ZhaEntity
 
-# Zigbee Cluster Library Zone Type to Home Assistant device class
+# Zigbee Cluster Library Zone Type to Open Peer Power device class
 CLASS_MAPPING = {
     0x000D: DEVICE_CLASS_MOTION,
     0x0015: DEVICE_CLASS_OPENING,

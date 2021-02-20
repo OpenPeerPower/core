@@ -124,8 +124,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
            .opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
-    # If Home Assistant is already in a running state, register the webhook
-    # immediately, else trigger it after Home Assistant has finished starting.
+    # If Open Peer Power is already in a running state, register the webhook
+    # immediately, else trigger it after Open Peer Power has finished starting.
     if.opp.state == CoreState.running:
         await coordinator.register_webhook()
     else:

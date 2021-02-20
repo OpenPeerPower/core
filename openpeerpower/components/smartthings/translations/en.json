@@ -1,8 +1,8 @@
 {
     "config": {
         "abort": {
-            "invalid_webhook_url": "Home Assistant is not configured correctly to receive updates from SmartThings. The webhook URL is invalid:\n> {webhook_url}\n\nPlease update your configuration per the [instructions]({component_url}), restart Home Assistant, and try again.",
-            "no_available_locations": "There are no available SmartThings Locations to setup in Home Assistant."
+            "invalid_webhook_url": "Open Peer Power is not configured correctly to receive updates from SmartThings. The webhook URL is invalid:\n> {webhook_url}\n\nPlease update your configuration per the [instructions]({component_url}), restart Open Peer Power, and try again.",
+            "no_available_locations": "There are no available SmartThings Locations to setup in Open Peer Power."
         },
         "error": {
             "app_setup_error": "Unable to setup the SmartApp.  Please try again.",
@@ -13,24 +13,24 @@
         },
         "step": {
             "authorize": {
-                "title": "Authorize Home Assistant"
+                "title": "Authorize Open Peer Power"
             },
             "pat": {
                 "data": {
                     "access_token": "Access Token"
                 },
-                "description": "Please enter a SmartThings [Personal Access Token]({token_url}) that has been created per the [instructions]({component_url}).  This will be used to create the Home Assistant integration within your SmartThings account.",
+                "description": "Please enter a SmartThings [Personal Access Token]({token_url}) that has been created per the [instructions]({component_url}).  This will be used to create the Open Peer Power integration within your SmartThings account.",
                 "title": "Enter Personal Access Token"
             },
             "select_location": {
                 "data": {
                     "location_id": "Location"
                 },
-                "description": "Please select the SmartThings Location you wish to add to Home Assistant.  We will then open a new window and ask you to login and authorize installation of the Home Assistant integration into the selected location.",
+                "description": "Please select the SmartThings Location you wish to add to Open Peer Power.  We will then open a new window and ask you to login and authorize installation of the Open Peer Power integration into the selected location.",
                 "title": "Select Location"
             },
             "user": {
-                "description": "SmartThings will be configured to send push updates to Home Assistant at:\n> {webhook_url}\n\nIf this is not correct, please update your configuration, restart Home Assistant, and try again.",
+                "description": "SmartThings will be configured to send push updates to Open Peer Power at:\n> {webhook_url}\n\nIf this is not correct, please update your configuration, restart Open Peer Power, and try again.",
                 "title": "Confirm Callback URL"
             }
         }

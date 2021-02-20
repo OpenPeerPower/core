@@ -18,11 +18,11 @@
                 "title": "\ud398\uc5b4\ub9c1 \uacfc\uc815 \ub05d\ub0b4\uae30"
             },
             "pairing_complete": {
-                "description": "VIZIO SmartCast \uae30\uae30\uac00 Home Assistant \uc5d0 \uc5f0\uacb0\ub418\uc5c8\uc2b5\ub2c8\ub2e4.",
+                "description": "VIZIO SmartCast \uae30\uae30\uac00 Open Peer Power \uc5d0 \uc5f0\uacb0\ub418\uc5c8\uc2b5\ub2c8\ub2e4.",
                 "title": "\ud398\uc5b4\ub9c1 \uc644\ub8cc"
             },
             "pairing_complete_import": {
-                "description": "VIZIO SmartCast \uae30\uae30\uac00 Home Assistant \uc5d0 \uc5f0\uacb0\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \n\n\uc561\uc138\uc2a4 \ud1a0\ud070\uc740 '**{access_token}**' \uc785\ub2c8\ub2e4.",
+                "description": "VIZIO SmartCast \uae30\uae30\uac00 Open Peer Power \uc5d0 \uc5f0\uacb0\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \n\n\uc561\uc138\uc2a4 \ud1a0\ud070\uc740 '**{access_token}**' \uc785\ub2c8\ub2e4.",
                 "title": "\ud398\uc5b4\ub9c1 \uc644\ub8cc"
             },
             "user": {

@@ -33,7 +33,7 @@ SCHEMA_UPDATE_ENTITY = vol.Schema({ATTR_ENTITY_ID: cv.entity_ids})
 
 
 async def async_setup.opp: op.OpenPeerPower, config: dict) -> bool:
-    """Set up general services related to Home Assistant."""
+    """Set up general services related to Open Peer Power."""
 
     async def async_op.dle_turn_service(service):
         """Handle calls to openpeerpower.turn_on/off."""

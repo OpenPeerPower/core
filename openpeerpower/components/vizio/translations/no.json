@@ -19,11 +19,11 @@
                 "title": "Fullf\u00f8r sammenkoblingsprosess"
             },
             "pairing_complete": {
-                "description": "VIZIO SmartCast-enhet er n\u00e5 koblet til Home Assistant.",
+                "description": "VIZIO SmartCast-enhet er n\u00e5 koblet til Open Peer Power.",
                 "title": "Sammenkoblingen fullf\u00f8rt"
             },
             "pairing_complete_import": {
-                "description": "Din VIZIO SmartCast-enhet er n\u00e5 koblet til Home Assistant . \n\n Tilgangstoken er '** {access_token} **'.",
+                "description": "Din VIZIO SmartCast-enhet er n\u00e5 koblet til Open Peer Power . \n\n Tilgangstoken er '** {access_token} **'.",
                 "title": "Sammenkoblingen fullf\u00f8rt"
             },
             "user": {

@@ -1,4 +1,4 @@
-"""Support for Home Assistant Updater binary sensors."""
+"""Support for Open Peer Power Updater binary sensors."""
 
 from openpeerpower.components.binary_sensor import BinarySensorEntity
 from openpeerpower.helpers.update_coordinator import CoordinatorEntity

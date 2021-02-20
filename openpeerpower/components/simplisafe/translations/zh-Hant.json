@@ -24,7 +24,7 @@
             },
             "user": {
                 "data": {
-                    "code": "\u9a57\u8b49\u78bc\uff08\u4f7f\u7528\u65bc Home Assistant UI\uff09",
+                    "code": "\u9a57\u8b49\u78bc\uff08\u4f7f\u7528\u65bc Open Peer Power UI\uff09",
                     "password": "\u5bc6\u78bc",
                     "username": "\u96fb\u5b50\u90f5\u4ef6"
                 },
@@ -36,7 +36,7 @@
         "step": {
             "init": {
                 "data": {
-                    "code": "\u9a57\u8b49\u78bc\uff08Home Assistant UI \u4f7f\u7528\uff09"
+                    "code": "\u9a57\u8b49\u78bc\uff08Open Peer Power UI \u4f7f\u7528\uff09"
                 },
                 "title": "\u8a2d\u5b9a SimpliSafe"
             }

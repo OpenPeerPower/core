@@ -18,7 +18,7 @@
                     "ssl": "A impressora suporta comunica\u00e7\u00e3o via SSL/TLS",
                     "verify_ssl": "A impressora usa um certificado SSL adequado"
                 },
-                "description": "Configure sua impressora via IPP (Internet Printing Protocol) para integrar-se ao Home Assistant.",
+                "description": "Configure sua impressora via IPP (Internet Printing Protocol) para integrar-se ao Open Peer Power.",
                 "title": "Vincule sua impressora"
             },
             "zeroconf_confirm": {

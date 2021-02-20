@@ -1,4 +1,4 @@
-"""API for Somfy bound to Home Assistant OAuth."""
+"""API for Somfy bound to Open Peer Power OAuth."""
 from asyncio import run_coroutine_threadsafe
 from typing import Dict, Union
 
@@ -28,7 +28,7 @@ class ConfigEntrySomfyApi(somfy_api.SomfyApi):
     def refresh_tokens(
         self,
     ) -> Dict[str, Union[str, int]]:
-        """Refresh and return new Somfy tokens using Home Assistant OAuth2 session."""
+        """Refresh and return new Somfy tokens using Open Peer Power OAuth2 session."""
         run_coroutine_threadsafe(
             self.session.async_ensure_token_valid(), self.opp.loop
         ).result()

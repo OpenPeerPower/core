@@ -1,4 +1,4 @@
-"""Provide methods to bootstrap a Home Assistant instance."""
+"""Provide methods to bootstrap a Open Peer Power instance."""
 import asyncio
 import contextlib
 from datetime import datetime
@@ -77,7 +77,7 @@ STAGE_1_INTEGRATIONS = {
 async def async_setup_opp(
     runtime_config: "RuntimeConfig",
 ) -> Optional[core.OpenPeerPower]:
-    """Set up Home Assistant."""
+    """Set up Open Peer Power."""
     opp = core.OpenPeerPower()
    .opp.config.config_dir = runtime_config.config_dir
 
@@ -184,7 +184,7 @@ def open_opp_ui.opp: core.OpenPeerPower) -> None:
 
     if not webbrowser.open(url):
         _LOGGER.warning(
-            "Unable to open the Home Assistant UI in a browser. Open it yourself at %s",
+            "Unable to open the Open Peer Power UI in a browser. Open it yourself at %s",
             url,
         )
 
@@ -192,7 +192,7 @@ def open_opp_ui.opp: core.OpenPeerPower) -> None:
 async def async_from_config_dict(
     config: ConfigType,.opp: core.OpenPeerPower
 ) -> Optional[core.OpenPeerPower]:
-    """Try to configure Home Assistant from a configuration dictionary.
+    """Try to configure Open Peer Power from a configuration dictionary.
 
     Dynamically loads required components and its dependencies.
     This method is a coroutine.
@@ -213,10 +213,10 @@ async def async_from_config_dict(
             )
         )
     ):
-        _LOGGER.error("Home Assistant core failed to initialize. ")
+        _LOGGER.error("Open Peer Power core failed to initialize. ")
         return None
 
-    _LOGGER.debug("Home Assistant core initialized")
+    _LOGGER.debug("Open Peer Power core initialized")
 
     core_config = config.get(core.DOMAIN, {})
 
@@ -227,7 +227,7 @@ async def async_from_config_dict(
         return None
     except OpenPeerPowerError:
         _LOGGER.error(
-            "Home Assistant core failed to initialize. "
+            "Open Peer Power core failed to initialize. "
             "Further initialization aborted"
         )
         return None
@@ -235,7 +235,7 @@ async def async_from_config_dict(
     await _async_set_up_integrations.opp, config)
 
     stop = monotonic()
-    _LOGGER.info("Home Assistant initialized in %.2fs", stop - start)
+    _LOGGER.info("Open Peer Power initialized in %.2fs", stop - start)
 
     if REQUIRED_NEXT_PYTHON_DATE and sys.version_info[:3] < REQUIRED_NEXT_PYTHON_VER:
         msg = (

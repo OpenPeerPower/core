@@ -63,7 +63,7 @@ class OpenPeerPowerConfig(OrderedDict):
 
 
 async def async_check_op.config_file.opp: OpenPeerPower) -> OpenPeerPowerConfig:
-    """Load and check if Home Assistant configuration file is valid.
+    """Load and check if Open Peer Power configuration file is valid.
 
     This method is a coroutine.
     """

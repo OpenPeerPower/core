@@ -77,7 +77,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     async_add_entities([instance], True)
 
     async def handle_add_tracking(call):
-        """Call when a user adds a new Aftership tracking from Home Assistant."""
+        """Call when a user adds a new Aftership tracking from Open Peer Power."""
         title = call.data.get(CONF_TITLE)
         slug = call.data.get(CONF_SLUG)
         tracking_number = call.data[CONF_TRACKING_NUMBER]
@@ -93,7 +93,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
     async def handle_remove_tracking(call):
-        """Call when a user removes an Aftership tracking from Home Assistant."""
+        """Call when a user removes an Aftership tracking from Open Peer Power."""
         slug = call.data[CONF_SLUG]
         tracking_number = call.data[CONF_TRACKING_NUMBER]
 

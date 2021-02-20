@@ -1,4 +1,4 @@
-"""Map Z-Wave nodes and values to Home Assistant entities."""
+"""Map Z-Wave nodes and values to Open Peer Power entities."""
 import openzwavemqtt.const as const_ozw
 from openzwavemqtt.const import CommandClass, ValueGenre, ValueIndex, ValueType
 

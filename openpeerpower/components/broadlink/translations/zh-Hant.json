@@ -32,7 +32,7 @@
                 "data": {
                     "unlock": "\u662f\uff0c\u57f7\u884c\u3002"
                 },
-                "description": "{name}\uff08\u4f4d\u65bc {host} \u7684 {model}\uff09\u88dd\u7f6e\u5df2\u9396\u5b9a\uff0c\u53ef\u80fd\u5c0e\u81f4 Home Assistant \u8a8d\u8b49\u554f\u984c\uff0c\u662f\u5426\u8981\u89e3\u9396\uff1f",
+                "description": "{name}\uff08\u4f4d\u65bc {host} \u7684 {model}\uff09\u88dd\u7f6e\u5df2\u9396\u5b9a\uff0c\u53ef\u80fd\u5c0e\u81f4 Open Peer Power \u8a8d\u8b49\u554f\u984c\uff0c\u662f\u5426\u8981\u89e3\u9396\uff1f",
                 "title": "\u89e3\u9396\u88dd\u7f6e\uff08\u9078\u9805\uff09"
             },
             "user": {

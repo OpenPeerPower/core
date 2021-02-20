@@ -54,7 +54,7 @@ addon_update:
       example: "0.2"
 
 openpeerpower_update:
-  description: Update the Home Assistant docker image.
+  description: Update the Open Peer Power docker image.
   fields:
     version:
       description: Optional or it will be use the latest version.

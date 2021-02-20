@@ -21,7 +21,7 @@
                 "data": {
                     "discovery": "Omogo\u010di odkrivanje"
                 },
-                "description": "Ali \u017eelite konfigurirati Home Assistant za povezavo s posrednikom MQTT, ki ga ponuja dodatek Opp.io {addon} ?",
+                "description": "Ali \u017eelite konfigurirati Open Peer Power za povezavo s posrednikom MQTT, ki ga ponuja dodatek Opp.io {addon} ?",
                 "title": "MQTT Broker prek dodatka Opp.io"
             }
         }

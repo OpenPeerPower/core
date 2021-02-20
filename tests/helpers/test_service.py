@@ -157,7 +157,7 @@ def area_mock.opp):
 
 
 class TestServiceHelpers(unittest.TestCase):
-    """Test the Home Assistant service helpers."""
+    """Test the Open Peer Power service helpers."""
 
     def setUp(self):  # pylint: disable=invalid-name
         """Set up things to be run when tests are started."""

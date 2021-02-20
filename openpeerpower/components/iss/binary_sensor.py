@@ -37,7 +37,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the ISS sensor."""
     if None in .opp.config.latitude,.opp.config.longitude):
-        _LOGGER.error("Latitude or longitude not set in Home Assistant config")
+        _LOGGER.error("Latitude or longitude not set in Open Peer Power config")
         return False
 
     try:

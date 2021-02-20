@@ -1,4 +1,4 @@
-"""Adapter to wrap the rachiopy api for home assistant."""
+"""Adapter to wrap the rachiopy api for Open Peer Power."""
 
 from openpeerpowerr.helpers import device_registry
 from openpeerpowerr.helpers.entity import Entity

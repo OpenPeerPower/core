@@ -23,7 +23,7 @@
                     "ssl": "\u4f7f\u7528 SSL \u8a8d\u8b49",
                     "verify_ssl": "\u78ba\u8a8d SSL \u8a8d\u8b49"
                 },
-                "description": "\u900f\u904e\u7db2\u969b\u7db2\u8def\u5217\u5370\u5354\u5b9a\uff08IPP\uff09\u8a2d\u5b9a\u5370\u8868\u6a5f\u4ee5\u6574\u5408\u81f3 Home Assistant\u3002",
+                "description": "\u900f\u904e\u7db2\u969b\u7db2\u8def\u5217\u5370\u5354\u5b9a\uff08IPP\uff09\u8a2d\u5b9a\u5370\u8868\u6a5f\u4ee5\u6574\u5408\u81f3 Open Peer Power\u3002",
                 "title": "\u9023\u7d50\u5370\u8868\u6a5f"
             },
             "zeroconf_confirm": {

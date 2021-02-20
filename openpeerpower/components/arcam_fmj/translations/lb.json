@@ -8,7 +8,7 @@
         "flow_title": "Arcam FMJ um {host}",
         "step": {
             "confirm": {
-                "description": "Soll den Arcam FMJ um `{host}` am Home Assistant dob\u00e4i gesaat ginn?"
+                "description": "Soll den Arcam FMJ um `{host}` am Open Peer Power dob\u00e4i gesaat ginn?"
             },
             "user": {
                 "data": {

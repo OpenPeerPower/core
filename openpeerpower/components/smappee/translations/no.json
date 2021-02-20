@@ -15,7 +15,7 @@
                 "data": {
                     "environment": "Milj\u00f8"
                 },
-                "description": "Konfigurer Smappee til \u00e5 integreres med Home Assistant."
+                "description": "Konfigurer Smappee til \u00e5 integreres med Open Peer Power."
             },
             "local": {
                 "data": {
@@ -27,7 +27,7 @@
                 "title": "Velg godkjenningsmetode"
             },
             "zeroconf_confirm": {
-                "description": "Vil du legge Smappee-enheten med serienummer ` {serialnumber} ` til Home Assistant?",
+                "description": "Vil du legge Smappee-enheten med serienummer ` {serialnumber} ` til Open Peer Power?",
                 "title": "Oppdaget Smappee-enhet"
             }
         }

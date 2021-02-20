@@ -9,7 +9,7 @@
         "step": {
             "user": {
                 "data": {
-                    "code": "\ucf54\ub4dc (Home Assistant UI \uc5d0\uc11c \uc0ac\uc6a9\ub428)",
+                    "code": "\ucf54\ub4dc (Open Peer Power UI \uc5d0\uc11c \uc0ac\uc6a9\ub428)",
                     "password": "\ube44\ubc00\ubc88\ud638",
                     "username": "\uc774\uba54\uc77c"
                 },
@@ -21,7 +21,7 @@
         "step": {
             "init": {
                 "data": {
-                    "code": "\ucf54\ub4dc (Home Assistant UI \uc5d0\uc11c \uc0ac\uc6a9\ub428)"
+                    "code": "\ucf54\ub4dc (Open Peer Power UI \uc5d0\uc11c \uc0ac\uc6a9\ub428)"
                 },
                 "title": "SimpliSafe \uad6c\uc131\ud558\uae30"
             }

@@ -92,7 +92,7 @@ def gather_new_integration(determine_auth: bool) -> Info:
         fields.update(
             {
                 "authentication": {
-                    "prompt": "Does Home Assistant need the user to authenticate to control the device/service? (yes/no)",
+                    "prompt": "Does Open Peer Power need the user to authenticate to control the device/service? (yes/no)",
                     "default": "yes",
                     **YES_NO,
                 },

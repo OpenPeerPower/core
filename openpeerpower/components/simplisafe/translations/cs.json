@@ -23,7 +23,7 @@
             },
             "user": {
                 "data": {
-                    "code": "K\u00f3d (pou\u017eit\u00fd v u\u017eivatelsk\u00e9m rozhran\u00ed Home Assistant)",
+                    "code": "K\u00f3d (pou\u017eit\u00fd v u\u017eivatelsk\u00e9m rozhran\u00ed Open Peer Power)",
                     "password": "Heslo",
                     "username": "E-mail"
                 },
@@ -35,7 +35,7 @@
         "step": {
             "init": {
                 "data": {
-                    "code": "K\u00f3d (pou\u017e\u00edt\u00fd v u\u017eivatelsk\u00e9m rozhran\u00ed Home Assistant)"
+                    "code": "K\u00f3d (pou\u017e\u00edt\u00fd v u\u017eivatelsk\u00e9m rozhran\u00ed Open Peer Power)"
                 },
                 "title": "Nastavte SimpliSafe"
             }

@@ -1,7 +1,7 @@
 {
     "config": {
         "abort": {
-            "install_app": "Apri l'App per dispositivi mobili per configurare l'integrazione con Home Assistant. Vedi [i documenti]({apps_url}) per un elenco di app compatibili."
+            "install_app": "Apri l'App per dispositivi mobili per configurare l'integrazione con Open Peer Power. Vedi [i documenti]({apps_url}) per un elenco di app compatibili."
         },
         "step": {
             "confirm": {

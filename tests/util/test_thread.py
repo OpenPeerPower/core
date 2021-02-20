@@ -1,4 +1,4 @@
-"""Test Home Assistant thread utils."""
+"""Test Open Peer Power thread utils."""
 
 import asyncio
 

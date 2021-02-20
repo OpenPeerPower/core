@@ -93,7 +93,7 @@ async def validate_installed_app(api, installed_app_id: str):
 
 
 def validate_webhook_requirements.opp: OpenPeerPowerType) -> bool:
-    """Ensure Home Assistant is setup properly to receive webhooks."""
+    """Ensure Open Peer Power is setup properly to receive webhooks."""
     if.opp.components.cloud.async_active_subscription():
         return True
     if.opp.data[DOMAIN][CONF_CLOUDHOOK_URL] is not None:
@@ -126,7 +126,7 @@ def _get_app_template.opp: OpenPeerPowerType):
 
     return {
         "app_name": APP_NAME_PREFIX + str(uuid4()),
-        "display_name": "Home Assistant",
+        "display_name": "Open Peer Power",
         "description": description,
         "webhook_target_url": get_webhook_url.opp),
         "app_type": APP_TYPE_WEBHOOK,

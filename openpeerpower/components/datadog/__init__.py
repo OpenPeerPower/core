@@ -58,7 +58,7 @@ def setup.opp, config):
         message = event.data.get("message")
 
         statsd.event(
-            title="Home Assistant",
+            title="Open Peer Power",
             text=f"%%% \n **{name}** {message} \n %%%",
             tags=[
                 f"entity:{event.data.get('entity_id')}",

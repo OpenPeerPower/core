@@ -3,7 +3,7 @@
 # Integration domain
 DOMAIN = "elgato"
 
-# Home Assistant data keys
+# Open Peer Power data keys
 DATA_ELGATO_CLIENT = "elgato_client"
 
 # Attributes

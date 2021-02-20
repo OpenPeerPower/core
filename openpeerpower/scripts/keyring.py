@@ -13,7 +13,7 @@ def run(args):
     """Handle keyring script."""
     parser = argparse.ArgumentParser(
         description=(
-            "Modify Home Assistant secrets in the default keyring. "
+            "Modify Open Peer Power secrets in the default keyring. "
             "Use the secrets in configuration files with: "
             "!secret <name>"
         )

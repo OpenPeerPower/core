@@ -34,7 +34,7 @@ async def test_oppio_system_health.opp, aioclient_mock):
         "oppos": True,
     }
    .opp.data["oppio_host_info"] = {
-        "operating_system": "Home Assistant OS 5.9",
+        "operating_system": "Open Peer Power OS 5.9",
         "disk_total": "32.0",
         "disk_used": "30.0",
     }
@@ -57,7 +57,7 @@ async def test_oppio_system_health.opp, aioclient_mock):
         "disk_used": "30.0 GB",
         "docker_version": "19.0.3",
         "healthy": True,
-        "host_os": "Home Assistant OS 5.9",
+        "host_os": "Open Peer Power OS 5.9",
         "installed_addons": "Awesome Addon (1.0.0)",
         "supervisor_api": "ok",
         "supervisor_version": "supervisor-2020.11.1",

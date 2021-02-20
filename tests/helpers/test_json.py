@@ -1,4 +1,4 @@
-"""Test Home Assistant remote methods and classes."""
+"""Test Open Peer Power remote methods and classes."""
 import pytest
 
 from openpeerpower import core

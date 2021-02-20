@@ -32,7 +32,7 @@ ATTR_TARGET = "target"
 
 # Title of notification
 ATTR_TITLE = "title"
-ATTR_TITLE_DEFAULT = "Home Assistant"
+ATTR_TITLE_DEFAULT = "Open Peer Power"
 
 DOMAIN = "notify"
 

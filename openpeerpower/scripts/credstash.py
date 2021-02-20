@@ -13,7 +13,7 @@ def run(args):
     """Handle credstash script."""
     parser = argparse.ArgumentParser(
         description=(
-            "Modify Home Assistant secrets in credstash."
+            "Modify Open Peer Power secrets in credstash."
             "Use the secrets in configuration files with: "
             "!secret <name>"
         )

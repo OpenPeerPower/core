@@ -21,7 +21,7 @@
                 "data": {
                     "discovery": "Attiva l'individuazione"
                 },
-                "description": "Vuoi configurare Home Assistant per connettersi al broker MQTT fornito dal componente aggiuntivo di Opp.io: {addon}?",
+                "description": "Vuoi configurare Open Peer Power per connettersi al broker MQTT fornito dal componente aggiuntivo di Opp.io: {addon}?",
                 "title": "Broker MQTT tramite il componente aggiuntivo di Opp.io"
             }
         }

@@ -33,7 +33,7 @@ CONF_PRIORITY = "priority"
 CONF_ROOT_CLIENT = "ROOT_CLIENT"
 
 DEFAULT_NAME = "Hyperion"
-DEFAULT_ORIGIN = "Home Assistant"
+DEFAULT_ORIGIN = "Open Peer Power"
 DEFAULT_PRIORITY = 128
 
 DOMAIN = "hyperion"

@@ -205,7 +205,7 @@ stages:
           sed -i "s|$stable_version|$version|g" stable.json
         fi
 
-        git commit -am "Bump Home Assistant $version"
+        git commit -am "Bump Open Peer Power $version"
         git push
       displayName: "Update version files"
   - job: 'ReleaseDocker'

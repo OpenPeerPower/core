@@ -1,7 +1,7 @@
 {
     "config": {
         "create_entry": {
-            "default": "For at sende h\u00e6ndelser til Home Assistant skal du konfigurere webhook-funktionen i GPSLogger.\n\n Udfyld f\u00f8lgende oplysninger: \n\n - Webadresse: `{webhook_url}`\n - Metode: POST\n \nSe [dokumentationen]({docs_url}) for yderligere oplysninger."
+            "default": "For at sende h\u00e6ndelser til Open Peer Power skal du konfigurere webhook-funktionen i GPSLogger.\n\n Udfyld f\u00f8lgende oplysninger: \n\n - Webadresse: `{webhook_url}`\n - Metode: POST\n \nSe [dokumentationen]({docs_url}) for yderligere oplysninger."
         },
         "step": {
             "user": {

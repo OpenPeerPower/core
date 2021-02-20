@@ -32,7 +32,7 @@
                 "data": {
                     "unlock": "S\u00ed, fes-ho."
                 },
-                "description": "{name} ({model} a {host}) est\u00e0 bloquejat. Aix\u00f2 pot donar problemes d'autenticaci\u00f3 a Home Assistant. Vols desbloquejar-lo?",
+                "description": "{name} ({model} a {host}) est\u00e0 bloquejat. Aix\u00f2 pot donar problemes d'autenticaci\u00f3 a Open Peer Power. Vols desbloquejar-lo?",
                 "title": "Desbloqueig de dispositiu (opcional)"
             },
             "user": {

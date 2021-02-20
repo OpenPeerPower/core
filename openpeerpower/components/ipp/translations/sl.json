@@ -20,11 +20,11 @@
                     "ssl": "Tiskalnik podpira komunikacijo prek SSL/TLS",
                     "verify_ssl": "Tiskalnik uporablja pravilno SSL potrdilo"
                 },
-                "description": "Tiskalnik nastavite s protokolom za internetni tiskanje (IPP) tako, da se bo integriral s programom Home Assistant.",
+                "description": "Tiskalnik nastavite s protokolom za internetni tiskanje (IPP) tako, da se bo integriral s programom Open Peer Power.",
                 "title": "Pove\u017eite svoj tiskalnik"
             },
             "zeroconf_confirm": {
-                "description": "Ali \u017eelite tiskalnik z imenom {name} dodati v Home Assistant?",
+                "description": "Ali \u017eelite tiskalnik z imenom {name} dodati v Open Peer Power?",
                 "title": "Odkrit tiskalnik"
             }
         }

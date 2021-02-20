@@ -55,7 +55,7 @@ def verify_version(value: str):
     """Verify the version."""
     if not validate_custom_integration_version(value):
         raise vol.Invalid(
-            f"'{value}' is not a valid version. This will cause a future version of Home Assistant to block this integration.",
+            f"'{value}' is not a valid version. This will cause a future version of Open Peer Power to block this integration.",
         )
     return value
 
@@ -121,7 +121,7 @@ def validate_version(integration: Integration):
     if not integration.manifest.get("version"):
         integration.add_error(
             "manifest",
-            "No 'version' key in the manifest file. This will cause a future version of Home Assistant to block this integration.",
+            "No 'version' key in the manifest file. This will cause a future version of Open Peer Power to block this integration.",
         )
         return
 

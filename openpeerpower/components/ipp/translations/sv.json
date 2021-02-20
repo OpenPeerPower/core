@@ -20,11 +20,11 @@
                     "ssl": "Skrivaren st\u00f6der kommunikation \u00f6ver SSL / TLS",
                     "verify_ssl": "Skrivaren anv\u00e4nder ett korrekt SSL-certifikat"
                 },
-                "description": "S\u00e4tt upp din skrivare \u00f6ver Internet Printing Protocol (IPP) f\u00f6r att integrera den med Home Assistant.",
+                "description": "S\u00e4tt upp din skrivare \u00f6ver Internet Printing Protocol (IPP) f\u00f6r att integrera den med Open Peer Power.",
                 "title": "Anslut din skrivare"
             },
             "zeroconf_confirm": {
-                "description": "Vill du l\u00e4gga till skrivaren med namn `{name}` till Home Assistant?",
+                "description": "Vill du l\u00e4gga till skrivaren med namn `{name}` till Open Peer Power?",
                 "title": "Uppt\u00e4ckte skrivare"
             }
         }

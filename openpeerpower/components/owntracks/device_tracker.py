@@ -122,7 +122,7 @@ class OwnTracksEntity(TrackerEntity, RestoreEntity):
         return {"name": self.name, "identifiers": {(OT_DOMAIN, self._dev_id)}}
 
     async def async_added_to_opp(self):
-        """Call when entity about to be added to Home Assistant."""
+        """Call when entity about to be added to Open Peer Power."""
         await super().async_added_to_opp()
 
         # Don't restore if we got set up with data.

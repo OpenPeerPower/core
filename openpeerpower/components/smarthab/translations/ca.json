@@ -11,7 +11,7 @@
                     "email": "Correu electr\u00f2nic",
                     "password": "Contrasenya"
                 },
-                "description": "Per motius t\u00e8cnics, assegura't utilitzar un compte secundari espec\u00edfic per a la configuraci\u00f3 de Home Assistant. Pots crear-ne un des de l'aplicaci\u00f3 SmartHab.",
+                "description": "Per motius t\u00e8cnics, assegura't utilitzar un compte secundari espec\u00edfic per a la configuraci\u00f3 de Open Peer Power. Pots crear-ne un des de l'aplicaci\u00f3 SmartHab.",
                 "title": "Configuraci\u00f3 de SmartHab"
             }
         }

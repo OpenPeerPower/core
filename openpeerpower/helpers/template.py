@@ -1,4 +1,4 @@
-"""Template helper methods for rendering strings with Home Assistant data."""
+"""Template helper methods for rendering strings with Open Peer Power data."""
 from __future__ import annotations
 
 from ast import literal_eval
@@ -1309,7 +1309,7 @@ def urlencode(value):
 
 
 class TemplateEnvironment(ImmutableSandboxedEnvironment):
-    """The Home Assistant template environment."""
+    """The Open Peer Power template environment."""
 
     def __init__(self,.opp):
         """Initialise template environment."""

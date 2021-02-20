@@ -11,7 +11,7 @@
                     "passkey": "Todentamisavaimen merkkijono",
                     "port": "Portti"
                 },
-                "description": "Asenna BSB-Lan-laite integroitavaksi Home Assistant -sovellukseen.",
+                "description": "Asenna BSB-Lan-laite integroitavaksi Open Peer Power -sovellukseen.",
                 "title": "Yhdist\u00e4 BSB-Lan-laitteeseen"
             }
         }

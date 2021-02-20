@@ -23,7 +23,7 @@ async def init_integration(
     aioclient_mock: AiohttpClientMocker,
     skip_setup: bool = False,
 ) -> MockConfigEntry:
-    """Set up the BSBLan integration in Home Assistant."""
+    """Set up the BSBLan integration in Open Peer Power."""
 
     aioclient_mock.post(
         "http://example.local:80/1234/JQ?Parameter=6224,6225,6226",
@@ -59,7 +59,7 @@ async def init_integration_without_auth(
     aioclient_mock: AiohttpClientMocker,
     skip_setup: bool = False,
 ) -> MockConfigEntry:
-    """Set up the BSBLan integration in Home Assistant."""
+    """Set up the BSBLan integration in Open Peer Power."""
 
     aioclient_mock.post(
         "http://example.local:80/1234/JQ?Parameter=6224,6225,6226",

@@ -76,7 +76,7 @@ class AveaLight(LightEntity):
     def update(self):
         """Fetch new state data for this light.
 
-        This is the only method that should fetch new data for Home Assistant.
+        This is the only method that should fetch new data for Open Peer Power.
         """
         brightness = self._light.get_brightness()
         if brightness is not None:

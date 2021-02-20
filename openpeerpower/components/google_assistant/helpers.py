@@ -557,7 +557,7 @@ class GoogleEntity:
 
     @callback
     def async_update(self):
-        """Update the entity with latest info from Home Assistant."""
+        """Update the entity with latest info from Open Peer Power."""
         self.state = self.opp.states.get(self.entity_id)
 
         if self._traits is None:

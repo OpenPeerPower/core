@@ -48,7 +48,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 
 class MinutPointSensor(MinutPointEntity):
-    """The platform class required by Home Assistant."""
+    """The platform class required by Open Peer Power."""
 
     def __init__(self, point_client, device_id, device_class):
         """Initialize the sensor."""

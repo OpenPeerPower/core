@@ -1,1 +1,1 @@
-"""Home Assistant scripts."""
+"""Open Peer Power scripts."""

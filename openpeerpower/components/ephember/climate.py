@@ -199,10 +199,10 @@ class EphEmberThermostat(ClimateEntity):
 
     @staticmethod
     def map_mode_opp_eph(operation_mode):
-        """Map from Home Assistant mode to eph mode."""
+        """Map from Open Peer Power mode to eph mode."""
         return getattr(ZoneMode, HA_STATE_TO_EPH.get(operation_mode), None)
 
     @staticmethod
     def map_mode_eph_opp(operation_mode):
-        """Map from eph mode to Home Assistant mode."""
+        """Map from eph mode to Open Peer Power mode."""
         return EPH_TO_HA_STATE.get(operation_mode.name, HVAC_MODE_HEAT_COOL)

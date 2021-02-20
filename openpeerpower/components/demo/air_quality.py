@@ -52,4 +52,4 @@ class DemoAirQuality(AirQualityEntity):
     @property
     def attribution(self):
         """Return the attribution."""
-        return "Powered by Home Assistant"
+        return "Powered by Open Peer Power"

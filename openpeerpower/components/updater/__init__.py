@@ -85,12 +85,12 @@ async def async_setup.opp, config):
         update_available = False
         if AwesomeVersion(newest) > AwesomeVersion(current_version):
             _LOGGER.debug(
-                "The latest available version of Home Assistant is %s", newest
+                "The latest available version of Open Peer Power is %s", newest
             )
             update_available = True
         elif AwesomeVersion(newest) == AwesomeVersion(current_version):
             _LOGGER.debug(
-                "You are on the latest version (%s) of Home Assistant", newest
+                "You are on the latest version (%s) of Open Peer Power", newest
             )
         elif AwesomeVersion(newest) < AwesomeVersion(current_version):
             _LOGGER.debug(
@@ -106,7 +106,7 @@ async def async_setup.opp, config):
     coordinator =.opp.data[DOMAIN] = update_coordinator.DataUpdateCoordinator[Updater](
        .opp,
         _LOGGER,
-        name="Home Assistant update",
+        name="Open Peer Power update",
         update_method=check_new_version,
         update_interval=timedelta(days=1),
     )
@@ -122,7 +122,7 @@ async def async_setup.opp, config):
 
 
 async def get_newest_version.opp, huuid, include_components):
-    """Get the newest Home Assistant version."""
+    """Get the newest Open Peer Power version."""
     if huuid:
         info_object = await.opp.helpers.system_info.async_get_system_info()
 
@@ -144,7 +144,7 @@ async def get_newest_version.opp, huuid, include_components):
 
     _LOGGER.info(
         (
-            "Submitted analytics to Home Assistant servers. "
+            "Submitted analytics to Open Peer Power servers. "
             "Information submitted includes %s"
         ),
         info_object,
@@ -154,7 +154,7 @@ async def get_newest_version.opp, huuid, include_components):
         res = await req.json()
     except ValueError as err:
         raise update_coordinator.UpdateFailed(
-            "Received invalid JSON from Home Assistant Update"
+            "Received invalid JSON from Open Peer Power Update"
         ) from err
 
     try:

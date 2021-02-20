@@ -19,11 +19,11 @@
                 "title": "Sidumise l\u00f5puleviimine"
             },
             "pairing_complete": {
-                "description": "[VOID] on n\u00fc\u00fcd Home Assistant'iga \u00fchendatud.",
+                "description": "[VOID] on n\u00fc\u00fcd Open Peer Power'iga \u00fchendatud.",
                 "title": "Sidumine on l\u00f5pule viidud"
             },
             "pairing_complete_import": {
-                "description": "[VOID] on n\u00fc\u00fcd \u00fchendatud Home Assistantiga.\n\nJuurdep\u00e4\u00e4sut\u00f5end on '** {access_token} **'.",
+                "description": "[VOID] on n\u00fc\u00fcd \u00fchendatud Open Peer Poweriga.\n\nJuurdep\u00e4\u00e4sut\u00f5end on '** {access_token} **'.",
                 "title": "Sidumine on l\u00f5pule viidud"
             },
             "user": {

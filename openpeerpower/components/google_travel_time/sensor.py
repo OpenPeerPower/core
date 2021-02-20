@@ -139,7 +139,7 @@ def setup_platform.opp, config, add_entities_callback, discovery_info=None):
 
     def run_setup(event):
         """
-        Delay the setup until Home Assistant is fully initialized.
+        Delay the setup until Open Peer Power is fully initialized.
 
         This allows any entities to be created already
         """

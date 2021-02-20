@@ -10,7 +10,7 @@ API_POINT_URL = (
 
 
 async def init_integration.opp, aioclient_mock) -> MockConfigEntry:
-    """Set up the Airly integration in Home Assistant."""
+    """Set up the Airly integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         title="Home",

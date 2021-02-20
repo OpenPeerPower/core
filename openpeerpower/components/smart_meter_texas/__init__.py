@@ -63,7 +63,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     # Use a DataUpdateCoordinator to manage the updates. This is due to the
     # Smart Meter Texas API which takes around 30 seconds to read a meter.
-    # This avoids Home Assistant from complaining about the component taking
+    # This avoids Open Peer Power from complaining about the component taking
     # too long to update.
     coordinator = DataUpdateCoordinator(
        .opp,

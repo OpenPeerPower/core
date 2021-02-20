@@ -1,4 +1,4 @@
-"""Integrates Native Apps to Home Assistant."""
+"""Integrates Native Apps to Open Peer Power."""
 import asyncio
 
 from openpeerpower.components import cloud, notify as.opp_notify

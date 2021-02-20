@@ -1,7 +1,7 @@
 {
     "config": {
         "error": {
-            "app_setup_error": "Det gick inte att installera Home Assistant SmartApp. V\u00e4nligen f\u00f6rs\u00f6k igen.",
+            "app_setup_error": "Det gick inte att installera Open Peer Power SmartApp. V\u00e4nligen f\u00f6rs\u00f6k igen.",
             "token_forbidden": "Token har inte det som kr\u00e4vs inom omf\u00e5ng f\u00f6r OAuth.",
             "token_invalid_format": "Token m\u00e5ste vara i UID/GUID-format",
             "token_unauthorized": "Denna token \u00e4r ogiltig eller inte l\u00e4ngre auktoriserad.",
@@ -9,7 +9,7 @@
         },
         "step": {
             "authorize": {
-                "title": "Auktorisera Home Assistant"
+                "title": "Auktorisera Open Peer Power"
             },
             "select_location": {
                 "data": {

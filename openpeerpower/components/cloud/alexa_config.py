@@ -1,4 +1,4 @@
-"""Alexa configuration for Home Assistant Cloud."""
+"""Alexa configuration for Open Peer Power Cloud."""
 import asyncio
 from datetime import timedelta
 import logging

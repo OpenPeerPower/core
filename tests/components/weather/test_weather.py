@@ -39,7 +39,7 @@ async def test_attributes.opp):
     assert data.get(ATTR_WEATHER_WIND_SPEED) == 0.5
     assert data.get(ATTR_WEATHER_WIND_BEARING) is None
     assert data.get(ATTR_WEATHER_OZONE) is None
-    assert data.get(ATTR_WEATHER_ATTRIBUTION) == "Powered by Home Assistant"
+    assert data.get(ATTR_WEATHER_ATTRIBUTION) == "Powered by Open Peer Power"
     assert data.get(ATTR_FORECAST)[0].get(ATTR_FORECAST_CONDITION) == "rainy"
     assert data.get(ATTR_FORECAST)[0].get(ATTR_FORECAST_PRECIPITATION) == 1
     assert data.get(ATTR_FORECAST)[0].get(ATTR_FORECAST_PRECIPITATION_PROBABILITY) == 60

@@ -18,7 +18,7 @@
                 "description": "Bitte gebe das Passwort der ESPHome-Konfiguration f\u00fcr {name} ein:"
             },
             "discovery_confirm": {
-                "description": "Willst du den ESPHome-Knoten `{name}` zu Home Assistant hinzuf\u00fcgen?",
+                "description": "Willst du den ESPHome-Knoten `{name}` zu Open Peer Power hinzuf\u00fcgen?",
                 "title": "Gefundener ESPHome-Knoten"
             },
             "user": {

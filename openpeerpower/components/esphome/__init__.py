@@ -75,7 +75,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         host,
         port,
         password,
-        client_info=f"Home Assistant {const.__version__}",
+        client_info=f"Open Peer Power {const.__version__}",
         zeroconf_instance=zeroconf_instance,
     )
 
@@ -92,7 +92,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         await _cleanup_instance.opp, entry)
 
     # Use async_listen instead of async_listen_once so that we don't deregister
-    # the callback twice when shutting down Home Assistant.
+    # the callback twice when shutting down Open Peer Power.
     # "Unable to remove unknown listener <function EventBus.async_listen_once.<locals>.onetime_listener>"
     entry_data.cleanup_callbacks.append(
        .opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, on_stop)
@@ -148,7 +148,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             )
 
     async def send_home_assistant_state_event(event: Event) -> None:
-        """Forward Home Assistant states updates to ESPHome."""
+        """Forward Open Peer Power states updates to ESPHome."""
         new_state = event.data.get("new_state")
         if new_state is None:
             return
@@ -158,7 +158,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     async def _send_home_assistant_state(
         entity_id: str, new_state: Optional[State]
     ) -> None:
-        """Forward Home Assistant states to ESPHome."""
+        """Forward Open Peer Power states to ESPHome."""
         await cli.send_home_assistant_state(entity_id, new_state.state)
 
     @callback
@@ -433,7 +433,7 @@ async def platform_async_setup_entry(
         # Then update the actual info
         entry_data.info[component_key] = new_infos
 
-        # Add entities to Home Assistant
+        # Add entities to Open Peer Power
         async_add_entities(add_entities)
 
     signal = f"esphome_{entry.entry_id}_on_list"
@@ -459,7 +459,7 @@ def esphome_state_property(func):
     """Wrap a state property of an esphome entity.
 
     This checks if the state object in the entity is set, and
-    prevents writing NAN values to the Home Assistant state machine.
+    prevents writing NAN values to the Open Peer Power state machine.
     """
 
     @property
@@ -468,7 +468,7 @@ def esphome_state_property(func):
             return None
         val = func(self)
         if isinstance(val, float) and math.isnan(val):
-            # Home Assistant doesn't use NAN values in state machine
+            # Open Peer Power doesn't use NAN values in state machine
             # (not JSON serializable)
             return None
         return val

@@ -15,7 +15,7 @@ TYPE_URL_EXTERNAL = "external_url"
 
 
 class NoURLAvailableError(OpenPeerPowerError):
-    """An URL to the Home Assistant instance is not available."""
+    """An URL to the Open Peer Power instance is not available."""
 
 
 @bind_opp
@@ -209,7 +209,7 @@ def _get_external_url(
 
 @bind_opp
 def _get_cloud_url.opp: OpenPeerPower, require_current_request: bool = False) -> str:
-    """Get external Home Assistant Cloud URL of this instance."""
+    """Get external Open Peer Power Cloud URL of this instance."""
     if "cloud" in.opp.config.components:
         try:
             cloud_url = yarl.URL(cast(str,.opp.components.cloud.async_remote_ui_url()))

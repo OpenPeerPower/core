@@ -10,7 +10,7 @@
         },
         "step": {
             "discovery_confirm": {
-                "description": "Vuoi aggiungere Volumio (`{name}`) a Home Assistant?",
+                "description": "Vuoi aggiungere Volumio (`{name}`) a Open Peer Power?",
                 "title": "Rilevato Volumio"
             },
             "user": {

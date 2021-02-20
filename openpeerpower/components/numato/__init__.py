@@ -153,7 +153,7 @@ def setup.opp, config):
            .opp.data[DOMAIN][DATA_API].ports_registered.clear()
 
     def prepare_gpio(event):
-        """Stuff to do when home assistant starts."""
+        """Stuff to do when Open Peer Power starts."""
         _LOGGER.debug("Setup cleanup at stop for Numato GPIO")
        .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_gpio)
 

@@ -18,7 +18,7 @@ class XboxBaseSensorEntity(CoordinatorEntity):
 
     @property
     def unique_id(self) -> str:
-        """Return a unique, Home Assistant friendly identifier for this entity."""
+        """Return a unique, Open Peer Power friendly identifier for this entity."""
         return f"{self.xuid}_{self.attribute}"
 
     @property

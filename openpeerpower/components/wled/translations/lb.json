@@ -13,10 +13,10 @@
                 "data": {
                     "host": "Host"
                 },
-                "description": "D\u00e4in WLED als Integratioun mam Home Assistant ariichten."
+                "description": "D\u00e4in WLED als Integratioun mam Open Peer Power ariichten."
             },
             "zeroconf_confirm": {
-                "description": "Soll de WLED mam Numm `{name}` am Home Assistant dob\u00e4i gesaat ginn?",
+                "description": "Soll de WLED mam Numm `{name}` am Open Peer Power dob\u00e4i gesaat ginn?",
                 "title": "Entdeckten WLED Apparat"
             }
         }

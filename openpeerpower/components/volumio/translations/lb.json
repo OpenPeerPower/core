@@ -10,7 +10,7 @@
         },
         "step": {
             "discovery_confirm": {
-                "description": "Soll de Volumio (`{name}`) am Home Assistant dob\u00e4i gesaat ginn?",
+                "description": "Soll de Volumio (`{name}`) am Open Peer Power dob\u00e4i gesaat ginn?",
                 "title": "Entdeckte Volumio"
             },
             "user": {

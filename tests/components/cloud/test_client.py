@@ -59,10 +59,10 @@ async def test_op.dler_alexa.opp):
     assert len(endpoints) == 1
     device = endpoints[0]
 
-    assert device["description"] == "Config description via Home Assistant"
+    assert device["description"] == "Config description via Open Peer Power"
     assert device["friendlyName"] == "Config name"
     assert device["displayCategories"] == ["LIGHT"]
-    assert device["manufacturerName"] == "Home Assistant"
+    assert device["manufacturerName"] == "Open Peer Power"
 
 
 async def test_op.dler_alexa_disabled.opp, mock_cloud_fixture):

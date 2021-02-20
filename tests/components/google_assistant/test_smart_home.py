@@ -1063,8 +1063,8 @@ async def test_identify.opp):
                 "isProxy": True,
                 "deviceInfo": {
                     "hwVersion": "UNKNOWN_HW_VERSION",
-                    "manufacturer": "Home Assistant",
-                    "model": "Home Assistant",
+                    "manufacturer": "Open Peer Power",
+                    "model": "Open Peer Power",
                     "swVersion": __version__,
                 },
             }

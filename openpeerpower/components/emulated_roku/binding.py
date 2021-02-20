@@ -1,4 +1,4 @@
-"""Bridge between emulated_roku and Home Assistant."""
+"""Bridge between emulated_roku and Open Peer Power."""
 import logging
 
 from emulated_roku import EmulatedRokuCommandHandler, EmulatedRokuServer

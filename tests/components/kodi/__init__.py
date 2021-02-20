@@ -17,7 +17,7 @@ from tests.common import MockConfigEntry
 
 
 async def init_integration.opp) -> MockConfigEntry:
-    """Set up the Kodi integration in Home Assistant."""
+    """Set up the Kodi integration in Open Peer Power."""
     entry_data = {
         CONF_NAME: "name",
         CONF_HOST: "1.1.1.1",

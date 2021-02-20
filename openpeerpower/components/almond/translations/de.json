@@ -8,7 +8,7 @@
         },
         "step": {
             "oppio_confirm": {
-                "description": "M\u00f6chtest du Home Assistant so konfigurieren, dass eine Verbindung mit Almond als Opp.io-Add-On hergestellt wird: {addon}?",
+                "description": "M\u00f6chtest du Open Peer Power so konfigurieren, dass eine Verbindung mit Almond als Opp.io-Add-On hergestellt wird: {addon}?",
                 "title": "Almond \u00fcber das Opp.io Add-on"
             },
             "pick_implementation": {

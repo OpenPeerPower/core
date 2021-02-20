@@ -17,7 +17,7 @@ from tests.common import get_test_home_assistant, init_recorder_component
 
 @pytest.fixture
 def.opp_recorder():
-    """Home Assistant fixture with in-memory recorder."""
+    """Open Peer Power fixture with in-memory recorder."""
     opp = get_test_home_assistant()
 
     def setup_recorder(config=None):

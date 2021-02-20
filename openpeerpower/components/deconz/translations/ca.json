@@ -14,11 +14,11 @@
         "flow_title": "Passarel\u00b7la d'enlla\u00e7 deCONZ Zigbee ({host})",
         "step": {
             "oppio_confirm": {
-                "description": "Vols configurar Home Assistant perqu\u00e8 es connecti amb la passarel\u00b7la deCONZ proporcionada pel complement de Opp.io: {addon}?",
+                "description": "Vols configurar Open Peer Power perqu\u00e8 es connecti amb la passarel\u00b7la deCONZ proporcionada pel complement de Opp.io: {addon}?",
                 "title": "Passarel\u00b7la d'enlla\u00e7 deCONZ Zigbee (complement de Opp.io)"
             },
             "link": {
-                "description": "Desbloqueja la teva passarel\u00b7la d'enlla\u00e7 deCONZ per a registrar-te amb Home Assistant.\n\n1. V\u00e9s a la configuraci\u00f3 del sistema deCONZ -> Passarel\u00b7la -> Avan\u00e7at\n2. Prem el bot\u00f3 \"Autenticar applicaci\u00f3\"",
+                "description": "Desbloqueja la teva passarel\u00b7la d'enlla\u00e7 deCONZ per a registrar-te amb Open Peer Power.\n\n1. V\u00e9s a la configuraci\u00f3 del sistema deCONZ -> Passarel\u00b7la -> Avan\u00e7at\n2. Prem el bot\u00f3 \"Autenticar applicaci\u00f3\"",
                 "title": "Vincular amb deCONZ"
             },
             "manual_input": {

@@ -173,7 +173,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> b
 
 
 def map_vera_device(vera_device: veraApi.VeraDevice, remap: List[int]) -> str:
-    """Map vera classes to Home Assistant types."""
+    """Map vera classes to Open Peer Power types."""
 
     type_map = {
         veraApi.VeraDimmer: "light",

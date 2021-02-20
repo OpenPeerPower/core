@@ -3,7 +3,7 @@
         "info": {
             "alexa_enabled": "Alexa povolena",
             "can_reach_cert_server": "Certifika\u010dn\u00ed server dosa\u017een",
-            "can_reach_cloud": "Home Assistant Cloud dosa\u017een",
+            "can_reach_cloud": "Open Peer Power Cloud dosa\u017een",
             "can_reach_cloud_auth": "Ov\u011b\u0159ovac\u00ed server dosa\u017een",
             "google_enabled": "Google povolen",
             "logged_in": "P\u0159ihl\u00e1\u0161en",

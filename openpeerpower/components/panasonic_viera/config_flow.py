@@ -137,7 +137,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         try:
             await self.opp.async_add_executor_job(
-                partial(self._remote.request_pin_code, name="Home Assistant")
+                partial(self._remote.request_pin_code, name="Open Peer Power")
             )
         except (TimeoutError, URLError, SOAPError, OSError) as err:
             _LOGGER.error("The remote connection was lost: %s", err)

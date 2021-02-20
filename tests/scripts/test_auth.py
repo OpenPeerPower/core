@@ -11,7 +11,7 @@ from tests.common import register_auth_provider
 
 @pytest.fixture
 def provider.opp):
-    """Home Assistant auth provider."""
+    """Open Peer Power auth provider."""
     provider =.opp.loop.run_until_complete(
         register_auth_provider.opp, {"type": "openpeerpowerr"})
     )

@@ -9,10 +9,10 @@
                 "data": {
                     "host": "V\u00e4rd eller IP-adress"
                 },
-                "description": "St\u00e4ll in din WLED f\u00f6r att integrera med Home Assistant."
+                "description": "St\u00e4ll in din WLED f\u00f6r att integrera med Open Peer Power."
             },
             "zeroconf_confirm": {
-                "description": "Vill du l\u00e4gga till WLED-enheten `{name}` till Home Assistant?",
+                "description": "Vill du l\u00e4gga till WLED-enheten `{name}` till Open Peer Power?",
                 "title": "Uppt\u00e4ckte WLED-enhet"
             }
         }

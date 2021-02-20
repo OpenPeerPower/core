@@ -46,7 +46,7 @@ from .const import DATA_CLIENT, DATA_UNSUBSCRIBE, DOMAIN
 from .discovery import ZwaveDiscoveryInfo
 from .entity import ZWaveBaseEntity
 
-# Map Z-Wave HVAC Mode to Home Assistant value
+# Map Z-Wave HVAC Mode to Open Peer Power value
 # Note: We treat "auto" as "heat_cool" as most Z-Wave devices
 # report auto_changeover as auto without schedule support.
 ZW_HVAC_MODE_MAP: Dict[int, str] = {
@@ -159,7 +159,7 @@ class ZWaveClimate(ZWaveBaseEntity, ClimateEntity):
         return val
 
     def _set_modes_and_presets(self) -> None:
-        """Convert Z-Wave Thermostat modes into Home Assistant modes and presets."""
+        """Convert Z-Wave Thermostat modes into Open Peer Power modes and presets."""
         all_modes: Dict[str, Optional[int]] = {}
         all_presets: Dict[str, Optional[int]] = {PRESET_NONE: None}
 

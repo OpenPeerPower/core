@@ -32,7 +32,7 @@
                 "data": {
                     "unlock": "S\u00ec, fallo."
                 },
-                "description": "{name} ({model} su {host}) \u00e8 bloccato. Ci\u00f2 pu\u00f2 causare problemi di autenticazione in Home Assistant. Vorresti sbloccarlo?",
+                "description": "{name} ({model} su {host}) \u00e8 bloccato. Ci\u00f2 pu\u00f2 causare problemi di autenticazione in Open Peer Power. Vorresti sbloccarlo?",
                 "title": "Sblocca il dispositivo (opzionale)"
             },
             "user": {

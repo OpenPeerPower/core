@@ -50,9 +50,9 @@ OPERATION_LIST = [HVAC_MODE_AUTO, HVAC_MODE_COOL, HVAC_MODE_HEAT, HVAC_MODE_OFF]
 CT30_FAN_OPERATION_LIST = [STATE_ON, HVAC_MODE_AUTO]
 CT80_FAN_OPERATION_LIST = [STATE_ON, STATE_CIRCULATE, HVAC_MODE_AUTO]
 
-# Mappings from radiotherm json data codes to and from Home Assistant state
+# Mappings from radiotherm json data codes to and from Open Peer Power state
 # flags.  CODE is the thermostat integer code and these map to and
-# from Home Assistant state flags.
+# from Open Peer Power state flags.
 
 # Programmed temperature mode of the thermostat.
 CODE_TO_TEMP_MODE = {
@@ -256,7 +256,7 @@ class RadioThermostat(ClimateEntity):
         """Update and validate the data from the thermostat."""
         # Radio thermostats are very slow, and sometimes don't respond
         # very quickly.  So we need to keep the number of calls to them
-        # to a bare minimum or we'll hit the Home Assistant 10 sec warning.  We
+        # to a bare minimum or we'll hit the Open Peer Power 10 sec warning.  We
         # have to make one call to /tstat to get temps but we'll try and
         # keep the other calls to a minimum.  Even with this, these
         # thermostats tend to time out sometimes when they're actively

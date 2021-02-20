@@ -1,4 +1,4 @@
-"""Helpers for Home Assistant dispatcher & internal component/platform."""
+"""Helpers for Open Peer Power dispatcher & internal component/platform."""
 import logging
 from typing import Any, Callable
 

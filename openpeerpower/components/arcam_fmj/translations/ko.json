@@ -7,7 +7,7 @@
         "flow_title": "Arcam FMJ: {host}",
         "step": {
             "confirm": {
-                "description": "Home Assistant \uc5d0 Arcam FMJ `{host}` \uc744(\ub97c) \ucd94\uac00\ud558\uc2dc\uaca0\uc2b5\ub2c8\uae4c?"
+                "description": "Open Peer Power \uc5d0 Arcam FMJ `{host}` \uc744(\ub97c) \ucd94\uac00\ud558\uc2dc\uaca0\uc2b5\ub2c8\uae4c?"
             },
             "user": {
                 "data": {

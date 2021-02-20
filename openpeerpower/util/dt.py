@@ -1,4 +1,4 @@
-"""Helper methods to handle the time in Home Assistant."""
+"""Helper methods to handle the time in Open Peer Power."""
 import datetime as dt
 import re
 from typing import Any, Dict, List, Optional, Union, cast

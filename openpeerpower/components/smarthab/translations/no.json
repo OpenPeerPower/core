@@ -11,7 +11,7 @@
                     "email": "E-post",
                     "password": "Passord"
                 },
-                "description": "Av tekniske \u00e5rsaker m\u00e5 du s\u00f8rge for \u00e5 bruke en sekund\u00e6r konto som er spesifikk for oppsettet i Home Assistant. Du kan opprette en fra SmartHab-programmet.",
+                "description": "Av tekniske \u00e5rsaker m\u00e5 du s\u00f8rge for \u00e5 bruke en sekund\u00e6r konto som er spesifikk for oppsettet i Open Peer Power. Du kan opprette en fra SmartHab-programmet.",
                 "title": "Oppsett av SmartHab"
             }
         }

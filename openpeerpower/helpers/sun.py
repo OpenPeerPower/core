@@ -20,7 +20,7 @@ DATA_LOCATION_CACHE = "astral_location_cache"
 @callback
 @bind_opp
 def get_astral_location.opp: OpenPeerPowerType) -> astral.Location:
-    """Get an astral location for the current Home Assistant configuration."""
+    """Get an astral location for the current Open Peer Power configuration."""
     from astral import Location  # pylint: disable=import-outside-toplevel
 
     latitude =.opp.config.latitude

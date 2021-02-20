@@ -9,7 +9,7 @@
         },
         "step": {
             "link": {
-                "description": "Buka gerbang deCONZ Anda untuk mendaftar dengan Home Assistant. \n\n 1. Pergi ke pengaturan sistem deCONZ \n 2. Tekan tombol \"Buka Kunci Gateway\"",
+                "description": "Buka gerbang deCONZ Anda untuk mendaftar dengan Open Peer Power. \n\n 1. Pergi ke pengaturan sistem deCONZ \n 2. Tekan tombol \"Buka Kunci Gateway\"",
                 "title": "Tautan dengan deCONZ"
             }
         }

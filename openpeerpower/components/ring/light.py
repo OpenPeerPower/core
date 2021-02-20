@@ -73,7 +73,7 @@ class RingLight(RingEntityMixin, LightEntity):
         return self._light_on
 
     def _set_light(self, new_state):
-        """Update light state, and causes Home Assistant to correctly update."""
+        """Update light state, and causes Open Peer Power to correctly update."""
         try:
             self._device.lights = new_state
         except requests.Timeout:

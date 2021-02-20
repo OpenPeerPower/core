@@ -17,11 +17,11 @@
                 "title": "Schlie\u00dfen Sie den Pairing-Prozess ab"
             },
             "pairing_complete": {
-                "description": "Dein Richten Sie das VIZIO SmartCast-Ger\u00e4t ein ist jetzt mit Home Assistant verbunden.",
+                "description": "Dein Richten Sie das VIZIO SmartCast-Ger\u00e4t ein ist jetzt mit Open Peer Power verbunden.",
                 "title": "Kopplung abgeschlossen"
             },
             "pairing_complete_import": {
-                "description": "Dein Richten Sie das VIZIO SmartCast-Ger\u00e4t ein ist jetzt mit Home Assistant verbunden.\n\nDein Zugangstoken ist '**{access_token}**'.",
+                "description": "Dein Richten Sie das VIZIO SmartCast-Ger\u00e4t ein ist jetzt mit Open Peer Power verbunden.\n\nDein Zugangstoken ist '**{access_token}**'.",
                 "title": "Kopplung abgeschlossen"
             },
             "user": {

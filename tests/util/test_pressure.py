@@ -1,4 +1,4 @@
-"""Test Home Assistant pressure utility functions."""
+"""Test Open Peer Power pressure utility functions."""
 import pytest
 
 from openpeerpower.const import (

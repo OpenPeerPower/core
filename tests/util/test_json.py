@@ -1,4 +1,4 @@
-"""Test Home Assistant json utility functions."""
+"""Test Open Peer Power json utility functions."""
 from datetime import datetime
 from functools import partial
 from json import JSONEncoder, dumps

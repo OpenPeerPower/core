@@ -10,8 +10,8 @@
         },
         "step": {
             "link": {
-                "description": "Vous devez autoriser Home Assistant dans Roon. Apr\u00e8s avoir cliqu\u00e9 sur soumettre, acc\u00e9dez \u00e0 l'application Roon Core, ouvrez Param\u00e8tres et activez Home Assistant dans l'onglet Extensions.",
-                "title": "Autoriser Home Assistant dans Roon"
+                "description": "Vous devez autoriser Open Peer Power dans Roon. Apr\u00e8s avoir cliqu\u00e9 sur soumettre, acc\u00e9dez \u00e0 l'application Roon Core, ouvrez Param\u00e8tres et activez Open Peer Power dans l'onglet Extensions.",
+                "title": "Autoriser Open Peer Power dans Roon"
             },
             "user": {
                 "data": {

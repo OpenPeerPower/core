@@ -6,7 +6,7 @@
             "already_in_progress": "Le flux de configuration de l'appareil est d\u00e9j\u00e0 en cours.",
             "already_paired": "Cet accessoire est d\u00e9j\u00e0 associ\u00e9 \u00e0 un autre appareil. R\u00e9initialisez l\u2019accessoire et r\u00e9essayez.",
             "ignored_model": "La prise en charge de HomeKit pour ce mod\u00e8le est bloqu\u00e9e car une int\u00e9gration native plus compl\u00e8te est disponible.",
-            "invalid_config_entry": "Cet appareil est pr\u00eat \u00e0 \u00eatre coupl\u00e9, mais il existe d\u00e9j\u00e0 une entr\u00e9e de configuration en conflit dans Home Assistant \u00e0 supprimer.",
+            "invalid_config_entry": "Cet appareil est pr\u00eat \u00e0 \u00eatre coupl\u00e9, mais il existe d\u00e9j\u00e0 une entr\u00e9e de configuration en conflit dans Open Peer Power \u00e0 supprimer.",
             "invalid_properties": "Propri\u00e9t\u00e9s invalides annonc\u00e9es par l'appareil.",
             "no_devices": "Aucun appareil non appair\u00e9 n'a pu \u00eatre trouv\u00e9"
         },

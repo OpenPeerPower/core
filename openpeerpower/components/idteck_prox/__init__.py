@@ -73,7 +73,7 @@ class IdteckReader:
         self._connection = rfk101py(self._host, self._port, self._callback)
 
     def _callback(self, card):
-        """Send a keycard event message into Home Assistant whenever a card is read."""
+        """Send a keycard event message into Open Peer Power whenever a card is read."""
         self.opp.bus.fire(
             EVENT_IDTECK_PROX_KEYCARD, {"card": card, "name": self._name}
         )

@@ -315,7 +315,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
         return PLATFORM_SCHEMA
 
     async def async_added_to_opp(self):
-        """Handle being added to Home Assistant."""
+        """Handle being added to Open Peer Power."""
         await super().async_added_to_opp()
         await self._subscribe_topics()
 

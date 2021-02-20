@@ -13,10 +13,10 @@
                 "data": {
                     "host": "Hostnaam of IP-adres"
                 },
-                "description": "Stel uw WLED-integratie in met Home Assistant."
+                "description": "Stel uw WLED-integratie in met Open Peer Power."
             },
             "zeroconf_confirm": {
-                "description": "Wil je de WLED genaamd `{name}` toevoegen aan Home Assistant?",
+                "description": "Wil je de WLED genaamd `{name}` toevoegen aan Open Peer Power?",
                 "title": "Ontdekt WLED-apparaat"
             }
         }

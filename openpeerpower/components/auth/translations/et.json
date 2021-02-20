@@ -21,7 +21,7 @@
         },
         "totp": {
             "error": {
-                "invalid_code": "Vale kood, palun proovi uuesti. Kui saad selle vea pidevalt, veendu, et Home Assistant-i s\u00fcsteemi kell oleks t\u00e4pne."
+                "invalid_code": "Vale kood, palun proovi uuesti. Kui saad selle vea pidevalt, veendu, et Open Peer Power-i s\u00fcsteemi kell oleks t\u00e4pne."
             },
             "step": {
                 "init": {

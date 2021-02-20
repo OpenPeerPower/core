@@ -1,4 +1,4 @@
-"""Home Assistant Cast integration for Cast."""
+"""Open Peer Power Cast integration for Cast."""
 from typing import Optional
 
 from pychromecast.controllers.openpeerpower import OpenPeerPowerController
@@ -19,7 +19,7 @@ ATTR_URL_PATH = "dashboard_path"
 async def async_setup_op.cast(
    .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
-    """Set up Home Assistant Cast."""
+    """Set up Open Peer Power Cast."""
     user_id: Optional[str] = entry.data.get("user_id")
     user: Optional[auth.models.User] = None
 
@@ -28,7 +28,7 @@ async def async_setup_op.cast(
 
     if user is None:
         user = await.opp.auth.async_create_system_user(
-            "Home Assistant Cast", [auth.GROUP_ID_ADMIN]
+            "Open Peer Power Cast", [auth.GROUP_ID_ADMIN]
         )
        .opp.config_entries.async_update_entry(
             entry, data={**entry.data, "user_id": user.id}
@@ -44,7 +44,7 @@ async def async_setup_op.cast(
        .opp_url = get_url.opp, require_ssl=True, prefer_external=True)
 
         controller = OpenPeerPowerController(
-            # If you are developing Home Assistant Cast, uncomment and set to your dev app id.
+            # If you are developing Open Peer Power Cast, uncomment and set to your dev app id.
             # app_id="5FE44367",
            .opp_url.opp_url,
             client_id=None,
@@ -77,7 +77,7 @@ async def async_setup_op.cast(
 async def async_remove_user(
    .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
-    """Remove Home Assistant Cast user."""
+    """Remove Open Peer Power Cast user."""
     user_id: Optional[str] = entry.data.get("user_id")
 
     if user_id is not None:

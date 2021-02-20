@@ -1,4 +1,4 @@
-"""Test Home Assistant yaml loader."""
+"""Test Open Peer Power yaml loader."""
 import io
 import logging
 import os

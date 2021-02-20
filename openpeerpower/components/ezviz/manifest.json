@@ -1,5 +1,5 @@
 {
-  "disabled": "Dependency contains code that breaks Home Assistant.",
+  "disabled": "Dependency contains code that breaks Open Peer Power.",
   "domain": "ezviz",
   "name": "Ezviz",
   "documentation": "https://www.home-assistant.io/integrations/ezviz",

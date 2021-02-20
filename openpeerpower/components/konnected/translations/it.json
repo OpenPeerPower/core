@@ -86,7 +86,7 @@
                     "api_host": "Sovrascrivi l'URL dell'host API (opzionale)",
                     "blink": "Attiva il lampeggio del LED del pannello durante l'invio del cambiamento di stato ",
                     "discovery": "Rispondi alle richieste di rilevamento sulla tua rete",
-                    "override_api_host": "Sovrascrivi l'URL predefinito del pannello host API di Home Assistant"
+                    "override_api_host": "Sovrascrivi l'URL predefinito del pannello host API di Open Peer Power"
                 },
                 "description": "Seleziona il comportamento desiderato per il tuo pannello",
                 "title": "Configura Altro"

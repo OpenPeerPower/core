@@ -24,7 +24,7 @@ def setup.opp, config):
     # blocking=True gives unexpected behavior (multiple responses for 1 press)
     # also by not blocking, we allow opp to shut down the thread gracefully
     # on exit.
-    lirc.init("home-assistant", blocking=False)
+    lirc.init("openpeerpower", blocking=False)
     lirc_interface = LircInterface.opp)
 
     def _start_lirc(_event):

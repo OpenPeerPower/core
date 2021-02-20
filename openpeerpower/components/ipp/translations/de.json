@@ -23,7 +23,7 @@
                     "ssl": "Verwendet ein SSL-Zertifikat",
                     "verify_ssl": "SSL-Zertifikat \u00fcberpr\u00fcfen"
                 },
-                "description": "Richten Sie Ihren Drucker \u00fcber das Internet Printing Protocol (IPP) f\u00fcr die Integration in Home Assistant ein.",
+                "description": "Richten Sie Ihren Drucker \u00fcber das Internet Printing Protocol (IPP) f\u00fcr die Integration in Open Peer Power ein.",
                 "title": "Verbinden Sie Ihren Drucker"
             },
             "zeroconf_confirm": {

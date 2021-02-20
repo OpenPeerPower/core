@@ -6,8 +6,8 @@
         "step": {
             "user": {
                 "data": {
-                    "exclude": "ID dispositivo Vera da escludere da Home Assistant.",
-                    "lights": "Gli ID dei dispositivi switch Vera da trattare come luci in Home Assistant.",
+                    "exclude": "ID dispositivo Vera da escludere da Open Peer Power.",
+                    "lights": "Gli ID dei dispositivi switch Vera da trattare come luci in Open Peer Power.",
                     "vera_controller_url": "URL del controller"
                 },
                 "description": "Fornisci un URL controller Vera di seguito. Dovrebbe assomigliare a questo: http://192.168.1.161:3480.",
@@ -19,10 +19,10 @@
         "step": {
             "init": {
                 "data": {
-                    "exclude": "ID dispositivo Vera da escludere da Home Assistant.",
-                    "lights": "Gli ID dei dispositivi switch Vera da trattare come luci in Home Assistant."
+                    "exclude": "ID dispositivo Vera da escludere da Open Peer Power.",
+                    "lights": "Gli ID dei dispositivi switch Vera da trattare come luci in Open Peer Power."
                 },
-                "description": "Consultare la documentazione di vera per i dettagli sui parametri opzionali: https://www.home-assistant.io/integrations/vera/. Nota: qualsiasi modifica qui effettuata necessita del riavvio del server di Home Assistant. Per cancellare i valori, inserire uno spazio.",
+                "description": "Consultare la documentazione di vera per i dettagli sui parametri opzionali: https://www.home-assistant.io/integrations/vera/. Nota: qualsiasi modifica qui effettuata necessita del riavvio del server di Open Peer Power. Per cancellare i valori, inserire uno spazio.",
                 "title": "Opzioni controller Vera"
             }
         }

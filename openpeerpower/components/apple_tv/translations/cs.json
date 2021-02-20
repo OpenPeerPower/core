@@ -50,7 +50,7 @@
         "step": {
             "init": {
                 "data": {
-                    "start_off": "Nezap\u00ednejte za\u0159\u00edzen\u00ed dokud se Home Assistant spou\u0161t\u00ed"
+                    "start_off": "Nezap\u00ednejte za\u0159\u00edzen\u00ed dokud se Open Peer Power spou\u0161t\u00ed"
                 },
                 "description": "Konfigurace obecn\u00fdch mo\u017enost\u00ed za\u0159\u00edzen\u00ed"
             }

@@ -252,7 +252,7 @@ class Timer(RestoreEntity):
         return self._config[CONF_ID]
 
     async def async_added_to_opp(self):
-        """Call when entity is about to be added to Home Assistant."""
+        """Call when entity is about to be added to Open Peer Power."""
         # If not None, we got an initial value.
         if self._state is not None:
             return

@@ -2,7 +2,7 @@
     "config": {
         "abort": {
             "ignored_model": "Mae cymorth HomeKit ar gyfer y model hwn wedi'i rwystro gan fod integreiddiad cynhenid mwy cyflawn ar gael.",
-            "invalid_config_entry": "Mae'r ddyfais yn dangos bod eisoes wedi paru ond mae cofnod ffurwedd groes amdano yn Home Assistant sydd angen ei diddymu",
+            "invalid_config_entry": "Mae'r ddyfais yn dangos bod eisoes wedi paru ond mae cofnod ffurwedd groes amdano yn Open Peer Power sydd angen ei diddymu",
             "no_devices": "Ni ellir ddod o hyd i ddyfeisiau heb eu paru"
         },
         "error": {

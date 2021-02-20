@@ -1,7 +1,7 @@
 """
-Core components of Home Assistant.
+Core components of Open Peer Power.
 
-Home Assistant is a Home Automation framework for observing the state
+Open Peer Power is a Home Automation framework for observing the state
 of entities and react to changes.
 """
 import asyncio
@@ -198,7 +198,7 @@ def _get_callable_job_type(target: Callable) -> OppJobType:
 
 
 class CoreState(enum.Enum):
-    """Represent the current state of Home Assistant."""
+    """Represent the current state of Open Peer Power."""
 
     not_running = "NOT_RUNNING"
     starting = "STARTING"
@@ -213,14 +213,14 @@ class CoreState(enum.Enum):
 
 
 class OpenPeerPower:
-    """Root object of the Home Assistant home automation."""
+    """Root object of the Open Peer Power home automation."""
 
     auth: "AuthManager"
     http: "OpenPeerPowerHTTP" = None  # type: ignore
     config_entries: "ConfigEntries" = None  # type: ignore
 
     def __init__(self) -> None:
-        """Initialize new Home Assistant object."""
+        """Initialize new Open Peer Power object."""
         self.loop = asyncio.get_running_loop()
         self._pending_tasks: list = []
         self._track_task = True
@@ -241,16 +241,16 @@ class OpenPeerPower:
 
     @property
     def is_running(self) -> bool:
-        """Return if Home Assistant is running."""
+        """Return if Open Peer Power is running."""
         return self.state in (CoreState.starting, CoreState.running)
 
     @property
     def is_stopping(self) -> bool:
-        """Return if Home Assistant is stopping."""
+        """Return if Open Peer Power is stopping."""
         return self.state in (CoreState.stopping, CoreState.final_write)
 
     def start(self) -> int:
-        """Start Home Assistant.
+        """Start Open Peer Power.
 
         Note: This function is only used for testing.
         For regular use, use "await.opp.run()".
@@ -260,19 +260,19 @@ class OpenPeerPower:
 
         # Run forever
         # Block until stopped
-        _LOGGER.info("Starting Home Assistant core loop")
+        _LOGGER.info("Starting Open Peer Power core loop")
         self.loop.run_forever()
         return self.exit_code
 
     async def async_run(self, *, attach_signals: bool = True) -> int:
-        """Home Assistant main entry point.
+        """Open Peer Power main entry point.
 
-        Start Home Assistant and block until stopped.
+        Start Open Peer Power and block until stopped.
 
         This method is a coroutine.
         """
         if self.state != CoreState.not_running:
-            raise RuntimeError("Home Assistant is already running")
+            raise RuntimeError("Open Peer Power is already running")
 
         # _async_stop will set this instead of stopping the loop
         self._stopped = asyncio.Event()
@@ -292,7 +292,7 @@ class OpenPeerPower:
 
         This method is a coroutine.
         """
-        _LOGGER.info("Starting Home Assistant")
+        _LOGGER.info("Starting Open Peer Power")
         setattr(self.loop, "_thread_ident", threading.get_ident())
 
         self.state = CoreState.starting
@@ -306,7 +306,7 @@ class OpenPeerPower:
                 await self.async_block_till_done()
         except asyncio.TimeoutError:
             _LOGGER.warning(
-                "Something is blocking Home Assistant from wrapping up the "
+                "Something is blocking Open Peer Power from wrapping up the "
                 "start up phase. We're going to continue anyway. Please "
                 "report the following info at https://github.com/openpeerpower/core/issues: %s",
                 ", ".join(self.config.components),
@@ -317,7 +317,7 @@ class OpenPeerPower:
 
         if self.state != CoreState.starting:
             _LOGGER.warning(
-                "Home Assistant startup has been interrupted. "
+                "Open Peer Power startup has been interrupted. "
                 "Its state may be inconsistent"
             )
             return
@@ -500,13 +500,13 @@ class OpenPeerPower:
                 _LOGGER.debug("Waited %s seconds for task: %s", wait_time, task)
 
     def stop(self) -> None:
-        """Stop Home Assistant and shuts down all threads."""
+        """Stop Open Peer Power and shuts down all threads."""
         if self.state == CoreState.not_running:  # just ignore
             return
         fire_coroutine_threadsafe(self.async_stop(), self.loop)
 
     async def async_stop(self, exit_code: int = 0, *, force: bool = False) -> None:
-        """Stop Home Assistant and shuts down all threads.
+        """Stop Open Peer Power and shuts down all threads.
 
         The "force" flag commands async_stop to proceed regardless of
         Home Assistan't current state. You should not set this flag
@@ -1528,7 +1528,7 @@ class ServiceRegistry:
 
 
 class Config:
-    """Configuration settings for Home Assistant."""
+    """Configuration settings for Open Peer Power."""
 
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize a new config object."""
@@ -1566,14 +1566,14 @@ class Config:
         # Dictionary of Media folders that integrations may use
         self.media_dirs: Dict[str, str] = {}
 
-        # If Home Assistant is running in safe mode
+        # If Open Peer Power is running in safe mode
         self.safe_mode: bool = False
 
         # Use legacy template behavior
         self.legacy_templates: bool = False
 
     def distance(self, lat: float, lon: float) -> Optional[float]:
-        """Calculate distance from Home Assistant.
+        """Calculate distance from Open Peer Power.
 
         Async friendly.
         """

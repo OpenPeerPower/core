@@ -26,7 +26,7 @@ class ConfigEntryNetatmoAuth(pyatmo.auth.NetatmoOAuth2):
     def refresh_tokens(
         self,
     ) -> dict:
-        """Refresh and return new Netatmo tokens using Home Assistant OAuth2 session."""
+        """Refresh and return new Netatmo tokens using Open Peer Power OAuth2 session."""
         run_coroutine_threadsafe(
             self.session.async_ensure_token_valid(), self.opp.loop
         ).result()

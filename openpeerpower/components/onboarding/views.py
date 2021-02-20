@@ -219,9 +219,9 @@ class IntegrationOnboardingView(_BaseOnboardingView):
 
 @callback
 def _async_get_opp_provider.opp):
-    """Get the Home Assistant auth provider."""
+    """Get the Open Peer Power auth provider."""
     for prv in.opp.auth.auth_providers:
         if prv.type == "openpeerpower":
             return prv
 
-    raise RuntimeError("No Home Assistant provider found")
+    raise RuntimeError("No Open Peer Power provider found")

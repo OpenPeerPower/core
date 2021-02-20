@@ -417,7 +417,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
             self._logger.exception("While executing automation %s", self.entity_id)
 
     async def async_will_remove_from_opp(self):
-        """Remove listeners when removing automation from Home Assistant."""
+        """Remove listeners when removing automation from Open Peer Power."""
         await super().async_will_remove_from_opp()
         await self.async_disable()
 

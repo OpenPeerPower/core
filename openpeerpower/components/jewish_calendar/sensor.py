@@ -1,4 +1,4 @@
-"""Platform to retrieve Jewish calendar information for Home Assistant."""
+"""Platform to retrieve Jewish calendar information for Open Peer Power."""
 import logging
 
 import hdate

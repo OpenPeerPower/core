@@ -44,7 +44,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     vacuums = []
     for device in.opp.data[ECOVACS_DEVICES]:
         vacuums.append(EcovacsVacuum(device))
-    _LOGGER.debug("Adding Ecovacs Vacuums to Home Assistant: %s", vacuums)
+    _LOGGER.debug("Adding Ecovacs Vacuums to Open Peer Power: %s", vacuums)
     add_entities(vacuums, True)
 
 

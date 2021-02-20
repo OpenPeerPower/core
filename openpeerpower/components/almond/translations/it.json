@@ -8,7 +8,7 @@
         },
         "step": {
             "oppio_confirm": {
-                "description": "Vuoi configurare Home Assistant a connettersi ad Almond tramite il componente aggiuntivo Opp.io: {addon} ?",
+                "description": "Vuoi configurare Open Peer Power a connettersi ad Almond tramite il componente aggiuntivo Opp.io: {addon} ?",
                 "title": "Almond tramite il componente aggiuntivo di Opp.io"
             },
             "pick_implementation": {

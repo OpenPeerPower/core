@@ -1,6 +1,6 @@
 """Constants for Blink."""
 DOMAIN = "blink"
-DEVICE_ID = "Home Assistant"
+DEVICE_ID = "Open Peer Power"
 
 CONF_MIGRATE = "migrate"
 CONF_CAMERA = "camera"

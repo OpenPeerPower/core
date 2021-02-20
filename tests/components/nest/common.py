@@ -33,7 +33,7 @@ FAKE_REFRESH_TOKEN = "some-refresh-token"
 
 
 def create_config_entry.opp, token_expiration_time=None):
-    """Create a ConfigEntry and add it to Home Assistant."""
+    """Create a ConfigEntry and add it to Open Peer Power."""
     if token_expiration_time is None:
         token_expiration_time = time.time() + 86400
     config_entry_data = {
@@ -77,7 +77,7 @@ class FakeSubscriber(GoogleNestSubscriber):
         self._device_manager = device_manager
 
     def set_update_callback(self, callback: Callable[[EventMessage], Awaitable[None]]):
-        """Capture the callback set by Home Assistant."""
+        """Capture the callback set by Open Peer Power."""
         self._callback = callback
 
     async def start_async(self):

@@ -23,7 +23,7 @@
                 "description": "Skonfiguruj autoryzacj\u0119 do serwera Hyperion Ambilight"
             },
             "confirm": {
-                "description": "Czy chcesz doda\u0107 ten Hyperion Ambilight do Home Assistanta? \n\n **Host:** {host}\n **Port:** {port}\n **ID**: {id}",
+                "description": "Czy chcesz doda\u0107 ten Hyperion Ambilight do Open Peer Powera? \n\n **Host:** {host}\n **Port:** {port}\n **ID**: {id}",
                 "title": "Potwierdzanie dodania us\u0142ugi Hyperion Ambilight"
             },
             "create_token": {

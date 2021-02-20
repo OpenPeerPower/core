@@ -22,19 +22,19 @@ import sys
 
 from openpeerpower.const import __short_version__, __version__
 
-PROJECT_NAME = "Home Assistant"
+PROJECT_NAME = "Open Peer Power"
 PROJECT_PACKAGE_NAME = "openpeerpower"
-PROJECT_AUTHOR = "The Home Assistant Authors"
+PROJECT_AUTHOR = "The Open Peer Power Authors"
 PROJECT_COPYRIGHT = f" 2013-2020, {PROJECT_AUTHOR}"
 PROJECT_LONG_DESCRIPTION = (
-    "Home Assistant is an open-source "
+    "Open Peer Power is an open-source "
     "home automation platform running on Python 3. "
     "Track and control all devices at home and "
     "automate control. "
     "Installation in less than a minute."
 )
-PROJECT_GITHUB_USERNAME = "home-assistant"
-PROJECT_GITHUB_REPOSITORY = "home-assistant"
+PROJECT_GITHUB_USERNAME = "openpeerpower"
+PROJECT_GITHUB_REPOSITORY = "openpeerpower"
 
 GITHUB_PATH = f"{PROJECT_GITHUB_USERNAME}/{PROJECT_GITHUB_REPOSITORY}"
 GITHUB_URL = f"https://github.com/{GITHUB_PATH}"
@@ -353,8 +353,8 @@ latex_documents = [
     (
         master_doc,
         "home-assistant.tex",
-        "Home Assistant Documentation",
-        "Home Assistant Team",
+        "Open Peer Power Documentation",
+        "Open Peer Power Team",
         "manual",
     )
 ]
@@ -397,7 +397,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, "home-assistant", "Home Assistant Documentation", [author], 1)
+    (master_doc, "openpeerpower", "Open Peer Power Documentation", [author], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -413,10 +413,10 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "Home-Assistant",
-        "Home Assistant Documentation",
+        "OpenPeerPower",
+        "Open Peer Power Documentation",
         author,
-        "Home Assistant",
+        "Open Peer Power",
         "Open-source home automation platform.",
         "Miscellaneous",
     )

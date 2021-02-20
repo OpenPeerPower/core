@@ -9,7 +9,7 @@
         "step": {
             "user": {
                 "data": {
-                    "code": "Koda (uporablja se v uporabni\u0161kem vmesniku Home Assistant)",
+                    "code": "Koda (uporablja se v uporabni\u0161kem vmesniku Open Peer Power)",
                     "password": "Geslo",
                     "username": "E-po\u0161tni naslov"
                 },
@@ -21,7 +21,7 @@
         "step": {
             "init": {
                 "data": {
-                    "code": "Koda (uporablja se v uporabni\u0161kem vmesniku Home Assistant)"
+                    "code": "Koda (uporablja se v uporabni\u0161kem vmesniku Open Peer Power)"
                 },
                 "title": "Konfigurirajte SimpliSafe"
             }

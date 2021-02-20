@@ -1,6 +1,6 @@
 {
   "domain": "my",
-  "name": "My Home Assistant",
+  "name": "My Open Peer Power",
   "documentation": "https://www.home-assistant.io/integrations/my",
   "dependencies": ["frontend"],
   "codeowners": ["@home-assistant/core"]

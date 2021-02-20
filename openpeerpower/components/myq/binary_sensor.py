@@ -65,7 +65,7 @@ class MyQBinarySensorEntity(CoordinatorEntity, BinarySensorEntity):
 
     @property
     def unique_id(self):
-        """Return a unique, Home Assistant friendly identifier for this entity."""
+        """Return a unique, Open Peer Power friendly identifier for this entity."""
         return self._device.device_id
 
     @property

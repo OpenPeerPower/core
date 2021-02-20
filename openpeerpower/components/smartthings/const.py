@@ -4,7 +4,7 @@ import re
 
 DOMAIN = "smartthings"
 
-APP_OAUTH_CLIENT_NAME = "Home Assistant"
+APP_OAUTH_CLIENT_NAME = "Open Peer Power"
 APP_OAUTH_SCOPES = ["r:devices:*"]
 APP_NAME_PREFIX = "openpeerpower."
 

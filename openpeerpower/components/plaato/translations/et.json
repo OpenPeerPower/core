@@ -3,7 +3,7 @@
         "abort": {
             "already_configured": "Kasutaja on juba seadistatud",
             "single_instance_allowed": "Juba seadistatud. V\u00f5imalik on ainult \u00fcks seadistamine.",
-            "webhook_not_internet_accessible": "Veebikonksu s\u00f5numite vastuv\u00f5tmiseks peab Home Assistant olema Interneti kaudu juurdep\u00e4\u00e4setav."
+            "webhook_not_internet_accessible": "Veebikonksu s\u00f5numite vastuv\u00f5tmiseks peab Open Peer Power olema Interneti kaudu juurdep\u00e4\u00e4setav."
         },
         "create_entry": {
             "default": "{device_type} Plaato  seade nimega **{device_name}** on edukalt seadistatud!"
@@ -31,7 +31,7 @@
                 "title": "Plaato seadmete h\u00e4\u00e4lestamine"
             },
             "webhook": {
-                "description": "S\u00fcndmuste saatmiseks Home Assistanti pead seadistama Plaato Airlocki veebihaagi. \n\n Sisesta j\u00e4rgmine teave: \n\n - URL: \" {webhook_url} \"\n - Meetod: POST \n\n Lisateavet leiad [dokumentatsioonist] ( {docs_url} ).",
+                "description": "S\u00fcndmuste saatmiseks Open Peer Poweri pead seadistama Plaato Airlocki veebihaagi. \n\n Sisesta j\u00e4rgmine teave: \n\n - URL: \" {webhook_url} \"\n - Meetod: POST \n\n Lisateavet leiad [dokumentatsioonist] ( {docs_url} ).",
                 "title": "Kasutatav veebihaak"
             }
         }

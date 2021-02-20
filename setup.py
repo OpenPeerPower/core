@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
-"""Home Assistant setup script."""
+"""Open Peer Power setup script."""
 from datetime import datetime as dt
 
 from setuptools import find_packages, setup
 
 import openpeerpower.const as.opp_const
 
-PROJECT_NAME = "Home Assistant"
+PROJECT_NAME = "Open Peer Power"
 PROJECT_PACKAGE_NAME = "openpeerpower"
 PROJECT_LICENSE = "Apache License 2.0"
-PROJECT_AUTHOR = "The Home Assistant Authors"
+PROJECT_AUTHOR = "The Open Peer Power Authors"
 PROJECT_COPYRIGHT = f" 2013-{dt.now().year}, {PROJECT_AUTHOR}"
 PROJECT_URL = "https://www.home-assistant.io/"
 PROJECT_EMAIL = "hello@home-assistant.io"
 
-PROJECT_GITHUB_USERNAME = "home-assistant"
+PROJECT_GITHUB_USERNAME = "openpeerpower"
 PROJECT_GITHUB_REPOSITORY = "core"
 
 PYPI_URL = f"https://pypi.python.org/pypi/{PROJECT_PACKAGE_NAME}"

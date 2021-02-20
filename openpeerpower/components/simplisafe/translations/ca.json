@@ -24,7 +24,7 @@
             },
             "user": {
                 "data": {
-                    "code": "Codi (utilitzat a la UI de Home Assistant)",
+                    "code": "Codi (utilitzat a la UI de Open Peer Power)",
                     "password": "Contrasenya",
                     "username": "Correu electr\u00f2nic"
                 },
@@ -36,7 +36,7 @@
         "step": {
             "init": {
                 "data": {
-                    "code": "Codi (utilitzat a la UI de Home Assistant)"
+                    "code": "Codi (utilitzat a la UI de Open Peer Power)"
                 },
                 "title": "Configuraci\u00f3 de SimpliSafe"
             }

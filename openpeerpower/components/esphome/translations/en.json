@@ -18,7 +18,7 @@
                 "description": "Please enter the password you set in your configuration for {name}."
             },
             "discovery_confirm": {
-                "description": "Do you want to add the ESPHome node `{name}` to Home Assistant?",
+                "description": "Do you want to add the ESPHome node `{name}` to Open Peer Power?",
                 "title": "Discovered ESPHome node"
             },
             "user": {

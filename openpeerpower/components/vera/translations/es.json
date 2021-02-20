@@ -6,8 +6,8 @@
         "step": {
             "user": {
                 "data": {
-                    "exclude": "Identificadores de dispositivos Vera a excluir de Home Assistant",
-                    "lights": "Identificadores de interruptores Vera que deben ser tratados como luces en Home Assistant",
+                    "exclude": "Identificadores de dispositivos Vera a excluir de Open Peer Power",
+                    "lights": "Identificadores de interruptores Vera que deben ser tratados como luces en Open Peer Power",
                     "vera_controller_url": "URL del controlador"
                 },
                 "description": "Introduce una URL para el controlador Vera a continuaci\u00f3n. Ser\u00eda algo como: http://192.168.1.161:3480.",
@@ -19,10 +19,10 @@
         "step": {
             "init": {
                 "data": {
-                    "exclude": "Identificadores de dispositivos Vera a excluir de Home Assistant",
-                    "lights": "Identificadores de interruptores Vera que deben ser tratados como luces en Home Assistant"
+                    "exclude": "Identificadores de dispositivos Vera a excluir de Open Peer Power",
+                    "lights": "Identificadores de interruptores Vera que deben ser tratados como luces en Open Peer Power"
                 },
-                "description": "Consulte la documentaci\u00f3n de Vera para obtener detalles sobre los par\u00e1metros opcionales: https://www.home-assistant.io/integrations/vera/. Nota: Cualquier cambio aqu\u00ed necesitar\u00e1 un reinicio del servidor de Home Assistant. Para borrar valores, introduce un espacio.",
+                "description": "Consulte la documentaci\u00f3n de Vera para obtener detalles sobre los par\u00e1metros opcionales: https://www.home-assistant.io/integrations/vera/. Nota: Cualquier cambio aqu\u00ed necesitar\u00e1 un reinicio del servidor de Open Peer Power. Para borrar valores, introduce un espacio.",
                 "title": "Opciones del controlador Vera"
             }
         }

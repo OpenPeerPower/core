@@ -128,7 +128,7 @@ class KNXCover(KnxEntity, CoverEntity):
         await self._device.set_angle(knx_tilt_position)
 
     def start_auto_updater(self):
-        """Start the autoupdater to update Home Assistant while cover is moving."""
+        """Start the autoupdater to update Open Peer Power while cover is moving."""
         if self._unsubscribe_auto_updater is None:
             self._unsubscribe_auto_updater = async_track_utc_time_change(
                 self.opp, self.auto_updater_hook

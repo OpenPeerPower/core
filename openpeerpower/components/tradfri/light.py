@@ -103,7 +103,7 @@ class TradfriGroup(TradfriBaseClass, LightEntity):
 
 
 class TradfriLight(TradfriBaseDevice, LightEntity):
-    """The platform class required by Home Assistant."""
+    """The platform class required by Open Peer Power."""
 
     def __init__(self, device, api, gateway_id):
         """Initialize a Light."""

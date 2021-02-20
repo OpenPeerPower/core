@@ -102,11 +102,11 @@ SERVICE_HOMEKIT_RESET_ACCESSORY = "reset_accessory"
 
 # #### String Constants ####
 BRIDGE_MODEL = "Bridge"
-BRIDGE_NAME = "Home Assistant Bridge"
+BRIDGE_NAME = "Open Peer Power Bridge"
 SHORT_BRIDGE_NAME = "OPP Bridge"
 SHORT_ACCESSORY_NAME = "OPP Accessory"
 BRIDGE_SERIAL_NUMBER = "homekit.bridge"
-MANUFACTURER = "Home Assistant"
+MANUFACTURER = "Open Peer Power"
 
 # #### Switch Types ####
 TYPE_FAUCET = "faucet"

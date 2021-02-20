@@ -3,7 +3,7 @@
         "abort": {
             "already_configured": "Account is already configured",
             "single_instance_allowed": "Already configured. Only a single configuration possible.",
-            "webhook_not_internet_accessible": "Your Home Assistant instance needs to be accessible from the internet to receive webhook messages."
+            "webhook_not_internet_accessible": "Your Open Peer Power instance needs to be accessible from the internet to receive webhook messages."
         },
         "create_entry": {
             "default": "Your Plaato {device_type} with name **{device_name}** was successfully setup!"
@@ -31,7 +31,7 @@
                 "title": "Set up the Plaato devices"
             },
             "webhook": {
-                "description": "To send events to Home Assistant, you will need to setup the webhook feature in Plaato Airlock.\n\nFill in the following info:\n\n- URL: `{webhook_url}`\n- Method: POST\n\nSee [the documentation]({docs_url}) for further details.",
+                "description": "To send events to Open Peer Power, you will need to setup the webhook feature in Plaato Airlock.\n\nFill in the following info:\n\n- URL: `{webhook_url}`\n- Method: POST\n\nSee [the documentation]({docs_url}) for further details.",
                 "title": "Webhook to use"
             }
         }

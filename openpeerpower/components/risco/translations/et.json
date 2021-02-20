@@ -27,8 +27,8 @@
                     "armed_home": "Valves kodus",
                     "armed_night": "Valves \u00f6ine"
                 },
-                "description": "Vali millisesse olekusse l\u00fcltub Risco alarm kui valvestada Home Assistant",
-                "title": "Lisa Risco olekud Home Assistanti olekutesse"
+                "description": "Vali millisesse olekusse l\u00fcltub Risco alarm kui valvestada Open Peer Power",
+                "title": "Lisa Risco olekud Open Peer Poweri olekutesse"
             },
             "init": {
                 "data": {
@@ -47,8 +47,8 @@
                     "arm": "Valvestatud (AWAY)",
                     "partial_arm": "Osaliselt valvestatud (STAY)"
                 },
-                "description": "Vali millises oleku Home Assistant saab iga Risco olekumuutuse korral",
-                "title": "Lisa Risco olekud Home Assistanti olekutesse"
+                "description": "Vali millises oleku Open Peer Power saab iga Risco olekumuutuse korral",
+                "title": "Lisa Risco olekud Open Peer Poweri olekutesse"
             }
         }
     }

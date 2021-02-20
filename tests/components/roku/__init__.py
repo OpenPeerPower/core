@@ -174,7 +174,7 @@ async def setup_integration(
     server_error: bool = False,
     skip_entry_setup: bool = False,
 ) -> MockConfigEntry:
-    """Set up the Roku integration in Home Assistant."""
+    """Set up the Roku integration in Open Peer Power."""
     entry = MockConfigEntry(domain=DOMAIN, unique_id=unique_id, data={CONF_HOST: host})
 
     entry.add_to_opp.opp)

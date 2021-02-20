@@ -14,11 +14,11 @@
         "flow_title": "pasarela deCONZ Zigbee ({host})",
         "step": {
             "oppio_confirm": {
-                "description": "\u00bfQuieres configurar Home Assistant para que se conecte al gateway de deCONZ proporcionado por el add-on {addon} de.opp.io?",
+                "description": "\u00bfQuieres configurar Open Peer Power para que se conecte al gateway de deCONZ proporcionado por el add-on {addon} de.opp.io?",
                 "title": "Add-on deCONZ Zigbee v\u00eda Opp.io"
             },
             "link": {
-                "description": "Desbloquea tu gateway de deCONZ para registrarte con Home Assistant.\n\n1. Dir\u00edgete a deCONZ Settings -> Gateway -> Advanced\n2. Pulsa el bot\u00f3n \"Authenticate app\"",
+                "description": "Desbloquea tu gateway de deCONZ para registrarte con Open Peer Power.\n\n1. Dir\u00edgete a deCONZ Settings -> Gateway -> Advanced\n2. Pulsa el bot\u00f3n \"Authenticate app\"",
                 "title": "Enlazar con deCONZ"
             },
             "manual_input": {

@@ -151,7 +151,7 @@ async def async_setup.opp, config):
 
     @callback
     def alarm_status_update_callback():
-        """Send status update received from alarm to Home Assistant."""
+        """Send status update received from alarm to Open Peer Power."""
         _LOGGER.debug("Sending request to update panel state")
         async_dispatcher_send.opp, SIGNAL_PANEL_MESSAGE)
 

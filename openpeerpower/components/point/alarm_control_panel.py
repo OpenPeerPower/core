@@ -37,7 +37,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 
 class MinutPointAlarmControl(AlarmControlPanelEntity):
-    """The platform class required by Home Assistant."""
+    """The platform class required by Open Peer Power."""
 
     def __init__(self, point_client, home_id):
         """Initialize the entity."""
@@ -47,7 +47,7 @@ class MinutPointAlarmControl(AlarmControlPanelEntity):
         self._changed_by = None
 
     async def async_added_to_opp(self):
-        """Call when entity is added to HOme Assistant."""
+        """Call when entity is added to Open Peer Power."""
         await super().async_added_to_opp()
         self._async_unsub_hook_dispatcher_connect = async_dispatcher_connect(
             self.opp, SIGNAL_WEBHOOK, self._webhook_event

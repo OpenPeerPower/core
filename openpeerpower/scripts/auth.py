@@ -1,4 +1,4 @@
-"""Script to manage users for the Home Assistant auth provider."""
+"""Script to manage users for the Open Peer Power auth provider."""
 import argparse
 import asyncio
 import logging
@@ -14,14 +14,14 @@ from openpeerpower.core import OpenPeerPower
 
 
 def run(args):
-    """Handle Home Assistant auth provider script."""
-    parser = argparse.ArgumentParser(description="Manage Home Assistant users")
+    """Handle Open Peer Power auth provider script."""
+    parser = argparse.ArgumentParser(description="Manage Open Peer Power users")
     parser.add_argument("--script", choices=["auth"])
     parser.add_argument(
         "-c",
         "--config",
         default=get_default_config_dir(),
-        help="Directory that contains the Home Assistant configuration",
+        help="Directory that contains the Open Peer Power configuration",
     )
 
     subparsers = parser.add_subparsers(dest="func")

@@ -25,7 +25,7 @@ from .const import (
 
 
 def version_validator(value):
-    """Validate a Home Assistant version."""
+    """Validate a Open Peer Power version."""
     if not isinstance(value, str):
         raise vol.Invalid("Version needs to be a string")
 

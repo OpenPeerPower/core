@@ -80,7 +80,7 @@ class AlexaIntentsView(http.OpenPeerPowerView):
                 intent_error_response(
                    .opp,
                     message,
-                    "This intent is not yet configured within Home Assistant.",
+                    "This intent is not yet configured within Open Peer Power.",
                 )
             )
 

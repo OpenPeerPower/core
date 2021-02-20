@@ -6,7 +6,7 @@
             "not_xiaomi_aqara": "Keng Xiaomi Aqara Gateway, entdeckten Apparat passt net zu bekannte Gateways"
         },
         "error": {
-            "discovery_error": "Feeler beim entdecken vun enger Xiaomi Aqara Gateway, prob\u00e9ier d'IP vum Apparat op deem Home Assistant leeft als Interface ze benotzen",
+            "discovery_error": "Feeler beim entdecken vun enger Xiaomi Aqara Gateway, prob\u00e9ier d'IP vum Apparat op deem Open Peer Power leeft als Interface ze benotzen",
             "invalid_host": "Ong\u00ebltege Numm oder IP Adress, kuck https://www.home-assistant.io/integrations/xiaomi_aqara/#connection-problem",
             "invalid_interface": "Ong\u00ebltege Netzwierk Interface",
             "invalid_key": "Ong\u00ebltegen Gateway Schl\u00ebssel",

@@ -24,7 +24,7 @@
             },
             "user": {
                 "data": {
-                    "code": "Code (benotzt am Home Assistant Benotzer Interface)",
+                    "code": "Code (benotzt am Open Peer Power Benotzer Interface)",
                     "password": "Passwuert",
                     "username": "E-Mail"
                 },
@@ -36,7 +36,7 @@
         "step": {
             "init": {
                 "data": {
-                    "code": "Code (den am Home Assistant Interface benotzt g\u00ebtt)"
+                    "code": "Code (den am Open Peer Power Interface benotzt g\u00ebtt)"
                 },
                 "title": "Simplisafe konfigur\u00e9ieren"
             }

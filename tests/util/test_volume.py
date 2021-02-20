@@ -1,4 +1,4 @@
-"""Test Home Assistant volume utility functions."""
+"""Test Open Peer Power volume utility functions."""
 
 import pytest
 

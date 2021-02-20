@@ -1,14 +1,14 @@
-"""Helpers to help with encoding Home Assistant objects in JSON."""
+"""Helpers to help with encoding Open Peer Power objects in JSON."""
 from datetime import datetime
 import json
 from typing import Any
 
 
 class JSONEncoder(json.JSONEncoder):
-    """JSONEncoder that supports Home Assistant objects."""
+    """JSONEncoder that supports Open Peer Power objects."""
 
     def default(self, o: Any) -> Any:
-        """Convert Home Assistant objects.
+        """Convert Open Peer Power objects.
 
         Hand other objects to the original method.
         """

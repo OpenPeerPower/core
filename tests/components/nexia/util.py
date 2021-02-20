@@ -16,7 +16,7 @@ async def async_init_integration(
    .opp: OpenPeerPower,
     skip_setup: bool = False,
 ) -> MockConfigEntry:
-    """Set up the nexia integration in Home Assistant."""
+    """Set up the nexia integration in Open Peer Power."""
 
     house_fixture = "nexia/mobile_houses_123456.json"
     session_fixture = "nexia/session_123456.json"

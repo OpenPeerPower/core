@@ -362,7 +362,7 @@ def temperature_to_homekit(temperature, unit):
 
 
 def temperature_to_states(temperature, unit):
-    """Convert temperature back from Celsius to Home Assistant unit."""
+    """Convert temperature back from Celsius to Open Peer Power unit."""
     return round(temp_util.convert(temperature, TEMP_CELSIUS, unit) * 2) / 2
 
 

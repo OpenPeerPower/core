@@ -19,7 +19,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 
 class TradfriCover(TradfriBaseDevice, CoverEntity):
-    """The platform class required by Home Assistant."""
+    """The platform class required by Open Peer Power."""
 
     def __init__(self, device, api, gateway_id):
         """Initialize a cover."""

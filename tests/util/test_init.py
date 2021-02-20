@@ -1,4 +1,4 @@
-"""Test Home Assistant util methods."""
+"""Test Open Peer Power util methods."""
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock, patch
 

@@ -247,7 +247,7 @@ class HERETravelTimeSensor(Entity):
 
         @callback
         def delayed_sensor_update(event):
-            """Update sensor after Home Assistant started."""
+            """Update sensor after Open Peer Power started."""
             self.async_schedule_update_op.state(True)
 
         self.opp.bus.async_listen_once(

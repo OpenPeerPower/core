@@ -10,8 +10,8 @@
         },
         "step": {
             "link": {
-                "description": "U moet Home Assistant autoriseren in Roon. Nadat je op verzenden hebt geklikt, ga je naar de Roon Core-applicatie, open je Instellingen en schakel je Home Assistant in op het tabblad Extensies.",
-                "title": "Autoriseer Home Assistant in Roon"
+                "description": "U moet Open Peer Power autoriseren in Roon. Nadat je op verzenden hebt geklikt, ga je naar de Roon Core-applicatie, open je Instellingen en schakel je Open Peer Power in op het tabblad Extensies.",
+                "title": "Autoriseer Open Peer Power in Roon"
             },
             "user": {
                 "data": {

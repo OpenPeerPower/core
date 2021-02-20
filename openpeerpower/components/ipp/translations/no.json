@@ -23,7 +23,7 @@
                     "ssl": "Bruker et SSL-sertifikat",
                     "verify_ssl": "Verifisere SSL-sertifikat"
                 },
-                "description": "Sett opp skriveren din via Internet Printing Protocol (IPP) for \u00e5 integrere med Home Assistant.",
+                "description": "Sett opp skriveren din via Internet Printing Protocol (IPP) for \u00e5 integrere med Open Peer Power.",
                 "title": "Koble til skriveren din"
             },
             "zeroconf_confirm": {

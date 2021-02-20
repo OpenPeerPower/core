@@ -1,7 +1,7 @@
 {
     "config": {
         "abort": {
-            "install_app": "Maacht d'Mobil App op fir d'Integratioun mam Home Assistant anzeriichten. Kuckt an der [Dokumentatioun]({apps_url}) fir eng L\u00ebscht vun kompatiblen App's."
+            "install_app": "Maacht d'Mobil App op fir d'Integratioun mam Open Peer Power anzeriichten. Kuckt an der [Dokumentatioun]({apps_url}) fir eng L\u00ebscht vun kompatiblen App's."
         },
         "step": {
             "confirm": {

@@ -21,7 +21,7 @@
                 "title": "Izberite dostopno to\u010dko HomematicIP"
             },
             "link": {
-                "description": "Pritisnite modro tipko na dostopni to\u010dko in gumb po\u0161lji, da registrirate homematicIP s Home Assistantom. \n\n![Location of button on bridge](/static/images/config_flows/config_homematicip_cloud.png)",
+                "description": "Pritisnite modro tipko na dostopni to\u010dko in gumb po\u0161lji, da registrirate homematicIP s Open Peer Powerom. \n\n![Location of button on bridge](/static/images/config_flows/config_homematicip_cloud.png)",
                 "title": "Pove\u017eite dostopno to\u010dko"
             }
         }

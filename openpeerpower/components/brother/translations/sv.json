@@ -21,7 +21,7 @@
                 "data": {
                     "type": "Typ av skrivare"
                 },
-                "description": "Vill du l\u00e4gga till Brother-skrivaren {model} med serienumret {serial_number} i Home Assistant?",
+                "description": "Vill du l\u00e4gga till Brother-skrivaren {model} med serienumret {serial_number} i Open Peer Power?",
                 "title": "Uppt\u00e4ckte Brother-skrivare"
             }
         }

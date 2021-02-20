@@ -10,7 +10,7 @@
         },
         "step": {
             "link": {
-                "description": "You must authorize Home Assistant in Roon. After you click submit, go to the Roon Core application, open Settings and enable OpenPeerPower on the Extensions tab.",
+                "description": "You must authorize Open Peer Power in Roon. After you click submit, go to the Roon Core application, open Settings and enable OpenPeerPower on the Extensions tab.",
                 "title": "Authorize OpenPeerPower in Roon"
             },
             "user": {

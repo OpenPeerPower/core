@@ -15,7 +15,7 @@
         },
         "step": {
             "creds": {
-                "description": "Informations d\u2019identification n\u00e9cessaires. Appuyez sur \u00ab\u00a0Envoyer\u00a0\u00bb puis dans la PS4 2\u00e8me \u00e9cran App, actualisez les p\u00e9riph\u00e9riques et s\u00e9lectionnez le dispositif \u00ab\u00a0Home Assistant\u00a0\u00bb pour continuer.",
+                "description": "Informations d\u2019identification n\u00e9cessaires. Appuyez sur \u00ab\u00a0Envoyer\u00a0\u00bb puis dans la PS4 2\u00e8me \u00e9cran App, actualisez les p\u00e9riph\u00e9riques et s\u00e9lectionnez le dispositif \u00ab\u00a0Open Peer Power\u00a0\u00bb pour continuer.",
                 "title": "PlayStation 4"
             },
             "link": {

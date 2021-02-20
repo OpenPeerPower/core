@@ -106,7 +106,7 @@ class Blueprint:
 
     @callback
     def validate(self) -> Optional[List[str]]:
-        """Test if the Home Assistant installation supports this blueprint.
+        """Test if the Open Peer Power installation supports this blueprint.
 
         Return list of errors if not valid.
         """
@@ -117,7 +117,7 @@ class Blueprint:
         if min_version is not None and AwesomeVersion(__version__) < AwesomeVersion(
             min_version
         ):
-            errors.append(f"Requires at least Home Assistant {min_version}")
+            errors.append(f"Requires at least Open Peer Power {min_version}")
 
         return errors or None
 

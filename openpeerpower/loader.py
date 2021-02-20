@@ -1,5 +1,5 @@
 """
-The methods for loading Home Assistant integrations.
+The methods for loading Open Peer Power integrations.
 
 This module has quite some complex parts. I have tried to add as much
 documentation as possible to keep it understandable.
@@ -54,9 +54,9 @@ PACKAGE_CUSTOM_COMPONENTS = "custom_components"
 PACKAGE_BUILTIN = "openpeerpower.components"
 CUSTOM_WARNING = (
     "You are using a custom integration %s which has not "
-    "been tested by Home Assistant. This component might "
+    "been tested by Open Peer Power. This component might "
     "cause stability problems, be sure to disable it if you "
-    "experience issues with Home Assistant"
+    "experience issues with Open Peer Power"
 )
 CUSTOM_WARNING_VERSION_MISSING = (
     "No 'version' key in the manifest file for "
@@ -284,7 +284,7 @@ async def async_get_mqtt.opp: OpenPeerPower) -> Dict[str, List[str]]:
 
 
 class Integration:
-    """An integration in Home Assistant."""
+    """An integration in Open Peer Power."""
 
     @classmethod
     def resolve_from_root(

@@ -12,7 +12,7 @@
     "flow_title": "BleBox device: {name} ({host})",
     "step": {
       "user": {
-        "description": "Set up your BleBox to integrate with Home Assistant.",
+        "description": "Set up your BleBox to integrate with Open Peer Power.",
         "data": {
           "host": "[%key:common::config_flow::data::ip%]",
           "port": "[%key:common::config_flow::data::port%]"

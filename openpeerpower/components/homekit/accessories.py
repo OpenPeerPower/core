@@ -309,7 +309,7 @@ class HomeAccessory(Accessory):
     async def run_op.dler(self):
         """Handle accessory driver started event.
 
-        Run inside the Home Assistant event loop.
+        Run inside the Open Peer Power event loop.
         """
         state = self.opp.states.get(self.entity_id)
         self.async_update_state_callback(state)

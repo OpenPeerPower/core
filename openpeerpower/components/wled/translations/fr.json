@@ -13,10 +13,10 @@
                 "data": {
                     "host": "Nom d'h\u00f4te ou adresse IP"
                 },
-                "description": "Configurez votre WLED pour l'int\u00e9grer \u00e0 Home Assistant."
+                "description": "Configurez votre WLED pour l'int\u00e9grer \u00e0 Open Peer Power."
             },
             "zeroconf_confirm": {
-                "description": "Voulez-vous ajouter le dispositif WLED nomm\u00e9 `{name}` \u00e0 Home Assistant?",
+                "description": "Voulez-vous ajouter le dispositif WLED nomm\u00e9 `{name}` \u00e0 Open Peer Power?",
                 "title": "Dispositif WLED d\u00e9couvert"
             }
         }

@@ -48,7 +48,7 @@ async def test_api_info(oppio_op.dler, aioclient_mock):
 
 
 async def test_api_info_error(oppio_op.dler, aioclient_mock):
-    """Test setup with API Home Assistant info error."""
+    """Test setup with API Open Peer Power info error."""
     aioclient_mock.get(
         "http://127.0.0.1/info", json={"result": "error", "message": None}
     )
@@ -114,7 +114,7 @@ async def test_api_os_info(oppio_op.dler, aioclient_mock):
 
 
 async def test_api_host_info_error(oppio_op.dler, aioclient_mock):
-    """Test setup with API Home Assistant info error."""
+    """Test setup with API Open Peer Power info error."""
     aioclient_mock.get(
         "http://127.0.0.1/host/info", json={"result": "error", "message": None}
     )
@@ -126,7 +126,7 @@ async def test_api_host_info_error(oppio_op.dler, aioclient_mock):
 
 
 async def test_api_core_info(oppio_op.dler, aioclient_mock):
-    """Test setup with API Home Assistant Core info."""
+    """Test setup with API Open Peer Power Core info."""
     aioclient_mock.get(
         "http://127.0.0.1/core/info",
         json={"result": "ok", "data": {"version_latest": "1.0.0"}},
@@ -138,7 +138,7 @@ async def test_api_core_info(oppio_op.dler, aioclient_mock):
 
 
 async def test_api_core_info_error(oppio_op.dler, aioclient_mock):
-    """Test setup with API Home Assistant Core info error."""
+    """Test setup with API Open Peer Power Core info error."""
     aioclient_mock.get(
         "http://127.0.0.1/core/info", json={"result": "error", "message": None}
     )
@@ -150,7 +150,7 @@ async def test_api_core_info_error(oppio_op.dler, aioclient_mock):
 
 
 async def test_api_openpeerpowerr_stop(oppio_op.dler, aioclient_mock):
-    """Test setup with API Home Assistant stop."""
+    """Test setup with API Open Peer Power stop."""
     aioclient_mock.post("http://127.0.0.1/openpeerpower/stop", json={"result": "ok"})
 
     assert await oppio_op.dler.stop_openpeerpowerr()
@@ -158,7 +158,7 @@ async def test_api_openpeerpowerr_stop(oppio_op.dler, aioclient_mock):
 
 
 async def test_api_openpeerpowerr_restart(oppio_op.dler, aioclient_mock):
-    """Test setup with API Home Assistant restart."""
+    """Test setup with API Open Peer Power restart."""
     aioclient_mock.post("http://127.0.0.1/openpeerpower/restart", json={"result": "ok"})
 
     assert await oppio_op.dler.restart_openpeerpowerr()

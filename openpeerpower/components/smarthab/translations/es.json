@@ -11,7 +11,7 @@
                     "email": "Correo electr\u00f3nico",
                     "password": "Contrase\u00f1a"
                 },
-                "description": "Por razones t\u00e9cnicas, aseg\u00farate de usar una cuenta secundaria espec\u00edfica para su configuraci\u00f3n de Home Assistant. Puedes crear una desde la aplicaci\u00f3n SmartHab.",
+                "description": "Por razones t\u00e9cnicas, aseg\u00farate de usar una cuenta secundaria espec\u00edfica para su configuraci\u00f3n de Open Peer Power. Puedes crear una desde la aplicaci\u00f3n SmartHab.",
                 "title": "Configurar SmartHab"
             }
         }

@@ -1,4 +1,4 @@
-"""Tests for Home Assistant View."""
+"""Tests for Open Peer Power View."""
 from unittest.mock import AsyncMock, Mock
 
 from aiohttp.web_exceptions import (

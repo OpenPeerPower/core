@@ -22,7 +22,7 @@ async def test_failing_setups_no_entities.opp, numato_fixture, monkeypatch):
 
 
 async def test_regular_opp_operations.opp, numato_fixture):
-    """Test regular operations from within Home Assistant."""
+    """Test regular operations from within Open Peer Power."""
     assert await async_setup_component.opp, "numato", NUMATO_CFG)
     await.opp.async_block_till_done()  # wait until services are registered
     await.opp.services.async_call(
@@ -60,7 +60,7 @@ async def test_regular_opp_operations.opp, numato_fixture):
 
 
 async def test_failing_opp_operations.opp, numato_fixture, monkeypatch):
-    """Test failing operations called from within Home Assistant.
+    """Test failing operations called from within Open Peer Power.
 
     Switches remain in their initial 'off' state when the device can't
     be written to.

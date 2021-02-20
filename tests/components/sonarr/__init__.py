@@ -188,7 +188,7 @@ async def setup_integration(
     invalid_auth: bool = False,
     server_error: bool = False,
 ) -> MockConfigEntry:
-    """Set up the Sonarr integration in Home Assistant."""
+    """Set up the Sonarr integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         unique_id=unique_id,

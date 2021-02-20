@@ -1,4 +1,4 @@
-"""Manage config entries in Home Assistant."""
+"""Manage config entries in Open Peer Power."""
 from __future__ import annotations
 
 import asyncio

@@ -24,7 +24,7 @@
             },
             "user": {
                 "data": {
-                    "code": "Kood (kasutatakse Home Assistant'i kasutajaliideses)",
+                    "code": "Kood (kasutatakse Open Peer Power'i kasutajaliideses)",
                     "password": "Salas\u00f5na",
                     "username": "E-post"
                 },
@@ -36,7 +36,7 @@
         "step": {
             "init": {
                 "data": {
-                    "code": "Kood (kasutatakse Home Assistant'i kasutajaliideses)"
+                    "code": "Kood (kasutatakse Open Peer Power'i kasutajaliideses)"
                 },
                 "title": "Seadista SimpliSafe"
             }

@@ -22,7 +22,7 @@
                 "data": {
                     "type": "Typ vum Printer"
                 },
-                "description": "W\u00ebllt dir den Brother Printer {model} mat der Seriennummer  `{serial_number}` am Home Assistant dob\u00e4isetzen?",
+                "description": "W\u00ebllt dir den Brother Printer {model} mat der Seriennummer  `{serial_number}` am Open Peer Power dob\u00e4isetzen?",
                 "title": "Entdeckten Brother Printer"
             }
         }

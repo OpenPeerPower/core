@@ -75,7 +75,7 @@ class SirenSwitch(BaseRingSwitch):
         self.async_write_op.state()
 
     def _set_switch(self, new_state):
-        """Update switch state, and causes Home Assistant to correctly update."""
+        """Update switch state, and causes Open Peer Power to correctly update."""
         try:
             self._device.siren = new_state
         except requests.Timeout:

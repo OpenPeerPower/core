@@ -6,8 +6,8 @@
         "step": {
             "user": {
                 "data": {
-                    "exclude": "Vera-apparaat-ID's om uit te sluiten van Home Assistant.",
-                    "lights": "Vera-schakelapparaat id's behandelen als lichten in Home Assistant.",
+                    "exclude": "Vera-apparaat-ID's om uit te sluiten van Open Peer Power.",
+                    "lights": "Vera-schakelapparaat id's behandelen als lichten in Open Peer Power.",
                     "vera_controller_url": "Controller-URL"
                 },
                 "description": "Geef hieronder een URL voor de Vera-controller op. Het zou er zo uit moeten zien: http://192.168.1.161:3480.",
@@ -19,10 +19,10 @@
         "step": {
             "init": {
                 "data": {
-                    "exclude": "Vera-apparaat-ID's om uit te sluiten van Home Assistant.",
-                    "lights": "Vera-schakelapparaat id's behandelen als lichten in Home Assistant."
+                    "exclude": "Vera-apparaat-ID's om uit te sluiten van Open Peer Power.",
+                    "lights": "Vera-schakelapparaat id's behandelen als lichten in Open Peer Power."
                 },
-                "description": "Zie de vera-documentatie voor details over optionele parameters: https://www.home-assistant.io/integrations/vera/. Opmerking: alle wijzigingen hier moeten opnieuw worden opgestart naar de Home Assistant-server. Druk op spatie om de waarden te wissen.",
+                "description": "Zie de vera-documentatie voor details over optionele parameters: https://www.home-assistant.io/integrations/vera/. Opmerking: alle wijzigingen hier moeten opnieuw worden opgestart naar de Open Peer Power-server. Druk op spatie om de waarden te wissen.",
                 "title": "Vera controller opties"
             }
         }

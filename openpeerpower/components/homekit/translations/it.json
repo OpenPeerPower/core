@@ -28,7 +28,7 @@
                     "include_domains": "Domini da includere",
                     "mode": "Modalit\u00e0"
                 },
-                "description": "L'integrazione di HomeKit ti consentir\u00e0 di accedere alle entit\u00e0 di Home Assistant in HomeKit. In modalit\u00e0 bridge, i bridge HomeKit sono limitati a 150 accessori per istanza, incluso il bridge stesso. Se desideri eseguire il bridge di un numero di accessori superiore a quello massimo, si consiglia di utilizzare pi\u00f9 bridge HomeKit per domini diversi. La configurazione dettagliata dell'entit\u00e0 \u00e8 disponibile solo tramite YAML per il bridge principale.",
+                "description": "L'integrazione di HomeKit ti consentir\u00e0 di accedere alle entit\u00e0 di Open Peer Power in HomeKit. In modalit\u00e0 bridge, i bridge HomeKit sono limitati a 150 accessori per istanza, incluso il bridge stesso. Se desideri eseguire il bridge di un numero di accessori superiore a quello massimo, si consiglia di utilizzare pi\u00f9 bridge HomeKit per domini diversi. La configurazione dettagliata dell'entit\u00e0 \u00e8 disponibile solo tramite YAML per il bridge principale.",
                 "title": "Attiva HomeKit"
             }
         }

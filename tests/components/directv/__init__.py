@@ -23,7 +23,7 @@ MOCK_USER_INPUT = {CONF_HOST: HOST}
 
 
 def mock_connection(aioclient_mock: AiohttpClientMocker) -> None:
-    """Mock the DirecTV connection for Home Assistant."""
+    """Mock the DirecTV connection for Open Peer Power."""
     aioclient_mock.get(
         f"http://{HOST}:8080/info/getVersion",
         text=load_fixture("directv/info-get-version.json"),
@@ -104,7 +104,7 @@ async def setup_integration(
     skip_entry_setup: bool = False,
     setup_error: bool = False,
 ) -> MockConfigEntry:
-    """Set up the DirecTV integration in Home Assistant."""
+    """Set up the DirecTV integration in Open Peer Power."""
     if setup_error:
         aioclient_mock.get(
             f"http://{HOST}:8080/info/getVersion", status=HTTP_INTERNAL_SERVER_ERROR

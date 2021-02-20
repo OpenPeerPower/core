@@ -1,4 +1,4 @@
-"""Component to integrate the Home Assistant cloud."""
+"""Component to integrate the Open Peer Power cloud."""
 from.opp_nabucasa import Cloud
 import voluptuous as vol
 
@@ -166,7 +166,7 @@ def is_cloudhook_request(request):
 
 
 async def async_setup.opp, config):
-    """Initialize the Home Assistant cloud."""
+    """Initialize the Open Peer Power cloud."""
     # Process configs
     if DOMAIN in config:
         kwargs = dict(config[DOMAIN])

@@ -69,7 +69,7 @@ def setup.opp, config):
 
        .opp.bus.fire(EVENT_CHECKIN, response.text)
 
-    # Register our service with Home Assistant.
+    # Register our service with Open Peer Power.
    .opp.services.register(
         DOMAIN, "checkin", checkin_user, schema=CHECKIN_SERVICE_SCHEMA
     )

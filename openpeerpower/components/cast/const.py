@@ -22,5 +22,5 @@ SIGNAL_CAST_DISCOVERED = "cast_discovered"
 # removed
 SIGNAL_CAST_REMOVED = "cast_removed"
 
-# Dispatcher signal fired when a Chromecast should show a Home Assistant Cast view.
+# Dispatcher signal fired when a Chromecast should show a Open Peer Power Cast view.
 SIGNAL_OPP_CAST_SHOW_VIEW = "cast_show_view"

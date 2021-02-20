@@ -34,7 +34,7 @@ async def test_serialize_discovery.opp):
     endpoint = msg["payload"]["endpoints"][0]
 
     assert endpoint["additionalAttributes"] == {
-        "manufacturer": "Home Assistant",
+        "manufacturer": "Open Peer Power",
         "model": "switch",
         "softwareVersion": __version__,
         "customIdentifier": "mock-user-id-switch.bla",

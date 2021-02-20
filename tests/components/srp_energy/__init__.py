@@ -27,7 +27,7 @@ async def init_integration(
     side_effect=None,
     usage=None,
 ):
-    """Set up the srp_energy integration in Home Assistant."""
+    """Set up the srp_energy integration in Open Peer Power."""
     if not config:
         config = ENTRY_CONFIG
 

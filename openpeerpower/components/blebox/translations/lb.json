@@ -16,7 +16,7 @@
                     "host": "IP Adresse",
                     "port": "Port"
                 },
-                "description": "BleBox ariichten fir d'Integratioun mam Home Assistant.",
+                "description": "BleBox ariichten fir d'Integratioun mam Open Peer Power.",
                 "title": "BleBox Apparat ariichten"
             }
         }

@@ -19,11 +19,11 @@
                 "title": "\u5b8c\u6210\u914d\u5c0d\u904e\u7a0b"
             },
             "pairing_complete": {
-                "description": "VIZIO SmartCast \u88dd\u7f6e \u5df2\u7d93\u9023\u7dda\u81f3 Home Assistant\u3002",
+                "description": "VIZIO SmartCast \u88dd\u7f6e \u5df2\u7d93\u9023\u7dda\u81f3 Open Peer Power\u3002",
                 "title": "\u914d\u5c0d\u5b8c\u6210"
             },
             "pairing_complete_import": {
-                "description": "VIZIO SmartCast \u88dd\u7f6e \u5df2\u9023\u7dda\u81f3 Home Assistant\u3002\n\n\u5b58\u53d6\u5bc6\u9470\u70ba '**{access_token}**'\u3002",
+                "description": "VIZIO SmartCast \u88dd\u7f6e \u5df2\u9023\u7dda\u81f3 Open Peer Power\u3002\n\n\u5b58\u53d6\u5bc6\u9470\u70ba '**{access_token}**'\u3002",
                 "title": "\u914d\u5c0d\u5b8c\u6210"
             },
             "user": {

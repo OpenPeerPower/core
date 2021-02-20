@@ -180,7 +180,7 @@ def test_home_assistant_start_stop_grouped.opp_):
 
     assert len(entries) == 1
     assert_entry(
-        entries[0], name="Home Assistant", message="restarted", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="restarted", domain=op.DOMAIN
     )
 
 
@@ -203,7 +203,7 @@ def test_home_assistant_start.opp_):
     )
 
     assert len(entries) == 2
-    assert_entry(entries[0], name="Home Assistant", message="started", domain=op.DOMAIN)
+    assert_entry(entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN)
     assert_entry(entries[1], pointA, "bla", entity_id=entity_id)
 
 
@@ -1459,7 +1459,7 @@ async def test_exclude_events_domain.opp,.opp_client):
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Home Assistant", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1500,7 +1500,7 @@ async def test_exclude_events_domain_glob.opp,.opp_client):
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Home Assistant", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1538,7 +1538,7 @@ async def test_include_events_entity.opp,.opp_client):
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Home Assistant", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1570,7 +1570,7 @@ async def test_exclude_events_entity.opp,.opp_client):
     entries = await _async_fetch_logbook(client)
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Home Assistant", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1609,7 +1609,7 @@ async def test_include_events_domain.opp,.opp_client):
 
     assert len(entries) == 3
     _assert_entry(
-        entries[0], name="Home Assistant", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="Amazon Alexa", domain="alexa")
     _assert_entry(entries[2], name="blu", entity_id=entity_id2)
@@ -1655,7 +1655,7 @@ async def test_include_events_domain_glob.opp,.opp_client):
 
     assert len(entries) == 4
     _assert_entry(
-        entries[0], name="Home Assistant", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="Amazon Alexa", domain="alexa")
     _assert_entry(entries[2], name="blu", entity_id=entity_id2)
@@ -1707,7 +1707,7 @@ async def test_include_exclude_events.opp,.opp_client):
 
     assert len(entries) == 3
     _assert_entry(
-        entries[0], name="Home Assistant", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
     _assert_entry(entries[2], name="keep", entity_id=entity_id4)
@@ -1765,7 +1765,7 @@ async def test_include_exclude_events_with_glob_filters.opp,.opp_client):
 
     assert len(entries) == 3
     _assert_entry(
-        entries[0], name="Home Assistant", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
     _assert_entry(entries[2], name="included", entity_id=entity_id4)
@@ -1796,7 +1796,7 @@ async def test_empty_config.opp,.opp_client):
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Home Assistant", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id)
 

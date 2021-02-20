@@ -59,7 +59,7 @@ async def test_entry_setup_unload.opp, client, integration):
 
 
 async def test_home_assistant_stop.opp, client, integration):
-    """Test we clean up on home assistant stop."""
+    """Test we clean up on Open Peer Power stop."""
     await.opp.async_stop()
 
     assert client.disconnect.call_count == 1

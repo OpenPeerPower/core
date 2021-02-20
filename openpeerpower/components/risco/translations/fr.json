@@ -27,8 +27,8 @@
                     "armed_home": "Arm\u00e9 pr\u00e9sent",
                     "armed_night": "Arm\u00e9 pour la nuit"
                 },
-                "description": "S\u00e9lectionnez l'\u00e9tat dans lequel r\u00e9gler votre alarme Risco lors de l'armement de l'alarme Home Assistant",
-                "title": "Associer les \u00e9tats de Home Assistant aux \u00e9tats de Risco"
+                "description": "S\u00e9lectionnez l'\u00e9tat dans lequel r\u00e9gler votre alarme Risco lors de l'armement de l'alarme Open Peer Power",
+                "title": "Associer les \u00e9tats de Open Peer Power aux \u00e9tats de Risco"
             },
             "init": {
                 "data": {
@@ -47,8 +47,8 @@
                     "arm": "Arm\u00e9 (Absent)",
                     "partial_arm": "Partiellement arm\u00e9 (PRESENT)"
                 },
-                "description": "S\u00e9lectionnez l'\u00e9tat que votre alarme Home Assistant rapportera pour chaque \u00e9tat signal\u00e9 par Risco",
-                "title": "Associer les \u00e9tats de Risco aux \u00e9tats de Home Assistant"
+                "description": "S\u00e9lectionnez l'\u00e9tat que votre alarme Open Peer Power rapportera pour chaque \u00e9tat signal\u00e9 par Risco",
+                "title": "Associer les \u00e9tats de Risco aux \u00e9tats de Open Peer Power"
             }
         }
     }

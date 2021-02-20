@@ -254,7 +254,7 @@ def humanify.opp, events, entity_attr_cache, context_lookup):
 
     Will try to group events if possible:
     - if 2+ sensor updates in GROUP_BY_MINUTES, show last
-    - if Home Assistant stop and start happen in same minute call it restarted
+    - if Open Peer Power stop and start happen in same minute call it restarted
     """
     external_events =.opp.data.get(DOMAIN, {})
 
@@ -354,7 +354,7 @@ def humanify.opp, events, entity_attr_cache, context_lookup):
 
                 yield {
                     "when": event.time_fired_isoformat,
-                    "name": "Home Assistant",
+                    "name": "Open Peer Power",
                     "message": "started",
                     "domain": HA_DOMAIN,
                 }
@@ -367,7 +367,7 @@ def humanify.opp, events, entity_attr_cache, context_lookup):
 
                 yield {
                     "when": event.time_fired_isoformat,
-                    "name": "Home Assistant",
+                    "name": "Open Peer Power",
                     "message": action,
                     "domain": HA_DOMAIN,
                 }

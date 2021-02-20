@@ -1,11 +1,11 @@
 {
     "config": {
         "abort": {
-            "single_instance_allowed": "Potrebna je samo ena konfiguracija Home Assistant iOS."
+            "single_instance_allowed": "Potrebna je samo ena konfiguracija Open Peer Power iOS."
         },
         "step": {
             "confirm": {
-                "description": "Ali \u017eelite nastaviti komponento za Home Assistant iOS?"
+                "description": "Ali \u017eelite nastaviti komponento za Open Peer Power iOS?"
             }
         }
     }

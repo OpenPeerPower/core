@@ -26,7 +26,7 @@ ATTR_AIR_QUALITY = "air_quality"
 # Define variables to store the device names, as referred to by the Canary API.
 # Note: If Canary change the name of any of their devices (which they have done),
 # then these variables will need updating, otherwise the sensors will stop working
-# and disappear in Home Assistant.
+# and disappear in Open Peer Power.
 CANARY_PRO = "Canary Pro"
 CANARY_FLEX = "Canary Flex"
 

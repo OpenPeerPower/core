@@ -16,7 +16,7 @@
                     "host": "IP Address",
                     "port": "Port"
                 },
-                "description": "Set up your BleBox to integrate with Home Assistant.",
+                "description": "Set up your BleBox to integrate with Open Peer Power.",
                 "title": "Set up your BleBox device"
             }
         }

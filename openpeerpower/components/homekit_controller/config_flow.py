@@ -19,7 +19,7 @@ from .const import DOMAIN, KNOWN_DEVICES
 HOMEKIT_DIR = ".homekit"
 HOMEKIT_BRIDGE_DOMAIN = "homekit"
 HOMEKIT_BRIDGE_SERIAL_NUMBER = "homekit.bridge"
-HOMEKIT_BRIDGE_MODEL = "Home Assistant HomeKit Bridge"
+HOMEKIT_BRIDGE_MODEL = "Open Peer Power HomeKit Bridge"
 
 HOMEKIT_IGNORE = [
     # eufy Indoor Cam 2K and 2K Pan & Tilt

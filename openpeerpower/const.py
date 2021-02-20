@@ -1,4 +1,4 @@
-"""Constants used by Home Assistant components."""
+"""Constants used by Open Peer Power components."""
 MAJOR_VERSION = 2021
 MINOR_VERSION = 3
 PATCH_VERSION = "0.dev0"
@@ -648,5 +648,5 @@ PRECISION_TENTHS = 0.1
 # cloud, alexa, or google_home components
 CLOUD_NEVER_EXPOSED_ENTITIES = ["group.all_locks"]
 
-# The ID of the Home Assistant Cast App
+# The ID of the Open Peer Power Cast App
 CAST_APP_ID_OPENPEERPOWER = "B12CE3CA"

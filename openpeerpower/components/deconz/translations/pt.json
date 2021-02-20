@@ -11,11 +11,11 @@
         },
         "step": {
             "oppio_confirm": {
-                "description": "Deseja configurar o Home Assistant para se conectar ao gateway deCONZ fornecido pelo addon Opp.io {addon} ?",
+                "description": "Deseja configurar o Open Peer Power para se conectar ao gateway deCONZ fornecido pelo addon Opp.io {addon} ?",
                 "title": "Gateway Zigbee deCONZ via addon Opp.io"
             },
             "link": {
-                "description": "Desbloqueie o seu gateway deCONZ para se registar no Home Assistant. \n\n 1. V\u00e1 para as configura\u00e7\u00f5es do sistema deCONZ \n 2. Pressione o bot\u00e3o \"Desbloquear Gateway\"",
+                "description": "Desbloqueie o seu gateway deCONZ para se registar no Open Peer Power. \n\n 1. V\u00e1 para as configura\u00e7\u00f5es do sistema deCONZ \n 2. Pressione o bot\u00e3o \"Desbloquear Gateway\"",
                 "title": "Liga\u00e7\u00e3o com deCONZ"
             },
             "manual_input": {

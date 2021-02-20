@@ -1,4 +1,4 @@
-"""Component to configure Home Assistant via an API."""
+"""Component to configure Open Peer Power via an API."""
 import asyncio
 import importlib
 import os

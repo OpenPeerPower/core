@@ -167,14 +167,14 @@ class MatrixBot:
         self._client.start_listener_thread(exception_op.dler=handle_matrix_exception)
 
         def stop_client(_):
-            """Run once when Home Assistant stops."""
+            """Run once when Open Peer Power stops."""
             self._client.stop_listener_thread()
 
         self.opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_client)
 
         # Joining rooms potentially does a lot of I/O, so we defer it
         def handle_startup(_):
-            """Run once when Home Assistant finished startup."""
+            """Run once when Open Peer Power finished startup."""
             self._join_rooms()
 
         self.opp.bus.listen_once(EVENT_OPENPEERPOWER_START, handle_startup)

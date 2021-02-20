@@ -143,7 +143,7 @@ def register_new_device_callback.opp):
 
     async def async_create_new_entities(address):
         _LOGGER.debug(
-            "Adding new INSTEON device to Home Assistant with address %s", address
+            "Adding new INSTEON device to Open Peer Power with address %s", address
         )
         await devices.async_save(workdir.opp.config.config_dir)
         device = devices[address]

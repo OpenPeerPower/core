@@ -18,7 +18,7 @@
                     "ssl": "Pou\u017e\u00edv\u00e1 SSL certifik\u00e1t",
                     "verify_ssl": "Ov\u011b\u0159it certifik\u00e1t SSL"
                 },
-                "description": "Nastavte svou tisk\u00e1rnu pomoc\u00ed protokolu IPP (Internet Printing Protocol) pro integraci s Home Assistant.",
+                "description": "Nastavte svou tisk\u00e1rnu pomoc\u00ed protokolu IPP (Internet Printing Protocol) pro integraci s Open Peer Power.",
                 "title": "Propojte svou tisk\u00e1rnu"
             },
             "zeroconf_confirm": {

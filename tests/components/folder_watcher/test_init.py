@@ -28,7 +28,7 @@ async def test_valid_path_setup.opp):
 
 
 def test_event():
-    """Check that Home Assistant events are fired correctly on watchdog event."""
+    """Check that Open Peer Power events are fired correctly on watchdog event."""
 
     class MockPatternMatchingEventHandler:
         """Mock base class for the pattern matcher event handler."""

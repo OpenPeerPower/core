@@ -7,7 +7,7 @@ ENV \
 
 WORKDIR /usr/src
 
-## Setup Home Assistant
+## Setup Open Peer Power
 COPY . openpeerpower/
 RUN \
     pip3 install --no-cache-dir --no-index --only-binary=:all: --find-links "${WHEELS_LINKS}" \
@@ -16,7 +16,7 @@ RUN \
     -e ./openpeerpower \
     && python3 -m compileall openpeerpower/openpeerpower
 
-# Home Assistant S6-Overlay
+# Open Peer Power S6-Overlay
 COPY rootfs /
 
 WORKDIR /config

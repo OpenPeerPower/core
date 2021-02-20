@@ -19,11 +19,11 @@
                 "title": "Complete Pairing Process"
             },
             "pairing_complete": {
-                "description": "Your VIZIO SmartCast Device is now connected to Home Assistant.",
+                "description": "Your VIZIO SmartCast Device is now connected to Open Peer Power.",
                 "title": "Pairing Complete"
             },
             "pairing_complete_import": {
-                "description": "Your VIZIO SmartCast Device is now connected to Home Assistant.\n\nYour Access Token is '**{access_token}**'.",
+                "description": "Your VIZIO SmartCast Device is now connected to Open Peer Power.\n\nYour Access Token is '**{access_token}**'.",
                 "title": "Pairing Complete"
             },
             "user": {

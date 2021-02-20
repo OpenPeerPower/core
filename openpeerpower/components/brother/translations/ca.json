@@ -22,7 +22,7 @@
                 "data": {
                     "type": "Tipus d'impressora"
                 },
-                "description": "Vols afegir la impressora Brother {model} amb n\u00famero de s\u00e8rie `{serial_number}` a Home Assistant?",
+                "description": "Vols afegir la impressora Brother {model} amb n\u00famero de s\u00e8rie `{serial_number}` a Open Peer Power?",
                 "title": "Impressora Brother descoberta"
             }
         }

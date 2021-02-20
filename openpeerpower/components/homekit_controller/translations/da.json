@@ -6,7 +6,7 @@
             "already_in_progress": "Enhedskonfiguration er allerede i gang.",
             "already_paired": "Dette tilbeh\u00f8r er allerede parret med en anden enhed. Nulstil tilbeh\u00f8ret og pr\u00f8v igen.",
             "ignored_model": "HomeKit-underst\u00f8ttelse af denne model er blokeret, da en mere funktionskomplet indbygget integration er tilg\u00e6ngelig.",
-            "invalid_config_entry": "Denne enhed vises som klar til parring, men der er allerede en modstridende konfigurationspost for den i Home Assistant, som f\u00f8rst skal fjernes.",
+            "invalid_config_entry": "Denne enhed vises som klar til parring, men der er allerede en modstridende konfigurationspost for den i Open Peer Power, som f\u00f8rst skal fjernes.",
             "no_devices": "Der blev ikke fundet nogen uparrede enheder"
         },
         "error": {

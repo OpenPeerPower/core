@@ -12,7 +12,7 @@ DEFAULT_NAME = "Roon Labs Music Player"
 
 ROON_APPINFO = {
     "extension_id": "home_assistant",
-    "display_name": "Roon Integration for Home Assistant",
+    "display_name": "Roon Integration for Open Peer Power",
     "display_version": "1.0.0",
     "publisher": "home_assistant",
     "email": "home_assistant@users.noreply.github.com",

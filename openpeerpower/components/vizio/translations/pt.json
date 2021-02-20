@@ -14,7 +14,7 @@
                 }
             },
             "pairing_complete": {
-                "description": "O seu Dispositivo VIZIO SmartCast j\u00e1 se encontra ligado ao Home Assistant.",
+                "description": "O seu Dispositivo VIZIO SmartCast j\u00e1 se encontra ligado ao Open Peer Power.",
                 "title": "Emparelhamento Completo"
             },
             "pairing_complete_import": {

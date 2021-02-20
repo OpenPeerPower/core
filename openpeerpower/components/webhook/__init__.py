@@ -1,4 +1,4 @@
-"""Webhooks for Home Assistant."""
+"""Webhooks for Open Peer Power."""
 import logging
 import secrets
 

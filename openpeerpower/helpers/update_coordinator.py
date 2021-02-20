@@ -223,7 +223,7 @@ class DataUpdateCoordinator(Generic[T]):
 
     @callback
     def _async_stop_refresh(self, _: Event) -> None:
-        """Stop refreshing when Home Assistant is stopping."""
+        """Stop refreshing when Open Peer Power is stopping."""
         self.update_interval = None
         if self._unsub_refresh:
             self._unsub_refresh()

@@ -13,7 +13,7 @@
                     "auto_start": "Samodejni zagon (onemogo\u010di, \u010de uporabljate Z-Wave ali drug sistem z zakasnjenim zagonom)",
                     "include_domains": "Domene, ki jih \u017eelite vklju\u010diti"
                 },
-                "description": "HomeKit most vam bo omogo\u010dil dostop do Home Assistant entitet v HomeKit-u. HomeKit mostovi so omejeni na 150 entitet na primerek, vklju\u010dno z mostom. \u010ce \u017eelite premostiti dovoljeno \u0161tevilo dodatkov, priporo\u010damo, da uporabite ve\u010d mostov HomeKit za razli\u010dne domene. Podrobna konfiguracija entitete je na voljo samo prek YAML za primarni most.",
+                "description": "HomeKit most vam bo omogo\u010dil dostop do Open Peer Power entitet v HomeKit-u. HomeKit mostovi so omejeni na 150 entitet na primerek, vklju\u010dno z mostom. \u010ce \u017eelite premostiti dovoljeno \u0161tevilo dodatkov, priporo\u010damo, da uporabite ve\u010d mostov HomeKit za razli\u010dne domene. Podrobna konfiguracija entitete je na voljo samo prek YAML za primarni most.",
                 "title": "Aktivirajte HomeKit most"
             }
         }

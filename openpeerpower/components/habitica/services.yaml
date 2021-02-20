@@ -10,4 +10,4 @@ api_call:
       example: '["tasks", "user", "post"]'
     args:
       description: Any additional JSON or URL parameter arguments. See apidoc mentioned for path. Example uses same API endpoint
-      example: '{"text": "Use API from Home Assistant", "type": "todo"}'
+      example: '{"text": "Use API from Open Peer Power", "type": "todo"}'

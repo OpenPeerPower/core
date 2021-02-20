@@ -14,11 +14,11 @@
         "flow_title": "deCONZ Zigbee Gateway",
         "step": {
             "oppio_confirm": {
-                "description": "M\u00f6chtest du Home Assistant so konfigurieren, dass er eine Verbindung mit dem deCONZ Gateway herstellt, der vom Opp.io Add-on {addon} bereitgestellt wird?",
+                "description": "M\u00f6chtest du Open Peer Power so konfigurieren, dass er eine Verbindung mit dem deCONZ Gateway herstellt, der vom Opp.io Add-on {addon} bereitgestellt wird?",
                 "title": "deCONZ Zigbee Gateway \u00fcber das Opp.io Add-on"
             },
             "link": {
-                "description": "Entsperre dein deCONZ-Gateway, um es bei Home Assistant zu registrieren. \n\n 1. Gehe in die deCONZ-Systemeinstellungen \n 2. Dr\u00fccke die Taste \"Gateway entsperren\"",
+                "description": "Entsperre dein deCONZ-Gateway, um es bei Open Peer Power zu registrieren. \n\n 1. Gehe in die deCONZ-Systemeinstellungen \n 2. Dr\u00fccke die Taste \"Gateway entsperren\"",
                 "title": "Mit deCONZ verbinden"
             },
             "manual_input": {

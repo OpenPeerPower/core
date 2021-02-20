@@ -11,7 +11,7 @@
         "flow_title": "Arcam FMJ op {host}",
         "step": {
             "confirm": {
-                "description": "Wil je Arcam FMJ op `{host}` toevoegen aan Home Assistant?"
+                "description": "Wil je Arcam FMJ op `{host}` toevoegen aan Open Peer Power?"
             },
             "user": {
                 "data": {

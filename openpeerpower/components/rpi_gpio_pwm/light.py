@@ -234,12 +234,12 @@ class PwmRgbLed(PwmSimpleLed):
 
 
 def _from_opp_brightness(brightness):
-    """Convert Home Assistant brightness units to percentage."""
+    """Convert Open Peer Power brightness units to percentage."""
     return brightness / 255
 
 
 def _from_opp_color(color):
-    """Convert Home Assistant RGB list to Color tuple."""
+    """Convert Open Peer Power RGB list to Color tuple."""
 
     rgb = color_util.color_hs_to_RGB(*color)
     return Color(*tuple(rgb))

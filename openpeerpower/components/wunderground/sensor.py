@@ -178,7 +178,7 @@ class WUDailySimpleForecastSensorConfig(WUSensorConfig):
         :param field: field name to use as value
         :param wu_unit: "fahrenheit", "celsius", "degrees" etc. see the example json at:
                 https://www.wunderground.com/weather/api/d/docs?d=data/forecast&MR=1
-        :param ha_unit: corresponding unit in Home Assistant
+        :param ha_unit: corresponding unit in Open Peer Power
         """
         super().__init__(
             friendly_name=friendly_name,

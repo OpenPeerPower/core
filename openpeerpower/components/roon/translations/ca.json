@@ -10,8 +10,8 @@
         },
         "step": {
             "link": {
-                "description": "Has d'autoritzar Home Assistant a Roon. Despr\u00e9s de fer clic a envia, ves a l'aplicaci\u00f3 Roon Core, obre la Configuraci\u00f3 i activa Home Assistant a la pestanya d'Extensions.",
-                "title": "Autoritza Home Assistant a Roon"
+                "description": "Has d'autoritzar Open Peer Power a Roon. Despr\u00e9s de fer clic a envia, ves a l'aplicaci\u00f3 Roon Core, obre la Configuraci\u00f3 i activa Open Peer Power a la pestanya d'Extensions.",
+                "title": "Autoritza Open Peer Power a Roon"
             },
             "user": {
                 "data": {

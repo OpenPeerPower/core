@@ -29,7 +29,7 @@ def run(args):
     # Disable logging
     logging.getLogger("openpeerpower.core").setLevel(logging.CRITICAL)
 
-    parser = argparse.ArgumentParser(description=("Run a Home Assistant benchmark."))
+    parser = argparse.ArgumentParser(description=("Run a Open Peer Power benchmark."))
     parser.add_argument("name", choices=BENCHMARKS)
     parser.add_argument("--script", choices=["benchmark"])
 

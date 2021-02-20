@@ -5,7 +5,7 @@
             "already_in_progress": "Der Konfigurationsablauf wird bereits ausgef\u00fchrt"
         },
         "error": {
-            "discovery_error": "Es konnte kein Xiaomi Aqara Gateway gefunden werden, versuche die IP von Home Assistant als Interface zu nutzen",
+            "discovery_error": "Es konnte kein Xiaomi Aqara Gateway gefunden werden, versuche die IP von Open Peer Power als Interface zu nutzen",
             "invalid_host": "Ung\u00fcltiger Hostname oder IP-Adresse, schau unter https://www.home-assistant.io/integrations/xiaomi_aqara/#connection-problem",
             "invalid_mac": "Ung\u00fcltige MAC-Adresse"
         },

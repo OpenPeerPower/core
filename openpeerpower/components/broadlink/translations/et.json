@@ -32,7 +32,7 @@
                 "data": {
                     "unlock": "Jah, tee seda."
                 },
-                "description": "{name} ( {model} asukohas {host} ) on lukus. See v\u00f5ib p\u00f5hjustada Home Assistanti autentimisprobleeme. Kas soovid selle avada?",
+                "description": "{name} ( {model} asukohas {host} ) on lukus. See v\u00f5ib p\u00f5hjustada Open Peer Poweri autentimisprobleeme. Kas soovid selle avada?",
                 "title": "Seadme lukustuse eemaldamine (valikuline)"
             },
             "user": {

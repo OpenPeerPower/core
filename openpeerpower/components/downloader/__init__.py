@@ -45,7 +45,7 @@ def setup.opp, config):
     """Listen for download events to download files."""
     download_path = config[DOMAIN][CONF_DOWNLOAD_DIR]
 
-    # If path is relative, we assume relative to Home Assistant config dir
+    # If path is relative, we assume relative to Open Peer Power config dir
     if not os.path.isabs(download_path):
         download_path =.opp.config.path(download_path)
 

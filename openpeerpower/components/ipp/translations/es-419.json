@@ -20,11 +20,11 @@
                     "ssl": "La impresora admite la comunicaci\u00f3n a trav\u00e9s de SSL/TLS",
                     "verify_ssl": "La impresora usa un certificado SSL adecuado"
                 },
-                "description": "Configure su impresora a trav\u00e9s del Protocolo de impresi\u00f3n de Internet (IPP) para integrarse con Home Assistant.",
+                "description": "Configure su impresora a trav\u00e9s del Protocolo de impresi\u00f3n de Internet (IPP) para integrarse con Open Peer Power.",
                 "title": "Enlace su impresora"
             },
             "zeroconf_confirm": {
-                "description": "\u00bfDesea agregar la impresora llamada `{name}` a Home Assistant?",
+                "description": "\u00bfDesea agregar la impresora llamada `{name}` a Open Peer Power?",
                 "title": "Impresora descubierta"
             }
         }

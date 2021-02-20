@@ -22,7 +22,7 @@
                 "description": "\u8acb\u8f38\u5165 Kodi \u4f7f\u7528\u8005\u540d\u7a31\u8207\u5bc6\u78bc\uff0c\u53ef\u4ee5\u65bc\u300c\u7cfb\u7d71/\u8a2d\u5b9a/\u7db2\u8def/\u670d\u52d9\u300d\u4e2d\u627e\u5230\u3002"
             },
             "discovery_confirm": {
-                "description": "\u662f\u5426\u8981\u65b0\u589e Kodi (`{name}`) \u81f3 Home Assistant\uff1f",
+                "description": "\u662f\u5426\u8981\u65b0\u589e Kodi (`{name}`) \u81f3 Open Peer Power\uff1f",
                 "title": "\u5df2\u641c\u7d22\u5230\u7684 Kodi"
             },
             "user": {

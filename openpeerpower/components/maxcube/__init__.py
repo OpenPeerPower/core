@@ -65,7 +65,7 @@ def setup.opp, config):
         except timeout as ex:
             _LOGGER.error("Unable to connect to Max!Cube gateway: %s", str(ex))
            .opp.components.persistent_notification.create(
-                f"Error: {ex}<br />You will need to restart Home Assistant after fixing.",
+                f"Error: {ex}<br />You will need to restart Open Peer Power after fixing.",
                 title=NOTIFICATION_TITLE,
                 notification_id=NOTIFICATION_ID,
             )

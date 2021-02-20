@@ -60,7 +60,7 @@ MOCK_SSDP_DISCOVERY_INFO_MISSING_MANUFACTORER = {
 async def setup_integration(
    .opp: OpenPeerPowerType,
 ) -> MockConfigEntry:
-    """Mock ConfigEntry in Home Assistant."""
+    """Mock ConfigEntry in Open Peer Power."""
 
     entry = MockConfigEntry(
         domain=DOMAIN,

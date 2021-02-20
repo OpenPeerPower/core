@@ -18,7 +18,7 @@
                 "description": "Zadejte heslo, kter\u00e9 jste nastavili ve va\u0161\u00ed konfiguraci pro {name} ."
             },
             "discovery_confirm": {
-                "description": "Chcete p\u0159idat uzel ESPHome `{name}` do Home Assistant?",
+                "description": "Chcete p\u0159idat uzel ESPHome `{name}` do Open Peer Power?",
                 "title": "Nalezen uzel ESPHome"
             },
             "user": {

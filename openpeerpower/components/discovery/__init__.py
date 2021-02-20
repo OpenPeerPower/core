@@ -208,7 +208,7 @@ async def async_setup.opp, config):
 
     @callback
     def schedule_first(event):
-        """Schedule the first discovery when Home Assistant starts up."""
+        """Schedule the first discovery when Open Peer Power starts up."""
         async_track_point_in_utc_time.opp, scan_devices, dt_util.utcnow())
 
    .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, schedule_first)

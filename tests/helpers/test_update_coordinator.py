@@ -289,7 +289,7 @@ async def test_async_set_updated_data(crd):
 
 
 async def test_stop_refresh_on_op.stop.opp, crd):
-    """Test no update interval refresh when Home Assistant is stopping."""
+    """Test no update interval refresh when Open Peer Power is stopping."""
     # Add subscriber
     update_callback = Mock()
     crd.async_add_listener(update_callback)
@@ -301,7 +301,7 @@ async def test_stop_refresh_on_op.stop.opp, crd):
     await.opp.async_block_till_done()
     assert crd.data == 1
 
-    # Fire Home Assistant stop event
+    # Fire Open Peer Power stop event
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
    .opp.state = CoreState.stopping
     await.opp.async_block_till_done()

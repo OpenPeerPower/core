@@ -111,7 +111,7 @@ def _get_logger_class.opp_overrides):
     """
 
     class OppLogger(logging.Logger):
-        """Home Assistant aware logger class."""
+        """Open Peer Power aware logger class."""
 
         def setLevel(self, level) -> None:
             """Set the log level unless overridden."""

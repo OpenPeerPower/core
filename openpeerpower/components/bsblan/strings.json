@@ -4,7 +4,7 @@
     "step": {
       "user": {
         "title": "Connect to the BSB-Lan device",
-        "description": "Set up you BSB-Lan device to integrate with Home Assistant.",
+        "description": "Set up you BSB-Lan device to integrate with Open Peer Power.",
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
           "port": "[%key:common::config_flow::data::port%]",

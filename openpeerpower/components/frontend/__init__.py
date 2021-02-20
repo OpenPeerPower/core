@@ -1,4 +1,4 @@
-"""Handle the frontend for Home Assistant."""
+"""Handle the frontend for Open Peer Power."""
 import json
 import logging
 import mimetypes
@@ -58,7 +58,7 @@ MANIFEST_JSON = {
         for size in (192, 384, 512, 1024)
     ],
     "lang": "en-US",
-    "name": "Home Assistant",
+    "name": "Open Peer Power",
     "short_name": "Assistant",
     "start_url": "/?homescreen=1",
     "theme_color": DEFAULT_THEME_COLOR,

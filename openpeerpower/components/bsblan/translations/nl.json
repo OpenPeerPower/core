@@ -14,7 +14,7 @@
                     "passkey": "Passkey-tekenreeks",
                     "port": "Poort"
                 },
-                "description": "Stel uw BSB-Lan-apparaat in om te integreren met Home Assistant.",
+                "description": "Stel uw BSB-Lan-apparaat in om te integreren met Open Peer Power.",
                 "title": "Maak verbinding met het BSB-Lan-apparaat"
             }
         }

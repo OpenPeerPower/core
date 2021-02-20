@@ -19,7 +19,7 @@
         "flow_title": "Apple TV: {name}",
         "step": {
             "confirm": {
-                "description": "Es wird der Apple TV mit dem Namen \" {name} \" zu Home Assistant hinzugef\u00fcgt. \n\n ** Um den Vorgang abzuschlie\u00dfen, m\u00fcssen m\u00f6glicherweise mehrere PIN-Codes eingegeben werden. ** \n\n Bitte beachte, dass der Apple TV mit dieser Integration * nicht * ausgeschalten werden kann. Nur der Media Player in Home Assistant wird ausgeschaltet!",
+                "description": "Es wird der Apple TV mit dem Namen \" {name} \" zu Open Peer Power hinzugef\u00fcgt. \n\n ** Um den Vorgang abzuschlie\u00dfen, m\u00fcssen m\u00f6glicherweise mehrere PIN-Codes eingegeben werden. ** \n\n Bitte beachte, dass der Apple TV mit dieser Integration * nicht * ausgeschalten werden kann. Nur der Media Player in Open Peer Power wird ausgeschaltet!",
                 "title": "Best\u00e4tige das Hinzuf\u00fcgen vom Apple TV"
             },
             "pair_no_pin": {
@@ -54,7 +54,7 @@
         "step": {
             "init": {
                 "data": {
-                    "start_off": "Schalte das Ger\u00e4t nicht ein, wenn Home Assistant startet"
+                    "start_off": "Schalte das Ger\u00e4t nicht ein, wenn Open Peer Power startet"
                 },
                 "description": "Konfiguriere die allgemeinen Ger\u00e4teeinstellungen"
             }

@@ -33,7 +33,7 @@ async def async_setup.opp: OpenPeerPower, config: dict) -> bool:
 
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
-    """Configure the base Nexia device for Home Assistant."""
+    """Configure the base Nexia device for Open Peer Power."""
 
     conf = entry.data
     username = conf[CONF_USERNAME]

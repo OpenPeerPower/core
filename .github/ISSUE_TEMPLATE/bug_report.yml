@@ -1,5 +1,5 @@
-name: Report an issue with Home Assistant Core
-about: Report an issue with Home Assistant Core.
+name: Report an issue with Open Peer Power Core
+about: Report an issue with Open Peer Power Core.
 title: ""
 issue_body: true
 inputs:
@@ -26,14 +26,14 @@ inputs:
         ## Environment
   - type: input
     attributes:
-      label: What is version of Home Assistant Core has the issue?
+      label: What is version of Open Peer Power Core has the issue?
       required: true
       placeholder: core-
       description: >
         Can be found in the Configuration panel -> Info.
   - type: input
     attributes:
-      label: What was the last working version of Home Assistant Core?
+      label: What was the last working version of Open Peer Power Core?
       required: false
       placeholder: core-
       description: >
@@ -45,10 +45,10 @@ inputs:
       description: >
         If you don't know, you can find it in: Configuration panel -> Info.
       choices:
-        - Home Assistant OS
-        - Home Assistant Container
-        - Home Assistant Supervised
-        - Home Assistant Core
+        - Open Peer Power OS
+        - Open Peer Power Container
+        - Open Peer Power Supervised
+        - Open Peer Power Core
   - type: input
     attributes:
       label: Integration causing the issue

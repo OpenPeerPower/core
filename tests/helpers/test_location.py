@@ -1,4 +1,4 @@
-"""Tests Home Assistant location helpers."""
+"""Tests Open Peer Power location helpers."""
 from openpeerpower.const import ATTR_LATITUDE, ATTR_LONGITUDE
 from openpeerpowerr.core import State
 from openpeerpowerr.helpers import location

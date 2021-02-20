@@ -13,7 +13,7 @@ STATIONS = [
 
 
 async def init_integration.opp, incomplete_data=False) -> MockConfigEntry:
-    """Set up the GIOS integration in Home Assistant."""
+    """Set up the GIOS integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         title="Home",

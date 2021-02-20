@@ -8,7 +8,7 @@
         },
         "step": {
             "oppio_confirm": {
-                "description": "Kas soovid seadistada Home Assistant-i \u00fchendust Almondiga mida pakub Opp.io lisandmoodul: {addon} ?",
+                "description": "Kas soovid seadistada Open Peer Power-i \u00fchendust Almondiga mida pakub Opp.io lisandmoodul: {addon} ?",
                 "title": "Almond Opp.io lisandmooduli kaudu"
             },
             "pick_implementation": {

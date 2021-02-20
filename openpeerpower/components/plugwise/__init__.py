@@ -1,4 +1,4 @@
-"""Plugwise platform for Home Assistant Core."""
+"""Plugwise platform for Open Peer Power Core."""
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST

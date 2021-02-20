@@ -21,7 +21,7 @@
                 "data": {
                     "discovery": "Luba automaatne avastamine"
                 },
-                "description": "Kas soovite seadistada Home Assistanti \u00fchenduse loomiseks Opp.io lisandmooduli {addon} pakutava MQTT vahendajaga?",
+                "description": "Kas soovite seadistada Open Peer Poweri \u00fchenduse loomiseks Opp.io lisandmooduli {addon} pakutava MQTT vahendajaga?",
                 "title": "MQTT vahendaja Opp.io pistikprogrammi kaudu"
             }
         }

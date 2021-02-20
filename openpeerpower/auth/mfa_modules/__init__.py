@@ -1,4 +1,4 @@
-"""Pluggable auth modules for Home Assistant."""
+"""Pluggable auth modules for Open Peer Power."""
 from __future__ import annotations
 
 import importlib

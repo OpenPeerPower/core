@@ -16,7 +16,7 @@ async def init_integration(
     rgbw: bool = False,
     skip_setup: bool = False,
 ) -> MockConfigEntry:
-    """Set up the WLED integration in Home Assistant."""
+    """Set up the WLED integration in Open Peer Power."""
 
     fixture = "wled/rgb.json" if not rgbw else "wled/rgbw.json"
     data = json.loads(load_fixture(fixture))

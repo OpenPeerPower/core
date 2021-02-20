@@ -16,7 +16,7 @@
                 "description": "Ange det l\u00f6senord du angett i din konfiguration f\u00f6r {name}."
             },
             "discovery_confirm": {
-                "description": "Vill du l\u00e4gga till ESPHome noden ` {name} ` till Home Assistant?",
+                "description": "Vill du l\u00e4gga till ESPHome noden ` {name} ` till Open Peer Power?",
                 "title": "Uppt\u00e4ckt ESPHome-nod"
             },
             "user": {

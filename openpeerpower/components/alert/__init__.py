@@ -210,7 +210,7 @@ class Alert(ToggleEntity):
 
     @property
     def should_poll(self):
-        """Home Assistant need not poll these entities."""
+        """Open Peer Power need not poll these entities."""
         return False
 
     @property

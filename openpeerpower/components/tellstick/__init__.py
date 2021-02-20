@@ -190,7 +190,7 @@ class TellstickDevice(Entity):
 
     @property
     def should_poll(self):
-        """Tell Home Assistant not to poll this device."""
+        """Tell Open Peer Power not to poll this device."""
         return False
 
     @property

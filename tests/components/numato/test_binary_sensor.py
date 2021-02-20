@@ -38,7 +38,7 @@ async def test_setup_callbacks.opp, numato_fixture, monkeypatch):
 
 
 async def test_opp_binary_sensor_notification.opp, numato_fixture):
-    """Test regular operations from within Home Assistant."""
+    """Test regular operations from within Open Peer Power."""
     assert await async_setup_component.opp, "numato", NUMATO_CFG)
     await.opp.async_block_till_done()  # wait until services are registered
     assert (

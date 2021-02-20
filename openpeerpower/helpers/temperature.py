@@ -1,4 +1,4 @@
-"""Temperature helpers for Home Assistant."""
+"""Temperature helpers for Open Peer Power."""
 from numbers import Number
 from typing import Optional
 

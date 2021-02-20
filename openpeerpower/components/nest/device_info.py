@@ -41,7 +41,7 @@ class DeviceInfo:
             if trait.custom_name:
                 return trait.custom_name
         # Build a name from the room/structure.  Note: This room/structure name
-        # is not associated with a home assistant Area.
+        # is not associated with a Open Peer Power Area.
         parent_relations = self._device.parent_relations
         if parent_relations:
             items = sorted(parent_relations.items())

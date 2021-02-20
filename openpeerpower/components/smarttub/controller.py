@@ -22,7 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class SmartTubController:
-    """Interface between Home Assistant and the SmartTub API."""
+    """Interface between Open Peer Power and the SmartTub API."""
 
     def __init__(self,.opp):
         """Initialize an interface to SmartTub."""

@@ -16,7 +16,7 @@
                     "port": "",
                     "username": "Kasutajanimi"
                 },
-                "description": "Seadista oma BSB-Lan seadme sidumine Home Assistant'iga.",
+                "description": "Seadista oma BSB-Lan seadme sidumine Open Peer Power'iga.",
                 "title": "\u00dchendu BSB-Lan seadmega"
             }
         }

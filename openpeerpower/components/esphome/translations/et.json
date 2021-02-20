@@ -18,7 +18,7 @@
                 "description": "Sisesta {name} seadistamises m\u00e4\u00e4ratud parool."
             },
             "discovery_confirm": {
-                "description": "Kas soovid lisada ESPHome'i s\u00f5lme '{name}' Home Assistant-ile?",
+                "description": "Kas soovid lisada ESPHome'i s\u00f5lme '{name}' Open Peer Power-ile?",
                 "title": "Avastastud ESPHome'i s\u00f5lm"
             },
             "user": {

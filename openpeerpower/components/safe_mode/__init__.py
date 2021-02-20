@@ -9,7 +9,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
     """Set up the Safe Mode component."""
     persistent_notification.async_create(
        .opp,
-        "Home Assistant is running in safe mode. Check [the error log](/config/logs) to see what went wrong.",
+        "Open Peer Power is running in safe mode. Check [the error log](/config/logs) to see what went wrong.",
         "Safe Mode",
     )
     return True

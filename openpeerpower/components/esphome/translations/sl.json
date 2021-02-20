@@ -18,7 +18,7 @@
                 "description": "Vnesite geslo, ki ste ga nastavili v konfiguraciji za {name}."
             },
             "discovery_confirm": {
-                "description": "\u017delite dodati ESPHome vozli\u0161\u010de ` {name} ` v Home Assistant?",
+                "description": "\u017delite dodati ESPHome vozli\u0161\u010de ` {name} ` v Open Peer Power?",
                 "title": "Odkrita ESPHome vozli\u0161\u010da"
             },
             "user": {

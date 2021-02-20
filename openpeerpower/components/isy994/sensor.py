@@ -85,7 +85,7 @@ class ISYSensorEntity(ISYNodeEntity):
         # Handle ISY precision and rounding
         value = convert_isy_value_to_opp(value, uom, self._node.prec)
 
-        # Convert temperatures to Home Assistant's unit
+        # Convert temperatures to Open Peer Power's unit
         if uom in (TEMP_CELSIUS, TEMP_FAHRENHEIT):
             value = self.opp.config.units.temperature(value, uom)
 
@@ -93,7 +93,7 @@ class ISYSensorEntity(ISYNodeEntity):
 
     @property
     def unit_of_measurement(self) -> str:
-        """Get the Home Assistant unit of measurement for the device."""
+        """Get the Open Peer Power unit of measurement for the device."""
         raw_units = self.raw_unit_of_measurement
         # Check if this is a known index pair UOM
         if isinstance(raw_units, dict) or raw_units in [UOM_ON_OFF, UOM_INDEX]:

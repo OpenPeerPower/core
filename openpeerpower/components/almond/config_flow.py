@@ -1,4 +1,4 @@
-"""Config flow to connect with Home Assistant."""
+"""Config flow to connect with Open Peer Power."""
 import asyncio
 import logging
 

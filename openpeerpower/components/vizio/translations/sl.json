@@ -12,11 +12,11 @@
                 "title": "Dokon\u010dajte proces zdru\u017eevanja"
             },
             "pairing_complete": {
-                "description": "Va\u0161a naprava Vizio SmartCast je zdaj povezana s Home Assistant-om.",
+                "description": "Va\u0161a naprava Vizio SmartCast je zdaj povezana s Open Peer Power-om.",
                 "title": "Seznanjanje je kon\u010dano"
             },
             "pairing_complete_import": {
-                "description": "Va\u0161 VIZIO SmartCast TV je zdaj povezan s Home Assistant-om.\n\n\u017deton za dostop je '**{access_token}**'.",
+                "description": "Va\u0161 VIZIO SmartCast TV je zdaj povezan s Open Peer Power-om.\n\n\u017deton za dostop je '**{access_token}**'.",
                 "title": "Seznanjanje je kon\u010dano"
             },
             "user": {

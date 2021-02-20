@@ -1,4 +1,4 @@
-"""The tests for Home Assistant ffmpeg binary sensor."""
+"""The tests for Open Peer Power ffmpeg binary sensor."""
 from unittest.mock import patch
 
 from openpeerpowerr.setup import setup_component

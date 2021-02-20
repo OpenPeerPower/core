@@ -43,7 +43,7 @@ jobs:
         else
           curl -s -o requirements_diff.txt https://raw.githubusercontent.com/openpeerpower/core/master/requirements.txt
         fi
-      displayName: 'Prepare requirements files for Home Assistant Core wheels'
+      displayName: 'Prepare requirements files for Open Peer Power Core wheels'
 - template: templates/azp-job-wheels.yaml@azure
   parameters:
     builderVersion: '$(versionWheels)'
@@ -97,4 +97,4 @@ jobs:
           echo "GRPC_BUILD_WITH_BORING_SSL_ASM="
           echo "GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1"
         ) > .env_file
-      displayName: 'Prepare requirements files for Home Assistant wheels'
+      displayName: 'Prepare requirements files for Open Peer Power wheels'

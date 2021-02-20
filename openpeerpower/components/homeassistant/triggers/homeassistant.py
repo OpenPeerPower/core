@@ -1,4 +1,4 @@
-"""Offer Home Assistant core automation rules."""
+"""Offer Open Peer Power core automation rules."""
 import voluptuous as vol
 
 from openpeerpower.const import CONF_EVENT, CONF_PLATFORM, EVENT_OPENPEERPOWER_STOP
@@ -26,14 +26,14 @@ async def async_attach_trigger.opp, config, action, automation_info):
 
         @callback
         def.opp_shutdown(event):
-            """Execute when Home Assistant is shutting down."""
+            """Execute when Open Peer Power is shutting down."""
            .opp.async_run_opp_job(
                 job,
                 {
                     "trigger": {
                         "platform": "openpeerpower",
                         "event": event,
-                        "description": "Home Assistant stopping",
+                        "description": "Open Peer Power stopping",
                     }
                 },
                 event.context,
@@ -50,7 +50,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
                 "trigger": {
                     "platform": "openpeerpower",
                     "event": event,
-                    "description": "Home Assistant starting",
+                    "description": "Open Peer Power starting",
                 }
             },
         )

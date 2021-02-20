@@ -66,7 +66,7 @@ async def async_setup.opp, config):
         _LOGGER.error("Could not find a charging station at %s", host)
         return False
 
-    # Set failsafe mode at start up of Home Assistant
+    # Set failsafe mode at start up of Open Peer Power
     failsafe = config[DOMAIN][CONF_FS]
     timeout = config[DOMAIN][CONF_FS_TIMEOUT] if failsafe else 0
     fallback = config[DOMAIN][CONF_FS_FALLBACK] if failsafe else 0

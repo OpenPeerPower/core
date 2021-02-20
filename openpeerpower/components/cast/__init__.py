@@ -32,5 +32,5 @@ async def async_setup_entry.opp, entry: config_entries.ConfigEntry):
 
 
 async def async_remove_entry.opp, entry):
-    """Remove Home Assistant Cast user."""
+    """Remove Open Peer Power Cast user."""
     await home_assistant_cast.async_remove_user.opp, entry)

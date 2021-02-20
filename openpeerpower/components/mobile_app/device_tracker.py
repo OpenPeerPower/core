@@ -108,7 +108,7 @@ class MobileAppEntity(TrackerEntity, RestoreEntity):
         return device_info(self._entry.data)
 
     async def async_added_to_opp(self):
-        """Call when entity about to be added to Home Assistant."""
+        """Call when entity about to be added to Open Peer Power."""
         await super().async_added_to_opp()
         self._dispatch_unsub = self.opp.helpers.dispatcher.async_dispatcher_connect(
             SIGNAL_LOCATION_UPDATE.format(self._entry.entry_id), self.update_data

@@ -23,7 +23,7 @@
                 "description": "Nastavite overitev za Hyperion Ambilight stre\u017enik"
             },
             "confirm": {
-                "description": "\u017delite dodati ta Hyperion Ambilight v  Home Assistant?\n\n**Gostitelj:** {host}\n**Vrata:** {port}\n**ID**: {id}",
+                "description": "\u017delite dodati ta Hyperion Ambilight v  Open Peer Power?\n\n**Gostitelj:** {host}\n**Vrata:** {port}\n**ID**: {id}",
                 "title": "Potrdi dodajanje storitve Hyperion Ambilight"
             },
             "create_token": {

@@ -15,7 +15,7 @@
                 "data": {
                     "environment": "\u00cbmwelt"
                 },
-                "description": "Smappee ariichten fir d'Integratioun mam Home Assistant."
+                "description": "Smappee ariichten fir d'Integratioun mam Open Peer Power."
             },
             "local": {
                 "data": {
@@ -27,7 +27,7 @@
                 "title": "Wiel Authentifikatiouns Method aus"
             },
             "zeroconf_confirm": {
-                "description": "Soll den Smappee Apparat mat der Seriennummer  `{serialnumber}` am Home Assistant dob\u00e4igesat ginn?",
+                "description": "Soll den Smappee Apparat mat der Seriennummer  `{serialnumber}` am Open Peer Power dob\u00e4igesat ginn?",
                 "title": "Entdeckten Smappee Apparat"
             }
         }

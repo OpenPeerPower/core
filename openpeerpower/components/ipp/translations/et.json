@@ -23,7 +23,7 @@
                     "ssl": "Printer toetab SSL/TLS \u00fchendust",
                     "verify_ssl": "Printer kasutab \u00f5iget SSL-serti"
                 },
-                "description": "Seadista oma printer Interneti-printimisprotokolli (IPP) kaudu, et see integreeruks Home Assistantiga.",
+                "description": "Seadista oma printer Interneti-printimisprotokolli (IPP) kaudu, et see integreeruks Open Peer Poweriga.",
                 "title": "Lingi oma printer"
             },
             "zeroconf_confirm": {
