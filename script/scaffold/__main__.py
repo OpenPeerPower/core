@@ -74,7 +74,7 @@ def main():
 
     pipe_null = {} if args.develop else {"stdout": subprocess.DEVNULL}
 
-    print("Running oppfest to pick up new information.")
+    print("Running.oppfest to pick up new information.")
     subprocess.run(["python", "-m", "script.oppfest"], **pipe_null)
     print()
 

@@ -1,6 +1,6 @@
 """Test the permission utils."""
 
-from openpeerpowerr.auth.permissions import util
+from openpeerpower.auth.permissions import util
 
 
 def test_test_all():

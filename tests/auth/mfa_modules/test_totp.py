@@ -3,8 +3,8 @@ import asyncio
 from unittest.mock import patch
 
 from openpeerpower import data_entry_flow
-from openpeerpowerr.auth import auth_manager_from_config, models as auth_models
-from openpeerpowerr.auth.mfa_modules import auth_mfa_module_from_config
+from openpeerpower.auth import auth_manager_from_config, models as auth_models
+from openpeerpower.auth.mfa_modules import auth_mfa_module_from_config
 
 from tests.common import MockUser
 
@@ -77,7 +77,7 @@ async def test_login_flow_validates_mfa.opp):
     user = MockUser(
         id="mock-user", is_owner=False, is_active=False, name="Paulus"
     ).add_to_auth_manager.opp.auth)
-    await opp..auth.async_link_user(
+    await.opp.auth.async_link_user(
         user,
         auth_models.Credentials(
             id="mock-id",
@@ -88,26 +88,26 @@ async def test_login_flow_validates_mfa.opp):
         ),
     )
 
-    await opp..auth.async_enable_user_mfa(user, "totp", {})
+    await.opp.auth.async_enable_user_mfa(user, "totp", {})
 
-    provider = opp.auth.auth_providers[0]
+    provider =.opp.auth.auth_providers[0]
 
-    result = await opp..auth.login_flow.async_init((provider.type, provider.id))
+    result = await.opp.auth.login_flow.async_init((provider.type, provider.id))
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await opp..auth.login_flow.async_configure(
+    result = await.opp.auth.login_flow.async_configure(
         result["flow_id"], {"username": "incorrect-user", "password": "test-pass"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"]["base"] == "invalid_auth"
 
-    result = await opp..auth.login_flow.async_configure(
+    result = await.opp.auth.login_flow.async_configure(
         result["flow_id"], {"username": "test-user", "password": "incorrect-pass"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"]["base"] == "invalid_auth"
 
-    result = await opp..auth.login_flow.async_configure(
+    result = await.opp.auth.login_flow.async_configure(
         result["flow_id"], {"username": "test-user", "password": "test-pass"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -115,7 +115,7 @@ async def test_login_flow_validates_mfa.opp):
     assert result["data_schema"].schema.get("code") == str
 
     with patch("pyotp.TOTP.verify", return_value=False):
-        result = await opp..auth.login_flow.async_configure(
+        result = await.opp.auth.login_flow.async_configure(
             result["flow_id"], {"code": "invalid-code"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -123,7 +123,7 @@ async def test_login_flow_validates_mfa.opp):
         assert result["errors"]["base"] == "invalid_code"
 
     with patch("pyotp.TOTP.verify", return_value=True):
-        result = await opp..auth.login_flow.async_configure(
+        result = await.opp.auth.login_flow.async_configure(
             result["flow_id"], {"code": MOCK_CODE}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -135,13 +135,13 @@ async def test_race_condition_in_data_loading.opp):
     counter = 0
 
     async def mock_load(_):
-        """Mock of openpeerpowerr.helpers.storage.Store.async_load."""
+        """Mock of openpeerpower.helpers.storage.Store.async_load."""
         nonlocal counter
         counter += 1
         await asyncio.sleep(0)
 
     totp_auth_module = await auth_mfa_module_from_config.opp, {"type": "totp"})
-    with patch("openpeerpowerr.helpers.storage.Store.async_load", new=mock_load):
+    with patch("openpeerpower.helpers.storage.Store.async_load", new=mock_load):
         task1 = totp_auth_module.async_validate("user", {"code": "value"})
         task2 = totp_auth_module.async_validate("user", {"code": "value"})
         results = await asyncio.gather(task1, task2, return_exceptions=True)

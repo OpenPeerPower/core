@@ -4,8 +4,8 @@ import uuid
 
 import pytest
 
-from openpeerpowerr.auth import AuthManager, auth_store, models as auth_models
-from openpeerpowerr.auth.providers import insecure_example
+from openpeerpower.auth import AuthManager, auth_store, models as auth_models
+from openpeerpower.auth.providers import insecure_example
 
 
 @pytest.fixture

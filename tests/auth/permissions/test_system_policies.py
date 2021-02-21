@@ -1,5 +1,5 @@
 """Test system policies."""
-from openpeerpowerr.auth.permissions import (
+from openpeerpower.auth.permissions import (
     POLICY_SCHEMA,
     PolicyPermissions,
     system_policies,

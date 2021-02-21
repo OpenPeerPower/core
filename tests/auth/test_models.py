@@ -1,5 +1,5 @@
 """Tests for the auth models."""
-from openpeerpowerr.auth import models, permissions
+from openpeerpower.auth import models, permissions
 
 
 def test_owner_fetching_owner_permissions():

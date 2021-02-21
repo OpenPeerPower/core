@@ -1,5 +1,5 @@
 """Tests for permissions merging."""
-from openpeerpowerr.auth.permissions.merge import merge_policies
+from openpeerpower.auth.permissions.merge import merge_policies
 
 
 def test_merging_permissions_true_rules_dict():

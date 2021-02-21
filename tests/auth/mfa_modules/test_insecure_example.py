@@ -1,7 +1,7 @@
 """Test the example module auth module."""
 from openpeerpower import auth, data_entry_flow
-from openpeerpowerr.auth.mfa_modules import auth_mfa_module_from_config
-from openpeerpowerr.auth.models import Credentials
+from openpeerpower.auth.mfa_modules import auth_mfa_module_from_config
+from openpeerpower.auth.models import Credentials
 
 from tests.common import MockUser
 
@@ -87,7 +87,7 @@ async def test_login.opp):
     user = MockUser(
         id="mock-user", is_owner=False, is_active=False, name="Paulus"
     ).add_to_auth_manager.opp.auth)
-    await opp..auth.async_link_user(
+    await.opp.auth.async_link_user(
         user,
         Credentials(
             id="mock-id",
@@ -98,36 +98,36 @@ async def test_login.opp):
         ),
     )
 
-    provider = opp.auth.auth_providers[0]
-    result = await opp..auth.login_flow.async_init((provider.type, provider.id))
+    provider =.opp.auth.auth_providers[0]
+    result = await.opp.auth.login_flow.async_init((provider.type, provider.id))
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await opp..auth.login_flow.async_configure(
+    result = await.opp.auth.login_flow.async_configure(
         result["flow_id"], {"username": "incorrect-user", "password": "test-pass"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"]["base"] == "invalid_auth"
 
-    result = await opp..auth.login_flow.async_configure(
+    result = await.opp.auth.login_flow.async_configure(
         result["flow_id"], {"username": "test-user", "password": "incorrect-pass"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"]["base"] == "invalid_auth"
 
-    result = await opp..auth.login_flow.async_configure(
+    result = await.opp.auth.login_flow.async_configure(
         result["flow_id"], {"username": "test-user", "password": "test-pass"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "mfa"
     assert result["data_schema"].schema.get("pin") == str
 
-    result = await opp..auth.login_flow.async_configure(
+    result = await.opp.auth.login_flow.async_configure(
         result["flow_id"], {"pin": "invalid-code"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"]["base"] == "invalid_code"
 
-    result = await opp..auth.login_flow.async_configure(
+    result = await.opp.auth.login_flow.async_configure(
         result["flow_id"], {"pin": "123456"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY

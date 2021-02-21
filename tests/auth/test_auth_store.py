@@ -2,7 +2,7 @@
 import asyncio
 from unittest.mock import patch
 
-from openpeerpowerr.auth import auth_store
+from openpeerpower.auth import auth_store
 
 
 async def test_loading_no_group_data_format.opp,.opp_storage):
@@ -23,7 +23,7 @@ async def test_loading_no_group_data_format.opp,.opp_storage):
                     "id": "system-id",
                     "is_active": True,
                     "is_owner": True,
-                    "name": "Opp.io",
+                    "name": "Hass.io",
                     "system_generated": True,
                 },
             ],
@@ -117,7 +117,7 @@ async def test_loading_all_access_group_data_format.opp,.opp_storage):
                     "id": "system-id",
                     "is_active": True,
                     "is_owner": True,
-                    "name": "Opp.io",
+                    "name": "Hass.io",
                     "system_generated": True,
                 },
             ],
@@ -236,11 +236,11 @@ async def test_loading_race_condition.opp):
     """Test only one storage load called when concurrent loading occurred ."""
     store = auth_store.AuthStore.opp)
     with patch(
-        "openpeerpowerr.helpers.entity_registry.async_get_registry"
+        "openpeerpower.helpers.entity_registry.async_get_registry"
     ) as mock_ent_registry, patch(
-        "openpeerpowerr.helpers.device_registry.async_get_registry"
+        "openpeerpower.helpers.device_registry.async_get_registry"
     ) as mock_dev_registry, patch(
-        "openpeerpowerr.helpers.storage.Store.async_load", return_value=None
+        "openpeerpower.helpers.storage.Store.async_load", return_value=None
     ) as mock_load:
         results = await asyncio.gather(store.async_get_users(), store.async_get_users())
 

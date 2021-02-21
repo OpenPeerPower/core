@@ -2,13 +2,13 @@
 import pytest
 import voluptuous as vol
 
-from openpeerpowerr.auth.permissions.entities import (
+from openpeerpower.auth.permissions.entities import (
     ENTITY_POLICY_SCHEMA,
     compile_entities,
 )
-from openpeerpowerr.auth.permissions.models import PermissionLookup
-from openpeerpowerr.helpers.device_registry import DeviceEntry
-from openpeerpowerr.helpers.entity_registry import RegistryEntry
+from openpeerpower.auth.permissions.models import PermissionLookup
+from openpeerpower.helpers.device_registry import DeviceEntry
+from openpeerpower.helpers.entity_registry import RegistryEntry
 
 from tests.common import mock_device_registry, mock_registry
 

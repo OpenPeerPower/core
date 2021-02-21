@@ -7,32 +7,32 @@ import pytest
 import voluptuous as vol
 
 from openpeerpower import auth, data_entry_flow
-from openpeerpowerr.auth import (
+from openpeerpower.auth import (
     InvalidAuthError,
     auth_store,
     const as auth_const,
     models as auth_models,
 )
-from openpeerpowerr.auth.const import MFA_SESSION_EXPIRATION
-from openpeerpowerr.core import callback
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.auth.const import MFA_SESSION_EXPIRATION
+from openpeerpower.core import callback
+from openpeerpower.util import dt as dt_util
 
 from tests.common import CLIENT_ID, MockUser, ensure_auth_manager_loaded, flush_store
 
 
 @pytest.fixture
-def mock_opp(loop):
+def mock.opp(loop):
     """Open Peer Power mock with minimum amount of data set to make it work with auth."""
-    opp = Mock()
+   .opp = Mock()
    .opp.config.skip_pip = True
     return.opp
 
 
-async def test_auth_manager_from_config_validates_config(mock_opp):
+async def test_auth_manager_from_config_validates_config(mock.opp):
     """Test get auth providers."""
     with pytest.raises(vol.Invalid):
         manager = await auth.auth_manager_from_config(
-            mock_opp,
+            mock.opp,
             [
                 {"name": "Test Name", "type": "insecure_example", "users": []},
                 {
@@ -45,7 +45,7 @@ async def test_auth_manager_from_config_validates_config(mock_opp):
         )
 
     manager = await auth.auth_manager_from_config(
-        mock_opp,
+        mock.opp,
         [
             {"name": "Test Name", "type": "insecure_example", "users": []},
             {
@@ -69,11 +69,11 @@ async def test_auth_manager_from_config_validates_config(mock_opp):
     ]
 
 
-async def test_auth_manager_from_config_auth_modules(mock_opp):
+async def test_auth_manager_from_config_auth_modules(mock.opp):
     """Test get auth modules."""
     with pytest.raises(vol.Invalid):
         manager = await auth.auth_manager_from_config(
-            mock_opp,
+            mock.opp,
             [
                 {"name": "Test Name", "type": "insecure_example", "users": []},
                 {
@@ -94,7 +94,7 @@ async def test_auth_manager_from_config_auth_modules(mock_opp):
         )
 
     manager = await auth.auth_manager_from_config(
-        mock_opp,
+        mock.opp,
         [
             {"name": "Test Name", "type": "insecure_example", "users": []},
             {
@@ -175,15 +175,15 @@ async def test_create_new_user.opp):
     assert user.is_owner is False
     assert user.name == "Test Name"
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data["user_id"] == user.id
 
 
-async def test_login_as_existing_user(mock_opp):
+async def test_login_as_existing_user(mock.opp):
     """Test login as existing user."""
     manager = await auth.auth_manager_from_config(
-        mock_opp,
+        mock.opp,
         [
             {
                 "type": "insecure_example",
@@ -198,7 +198,7 @@ async def test_login_as_existing_user(mock_opp):
         ],
         [],
     )
-    mock_opp.auth = manager
+    mock.opp.auth = manager
     ensure_auth_manager_loaded(manager)
 
     # Add a fake user that we're not going to log in with
@@ -350,7 +350,7 @@ async def test_cannot_retrieve_expired_access_token.opp):
     assert await manager.async_validate_access_token(access_token) is refresh_token
 
     with patch(
-        "openpeerpowerr.util.dt.utcnow",
+        "openpeerpower.util.dt.utcnow",
         return_value=dt_util.utcnow()
         - auth_const.ACCESS_TOKEN_EXPIRATION
         - timedelta(seconds=11),
@@ -371,13 +371,13 @@ async def test_generating_system_user.opp):
    .opp.bus.async_listen("user_added", user_added)
 
     manager = await auth.auth_manager_from_config.opp, [], [])
-    user = await manager.async_create_system_user("Opp.io")
+    user = await manager.async_create_system_user("Hass.io")
     token = await manager.async_create_refresh_token(user)
     assert user.system_generated
     assert token is not None
     assert token.client_id is None
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data["user_id"] == user.id
 
@@ -402,7 +402,7 @@ async def test_refresh_token_requires_client_for_user.opp):
 async def test_refresh_token_not_requires_client_for_system_user.opp):
     """Test create refresh token for a system user w/o client_id."""
     manager = await auth.auth_manager_from_config.opp, [], [])
-    user = await manager.async_create_system_user("Opp.io")
+    user = await manager.async_create_system_user("Hass.io")
     assert user.system_generated is True
 
     with pytest.raises(ValueError):
@@ -468,10 +468,10 @@ async def test_refresh_token_type_long_lived_access_token.opp):
     assert token.token_type == auth_models.TOKEN_TYPE_LONG_LIVED_ACCESS_TOKEN
 
 
-async def test_refresh_token_provider_validation(mock_opp):
+async def test_refresh_token_provider_validation(mock.opp):
     """Test that creating access token from refresh token checks with provider."""
     manager = await auth.auth_manager_from_config(
-        mock_opp,
+        mock.opp,
         [
             {
                 "type": "insecure_example",
@@ -499,7 +499,7 @@ async def test_refresh_token_provider_validation(mock_opp):
     assert manager.async_create_access_token(refresh_token, ip) is not None
 
     with patch(
-        "openpeerpowerr.auth.providers.insecure_example.ExampleAuthProvider.async_validate_refresh_token",
+        "openpeerpower.auth.providers.insecure_example.ExampleAuthProvider.async_validate_refresh_token",
         side_effect=InvalidAuthError("Invalid access"),
     ) as call:
         with pytest.raises(InvalidAuthError):
@@ -508,18 +508,18 @@ async def test_refresh_token_provider_validation(mock_opp):
     call.assert_called_with(refresh_token, ip)
 
 
-async def test_cannot_deactive_owner(mock_opp):
+async def test_cannot_deactive_owner(mock.opp):
     """Test that we cannot deactivate the owner."""
-    manager = await auth.auth_manager_from_config(mock_opp, [], [])
+    manager = await auth.auth_manager_from_config(mock.opp, [], [])
     owner = MockUser(is_owner=True).add_to_auth_manager(manager)
 
     with pytest.raises(ValueError):
         await manager.async_deactivate_user(owner)
 
 
-async def test_remove_refresh_token(mock_opp):
+async def test_remove_refresh_token(mock.opp):
     """Test that we can remove a refresh token."""
-    manager = await auth.auth_manager_from_config(mock_opp, [], [])
+    manager = await auth.auth_manager_from_config(mock.opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
     refresh_token = await manager.async_create_refresh_token(user, CLIENT_ID)
     access_token = manager.async_create_access_token(refresh_token)
@@ -530,9 +530,9 @@ async def test_remove_refresh_token(mock_opp):
     assert await manager.async_validate_access_token(access_token) is None
 
 
-async def test_create_access_token(mock_opp):
+async def test_create_access_token(mock.opp):
     """Test normal refresh_token's jwt_key keep same after used."""
-    manager = await auth.auth_manager_from_config(mock_opp, [], [])
+    manager = await auth.auth_manager_from_config(mock.opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
     refresh_token = await manager.async_create_refresh_token(user, CLIENT_ID)
     assert refresh_token.token_type == auth_models.TOKEN_TYPE_NORMAL
@@ -547,9 +547,9 @@ async def test_create_access_token(mock_opp):
     )
 
 
-async def test_create_long_lived_access_token(mock_opp):
+async def test_create_long_lived_access_token(mock.opp):
     """Test refresh_token's jwt_key changed for long-lived access token."""
-    manager = await auth.auth_manager_from_config(mock_opp, [], [])
+    manager = await auth.auth_manager_from_config(mock.opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
     refresh_token = await manager.async_create_refresh_token(
         user,
@@ -566,9 +566,9 @@ async def test_create_long_lived_access_token(mock_opp):
     )
 
 
-async def test_one_long_lived_access_token_per_refresh_token(mock_opp):
+async def test_one_long_lived_access_token_per_refresh_token(mock.opp):
     """Test one refresh_token can only have one long-lived access token."""
-    manager = await auth.auth_manager_from_config(mock_opp, [], [])
+    manager = await auth.auth_manager_from_config(mock.opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
     refresh_token = await manager.async_create_refresh_token(
         user,
@@ -618,10 +618,10 @@ async def test_one_long_lived_access_token_per_refresh_token(mock_opp):
     )
 
 
-async def test_login_with_auth_module(mock_opp):
+async def test_login_with_auth_module(mock.opp):
     """Test login as existing user with auth module."""
     manager = await auth.auth_manager_from_config(
-        mock_opp,
+        mock.opp,
         [
             {
                 "type": "insecure_example",
@@ -641,7 +641,7 @@ async def test_login_with_auth_module(mock_opp):
             }
         ],
     )
-    mock_opp.auth = manager
+    mock.opp.auth = manager
     ensure_auth_manager_loaded(manager)
 
     # Add fake user with credentials for example auth provider.
@@ -688,10 +688,10 @@ async def test_login_with_auth_module(mock_opp):
     assert step["result"].id == "mock-id"
 
 
-async def test_login_with_multi_auth_module(mock_opp):
+async def test_login_with_multi_auth_module(mock.opp):
     """Test login as existing user with multiple auth modules."""
     manager = await auth.auth_manager_from_config(
-        mock_opp,
+        mock.opp,
         [
             {
                 "type": "insecure_example",
@@ -716,7 +716,7 @@ async def test_login_with_multi_auth_module(mock_opp):
             },
         ],
     )
-    mock_opp.auth = manager
+    mock.opp.auth = manager
     ensure_auth_manager_loaded(manager)
 
     # Add fake user with credentials for example auth provider.
@@ -761,10 +761,10 @@ async def test_login_with_multi_auth_module(mock_opp):
     assert step["result"].id == "mock-id"
 
 
-async def test_auth_module_expired_session(mock_opp):
+async def test_auth_module_expired_session(mock.opp):
     """Test login as existing user."""
     manager = await auth.auth_manager_from_config(
-        mock_opp,
+        mock.opp,
         [
             {
                 "type": "insecure_example",
@@ -784,7 +784,7 @@ async def test_auth_module_expired_session(mock_opp):
             }
         ],
     )
-    mock_opp.auth = manager
+    mock.opp.auth = manager
     ensure_auth_manager_loaded(manager)
 
     # Add fake user with credentials for example auth provider.
@@ -812,7 +812,7 @@ async def test_auth_module_expired_session(mock_opp):
     assert step["step_id"] == "mfa"
 
     with patch(
-        "openpeerpowerr.util.dt.utcnow",
+        "openpeerpower.util.dt.utcnow",
         return_value=dt_util.utcnow() + MFA_SESSION_EXPIRATION,
     ):
         step = await manager.login_flow.async_configure(
@@ -938,20 +938,20 @@ async def test_async_remove_user.opp):
     )
     assert len(user.credentials) == 1
 
-    await opp..auth.async_remove_user(user)
+    await.opp.auth.async_remove_user(user)
 
     assert len(await manager.async_get_users()) == 0
     assert len(user.credentials) == 0
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data["user_id"] == user.id
 
 
-async def test_new_users(mock_opp):
+async def test_new_users(mock.opp):
     """Test newly created users."""
     manager = await auth.auth_manager_from_config(
-        mock_opp,
+        mock.opp,
         [
             {
                 "type": "insecure_example",

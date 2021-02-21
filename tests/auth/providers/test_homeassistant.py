@@ -6,8 +6,8 @@ import pytest
 import voluptuous as vol
 
 from openpeerpower import data_entry_flow
-from openpeerpowerr.auth import auth_manager_from_config, auth_store
-from openpeerpowerr.auth.providers import (
+from openpeerpower.auth import auth_manager_from_config, auth_store
+from openpeerpower.auth.providers import (
     auth_provider_from_config,
     openpeerpower as.opp_auth,
 )
@@ -16,7 +16,7 @@ from openpeerpowerr.auth.providers import (
 @pytest.fixture
 def data.opp):
     """Create a loaded data class."""
-    data = opp_auth.Data.opp)
+    data =.opp_auth.Data.opp)
    .opp.loop.run_until_complete(data.async_load())
     return data
 
@@ -24,7 +24,7 @@ def data.opp):
 @pytest.fixture
 def legacy_data.opp):
     """Create a loaded legacy data class."""
-    data = opp_auth.Data.opp)
+    data =.opp_auth.Data.opp)
    .opp.loop.run_until_complete(data.async_load())
     data.is_legacy = True
     return data
@@ -38,10 +38,10 @@ async def test_validating_password_invalid_user(data,.opp):
 
 async def test_not_allow_set_id():
     """Test we are not allowed to set an ID in config."""
-    opp = Mock()
+   .opp = Mock()
     with pytest.raises(vol.Invalid):
         await auth_provider_from_config(
-           .opp, None, {"type": "openpeerpowerr", "id": "invalid"}
+           .opp, None, {"type": "openpeerpower", "id": "invalid"}
         )
 
 
@@ -50,7 +50,7 @@ async def test_new_users_populate_values.opp, data):
     data.add_auth("hello", "test-pass")
     await data.async_save()
 
-    manager = await auth_manager_from_config.opp, [{"type": "openpeerpowerr"}], [])
+    manager = await auth_manager_from_config.opp, [{"type": "openpeerpower"}], [])
     provider = manager.auth_providers[0]
     credentials = await provider.async_get_or_create_credentials({"username": "hello"})
     user = await manager.async_get_or_create_user(credentials)
@@ -110,8 +110,8 @@ async def test_login_flow_validates(data,.opp):
     data.add_auth("test-user", "test-pass")
     await data.async_save()
 
-    provider = opp_auth.OppAuthProvider(
-       .opp, auth_store.AuthStore.opp), {"type": "openpeerpowerr"}
+    provider =.opp_auth.HassAuthProvider(
+       .opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
     result = await flow.async_step_init()
@@ -142,7 +142,7 @@ async def test_saving_loading(data,.opp):
     data.add_auth("second-user", "second-pass")
     await data.async_save()
 
-    data = opp_auth.Data.opp)
+    data =.opp_auth.Data.opp)
     await data.async_load()
     data.validate_login("test-user ", "test-pass")
     data.validate_login("second-user ", "second-pass")
@@ -150,7 +150,7 @@ async def test_saving_loading(data,.opp):
 
 async def test_get_or_create_credentials.opp, data):
     """Test that we can get or create credentials."""
-    manager = await auth_manager_from_config.opp, [{"type": "openpeerpowerr"}], [])
+    manager = await auth_manager_from_config.opp, [{"type": "openpeerpower"}], [])
     provider = manager.auth_providers[0]
     provider.data = data
     credentials1 = await provider.async_get_or_create_credentials({"username": "hello"})
@@ -211,8 +211,8 @@ async def test_legacy_login_flow_validates(legacy_data,.opp):
     legacy_data.add_auth("test-user", "test-pass")
     await legacy_data.async_save()
 
-    provider = opp_auth.OppAuthProvider(
-       .opp, auth_store.AuthStore.opp), {"type": "openpeerpowerr"}
+    provider =.opp_auth.HassAuthProvider(
+       .opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
     result = await flow.async_step_init()
@@ -243,7 +243,7 @@ async def test_legacy_saving_loading(legacy_data,.opp):
     legacy_data.add_auth("second-user", "second-pass")
     await legacy_data.async_save()
 
-    legacy_data = opp_auth.Data.opp)
+    legacy_data =.opp_auth.Data.opp)
     await legacy_data.async_load()
     legacy_data.is_legacy = True
     legacy_data.validate_login("test-user", "test-pass")
@@ -255,7 +255,7 @@ async def test_legacy_saving_loading(legacy_data,.opp):
 
 async def test_legacy_get_or_create_credentials.opp, legacy_data):
     """Test in legacy mode that we can get or create credentials."""
-    manager = await auth_manager_from_config.opp, [{"type": "openpeerpowerr"}], [])
+    manager = await auth_manager_from_config.opp, [{"type": "openpeerpower"}], [])
     provider = manager.auth_providers[0]
     provider.data = legacy_data
     credentials1 = await provider.async_get_or_create_credentials({"username": "hello"})
@@ -276,20 +276,20 @@ async def test_legacy_get_or_create_credentials.opp, legacy_data):
 async def test_race_condition_in_data_loading.opp):
     """Test race condition in the.opp_auth.Data loading.
 
-    Ref issue: https://github.com/openpeerpower/core/issues/21569
+    Ref issue: https://github.com/open-peer-power/core/issues/21569
     """
     counter = 0
 
     async def mock_load(_):
-        """Mock of openpeerpowerr.helpers.storage.Store.async_load."""
+        """Mock of openpeerpower.helpers.storage.Store.async_load."""
         nonlocal counter
         counter += 1
         await asyncio.sleep(0)
 
-    provider = opp_auth.OppAuthProvider(
-       .opp, auth_store.AuthStore.opp), {"type": "openpeerpowerr"}
+    provider =.opp_auth.HassAuthProvider(
+       .opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
-    with patch("openpeerpowerr.helpers.storage.Store.async_load", new=mock_load):
+    with patch("openpeerpower.helpers.storage.Store.async_load", new=mock_load):
         task1 = provider.async_validate_login("user", "pass")
         task2 = provider.async_validate_login("user", "pass")
         results = await asyncio.gather(task1, task2, return_exceptions=True)

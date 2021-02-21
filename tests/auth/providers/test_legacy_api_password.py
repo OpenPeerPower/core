@@ -2,8 +2,8 @@
 import pytest
 
 from openpeerpower import auth, data_entry_flow
-from openpeerpowerr.auth import auth_store
-from openpeerpowerr.auth.providers import legacy_api_password
+from openpeerpower.auth import auth_store
+from openpeerpower.auth.providers import legacy_api_password
 
 
 @pytest.fixture

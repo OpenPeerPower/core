@@ -6,8 +6,8 @@ import pytest
 import voluptuous as vol
 
 from openpeerpower import auth
-from openpeerpowerr.auth import auth_store
-from openpeerpowerr.auth.providers import trusted_networks as tn_auth
+from openpeerpower.auth import auth_store
+from openpeerpower.auth.providers import trusted_networks as tn_auth
 
 
 @pytest.fixture

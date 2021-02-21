@@ -7,8 +7,8 @@ import uuid
 import pytest
 
 from openpeerpower import data_entry_flow
-from openpeerpowerr.auth import AuthManager, auth_store, models as auth_models
-from openpeerpowerr.auth.providers import command_line
+from openpeerpower.auth import AuthManager, auth_store, models as auth_models
+from openpeerpower.auth.providers import command_line
 from openpeerpower.const import CONF_TYPE
 
 
