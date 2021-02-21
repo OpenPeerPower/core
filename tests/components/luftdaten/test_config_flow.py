@@ -16,7 +16,7 @@ async def test_duplicate_error.opp):
 
     MockConfigEntry(domain=DOMAIN, data=conf).add_to_opp.opp)
     flow = config_flow.LuftDatenFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await flow.async_step_user(user_input=conf)
     assert result["errors"] == {CONF_SENSOR_ID: "already_configured"}
@@ -27,7 +27,7 @@ async def test_communication_error.opp):
     conf = {CONF_SENSOR_ID: "12345abcde"}
 
     flow = config_flow.LuftDatenFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch("luftdaten.Luftdaten.get_data", return_value=None):
         result = await flow.async_step_user(user_input=conf)
@@ -39,7 +39,7 @@ async def test_invalid_sensor.opp):
     conf = {CONF_SENSOR_ID: "12345abcde"}
 
     flow = config_flow.LuftDatenFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch("luftdaten.Luftdaten.get_data", return_value=False), patch(
         "luftdaten.Luftdaten.validate_sensor", return_value=False
@@ -51,7 +51,7 @@ async def test_invalid_sensor.opp):
 async def test_show_form.opp):
     """Test that the form is served with no input."""
     flow = config_flow.LuftDatenFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await flow.async_step_user(user_input=None)
 
@@ -64,7 +64,7 @@ async def test_step_import.opp):
     conf = {CONF_SENSOR_ID: "12345abcde", CONF_SHOW_ON_MAP: False}
 
     flow = config_flow.LuftDatenFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch("luftdaten.Luftdaten.get_data", return_value=True), patch(
         "luftdaten.Luftdaten.validate_sensor", return_value=True
@@ -89,7 +89,7 @@ async def test_step_user.opp):
     }
 
     flow = config_flow.LuftDatenFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch("luftdaten.Luftdaten.get_data", return_value=True), patch(
         "luftdaten.Luftdaten.validate_sensor", return_value=True

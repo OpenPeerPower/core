@@ -135,7 +135,7 @@ async def test_set_datetime.opp):
 
     await async_set_date_and_time.opp, entity_id, dt_obj)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == dt_obj.strftime(FMT_DATETIME)
     assert state.attributes["has_time"]
     assert state.attributes["has_date"]
@@ -161,7 +161,7 @@ async def test_set_datetime_2.opp):
 
     await async_set_datetime.opp, entity_id, dt_obj)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == dt_obj.strftime(FMT_DATETIME)
     assert state.attributes["has_time"]
     assert state.attributes["has_date"]
@@ -187,7 +187,7 @@ async def test_set_datetime_3.opp):
 
     await async_set_timestamp.opp, entity_id, dt_util.as_utc(dt_obj).timestamp())
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == dt_obj.strftime(FMT_DATETIME)
     assert state.attributes["has_time"]
     assert state.attributes["has_date"]
@@ -213,7 +213,7 @@ async def test_set_datetime_time.opp):
 
     await async_set_date_and_time.opp, entity_id, dt_obj)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == dt_obj.strftime(FMT_TIME)
     assert state.attributes["has_time"]
     assert not state.attributes["has_date"]
@@ -247,7 +247,7 @@ async def test_set_invalid.opp):
             blocking=True,
         )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == initial
 
 
@@ -277,7 +277,7 @@ async def test_set_invalid_2.opp):
             blocking=True,
         )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == initial
 
 
@@ -294,7 +294,7 @@ async def test_set_datetime_date.opp):
 
     await async_set_date_and_time.opp, entity_id, dt_obj)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == str(date_portion)
     assert not state.attributes["has_time"]
     assert state.attributes["has_date"]
@@ -342,22 +342,22 @@ async def test_restore_state.opp):
     )
 
     dt_obj = datetime.datetime(2017, 9, 7, 19, 46)
-    state_time =.opp.states.get("input_datetime.test_time")
+    state_time = opp.states.get("input_datetime.test_time")
     assert state_time.state == dt_obj.strftime(FMT_TIME)
 
-    state_date =.opp.states.get("input_datetime.test_date")
+    state_date = opp.states.get("input_datetime.test_date")
     assert state_date.state == dt_obj.strftime(FMT_DATE)
 
-    state_datetime =.opp.states.get("input_datetime.test_datetime")
+    state_datetime = opp.states.get("input_datetime.test_datetime")
     assert state_datetime.state == dt_obj.strftime(FMT_DATETIME)
 
-    state_bogus =.opp.states.get("input_datetime.test_bogus_data")
+    state_bogus = opp.states.get("input_datetime.test_bogus_data")
     assert state_bogus.state == initial.strftime(FMT_DATETIME)
 
-    state_was_time =.opp.states.get("input_datetime.test_was_time")
+    state_was_time = opp.states.get("input_datetime.test_was_time")
     assert state_was_time.state == default.strftime(FMT_DATE)
 
-    state_was_date =.opp.states.get("input_datetime.test_was_date")
+    state_was_date = opp.states.get("input_datetime.test_was_date")
     assert state_was_date.state == default.strftime(FMT_TIME)
 
 
@@ -376,15 +376,15 @@ async def test_default_value.opp):
     )
 
     dt_obj = datetime.datetime.combine(datetime.date.today(), DEFAULT_TIME)
-    state_time =.opp.states.get("input_datetime.test_time")
+    state_time = opp.states.get("input_datetime.test_time")
     assert state_time.state == dt_obj.strftime(FMT_TIME)
     assert state_time.attributes.get("timestamp") is not None
 
-    state_date =.opp.states.get("input_datetime.test_date")
+    state_date = opp.states.get("input_datetime.test_date")
     assert state_date.state == dt_obj.strftime(FMT_DATE)
     assert state_date.attributes.get("timestamp") is not None
 
-    state_datetime =.opp.states.get("input_datetime.test_datetime")
+    state_datetime = opp.states.get("input_datetime.test_datetime")
     assert state_datetime.state == dt_obj.strftime(FMT_DATETIME)
     assert state_datetime.attributes.get("timestamp") is not None
 
@@ -395,7 +395,7 @@ async def test_input_datetime_context.opp,.opp_admin_user):
        .opp, "input_datetime", {"input_datetime": {"only_date": {"has_date": True}}}
     )
 
-    state =.opp.states.get("input_datetime.only_date")
+    state = opp.states.get("input_datetime.only_date")
     assert state is not None
 
     await.opp.services.async_call(
@@ -406,10 +406,10 @@ async def test_input_datetime_context.opp,.opp_admin_user):
         context=Context(user_id.opp_admin_user.id),
     )
 
-    state2 =.opp.states.get("input_datetime.only_date")
+    state2 = opp.states.get("input_datetime.only_date")
     assert state2 is not None
     assert state.state != state2.state
-    assert state2.context.user_id ==.opp_admin_user.id
+    assert state2.context.user_id == opp_admin_user.id
 
 
 async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
@@ -430,9 +430,9 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
-    state_1 =.opp.states.get("input_datetime.dt1")
-    state_2 =.opp.states.get("input_datetime.dt2")
-    state_3 =.opp.states.get("input_datetime.dt3")
+    state_1 = opp.states.get("input_datetime.dt1")
+    state_2 = opp.states.get("input_datetime.dt2")
+    state_3 = opp.states.get("input_datetime.dt3")
 
     dt_obj = datetime.datetime(2019, 1, 1, 0, 0)
     assert state_1 is not None
@@ -469,9 +469,9 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
-    state_1 =.opp.states.get("input_datetime.dt1")
-    state_2 =.opp.states.get("input_datetime.dt2")
-    state_3 =.opp.states.get("input_datetime.dt3")
+    state_1 = opp.states.get("input_datetime.dt1")
+    state_2 = opp.states.get("input_datetime.dt2")
+    state_3 = opp.states.get("input_datetime.dt3")
 
     assert state_1 is not None
     assert state_2 is not None
@@ -489,7 +489,7 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
 async def test_load_from_storage.opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
-    state =.opp.states.get(f"{DOMAIN}.datetime_from_storage")
+    state = opp.states.get(f"{DOMAIN}.datetime_from_storage")
     assert state.state == INITIAL_DATETIME
     assert state.attributes.get(ATTR_EDITABLE)
 
@@ -509,11 +509,11 @@ async def test_editable_state_attribute.opp, storage_setup):
         }
     )
 
-    state =.opp.states.get(f"{DOMAIN}.datetime_from_storage")
+    state = opp.states.get(f"{DOMAIN}.datetime_from_storage")
     assert state.state == INITIAL_DATETIME
     assert state.attributes.get(ATTR_EDITABLE)
 
-    state =.opp.states.get(f"{DOMAIN}.from_yaml")
+    state = opp.states.get(f"{DOMAIN}.from_yaml")
     assert state.state == "2001-01-02 12:34:56"
     assert not state.attributes[ATTR_EDITABLE]
 
@@ -546,7 +546,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.datetime_from_storage"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) == input_entity_id
 
@@ -558,7 +558,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
@@ -572,7 +572,7 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.datetime_from_storage"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "datetime from storage"
     assert state.state == INITIAL_DATETIME
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) == input_entity_id
@@ -591,7 +591,7 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state.state == INITIAL_TIME
     assert state.attributes[ATTR_FRIENDLY_NAME] == "even newer name"
 
@@ -604,7 +604,7 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
@@ -623,7 +623,7 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state.state == "1991-01-02 01:02:03"
     assert state.attributes[ATTR_FRIENDLY_NAME] == "New DateTime"
     assert state.attributes[ATTR_EDITABLE]
@@ -677,7 +677,7 @@ async def test_timestamp.opp):
         )
 
         # initial has been converted to the set timezone
-        state_with_tz =.opp.states.get("input_datetime.test_datetime_initial_with_tz")
+        state_with_tz = opp.states.get("input_datetime.test_datetime_initial_with_tz")
         assert state_with_tz is not None
         # Timezone LA is UTC-8 => timestamp carries +01:00 => delta is -9 => 10:00 - 09:00 => 01:00
         assert state_with_tz.state == "2020-12-13 01:00:00"
@@ -689,7 +689,7 @@ async def test_timestamp.opp):
         )
 
         # initial has been interpreted as being part of set timezone
-        state_without_tz =.opp.states.get(
+        state_without_tz = opp.states.get(
             "input_datetime.test_datetime_initial_without_tz"
         )
         assert state_without_tz is not None
@@ -718,7 +718,7 @@ async def test_timestamp.opp):
         )
 
         # Test initial time sets timestamp correctly.
-        state_time =.opp.states.get("input_datetime.test_time_initial")
+        state_time = opp.states.get("input_datetime.test_time_initial")
         assert state_time is not None
         assert state_time.state == "10:00:00"
         assert state_time.attributes[ATTR_TIMESTAMP] == 10 * 60 * 60
@@ -733,7 +733,7 @@ async def test_timestamp.opp):
             },
             blocking=True,
         )
-        state_with_tz_updated =.opp.states.get(
+        state_with_tz_updated = opp.states.get(
             "input_datetime.test_datetime_initial_with_tz"
         )
         assert state_with_tz_updated.state == "2020-12-13 10:00:00"

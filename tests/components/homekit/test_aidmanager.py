@@ -617,6 +617,6 @@ async def test_aid_generation_no_unique_ids_op.dles_collision(
     }
 
     aidstore = get_aid_storage_filename_for_entry_id(config_entry.entry_id)
-    aid_storage_path =.opp.config.path(STORAGE_DIR, aidstore)
+    aid_storage_path = opp.config.path(STORAGE_DIR, aidstore)
     if await.opp.async_add_executor_job(os.path.exists, aid_storage_path):
         await.opp.async_add_executor_job(os.unlink, aid_storage_path)

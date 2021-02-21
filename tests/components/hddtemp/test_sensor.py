@@ -92,8 +92,8 @@ async def test_hddtemp_min_config.opp, telnetmock):
     assert await async_setup_component.opp, "sensor", VALID_CONFIG_MINIMAL)
     await.opp.async_block_till_done()
 
-    entity_id =.opp.states.async_all()[0].entity_id
-    state =.opp.states.get(entity_id)
+    entity_id = opp.states.async_all()[0].entity_id
+    state = opp.states.get(entity_id)
 
     reference = REFERENCE[state.attributes.get("device")]
 
@@ -113,8 +113,8 @@ async def test_hddtemp_rename_config.opp, telnetmock):
     assert await async_setup_component.opp, "sensor", VALID_CONFIG_NAME)
     await.opp.async_block_till_done()
 
-    entity_id =.opp.states.async_all()[0].entity_id
-    state =.opp.states.get(entity_id)
+    entity_id = opp.states.async_all()[0].entity_id
+    state = opp.states.get(entity_id)
 
     reference = REFERENCE[state.attributes.get("device")]
 
@@ -126,7 +126,7 @@ async def test_hddtemp_one_disk.opp, telnetmock):
     assert await async_setup_component.opp, "sensor", VALID_CONFIG_ONE_DISK)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.hd_temperature_dev_sdd1")
+    state = opp.states.get("sensor.hd_temperature_dev_sdd1")
 
     reference = REFERENCE[state.attributes.get("device")]
 
@@ -147,7 +147,7 @@ async def test_hddtemp_wrong_disk.opp, telnetmock):
     await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
-    state =.opp.states.get("sensor.hd_temperature_dev_sdx1")
+    state = opp.states.get("sensor.hd_temperature_dev_sdx1")
     assert state.attributes.get("friendly_name") == "HD Temperature /dev/sdx1"
 
 
@@ -162,7 +162,7 @@ async def test_hddtemp_multiple_disks.opp, telnetmock):
         "sensor.hd_temperature_dev_sdc1",
     ]:
 
-        state =.opp.states.get(sensor)
+        state = opp.states.get(sensor)
 
         reference = REFERENCE[state.attributes.get("device")]
 

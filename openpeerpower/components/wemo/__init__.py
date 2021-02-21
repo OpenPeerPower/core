@@ -95,10 +95,10 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up a wemo config entry."""
-    config =.opp.data[DOMAIN].pop("config")
+    config = opp.data[DOMAIN].pop("config")
 
     # Keep track of WeMo device subscriptions for push updates
-    registry =.opp.data[DOMAIN]["registry"] = pywemo.SubscriptionRegistry()
+    registry = opp.data[DOMAIN]["registry"] = pywemo.SubscriptionRegistry()
     await.opp.async_add_executor_job(registry.start)
 
     wemo_dispatcher = WemoDispatcher(entry)
@@ -184,7 +184,7 @@ class WemoDiscovery:
 
     def __init__(self,.opp: OpenPeerPower, wemo_dispatcher: WemoDispatcher) -> None:
         """Initialize the WemoDiscovery."""
-        self._opp =.opp
+        self._opp = opp
         self._wemo_dispatcher = wemo_dispatcher
         self._stop = None
         self._scan_delay = 0

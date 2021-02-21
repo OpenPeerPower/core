@@ -27,7 +27,7 @@ class Helper:
 
     def __init__(self,.opp, entity_id, pairing, accessory, config_entry):
         """Create a helper for a given accessory/entity."""
-        self.opp =.opp
+        self.opp = opp
         self.entity_id = entity_id
         self.pairing = pairing
         self.accessory = accessory
@@ -112,7 +112,7 @@ async def setup_test_accessories.opp, accessories):
 async def device_config_changed.opp, accessories):
     """Discover new devices added to Open Peer Power at runtime."""
     # Update the accessories our FakePairing knows about
-    controller =.opp.data[CONTROLLER]
+    controller = opp.data[CONTROLLER]
     pairing = controller.pairings["00:00:00:00:00:00"]
 
     accessories_obj = Accessories()
@@ -135,7 +135,7 @@ async def device_config_changed.opp, accessories):
     # Config Flow will abort and notify us if the discovery event is of
     # interest - in this case c# has incremented
     flow = config_flow.HomekitControllerFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {}
     result = await flow.async_step_zeroconf(discovery_info)
     assert result["type"] == "abort"

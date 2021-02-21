@@ -42,7 +42,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up powerview scene entries."""
 
-    pv_data =.opp.data[DOMAIN][entry.entry_id]
+    pv_data = opp.data[DOMAIN][entry.entry_id]
     room_data = pv_data[PV_ROOM_DATA]
     scene_data = pv_data[PV_SCENE_DATA]
     pv_request = pv_data[PV_API]

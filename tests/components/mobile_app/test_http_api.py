@@ -29,7 +29,7 @@ async def test_registration.opp,.opp_client,.opp_admin_user):
         )
 
     assert len(add_user_dev_track.mock_calls) == 1
-    assert add_user_dev_track.mock_calls[0][1][1] ==.opp_admin_user.id
+    assert add_user_dev_track.mock_calls[0][1][1] == opp_admin_user.id
     assert add_user_dev_track.mock_calls[0][1][2] == "device_tracker.test_1"
 
     assert resp.status == 201
@@ -37,7 +37,7 @@ async def test_registration.opp,.opp_client,.opp_admin_user):
     assert CONF_WEBHOOK_ID in register_json
     assert CONF_SECRET in register_json
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
 
     assert entries[0].unique_id == "io.openpeerpowerr.mobile_app_test-mock-device-id"
     assert entries[0].data["device_id"] == REGISTER_CLEARTEXT["device_id"]

@@ -75,7 +75,7 @@ async def async_get_conditions.opp: OpenPeerPower, device_id: str) -> List[dict]
         if entry.domain != DOMAIN:
             continue
 
-        state =.opp.states.get(entry.entity_id)
+        state = opp.states.get(entry.entity_id)
         if not state or ATTR_SUPPORTED_FEATURES not in state.attributes:
             continue
 
@@ -200,7 +200,7 @@ def async_condition_from_config(
     @callback
     def template_if.opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate template based if-condition."""
-        value_template.opp =.opp
+        value_template.opp = opp
 
         return condition.async_numeric_state(
            .opp, config[ATTR_ENTITY_ID], max_pos, min_pos, value_template

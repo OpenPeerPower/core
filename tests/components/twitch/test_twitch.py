@@ -57,7 +57,7 @@ async def test_init.opp):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG) is True
         await.opp.async_block_till_done()
 
-    sensor_state =.opp.states.get(ENTITY_ID)
+    sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.state == "offline"
     assert sensor_state.name == "channel123"
     assert sensor_state.attributes["icon"] == "mdi:twitch"
@@ -81,7 +81,7 @@ async def test_offline.opp):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG) is True
         await.opp.async_block_till_done()
 
-    sensor_state =.opp.states.get(ENTITY_ID)
+    sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.state == "offline"
     assert sensor_state.attributes["entity_picture"] == "logo.png"
 
@@ -101,7 +101,7 @@ async def test_streaming.opp):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG) is True
         await.opp.async_block_till_done()
 
-    sensor_state =.opp.states.get(ENTITY_ID)
+    sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.state == "streaming"
     assert sensor_state.attributes["entity_picture"] == "stream-medium.png"
     assert sensor_state.attributes["game"] == "Good Game"
@@ -126,7 +126,7 @@ async def test_oauth_without_sub_and_follow.opp):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
         await.opp.async_block_till_done()
 
-    sensor_state =.opp.states.get(ENTITY_ID)
+    sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.attributes["subscribed"] is False
     assert sensor_state.attributes["following"] is False
 
@@ -149,7 +149,7 @@ async def test_oauth_with_sub.opp):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
         await.opp.async_block_till_done()
 
-    sensor_state =.opp.states.get(ENTITY_ID)
+    sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.attributes["subscribed"] is True
     assert sensor_state.attributes["subscribed_since"] == "2020-01-20T21:22:42"
     assert sensor_state.attributes["subscription_is_gifted"] is False
@@ -174,7 +174,7 @@ async def test_oauth_with_follow.opp):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
         await.opp.async_block_till_done()
 
-    sensor_state =.opp.states.get(ENTITY_ID)
+    sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.attributes["subscribed"] is False
     assert sensor_state.attributes["following"] is True
     assert sensor_state.attributes["following_since"] == "2020-01-20T21:22:42"

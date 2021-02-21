@@ -22,7 +22,7 @@ async def async_get_service.opp, config, discovery_info=None):
     host = discovery_info.get(CONF_HOST)
     icon_path = discovery_info.get(CONF_ICON)
 
-    client =.opp.data[DOMAIN][host]["client"]
+    client = opp.data[DOMAIN][host]["client"]
 
     svc = LgWebOSNotificationService(client, icon_path)
 

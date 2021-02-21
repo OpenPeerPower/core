@@ -124,7 +124,7 @@ def get_test_home_assistant():
         loop.run_forever()
         loop_stop_event.set()
 
-    orig_stop =.opp.stop
+    orig_stop = opp.stop
    .opp._stopped = Mock(set=loop.stop)
 
     def start_opp(*mocks):
@@ -154,9 +154,9 @@ async def async_test_home_assistant(loop, load_registries=True):
     ensure_auth_manager_loaded.opp.auth)
     INSTANCES.append.opp)
 
-    orig_async_add_job =.opp.async_add_job
-    orig_async_add_executor_job =.opp.async_add_executor_job
-    orig_async_create_task =.opp.async_create_task
+    orig_async_add_job = opp.async_add_job
+    orig_async_add_executor_job = opp.async_add_executor_job
+    orig_async_create_task = opp.async_create_task
 
     def async_add_job(target, *args):
         """Add job."""
@@ -292,7 +292,7 @@ async def async_test_home_assistant(loop, load_registries=True):
    .opp.state = op.CoreState.running
 
     # Mock async_start
-    orig_start =.opp.async_start
+    orig_start = opp.async_start
 
     async def mock_async_start():
         """Start the mocking."""
@@ -527,7 +527,7 @@ async def register_auth_provider.opp, config):
     )
     assert provider is not None, "Invalid config specified"
     key = (provider.type, provider.id)
-    providers =.opp.auth._providers
+    providers = opp.auth._providers
 
     if key in providers:
         raise ValueError("Provider already registered")
@@ -1097,8 +1097,8 @@ def mock_platform.opp, platform_path, module=None):
     platform_path is in form hue.config_flow.
     """
     domain, platform_name = platform_path.split(".")
-    integration_cache =.opp.data.setdefault(loader.DATA_INTEGRATIONS, {})
-    module_cache =.opp.data.setdefault(loader.DATA_COMPONENTS, {})
+    integration_cache = opp.data.setdefault(loader.DATA_INTEGRATIONS, {})
+    module_cache = opp.data.setdefault(loader.DATA_COMPONENTS, {})
 
     if domain not in integration_cache:
         mock_integration.opp, MockModule(domain))

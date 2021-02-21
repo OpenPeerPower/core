@@ -294,7 +294,7 @@ async def test_ensure_setup_config(mocked_status, mocked_volume,.opp, one_device
     assert one_device.call_count == 1
     assert one_device.call_args == call("192.168.1.44", 8888)
     assert len.opp.states.async_all()) == 1
-    state =.opp.states.get("media_player.custom_sound")
+    state = opp.states.get("media_player.custom_sound")
     assert state.name == "custom_sound"
 
 
@@ -360,7 +360,7 @@ async def test_playing_media(mocked_status, mocked_volume,.opp, one_device):
     assert mocked_status.call_count == 2
     assert mocked_volume.call_count == 2
 
-    entity_1_state =.opp.states.get("media_player.soundtouch_1")
+    entity_1_state = opp.states.get("media_player.soundtouch_1")
     assert entity_1_state.state == STATE_PLAYING
     assert entity_1_state.attributes["media_title"] == "artist - track"
     assert entity_1_state.attributes["media_track"] == "track"
@@ -378,7 +378,7 @@ async def test_playing_unknown_media(mocked_status, mocked_volume,.opp, one_devi
     assert mocked_status.call_count == 2
     assert mocked_volume.call_count == 2
 
-    entity_1_state =.opp.states.get("media_player.soundtouch_1")
+    entity_1_state = opp.states.get("media_player.soundtouch_1")
     assert entity_1_state.state == STATE_PLAYING
 
 
@@ -391,7 +391,7 @@ async def test_playing_radio(mocked_status, mocked_volume,.opp, one_device):
     assert mocked_status.call_count == 2
     assert mocked_volume.call_count == 2
 
-    entity_1_state =.opp.states.get("media_player.soundtouch_1")
+    entity_1_state = opp.states.get("media_player.soundtouch_1")
     assert entity_1_state.state == STATE_PLAYING
     assert entity_1_state.attributes["media_title"] == "station"
 
@@ -405,7 +405,7 @@ async def test_playing_aux(mocked_status, mocked_volume,.opp, one_device):
     assert mocked_status.call_count == 2
     assert mocked_volume.call_count == 2
 
-    entity_1_state =.opp.states.get("media_player.soundtouch_1")
+    entity_1_state = opp.states.get("media_player.soundtouch_1")
     assert entity_1_state.state == STATE_PLAYING
     assert entity_1_state.attributes["source"] == "AUX"
 
@@ -419,7 +419,7 @@ async def test_playing_bluetooth(mocked_status, mocked_volume,.opp, one_device):
     assert mocked_status.call_count == 2
     assert mocked_volume.call_count == 2
 
-    entity_1_state =.opp.states.get("media_player.soundtouch_1")
+    entity_1_state = opp.states.get("media_player.soundtouch_1")
     assert entity_1_state.state == STATE_PLAYING
     assert entity_1_state.attributes["source"] == "BLUETOOTH"
     assert entity_1_state.attributes["media_track"] == "track"
@@ -436,7 +436,7 @@ async def test_get_volume_level(mocked_status, mocked_volume,.opp, one_device):
     assert mocked_status.call_count == 2
     assert mocked_volume.call_count == 2
 
-    entity_1_state =.opp.states.get("media_player.soundtouch_1")
+    entity_1_state = opp.states.get("media_player.soundtouch_1")
     assert entity_1_state.attributes["volume_level"] == 0.12
 
 
@@ -449,7 +449,7 @@ async def test_get_state_off(mocked_status, mocked_volume,.opp, one_device):
     assert mocked_status.call_count == 2
     assert mocked_volume.call_count == 2
 
-    entity_1_state =.opp.states.get("media_player.soundtouch_1")
+    entity_1_state = opp.states.get("media_player.soundtouch_1")
     assert entity_1_state.state == STATE_OFF
 
 
@@ -462,7 +462,7 @@ async def test_get_state_pause(mocked_status, mocked_volume,.opp, one_device):
     assert mocked_status.call_count == 2
     assert mocked_volume.call_count == 2
 
-    entity_1_state =.opp.states.get("media_player.soundtouch_1")
+    entity_1_state = opp.states.get("media_player.soundtouch_1")
     assert entity_1_state.state == STATE_PAUSED
 
 
@@ -475,7 +475,7 @@ async def test_is_muted(mocked_status, mocked_volume,.opp, one_device):
     assert mocked_status.call_count == 2
     assert mocked_volume.call_count == 2
 
-    entity_1_state =.opp.states.get("media_player.soundtouch_1")
+    entity_1_state = opp.states.get("media_player.soundtouch_1")
     assert entity_1_state.attributes["is_volume_muted"]
 
 
@@ -487,7 +487,7 @@ async def test_media_commands(mocked_status, mocked_volume,.opp, one_device):
     assert mocked_status.call_count == 2
     assert mocked_volume.call_count == 2
 
-    entity_1_state =.opp.states.get("media_player.soundtouch_1")
+    entity_1_state = opp.states.get("media_player.soundtouch_1")
     assert entity_1_state.attributes["supported_features"] == 20413
 
 
@@ -1034,7 +1034,7 @@ async def test_zone_attributes(
     assert mocked_status.call_count == 4
     assert mocked_volume.call_count == 4
 
-    entity_1_state =.opp.states.get("media_player.soundtouch_1")
+    entity_1_state = opp.states.get("media_player.soundtouch_1")
     assert entity_1_state.attributes[ATTR_SOUNDTOUCH_ZONE]["is_master"]
     assert (
         entity_1_state.attributes[ATTR_SOUNDTOUCH_ZONE]["master"]
@@ -1047,7 +1047,7 @@ async def test_zone_attributes(
         "media_player.soundtouch_1",
         "media_player.soundtouch_2",
     ]
-    entity_2_state =.opp.states.get("media_player.soundtouch_2")
+    entity_2_state = opp.states.get("media_player.soundtouch_2")
     assert not entity_2_state.attributes[ATTR_SOUNDTOUCH_ZONE]["is_master"]
     assert (
         entity_2_state.attributes[ATTR_SOUNDTOUCH_ZONE]["master"]

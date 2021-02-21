@@ -47,7 +47,7 @@ class TadoDeviceScanner(DeviceScanner):
 
     def __init__(self,.opp, config):
         """Initialize the scanner."""
-        self.opp =.opp
+        self.opp = opp
         self.last_results = []
 
         self.username = config[CONF_USERNAME]

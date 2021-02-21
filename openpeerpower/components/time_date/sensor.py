@@ -55,7 +55,7 @@ class TimeDateSensor(Entity):
         self._name = OPTION_TYPES[option_type]
         self.type = option_type
         self._state = None
-        self.opp =.opp
+        self.opp = opp
         self.unsub = None
 
         self._update_internal_state(dt_util.utcnow())

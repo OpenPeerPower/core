@@ -55,7 +55,7 @@ async def init_config_flow.opp):
         {"external_url": BASE_URL},
     )
     flow = config_flow.OwnTracksFlow()
-    flow.opp =.opp
+    flow.opp = opp
     return flow
 
 

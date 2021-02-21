@@ -31,19 +31,19 @@ async def async_setup_entry.opp, entry, async_add_entities):
 
     entities = []
     for dev_id in dev_ids:
-        entity =.opp.data[OT_DOMAIN]["devices"][dev_id] = OwnTracksEntity(dev_id)
+        entity = opp.data[OT_DOMAIN]["devices"][dev_id] = OwnTracksEntity(dev_id)
         entities.append(entity)
 
     @callback
     def _receive_data(dev_id, **data):
         """Receive set location."""
-        entity =.opp.data[OT_DOMAIN]["devices"].get(dev_id)
+        entity = opp.data[OT_DOMAIN]["devices"].get(dev_id)
 
         if entity is not None:
             entity.update_data(data)
             return
 
-        entity =.opp.data[OT_DOMAIN]["devices"][dev_id] = OwnTracksEntity(dev_id, data)
+        entity = opp.data[OT_DOMAIN]["devices"][dev_id] = OwnTracksEntity(dev_id, data)
         async_add_entities([entity])
 
    .opp.data[OT_DOMAIN]["context"].set_async_see(_receive_data)

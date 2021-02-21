@@ -11,7 +11,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Optional(CONF_ON_STATE): vol.In(ST
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the XBee Zigbee switch platform."""
-    zigbee_device =.opp.data[DOMAIN]
+    zigbee_device = opp.data[DOMAIN]
     add_entities([XBeeSwitch(XBeeDigitalOutConfig(config), zigbee_device)])
 
 

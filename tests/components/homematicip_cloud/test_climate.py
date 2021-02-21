@@ -74,7 +74,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "set_point_temperature"
     assert hmip_device.mock_calls[-1][1] == (22.5,)
     await async_manipulate_test_data.opp, hmip_device, "actualTemperature", 22.5)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_CURRENT_TEMPERATURE] == 22.5
 
     await.opp.services.async_call(
@@ -87,7 +87,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "set_control_mode"
     assert hmip_device.mock_calls[-1][1] == ("MANUAL",)
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "MANUAL")
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_HEAT
 
     await.opp.services.async_call(
@@ -100,7 +100,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "set_control_mode"
     assert hmip_device.mock_calls[-1][1] == ("AUTOMATIC",)
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "AUTO")
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_AUTO
 
     await.opp.services.async_call(
@@ -113,7 +113,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "set_boost"
     assert hmip_device.mock_calls[-1][1] == ()
     await async_manipulate_test_data.opp, hmip_device, "boostMode", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_PRESET_MODE] == PRESET_BOOST
 
     await.opp.services.async_call(
@@ -126,7 +126,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "set_active_profile"
     assert hmip_device.mock_calls[-1][1] == (0,)
     await async_manipulate_test_data.opp, hmip_device, "boostMode", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_PRESET_MODE] == "STD"
 
     # Not required for hmip, but a possibility to send no temperature.
@@ -149,7 +149,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_op._factory):
         AbsenceType.VACATION,
         fire_device=hmip_device,
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_PRESET_MODE] == PRESET_AWAY
 
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "ECO")
@@ -160,7 +160,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_op._factory):
         AbsenceType.PERIOD,
         fire_device=hmip_device,
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_PRESET_MODE] == PRESET_ECO
 
     await.opp.services.async_call(
@@ -179,7 +179,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_op._factory):
     ).absenceType = AbsenceType.PERMANENT
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "ECO")
 
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_PRESET_END_TIME] == PERMANENT_END_TIME
 
     await.opp.services.async_call(
@@ -192,7 +192,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "set_control_mode"
     assert hmip_device.mock_calls[-1][1] == ("MANUAL",)
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "MANUAL")
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_HEAT
 
     await.opp.services.async_call(
@@ -207,7 +207,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][1] == (1,)
     hmip_device.activeProfile = hmip_device.profiles[0]
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "AUTOMATIC")
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_AUTO
 
     await.opp.services.async_call(
@@ -222,12 +222,12 @@ async def test_hmip_heating_group_heat.opp, default_mock_op._factory):
 
     await async_manipulate_test_data.opp, hmip_device, "floorHeatingMode", "RADIATOR")
     await async_manipulate_test_data.opp, hmip_device, "valvePosition", 0.1)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_AUTO
     assert ha_state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
     await async_manipulate_test_data.opp, hmip_device, "floorHeatingMode", "RADIATOR")
     await async_manipulate_test_data.opp, hmip_device, "valvePosition", 0.0)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_AUTO
     assert ha_state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
 
@@ -249,7 +249,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_op._factory):
     await async_manipulate_test_data.opp, hmip_device, "cooling", True)
     await async_manipulate_test_data.opp, hmip_device, "coolingAllowed", True)
     await async_manipulate_test_data.opp, hmip_device, "coolingIgnored", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
 
     assert ha_state.state == HVAC_MODE_AUTO
     assert ha_state.attributes["current_temperature"] == 23.8
@@ -272,7 +272,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "set_control_mode"
     assert hmip_device.mock_calls[-1][1] == ("MANUAL",)
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "MANUAL")
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_COOL
 
     await.opp.services.async_call(
@@ -285,7 +285,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "set_control_mode"
     assert hmip_device.mock_calls[-1][1] == ("AUTOMATIC",)
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "AUTO")
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_AUTO
 
     await.opp.services.async_call(
@@ -303,7 +303,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_op._factory):
     await async_manipulate_test_data.opp, hmip_device, "cooling", True)
     await async_manipulate_test_data.opp, hmip_device, "coolingAllowed", False)
     await async_manipulate_test_data.opp, hmip_device, "coolingIgnored", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
 
     assert ha_state.state == HVAC_MODE_OFF
     assert ha_state.attributes[ATTR_PRESET_MODE] == "none"
@@ -313,7 +313,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_op._factory):
     await async_manipulate_test_data.opp, hmip_device, "cooling", True)
     await async_manipulate_test_data.opp, hmip_device, "coolingAllowed", True)
     await async_manipulate_test_data.opp, hmip_device, "coolingIgnored", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
 
     assert ha_state.state == HVAC_MODE_OFF
     assert ha_state.attributes[ATTR_PRESET_MODE] == "none"
@@ -334,7 +334,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_op._factory):
     await async_manipulate_test_data.opp, hmip_device, "cooling", True)
     await async_manipulate_test_data.opp, hmip_device, "coolingAllowed", True)
     await async_manipulate_test_data.opp, hmip_device, "coolingIgnored", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
 
     assert ha_state.state == HVAC_MODE_AUTO
     assert ha_state.attributes[ATTR_PRESET_MODE] == "Cool2"

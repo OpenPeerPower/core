@@ -44,10 +44,10 @@ async def test_one_sensor_site_running.opp, requests_mock, legacy_patchable_time
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    running_sensor_ids =.opp.states.async_entity_ids("sensor")
+    running_sensor_ids = opp.states.async_entity_ids("sensor")
     assert len(running_sensor_ids) > 0
     for running_id in running_sensor_ids:
-        sensor =.opp.states.get(running_id)
+        sensor = opp.states.get(running_id)
         sensor_id = sensor.attributes.get("sensor_id")
         sensor_name, sensor_value = WAVERTREE_SENSOR_RESULTS[sensor_id]
 
@@ -96,10 +96,10 @@ async def test_two_sensor_sites_running.opp, requests_mock, legacy_patchable_tim
     await.opp.config_entries.async_setup(entry2.entry_id)
     await.opp.async_block_till_done()
 
-    running_sensor_ids =.opp.states.async_entity_ids("sensor")
+    running_sensor_ids = opp.states.async_entity_ids("sensor")
     assert len(running_sensor_ids) > 0
     for running_id in running_sensor_ids:
-        sensor =.opp.states.get(running_id)
+        sensor = opp.states.get(running_id)
         sensor_id = sensor.attributes.get("sensor_id")
         if sensor.attributes.get("site_id") == "354107":
             sensor_name, sensor_value = WAVERTREE_SENSOR_RESULTS[sensor_id]

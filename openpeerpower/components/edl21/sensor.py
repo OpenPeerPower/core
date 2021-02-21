@@ -115,7 +115,7 @@ class EDL21:
     def __init__(self,.opp, config, async_add_entities) -> None:
         """Initialize an EDL21 object."""
         self._registered_obis = set()
-        self._opp =.opp
+        self._opp = opp
         self._async_add_entities = async_add_entities
         self._name = config[CONF_NAME]
         self._proto = SmlProtocol(config[CONF_SERIAL_PORT])

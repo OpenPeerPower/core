@@ -65,7 +65,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
-    controller =.opp.data[UNIFI_DOMAIN].pop(config_entry.entry_id)
+    controller = opp.data[UNIFI_DOMAIN].pop(config_entry.entry_id)
     return await controller.async_reset()
 
 
@@ -88,9 +88,9 @@ class UnifiWirelessClients:
 
     def __init__(self,.opp):
         """Set up client storage."""
-        self.opp =.opp
+        self.opp = opp
         self.data = {}
-        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
 
     async def async_load(self):
         """Load data from file."""

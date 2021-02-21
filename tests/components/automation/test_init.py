@@ -83,7 +83,7 @@ async def test_service_specify_data.opp, calls):
 
     assert len(calls) == 1
     assert calls[0].data["some"] == "event - test_event"
-    state =.opp.states.get("automation.hello")
+    state = opp.states.get("automation.hello")
     assert state is not None
     assert state.attributes.get("last_triggered") == time
 
@@ -367,7 +367,7 @@ async def test_shared_context.opp, calls):
     assert args[0].context is first_trigger_context
 
     # Ensure the 'hello' automation state has the right context
-    state =.opp.states.get("automation.hello")
+    state = opp.states.get("automation.hello")
     assert state is not None
     assert state.context is first_trigger_context
 
@@ -486,7 +486,7 @@ async def test_reload_config_service.opp, calls,.opp_admin_user,.opp_read_only_u
     )
     assert.opp.states.get("automation.hello") is not None
     assert.opp.states.get("automation.bye") is None
-    listeners =.opp.bus.async_listeners()
+    listeners = opp.bus.async_listeners()
     assert listeners.get("test_event") == 1
     assert listeners.get("test_event2") is None
 
@@ -535,7 +535,7 @@ async def test_reload_config_service.opp, calls,.opp_admin_user,.opp_read_only_u
 
     assert.opp.states.get("automation.hello") is None
     assert.opp.states.get("automation.bye") is not None
-    listeners =.opp.bus.async_listeners()
+    listeners = opp.bus.async_listeners()
     assert listeners.get("test_event") is None
     assert listeners.get("test_event2") == 1
 
@@ -715,12 +715,12 @@ async def test_automation_restore_state.opp):
 
     assert await async_setup_component.opp, automation.DOMAIN, config)
 
-    state =.opp.states.get("automation.hello")
+    state = opp.states.get("automation.hello")
     assert state
     assert state.state == STATE_ON
     assert state.attributes["last_triggered"] is None
 
-    state =.opp.states.get("automation.bye")
+    state = opp.states.get("automation.bye")
     assert state
     assert state.state == STATE_OFF
     assert state.attributes["last_triggered"] == time
@@ -1014,17 +1014,17 @@ async def test_automation_restore_last_triggered_with_initial_state.opp):
 
     await async_setup_component.opp, automation.DOMAIN, config)
 
-    state =.opp.states.get("automation.hello")
+    state = opp.states.get("automation.hello")
     assert state
     assert state.state == STATE_OFF
     assert state.attributes["last_triggered"] is None
 
-    state =.opp.states.get("automation.bye")
+    state = opp.states.get("automation.bye")
     assert state
     assert state.state == STATE_OFF
     assert state.attributes["last_triggered"] == time
 
-    state =.opp.states.get("automation.solong")
+    state = opp.states.get("automation.solong")
     assert state
     assert state.state == STATE_ON
     assert state.attributes["last_triggered"] == time

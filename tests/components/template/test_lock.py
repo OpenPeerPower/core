@@ -44,13 +44,13 @@ async def test_template_state.opp):
    .opp.states.async_set("switch.test_state", STATE_ON)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("lock.test_template_lock")
+    state = opp.states.get("lock.test_template_lock")
     assert state.state == lock.STATE_LOCKED
 
    .opp.states.async_set("switch.test_state", STATE_OFF)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("lock.test_template_lock")
+    state = opp.states.get("lock.test_template_lock")
     assert state.state == lock.STATE_UNLOCKED
 
 
@@ -80,7 +80,7 @@ async def test_template_state_boolean_on.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("lock.template_lock")
+    state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_LOCKED
 
 
@@ -110,7 +110,7 @@ async def test_template_state_boolean_off.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("lock.template_lock")
+    state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_UNLOCKED
 
 
@@ -244,12 +244,12 @@ async def test_template_static.opp, caplog):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("lock.template_lock")
+    state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_UNLOCKED
 
    .opp.states.async_set("lock.template_lock", lock.STATE_LOCKED)
     await.opp.async_block_till_done()
-    state =.opp.states.get("lock.template_lock")
+    state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_LOCKED
 
 
@@ -278,7 +278,7 @@ async def test_lock_action.opp, calls):
    .opp.states.async_set("switch.test_state", STATE_OFF)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("lock.template_lock")
+    state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_UNLOCKED
 
     await.opp.services.async_call(
@@ -314,7 +314,7 @@ async def test_unlock_action.opp, calls):
    .opp.states.async_set("switch.test_state", STATE_ON)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("lock.template_lock")
+    state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_LOCKED
 
     await.opp.services.async_call(

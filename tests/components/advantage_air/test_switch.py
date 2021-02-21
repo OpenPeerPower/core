@@ -42,7 +42,7 @@ async def test_cover_async_setup_entry.opp, aioclient_mock):
 
     # Test Switch Entity
     entity_id = "switch.ac_one_fresh_air"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_OFF
 

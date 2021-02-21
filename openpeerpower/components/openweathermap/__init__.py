@@ -78,7 +78,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
 
 async def async_migrate_entry.opp, entry):
     """Migrate old entry."""
-    config_entries =.opp.config_entries
+    config_entries = opp.config_entries
     data = entry.data
     version = entry.version
 
@@ -114,7 +114,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
         )
     )
     if unload_ok:
-        update_listener =.opp.data[DOMAIN][config_entry.entry_id][UPDATE_LISTENER]
+        update_listener = opp.data[DOMAIN][config_entry.entry_id][UPDATE_LISTENER]
         update_listener()
        .opp.data[DOMAIN].pop(config_entry.entry_id)
 

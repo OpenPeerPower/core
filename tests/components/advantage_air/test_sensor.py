@@ -37,7 +37,7 @@ async def test_sensor_platform.opp, aioclient_mock):
 
     # Test First TimeToOn Sensor
     entity_id = "sensor.ac_one_time_to_on"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert int(state.state) == 0
 
@@ -62,7 +62,7 @@ async def test_sensor_platform.opp, aioclient_mock):
 
     # Test First TimeToOff Sensor
     entity_id = "sensor.ac_one_time_to_off"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert int(state.state) == 10
 
@@ -87,7 +87,7 @@ async def test_sensor_platform.opp, aioclient_mock):
 
     # Test First Zone Vent Sensor
     entity_id = "sensor.zone_open_with_sensor_vent"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert int(state.state) == 100
 
@@ -97,7 +97,7 @@ async def test_sensor_platform.opp, aioclient_mock):
 
     # Test Second Zone Vent Sensor
     entity_id = "sensor.zone_closed_with_sensor_vent"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert int(state.state) == 0
 
@@ -107,7 +107,7 @@ async def test_sensor_platform.opp, aioclient_mock):
 
     # Test First Zone Signal Sensor
     entity_id = "sensor.zone_open_with_sensor_signal"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert int(state.state) == 40
 
@@ -117,7 +117,7 @@ async def test_sensor_platform.opp, aioclient_mock):
 
     # Test Second Zone Signal Sensor
     entity_id = "sensor.zone_closed_with_sensor_signal"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert int(state.state) == 10
 

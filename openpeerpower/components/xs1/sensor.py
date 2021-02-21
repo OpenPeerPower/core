@@ -8,8 +8,8 @@ from . import ACTUATORS, DOMAIN as COMPONENT_DOMAIN, SENSORS, XS1DeviceEntity
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the XS1 sensor platform."""
-    sensors =.opp.data[COMPONENT_DOMAIN][SENSORS]
-    actuators =.opp.data[COMPONENT_DOMAIN][ACTUATORS]
+    sensors = opp.data[COMPONENT_DOMAIN][SENSORS]
+    actuators = opp.data[COMPONENT_DOMAIN][ACTUATORS]
 
     sensor_entities = []
     for sensor in sensors:

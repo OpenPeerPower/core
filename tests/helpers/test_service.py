@@ -359,7 +359,7 @@ async def test_extract_entity_ids_from_area.opp, area_mock):
 
 async def test_async_get_all_descriptions.opp):
     """Test async_get_all_descriptions."""
-    group =.opp.components.group
+    group = opp.components.group
     group_config = {group.DOMAIN: {}}
     await async_setup_component.opp, group.DOMAIN, group_config)
     descriptions = await service.async_get_all_descriptions.opp)
@@ -369,7 +369,7 @@ async def test_async_get_all_descriptions.opp):
     assert "description" in descriptions["group"]["reload"]
     assert "fields" in descriptions["group"]["reload"]
 
-    logger =.opp.components.logger
+    logger = opp.components.logger
     logger_config = {logger.DOMAIN: {}}
     await async_setup_component.opp, logger.DOMAIN, logger_config)
     descriptions = await service.async_get_all_descriptions.opp)
@@ -692,7 +692,7 @@ async def test_register_admin_service.opp,.opp_read_only_user,.opp_admin_user):
         context=op.Context(user_id.opp_admin_user.id),
     )
     assert len(calls) == 1
-    assert calls[0].context.user_id ==.opp_admin_user.id
+    assert calls[0].context.user_id == opp_admin_user.id
 
 
 async def test_domain_control_not_async.opp, mock_entities):
@@ -719,7 +719,7 @@ async def test_domain_control_unknown.opp, mock_entities):
         "openpeerpowerr.helpers.entity_registry.async_get_registry",
         return_value=Mock(entities=mock_entities),
     ):
-        protected_mock_service =.opp.helpers.service.verify_domain_control(
+        protected_mock_service = opp.helpers.service.verify_domain_control(
             "test_domain"
         )(mock_service_log)
 
@@ -757,7 +757,7 @@ async def test_domain_control_unauthorized.opp,.opp_read_only_user):
         """Define a protected service."""
         calls.append(call)
 
-    protected_mock_service =.opp.helpers.service.verify_domain_control("test_domain")(
+    protected_mock_service = opp.helpers.service.verify_domain_control("test_domain")(
         mock_service_log
     )
 
@@ -796,7 +796,7 @@ async def test_domain_control_admin.opp,.opp_admin_user):
         """Define a protected service."""
         calls.append(call)
 
-    protected_mock_service =.opp.helpers.service.verify_domain_control("test_domain")(
+    protected_mock_service = opp.helpers.service.verify_domain_control("test_domain")(
         mock_service_log
     )
 
@@ -834,7 +834,7 @@ async def test_domain_control_no_user.opp):
         """Define a protected service."""
         calls.append(call)
 
-    protected_mock_service =.opp.helpers.service.verify_domain_control("test_domain")(
+    protected_mock_service = opp.helpers.service.verify_domain_control("test_domain")(
         mock_service_log
     )
 

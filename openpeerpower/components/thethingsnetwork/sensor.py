@@ -39,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up The Things Network Data storage sensors."""
-    ttn =.opp.data.get(DATA_TTN)
+    ttn = opp.data.get(DATA_TTN)
     device_id = config.get(CONF_DEVICE_ID)
     values = config.get(CONF_VALUES)
     app_id = ttn.get(TTN_APP_ID)
@@ -113,7 +113,7 @@ class TtnDataStorage:
     def __init__(self,.opp, app_id, device_id, access_key, values):
         """Initialize the data object."""
         self.data = None
-        self._opp =.opp
+        self._opp = opp
         self._app_id = app_id
         self._device_id = device_id
         self._values = values

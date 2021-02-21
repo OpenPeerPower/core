@@ -9,7 +9,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     receive_message = await setup_ozw.opp, fixture=light_data)
 
     # Test loaded
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "off"
 
@@ -47,7 +47,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     receive_message(light_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["brightness"] == new_brightness
@@ -80,7 +80,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     receive_message(light_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "off"
 
@@ -115,7 +115,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     receive_message(light_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["brightness"] == new_brightness
@@ -146,7 +146,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     receive_message(light_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "off"
 
@@ -179,7 +179,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     receive_message(light_rgb_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["rgb_color"] == (0, 0, 255)
@@ -212,7 +212,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     receive_message(light_rgb_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["hs_color"] == (300.0, 70.196)
@@ -245,7 +245,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     receive_message(light_rgb_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["rgb_color"] == (255, 153, 0)
@@ -278,7 +278,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     receive_message(light_rgb_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["xy_color"] == (0.519, 0.429)
@@ -311,7 +311,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     receive_message(light_rgb_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["color_temp"] == 200
@@ -344,7 +344,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     receive_message(light_rgb_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["color_temp"] == 153
@@ -357,7 +357,7 @@ async def test_pure_rgb_dimmer_light(
     receive_message = await setup_ozw.opp, fixture=light_data)
 
     # Test loaded
-    state =.opp.states.get("light.kitchen_rgb_strip_level")
+    state = opp.states.get("light.kitchen_rgb_strip_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["supported_features"] == 17
@@ -386,7 +386,7 @@ async def test_pure_rgb_dimmer_light(
     receive_message(light_pure_rgb_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.kitchen_rgb_strip_level")
+    state = opp.states.get("light.kitchen_rgb_strip_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["hs_color"] == (300.0, 70.196)
@@ -397,7 +397,7 @@ async def test_no_rgb_light.opp, light_data, light_no_rgb_msg, sent_messages):
     receive_message = await setup_ozw.opp, fixture=light_data)
 
     # Test loaded no RGBW support (dimmer only)
-    state =.opp.states.get("light.master_bedroom_l_level")
+    state = opp.states.get("light.master_bedroom_l_level")
     assert state is not None
     assert state.state == "off"
 
@@ -425,7 +425,7 @@ async def test_no_rgb_light.opp, light_data, light_no_rgb_msg, sent_messages):
     receive_message(light_no_rgb_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.master_bedroom_l_level")
+    state = opp.states.get("light.master_bedroom_l_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["brightness"] == new_brightness
@@ -438,7 +438,7 @@ async def test_no_ww_light(
     receive_message = await setup_ozw.opp, fixture=light_no_ww_data)
 
     # Test loaded no ww support
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "off"
 
@@ -469,7 +469,7 @@ async def test_no_ww_light(
     receive_message(light_rgb_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["white_value"] == 190
@@ -482,7 +482,7 @@ async def test_no_cw_light(
     receive_message = await setup_ozw.opp, fixture=light_no_cw_data)
 
     # Test loaded no cw support
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "off"
 
@@ -513,7 +513,7 @@ async def test_no_cw_light(
     receive_message(light_rgb_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["white_value"] == 190
@@ -524,7 +524,7 @@ async def test_wc_light.opp, light_wc_data, light_msg, light_rgb_msg, sent_messa
     receive_message = await setup_ozw.opp, fixture=light_wc_data)
 
     # Test loaded only white LED support
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "off"
 
@@ -555,7 +555,7 @@ async def test_wc_light.opp, light_wc_data, light_msg, light_rgb_msg, sent_messa
     receive_message(light_rgb_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["color_temp"] == 190
@@ -566,7 +566,7 @@ async def test_new_ozw_light.opp, light_new_ozw_data, light_msg, sent_messages):
     receive_message = await setup_ozw.opp, fixture=light_new_ozw_data)
 
     # Test loaded only white LED support
-    state =.opp.states.get("light.led_bulb_6_multi_colour_level")
+    state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
     assert state.state == "off"
 

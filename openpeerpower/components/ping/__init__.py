@@ -16,7 +16,7 @@ def async_get_next_ping_id.opp):
 
     Must be called in async
     """
-    current_id =.opp.data.setdefault(DOMAIN, {}).get(PING_ID, DEFAULT_START_ID)
+    current_id = opp.data.setdefault(DOMAIN, {}).get(PING_ID, DEFAULT_START_ID)
 
     if current_id == MAX_PING_ID:
         next_id = DEFAULT_START_ID

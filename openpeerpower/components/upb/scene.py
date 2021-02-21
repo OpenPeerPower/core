@@ -16,7 +16,7 @@ SERVICE_LINK_BLINK = "link_blink"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the UPB link based on a config entry."""
-    upb =.opp.data[DOMAIN][config_entry.entry_id]["upb"]
+    upb = opp.data[DOMAIN][config_entry.entry_id]["upb"]
     unique_id = config_entry.entry_id
     async_add_entities(UpbLink(upb.links[link], unique_id, upb) for link in upb.links)
 

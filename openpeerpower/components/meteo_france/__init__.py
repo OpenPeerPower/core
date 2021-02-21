@@ -184,7 +184,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     if.opp.data[DOMAIN][entry.entry_id][COORDINATOR_ALERT]:
 
-        department =.opp.data[DOMAIN][entry.entry_id][
+        department = opp.data[DOMAIN][entry.entry_id][
             COORDINATOR_FORECAST
         ].data.position.get("dept")
        .opp.data[DOMAIN][department] = False

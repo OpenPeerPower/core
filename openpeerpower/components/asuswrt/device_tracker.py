@@ -19,7 +19,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up device tracker for AsusWrt component."""
-    router =.opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
+    router = opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
     tracked = set()
 
     @callback

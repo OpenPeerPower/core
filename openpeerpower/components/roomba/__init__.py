@@ -111,7 +111,7 @@ async def async_unload_entry.opp, config_entry):
         )
     )
     if unload_ok:
-        domain_data =.opp.data[DOMAIN][config_entry.entry_id]
+        domain_data = opp.data[DOMAIN][config_entry.entry_id]
         await async_disconnect_or_timeout.opp, roomba=domain_data[ROOMBA_SESSION])
        .opp.data[DOMAIN].pop(config_entry.entry_id)
 

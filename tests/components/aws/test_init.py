@@ -36,7 +36,7 @@ async def test_empty_config.opp):
         await async_setup_component.opp, "aws", {"aws": {}})
         await.opp.async_block_till_done()
 
-    sessions =.opp.data[aws.DATA_SESSIONS]
+    sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
     assert len(sessions) == 1
     session = sessions.get("default")
@@ -65,7 +65,7 @@ async def test_empty_credential.opp):
         )
         await.opp.async_block_till_done()
 
-    sessions =.opp.data[aws.DATA_SESSIONS]
+    sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
     assert len(sessions) == 1
     session = sessions.get("default")
@@ -100,7 +100,7 @@ async def test_profile_credential.opp):
         )
         await.opp.async_block_till_done()
 
-    sessions =.opp.data[aws.DATA_SESSIONS]
+    sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
     assert len(sessions) == 1
     session = sessions.get("test")
@@ -145,7 +145,7 @@ async def test_access_key_credential.opp):
         )
         await.opp.async_block_till_done()
 
-    sessions =.opp.data[aws.DATA_SESSIONS]
+    sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
     assert len(sessions) == 2
     session = sessions.get("key")
@@ -184,7 +184,7 @@ async def test_notify_credential.opp):
         )
         await.opp.async_block_till_done()
 
-    sessions =.opp.data[aws.DATA_SESSIONS]
+    sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
     assert len(sessions) == 1
     assert isinstance(sessions.get("default"), MockAioSession)
@@ -216,7 +216,7 @@ async def test_notify_credential_profile.opp):
         )
         await.opp.async_block_till_done()
 
-    sessions =.opp.data[aws.DATA_SESSIONS]
+    sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
     assert len(sessions) == 1
     assert isinstance(sessions.get("default"), MockAioSession)
@@ -248,7 +248,7 @@ async def test_credential_skip_validate.opp):
         )
         await.opp.async_block_till_done()
 
-    sessions =.opp.data[aws.DATA_SESSIONS]
+    sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
     assert len(sessions) == 1
     session = sessions.get("key")

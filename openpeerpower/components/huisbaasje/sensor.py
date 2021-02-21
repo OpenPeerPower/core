@@ -14,7 +14,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ):
     """Set up the sensor platform."""
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
     user_id = config_entry.data[CONF_ID]
 
     async_add_entities(

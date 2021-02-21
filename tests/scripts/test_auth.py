@@ -12,7 +12,7 @@ from tests.common import register_auth_provider
 @pytest.fixture
 def provider.opp):
     """Open Peer Power auth provider."""
-    provider =.opp.loop.run_until_complete(
+    provider = opp.loop.run_until_complete(
         register_auth_provider.opp, {"type": "openpeerpowerr"})
     )
    .opp.loop.run_until_complete(provider.async_initialize())

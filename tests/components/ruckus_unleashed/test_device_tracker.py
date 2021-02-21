@@ -37,7 +37,7 @@ async def test_client_connected.opp):
         await.opp.async_block_till_done()
         await.opp.helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
 
-    test_client =.opp.states.get(TEST_CLIENT_ENTITY_ID)
+    test_client = opp.states.get(TEST_CLIENT_ENTITY_ID)
     assert test_client.state == STATE_HOME
 
 
@@ -54,7 +54,7 @@ async def test_client_disconnected.opp):
         await.opp.async_block_till_done()
 
         await.opp.helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
-        test_client =.opp.states.get(TEST_CLIENT_ENTITY_ID)
+        test_client = opp.states.get(TEST_CLIENT_ENTITY_ID)
         assert test_client.state == STATE_NOT_HOME
 
 
@@ -71,7 +71,7 @@ async def test_clients_update_failed.opp):
         await.opp.async_block_till_done()
 
         await.opp.helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
-        test_client =.opp.states.get(TEST_CLIENT_ENTITY_ID)
+        test_client = opp.states.get(TEST_CLIENT_ENTITY_ID)
         assert test_client.state == STATE_UNAVAILABLE
 
 
@@ -109,7 +109,7 @@ async def test_restoring_clients.opp):
         await.opp.config_entries.async_setup(entry.entry_id)
         await.opp.async_block_till_done()
 
-    device =.opp.states.get(TEST_CLIENT_ENTITY_ID)
+    device = opp.states.get(TEST_CLIENT_ENTITY_ID)
     assert device is not None
     assert device.state == STATE_NOT_HOME
 

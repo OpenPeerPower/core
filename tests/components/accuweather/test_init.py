@@ -22,7 +22,7 @@ async def test_async_setup_entry.opp):
     """Test a successful setup entry."""
     await init_integration.opp)
 
-    state =.opp.states.get("weather.home")
+    state = opp.states.get("weather.home")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.state == "sunny"

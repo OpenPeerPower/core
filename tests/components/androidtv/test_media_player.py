@@ -141,7 +141,7 @@ async def _test_reconnect.opp, caplog, config):
         await.opp.async_block_till_done()
 
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
 
@@ -153,7 +153,7 @@ async def _test_reconnect.opp, caplog, config):
     ], patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
         for _ in range(5):
             await.opp.helpers.entity_component.async_update_entity(entity_id)
-            state =.opp.states.get(entity_id)
+            state = opp.states.get(entity_id)
             assert state is not None
             assert state.state == STATE_UNAVAILABLE
 
@@ -167,7 +167,7 @@ async def _test_reconnect.opp, caplog, config):
     )[patch_key], patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
         await.opp.helpers.entity_component.async_update_entity(entity_id)
 
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_STANDBY
 
@@ -200,7 +200,7 @@ async def _test_adb_shell_returns_none.opp, config):
         assert await async_setup_component.opp, DOMAIN, config)
         await.opp.async_block_till_done()
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state != STATE_UNAVAILABLE
 
@@ -208,7 +208,7 @@ async def _test_adb_shell_returns_none.opp, config):
         patch_key
     ], patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_UNAVAILABLE
 
@@ -298,7 +298,7 @@ async def test_adb_shell_returns_none_firetv_adb_server.opp):
 async def test_setup_with_adbkey.opp):
     """Test that setup succeeds when using an ADB key."""
     config = copy.deepcopy(CONFIG_ANDROIDTV_PYTHON_ADB)
-    config[DOMAIN][CONF_ADBKEY] =.opp.config.path("user_provided_adbkey")
+    config[DOMAIN][CONF_ADBKEY] = opp.config.path("user_provided_adbkey")
     patch_key, entity_id = _setup(config)
 
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
@@ -309,7 +309,7 @@ async def test_setup_with_adbkey.opp):
         assert await async_setup_component.opp, DOMAIN, config)
         await.opp.async_block_till_done()
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
 
@@ -330,7 +330,7 @@ async def _test_sources.opp, config0):
         assert await async_setup_component.opp, DOMAIN, config)
         await.opp.async_block_till_done()
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
 
@@ -354,7 +354,7 @@ async def _test_sources.opp, config0):
 
     with patch_update:
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_PLAYING
         assert state.attributes["source"] == "TEST 1"
@@ -380,7 +380,7 @@ async def _test_sources.opp, config0):
 
     with patch_update:
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_PLAYING
         assert state.attributes["source"] == "com.app.test2"
@@ -415,7 +415,7 @@ async def _test_exclude_sources.opp, config0, expected_sources):
         assert await async_setup_component.opp, DOMAIN, config)
         await.opp.async_block_till_done()
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
 
@@ -451,7 +451,7 @@ async def _test_exclude_sources.opp, config0, expected_sources):
 
     with patch_update:
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_PLAYING
         assert state.attributes["source"] == "TEST 1"
@@ -490,7 +490,7 @@ async def _test_select_source.opp, config0, source, expected_arg, method_patch):
         assert await async_setup_component.opp, DOMAIN, config)
         await.opp.async_block_till_done()
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
 
@@ -708,7 +708,7 @@ async def _test_setup_fail.opp, config):
         assert await async_setup_component.opp, DOMAIN, config)
         await.opp.async_block_till_done()
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is None
 
     return True
@@ -743,7 +743,7 @@ async def test_setup_two_devices.opp):
 
         for entity_id in ["media_player.android_tv", "media_player.fire_tv"]:
             await.opp.helpers.entity_component.async_update_entity(entity_id)
-            state =.opp.states.get(entity_id)
+            state = opp.states.get(entity_id)
             assert state is not None
             assert state.state == STATE_OFF
 
@@ -757,7 +757,7 @@ async def test_setup_same_device_twice.opp):
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
 
     assert.opp.services.has_service(ANDROIDTV_DOMAIN, SERVICE_ADB_COMMAND)
@@ -792,7 +792,7 @@ async def test_adb_command.opp):
         )
 
         patch_shell.assert_called_with(command)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.attributes["adb_response"] == response
 
@@ -821,7 +821,7 @@ async def test_adb_command_unicode_decode_error.opp):
         )
 
         # patch_shell.assert_called_with(command)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.attributes["adb_response"] is None
 
@@ -850,7 +850,7 @@ async def test_adb_command_key.opp):
         )
 
         patch_shell.assert_called_with(f"input keyevent {KEYS[command]}")
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.attributes["adb_response"] is None
 
@@ -880,7 +880,7 @@ async def test_adb_command_get_properties.opp):
         )
 
         patch_get_props.assert_called()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.attributes["adb_response"] == str(response)
 
@@ -909,7 +909,7 @@ async def test_learn_sendevent.opp):
             )
 
             patch_learn_sendevent.assert_called()
-            state =.opp.states.get(entity_id)
+            state = opp.states.get(entity_id)
             assert state is not None
             assert state.attributes["adb_response"] == response
 
@@ -926,7 +926,7 @@ async def test_update_lock_not_acquired.opp):
 
     with patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
 
@@ -936,13 +936,13 @@ async def test_update_lock_not_acquired.opp):
     ):
         with patchers.patch_shell(SHELL_RESPONSE_STANDBY)[patch_key]:
             await.opp.helpers.entity_component.async_update_entity(entity_id)
-            state =.opp.states.get(entity_id)
+            state = opp.states.get(entity_id)
             assert state is not None
             assert state.state == STATE_OFF
 
     with patchers.patch_shell(SHELL_RESPONSE_STANDBY)[patch_key]:
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_STANDBY
 
@@ -1100,7 +1100,7 @@ async def test_get_image.opp,.opp_ws_client):
         msg = await client.receive_json()
 
         # The device is unavailable, but getting the media image did not cause an exception
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_UNAVAILABLE
 
@@ -1237,19 +1237,19 @@ async def test_exception.opp):
         await.opp.async_block_till_done()
 
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
 
         # When an unforessen exception occurs, we close the ADB connection and raise the exception
         with patchers.PATCH_ANDROIDTV_UPDATE_EXCEPTION, pytest.raises(Exception):
             await.opp.helpers.entity_component.async_update_entity(entity_id)
-            state =.opp.states.get(entity_id)
+            state = opp.states.get(entity_id)
             assert state is not None
             assert state.state == STATE_UNAVAILABLE
 
         # On the next update, HA will reconnect to the device
         await.opp.helpers.entity_component.async_update_entity(entity_id)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF

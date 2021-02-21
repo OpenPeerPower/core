@@ -53,7 +53,7 @@ def find_coordinates(
    .opp: OpenPeerPowerType, entity_id: str, recursion_history: Optional[list] = None
 ) -> Optional[str]:
     """Find the gps coordinates of the entity in the form of '90.000,180.000'."""
-    entity_state =.opp.states.get(entity_id)
+    entity_state = opp.states.get(entity_id)
 
     if entity_state is None:
         _LOGGER.error("Unable to find entity %s", entity_id)
@@ -64,7 +64,7 @@ def find_coordinates(
         return _get_location_from_attributes(entity_state)
 
     # Check if device is in a zone
-    zone_entity =.opp.states.get(f"zone.{entity_state.state}")
+    zone_entity = opp.states.get(f"zone.{entity_state.state}")
     if has_location(zone_entity):  # type: ignore
         _LOGGER.debug(
             "%s is in %s, getting zone location", entity_id, zone_entity.entity_id  # type: ignore
@@ -82,7 +82,7 @@ def find_coordinates(
         )
         return None
     _LOGGER.debug("Getting nested entity for state: %s", entity_state.state)
-    nested_entity =.opp.states.get(entity_state.state)
+    nested_entity = opp.states.get(entity_state.state)
     if nested_entity is not None:
         _LOGGER.debug("Resolving nested entity_id: %s", entity_state.state)
         return find_coordinates.opp, entity_state.state, recursion_history)

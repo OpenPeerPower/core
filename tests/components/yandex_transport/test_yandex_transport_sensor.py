@@ -69,20 +69,20 @@ async def test_setup_platform_invalid_config.opp, mock_requester):
 async def test_name.opp, mock_requester):
     """Return the name if set in the configuration."""
     await assert_setup_sensor.opp, TEST_CONFIG)
-    state =.opp.states.get("sensor.test_name")
+    state = opp.states.get("sensor.test_name")
     assert state.name == TEST_CONFIG["sensor"][CONF_NAME]
 
 
 async def test_state.opp, mock_requester):
     """Return the contents of _state."""
     await assert_setup_sensor.opp, TEST_CONFIG)
-    state =.opp.states.get("sensor.test_name")
+    state = opp.states.get("sensor.test_name")
     assert state.state == RESULT_STATE
 
 
 async def test_filtered_attributes.opp, mock_requester):
     """Return the contents of attributes."""
     await assert_setup_sensor.opp, TEST_CONFIG)
-    state =.opp.states.get("sensor.test_name")
+    state = opp.states.get("sensor.test_name")
     state_attrs = {key: state.attributes[key] for key in FILTERED_ATTRS}
     assert state_attrs == FILTERED_ATTRS

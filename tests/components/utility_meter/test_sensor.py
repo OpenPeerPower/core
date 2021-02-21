@@ -62,17 +62,17 @@ async def test_state.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.energy_bill_onpeak")
+    state = opp.states.get("sensor.energy_bill_onpeak")
     assert state is not None
     assert state.state == "0"
     assert state.attributes.get("status") == COLLECTING
 
-    state =.opp.states.get("sensor.energy_bill_midpeak")
+    state = opp.states.get("sensor.energy_bill_midpeak")
     assert state is not None
     assert state.state == "0"
     assert state.attributes.get("status") == PAUSED
 
-    state =.opp.states.get("sensor.energy_bill_offpeak")
+    state = opp.states.get("sensor.energy_bill_offpeak")
     assert state is not None
     assert state.state == "0"
     assert state.attributes.get("status") == PAUSED
@@ -87,17 +87,17 @@ async def test_state.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.energy_bill_onpeak")
+    state = opp.states.get("sensor.energy_bill_onpeak")
     assert state is not None
     assert state.state == "1"
     assert state.attributes.get("status") == COLLECTING
 
-    state =.opp.states.get("sensor.energy_bill_midpeak")
+    state = opp.states.get("sensor.energy_bill_midpeak")
     assert state is not None
     assert state.state == "0"
     assert state.attributes.get("status") == PAUSED
 
-    state =.opp.states.get("sensor.energy_bill_offpeak")
+    state = opp.states.get("sensor.energy_bill_offpeak")
     assert state is not None
     assert state.state == "0"
     assert state.attributes.get("status") == PAUSED
@@ -121,17 +121,17 @@ async def test_state.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.energy_bill_onpeak")
+    state = opp.states.get("sensor.energy_bill_onpeak")
     assert state is not None
     assert state.state == "1"
     assert state.attributes.get("status") == PAUSED
 
-    state =.opp.states.get("sensor.energy_bill_midpeak")
+    state = opp.states.get("sensor.energy_bill_midpeak")
     assert state is not None
     assert state.state == "0"
     assert state.attributes.get("status") == PAUSED
 
-    state =.opp.states.get("sensor.energy_bill_offpeak")
+    state = opp.states.get("sensor.energy_bill_offpeak")
     assert state is not None
     assert state.state == "3"
     assert state.attributes.get("status") == COLLECTING
@@ -143,7 +143,7 @@ async def test_state.opp):
         blocking=True,
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.energy_bill_midpeak")
+    state = opp.states.get("sensor.energy_bill_midpeak")
     assert state is not None
     assert state.state == "100"
 
@@ -154,7 +154,7 @@ async def test_state.opp):
         blocking=True,
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.energy_bill_midpeak")
+    state = opp.states.get("sensor.energy_bill_midpeak")
     assert state is not None
     assert state.state == "0.123"
 
@@ -196,11 +196,11 @@ async def test_restore_state.opp):
     await.opp.async_block_till_done()
 
     # restore from cache
-    state =.opp.states.get("sensor.energy_bill_onpeak")
+    state = opp.states.get("sensor.energy_bill_onpeak")
     assert state.state == "3"
     assert state.attributes.get("status") == PAUSED
 
-    state =.opp.states.get("sensor.energy_bill_offpeak")
+    state = opp.states.get("sensor.energy_bill_offpeak")
     assert state.state == "6"
     assert state.attributes.get("status") == COLLECTING
 
@@ -208,13 +208,13 @@ async def test_restore_state.opp):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("utility_meter.energy_bill")
+    state = opp.states.get("utility_meter.energy_bill")
     assert state.state == "onpeak"
 
-    state =.opp.states.get("sensor.energy_bill_onpeak")
+    state = opp.states.get("sensor.energy_bill_onpeak")
     assert state.attributes.get("status") == COLLECTING
 
-    state =.opp.states.get("sensor.energy_bill_offpeak")
+    state = opp.states.get("sensor.energy_bill_offpeak")
     assert state.attributes.get("status") == PAUSED
 
 
@@ -247,7 +247,7 @@ async def test_net_consumption.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.energy_bill")
+    state = opp.states.get("sensor.energy_bill")
     assert state is not None
 
     assert state.state == "-1"
@@ -282,7 +282,7 @@ async def test_non_net_consumption.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.energy_bill")
+    state = opp.states.get("sensor.energy_bill")
     assert state is not None
 
     assert state.state == "0"
@@ -342,7 +342,7 @@ async def _test_self_reset.opp, config, start_time, expect_reset=True):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.energy_bill")
+    state = opp.states.get("sensor.energy_bill")
     if expect_reset:
         assert state.attributes.get("last_period") == "2"
         assert state.state == "3"

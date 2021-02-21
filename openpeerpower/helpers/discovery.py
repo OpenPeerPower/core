@@ -54,7 +54,7 @@ def async_listen(
     async def discovery_event_listener(event: core.Event) -> None:
         """Listen for discovery events."""
         if ATTR_SERVICE in event.data and event.data[ATTR_SERVICE] in service:
-            task =.opp.async_run_opp_job(
+            task = opp.async_run_opp_job(
                 job, event.data[ATTR_SERVICE], event.data.get(ATTR_DISCOVERED)
             )
             if task:
@@ -132,7 +132,7 @@ def async_listen_platform(
         if not platform:
             return
 
-        task =.opp.async_run_opp_job(job, platform, event.data.get(ATTR_DISCOVERED))
+        task = opp.async_run_opp_job(job, platform, event.data.get(ATTR_DISCOVERED))
         if task:
             await task
 

@@ -70,7 +70,7 @@ async def test_minimal_setup.opp):
     config = {DOMAIN: {"id": "1234", "name": "test person"}}
     assert await async_setup_component.opp, DOMAIN, config)
 
-    state =.opp.states.get("person.test_person")
+    state = opp.states.get("person.test_person")
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get(ATTR_LATITUDE) is None
     assert state.attributes.get(ATTR_LONGITUDE) is None
@@ -93,11 +93,11 @@ async def test_setup_no_name.opp):
 
 async def test_setup_user_id.opp,.opp_admin_user):
     """Test config with user id."""
-    user_id =.opp_admin_user.id
+    user_id = opp_admin_user.id
     config = {DOMAIN: {"id": "1234", "name": "test person", "user_id": user_id}}
     assert await async_setup_component.opp, DOMAIN, config)
 
-    state =.opp.states.get("person.test_person")
+    state = opp.states.get("person.test_person")
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get(ATTR_ID) == "1234"
     assert state.attributes.get(ATTR_LATITUDE) is None
@@ -108,7 +108,7 @@ async def test_setup_user_id.opp,.opp_admin_user):
 
 async def test_valid_invalid_user_ids.opp,.opp_admin_user):
     """Test a person with valid user id and a person with invalid user id ."""
-    user_id =.opp_admin_user.id
+    user_id = opp_admin_user.id
     config = {
         DOMAIN: [
             {"id": "1234", "name": "test valid user", "user_id": user_id},
@@ -117,21 +117,21 @@ async def test_valid_invalid_user_ids.opp,.opp_admin_user):
     }
     assert await async_setup_component.opp, DOMAIN, config)
 
-    state =.opp.states.get("person.test_valid_user")
+    state = opp.states.get("person.test_valid_user")
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get(ATTR_ID) == "1234"
     assert state.attributes.get(ATTR_LATITUDE) is None
     assert state.attributes.get(ATTR_LONGITUDE) is None
     assert state.attributes.get(ATTR_SOURCE) is None
     assert state.attributes.get(ATTR_USER_ID) == user_id
-    state =.opp.states.get("person.test_bad_user")
+    state = opp.states.get("person.test_bad_user")
     assert state is None
 
 
 async def test_setup_tracker.opp,.opp_admin_user):
     """Test set up person with one device tracker."""
    .opp.state = CoreState.not_running
-    user_id =.opp_admin_user.id
+    user_id = opp_admin_user.id
     config = {
         DOMAIN: {
             "id": "1234",
@@ -142,7 +142,7 @@ async def test_setup_tracker.opp,.opp_admin_user):
     }
     assert await async_setup_component.opp, DOMAIN, config)
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get(ATTR_ID) == "1234"
     assert state.attributes.get(ATTR_LATITUDE) is None
@@ -153,13 +153,13 @@ async def test_setup_tracker.opp,.opp_admin_user):
    .opp.states.async_set(DEVICE_TRACKER, "home")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == "home"
     assert state.attributes.get(ATTR_ID) == "1234"
     assert state.attributes.get(ATTR_LATITUDE) is None
@@ -174,7 +174,7 @@ async def test_setup_tracker.opp,.opp_admin_user):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == "not_home"
     assert state.attributes.get(ATTR_ID) == "1234"
     assert state.attributes.get(ATTR_LATITUDE) == 10.123456
@@ -187,7 +187,7 @@ async def test_setup_tracker.opp,.opp_admin_user):
 async def test_setup_two_trackers.opp,.opp_admin_user):
     """Test set up person with two device trackers."""
    .opp.state = CoreState.not_running
-    user_id =.opp_admin_user.id
+    user_id = opp_admin_user.id
     config = {
         DOMAIN: {
             "id": "1234",
@@ -198,7 +198,7 @@ async def test_setup_two_trackers.opp,.opp_admin_user):
     }
     assert await async_setup_component.opp, DOMAIN, config)
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get(ATTR_ID) == "1234"
     assert state.attributes.get(ATTR_LATITUDE) is None
@@ -213,7 +213,7 @@ async def test_setup_two_trackers.opp,.opp_admin_user):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == "home"
     assert state.attributes.get(ATTR_ID) == "1234"
     assert state.attributes.get(ATTR_LATITUDE) is None
@@ -238,7 +238,7 @@ async def test_setup_two_trackers.opp,.opp_admin_user):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == "not_home"
     assert state.attributes.get(ATTR_ID) == "1234"
     assert state.attributes.get(ATTR_LATITUDE) == 12.123456
@@ -252,7 +252,7 @@ async def test_setup_two_trackers.opp,.opp_admin_user):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == "zone1"
     assert state.attributes.get(ATTR_SOURCE) == DEVICE_TRACKER_2
 
@@ -265,7 +265,7 @@ async def test_setup_two_trackers.opp,.opp_admin_user):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == "home"
     assert state.attributes.get(ATTR_SOURCE) == DEVICE_TRACKER
 
@@ -273,7 +273,7 @@ async def test_setup_two_trackers.opp,.opp_admin_user):
 async def test_ignore_unavailable_states.opp,.opp_admin_user):
     """Test set up person with two device trackers, one unavailable."""
    .opp.state = CoreState.not_running
-    user_id =.opp_admin_user.id
+    user_id = opp_admin_user.id
     config = {
         DOMAIN: {
             "id": "1234",
@@ -284,7 +284,7 @@ async def test_ignore_unavailable_states.opp,.opp_admin_user):
     }
     assert await async_setup_component.opp, DOMAIN, config)
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -295,27 +295,27 @@ async def test_ignore_unavailable_states.opp,.opp_admin_user):
     await.opp.async_block_till_done()
 
     # Unknown, as only 1 device tracker has a state, but we ignore that one
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
 
    .opp.states.async_set(DEVICE_TRACKER_2, "not_home")
     await.opp.async_block_till_done()
 
     # Take state of tracker 2
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == "not_home"
 
     # state 1 is newer but ignored, keep tracker 2 state
    .opp.states.async_set(DEVICE_TRACKER, "unknown")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == "not_home"
 
 
 async def test_restore_home_state.opp,.opp_admin_user):
     """Test that the state is restored for a person on startup."""
-    user_id =.opp_admin_user.id
+    user_id = opp_admin_user.id
     attrs = {
         ATTR_ID: "1234",
         ATTR_LATITUDE: 10.12346,
@@ -338,7 +338,7 @@ async def test_restore_home_state.opp,.opp_admin_user):
     }
     assert await async_setup_component.opp, DOMAIN, config)
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == "home"
     assert state.attributes.get(ATTR_ID) == "1234"
     assert state.attributes.get(ATTR_LATITUDE) == 10.12346
@@ -376,32 +376,32 @@ async def test_create_person_during_run.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == "home"
 
 
 async def test_load_person_storage.opp,.opp_admin_user, storage_setup):
     """Test set up person from storage."""
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get(ATTR_ID) == "1234"
     assert state.attributes.get(ATTR_LATITUDE) is None
     assert state.attributes.get(ATTR_LONGITUDE) is None
     assert state.attributes.get(ATTR_SOURCE) is None
-    assert state.attributes.get(ATTR_USER_ID) ==.opp_admin_user.id
+    assert state.attributes.get(ATTR_USER_ID) == opp_admin_user.id
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
    .opp.states.async_set(DEVICE_TRACKER, "home")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.state == "home"
     assert state.attributes.get(ATTR_ID) == "1234"
     assert state.attributes.get(ATTR_LATITUDE) is None
     assert state.attributes.get(ATTR_LONGITUDE) is None
     assert state.attributes.get(ATTR_SOURCE) == DEVICE_TRACKER
-    assert state.attributes.get(ATTR_USER_ID) ==.opp_admin_user.id
+    assert state.attributes.get(ATTR_USER_ID) == opp_admin_user.id
 
 
 async def test_load_person_storage_two_nonlinked.opp,.opp_storage):
@@ -435,7 +435,7 @@ async def test_load_person_storage_two_nonlinked.opp,.opp_storage):
 
 async def test_ws_list.opp,.opp_ws_client, storage_setup):
     """Test listing via WS."""
-    manager =.opp.data[DOMAIN][1]
+    manager = opp.data[DOMAIN][1]
 
     client = await.opp_ws_client.opp)
 
@@ -449,7 +449,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
 
 async def test_ws_create.opp,.opp_ws_client, storage_setup,.opp_read_only_user):
     """Test creating via WS."""
-    manager =.opp.data[DOMAIN][1]
+    manager = opp.data[DOMAIN][1]
 
     client = await.opp_ws_client.opp)
 
@@ -477,7 +477,7 @@ async def test_ws_create_requires_admin(
 ):
     """Test creating via WS requires admin."""
    .opp_admin_user.groups = []
-    manager =.opp.data[DOMAIN][1]
+    manager = opp.data[DOMAIN][1]
 
     client = await.opp_ws_client.opp)
 
@@ -500,7 +500,7 @@ async def test_ws_create_requires_admin(
 
 async def test_ws_update.opp,.opp_ws_client, storage_setup):
     """Test updating via WS."""
-    manager =.opp.data[DOMAIN][1]
+    manager = opp.data[DOMAIN][1]
 
     client = await.opp_ws_client.opp)
     persons = manager.async_items()
@@ -541,7 +541,7 @@ async def test_ws_update.opp,.opp_ws_client, storage_setup):
     assert persons[0]["user_id"] is None
     assert persons[0]["picture"] == "/bla"
 
-    state =.opp.states.get("person.tracked_person")
+    state = opp.states.get("person.tracked_person")
     assert state.name == "Updated Name"
 
 
@@ -550,7 +550,7 @@ async def test_ws_update_require_admin(
 ):
     """Test updating via WS requires admin."""
    .opp_admin_user.groups = []
-    manager =.opp.data[DOMAIN][1]
+    manager = opp.data[DOMAIN][1]
 
     client = await.opp_ws_client.opp)
     original = dict(manager.async_items()[0])
@@ -574,7 +574,7 @@ async def test_ws_update_require_admin(
 
 async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     """Test deleting via WS."""
-    manager =.opp.data[DOMAIN][1]
+    manager = opp.data[DOMAIN][1]
 
     client = await.opp_ws_client.opp)
     persons = manager.async_items()
@@ -598,7 +598,7 @@ async def test_ws_delete_require_admin(
 ):
     """Test deleting via WS requires admin."""
    .opp_admin_user.groups = []
-    manager =.opp.data[DOMAIN][1]
+    manager = opp.data[DOMAIN][1]
 
     client = await.opp_ws_client.opp)
 
@@ -666,7 +666,7 @@ async def test_update_person_when_user_removed(
    .opp, storage_setup,.opp_read_only_user
 ):
     """Update person when user is removed."""
-    storage_collection =.opp.data[DOMAIN][1]
+    storage_collection = opp.data[DOMAIN][1]
 
     person = await storage_collection.async_create_item(
         {"name": "Hello", "user_id":.opp_read_only_user.id}
@@ -680,7 +680,7 @@ async def test_update_person_when_user_removed(
 
 async def test_removing_device_tracker.opp, storage_setup):
     """Test we automatically remove removed device trackers."""
-    storage_collection =.opp.data[DOMAIN][1]
+    storage_collection = opp.data[DOMAIN][1]
     reg = await entity_registry.async_get_registry.opp)
     entry = reg.async_get_or_create(
         "device_tracker", "mobile_app", "bla", suggested_object_id="pixel"
@@ -698,7 +698,7 @@ async def test_removing_device_tracker.opp, storage_setup):
 
 async def test_add_user_device_tracker.opp, storage_setup,.opp_read_only_user):
     """Test adding a device tracker to a person tied to a user."""
-    storage_collection =.opp.data[DOMAIN][1]
+    storage_collection = opp.data[DOMAIN][1]
     pers = await storage_collection.async_create_item(
         {
             "name": "Hello",
@@ -732,9 +732,9 @@ async def test_reload.opp,.opp_admin_user):
 
     assert len.opp.states.async_entity_ids()) == 2
 
-    state_1 =.opp.states.get("person.person_1")
-    state_2 =.opp.states.get("person.person_2")
-    state_3 =.opp.states.get("person.person_3")
+    state_1 = opp.states.get("person.person_1")
+    state_2 = opp.states.get("person.person_2")
+    state_3 = opp.states.get("person.person_3")
 
     assert state_1 is not None
     assert state_1.name == "Person 1"
@@ -762,9 +762,9 @@ async def test_reload.opp,.opp_admin_user):
 
     assert len.opp.states.async_entity_ids()) == 2
 
-    state_1 =.opp.states.get("person.person_1")
-    state_2 =.opp.states.get("person.person_2")
-    state_3 =.opp.states.get("person.person_3")
+    state_1 = opp.states.get("person.person_1")
+    state_2 = opp.states.get("person.person_2")
+    state_3 = opp.states.get("person.person_3")
 
     assert state_1 is not None
     assert state_1.name == "Person 1-updated"

@@ -77,7 +77,7 @@ async def test_device_tracker.opp, zha_device_joined_restored, zigpy_device_dt):
 
     assert.opp.states.get(entity_id).state == STATE_HOME
 
-    entity =.opp.data[DOMAIN].get_entity(entity_id)
+    entity = opp.data[DOMAIN].get_entity(entity_id)
 
     assert entity.is_connected is True
     assert entity.source_type == SOURCE_TYPE_ROUTER

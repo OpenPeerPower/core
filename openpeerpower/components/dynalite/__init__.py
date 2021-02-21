@@ -255,7 +255,7 @@ async def async_setup.opp: OpenPeerPower, config: Dict[str, Any]) -> bool:
 async def async_entry_changed.opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Reload entry since the data has changed."""
     LOGGER.debug("Reconfiguring entry %s", entry.data)
-    bridge =.opp.data[DOMAIN][entry.entry_id]
+    bridge = opp.data[DOMAIN][entry.entry_id]
     bridge.reload_config(entry.data)
     LOGGER.debug("Reconfiguring entry finished %s", entry.data)
 

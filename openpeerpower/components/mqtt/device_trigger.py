@@ -201,7 +201,7 @@ async def async_setup_trigger.opp, config, config_entry, discovery_data):
             _LOGGER.info("Removing trigger: %s", discovery_op.h)
             debug_info.remove_trigger_discovery_data.opp, discovery_op.h)
             if discovery_id in.opp.data[DEVICE_TRIGGERS]:
-                device_trigger =.opp.data[DEVICE_TRIGGERS][discovery_id]
+                device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
                 device_trigger.detach_trigger()
                 clear_discovery_op.h.opp, discovery_op.h)
                 remove_signal()
@@ -212,7 +212,7 @@ async def async_setup_trigger.opp, config, config_entry, discovery_data):
             debug_info.update_trigger_discovery_data.opp, discovery_op.h, payload)
             config = TRIGGER_DISCOVERY_SCHEMA(payload)
             await _update_device.opp, config_entry, config)
-            device_trigger =.opp.data[DEVICE_TRIGGERS][discovery_id]
+            device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
             await device_trigger.update_trigger(config, discovery_op.h, remove_signal)
         async_dispatcher_send.opp, MQTT_DISCOVERY_DONE.format(discovery_op.h), None)
 
@@ -261,7 +261,7 @@ async def async_device_removed.opp: OpenPeerPower, device_id: str):
     """Handle the removal of a device."""
     triggers = await async_get_triggers.opp, device_id)
     for trig in triggers:
-        device_trigger =.opp.data[DEVICE_TRIGGERS].pop(trig[CONF_DISCOVERY_ID])
+        device_trigger = opp.data[DEVICE_TRIGGERS].pop(trig[CONF_DISCOVERY_ID])
         if device_trigger:
             discovery_op.h = device_trigger.discovery_data[ATTR_DISCOVERY_HASH]
             discovery_topic = device_trigger.discovery_data[ATTR_DISCOVERY_TOPIC]

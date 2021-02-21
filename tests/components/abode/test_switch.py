@@ -38,7 +38,7 @@ async def test_attributes.opp):
     """Test the switch attributes are correct."""
     await setup_platform.opp, SWITCH_DOMAIN)
 
-    state =.opp.states.get(DEVICE_ID)
+    state = opp.states.get(DEVICE_ID)
     assert state.state == STATE_OFF
 
 
@@ -72,7 +72,7 @@ async def test_automation_attributes.opp):
     """Test the automation attributes are correct."""
     await setup_platform.opp, SWITCH_DOMAIN)
 
-    state =.opp.states.get(AUTOMATION_ID)
+    state = opp.states.get(AUTOMATION_ID)
     # State is set based on "enabled" key in automation JSON.
     assert state.state == STATE_ON
 

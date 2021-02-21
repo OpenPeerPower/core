@@ -124,7 +124,7 @@ async def test_simple_climate_device.opp, aioclient_mock):
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
     assert len.opp.states.async_all()) == 2
-    climate_thermostat =.opp.states.get("climate.thermostat")
+    climate_thermostat = opp.states.get("climate.thermostat")
     assert climate_thermostat.state == HVAC_MODE_HEAT
     assert climate_thermostat.attributes["hvac_modes"] == [
         HVAC_MODE_HEAT,
@@ -207,7 +207,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
     assert len.opp.states.async_all()) == 2
-    climate_thermostat =.opp.states.get("climate.thermostat")
+    climate_thermostat = opp.states.get("climate.thermostat")
     assert climate_thermostat.state == HVAC_MODE_AUTO
     assert climate_thermostat.attributes["hvac_modes"] == [
         HVAC_MODE_AUTO,
@@ -334,7 +334,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
 
     await.opp.config_entries.async_unload(config_entry.entry_id)
 
-    states =.opp.states.async_all()
+    states = opp.states.async_all()
     assert len.opp.states.async_all()) == 2
     for state in states:
         assert state.state == STATE_UNAVAILABLE
@@ -380,7 +380,7 @@ async def test_climate_device_with_cooling_support.opp, aioclient_mock):
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
     assert len.opp.states.async_all()) == 2
-    climate_thermostat =.opp.states.get("climate.zen_01")
+    climate_thermostat = opp.states.get("climate.zen_01")
     assert climate_thermostat.state == HVAC_MODE_HEAT
     assert climate_thermostat.attributes["hvac_modes"] == [
         HVAC_MODE_AUTO,
@@ -457,7 +457,7 @@ async def test_climate_device_with_fan_support.opp, aioclient_mock):
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
     assert len.opp.states.async_all()) == 2
-    climate_thermostat =.opp.states.get("climate.zen_01")
+    climate_thermostat = opp.states.get("climate.zen_01")
     assert climate_thermostat.state == HVAC_MODE_HEAT
     assert climate_thermostat.attributes["fan_mode"] == FAN_AUTO
     assert climate_thermostat.attributes["fan_modes"] == [
@@ -586,7 +586,7 @@ async def test_climate_device_with_preset.opp, aioclient_mock):
 
     assert len.opp.states.async_all()) == 2
 
-    climate_zen_01 =.opp.states.get("climate.zen_01")
+    climate_zen_01 = opp.states.get("climate.zen_01")
     assert climate_zen_01.state == HVAC_MODE_HEAT
     assert climate_zen_01.attributes["current_temperature"] == 23.2
     assert climate_zen_01.attributes["temperature"] == 22.2

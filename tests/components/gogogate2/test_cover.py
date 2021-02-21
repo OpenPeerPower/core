@@ -205,7 +205,7 @@ async def test_import_fail(gogogate2api_mock,.opp: OpenPeerPower) -> None:
     assert await async_setup_component.opp, COVER_DOMAIN,.opp_config)
     await.opp.async_block_till_done()
 
-    entity_ids =.opp.states.async_entity_ids(COVER_DOMAIN)
+    entity_ids = opp.states.async_entity_ids(COVER_DOMAIN)
     assert not entity_ids
 
 
@@ -250,7 +250,7 @@ async def test_import(
     assert await async_setup_component.opp, COVER_DOMAIN,.opp_config)
     await.opp.async_block_till_done()
 
-    entity_ids =.opp.states.async_entity_ids(COVER_DOMAIN)
+    entity_ids = opp.states.async_entity_ids(COVER_DOMAIN)
     assert entity_ids is not None
     assert len(entity_ids) == 3
     assert "cover.door1" in entity_ids

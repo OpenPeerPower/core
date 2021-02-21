@@ -38,7 +38,7 @@ class DiscordNotificationService(BaseNotificationService):
     def __init__(self,.opp, token):
         """Initialize the service."""
         self.token = token
-        self.opp =.opp
+        self.opp = opp
 
     def file_exists(self, filename):
         """Check if a file exists on disk and is in authorized path."""

@@ -45,7 +45,7 @@ async def test_async_step_user_success.opp: OpenPeerPower) -> None:
         }
         assert result["result"].unique_id == controller.serial_number
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert entries
 
 

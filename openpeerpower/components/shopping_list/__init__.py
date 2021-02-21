@@ -74,14 +74,14 @@ async def async_setup_entry.opp, config_entry):
 
     async def add_item_service(call):
         """Add an item with `name`."""
-        data =.opp.data[DOMAIN]
+        data = opp.data[DOMAIN]
         name = call.data.get(ATTR_NAME)
         if name is not None:
             await data.async_add(name)
 
     async def complete_item_service(call):
         """Mark the item provided via `name` as completed."""
-        data =.opp.data[DOMAIN]
+        data = opp.data[DOMAIN]
         name = call.data.get(ATTR_NAME)
         if name is None:
             return
@@ -92,7 +92,7 @@ async def async_setup_entry.opp, config_entry):
         else:
             await data.async_update(item["id"], {"name": name, "complete": True})
 
-    data =.opp.data[DOMAIN] = ShoppingData.opp)
+    data = opp.data[DOMAIN] = ShoppingData.opp)
     await data.async_load()
 
    .opp.services.async_register(
@@ -138,7 +138,7 @@ class ShoppingData:
 
     def __init__(self,.opp):
         """Initialize the shopping list."""
-        self.opp =.opp
+        self.opp = opp
         self.items = []
 
     async def async_add(self, name):

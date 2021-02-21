@@ -36,7 +36,7 @@ class AugustGateway:
         self._aiohttp_session = aiohttp_client.async_get_clientsession.opp)
         self._token_refresh_lock = asyncio.Lock()
         self._access_token_cache_file = None
-        self._opp =.opp
+        self._opp = opp
         self._config = None
         self.api = None
         self.authenticator = None

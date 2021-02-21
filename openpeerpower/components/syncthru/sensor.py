@@ -59,7 +59,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up from config entry."""
 
-    printer =.opp.data[DOMAIN][config_entry.entry_id]
+    printer = opp.data[DOMAIN][config_entry.entry_id]
 
     supp_toner = printer.toner_status(filter_supported=True)
     supp_drum = printer.drum_status(filter_supported=True)

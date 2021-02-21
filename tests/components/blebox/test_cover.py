@@ -104,7 +104,7 @@ async def test_init_gatecontroller(gatecontroller,.opp, config):
     entry = await async_setup_entity.opp, config, entity_id)
     assert entry.unique_id == "BleBox-gateController-2bee34e750b8-position"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.name == "gateController-position"
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_GATE
 
@@ -134,7 +134,7 @@ async def test_init_shutterbox(shutterbox,.opp, config):
     entry = await async_setup_entity.opp, config, entity_id)
     assert entry.unique_id == "BleBox-shutterBox-2bee34e750b8-position"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.name == "shutterBox-position"
     assert entry.device_class == DEVICE_CLASS_SHUTTER
 
@@ -164,7 +164,7 @@ async def test_init_gatebox(gatebox,.opp, config):
     entry = await async_setup_entity.opp, config, entity_id)
     assert entry.unique_id == "BleBox-gateBox-1afe34db9437-position"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.name == "gateBox-position"
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_DOOR
 
@@ -286,7 +286,7 @@ async def test_update(feature,.opp, config):
 
     await async_setup_entity.opp, config, entity_id)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_CURRENT_POSITION] == 71  # 100 - 29
     assert state.state == STATE_OPEN
 
@@ -336,7 +336,7 @@ async def test_unknown_position(shutterbox,.opp, config):
 
     await async_setup_entity.opp, config, entity_id)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == STATE_OPEN
     assert ATTR_CURRENT_POSITION not in state.attributes
 
@@ -350,7 +350,7 @@ async def test_with_stop(gatebox,.opp, config):
 
     await async_setup_entity.opp, config, entity_id)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     supported_features = state.attributes[ATTR_SUPPORTED_FEATURES]
     assert supported_features & SUPPORT_STOP
 
@@ -364,7 +364,7 @@ async def test_with_no_stop(gatebox,.opp, config):
 
     await async_setup_entity.opp, config, entity_id)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     supported_features = state.attributes[ATTR_SUPPORTED_FEATURES]
     assert not supported_features & SUPPORT_STOP
 

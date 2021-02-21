@@ -24,7 +24,7 @@ async def async_setup_platform(
     if discovery_info is None:
         return
 
-    broker =.opp.data[DOMAIN]["broker"]
+    broker = opp.data[DOMAIN]["broker"]
 
     sensors = [
         GeniusBattery(broker, d, GH_STATE_ATTR)

@@ -141,7 +141,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 def get_device.opp, values, **kwargs):
     """Create Z-Wave entity device."""
-    temp_unit =.opp.config.units.temperature_unit
+    temp_unit = opp.config.units.temperature_unit
     if values.primary.command_class == const.COMMAND_CLASS_THERMOSTAT_SETPOINT:
         return ZWaveClimateSingleSetpoint(values, temp_unit)
     if values.primary.command_class == const.COMMAND_CLASS_THERMOSTAT_MODE:

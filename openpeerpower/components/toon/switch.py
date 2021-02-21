@@ -31,7 +31,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up a Toon switches based on a config entry."""
-    coordinator =.opp.data[DOMAIN][entry.entry_id]
+    coordinator = opp.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
         [ToonProgramSwitch(coordinator), ToonHolidayModeSwitch(coordinator)]

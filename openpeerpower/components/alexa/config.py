@@ -13,7 +13,7 @@ class AbstractConfig(ABC):
 
     def __init__(self,.opp):
         """Initialize abstract config."""
-        self.opp =.opp
+        self.opp = opp
 
     @property
     def supports_auth(self):

@@ -22,11 +22,11 @@ async def test_unload_entry.opp, mock_simple_nws):
     assert DOMAIN in.opp.data
 
     assert len.opp.data[DOMAIN]) == 1
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
 
     assert await.opp.config_entries.async_unload(entries[0].entry_id)
-    entities =.opp.states.async_entity_ids(WEATHER_DOMAIN)
+    entities = opp.states.async_entity_ids(WEATHER_DOMAIN)
     assert len(entities) == 1
     for entity in entities:
         assert.opp.states.get(entity).state == STATE_UNAVAILABLE

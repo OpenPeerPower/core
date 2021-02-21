@@ -47,7 +47,7 @@ async def test_default_setup.opp, monkeypatch):
     assert create.call_args_list[0][1]["ignore"]
 
     # test default state of light loaded from config
-    light_initial =.opp.states.get(f"{DOMAIN}.test")
+    light_initial = opp.states.get(f"{DOMAIN}.test")
     assert light_initial.state == "off"
     assert light_initial.attributes["assumed_state"]
 
@@ -58,7 +58,7 @@ async def test_default_setup.opp, monkeypatch):
     event_callback({"id": "protocol_0_0", "command": "on"})
     await.opp.async_block_till_done()
 
-    light_after_first_command =.opp.states.get(f"{DOMAIN}.test")
+    light_after_first_command = opp.states.get(f"{DOMAIN}.test")
     assert light_after_first_command.state == "on"
     # also after receiving first command state not longer has to be assumed
     assert not light_after_first_command.attributes.get("assumed_state")
@@ -73,7 +73,7 @@ async def test_default_setup.opp, monkeypatch):
     event_callback({"id": "protocol_0_0", "command": "allon"})
     await.opp.async_block_till_done()
 
-    light_after_first_command =.opp.states.get(f"{DOMAIN}.test")
+    light_after_first_command = opp.states.get(f"{DOMAIN}.test")
     assert light_after_first_command.state == "on"
 
     # should respond to group command
@@ -501,31 +501,31 @@ async def test_restore_state.opp, monkeypatch):
     _, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
 
     # hybrid light must restore brightness
-    state =.opp.states.get(f"{DOMAIN}.l1")
+    state = opp.states.get(f"{DOMAIN}.l1")
     assert state
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 123
 
     # normal light do NOT must restore brightness
-    state =.opp.states.get(f"{DOMAIN}.l2")
+    state = opp.states.get(f"{DOMAIN}.l2")
     assert state
     assert state.state == STATE_ON
     assert not state.attributes.get(ATTR_BRIGHTNESS)
 
     # OFF state also restores (or not)
-    state =.opp.states.get(f"{DOMAIN}.l3")
+    state = opp.states.get(f"{DOMAIN}.l3")
     assert state
     assert state.state == STATE_OFF
 
     # not cached light must default values
-    state =.opp.states.get(f"{DOMAIN}.l4")
+    state = opp.states.get(f"{DOMAIN}.l4")
     assert state
     assert state.state == STATE_OFF
     assert state.attributes[ATTR_BRIGHTNESS] == 255
     assert state.attributes["assumed_state"]
 
     # test coverage for dimmable light
-    state =.opp.states.get(f"{DOMAIN}.l5")
+    state = opp.states.get(f"{DOMAIN}.l5")
     assert state
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 222

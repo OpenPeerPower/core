@@ -106,9 +106,9 @@ async def test_config_options.opp):
     assert count_start + 3 == len.opp.states.async_entity_ids())
     await.opp.async_block_till_done()
 
-    state_1 =.opp.states.get("counter.test_1")
-    state_2 =.opp.states.get("counter.test_2")
-    state_3 =.opp.states.get("counter.test_3")
+    state_1 = opp.states.get("counter.test_1")
+    state_2 = opp.states.get("counter.test_2")
+    state_3 = opp.states.get("counter.test_3")
 
     assert state_1 is not None
     assert state_2 is not None
@@ -134,31 +134,31 @@ async def test_methods.opp):
 
     entity_id = "counter.test_1"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert 0 == int(state.state)
 
     async_increment.opp, entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert 1 == int(state.state)
 
     async_increment.opp, entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert 2 == int(state.state)
 
     async_decrement.opp, entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert 1 == int(state.state)
 
     async_reset.opp, entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert 0 == int(state.state)
 
 
@@ -172,25 +172,25 @@ async def test_methods_with_config.opp):
 
     entity_id = "counter.test"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert 10 == int(state.state)
 
     async_increment.opp, entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert 15 == int(state.state)
 
     async_increment.opp, entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert 20 == int(state.state)
 
     async_decrement.opp, entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert 15 == int(state.state)
 
 
@@ -213,11 +213,11 @@ async def test_initial_state_overrules_restore_state.opp):
         },
     )
 
-    state =.opp.states.get("counter.test1")
+    state = opp.states.get("counter.test1")
     assert state
     assert int(state.state) == 0
 
-    state =.opp.states.get("counter.test2")
+    state = opp.states.get("counter.test2")
     assert state
     assert int(state.state) == 10
 
@@ -242,15 +242,15 @@ async def test_restore_state_overrules_initial_state.opp):
        .opp, DOMAIN, {DOMAIN: {"test1": {}, "test2": {CONF_INITIAL: 10}, "test3": {}}}
     )
 
-    state =.opp.states.get("counter.test1")
+    state = opp.states.get("counter.test1")
     assert state
     assert int(state.state) == 11
 
-    state =.opp.states.get("counter.test2")
+    state = opp.states.get("counter.test2")
     assert state
     assert int(state.state) == -22
 
-    state =.opp.states.get("counter.test3")
+    state = opp.states.get("counter.test3")
     assert state
     assert int(state.state) == 5
     assert state.attributes.get("initial") == 6
@@ -265,7 +265,7 @@ async def test_no_initial_state_and_no_restore_state.opp):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_STEP: 5}}})
 
-    state =.opp.states.get("counter.test1")
+    state = opp.states.get("counter.test1")
     assert state
     assert int(state.state) == 0
 
@@ -274,7 +274,7 @@ async def test_counter_context.opp,.opp_admin_user):
     """Test that counter context works."""
     assert await async_setup_component.opp, "counter", {"counter": {"test": {}}})
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
 
     await.opp.services.async_call(
@@ -285,10 +285,10 @@ async def test_counter_context.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state2 =.opp.states.get("counter.test")
+    state2 = opp.states.get("counter.test")
     assert state2 is not None
     assert state.state != state2.state
-    assert state2.context.user_id ==.opp_admin_user.id
+    assert state2.context.user_id == opp_admin_user.id
 
 
 async def test_counter_min.opp,.opp_admin_user):
@@ -297,7 +297,7 @@ async def test_counter_min.opp,.opp_admin_user):
        .opp, "counter", {"counter": {"test": {"minimum": "0", "initial": "0"}}}
     )
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
     assert state.state == "0"
 
@@ -309,7 +309,7 @@ async def test_counter_min.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state2 =.opp.states.get("counter.test")
+    state2 = opp.states.get("counter.test")
     assert state2 is not None
     assert state2.state == "0"
 
@@ -321,7 +321,7 @@ async def test_counter_min.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state2 =.opp.states.get("counter.test")
+    state2 = opp.states.get("counter.test")
     assert state2 is not None
     assert state2.state == "1"
 
@@ -332,7 +332,7 @@ async def test_counter_max.opp,.opp_admin_user):
        .opp, "counter", {"counter": {"test": {"maximum": "0", "initial": "0"}}}
     )
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
     assert state.state == "0"
 
@@ -344,7 +344,7 @@ async def test_counter_max.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state2 =.opp.states.get("counter.test")
+    state2 = opp.states.get("counter.test")
     assert state2 is not None
     assert state2.state == "0"
 
@@ -356,7 +356,7 @@ async def test_counter_max.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state2 =.opp.states.get("counter.test")
+    state2 = opp.states.get("counter.test")
     assert state2 is not None
     assert state2.state == "-1"
 
@@ -367,7 +367,7 @@ async def test_configure.opp,.opp_admin_user):
        .opp, "counter", {"counter": {"test": {"maximum": "10", "initial": "10"}}}
     )
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
     assert state.state == "10"
     assert 10 == state.attributes.get("maximum")
@@ -381,7 +381,7 @@ async def test_configure.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
     assert state.state == "0"
     assert 0 == state.attributes.get("maximum")
@@ -395,7 +395,7 @@ async def test_configure.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
     assert state.state == "0"
     assert state.attributes.get("maximum") is None
@@ -410,7 +410,7 @@ async def test_configure.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
     assert state.state == "5"
     assert 5 == state.attributes.get("minimum")
@@ -424,7 +424,7 @@ async def test_configure.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
     assert state.state == "5"
     assert state.attributes.get("minimum") is None
@@ -439,7 +439,7 @@ async def test_configure.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
     assert state.state == "5"
     assert 3 == state.attributes.get("step")
@@ -453,7 +453,7 @@ async def test_configure.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
     assert state.state == "6"
 
@@ -466,7 +466,7 @@ async def test_configure.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
     assert state.state == "6"
     assert 5 == state.attributes.get("initial")
@@ -487,7 +487,7 @@ async def test_configure.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state =.opp.states.get("counter.test")
+    state = opp.states.get("counter.test")
     assert state is not None
     assert state.state == "5"
     assert 5 == state.attributes.get("step")
@@ -499,7 +499,7 @@ async def test_configure.opp,.opp_admin_user):
 async def test_load_from_storage.opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
-    state =.opp.states.get(f"{DOMAIN}.from_storage")
+    state = opp.states.get(f"{DOMAIN}.from_storage")
     assert int(state.state) == 10
     assert state.attributes.get(ATTR_FRIENDLY_NAME) == "from storage"
     assert state.attributes.get(ATTR_EDITABLE)
@@ -521,12 +521,12 @@ async def test_editable_state_attribute.opp, storage_setup):
         }
     )
 
-    state =.opp.states.get(f"{DOMAIN}.from_storage")
+    state = opp.states.get(f"{DOMAIN}.from_storage")
     assert int(state.state) == 10
     assert state.attributes[ATTR_FRIENDLY_NAME] == "from storage"
     assert state.attributes[ATTR_EDITABLE] is True
 
-    state =.opp.states.get(f"{DOMAIN}.from_yaml")
+    state = opp.states.get(f"{DOMAIN}.from_yaml")
     assert int(state.state) == 5
     assert state.attributes[ATTR_EDITABLE] is False
 
@@ -571,7 +571,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
@@ -583,7 +583,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
@@ -608,7 +608,7 @@ async def test_update_min_max.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is not None
     assert int(state.state) == 15
     assert state.attributes[ATTR_MAXIMUM] == 100
@@ -629,7 +629,7 @@ async def test_update_min_max.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert int(state.state) == 19
     assert state.attributes[ATTR_MINIMUM] == 19
     assert state.attributes[ATTR_MAXIMUM] == 100
@@ -648,7 +648,7 @@ async def test_update_min_max.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert int(state.state) == 5
     assert state.attributes[ATTR_MINIMUM] == 2
     assert state.attributes[ATTR_MAXIMUM] == 5
@@ -667,7 +667,7 @@ async def test_update_min_max.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert int(state.state) == 5
     assert ATTR_MINIMUM not in state.attributes
     assert ATTR_MAXIMUM not in state.attributes
@@ -685,7 +685,7 @@ async def test_create.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{counter_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, counter_id) is None
 
@@ -695,7 +695,7 @@ async def test_create.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert int(state.state) == 0
     assert ATTR_MINIMUM not in state.attributes
     assert ATTR_MAXIMUM not in state.attributes

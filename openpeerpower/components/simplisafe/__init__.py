@@ -214,7 +214,7 @@ async def async_setup_entry.opp, config_entry):
 
     _async_save_refresh_token.opp, config_entry, api.refresh_token)
 
-    simplisafe =.opp.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = SimpliSafe(
+    simplisafe = opp.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = SimpliSafe(
        .opp, api, config_entry
     )
     await simplisafe.async_init()
@@ -350,7 +350,7 @@ class SimpliSafeWebsocket:
 
     def __init__(self,.opp, websocket):
         """Initialize."""
-        self._opp =.opp
+        self._opp = opp
         self._websocket = websocket
 
     @staticmethod
@@ -412,7 +412,7 @@ class SimpliSafe:
         """Initialize."""
         self._api = api
         self._emergency_refresh_token_used = False
-        self._opp =.opp
+        self._opp = opp
         self._system_notifications = {}
         self.config_entry = config_entry
         self.coordinator = None

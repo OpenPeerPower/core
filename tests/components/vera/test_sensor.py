@@ -41,7 +41,7 @@ async def run_sensor_test(
         setattr(vera_device, class_property, initial_value)
         update_callback(vera_device)
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state.state == state_value
         if assert_unit_of_measurement:
             assert (

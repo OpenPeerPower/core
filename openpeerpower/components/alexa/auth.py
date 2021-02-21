@@ -30,13 +30,13 @@ class Auth:
 
     def __init__(self,.opp, client_id, client_secret):
         """Initialize the Auth class."""
-        self.opp =.opp
+        self.opp = opp
 
         self.client_id = client_id
         self.client_secret = client_secret
 
         self._prefs = None
-        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
 
         self._get_token_lock = asyncio.Lock()
 

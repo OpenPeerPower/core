@@ -16,7 +16,7 @@ class ConnectXiaomiGateway:
 
     def __init__(self,.opp):
         """Initialize the entity."""
-        self._opp =.opp
+        self._opp = opp
         self._gateway_device = None
         self._gateway_info = None
 

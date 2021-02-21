@@ -18,11 +18,11 @@ async def test_remote_connection_sensor.opp):
     )
 
     # Mock test env
-    cloud =.opp.data["cloud"] = Mock()
+    cloud = opp.data["cloud"] = Mock()
     cloud.remote.certificate = None
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.remote_ui")
+    state = opp.states.get("binary_sensor.remote_ui")
     assert state is not None
     assert state.state == "unavailable"
 
@@ -32,12 +32,12 @@ async def test_remote_connection_sensor.opp):
        .opp.helpers.dispatcher.async_dispatcher_send(DISPATCHER_REMOTE_UPDATE, {})
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("binary_sensor.remote_ui")
+        state = opp.states.get("binary_sensor.remote_ui")
         assert state.state == "off"
 
         cloud.remote.is_connected = True
        .opp.helpers.dispatcher.async_dispatcher_send(DISPATCHER_REMOTE_UPDATE, {})
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("binary_sensor.remote_ui")
+        state = opp.states.get("binary_sensor.remote_ui")
         assert state.state == "on"

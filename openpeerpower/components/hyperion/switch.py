@@ -58,7 +58,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> bool:
     """Set up a Hyperion platform from config entry."""
-    entry_data =.opp.data[DOMAIN][config_entry.entry_id]
+    entry_data = opp.data[DOMAIN][config_entry.entry_id]
     server_id = config_entry.unique_id
 
     def component_to_switch_type(component: str) -> str:

@@ -86,43 +86,43 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", "StAtE_On")
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_ON
 
     async_fire_mqtt_message.opp, "state-topic", "StAtE_OfF")
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get("oscillating") is False
 
     async_fire_mqtt_message.opp, "oscillation-state-topic", "OsC_On")
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("oscillating") is True
 
     async_fire_mqtt_message.opp, "oscillation-state-topic", "OsC_OfF")
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("oscillating") is False
 
     assert state.attributes.get("speed") == fan.SPEED_OFF
 
     async_fire_mqtt_message.opp, "speed-state-topic", "speed_lOw")
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("speed") == fan.SPEED_LOW
 
     async_fire_mqtt_message.opp, "speed-state-topic", "speed_mEdium")
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("speed") == fan.SPEED_MEDIUM
 
     async_fire_mqtt_message.opp, "speed-state-topic", "speed_High")
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("speed") == fan.SPEED_HIGH
 
     async_fire_mqtt_message.opp, "speed-state-topic", "speed_OfF")
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("speed") == fan.SPEED_OFF
 
 
@@ -149,43 +149,43 @@ async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", '{"val":"ON"}')
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_ON
 
     async_fire_mqtt_message.opp, "state-topic", '{"val":"OFF"}')
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get("oscillating") is False
 
     async_fire_mqtt_message.opp, "oscillation-state-topic", '{"val":"oscillate_on"}')
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("oscillating") is True
 
     async_fire_mqtt_message.opp, "oscillation-state-topic", '{"val":"oscillate_off"}')
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("oscillating") is False
 
     assert state.attributes.get("speed") == fan.SPEED_OFF
 
     async_fire_mqtt_message.opp, "speed-state-topic", '{"val":"low"}')
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("speed") == fan.SPEED_LOW
 
     async_fire_mqtt_message.opp, "speed-state-topic", '{"val":"medium"}')
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("speed") == fan.SPEED_MEDIUM
 
     async_fire_mqtt_message.opp, "speed-state-topic", '{"val":"high"}')
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("speed") == fan.SPEED_HIGH
 
     async_fire_mqtt_message.opp, "speed-state-topic", '{"val":"off"}')
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.attributes.get("speed") == fan.SPEED_OFF
 
 
@@ -216,7 +216,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -225,7 +225,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "command-topic", "StAtE_On", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_ON
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -234,7 +234,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "command-topic", "StAtE_OfF", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -243,7 +243,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "oscillation-command-topic", "OsC_On", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -252,7 +252,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "oscillation-command-topic", "OsC_OfF", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -261,7 +261,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "speed-command-topic", "speed_lOw", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -270,7 +270,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "speed-command-topic", "speed_mEdium", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -279,7 +279,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "speed-command-topic", "speed_High", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -288,7 +288,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "speed-command-topic", "speed_OfF", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -310,14 +310,14 @@ async def test_on_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
     await common.async_turn_on.opp, "fan.test")
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "ON", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_ON
     assert state.attributes.get(ATTR_ASSUMED_STATE)
     assert state.attributes.get(fan.ATTR_SPEED) is None
@@ -326,7 +326,7 @@ async def test_on_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     await common.async_turn_off.opp, "fan.test")
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "OFF", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -335,7 +335,7 @@ async def test_on_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     mqtt_mock.async_publish.assert_any_call("command-topic", "ON", 0, False)
     mqtt_mock.async_publish.assert_any_call("speed-command-topic", "low", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_ON
     assert state.attributes.get(ATTR_ASSUMED_STATE)
     assert state.attributes.get(fan.ATTR_SPEED) == "low"
@@ -363,21 +363,21 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
     await common.async_turn_on.opp, "fan.test")
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "ON", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_ON
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
     await common.async_turn_off.opp, "fan.test")
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "OFF", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -386,7 +386,7 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
         "oscillation-command-topic", "oscillate_on", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -395,7 +395,7 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
         "oscillation-command-topic", "oscillate_off", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -404,7 +404,7 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
         "speed-command-topic", "low", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -413,7 +413,7 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
         "speed-command-topic", "medium", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -422,7 +422,7 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
         "speed-command-topic", "high", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -431,7 +431,7 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
         "speed-command-topic", "off", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -456,61 +456,61 @@ async def test_attributes.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(fan.ATTR_SPEED_LIST) == ["off", "low", "medium", "high"]
 
     await common.async_turn_on.opp, "fan.test")
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_ON
     assert state.attributes.get(ATTR_ASSUMED_STATE)
     assert state.attributes.get(fan.ATTR_SPEED) is None
     assert state.attributes.get(fan.ATTR_OSCILLATING) is None
 
     await common.async_turn_off.opp, "fan.test")
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
     assert state.attributes.get(fan.ATTR_SPEED) is None
     assert state.attributes.get(fan.ATTR_OSCILLATING) is None
 
     await common.async_oscillate.opp, "fan.test", True)
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
     assert state.attributes.get(fan.ATTR_SPEED) is None
     assert state.attributes.get(fan.ATTR_OSCILLATING) is True
 
     await common.async_oscillate.opp, "fan.test", False)
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
     assert state.attributes.get(fan.ATTR_SPEED) is None
     assert state.attributes.get(fan.ATTR_OSCILLATING) is False
 
     await common.async_set_speed.opp, "fan.test", fan.SPEED_LOW)
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
     assert state.attributes.get(fan.ATTR_SPEED) == "low"
     assert state.attributes.get(fan.ATTR_OSCILLATING) is False
 
     await common.async_set_speed.opp, "fan.test", fan.SPEED_MEDIUM)
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
     assert state.attributes.get(fan.ATTR_SPEED) == "medium"
     assert state.attributes.get(fan.ATTR_OSCILLATING) is False
 
     await common.async_set_speed.opp, "fan.test", fan.SPEED_HIGH)
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
     assert state.attributes.get(fan.ATTR_SPEED) == "high"
     assert state.attributes.get(fan.ATTR_OSCILLATING) is False
 
     await common.async_set_speed.opp, "fan.test", fan.SPEED_OFF)
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(ATTR_ASSUMED_STATE)
     assert state.attributes.get(fan.ATTR_SPEED) == "off"
@@ -540,7 +540,7 @@ async def test_custom_speed_list.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.test")
+    state = opp.states.get("fan.test")
     assert state.state is STATE_OFF
     assert state.attributes.get(fan.ATTR_SPEED_LIST) == ["off", "high"]
 
@@ -581,13 +581,13 @@ async def test_supported_features.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.test1")
+    state = opp.states.get("fan.test1")
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 0
-    state =.opp.states.get("fan.test2")
+    state = opp.states.get("fan.test2")
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == fan.SUPPORT_OSCILLATE
-    state =.opp.states.get("fan.test3")
+    state = opp.states.get("fan.test3")
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == fan.SUPPORT_SET_SPEED
-    state =.opp.states.get("fan.test4")
+    state = opp.states.get("fan.test4")
     assert (
         state.attributes.get(ATTR_SUPPORTED_FEATURES)
         == fan.SUPPORT_OSCILLATE | fan.SUPPORT_SET_SPEED

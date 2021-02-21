@@ -15,7 +15,7 @@ def mock_client.opp,.opp_client):
 async def test_unregistering_webhook.opp, mock_client):
     """Test unregistering a webhook."""
     hooks = []
-    webhook_id =.opp.components.webhook.async_generate_id()
+    webhook_id = opp.components.webhook.async_generate_id()
 
     async def handle(*args):
         """Handle webhook."""
@@ -40,14 +40,14 @@ async def test_generate_webhook_url.opp):
        .opp,
         {"external_url": "https://example.com"},
     )
-    url =.opp.components.webhook.async_generate_url("some_id")
+    url = opp.components.webhook.async_generate_url("some_id")
 
     assert url == "https://example.com/api/webhook/some_id"
 
 
 async def test_async_generate_path.opp):
     """Test generating just the path component of the url correctly."""
-    path =.opp.components.webhook.async_generate_path("some_id")
+    path = opp.components.webhook.async_generate_path("some_id")
     assert path == "/api/webhook/some_id"
 
 
@@ -67,7 +67,7 @@ async def test_posting_webhook_invalid_json.opp, mock_client):
 async def test_posting_webhook_json.opp, mock_client):
     """Test posting a webhook with JSON data."""
     hooks = []
-    webhook_id =.opp.components.webhook.async_generate_id()
+    webhook_id = opp.components.webhook.async_generate_id()
 
     async def handle(*args):
         """Handle webhook."""
@@ -86,7 +86,7 @@ async def test_posting_webhook_json.opp, mock_client):
 async def test_posting_webhook_no_data.opp, mock_client):
     """Test posting a webhook with no data."""
     hooks = []
-    webhook_id =.opp.components.webhook.async_generate_id()
+    webhook_id = opp.components.webhook.async_generate_id()
 
     async def handle(*args):
         """Handle webhook."""
@@ -106,7 +106,7 @@ async def test_posting_webhook_no_data.opp, mock_client):
 async def test_webhook_put.opp, mock_client):
     """Test sending a put request to a webhook."""
     hooks = []
-    webhook_id =.opp.components.webhook.async_generate_id()
+    webhook_id = opp.components.webhook.async_generate_id()
 
     async def handle(*args):
         """Handle webhook."""
@@ -125,7 +125,7 @@ async def test_webhook_put.opp, mock_client):
 async def test_webhook_head.opp, mock_client):
     """Test sending a head request to a webhook."""
     hooks = []
-    webhook_id =.opp.components.webhook.async_generate_id()
+    webhook_id = opp.components.webhook.async_generate_id()
 
     async def handle(*args):
         """Handle webhook."""

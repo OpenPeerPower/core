@@ -87,7 +87,7 @@ def handle_subscribe_events.opp, connection, msg):
 
             connection.send_message(messages.cached_event_message(msg["id"], event))
 
-    connection.subscriptions[msg["id"]] =.opp.bus.async_listen(
+    connection.subscriptions[msg["id"]] = opp.bus.async_listen(
         event_type, forward_events
     )
 
@@ -179,7 +179,7 @@ async def handle_call_service.opp, connection, msg):
 def handle_get_states.opp, connection, msg):
     """Handle get states command."""
     if connection.user.permissions.access_all_entities("read"):
-        states =.opp.states.async_all()
+        states = opp.states.async_all()
     else:
         entity_perm = connection.user.permissions.check_entity
         states = [

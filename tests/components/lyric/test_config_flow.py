@@ -107,7 +107,7 @@ async def test_full_flow(
     }
 
     assert DOMAIN in.opp.config.components
-    entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert entry.state == config_entries.ENTRY_STATE_LOADED
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
@@ -123,7 +123,7 @@ async def test_abort_if_authorization_timeout(
     )
 
     flow = config_flow.OAuth2FlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch.object(
         mock_impl, "async_generate_authorize_url", side_effect=asyncio.TimeoutError

@@ -25,7 +25,7 @@ PARALLEL_UPDATES = 0
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the Tibber sensor."""
 
-    tibber_connection =.opp.data.get(TIBBER_DOMAIN)
+    tibber_connection = opp.data.get(TIBBER_DOMAIN)
 
     dev = []
     for home in tibber_connection.get_homes(only_active=False):

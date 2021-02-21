@@ -46,7 +46,7 @@ PLATFORM_SCHEMA = vol.All(
 
 async def async_get_engine.opp, config, discovery_info=None):
     """Set up Cloud speech component."""
-    cloud: Cloud =.opp.data[DOMAIN]
+    cloud: Cloud = opp.data[DOMAIN]
 
     if discovery_info is not None:
         language = None

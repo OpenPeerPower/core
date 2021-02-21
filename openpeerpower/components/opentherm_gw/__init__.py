@@ -82,7 +82,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def options_updated.opp, entry):
     """Handle options update."""
-    gateway =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][entry.data[CONF_ID]]
+    gateway = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][entry.data[CONF_ID]]
     async_dispatcher_send.opp, gateway.options_update_signal, entry)
 
 
@@ -238,7 +238,7 @@ def register_services.opp):
 
     async def reset_gateway(call):
         """Reset the OpenTherm Gateway."""
-        gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
+        gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         mode_rst = gw_vars.OTGW_MODE_RESET
         status = await gw_dev.gateway.set_mode(mode_rst)
         gw_dev.status = status
@@ -250,7 +250,7 @@ def register_services.opp):
 
     async def set_ch_ovrd(call):
         """Set the central heating override on the OpenTherm Gateway."""
-        gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
+        gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         await gw_dev.gateway.set_ch_enable_bit(1 if call.data[ATTR_CH_OVRD] else 0)
 
    .opp.services.async_register(
@@ -262,7 +262,7 @@ def register_services.opp):
 
     async def set_control_setpoint(call):
         """Set the control setpoint on the OpenTherm Gateway."""
-        gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
+        gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         gw_var = gw_vars.DATA_CONTROL_SETPOINT
         value = await gw_dev.gateway.set_control_setpoint(call.data[ATTR_TEMPERATURE])
         gw_dev.status.update({gw_var: value})
@@ -277,7 +277,7 @@ def register_services.opp):
 
     async def set_dhw_ovrd(call):
         """Set the domestic hot water override on the OpenTherm Gateway."""
-        gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
+        gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         gw_var = gw_vars.OTGW_DHW_OVRD
         value = await gw_dev.gateway.set_hot_water_ovrd(call.data[ATTR_DHW_OVRD])
         gw_dev.status.update({gw_var: value})
@@ -292,7 +292,7 @@ def register_services.opp):
 
     async def set_dhw_setpoint(call):
         """Set the domestic hot water setpoint on the OpenTherm Gateway."""
-        gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
+        gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         gw_var = gw_vars.DATA_DHW_SETPOINT
         value = await gw_dev.gateway.set_dhw_setpoint(call.data[ATTR_TEMPERATURE])
         gw_dev.status.update({gw_var: value})
@@ -307,7 +307,7 @@ def register_services.opp):
 
     async def set_device_clock(call):
         """Set the clock on the OpenTherm Gateway."""
-        gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
+        gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         attr_date = call.data[ATTR_DATE]
         attr_time = call.data[ATTR_TIME]
         await gw_dev.gateway.set_clock(datetime.combine(attr_date, attr_time))
@@ -318,7 +318,7 @@ def register_services.opp):
 
     async def set_gpio_mode(call):
         """Set the OpenTherm Gateway GPIO modes."""
-        gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
+        gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         gpio_id = call.data[ATTR_ID]
         gpio_mode = call.data[ATTR_MODE]
         mode = await gw_dev.gateway.set_gpio_mode(gpio_id, gpio_mode)
@@ -332,7 +332,7 @@ def register_services.opp):
 
     async def set_led_mode(call):
         """Set the OpenTherm Gateway LED modes."""
-        gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
+        gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         led_id = call.data[ATTR_ID]
         led_mode = call.data[ATTR_MODE]
         mode = await gw_dev.gateway.set_led_mode(led_id, led_mode)
@@ -346,7 +346,7 @@ def register_services.opp):
 
     async def set_max_mod(call):
         """Set the max modulation level."""
-        gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
+        gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         gw_var = gw_vars.DATA_SLAVE_MAX_RELATIVE_MOD
         level = call.data[ATTR_LEVEL]
         if level == -1:
@@ -362,7 +362,7 @@ def register_services.opp):
 
     async def set_outside_temp(call):
         """Provide the outside temperature to the OpenTherm Gateway."""
-        gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
+        gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         gw_var = gw_vars.DATA_OUTSIDE_TEMP
         value = await gw_dev.gateway.set_outside_temp(call.data[ATTR_TEMPERATURE])
         gw_dev.status.update({gw_var: value})
@@ -374,7 +374,7 @@ def register_services.opp):
 
     async def set_setback_temp(call):
         """Set the OpenTherm Gateway SetBack temperature."""
-        gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
+        gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         gw_var = gw_vars.OTGW_SB_TEMP
         value = await gw_dev.gateway.set_setback_temp(call.data[ATTR_TEMPERATURE])
         gw_dev.status.update({gw_var: value})
@@ -392,7 +392,7 @@ async def async_unload_entry.opp, entry):
        .opp.config_entries.async_forward_entry_unload(entry, COMP_CLIMATE),
        .opp.config_entries.async_forward_entry_unload(entry, COMP_SENSOR),
     )
-    gateway =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][entry.data[CONF_ID]]
+    gateway = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][entry.data[CONF_ID]]
     await gateway.cleanup()
     return True
 
@@ -402,7 +402,7 @@ class OpenThermGatewayDevice:
 
     def __init__(self,.opp, config_entry):
         """Initialize the OpenTherm Gateway."""
-        self.opp =.opp
+        self.opp = opp
         self.device_path = config_entry.data[CONF_DEVICE]
         self.gw_id = config_entry.data[CONF_ID]
         self.name = config_entry.data[CONF_NAME]

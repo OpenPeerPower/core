@@ -19,7 +19,7 @@ async def test_state.opp):
     assert await async_setup_component.opp, "air_quality", config)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("air_quality.demo_air_quality_home")
+    state = opp.states.get("air_quality.demo_air_quality_home")
     assert state is not None
 
     assert state.state == "14"
@@ -32,7 +32,7 @@ async def test_attributes.opp):
     assert await async_setup_component.opp, "air_quality", config)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("air_quality.demo_air_quality_office")
+    state = opp.states.get("air_quality.demo_air_quality_office")
     assert state is not None
 
     data = state.attributes

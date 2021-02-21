@@ -106,7 +106,7 @@ async def base_test(
         assert DOMAIN in.opp.data
         if config_device is not None:
             entity_id = f"{entity_domain}.{device_name}"
-            device =.opp.states.get(entity_id)
+            device = opp.states.get(entity_id)
             if device is None:
                 pytest.fail("CONFIG failed, see output")
         if check_config_only:

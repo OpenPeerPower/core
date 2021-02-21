@@ -19,7 +19,7 @@ def async_setup_entry_base(
 ) -> None:
     """Record the async_add_entities function to add them later when received from Dynalite."""
     LOGGER.debug("Setting up %s entry = %s", platform, config_entry.data)
-    bridge =.opp.data[DOMAIN][config_entry.entry_id]
+    bridge = opp.data[DOMAIN][config_entry.entry_id]
 
     @callback
     def async_add_entities_platform(devices):

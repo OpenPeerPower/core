@@ -111,7 +111,7 @@ class MetWeatherData:
 
     def __init__(self,.opp, config, is_metric):
         """Initialise the weather entity data."""
-        self.opp =.opp
+        self.opp = opp
         self._config = config
         self._is_metric = is_metric
         self._weather_data = None

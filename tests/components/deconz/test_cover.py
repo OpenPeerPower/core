@@ -210,13 +210,13 @@ async def test_cover.opp, aioclient_mock):
     gateway.api.event_op.dler(state_changed_event)
     await.opp.async_block_till_done()
 
-    deconz_old_brightness_cover =.opp.states.get("cover.deconz_old_brightness_cover")
+    deconz_old_brightness_cover = opp.states.get("cover.deconz_old_brightness_cover")
     assert deconz_old_brightness_cover.state == STATE_CLOSED
     assert deconz_old_brightness_cover.attributes["current_position"] == 0
 
     await.opp.config_entries.async_unload(config_entry.entry_id)
 
-    states =.opp.states.async_all()
+    states = opp.states.async_all()
     assert len.opp.states.async_all()) == 5
     for state in states:
         assert state.state == STATE_UNAVAILABLE
@@ -255,7 +255,7 @@ async def test_tilt_cover.opp, aioclient_mock):
     )
 
     assert len.opp.states.async_all()) == 1
-    entity =.opp.states.get("cover.covering_device")
+    entity = opp.states.get("cover.covering_device")
     assert entity.state == STATE_OPEN
     assert entity.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 

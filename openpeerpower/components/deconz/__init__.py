@@ -57,7 +57,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload deCONZ config entry."""
-    gateway =.opp.data[DOMAIN].pop(config_entry.unique_id)
+    gateway = opp.data[DOMAIN].pop(config_entry.unique_id)
 
     if not.opp.data[DOMAIN]:
         await async_unload_services.opp)

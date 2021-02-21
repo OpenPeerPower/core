@@ -137,7 +137,7 @@ async def async_setup_entry.opp, config_entry):
     websession = aiohttp_client.async_get_clientsession.opp)
     email = config_entry.title
     if email in.opp.data[DOMAIN] and CONF_SCAN_INTERVAL in.opp.data[DOMAIN][email]:
-        scan_interval =.opp.data[DOMAIN][email][CONF_SCAN_INTERVAL]
+        scan_interval = opp.data[DOMAIN][email][CONF_SCAN_INTERVAL]
        .opp.config_entries.async_update_entry(
             config_entry, options={CONF_SCAN_INTERVAL: scan_interval}
         )
@@ -171,7 +171,7 @@ async def async_setup_entry.opp, config_entry):
        .opp, config_entry=config_entry, controller=controller
     )
     # Fetch initial data so we have data when entities subscribe
-    entry_data =.opp.data[DOMAIN][config_entry.entry_id] = {
+    entry_data = opp.data[DOMAIN][config_entry.entry_id] = {
         "coordinator": coordinator,
         "devices": defaultdict(list),
         DATA_LISTENER: [config_entry.add_update_listener(update_listener)],
@@ -231,7 +231,7 @@ def _async_start_reauth.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def update_listener.opp, config_entry):
     """Update when config_entry options update."""
-    controller =.opp.data[DOMAIN][config_entry.entry_id]["coordinator"].controller
+    controller = opp.data[DOMAIN][config_entry.entry_id]["coordinator"].controller
     old_update_interval = controller.update_interval
     controller.update_interval = config_entry.options.get(CONF_SCAN_INTERVAL)
     if old_update_interval != controller.update_interval:

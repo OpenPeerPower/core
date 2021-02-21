@@ -78,13 +78,13 @@ async def async_setup_entry.opp, config_entry):
 
     device_dict = await async_process_devices.opp, manager)
 
-    forward_setup =.opp.config_entries.async_forward_entry_setup
+    forward_setup = opp.config_entries.async_forward_entry_setup
 
    .opp.data[DOMAIN] = {}
    .opp.data[DOMAIN][VS_MANAGER] = manager
 
-    switches =.opp.data[DOMAIN][VS_SWITCHES] = []
-    fans =.opp.data[DOMAIN][VS_FANS] = []
+    switches = opp.data[DOMAIN][VS_SWITCHES] = []
+    fans = opp.data[DOMAIN][VS_FANS] = []
 
    .opp.data[DOMAIN][VS_DISPATCHERS] = []
 
@@ -98,9 +98,9 @@ async def async_setup_entry.opp, config_entry):
 
     async def async_new_device_discovery(service):
         """Discover if new devices should be added."""
-        manager =.opp.data[DOMAIN][VS_MANAGER]
-        switches =.opp.data[DOMAIN][VS_SWITCHES]
-        fans =.opp.data[DOMAIN][VS_FANS]
+        manager = opp.data[DOMAIN][VS_MANAGER]
+        switches = opp.data[DOMAIN][VS_SWITCHES]
+        fans = opp.data[DOMAIN][VS_FANS]
 
         dev_dict = await async_process_devices.opp, manager)
         switch_devs = dev_dict.get(VS_SWITCHES, [])

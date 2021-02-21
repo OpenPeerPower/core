@@ -303,7 +303,7 @@ async def test_device_setup.opp):
         return_value=True,
     ) as forward_entry_setup:
         config_entry = await setup_axis_integration.opp)
-        device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+        device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     assert device.api.vapix.firmware_version == "9.10.1"
     assert device.api.vapix.product_number == "M1065-LW"
@@ -331,7 +331,7 @@ async def test_device_info.opp):
 
     with patch.dict(API_DISCOVERY_RESPONSE, api_discovery):
         config_entry = await setup_axis_integration.opp)
-        device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+        device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     assert device.api.vapix.firmware_version == "9.80.1"
     assert device.api.vapix.product_number == "M1065-LW"
@@ -357,7 +357,7 @@ async def test_device_support_mqtt.opp, mqtt_mock):
     await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)) == 1
 
-    pir =.opp.states.get(f"{BINARY_SENSOR_DOMAIN}.{NAME}_pir_0")
+    pir = opp.states.get(f"{BINARY_SENSOR_DOMAIN}.{NAME}_pir_0")
     assert pir.state == STATE_ON
     assert pir.name == f"{NAME} PIR 0"
 
@@ -365,7 +365,7 @@ async def test_device_support_mqtt.opp, mqtt_mock):
 async def test_update_address.opp):
     """Test update address works."""
     config_entry = await setup_axis_integration.opp)
-    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
     assert device.api.config.host == "1.2.3.4"
 
     with patch(
@@ -392,7 +392,7 @@ async def test_update_address.opp):
 async def test_device_unavailable.opp):
     """Successful setup."""
     config_entry = await setup_axis_integration.opp)
-    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
     device.async_connection_status_callback(status=False)
     assert not device.available
 
@@ -400,7 +400,7 @@ async def test_device_unavailable.opp):
 async def test_device_reset.opp):
     """Successfully reset device."""
     config_entry = await setup_axis_integration.opp)
-    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
     result = await device.async_reset()
     assert result is True
 

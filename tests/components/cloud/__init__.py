@@ -10,7 +10,7 @@ from openpeerpowerr.setup import async_setup_component
 async def mock_cloud.opp, config=None):
     """Mock cloud."""
     assert await async_setup_component.opp, cloud.DOMAIN, {"cloud": config or {}})
-    cloud_inst =.opp.data["cloud"]
+    cloud_inst = opp.data["cloud"]
     with patch("opp_nabucasa.Cloud.run_executor", AsyncMock(return_value=None)):
         await cloud_inst.start()
 

@@ -75,9 +75,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the Mediaroom platform."""
-    known_hosts =.opp.data.get(DATA_MEDIAROOM)
+    known_hosts = opp.data.get(DATA_MEDIAROOM)
     if known_hosts is None:
-        known_hosts =.opp.data[DATA_MEDIAROOM] = []
+        known_hosts = opp.data[DATA_MEDIAROOM] = []
     host = config.get(CONF_HOST)
     if host:
         async_add_entities(
@@ -109,7 +109,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     if not config[CONF_OPTIMISTIC]:
 
-        already_installed =.opp.data.get(DISCOVERY_MEDIAROOM)
+        already_installed = opp.data.get(DISCOVERY_MEDIAROOM)
         if not already_installed:
            .opp.data[DISCOVERY_MEDIAROOM] = await install_mediaroom_protocol(
                 responses_callback=callback_notify

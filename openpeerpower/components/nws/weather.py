@@ -84,7 +84,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigType, async_add_entities
 ) -> None:
     """Set up the NWS weather platform."""
-   .opp_data =.opp.data[DOMAIN][entry.entry_id]
+   .opp_data = opp.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
         [
@@ -100,14 +100,14 @@ class NWSWeather(WeatherEntity):
 
     def __init__(self, entry_data,.opp_data, mode, units):
         """Initialise the platform with a data instance and station name."""
-        self.nws =.opp_data[NWS_DATA]
+        self.nws = opp_data[NWS_DATA]
         self.latitude = entry_data[CONF_LATITUDE]
         self.longitude = entry_data[CONF_LONGITUDE]
-        self.coordinator_observation =.opp_data[COORDINATOR_OBSERVATION]
+        self.coordinator_observation = opp_data[COORDINATOR_OBSERVATION]
         if mode == DAYNIGHT:
-            self.coordinator_forecast =.opp_data[COORDINATOR_FORECAST]
+            self.coordinator_forecast = opp_data[COORDINATOR_FORECAST]
         else:
-            self.coordinator_forecast =.opp_data[COORDINATOR_FORECAST_HOURLY]
+            self.coordinator_forecast = opp_data[COORDINATOR_FORECAST_HOURLY]
         self.station = self.nws.station
 
         self.is_metric = units.is_metric

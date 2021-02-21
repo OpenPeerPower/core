@@ -147,7 +147,7 @@ ZCL_TEMP = 100
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation sensor from config entry."""
-    entities_to_create =.opp.data[DATA_ZHA][DOMAIN]
+    entities_to_create = opp.data[DATA_ZHA][DOMAIN]
     unsub = async_dispatcher_connect(
        .opp,
         SIGNAL_ADD_ENTITIES,

@@ -25,8 +25,8 @@ SPEED_TO_MODE = {v: k for k, v in SPEED_MAPPING.items()}
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the Smarty Fan Platform."""
-    smarty =.opp.data[DOMAIN]["api"]
-    name =.opp.data[DOMAIN]["name"]
+    smarty = opp.data[DOMAIN]["api"]
+    name = opp.data[DOMAIN]["name"]
 
     async_add_entities([SmartyFan(name, smarty)], True)
 

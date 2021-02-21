@@ -40,7 +40,7 @@ class LovelaceConfig(ABC):
 
     def __init__(self,.opp, url_path, config):
         """Initialize Lovelace config."""
-        self.opp =.opp
+        self.opp = opp
         if config:
             self.config = {**config, CONF_URL_PATH: url_path}
         else:
@@ -158,7 +158,7 @@ class LovelaceYAML(LovelaceConfig):
         """Initialize the YAML config."""
         super().__init__.opp, url_path, config)
 
-        self.path =.opp.config.path(
+        self.path = opp.config.path(
             config[CONF_FILENAME] if config else LOVELACE_CONFIG_FILE
         )
         self._cache = None

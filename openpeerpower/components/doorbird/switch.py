@@ -17,8 +17,8 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     entities = []
     config_entry_id = config_entry.entry_id
 
-    doorstation =.opp.data[DOMAIN][config_entry_id][DOOR_STATION]
-    doorstation_info =.opp.data[DOMAIN][config_entry_id][DOOR_STATION_INFO]
+    doorstation = opp.data[DOMAIN][config_entry_id][DOOR_STATION]
+    doorstation_info = opp.data[DOMAIN][config_entry_id][DOOR_STATION_INFO]
 
     relays = doorstation_info["RELAYS"]
     relays.append(IR_RELAY)

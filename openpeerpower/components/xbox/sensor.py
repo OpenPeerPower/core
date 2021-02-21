@@ -17,7 +17,7 @@ SENSOR_ATTRIBUTES = ["status", "gamer_score", "account_tier", "gold_tenure"]
 
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry, async_add_entities):
     """Set up Xbox Live friends."""
-    coordinator: XboxUpdateCoordinator =.opp.data[DOMAIN][config_entry.entry_id][
+    coordinator: XboxUpdateCoordinator = opp.data[DOMAIN][config_entry.entry_id][
         "coordinator"
     ]
 

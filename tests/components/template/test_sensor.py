@@ -46,12 +46,12 @@ async def test_template.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.state == "It ."
 
    .opp.states.async_set("sensor.test_state", "Works")
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.state == "It Works."
 
 
@@ -81,12 +81,12 @@ async def test_icon_template.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes.get("icon") == ""
 
    .opp.states.async_set("sensor.test_state", "Works")
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes["icon"] == "mdi:check"
 
 
@@ -116,12 +116,12 @@ async def test_entity_picture_template.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes.get("entity_picture") == ""
 
    .opp.states.async_set("sensor.test_state", "Works")
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes["entity_picture"] == "/local/sensor.png"
 
 
@@ -148,12 +148,12 @@ async def test_friendly_name_template.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes.get("friendly_name") == "It ."
 
    .opp.states.async_set("sensor.test_state", "Works")
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes["friendly_name"] == "It Works."
 
 
@@ -180,12 +180,12 @@ async def test_friendly_name_template_with_unknown_state.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes["friendly_name"] == "It ."
 
    .opp.states.async_set("sensor.test_state", "Works")
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes["friendly_name"] == "It Works."
 
 
@@ -214,12 +214,12 @@ async def test_attribute_templates.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes.get("test_attribute") == "It ."
 
    .opp.states.async_set("sensor.test_state", "Works")
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes["test_attribute"] == "It Works."
 
 
@@ -268,7 +268,7 @@ async def test_template_attribute_missing.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.state == STATE_UNAVAILABLE
 
 
@@ -399,9 +399,9 @@ async def test_setup_valid_device_class.opp):
         )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test1")
+    state = opp.states.get("sensor.test1")
     assert state.attributes["device_class"] == "temperature"
-    state =.opp.states.get("sensor.test2")
+    state = opp.states.get("sensor.test2")
     assert "device_class" not in state.attributes
 
 
@@ -749,7 +749,7 @@ async def test_self_referencing_sensor_loop.opp, caplog):
 
     assert "Template loop detected" in caplog.text
 
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert int(state.state) == 2
     await.opp.async_block_till_done()
     assert int(state.state) == 2
@@ -785,7 +785,7 @@ async def test_self_referencing_sensor_with_icon_loop.opp, caplog):
 
     assert "Template loop detected" in caplog.text
 
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert int(state.state) == 3
     assert state.attributes[ATTR_ICON] == "mdi:greater"
 
@@ -824,7 +824,7 @@ async def test_self_referencing_sensor_with_icon_and_picture_entity_loop.opp, ca
 
     assert "Template loop detected" in caplog.text
 
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert int(state.state) == 4
     assert state.attributes[ATTR_ICON] == "mdi:less"
     assert state.attributes[ATTR_ENTITY_PICTURE] == "bigpic"
@@ -868,7 +868,7 @@ async def test_self_referencing_entity_picture_loop.opp, caplog):
 
     assert "Template loop detected" in caplog.text
 
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert int(state.state) == 1
     assert state.attributes[ATTR_ENTITY_PICTURE] == 2
 
@@ -941,7 +941,7 @@ async def test_self_referencing_icon_with_no_loop.opp, caplog):
 
     assert "Template loop detected" not in caplog.text
 
-    state =.opp.states.get("sensor.heartworm_risk")
+    state = opp.states.get("sensor.heartworm_risk")
     assert state.state == "extreme"
     assert state.attributes[ATTR_ICON] == "mdi:hazard-lights"
 
@@ -976,13 +976,13 @@ async def test_duplicate_templates.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes["friendly_name"] == "Abc"
     assert state.state == "Abc"
 
    .opp.states.async_set("sensor.test_state", "Def")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_template_sensor")
+    state = opp.states.get("sensor.test_template_sensor")
     assert state.attributes["friendly_name"] == "Def"
     assert state.state == "Def"

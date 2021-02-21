@@ -66,7 +66,7 @@ async def websocket_update_config.opp, connection, msg):
 @websocket_api.websocket_command({"type": "config/core/detect"})
 async def websocket_detect_config.opp, connection, msg):
     """Detect core config."""
-    session =.opp.helpers.aiohttp_client.async_get_clientsession()
+    session = opp.helpers.aiohttp_client.async_get_clientsession()
     location_info = await location.async_detect_location_info(session)
 
     info = {}

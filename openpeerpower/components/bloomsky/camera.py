@@ -13,7 +13,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is not None:
         return
 
-    bloomsky =.opp.data[DOMAIN]
+    bloomsky = opp.data[DOMAIN]
 
     for device in bloomsky.devices.values():
         add_entities([BloomSkyCamera(bloomsky, device)])

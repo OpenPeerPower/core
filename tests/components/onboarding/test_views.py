@@ -390,7 +390,7 @@ async def test_onboarding_core_sets_up_rpi_power(
 
         await.opp.async_block_till_done()
 
-    rpi_power_state =.opp.states.get("binary_sensor.rpi_power_status")
+    rpi_power_state = opp.states.get("binary_sensor.rpi_power_status")
     assert rpi_power_state
 
 
@@ -415,5 +415,5 @@ async def test_onboarding_core_no_rpi_power(
 
         await.opp.async_block_till_done()
 
-    rpi_power_state =.opp.states.get("binary_sensor.rpi_power_status")
+    rpi_power_state = opp.states.get("binary_sensor.rpi_power_status")
     assert not rpi_power_state

@@ -25,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up switches attached to a Konnected device from a config entry."""
-    data =.opp.data[KONNECTED_DOMAIN]
+    data = opp.data[KONNECTED_DOMAIN]
     device_id = config_entry.data["id"]
     switches = [
         KonnectedSwitch(device_id, zone_data.get(CONF_ZONE), zone_data)

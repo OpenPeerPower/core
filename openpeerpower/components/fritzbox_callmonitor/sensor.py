@@ -74,7 +74,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the fritzbox_callmonitor sensor from config_entry."""
-    fritzbox_phonebook =.opp.data[DOMAIN][config_entry.entry_id][FRITZBOX_PHONEBOOK]
+    fritzbox_phonebook = opp.data[DOMAIN][config_entry.entry_id][FRITZBOX_PHONEBOOK]
 
     phonebook_name = config_entry.title
     phonebook_id = config_entry.data[CONF_PHONEBOOK]

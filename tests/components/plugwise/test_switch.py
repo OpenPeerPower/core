@@ -12,10 +12,10 @@ async def test_adam_climate_switch_entities.opp, mock_smile_adam):
     entry = await async_init_integration.opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
-    state =.opp.states.get("switch.cv_pomp")
+    state = opp.states.get("switch.cv_pomp")
     assert str(state.state) == "on"
 
-    state =.opp.states.get("switch.fibaro_hc2")
+    state = opp.states.get("switch.fibaro_hc2")
     assert str(state.state) == "on"
 
 
@@ -31,7 +31,7 @@ async def test_adam_climate_switch_negative_testing.opp, mock_smile_adam):
         {"entity_id": "switch.cv_pomp"},
         blocking=True,
     )
-    state =.opp.states.get("switch.cv_pomp")
+    state = opp.states.get("switch.cv_pomp")
     assert str(state.state) == "on"
 
     await.opp.services.async_call(
@@ -40,7 +40,7 @@ async def test_adam_climate_switch_negative_testing.opp, mock_smile_adam):
         {"entity_id": "switch.fibaro_hc2"},
         blocking=True,
     )
-    state =.opp.states.get("switch.fibaro_hc2")
+    state = opp.states.get("switch.fibaro_hc2")
     assert str(state.state) == "on"
 
 
@@ -55,7 +55,7 @@ async def test_adam_climate_switch_changes.opp, mock_smile_adam):
         {"entity_id": "switch.cv_pomp"},
         blocking=True,
     )
-    state =.opp.states.get("switch.cv_pomp")
+    state = opp.states.get("switch.cv_pomp")
     assert str(state.state) == "off"
 
     await.opp.services.async_call(
@@ -64,7 +64,7 @@ async def test_adam_climate_switch_changes.opp, mock_smile_adam):
         {"entity_id": "switch.fibaro_hc2"},
         blocking=True,
     )
-    state =.opp.states.get("switch.fibaro_hc2")
+    state = opp.states.get("switch.fibaro_hc2")
     assert str(state.state) == "off"
 
     await.opp.services.async_call(
@@ -73,7 +73,7 @@ async def test_adam_climate_switch_changes.opp, mock_smile_adam):
         {"entity_id": "switch.fibaro_hc2"},
         blocking=True,
     )
-    state =.opp.states.get("switch.fibaro_hc2")
+    state = opp.states.get("switch.fibaro_hc2")
     assert str(state.state) == "on"
 
 
@@ -82,10 +82,10 @@ async def test_stretch_switch_entities.opp, mock_stretch):
     entry = await async_init_integration.opp, mock_stretch)
     assert entry.state == ENTRY_STATE_LOADED
 
-    state =.opp.states.get("switch.koelkast_92c4a")
+    state = opp.states.get("switch.koelkast_92c4a")
     assert str(state.state) == "on"
 
-    state =.opp.states.get("switch.droger_52559")
+    state = opp.states.get("switch.droger_52559")
     assert str(state.state) == "on"
 
 
@@ -101,7 +101,7 @@ async def test_stretch_switch_changes.opp, mock_stretch):
         blocking=True,
     )
 
-    state =.opp.states.get("switch.koelkast_92c4a")
+    state = opp.states.get("switch.koelkast_92c4a")
     assert str(state.state) == "off"
 
     await.opp.services.async_call(
@@ -110,7 +110,7 @@ async def test_stretch_switch_changes.opp, mock_stretch):
         {"entity_id": "switch.droger_52559"},
         blocking=True,
     )
-    state =.opp.states.get("switch.droger_52559")
+    state = opp.states.get("switch.droger_52559")
     assert str(state.state) == "off"
 
     await.opp.services.async_call(
@@ -119,5 +119,5 @@ async def test_stretch_switch_changes.opp, mock_stretch):
         {"entity_id": "switch.droger_52559"},
         blocking=True,
     )
-    state =.opp.states.get("switch.droger_52559")
+    state = opp.states.get("switch.droger_52559")
     assert str(state.state) == "on"

@@ -95,7 +95,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload an GeoNet NZ Volcano component config entry."""
-    manager =.opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
+    manager = opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
     await manager.async_stop()
     await asyncio.wait(
         .opp.config_entries.async_forward_entry_unload(config_entry, "sensor")]
@@ -108,7 +108,7 @@ class GeonetnzVolcanoFeedEntityManager:
 
     def __init__(self,.opp, config_entry, radius_in_km, unit_system):
         """Initialize the Feed Entity Manager."""
-        self._opp =.opp
+        self._opp = opp
         self._config_entry = config_entry
         coordinates = (
             config_entry.data[CONF_LATITUDE],

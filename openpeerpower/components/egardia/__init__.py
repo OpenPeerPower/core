@@ -89,7 +89,7 @@ def setup.opp, config):
     rs_enabled = conf.get(CONF_REPORT_SERVER_ENABLED)
     rs_port = conf.get(CONF_REPORT_SERVER_PORT)
     try:
-        device =.opp.data[EGARDIA_DEVICE] = egardiadevice.EgardiaDevice(
+        device = opp.data[EGARDIA_DEVICE] = egardiadevice.EgardiaDevice(
             host, port, username, password, "", version
         )
     except requests.exceptions.RequestException:

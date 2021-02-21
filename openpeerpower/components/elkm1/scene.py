@@ -9,7 +9,7 @@ from .const import DOMAIN
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Create the Elk-M1 scene platform."""
-    elk_data =.opp.data[DOMAIN][config_entry.entry_id]
+    elk_data = opp.data[DOMAIN][config_entry.entry_id]
     entities = []
     elk = elk_data["elk"]
     create_elk_entities(elk_data, elk.tasks, "task", ElkTask, entities)

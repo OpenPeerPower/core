@@ -31,7 +31,7 @@ async def test_sensor.opp, aioclient_mock):
     await init_integration.opp, aioclient_mock)
     registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state =.opp.states.get("sensor.home_humidity")
+    state = opp.states.get("sensor.home_humidity")
     assert state
     assert state.state == "92.8"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -42,7 +42,7 @@ async def test_sensor.opp, aioclient_mock):
     assert entry
     assert entry.unique_id == "123-456-humidity"
 
-    state =.opp.states.get("sensor.home_pm1")
+    state = opp.states.get("sensor.home_pm1")
     assert state
     assert state.state == "9"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -56,7 +56,7 @@ async def test_sensor.opp, aioclient_mock):
     assert entry
     assert entry.unique_id == "123-456-pm1"
 
-    state =.opp.states.get("sensor.home_pressure")
+    state = opp.states.get("sensor.home_pressure")
     assert state
     assert state.state == "1001"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -67,7 +67,7 @@ async def test_sensor.opp, aioclient_mock):
     assert entry
     assert entry.unique_id == "123-456-pressure"
 
-    state =.opp.states.get("sensor.home_temperature")
+    state = opp.states.get("sensor.home_temperature")
     assert state
     assert state.state == "14.2"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -83,7 +83,7 @@ async def test_availability.opp, aioclient_mock):
     """Ensure that we mark the entities unavailable correctly when service is offline."""
     await init_integration.opp, aioclient_mock)
 
-    state =.opp.states.get("sensor.home_humidity")
+    state = opp.states.get("sensor.home_humidity")
     assert state
     assert state.state != STATE_UNAVAILABLE
     assert state.state == "92.8"
@@ -94,7 +94,7 @@ async def test_availability.opp, aioclient_mock):
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.home_humidity")
+    state = opp.states.get("sensor.home_humidity")
     assert state
     assert state.state == STATE_UNAVAILABLE
 
@@ -104,7 +104,7 @@ async def test_availability.opp, aioclient_mock):
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.home_humidity")
+    state = opp.states.get("sensor.home_humidity")
     assert state
     assert state.state != STATE_UNAVAILABLE
     assert state.state == "92.8"

@@ -17,7 +17,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up device tracker for iCloud component."""
-    account =.opp.data[DOMAIN][entry.unique_id]
+    account = opp.data[DOMAIN][entry.unique_id]
     tracked = set()
 
     @callback

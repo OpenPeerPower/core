@@ -31,8 +31,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    task =.opp.data[DOMAIN][entry.entry_id][DATA_TASK]
-    listener =.opp.data[DOMAIN][entry.entry_id][DATA_LISTENER]
+    task = opp.data[DOMAIN][entry.entry_id][DATA_TASK]
+    listener = opp.data[DOMAIN][entry.entry_id][DATA_LISTENER]
 
     # Cancel the reconnect task
     task.cancel()

@@ -47,7 +47,7 @@ class DemoManager:
 
     def __init__(self,.opp, add_entities):
         """Initialise the demo geolocation event manager."""
-        self._opp =.opp
+        self._opp = opp
         self._add_entities = add_entities
         self._managed_devices = []
         self._update(count=NUMBER_OF_DEMO_DEVICES)

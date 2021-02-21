@@ -26,7 +26,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up Twente Milieu sensor based on a config entry."""
-    twentemilieu =.opp.data[DOMAIN][entry.data[CONF_ID]]
+    twentemilieu = opp.data[DOMAIN][entry.data[CONF_ID]]
 
     try:
         await twentemilieu.update()

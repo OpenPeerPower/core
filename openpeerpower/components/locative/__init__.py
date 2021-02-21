@@ -79,7 +79,7 @@ async def handle_webhook.opp, webhook_id, request):
         return web.Response(text=f"Setting location to {location_name}", status=HTTP_OK)
 
     if direction == "exit":
-        current_state =.opp.states.get(f"{DEVICE_TRACKER}.{device}")
+        current_state = opp.states.get(f"{DEVICE_TRACKER}.{device}")
 
         if current_state is None or current_state.state == location_name:
             location_name = STATE_NOT_HOME

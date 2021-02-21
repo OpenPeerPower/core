@@ -92,8 +92,8 @@ async def async_setup_platform(
     """Create the ViCare climate devices."""
     if discovery_info is None:
         return
-    vicare_api =.opp.data[VICARE_DOMAIN][VICARE_API]
-    heating_type =.opp.data[VICARE_DOMAIN][VICARE_HEATING_TYPE]
+    vicare_api = opp.data[VICARE_DOMAIN][VICARE_API]
+    heating_type = opp.data[VICARE_DOMAIN][VICARE_HEATING_TYPE]
     async_add_entities(
         [
             ViCareClimate(

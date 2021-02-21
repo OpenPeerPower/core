@@ -209,7 +209,7 @@ def setup.opp, config):
         # component is set up by tts platform
         return True
 
-    token_file =.opp.config.path(TOKEN_FILE)
+    token_file = opp.config.path(TOKEN_FILE)
     if not os.path.isfile(token_file):
         do_authentication.opp, config, conf)
     else:

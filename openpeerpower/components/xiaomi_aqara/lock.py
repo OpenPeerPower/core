@@ -20,7 +20,7 @@ UNLOCK_MAINTAIN_TIME = 5
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Perform the setup for Xiaomi devices."""
     entities = []
-    gateway =.opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
+    gateway = opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
     for device in gateway.devices["lock"]:
         model = device["model"]
         if model == "lock.aq1":

@@ -69,7 +69,7 @@ async def async_migrate_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     # Remove the entry which will invoke the callback to delete the app.
    .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
     # only create new flow if there isn't a pending one for SmartThings.
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     if not [flow for flow in flows if flow["handler"] == DOMAIN]:
        .opp.async_create_task(
            .opp.config_entries.flow.async_init(DOMAIN, context={"source": "import"})
@@ -102,7 +102,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     try:
         # See if the app is already setup. This occurs when there are
         # installs in multiple SmartThings locations (valid use-case)
-        manager =.opp.data[DOMAIN][DATA_MANAGER]
+        manager = opp.data[DOMAIN][DATA_MANAGER]
         smart_app = manager.smartapps.get(entry.data[CONF_APP_ID])
         if not smart_app:
             # Validate and setup the app.
@@ -175,7 +175,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     if remove_entry:
        .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
         # only create new flow if there isn't a pending one for SmartThings.
-        flows =.opp.config_entries.flow.async_progress()
+        flows = opp.config_entries.flow.async_progress()
         if not [flow for flow in flows if flow["handler"] == DOMAIN]:
            .opp.async_create_task(
                .opp.config_entries.flow.async_init(
@@ -208,7 +208,7 @@ async def async_get_entry_scenes(entry: ConfigEntry, api):
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
-    broker =.opp.data[DOMAIN][DATA_BROKERS].pop(entry.entry_id, None)
+    broker = opp.data[DOMAIN][DATA_BROKERS].pop(entry.entry_id, None)
     if broker:
         broker.disconnect()
 
@@ -240,7 +240,7 @@ async def async_remove_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None
 
     # Remove the app if not referenced by other entries, which if already
     # removed raises a HTTP_FORBIDDEN error.
-    all_entries =.opp.config_entries.async_entries(DOMAIN)
+    all_entries = opp.config_entries.async_entries(DOMAIN)
     app_id = entry.data[CONF_APP_ID]
     app_count = sum(1 for entry in all_entries if entry.data[CONF_APP_ID] == app_id)
     if app_count > 1:
@@ -276,7 +276,7 @@ class DeviceBroker:
         scenes: Iterable,
     ):
         """Create a new instance of the DeviceBroker."""
-        self._opp =.opp
+        self._opp = opp
         self._entry = entry
         self._installed_app_id = entry.data[CONF_INSTALLED_APP_ID]
         self._smart_app = smart_app

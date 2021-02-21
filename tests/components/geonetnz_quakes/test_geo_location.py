@@ -72,13 +72,13 @@ async def test_setup.opp):
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await.opp.async_block_till_done()
 
-        all_states =.opp.states.async_all()
+        all_states = opp.states.async_all()
         # 3 geolocation and 1 sensor entities
         assert len(all_states) == 4
         entity_registry = await async_get_registry.opp)
         assert len(entity_registry.entities) == 4
 
-        state =.opp.states.get("geo_location.title_1")
+        state = opp.states.get("geo_location.title_1")
         assert state is not None
         assert state.name == "Title 1"
         assert state.attributes == {
@@ -101,7 +101,7 @@ async def test_setup.opp):
         }
         assert float(state.state) == 15.5
 
-        state =.opp.states.get("geo_location.title_2")
+        state = opp.states.get("geo_location.title_2")
         assert state is not None
         assert state.name == "Title 2"
         assert state.attributes == {
@@ -116,7 +116,7 @@ async def test_setup.opp):
         }
         assert float(state.state) == 20.5
 
-        state =.opp.states.get("geo_location.title_3")
+        state = opp.states.get("geo_location.title_3")
         assert state is not None
         assert state.name == "Title 3"
         assert state.attributes == {
@@ -136,7 +136,7 @@ async def test_setup.opp):
         async_fire_time_changed.opp, utcnow + DEFAULT_SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        all_states =.opp.states.async_all()
+        all_states = opp.states.async_all()
         assert len(all_states) == 4
 
         # Simulate an update - empty data, but successful update,
@@ -145,7 +145,7 @@ async def test_setup.opp):
         async_fire_time_changed.opp, utcnow + 2 * DEFAULT_SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        all_states =.opp.states.async_all()
+        all_states = opp.states.async_all()
         assert len(all_states) == 4
 
         # Simulate an update - empty data, removes all entities
@@ -153,7 +153,7 @@ async def test_setup.opp):
         async_fire_time_changed.opp, utcnow + 3 * DEFAULT_SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        all_states =.opp.states.async_all()
+        all_states = opp.states.async_all()
         assert len(all_states) == 1
         assert len(entity_registry.entities) == 1
 
@@ -178,18 +178,18 @@ async def test_setup_imperial.opp):
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await.opp.async_block_till_done()
 
-        all_states =.opp.states.async_all()
+        all_states = opp.states.async_all()
         assert len(all_states) == 2
 
         # Test conversion of 200 miles to kilometers.
-        feeds =.opp.data[DOMAIN][FEED]
+        feeds = opp.data[DOMAIN][FEED]
         assert feeds is not None
         assert len(feeds) == 1
         manager = list(feeds.values())[0]
         # Ensure that the filter value in km is correctly set.
         assert manager._feed_manager._feed._filter_radius == 321.8688
 
-        state =.opp.states.get("geo_location.title_1")
+        state = opp.states.get("geo_location.title_1")
         assert state is not None
         assert state.name == "Title 1"
         assert state.attributes == {

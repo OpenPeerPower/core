@@ -99,7 +99,7 @@ class LightColorMode(enum.IntEnum):
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation light from config entry."""
-    entities_to_create =.opp.data[DATA_ZHA][light.DOMAIN]
+    entities_to_create = opp.data[DATA_ZHA][light.DOMAIN]
 
     unsub = async_dispatcher_connect(
        .opp,

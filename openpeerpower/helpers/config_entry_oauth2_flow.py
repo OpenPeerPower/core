@@ -105,7 +105,7 @@ class LocalOAuth2Implementation(AbstractOAuth2Implementation):
         token_url: str,
     ):
         """Initialize local auth implementation."""
-        self.opp =.opp
+        self.opp = opp
         self._domain = domain
         self.client_id = client_id
         self.client_secret = client_secret
@@ -350,7 +350,7 @@ def async_register_implementation(
        .opp.http.register_view(OAuth2AuthorizeCallbackView())  # type: ignore
        .opp.data[DATA_VIEW_REGISTERED] = True
 
-    implementations =.opp.data.setdefault(DATA_IMPLEMENTATIONS, {})
+    implementations = opp.data.setdefault(DATA_IMPLEMENTATIONS, {})
     implementations.setdefault(domain, {})[implementation.domain] = implementation
 
 
@@ -448,7 +448,7 @@ class OAuth2Session:
         implementation: AbstractOAuth2Implementation,
     ):
         """Initialize an OAuth2 session."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.implementation = implementation
 
@@ -509,10 +509,10 @@ async def async_oauth2_request(
 @callback
 def _encode_jwt.opp: OpenPeerPower, data: dict) -> str:
     """JWT encode data."""
-    secret =.opp.data.get(DATA_JWT_SECRET)
+    secret = opp.data.get(DATA_JWT_SECRET)
 
     if secret is None:
-        secret =.opp.data[DATA_JWT_SECRET] = secrets.token_hex()
+        secret = opp.data[DATA_JWT_SECRET] = secrets.token_hex()
 
     return jwt.encode(data, secret, algorithm="HS256").decode()
 

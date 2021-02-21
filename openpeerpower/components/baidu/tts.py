@@ -61,7 +61,7 @@ class BaiduTTSProvider(Provider):
 
     def __init__(self,.opp, conf):
         """Init Baidu TTS service."""
-        self.opp =.opp
+        self.opp = opp
         self._lang = conf[CONF_LANG]
         self._codec = "mp3"
         self.name = "BaiduTTS"

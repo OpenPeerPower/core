@@ -58,7 +58,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ):
     """Set up Awair sensor entity based on a config entry."""
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id]
     sensors = []
 
     data: List[AwairResult] = coordinator.data.values()

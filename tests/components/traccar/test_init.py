@@ -110,7 +110,7 @@ async def test_enter_and_exit.opp, client, webhook_id):
     req = await client.post(url, params=data)
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name =.opp.states.get(
+    state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
     ).state
     assert STATE_HOME == state_name
@@ -119,7 +119,7 @@ async def test_enter_and_exit.opp, client, webhook_id):
     req = await client.post(url, params=data)
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name =.opp.states.get(
+    state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
     ).state
     assert STATE_HOME == state_name
@@ -131,7 +131,7 @@ async def test_enter_and_exit.opp, client, webhook_id):
     req = await client.post(url, params=data)
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name =.opp.states.get(
+    state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
     ).state
     assert STATE_NOT_HOME == state_name
@@ -161,7 +161,7 @@ async def test_enter_with_attrs.opp, client, webhook_id):
     req = await client.post(url, params=data)
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state =.opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"]))
+    state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"]))
     assert state.state == STATE_NOT_HOME
     assert state.attributes["gps_accuracy"] == 10.5
     assert state.attributes["battery_level"] == 10.0
@@ -183,7 +183,7 @@ async def test_enter_with_attrs.opp, client, webhook_id):
     req = await client.post(url, params=data)
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state =.opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"]))
+    state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"]))
     assert state.state == STATE_HOME
     assert state.attributes["gps_accuracy"] == 123
     assert state.attributes["battery_level"] == 23
@@ -203,7 +203,7 @@ async def test_two_devices.opp, client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
 
-    state =.opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data_device_1["id"]))
+    state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data_device_1["id"]))
     assert state.state == "not_home"
 
     # Enter Home
@@ -215,9 +215,9 @@ async def test_two_devices.opp, client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
 
-    state =.opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data_device_2["id"]))
+    state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data_device_2["id"]))
     assert state.state == "home"
-    state =.opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data_device_1["id"]))
+    state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data_device_1["id"]))
     assert state.state == "not_home"
 
 
@@ -233,13 +233,13 @@ async def test_load_unload_entry.opp, client, webhook_id):
     req = await client.post(url, params=data)
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name =.opp.states.get(
+    state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
     ).state
     assert STATE_HOME == state_name
     assert len.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
 
-    entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    entry = opp.config_entries.async_entries(DOMAIN)[0]
 
     assert await traccar.async_unload_entry.opp, entry)
     await.opp.async_block_till_done()

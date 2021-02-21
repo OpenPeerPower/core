@@ -56,6 +56,6 @@ async def test_valid_credentials.opp):
         await.opp.async_block_till_done()
 
         assert len.opp.states.async_entity_ids()) == 1
-        state =.opp.states.get("sensor.sigfox_fake_id")
+        state = opp.states.get("sensor.sigfox_fake_id")
         assert state.state == "payload"
         assert state.attributes.get("snr") == "50.0"

@@ -63,7 +63,7 @@ async def test_apply_service.opp):
         blocking=True,
     )
 
-    state =.opp.states.get("light.bed_light")
+    state = opp.states.get("light.bed_light")
     assert state.state == "on"
     assert state.attributes["brightness"] == 50
 
@@ -118,7 +118,7 @@ async def test_create_service.opp, caplog):
     )
     await.opp.async_block_till_done()
 
-    scene =.opp.states.get("scene.hallo")
+    scene = opp.states.get("scene.hallo")
     assert scene is not None
     assert scene.domain == "scene"
     assert scene.name == "hallo"
@@ -136,7 +136,7 @@ async def test_create_service.opp, caplog):
     )
     await.opp.async_block_till_done()
 
-    scene =.opp.states.get("scene.hallo")
+    scene = opp.states.get("scene.hallo")
     assert scene is not None
     assert scene.domain == "scene"
     assert scene.name == "hallo"
@@ -155,7 +155,7 @@ async def test_create_service.opp, caplog):
     await.opp.async_block_till_done()
 
     assert "The scene scene.hallo_2 already exists" in caplog.text
-    scene =.opp.states.get("scene.hallo_2")
+    scene = opp.states.get("scene.hallo_2")
     assert scene is not None
     assert scene.domain == "scene"
     assert scene.name == "hallo_2"
@@ -177,7 +177,7 @@ async def test_snapshot_service.opp, caplog):
         blocking=True,
     )
     await.opp.async_block_till_done()
-    scene =.opp.states.get("scene.hallo")
+    scene = opp.states.get("scene.hallo")
     assert scene is not None
     assert scene.attributes.get("entity_id") == ["light.my_light"]
 
@@ -215,7 +215,7 @@ async def test_snapshot_service.opp, caplog):
         blocking=True,
     )
     await.opp.async_block_till_done()
-    scene =.opp.states.get("scene.hallo_3")
+    scene = opp.states.get("scene.hallo_3")
     assert scene is not None
     assert "light.my_light" in scene.attributes.get("entity_id")
     assert "light.bed_light" in scene.attributes.get("entity_id")
@@ -314,11 +314,11 @@ async def test_config.opp):
     )
     await.opp.async_block_till_done()
 
-    icon =.opp.states.get("scene.scene_icon")
+    icon = opp.states.get("scene.scene_icon")
     assert icon is not None
     assert icon.attributes["icon"] == "mdi:party"
 
-    no_icon =.opp.states.get("scene.scene_no_icon")
+    no_icon = opp.states.get("scene.scene_no_icon")
     assert no_icon is not None
     assert "icon" not in no_icon.attributes
 

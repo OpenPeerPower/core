@@ -47,7 +47,7 @@ def setup.opp, config):
     password = conf.get(CONF_PASSWORD)
 
     try:
-        cache =.opp.config.path(DEFAULT_CACHEDB)
+        cache = opp.config.path(DEFAULT_CACHEDB)
         skybell = Skybell(
             username=username,
             password=password,

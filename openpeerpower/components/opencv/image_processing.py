@@ -103,7 +103,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     entities = []
     if CONF_CLASSIFIER not in config:
-        dest_path =.opp.config.path(DEFAULT_CLASSIFIER_PATH)
+        dest_path = opp.config.path(DEFAULT_CLASSIFIER_PATH)
         _get_default_classifier(dest_path)
         config[CONF_CLASSIFIER] = {"Face": dest_path}
 
@@ -125,7 +125,7 @@ class OpenCVImageProcessor(ImageProcessingEntity):
 
     def __init__(self,.opp, camera_entity, name, classifiers):
         """Initialize the OpenCV entity."""
-        self.opp =.opp
+        self.opp = opp
         self._camera_entity = camera_entity
         if name:
             self._name = name

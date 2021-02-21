@@ -96,7 +96,7 @@ class NotifyAuthModule(MultiFactorAuthModule):
         """Initialize the user data store."""
         super().__init__.opp, config)
         self._user_settings: Optional[_UsersDict] = None
-        self._user_store =.opp.helpers.storage.Store(
+        self._user_store = opp.helpers.storage.Store(
             STORAGE_VERSION, STORAGE_KEY, private=True
         )
         self._include = config.get(CONF_INCLUDE, [])

@@ -29,7 +29,7 @@ class TrackRDeviceScanner:
     def __init__(self,.opp, config: dict, see) -> None:
         """Initialize the TrackR device scanner."""
 
-        self.opp =.opp
+        self.opp = opp
         self.api = trackrApiInterface(
             config.get(CONF_USERNAME), config.get(CONF_PASSWORD)
         )

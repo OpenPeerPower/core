@@ -366,7 +366,7 @@ async def test_device_types.opp: OpenPeerPower):
         type(mocked_bulb).get_model_specs = MagicMock(return_value=model_specs)
         await _async_setup(config_entry)
 
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state.state == "on"
         target_properties["friendly_name"] = name
         target_properties["flowing"] = False
@@ -393,7 +393,7 @@ async def test_device_types.opp: OpenPeerPower):
         await _async_setup(config_entry)
 
         assert.opp.states.get(entity_id).state == "off"
-        state =.opp.states.get(f"{entity_id}_nightlight")
+        state = opp.states.get(f"{entity_id}_nightlight")
         assert state.state == "on"
         nightlight_properties["friendly_name"] = f"{name} nightlight"
         nightlight_properties["icon"] = "mdi:weather-night"

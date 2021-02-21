@@ -153,7 +153,7 @@ async def test_oppio_confirm.opp, mock_try_connection, mock_finish_setup):
 async def test_option_flow.opp, mqtt_mock, mock_try_connection):
     """Test config flow options."""
     mock_try_connection.return_value = True
-    config_entry =.opp.config_entries.async_entries(mqtt.DOMAIN)[0]
+    config_entry = opp.config_entries.async_entries(mqtt.DOMAIN)[0]
     config_entry.data = {
         mqtt.CONF_BROKER: "test-broker",
         mqtt.CONF_PORT: 1234,
@@ -225,7 +225,7 @@ async def test_option_flow.opp, mqtt_mock, mock_try_connection):
 async def test_disable_birth_will.opp, mqtt_mock, mock_try_connection):
     """Test disabling birth and will."""
     mock_try_connection.return_value = True
-    config_entry =.opp.config_entries.async_entries(mqtt.DOMAIN)[0]
+    config_entry = opp.config_entries.async_entries(mqtt.DOMAIN)[0]
     config_entry.data = {
         mqtt.CONF_BROKER: "test-broker",
         mqtt.CONF_PORT: 1234,
@@ -307,7 +307,7 @@ async def test_option_flow_default_suggested_values(
 ):
     """Test config flow options has default/suggested values."""
     mock_try_connection.return_value = True
-    config_entry =.opp.config_entries.async_entries(mqtt.DOMAIN)[0]
+    config_entry = opp.config_entries.async_entries(mqtt.DOMAIN)[0]
     config_entry.data = {
         mqtt.CONF_BROKER: "test-broker",
         mqtt.CONF_PORT: 1234,

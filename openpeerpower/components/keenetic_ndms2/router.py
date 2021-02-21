@@ -37,7 +37,7 @@ class KeeneticRouter:
 
     def __init__(self,.opp: OpenPeerPower, config_entry: ConfigEntry):
         """Initialize the Client."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self._last_devices: Dict[str, Device] = {}
         self._router_info: Optional[RouterInfo] = None

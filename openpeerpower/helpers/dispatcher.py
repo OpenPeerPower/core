@@ -81,7 +81,7 @@ def async_dispatcher_send.opp: OpenPeerPowerType, signal: str, *args: Any) -> No
 
     This method must be run in the event loop.
     """
-    target_list =.opp.data.get(DATA_DISPATCHER, {}).get(signal, [])
+    target_list = opp.data.get(DATA_DISPATCHER, {}).get(signal, [])
 
     for job in target_list:
        .opp.async_add_opp_job(job, *args)

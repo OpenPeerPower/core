@@ -132,7 +132,7 @@ async def websocket_update_entity.opp, connection, msg):
         return
     result = {"entity_entry": _entry_ext_dict(entry)}
     if "disabled_by" in changes and changes["disabled_by"] is None:
-        config_entry =.opp.config_entries.async_get_entry(entry.config_entry_id)
+        config_entry = opp.config_entries.async_get_entry(entry.config_entry_id)
         if config_entry and not config_entry.supports_unload:
             result["require_restart"] = True
         else:

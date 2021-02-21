@@ -83,7 +83,7 @@ def attach.opp: OpenPeerPowerType, obj: Any) -> None:
             attach.opp, child_key)
             attach.opp, child_value)
     elif isinstance(obj, Template):
-        obj.opp =.opp
+        obj.opp = opp
 
 
 def render_complex(
@@ -294,7 +294,7 @@ class Template:
         self.template: str = template.strip()
         self._compiled_code = None
         self._compiled: Optional[Template] = None
-        self.opp =.opp
+        self.opp = opp
         self.is_static = not is_template_string(template)
         self._limited = None
 
@@ -573,7 +573,7 @@ class AllStates:
 
     def __init__(self,.opp: OpenPeerPowerType) -> None:
         """Initialize all states."""
-        self._opp =.opp
+        self._opp = opp
 
     def __getattr__(self, name):
         """Return the domain state."""
@@ -627,7 +627,7 @@ class DomainStates:
 
     def __init__(self,.opp: OpenPeerPowerType, domain: str) -> None:
         """Initialize the domain states."""
-        self._opp =.opp
+        self._opp = opp
         self._domain = domain
 
     def __getattr__(self, name):
@@ -674,7 +674,7 @@ class TemplateState(State):
         self,.opp: OpenPeerPowerType, state: State, collect: bool = True
     ) -> None:
         """Initialize template state."""
-        self._opp =.opp
+        self._opp = opp
         self._state = state
         self._collect = collect
 
@@ -771,7 +771,7 @@ class TemplateState(State):
 
 
 def _collect_state.opp: OpenPeerPowerType, entity_id: str) -> None:
-    entity_collect =.opp.data.get(_RENDER_INFO)
+    entity_collect = opp.data.get(_RENDER_INFO)
     if entity_collect is not None:
         entity_collect.entities.add(entity_id)
 
@@ -785,7 +785,7 @@ def _state_generator.opp: OpenPeerPowerType, domain: Optional[str]) -> Generator
 def _get_state_if_valid(
    .opp: OpenPeerPowerType, entity_id: str
 ) -> Optional[TemplateState]:
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     if state is None and not valid_entity_id(entity_id):
         raise TemplateError(f"Invalid entity ID '{entity_id}'")  # type: ignore
     return _get_template_state_from_state.opp, entity_id, state)
@@ -891,8 +891,8 @@ def closest.opp, *args):
 
     """
     if len(args) == 1:
-        latitude =.opp.config.latitude
-        longitude =.opp.config.longitude
+        latitude = opp.config.latitude
+        longitude = opp.config.longitude
         entities = args[0]
 
     elif len(args) == 2:
@@ -1016,7 +1016,7 @@ def state_attr.opp, entity_id, name):
 
 def now.opp):
     """Record fetching now."""
-    render_info =.opp.data.get(_RENDER_INFO)
+    render_info = opp.data.get(_RENDER_INFO)
     if render_info is not None:
         render_info.has_time = True
 
@@ -1025,7 +1025,7 @@ def now.opp):
 
 def utcnow.opp):
     """Record fetching utcnow."""
-    render_info =.opp.data.get(_RENDER_INFO)
+    render_info = opp.data.get(_RENDER_INFO)
     if render_info is not None:
         render_info.has_time = True
 
@@ -1314,7 +1314,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
     def __init__(self,.opp):
         """Initialise template environment."""
         super().__init__()
-        self.opp =.opp
+        self.opp = opp
         self.template_cache = weakref.WeakValueDictionary()
         self.filters["round"] = forgiving_round
         self.filters["multiply"] = multiply
@@ -1408,17 +1408,17 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
 
             return contextfunction(wrapper)
 
-        self.globals["expand"] =.oppfunction(expand)
+        self.globals["expand"] = oppfunction(expand)
         self.filters["expand"] = contextfilter(self.globals["expand"])
-        self.globals["closest"] =.oppfunction(closest)
+        self.globals["closest"] = oppfunction(closest)
         self.filters["closest"] = contextfilter.oppfunction(closest_filter))
-        self.globals["distance"] =.oppfunction(distance)
-        self.globals["is_state"] =.oppfunction(is_state)
-        self.globals["is_state_attr"] =.oppfunction(is_state_attr)
-        self.globals["state_attr"] =.oppfunction(state_attr)
+        self.globals["distance"] = oppfunction(distance)
+        self.globals["is_state"] = oppfunction(is_state)
+        self.globals["is_state_attr"] = oppfunction(is_state_attr)
+        self.globals["state_attr"] = oppfunction(state_attr)
         self.globals["states"] = AllStates.opp)
-        self.globals["utcnow"] =.oppfunction(utcnow)
-        self.globals["now"] =.oppfunction(now)
+        self.globals["utcnow"] = oppfunction(utcnow)
+        self.globals["now"] = oppfunction(now)
 
     def is_safe_callable(self, obj):
         """Test if callback is safe."""

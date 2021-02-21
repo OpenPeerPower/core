@@ -35,7 +35,7 @@ async def test_thermostat_v2(
 ):
     """Test a thermostat v2 command class entity."""
     node = climate_radio_thermostat_ct100_plus
-    state =.opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
+    state = opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
 
     assert state
     assert state.state == HVAC_MODE_HEAT
@@ -201,7 +201,7 @@ async def test_thermostat_v2(
     )
     node.receive_event(event)
 
-    state =.opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
+    state = opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
     assert state.state == HVAC_MODE_COOL
     assert state.attributes[ATTR_TEMPERATURE] == 22.8
 
@@ -225,7 +225,7 @@ async def test_thermostat_v2(
     )
     node.receive_event(event)
 
-    state =.opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
+    state = opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
     assert state.state == HVAC_MODE_HEAT_COOL
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] == 22.8
     assert state.attributes[ATTR_TARGET_TEMP_LOW] == 22.2
@@ -334,7 +334,7 @@ async def test_thermostat_different_endpoints(
    .opp, client, climate_radio_thermostat_ct100_plus_different_endpoints, integration
 ):
     """Test an entity with values on a different endpoint from the primary value."""
-    state =.opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
+    state = opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
 
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] == 22.5
 
@@ -342,7 +342,7 @@ async def test_thermostat_different_endpoints(
 async def test_setpoint_thermostat.opp, client, climate_danfoss_lc_13, integration):
     """Test a setpoint thermostat command class entity."""
     node = climate_danfoss_lc_13
-    state =.opp.states.get(CLIMATE_DANFOSS_LC13_ENTITY)
+    state = opp.states.get(CLIMATE_DANFOSS_LC13_ENTITY)
 
     assert state
     assert state.state == HVAC_MODE_HEAT
@@ -410,7 +410,7 @@ async def test_setpoint_thermostat.opp, client, climate_danfoss_lc_13, integrati
     )
     node.receive_event(event)
 
-    state =.opp.states.get(CLIMATE_DANFOSS_LC13_ENTITY)
+    state = opp.states.get(CLIMATE_DANFOSS_LC13_ENTITY)
     assert state.state == HVAC_MODE_HEAT
     assert state.attributes[ATTR_TEMPERATURE] == 23
 
@@ -419,7 +419,7 @@ async def test_setpoint_thermostat.opp, client, climate_danfoss_lc_13, integrati
 
 async def test_thermostat_heatit.opp, client, climate_heatit_z_trm3, integration):
     """Test a thermostat v2 command class entity."""
-    state =.opp.states.get(CLIMATE_FLOOR_THERMOSTAT_ENTITY)
+    state = opp.states.get(CLIMATE_FLOOR_THERMOSTAT_ENTITY)
 
     assert state
     assert state.state == HVAC_MODE_HEAT

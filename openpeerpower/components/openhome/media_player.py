@@ -36,7 +36,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if not discovery_info:
         return
 
-    openhome_data =.opp.data.setdefault(DATA_OPENHOME, set())
+    openhome_data = opp.data.setdefault(DATA_OPENHOME, set())
 
     name = discovery_info.get("name")
     description = discovery_info.get("ssdp_description")
@@ -67,7 +67,7 @@ class OpenhomeDevice(MediaPlayerEntity):
 
     def __init__(self,.opp, device):
         """Initialise the Openhome device."""
-        self.opp =.opp
+        self.opp = opp
         self._device = device
         self._track_information = {}
         self._in_standby = None

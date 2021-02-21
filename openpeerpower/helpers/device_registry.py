@@ -134,8 +134,8 @@ class DeviceRegistry:
 
     def __init__(self,.opp: OpenPeerPowerType) -> None:
         """Initialize the device registry."""
-        self.opp =.opp
-        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        self.opp = opp
+        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
         self._clear_index()
 
     @callback

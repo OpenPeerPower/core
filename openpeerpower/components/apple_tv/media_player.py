@@ -68,7 +68,7 @@ SUPPORT_APPLE_TV = (
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Load Apple TV media player based on a config entry."""
     name = config_entry.data[CONF_NAME]
-    manager =.opp.data[DOMAIN][config_entry.unique_id]
+    manager = opp.data[DOMAIN][config_entry.unique_id]
     async_add_entities([AppleTvMediaPlayer(name, config_entry.unique_id, manager)])
 
 

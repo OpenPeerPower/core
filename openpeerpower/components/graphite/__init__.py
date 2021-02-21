@@ -65,7 +65,7 @@ class GraphiteFeeder(threading.Thread):
     def __init__(self,.opp, host, port, prefix):
         """Initialize the feeder."""
         super().__init__(daemon=True)
-        self._opp =.opp
+        self._opp = opp
         self._host = host
         self._port = port
         # rstrip any trailing dots in case they think they need it

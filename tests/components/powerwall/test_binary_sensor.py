@@ -26,14 +26,14 @@ async def test_sensors.opp):
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.grid_status")
+    state = opp.states.get("binary_sensor.grid_status")
     assert state.state == STATE_ON
     expected_attributes = {"friendly_name": "Grid Status", "device_class": "power"}
     # Only test for a subset of attributes in case
     # HA changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
-    state =.opp.states.get("binary_sensor.powerwall_status")
+    state = opp.states.get("binary_sensor.powerwall_status")
     assert state.state == STATE_ON
     expected_attributes = {
         "friendly_name": "Powerwall Status",
@@ -43,7 +43,7 @@ async def test_sensors.opp):
     # HA changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
-    state =.opp.states.get("binary_sensor.powerwall_connected_to_tesla")
+    state = opp.states.get("binary_sensor.powerwall_connected_to_tesla")
     assert state.state == STATE_ON
     expected_attributes = {
         "friendly_name": "Powerwall Connected to Tesla",
@@ -53,7 +53,7 @@ async def test_sensors.opp):
     # HA changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
-    state =.opp.states.get("binary_sensor.powerwall_charging")
+    state = opp.states.get("binary_sensor.powerwall_charging")
     assert state.state == STATE_ON
     expected_attributes = {
         "friendly_name": "Powerwall Charging",

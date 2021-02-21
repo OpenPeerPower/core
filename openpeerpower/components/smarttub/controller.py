@@ -26,7 +26,7 @@ class SmartTubController:
 
     def __init__(self,.opp):
         """Initialize an interface to SmartTub."""
-        self._opp =.opp
+        self._opp = opp
         self._account = None
         self.spas = set()
         self._spa_devices = {}

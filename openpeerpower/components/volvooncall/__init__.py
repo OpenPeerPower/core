@@ -128,7 +128,7 @@ async def async_setup.opp, config):
 
     interval = config[DOMAIN][CONF_SCAN_INTERVAL]
 
-    data =.opp.data[DATA_KEY] = VolvoData(config)
+    data = opp.data[DATA_KEY] = VolvoData(config)
 
     def is_enabled(attr):
         """Return true if the user has enabled the resource."""

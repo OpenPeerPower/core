@@ -129,7 +129,7 @@ class FlicButton(BinarySensorEntity):
     def __init__(self,.opp, client, address, timeout, ignored_click_types):
         """Initialize the flic button."""
 
-        self._opp =.opp
+        self._opp = opp
         self._address = address
         self._timeout = timeout
         self._is_down = False

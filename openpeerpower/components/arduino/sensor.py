@@ -20,7 +20,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Arduino platform."""
-    board =.opp.data[DOMAIN]
+    board = opp.data[DOMAIN]
 
     pins = config[CONF_PINS]
 

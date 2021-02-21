@@ -21,5 +21,5 @@ async def test_smoke_test_setup_component.opp):
     assert await async_setup_component.opp, weather.DOMAIN, BASE_CONFIG)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("weather.volkel")
+    state = opp.states.get("weather.volkel")
     assert state.state == "unknown"

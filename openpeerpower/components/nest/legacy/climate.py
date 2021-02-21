@@ -76,7 +76,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
 async def async_setup_legacy_entry.opp, entry, async_add_entities):
     """Set up the Nest climate device based on a config entry."""
-    temp_unit =.opp.config.units.temperature_unit
+    temp_unit = opp.config.units.temperature_unit
 
     thermostats = await.opp.async_add_executor_job.opp.data[DATA_NEST].thermostats)
 

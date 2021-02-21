@@ -44,7 +44,7 @@ def min_kelvin(model: str):
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up lights for device."""
-    wrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][COAP]
+    wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][COAP]
 
     blocks = []
     for block in wrapper.device.blocks:

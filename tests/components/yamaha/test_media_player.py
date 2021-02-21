@@ -52,7 +52,7 @@ async def test_setup_host.opp, device, main_zone):
     assert await async_setup_component.opp, mp.DOMAIN, CONFIG)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("media_player.yamaha_receiver_main_zone")
+    state = opp.states.get("media_player.yamaha_receiver_main_zone")
 
     assert state is not None
     assert state.state == "off"
@@ -66,7 +66,7 @@ async def test_setup_no_host.opp, device, main_zone):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("media_player.yamaha_receiver_main_zone")
+    state = opp.states.get("media_player.yamaha_receiver_main_zone")
 
     assert state is not None
     assert state.state == "off"
@@ -85,7 +85,7 @@ async def test_setup_discovery.opp, device, main_zone):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("media_player.yamaha_receiver_main_zone")
+    state = opp.states.get("media_player.yamaha_receiver_main_zone")
 
     assert state is not None
     assert state.state == "off"
@@ -106,7 +106,7 @@ async def test_setup_zone_ignore.opp, device, main_zone):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("media_player.yamaha_receiver_main_zone")
+    state = opp.states.get("media_player.yamaha_receiver_main_zone")
 
     assert state is None
 

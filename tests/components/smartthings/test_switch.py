@@ -48,7 +48,7 @@ async def test_turn_off.opp, device_factory):
         "switch", "turn_off", {"entity_id": "switch.switch_1"}, blocking=True
     )
     # Assert
-    state =.opp.states.get("switch.switch_1")
+    state = opp.states.get("switch.switch_1")
     assert state is not None
     assert state.state == "off"
 
@@ -67,7 +67,7 @@ async def test_turn_on.opp, device_factory):
         "switch", "turn_on", {"entity_id": "switch.switch_1"}, blocking=True
     )
     # Assert
-    state =.opp.states.get("switch.switch_1")
+    state = opp.states.get("switch.switch_1")
     assert state is not None
     assert state.state == "on"
     assert state.attributes[ATTR_CURRENT_POWER_W] == 355
@@ -84,7 +84,7 @@ async def test_update_from_signal.opp, device_factory):
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await.opp.async_block_till_done()
-    state =.opp.states.get("switch.switch_1")
+    state = opp.states.get("switch.switch_1")
     assert state is not None
     assert state.state == "on"
 

@@ -33,7 +33,7 @@ SPEED_RANGE = (1, 3)  # away is not included in speeds and instead mapped to off
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the ComfoConnect fan platform."""
-    ccb =.opp.data[DOMAIN]
+    ccb = opp.data[DOMAIN]
 
     add_entities([ComfoConnectFan(ccb.name, ccb)], True)
 

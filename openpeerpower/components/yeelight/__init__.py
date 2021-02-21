@@ -253,7 +253,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     if unload_ok:
-        data =.opp.data[DOMAIN][DATA_CONFIG_ENTRIES].pop(entry.entry_id)
+        data = opp.data[DOMAIN][DATA_CONFIG_ENTRIES].pop(entry.entry_id)
         remove_init_dispatcher = data.get(DATA_REMOVE_INIT_DISPATCHER)
         if remove_init_dispatcher is not None:
             remove_init_dispatcher()
@@ -295,7 +295,7 @@ class YeelightScanner:
 
     def __init__(self,.opp: OpenPeerPower):
         """Initialize class."""
-        self._opp =.opp
+        self._opp = opp
         self._seen = {}
         self._callbacks = {}
         self._scan_task = None
@@ -362,7 +362,7 @@ class YeelightDevice:
 
     def __init__(self,.opp, host, config, bulb, capabilities):
         """Initialize device."""
-        self._opp =.opp
+        self._opp = opp
         self._config = config
         self._host = host
         self._bulb_device = bulb

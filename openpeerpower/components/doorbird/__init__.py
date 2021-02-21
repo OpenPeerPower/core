@@ -211,7 +211,7 @@ async def _async_register_events.opp, doorstation):
 async def _update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     config_entry_id = entry.entry_id
-    doorstation =.opp.data[DOMAIN][config_entry_id][DOOR_STATION]
+    doorstation = opp.data[DOMAIN][config_entry_id][DOOR_STATION]
 
     doorstation.events = entry.options[CONF_EVENTS]
     # Subscribe to doorbell or motion events
@@ -376,7 +376,7 @@ class DoorBirdRequestView(OpenPeerPowerView):
             message = f"HTTP Favorites cleared for {device.slug}"
             return web.Response(status=HTTP_OK, text=message)
 
-        event_data[ATTR_ENTITY_ID] =.opp.data[DOMAIN][
+        event_data[ATTR_ENTITY_ID] = opp.data[DOMAIN][
             DOOR_STATION_EVENT_ENTITY_IDS
         ].get(event)
 

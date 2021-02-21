@@ -58,7 +58,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
         if entry.domain != DOMAIN:
             continue
 
-        entity_state =.opp.states.get(entry.entity_id)
+        entity_state = opp.states.get(entry.entity_id)
 
         # We need a state or else we can't populate the HVAC and preset modes.
         if entity_state is None:

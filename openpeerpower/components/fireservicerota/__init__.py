@@ -99,7 +99,7 @@ class FireServiceRotaOauth:
 
     def __init__(self,.opp, entry, fsr):
         """Initialize the oauth object."""
-        self._opp =.opp
+        self._opp = opp
         self._entry = entry
 
         self._url = entry.data[CONF_URL]
@@ -148,7 +148,7 @@ class FireServiceRotaWebSocket:
 
     def __init__(self,.opp, entry):
         """Initialize the websocket object."""
-        self._opp =.opp
+        self._opp = opp
         self._entry = entry
 
         self._fsr_incidents = FireServiceRotaIncidents(on_incident=self._on_incident)
@@ -182,7 +182,7 @@ class FireServiceRotaClient:
 
     def __init__(self,.opp, entry):
         """Initialize the data object."""
-        self._opp =.opp
+        self._opp = opp
         self._entry = entry
 
         self._url = entry.data[CONF_URL]

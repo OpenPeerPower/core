@@ -48,7 +48,7 @@ async def test_state.opp: OpenPeerPower, device: Dyson360Eye) -> None:
     er = await entity_registry.async_get_registry.opp)
     assert er.async_get(ENTITY_ID).unique_id == SERIAL
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.name == NAME
     assert state.state == STATE_ON
     attributes = state.attributes
@@ -62,14 +62,14 @@ async def test_state.opp: OpenPeerPower, device: Dyson360Eye) -> None:
     device.state.state = Dyson360EyeMode.INACTIVE_CHARGING
     device.state.power_mode = PowerMode.MAX
     await async_update_device.opp, device)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
     assert state.attributes[ATTR_STATUS] == "Stopped - Charging"
     assert state.attributes[ATTR_FAN_SPEED] == "Max"
 
     device.state.state = Dyson360EyeMode.FULL_CLEAN_PAUSED
     await async_update_device.opp, device)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
     assert state.attributes[ATTR_STATUS] == "Paused"
 

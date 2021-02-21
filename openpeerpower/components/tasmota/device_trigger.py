@@ -169,14 +169,14 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_op.h
             # Empty trigger_config: Remove trigger
             _LOGGER.debug("Removing trigger: %s", discovery_op.h)
             if discovery_id in.opp.data[DEVICE_TRIGGERS]:
-                device_trigger =.opp.data[DEVICE_TRIGGERS][discovery_id]
+                device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
                 await device_trigger.tasmota_trigger.unsubscribe_topics()
                 device_trigger.detach_trigger()
                 clear_discovery_op.h.opp, discovery_op.h)
                 remove_update_signal()
             return
 
-        device_trigger =.opp.data[DEVICE_TRIGGERS][discovery_id]
+        device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
         if device_trigger.tasmota_trigger.config_same(trigger_config):
             # Unchanged payload: Ignore to avoid unnecessary unsubscribe / subscribe
             _LOGGER.debug("Ignoring unchanged update for: %s", discovery_op.h)
@@ -219,7 +219,7 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_op.h
        .opp.data[DEVICE_TRIGGERS][discovery_id] = device_trigger
     else:
         # This Tasmota trigger is wanted by device trigger(s), set them up
-        device_trigger =.opp.data[DEVICE_TRIGGERS][discovery_id]
+        device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
         await device_trigger.set_tasmota_trigger(tasmota_trigger, remove_update_signal)
     await device_trigger.arm_tasmota_trigger()
 
@@ -228,7 +228,7 @@ async def async_remove_triggers.opp: OpenPeerPower, device_id: str):
     """Cleanup any device triggers for a Tasmota device."""
     triggers = await async_get_triggers.opp, device_id)
     for trig in triggers:
-        device_trigger =.opp.data[DEVICE_TRIGGERS].pop(trig[CONF_DISCOVERY_ID])
+        device_trigger = opp.data[DEVICE_TRIGGERS].pop(trig[CONF_DISCOVERY_ID])
         if device_trigger:
             discovery_op.h = device_trigger.discovery_op.h
 

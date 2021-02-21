@@ -45,7 +45,7 @@ class AuthPhase:
 
     def __init__(self, logger,.opp, send_message, request):
         """Initialize the authentiated connection."""
-        self._opp =.opp
+        self._opp = opp
         self._send_message = send_message
         self._logger = logger
         self._request = request

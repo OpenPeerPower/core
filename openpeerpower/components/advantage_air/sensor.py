@@ -17,7 +17,7 @@ PARALLEL_UPDATES = 0
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up AdvantageAir sensor platform."""
 
-    instance =.opp.data[ADVANTAGE_AIR_DOMAIN][config_entry.entry_id]
+    instance = opp.data[ADVANTAGE_AIR_DOMAIN][config_entry.entry_id]
 
     entities = []
     for ac_key, ac_device in instance["coordinator"].data["aircons"].items():

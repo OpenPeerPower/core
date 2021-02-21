@@ -144,7 +144,7 @@ async def async_setup_opp(
                 await.opp.async_stop()
 
         safe_mode = True
-        old_config =.opp.config
+        old_config = opp.config
 
         opp = core.OpenPeerPower()
        .opp.config.skip_pip = old_config.skip_pip
@@ -315,7 +315,7 @@ def async_enable_logging(
 
     # Log errors to a file if we have write access to file or config dir
     if log_file is None:
-        err_log_path =.opp.config.path(ERROR_LOG_FILENAME)
+        err_log_path = opp.config.path(ERROR_LOG_FILENAME)
     else:
         err_log_path = os.path.abspath(log_file)
 
@@ -428,7 +428,7 @@ async def _async_set_up_integrations(
    .opp: core.OpenPeerPower, config: Dict[str, Any]
 ) -> None:
     """Set up all the integrations."""
-    setup_started =.opp.data[DATA_SETUP_STARTED] = {}
+    setup_started = opp.data[DATA_SETUP_STARTED] = {}
     domains_to_setup = _get_domains.opp, config)
 
     # Resolve all dependencies so we know all integrations

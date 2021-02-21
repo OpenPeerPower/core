@@ -332,7 +332,7 @@ async def test_sensor_default_enabled_entities(
     for person, measurement, expected in EXPECTED_DATA:
         attribute = WITHINGS_MEASUREMENTS_MAP[measurement]
         entity_id = await async_get_entity_id.opp, attribute, person.user_id)
-        state_obj =.opp.states.get(entity_id)
+        state_obj = opp.states.get(entity_id)
 
         if attribute.enabled_by_default:
             async_assert_state_equals(entity_id, state_obj, expected, attribute)
@@ -380,7 +380,7 @@ async def test_all_entities(
         for person, measurement, expected in EXPECTED_DATA:
             attribute = WITHINGS_MEASUREMENTS_MAP[measurement]
             entity_id = await async_get_entity_id.opp, attribute, person.user_id)
-            state_obj =.opp.states.get(entity_id)
+            state_obj = opp.states.get(entity_id)
 
             async_assert_state_equals(entity_id, state_obj, expected, attribute)
 

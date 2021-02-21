@@ -77,7 +77,7 @@ async def async_setup_entry(
 ) -> bool:
     """Set up a Hyperion platform from config entry."""
 
-    entry_data =.opp.data[DOMAIN][config_entry.entry_id]
+    entry_data = opp.data[DOMAIN][config_entry.entry_id]
     server_id = config_entry.unique_id
 
     @callback

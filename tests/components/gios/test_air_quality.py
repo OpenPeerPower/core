@@ -34,7 +34,7 @@ async def test_air_quality.opp):
     await init_integration.opp)
     registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state =.opp.states.get("air_quality.home")
+    state = opp.states.get("air_quality.home")
     assert state
     assert state.state == "4"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -62,7 +62,7 @@ async def test_air_quality_with_incomplete_data.opp):
     await init_integration.opp, incomplete_data=True)
     registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state =.opp.states.get("air_quality.home")
+    state = opp.states.get("air_quality.home")
     assert state
     assert state.state == "4"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -89,7 +89,7 @@ async def test_availability.opp):
     """Ensure that we mark the entities unavailable correctly when service causes an error."""
     await init_integration.opp)
 
-    state =.opp.states.get("air_quality.home")
+    state = opp.states.get("air_quality.home")
     assert state
     assert state.state != STATE_UNAVAILABLE
     assert state.state == "4"
@@ -102,7 +102,7 @@ async def test_availability.opp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("air_quality.home")
+        state = opp.states.get("air_quality.home")
         assert state
         assert state.state == STATE_UNAVAILABLE
 
@@ -117,7 +117,7 @@ async def test_availability.opp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("air_quality.home")
+        state = opp.states.get("air_quality.home")
         assert state
         assert state.state != STATE_UNAVAILABLE
         assert state.state == "4"

@@ -169,7 +169,7 @@ async def test_token_refresh.opp, mock_login, mock_get_devices):
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
 
     entry = entries[0]

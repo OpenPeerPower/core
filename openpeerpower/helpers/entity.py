@@ -510,7 +510,7 @@ class Entity(ABC):
                 f"Entity {self.entity_id} cannot be added a second time to an entity platform"
             )
 
-        self.opp =.opp
+        self.opp = opp
         self.platform = platform
         self.parallel_updates = parallel_updates
         self._added = True

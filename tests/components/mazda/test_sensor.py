@@ -50,7 +50,7 @@ async def test_sensors.opp):
     entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     # Fuel Remaining Percentage
-    state =.opp.states.get("sensor.my_mazda3_fuel_remaining_percentage")
+    state = opp.states.get("sensor.my_mazda3_fuel_remaining_percentage")
     assert state
     assert (
         state.attributes.get(ATTR_FRIENDLY_NAME)
@@ -64,7 +64,7 @@ async def test_sensors.opp):
     assert entry.unique_id == "JM000000000000000_fuel_remaining_percentage"
 
     # Fuel Distance Remaining
-    state =.opp.states.get("sensor.my_mazda3_fuel_distance_remaining")
+    state = opp.states.get("sensor.my_mazda3_fuel_distance_remaining")
     assert state
     assert (
         state.attributes.get(ATTR_FRIENDLY_NAME) == "My Mazda3 Fuel Distance Remaining"
@@ -77,7 +77,7 @@ async def test_sensors.opp):
     assert entry.unique_id == "JM000000000000000_fuel_distance_remaining"
 
     # Odometer
-    state =.opp.states.get("sensor.my_mazda3_odometer")
+    state = opp.states.get("sensor.my_mazda3_odometer")
     assert state
     assert state.attributes.get(ATTR_FRIENDLY_NAME) == "My Mazda3 Odometer"
     assert state.attributes.get(ATTR_ICON) == "mdi:speedometer"
@@ -88,7 +88,7 @@ async def test_sensors.opp):
     assert entry.unique_id == "JM000000000000000_odometer"
 
     # Front Left Tire Pressure
-    state =.opp.states.get("sensor.my_mazda3_front_left_tire_pressure")
+    state = opp.states.get("sensor.my_mazda3_front_left_tire_pressure")
     assert state
     assert (
         state.attributes.get(ATTR_FRIENDLY_NAME) == "My Mazda3 Front Left Tire Pressure"
@@ -101,7 +101,7 @@ async def test_sensors.opp):
     assert entry.unique_id == "JM000000000000000_front_left_tire_pressure"
 
     # Front Right Tire Pressure
-    state =.opp.states.get("sensor.my_mazda3_front_right_tire_pressure")
+    state = opp.states.get("sensor.my_mazda3_front_right_tire_pressure")
     assert state
     assert (
         state.attributes.get(ATTR_FRIENDLY_NAME)
@@ -115,7 +115,7 @@ async def test_sensors.opp):
     assert entry.unique_id == "JM000000000000000_front_right_tire_pressure"
 
     # Rear Left Tire Pressure
-    state =.opp.states.get("sensor.my_mazda3_rear_left_tire_pressure")
+    state = opp.states.get("sensor.my_mazda3_rear_left_tire_pressure")
     assert state
     assert (
         state.attributes.get(ATTR_FRIENDLY_NAME) == "My Mazda3 Rear Left Tire Pressure"
@@ -128,7 +128,7 @@ async def test_sensors.opp):
     assert entry.unique_id == "JM000000000000000_rear_left_tire_pressure"
 
     # Rear Right Tire Pressure
-    state =.opp.states.get("sensor.my_mazda3_rear_right_tire_pressure")
+    state = opp.states.get("sensor.my_mazda3_rear_right_tire_pressure")
     assert state
     assert (
         state.attributes.get(ATTR_FRIENDLY_NAME) == "My Mazda3 Rear Right Tire Pressure"
@@ -148,13 +148,13 @@ async def test_sensors_imperial_units.opp):
     await init_integration.opp)
 
     # Fuel Distance Remaining
-    state =.opp.states.get("sensor.my_mazda3_fuel_distance_remaining")
+    state = opp.states.get("sensor.my_mazda3_fuel_distance_remaining")
     assert state
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == LENGTH_MILES
     assert state.state == "237"
 
     # Odometer
-    state =.opp.states.get("sensor.my_mazda3_odometer")
+    state = opp.states.get("sensor.my_mazda3_odometer")
     assert state
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == LENGTH_MILES
     assert state.state == "1737"

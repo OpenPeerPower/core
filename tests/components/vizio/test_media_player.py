@@ -113,7 +113,7 @@ def _get_attr_and_assert_base_attr(
    .opp: OpenPeerPowerType, device_class: str, power_state: str
 ) -> Dict[str, Any]:
     """Return entity attributes  after asserting name, device class, and power state."""
-    attr =.opp.states.get(ENTITY_ID).attributes
+    attr = opp.states.get(ENTITY_ID).attributes
     assert attr["friendly_name"] == NAME
     assert attr["device_class"] == device_class
 
@@ -444,7 +444,7 @@ async def test_options_update(
 ) -> None:
     """Test when config entry update event fires."""
     await _test_setup_speaker.opp, True)
-    config_entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    config_entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert config_entry.options
     new_options = config_entry.options.copy()
     updated_options = {CONF_VOLUME_STEP: VOLUME_STEP}
@@ -532,7 +532,7 @@ async def test_setup_with_apps(
     async with _cm_for_test_setup_tv_with_apps(
        .opp, MOCK_USER_VALID_TV_CONFIG, CURRENT_APP_CONFIG
     ):
-        attr =.opp.states.get(ENTITY_ID).attributes
+        attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
         assert CURRENT_APP in attr["source_list"]
         assert attr["source"] == CURRENT_APP
@@ -560,7 +560,7 @@ async def test_setup_with_apps_include(
     async with _cm_for_test_setup_tv_with_apps(
        .opp, MOCK_TV_WITH_INCLUDE_CONFIG, CURRENT_APP_CONFIG
     ):
-        attr =.opp.states.get(ENTITY_ID).attributes
+        attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + [CURRENT_APP]), attr)
         assert CURRENT_APP in attr["source_list"]
         assert attr["source"] == CURRENT_APP
@@ -578,7 +578,7 @@ async def test_setup_with_apps_exclude(
     async with _cm_for_test_setup_tv_with_apps(
        .opp, MOCK_TV_WITH_EXCLUDE_CONFIG, CURRENT_APP_CONFIG
     ):
-        attr =.opp.states.get(ENTITY_ID).attributes
+        attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + [CURRENT_APP]), attr)
         assert CURRENT_APP in attr["source_list"]
         assert attr["source"] == CURRENT_APP
@@ -598,7 +598,7 @@ async def test_setup_with_apps_additional_apps_config(
         MOCK_TV_WITH_ADDITIONAL_APPS_CONFIG,
         ADDITIONAL_APP_CONFIG["config"],
     ):
-        attr =.opp.states.get(ENTITY_ID).attributes
+        attr = opp.states.get(ENTITY_ID).attributes
         assert attr["source_list"].count(CURRENT_APP) == 1
         _assert_source_list_with_apps(
             list(
@@ -672,7 +672,7 @@ async def test_setup_with_unknown_app_config(
     async with _cm_for_test_setup_tv_with_apps(
        .opp, MOCK_USER_VALID_TV_CONFIG, UNKNOWN_APP_CONFIG
     ):
-        attr =.opp.states.get(ENTITY_ID).attributes
+        attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
         assert attr["source"] == UNKNOWN_APP
         assert attr["app_name"] == UNKNOWN_APP
@@ -689,7 +689,7 @@ async def test_setup_with_no_running_app(
     async with _cm_for_test_setup_tv_with_apps(
        .opp, MOCK_USER_VALID_TV_CONFIG, vars(AppConfig())
     ):
-        attr =.opp.states.get(ENTITY_ID).attributes
+        attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
         assert attr["source"] == "CAST"
         assert "app_id" not in attr
@@ -736,7 +736,7 @@ async def test_apps_update(
         ):
             # Check source list, remove TV inputs, and verify that the integration is
             # using the default APPS list
-            sources =.opp.states.get(ENTITY_ID).attributes["source_list"]
+            sources = opp.states.get(ENTITY_ID).attributes["source_list"]
             apps = list(set(sources) - set(INPUT_LIST))
             assert len(apps) == len(APPS)
 
@@ -748,6 +748,6 @@ async def test_apps_update(
                 await.opp.async_block_till_done()
                 # Check source list, remove TV inputs, and verify that the integration is
                 # now using the APP_LIST list
-                sources =.opp.states.get(ENTITY_ID).attributes["source_list"]
+                sources = opp.states.get(ENTITY_ID).attributes["source_list"]
                 apps = list(set(sources) - set(INPUT_LIST))
                 assert len(apps) == len(APP_LIST)

@@ -17,7 +17,7 @@ async def test_already_configured.opp, step):
     MockConfigEntry(domain="iaqualink", data=DATA).add_to_opp.opp)
 
     flow = config_flow.AqualinkFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {}
 
     fname = f"async_step_{step}"
@@ -31,7 +31,7 @@ async def test_already_configured.opp, step):
 async def test_without_config.opp, step):
     """Test with no configuration."""
     flow = config_flow.AqualinkFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {}
 
     fname = f"async_step_{step}"
@@ -47,7 +47,7 @@ async def test_without_config.opp, step):
 async def test_with_invalid_credentials.opp, step):
     """Test config flow with invalid username and/or password."""
     flow = config_flow.AqualinkFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     fname = f"async_step_{step}"
     func = getattr(flow, fname)
@@ -65,7 +65,7 @@ async def test_with_invalid_credentials.opp, step):
 async def test_with_existing_config.opp, step):
     """Test with existing configuration."""
     flow = config_flow.AqualinkFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {}
 
     fname = f"async_step_{step}"

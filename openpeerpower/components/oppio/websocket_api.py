@@ -68,7 +68,7 @@ async def websocket_supervisor_api(
    .opp: OpenPeerPower, connection: ActiveConnection, msg: dict
 ):
     """Websocket handler to call Supervisor API."""
-    supervisor: OppIO =.opp.data[DOMAIN]
+    supervisor: OppIO = opp.data[DOMAIN]
     result = False
     try:
         result = await supervisor.send_command(

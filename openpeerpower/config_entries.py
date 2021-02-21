@@ -261,7 +261,7 @@ class ConfigEntry:
                 self._async_cancel_retry_setup = None
                 await self.async_setup.opp, integration=integration, tries=tries)
 
-            self._async_cancel_retry_setup =.opp.helpers.event.async_call_later(
+            self._async_cancel_retry_setup = opp.helpers.event.async_call_later(
                 wait_time, setup_again
             )
             return
@@ -453,7 +453,7 @@ class ConfigEntriesFlowManager(data_entry_flow.FlowManager):
         """Initialize the config entry flow manager."""
         super().__init__.opp)
         self.config_entries = config_entries
-        self._opp_config =.opp_config
+        self._opp_config = opp_config
 
     async def async_finish_flow(
         self, flow: data_entry_flow.FlowHandler, result: Dict[str, Any]
@@ -600,12 +600,12 @@ class ConfigEntries:
 
     def __init__(self,.opp: OpenPeerPower,.opp_config: dict) -> None:
         """Initialize the entry manager."""
-        self.opp =.opp
+        self.opp = opp
         self.flow = ConfigEntriesFlowManager.opp, self,.opp_config)
         self.options = OptionsFlowManager.opp)
-        self._opp_config =.opp_config
+        self._opp_config = opp_config
         self._entries: List[ConfigEntry] = []
-        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
         EntityRegistryDisabledHandler.opp).async_setup()
 
     @callback
@@ -1130,7 +1130,7 @@ class EntityRegistryDisabledHandler:
 
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize the handler."""
-        self.opp =.opp
+        self.opp = opp
         self.registry: Optional[entity_registry.EntityRegistry] = None
         self.changed: Set[str] = set()
         self._remove_call_later: Optional[Callable[[], None]] = None

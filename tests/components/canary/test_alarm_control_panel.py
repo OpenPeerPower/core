@@ -52,7 +52,7 @@ async def test_alarm_control_panel.opp, canary) -> None:
     assert entity_entry
     assert entity_entry.unique_id == "100"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_UNKNOWN
     assert not state.attributes["private"]
@@ -63,7 +63,7 @@ async def test_alarm_control_panel.opp, canary) -> None:
     await.opp.helpers.entity_component.async_update_entity(entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_ALARM_DISARMED
     assert state.attributes["private"]
@@ -78,7 +78,7 @@ async def test_alarm_control_panel.opp, canary) -> None:
     await.opp.helpers.entity_component.async_update_entity(entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_ALARM_ARMED_HOME
 
@@ -90,7 +90,7 @@ async def test_alarm_control_panel.opp, canary) -> None:
     await.opp.helpers.entity_component.async_update_entity(entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_ALARM_ARMED_AWAY
 
@@ -102,7 +102,7 @@ async def test_alarm_control_panel.opp, canary) -> None:
     await.opp.helpers.entity_component.async_update_entity(entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_ALARM_ARMED_NIGHT
 

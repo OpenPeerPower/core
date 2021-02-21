@@ -64,7 +64,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Flume sensor."""
-    flume_domain_data =.opp.data[DOMAIN][config_entry.entry_id]
+    flume_domain_data = opp.data[DOMAIN][config_entry.entry_id]
 
     flume_auth = flume_domain_data[FLUME_AUTH]
     http_session = flume_domain_data[FLUME_HTTP_SESSION]

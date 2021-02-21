@@ -44,7 +44,7 @@ async def async_setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up a media player entity for a Sisyphus table."""
     host = discovery_info[CONF_HOST]
     try:
-        table_holder =.opp.data[DATA_SISYPHUS][host]
+        table_holder = opp.data[DATA_SISYPHUS][host]
         table = await table_holder.get_table()
     except aiohttp.ClientError as err:
         raise PlatformNotReady() from err

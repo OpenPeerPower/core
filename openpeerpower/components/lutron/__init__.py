@@ -138,7 +138,7 @@ class LutronButton:
     def __init__(self,.opp, area_name, keypad, button):
         """Register callback for activity on the button."""
         name = f"{keypad.name}: {button.name}"
-        self._opp =.opp
+        self._opp = opp
         self._op._release_event = (
             button.button_type is not None and "RaiseLower" in button.button_type
         )

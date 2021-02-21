@@ -23,10 +23,10 @@ def get_astral_location.opp: OpenPeerPowerType) -> astral.Location:
     """Get an astral location for the current Open Peer Power configuration."""
     from astral import Location  # pylint: disable=import-outside-toplevel
 
-    latitude =.opp.config.latitude
-    longitude =.opp.config.longitude
+    latitude = opp.config.latitude
+    longitude = opp.config.longitude
     timezone = str.opp.config.time_zone)
-    elevation =.opp.config.elevation
+    elevation = opp.config.elevation
     info = ("", "", latitude, longitude, timezone, elevation)
 
     # Cache astral locations so they aren't recreated with the same args

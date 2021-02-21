@@ -108,7 +108,7 @@ async def async_setup_entry(
     _async_import_options_from_data_if_missing.opp, entry)
 
    .opp.data[DOMAIN][entry.entry_id] = {}
-   .opp_isy_data =.opp.data[DOMAIN][entry.entry_id]
+   .opp_isy_data = opp.data[DOMAIN][entry.entry_id]
 
    .opp_isy_data[ISY994_NODES] = {}
     for platform in SUPPORTED_PLATFORMS:
@@ -253,9 +253,9 @@ async def async_unload_entry(
         )
     )
 
-   .opp_isy_data =.opp.data[DOMAIN][entry.entry_id]
+   .opp_isy_data = opp.data[DOMAIN][entry.entry_id]
 
-    isy =.opp_isy_data[ISY994_ISY]
+    isy = opp_isy_data[ISY994_ISY]
 
     def _stop_auto_update() -> None:
         """Start isy auto update."""

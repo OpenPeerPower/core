@@ -24,7 +24,7 @@ async def test_download_switch.opp, nzbget_api) -> None:
     assert entity_entry
     assert entity_entry.unique_id == f"{entry.entry_id}_download"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_ON
 
@@ -34,7 +34,7 @@ async def test_download_switch.opp, nzbget_api) -> None:
     await.opp.helpers.entity_component.async_update_entity(entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_OFF
 

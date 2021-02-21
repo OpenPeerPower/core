@@ -806,7 +806,7 @@ async def test_owserver_setup_valid_device(owproxy,.opp, device_id, platform):
         assert registry_entry.unit_of_measurement == expected_sensor["unit"]
         assert registry_entry.device_class == expected_sensor["class"]
         assert registry_entry.disabled == expected_sensor.get("disabled", False)
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         if registry_entry.disabled:
             assert state is None
         else:

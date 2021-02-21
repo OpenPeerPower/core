@@ -18,7 +18,7 @@ async def test_async_setup_entry_hosts.opp, config_entry, config, soco):
     """Test static setup."""
     await setup_platform.opp, config_entry, config)
 
-    entity =.opp.data[media_player.DATA_SONOS].entities[0]
+    entity = opp.data[media_player.DATA_SONOS].entities[0]
     assert entity.soco == soco
 
 
@@ -26,7 +26,7 @@ async def test_async_setup_entry_discover.opp, config_entry, discover):
     """Test discovery setup."""
     await setup_platform.opp, config_entry, {})
 
-    entity =.opp.data[media_player.DATA_SONOS].entities[0]
+    entity = opp.data[media_player.DATA_SONOS].entities[0]
     assert entity.unique_id == "RINCON_test"
 
 

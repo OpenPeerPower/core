@@ -49,7 +49,7 @@ async def async_setup.opp, config):
     """Activate the Apache Kafka integration."""
     conf = config[DOMAIN]
 
-    kafka =.opp.data[DOMAIN] = KafkaManager(
+    kafka = opp.data[DOMAIN] = KafkaManager(
        .opp,
         conf[CONF_IP_ADDRESS],
         conf[CONF_PORT],
@@ -97,7 +97,7 @@ class KafkaManager:
         """Initialize."""
         self._encoder = DateTimeJSONEncoder()
         self._entities_filter = entities_filter
-        self._opp =.opp
+        self._opp = opp
         ssl_context = ssl_util.client_context()
         self._producer = AIOKafkaProducer(
             loop.opp.loop,

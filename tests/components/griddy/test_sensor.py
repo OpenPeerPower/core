@@ -35,5 +35,5 @@ async def test_houston_loadzone.opp):
         assert await async_setup_component.opp, DOMAIN, _mock_get_config())
         await.opp.async_block_till_done()
 
-    sensor_lz_houston_price_now =.opp.states.get("sensor.lz_houston_price_now")
+    sensor_lz_houston_price_now = opp.states.get("sensor.lz_houston_price_now")
     assert sensor_lz_houston_price_now.state == "1.269"

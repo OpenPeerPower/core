@@ -72,7 +72,7 @@ def player_fixture.opp, state):
     """Get standard player."""
     player = ArcamFmj(MOCK_NAME, state, MOCK_UUID)
     player.entity_id = MOCK_ENTITY_ID
-    player.opp =.opp
+    player.opp = opp
     player.async_write_op.state = Mock()
     return player
 

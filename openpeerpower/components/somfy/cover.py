@@ -35,7 +35,7 @@ SUPPORTED_CATEGORIES = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Somfy cover platform."""
-    domain_data =.opp.data[DOMAIN]
+    domain_data = opp.data[DOMAIN]
     coordinator = domain_data[COORDINATOR]
     api = domain_data[API]
 

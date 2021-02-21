@@ -526,7 +526,7 @@ class MqttEntity(
 
     def __init__(self,.opp, config, config_entry, discovery_data):
         """Init the MQTT Entity."""
-        self.opp =.opp
+        self.opp = opp
         self._unique_id = config.get(CONF_UNIQUE_ID)
         self._sub_state = None
 

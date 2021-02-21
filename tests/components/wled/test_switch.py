@@ -33,7 +33,7 @@ async def test_switch_state(
 
     entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state =.opp.states.get("switch.wled_rgb_light_nightlight")
+    state = opp.states.get("switch.wled_rgb_light_nightlight")
     assert state
     assert state.attributes.get(ATTR_DURATION) == 60
     assert state.attributes.get(ATTR_ICON) == "mdi:weather-night"
@@ -45,7 +45,7 @@ async def test_switch_state(
     assert entry
     assert entry.unique_id == "aabbccddeeff_nightlight"
 
-    state =.opp.states.get("switch.wled_rgb_light_sync_send")
+    state = opp.states.get("switch.wled_rgb_light_sync_send")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:upload-network-outline"
     assert state.attributes.get(ATTR_UDP_PORT) == 21324
@@ -55,7 +55,7 @@ async def test_switch_state(
     assert entry
     assert entry.unique_id == "aabbccddeeff_sync_send"
 
-    state =.opp.states.get("switch.wled_rgb_light_sync_receive")
+    state = opp.states.get("switch.wled_rgb_light_sync_receive")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:download-network-outline"
     assert state.attributes.get(ATTR_UDP_PORT) == 21324
@@ -152,7 +152,7 @@ async def test_switch_error(
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("switch.wled_rgb_light_nightlight")
+        state = opp.states.get("switch.wled_rgb_light_nightlight")
         assert state.state == STATE_OFF
         assert "Invalid response from API" in caplog.text
 
@@ -174,5 +174,5 @@ async def test_switch_connection_error(
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("switch.wled_rgb_light_nightlight")
+        state = opp.states.get("switch.wled_rgb_light_nightlight")
         assert state.state == STATE_UNAVAILABLE

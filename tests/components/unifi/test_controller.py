@@ -208,7 +208,7 @@ async def test_controller_setup.opp, aioclient_mock):
         return_value=True,
     ) as forward_entry_setup:
         config_entry = await setup_unifi_integration.opp, aioclient_mock)
-        controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+        controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     entry = controller.config_entry
     assert len(forward_entry_setup.mock_calls) == len(SUPPORTED_PLATFORMS)
@@ -244,7 +244,7 @@ async def test_controller_mac.opp, aioclient_mock):
     config_entry = await setup_unifi_integration(
        .opp, aioclient_mock, clients_response=[CONTROLLER_HOST]
     )
-    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     assert controller.mac == CONTROLLER_HOST["mac"]
 
 
@@ -282,7 +282,7 @@ async def test_controller_unknown_error.opp):
 async def test_reset_after_successful_setup.opp, aioclient_mock):
     """Calling reset when the entry has been setup."""
     config_entry = await setup_unifi_integration.opp, aioclient_mock)
-    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     assert len(controller.listeners) == 6
 
@@ -298,7 +298,7 @@ async def test_wireless_client_event_calls_update_wireless_devices(
 ):
     """Call update_wireless_devices method when receiving wireless client event."""
     config_entry = await setup_unifi_integration.opp, aioclient_mock)
-    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     with patch(
         "openpeerpower.components.unifi.controller.UniFiController.update_wireless_clients",

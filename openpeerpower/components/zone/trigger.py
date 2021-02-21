@@ -56,7 +56,7 @@ async def async_attach_trigger(
         ):
             return
 
-        zone_state =.opp.states.get(zone_entity_id)
+        zone_state = opp.states.get(zone_entity_id)
         from_match = condition.zone.opp, zone_state, from_s) if from_s else False
         to_match = condition.zone.opp, zone_state, to_s)
 

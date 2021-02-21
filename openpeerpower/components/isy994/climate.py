@@ -66,7 +66,7 @@ async def async_setup_entry(
     """Set up the ISY994 thermostat platform."""
     entities = []
 
-   .opp_isy_data =.opp.data[ISY994_DOMAIN][entry.entry_id]
+   .opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     for node in.opp_isy_data[ISY994_NODES][CLIMATE]:
         entities.append(ISYThermostatEntity(node))
 

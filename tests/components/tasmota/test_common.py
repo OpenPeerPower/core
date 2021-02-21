@@ -130,7 +130,7 @@ async def help_test_availability_when_connection_lost(
         config_get_state_online(config),
     )
 
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
     # Disconnected from MQTT server -> state changed to unavailable
@@ -139,7 +139,7 @@ async def help_test_availability_when_connection_lost(
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     # Reconnected to MQTT server -> state still unavailable
@@ -148,7 +148,7 @@ async def help_test_availability_when_connection_lost(
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     # Receive LWT again
@@ -157,7 +157,7 @@ async def help_test_availability_when_connection_lost(
         get_topic_tele_will(config),
         config_get_state_online(config),
     )
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
 
@@ -187,7 +187,7 @@ async def help_test_availability(
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message(
@@ -196,7 +196,7 @@ async def help_test_availability(
         config_get_state_online(config),
     )
 
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message(
@@ -205,7 +205,7 @@ async def help_test_availability(
         config_get_state_offline(config),
     )
 
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
 
@@ -253,15 +253,15 @@ async def help_test_availability_discovery_update(
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, availability_topic1, online1)
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, availability_topic1, offline1)
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     # Change availability settings
@@ -272,12 +272,12 @@ async def help_test_availability_discovery_update(
     async_fire_mqtt_message.opp, availability_topic1, online1)
     async_fire_mqtt_message.opp, availability_topic1, online2)
     async_fire_mqtt_message.opp, availability_topic2, online1)
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     # Verify we are subscribing to the new topic
     async_fire_mqtt_message.opp, availability_topic2, online2)
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
 
@@ -387,7 +387,7 @@ async def help_test_discovery_removal(
     assert entity_entry is not None
 
     # Verify state is added
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state is not None
     assert state.name == name
 
@@ -408,7 +408,7 @@ async def help_test_discovery_removal(
     assert entity_entry is None
 
     # Verify state is removed
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state is None
 
 
@@ -444,7 +444,7 @@ async def help_test_discovery_update_unchanged(
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state is not None
     assert state.name == name
 
@@ -523,7 +523,7 @@ async def help_test_entity_id_update_subscriptions(
         topics = [get_topic_tele_state(config), get_topic_tele_will(config)]
     assert len(topics) > 0
 
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state is not None
     assert mqtt_mock.async_subscribe.call_count == len(topics)
     for topic in topics:
@@ -535,10 +535,10 @@ async def help_test_entity_id_update_subscriptions(
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state is None
 
-    state =.opp.states.get(f"{domain}.milk")
+    state = opp.states.get(f"{domain}.milk")
     assert state is not None
     for topic in topics:
         mqtt_mock.async_subscribe.assert_any_call(topic, ANY, ANY, ANY)
@@ -566,11 +566,11 @@ async def help_test_entity_id_update_discovery_update(
         await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, topic, config_get_state_online(config))
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, topic, config_get_state_offline(config))
-    state =.opp.states.get(f"{domain}.{entity_id}")
+    state = opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     entity_reg.async_update_entity(
@@ -588,5 +588,5 @@ async def help_test_entity_id_update_discovery_update(
 
     topic = get_topic_tele_will(config)
     async_fire_mqtt_message.opp, topic, config_get_state_online(config))
-    state =.opp.states.get(f"{domain}.milk")
+    state = opp.states.get(f"{domain}.milk")
     assert state.state != STATE_UNAVAILABLE

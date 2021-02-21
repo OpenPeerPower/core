@@ -48,7 +48,7 @@ STATES_TO_SUPPORTED_FEATURES = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Risco alarm control panel."""
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
     options = {**DEFAULT_OPTIONS, **config_entry.options}
     entities = [
         RiscoAlarm(coordinator, partition_id, config_entry.data[CONF_PIN], options)

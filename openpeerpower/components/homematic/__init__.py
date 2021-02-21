@@ -437,7 +437,7 @@ def _system_callback_op.dler.opp, config, src, *args):
         # Search all devices with an EVENTNODE that includes data
         bound_event_callback = partial(_hm_event_op.dler,.opp, interface)
         for dev in addresses:
-            hmdevice =.opp.data[DATA_HOMEMATIC].devices[interface].get(dev)
+            hmdevice = opp.data[DATA_HOMEMATIC].devices[interface].get(dev)
 
             if hmdevice.EVENTNODE:
                 hmdevice.setEventCallback(callback=bound_event_callback, bequeath=True)
@@ -483,7 +483,7 @@ def _get_devices.opp, discovery_type, keys, interface):
     device_arr = []
 
     for key in keys:
-        device =.opp.data[DATA_HOMEMATIC].devices[interface][key]
+        device = opp.data[DATA_HOMEMATIC].devices[interface][key]
         class_name = device.__class__.__name__
         metadata = {}
 
@@ -578,7 +578,7 @@ def _hm_event_op.dler.opp, interface, device, caller, attribute, value):
     try:
         channel = int(device.split(":")[1])
         address = device.split(":")[0]
-        hmdevice =.opp.data[DATA_HOMEMATIC].devices[interface].get(address)
+        hmdevice = opp.data[DATA_HOMEMATIC].devices[interface].get(address)
     except (TypeError, ValueError):
         _LOGGER.error("Event handling channel convert error!")
         return

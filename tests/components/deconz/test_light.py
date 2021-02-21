@@ -124,21 +124,21 @@ async def test_lights_and_groups.opp, aioclient_mock):
 
     assert len.opp.states.async_all()) == 6
 
-    rgb_light =.opp.states.get("light.rgb_light")
+    rgb_light = opp.states.get("light.rgb_light")
     assert rgb_light.state == STATE_ON
     assert rgb_light.attributes[ATTR_BRIGHTNESS] == 255
     assert rgb_light.attributes[ATTR_HS_COLOR] == (224.235, 100.0)
     assert rgb_light.attributes["is_deconz_group"] is False
     assert rgb_light.attributes[ATTR_SUPPORTED_FEATURES] == 61
 
-    tunable_white_light =.opp.states.get("light.tunable_white_light")
+    tunable_white_light = opp.states.get("light.tunable_white_light")
     assert tunable_white_light.state == STATE_ON
     assert tunable_white_light.attributes[ATTR_COLOR_TEMP] == 2500
     assert tunable_white_light.attributes[ATTR_MAX_MIREDS] == 454
     assert tunable_white_light.attributes[ATTR_MIN_MIREDS] == 155
     assert tunable_white_light.attributes[ATTR_SUPPORTED_FEATURES] == 2
 
-    tunable_white_light_bad_maxmin =.opp.states.get(
+    tunable_white_light_bad_maxmin = opp.states.get(
         "light.tunable_white_light_with_bad_maxmin_values"
     )
     assert tunable_white_light_bad_maxmin.state == STATE_ON
@@ -147,15 +147,15 @@ async def test_lights_and_groups.opp, aioclient_mock):
     assert tunable_white_light_bad_maxmin.attributes[ATTR_MIN_MIREDS] == 140
     assert tunable_white_light_bad_maxmin.attributes[ATTR_SUPPORTED_FEATURES] == 2
 
-    on_off_light =.opp.states.get("light.on_off_light")
+    on_off_light = opp.states.get("light.on_off_light")
     assert on_off_light.state == STATE_ON
     assert on_off_light.attributes[ATTR_SUPPORTED_FEATURES] == 0
 
-    light_group =.opp.states.get("light.light_group")
+    light_group = opp.states.get("light.light_group")
     assert light_group.state == STATE_ON
     assert light_group.attributes["all_on"] is False
 
-    empty_group =.opp.states.get("light.empty_group")
+    empty_group = opp.states.get("light.empty_group")
     assert empty_group is None
 
     state_changed_event = {
@@ -168,7 +168,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
     gateway.api.event_op.dler(state_changed_event)
     await.opp.async_block_till_done()
 
-    rgb_light =.opp.states.get("light.rgb_light")
+    rgb_light = opp.states.get("light.rgb_light")
     assert rgb_light.state == STATE_OFF
 
     # Verify service calls
@@ -271,7 +271,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
 
     await.opp.config_entries.async_unload(config_entry.entry_id)
 
-    states =.opp.states.async_all()
+    states = opp.states.async_all()
     assert len.opp.states.async_all()) == 6
     for state in states:
         assert state.state == STATE_UNAVAILABLE
@@ -556,6 +556,6 @@ async def test_verify_group_supported_features.opp, aioclient_mock):
 
     assert len.opp.states.async_all()) == 4
 
-    group =.opp.states.get("light.group")
+    group = opp.states.get("light.group")
     assert group.state == STATE_ON
     assert group.attributes[ATTR_SUPPORTED_FEATURES] == 63

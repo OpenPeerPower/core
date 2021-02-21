@@ -94,7 +94,7 @@ class MikrotikData:
 
     def __init__(self,.opp, config_entry, api):
         """Initialize the Mikrotik Client."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.api = api
         self._host = self.config_entry.data[CONF_HOST]
@@ -288,7 +288,7 @@ class MikrotikHub:
 
     def __init__(self,.opp, config_entry):
         """Initialize the Mikrotik Client."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self._mk_data = None
         self.progress = None

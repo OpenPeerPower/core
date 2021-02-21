@@ -10,7 +10,7 @@ async def test_create_covers.opp):
 
     await async_init_integration.opp)
 
-    state =.opp.states.get("cover.large_garage_door")
+    state = opp.states.get("cover.large_garage_door")
     assert state.state == STATE_CLOSED
     expected_attributes = {
         "device_class": "garage",
@@ -23,7 +23,7 @@ async def test_create_covers.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("cover.small_garage_door")
+    state = opp.states.get("cover.small_garage_door")
     assert state.state == STATE_CLOSED
     expected_attributes = {
         "device_class": "garage",
@@ -36,7 +36,7 @@ async def test_create_covers.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("cover.gate")
+    state = opp.states.get("cover.gate")
     assert state.state == STATE_CLOSED
     expected_attributes = {
         "device_class": "gate",

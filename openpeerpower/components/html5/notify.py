@@ -168,7 +168,7 @@ HTML5_SHOWNOTIFICATION_PARAMETERS = (
 
 def get_service.opp, config, discovery_info=None):
     """Get the HTML5 push notification service."""
-    json_path =.opp.config.path(REGISTRATIONS_FILE)
+    json_path = opp.config.path(REGISTRATIONS_FILE)
 
     registrations = _load_config(json_path)
 

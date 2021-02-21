@@ -41,7 +41,7 @@ async def test_lock_changed_by.opp):
     activities = await _mock_activities_from_fixture.opp, "get_activity.lock.json")
     await _create_august_with_devices.opp, [lock_one], activities=activities)
 
-    lock_online_with_doorsense_name =.opp.states.get("lock.online_with_doorsense_name")
+    lock_online_with_doorsense_name = opp.states.get("lock.online_with_doorsense_name")
 
     assert lock_online_with_doorsense_name.state == STATE_LOCKED
 
@@ -56,7 +56,7 @@ async def test_one_lock_operation.opp):
     lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
     await _create_august_with_devices.opp, [lock_one])
 
-    lock_online_with_doorsense_name =.opp.states.get("lock.online_with_doorsense_name")
+    lock_online_with_doorsense_name = opp.states.get("lock.online_with_doorsense_name")
 
     assert lock_online_with_doorsense_name.state == STATE_LOCKED
 
@@ -72,7 +72,7 @@ async def test_one_lock_operation.opp):
     )
     await.opp.async_block_till_done()
 
-    lock_online_with_doorsense_name =.opp.states.get("lock.online_with_doorsense_name")
+    lock_online_with_doorsense_name = opp.states.get("lock.online_with_doorsense_name")
     assert lock_online_with_doorsense_name.state == STATE_UNLOCKED
 
     assert lock_online_with_doorsense_name.attributes.get("battery_level") == 92
@@ -86,7 +86,7 @@ async def test_one_lock_operation.opp):
     )
     await.opp.async_block_till_done()
 
-    lock_online_with_doorsense_name =.opp.states.get("lock.online_with_doorsense_name")
+    lock_online_with_doorsense_name = opp.states.get("lock.online_with_doorsense_name")
     assert lock_online_with_doorsense_name.state == STATE_LOCKED
 
     # No activity means it will be unavailable until the activity feed has data
@@ -109,6 +109,6 @@ async def test_one_lock_unknown_state.opp):
     )
     await _create_august_with_devices.opp, [lock_one])
 
-    lock_brokenid_name =.opp.states.get("lock.brokenid_name")
+    lock_brokenid_name = opp.states.get("lock.brokenid_name")
 
     assert lock_brokenid_name.state == STATE_UNKNOWN

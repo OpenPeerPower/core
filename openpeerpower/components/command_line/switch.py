@@ -52,7 +52,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         value_template = device_config.get(CONF_VALUE_TEMPLATE)
 
         if value_template is not None:
-            value_template.opp =.opp
+            value_template.opp = opp
 
         switches.append(
             CommandSwitch(
@@ -89,7 +89,7 @@ class CommandSwitch(SwitchEntity):
         timeout,
     ):
         """Initialize the switch."""
-        self._opp =.opp
+        self._opp = opp
         self.entity_id = ENTITY_ID_FORMAT.format(object_id)
         self._name = friendly_name
         self._state = False

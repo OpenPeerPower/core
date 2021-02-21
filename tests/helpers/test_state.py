@@ -40,11 +40,11 @@ async def test_async_track_states.opp):
 
             mock_utcnow.return_value = point2
            .opp.states.async_set("light.test2", "on")
-            state2 =.opp.states.get("light.test2")
+            state2 = opp.states.get("light.test2")
 
             mock_utcnow.return_value = point3
            .opp.states.async_set("light.test3", "on")
-            state3 =.opp.states.get("light.test3")
+            state3 = opp.states.get("light.test3")
 
     assert [state2, state3] == sorted(states, key=lambda state: state.entity_id)
 
@@ -90,15 +90,15 @@ async def test_get_changed_since.opp):
 
     with patch("openpeerpowerr.core.dt_util.utcnow", return_value=point1):
        .opp.states.async_set("light.test", "on")
-        state1 =.opp.states.get("light.test")
+        state1 = opp.states.get("light.test")
 
     with patch("openpeerpowerr.core.dt_util.utcnow", return_value=point2):
        .opp.states.async_set("light.test2", "on")
-        state2 =.opp.states.get("light.test2")
+        state2 = opp.states.get("light.test2")
 
     with patch("openpeerpowerr.core.dt_util.utcnow", return_value=point3):
        .opp.states.async_set("light.test3", "on")
-        state3 =.opp.states.get("light.test3")
+        state3 = opp.states.get("light.test3")
 
     assert [state2, state3] == state.get_changed_since([state1, state2, state3], point2)
 

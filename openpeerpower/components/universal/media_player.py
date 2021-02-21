@@ -150,7 +150,7 @@ class UniversalMediaPlayer(MediaPlayerEntity):
         state_template=None,
     ):
         """Initialize the Universal media device."""
-        self.opp =.opp
+        self.opp = opp
         self._name = name
         self._children = children
         self._cmds = commands

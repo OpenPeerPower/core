@@ -36,7 +36,7 @@ async def test_bad_posting.opp, aiohttp_client):
     async with client.post("/api/webhook/camera.config_test") as resp:
         assert resp.status == 200  # webhooks always return 200
 
-    camera_state =.opp.states.get("camera.config_test")
+    camera_state = opp.states.get("camera.config_test")
     assert camera_state.state == "idle"  # no file supplied we are still idle
 
 
@@ -64,7 +64,7 @@ async def test_posting_url.opp, aiohttp_client):
     files = {"image": io.BytesIO(b"fake")}
 
     # initial state
-    camera_state =.opp.states.get("camera.config_test")
+    camera_state = opp.states.get("camera.config_test")
     assert camera_state.state == "idle"
 
     # post image
@@ -72,7 +72,7 @@ async def test_posting_url.opp, aiohttp_client):
     assert resp.status == 200
 
     # state recording
-    camera_state =.opp.states.get("camera.config_test")
+    camera_state = opp.states.get("camera.config_test")
     assert camera_state.state == "recording"
 
     # await timeout
@@ -81,5 +81,5 @@ async def test_posting_url.opp, aiohttp_client):
     await.opp.async_block_till_done()
 
     # back to initial state
-    camera_state =.opp.states.get("camera.config_test")
+    camera_state = opp.states.get("camera.config_test")
     assert camera_state.state == "idle"

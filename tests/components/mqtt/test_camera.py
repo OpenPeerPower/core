@@ -48,7 +48,7 @@ async def test_run_camera_setup.opp, aiohttp_client, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    url =.opp.states.get("camera.test_camera").attributes["entity_picture"]
+    url = opp.states.get("camera.test_camera").attributes["entity_picture"]
 
     async_fire_mqtt_message.opp, topic, "beer")
 

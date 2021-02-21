@@ -151,7 +151,7 @@ async def test_sbb_trust_state.opp: core.OpenPeerPower):
        .opp, LIGHT_DOMAIN, ceiling_fan("name-1"), bond_version=version
     )
 
-    device =.opp.states.get("light.name_1")
+    device = opp.states.get("light.name_1")
     assert device.attributes.get(ATTR_ASSUMED_STATE) is not True
 
 
@@ -159,7 +159,7 @@ async def test_trust_state_not_specified.opp: core.OpenPeerPower):
     """Assumed state should be True if Trust State is not specified."""
     await setup_platform.opp, LIGHT_DOMAIN, ceiling_fan("name-1"))
 
-    device =.opp.states.get("light.name_1")
+    device = opp.states.get("light.name_1")
     assert device.attributes.get(ATTR_ASSUMED_STATE) is True
 
 
@@ -169,7 +169,7 @@ async def test_trust_state.opp: core.OpenPeerPower):
        .opp, LIGHT_DOMAIN, ceiling_fan("name-1"), props={"trust_state": False}
     )
 
-    device =.opp.states.get("light.name_1")
+    device = opp.states.get("light.name_1")
     assert device.attributes.get(ATTR_ASSUMED_STATE) is True
 
 
@@ -178,7 +178,7 @@ async def test_no_trust_state.opp: core.OpenPeerPower):
     await setup_platform(
        .opp, LIGHT_DOMAIN, ceiling_fan("name-1"), props={"trust_state": True}
     )
-    device =.opp.states.get("light.name_1")
+    device = opp.states.get("light.name_1")
     assert device.attributes.get(ATTR_ASSUMED_STATE) is not True
 
 
@@ -229,7 +229,7 @@ async def test_brightness_support.opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    state =.opp.states.get("light.name_1")
+    state = opp.states.get("light.name_1")
     assert state.attributes[ATTR_SUPPORTED_FEATURES] & SUPPORT_BRIGHTNESS
 
 
@@ -242,7 +242,7 @@ async def test_brightness_not_supported.opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    state =.opp.states.get("light.name_1")
+    state = opp.states.get("light.name_1")
     assert not state.attributes[ATTR_SUPPORTED_FEATURES] & SUPPORT_BRIGHTNESS
 
 

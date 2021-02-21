@@ -11,7 +11,7 @@ async def test_cover.opp, cover_data, sent_messages, cover_msg):
     """Test setting up config entry."""
     receive_message = await setup_ozw.opp, fixture=cover_data)
     # Test loaded
-    state =.opp.states.get("cover.roller_shutter_3_instance_1_level")
+    state = opp.states.get("cover.roller_shutter_3_instance_1_level")
     assert state is not None
     assert state.state == "closed"
     assert state.attributes[ATTR_CURRENT_POSITION] == 0
@@ -137,7 +137,7 @@ async def test_barrier.opp, cover_gdo_data, sent_messages, cover_gdo_msg):
     """Test setting up config entry."""
     receive_message = await setup_ozw.opp, fixture=cover_gdo_data)
     # Test loaded
-    state =.opp.states.get("cover.gd00z_4_barrier_state")
+    state = opp.states.get("cover.gd00z_4_barrier_state")
     assert state is not None
     assert state.state == "closed"
 
@@ -160,7 +160,7 @@ async def test_barrier.opp, cover_gdo_data, sent_messages, cover_gdo_msg):
     receive_message(cover_gdo_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.gd00z_4_barrier_state")
+    state = opp.states.get("cover.gd00z_4_barrier_state")
     assert state is not None
     assert state.state == "open"
 

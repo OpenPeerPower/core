@@ -296,7 +296,7 @@ async def test_reauth_unique_id_not_found.opp: OpenPeerPower) -> None:
         assert result["step_id"] == "reauth"
 
         # Change the unique_id of the flow in order to cause a mismatch
-        flows =.opp.config_entries.flow.async_progress()
+        flows = opp.config_entries.flow.async_progress()
         flows[0]["context"]["unique_id"] = "example2@example.com"
 
         result2 = await.opp.config_entries.flow.async_configure(

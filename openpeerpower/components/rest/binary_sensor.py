@@ -86,11 +86,11 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     force_update = config.get(CONF_FORCE_UPDATE)
 
     if resource_template is not None:
-        resource_template.opp =.opp
+        resource_template.opp = opp
         resource = resource_template.async_render(parse_result=False)
 
     if value_template is not None:
-        value_template.opp =.opp
+        value_template.opp = opp
 
     if username and password:
         if config.get(CONF_AUTHENTICATION) == HTTP_DIGEST_AUTHENTICATION:
@@ -137,7 +137,7 @@ class RestBinarySensor(BinarySensorEntity):
         resource_template,
     ):
         """Initialize a REST binary sensor."""
-        self._opp =.opp
+        self._opp = opp
         self.rest = rest
         self._name = name
         self._device_class = device_class

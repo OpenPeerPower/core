@@ -23,7 +23,7 @@ SERVICE_RUN_HEALTH_TEST = "run_health_test"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Flo switches from config entry."""
-    devices: List[FloDeviceDataUpdateCoordinator] =.opp.data[FLO_DOMAIN][
+    devices: List[FloDeviceDataUpdateCoordinator] = opp.data[FLO_DOMAIN][
         config_entry.entry_id
     ]["devices"]
     async_add_entities([FloSwitch(device) for device in devices])

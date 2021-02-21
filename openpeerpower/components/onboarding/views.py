@@ -133,7 +133,7 @@ class UserOnboardingView(_BaseOnboardingView):
 
             # Return authorization code for fetching tokens and connect
             # during onboarding.
-            auth_code =.opp.components.auth.create_auth_code(
+            auth_code = opp.components.auth.create_auth_code(
                 data["client_id"], credentials
             )
             return self.json({"auth_code": auth_code})
@@ -211,7 +211,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
                 )
 
             # Return authorization code so we can redirect user and log them in
-            auth_code =.opp.components.auth.create_auth_code(
+            auth_code = opp.components.auth.create_auth_code(
                 data["client_id"], refresh_token.credential
             )
             return self.json({"auth_code": auth_code})

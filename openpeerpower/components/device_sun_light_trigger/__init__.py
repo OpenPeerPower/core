@@ -85,13 +85,13 @@ async def activate_automation(
 ):
     """Activate the automation."""
     logger = logging.getLogger(__name__)
-    device_tracker =.opp.components.device_tracker
-    group =.opp.components.group
-    light =.opp.components.light
-    person =.opp.components.person
+    device_tracker = opp.components.device_tracker
+    group = opp.components.group
+    light = opp.components.light
+    person = opp.components.person
 
     if device_group is None:
-        device_entity_ids =.opp.states.async_entity_ids(device_tracker.DOMAIN)
+        device_entity_ids = opp.states.async_entity_ids(device_tracker.DOMAIN)
     else:
         device_entity_ids = group.get_entity_ids(device_group, device_tracker.DOMAIN)
         device_entity_ids.extend(group.get_entity_ids(device_group, person.DOMAIN))
@@ -102,7 +102,7 @@ async def activate_automation(
 
     # Get the light IDs from the specified group
     if light_group is None:
-        light_ids =.opp.states.async_entity_ids(light.DOMAIN)
+        light_ids = opp.states.async_entity_ids(light.DOMAIN)
     else:
         light_ids = group.get_entity_ids(light_group, light.DOMAIN)
 

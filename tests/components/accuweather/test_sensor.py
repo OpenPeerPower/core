@@ -34,7 +34,7 @@ async def test_sensor_without_forecast.opp):
     await init_integration.opp)
     registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state =.opp.states.get("sensor.home_cloud_ceiling")
+    state = opp.states.get("sensor.home_cloud_ceiling")
     assert state
     assert state.state == "3200"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -45,7 +45,7 @@ async def test_sensor_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-ceiling"
 
-    state =.opp.states.get("sensor.home_precipitation")
+    state = opp.states.get("sensor.home_precipitation")
     assert state
     assert state.state == "0.0"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -57,7 +57,7 @@ async def test_sensor_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-precipitation"
 
-    state =.opp.states.get("sensor.home_pressure_tendency")
+    state = opp.states.get("sensor.home_pressure_tendency")
     assert state
     assert state.state == "falling"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -68,7 +68,7 @@ async def test_sensor_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-pressuretendency"
 
-    state =.opp.states.get("sensor.home_realfeel_temperature")
+    state = opp.states.get("sensor.home_realfeel_temperature")
     assert state
     assert state.state == "25.1"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -79,7 +79,7 @@ async def test_sensor_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-realfeeltemperature"
 
-    state =.opp.states.get("sensor.home_uv_index")
+    state = opp.states.get("sensor.home_uv_index")
     assert state
     assert state.state == "6"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -96,7 +96,7 @@ async def test_sensor_with_forecast.opp):
     await init_integration.opp, forecast=True)
     registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state =.opp.states.get("sensor.home_hours_of_sun_0d")
+    state = opp.states.get("sensor.home_hours_of_sun_0d")
     assert state
     assert state.state == "7.2"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -107,7 +107,7 @@ async def test_sensor_with_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-hoursofsun-0"
 
-    state =.opp.states.get("sensor.home_realfeel_temperature_max_0d")
+    state = opp.states.get("sensor.home_realfeel_temperature_max_0d")
     assert state
     assert state.state == "29.8"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -117,7 +117,7 @@ async def test_sensor_with_forecast.opp):
     entry = registry.async_get("sensor.home_realfeel_temperature_max_0d")
     assert entry
 
-    state =.opp.states.get("sensor.home_realfeel_temperature_min_0d")
+    state = opp.states.get("sensor.home_realfeel_temperature_min_0d")
     assert state
     assert state.state == "15.1"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -128,7 +128,7 @@ async def test_sensor_with_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-realfeeltemperaturemin-0"
 
-    state =.opp.states.get("sensor.home_thunderstorm_probability_day_0d")
+    state = opp.states.get("sensor.home_thunderstorm_probability_day_0d")
     assert state
     assert state.state == "40"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -139,7 +139,7 @@ async def test_sensor_with_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-thunderstormprobabilityday-0"
 
-    state =.opp.states.get("sensor.home_thunderstorm_probability_night_0d")
+    state = opp.states.get("sensor.home_thunderstorm_probability_night_0d")
     assert state
     assert state.state == "40"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -150,7 +150,7 @@ async def test_sensor_with_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-thunderstormprobabilitynight-0"
 
-    state =.opp.states.get("sensor.home_uv_index_0d")
+    state = opp.states.get("sensor.home_uv_index_0d")
     assert state
     assert state.state == "5"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -337,7 +337,7 @@ async def test_sensor_enabled_without_forecast.opp):
 
     await init_integration.opp, forecast=True)
 
-    state =.opp.states.get("sensor.home_apparent_temperature")
+    state = opp.states.get("sensor.home_apparent_temperature")
     assert state
     assert state.state == "22.8"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -348,7 +348,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-apparenttemperature"
 
-    state =.opp.states.get("sensor.home_cloud_cover")
+    state = opp.states.get("sensor.home_cloud_cover")
     assert state
     assert state.state == "10"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -359,7 +359,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-cloudcover"
 
-    state =.opp.states.get("sensor.home_dew_point")
+    state = opp.states.get("sensor.home_dew_point")
     assert state
     assert state.state == "16.2"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -370,7 +370,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-dewpoint"
 
-    state =.opp.states.get("sensor.home_realfeel_temperature_shade")
+    state = opp.states.get("sensor.home_realfeel_temperature_shade")
     assert state
     assert state.state == "21.1"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -381,7 +381,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-realfeeltemperatureshade"
 
-    state =.opp.states.get("sensor.home_wet_bulb_temperature")
+    state = opp.states.get("sensor.home_wet_bulb_temperature")
     assert state
     assert state.state == "18.6"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -392,7 +392,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-wetbulbtemperature"
 
-    state =.opp.states.get("sensor.home_wind_chill_temperature")
+    state = opp.states.get("sensor.home_wind_chill_temperature")
     assert state
     assert state.state == "22.8"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -403,7 +403,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-windchilltemperature"
 
-    state =.opp.states.get("sensor.home_wind_gust")
+    state = opp.states.get("sensor.home_wind_gust")
     assert state
     assert state.state == "20.3"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -414,7 +414,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-windgust"
 
-    state =.opp.states.get("sensor.home_wind")
+    state = opp.states.get("sensor.home_wind")
     assert state
     assert state.state == "14.5"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -425,7 +425,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-wind"
 
-    state =.opp.states.get("sensor.home_cloud_cover_day_0d")
+    state = opp.states.get("sensor.home_cloud_cover_day_0d")
     assert state
     assert state.state == "58"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -436,7 +436,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-cloudcoverday-0"
 
-    state =.opp.states.get("sensor.home_cloud_cover_night_0d")
+    state = opp.states.get("sensor.home_cloud_cover_night_0d")
     assert state
     assert state.state == "65"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -446,7 +446,7 @@ async def test_sensor_enabled_without_forecast.opp):
     entry = registry.async_get("sensor.home_cloud_cover_night_0d")
     assert entry
 
-    state =.opp.states.get("sensor.home_grass_pollen_0d")
+    state = opp.states.get("sensor.home_grass_pollen_0d")
     assert state
     assert state.state == "0"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -461,7 +461,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-grass-0"
 
-    state =.opp.states.get("sensor.home_mold_pollen_0d")
+    state = opp.states.get("sensor.home_mold_pollen_0d")
     assert state
     assert state.state == "0"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -476,7 +476,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-mold-0"
 
-    state =.opp.states.get("sensor.home_ozone_0d")
+    state = opp.states.get("sensor.home_ozone_0d")
     assert state
     assert state.state == "32"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -487,7 +487,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-ozone-0"
 
-    state =.opp.states.get("sensor.home_ragweed_pollen_0d")
+    state = opp.states.get("sensor.home_ragweed_pollen_0d")
     assert state
     assert state.state == "0"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -502,7 +502,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-ragweed-0"
 
-    state =.opp.states.get("sensor.home_realfeel_temperature_shade_max_0d")
+    state = opp.states.get("sensor.home_realfeel_temperature_shade_max_0d")
     assert state
     assert state.state == "28.0"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -513,7 +513,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-realfeeltemperatureshademax-0"
 
-    state =.opp.states.get("sensor.home_realfeel_temperature_shade_min_0d")
+    state = opp.states.get("sensor.home_realfeel_temperature_shade_min_0d")
     assert state
     assert state.state == "15.1"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -524,7 +524,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-realfeeltemperatureshademin-0"
 
-    state =.opp.states.get("sensor.home_tree_pollen_0d")
+    state = opp.states.get("sensor.home_tree_pollen_0d")
     assert state
     assert state.state == "0"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -539,7 +539,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-tree-0"
 
-    state =.opp.states.get("sensor.home_wind_day_0d")
+    state = opp.states.get("sensor.home_wind_day_0d")
     assert state
     assert state.state == "13.0"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -551,7 +551,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-windday-0"
 
-    state =.opp.states.get("sensor.home_wind_night_0d")
+    state = opp.states.get("sensor.home_wind_night_0d")
     assert state
     assert state.state == "7.4"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -563,7 +563,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-windnight-0"
 
-    state =.opp.states.get("sensor.home_wind_gust_day_0d")
+    state = opp.states.get("sensor.home_wind_gust_day_0d")
     assert state
     assert state.state == "29.6"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -575,7 +575,7 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry
     assert entry.unique_id == "0123456-windgustday-0"
 
-    state =.opp.states.get("sensor.home_wind_gust_night_0d")
+    state = opp.states.get("sensor.home_wind_gust_night_0d")
     assert state
     assert state.state == "18.5"
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -592,7 +592,7 @@ async def test_availability.opp):
     """Ensure that we mark the entities unavailable correctly when service is offline."""
     await init_integration.opp)
 
-    state =.opp.states.get("sensor.home_cloud_ceiling")
+    state = opp.states.get("sensor.home_cloud_ceiling")
     assert state
     assert state.state != STATE_UNAVAILABLE
     assert state.state == "3200"
@@ -605,7 +605,7 @@ async def test_availability.opp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("sensor.home_cloud_ceiling")
+        state = opp.states.get("sensor.home_cloud_ceiling")
         assert state
         assert state.state == STATE_UNAVAILABLE
 
@@ -619,7 +619,7 @@ async def test_availability.opp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("sensor.home_cloud_ceiling")
+        state = opp.states.get("sensor.home_cloud_ceiling")
         assert state
         assert state.state != STATE_UNAVAILABLE
         assert state.state == "3200"

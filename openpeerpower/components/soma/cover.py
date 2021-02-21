@@ -13,7 +13,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Soma cover platform."""
 
-    devices =.opp.data[DOMAIN][DEVICES]
+    devices = opp.data[DOMAIN][DEVICES]
 
     async_add_entities(
         [SomaCover(cover,.opp.data[DOMAIN][API]) for cover in devices], True

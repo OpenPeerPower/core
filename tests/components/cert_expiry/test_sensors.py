@@ -34,7 +34,7 @@ async def test_async_setup_entry(mock_now,.opp):
         assert await.opp.config_entries.async_setup(entry.entry_id)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.state == timestamp.isoformat()
@@ -58,7 +58,7 @@ async def test_async_setup_entry_bad_cert.opp):
         assert await.opp.config_entries.async_setup(entry.entry_id)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.attributes.get("error") == "some error"
@@ -91,7 +91,7 @@ async def test_async_setup_entry_host_unavailable.opp):
     ):
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is None
 
 
@@ -114,7 +114,7 @@ async def test_update_sensor.opp):
         assert await.opp.config_entries.async_setup(entry.entry_id)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.state == timestamp.isoformat()
@@ -129,7 +129,7 @@ async def test_update_sensor.opp):
         async_fire_time_changed.opp, utcnow() + timedelta(hours=24))
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.state == timestamp.isoformat()
@@ -156,7 +156,7 @@ async def test_update_sensor_network_errors.opp):
         assert await.opp.config_entries.async_setup(entry.entry_id)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.state == timestamp.isoformat()
@@ -174,7 +174,7 @@ async def test_update_sensor_network_errors.opp):
 
     next_update = starting_time + timedelta(hours=48)
 
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state.state == STATE_UNAVAILABLE
 
     with patch("openpeerpowerr.util.dt.utcnow", return_value=next_update), patch(
@@ -184,7 +184,7 @@ async def test_update_sensor_network_errors.opp):
         async_fire_time_changed.opp, utcnow() + timedelta(hours=48))
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+        state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
         assert state is not None
         assert state.state != STATE_UNAVAILABLE
         assert state.state == timestamp.isoformat()
@@ -200,7 +200,7 @@ async def test_update_sensor_network_errors.opp):
         async_fire_time_changed.opp, utcnow() + timedelta(hours=72))
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get("error") == "something bad"
@@ -214,5 +214,5 @@ async def test_update_sensor_network_errors.opp):
         async_fire_time_changed.opp, utcnow() + timedelta(hours=96))
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state.state == STATE_UNAVAILABLE

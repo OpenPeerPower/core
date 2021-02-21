@@ -295,7 +295,7 @@ async def setup_ozw.opp, mock_openzwave):
 
 async def test_lock_set_usercode_service.opp, mock_openzwave):
     """Test the zwave lock set_usercode service."""
-    mock_network =.opp.data[const.DATA_NETWORK] = MagicMock()
+    mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
 
     node = MockNode(node_id=12)
     value0 = MockValue(data="          ", node=node, index=0)
@@ -338,7 +338,7 @@ async def test_lock_set_usercode_service.opp, mock_openzwave):
 
 async def test_lock_get_usercode_service.opp, mock_openzwave):
     """Test the zwave lock get_usercode service."""
-    mock_network =.opp.data[const.DATA_NETWORK] = MagicMock()
+    mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=12)
     value0 = MockValue(data=None, node=node, index=0)
     value1 = MockValue(data="1234", node=node, index=1)
@@ -364,7 +364,7 @@ async def test_lock_get_usercode_service.opp, mock_openzwave):
 
 async def test_lock_clear_usercode_service.opp, mock_openzwave):
     """Test the zwave lock clear_usercode service."""
-    mock_network =.opp.data[const.DATA_NETWORK] = MagicMock()
+    mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=12)
     value0 = MockValue(data=None, node=node, index=0)
     value1 = MockValue(data="123", node=node, index=1)

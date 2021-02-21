@@ -22,7 +22,7 @@ async def test_siren_off_reports_correctly.opp, requests_mock):
     """Tests that the initial state of a device that should be off is correct."""
     await setup_platform.opp, SWITCH_DOMAIN)
 
-    state =.opp.states.get("switch.front_siren")
+    state = opp.states.get("switch.front_siren")
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "Front siren"
 
@@ -31,7 +31,7 @@ async def test_siren_on_reports_correctly.opp, requests_mock):
     """Tests that the initial state of a device that should be on is correct."""
     await setup_platform.opp, SWITCH_DOMAIN)
 
-    state =.opp.states.get("switch.internal_siren")
+    state = opp.states.get("switch.internal_siren")
     assert state.state == "on"
     assert state.attributes.get("friendly_name") == "Internal siren"
     assert state.attributes.get("icon") == "mdi:alarm-bell"
@@ -47,7 +47,7 @@ async def test_siren_can_be_turned_on.opp, requests_mock):
         text=load_fixture("ring_doorbot_siren_on_response.json"),
     )
 
-    state =.opp.states.get("switch.front_siren")
+    state = opp.states.get("switch.front_siren")
     assert state.state == "off"
 
     await.opp.services.async_call(
@@ -55,14 +55,14 @@ async def test_siren_can_be_turned_on.opp, requests_mock):
     )
 
     await.opp.async_block_till_done()
-    state =.opp.states.get("switch.front_siren")
+    state = opp.states.get("switch.front_siren")
     assert state.state == "on"
 
 
 async def test_updates_work.opp, requests_mock):
     """Tests the update service works correctly."""
     await setup_platform.opp, SWITCH_DOMAIN)
-    state =.opp.states.get("switch.front_siren")
+    state = opp.states.get("switch.front_siren")
     assert state.state == "off"
     # Changes the return to indicate that the siren is now on.
     requests_mock.get(
@@ -74,5 +74,5 @@ async def test_updates_work.opp, requests_mock):
 
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.front_siren")
+    state = opp.states.get("switch.front_siren")
     assert state.state == "on"

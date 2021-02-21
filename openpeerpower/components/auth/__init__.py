@@ -317,7 +317,7 @@ class TokenView(OpenPeerPowerView):
             user, client_id, credential=credential
         )
         try:
-            access_token =.opp.auth.async_create_access_token(
+            access_token = opp.auth.async_create_access_token(
                 refresh_token, remote_addr
             )
         except InvalidAuthError as exc:
@@ -360,7 +360,7 @@ class TokenView(OpenPeerPowerView):
             return self.json({"error": "invalid_request"}, status_code=HTTP_BAD_REQUEST)
 
         try:
-            access_token =.opp.auth.async_create_access_token(
+            access_token = opp.auth.async_create_access_token(
                 refresh_token, remote_addr
             )
         except InvalidAuthError as exc:
@@ -504,7 +504,7 @@ async def websocket_create_long_lived_access_token(
     )
 
     try:
-        access_token =.opp.auth.async_create_access_token(refresh_token)
+        access_token = opp.auth.async_create_access_token(refresh_token)
     except InvalidAuthError as exc:
         return websocket_api.error_message(
             msg["id"], websocket_api.const.ERR_UNAUTHORIZED, str(exc)

@@ -16,8 +16,8 @@ from .const import (
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Fritzbox smarthome sensor from config_entry."""
     entities = []
-    devices =.opp.data[FRITZBOX_DOMAIN][CONF_DEVICES]
-    fritz =.opp.data[FRITZBOX_DOMAIN][CONF_CONNECTIONS][config_entry.entry_id]
+    devices = opp.data[FRITZBOX_DOMAIN][CONF_DEVICES]
+    fritz = opp.data[FRITZBOX_DOMAIN][CONF_CONNECTIONS][config_entry.entry_id]
 
     for device in await.opp.async_add_executor_job(fritz.get_devices):
         if (

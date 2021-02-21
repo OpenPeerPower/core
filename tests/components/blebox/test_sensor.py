@@ -42,7 +42,7 @@ async def test_init(tempsensor,.opp, config):
     entry = await async_setup_entity.opp, config, entity_id)
     assert entry.unique_id == "BleBox-tempSensor-1afe34db9437-0.temperature"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.name == "tempSensor-0.temperature"
 
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_TEMPERATURE
@@ -70,7 +70,7 @@ async def test_update(tempsensor,.opp, config):
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
     await async_setup_entity.opp, config, entity_id)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == TEMP_CELSIUS
     assert state.state == "25.18"
 

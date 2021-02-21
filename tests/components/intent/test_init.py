@@ -19,7 +19,7 @@ async def test_http_op.dle_intent.opp,.opp_client,.opp_admin_user):
 
         async def async_op.dle(self, intent):
             """Handle the intent."""
-            assert intent.context.user_id ==.opp_admin_user.id
+            assert intent.context.user_id == opp_admin_user.id
             response = intent.create_response()
             response.async_set_speech(
                 "I've ordered a {}!".format(intent.slots["type"]["value"])

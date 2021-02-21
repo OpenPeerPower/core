@@ -91,7 +91,7 @@ def create_light(item_class, coordinator, bridge, is_group, api, item_id):
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Hue lights from a config entry."""
-    bridge =.opp.data[HUE_DOMAIN][config_entry.entry_id]
+    bridge = opp.data[HUE_DOMAIN][config_entry.entry_id]
 
     light_coordinator = DataUpdateCoordinator(
        .opp,
@@ -392,7 +392,7 @@ class HueLight(CoordinatorEntity, LightEntity):
             command["ct"] = max(self.min_mireds, min(temp, self.max_mireds))
 
         if ATTR_BRIGHTNESS in kwargs:
-            command["bri"] =.opp_to_hue_brightness(kwargs[ATTR_BRIGHTNESS])
+            command["bri"] = opp_to_hue_brightness(kwargs[ATTR_BRIGHTNESS])
 
         flash = kwargs.get(ATTR_FLASH)
 

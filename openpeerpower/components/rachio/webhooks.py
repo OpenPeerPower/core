@@ -87,7 +87,7 @@ def async_register_webhook.opp, webhook_id, entry_id):
 
         try:
             auth = data.get(KEY_EXTERNAL_ID, "").split(":")[1]
-            assert auth ==.opp.data[DOMAIN][entry_id].rachio.webhook_auth
+            assert auth == opp.data[DOMAIN][entry_id].rachio.webhook_auth
         except (AssertionError, IndexError):
             return web.Response(status=web.HTTPForbidden.status_code)
 
@@ -111,7 +111,7 @@ async def async_get_or_create_registered_webhook_id_and_url.opp, entry):
 
     webhook_id = config.get(CONF_WEBHOOK_ID)
     if not webhook_id:
-        webhook_id =.opp.components.webhook.async_generate_id()
+        webhook_id = opp.components.webhook.async_generate_id()
         config[CONF_WEBHOOK_ID] = webhook_id
         updated_config = True
 
@@ -126,7 +126,7 @@ async def async_get_or_create_registered_webhook_id_and_url.opp, entry):
         webhook_url = cloudhook_url
 
     if not webhook_url:
-        webhook_url =.opp.components.webhook.async_generate_url(webhook_id)
+        webhook_url = opp.components.webhook.async_generate_url(webhook_id)
 
     if updated_config:
        .opp.config_entries.async_update_entry(entry, data=config)

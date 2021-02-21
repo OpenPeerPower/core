@@ -51,12 +51,12 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -64,35 +64,35 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Switch1":{"Action":"ON"}}'
     )
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Switch1":{"Action":"OFF"}}'
     )
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_OFF
 
     # Test periodic state update
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/SENSOR", '{"Switch1":"ON"}')
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/SENSOR", '{"Switch1":"OFF"}')
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_OFF
 
     # Test polled state update
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/STATUS10", '{"StatusSNS":{"Switch1":"ON"}}'
     )
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/STATUS10", '{"StatusSNS":{"Switch1":"OFF"}}'
     )
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_OFF
 
 
@@ -110,12 +110,12 @@ async def test_controlling_state_via_mqtt_switchname.opp, mqtt_mock, setup_tasmo
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.custom_name")
+    state = opp.states.get("binary_sensor.custom_name")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("binary_sensor.custom_name")
+    state = opp.states.get("binary_sensor.custom_name")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -123,35 +123,35 @@ async def test_controlling_state_via_mqtt_switchname.opp, mqtt_mock, setup_tasmo
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Custom Name":{"Action":"ON"}}'
     )
-    state =.opp.states.get("binary_sensor.custom_name")
+    state = opp.states.get("binary_sensor.custom_name")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Custom Name":{"Action":"OFF"}}'
     )
-    state =.opp.states.get("binary_sensor.custom_name")
+    state = opp.states.get("binary_sensor.custom_name")
     assert state.state == STATE_OFF
 
     # Test periodic state update
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/SENSOR", '{"Custom Name":"ON"}')
-    state =.opp.states.get("binary_sensor.custom_name")
+    state = opp.states.get("binary_sensor.custom_name")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/SENSOR", '{"Custom Name":"OFF"}')
-    state =.opp.states.get("binary_sensor.custom_name")
+    state = opp.states.get("binary_sensor.custom_name")
     assert state.state == STATE_OFF
 
     # Test polled state update
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/STATUS10", '{"StatusSNS":{"Custom Name":"ON"}}'
     )
-    state =.opp.states.get("binary_sensor.custom_name")
+    state = opp.states.get("binary_sensor.custom_name")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/STATUS10", '{"StatusSNS":{"Custom Name":"OFF"}}'
     )
-    state =.opp.states.get("binary_sensor.custom_name")
+    state = opp.states.get("binary_sensor.custom_name")
     assert state.state == STATE_OFF
 
 
@@ -168,12 +168,12 @@ async def test_pushon_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -181,25 +181,25 @@ async def test_pushon_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Switch1":{"Action":"ON"}}'
     )
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Switch1":{"Action":"OFF"}}'
     )
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_OFF
 
     # Test periodic state update is ignored
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/SENSOR", '{"Switch1":"ON"}')
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_OFF
 
     # Test polled state update is ignored
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/STATUS10", '{"StatusSNS":{"Switch1":"ON"}}'
     )
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_OFF
 
 
@@ -218,11 +218,11 @@ async def test_friendly_names.opp, mqtt_mock, setup_tasmota):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == "unavailable"
     assert state.attributes.get("friendly_name") == "Tasmota binary_sensor 1"
 
-    state =.opp.states.get("binary_sensor.beer")
+    state = opp.states.get("binary_sensor.beer")
     assert state.state == "unavailable"
     assert state.attributes.get("friendly_name") == "Beer"
 
@@ -256,7 +256,7 @@ async def test_off_delay.opp, mqtt_mock, setup_tasmota):
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Switch1":{"Action":"ON"}}'
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_ON
     assert events == ["off", "on"]
 
@@ -264,13 +264,13 @@ async def test_off_delay.opp, mqtt_mock, setup_tasmota):
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Switch1":{"Action":"ON"}}'
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_ON
     assert events == ["off", "on", "on"]
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=1))
     await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.tasmota_binary_sensor_1")
+    state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_OFF
     assert events == ["off", "on", "on", "off"]
 

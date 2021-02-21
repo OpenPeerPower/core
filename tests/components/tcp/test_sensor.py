@@ -78,7 +78,7 @@ async def test_state.opp, mock_socket, mock_select):
     assert await async_setup_component.opp, "sensor", TEST_CONFIG)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
 
     assert state
     assert state.state == "test_value"
@@ -110,7 +110,7 @@ async def test_config_uses_defaults.opp, mock_socket):
         assert await async_setup_component.opp, "sensor", {"sensor": config})
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tcp_sensor")
+    state = opp.states.get("sensor.tcp_sensor")
 
     assert state
     assert state.state == "value"
@@ -128,7 +128,7 @@ async def test_update_socket_error.opp, mock_socket, sock_attr):
     assert await async_setup_component.opp, "sensor", TEST_CONFIG)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
 
     assert state
     assert state.state == "unknown"
@@ -141,7 +141,7 @@ async def test_update_select_fails.opp, mock_socket, mock_select):
     assert await async_setup_component.opp, "sensor", TEST_CONFIG)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
 
     assert state
     assert state.state == "unknown"
@@ -155,7 +155,7 @@ async def test_update_returns_if_template_render_fails.opp, mock_socket):
     assert await async_setup_component.opp, "sensor", {"sensor": config})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
 
     assert state
     assert state.state == "unknown"

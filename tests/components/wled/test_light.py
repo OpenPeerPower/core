@@ -52,7 +52,7 @@ async def test_rgb_light_state(
     entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     # First segment of the strip
-    state =.opp.states.get("light.wled_rgb_light_segment_0")
+    state = opp.states.get("light.wled_rgb_light_segment_0")
     assert state
     assert state.attributes.get(ATTR_BRIGHTNESS) == 127
     assert state.attributes.get(ATTR_EFFECT) == "Solid"
@@ -71,7 +71,7 @@ async def test_rgb_light_state(
     assert entry.unique_id == "aabbccddeeff_0"
 
     # Second segment of the strip
-    state =.opp.states.get("light.wled_rgb_light_segment_1")
+    state = opp.states.get("light.wled_rgb_light_segment_1")
     assert state
     assert state.attributes.get(ATTR_BRIGHTNESS) == 127
     assert state.attributes.get(ATTR_EFFECT) == "Blink"
@@ -90,7 +90,7 @@ async def test_rgb_light_state(
     assert entry.unique_id == "aabbccddeeff_1"
 
     # Test master control of the lightstrip
-    state =.opp.states.get("light.wled_rgb_light_master")
+    state = opp.states.get("light.wled_rgb_light_master")
     assert state
     assert state.attributes.get(ATTR_BRIGHTNESS) == 127
     assert state.state == STATE_ON
@@ -279,7 +279,7 @@ async def test_single_segment_behavior(
 
         assert not.opp.states.get("light.wled_rgb_light_master")
 
-        state =.opp.states.get("light.wled_rgb_light_segment_0")
+        state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state
         assert state.state == STATE_ON
 
@@ -293,7 +293,7 @@ async def test_single_segment_behavior(
         async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("light.wled_rgb_light_segment_0")
+        state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state
         assert state.attributes.get(ATTR_BRIGHTNESS) == 100
 
@@ -305,7 +305,7 @@ async def test_single_segment_behavior(
     ):
         async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
         await.opp.async_block_till_done()
-        state =.opp.states.get("light.wled_rgb_light_segment_0")
+        state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state
         assert state.state == STATE_OFF
 
@@ -359,7 +359,7 @@ async def test_light_error(
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("light.wled_rgb_light_segment_0")
+        state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_ON
         assert "Invalid response from API" in caplog.text
 
@@ -381,7 +381,7 @@ async def test_light_connection_error(
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("light.wled_rgb_light_segment_0")
+        state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_UNAVAILABLE
 
 
@@ -391,7 +391,7 @@ async def test_rgbw_light(
     """Test RGBW support for WLED."""
     await init_integration.opp, aioclient_mock, rgbw=True)
 
-    state =.opp.states.get("light.wled_rgbw_light")
+    state = opp.states.get("light.wled_rgbw_light")
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_HS_COLOR) == (0.0, 100.0)
     assert state.attributes.get(ATTR_WHITE_VALUE) == 139
@@ -585,7 +585,7 @@ async def test_effect_service_error(
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("light.wled_rgb_light_segment_0")
+        state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_ON
         assert "Invalid response from API" in caplog.text
 
@@ -628,6 +628,6 @@ async def test_preset_service_error(
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("light.wled_rgb_light_segment_0")
+        state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_ON
         assert "Invalid response from API" in caplog.text

@@ -470,12 +470,12 @@ async def test_update_state_via_state_topic_template.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test")
+    state = opp.states.get("alarm_control_panel.test")
     assert state.state == STATE_UNKNOWN
 
     async_fire_mqtt_message.opp, "test-topic", "100")
 
-    state =.opp.states.get("alarm_control_panel.test")
+    state = opp.states.get("alarm_control_panel.test")
     assert state.state == STATE_ALARM_ARMED_AWAY
 
 
@@ -487,7 +487,7 @@ async def test_attributes_code_number.opp, mqtt_mock):
     assert await async_setup_component.opp, alarm_control_panel.DOMAIN, config)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test")
+    state = opp.states.get("alarm_control_panel.test")
     assert (
         state.attributes.get(alarm_control_panel.ATTR_CODE_FORMAT)
         == alarm_control_panel.FORMAT_NUMBER
@@ -502,7 +502,7 @@ async def test_attributes_code_text.opp, mqtt_mock):
     assert await async_setup_component.opp, alarm_control_panel.DOMAIN, config)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test")
+    state = opp.states.get("alarm_control_panel.test")
     assert (
         state.attributes.get(alarm_control_panel.ATTR_CODE_FORMAT)
         == alarm_control_panel.FORMAT_TEXT

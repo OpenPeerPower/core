@@ -29,7 +29,7 @@ async def async_setup_platform(
 
     entities = []
 
-    spc =.opp.data[DATA_SURE_PETCARE][SPC]
+    spc = opp.data[DATA_SURE_PETCARE][SPC]
 
     for thing in spc.ids:
         sure_id = thing[CONF_ID]

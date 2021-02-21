@@ -128,7 +128,7 @@ async def test_sensors(
         assert er.async_get(entity_id).unique_id == f"{SERIAL}-{sensor}"
 
         # Test state
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state.state == str(MOCKED_VALUES[sensor])
         assert state.name == f"{NAME} {SENSOR_NAMES[sensor]}"
 
@@ -141,7 +141,7 @@ async def test_sensors(
     _async_assign_values(device, MOCKED_UPDATED_VALUES)
     await async_update_device.opp, device)
     for sensor in sensors:
-        state =.opp.states.get(_async_get_entity_id(sensor))
+        state = opp.states.get(_async_get_entity_id(sensor))
         assert state.state == str(MOCKED_UPDATED_VALUES[sensor])
 
 
@@ -177,6 +177,6 @@ async def test_temperature(
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{ENTITY_ID_PREFIX}_temperature")
+    state = opp.states.get(f"{ENTITY_ID_PREFIX}_temperature")
     assert state.state == str(temperature)
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == temp_unit

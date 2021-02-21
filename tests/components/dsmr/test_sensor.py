@@ -52,7 +52,7 @@ async def test_setup_platform.opp, dsmr_connection_fixture):
     assert not async_add_entities.called
 
     # Check config entry
-    conf_entries =.opp.config_entries.async_entries(DOMAIN)
+    conf_entries = opp.config_entries.async_entries(DOMAIN)
 
     assert len(conf_entries) == 1
 
@@ -120,7 +120,7 @@ async def test_default_setup.opp, dsmr_connection_fixture):
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
     # make sure entities have been created and return 'unknown' state
-    power_consumption =.opp.states.get("sensor.power_consumption")
+    power_consumption = opp.states.get("sensor.power_consumption")
     assert power_consumption.state == "unknown"
     assert power_consumption.attributes.get("unit_of_measurement") is None
 
@@ -131,19 +131,19 @@ async def test_default_setup.opp, dsmr_connection_fixture):
     await asyncio.sleep(0)
 
     # ensure entities have new state value after incoming telegram
-    power_consumption =.opp.states.get("sensor.power_consumption")
+    power_consumption = opp.states.get("sensor.power_consumption")
     assert power_consumption.state == "0.0"
     assert (
         power_consumption.attributes.get("unit_of_measurement") == ENERGY_KILO_WATT_HOUR
     )
 
     # tariff should be translated in human readable and have no unit
-    power_tariff =.opp.states.get("sensor.power_tariff")
+    power_tariff = opp.states.get("sensor.power_tariff")
     assert power_tariff.state == "low"
     assert power_tariff.attributes.get("unit_of_measurement") == ""
 
     # check if gas consumption is parsed correctly
-    gas_consumption =.opp.states.get("sensor.gas_consumption")
+    gas_consumption = opp.states.get("sensor.gas_consumption")
     assert gas_consumption.state == "745.695"
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
@@ -267,12 +267,12 @@ async def test_v4_meter.opp, dsmr_connection_fixture):
     await asyncio.sleep(0)
 
     # tariff should be translated in human readable and have no unit
-    power_tariff =.opp.states.get("sensor.power_tariff")
+    power_tariff = opp.states.get("sensor.power_tariff")
     assert power_tariff.state == "low"
     assert power_tariff.attributes.get("unit_of_measurement") == ""
 
     # check if gas consumption is parsed correctly
-    gas_consumption =.opp.states.get("sensor.gas_consumption")
+    gas_consumption = opp.states.get("sensor.gas_consumption")
     assert gas_consumption.state == "745.695"
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
@@ -327,12 +327,12 @@ async def test_v5_meter.opp, dsmr_connection_fixture):
     await asyncio.sleep(0)
 
     # tariff should be translated in human readable and have no unit
-    power_tariff =.opp.states.get("sensor.power_tariff")
+    power_tariff = opp.states.get("sensor.power_tariff")
     assert power_tariff.state == "low"
     assert power_tariff.attributes.get("unit_of_measurement") == ""
 
     # check if gas consumption is parsed correctly
-    gas_consumption =.opp.states.get("sensor.gas_consumption")
+    gas_consumption = opp.states.get("sensor.gas_consumption")
     assert gas_consumption.state == "745.695"
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
@@ -392,16 +392,16 @@ async def test_luxembourg_meter.opp, dsmr_connection_fixture):
     # after receiving telegram entities need to have the chance to update
     await asyncio.sleep(0)
 
-    power_tariff =.opp.states.get("sensor.energy_consumption_total")
+    power_tariff = opp.states.get("sensor.energy_consumption_total")
     assert power_tariff.state == "123.456"
     assert power_tariff.attributes.get("unit_of_measurement") == ENERGY_KILO_WATT_HOUR
 
-    power_tariff =.opp.states.get("sensor.energy_production_total")
+    power_tariff = opp.states.get("sensor.energy_production_total")
     assert power_tariff.state == "654.321"
     assert power_tariff.attributes.get("unit_of_measurement") == ENERGY_KILO_WATT_HOUR
 
     # check if gas consumption is parsed correctly
-    gas_consumption =.opp.states.get("sensor.gas_consumption")
+    gas_consumption = opp.states.get("sensor.gas_consumption")
     assert gas_consumption.state == "745.695"
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
@@ -456,12 +456,12 @@ async def test_belgian_meter.opp, dsmr_connection_fixture):
     await asyncio.sleep(0)
 
     # tariff should be translated in human readable and have no unit
-    power_tariff =.opp.states.get("sensor.power_tariff")
+    power_tariff = opp.states.get("sensor.power_tariff")
     assert power_tariff.state == "normal"
     assert power_tariff.attributes.get("unit_of_measurement") == ""
 
     # check if gas consumption is parsed correctly
-    gas_consumption =.opp.states.get("sensor.gas_consumption")
+    gas_consumption = opp.states.get("sensor.gas_consumption")
     assert gas_consumption.state == "745.695"
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
@@ -505,7 +505,7 @@ async def test_belgian_meter_low.opp, dsmr_connection_fixture):
     await asyncio.sleep(0)
 
     # tariff should be translated in human readable and have no unit
-    power_tariff =.opp.states.get("sensor.power_tariff")
+    power_tariff = opp.states.get("sensor.power_tariff")
     assert power_tariff.state == "low"
     assert power_tariff.attributes.get("unit_of_measurement") == ""
 

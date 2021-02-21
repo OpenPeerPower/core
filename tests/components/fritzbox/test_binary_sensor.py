@@ -36,7 +36,7 @@ async def test_setup.opp: OpenPeerPowerType, fritz: Mock):
     fritz().get_devices.return_value = [device]
 
     await setup_fritzbox.opp, MOCK_CONFIG)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
 
     assert state
     assert state.state == STATE_ON
@@ -51,7 +51,7 @@ async def test_is_off.opp: OpenPeerPowerType, fritz: Mock):
     fritz().get_devices.return_value = [device]
 
     await setup_fritzbox.opp, MOCK_CONFIG)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
 
     assert state
     assert state.state == STATE_OFF

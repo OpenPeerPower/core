@@ -7,7 +7,7 @@ from tests.common import MockConfigEntry
 async def test_flow_works.opp):
     """Test that config flow works."""
     flow = config_flow.EmulatedRokuFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_user(
         user_input={"name": "Emulated Roku Test", "listen_port": 8060}
     )
@@ -23,7 +23,7 @@ async def test_flow_already_registered_entry.opp):
         domain="emulated_roku", data={"name": "Emulated Roku Test", "listen_port": 8062}
     ).add_to_opp.opp)
     flow = config_flow.EmulatedRokuFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await flow.async_step_user(
         user_input={"name": "Emulated Roku Test", "listen_port": 8062}

@@ -63,7 +63,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up ozw from a config entry."""
-    ozw_data =.opp.data[DOMAIN][entry.entry_id] = {}
+    ozw_data = opp.data[DOMAIN][entry.entry_id] = {}
     ozw_data[DATA_UNSUBSCRIBE] = []
 
     data_nodes = {}
@@ -95,7 +95,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         manager_options["send_message"] = mqtt_client.send_message
 
     else:
-        mqtt_entries =.opp.config_entries.async_entries("mqtt")
+        mqtt_entries = opp.config_entries.async_entries("mqtt")
         if not mqtt_entries or mqtt_entries[0].state != ENTRY_STATE_LOADED:
             _LOGGER.error("MQTT integration is not set up")
             return False
@@ -323,7 +323,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
         unsubscribe_listener()
 
     if entry.data.get(CONF_USE_ADDON):
-        async_stop_mqtt_client =.opp.data[DOMAIN][entry.entry_id][
+        async_stop_mqtt_client = opp.data[DOMAIN][entry.entry_id][
             DATA_STOP_MQTT_CLIENT
         ]
         await async_stop_mqtt_client()

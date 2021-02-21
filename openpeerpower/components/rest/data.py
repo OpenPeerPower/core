@@ -26,7 +26,7 @@ class RestData:
         timeout=DEFAULT_TIMEOUT,
     ):
         """Initialize the data object."""
-        self._opp =.opp
+        self._opp = opp
         self._method = method
         self._resource = resource
         self._auth = auth

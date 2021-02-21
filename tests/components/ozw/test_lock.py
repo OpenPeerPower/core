@@ -7,7 +7,7 @@ async def test_lock.opp, lock_data, sent_messages, lock_msg, caplog):
     receive_message = await setup_ozw.opp, fixture=lock_data)
 
     # Test loaded
-    state =.opp.states.get("lock.danalock_v3_btze_locked")
+    state = opp.states.get("lock.danalock_v3_btze_locked")
     assert state is not None
     assert state.state == "unlocked"
 
@@ -27,7 +27,7 @@ async def test_lock.opp, lock_data, sent_messages, lock_msg, caplog):
     receive_message(lock_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("lock.danalock_v3_btze_locked")
+    state = opp.states.get("lock.danalock_v3_btze_locked")
     assert state is not None
     assert state.state == "locked"
 

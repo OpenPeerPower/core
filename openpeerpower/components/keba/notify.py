@@ -7,7 +7,7 @@ from . import DOMAIN
 async def async_get_service.opp, config, discovery_info=None):
     """Return the notify service."""
 
-    client =.opp.data[DOMAIN]
+    client = opp.data[DOMAIN]
     return KebaNotificationService(client)
 
 

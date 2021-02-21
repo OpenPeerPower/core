@@ -27,7 +27,7 @@ async def test_connection_state_changes(mock_hc,.opp, mock_write_config):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    data =.opp.data[DOMAIN][entry.entry_id]
+    data = opp.data[DOMAIN][entry.entry_id]
 
     # mocks start with current activity == Watch TV
     assert.opp.states.is_state(ENTITY_REMOTE, STATE_ON)

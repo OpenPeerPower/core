@@ -263,7 +263,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     )
 
     if unload_ok:
-        entry_data =.opp.data[DOMAIN][entry.unique_id]
+        entry_data = opp.data[DOMAIN][entry.unique_id]
         entry_data[UNDO_UPDATE_LISTENER]()
         await entry_data[SYNO_API].async_unload()
        .opp.data[DOMAIN].pop(entry.unique_id)
@@ -282,7 +282,7 @@ async def _async_setup_services.opp: OpenPeerPowerType):
     async def service_op.dler(call: ServiceCall):
         """Handle service call."""
         serial = call.data.get(CONF_SERIAL)
-        dsm_devices =.opp.data[DOMAIN]
+        dsm_devices = opp.data[DOMAIN]
 
         if serial:
             dsm_device = dsm_devices.get(serial)
@@ -318,7 +318,7 @@ class SynoApi:
 
     def __init__(self,.opp: OpenPeerPowerType, entry: ConfigEntry):
         """Initialize the API wrapper class."""
-        self._opp =.opp
+        self._opp = opp
         self._entry = entry
 
         # DSM APIs

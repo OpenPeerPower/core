@@ -208,7 +208,7 @@ def.opp_hue(loop,.opp):
 @pytest.fixture
 def hue_client(loop,.opp_hue, aiohttp_client):
     """Create web client for emulated hue api."""
-    web_app =.opp_hue.http.app
+    web_app = opp_hue.http.app
     config = Config(
         None,
         {
@@ -317,7 +317,7 @@ async def test_lights_all_dimmable.opp, aiohttp_client):
         await.opp.async_block_till_done()
     config = Config(None, hue_config)
     config.numbers = ENTITY_IDS_BY_NUMBER
-    web_app =.opp.http.app
+    web_app = opp.http.app
     HueOneLightStateView(config).register(web_app, web_app.router)
     client = await aiohttp_client(web_app)
     light_without_brightness_json = await perform_get_light_state(
@@ -609,7 +609,7 @@ async def test_put_light_state.opp,.opp_hue, hue_client):
         blocking=True,
     )
 
-    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_ON
     assert ceiling_lights.attributes[light.ATTR_BRIGHTNESS] == 153
 
@@ -702,7 +702,7 @@ async def test_put_light_state.opp,.opp_hue, hue_client):
     assert len(ceiling_result_json) == 1
 
     # Check to make sure the state changed
-    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_OFF
     ceiling_json = await perform_get_light_state(
         hue_client, "light.ceiling_lights", HTTP_OK
@@ -788,7 +788,7 @@ async def test_put_light_state_script.opp,.opp_hue, hue_client):
     assert script_result.status == HTTP_OK
     assert len(script_result_json) == 2
 
-    kitchen_light =.opp_hue.states.get("light.kitchen_lights")
+    kitchen_light = opp_hue.states.get("light.kitchen_lights")
     assert kitchen_light.state == "on"
     assert kitchen_light.attributes[light.ATTR_BRIGHTNESS] == level
 
@@ -811,7 +811,7 @@ async def test_put_light_state_climate_set_temperature.opp_hue, hue_client):
     assert hvac_result.status == HTTP_OK
     assert len(hvac_result_json) == 2
 
-    hvac =.opp_hue.states.get("climate.hvac")
+    hvac = opp_hue.states.get("climate.hvac")
     assert hvac.state == climate.const.HVAC_MODE_COOL
     assert hvac.attributes[climate.ATTR_TEMPERATURE] == temperature
 
@@ -844,7 +844,7 @@ async def test_put_light_state_humidifier_set_humidity.opp_hue, hue_client):
     assert humidifier_result.status == HTTP_OK
     assert len(humidifier_result_json) == 2
 
-    hvac =.opp_hue.states.get("humidifier.humidifier")
+    hvac = opp_hue.states.get("humidifier.humidifier")
     assert hvac.state == "on"
     assert hvac.attributes[humidifier.ATTR_HUMIDITY] == humidity
 
@@ -878,7 +878,7 @@ async def test_put_light_state_media_player.opp_hue, hue_client):
     assert mp_result.status == HTTP_OK
     assert len(mp_result_json) == 2
 
-    walkman =.opp_hue.states.get("media_player.walkman")
+    walkman = opp_hue.states.get("media_player.walkman")
     assert walkman.state == "playing"
     assert walkman.attributes[media_player.ATTR_MEDIA_VOLUME_LEVEL] == level
 
@@ -894,7 +894,7 @@ async def test_close_cover.opp_hue, hue_client):
         blocking=True,
     )
 
-    cover_test =.opp_hue.states.get(cover_id)
+    cover_test = opp_hue.states.get(cover_id)
     assert cover_test.state == "closing"
 
     for _ in range(7):
@@ -902,7 +902,7 @@ async def test_close_cover.opp_hue, hue_client):
         async_fire_time_changed.opp_hue, future)
         await.opp_hue.async_block_till_done()
 
-    cover_test =.opp_hue.states.get(cover_id)
+    cover_test = opp_hue.states.get(cover_id)
     assert cover_test.state == "closed"
 
     # Go through the API to turn it on
@@ -923,7 +923,7 @@ async def test_close_cover.opp_hue, hue_client):
     assert len(cover_result_json) == 2
 
     # Check to make sure the state changed
-    cover_test_2 =.opp_hue.states.get(cover_id)
+    cover_test_2 = opp_hue.states.get(cover_id)
     assert cover_test_2.state == "open"
 
 
@@ -939,7 +939,7 @@ async def test_set_position_cover.opp_hue, hue_client):
         blocking=True,
     )
 
-    cover_test =.opp_hue.states.get(cover_id)
+    cover_test = opp_hue.states.get(cover_id)
     assert cover_test.state == "closing"
 
     for _ in range(7):
@@ -947,7 +947,7 @@ async def test_set_position_cover.opp_hue, hue_client):
         async_fire_time_changed.opp_hue, future)
         await.opp_hue.async_block_till_done()
 
-    cover_test =.opp_hue.states.get(cover_id)
+    cover_test = opp_hue.states.get(cover_id)
     assert cover_test.state == "closed"
 
     level = 20
@@ -973,7 +973,7 @@ async def test_set_position_cover.opp_hue, hue_client):
         await.opp_hue.async_block_till_done()
 
     # Check to make sure the state changed
-    cover_test_2 =.opp_hue.states.get(cover_id)
+    cover_test_2 = opp_hue.states.get(cover_id)
     assert cover_test_2.state == "open"
     assert cover_test_2.attributes.get("current_position") == level
 
@@ -1001,7 +1001,7 @@ async def test_put_light_state_fan.opp_hue, hue_client):
     assert fan_result.status == HTTP_OK
     assert len(fan_result_json) == 2
 
-    living_room_fan =.opp_hue.states.get("fan.living_room_fan")
+    living_room_fan = opp_hue.states.get("fan.living_room_fan")
     assert living_room_fan.state == "on"
     assert living_room_fan.attributes[fan.ATTR_SPEED] == fan.SPEED_MEDIUM
 
@@ -1169,7 +1169,7 @@ async def perform_put_test_on_ceiling_lights(
         blocking=True,
     )
 
-    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_OFF
 
     # Go through the API to turn it on
@@ -1185,7 +1185,7 @@ async def perform_put_test_on_ceiling_lights(
     assert len(office_result_json) == 2
 
     # Check to make sure the state changed
-    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_ON
     assert ceiling_lights.attributes[light.ATTR_BRIGHTNESS] == 56
 
@@ -1312,7 +1312,7 @@ async def test_put_then_get_cached_properly.opp,.opp_hue, hue_client):
         blocking=True,
     )
 
-    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_ON
     assert ceiling_lights.attributes[light.ATTR_BRIGHTNESS] == 153
 
@@ -1447,7 +1447,7 @@ async def test_put_than_get_when_service_call_fails.opp,.opp_hue, hue_client):
         light.DOMAIN, SERVICE_TURN_ON, mock_service_call, schema=None
     )
 
-    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_OFF
 
     with patch.object(hue_api, "STATE_CHANGE_WAIT_TIMEOUT", 0.000001):
@@ -1547,7 +1547,7 @@ async def test_only_change_contrast.opp,.opp_hue, hue_client):
     # TODO: It should be noted that a real Hue hub will not allow to change the brightness if the underlying entity is off.
     # giving the error: [{"error":{"type":201,"address":"/lights/20/state/bri","description":"parameter, bri, is not modifiable. Device is set to off."}}]
     # emulated_hue however will always turn on the light.
-    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_ON
     assert ceiling_lights.attributes[light.ATTR_BRIGHTNESS] == 255
 

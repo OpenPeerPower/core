@@ -76,7 +76,7 @@ async def async_setup.opp, yaml_config):
         }
         conn_str_client = False
 
-    instance =.opp.data[DOMAIN] = AzureEventHub(
+    instance = opp.data[DOMAIN] = AzureEventHub(
        .opp,
         client_args,
         conn_str_client,
@@ -102,7 +102,7 @@ class AzureEventHub:
         max_delay: int,
     ):
         """Initialize the listener."""
-        self.opp =.opp
+        self.opp = opp
         self.queue = asyncio.PriorityQueue()
         self._client_args = client_args
         self._conn_str_client = conn_str_client

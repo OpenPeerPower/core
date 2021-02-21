@@ -37,7 +37,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    hub =.opp.data[MYCHEVY_DOMAIN]
+    hub = opp.data[MYCHEVY_DOMAIN]
     sensors = [MyChevyStatus()]
     for sconfig in SENSORS:
         for car in hub.cars:

@@ -40,7 +40,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
     if DOMAIN not in config:
         return True
     host = config[DOMAIN][CONF_HOST]
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     if not entries:
         # Create new entry based on config
        .opp.async_create_task(
@@ -123,7 +123,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
-    controller_manager =.opp.data[DOMAIN][DATA_CONTROLLER_MANAGER]
+    controller_manager = opp.data[DOMAIN][DATA_CONTROLLER_MANAGER]
     await controller_manager.disconnect()
    .opp.data.pop(DOMAIN)
 
@@ -139,7 +139,7 @@ class ControllerManager:
 
     def __init__(self,.opp, controller):
         """Init the controller manager."""
-        self._opp =.opp
+        self._opp = opp
         self._device_registry = None
         self._entity_registry = None
         self.controller = controller

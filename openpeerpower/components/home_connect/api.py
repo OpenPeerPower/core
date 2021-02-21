@@ -48,7 +48,7 @@ class ConfigEntryAuth(homeconnect.HomeConnectAPI):
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
     ):
         """Initialize Home Connect Auth."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.session = config_entry_oauth2_flow.OAuth2Session(
            .opp, config_entry, implementation
@@ -104,7 +104,7 @@ class HomeConnectDevice:
 
     def __init__(self,.opp, appliance):
         """Initialize the device class."""
-        self.opp =.opp
+        self.opp = opp
         self.appliance = appliance
 
     def initialize(self):

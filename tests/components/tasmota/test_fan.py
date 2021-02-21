@@ -44,12 +44,12 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.tasmota")
+    state = opp.states.get("fan.tasmota")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("fan.tasmota")
+    state = opp.states.get("fan.tasmota")
     assert state.state == STATE_OFF
     assert state.attributes["speed"] is None
     assert state.attributes["speed_list"] == ["off", "low", "medium", "high"]
@@ -57,32 +57,32 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"FanSpeed":1}')
-    state =.opp.states.get("fan.tasmota")
+    state = opp.states.get("fan.tasmota")
     assert state.state == STATE_ON
     assert state.attributes["speed"] == "low"
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"FanSpeed":2}')
-    state =.opp.states.get("fan.tasmota")
+    state = opp.states.get("fan.tasmota")
     assert state.state == STATE_ON
     assert state.attributes["speed"] == "medium"
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"FanSpeed":3}')
-    state =.opp.states.get("fan.tasmota")
+    state = opp.states.get("fan.tasmota")
     assert state.state == STATE_ON
     assert state.attributes["speed"] == "high"
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"FanSpeed":0}')
-    state =.opp.states.get("fan.tasmota")
+    state = opp.states.get("fan.tasmota")
     assert state.state == STATE_OFF
     assert state.attributes["speed"] == "off"
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"FanSpeed":1}')
-    state =.opp.states.get("fan.tasmota")
+    state = opp.states.get("fan.tasmota")
     assert state.state == STATE_ON
     assert state.attributes["speed"] == "low"
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"FanSpeed":0}')
-    state =.opp.states.get("fan.tasmota")
+    state = opp.states.get("fan.tasmota")
     assert state.state == STATE_OFF
     assert state.attributes["speed"] == "off"
 
@@ -101,7 +101,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("fan.tasmota")
+    state = opp.states.get("fan.tasmota")
     assert state.state == STATE_OFF
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()
@@ -115,7 +115,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     mqtt_mock.async_publish.reset_mock()
 
     # Tasmota is not optimistic, the state should still be off
-    state =.opp.states.get("fan.tasmota")
+    state = opp.states.get("fan.tasmota")
     assert state.state == STATE_OFF
 
     # Turn the fan off and verify MQTT message is sent
@@ -167,7 +167,7 @@ async def test_invalid_fan_speed.opp, mqtt_mock, setup_tasmota):
     await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("fan.tasmota")
+    state = opp.states.get("fan.tasmota")
     assert state.state == STATE_OFF
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()

@@ -87,7 +87,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     await async_remove_obsolete_entities.opp, entry, hap)
 
     # Register on HA stop event to gracefully shutdown HomematicIP Cloud connection
-    hap.reset_connection_listener =.opp.bus.async_listen_once(
+    hap.reset_connection_listener = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, hap.shutdown
     )
 
@@ -109,7 +109,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    hap =.opp.data[DOMAIN].pop(entry.unique_id)
+    hap = opp.data[DOMAIN].pop(entry.unique_id)
     hap.reset_connection_listener()
 
     await async_unload_services.opp)

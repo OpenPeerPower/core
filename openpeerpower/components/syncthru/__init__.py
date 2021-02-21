@@ -27,7 +27,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up config entry."""
 
     session = aiohttp_client.async_get_clientsession.opp)
-    printer =.opp.data[DOMAIN][entry.entry_id] = SyncThru(
+    printer = opp.data[DOMAIN][entry.entry_id] = SyncThru(
         entry.data[CONF_URL], session
     )
 

@@ -20,7 +20,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         SERVICE_UNBYPASS_ZONE, {}, "async_unbypass_zone"
     )
 
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
     entities = [
         RiscoBinarySensor(coordinator, zone_id, zone)
         for zone_id, zone in coordinator.data.zones.items()

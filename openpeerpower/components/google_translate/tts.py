@@ -109,7 +109,7 @@ class GoogleProvider(Provider):
 
     def __init__(self,.opp, lang):
         """Init Google TTS service."""
-        self.opp =.opp
+        self.opp = opp
         self._lang = lang
         self.name = "Google"
 

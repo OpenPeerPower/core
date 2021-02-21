@@ -110,7 +110,7 @@ class KebaHandler(KebaKeContact):
         super().__init__(host, self.opp_callback)
 
         self._update_listeners = []
-        self._opp =.opp
+        self._opp = opp
         self.rfid = rfid
         self.device_name = "keba"  # correct device name will be set in setup()
         self.device_id = "keba_wallbox_"  # correct device id will be set in setup()

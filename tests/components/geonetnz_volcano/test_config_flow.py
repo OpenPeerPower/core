@@ -19,7 +19,7 @@ async def test_duplicate_error.opp, config_entry):
 
     config_entry.add_to_opp.opp)
     flow = config_flow.GeonetnzVolcanoFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await flow.async_step_user(user_input=conf)
     assert result["errors"] == {"base": "already_configured"}
@@ -28,7 +28,7 @@ async def test_duplicate_error.opp, config_entry):
 async def test_show_form.opp):
     """Test that the form is served with no input."""
     flow = config_flow.GeonetnzVolcanoFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await flow.async_step_user(user_input=None)
 
@@ -47,7 +47,7 @@ async def test_step_import.opp):
     }
 
     flow = config_flow.GeonetnzVolcanoFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch(
         "openpeerpower.components.geonetnz_volcano.async_setup_entry", return_value=True
@@ -73,7 +73,7 @@ async def test_step_user.opp):
     conf = {CONF_RADIUS: 25}
 
     flow = config_flow.GeonetnzVolcanoFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch(
         "openpeerpower.components.geonetnz_volcano.async_setup_entry", return_value=True

@@ -130,7 +130,7 @@ async def test_create_and_setup.opp, mock_panel):
 
     # confirm panel instance was created and configured
     #.opp.data is the only mechanism to get a reference to the created panel instance
-    device =.opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
+    device = opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
     await device.update_switch("1", 0)
 
     # confirm the correct api is used
@@ -283,7 +283,7 @@ async def test_create_and_setup_pro.opp, mock_panel):
 
     # confirm panel instance was created and configured
     #.opp.data is the only mechanism to get a reference to the created panel instance
-    device =.opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
+    device = opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
     await device.update_switch("2", 1)
 
     # confirm the correct api is used
@@ -478,7 +478,7 @@ async def test_default_options.opp, mock_panel):
 
     # confirm panel instance was created and configured.
     #.opp.data is the only mechanism to get a reference to the created panel instance
-    device =.opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
+    device = opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
     await device.update_switch("1", 0)
 
     # confirm the correct api is used

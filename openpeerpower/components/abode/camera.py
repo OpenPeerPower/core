@@ -17,7 +17,7 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=90)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Abode camera devices."""
-    data =.opp.data[DOMAIN]
+    data = opp.data[DOMAIN]
 
     entities = []
 

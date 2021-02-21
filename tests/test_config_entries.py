@@ -615,7 +615,7 @@ async def test_discovery_notification.opp):
         )
 
         await.opp.async_block_till_done()
-        state =.opp.states.get("persistent_notification.config_entry_discovery")
+        state = opp.states.get("persistent_notification.config_entry_discovery")
         assert state is not None
 
         # Start a second discovery flow so we can finish the first and assert that
@@ -628,14 +628,14 @@ async def test_discovery_notification.opp):
         assert flow1["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
         await.opp.async_block_till_done()
-        state =.opp.states.get("persistent_notification.config_entry_discovery")
+        state = opp.states.get("persistent_notification.config_entry_discovery")
         assert state is not None
 
         flow2 = await.opp.config_entries.flow.async_configure(flow2["flow_id"], {})
         assert flow2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
         await.opp.async_block_till_done()
-        state =.opp.states.get("persistent_notification.config_entry_discovery")
+        state = opp.states.get("persistent_notification.config_entry_discovery")
         assert state is None
 
 
@@ -674,7 +674,7 @@ async def test_reauth_notification.opp):
         )
 
         await.opp.async_block_till_done()
-        state =.opp.states.get("persistent_notification.config_entry_reconfigure")
+        state = opp.states.get("persistent_notification.config_entry_reconfigure")
         assert state is None
 
         # Start first reauth flow to assert that reconfigure notification fires
@@ -683,7 +683,7 @@ async def test_reauth_notification.opp):
         )
 
         await.opp.async_block_till_done()
-        state =.opp.states.get("persistent_notification.config_entry_reconfigure")
+        state = opp.states.get("persistent_notification.config_entry_reconfigure")
         assert state is not None
 
         # Start a second reauth flow so we can finish the first and assert that
@@ -696,14 +696,14 @@ async def test_reauth_notification.opp):
         assert flow1["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
         await.opp.async_block_till_done()
-        state =.opp.states.get("persistent_notification.config_entry_reconfigure")
+        state = opp.states.get("persistent_notification.config_entry_reconfigure")
         assert state is not None
 
         flow2 = await.opp.config_entries.flow.async_configure(flow2["flow_id"], {})
         assert flow2["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
         await.opp.async_block_till_done()
-        state =.opp.states.get("persistent_notification.config_entry_reconfigure")
+        state = opp.states.get("persistent_notification.config_entry_reconfigure")
         assert state is None
 
 
@@ -728,7 +728,7 @@ async def test_discovery_notification_not_created.opp):
         )
 
     await.opp.async_block_till_done()
-    state =.opp.states.get("persistent_notification.config_entry_discovery")
+    state = opp.states.get("persistent_notification.config_entry_discovery")
     assert state is None
 
 
@@ -1269,7 +1269,7 @@ async def test_unique_id_existing_entry.opp, manager):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    entries =.opp.config_entries.async_entries("comp")
+    entries = opp.config_entries.async_entries("comp")
     assert len(entries) == 1
     assert entries[0].data == {"via": "flow"}
 
@@ -1533,7 +1533,7 @@ async def test_unique_id_ignore.opp, manager):
     # We should never set up an ignored entry.
     assert len(async_setup_entry.mock_calls) == 0
 
-    entry =.opp.config_entries.async_entries("comp")[0]
+    entry = opp.config_entries.async_entries("comp")[0]
 
     assert entry.source == "ignore"
     assert entry.unique_id == "mock-unique-id"
@@ -1649,7 +1649,7 @@ async def test_unignore_step_form.opp, manager):
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        entry =.opp.config_entries.async_entries("comp")[0]
+        entry = opp.config_entries.async_entries("comp")[0]
         assert entry.source == "ignore"
         assert entry.unique_id == "mock-unique-id"
         assert entry.domain == "comp"
@@ -1694,7 +1694,7 @@ async def test_unignore_create_entry.opp, manager):
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        entry =.opp.config_entries.async_entries("comp")[0]
+        entry = opp.config_entries.async_entries("comp")[0]
         assert entry.source == "ignore"
         assert entry.unique_id == "mock-unique-id"
         assert entry.domain == "comp"
@@ -1708,7 +1708,7 @@ async def test_unignore_create_entry.opp, manager):
 
         # But after a 'tick' the unignore step has run and we can see a config entry.
         await.opp.async_block_till_done()
-        entry =.opp.config_entries.async_entries("comp")[0]
+        entry = opp.config_entries.async_entries("comp")[0]
         assert entry.source == "unignore"
         assert entry.unique_id == "mock-unique-id"
         assert entry.title == "yo"
@@ -1736,7 +1736,7 @@ async def test_unignore_default_impl.opp, manager):
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        entry =.opp.config_entries.async_entries("comp")[0]
+        entry = opp.config_entries.async_entries("comp")[0]
         assert entry.source == "ignore"
         assert entry.unique_id == "mock-unique-id"
         assert entry.domain == "comp"
@@ -1791,7 +1791,7 @@ async def test_partial_flows_hidden.opp, manager):
         assert len.opp.config_entries.flow.async_progress()) == 0
 
         await.opp.async_block_till_done()
-        state =.opp.states.get("persistent_notification.config_entry_discovery")
+        state = opp.states.get("persistent_notification.config_entry_discovery")
         assert state is None
 
         # Let the flow init complete
@@ -1804,7 +1804,7 @@ async def test_partial_flows_hidden.opp, manager):
         assert len.opp.config_entries.flow.async_progress()) == 1
 
         await.opp.async_block_till_done()
-        state =.opp.states.get("persistent_notification.config_entry_discovery")
+        state = opp.states.get("persistent_notification.config_entry_discovery")
         assert state is not None
 
 
@@ -1848,7 +1848,7 @@ async def test_async_setup_init_entry.opp):
 
         assert len(async_setup_entry.mock_calls) == 1
 
-        entries =.opp.config_entries.async_entries("comp")
+        entries = opp.config_entries.async_entries("comp")
         assert len(entries) == 1
         assert entries[0].state == config_entries.ENTRY_STATE_LOADED
 
@@ -1903,7 +1903,7 @@ async def test_async_setup_update_entry.opp):
     with patch.dict(config_entries.HANDLERS, {"comp": TestFlow}):
         assert await async_setup_component.opp, "comp", {})
 
-        entries =.opp.config_entries.async_entries("comp")
+        entries = opp.config_entries.async_entries("comp")
         assert len(entries) == 1
         assert entries[0].state == config_entries.ENTRY_STATE_LOADED
         assert entries[0].data == {"value": "updated"}
@@ -1946,7 +1946,7 @@ async def test_flow_with_default_discovery.opp, manager, discovery_source):
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        flows =.opp.config_entries.flow.async_progress()
+        flows = opp.config_entries.flow.async_progress()
         assert len(flows) == 1
         assert (
             flows[0]["context"]["unique_id"]
@@ -1961,7 +1961,7 @@ async def test_flow_with_default_discovery.opp, manager, discovery_source):
 
     assert len.opp.config_entries.flow.async_progress()) == 0
 
-    entry =.opp.config_entries.async_entries("comp")[0]
+    entry = opp.config_entries.async_entries("comp")[0]
     assert entry.title == "yo"
     assert entry.source == discovery_source
     assert entry.unique_id is None
@@ -1990,7 +1990,7 @@ async def test_flow_with_default_discovery_with_unique_id.opp, manager):
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["context"]["unique_id"] == "mock-unique-id"
 
@@ -2047,7 +2047,7 @@ async def test_default_discovery_in_progress.opp, manager):
         )
         assert result2["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["context"]["unique_id"] == "mock-unique-id"
 
@@ -2084,7 +2084,7 @@ async def test_default_discovery_abort_on_new_unique_flow.opp, manager):
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
     # Ensure the first one is cancelled and we end up with just the last one
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["context"]["unique_id"] == "mock-unique-id"
 

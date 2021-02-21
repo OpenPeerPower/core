@@ -54,7 +54,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up WLED light based on a config entry."""
-    coordinator: WLEDDataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id]
+    coordinator: WLEDDataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id]
 
     platform = entity_platform.current_platform.get()
 

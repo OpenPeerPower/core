@@ -30,7 +30,7 @@ async def test_state.opp):
        .opp.states.async_set(entity_id, 1, {}, force_update=True)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.integration")
+    state = opp.states.get("sensor.integration")
     assert state is not None
 
     # Testing a power sensor at 1 KiloWatts for 1hour = 1kWh
@@ -64,7 +64,7 @@ async def test_trapezoidal.opp):
            .opp.states.async_set(entity_id, value, {}, force_update=True)
             await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.integration")
+    state = opp.states.get("sensor.integration")
     assert state is not None
 
     assert round(float(state.state), config["sensor"]["round"]) == 8.33
@@ -98,7 +98,7 @@ async def test_left.opp):
            .opp.states.async_set(entity_id, value, {}, force_update=True)
             await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.integration")
+    state = opp.states.get("sensor.integration")
     assert state is not None
 
     assert round(float(state.state), config["sensor"]["round"]) == 7.5
@@ -132,7 +132,7 @@ async def test_right.opp):
            .opp.states.async_set(entity_id, value, {}, force_update=True)
             await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.integration")
+    state = opp.states.get("sensor.integration")
     assert state is not None
 
     assert round(float(state.state), config["sensor"]["round"]) == 9.17
@@ -165,7 +165,7 @@ async def test_prefix.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.integration")
+    state = opp.states.get("sensor.integration")
     assert state is not None
 
     # Testing a power sensor at 1000 Watts for 1hour = 1kWh
@@ -197,7 +197,7 @@ async def test_suffix.opp):
        .opp.states.async_set(entity_id, 1000, {}, force_update=True)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.integration")
+    state = opp.states.get("sensor.integration")
     assert state is not None
 
     # Testing a network speed sensor at 1000 bytes/s over 10s  = 10kbytes

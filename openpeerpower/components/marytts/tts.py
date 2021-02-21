@@ -47,7 +47,7 @@ class MaryTTSProvider(Provider):
 
     def __init__(self,.opp, conf):
         """Init MaryTTS TTS service."""
-        self.opp =.opp
+        self.opp = opp
         self._mary = MaryTTS(
             conf.get(CONF_HOST),
             conf.get(CONF_PORT),

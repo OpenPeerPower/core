@@ -53,7 +53,7 @@ async def async_setup.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Control4 from a config entry."""
-    entry_data =.opp.data[DOMAIN].setdefault(entry.entry_id, {})
+    entry_data = opp.data[DOMAIN].setdefault(entry.entry_id, {})
     account_session = aiohttp_client.async_get_clientsession.opp)
 
     config = entry.data
@@ -149,7 +149,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def get_items_of_category.opp: OpenPeerPower, entry: ConfigEntry, category: str):
     """Return a list of all Control4 items with the specified category."""
-    director_all_items =.opp.data[DOMAIN][entry.entry_id][CONF_DIRECTOR_ALL_ITEMS]
+    director_all_items = opp.data[DOMAIN][entry.entry_id][CONF_DIRECTOR_ALL_ITEMS]
     return_list = []
     for item in director_all_items:
         if "categories" in item and category in item["categories"]:

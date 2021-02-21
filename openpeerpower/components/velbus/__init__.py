@@ -84,7 +84,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         """Handle Memo Text service call."""
         module_address = service.data[CONF_ADDRESS]
         memo_text = service.data[CONF_MEMO_TEXT]
-        memo_text.opp =.opp
+        memo_text.opp = opp
         try:
             controller.get_module(module_address).set_memo_text(
                 memo_text.async_render()

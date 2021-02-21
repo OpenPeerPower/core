@@ -292,7 +292,7 @@ async def test_create_account.opp, client):
 
     assert resp.status == 200
 
-    entries =.opp.config_entries.async_entries("test")
+    entries = opp.config_entries.async_entries("test")
     assert len(entries) == 1
 
     data = await resp.json()
@@ -351,7 +351,7 @@ async def test_two_step_flow.opp, client):
         )
         assert resp.status == 200
 
-        entries =.opp.config_entries.async_entries("test")
+        entries = opp.config_entries.async_entries("test")
         assert len(entries) == 1
 
         data = await resp.json()
@@ -551,7 +551,7 @@ async def test_options_flow.opp, client):
         source="bla",
         connection_class=core_ce.CONN_CLASS_LOCAL_POLL,
     ).add_to_opp.opp)
-    entry =.opp.config_entries._entries[0]
+    entry = opp.config_entries._entries[0]
 
     with patch.dict(HANDLERS, {"test": TestFlow}):
         url = "/api/config/config_entries/options/flow"
@@ -600,7 +600,7 @@ async def test_two_step_options_flow.opp, client):
         source="bla",
         connection_class=core_ce.CONN_CLASS_LOCAL_POLL,
     ).add_to_opp.opp)
-    entry =.opp.config_entries._entries[0]
+    entry = opp.config_entries._entries[0]
 
     with patch.dict(HANDLERS, {"test": TestFlow}):
         url = "/api/config/config_entries/options/flow"
@@ -759,7 +759,7 @@ async def test_ignore_flow.opp,.opp_ws_client):
 
     assert len.opp.config_entries.flow.async_progress()) == 0
 
-    entry =.opp.config_entries.async_entries("test")[0]
+    entry = opp.config_entries.async_entries("test")[0]
     assert entry.source == "ignore"
     assert entry.unique_id == "mock-unique-id"
     assert entry.title == "Test Integration"

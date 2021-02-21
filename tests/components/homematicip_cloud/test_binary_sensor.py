@@ -55,7 +55,7 @@ async def test_hmip_home_cloud_connection_sensor.opp, default_mock_op._factory):
 
     await async_manipulate_test_data.opp, mock_op..home, "connected", False)
 
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
 
@@ -84,14 +84,14 @@ async def test_hmip_acceleration_sensor.opp, default_mock_op._factory):
     await async_manipulate_test_data(
        .opp, hmip_device, "accelerationSensorTriggered", False
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
     assert len(hmip_device.mock_calls) == service_call_counter + 1
 
     await async_manipulate_test_data(
        .opp, hmip_device, "accelerationSensorTriggered", True
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
     assert len(hmip_device.mock_calls) == service_call_counter + 2
 
@@ -120,14 +120,14 @@ async def test_hmip_tilt_vibration_sensor.opp, default_mock_op._factory):
     await async_manipulate_test_data(
        .opp, hmip_device, "accelerationSensorTriggered", False
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
     assert len(hmip_device.mock_calls) == service_call_counter + 1
 
     await async_manipulate_test_data(
        .opp, hmip_device, "accelerationSensorTriggered", True
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
     assert len(hmip_device.mock_calls) == service_call_counter + 2
 
@@ -147,11 +147,11 @@ async def test_hmip_contact_interface.opp, default_mock_op._factory):
 
     assert ha_state.state == STATE_OFF
     await async_manipulate_test_data.opp, hmip_device, "windowState", WindowState.OPEN)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
     await async_manipulate_test_data.opp, hmip_device, "windowState", None)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
 
@@ -172,26 +172,26 @@ async def test_hmip_shutter_contact.opp, default_mock_op._factory):
     assert ha_state.attributes[ATTR_WINDOW_STATE] == WindowState.TILTED
 
     await async_manipulate_test_data.opp, hmip_device, "windowState", WindowState.OPEN)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
     assert ha_state.attributes[ATTR_WINDOW_STATE] == WindowState.OPEN
 
     await async_manipulate_test_data(
        .opp, hmip_device, "windowState", WindowState.CLOSED
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
     assert not ha_state.attributes.get(ATTR_WINDOW_STATE)
 
     await async_manipulate_test_data.opp, hmip_device, "windowState", None)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
     # test common attributes
     assert ha_state.attributes[ATTR_RSSI_DEVICE] == -54
     assert not ha_state.attributes.get(ATTR_SABOTAGE)
     await async_manipulate_test_data.opp, hmip_device, "sabotage", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_SABOTAGE]
 
 
@@ -210,18 +210,18 @@ async def test_hmip_shutter_contact_optical.opp, default_mock_op._factory):
 
     assert ha_state.state == STATE_OFF
     await async_manipulate_test_data.opp, hmip_device, "windowState", WindowState.OPEN)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
     await async_manipulate_test_data.opp, hmip_device, "windowState", None)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
     # test common attributes
     assert ha_state.attributes[ATTR_RSSI_DEVICE] == -72
     assert not ha_state.attributes.get(ATTR_SABOTAGE)
     await async_manipulate_test_data.opp, hmip_device, "sabotage", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_SABOTAGE]
 
 
@@ -240,7 +240,7 @@ async def test_hmip_motion_detector.opp, default_mock_op._factory):
 
     assert ha_state.state == STATE_OFF
     await async_manipulate_test_data.opp, hmip_device, "motionDetected", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
 
@@ -259,12 +259,12 @@ async def test_hmip_presence_detector.opp, default_mock_op._factory):
 
     assert ha_state.state == STATE_OFF
     await async_manipulate_test_data.opp, hmip_device, "presenceDetected", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
     assert not ha_state.attributes.get(ATTR_EVENT_DELAY)
     await async_manipulate_test_data.opp, hmip_device, "eventDelay", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_EVENT_DELAY]
 
 
@@ -285,7 +285,7 @@ async def test_hmip_pluggable_mains_failure_surveillance_sensor(
 
     assert ha_state.state == STATE_ON
     await async_manipulate_test_data.opp, hmip_device, "powerMainsFailure", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
 
@@ -309,7 +309,7 @@ async def test_hmip_smoke_detector.opp, default_mock_op._factory):
         "smokeDetectorAlarmType",
         SmokeDetectorAlarmType.PRIMARY_ALARM,
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
     await async_manipulate_test_data(
        .opp,
@@ -317,7 +317,7 @@ async def test_hmip_smoke_detector.opp, default_mock_op._factory):
         "smokeDetectorAlarmType",
         None,
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
 
@@ -337,22 +337,22 @@ async def test_hmip_water_detector.opp, default_mock_op._factory):
     assert ha_state.state == STATE_OFF
     await async_manipulate_test_data.opp, hmip_device, "waterlevelDetected", True)
     await async_manipulate_test_data.opp, hmip_device, "moistureDetected", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
     await async_manipulate_test_data.opp, hmip_device, "waterlevelDetected", True)
     await async_manipulate_test_data.opp, hmip_device, "moistureDetected", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
     await async_manipulate_test_data.opp, hmip_device, "waterlevelDetected", False)
     await async_manipulate_test_data.opp, hmip_device, "moistureDetected", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
     await async_manipulate_test_data.opp, hmip_device, "waterlevelDetected", False)
     await async_manipulate_test_data.opp, hmip_device, "moistureDetected", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
 
@@ -371,7 +371,7 @@ async def test_hmip_storm_sensor.opp, default_mock_op._factory):
 
     assert ha_state.state == STATE_OFF
     await async_manipulate_test_data.opp, hmip_device, "storm", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
 
@@ -390,7 +390,7 @@ async def test_hmip_rain_sensor.opp, default_mock_op._factory):
 
     assert ha_state.state == STATE_OFF
     await async_manipulate_test_data.opp, hmip_device, "raining", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
 
@@ -410,7 +410,7 @@ async def test_hmip_sunshine_sensor.opp, default_mock_op._factory):
     assert ha_state.state == STATE_ON
     assert ha_state.attributes["today_sunshine_duration_in_minutes"] == 100
     await async_manipulate_test_data.opp, hmip_device, "sunshine", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
 
@@ -429,7 +429,7 @@ async def test_hmip_battery_sensor.opp, default_mock_op._factory):
 
     assert ha_state.state == STATE_OFF
     await async_manipulate_test_data.opp, hmip_device, "lowBat", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
 
@@ -458,7 +458,7 @@ async def test_hmip_security_zone_sensor_group.opp, default_mock_op._factory):
     await async_manipulate_test_data.opp, hmip_device, "unreach", True)
     await async_manipulate_test_data.opp, hmip_device, "sabotage", True)
     await async_manipulate_test_data.opp, hmip_device, "windowState", WindowState.OPEN)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
 
     assert ha_state.state == STATE_ON
     assert ha_state.attributes[ATTR_MOTION_DETECTED]
@@ -485,7 +485,7 @@ async def test_hmip_security_sensor_group.opp, default_mock_op._factory):
         "smokeDetectorAlarmType",
         SmokeDetectorAlarmType.PRIMARY_ALARM,
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
     assert (
@@ -495,7 +495,7 @@ async def test_hmip_security_sensor_group.opp, default_mock_op._factory):
     await async_manipulate_test_data(
        .opp, hmip_device, "smokeDetectorAlarmType", SmokeDetectorAlarmType.IDLE_OFF
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
     assert not ha_state.attributes.get(ATTR_LOW_BATTERY)
@@ -517,7 +517,7 @@ async def test_hmip_security_sensor_group.opp, default_mock_op._factory):
     await async_manipulate_test_data.opp, hmip_device, "unreach", True)
     await async_manipulate_test_data.opp, hmip_device, "sabotage", True)
     await async_manipulate_test_data.opp, hmip_device, "windowState", WindowState.OPEN)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
 
     assert ha_state.state == STATE_ON
     assert ha_state.attributes[ATTR_LOW_BATTERY]
@@ -536,7 +536,7 @@ async def test_hmip_security_sensor_group.opp, default_mock_op._factory):
         "smokeDetectorAlarmType",
         SmokeDetectorAlarmType.INTRUSION_ALARM,
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
 
@@ -557,11 +557,11 @@ async def test_hmip_multi_contact_interface.opp, default_mock_op._factory):
     await async_manipulate_test_data(
        .opp, hmip_device, "windowState", WindowState.OPEN, channel=5
     )
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
     await async_manipulate_test_data.opp, hmip_device, "windowState", None, channel=5)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
     ha_state, hmip_device = get_and_check_entity_basics(

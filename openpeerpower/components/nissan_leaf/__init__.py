@@ -103,7 +103,7 @@ def setup.opp, config):
         vin = service.data[ATTR_VIN]
 
         if vin in.opp.data[DATA_LEAF]:
-            data_store =.opp.data[DATA_LEAF][vin]
+            data_store = opp.data[DATA_LEAF][vin]
             await data_store.async_update_data(utcnow())
         else:
             _LOGGER.debug("Vin %s not recognised for update", vin)
@@ -115,7 +115,7 @@ def setup.opp, config):
         vin = service.data[ATTR_VIN]
 
         if vin in.opp.data[DATA_LEAF]:
-            data_store =.opp.data[DATA_LEAF][vin]
+            data_store = opp.data[DATA_LEAF][vin]
 
             # Send the command to request charging is started to Nissan
             # servers. If that completes OK then trigger a fresh update to
@@ -199,7 +199,7 @@ class LeafDataStore:
 
     def __init__(self,.opp, leaf, car_config):
         """Initialise the data store."""
-        self.opp =.opp
+        self.opp = opp
         self.leaf = leaf
         self.car_config = car_config
         self.force_miles = car_config[CONF_FORCE_MILES]

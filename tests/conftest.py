@@ -258,7 +258,7 @@ def.opp_owner_user.opp, local_auth):
 @pytest.fixture
 def.opp_admin_user.opp, local_auth):
     """Return a Open Peer Power admin user."""
-    admin_group =.opp.loop.run_until_complete(
+    admin_group = opp.loop.run_until_complete(
        .opp.auth.async_get_group(GROUP_ID_ADMIN)
     )
     return MockUser(groups=[admin_group]).add_to_opp.opp)
@@ -267,7 +267,7 @@ def.opp_admin_user.opp, local_auth):
 @pytest.fixture
 def.opp_read_only_user.opp, local_auth):
     """Return a Open Peer Power read only user."""
-    read_only_group =.opp.loop.run_until_complete(
+    read_only_group = opp.loop.run_until_complete(
        .opp.auth.async_get_group(GROUP_ID_READ_ONLY)
     )
     return MockUser(groups=[read_only_group]).add_to_opp.opp)
@@ -285,7 +285,7 @@ def.opp_read_only_access_token.opp,.opp_read_only_user, local_auth):
     )
    .opp_read_only_user.credentials.append(credential)
 
-    refresh_token =.opp.loop.run_until_complete(
+    refresh_token = opp.loop.run_until_complete(
        .opp.auth.async_create_refresh_token(
            .opp_read_only_user, CLIENT_ID, credential=credential
         )
@@ -470,7 +470,7 @@ async def mqtt_mock.opp, mqtt_client_mock, mqtt_config):
     mqtt_component_mock._mqttc = mqtt_client_mock
 
    .opp.data["mqtt"] = mqtt_component_mock
-    component =.opp.data["mqtt"]
+    component = opp.data["mqtt"]
     component.reset_mock()
     return component
 
@@ -515,7 +515,7 @@ def legacy_patchable_time():
 
            .opp.async_run_opp_job(job, now)
 
-        async_unsub =.opp.bus.async_listen(EVENT_TIME_CHANGED, point_in_time_listener)
+        async_unsub = opp.bus.async_listen(EVENT_TIME_CHANGED, point_in_time_listener)
 
         return async_unsub
 

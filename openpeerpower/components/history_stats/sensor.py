@@ -89,7 +89,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     for template in [start, end]:
         if template is not None:
-            template.opp =.opp
+            template.opp = opp
 
     add_entities(
         [

@@ -102,7 +102,7 @@ class RestoreStateData:
 
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize the restore state data class."""
-        self.opp: OpenPeerPower =.opp
+        self.opp: OpenPeerPower = opp
         self.store: Store = Store(
            .opp, STORAGE_VERSION, STORAGE_KEY, encoder=JSONEncoder
         )

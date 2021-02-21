@@ -218,7 +218,7 @@ async def async_setup_entry.opp, entry):
 
 async def async_setup.opp, config):
     """Set up for Homekit devices."""
-    map_storage =.opp.data[ENTITY_MAP] = EntityMapStorage.opp)
+    map_storage = opp.data[ENTITY_MAP] = EntityMapStorage.opp)
     await map_storage.async_initialize()
 
     zeroconf_instance = await zeroconf.async_get_instance.opp)
@@ -234,7 +234,7 @@ async def async_unload_entry.opp, entry):
     hkid = entry.data["AccessoryPairingID"]
 
     if hkid in.opp.data[KNOWN_DEVICES]:
-        connection =.opp.data[KNOWN_DEVICES][hkid]
+        connection = opp.data[KNOWN_DEVICES][hkid]
         await connection.async_unload()
 
     return True

@@ -106,7 +106,7 @@ class NswRuralFireServiceFeedEntityManager:
         categories,
     ):
         """Initialize the Feed Entity Manager."""
-        self._opp =.opp
+        self._opp = opp
         websession = aiohttp_client.async_get_clientsession.opp)
         self._feed_manager = NswRuralFireServiceIncidentsFeedManager(
             websession,

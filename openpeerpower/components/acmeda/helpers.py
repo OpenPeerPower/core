@@ -10,7 +10,7 @@ def async_add_acmeda_entities(
    .opp, entity_class, config_entry, current, async_add_entities
 ):
     """Add any new entities."""
-    hub =.opp.data[DOMAIN][config_entry.entry_id]
+    hub = opp.data[DOMAIN][config_entry.entry_id]
     LOGGER.debug("Looking for new %s on: %s", entity_class.__name__, hub.host)
 
     api = hub.api.rollers

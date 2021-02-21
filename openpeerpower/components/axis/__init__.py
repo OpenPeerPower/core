@@ -38,7 +38,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload Axis device config entry."""
-    device =.opp.data[AXIS_DOMAIN].pop(config_entry.unique_id)
+    device = opp.data[AXIS_DOMAIN].pop(config_entry.unique_id)
     return await device.async_reset()
 
 

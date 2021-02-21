@@ -37,7 +37,7 @@ FAN_MODES = [FAN_AUTO, FAN_HIGH, FAN_MEDIUM, FAN_LOW]
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Iterate through and add all Melissa devices."""
-    api =.opp.data[DATA_MELISSA]
+    api = opp.data[DATA_MELISSA]
     devices = (await api.async_fetch_devices()).values()
 
     all_devices = []

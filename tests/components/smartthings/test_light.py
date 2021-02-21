@@ -76,7 +76,7 @@ async def test_entity_state.opp, light_devices):
     await setup_platform.opp, LIGHT_DOMAIN, devices=light_devices)
 
     # Dimmer 1
-    state =.opp.states.get("light.dimmer_1")
+    state = opp.states.get("light.dimmer_1")
     assert state.state == "on"
     assert (
         state.attributes[ATTR_SUPPORTED_FEATURES]
@@ -86,7 +86,7 @@ async def test_entity_state.opp, light_devices):
     assert state.attributes[ATTR_BRIGHTNESS] == 255
 
     # Color Dimmer 1
-    state =.opp.states.get("light.color_dimmer_1")
+    state = opp.states.get("light.color_dimmer_1")
     assert state.state == "off"
     assert (
         state.attributes[ATTR_SUPPORTED_FEATURES]
@@ -94,7 +94,7 @@ async def test_entity_state.opp, light_devices):
     )
 
     # Color Dimmer 2
-    state =.opp.states.get("light.color_dimmer_2")
+    state = opp.states.get("light.color_dimmer_2")
     assert state.state == "on"
     assert (
         state.attributes[ATTR_SUPPORTED_FEATURES]
@@ -135,7 +135,7 @@ async def test_turn_off.opp, light_devices):
         "light", "turn_off", {"entity_id": "light.color_dimmer_2"}, blocking=True
     )
     # Assert
-    state =.opp.states.get("light.color_dimmer_2")
+    state = opp.states.get("light.color_dimmer_2")
     assert state is not None
     assert state.state == "off"
 
@@ -152,7 +152,7 @@ async def test_turn_off_with_transition.opp, light_devices):
         blocking=True,
     )
     # Assert
-    state =.opp.states.get("light.color_dimmer_2")
+    state = opp.states.get("light.color_dimmer_2")
     assert state is not None
     assert state.state == "off"
 
@@ -166,7 +166,7 @@ async def test_turn_on.opp, light_devices):
         "light", "turn_on", {ATTR_ENTITY_ID: "light.color_dimmer_1"}, blocking=True
     )
     # Assert
-    state =.opp.states.get("light.color_dimmer_1")
+    state = opp.states.get("light.color_dimmer_1")
     assert state is not None
     assert state.state == "on"
 
@@ -187,7 +187,7 @@ async def test_turn_on_with_brightness.opp, light_devices):
         blocking=True,
     )
     # Assert
-    state =.opp.states.get("light.color_dimmer_1")
+    state = opp.states.get("light.color_dimmer_1")
     assert state is not None
     assert state.state == "on"
     # round-trip rounding error (expected)
@@ -212,7 +212,7 @@ async def test_turn_on_with_minimal_brightness.opp, light_devices):
         blocking=True,
     )
     # Assert
-    state =.opp.states.get("light.color_dimmer_1")
+    state = opp.states.get("light.color_dimmer_1")
     assert state is not None
     assert state.state == "on"
     # round-trip rounding error (expected)
@@ -231,7 +231,7 @@ async def test_turn_on_with_color.opp, light_devices):
         blocking=True,
     )
     # Assert
-    state =.opp.states.get("light.color_dimmer_2")
+    state = opp.states.get("light.color_dimmer_2")
     assert state is not None
     assert state.state == "on"
     assert state.attributes[ATTR_HS_COLOR] == (180, 50)
@@ -249,7 +249,7 @@ async def test_turn_on_with_color_temp.opp, light_devices):
         blocking=True,
     )
     # Assert
-    state =.opp.states.get("light.color_dimmer_2")
+    state = opp.states.get("light.color_dimmer_2")
     assert state is not None
     assert state.state == "on"
     assert state.attributes[ATTR_COLOR_TEMP] == 300
@@ -280,7 +280,7 @@ async def test_update_from_signal.opp, device_factory):
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await.opp.async_block_till_done()
-    state =.opp.states.get("light.color_dimmer_2")
+    state = opp.states.get("light.color_dimmer_2")
     assert state is not None
     assert state.state == "on"
 

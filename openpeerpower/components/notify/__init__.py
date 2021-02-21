@@ -156,7 +156,7 @@ class BaseNotificationService:
     ) -> None:
         """Store the data for the notify service."""
         # pylint: disable=attribute-defined-outside-init
-        self.opp =.opp
+        self.opp = opp
         self._service_name = service_name
         self._target_service_name_prefix = target_service_name_prefix
         self.registered_targets = {}
@@ -233,12 +233,12 @@ async def async_setup.opp, config):
         """Send notification via the built-in persistsent_notify integration."""
         payload = {}
         message = service.data[ATTR_MESSAGE]
-        message.opp =.opp
+        message.opp = opp
         payload[ATTR_MESSAGE] = message.async_render(parse_result=False)
 
         title = service.data.get(ATTR_TITLE)
         if title:
-            title.opp =.opp
+            title.opp = opp
             payload[ATTR_TITLE] = title.async_render(parse_result=False)
 
         await.opp.services.async_call(

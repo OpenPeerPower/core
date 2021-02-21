@@ -16,7 +16,7 @@ async def test_binary_sensor.opp, generic_data, binary_sensor_msg):
     # Test Legacy sensor (disabled by default)
     registry = await.opp.helpers.entity_registry.async_get_registry()
     entity_id = "binary_sensor.trisensor_sensor"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is None
     entry = registry.async_get(entity_id)
     assert entry
@@ -31,7 +31,7 @@ async def test_binary_sensor.opp, generic_data, binary_sensor_msg):
     assert updated_entry.disabled is False
 
     # Test Sensor for Notification CC
-    state =.opp.states.get("binary_sensor.trisensor_home_security_motion_detected")
+    state = opp.states.get("binary_sensor.trisensor_home_security_motion_detected")
     assert state
     assert state.state == "off"
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_MOTION
@@ -39,7 +39,7 @@ async def test_binary_sensor.opp, generic_data, binary_sensor_msg):
     # Test incoming state change
     receive_msg(binary_sensor_msg)
     await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.trisensor_home_security_motion_detected")
+    state = opp.states.get("binary_sensor.trisensor_home_security_motion_detected")
     assert state.state == "on"
 
 
@@ -61,6 +61,6 @@ async def test_sensor_enabled.opp, generic_data, binary_sensor_alt_msg):
     receive_msg(binary_sensor_alt_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entry.entity_id)
+    state = opp.states.get(entry.entity_id)
     assert state is not None
     assert state.state == "on"

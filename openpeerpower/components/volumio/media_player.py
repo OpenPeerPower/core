@@ -61,7 +61,7 @@ PLAYLIST_UPDATE_INTERVAL = timedelta(seconds=15)
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Volumio media player platform."""
 
-    data =.opp.data[DOMAIN][config_entry.entry_id]
+    data = opp.data[DOMAIN][config_entry.entry_id]
     volumio = data[DATA_VOLUMIO]
     info = data[DATA_INFO]
     uid = config_entry.data[CONF_ID]

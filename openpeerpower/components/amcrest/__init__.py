@@ -118,7 +118,7 @@ class AmcrestChecker(Http):
 
     def __init__(self,.opp, name, host, port, user, password):
         """Initialize."""
-        self._opp =.opp
+        self._opp = opp
         self._wrap_name = name
         self._wrap_errors = 0
         self._wrap_lock = threading.Lock()
@@ -216,7 +216,7 @@ def _start_event_monitor.opp, name, api, event_codes):
     thread = threading.Thread(
         target=_monitor_events,
         name=f"Amcrest {name}",
-        args=.opp, name, api, event_codes),
+        args= opp, name, api, event_codes),
         daemon=True,
     )
     thread.start()

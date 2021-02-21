@@ -27,7 +27,7 @@ async def async_get_service(
     if discovery_info is None:
         return None
 
-    router =.opp.data[DOMAIN].routers[discovery_info[CONF_URL]]
+    router = opp.data[DOMAIN].routers[discovery_info[CONF_URL]]
     default_targets = discovery_info[CONF_RECIPIENT] or []
 
     return HuaweiLteSmsNotificationService(router, default_targets)

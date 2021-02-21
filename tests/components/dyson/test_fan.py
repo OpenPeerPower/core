@@ -82,7 +82,7 @@ async def test_state_purecoollink(
     er = await entity_registry.async_get_registry.opp)
     assert er.async_get(ENTITY_ID).unique_id == SERIAL
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
     assert state.name == NAME
     attributes = state.attributes
@@ -105,7 +105,7 @@ async def test_state_purecoollink(
 
     device.state.fan_mode = FanMode.OFF.value
     await async_update_device.opp, device, DysonPureCoolState)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
 
     device.state.fan_mode = FanMode.AUTO.value
@@ -113,7 +113,7 @@ async def test_state_purecoollink(
     device.state.night_mode = "OFF"
     device.state.oscillation = "OFF"
     await async_update_device.opp, device, DysonPureCoolState)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
     attributes = state.attributes
     assert attributes[ATTR_NIGHT_MODE] is False
@@ -131,7 +131,7 @@ async def test_state_purecool.opp: OpenPeerPower, device: DysonPureCool) -> None
     er = await entity_registry.async_get_registry.opp)
     assert er.async_get(ENTITY_ID).unique_id == SERIAL
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
     assert state.name == NAME
     attributes = state.attributes
@@ -166,7 +166,7 @@ async def test_state_purecool.opp: OpenPeerPower, device: DysonPureCool) -> None
     device.state.sleep_timer = "0120"
     device.state.carbon_filter_state = "INV"
     await async_update_device.opp, device, DysonPureCoolV2State)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     attributes = state.attributes
     assert attributes[ATTR_NIGHT_MODE] is False
     assert attributes[ATTR_OSCILLATING] is False
@@ -181,7 +181,7 @@ async def test_state_purecool.opp: OpenPeerPower, device: DysonPureCool) -> None
 
     device.state.fan_power = "OFF"
     await async_update_device.opp, device, DysonPureCoolV2State)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
 
 

@@ -27,7 +27,7 @@ class OnboadingStorage(Store):
 @callback
 def async_is_onboarded.opp):
     """Return if Open Peer Power has been onboarded."""
-    data =.opp.data.get(DOMAIN)
+    data = opp.data.get(DOMAIN)
     return data is None or data is True
 
 

@@ -51,7 +51,7 @@ async def test_list.opp,.opp_ws_client,.opp_admin_user):
     refresh_token = await.opp.auth.async_create_refresh_token(
         owner, CLIENT_ID, credential=owner.credentials[0]
     )
-    access_token =.opp.auth.async_create_access_token(refresh_token)
+    access_token = opp.auth.async_create_access_token(refresh_token)
 
     client = await.opp_ws_client.opp, access_token)
     await client.send_json({"id": 5, "type": auth_config.WS_TYPE_LIST})

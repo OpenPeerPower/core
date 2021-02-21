@@ -400,7 +400,7 @@ def setup_plex_server(
             websocket_connected(mock_websocket)
             await.opp.async_block_till_done()
 
-        plex_server =.opp.data[DOMAIN][SERVERS][entry.unique_id]
+        plex_server = opp.data[DOMAIN][SERVERS][entry.unique_id]
         return plex_server
 
     return _wrapper

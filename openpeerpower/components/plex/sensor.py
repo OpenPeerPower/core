@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Plex sensor from a config entry."""
     server_id = config_entry.data[CONF_SERVER_IDENTIFIER]
-    plexserver =.opp.data[PLEX_DOMAIN][SERVERS][server_id]
+    plexserver = opp.data[PLEX_DOMAIN][SERVERS][server_id]
     sensor = PlexSensor.opp, plexserver)
     async_add_entities([sensor])
 

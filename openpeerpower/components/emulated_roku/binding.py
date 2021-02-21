@@ -35,7 +35,7 @@ class EmulatedRoku:
         upnp_bind_multicast,
     ):
         """Initialize the properties."""
-        self.opp =.opp
+        self.opp = opp
 
         self.roku_usn = name
         self.host_ip = host_ip
@@ -58,7 +58,7 @@ class EmulatedRoku:
             """emulated_roku command handler to turn commands into events."""
 
             def __init__(self,.opp):
-                self.opp =.opp
+                self.opp = opp
 
             def on_keydown(self, roku_usn, key):
                 """Handle keydown event."""

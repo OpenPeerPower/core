@@ -188,7 +188,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 if player.entity_id in entity_ids
             ]
         else:
-            target_players =.opp.data[DATA_BLUESOUND]
+            target_players = opp.data[DATA_BLUESOUND]
 
         for player in target_players:
             await getattr(player, method["method"])(**params)
@@ -206,7 +206,7 @@ class BluesoundPlayer(MediaPlayerEntity):
     def __init__(self,.opp, host, port=None, name=None, init_callback=None):
         """Initialize the media player."""
         self.host = host
-        self._opp =.opp
+        self._opp = opp
         self.port = port
         self._polling_session = async_get_clientsession.opp)
         self._polling_task = None  # The actual polling task.

@@ -287,7 +287,7 @@ class SolarEdgeData:
 
     def __init__(self,.opp, api):
         """Initialize the data object."""
-        self.opp =.opp
+        self.opp = opp
         self.api = api
         self.data = {}
         self.info = {}

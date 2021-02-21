@@ -52,7 +52,7 @@ class MockFFmpegDev(ffmpeg.FFmpegBase):
         """Initialize mock."""
         super().__init__(initial_state)
 
-        self.opp =.opp
+        self.opp = opp
         self.entity_id = entity_id
         self.ffmpeg = MagicMock
         self.called_stop = False

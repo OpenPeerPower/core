@@ -10,7 +10,7 @@ from .entity import RingEntityMixin
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up a sensor for a Ring device."""
-    devices =.opp.data[DOMAIN][config_entry.entry_id]["devices"]
+    devices = opp.data[DOMAIN][config_entry.entry_id]["devices"]
 
     sensors = []
 

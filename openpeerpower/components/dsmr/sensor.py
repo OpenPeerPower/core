@@ -239,7 +239,7 @@ async def async_setup_entry(
 
                 if transport:
                     # Register listener to close transport on HA shutdown
-                    stop_listener =.opp.bus.async_listen_once(
+                    stop_listener = opp.bus.async_listen_once(
                         EVENT_OPENPEERPOWER_STOP, transport.close
                     )
 

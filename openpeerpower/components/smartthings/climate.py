@@ -91,7 +91,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         Capability.thermostat_cooling_setpoint,
     ]
 
-    broker =.opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
+    broker = opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
     entities = []
     for device in broker.devices.values():
         if not broker.any_assigned(device.device_id, CLIMATE_DOMAIN):

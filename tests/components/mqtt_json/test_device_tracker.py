@@ -28,7 +28,7 @@ LOCATION_MESSAGE_INCOMPLETE = {"longitude": 2.0}
 @pytest.fixture(autouse=True)
 def setup_comp.opp, mqtt_mock):
     """Initialize components."""
-    yaml_devices =.opp.config.path(YAML_DEVICES)
+    yaml_devices = opp.config.path(YAML_DEVICES)
     yield
     if os.path.isfile(yaml_devices):
         os.remove(yaml_devices)
@@ -70,7 +70,7 @@ async def test_json_message.opp):
     )
     async_fire_mqtt_message.opp, topic, location)
     await.opp.async_block_till_done()
-    state =.opp.states.get("device_tracker.zanzito")
+    state = opp.states.get("device_tracker.zanzito")
     assert state.attributes.get("latitude") == 2.0
     assert state.attributes.get("longitude") == 1.0
 
@@ -130,7 +130,7 @@ async def test_single_level_wildcard_topic.opp):
     )
     async_fire_mqtt_message.opp, topic, location)
     await.opp.async_block_till_done()
-    state =.opp.states.get("device_tracker.zanzito")
+    state = opp.states.get("device_tracker.zanzito")
     assert state.attributes.get("latitude") == 2.0
     assert state.attributes.get("longitude") == 1.0
 
@@ -149,7 +149,7 @@ async def test_multi_level_wildcard_topic.opp):
     )
     async_fire_mqtt_message.opp, topic, location)
     await.opp.async_block_till_done()
-    state =.opp.states.get("device_tracker.zanzito")
+    state = opp.states.get("device_tracker.zanzito")
     assert state.attributes.get("latitude") == 2.0
     assert state.attributes.get("longitude") == 1.0
 

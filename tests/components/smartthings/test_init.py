@@ -38,7 +38,7 @@ async def test_migration_creates_new_flow.opp, smartthings_mock, config_entry):
     assert smartthings_mock.delete_installed_app.call_count == 1
     assert smartthings_mock.delete_app.call_count == 1
     assert not.opp.config_entries.async_entries(DOMAIN)
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["handler"] == "smartthings"
     assert flows[0]["context"] == {"source": "import"}
@@ -68,7 +68,7 @@ async def test_unrecoverable_api_errors_create_new_flow(
     # Assert entry was removed and new flow created
     await.opp.async_block_till_done()
     assert not.opp.config_entries.async_entries(DOMAIN)
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["handler"] == "smartthings"
     assert flows[0]["context"] == {"source": "import"}

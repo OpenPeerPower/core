@@ -72,7 +72,7 @@ def setup.opp, config):
         payload_dict = {}
 
         for entity_id in whitelist:
-            state =.opp.states.get(entity_id)
+            state = opp.states.get(entity_id)
 
             if state is None or state.state in (STATE_UNKNOWN, "", STATE_UNAVAILABLE):
                 continue

@@ -90,7 +90,7 @@ async def test_login_flow_validates_mfa.opp):
 
     await.opp.auth.async_enable_user_mfa(user, "totp", {})
 
-    provider =.opp.auth.auth_providers[0]
+    provider = opp.auth.auth_providers[0]
 
     result = await.opp.auth.login_flow.async_init((provider.type, provider.id))
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

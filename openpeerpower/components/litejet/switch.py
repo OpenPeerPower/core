@@ -11,7 +11,7 @@ _LOGGER = logging.getLogger(__name__)
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the LiteJet switch platform."""
-    litejet_ =.opp.data["litejet_system"]
+    litejet_ = opp.data["litejet_system"]
 
     devices = []
     for i in litejet_.button_switches():
@@ -26,7 +26,7 @@ class LiteJetSwitch(SwitchEntity):
 
     def __init__(self,.opp, lj, i, name):
         """Initialize a LiteJet switch."""
-        self._opp =.opp
+        self._opp = opp
         self._lj = lj
         self._index = i
         self._state = False

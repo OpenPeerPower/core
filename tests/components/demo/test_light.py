@@ -41,7 +41,7 @@ async def test_state_attributes.opp):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_LIGHT)
+    state = opp.states.get(ENTITY_LIGHT)
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_XY_COLOR) == (0.4, 0.4)
     assert state.attributes.get(ATTR_BRIGHTNESS) == 25
@@ -59,7 +59,7 @@ async def test_state_attributes.opp):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_LIGHT)
+    state = opp.states.get(ENTITY_LIGHT)
     assert state.attributes.get(ATTR_WHITE_VALUE) == 254
     assert state.attributes.get(ATTR_RGB_COLOR) == (250, 252, 255)
     assert state.attributes.get(ATTR_XY_COLOR) == (0.319, 0.326)
@@ -71,7 +71,7 @@ async def test_state_attributes.opp):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_LIGHT)
+    state = opp.states.get(ENTITY_LIGHT)
     assert state.attributes.get(ATTR_COLOR_TEMP) == 400
     assert state.attributes.get(ATTR_MIN_MIREDS) == 153
     assert state.attributes.get(ATTR_MAX_MIREDS) == 500
@@ -84,7 +84,7 @@ async def test_state_attributes.opp):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_LIGHT)
+    state = opp.states.get(ENTITY_LIGHT)
     assert state.attributes.get(ATTR_COLOR_TEMP) == 333
     assert state.attributes.get(ATTR_BRIGHTNESS) == 128
 
@@ -95,14 +95,14 @@ async def test_turn_off.opp):
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_LIGHT}, blocking=True
     )
 
-    state =.opp.states.get(ENTITY_LIGHT)
+    state = opp.states.get(ENTITY_LIGHT)
     assert state.state == STATE_ON
 
     await.opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_LIGHT}, blocking=True
     )
 
-    state =.opp.states.get(ENTITY_LIGHT)
+    state = opp.states.get(ENTITY_LIGHT)
     assert state.state == STATE_OFF
 
 
@@ -112,12 +112,12 @@ async def test_turn_off_without_entity_id.opp):
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: "all"}, blocking=True
     )
 
-    state =.opp.states.get(ENTITY_LIGHT)
+    state = opp.states.get(ENTITY_LIGHT)
     assert state.state == STATE_ON
 
     await.opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: "all"}, blocking=True
     )
 
-    state =.opp.states.get(ENTITY_LIGHT)
+    state = opp.states.get(ENTITY_LIGHT)
     assert state.state == STATE_OFF

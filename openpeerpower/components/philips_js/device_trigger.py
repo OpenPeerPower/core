@@ -58,7 +58,7 @@ async def async_attach_trigger(
 
         device = registry.async_get(config[CONF_DEVICE_ID])
         for config_entry_id in device.config_entries:
-            coordinator: PhilipsTVDataUpdateCoordinator =.opp.data[DOMAIN].get(
+            coordinator: PhilipsTVDataUpdateCoordinator = opp.data[DOMAIN].get(
                 config_entry_id
             )
             if coordinator:

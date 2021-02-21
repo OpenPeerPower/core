@@ -75,22 +75,22 @@ async def test_state_value.opp):
         )
         await.opp.async_block_till_done()
 
-        assert "unknown" ==.opp.states.get("cover.test").state
+        assert "unknown" == opp.states.get("cover.test").state
 
         await.opp.services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
         )
-        assert "open" ==.opp.states.get("cover.test").state
+        assert "open" == opp.states.get("cover.test").state
 
         await.opp.services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
         )
-        assert "open" ==.opp.states.get("cover.test").state
+        assert "open" == opp.states.get("cover.test").state
 
         await.opp.services.async_call(
             DOMAIN, SERVICE_STOP_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
         )
-        assert "closed" ==.opp.states.get("cover.test").state
+        assert "closed" == opp.states.get("cover.test").state
 
 
 async def test_reload.opp):

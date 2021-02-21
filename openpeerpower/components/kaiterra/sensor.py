@@ -16,7 +16,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    api =.opp.data[DOMAIN]
+    api = opp.data[DOMAIN]
     name = discovery_info[CONF_NAME]
     device_id = discovery_info[CONF_DEVICE_ID]
 

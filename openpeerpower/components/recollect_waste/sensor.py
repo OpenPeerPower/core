@@ -71,7 +71,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up ReCollect Waste sensors based on a config entry."""
-    coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]
+    coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]
     async_add_entities([ReCollectWasteSensor(coordinator, entry)])
 
 

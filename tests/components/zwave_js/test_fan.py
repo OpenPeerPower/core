@@ -10,7 +10,7 @@ FAN_ENTITY = "fan.in_wall_smart_fan_control"
 async def test_fan.opp, client, in_wall_smart_fan_control, integration):
     """Test the fan entity."""
     node = in_wall_smart_fan_control
-    state =.opp.states.get(FAN_ENTITY)
+    state = opp.states.get(FAN_ENTITY)
 
     assert state
     assert state.state == "off"
@@ -142,7 +142,7 @@ async def test_fan.opp, client, in_wall_smart_fan_control, integration):
     )
     node.receive_event(event)
 
-    state =.opp.states.get(FAN_ENTITY)
+    state = opp.states.get(FAN_ENTITY)
     assert state.state == "on"
     assert state.attributes[ATTR_SPEED] == "high"
 
@@ -167,6 +167,6 @@ async def test_fan.opp, client, in_wall_smart_fan_control, integration):
     )
     node.receive_event(event)
 
-    state =.opp.states.get(FAN_ENTITY)
+    state = opp.states.get(FAN_ENTITY)
     assert state.state == "off"
     assert state.attributes[ATTR_SPEED] == "off"

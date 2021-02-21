@@ -98,7 +98,7 @@ async def test_sensors.opp, aioclient_mock):
 
     assert len.opp.states.async_all()) == 5
 
-    light_level_sensor =.opp.states.get("sensor.light_level_sensor")
+    light_level_sensor = opp.states.get("sensor.light_level_sensor")
     assert light_level_sensor.state == "999.8"
     assert light_level_sensor.attributes["device_class"] == DEVICE_CLASS_ILLUMINANCE
 
@@ -107,17 +107,17 @@ async def test_sensors.opp, aioclient_mock):
     assert.opp.states.get("sensor.switch_1_battery_level") is None
     assert.opp.states.get("sensor.switch_2") is None
 
-    switch_2_battery_level =.opp.states.get("sensor.switch_2_battery_level")
+    switch_2_battery_level = opp.states.get("sensor.switch_2_battery_level")
     assert switch_2_battery_level.state == "100"
     assert switch_2_battery_level.attributes["device_class"] == DEVICE_CLASS_BATTERY
 
     assert.opp.states.get("sensor.daylight_sensor") is None
 
-    power_sensor =.opp.states.get("sensor.power_sensor")
+    power_sensor = opp.states.get("sensor.power_sensor")
     assert power_sensor.state == "6"
     assert power_sensor.attributes["device_class"] == DEVICE_CLASS_POWER
 
-    consumption_sensor =.opp.states.get("sensor.consumption_sensor")
+    consumption_sensor = opp.states.get("sensor.consumption_sensor")
     assert consumption_sensor.state == "0.002"
     assert "device_class" not in consumption_sensor.attributes
 
@@ -152,7 +152,7 @@ async def test_sensors.opp, aioclient_mock):
 
     await.opp.config_entries.async_unload(config_entry.entry_id)
 
-    states =.opp.states.async_all()
+    states = opp.states.async_all()
     assert len.opp.states.async_all()) == 5
     for state in states:
         assert state.state == STATE_UNAVAILABLE
@@ -267,7 +267,7 @@ async def test_air_quality_sensor.opp, aioclient_mock):
 
     assert len.opp.states.async_all()) == 1
 
-    air_quality =.opp.states.get("sensor.air_quality")
+    air_quality = opp.states.get("sensor.air_quality")
     assert air_quality.state == "poor"
 
 
@@ -298,10 +298,10 @@ async def test_time_sensor.opp, aioclient_mock):
 
     assert len.opp.states.async_all()) == 2
 
-    time =.opp.states.get("sensor.time")
+    time = opp.states.get("sensor.time")
     assert time.state == "2020-11-19T08:07:08Z"
 
-    time_battery =.opp.states.get("sensor.time_battery_level")
+    time_battery = opp.states.get("sensor.time_battery_level")
     assert time_battery.state == "40"
 
 
@@ -315,5 +315,5 @@ async def test_unsupported_sensor.opp, aioclient_mock):
 
     assert len.opp.states.async_all()) == 1
 
-    unsupported_sensor =.opp.states.get("sensor.name")
+    unsupported_sensor = opp.states.get("sensor.name")
     assert unsupported_sensor.state == "unknown"

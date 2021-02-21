@@ -102,10 +102,10 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     timeout = config.get(CONF_TIMEOUT)
 
     if value_template is not None:
-        value_template.opp =.opp
+        value_template.opp = opp
 
     if resource_template is not None:
-        resource_template.opp =.opp
+        resource_template.opp = opp
         resource = resource_template.async_render(parse_result=False)
 
     if username and password:
@@ -161,7 +161,7 @@ class RestSensor(Entity):
         json_attrs_path,
     ):
         """Initialize the REST sensor."""
-        self._opp =.opp
+        self._opp = opp
         self.rest = rest
         self._name = name
         self._state = None

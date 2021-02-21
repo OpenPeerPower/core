@@ -184,7 +184,7 @@ async def test_reauthentication(
         DOMAIN, context={"source": "reauth"}, data=old_entry.data
     )
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
 
     result = await.opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
@@ -249,7 +249,7 @@ async def test_reauth_account_mismatch(
         DOMAIN, context={"source": "reauth"}, data=old_entry.data
     )
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     result = await.opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
 
     # pylint: disable=protected-access

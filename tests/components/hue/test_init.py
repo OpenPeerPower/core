@@ -124,6 +124,6 @@ async def test_security_vuln_check.opp):
 
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("persistent_notification.hue_hub_firmware")
+    state = opp.states.get("persistent_notification.hue_hub_firmware")
     assert state is not None
     assert "CVE-2020-6007" in state.attributes["message"]

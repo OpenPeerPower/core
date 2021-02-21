@@ -26,7 +26,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    controller: RainbirdController =.opp.data[DATA_RAINBIRD][
+    controller: RainbirdController = opp.data[DATA_RAINBIRD][
         discovery_info[RAINBIRD_CONTROLLER]
     ]
     available_stations: AvailableStations = controller.get_available_stations()

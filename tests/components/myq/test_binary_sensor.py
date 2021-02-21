@@ -10,7 +10,7 @@ async def test_create_binary_sensors.opp):
 
     await async_init_integration.opp)
 
-    state =.opp.states.get("binary_sensor.happy_place_myq_gateway")
+    state = opp.states.get("binary_sensor.happy_place_myq_gateway")
     assert state.state == STATE_ON
     expected_attributes = {"device_class": "connectivity"}
     # Only test for a subset of attributes in case

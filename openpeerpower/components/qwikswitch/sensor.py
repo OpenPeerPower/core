@@ -15,7 +15,7 @@ async def async_setup_platform.opp, _, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    qsusb =.opp.data[QWIKSWITCH]
+    qsusb = opp.data[QWIKSWITCH]
     _LOGGER.debug("Setup qwikswitch.sensor %s, %s", qsusb, discovery_info)
     devs = [QSSensor(sensor) for sensor in discovery_info[QWIKSWITCH]]
     add_entities(devs)

@@ -328,7 +328,7 @@ async def test_get_services.opp, websocket_client):
     assert msg["id"] == 5
     assert msg["type"] == const.TYPE_RESULT
     assert msg["success"]
-    assert msg["result"] ==.opp.services.async_services()
+    assert msg["result"] == opp.services.async_services()
 
 
 async def test_get_config.opp, websocket_client):
@@ -355,7 +355,7 @@ async def test_get_config.opp, websocket_client):
             msg["result"]["allowlist_external_urls"]
         )
 
-    assert msg["result"] ==.opp.config.as_dict()
+    assert msg["result"] == opp.config.as_dict()
 
 
 async def test_ping(websocket_client):

@@ -17,7 +17,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     sensors = []
-    hub =.opp.data[MYCHEVY_DOMAIN]
+    hub = opp.data[MYCHEVY_DOMAIN]
     for sconfig in SENSORS:
         for car in hub.cars:
             sensors.append(EVBinarySensor(hub, sconfig, car.vid))

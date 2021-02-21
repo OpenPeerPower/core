@@ -173,7 +173,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         )
 
     # Priority 1: manual config
-    interfaces =.opp.data[LIFX_DOMAIN].get(DOMAIN)
+    interfaces = opp.data[LIFX_DOMAIN].get(DOMAIN)
     if not interfaces:
         # Priority 2: scanned interfaces
         lifx_ip_addresses = await aiolifx().LifxScan.opp.loop).scan()
@@ -237,7 +237,7 @@ class LIFXManager:
     def __init__(self,.opp, platform, async_add_entities):
         """Initialize the light."""
         self.entities = {}
-        self.opp =.opp
+        self.opp = opp
         self.platform = platform
         self.async_add_entities = async_add_entities
         self.effects_conductor = aiolifx_effects().Conductor.opp.loop)

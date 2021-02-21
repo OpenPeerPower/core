@@ -23,7 +23,7 @@ async def test_one_light.opp, rfxtrx):
     await.opp.config_entries.async_setup(mock_entry.entry_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.ac_213c7f2_16")
+    state = opp.states.get("light.ac_213c7f2_16")
     assert state
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "AC 213c7f2:16"
@@ -31,14 +31,14 @@ async def test_one_light.opp, rfxtrx):
     await.opp.services.async_call(
         "light", "turn_on", {"entity_id": "light.ac_213c7f2_16"}, blocking=True
     )
-    state =.opp.states.get("light.ac_213c7f2_16")
+    state = opp.states.get("light.ac_213c7f2_16")
     assert state.state == "on"
     assert state.attributes.get("brightness") == 255
 
     await.opp.services.async_call(
         "light", "turn_off", {"entity_id": "light.ac_213c7f2_16"}, blocking=True
     )
-    state =.opp.states.get("light.ac_213c7f2_16")
+    state = opp.states.get("light.ac_213c7f2_16")
     assert state.state == "off"
     assert state.attributes.get("brightness") is None
 
@@ -48,7 +48,7 @@ async def test_one_light.opp, rfxtrx):
         {"entity_id": "light.ac_213c7f2_16", "brightness": 100},
         blocking=True,
     )
-    state =.opp.states.get("light.ac_213c7f2_16")
+    state = opp.states.get("light.ac_213c7f2_16")
     assert state.state == "on"
     assert state.attributes.get("brightness") == 100
 
@@ -58,7 +58,7 @@ async def test_one_light.opp, rfxtrx):
         {"entity_id": "light.ac_213c7f2_16", "brightness": 10},
         blocking=True,
     )
-    state =.opp.states.get("light.ac_213c7f2_16")
+    state = opp.states.get("light.ac_213c7f2_16")
     assert state.state == "on"
     assert state.attributes.get("brightness") == 10
 
@@ -68,14 +68,14 @@ async def test_one_light.opp, rfxtrx):
         {"entity_id": "light.ac_213c7f2_16", "brightness": 255},
         blocking=True,
     )
-    state =.opp.states.get("light.ac_213c7f2_16")
+    state = opp.states.get("light.ac_213c7f2_16")
     assert state.state == "on"
     assert state.attributes.get("brightness") == 255
 
     await.opp.services.async_call(
         "light", "turn_off", {"entity_id": "light.ac_213c7f2_16"}, blocking=True
     )
-    state =.opp.states.get("light.ac_213c7f2_16")
+    state = opp.states.get("light.ac_213c7f2_16")
     assert state.state == "off"
     assert state.attributes.get("brightness") is None
 
@@ -130,33 +130,33 @@ async def test_several_lights.opp, rfxtrx):
     await.opp.async_block_till_done()
     await.opp.async_start()
 
-    state =.opp.states.get("light.ac_213c7f2_48")
+    state = opp.states.get("light.ac_213c7f2_48")
     assert state
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "AC 213c7f2:48"
 
-    state =.opp.states.get("light.ac_118cdea_2")
+    state = opp.states.get("light.ac_118cdea_2")
     assert state
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "AC 118cdea:2"
 
-    state =.opp.states.get("light.ac_1118cdea_2")
+    state = opp.states.get("light.ac_1118cdea_2")
     assert state
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "AC 1118cdea:2"
 
     await rfxtrx.signal("0b1100cd0213c7f230010f71")
-    state =.opp.states.get("light.ac_213c7f2_48")
+    state = opp.states.get("light.ac_213c7f2_48")
     assert state
     assert state.state == "on"
 
     await rfxtrx.signal("0b1100cd0213c7f230000f71")
-    state =.opp.states.get("light.ac_213c7f2_48")
+    state = opp.states.get("light.ac_213c7f2_48")
     assert state
     assert state.state == "off"
 
     await rfxtrx.signal("0b1100cd0213c7f230020f71")
-    state =.opp.states.get("light.ac_213c7f2_48")
+    state = opp.states.get("light.ac_213c7f2_48")
     assert state
     assert state.state == "on"
     assert state.attributes.get("brightness") == 255
@@ -188,13 +188,13 @@ async def test_discover_light.opp, rfxtrx_automatic):
     rfxtrx = rfxtrx_automatic
 
     await rfxtrx.signal("0b11009e00e6116202020070")
-    state =.opp.states.get("light.ac_0e61162_2")
+    state = opp.states.get("light.ac_0e61162_2")
     assert state
     assert state.state == "on"
     assert state.attributes.get("friendly_name") == "AC 0e61162:2"
 
     await rfxtrx.signal("0b1100120118cdea02020070")
-    state =.opp.states.get("light.ac_118cdea_2")
+    state = opp.states.get("light.ac_118cdea_2")
     assert state
     assert state.state == "on"
     assert state.attributes.get("friendly_name") == "AC 118cdea:2"

@@ -367,7 +367,7 @@ async def test_eventbus_add_remove_listener.opp):
     def listener(_):
         pass
 
-    unsub =.opp.bus.async_listen("test", listener)
+    unsub = opp.bus.async_listen("test", listener)
 
     assert old_count + 1 == len.opp.bus.async_listeners())
 
@@ -393,7 +393,7 @@ async def test_eventbus_filtered_listener.opp):
         """Mock filter."""
         return not event.data["filtered"]
 
-    unsub =.opp.bus.async_listen("test", listener, event_filter=filter)
+    unsub = opp.bus.async_listen("test", listener, event_filter=filter)
 
    .opp.bus.async_fire("test", {"filtered": True})
     await.opp.async_block_till_done()
@@ -417,7 +417,7 @@ async def test_eventbus_unsubscribe_listener.opp):
         """Mock listener."""
         calls.append(event)
 
-    unsub =.opp.bus.async_listen("test", listener)
+    unsub = opp.bus.async_listen("test", listener)
 
    .opp.bus.async_fire("test")
     await.opp.async_block_till_done()
@@ -614,12 +614,12 @@ async def test_statemachine_entity_ids.opp):
     """Test get_entity_ids method."""
    .opp.states.async_set("light.bowl", "on", {})
    .opp.states.async_set("SWITCH.AC", "off", {})
-    ent_ids =.opp.states.async_entity_ids()
+    ent_ids = opp.states.async_entity_ids()
     assert len(ent_ids) == 2
     assert "light.bowl" in ent_ids
     assert "switch.ac" in ent_ids
 
-    ent_ids =.opp.states.async_entity_ids("light")
+    ent_ids = opp.states.async_entity_ids("light")
     assert len(ent_ids) == 1
     assert "light.bowl" in ent_ids
 
@@ -663,7 +663,7 @@ async def test_statemachine_case_insensitivty.opp):
 async def test_statemachine_last_changed_not_updated_on_same_state.opp):
     """Test to not update the existing, same state."""
    .opp.states.async_set("light.bowl", "on", {})
-    state =.opp.states.get("light.Bowl")
+    state = opp.states.get("light.Bowl")
 
     future = dt_util.utcnow() + timedelta(hours=10)
 
@@ -671,7 +671,7 @@ async def test_statemachine_last_changed_not_updated_on_same_state.opp):
        .opp.states.async_set("light.Bowl", "on", {"attr": "triggers_change"})
         await.opp.async_block_till_done()
 
-    state2 =.opp.states.get("light.Bowl")
+    state2 = opp.states.get("light.Bowl")
     assert state2 is not None
     assert state.last_changed == state2.last_changed
 
@@ -1029,7 +1029,7 @@ def test_create_timer(mock_monotonic, loop):
     fire_time_event, stop_timer = funcs
 
     assert len.opp.loop.call_later.mock_calls) == 1
-    delay, callback, target =.opp.loop.call_later.mock_calls[0][1]
+    delay, callback, target = opp.loop.call_later.mock_calls[0][1]
     assert abs(delay - 0.666667) < 0.001
     assert callback is fire_time_event
     assert abs(target - 10.866667) < 0.001
@@ -1044,16 +1044,16 @@ def test_create_timer(mock_monotonic, loop):
     assert len.opp.bus.async_fire.mock_calls) == 1
     assert len.opp.loop.call_later.mock_calls) == 2
 
-    event_type, callback =.opp.bus.async_listen_once.mock_calls[0][1]
+    event_type, callback = opp.bus.async_listen_once.mock_calls[0][1]
     assert event_type == EVENT_OPENPEERPOWER_STOP
     assert callback is stop_timer
 
-    delay, callback, target =.opp.loop.call_later.mock_calls[1][1]
+    delay, callback, target = opp.loop.call_later.mock_calls[1][1]
     assert abs(delay - 0.9) < 0.001
     assert callback is fire_time_event
     assert abs(target - 12.2) < 0.001
 
-    event_type, event_data =.opp.bus.async_fire.mock_calls[0][1]
+    event_type, event_data = opp.bus.async_fire.mock_calls[0][1]
     assert event_type == EVENT_TIME_CHANGED
     assert event_data[ATTR_NOW] == datetime(2018, 12, 31, 3, 4, 6, 100000)
 
@@ -1077,7 +1077,7 @@ def test_timer_out_of_sync(mock_monotonic, loop):
     ):
         op._async_create_timer.opp)
 
-    delay, callback, target =.opp.loop.call_later.mock_calls[0][1]
+    delay, callback, target = opp.loop.call_later.mock_calls[0][1]
 
     with patch(
         "openpeerpowerr.core.dt_util.utcnow",
@@ -1085,13 +1085,13 @@ def test_timer_out_of_sync(mock_monotonic, loop):
     ):
         callback(target)
 
-        _, event_0_args, event_0_kwargs =.opp.bus.async_fire.mock_calls[0]
+        _, event_0_args, event_0_kwargs = opp.bus.async_fire.mock_calls[0]
         event_context_0 = event_0_kwargs["context"]
 
         event_type_0, _ = event_0_args
         assert event_type_0 == EVENT_TIME_CHANGED
 
-        _, event_1_args, event_1_kwargs =.opp.bus.async_fire.mock_calls[1]
+        _, event_1_args, event_1_kwargs = opp.bus.async_fire.mock_calls[1]
         event_type_1, event_data_1 = event_1_args
         event_context_1 = event_1_kwargs["context"]
 
@@ -1105,7 +1105,7 @@ def test_timer_out_of_sync(mock_monotonic, loop):
 
     assert len.opp.loop.call_later.mock_calls) == 2
 
-    delay, callback, target =.opp.loop.call_later.mock_calls[1][1]
+    delay, callback, target = opp.loop.call_later.mock_calls[1][1]
     assert abs(delay - 0.8) < 0.001
     assert callback is fire_time_event
     assert abs(target - 14.2) < 0.001
@@ -1173,10 +1173,10 @@ async def test_service_executed_with_subservices.opp):
     async def handle_outer(call):
         """Handle outer service call."""
         calls.append(call)
-        call1 =.opp.services.async_call(
+        call1 = opp.services.async_call(
             "test", "inner", blocking=True, context=call.context
         )
-        call2 =.opp.services.async_call(
+        call2 = opp.services.async_call(
             "test", "inner", blocking=True, context=call.context
         )
         await asyncio.wait([call1, call2])
@@ -1272,7 +1272,7 @@ async def test_cancel_service_task.opp, cancel_call):
             raise
 
    .opp.services.async_register("test_domain", "test_service", service_op.dler)
-    call_task =.opp.async_create_task(
+    call_task = opp.async_create_task(
        .opp.services.async_call("test_domain", "test_service", blocking=True)
     )
 
@@ -1531,6 +1531,6 @@ async def test_state_change_events_match_state_time.opp):
 
    .opp.states.async_set("light.bedroom", "on")
     await.opp.async_block_till_done()
-    state =.opp.states.get("light.bedroom")
+    state = opp.states.get("light.bedroom")
 
     assert state.last_updated == events[0].time_fired

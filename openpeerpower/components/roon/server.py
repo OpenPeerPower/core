@@ -20,7 +20,7 @@ class RoonServer:
     def __init__(self,.opp, config_entry):
         """Initialize the system."""
         self.config_entry = config_entry
-        self.opp =.opp
+        self.opp = opp
         self.roonapi = None
         self.roon_id = None
         self.all_player_ids = set()

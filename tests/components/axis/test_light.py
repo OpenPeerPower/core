@@ -74,7 +74,7 @@ async def test_no_light_entity_without_light_control_representation.opp):
         LIGHT_CONTROL_RESPONSE, light_control
     ):
         config_entry = await setup_axis_integration.opp)
-        device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+        device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.event.update([EVENT_ON])
     await.opp.async_block_till_done()
@@ -89,7 +89,7 @@ async def test_lights.opp):
 
     with patch.dict(API_DISCOVERY_RESPONSE, api_discovery):
         config_entry = await setup_axis_integration.opp)
-        device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+        device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     # Add light
     with patch(
@@ -106,7 +106,7 @@ async def test_lights.opp):
 
     entity_id = f"{LIGHT_DOMAIN}.{NAME}_ir_light_0"
 
-    light_0 =.opp.states.get(entity_id)
+    light_0 = opp.states.get(entity_id)
     assert light_0.state == STATE_ON
     assert light_0.name == f"{NAME} IR Light 0"
 
@@ -147,7 +147,7 @@ async def test_lights.opp):
     device.api.event.update([EVENT_OFF])
     await.opp.async_block_till_done()
 
-    light_0 =.opp.states.get(entity_id)
+    light_0 = opp.states.get(entity_id)
     assert light_0.state == STATE_OFF
 
     # Turn on, set brightness

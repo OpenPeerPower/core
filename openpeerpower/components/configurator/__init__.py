@@ -64,10 +64,10 @@ def async_request_config(
     if description_image is not None:
         description += f"\n\n![Description image]({description_image})"
 
-    instance =.opp.data.get(_KEY_INSTANCE)
+    instance = opp.data.get(_KEY_INSTANCE)
 
     if instance is None:
-        instance =.opp.data[_KEY_INSTANCE] = Configurator.opp)
+        instance = opp.data[_KEY_INSTANCE] = Configurator.opp)
 
     request_id = instance.async_request_config(
         name, callback, description, submit_caption, fields, entity_picture
@@ -140,7 +140,7 @@ class Configurator:
 
     def __init__(self,.opp):
         """Initialize the configurator."""
-        self.opp =.opp
+        self.opp = opp
         self._cur_id = 0
         self._requests = {}
        .opp.services.async_register(

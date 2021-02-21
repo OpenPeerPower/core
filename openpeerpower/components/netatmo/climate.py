@@ -102,7 +102,7 @@ NA_VALVE = "NRV"
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the Netatmo energy platform."""
-    data_op.dler =.opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
+    data_op.dler = opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
 
     await data_op.dler.register_data_class(
         HOMEDATA_DATA_CLASS_NAME, HOMEDATA_DATA_CLASS_NAME, None

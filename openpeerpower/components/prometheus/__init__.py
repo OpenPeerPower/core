@@ -84,7 +84,7 @@ def setup.opp, config):
     conf = config[DOMAIN]
     entity_filter = conf[CONF_FILTER]
     namespace = conf.get(CONF_PROM_NAMESPACE)
-    climate_units =.opp.config.units.temperature_unit
+    climate_units = opp.config.units.temperature_unit
     override_metric = conf.get(CONF_OVERRIDE_METRIC)
     default_metric = conf.get(CONF_DEFAULT_METRIC)
     component_config = EntityValues(

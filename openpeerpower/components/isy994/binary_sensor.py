@@ -67,7 +67,7 @@ async def async_setup_entry(
     devices_by_address = {}
     child_nodes = []
 
-   .opp_isy_data =.opp.data[ISY994_DOMAIN][entry.entry_id]
+   .opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     for node in.opp_isy_data[ISY994_NODES][BINARY_SENSOR]:
         device_class, device_type = _detect_device_type_and_class(node)
         if node.protocol == PROTO_INSTEON:

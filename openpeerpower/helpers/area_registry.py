@@ -42,9 +42,9 @@ class AreaRegistry:
 
     def __init__(self,.opp: OpenPeerPowerType) -> None:
         """Initialize the area registry."""
-        self.opp =.opp
+        self.opp = opp
         self.areas: MutableMapping[str, AreaEntry] = {}
-        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
 
     @callback
     def async_get_area(self, area_id: str) -> Optional[AreaEntry]:

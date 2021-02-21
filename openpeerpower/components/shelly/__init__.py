@@ -120,7 +120,7 @@ async def async_device_setup(
    .opp: OpenPeerPower, entry: ConfigEntry, device: aioshelly.Device
 ):
     """Set up a device that is online."""
-    device_wrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][
+    device_wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][
         COAP
     ] = ShellyDeviceWrapper.opp, entry, device)
     await device_wrapper.async_setup()
@@ -161,7 +161,7 @@ class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
             name=device_name,
             update_interval=timedelta(seconds=update_interval),
         )
-        self.opp =.opp
+        self.opp = opp
         self.entry = entry
         self.device = device
 
@@ -307,7 +307,7 @@ class ShellyDeviceRestWrapper(update_coordinator.DataUpdateCoordinator):
 
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    device =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id].get(DEVICE)
+    device = opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id].get(DEVICE)
     if device is not None:
         # If device is present, device wrapper is not setup yet
         device.shutdown()

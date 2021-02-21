@@ -58,7 +58,7 @@ async def test_imperial_metric(
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("weather.abc_hourly")
+    state = opp.states.get("weather.abc_hourly")
 
     assert state
     assert state.state == ATTR_CONDITION_SUNNY
@@ -71,7 +71,7 @@ async def test_imperial_metric(
     for key, value in result_forecast.items():
         assert forecast[0].get(key) == value
 
-    state =.opp.states.get("weather.abc_daynight")
+    state = opp.states.get("weather.abc_daynight")
 
     assert state
     assert state.state == ATTR_CONDITION_SUNNY
@@ -99,7 +99,7 @@ async def test_none_values.opp, mock_simple_nws):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("weather.abc_daynight")
+    state = opp.states.get("weather.abc_daynight")
     assert state.state == STATE_UNKNOWN
     data = state.attributes
     for key in EXPECTED_OBSERVATION_IMPERIAL:
@@ -124,7 +124,7 @@ async def test_none.opp, mock_simple_nws):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("weather.abc_daynight")
+    state = opp.states.get("weather.abc_daynight")
     assert state
     assert state.state == STATE_UNKNOWN
 
@@ -211,7 +211,7 @@ async def test_error_observation.opp, mock_simple_nws):
 
         instance.update_observation.assert_called_once()
 
-        state =.opp.states.get("weather.abc_daynight")
+        state = opp.states.get("weather.abc_daynight")
         assert state
         assert state.state == STATE_UNAVAILABLE
 
@@ -222,7 +222,7 @@ async def test_error_observation.opp, mock_simple_nws):
 
         assert instance.update_observation.call_count == 2
 
-        state =.opp.states.get("weather.abc_daynight")
+        state = opp.states.get("weather.abc_daynight")
         assert state
         assert state.state == ATTR_CONDITION_SUNNY
 
@@ -234,7 +234,7 @@ async def test_error_observation.opp, mock_simple_nws):
 
         assert instance.update_observation.call_count == 3
 
-        state =.opp.states.get("weather.abc_daynight")
+        state = opp.states.get("weather.abc_daynight")
         assert state
         assert state.state == ATTR_CONDITION_SUNNY
 
@@ -242,7 +242,7 @@ async def test_error_observation.opp, mock_simple_nws):
         increment_time(timedelta(minutes=10))
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("weather.abc_daynight")
+        state = opp.states.get("weather.abc_daynight")
         assert state
         assert state.state == STATE_UNAVAILABLE
 
@@ -262,7 +262,7 @@ async def test_error_forecast.opp, mock_simple_nws):
 
     instance.update_forecast.assert_called_once()
 
-    state =.opp.states.get("weather.abc_daynight")
+    state = opp.states.get("weather.abc_daynight")
     assert state
     assert state.state == STATE_UNAVAILABLE
 
@@ -273,7 +273,7 @@ async def test_error_forecast.opp, mock_simple_nws):
 
     assert instance.update_forecast.call_count == 2
 
-    state =.opp.states.get("weather.abc_daynight")
+    state = opp.states.get("weather.abc_daynight")
     assert state
     assert state.state == ATTR_CONDITION_SUNNY
 
@@ -301,7 +301,7 @@ async def test_error_forecast_hourly.opp, mock_simple_nws):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("weather.abc_hourly")
+    state = opp.states.get("weather.abc_hourly")
     assert state
     assert state.state == STATE_UNAVAILABLE
 
@@ -314,7 +314,7 @@ async def test_error_forecast_hourly.opp, mock_simple_nws):
 
     assert instance.update_forecast_hourly.call_count == 2
 
-    state =.opp.states.get("weather.abc_hourly")
+    state = opp.states.get("weather.abc_hourly")
     assert state
     assert state.state == ATTR_CONDITION_SUNNY
 

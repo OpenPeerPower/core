@@ -22,7 +22,7 @@ from tests.common import MockConfigEntry, mock_coro
 def init_config_flow.opp, side_effect=None):
     """Init a configuration flow."""
     flow = config_flow.FlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     if side_effect:
         flow._get_auth_url = Mock(side_effect=side_effect)
     return flow

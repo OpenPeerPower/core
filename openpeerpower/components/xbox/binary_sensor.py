@@ -18,7 +18,7 @@ PRESENCE_ATTRIBUTES = ["online", "in_party", "in_game", "in_multiplayer"]
 
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry, async_add_entities):
     """Set up Xbox Live friends."""
-    coordinator: XboxUpdateCoordinator =.opp.data[DOMAIN][config_entry.entry_id][
+    coordinator: XboxUpdateCoordinator = opp.data[DOMAIN][config_entry.entry_id][
         "coordinator"
     ]
 

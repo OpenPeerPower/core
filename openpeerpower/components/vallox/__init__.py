@@ -138,7 +138,7 @@ class ValloxStateProxy:
 
     def __init__(self,.opp, client):
         """Initialize the proxy."""
-        self._opp =.opp
+        self._opp = opp
         self._client = client
         self._metric_cache = {}
         self._profile = None

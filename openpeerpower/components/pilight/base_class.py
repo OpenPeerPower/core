@@ -58,7 +58,7 @@ class PilightBaseDevice(RestoreEntity):
 
     def __init__(self,.opp, name, config):
         """Initialize a device."""
-        self._opp =.opp
+        self._opp = opp
         self._name = config.get(CONF_NAME, name)
         self._is_on = False
         self._code_on = config.get(CONF_ON_CODE)

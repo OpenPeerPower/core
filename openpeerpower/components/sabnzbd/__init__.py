@@ -192,7 +192,7 @@ def async_setup_sabnzbd.opp, sab_api, config, name):
 def async_request_configuration.opp, config, host, web_root):
     """Request configuration steps from the user."""
 
-    configurator =.opp.components.configurator
+    configurator = opp.components.configurator
     # We got an error if this method is called while we are configuring
     if host in _CONFIGURING:
         configurator.async_notify_errors(

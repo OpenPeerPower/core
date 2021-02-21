@@ -75,7 +75,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
         if entry.domain != DOMAIN:
             continue
 
-        state =.opp.states.get(entry.entity_id)
+        state = opp.states.get(entry.entity_id)
         if not state or ATTR_SUPPORTED_FEATURES not in state.attributes:
             continue
 

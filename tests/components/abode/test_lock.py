@@ -29,7 +29,7 @@ async def test_attributes.opp):
     """Test the lock attributes are correct."""
     await setup_platform.opp, LOCK_DOMAIN)
 
-    state =.opp.states.get(DEVICE_ID)
+    state = opp.states.get(DEVICE_ID)
     assert state.state == STATE_LOCKED
     assert state.attributes.get(ATTR_DEVICE_ID) == "ZW:00000004"
     assert not state.attributes.get("battery_low")

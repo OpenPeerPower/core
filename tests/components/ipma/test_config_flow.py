@@ -16,7 +16,7 @@ async def test_show_config_form():
     """Test show configuration form."""
     opp = Mock()
     flow = config_flow.IpmaFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await flow._show_config_form()
 
@@ -28,7 +28,7 @@ async def test_show_config_form_default_values():
     """Test show configuration form."""
     opp = Mock()
     flow = config_flow.IpmaFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await flow._show_config_form(name="test", latitude="0", longitude="0")
 
@@ -43,7 +43,7 @@ async def test_flow_with_home_location.opp):
     then it should return a form with default values
     """
     flow = config_flow.IpmaFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
    .opp.config.location_name = "Home"
    .opp.config.latitude = 1
@@ -61,7 +61,7 @@ async def test_flow_show_form():
     """
     opp = Mock()
     flow = config_flow.IpmaFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch(
         "openpeerpower.components.ipma.config_flow.IpmaFlowHandler._show_config_form"
@@ -77,7 +77,7 @@ async def test_flow_entry_created_from_user_input():
     """
     opp = Mock()
     flow = config_flow.IpmaFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     test_data = {"name": "home", CONF_LONGITUDE: "0", CONF_LATITUDE: "0"}
 
@@ -106,7 +106,7 @@ async def test_flow_entry_config_entry_already_exists():
     """
     opp = Mock()
     flow = config_flow.IpmaFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     test_data = {"name": "home", CONF_LONGITUDE: "0", CONF_LATITUDE: "0"}
 

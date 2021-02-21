@@ -106,7 +106,7 @@ class PoolSenseDataUpdateCoordinator(DataUpdateCoordinator):
             entry.data[CONF_EMAIL],
             entry.data[CONF_PASSWORD],
         )
-        self.opp =.opp
+        self.opp = opp
         self.entry = entry
 
         super().__init__.opp, _LOGGER, name=DOMAIN, update_interval=timedelta(hours=1))

@@ -105,7 +105,7 @@ async def async_setup_tv.opp, config, conf):
     """Set up a LG WebOS TV based on host parameter."""
 
     host = conf[CONF_HOST]
-    config_file =.opp.config.path(WEBOSTV_CONFIG_FILE)
+    config_file = opp.config.path(WEBOSTV_CONFIG_FILE)
 
     client = WebOsClient(host, config_file)
    .opp.data[DOMAIN][host] = {"client": client}
@@ -156,7 +156,7 @@ async def async_request_configuration.opp, config, conf, client):
     """Request configuration steps from the user."""
     host = conf.get(CONF_HOST)
     name = conf.get(CONF_NAME)
-    configurator =.opp.components.configurator
+    configurator = opp.components.configurator
 
     async def lgtv_configuration_callback(data):
         """Handle actions when configuration callback is called."""

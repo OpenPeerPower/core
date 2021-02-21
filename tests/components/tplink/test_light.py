@@ -294,7 +294,7 @@ async def test_smartswitch(
     await.opp.async_block_till_done()
     await update_entity.opp, "light.dimmer1")
 
-    state =.opp.states.get("light.dimmer1")
+    state = opp.states.get("light.dimmer1")
     assert state.state == "on"
     assert state.attributes["brightness"] == 51
     assert sys_info["relay_state"] == 1
@@ -308,7 +308,7 @@ async def test_smartswitch(
     await.opp.async_block_till_done()
     await update_entity.opp, "light.dimmer1")
 
-    state =.opp.states.get("light.dimmer1")
+    state = opp.states.get("light.dimmer1")
     assert state.state == "on"
     assert state.attributes["brightness"] == 56
     assert sys_info["brightness"] == 22
@@ -325,7 +325,7 @@ async def test_smartswitch(
     await.opp.async_block_till_done()
     await update_entity.opp, "light.dimmer1")
 
-    state =.opp.states.get("light.dimmer1")
+    state = opp.states.get("light.dimmer1")
     assert state.state == "off"
 
     await.opp.services.async_call(
@@ -337,7 +337,7 @@ async def test_smartswitch(
     await.opp.async_block_till_done()
     await update_entity.opp, "light.dimmer1")
 
-    state =.opp.states.get("light.dimmer1")
+    state = opp.states.get("light.dimmer1")
     assert state.state == "on"
     assert state.attributes["brightness"] == 168
     assert sys_info["brightness"] == 66
@@ -386,7 +386,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
     await.opp.async_block_till_done()
     await update_entity.opp, "light.light1")
 
-    state =.opp.states.get("light.light1")
+    state = opp.states.get("light.light1")
     assert state.state == "on"
     assert state.attributes["brightness"] == 51
     assert state.attributes["hs_color"] == (110, 90)
@@ -402,7 +402,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
     await.opp.async_block_till_done()
     await update_entity.opp, "light.light1")
 
-    state =.opp.states.get("light.light1")
+    state = opp.states.get("light.light1")
     assert state.state == "on"
     assert state.attributes["brightness"] == 56
     assert state.attributes["hs_color"] == (23, 27)
@@ -430,7 +430,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
     await.opp.async_block_till_done()
     await update_entity.opp, "light.light1")
 
-    state =.opp.states.get("light.light1")
+    state = opp.states.get("light.light1")
     assert state.state == "off"
 
     await.opp.services.async_call(
@@ -442,7 +442,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
     await.opp.async_block_till_done()
     await update_entity.opp, "light.light1")
 
-    state =.opp.states.get("light.light1")
+    state = opp.states.get("light.light1")
     assert state.state == "on"
     assert state.attributes["brightness"] == 168
     assert state.attributes["hs_color"] == (77, 78)
@@ -454,7 +454,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
     set_light_state({"brightness": 91, "dft_on_state": {"brightness": 91}})
     await update_entity.opp, "light.light1")
 
-    state =.opp.states.get("light.light1")
+    state = opp.states.get("light.light1")
     assert state.attributes["brightness"] == 232
 
 

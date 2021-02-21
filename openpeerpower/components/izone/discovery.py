@@ -22,7 +22,7 @@ class DiscoveryService(pizone.Listener):
     def __init__(self,.opp):
         """Initialise discovery service."""
         super().__init__()
-        self.opp =.opp
+        self.opp = opp
         self.pi_disco = None
 
     # Listener interface
@@ -49,7 +49,7 @@ class DiscoveryService(pizone.Listener):
 
 async def async_start_discovery_service.opp: OpenPeerPowerType):
     """Set up the pizone internal discovery."""
-    disco =.opp.data.get(DATA_DISCOVERY_SERVICE)
+    disco = opp.data.get(DATA_DISCOVERY_SERVICE)
     if disco:
         # Already started
         return disco
@@ -60,7 +60,7 @@ async def async_start_discovery_service.opp: OpenPeerPowerType):
 
     # Start the pizone discovery service, disco is the listener
     session = aiohttp_client.async_get_clientsession.opp)
-    loop =.opp.loop
+    loop = opp.loop
 
     disco.pi_disco = pizone.discovery(disco, loop=loop, session=session)
     await disco.pi_disco.start_discovery()
@@ -75,7 +75,7 @@ async def async_start_discovery_service.opp: OpenPeerPowerType):
 
 async def async_stop_discovery_service.opp: OpenPeerPowerType):
     """Stop the discovery service."""
-    disco =.opp.data.get(DATA_DISCOVERY_SERVICE)
+    disco = opp.data.get(DATA_DISCOVERY_SERVICE)
     if not disco:
         return
 

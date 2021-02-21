@@ -52,7 +52,7 @@ async def setup_sensor.opp, mock_bridge_discover, mock_comfoconnect_command):
 
 async def test_sensors.opp, setup_sensor):
     """Test the sensors."""
-    state =.opp.states.get("sensor.comfoairq_inside_humidity")
+    state = opp.states.get("sensor.comfoairq_inside_humidity")
     assert state is not None
 
     assert state.name == "ComfoAirQ Inside Humidity"
@@ -60,7 +60,7 @@ async def test_sensors.opp, setup_sensor):
     assert state.attributes.get("device_class") == "humidity"
     assert state.attributes.get("icon") is None
 
-    state =.opp.states.get("sensor.comfoairq_inside_temperature")
+    state = opp.states.get("sensor.comfoairq_inside_temperature")
     assert state is not None
 
     assert state.name == "ComfoAirQ Inside Temperature"
@@ -68,7 +68,7 @@ async def test_sensors.opp, setup_sensor):
     assert state.attributes.get("device_class") == "temperature"
     assert state.attributes.get("icon") is None
 
-    state =.opp.states.get("sensor.comfoairq_supply_fan_duty")
+    state = opp.states.get("sensor.comfoairq_supply_fan_duty")
     assert state is not None
 
     assert state.name == "ComfoAirQ Supply Fan Duty"
@@ -76,7 +76,7 @@ async def test_sensors.opp, setup_sensor):
     assert state.attributes.get("device_class") is None
     assert state.attributes.get("icon") == "mdi:fan"
 
-    state =.opp.states.get("sensor.comfoairq_power_usage")
+    state = opp.states.get("sensor.comfoairq_power_usage")
     assert state is not None
 
     assert state.name == "ComfoAirQ Power usage"
@@ -84,7 +84,7 @@ async def test_sensors.opp, setup_sensor):
     assert state.attributes.get("device_class") == "power"
     assert state.attributes.get("icon") is None
 
-    state =.opp.states.get("sensor.comfoairq_preheater_power_total")
+    state = opp.states.get("sensor.comfoairq_preheater_power_total")
     assert state is not None
 
     assert state.name == "ComfoAirQ Preheater power total"

@@ -47,7 +47,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up Canary sensors based on a config entry."""
-    coordinator: CanaryDataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id][
+    coordinator: CanaryDataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id][
         DATA_COORDINATOR
     ]
     ffmpeg_arguments = entry.options.get(
@@ -79,7 +79,7 @@ class CanaryCamera(CoordinatorEntity, Camera):
         """Initialize a Canary security camera."""
         super().__init__(coordinator)
         Camera.__init__(self)
-        self._ffmpeg =.opp.data[DATA_FFMPEG]
+        self._ffmpeg = opp.data[DATA_FFMPEG]
         self._ffmpeg_arguments = ffmpeg_args
         self._location_id = location_id
         self._device = device

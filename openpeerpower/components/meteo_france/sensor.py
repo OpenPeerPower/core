@@ -41,9 +41,9 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the Meteo-France sensor platform."""
-    coordinator_forecast =.opp.data[DOMAIN][entry.entry_id][COORDINATOR_FORECAST]
-    coordinator_rain =.opp.data[DOMAIN][entry.entry_id][COORDINATOR_RAIN]
-    coordinator_alert =.opp.data[DOMAIN][entry.entry_id][COORDINATOR_ALERT]
+    coordinator_forecast = opp.data[DOMAIN][entry.entry_id][COORDINATOR_FORECAST]
+    coordinator_rain = opp.data[DOMAIN][entry.entry_id][COORDINATOR_RAIN]
+    coordinator_alert = opp.data[DOMAIN][entry.entry_id][COORDINATOR_ALERT]
 
     entities = []
     for sensor_type in SENSOR_TYPES:

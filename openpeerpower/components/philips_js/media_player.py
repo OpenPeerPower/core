@@ -102,7 +102,7 @@ async def async_setup_entry(
     async_add_entities,
 ):
     """Set up the configuration entry."""
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id]
     async_add_entities(
         [
             PhilipsTVMediaPlayer(

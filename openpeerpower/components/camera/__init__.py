@@ -213,7 +213,7 @@ async def async_get_still_stream(request, image_cb, content_type, interval):
 
 def _get_camera_from_entity_id.opp, entity_id):
     """Get camera component from entity_id."""
-    component =.opp.data.get(DOMAIN)
+    component = opp.data.get(DOMAIN)
 
     if component is None:
         raise OpenPeerPowerError("Camera integration not set up")
@@ -231,7 +231,7 @@ def _get_camera_from_entity_id.opp, entity_id):
 
 async def async_setup.opp, config):
     """Set up the camera component."""
-    component =.opp.data[DOMAIN] = EntityComponent(
+    component = opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
     )
 
@@ -602,7 +602,7 @@ async def ws_camera_stream.opp, connection, msg):
 )
 async def websocket_get_prefs.opp, connection, msg):
     """Handle request for account info."""
-    prefs =.opp.data[DATA_CAMERA_PREFS].get(msg["entity_id"])
+    prefs = opp.data[DATA_CAMERA_PREFS].get(msg["entity_id"])
     connection.send_result(msg["id"], prefs.as_dict())
 
 
@@ -616,7 +616,7 @@ async def websocket_get_prefs.opp, connection, msg):
 )
 async def websocket_update_prefs.opp, connection, msg):
     """Handle request for account info."""
-    prefs =.opp.data[DATA_CAMERA_PREFS]
+    prefs = opp.data[DATA_CAMERA_PREFS]
 
     changes = dict(msg)
     changes.pop("id")
@@ -631,7 +631,7 @@ async def async_op.dle_snapshot_service(camera, service):
     """Handle snapshot services calls."""
     opp = camera.opp
     filename = service.data[ATTR_FILENAME]
-    filename.opp =.opp
+    filename.opp = opp
 
     snapshot_file = filename.async_render(variables={ATTR_ENTITY_ID: camera})
 
@@ -716,7 +716,7 @@ async def _async_stream_endpoint_url.opp, camera, fmt):
         )
 
     # Update keepalive setting which manages idle shutdown
-    camera_prefs =.opp.data[DATA_CAMERA_PREFS].get(camera.entity_id)
+    camera_prefs = opp.data[DATA_CAMERA_PREFS].get(camera.entity_id)
     stream.keepalive = camera_prefs.preload_stream
 
     stream.hls_output()
@@ -733,7 +733,7 @@ async def async_op.dle_record_service(camera, call):
 
     opp = camera.opp
     filename = call.data[CONF_FILENAME]
-    filename.opp =.opp
+    filename.opp = opp
     video_path = filename.async_render(variables={ATTR_ENTITY_ID: camera})
 
     await stream.async_record(

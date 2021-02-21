@@ -45,7 +45,7 @@ SENSOR_TYPES_BATTERY = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the August sensors."""
-    data =.opp.data[DOMAIN][config_entry.entry_id][DATA_AUGUST]
+    data = opp.data[DOMAIN][config_entry.entry_id][DATA_AUGUST]
     devices = []
     migrate_unique_id_devices = []
     operation_sensors = []

@@ -60,7 +60,7 @@ async def test_setup_no_zones_still_adds_home_zone.opp):
     """Test if no config is passed in we still get the home zone."""
     assert await setup.async_setup_component.opp, zone.DOMAIN, {"zone": None})
     assert len.opp.states.async_entity_ids("zone")) == 1
-    state =.opp.states.get("zone.home")
+    state = opp.states.get("zone.home")
     assert.opp.config.location_name == state.name
     assert.opp.config.latitude == state.attributes["latitude"]
     assert.opp.config.longitude == state.attributes["longitude"]
@@ -79,7 +79,7 @@ async def test_setup.opp):
     assert await setup.async_setup_component.opp, zone.DOMAIN, {"zone": info})
 
     assert len.opp.states.async_entity_ids("zone")) == 2
-    state =.opp.states.get("zone.test_zone")
+    state = opp.states.get("zone.test_zone")
     assert info["name"] == state.name
     assert info["latitude"] == state.attributes["latitude"]
     assert info["longitude"] == state.attributes["longitude"]
@@ -93,7 +93,7 @@ async def test_setup_zone_skips_home_zone.opp):
     assert await setup.async_setup_component.opp, zone.DOMAIN, {"zone": info})
 
     assert len.opp.states.async_entity_ids("zone")) == 1
-    state =.opp.states.get("zone.home")
+    state = opp.states.get("zone.home")
     assert info["name"] == state.name
 
 
@@ -226,14 +226,14 @@ async def test_core_config_update.opp):
     """Test updating core config will update home zone."""
     assert await setup.async_setup_component.opp, "zone", {})
 
-    home =.opp.states.get("zone.home")
+    home = opp.states.get("zone.home")
 
     await.opp.config.async_update(
         location_name="Updated Name", latitude=10, longitude=20
     )
     await.opp.async_block_till_done()
 
-    home_updated =.opp.states.get("zone.home")
+    home_updated = opp.states.get("zone.home")
 
     assert home is not home_updated
     assert home_updated.name == "Updated Name"
@@ -259,9 +259,9 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
 
     assert count_start + 3 == len.opp.states.async_entity_ids())
 
-    state_1 =.opp.states.get("zone.yaml_1")
-    state_2 =.opp.states.get("zone.yaml_2")
-    state_3 =.opp.states.get("zone.yaml_3")
+    state_1 = opp.states.get("zone.yaml_1")
+    state_2 = opp.states.get("zone.yaml_2")
+    state_3 = opp.states.get("zone.yaml_3")
 
     assert state_1 is not None
     assert state_1.attributes["latitude"] == 1
@@ -299,9 +299,9 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
 
     assert count_start + 3 == len.opp.states.async_entity_ids())
 
-    state_1 =.opp.states.get("zone.yaml_1")
-    state_2 =.opp.states.get("zone.yaml_2")
-    state_3 =.opp.states.get("zone.yaml_3")
+    state_1 = opp.states.get("zone.yaml_1")
+    state_2 = opp.states.get("zone.yaml_2")
+    state_3 = opp.states.get("zone.yaml_3")
 
     assert state_1 is None
     assert state_2 is not None
@@ -315,7 +315,7 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
 async def test_load_from_storage.opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
-    state =.opp.states.get(f"{DOMAIN}.from_storage")
+    state = opp.states.get(f"{DOMAIN}.from_storage")
     assert state.state == "zoning"
     assert state.name == "from storage"
     assert state.attributes.get(ATTR_EDITABLE)
@@ -327,12 +327,12 @@ async def test_editable_state_attribute.opp, storage_setup):
         config={DOMAIN: [{"name": "yaml option", "latitude": 3, "longitude": 4}]}
     )
 
-    state =.opp.states.get(f"{DOMAIN}.from_storage")
+    state = opp.states.get(f"{DOMAIN}.from_storage")
     assert state.state == "zoning"
     assert state.attributes.get(ATTR_FRIENDLY_NAME) == "from storage"
     assert state.attributes.get(ATTR_EDITABLE)
 
-    state =.opp.states.get(f"{DOMAIN}.yaml_option")
+    state = opp.states.get(f"{DOMAIN}.yaml_option")
     assert state.state == "zoning"
     assert not state.attributes.get(ATTR_EDITABLE)
 
@@ -367,7 +367,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
@@ -379,7 +379,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
@@ -403,7 +403,7 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state.attributes["latitude"] == 1
     assert state.attributes["longitude"] == 2
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
@@ -423,7 +423,7 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state.attributes["latitude"] == 3
     assert state.attributes["longitude"] == 4
     assert state.attributes["passive"] is True
@@ -437,7 +437,7 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
@@ -456,7 +456,7 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state.state == "zoning"
     assert state.attributes["latitude"] == 3
     assert state.attributes["longitude"] == 4
@@ -481,7 +481,7 @@ async def test_import_config_entry.opp):
     await.opp.async_block_till_done()
     assert len.opp.config_entries.async_entries()) == 0
 
-    state =.opp.states.get("zone.from_config_entry")
+    state = opp.states.get("zone.from_config_entry")
     assert state is not None
     assert state.attributes[zone.ATTR_LATITUDE] == 1
     assert state.attributes[zone.ATTR_LONGITUDE] == 2

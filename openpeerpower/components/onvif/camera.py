@@ -69,7 +69,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         "async_perform_ptz",
     )
 
-    device =.opp.data[DOMAIN][config_entry.unique_id]
+    device = opp.data[DOMAIN][config_entry.unique_id]
     async_add_entities(
         [ONVIFCameraEntity(device, profile) for profile in device.profiles]
     )

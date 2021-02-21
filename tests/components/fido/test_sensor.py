@@ -55,10 +55,10 @@ async def test_fido_sensor(loop,.opp):
         with assert_setup_component(1):
             await async_setup_component.opp, "sensor", config)
             await.opp.async_block_till_done()
-        state =.opp.states.get("sensor.fido_1112223344_balance")
+        state = opp.states.get("sensor.fido_1112223344_balance")
         assert state.state == "160.12"
         assert state.attributes.get("number") == "1112223344"
-        state =.opp.states.get("sensor.fido_1112223344_data_remaining")
+        state = opp.states.get("sensor.fido_1112223344_data_remaining")
         assert state.state == "100.33"
 
 

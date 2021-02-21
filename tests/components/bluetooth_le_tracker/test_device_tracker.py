@@ -51,6 +51,6 @@ async def test_preserve_new_tracked_device_name.opp, mock_device_tracker_conf):
             )
             await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.name == name

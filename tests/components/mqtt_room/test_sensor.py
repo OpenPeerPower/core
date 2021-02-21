@@ -40,13 +40,13 @@ async def send_message.opp, topic, message):
 
 async def assert_state.opp, room):
     """Test the assertion of a room state."""
-    state =.opp.states.get(SENSOR_STATE)
+    state = opp.states.get(SENSOR_STATE)
     assert state.state == room
 
 
 async def assert_distance.opp, distance):
     """Test the assertion of a distance state."""
-    state =.opp.states.get(SENSOR_STATE)
+    state = opp.states.get(SENSOR_STATE)
     assert state.attributes.get("distance") == distance
 
 

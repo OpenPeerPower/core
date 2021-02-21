@@ -87,7 +87,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
         return data
 
-    coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][
+    coordinator = opp.data[DOMAIN][DATA_COORDINATOR][
         entry.entry_id
     ] = DataUpdateCoordinator(
        .opp,

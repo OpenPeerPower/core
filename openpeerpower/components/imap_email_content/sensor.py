@@ -58,7 +58,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     value_template = config.get(CONF_VALUE_TEMPLATE)
     if value_template is not None:
-        value_template.opp =.opp
+        value_template.opp = opp
     sensor = EmailContentSensor(
        .opp,
         reader,
@@ -150,7 +150,7 @@ class EmailContentSensor(Entity):
 
     def __init__(self,.opp, email_reader, name, allowed_senders, value_template):
         """Initialize the sensor."""
-        self.opp =.opp
+        self.opp = opp
         self._email_reader = email_reader
         self._name = name
         self._allowed_senders = [sender.upper() for sender in allowed_senders]

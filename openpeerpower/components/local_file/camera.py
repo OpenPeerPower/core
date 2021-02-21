@@ -42,7 +42,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         """Update the file path."""
         file_path = call.data.get(CONF_FILE_PATH)
         entity_ids = call.data.get(ATTR_ENTITY_ID)
-        cameras =.opp.data[DATA_LOCAL_FILE]
+        cameras = opp.data[DATA_LOCAL_FILE]
 
         for camera in cameras:
             if camera.entity_id in entity_ids:

@@ -74,7 +74,7 @@ async def test_chain.opp, values):
            .opp.states.async_set(config["sensor"]["entity_id"], value.state)
             await.opp.async_block_till_done()
 
-        state =.opp.states.get("sensor.test")
+        state = opp.states.get("sensor.test")
         assert "18.05" == state.state
 
 
@@ -129,7 +129,7 @@ async def test_chain_history.opp, values, missing=False):
                .opp.states.async_set(config["sensor"]["entity_id"], value.state)
                 await.opp.async_block_till_done()
 
-            state =.opp.states.get("sensor.test")
+            state = opp.states.get("sensor.test")
             if missing:
                 assert "18.05" == state.state
             else:
@@ -170,11 +170,11 @@ async def test_source_state_none.opp, values):
    .opp.states.async_set("sensor.test_state", 0)
 
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.template_test")
+    state = opp.states.get("sensor.template_test")
     assert state.state == "0"
 
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert state.state == "0.0"
 
     # Force Template Reload
@@ -193,11 +193,11 @@ async def test_source_state_none.opp, values):
         await.opp.async_block_till_done()
 
     # Template state gets to None
-    state =.opp.states.get("sensor.template_test")
+    state = opp.states.get("sensor.template_test")
     assert state is None
 
     # Filter sensor ignores None state setting state to STATE_UNKNOWN
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert state.state == STATE_UNKNOWN
 
 
@@ -244,7 +244,7 @@ async def test_history_time.opp):
                 await.opp.async_block_till_done()
 
             await.opp.async_block_till_done()
-            state =.opp.states.get("sensor.test")
+            state = opp.states.get("sensor.test")
             assert "18.0" == state.state
 
 
@@ -273,7 +273,7 @@ async def test_setup.opp):
             {"icon": "mdi:test", "device_class": DEVICE_CLASS_TEMPERATURE},
         )
         await.opp.async_block_till_done()
-        state =.opp.states.get("sensor.test")
+        state = opp.states.get("sensor.test")
         assert state.attributes["icon"] == "mdi:test"
         assert state.attributes["device_class"] == DEVICE_CLASS_TEMPERATURE
         assert state.state == "1.0"
@@ -301,13 +301,13 @@ async def test_invalid_state.opp):
        .opp.states.async_set("sensor.test_monitored", STATE_UNAVAILABLE)
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("sensor.test")
+        state = opp.states.get("sensor.test")
         assert state.state == STATE_UNAVAILABLE
 
        .opp.states.async_set("sensor.test_monitored", "invalid")
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("sensor.test")
+        state = opp.states.get("sensor.test")
         assert state.state == STATE_UNAVAILABLE
 
 

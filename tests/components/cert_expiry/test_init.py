@@ -51,7 +51,7 @@ async def test_update_unique_id.opp):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_HOST: HOST, CONF_PORT: PORT})
     entry.add_to_opp.opp)
 
-    config_entries =.opp.config_entries.async_entries(DOMAIN)
+    config_entries = opp.config_entries.async_entries(DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
     assert not entry.unique_id
@@ -77,7 +77,7 @@ async def test_unload_config_entry(mock_now,.opp):
     )
     entry.add_to_opp.opp)
 
-    config_entries =.opp.config_entries.async_entries(DOMAIN)
+    config_entries = opp.config_entries.async_entries(DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
 
@@ -90,7 +90,7 @@ async def test_unload_config_entry(mock_now,.opp):
         await.opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_LOADED
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state.state == timestamp.isoformat()
     assert state.attributes.get("error") == "None"
     assert state.attributes.get("is_valid")
@@ -98,10 +98,10 @@ async def test_unload_config_entry(mock_now,.opp):
     await.opp.config_entries.async_unload(entry.entry_id)
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state.state == STATE_UNAVAILABLE
 
     await.opp.config_entries.async_remove(entry.entry_id)
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is None

@@ -74,7 +74,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
     sensors = []
     for sensor_type, (name, icon) in SENSORS.items():
         api_category = API_CATEGORY_MAPPING.get(sensor_type, sensor_type)
-        coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][api_category]
+        coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][api_category]
         sensor_class = sensor_class_mapping[sensor_type]
 
         sensors.append(sensor_class(coordinator, entry, sensor_type, name, icon))

@@ -67,7 +67,7 @@ async def test_loading_cover(
     entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     # First segment of the strip
-    state =.opp.states.get("cover.wl000000000099_1")
+    state = opp.states.get("cover.wl000000000099_1")
     assert state
     assert state.state == STATE_CLOSED
 
@@ -91,7 +91,7 @@ async def test_open_close_cover_state(
     )
 
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.wl000000000099_1")
+    state = opp.states.get("cover.wl000000000099_1")
     assert state
     assert state.state == STATE_OPENING
 
@@ -104,7 +104,7 @@ async def test_open_close_cover_state(
     )
 
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.wl000000000099_1")
+    state = opp.states.get("cover.wl000000000099_1")
     assert state
     assert state.state == STATE_CLOSING
 
@@ -117,7 +117,7 @@ async def test_open_close_cover_state(
     )
 
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.wl000000000099_1")
+    state = opp.states.get("cover.wl000000000099_1")
     assert state
     assert state.state == STATE_OPEN
     assert state.attributes.get(ATTR_CURRENT_POSITION) == 50
@@ -131,6 +131,6 @@ async def test_open_close_cover_state(
     )
 
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.wl000000000099_1")
+    state = opp.states.get("cover.wl000000000099_1")
     assert state
     assert state.state == STATE_OPEN

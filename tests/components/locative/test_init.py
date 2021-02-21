@@ -126,7 +126,7 @@ async def test_enter_and_exit.opp, locative_client, webhook_id):
     req = await locative_client.post(url, data=data)
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name =.opp.states.get(
+    state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"])
     ).state
     assert state_name == "home"
@@ -138,7 +138,7 @@ async def test_enter_and_exit.opp, locative_client, webhook_id):
     req = await locative_client.post(url, data=data)
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name =.opp.states.get(
+    state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"])
     ).state
     assert state_name == "not_home"
@@ -150,7 +150,7 @@ async def test_enter_and_exit.opp, locative_client, webhook_id):
     req = await locative_client.post(url, data=data)
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name =.opp.states.get(
+    state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"])
     ).state
     assert state_name == "home"
@@ -161,7 +161,7 @@ async def test_enter_and_exit.opp, locative_client, webhook_id):
     req = await locative_client.post(url, data=data)
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name =.opp.states.get(
+    state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"])
     ).state
     assert state_name == "not_home"
@@ -173,7 +173,7 @@ async def test_enter_and_exit.opp, locative_client, webhook_id):
     req = await locative_client.post(url, data=data)
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name =.opp.states.get(
+    state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"])
     ).state
     assert state_name == "work"
@@ -196,7 +196,7 @@ async def test_exit_after_enter.opp, locative_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
 
-    state =.opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
+    state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
     assert state.state == "home"
 
     data["id"] = "Work"
@@ -206,7 +206,7 @@ async def test_exit_after_enter.opp, locative_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
 
-    state =.opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
+    state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
     assert state.state == "work"
 
     data["id"] = "Home"
@@ -217,7 +217,7 @@ async def test_exit_after_enter.opp, locative_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
 
-    state =.opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
+    state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
     assert state.state == "work"
 
 
@@ -238,7 +238,7 @@ async def test_exit_first.opp, locative_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
 
-    state =.opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
+    state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
     assert state.state == "not_home"
 
 
@@ -259,7 +259,7 @@ async def test_two_devices.opp, locative_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
 
-    state =.opp.states.get(
+    state = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data_device_1["device"])
     )
     assert state.state == "not_home"
@@ -272,11 +272,11 @@ async def test_two_devices.opp, locative_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
 
-    state =.opp.states.get(
+    state = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data_device_2["device"])
     )
     assert state.state == "home"
-    state =.opp.states.get(
+    state = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data_device_1["device"])
     )
     assert state.state == "not_home"
@@ -302,11 +302,11 @@ async def test_load_unload_entry.opp, locative_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
 
-    state =.opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
+    state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
     assert state.state == "not_home"
     assert len.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
 
-    entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    entry = opp.config_entries.async_entries(DOMAIN)[0]
 
     await locative.async_unload_entry.opp, entry)
     await.opp.async_block_till_done()

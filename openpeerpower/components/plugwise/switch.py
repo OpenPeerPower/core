@@ -21,8 +21,8 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 async def async_setup_entry_gateway.opp, config_entry, async_add_entities):
     """Set up the Smile switches from a config entry."""
-    api =.opp.data[DOMAIN][config_entry.entry_id]["api"]
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
+    api = opp.data[DOMAIN][config_entry.entry_id]["api"]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
 
     entities = []
     switch_classes = ["plug", "switch_group"]

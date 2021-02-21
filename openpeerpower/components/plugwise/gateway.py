@@ -149,7 +149,7 @@ async def async_setup_entry_gw.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 async def _update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
-    coordinator =.opp.data[DOMAIN][entry.entry_id][COORDINATOR]
+    coordinator = opp.data[DOMAIN][entry.entry_id][COORDINATOR]
     coordinator.update_interval = timedelta(
         seconds=entry.options.get(CONF_SCAN_INTERVAL)
     )

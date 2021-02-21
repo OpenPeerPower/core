@@ -16,9 +16,9 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up FireServiceRota switch based on a config entry."""
-    client =.opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
+    client = opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
 
-    coordinator =.opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_COORDINATOR]
+    coordinator = opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_COORDINATOR]
 
     async_add_entities([ResponseSwitch(coordinator, client, entry)])
 

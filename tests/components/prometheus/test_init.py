@@ -49,14 +49,14 @@ async def prometheus_client.opp,.opp_client):
     sensor1 = DemoSensor(
         None, "Television Energy", 74, None, ENERGY_KILO_WATT_HOUR, None
     )
-    sensor1.opp =.opp
+    sensor1.opp = opp
     sensor1.entity_id = "sensor.television_energy"
     await sensor1.async_update_op.state()
 
     sensor2 = DemoSensor(
         None, "Radio Energy", 14, DEVICE_CLASS_POWER, ENERGY_KILO_WATT_HOUR, None
     )
-    sensor2.opp =.opp
+    sensor2.opp = opp
     sensor2.entity_id = "sensor.radio_energy"
     with mock.patch(
         "openpeerpowerr.util.dt.utcnow",
@@ -67,12 +67,12 @@ async def prometheus_client.opp,.opp_client):
     sensor3 = DemoSensor(
         None, "Electricity price", 0.123, None, f"SEK/{ENERGY_KILO_WATT_HOUR}", None
     )
-    sensor3.opp =.opp
+    sensor3.opp = opp
     sensor3.entity_id = "sensor.electricity_price"
     await sensor3.async_update_op.state()
 
     sensor4 = DemoSensor(None, "Wind Direction", 25, None, DEGREE, None)
-    sensor4.opp =.opp
+    sensor4.opp = opp
     sensor4.entity_id = "sensor.wind_direction"
     await sensor4.async_update_op.state()
 
@@ -84,7 +84,7 @@ async def prometheus_client.opp,.opp_client):
         CONCENTRATION_MICROGRAMS_PER_CUBIC_METER,
         None,
     )
-    sensor5.opp =.opp
+    sensor5.opp = opp
     sensor5.entity_id = "sensor.sps30_pm_1um_weight_concentration"
     await sensor5.async_update_op.state()
 
@@ -224,7 +224,7 @@ async def test_minimal_config.opp, mock_client):
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
     await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
 
 @pytest.mark.usefixtures("mock_bus")
@@ -251,7 +251,7 @@ async def test_full_config.opp, mock_client):
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
     await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
 
 def make_event(entity_id):

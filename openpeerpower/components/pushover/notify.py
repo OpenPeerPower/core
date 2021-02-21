@@ -47,7 +47,7 @@ class PushoverNotificationService(BaseNotificationService):
 
     def __init__(self,.opp, user_key, api_token):
         """Initialize the service."""
-        self._opp =.opp
+        self._opp = opp
         self._user_key = user_key
         self._api_token = api_token
         self.pushover = PushoverAPI(self._api_token)

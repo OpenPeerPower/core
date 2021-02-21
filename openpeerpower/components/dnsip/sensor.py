@@ -61,7 +61,7 @@ class WanIpSensor(Entity):
     def __init__(self,.opp, name, hostname, resolver, ipv6):
         """Initialize the DNS IP sensor."""
 
-        self.opp =.opp
+        self.opp = opp
         self._name = name
         self.hostname = hostname
         self.resolver = aiodns.DNSResolver()

@@ -189,7 +189,7 @@ async def test_supported_features(
     await setup_integration.opp, aioclient_mock)
 
     # Features supported for main DVR
-    state =.opp.states.get(MAIN_ENTITY_ID)
+    state = opp.states.get(MAIN_ENTITY_ID)
     assert (
         SUPPORT_PAUSE
         | SUPPORT_TURN_ON
@@ -203,7 +203,7 @@ async def test_supported_features(
     )
 
     # Feature supported for clients.
-    state =.opp.states.get(CLIENT_ENTITY_ID)
+    state = opp.states.get(CLIENT_ENTITY_ID)
     assert (
         SUPPORT_PAUSE
         | SUPPORT_PLAY_MEDIA
@@ -223,7 +223,7 @@ async def test_check_attributes(
     """Test attributes."""
     await setup_integration.opp, aioclient_mock)
 
-    state =.opp.states.get(MAIN_ENTITY_ID)
+    state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_PLAYING
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_ID) == "17016356"
@@ -242,7 +242,7 @@ async def test_check_attributes(
         2020, 3, 21, 13, 0, tzinfo=dt_util.UTC
     )
 
-    state =.opp.states.get(CLIENT_ENTITY_ID)
+    state = opp.states.get(CLIENT_ENTITY_ID)
     assert state.state == STATE_PLAYING
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_ID) == "4405732"
@@ -261,7 +261,7 @@ async def test_check_attributes(
         2010, 7, 5, 15, 0, 8, tzinfo=dt_util.UTC
     )
 
-    state =.opp.states.get(MUSIC_ENTITY_ID)
+    state = opp.states.get(MUSIC_ENTITY_ID)
     assert state.state == STATE_PLAYING
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_ID) == "76917562"
@@ -282,7 +282,7 @@ async def test_check_attributes(
         2020, 3, 21, 10, 0, 0, tzinfo=dt_util.UTC
     )
 
-    state =.opp.states.get(STANDBY_ENTITY_ID)
+    state = opp.states.get(STANDBY_ENTITY_ID)
     assert state.state == STATE_OFF
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_ID) is None
@@ -300,7 +300,7 @@ async def test_check_attributes(
     assert state.attributes.get(ATTR_MEDIA_RATING) is None
     assert not state.attributes.get(ATTR_MEDIA_RECORDED)
 
-    state =.opp.states.get(RESTRICTED_ENTITY_ID)
+    state = opp.states.get(RESTRICTED_ENTITY_ID)
     assert state.state == STATE_PLAYING
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_ID) is None
@@ -318,7 +318,7 @@ async def test_check_attributes(
     assert state.attributes.get(ATTR_MEDIA_RATING) is None
     assert not state.attributes.get(ATTR_MEDIA_RECORDED)
 
-    state =.opp.states.get(UNAVAILABLE_ENTITY_ID)
+    state = opp.states.get(UNAVAILABLE_ENTITY_ID)
     assert state.state == STATE_UNAVAILABLE
 
 
@@ -330,7 +330,7 @@ async def test_attributes_paused(
     """Test attributes while paused."""
     await setup_integration.opp, aioclient_mock)
 
-    state =.opp.states.get(CLIENT_ENTITY_ID)
+    state = opp.states.get(CLIENT_ENTITY_ID)
     last_updated = state.attributes.get(ATTR_MEDIA_POSITION_UPDATED_AT)
 
     # Test to make sure that ATTR_MEDIA_POSITION_UPDATED_AT is not
@@ -341,7 +341,7 @@ async def test_attributes_paused(
         await async_media_pause.opp, CLIENT_ENTITY_ID)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(CLIENT_ENTITY_ID)
+    state = opp.states.get(CLIENT_ENTITY_ID)
     assert state.state == STATE_PAUSED
     assert state.attributes.get(ATTR_MEDIA_POSITION_UPDATED_AT) == last_updated
 

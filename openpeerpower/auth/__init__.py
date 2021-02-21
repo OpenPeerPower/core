@@ -150,7 +150,7 @@ class AuthManager:
         mfa_modules: _MfaModuleDict,
     ) -> None:
         """Initialize the auth manager."""
-        self.opp =.opp
+        self.opp = opp
         self._store = store
         self._providers = providers
         self._mfa_modules = mfa_modules

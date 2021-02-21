@@ -37,7 +37,7 @@ class OppIOBaseAuth(OpenPeerPowerView):
 
     def __init__(self,.opp: OpenPeerPowerType, user: User):
         """Initialize WebView."""
-        self.opp =.opp
+        self.opp = opp
         self.user = user
 
     def _check_access(self, request: web.Request):

@@ -42,7 +42,7 @@ class DataUpdateCoordinator(Generic[T]):
         request_refresh_debouncer: Optional[Debouncer] = None,
     ):
         """Initialize global data updater."""
-        self.opp =.opp
+        self.opp = opp
         self.logger = logger
         self.name = name
         self.update_method = update_method

@@ -282,7 +282,7 @@ def get_button_device_by_dr_id.opp: OpenPeerPower, device_id: str):
         return None
 
     for config_entry in.opp.data[DOMAIN]:
-        button_devices =.opp.data[DOMAIN][config_entry][BUTTON_DEVICES]
+        button_devices = opp.data[DOMAIN][config_entry][BUTTON_DEVICES]
         device = button_devices.get(device_id)
         if device:
             return device

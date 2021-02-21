@@ -35,7 +35,7 @@ async def test_attributes.opp):
     """Test the light attributes are correct."""
     await setup_platform.opp, LIGHT_DOMAIN)
 
-    state =.opp.states.get(DEVICE_ID)
+    state = opp.states.get(DEVICE_ID)
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_BRIGHTNESS) == 204
     assert state.attributes.get(ATTR_RGB_COLOR) == (0, 63, 255)

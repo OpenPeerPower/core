@@ -24,12 +24,12 @@ def with_store(orig_func):
     @wraps(orig_func)
     async def with_store_func.opp, connection, msg):
         """Provide user specific data and store to function."""
-        stores, data =.opp.data[DATA_STORAGE]
+        stores, data = opp.data[DATA_STORAGE]
         user_id = connection.user.id
         store = stores.get(user_id)
 
         if store is None:
-            store = stores[user_id] =.opp.helpers.storage.Store(
+            store = stores[user_id] = opp.helpers.storage.Store(
                 STORAGE_VERSION_USER_DATA, f"frontend.user_data_{connection.user.id}"
             )
 

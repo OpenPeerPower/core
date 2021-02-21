@@ -14,7 +14,7 @@ async def test_tracking_home.opp, mock_weather):
     # Test the hourly sensor is disabled by default
     registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state =.opp.states.get("weather.test_home_hourly")
+    state = opp.states.get("weather.test_home_hourly")
     assert state is None
 
     entry = registry.async_get("weather.test_home_hourly")
@@ -28,7 +28,7 @@ async def test_tracking_home.opp, mock_weather):
 
     assert len(mock_weather.mock_calls) == 8
 
-    entry =.opp.config_entries.async_entries()[0]
+    entry = opp.config_entries.async_entries()[0]
     await.opp.config_entries.async_remove(entry.entry_id)
     await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids("weather")) == 0
@@ -62,7 +62,7 @@ async def test_not_tracking_home.opp, mock_weather):
 
     assert len(mock_weather.mock_calls) == 4
 
-    entry =.opp.config_entries.async_entries()[0]
+    entry = opp.config_entries.async_entries()[0]
     await.opp.config_entries.async_remove(entry.entry_id)
     await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids("weather")) == 0

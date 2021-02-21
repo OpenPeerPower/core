@@ -91,7 +91,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         )
 
     if switches:
-        platform_data =.opp.data[DOMAIN].platforms.setdefault(SWITCH_DOMAIN, {})
+        platform_data = opp.data[DOMAIN].platforms.setdefault(SWITCH_DOMAIN, {})
         platform_data.setdefault(mac_addr, []).extend(switches)
 
     else:
@@ -107,10 +107,10 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Broadlink switch."""
-    device =.opp.data[DOMAIN].devices[config_entry.entry_id]
+    device = opp.data[DOMAIN].devices[config_entry.entry_id]
 
     if device.api.type in {"RM2", "RM4"}:
-        platform_data =.opp.data[DOMAIN].platforms.get(SWITCH_DOMAIN, {})
+        platform_data = opp.data[DOMAIN].platforms.get(SWITCH_DOMAIN, {})
         user_defined_switches = platform_data.get(device.api.mac, {})
         switches = [
             BroadlinkRMSwitch(device, config) for config in user_defined_switches

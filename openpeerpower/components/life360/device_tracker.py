@@ -88,8 +88,8 @@ def _dump_filter(filter_dict, desc, func=lambda x: x):
 
 def setup_scanner.opp, config, see, discovery_info=None):
     """Set up device scanner."""
-    config =.opp.data[DOMAIN]["config"]
-    apis =.opp.data[DOMAIN]["apis"]
+    config = opp.data[DOMAIN]["config"]
+    apis = opp.data[DOMAIN]["apis"]
     Life360Scanner.opp, config, see, apis)
     return True
 
@@ -120,7 +120,7 @@ class Life360Scanner:
 
     def __init__(self,.opp, config, see, apis):
         """Initialize Life360Scanner."""
-        self._opp =.opp
+        self._opp = opp
         self._see = see
         self._max_gps_accuracy = config.get(CONF_MAX_GPS_ACCURACY)
         self._max_update_wait = config.get(CONF_MAX_UPDATE_WAIT)

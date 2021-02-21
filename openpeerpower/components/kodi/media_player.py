@@ -231,7 +231,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         SERVICE_CALL_METHOD, KODI_CALL_METHOD_SCHEMA, "async_call_method"
     )
 
-    data =.opp.data[DOMAIN][config_entry.entry_id]
+    data = opp.data[DOMAIN][config_entry.entry_id]
     connection = data[DATA_CONNECTION]
     kodi = data[DATA_KODI]
     name = config_entry.data[CONF_NAME]

@@ -172,7 +172,7 @@ async def test_queue_listener():
 
     queue_listener.stop()
 
-    call_domain, call_event =.opp.bus.fire.call_args[0]
+    call_domain, call_event = opp.bus.fire.call_args[0]
 
     expected_event = {
         "event_name": "s3:ObjectCreated:Put",

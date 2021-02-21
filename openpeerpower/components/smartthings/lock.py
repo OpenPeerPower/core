@@ -21,7 +21,7 @@ ST_LOCK_ATTR_MAP = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Add locks for a config entry."""
-    broker =.opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
+    broker = opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
     async_add_entities(
         [
             SmartThingsLock(device)

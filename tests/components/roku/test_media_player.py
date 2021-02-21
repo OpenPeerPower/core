@@ -96,7 +96,7 @@ async def test_idle_setup(
     """Test setup with idle device."""
     await setup_integration.opp, aioclient_mock, power=False)
 
-    state =.opp.states.get(MAIN_ENTITY_ID)
+    state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_STANDBY
 
 
@@ -154,7 +154,7 @@ async def test_supported_features(
     await setup_integration.opp, aioclient_mock)
 
     # Features supported for Rokus
-    state =.opp.states.get(MAIN_ENTITY_ID)
+    state = opp.states.get(MAIN_ENTITY_ID)
     assert (
         SUPPORT_PREVIOUS_TRACK
         | SUPPORT_NEXT_TRACK
@@ -184,7 +184,7 @@ async def test_tv_supported_features(
         unique_id=TV_SERIAL,
     )
 
-    state =.opp.states.get(TV_ENTITY_ID)
+    state = opp.states.get(TV_ENTITY_ID)
     assert (
         SUPPORT_PREVIOUS_TRACK
         | SUPPORT_NEXT_TRACK
@@ -207,7 +207,7 @@ async def test_attributes(
     """Test attributes."""
     await setup_integration.opp, aioclient_mock)
 
-    state =.opp.states.get(MAIN_ENTITY_ID)
+    state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_HOME
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_TYPE) is None
@@ -222,7 +222,7 @@ async def test_attributes_app(
     """Test attributes for app."""
     await setup_integration.opp, aioclient_mock, app="netflix")
 
-    state =.opp.states.get(MAIN_ENTITY_ID)
+    state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_ON
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_TYPE) == MEDIA_TYPE_APP
@@ -237,7 +237,7 @@ async def test_attributes_app_media_playing(
     """Test attributes for app with playing media."""
     await setup_integration.opp, aioclient_mock, app="pluto", media_state="play")
 
-    state =.opp.states.get(MAIN_ENTITY_ID)
+    state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_PLAYING
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_TYPE) == MEDIA_TYPE_APP
@@ -254,7 +254,7 @@ async def test_attributes_app_media_paused(
     """Test attributes for app with paused media."""
     await setup_integration.opp, aioclient_mock, app="pluto", media_state="pause")
 
-    state =.opp.states.get(MAIN_ENTITY_ID)
+    state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_PAUSED
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_TYPE) == MEDIA_TYPE_APP
@@ -271,7 +271,7 @@ async def test_attributes_screensaver(
     """Test attributes for app with screensaver."""
     await setup_integration.opp, aioclient_mock, app="screensaver")
 
-    state =.opp.states.get(MAIN_ENTITY_ID)
+    state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_IDLE
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_TYPE) is None
@@ -293,7 +293,7 @@ async def test_tv_attributes(
         unique_id=TV_SERIAL,
     )
 
-    state =.opp.states.get(TV_ENTITY_ID)
+    state = opp.states.get(TV_ENTITY_ID)
     assert state.state == STATE_ON
 
     assert state.attributes.get(ATTR_APP_ID) == "tvinput.dtv"

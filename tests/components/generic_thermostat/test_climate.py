@@ -115,13 +115,13 @@ async def test_heater_input_boolean.opp, setup_comp_1):
     )
     await.opp.async_block_till_done()
 
-    assert STATE_OFF ==.opp.states.get(heater_switch).state
+    assert STATE_OFF == opp.states.get(heater_switch).state
 
     _setup_sensor.opp, 18)
     await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 23)
 
-    assert STATE_ON ==.opp.states.get(heater_switch).state
+    assert STATE_ON == opp.states.get(heater_switch).state
 
 
 async def test_heater_switch.opp, setup_comp_1):
@@ -150,13 +150,13 @@ async def test_heater_switch.opp, setup_comp_1):
     )
 
     await.opp.async_block_till_done()
-    assert STATE_OFF ==.opp.states.get(heater_switch).state
+    assert STATE_OFF == opp.states.get(heater_switch).state
 
     _setup_sensor.opp, 18)
     await common.async_set_temperature.opp, 23)
     await.opp.async_block_till_done()
 
-    assert STATE_ON ==.opp.states.get(heater_switch).state
+    assert STATE_ON == opp.states.get(heater_switch).state
 
 
 async def test_unique_id.opp, setup_comp_1):
@@ -233,7 +233,7 @@ async def test_setup_defaults_to_unknown.opp):
         },
     )
     await.opp.async_block_till_done()
-    assert HVAC_MODE_OFF ==.opp.states.get(ENTITY).state
+    assert HVAC_MODE_OFF == opp.states.get(ENTITY).state
 
 
 async def test_setup_gets_current_temp_from_sensor.opp):
@@ -262,7 +262,7 @@ async def test_setup_gets_current_temp_from_sensor.opp):
 
 async def test_default_setup_params.opp, setup_comp_2):
     """Test the setup with default parameters."""
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert 7 == state.attributes.get("min_temp")
     assert 35 == state.attributes.get("max_temp")
     assert 7 == state.attributes.get("temperature")
@@ -270,7 +270,7 @@ async def test_default_setup_params.opp, setup_comp_2):
 
 async def test_get_hvac_modes.opp, setup_comp_2):
     """Test that the operation list returns the correct modes."""
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     modes = state.attributes.get("hvac_modes")
     assert [HVAC_MODE_HEAT, HVAC_MODE_OFF] == modes
 
@@ -278,11 +278,11 @@ async def test_get_hvac_modes.opp, setup_comp_2):
 async def test_set_target_temp.opp, setup_comp_2):
     """Test the setting of the target temperature."""
     await common.async_set_temperature.opp, 30)
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert 30.0 == state.attributes.get("temperature")
     with pytest.raises(vol.Invalid):
         await common.async_set_temperature.opp, None)
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert 30.0 == state.attributes.get("temperature")
 
 
@@ -290,7 +290,7 @@ async def test_set_away_mode.opp, setup_comp_2):
     """Test the setting away mode."""
     await common.async_set_temperature.opp, 23)
     await common.async_set_preset_mode.opp, PRESET_AWAY)
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert 16 == state.attributes.get("temperature")
 
 
@@ -301,10 +301,10 @@ async def test_set_away_mode_and_restore_prev_temp.opp, setup_comp_2):
     """
     await common.async_set_temperature.opp, 23)
     await common.async_set_preset_mode.opp, PRESET_AWAY)
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert 16 == state.attributes.get("temperature")
     await common.async_set_preset_mode.opp, PRESET_NONE)
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert 23 == state.attributes.get("temperature")
 
 
@@ -316,22 +316,22 @@ async def test_set_away_mode_twice_and_restore_prev_temp.opp, setup_comp_2):
     await common.async_set_temperature.opp, 23)
     await common.async_set_preset_mode.opp, PRESET_AWAY)
     await common.async_set_preset_mode.opp, PRESET_AWAY)
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert 16 == state.attributes.get("temperature")
     await common.async_set_preset_mode.opp, PRESET_NONE)
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert 23 == state.attributes.get("temperature")
 
 
 async def test_sensor_bad_value.opp, setup_comp_2):
     """Test sensor that have None as state."""
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     temp = state.attributes.get("current_temperature")
 
     _setup_sensor.opp, None)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert temp == state.attributes.get("current_temperature")
 
 
@@ -351,7 +351,7 @@ async def test_sensor_unknown.opp):
         },
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("climate.unknown")
+    state = opp.states.get("climate.unknown")
     assert state.attributes.get("current_temperature") is None
 
 
@@ -371,7 +371,7 @@ async def test_sensor_unavailable.opp):
         },
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("climate.unavailable")
+    state = opp.states.get("climate.unavailable")
     assert state.attributes.get("current_temperature") is None
 
 
@@ -545,7 +545,7 @@ async def test_turn_away_mode_on_cooling.opp, setup_comp_3):
     await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 19)
     await common.async_set_preset_mode.opp, PRESET_AWAY)
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert 30 == state.attributes.get("temperature")
 
 
@@ -1147,7 +1147,7 @@ async def setup_comp_9.opp):
 async def test_precision.opp, setup_comp_9):
     """Test that setting precision to tenths works as intended."""
     await common.async_set_temperature.opp, 23.27)
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert 23.3 == state.attributes.get("temperature")
 
 
@@ -1170,7 +1170,7 @@ async def test_custom_setup_params.opp):
     )
     assert result
     await.opp.async_block_till_done()
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert state.attributes.get("min_temp") == MIN_TEMP
     assert state.attributes.get("max_temp") == MAX_TEMP
     assert state.attributes.get("temperature") == TARGET_TEMP
@@ -1205,7 +1205,7 @@ async def test_restore_state.opp):
         },
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("climate.test_thermostat")
+    state = opp.states.get("climate.test_thermostat")
     assert state.attributes[ATTR_TEMPERATURE] == 20
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_AWAY
     assert state.state == HVAC_MODE_OFF
@@ -1243,7 +1243,7 @@ async def test_no_restore_state.opp):
         },
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("climate.test_thermostat")
+    state = opp.states.get("climate.test_thermostat")
     assert state.attributes[ATTR_TEMPERATURE] == 22
     assert state.state == HVAC_MODE_OFF
 
@@ -1262,14 +1262,14 @@ async def test_restore_state_uncoherence_case.opp):
     await _setup_climate.opp)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert 20 == state.attributes[ATTR_TEMPERATURE]
     assert HVAC_MODE_OFF == state.state
     assert 0 == len(calls)
 
     calls = _setup_switch.opp, False)
     await.opp.async_block_till_done()
-    state =.opp.states.get(ENTITY)
+    state = opp.states.get(ENTITY)
     assert HVAC_MODE_OFF == state.state
 
 

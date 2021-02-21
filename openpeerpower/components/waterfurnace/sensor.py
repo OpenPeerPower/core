@@ -54,7 +54,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         return
 
     sensors = []
-    client =.opp.data[WF_DOMAIN]
+    client = opp.data[WF_DOMAIN]
     for sconfig in SENSORS:
         sensors.append(WaterFurnaceSensor(client, sconfig))
 

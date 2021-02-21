@@ -56,7 +56,7 @@ async def test_setup_entry_fails.opp):
 async def test_unload_entry.opp):
     """Test successful unload of entry."""
     config_entry = await setup_axis_integration.opp)
-    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
     assert.opp.data[AXIS_DOMAIN]
 
     assert await.opp.config_entries.async_unload(device.config_entry.entry_id)

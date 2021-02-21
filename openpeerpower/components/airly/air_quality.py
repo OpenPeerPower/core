@@ -40,7 +40,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Airly air_quality entity based on a config entry."""
     name = config_entry.data[CONF_NAME]
 
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id]
 
     async_add_entities([AirlyAirQuality(coordinator, name)], False)
 

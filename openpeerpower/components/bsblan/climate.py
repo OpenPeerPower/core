@@ -77,7 +77,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up BSBLan device based on a config entry."""
-    bsblan: BSBLan =.opp.data[DOMAIN][entry.entry_id][DATA_BSBLAN_CLIENT]
+    bsblan: BSBLan = opp.data[DOMAIN][entry.entry_id][DATA_BSBLAN_CLIENT]
     info = await bsblan.info()
     async_add_entities([BSBLanClimate(entry.entry_id, bsblan, info)], True)
 

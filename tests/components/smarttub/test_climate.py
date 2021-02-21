@@ -38,14 +38,14 @@ async def test_thermostat(coordinator, spa,.opp, config_entry):
     await.opp.async_block_till_done()
 
     entity_id = f"climate.{spa.brand}_{spa.model}_thermostat"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
 
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
 
     spa.get_status.return_value["heater"] = "OFF"
     await.opp.helpers.entity_component.async_update_entity(entity_id)
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
 
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
 

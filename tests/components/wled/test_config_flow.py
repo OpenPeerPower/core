@@ -30,7 +30,7 @@ async def test_show_user_form.opp: OpenPeerPower) -> None:
 async def test_show_zeroconf_confirm_form.opp: OpenPeerPower) -> None:
     """Test that the zeroconf confirmation form is served."""
     flow = config_flow.WLEDFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": SOURCE_ZEROCONF, CONF_NAME: "test"}
     result = await flow.async_step_zeroconf_confirm()
 
@@ -50,7 +50,7 @@ async def test_show_zerconf_form(
     )
 
     flow = config_flow.WLEDFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": SOURCE_ZEROCONF}
     result = await flow.async_step_zeroconf(
         {"host": "192.168.1.123", "hostname": "example.local.", "properties": {}}
@@ -125,7 +125,7 @@ async def test_zeroconf_no_data(
 ) -> None:
     """Test we abort if zeroconf provides no data."""
     flow = config_flow.WLEDFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_zeroconf()
 
     assert result["reason"] == "cannot_connect"
@@ -223,7 +223,7 @@ async def test_full_zeroconf_flow_implementation(
     )
 
     flow = config_flow.WLEDFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": SOURCE_ZEROCONF}
     result = await flow.async_step_zeroconf(
         {"host": "192.168.1.123", "hostname": "example.local.", "properties": {}}

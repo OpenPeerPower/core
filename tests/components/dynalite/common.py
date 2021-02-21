@@ -25,7 +25,7 @@ async def get_entry_id_from_opp.opp):
     """Get the config entry id from.opp."""
     ent_reg = await entity_registry.async_get_registry.opp)
     assert ent_reg
-    conf_entries =.opp.config_entries.async_entries(dynalite.DOMAIN)
+    conf_entries = opp.config_entries.async_entries(dynalite.DOMAIN)
     assert len(conf_entries) == 1
     return conf_entries[0].entry_id
 

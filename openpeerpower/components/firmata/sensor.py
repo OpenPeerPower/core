@@ -20,7 +20,7 @@ async def async_setup_entry(
     """Set up the Firmata sensors."""
     new_entities = []
 
-    board =.opp.data[DOMAIN][config_entry.entry_id]
+    board = opp.data[DOMAIN][config_entry.entry_id]
     for sensor in board.sensors:
         pin = sensor[CONF_PIN]
         pin_mode = sensor[CONF_PIN_MODE]

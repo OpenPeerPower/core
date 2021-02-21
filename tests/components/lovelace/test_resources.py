@@ -82,7 +82,7 @@ async def test_storage_resources_import.opp,.opp_ws_client,.opp_storage):
     assert response["success"]
     assert (
         response["result"]
-        ==.opp_storage[resources.RESOURCE_STORAGE_KEY]["data"]["items"]
+        == opp_storage[resources.RESOURCE_STORAGE_KEY]["data"]["items"]
     )
     assert (
         "resources"

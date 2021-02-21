@@ -65,9 +65,9 @@ SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the NuHeat thermostat(s)."""
-    thermostat, coordinator =.opp.data[DOMAIN][config_entry.entry_id]
+    thermostat, coordinator = opp.data[DOMAIN][config_entry.entry_id]
 
-    temperature_unit =.opp.config.units.temperature_unit
+    temperature_unit = opp.config.units.temperature_unit
     entity = NuHeatThermostat(coordinator, thermostat, temperature_unit)
 
     # No longer need a service as set_hvac_mode to auto does this

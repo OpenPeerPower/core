@@ -299,7 +299,7 @@ class HueOneLightStateView(OpenPeerPowerView):
             )
             return self.json_message("Entity not found", HTTP_NOT_FOUND)
 
-        entity =.opp.states.get.opp_entity_id)
+        entity = opp.states.get.opp_entity_id)
 
         if entity is None:
             _LOGGER.error("Entity not found: %s",.opp_entity_id)
@@ -338,7 +338,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
             _LOGGER.error("Unknown entity number: %s", entity_number)
             return self.json_message("Entity not found", HTTP_NOT_FOUND)
 
-        entity =.opp.states.get(entity_id)
+        entity = opp.states.get(entity_id)
 
         if entity is None:
             _LOGGER.error("Entity not found: %s", entity_id)
@@ -639,7 +639,7 @@ def get_entity_state(config, entity):
         data[STATE_ON] = entity.state != STATE_OFF
 
         if data[STATE_ON]:
-            data[STATE_BRIGHTNESS] =.opp_to_hue_brightness(
+            data[STATE_BRIGHTNESS] = opp_to_hue_brightness(
                 entity.attributes.get(ATTR_BRIGHTNESS, 0)
             )
             hue_sat = entity.attributes.get(ATTR_HS_COLOR)

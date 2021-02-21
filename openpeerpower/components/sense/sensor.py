@@ -60,9 +60,9 @@ def sense_to_mdi(sense_icon):
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Sense sensor."""
-    data =.opp.data[DOMAIN][config_entry.entry_id][SENSE_DATA]
-    sense_devices_data =.opp.data[DOMAIN][config_entry.entry_id][SENSE_DEVICES_DATA]
-    trends_coordinator =.opp.data[DOMAIN][config_entry.entry_id][
+    data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DATA]
+    sense_devices_data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DEVICES_DATA]
+    trends_coordinator = opp.data[DOMAIN][config_entry.entry_id][
         SENSE_TRENDS_COORDINATOR
     ]
 
@@ -71,7 +71,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     await trends_coordinator.async_request_refresh()
 
     sense_monitor_id = data.sense_monitor_id
-    sense_devices =.opp.data[DOMAIN][config_entry.entry_id][
+    sense_devices = opp.data[DOMAIN][config_entry.entry_id][
         SENSE_DISCOVERED_DEVICES_DATA
     ]
 

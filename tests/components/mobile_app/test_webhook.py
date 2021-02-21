@@ -186,7 +186,7 @@ async def test_webhook_op.dle_get_config.opp, create_registrations, webhook_clie
     if "allowlist_external_dirs" in json:
         json["allowlist_external_dirs"] = set(json["allowlist_external_dirs"])
 
-   .opp_config =.opp.config.as_dict()
+   .opp_config = opp.config.as_dict()
 
     expected_dict = {
         "latitude":.opp_config["latitude"],
@@ -265,7 +265,7 @@ async def test_webhook_update_location.opp, webhook_client, create_registrations
 
     assert resp.status == 200
 
-    state =.opp.states.get("device_tracker.test_1_2")
+    state = opp.states.get("device_tracker.test_1_2")
     assert state is not None
     assert state.attributes["latitude"] == 1.0
     assert state.attributes["longitude"] == 2.0

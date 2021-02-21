@@ -119,7 +119,7 @@ async def async_start_event_op.dler(
     callback_url_override: Optional[str] = None,
 ):
     """Register notify view."""
-   .opp_data =.opp.data[DLNA_DMR_DATA]
+   .opp_data = opp.data[DLNA_DMR_DATA]
     if "event_op.dler" in.opp_data:
         return.opp_data["event_op.dler"]
 

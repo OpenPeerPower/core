@@ -66,7 +66,7 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp, config_entry):
     """Set up Panasonic Viera from a config entry."""
-    panasonic_viera_data =.opp.data.setdefault(DOMAIN, {})
+    panasonic_viera_data = opp.data.setdefault(DOMAIN, {})
 
     config = config_entry.data
 
@@ -141,7 +141,7 @@ class Remote:
         encryption_key=None,
     ):
         """Initialize the Remote class."""
-        self._opp =.opp
+        self._opp = opp
 
         self._host = host
         self._port = port

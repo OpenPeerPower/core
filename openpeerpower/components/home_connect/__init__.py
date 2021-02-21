@@ -98,7 +98,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 @Throttle(SCAN_INTERVAL)
 async def update_all_devices.opp, entry):
     """Update all the devices."""
-    data =.opp.data[DOMAIN]
+    data = opp.data[DOMAIN]
     hc_api = data[entry.entry_id]
     try:
         await.opp.async_add_executor_job(hc_api.get_devices)

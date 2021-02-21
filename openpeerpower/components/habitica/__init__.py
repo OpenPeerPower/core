@@ -107,7 +107,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     async def handle_api_call(call):
         name = call.data[ATTR_NAME]
         path = call.data[ATTR_PATH]
-        api =.opp.data[DOMAIN].get(name)
+        api = opp.data[DOMAIN].get(name)
         if api is None:
             _LOGGER.error("API_CALL: User '%s' not configured", name)
             return
@@ -125,7 +125,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
             EVENT_API_CALL_SUCCESS, {"name": name, "path": path, "data": data}
         )
 
-    data =.opp.data.setdefault(DOMAIN, {})
+    data = opp.data.setdefault(DOMAIN, {})
     config = config_entry.data
     websession = async_get_clientsession.opp)
     url = config[CONF_URL]

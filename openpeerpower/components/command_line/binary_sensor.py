@@ -55,7 +55,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     value_template = config.get(CONF_VALUE_TEMPLATE)
     command_timeout = config.get(CONF_COMMAND_TIMEOUT)
     if value_template is not None:
-        value_template.opp =.opp
+        value_template.opp = opp
     data = CommandSensorData.opp, command, command_timeout)
 
     add_entities(
@@ -75,7 +75,7 @@ class CommandBinarySensor(BinarySensorEntity):
         self,.opp, data, name, device_class, payload_on, payload_off, value_template
     ):
         """Initialize the Command line binary sensor."""
-        self._opp =.opp
+        self._opp = opp
         self.data = data
         self._name = name
         self._device_class = device_class

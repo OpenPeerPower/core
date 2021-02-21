@@ -22,7 +22,7 @@ async def test_time.opp, time_zone):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.worldclock_sensor")
+    state = opp.states.get("sensor.worldclock_sensor")
     assert state is not None
 
     assert state.state == dt_util.now(time_zone=time_zone).strftime("%H:%M")
@@ -46,7 +46,7 @@ async def test_time_format.opp, time_zone):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.worldclock_sensor")
+    state = opp.states.get("sensor.worldclock_sensor")
     assert state is not None
 
     assert state.state == dt_util.now(time_zone=time_zone).strftime(time_format)

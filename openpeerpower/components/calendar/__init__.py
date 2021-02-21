@@ -29,7 +29,7 @@ SCAN_INTERVAL = timedelta(seconds=60)
 
 async def async_setup.opp, config):
     """Track states and offer events for calendars."""
-    component =.opp.data[DOMAIN] = EntityComponent(
+    component = opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
     )
 
@@ -221,7 +221,7 @@ class CalendarListView(http.OpenPeerPowerView):
         calendar_list: List[Dict[str, str]] = []
 
         for entity in self.component.entities:
-            state =.opp.states.get(entity.entity_id)
+            state = opp.states.get(entity.entity_id)
             calendar_list.append({"name": state.name, "entity_id": entity.entity_id})
 
         return self.json(sorted(calendar_list, key=lambda x: cast(str, x["name"])))

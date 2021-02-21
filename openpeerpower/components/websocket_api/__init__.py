@@ -55,9 +55,9 @@ def async_register_command(
         schema = op.dler._ws_schema  # type: ignore
     else:
         command = command_or_op.dler
-    handlers =.opp.data.get(DOMAIN)
+    handlers = opp.data.get(DOMAIN)
     if handlers is None:
-        handlers =.opp.data[DOMAIN] = {}
+        handlers = opp.data[DOMAIN] = {}
     handlers[command] = (handler, schema)
 
 

@@ -52,7 +52,7 @@ class SubscriptionRegistry(pv.AbstractSubscriptionRegistry):
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize the object."""
         super().__init__()
-        self._opp =.opp
+        self._opp = opp
         self._cancel_poll = None
 
     def start(self) -> None:

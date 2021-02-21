@@ -48,7 +48,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Arlo Alarm Control Panels."""
-    arlo =.opp.data[DATA_ARLO]
+    arlo = opp.data[DATA_ARLO]
 
     if not arlo.base_stations:
         return

@@ -78,7 +78,7 @@ async def test_setup_entry_encrypted.opp):
         await.opp.config_entries.async_setup(mock_entry.entry_id)
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("media_player.panasonic_viera_tv")
+        state = opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -106,7 +106,7 @@ async def test_setup_entry_encrypted_missing_device_info.opp):
         assert mock_entry.data[ATTR_DEVICE_INFO] == MOCK_DEVICE_INFO
         assert mock_entry.unique_id == MOCK_DEVICE_INFO[ATTR_UDN]
 
-        state =.opp.states.get("media_player.panasonic_viera_tv")
+        state = opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -134,7 +134,7 @@ async def test_setup_entry_encrypted_missing_device_info_none.opp):
         assert mock_entry.data[ATTR_DEVICE_INFO] is None
         assert mock_entry.unique_id == MOCK_CONFIG_DATA[CONF_HOST]
 
-        state =.opp.states.get("media_player.panasonic_viera_tv")
+        state = opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -159,7 +159,7 @@ async def test_setup_entry_unencrypted.opp):
         await.opp.config_entries.async_setup(mock_entry.entry_id)
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("media_player.panasonic_viera_tv")
+        state = opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -187,7 +187,7 @@ async def test_setup_entry_unencrypted_missing_device_info.opp):
         assert mock_entry.data[ATTR_DEVICE_INFO] == MOCK_DEVICE_INFO
         assert mock_entry.unique_id == MOCK_DEVICE_INFO[ATTR_UDN]
 
-        state =.opp.states.get("media_player.panasonic_viera_tv")
+        state = opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -215,7 +215,7 @@ async def test_setup_entry_unencrypted_missing_device_info_none.opp):
         assert mock_entry.data[ATTR_DEVICE_INFO] is None
         assert mock_entry.unique_id == MOCK_CONFIG_DATA[CONF_HOST]
 
-        state =.opp.states.get("media_player.panasonic_viera_tv")
+        state = opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -254,10 +254,10 @@ async def test_setup_unload_entry.opp):
 
     await.opp.config_entries.async_unload(mock_entry.entry_id)
     assert mock_entry.state == ENTRY_STATE_NOT_LOADED
-    state =.opp.states.get("media_player.panasonic_viera_tv")
+    state = opp.states.get("media_player.panasonic_viera_tv")
     assert state.state == STATE_UNAVAILABLE
 
     await.opp.config_entries.async_remove(mock_entry.entry_id)
     await.opp.async_block_till_done()
-    state =.opp.states.get("media_player.panasonic_viera_tv")
+    state = opp.states.get("media_player.panasonic_viera_tv")
     assert state is None

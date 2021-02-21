@@ -209,7 +209,7 @@ async def test_diskspace_no_paths.opp):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
 
-        entity =.opp.states.get("sensor.radarr_disk_space")
+        entity = opp.states.get("sensor.radarr_disk_space")
         assert entity is not None
         assert "263.10" == entity.state
         assert "mdi:harddisk" == entity.attributes["icon"]
@@ -238,7 +238,7 @@ async def test_diskspace_paths.opp):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
 
-        entity =.opp.states.get("sensor.radarr_disk_space")
+        entity = opp.states.get("sensor.radarr_disk_space")
         assert entity is not None
         assert "263.10" == entity.state
         assert "mdi:harddisk" == entity.attributes["icon"]
@@ -267,7 +267,7 @@ async def test_commands.opp):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
 
-        entity =.opp.states.get("sensor.radarr_commands")
+        entity = opp.states.get("sensor.radarr_commands")
         assert entity is not None
         assert 1 == int(entity.state)
         assert "mdi:code-braces" == entity.attributes["icon"]
@@ -296,7 +296,7 @@ async def test_movies.opp):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
 
-        entity =.opp.states.get("sensor.radarr_movies")
+        entity = opp.states.get("sensor.radarr_movies")
         assert entity is not None
         assert 1 == int(entity.state)
         assert "mdi:television" == entity.attributes["icon"]
@@ -325,7 +325,7 @@ async def test_upcoming_multiple_days.opp):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
 
-        entity =.opp.states.get("sensor.radarr_upcoming")
+        entity = opp.states.get("sensor.radarr_upcoming")
         assert entity is not None
         assert 1 == int(entity.state)
         assert "mdi:television" == entity.attributes["icon"]
@@ -356,7 +356,7 @@ async def test_upcoming_today.opp):
     ):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
-        entity =.opp.states.get("sensor.radarr_upcoming")
+        entity = opp.states.get("sensor.radarr_upcoming")
         assert 1 == int(entity.state)
         assert "mdi:television" == entity.attributes["icon"]
         assert "Movies" == entity.attributes["unit_of_measurement"]
@@ -382,7 +382,7 @@ async def test_system_status.opp):
     ):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
-        entity =.opp.states.get("sensor.radarr_status")
+        entity = opp.states.get("sensor.radarr_status")
         assert entity is not None
         assert "0.2.0.210" == entity.state
         assert "mdi:information" == entity.attributes["icon"]
@@ -409,7 +409,7 @@ async def test_ssl.opp):
     ):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
-        entity =.opp.states.get("sensor.radarr_upcoming")
+        entity = opp.states.get("sensor.radarr_upcoming")
         assert entity is not None
         assert 1 == int(entity.state)
         assert "mdi:television" == entity.attributes["icon"]
@@ -436,6 +436,6 @@ async def test_exception_op.dling.opp):
     ):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
-        entity =.opp.states.get("sensor.radarr_upcoming")
+        entity = opp.states.get("sensor.radarr_upcoming")
         assert entity is not None
         assert "unavailable" == entity.state

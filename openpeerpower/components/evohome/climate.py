@@ -80,7 +80,7 @@ async def async_setup_platform(
     if discovery_info is None:
         return
 
-    broker =.opp.data[DOMAIN]["broker"]
+    broker = opp.data[DOMAIN]["broker"]
 
     _LOGGER.debug(
         "Found the Location/Controller (%s), id=%s, name=%s (location_idx=%s)",

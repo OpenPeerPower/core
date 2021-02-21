@@ -49,7 +49,7 @@ async def async_setup_platform(
 
     covers = []
     for cover in discovery_info[CONF_COVERS]:
-        hub: ModbusHub =.opp.data[MODBUS_DOMAIN][discovery_info[CONF_NAME]]
+        hub: ModbusHub = opp.data[MODBUS_DOMAIN][discovery_info[CONF_NAME]]
         covers.append(ModbusCover(hub, cover))
 
     async_add_entities(covers)

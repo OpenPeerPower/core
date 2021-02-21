@@ -62,16 +62,16 @@ async def test_template_state_text.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.async_set("cover.test_state", STATE_OPEN)
+    state = opp.states.async_set("cover.test_state", STATE_OPEN)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.state == STATE_OPEN
 
-    state =.opp.states.async_set("cover.test_state", STATE_CLOSED)
+    state = opp.states.async_set("cover.test_state", STATE_CLOSED)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.state == STATE_CLOSED
 
 
@@ -105,7 +105,7 @@ async def test_template_state_boolean.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.state == STATE_OPEN
 
 
@@ -140,27 +140,27 @@ async def test_template_position.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.async_set("cover.test", STATE_CLOSED)
+    state = opp.states.async_set("cover.test", STATE_CLOSED)
     await.opp.async_block_till_done()
 
-    entity =.opp.states.get("cover.test")
+    entity = opp.states.get("cover.test")
     attrs = {}
     attrs["position"] = 42
    .opp.states.async_set(entity.entity_id, entity.state, attributes=attrs)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_position") == 42.0
     assert state.state == STATE_OPEN
 
-    state =.opp.states.async_set("cover.test", STATE_OPEN)
+    state = opp.states.async_set("cover.test", STATE_OPEN)
     await.opp.async_block_till_done()
-    entity =.opp.states.get("cover.test")
+    entity = opp.states.get("cover.test")
     attrs["position"] = 0.0
    .opp.states.async_set(entity.entity_id, entity.state, attributes=attrs)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_position") == 0.0
     assert state.state == STATE_CLOSED
 
@@ -196,7 +196,7 @@ async def test_template_tilt.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_tilt_position") == 42.0
 
 
@@ -231,7 +231,7 @@ async def test_template_out_of_bounds.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_tilt_position") is None
     assert state.attributes.get("current_position") is None
 
@@ -355,7 +355,7 @@ async def test_template_non_numeric.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_tilt_position") is None
     assert state.attributes.get("current_position") is None
 
@@ -387,7 +387,7 @@ async def test_open_action.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.state == STATE_CLOSED
 
     await.opp.services.async_call(
@@ -426,7 +426,7 @@ async def test_close_stop_action.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.state == STATE_OPEN
 
     await.opp.services.async_call(
@@ -474,37 +474,37 @@ async def test_set_position.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.async_set("input_number.test", 42)
+    state = opp.states.async_set("input_number.test", 42)
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.state == STATE_OPEN
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_position") == 100.0
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_position") == 0.0
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_position") == 100.0
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_position") == 0.0
 
     await.opp.services.async_call(
@@ -514,7 +514,7 @@ async def test_set_position.opp, calls):
         blocking=True,
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_position") == 25.0
 
 
@@ -659,7 +659,7 @@ async def test_set_position_optimistic.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_position") is None
 
     await.opp.services.async_call(
@@ -669,35 +669,35 @@ async def test_set_position_optimistic.opp, calls):
         blocking=True,
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_position") == 42.0
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.state == STATE_CLOSED
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.state == STATE_OPEN
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.state == STATE_CLOSED
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.state == STATE_OPEN
 
 
@@ -724,7 +724,7 @@ async def test_set_tilt_position_optimistic.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_tilt_position") is None
 
     await.opp.services.async_call(
@@ -734,35 +734,35 @@ async def test_set_tilt_position_optimistic.opp, calls):
         blocking=True,
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_tilt_position") == 42.0
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_CLOSE_COVER_TILT, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_tilt_position") == 0.0
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER_TILT, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_tilt_position") == 100.0
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE_COVER_TILT, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_tilt_position") == 0.0
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE_COVER_TILT, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("current_tilt_position") == 100.0
 
 
@@ -799,13 +799,13 @@ async def test_icon_template.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("icon") == ""
 
-    state =.opp.states.async_set("cover.test_state", STATE_OPEN)
+    state = opp.states.async_set("cover.test_state", STATE_OPEN)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
 
     assert state.attributes["icon"] == "mdi:check"
 
@@ -843,13 +843,13 @@ async def test_entity_picture_template.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("entity_picture") == ""
 
-    state =.opp.states.async_set("cover.test_state", STATE_OPEN)
+    state = opp.states.async_set("cover.test_state", STATE_OPEN)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
 
     assert state.attributes["entity_picture"] == "/local/cover.png"
 
@@ -925,7 +925,7 @@ async def test_availability_without_availability_template.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.state != STATE_UNAVAILABLE
 
 
@@ -994,7 +994,7 @@ async def test_device_class.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert state.attributes.get("device_class") == "door"
 
 
@@ -1029,7 +1029,7 @@ async def test_invalid_device_class.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("cover.test_template_cover")
+    state = opp.states.get("cover.test_template_cover")
     assert not state
 
 

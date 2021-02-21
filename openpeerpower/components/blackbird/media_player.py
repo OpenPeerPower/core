@@ -117,7 +117,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             ]
 
         else:
-            devices =.opp.data[DATA_BLACKBIRD].values()
+            devices = opp.data[DATA_BLACKBIRD].values()
 
         for device in devices:
             if service.service == SERVICE_SETALLZONES:

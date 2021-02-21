@@ -54,7 +54,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     value_template = config.get(CONF_VALUE_TEMPLATE)
     command_timeout = config.get(CONF_COMMAND_TIMEOUT)
     if value_template is not None:
-        value_template.opp =.opp
+        value_template.opp = opp
     json_attributes = config.get(CONF_JSON_ATTRIBUTES)
     data = CommandSensorData.opp, command, command_timeout)
 
@@ -70,7 +70,7 @@ class CommandSensor(Entity):
         self,.opp, data, name, unit_of_measurement, value_template, json_attributes
     ):
         """Initialize the sensor."""
-        self._opp =.opp
+        self._opp = opp
         self.data = data
         self._attributes = None
         self._json_attributes = json_attributes
@@ -138,7 +138,7 @@ class CommandSensorData:
     def __init__(self,.opp, command, command_timeout):
         """Initialize the data object."""
         self.value = None
-        self.opp =.opp
+        self.opp = opp
         self.command = command
         self.timeout = command_timeout
 

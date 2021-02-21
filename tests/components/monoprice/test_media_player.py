@@ -188,7 +188,7 @@ async def test_service_calls_with_entity_id.opp):
     await.opp.async_block_till_done()
 
     # Checking that values were not (!) restored
-    state =.opp.states.get(ZONE_1_ID)
+    state = opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 1.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "three"
@@ -197,7 +197,7 @@ async def test_service_calls_with_entity_id.opp):
     await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": ZONE_1_ID})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ZONE_1_ID)
+    state = opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
@@ -230,7 +230,7 @@ async def test_service_calls_with_all_entities.opp):
     await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": "all"})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ZONE_1_ID)
+    state = opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
@@ -263,7 +263,7 @@ async def test_service_calls_without_relevant_entities.opp):
     await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": "light.demo"})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ZONE_1_ID)
+    state = opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 1.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "three"
@@ -299,7 +299,7 @@ async def test_update.opp):
     await async_update_entity.opp, ZONE_1_ID)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ZONE_1_ID)
+    state = opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 1.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "three"
@@ -325,7 +325,7 @@ async def test_failed_update.opp):
         await async_update_entity.opp, ZONE_1_ID)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(ZONE_1_ID)
+    state = opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
@@ -351,7 +351,7 @@ async def test_empty_update.opp):
         await async_update_entity.opp, ZONE_1_ID)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(ZONE_1_ID)
+    state = opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
@@ -361,7 +361,7 @@ async def test_supported_features.opp):
     """Test supported features property."""
     await _setup_monoprice.opp, MockMonoprice())
 
-    state =.opp.states.get(ZONE_1_ID)
+    state = opp.states.get(ZONE_1_ID)
     assert (
         SUPPORT_VOLUME_MUTE
         | SUPPORT_VOLUME_SET
@@ -377,7 +377,7 @@ async def test_source_list.opp):
     """Test source list property."""
     await _setup_monoprice.opp, MockMonoprice())
 
-    state =.opp.states.get(ZONE_1_ID)
+    state = opp.states.get(ZONE_1_ID)
     # Note, the list is sorted!
     assert state.attributes[ATTR_INPUT_SOURCE_LIST] == ["one", "three"]
 
@@ -386,7 +386,7 @@ async def test_source_list_with_options.opp):
     """Test source list property."""
     await _setup_monoprice_with_options.opp, MockMonoprice())
 
-    state =.opp.states.get(ZONE_1_ID)
+    state = opp.states.get(ZONE_1_ID)
     # Note, the list is sorted!
     assert state.attributes[ATTR_INPUT_SOURCE_LIST] == ["two", "four"]
 
@@ -422,7 +422,7 @@ async def test_unknown_source.opp):
     await async_update_entity.opp, ZONE_1_ID)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ZONE_1_ID)
+    state = opp.states.get(ZONE_1_ID)
 
     assert state.attributes.get(ATTR_INPUT_SOURCE) is None
 

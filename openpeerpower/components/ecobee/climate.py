@@ -173,7 +173,7 @@ SUPPORT_FLAGS = (
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the ecobee thermostat."""
 
-    data =.opp.data[DOMAIN]
+    data = opp.data[DOMAIN]
 
     devices = [Thermostat(data, index) for index in range(len(data.ecobee.thermostats))]
 

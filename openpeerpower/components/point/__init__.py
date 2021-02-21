@@ -108,8 +108,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 async def async_setup_webhook.opp: OpenPeerPowerType, entry: ConfigEntry, session):
     """Set up a webhook to handle binary sensor events."""
     if CONF_WEBHOOK_ID not in entry.data:
-        webhook_id =.opp.components.webhook.async_generate_id()
-        webhook_url =.opp.components.webhook.async_generate_url(webhook_id)
+        webhook_id = opp.components.webhook.async_generate_id()
+        webhook_url = opp.components.webhook.async_generate_url(webhook_id)
         _LOGGER.info("Registering new webhook at: %s", webhook_url)
 
        .opp.config_entries.async_update_entry(
@@ -134,7 +134,7 @@ async def async_setup_webhook.opp: OpenPeerPowerType, entry: ConfigEntry, sessio
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
    .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
-    session =.opp.data[DOMAIN].pop(entry.entry_id)
+    session = opp.data[DOMAIN].pop(entry.entry_id)
     await session.remove_webhook()
 
     for component in ("binary_sensor", "sensor"):
@@ -167,7 +167,7 @@ class MinutPointClient:
         """Initialize the Minut data object."""
         self._known_devices = set()
         self._known_homes = set()
-        self._opp =.opp
+        self._opp = opp
         self._config_entry = config_entry
         self._is_available = True
         self._client = session

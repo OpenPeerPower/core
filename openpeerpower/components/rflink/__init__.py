@@ -169,11 +169,11 @@ async def async_setup.opp, config):
             and event[EVENT_KEY_COMMAND] in RFLINK_GROUP_COMMANDS
         )
         if is_group_event:
-            entity_ids =.opp.data[DATA_ENTITY_GROUP_LOOKUP][event_type].get(
+            entity_ids = opp.data[DATA_ENTITY_GROUP_LOOKUP][event_type].get(
                 event_id, []
             )
         else:
-            entity_ids =.opp.data[DATA_ENTITY_LOOKUP][event_type][event_id]
+            entity_ids = opp.data[DATA_ENTITY_LOOKUP][event_type][event_id]
 
         _LOGGER.debug("entity_ids: %s", entity_ids)
         if entity_ids:

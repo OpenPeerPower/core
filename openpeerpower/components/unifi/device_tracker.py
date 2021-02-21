@@ -70,7 +70,7 @@ WIRELESS_CONNECTION = (
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up device tracker for UniFi component."""
-    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     controller.entities[DOMAIN] = {CLIENT_TRACKER: set(), DEVICE_TRACKER: set()}
 
     @callback

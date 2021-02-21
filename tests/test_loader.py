@@ -104,7 +104,7 @@ async def test_custom_component_name.opp):
     assert int_comp.__name__ == "custom_components.test_standalone"
     assert int_comp.__package__ == "custom_components"
 
-    comp =.opp.components.test_standalone
+    comp = opp.components.test_standalone
     assert comp.__name__ == "custom_components.test_standalone"
     assert comp.__package__ == "custom_components"
 
@@ -113,7 +113,7 @@ async def test_custom_component_name.opp):
     assert int_comp.__name__ == "custom_components.test_package"
     assert int_comp.__package__ == "custom_components.test_package"
 
-    comp =.opp.components.test_package
+    comp = opp.components.test_package
     assert comp.__name__ == "custom_components.test_package"
     assert comp.__package__ == "custom_components.test_package"
 
@@ -313,8 +313,8 @@ def test_integration_properties.opp):
 
 async def test_integrations_only_once.opp):
     """Test that we load integrations only once."""
-    int_1 =.opp.async_create_task(loader.async_get_integration.opp, "hue"))
-    int_2 =.opp.async_create_task(loader.async_get_integration.opp, "hue"))
+    int_1 = opp.async_create_task(loader.async_get_integration.opp, "hue"))
+    int_2 = opp.async_create_task(loader.async_get_integration.opp, "hue"))
 
     assert await int_1 is await int_2
 

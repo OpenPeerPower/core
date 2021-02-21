@@ -9,7 +9,7 @@ from openpeerpowerr.setup import async_setup_component
 
 async def test_async_browse_media.opp):
     """Test browse media."""
-    local_media =.opp.config.path("media")
+    local_media = opp.config.path("media")
     await async_process_op.core_config(
        .opp, {"media_dirs": {"local": local_media, "recordings": local_media}}
     )
@@ -65,7 +65,7 @@ async def test_async_browse_media.opp):
 
 async def test_media_view.opp,.opp_client):
     """Test media view."""
-    local_media =.opp.config.path("media")
+    local_media = opp.config.path("media")
     await async_process_op.core_config(
        .opp, {"media_dirs": {"local": local_media, "recordings": local_media}}
     )

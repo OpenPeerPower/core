@@ -26,7 +26,7 @@ NAME_WATER_PRESSURE = "Water Pressure"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Flo sensors from config entry."""
-    devices: List[FloDeviceDataUpdateCoordinator] =.opp.data[FLO_DOMAIN][
+    devices: List[FloDeviceDataUpdateCoordinator] = opp.data[FLO_DOMAIN][
         config_entry.entry_id
     ]["devices"]
     entities = []

@@ -107,7 +107,7 @@ async def test_owserver_switch(owproxy,.opp, device_id):
         entity_id = expected_sensor["entity_id"]
         registry_entry = entity_registry.entities.get(entity_id)
         assert registry_entry is not None
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state.state == expected_sensor["result"]
 
         if state.state == STATE_ON:
@@ -125,7 +125,7 @@ async def test_owserver_switch(owproxy,.opp, device_id):
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state.state == expected_sensor["result"]
         assert state.attributes["device_file"] == expected_sensor.get(
             "device_file", registry_entry.unique_id

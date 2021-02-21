@@ -44,7 +44,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Dovado sensor platform."""
-    dovado =.opp.data[DOVADO_DOMAIN]
+    dovado = opp.data[DOVADO_DOMAIN]
 
     entities = []
     for sensor in config[CONF_SENSORS]:

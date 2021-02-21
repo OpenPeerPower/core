@@ -30,7 +30,7 @@ async def test_storage_is_removed.opp,.opp_storage):
     """Test entity map storage removal is idempotent."""
     await setup_platform.opp)
 
-    entity_map =.opp.data[ENTITY_MAP]
+    entity_map = opp.data[ENTITY_MAP]
     hkid = "00:00:00:00:00:01"
 
     entity_map.async_create_or_update_map(hkid, 1, [])
@@ -49,7 +49,7 @@ async def test_storage_is_removed_idempotent.opp):
     """Test entity map storage removal is idempotent."""
     await setup_platform.opp)
 
-    entity_map =.opp.data[ENTITY_MAP]
+    entity_map = opp.data[ENTITY_MAP]
     hkid = "00:00:00:00:00:01"
 
     assert hkid not in entity_map.storage_data
@@ -70,7 +70,7 @@ async def test_storage_is_updated_on_add.opp,.opp_storage, utcnow):
     """Test entity map storage is cleaned up on adding an accessory."""
     await setup_test_component.opp, create_lightbulb_service)
 
-    entity_map =.opp.data[ENTITY_MAP]
+    entity_map = opp.data[ENTITY_MAP]
     hkid = "00:00:00:00:00:00"
 
     # Is in memory store updated?

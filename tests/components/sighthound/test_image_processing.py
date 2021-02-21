@@ -119,7 +119,7 @@ async def test_process_image.opp, mock_image, mock_detections):
     await.opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(VALID_ENTITY_ID)
+    state = opp.states.get(VALID_ENTITY_ID)
     assert state.state == "2"
     assert len(person_events) == 2
 
@@ -156,7 +156,7 @@ async def test_save_image.opp, mock_image, mock_detections):
         data = {ATTR_ENTITY_ID: VALID_ENTITY_ID}
         await.opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
         await.opp.async_block_till_done()
-        state =.opp.states.get(VALID_ENTITY_ID)
+        state = opp.states.get(VALID_ENTITY_ID)
         assert state.state == "2"
         assert pil_img.save.call_count == 1
 
@@ -182,7 +182,7 @@ async def test_save_timestamped_image.opp, mock_image, mock_detections, mock_now
         data = {ATTR_ENTITY_ID: VALID_ENTITY_ID}
         await.opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
         await.opp.async_block_till_done()
-        state =.opp.states.get(VALID_ENTITY_ID)
+        state = opp.states.get(VALID_ENTITY_ID)
         assert state.state == "2"
         assert pil_img.save.call_count == 2
 

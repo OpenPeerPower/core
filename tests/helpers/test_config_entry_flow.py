@@ -45,7 +45,7 @@ def webhook_flow_conf.opp):
 async def test_single_entry_allowed.opp, discovery_flow_conf):
     """Test only a single entry is allowed."""
     flow = config_entries.HANDLERS["test"]()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {}
 
     MockConfigEntry(domain="test").add_to_opp.opp)
@@ -58,7 +58,7 @@ async def test_single_entry_allowed.opp, discovery_flow_conf):
 async def test_user_no_devices_found.opp, discovery_flow_conf):
     """Test if no devices found."""
     flow = config_entries.HANDLERS["test"]()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": config_entries.SOURCE_USER}
     result = await flow.async_step_confirm(user_input={})
 
@@ -86,7 +86,7 @@ async def test_user_op._confirmation.opp, discovery_flow_conf):
 async def test_discovery_single_instance.opp, discovery_flow_conf, source):
     """Test we not allow duplicates."""
     flow = config_entries.HANDLERS["test"]()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {}
 
     MockConfigEntry(domain="test").add_to_opp.opp)
@@ -100,7 +100,7 @@ async def test_discovery_single_instance.opp, discovery_flow_conf, source):
 async def test_discovery_confirmation.opp, discovery_flow_conf, source):
     """Test we ask for confirmation via discovery."""
     flow = config_entries.HANDLERS["test"]()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": source}
 
     result = await getattr(flow, f"async_step_{source}")({})
@@ -178,7 +178,7 @@ async def test_import_abort_discovery.opp, discovery_flow_conf):
 async def test_import_no_confirmation.opp, discovery_flow_conf):
     """Test import requires no confirmation to set up."""
     flow = config_entries.HANDLERS["test"]()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {}
     discovery_flow_conf["discovered"] = True
 
@@ -189,7 +189,7 @@ async def test_import_no_confirmation.opp, discovery_flow_conf):
 async def test_import_single_instance.opp, discovery_flow_conf):
     """Test import doesn't create second instance."""
     flow = config_entries.HANDLERS["test"]()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {}
     discovery_flow_conf["discovered"] = True
     MockConfigEntry(domain="test").add_to_opp.opp)
@@ -233,7 +233,7 @@ async def test_ignored_discoveries.opp, discovery_flow_conf):
 async def test_webhook_single_entry_allowed.opp, webhook_flow_conf):
     """Test only a single entry is allowed."""
     flow = config_entries.HANDLERS["test_single"]()
-    flow.opp =.opp
+    flow.opp = opp
 
     MockConfigEntry(domain="test_single").add_to_opp.opp)
     result = await flow.async_step_user()
@@ -245,7 +245,7 @@ async def test_webhook_single_entry_allowed.opp, webhook_flow_conf):
 async def test_webhook_multiple_entries_allowed.opp, webhook_flow_conf):
     """Test multiple entries are allowed when specified."""
     flow = config_entries.HANDLERS["test_multiple"]()
-    flow.opp =.opp
+    flow.opp = opp
 
     MockConfigEntry(domain="test_multiple").add_to_opp.opp)
    .opp.config.api = Mock(base_url="http://example.com")
@@ -257,7 +257,7 @@ async def test_webhook_multiple_entries_allowed.opp, webhook_flow_conf):
 async def test_webhook_config_flow_registers_webhook.opp, webhook_flow_conf):
     """Test setting up an entry creates a webhook."""
     flow = config_entries.HANDLERS["test_single"]()
-    flow.opp =.opp
+    flow.opp = opp
 
     await async_process_op.core_config(
        .opp,

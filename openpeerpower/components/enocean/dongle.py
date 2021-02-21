@@ -29,7 +29,7 @@ class EnOceanDongle:
         )
         self.serial_path = serial_path
         self.identifier = basename(normpath(serial_path))
-        self.opp =.opp
+        self.opp = opp
         self.dispatcher_disconnect_op.dle = None
 
     async def async_setup(self):

@@ -131,7 +131,7 @@ async def async_get_triggers.opp, device_id):
 
     for entry in entries:
         device_class = DEVICE_CLASS_NONE
-        state =.opp.states.get(entry.entity_id)
+        state = opp.states.get(entry.entity_id)
         unit_of_measurement = (
             state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) if state else None
         )
@@ -162,7 +162,7 @@ async def async_get_triggers.opp, device_id):
 
 async def async_get_trigger_capabilities.opp, config):
     """List trigger capabilities."""
-    state =.opp.states.get(config[CONF_ENTITY_ID])
+    state = opp.states.get(config[CONF_ENTITY_ID])
     unit_of_measurement = (
         state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) if state else None
     )

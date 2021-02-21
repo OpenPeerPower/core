@@ -16,7 +16,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is not None:
         name = discovery_info.get(CONF_NAME)
         device = discovery_info.get(CONF_DEVICE)
-        kira =.opp.data[DOMAIN][CONF_SENSOR][name]
+        kira = opp.data[DOMAIN][CONF_SENSOR][name]
 
         add_entities([KiraReceiver(device, kira)])
 

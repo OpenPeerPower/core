@@ -61,7 +61,7 @@ async def test_unload_config_entry.opp, config_entry, aioclient_mock):
     """Test entry unloading."""
     await setup_integration.opp, config_entry, aioclient_mock)
 
-    config_entries =.opp.config_entries.async_entries(DOMAIN)
+    config_entries = opp.config_entries.async_entries(DOMAIN)
     assert len(config_entries) == 1
     assert config_entries[0] is config_entry
     assert config_entry.state == ENTRY_STATE_LOADED

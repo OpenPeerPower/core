@@ -53,7 +53,7 @@ class GroupNotifyPlatform(BaseNotificationService):
 
     def __init__(self,.opp, entities):
         """Initialize the service."""
-        self.opp =.opp
+        self.opp = opp
         self.entities = entities
 
     async def async_send_message(self, message="", **kwargs):

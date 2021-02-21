@@ -26,7 +26,7 @@ from .const import (
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the ecobee weather platform."""
-    data =.opp.data[DOMAIN]
+    data = opp.data[DOMAIN]
     dev = []
     for index in range(len(data.ecobee.thermostats)):
         thermostat = data.ecobee.get_thermostat(index)

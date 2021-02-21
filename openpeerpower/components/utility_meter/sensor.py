@@ -69,13 +69,13 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     meters = []
     for conf in discovery_info:
         meter = conf[CONF_METER]
-        conf_meter_source =.opp.data[DATA_UTILITY][meter][CONF_SOURCE_SENSOR]
-        conf_meter_type =.opp.data[DATA_UTILITY][meter].get(CONF_METER_TYPE)
-        conf_meter_offset =.opp.data[DATA_UTILITY][meter][CONF_METER_OFFSET]
-        conf_meter_net_consumption =.opp.data[DATA_UTILITY][meter][
+        conf_meter_source = opp.data[DATA_UTILITY][meter][CONF_SOURCE_SENSOR]
+        conf_meter_type = opp.data[DATA_UTILITY][meter].get(CONF_METER_TYPE)
+        conf_meter_offset = opp.data[DATA_UTILITY][meter][CONF_METER_OFFSET]
+        conf_meter_net_consumption = opp.data[DATA_UTILITY][meter][
             CONF_METER_NET_CONSUMPTION
         ]
-        conf_meter_tariff_entity =.opp.data[DATA_UTILITY][meter].get(
+        conf_meter_tariff_entity = opp.data[DATA_UTILITY][meter].get(
             CONF_TARIFF_ENTITY
         )
 

@@ -49,7 +49,7 @@ class HomematicNotificationService(BaseNotificationService):
 
     def __init__(self,.opp, data):
         """Initialize the service."""
-        self.opp =.opp
+        self.opp = opp
         self.data = data
 
     def send_message(self, message="", **kwargs):

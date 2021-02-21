@@ -112,7 +112,7 @@ class ComponentFactory:
         aioclient_mock: AiohttpClientMocker,
     ) -> None:
         """Initialize the object."""
-        self._opp =.opp
+        self._opp = opp
         self._api_class_mock = api_class_mock
         self._aiohttp_client = aiohttp_client
         self._aioclient_mock = aioclient_mock

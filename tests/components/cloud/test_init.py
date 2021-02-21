@@ -38,7 +38,7 @@ async def test_constructor_loads_info_from_config.opp):
         )
         assert result
 
-    cl =.opp.data["cloud"]
+    cl = opp.data["cloud"]
     assert cl.mode == cloud.MODE_DEV
     assert cl.cognito_client_id == "test-cognito_client_id"
     assert cl.user_pool_id == "test-user_pool_id"
@@ -57,7 +57,7 @@ async def test_constructor_loads_info_from_config.opp):
 
 async def test_remote_services.opp, mock_cloud_fixture,.opp_read_only_user):
     """Setup cloud component and test services."""
-    cloud =.opp.data[DOMAIN]
+    cloud = opp.data[DOMAIN]
 
     assert.opp.services.has_service(DOMAIN, "remote_connect")
     assert.opp.services.has_service(DOMAIN, "remote_disconnect")
@@ -131,7 +131,7 @@ async def test_setup_existing_cloud_user.opp,.opp_storage):
 
 async def test_on_connect.opp, mock_cloud_fixture):
     """Test cloud on connect triggers."""
-    cl =.opp.data["cloud"]
+    cl = opp.data["cloud"]
 
     assert len(cl.iot._on_connect) == 3
 
@@ -152,7 +152,7 @@ async def test_on_connect.opp, mock_cloud_fixture):
 
 async def test_remote_ui_url.opp, mock_cloud_fixture):
     """Test getting remote ui url."""
-    cl =.opp.data["cloud"]
+    cl = opp.data["cloud"]
 
     # Not logged in
     with pytest.raises(cloud.CloudNotAvailable):

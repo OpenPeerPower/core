@@ -9,7 +9,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     receive_message = await setup_ozw.opp, fixture=fan_data)
 
     # Test loaded
-    state =.opp.states.get("fan.in_wall_smart_fan_control_level")
+    state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
     assert state.state == "on"
 
@@ -33,7 +33,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     receive_message(fan_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.in_wall_smart_fan_control_level")
+    state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
     assert state.state == "off"
 
@@ -60,7 +60,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     receive_message(fan_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.in_wall_smart_fan_control_level")
+    state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["percentage"] == 66
@@ -88,7 +88,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     receive_message(fan_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.in_wall_smart_fan_control_level")
+    state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
     assert state.state == "on"
     assert state.attributes["percentage"] == 100
@@ -116,7 +116,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     receive_message(fan_msg)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("fan.in_wall_smart_fan_control_level")
+    state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
     assert state.state == "off"
 

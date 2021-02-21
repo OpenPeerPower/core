@@ -24,8 +24,8 @@ SENSOR_TYPES = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Ring binary sensors from a config entry."""
-    ring =.opp.data[DOMAIN][config_entry.entry_id]["api"]
-    devices =.opp.data[DOMAIN][config_entry.entry_id]["devices"]
+    ring = opp.data[DOMAIN][config_entry.entry_id]["api"]
+    devices = opp.data[DOMAIN][config_entry.entry_id]["devices"]
 
     sensors = []
 

@@ -62,13 +62,13 @@ async def test_template_state_text.opp):
    .opp.states.async_set("switch.test_state", STATE_ON)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.state == STATE_ON
 
    .opp.states.async_set("switch.test_state", STATE_OFF)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.state == STATE_OFF
 
 
@@ -102,7 +102,7 @@ async def test_template_state_boolean_on.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.state == STATE_ON
 
 
@@ -136,7 +136,7 @@ async def test_template_state_boolean_off.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.state == STATE_OFF
 
 
@@ -173,13 +173,13 @@ async def test_icon_template.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.attributes.get("icon") == ""
 
    .opp.states.async_set("switch.test_state", STATE_ON)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.attributes["icon"] == "mdi:check"
 
 
@@ -216,13 +216,13 @@ async def test_entity_picture_template.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.attributes.get("entity_picture") == ""
 
    .opp.states.async_set("switch.test_state", STATE_ON)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.attributes["entity_picture"] == "/local/switch.png"
 
 
@@ -422,7 +422,7 @@ async def test_on_action.opp, calls):
    .opp.states.async_set("switch.test_state", STATE_OFF)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.state == STATE_OFF
 
     await.opp.services.async_call(
@@ -462,7 +462,7 @@ async def test_on_action_optimistic.opp, calls):
    .opp.states.async_set("switch.test_template_switch", STATE_OFF)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.state == STATE_OFF
 
     await.opp.services.async_call(
@@ -472,7 +472,7 @@ async def test_on_action_optimistic.opp, calls):
         blocking=True,
     )
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert len(calls) == 1
     assert state.state == STATE_ON
 
@@ -506,7 +506,7 @@ async def test_off_action.opp, calls):
    .opp.states.async_set("switch.test_state", STATE_ON)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.state == STATE_ON
 
     await.opp.services.async_call(
@@ -546,7 +546,7 @@ async def test_off_action_optimistic.opp, calls):
    .opp.states.async_set("switch.test_template_switch", STATE_ON)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert state.state == STATE_ON
 
     await.opp.services.async_call(
@@ -556,7 +556,7 @@ async def test_off_action_optimistic.opp, calls):
         blocking=True,
     )
 
-    state =.opp.states.get("switch.test_template_switch")
+    state = opp.states.get("switch.test_template_switch")
     assert len(calls) == 1
     assert state.state == STATE_OFF
 
@@ -595,11 +595,11 @@ async def test_restore_state.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.s1")
+    state = opp.states.get("switch.s1")
     assert state
     assert state.state == STATE_ON
 
-    state =.opp.states.get("switch.s2")
+    state = opp.states.get("switch.s2")
     assert state
     assert state.state == STATE_OFF
 

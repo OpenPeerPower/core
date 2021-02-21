@@ -30,7 +30,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     name = discovery_info[CONF_NAME]
-    device =.opp.data[DATA_AMCREST][DEVICES][name]
+    device = opp.data[DATA_AMCREST][DEVICES][name]
     async_add_entities(
         [
             AmcrestSensor(name, device, sensor_type)

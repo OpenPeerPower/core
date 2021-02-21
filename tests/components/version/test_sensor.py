@@ -21,6 +21,6 @@ async def test_version.opp):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
 
     assert state.state == "10.0"

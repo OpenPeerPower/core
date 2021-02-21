@@ -209,7 +209,7 @@ async def test_setup_websocket_2.opp, mock_now):
     )
     entry.add_to_opp.opp)
 
-    config_entries =.opp.config_entries.async_entries(SAMSUNGTV_DOMAIN)
+    config_entries = opp.config_entries.async_entries(SAMSUNGTV_DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
 
@@ -223,7 +223,7 @@ async def test_setup_websocket_2.opp, mock_now):
         async_fire_time_changed.opp, next_update)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert remote.call_count == 1
     assert remote.call_args_list == [call(**MOCK_CALLS_ENTRY_WS)]
@@ -238,7 +238,7 @@ async def test_update_on.opp, remote, mock_now):
         async_fire_time_changed.opp, next_update)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
 
@@ -256,7 +256,7 @@ async def test_update_off.opp, remote, mock_now):
             async_fire_time_changed.opp, next_update)
             await.opp.async_block_till_done()
 
-        state =.opp.states.get(ENTITY_ID)
+        state = opp.states.get(ENTITY_ID)
         assert state.state == STATE_OFF
 
 
@@ -318,7 +318,7 @@ async def test_update_unhandled_response.opp, remote, mock_now):
             async_fire_time_changed.opp, next_update)
             await.opp.async_block_till_done()
 
-        state =.opp.states.get(ENTITY_ID)
+        state = opp.states.get(ENTITY_ID)
         assert state.state == STATE_ON
 
 
@@ -328,7 +328,7 @@ async def test_send_key.opp, remote):
     assert await.opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     # key and update called
     assert remote.control.call_count == 1
     assert remote.control.call_args_list == [call("KEY_VOLUP")]
@@ -344,7 +344,7 @@ async def test_send_key_broken_pipe.opp, remote):
     assert await.opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
 
@@ -357,7 +357,7 @@ async def test_send_key_connection_closed_retry_succeed.opp, remote):
     assert await.opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     # key because of retry two times and update called
     assert remote.control.call_count == 2
     assert remote.control.call_args_list == [
@@ -376,7 +376,7 @@ async def test_send_key_unhandled_response.opp, remote):
     assert await.opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
 
@@ -387,7 +387,7 @@ async def test_send_key_websocketexception.opp, remote):
     assert await.opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
 
@@ -398,14 +398,14 @@ async def test_send_key_os_error.opp, remote):
     assert await.opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
 
 async def test_name.opp, remote):
     """Test for name property."""
     await setup_samsungtv.opp, MOCK_CONFIG)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "fake"
 
 
@@ -415,14 +415,14 @@ async def test_state_with_turnon.opp, remote, delay):
     assert await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
     assert delay.call_count == 1
 
     assert await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
 
 
@@ -432,19 +432,19 @@ async def test_state_without_turnon.opp, remote):
     assert await.opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID_NOTURNON}, True
     )
-    state =.opp.states.get(ENTITY_ID_NOTURNON)
+    state = opp.states.get(ENTITY_ID_NOTURNON)
     assert state.state == STATE_ON
     assert await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID_NOTURNON}, True
     )
-    state =.opp.states.get(ENTITY_ID_NOTURNON)
+    state = opp.states.get(ENTITY_ID_NOTURNON)
     assert state.state == STATE_OFF
 
 
 async def test_supported_features_with_turnon.opp, remote):
     """Test for supported_features property."""
     await setup_samsungtv.opp, MOCK_CONFIG)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert (
         state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORT_SAMSUNGTV | SUPPORT_TURN_ON
     )
@@ -453,14 +453,14 @@ async def test_supported_features_with_turnon.opp, remote):
 async def test_supported_features_without_turnon.opp, remote):
     """Test for supported_features property."""
     await setup_samsungtv.opp, MOCK_CONFIG_NOTURNON)
-    state =.opp.states.get(ENTITY_ID_NOTURNON)
+    state = opp.states.get(ENTITY_ID_NOTURNON)
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORT_SAMSUNGTV
 
 
 async def test_device_class.opp, remote):
     """Test for device_class property."""
     await setup_samsungtv.opp, MOCK_CONFIG)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_TV
 
 

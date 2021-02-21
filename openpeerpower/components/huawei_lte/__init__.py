@@ -314,7 +314,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
     # Override settings from YAML config, but only if they're changed in it
     # Old values are stored as *_from_yaml in the config entry
-    yaml_config =.opp.data[DOMAIN].config.get(url)
+    yaml_config = opp.data[DOMAIN].config.get(url)
     if yaml_config:
         # Config values
         new_data = {}
@@ -470,7 +470,7 @@ async def async_unload_entry(
         await.opp.config_entries.async_forward_entry_unload(config_entry, domain)
 
     # Forget about the router and invoke its cleanup
-    router =.opp.data[DOMAIN].routers.pop(config_entry.data[CONF_URL])
+    router = opp.data[DOMAIN].routers.pop(config_entry.data[CONF_URL])
     await.opp.async_add_executor_job(router.cleanup)
 
     return True
@@ -493,7 +493,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
     def service_op.dler(service: ServiceCall) -> None:
         """Apply a service."""
         url = service.data.get(CONF_URL)
-        routers =.opp.data[DOMAIN].routers
+        routers = opp.data[DOMAIN].routers
         if url:
             router = routers.get(url)
         elif not routers:

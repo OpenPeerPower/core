@@ -92,7 +92,7 @@ async def handle_info(
    .opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: Dict
 ):
     """Handle an info request via a subscription."""
-    registrations: Dict[str, SystemHealthRegistration] =.opp.data[DOMAIN]
+    registrations: Dict[str, SystemHealthRegistration] = opp.data[DOMAIN]
     data = {}
     pending_info = {}
 

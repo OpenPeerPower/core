@@ -35,7 +35,7 @@ async def mock_impl.opp):
 async def test_abort_if_no_configuration.opp):
     """Check flow abort when no configuration."""
     flow = config_flow.SomfyFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "missing_configuration"
@@ -44,7 +44,7 @@ async def test_abort_if_no_configuration.opp):
 async def test_abort_if_existing_entry.opp):
     """Check flow abort when an entry already exist."""
     flow = config_flow.SomfyFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     MockConfigEntry(domain=DOMAIN).add_to_opp.opp)
 
     result = await flow.async_step_user()
@@ -116,7 +116,7 @@ async def test_full_flow(
     }
 
     assert DOMAIN in.opp.config.components
-    entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert entry.state == config_entries.ENTRY_STATE_LOADED
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
@@ -126,7 +126,7 @@ async def test_full_flow(
 async def test_abort_if_authorization_timeout.opp, mock_impl):
     """Check Somfy authorization timeout."""
     flow = config_flow.SomfyFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch.object(
         mock_impl, "async_generate_authorize_url", side_effect=asyncio.TimeoutError

@@ -233,7 +233,7 @@ async def test_friendly_name_changed.opp):
     await _goto_future.opp)
 
     assert.opp.states.get("sensor.seventeentrack_package_456") is not None
-    entity =.opp.data["entity_components"]["sensor"].get_entity(
+    entity = opp.data["entity_components"]["sensor"].get_entity(
         "sensor.seventeentrack_package_456"
     )
     assert entity.name == "Seventeentrack Package: friendly name 2"

@@ -104,7 +104,7 @@ async def async_setup_legacy.opp, config):
     local_auth.initialize.opp, conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET])
 
     filename = config.get(CONF_FILENAME, NEST_CONFIG_FILE)
-    access_token_cache_file =.opp.config.path(filename)
+    access_token_cache_file = opp.config.path(filename)
 
    .opp.async_create_task(
        .opp.config_entries.flow.async_init(
@@ -126,7 +126,7 @@ async def async_setup_legacy_entry.opp, entry):
     nest = Nest(access_token=entry.data["tokens"]["access_token"])
 
     _LOGGER.debug("proceeding with setup")
-    conf =.opp.data.get(DATA_NEST_CONFIG, {})
+    conf = opp.data.get(DATA_NEST_CONFIG, {})
    .opp.data[DATA_NEST] = NestLegacyDevice.opp, conf, nest)
     if not await.opp.async_add_executor_job.opp.data[DATA_NEST].initialize):
         return False
@@ -148,7 +148,7 @@ async def async_setup_legacy_entry.opp, entry):
             target_structures = service.data[ATTR_STRUCTURE]
             validate_structures(target_structures)
         else:
-            target_structures =.opp.data[DATA_NEST].local_structure
+            target_structures = opp.data[DATA_NEST].local_structure
 
         for structure in nest.structures:
             if structure.name in target_structures:
@@ -165,7 +165,7 @@ async def async_setup_legacy_entry.opp, entry):
             target_structures = service.data[ATTR_STRUCTURE]
             validate_structures(target_structures)
         else:
-            target_structures =.opp.data[DATA_NEST].local_structure
+            target_structures = opp.data[DATA_NEST].local_structure
 
         for structure in nest.structures:
             if structure.name in target_structures:
@@ -204,7 +204,7 @@ async def async_setup_legacy_entry.opp, entry):
             target_structures = service.data[ATTR_STRUCTURE]
             validate_structures(target_structures)
         else:
-            target_structures =.opp.data[DATA_NEST].local_structure
+            target_structures = opp.data[DATA_NEST].local_structure
 
         for structure in nest.structures:
             if structure.name in target_structures:
@@ -237,7 +237,7 @@ async def async_setup_legacy_entry.opp, entry):
         threading.Thread(
             name="Nest update listener",
             target=nest_update_event_broker,
-            args=.opp, nest),
+            args= opp, nest),
         ).start()
 
    .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_up)
@@ -259,7 +259,7 @@ class NestLegacyDevice:
 
     def __init__(self,.opp, conf, nest):
         """Init Nest Devices."""
-        self.opp =.opp
+        self.opp = opp
         self.nest = nest
         self.local_structure = conf.get(CONF_STRUCTURE)
 

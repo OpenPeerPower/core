@@ -32,7 +32,7 @@ class BroadlinkDevice:
 
     def __init__(self,.opp, config):
         """Initialize the device."""
-        self.opp =.opp
+        self.opp = opp
         self.config = config
         self.api = None
         self.update_manager = None

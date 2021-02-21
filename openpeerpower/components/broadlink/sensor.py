@@ -46,7 +46,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Broadlink sensor."""
-    device =.opp.data[DOMAIN].devices[config_entry.entry_id]
+    device = opp.data[DOMAIN].devices[config_entry.entry_id]
     sensor_data = device.update_manager.coordinator.data
     sensors = [
         BroadlinkSensor(device, monitored_condition)

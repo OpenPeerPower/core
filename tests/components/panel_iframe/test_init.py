@@ -48,7 +48,7 @@ async def test_correct_config.opp):
         },
     )
 
-    panels =.opp.data[frontend.DATA_PANELS]
+    panels = opp.data[frontend.DATA_PANELS]
 
     assert panels.get("router").to_response() == {
         "component_name": "iframe",

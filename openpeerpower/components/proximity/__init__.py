@@ -121,7 +121,7 @@ class Proximity(Entity):
         unit_of_measurement,
     ):
         """Initialize the proximity."""
-        self.opp =.opp
+        self.opp = opp
         self.friendly_name = zone_friendly_name
         self.dist_to = dist_to
         self.dir_of_travel = dir_of_travel

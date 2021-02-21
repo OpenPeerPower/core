@@ -88,7 +88,7 @@ SWING_MODE_OPP_TO_HOMEKIT = {v: k for k, v in SWING_MODE_HOMEKIT_TO_OPP.items()}
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Homekit climate."""
     hkid = config_entry.data["AccessoryPairingID"]
-    conn =.opp.data[KNOWN_DEVICES][hkid]
+    conn = opp.data[KNOWN_DEVICES][hkid]
 
     @callback
     def async_add_service(service):

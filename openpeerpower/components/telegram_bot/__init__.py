@@ -334,7 +334,7 @@ async def async_setup.opp, config):
                 ):
                     data[attribute] = attribute_templ
                 else:
-                    attribute_templ.opp =.opp
+                    attribute_templ.opp = opp
                     try:
                         data[attribute] = attribute_templ.async_render(
                             parse_result=False
@@ -431,7 +431,7 @@ class TelegramNotificationService:
         self._parsers = {PARSER_HTML: ParseMode.HTML, PARSER_MD: ParseMode.MARKDOWN}
         self._parse_mode = self._parsers.get(parser)
         self.bot = bot
-        self.opp =.opp
+        self.opp = opp
 
     def _get_msg_ids(self, msg_data, chat_id):
         """Get the message id to edit.
@@ -830,7 +830,7 @@ class BaseTelegramBotEntity:
     def __init__(self,.opp, allowed_chat_ids):
         """Initialize the bot base class."""
         self.allowed_chat_ids = allowed_chat_ids
-        self.opp =.opp
+        self.opp = opp
 
     def _get_message_data(self, msg_data):
         """Return boolean msg_data_is_ok and dict msg_data."""

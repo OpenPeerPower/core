@@ -68,7 +68,7 @@ async def find_app.opp: OpenPeerPowerType, api):
         settings = await app.settings()
         if (
             settings.settings.get(SETTINGS_INSTANCE_ID)
-            ==.opp.data[DOMAIN][CONF_INSTANCE_ID]
+            == opp.data[DOMAIN][CONF_INSTANCE_ID]
         ):
             return app
 
@@ -107,7 +107,7 @@ def get_webhook_url.opp: OpenPeerPowerType) -> str:
 
     Return the cloudhook if available, otherwise local webhook.
     """
-    cloudhook_url =.opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
+    cloudhook_url = opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
     if.opp.components.cloud.async_active_subscription() and cloudhook_url is not None:
         return cloudhook_url
     return webhook.async_generate_url.opp,.opp.data[DOMAIN][CONF_WEBHOOK_ID])
@@ -119,7 +119,7 @@ def _get_app_template.opp: OpenPeerPowerType):
     except NoURLAvailableError:
         endpoint = ""
 
-    cloudhook_url =.opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
+    cloudhook_url = opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
     if cloudhook_url is not None:
         endpoint = "via Nabu Casa"
     description = f".opp.config.location_name} {endpoint}"
@@ -148,7 +148,7 @@ async def create_app.opp: OpenPeerPowerType, api):
     # Set unique opp id in settings
     settings = AppSettings(app.app_id)
     settings.settings[SETTINGS_APP_ID] = app.app_id
-    settings.settings[SETTINGS_INSTANCE_ID] =.opp.data[DOMAIN][CONF_INSTANCE_ID]
+    settings.settings[SETTINGS_INSTANCE_ID] = opp.data[DOMAIN][CONF_INSTANCE_ID]
     await api.update_app_settings(settings)
     _LOGGER.debug(
         "Updated App Settings for SmartApp '%s' (%s)", app.app_name, app.app_id
@@ -187,7 +187,7 @@ def setup_smartapp.opp, app):
     lifecycle events (install, event, etc...).  A unique SmartApp is created
     for each SmartThings account that is configured in.opp.
     """
-    manager =.opp.data[DOMAIN][DATA_MANAGER]
+    manager = opp.data[DOMAIN][DATA_MANAGER]
     smartapp = manager.smartapps.get(app.app_id)
     if smartapp:
         # already setup
@@ -206,13 +206,13 @@ async def setup_smartapp_endpoint.opp: OpenPeerPowerType):
     SmartApps are an extension point within the SmartThings ecosystem and
     is used to receive push updates (i.e. device updates) from the cloud.
     """
-    data =.opp.data.get(DOMAIN)
+    data = opp.data.get(DOMAIN)
     if data:
         # already setup
         return
 
     # Get/create config to store a unique id for this opp instance.
-    store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+    store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
     config = await store.async_load()
     if not config:
         # Create config
@@ -281,13 +281,13 @@ async def unload_smartapp_endpoint.opp: OpenPeerPowerType):
     if DOMAIN not in.opp.data:
         return
     # Remove the cloudhook if it was created
-    cloudhook_url =.opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
+    cloudhook_url = opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
     if cloudhook_url and.opp.components.cloud.async_is_logged_in():
         await.opp.components.cloud.async_delete_cloudhook(
            .opp.data[DOMAIN][CONF_WEBHOOK_ID]
         )
         # Remove cloudhook from storage
-        store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
         await store.async_save(
             {
                 CONF_INSTANCE_ID:.opp.data[DOMAIN][CONF_INSTANCE_ID],
@@ -503,7 +503,7 @@ async def smartapp_webhook.opp: OpenPeerPowerType, webhook_id: str, request):
     Requests from SmartThings are digitally signed and the SmartAppManager
     validates the signature for authenticity.
     """
-    manager =.opp.data[DOMAIN][DATA_MANAGER]
+    manager = opp.data[DOMAIN][DATA_MANAGER]
     data = await request.json()
     result = await manager.handle_request(data, request.headers)
     return web.json_response(result)

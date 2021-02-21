@@ -80,12 +80,12 @@ async def test_binary_sensors.opp, aioclient_mock):
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
     assert len.opp.states.async_all()) == 3
-    presence_sensor =.opp.states.get("binary_sensor.presence_sensor")
+    presence_sensor = opp.states.get("binary_sensor.presence_sensor")
     assert presence_sensor.state == STATE_OFF
     assert presence_sensor.attributes["device_class"] == DEVICE_CLASS_MOTION
     assert.opp.states.get("binary_sensor.temperature_sensor") is None
     assert.opp.states.get("binary_sensor.clip_presence_sensor") is None
-    vibration_sensor =.opp.states.get("binary_sensor.vibration_sensor")
+    vibration_sensor = opp.states.get("binary_sensor.vibration_sensor")
     assert vibration_sensor.state == STATE_ON
     assert vibration_sensor.attributes["device_class"] == DEVICE_CLASS_VIBRATION
 

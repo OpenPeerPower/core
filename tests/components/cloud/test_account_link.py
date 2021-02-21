@@ -160,7 +160,7 @@ async def test_implementation.opp, flow_op.dler):
         "expires_in": 10,
     }
 
-    entry =.opp.config_entries.async_entries(TEST_DOMAIN)[0]
+    entry = opp.config_entries.async_entries(TEST_DOMAIN)[0]
 
     assert (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(

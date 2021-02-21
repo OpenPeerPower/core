@@ -28,7 +28,7 @@ MAX_RESTART_TIME = timedelta(minutes=10)
 def session_scope(*,.opp=None, session=None):
     """Provide a transactional scope around a series of operations."""
     if session is None and opp is not None:
-        session =.opp.data[DATA_INSTANCE].get_session()
+        session = opp.data[DATA_INSTANCE].get_session()
 
     if session is None:
         raise RuntimeError("Session required")

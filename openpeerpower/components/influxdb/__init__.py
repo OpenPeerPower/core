@@ -480,7 +480,7 @@ def setup.opp, config):
 
     event_to_json = _generate_event_to_json(conf)
     max_tries = conf.get(CONF_RETRY_COUNT)
-    instance =.opp.data[DOMAIN] = InfluxThread.opp, influx, event_to_json, max_tries)
+    instance = opp.data[DOMAIN] = InfluxThread.opp, influx, event_to_json, max_tries)
     instance.start()
 
     def shutdown(event):

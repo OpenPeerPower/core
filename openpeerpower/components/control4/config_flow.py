@@ -43,7 +43,7 @@ class Control4Validator:
         self.password = password
         self.controller_unique_id = None
         self.director_bearer_token = None
-        self.opp =.opp
+        self.opp = opp
 
     async def authenticate(self) -> bool:
         """Test if we can authenticate with the Control4 account API."""

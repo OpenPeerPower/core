@@ -89,7 +89,7 @@ def transmission_setup_fixture():
 def init_config_flow.opp):
     """Init a configuration flow."""
     flow = config_flow.TransmissionFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     return flow
 
 

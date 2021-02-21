@@ -61,7 +61,7 @@ class IdteckReader:
 
     def __init__(self,.opp, host, port, name):
         """Initialize the reader."""
-        self.opp =.opp
+        self.opp = opp
         self._host = host
         self._port = port
         self._name = name

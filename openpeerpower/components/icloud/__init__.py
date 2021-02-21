@@ -118,7 +118,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     if entry.unique_id is None:
        .opp.config_entries.async_update_entry(entry, unique_id=username)
 
-    icloud_dir =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+    icloud_dir = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
 
     account = IcloudAccount(
        .opp,
@@ -184,7 +184,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         if account_identifier is None:
             return None
 
-        icloud_account =.opp.data[DOMAIN].get(account_identifier)
+        icloud_account = opp.data[DOMAIN].get(account_identifier)
         if icloud_account is None:
             for account in.opp.data[DOMAIN].values():
                 if account.username == account_identifier:

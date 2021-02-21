@@ -22,7 +22,7 @@ def setup_platform.opp, config, add_entities, discover_info=None):
     if discover_info is None:
         return
 
-    controller =.opp.data[HOMEWORKS_CONTROLLER]
+    controller = opp.data[HOMEWORKS_CONTROLLER]
     devs = []
     for dimmer in discover_info[CONF_DIMMERS]:
         dev = HomeworksLight(

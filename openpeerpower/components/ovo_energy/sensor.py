@@ -19,10 +19,10 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up OVO Energy sensor based on a config entry."""
-    coordinator: DataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id][
+    coordinator: DataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id][
         DATA_COORDINATOR
     ]
-    client: OVOEnergy =.opp.data[DOMAIN][entry.entry_id][DATA_CLIENT]
+    client: OVOEnergy = opp.data[DOMAIN][entry.entry_id][DATA_CLIENT]
 
     entities = []
 

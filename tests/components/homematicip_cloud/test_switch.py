@@ -45,7 +45,7 @@ async def test_hmip_switch.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "on", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
     await.opp.services.async_call(
@@ -55,7 +55,7 @@ async def test_hmip_switch.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "turn_on"
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "on", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
 
@@ -82,7 +82,7 @@ async def test_hmip_switch_input.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "on", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
     await.opp.services.async_call(
@@ -92,7 +92,7 @@ async def test_hmip_switch_input.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "turn_on"
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "on", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
 
@@ -119,7 +119,7 @@ async def test_hmip_switch_measuring.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "on", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
     await.opp.services.async_call(
@@ -130,13 +130,13 @@ async def test_hmip_switch_measuring.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "on", True)
     await async_manipulate_test_data.opp, hmip_device, "currentPowerConsumption", 50)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
     assert ha_state.attributes[ATTR_CURRENT_POWER_W] == 50
     assert ha_state.attributes[ATTR_TODAY_ENERGY_KWH] == 36
 
     await async_manipulate_test_data.opp, hmip_device, "energyCounter", None)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert not ha_state.attributes.get(ATTR_TODAY_ENERGY_KWH)
 
 
@@ -161,7 +161,7 @@ async def test_hmip_group_switch.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == ()
     await async_manipulate_test_data.opp, hmip_device, "on", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
     await.opp.services.async_call(
@@ -171,12 +171,12 @@ async def test_hmip_group_switch.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "turn_on"
     assert hmip_device.mock_calls[-1][1] == ()
     await async_manipulate_test_data.opp, hmip_device, "on", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
     assert not ha_state.attributes.get(ATTR_GROUP_MEMBER_UNREACHABLE)
     await async_manipulate_test_data.opp, hmip_device, "unreach", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_GROUP_MEMBER_UNREACHABLE]
 
 
@@ -209,7 +209,7 @@ async def test_hmip_multi_switch.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "turn_on"
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "on", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
     await.opp.services.async_call(
@@ -219,7 +219,7 @@ async def test_hmip_multi_switch.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "on", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
     ha_state, hmip_device = get_and_check_entity_basics(
@@ -258,7 +258,7 @@ async def test_hmip_wired_multi_switch.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "on", False)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
     await.opp.services.async_call(
@@ -268,5 +268,5 @@ async def test_hmip_wired_multi_switch.opp, default_mock_op._factory):
     assert hmip_device.mock_calls[-1][0] == "turn_on"
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "on", True)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON

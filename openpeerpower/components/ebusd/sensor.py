@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Ebus sensor."""
-    ebusd_api =.opp.data[DOMAIN]
+    ebusd_api = opp.data[DOMAIN]
     monitored_conditions = discovery_info["monitored_conditions"]
     name = discovery_info["client_name"]
 

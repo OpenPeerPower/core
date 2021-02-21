@@ -9,7 +9,7 @@ from .const import DATA_KEY_API, DATA_KEY_COORDINATOR, DOMAIN as PIHOLE_DOMAIN
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the Pi-hole binary sensor."""
     name = entry.data[CONF_NAME]
-    hole_data =.opp.data[PIHOLE_DOMAIN][entry.entry_id]
+    hole_data = opp.data[PIHOLE_DOMAIN][entry.entry_id]
     binary_sensors = [
         PiHoleBinarySensor(
             hole_data[DATA_KEY_API],

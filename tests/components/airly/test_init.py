@@ -19,7 +19,7 @@ async def test_async_setup_entry.opp, aioclient_mock):
     """Test a successful setup entry."""
     await init_integration.opp, aioclient_mock)
 
-    state =.opp.states.get("air_quality.home")
+    state = opp.states.get("air_quality.home")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.state == "14"

@@ -160,7 +160,7 @@ SERVICE_RUN_NETWORK_RESOURCE_SCHEMA = vol.All(
 @callback
 def async_setup_services.opp: OpenPeerPowerType):
     """Create and register services for the ISY integration."""
-    existing_services =.opp.services.async_services().get(DOMAIN)
+    existing_services = opp.services.async_services().get(DOMAIN)
     if existing_services and any(
         service in INTEGRATION_SERVICES for service in existing_services
     ):
@@ -173,7 +173,7 @@ def async_setup_services.opp: OpenPeerPowerType):
         isy_name = service.data.get(CONF_ISY)
 
         for config_entry_id in.opp.data[DOMAIN]:
-            isy =.opp.data[DOMAIN][config_entry_id][ISY994_ISY]
+            isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
             # If an address is provided, make sure we query the correct ISY.
@@ -198,7 +198,7 @@ def async_setup_services.opp: OpenPeerPowerType):
         isy_name = service.data.get(CONF_ISY)
 
         for config_entry_id in.opp.data[DOMAIN]:
-            isy =.opp.data[DOMAIN][config_entry_id][ISY994_ISY]
+            isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
             if not hasattr(isy, "networking") or isy.networking is None:
@@ -223,7 +223,7 @@ def async_setup_services.opp: OpenPeerPowerType):
         isy_name = service.data.get(CONF_ISY)
 
         for config_entry_id in.opp.data[DOMAIN]:
-            isy =.opp.data[DOMAIN][config_entry_id][ISY994_ISY]
+            isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
             program = None
@@ -246,7 +246,7 @@ def async_setup_services.opp: OpenPeerPowerType):
         isy_name = service.data.get(CONF_ISY)
 
         for config_entry_id in.opp.data[DOMAIN]:
-            isy =.opp.data[DOMAIN][config_entry_id][ISY994_ISY]
+            isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
             variable = None
@@ -276,8 +276,8 @@ def async_setup_services.opp: OpenPeerPowerType):
                 ]
             )
 
-           .opp_isy_data =.opp.data[DOMAIN][config_entry_id]
-            uuid =.opp_isy_data[ISY994_ISY].configuration["uuid"]
+           .opp_isy_data = opp.data[DOMAIN][config_entry_id]
+            uuid = opp_isy_data[ISY994_ISY].configuration["uuid"]
 
             for platform in SUPPORTED_PLATFORMS:
                 for node in.opp_isy_data[ISY994_NODES][platform]:
@@ -386,7 +386,7 @@ def async_unload_services.opp: OpenPeerPowerType):
         # There is still another config entry for this domain, don't remove services.
         return
 
-    existing_services =.opp.services.async_services().get(DOMAIN)
+    existing_services = opp.services.async_services().get(DOMAIN)
     if not existing_services or not any(
         service in INTEGRATION_SERVICES for service in existing_services
     ):

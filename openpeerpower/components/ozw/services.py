@@ -18,7 +18,7 @@ class ZWaveServices:
 
     def __init__(self,.opp, manager):
         """Initialize with both opp and ozwmanager objects."""
-        self._opp =.opp
+        self._opp = opp
         self._manager = manager
 
     @callback

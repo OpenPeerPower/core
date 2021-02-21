@@ -179,7 +179,7 @@ async def test_no_color_brightness_color_temp_white_val_if_no_topics.opp, mqtt_m
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 40
     assert state.attributes.get("rgb_color") is None
@@ -192,7 +192,7 @@ async def test_no_color_brightness_color_temp_white_val_if_no_topics.opp, mqtt_m
 
     async_fire_mqtt_message.opp, "test_light_rgb", '{"state":"ON"}')
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("rgb_color") is None
     assert state.attributes.get("brightness") is None
@@ -228,7 +228,7 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 191
     assert state.attributes.get("rgb_color") is None
@@ -252,7 +252,7 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
         '"white_value":150}',
     )
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("rgb_color") == (255, 255, 255)
     assert state.attributes.get("brightness") == 255
@@ -265,12 +265,12 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
     # Turn the light off
     async_fire_mqtt_message.opp, "test_light_rgb", '{"state":"OFF"}')
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     async_fire_mqtt_message.opp, "test_light_rgb", '{"state":"ON", "brightness":100}')
 
-    light_state =.opp.states.get("light.test")
+    light_state = opp.states.get("light.test")
 
     assert light_state.attributes["brightness"] == 100
 
@@ -278,48 +278,48 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
        .opp, "test_light_rgb", '{"state":"ON", ' '"color":{"r":125,"g":125,"b":125}}'
     )
 
-    light_state =.opp.states.get("light.test")
+    light_state = opp.states.get("light.test")
     assert light_state.attributes.get("rgb_color") == (255, 255, 255)
 
     async_fire_mqtt_message(
        .opp, "test_light_rgb", '{"state":"ON", "color":{"x":0.135,"y":0.135}}'
     )
 
-    light_state =.opp.states.get("light.test")
+    light_state = opp.states.get("light.test")
     assert light_state.attributes.get("xy_color") == (0.141, 0.14)
 
     async_fire_mqtt_message(
        .opp, "test_light_rgb", '{"state":"ON", "color":{"h":180,"s":50}}'
     )
 
-    light_state =.opp.states.get("light.test")
+    light_state = opp.states.get("light.test")
     assert light_state.attributes.get("hs_color") == (180.0, 50.0)
 
     async_fire_mqtt_message.opp, "test_light_rgb", '{"state":"ON", "color":null}')
 
-    light_state =.opp.states.get("light.test")
+    light_state = opp.states.get("light.test")
     assert "hs_color" not in light_state.attributes
 
     async_fire_mqtt_message.opp, "test_light_rgb", '{"state":"ON", "color_temp":155}')
 
-    light_state =.opp.states.get("light.test")
+    light_state = opp.states.get("light.test")
     assert light_state.attributes.get("color_temp") == 155
 
     async_fire_mqtt_message.opp, "test_light_rgb", '{"state":"ON", "color_temp":null}')
 
-    light_state =.opp.states.get("light.test")
+    light_state = opp.states.get("light.test")
     assert "color_temp" not in light_state.attributes
 
     async_fire_mqtt_message(
        .opp, "test_light_rgb", '{"state":"ON", "effect":"colorloop"}'
     )
 
-    light_state =.opp.states.get("light.test")
+    light_state = opp.states.get("light.test")
     assert light_state.attributes.get("effect") == "colorloop"
 
     async_fire_mqtt_message.opp, "test_light_rgb", '{"state":"ON", "white_value":155}')
 
-    light_state =.opp.states.get("light.test")
+    light_state = opp.states.get("light.test")
     assert light_state.attributes.get("white_value") == 155
 
 
@@ -363,7 +363,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 95
     assert state.attributes.get("hs_color") == (100, 100)
@@ -379,7 +379,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "test_light_rgb/set", '{"state": "ON"}', 2, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
 
     await common.async_turn_on.opp, "light.test", color_temp=90)
@@ -391,7 +391,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         False,
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
 
     await common.async_turn_off.opp, "light.test")
@@ -400,7 +400,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "test_light_rgb/set", '{"state": "OFF"}', 2, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     mqtt_mock.reset_mock()
@@ -448,7 +448,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         any_order=True,
     )
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes["rgb_color"] == (255, 128, 0)
     assert state.attributes["brightness"] == 50
@@ -475,7 +475,7 @@ async def test_sending_hs_color.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     mqtt_mock.reset_mock()
@@ -538,7 +538,7 @@ async def test_sending_rgb_color_no_brightness.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     await common.async_turn_on(
@@ -592,7 +592,7 @@ async def test_sending_rgb_color_with_brightness.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     await common.async_turn_on(
@@ -662,7 +662,7 @@ async def test_sending_rgb_color_with_scaled_brightness.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     await common.async_turn_on(
@@ -731,7 +731,7 @@ async def test_sending_xy_color.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     await common.async_turn_on(
@@ -794,7 +794,7 @@ async def test_effect.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 44
 
@@ -804,7 +804,7 @@ async def test_effect.opp, mqtt_mock):
         "test_light_rgb/set", JsonValidator('{"state": "ON"}'), 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("effect") is None
 
@@ -817,7 +817,7 @@ async def test_effect.opp, mqtt_mock):
         False,
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("effect") == "rainbow"
 
@@ -830,7 +830,7 @@ async def test_effect.opp, mqtt_mock):
         False,
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("effect") == "colorloop"
 
@@ -854,7 +854,7 @@ async def test_flash_short_and_long.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 40
 
@@ -864,7 +864,7 @@ async def test_flash_short_and_long.opp, mqtt_mock):
         "test_light_rgb/set", JsonValidator('{"state": "ON", "flash": 5}'), 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
 
     await common.async_turn_on.opp, "light.test", flash="long")
@@ -873,7 +873,7 @@ async def test_flash_short_and_long.opp, mqtt_mock):
         "test_light_rgb/set", JsonValidator('{"state": "ON", "flash": 15}'), 0, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
 
 
@@ -894,7 +894,7 @@ async def test_transition.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 40
 
@@ -907,7 +907,7 @@ async def test_transition.opp, mqtt_mock):
         False,
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
 
     await common.async_turn_off.opp, "light.test", transition=30)
@@ -919,7 +919,7 @@ async def test_transition.opp, mqtt_mock):
         False,
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
 
 
@@ -942,7 +942,7 @@ async def test_brightness_scale.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert state.attributes.get("brightness") is None
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
@@ -950,7 +950,7 @@ async def test_brightness_scale.opp, mqtt_mock):
     # Turn on the light
     async_fire_mqtt_message.opp, "test_light_bright_scale", '{"state":"ON"}')
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") is None
 
@@ -959,7 +959,7 @@ async def test_brightness_scale.opp, mqtt_mock):
        .opp, "test_light_bright_scale", '{"state":"ON", "brightness": 99}'
     )
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 255
 
@@ -986,7 +986,7 @@ async def test_invalid_values.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 187
     assert state.attributes.get("rgb_color") is None
@@ -1007,7 +1007,7 @@ async def test_invalid_values.opp, mqtt_mock):
         '"effect": "rainbow"}',
     )
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("rgb_color") == (255, 255, 255)
     assert state.attributes.get("brightness") == 255
@@ -1022,7 +1022,7 @@ async def test_invalid_values.opp, mqtt_mock):
     )
 
     # Color should not have changed
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("rgb_color") == (255, 255, 255)
 
@@ -1034,7 +1034,7 @@ async def test_invalid_values.opp, mqtt_mock):
     )
 
     # Color should not have changed
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("rgb_color") == (255, 255, 255)
 
@@ -1046,7 +1046,7 @@ async def test_invalid_values.opp, mqtt_mock):
     )
 
     # Color should not have changed
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("rgb_color") == (255, 255, 255)
 
@@ -1058,7 +1058,7 @@ async def test_invalid_values.opp, mqtt_mock):
     )
 
     # Color should not have changed
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("rgb_color") == (255, 255, 255)
 
@@ -1068,7 +1068,7 @@ async def test_invalid_values.opp, mqtt_mock):
     )
 
     # Brightness should not have changed
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 255
 
@@ -1078,7 +1078,7 @@ async def test_invalid_values.opp, mqtt_mock):
     )
 
     # White value should not have changed
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("white_value") == 255
 
@@ -1088,7 +1088,7 @@ async def test_invalid_values.opp, mqtt_mock):
     )
 
     # Color temperature should not have changed
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("color_temp") == 100
 
@@ -1302,6 +1302,6 @@ async def test_max_mireds.opp, mqtt_mock):
     assert await async_setup_component.opp, light.DOMAIN, config)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.test")
+    state = opp.states.get("light.test")
     assert state.attributes.get("min_mireds") == 153
     assert state.attributes.get("max_mireds") == 370

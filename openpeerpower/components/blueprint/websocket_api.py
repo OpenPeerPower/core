@@ -33,7 +33,7 @@ def async_setup.opp: OpenPeerPower):
 )
 async def ws_list_blueprints.opp, connection, msg):
     """List available blueprints."""
-    domain_blueprints: Optional[Dict[str, models.DomainBlueprints]] =.opp.data.get(
+    domain_blueprints: Optional[Dict[str, models.DomainBlueprints]] = opp.data.get(
         DOMAIN, {}
     )
     results = {}
@@ -102,7 +102,7 @@ async def ws_save_blueprint.opp, connection, msg):
     path = msg["path"]
     domain = msg["domain"]
 
-    domain_blueprints: Optional[Dict[str, models.DomainBlueprints]] =.opp.data.get(
+    domain_blueprints: Optional[Dict[str, models.DomainBlueprints]] = opp.data.get(
         DOMAIN, {}
     )
 
@@ -149,7 +149,7 @@ async def ws_delete_blueprint.opp, connection, msg):
     path = msg["path"]
     domain = msg["domain"]
 
-    domain_blueprints: Optional[Dict[str, models.DomainBlueprints]] =.opp.data.get(
+    domain_blueprints: Optional[Dict[str, models.DomainBlueprints]] = opp.data.get(
         DOMAIN, {}
     )
 

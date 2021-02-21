@@ -67,8 +67,8 @@ SET_ABSOLUTE_POSITION_SCHEMA = {
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Motion Blind from a config entry."""
     entities = []
-    motion_gateway =.opp.data[DOMAIN][config_entry.entry_id][KEY_GATEWAY]
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][KEY_COORDINATOR]
+    motion_gateway = opp.data[DOMAIN][config_entry.entry_id][KEY_GATEWAY]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][KEY_COORDINATOR]
 
     for blind in motion_gateway.device_list.values():
         if blind.type in POSITION_DEVICE_MAP:

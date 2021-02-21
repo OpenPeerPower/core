@@ -10,7 +10,7 @@ from .const import DATA_CLIENT, DOMAIN, LOGGER
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up SimpliSafe freeze sensors based on a config entry."""
-    simplisafe =.opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
+    simplisafe = opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
     sensors = []
 
     for system in simplisafe.systems.values():

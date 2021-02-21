@@ -63,11 +63,11 @@ async def test_single_sensor_readings.opp, requests_mock):
     assert await async_setup_component.opp, "sensor", {"sensor": ONE_SENSOR_CONFIG})
     await.opp.async_block_till_done()
 
-    assert "38.21" ==.opp.states.get("sensor.energy_consumed").state
-    assert "1580" ==.opp.states.get("sensor.energy_usage").state
-    assert "ok" ==.opp.states.get("sensor.energy_budget").state
-    assert "5.27" ==.opp.states.get("sensor.energy_cost").state
-    assert "1628" ==.opp.states.get("sensor.efergy_728386").state
+    assert "38.21" == opp.states.get("sensor.energy_consumed").state
+    assert "1580" == opp.states.get("sensor.energy_usage").state
+    assert "ok" == opp.states.get("sensor.energy_budget").state
+    assert "5.27" == opp.states.get("sensor.energy_cost").state
+    assert "1628" == opp.states.get("sensor.efergy_728386").state
 
 
 async def test_multi_sensor_readings.opp, requests_mock):
@@ -76,6 +76,6 @@ async def test_multi_sensor_readings.opp, requests_mock):
     assert await async_setup_component.opp, "sensor", {"sensor": MULTI_SENSOR_CONFIG})
     await.opp.async_block_till_done()
 
-    assert "218" ==.opp.states.get("sensor.efergy_728386").state
-    assert "1808" ==.opp.states.get("sensor.efergy_0").state
-    assert "312" ==.opp.states.get("sensor.efergy_728387").state
+    assert "218" == opp.states.get("sensor.efergy_728386").state
+    assert "1808" == opp.states.get("sensor.efergy_0").state
+    assert "312" == opp.states.get("sensor.efergy_728387").state

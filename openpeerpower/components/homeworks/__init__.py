@@ -127,7 +127,7 @@ class HomeworksKeypadEvent:
 
     def __init__(self,.opp, addr, name):
         """Register callback that will be used for signals."""
-        self._opp =.opp
+        self._opp = opp
         self._addr = addr
         self._name = name
         self._id = slugify(self._name)

@@ -37,7 +37,7 @@ from tests.common import MockConfigEntry, async_fire_time_changed
 
 
 def _get_attributes.opp):
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     return state.as_dict()["attributes"]
 
 
@@ -62,7 +62,7 @@ async def test_setup_platform.opp):
 
     # No device is set up
     mocked_device.assert_not_called()
-    all_states =.opp.states.async_all()
+    all_states = opp.states.async_all()
     assert len(all_states) == 0
 
 
@@ -75,7 +75,7 @@ async def test_setup_failed.opp, caplog):
     with _patch_media_player_device(mocked_device):
         await.opp.config_entries.async_setup(entry.entry_id)
         await.opp.async_block_till_done()
-    all_states =.opp.states.async_all()
+    all_states = opp.states.async_all()
     assert len(all_states) == 0
     warning_records = [x for x in caplog.records if x.levelno == logging.WARNING]
     assert len(warning_records) == 2
@@ -87,7 +87,7 @@ async def test_setup_failed.opp, caplog):
     with _patch_media_player_device(mocked_device):
         async_fire_time_changed.opp, utcnow + timedelta(seconds=30))
         await.opp.async_block_till_done()
-    all_states =.opp.states.async_all()
+    all_states = opp.states.async_all()
     assert len(all_states) == 1
     assert not any(x.levelno == logging.WARNING for x in caplog.records)
     assert not any(x.levelno == logging.ERROR for x in caplog.records)
@@ -103,7 +103,7 @@ async def test_state.opp):
         await.opp.config_entries.async_setup(entry.entry_id)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.name == FRIENDLY_NAME
     assert state.state == STATE_ON
     attributes = state.as_dict()["attributes"]
@@ -245,7 +245,7 @@ async def test_disconnected.opp, caplog):
         await.opp.async_block_till_done()
 
     async def _assert_state():
-        state =.opp.states.get(ENTITY_ID)
+        state = opp.states.get(ENTITY_ID)
         assert state.state == STATE_UNAVAILABLE
 
     connect_change = MagicMock()

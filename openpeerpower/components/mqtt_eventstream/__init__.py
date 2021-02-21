@@ -40,7 +40,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup.opp, config):
     """Set up the MQTT eventstream component."""
-    mqtt =.opp.components.mqtt
+    mqtt = opp.components.mqtt
     conf = config.get(DOMAIN, {})
     pub_topic = conf.get(CONF_PUBLISH_TOPIC)
     sub_topic = conf.get(CONF_SUBSCRIBE_TOPIC)

@@ -21,7 +21,7 @@ async def test_device.opp, config_entry, aioclient_mock_fixture, aioclient_mock)
     await.opp.async_block_till_done()
     assert len.opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
 
-    device: FloDeviceDataUpdateCoordinator =.opp.data[FLO_DOMAIN][
+    device: FloDeviceDataUpdateCoordinator = opp.data[FLO_DOMAIN][
         config_entry.entry_id
     ]["devices"][0]
     assert device.api_client is not None

@@ -423,7 +423,7 @@ async def test_full_zeroconf_flow.opp):
         assert result["title"] == "smappee1006000212"
         assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-        entry =.opp.config_entries.async_entries(DOMAIN)[0]
+        entry = opp.config_entries.async_entries(DOMAIN)[0]
         assert entry.unique_id == "1006000212"
 
 
@@ -462,5 +462,5 @@ async def test_full_user_local_flow.opp):
         assert result["title"] == "smappee1006000212"
         assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-        entry =.opp.config_entries.async_entries(DOMAIN)[0]
+        entry = opp.config_entries.async_entries(DOMAIN)[0]
         assert entry.unique_id == "1006000212"

@@ -112,7 +112,7 @@ async def test_op._reset_unloads_entry_if_setup.opp, default_mock_op._factory):
     """Test calling reset while the entry has been setup."""
     mock_op. = await default_mock_op._factory.async_get_mock_op.()
     assert.opp.data[HMIPC_DOMAIN][HAPID] == mock_op.
-    config_entries =.opp.config_entries.async_entries(HMIPC_DOMAIN)
+    config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 1
     # hap_reset is called during unload
     await.opp.config_entries.async_unload(config_entries[0].entry_id)

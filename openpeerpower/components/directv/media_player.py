@@ -67,7 +67,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List, bool], None],
 ) -> bool:
     """Set up the DirecTV config entry."""
-    dtv =.opp.data[DOMAIN][entry.entry_id]
+    dtv = opp.data[DOMAIN][entry.entry_id]
     entities = []
 
     for location in dtv.device.locations:

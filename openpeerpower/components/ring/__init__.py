@@ -158,7 +158,7 @@ class GlobalDataUpdater:
         update_interval: timedelta,
     ):
         """Initialize global data updater."""
-        self.opp =.opp
+        self.opp = opp
         self.data_type = data_type
         self.config_entry_id = config_entry_id
         self.ring = ring
@@ -232,7 +232,7 @@ class DeviceDataUpdater:
     ):
         """Initialize device data updater."""
         self.data_type = data_type
-        self.opp =.opp
+        self.opp = opp
         self.config_entry_id = config_entry_id
         self.ring = ring
         self.update_method = update_method

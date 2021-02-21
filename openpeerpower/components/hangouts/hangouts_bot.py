@@ -40,7 +40,7 @@ class HangoutsBot:
         self,.opp, refresh_token, intents, default_convs, error_suppressed_convs
     ):
         """Set up the client."""
-        self.opp =.opp
+        self.opp = opp
         self._connected = False
 
         self._refresh_token = refresh_token

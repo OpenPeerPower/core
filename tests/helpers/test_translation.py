@@ -88,10 +88,10 @@ async def test_component_translation_path.opp):
 def test_load_translations_files.opp):
     """Test the load translation files function."""
     # Test one valid and one invalid file
-    file1 =.opp.config.path(
+    file1 = opp.config.path(
         "custom_components", "test", "translations", "switch.en.json"
     )
-    file2 =.opp.config.path(
+    file2 = opp.config.path(
         "custom_components", "test", "translations", "invalid.json"
     )
     assert translation.load_translations_files(

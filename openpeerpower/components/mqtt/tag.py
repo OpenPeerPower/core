@@ -103,7 +103,7 @@ class MQTTTagScanner:
         self._config_entry = config_entry
         self.device_id = device_id
         self.discovery_data = discovery_data
-        self.opp =.opp
+        self.opp = opp
         self._remove_discovery = None
         self._remove_device_updated = None
         self._sub_state = None

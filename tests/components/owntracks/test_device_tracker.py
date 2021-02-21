@@ -354,59 +354,59 @@ async def send_message.opp, topic, message, corrupt=False):
 
 def assert_location_state.opp, location):
     """Test the assertion of a location state."""
-    state =.opp.states.get(DEVICE_TRACKER_STATE)
+    state = opp.states.get(DEVICE_TRACKER_STATE)
     assert state.state == location
 
 
 def assert_location_latitude.opp, latitude):
     """Test the assertion of a location latitude."""
-    state =.opp.states.get(DEVICE_TRACKER_STATE)
+    state = opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("latitude") == latitude
 
 
 def assert_location_longitude.opp, longitude):
     """Test the assertion of a location longitude."""
-    state =.opp.states.get(DEVICE_TRACKER_STATE)
+    state = opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("longitude") == longitude
 
 
 def assert_location_accuracy.opp, accuracy):
     """Test the assertion of a location accuracy."""
-    state =.opp.states.get(DEVICE_TRACKER_STATE)
+    state = opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("gps_accuracy") == accuracy
 
 
 def assert_location_source_type.opp, source_type):
     """Test the assertion of source_type."""
-    state =.opp.states.get(DEVICE_TRACKER_STATE)
+    state = opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("source_type") == source_type
 
 
 def assert_mobile_tracker_state.opp, location, beacon=IBEACON_DEVICE):
     """Test the assertion of a mobile beacon tracker state."""
     dev_id = MOBILE_BEACON_FMT.format(beacon)
-    state =.opp.states.get(dev_id)
+    state = opp.states.get(dev_id)
     assert state.state == location
 
 
 def assert_mobile_tracker_latitude.opp, latitude, beacon=IBEACON_DEVICE):
     """Test the assertion of a mobile beacon tracker latitude."""
     dev_id = MOBILE_BEACON_FMT.format(beacon)
-    state =.opp.states.get(dev_id)
+    state = opp.states.get(dev_id)
     assert state.attributes.get("latitude") == latitude
 
 
 def assert_mobile_tracker_accuracy.opp, accuracy, beacon=IBEACON_DEVICE):
     """Test the assertion of a mobile beacon tracker accuracy."""
     dev_id = MOBILE_BEACON_FMT.format(beacon)
-    state =.opp.states.get(dev_id)
+    state = opp.states.get(dev_id)
     assert state.attributes.get("gps_accuracy") == accuracy
 
 
 async def test_location_invalid_devid.opp, context):
     """Test the update of a location."""
     await send_message.opp, "owntracks/paulus/nexus-5x", LOCATION_MESSAGE)
-    state =.opp.states.get("device_tracker.paulus_nexus_5x")
+    state = opp.states.get("device_tracker.paulus_nexus_5x")
     assert state.state == "outer"
 
 
@@ -1222,9 +1222,9 @@ async def test_waypoint_import_simple.opp, context):
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC, waypoints_message)
     # Check if it made it into states
-    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[0])
+    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     assert wayp is not None
-    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[1])
+    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[1])
     assert wayp is not None
 
 
@@ -1233,9 +1233,9 @@ async def test_waypoint_import_block.opp, context):
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC_BLOCKED, waypoints_message)
     # Check if it made it into states
-    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[2])
+    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[2])
     assert wayp is None
-    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[3])
+    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[3])
     assert wayp is None
 
 
@@ -1253,9 +1253,9 @@ async def test_waypoint_import_no_whitelist.opp, setup_comp):
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC_BLOCKED, waypoints_message)
     # Check if it made it into states
-    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[2])
+    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[2])
     assert wayp is not None
-    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[3])
+    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[3])
     assert wayp is not None
 
 
@@ -1264,9 +1264,9 @@ async def test_waypoint_import_bad_json.opp, context):
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC, waypoints_message, True)
     # Check if it made it into states
-    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[2])
+    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[2])
     assert wayp is None
-    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[3])
+    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[3])
     assert wayp is None
 
 
@@ -1275,11 +1275,11 @@ async def test_waypoint_import_existing.opp, context):
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC, waypoints_message)
     # Get the first waypoint exported
-    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[0])
+    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     # Send an update
     waypoints_message = WAYPOINTS_UPDATED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC, waypoints_message)
-    new_wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[0])
+    new_wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     assert wayp == new_wayp
 
 
@@ -1287,7 +1287,7 @@ async def test_single_waypoint_import.opp, context):
     """Test single waypoint message."""
     waypoint_message = WAYPOINT_MESSAGE.copy()
     await send_message.opp, WAYPOINT_TOPIC, waypoint_message)
-    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[0])
+    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     assert wayp is not None
 
 
@@ -1542,13 +1542,13 @@ async def test_restore_state.opp,.opp_client):
     assert resp.status == 200
     await.opp.async_block_till_done()
 
-    state_1 =.opp.states.get("device_tracker.paulus_pixel")
+    state_1 = opp.states.get("device_tracker.paulus_pixel")
     assert state_1 is not None
 
     await.opp.config_entries.async_reload(entry.entry_id)
     await.opp.async_block_till_done()
 
-    state_2 =.opp.states.get("device_tracker.paulus_pixel")
+    state_2 = opp.states.get("device_tracker.paulus_pixel")
     assert state_2 is not None
 
     assert state_1 is not state_2

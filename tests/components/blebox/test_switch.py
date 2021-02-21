@@ -51,7 +51,7 @@ async def test_switchbox_init(switchbox,.opp, config):
     entry = await async_setup_entity.opp, config, entity_id)
     assert entry.unique_id == "BleBox-switchBox-1afe34e750b8-0.relay"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.name == "switchBox-0.relay"
 
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_SWITCH
@@ -79,7 +79,7 @@ async def test_switchbox_update_when_off(switchbox,.opp, config):
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
     await async_setup_entity.opp, config, entity_id)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == STATE_OFF
 
 
@@ -94,7 +94,7 @@ async def test_switchbox_update_when_on(switchbox,.opp, config):
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
     await async_setup_entity.opp, config, entity_id)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == STATE_ON
 
 
@@ -122,7 +122,7 @@ async def test_switchbox_on(switchbox,.opp, config):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == STATE_ON
 
 
@@ -149,7 +149,7 @@ async def test_switchbox_off(switchbox,.opp, config):
         {"entity_id": entity_id},
         blocking=True,
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == STATE_OFF
 
 
@@ -199,7 +199,7 @@ async def test_switchbox_d_init(switchbox_d,.opp, config):
     entry = entries[0]
     assert entry.unique_id == "BleBox-switchBoxD-1afe34e750b8-0.relay"
 
-    state =.opp.states.get(entity_ids[0])
+    state = opp.states.get(entity_ids[0])
     assert state.name == "switchBoxD-0.relay"
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_SWITCH
     assert state.state == STATE_OFF  # NOTE: should instead be STATE_UNKNOWN?
@@ -216,7 +216,7 @@ async def test_switchbox_d_init(switchbox_d,.opp, config):
     entry = entries[1]
     assert entry.unique_id == "BleBox-switchBoxD-1afe34e750b8-1.relay"
 
-    state =.opp.states.get(entity_ids[1])
+    state = opp.states.get(entity_ids[1])
     assert state.name == "switchBoxD-1.relay"
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_SWITCH
     assert state.state == STATE_OFF  # NOTE: should instead be STATE_UNKNOWN?

@@ -179,7 +179,7 @@ async def find_entity_id(domain, zha_device,.opp):
     ieeetail = "".join([f"{o:02x}" for o in zha_device.ieee[:4]])
     head = f"{domain}.{slugify(f'{zha_device.name} {ieeetail}')}"
 
-    enitiy_ids =.opp.states.async_entity_ids(domain)
+    enitiy_ids = opp.states.async_entity_ids(domain)
     await.opp.async_block_till_done()
 
     for entity_id in enitiy_ids:
@@ -192,7 +192,7 @@ def async_find_group_entity_id.opp, domain, group):
     """Find the group entity id under test."""
     entity_id = f"{domain}.{group.name.lower().replace(' ','_')}_zha_group_0x{group.group_id:04x}"
 
-    entity_ids =.opp.states.async_entity_ids(domain)
+    entity_ids = opp.states.async_entity_ids(domain)
 
     if entity_id in entity_ids:
         return entity_id

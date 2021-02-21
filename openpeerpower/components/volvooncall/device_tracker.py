@@ -12,7 +12,7 @@ async def async_setup_scanner.opp, config, async_see, discovery_info=None):
         return
 
     vin, component, attr = discovery_info
-    data =.opp.data[DATA_KEY]
+    data = opp.data[DATA_KEY]
     instrument = data.instrument(vin, component, attr)
 
     async def see_vehicle():

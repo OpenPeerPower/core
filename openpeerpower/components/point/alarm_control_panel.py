@@ -28,7 +28,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     async def async_discover_home(home_id):
         """Discover and add a discovered home."""
-        client =.opp.data[POINT_DOMAIN][config_entry.entry_id]
+        client = opp.data[POINT_DOMAIN][config_entry.entry_id]
         async_add_entities([MinutPointAlarmControl(client, home_id)], True)
 
     async_dispatcher_connect(

@@ -22,7 +22,7 @@ async def test_light_off_reports_correctly.opp, requests_mock):
     """Tests that the initial state of a device that should be off is correct."""
     await setup_platform.opp, LIGHT_DOMAIN)
 
-    state =.opp.states.get("light.front_light")
+    state = opp.states.get("light.front_light")
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "Front light"
 
@@ -31,7 +31,7 @@ async def test_light_on_reports_correctly.opp, requests_mock):
     """Tests that the initial state of a device that should be on is correct."""
     await setup_platform.opp, LIGHT_DOMAIN)
 
-    state =.opp.states.get("light.internal_light")
+    state = opp.states.get("light.internal_light")
     assert state.state == "on"
     assert state.attributes.get("friendly_name") == "Internal light"
 
@@ -46,7 +46,7 @@ async def test_light_can_be_turned_on.opp, requests_mock):
         text=load_fixture("ring_doorbot_siren_on_response.json"),
     )
 
-    state =.opp.states.get("light.front_light")
+    state = opp.states.get("light.front_light")
     assert state.state == "off"
 
     await.opp.services.async_call(
@@ -54,14 +54,14 @@ async def test_light_can_be_turned_on.opp, requests_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.front_light")
+    state = opp.states.get("light.front_light")
     assert state.state == "on"
 
 
 async def test_updates_work.opp, requests_mock):
     """Tests the update service works correctly."""
     await setup_platform.opp, LIGHT_DOMAIN)
-    state =.opp.states.get("light.front_light")
+    state = opp.states.get("light.front_light")
     assert state.state == "off"
     # Changes the return to indicate that the light is now on.
     requests_mock.get(
@@ -73,5 +73,5 @@ async def test_updates_work.opp, requests_mock):
 
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.front_light")
+    state = opp.states.get("light.front_light")
     assert state.state == "on"

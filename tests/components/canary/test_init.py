@@ -25,7 +25,7 @@ async def test_import_from_yaml.opp, canary) -> None:
         assert await async_setup_component.opp, DOMAIN, {DOMAIN: YAML_CONFIG})
         await.opp.async_block_till_done()
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
 
     assert entries[0].data[CONF_USERNAME] == "test-username"
@@ -49,7 +49,7 @@ async def test_import_from_yaml_ffmpeg.opp, canary) -> None:
         )
         await.opp.async_block_till_done()
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
 
     assert entries[0].data[CONF_USERNAME] == "test-username"

@@ -16,7 +16,7 @@ from .const import DOMAIN as KONNECTED_DOMAIN
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up binary sensors attached to a Konnected device from a config entry."""
-    data =.opp.data[KONNECTED_DOMAIN]
+    data = opp.data[KONNECTED_DOMAIN]
     device_id = config_entry.data["id"]
     sensors = [
         KonnectedBinarySensor(device_id, pin_num, pin_data)

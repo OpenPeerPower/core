@@ -125,9 +125,9 @@ async def test_inoperative_locks_are_filtered_out.opp):
        .opp, [august_operative_lock, august_inoperative_lock]
     )
 
-    lock_abc_name =.opp.states.get("lock.abc_name")
+    lock_abc_name = opp.states.get("lock.abc_name")
     assert lock_abc_name is None
-    lock_a6697750d607098bae8d6baa11ef8063_name =.opp.states.get(
+    lock_a6697750d607098bae8d6baa11ef8063_name = opp.states.get(
         "lock.a6697750d607098bae8d6baa11ef8063_name"
     )
     assert lock_a6697750d607098bae8d6baa11ef8063_name.state == STATE_LOCKED
@@ -139,11 +139,11 @@ async def test_lock_op._doorsense.opp):
     nodoorsenselock = await _mock_doorsense_missing_august_lock_detail.opp)
     await _create_august_with_devices.opp, [doorsenselock, nodoorsenselock])
 
-    binary_sensor_online_with_doorsense_name_open =.opp.states.get(
+    binary_sensor_online_with_doorsense_name_open = opp.states.get(
         "binary_sensor.online_with_doorsense_name_open"
     )
     assert binary_sensor_online_with_doorsense_name_open.state == STATE_ON
-    binary_sensor_missing_doorsense_id_name_open =.opp.states.get(
+    binary_sensor_missing_doorsense_id_name_open = opp.states.get(
         "binary_sensor.missing_doorsense_id_name_open"
     )
     assert binary_sensor_missing_doorsense_id_name_open is None
@@ -199,7 +199,7 @@ async def test_auth_fails.opp):
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
 
     assert flows[0]["step_id"] == "user"
 
@@ -227,7 +227,7 @@ async def test_bad_password.opp):
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
 
     assert flows[0]["step_id"] == "user"
 
@@ -277,7 +277,7 @@ async def test_unknown_auth_state.opp):
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
 
     assert flows[0]["step_id"] == "user"
 

@@ -47,7 +47,7 @@ async def test_initial_state.opp: OpenPeerPower):
     """Validate that entity and device states are updated on startup."""
     entity, device, _ = await _create_entries.opp)
 
-    state =.opp.states.get(entity.entity_id)
+    state = opp.states.get(entity.entity_id)
 
     # Basic state properties
     assert state.name == entity.unique_id
@@ -74,7 +74,7 @@ async def test_initial_state_offline.opp: OpenPeerPower):
     client.is_offline = True
     entity, device, _ = await _create_entries.opp, client)
 
-    state =.opp.states.get(entity.entity_id)
+    state = opp.states.get(entity.entity_id)
 
     assert state.name == TEST_NAME_ORIGINAL
     assert state.state == "unavailable"
@@ -103,7 +103,7 @@ async def test_turn_on.opp: OpenPeerPower):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity.entity_id)
+    state = opp.states.get(entity.entity_id)
 
     assert state.state == "on"
     assert state.attributes["brightness"] == 51
@@ -125,7 +125,7 @@ async def test_turn_on_with_brightness.opp: OpenPeerPower):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity.entity_id)
+    state = opp.states.get(entity.entity_id)
 
     assert state.state == "on"
     assert state.attributes["brightness"] == 255
@@ -142,7 +142,7 @@ async def test_turn_off.opp: OpenPeerPower):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity.entity_id)
+    state = opp.states.get(entity.entity_id)
 
     assert state.state == "off"
     assert state.attributes["brightness"] == 0
@@ -172,7 +172,7 @@ async def test_update_name.opp: OpenPeerPower):
     )  # We call turn_off which will automatically cause an async_update
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity.entity_id)
+    state = opp.states.get(entity.entity_id)
 
     assert updated_config_entry is not None
     assert updated_config_entry.data[CONF_ENTRY_NAME] == "new_device_name"

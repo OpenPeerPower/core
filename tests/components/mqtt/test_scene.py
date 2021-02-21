@@ -54,7 +54,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("scene.test")
+    state = opp.states.get("scene.test")
     assert state.state == scene.STATE
 
     data = {ATTR_ENTITY_ID: "scene.test"}

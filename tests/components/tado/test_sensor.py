@@ -8,16 +8,16 @@ async def test_air_con_create_sensors.opp):
 
     await async_init_integration.opp)
 
-    state =.opp.states.get("sensor.air_conditioning_tado_mode")
+    state = opp.states.get("sensor.air_conditioning_tado_mode")
     assert state.state == "HOME"
 
-    state =.opp.states.get("sensor.air_conditioning_temperature")
+    state = opp.states.get("sensor.air_conditioning_temperature")
     assert state.state == "24.76"
 
-    state =.opp.states.get("sensor.air_conditioning_ac")
+    state = opp.states.get("sensor.air_conditioning_ac")
     assert state.state == "ON"
 
-    state =.opp.states.get("sensor.air_conditioning_humidity")
+    state = opp.states.get("sensor.air_conditioning_humidity")
     assert state.state == "60.9"
 
 
@@ -26,13 +26,13 @@ async def test_heater_create_sensors.opp):
 
     await async_init_integration.opp)
 
-    state =.opp.states.get("sensor.baseboard_heater_tado_mode")
+    state = opp.states.get("sensor.baseboard_heater_tado_mode")
     assert state.state == "HOME"
 
-    state =.opp.states.get("sensor.baseboard_heater_temperature")
+    state = opp.states.get("sensor.baseboard_heater_temperature")
     assert state.state == "20.65"
 
-    state =.opp.states.get("sensor.baseboard_heater_humidity")
+    state = opp.states.get("sensor.baseboard_heater_humidity")
     assert state.state == "45.2"
 
 
@@ -41,5 +41,5 @@ async def test_water_heater_create_sensors.opp):
 
     await async_init_integration.opp)
 
-    state =.opp.states.get("sensor.water_heater_tado_mode")
+    state = opp.states.get("sensor.water_heater_tado_mode")
     assert state.state == "HOME"

@@ -45,7 +45,7 @@ async def test_publish_without_mqtt.opp, caplog):
 
         send_message = ozw_options.call_args[1]["send_message"]
 
-        mqtt_entries =.opp.config_entries.async_entries("mqtt")
+        mqtt_entries = opp.config_entries.async_entries("mqtt")
         mqtt_entry = mqtt_entries[0]
         await.opp.config_entries.async_remove(mqtt_entry.entry_id)
         await.opp.async_block_till_done()
@@ -77,7 +77,7 @@ async def test_unload_entry.opp, generic_data, switch_msg, caplog):
     await.opp.config_entries.async_unload(entry.entry_id)
 
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
-    entities =.opp.states.async_entity_ids("switch")
+    entities = opp.states.async_entity_ids("switch")
     assert len(entities) == 1
     for entity in entities:
         assert.opp.states.get(entity).state == STATE_UNAVAILABLE

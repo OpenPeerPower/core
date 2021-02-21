@@ -37,7 +37,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     configured_partitions = discovery_info[CONF_DEVICE_PARTITIONS]
-    controller =.opp.data[DATA_SATEL]
+    controller = opp.data[DATA_SATEL]
 
     devices = []
 

@@ -37,7 +37,7 @@ async def test_source_select.opp):
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get(mp.ATTR_INPUT_SOURCE) == "dvd"
 
     with pytest.raises(vol.Invalid):
@@ -47,7 +47,7 @@ async def test_source_select.opp):
             {ATTR_ENTITY_ID: entity_id, mp.ATTR_INPUT_SOURCE: None},
             blocking=True,
         )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get(mp.ATTR_INPUT_SOURCE) == "dvd"
 
     await.opp.services.async_call(
@@ -56,7 +56,7 @@ async def test_source_select.opp):
         {ATTR_ENTITY_ID: entity_id, mp.ATTR_INPUT_SOURCE: "xbox"},
         blocking=True,
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get(mp.ATTR_INPUT_SOURCE) == "xbox"
 
 
@@ -68,7 +68,7 @@ async def test_repeat_set.opp):
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get(mp.ATTR_MEDIA_REPEAT) == mp.const.REPEAT_MODE_OFF
 
     await.opp.services.async_call(
@@ -77,7 +77,7 @@ async def test_repeat_set.opp):
         {ATTR_ENTITY_ID: entity_id, mp.ATTR_MEDIA_REPEAT: mp.const.REPEAT_MODE_ALL},
         blocking=True,
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get(mp.ATTR_MEDIA_REPEAT) == mp.const.REPEAT_MODE_ALL
 
 
@@ -88,7 +88,7 @@ async def test_clear_playlist.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING
 
     await.opp.services.async_call(
@@ -97,7 +97,7 @@ async def test_clear_playlist.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_OFF
 
 
@@ -108,7 +108,7 @@ async def test_volume_services.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_VOLUME_LEVEL) == 1.0
 
     with pytest.raises(vol.Invalid):
@@ -119,7 +119,7 @@ async def test_volume_services.opp):
             blocking=True,
         )
 
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_VOLUME_LEVEL) == 1.0
 
     await.opp.services.async_call(
@@ -128,7 +128,7 @@ async def test_volume_services.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID, mp.ATTR_MEDIA_VOLUME_LEVEL: 0.5},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_VOLUME_LEVEL) == 0.5
 
     await.opp.services.async_call(
@@ -137,7 +137,7 @@ async def test_volume_services.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_VOLUME_LEVEL) == 0.4
 
     await.opp.services.async_call(
@@ -146,7 +146,7 @@ async def test_volume_services.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_VOLUME_LEVEL) == 0.5
 
     assert state.attributes.get(mp.ATTR_MEDIA_VOLUME_MUTED) is False
@@ -159,7 +159,7 @@ async def test_volume_services.opp):
             blocking=True,
         )
 
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_VOLUME_MUTED) is False
 
     await.opp.services.async_call(
@@ -169,7 +169,7 @@ async def test_volume_services.opp):
         blocking=True,
     )
 
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_VOLUME_MUTED) is True
 
 
@@ -180,7 +180,7 @@ async def test_turning_off_and_on.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING
 
     await.opp.services.async_call(
@@ -189,7 +189,7 @@ async def test_turning_off_and_on.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_OFF
     assert not mp.is_on.opp, TEST_ENTITY_ID)
 
@@ -199,7 +199,7 @@ async def test_turning_off_and_on.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING
     assert mp.is_on.opp, TEST_ENTITY_ID)
 
@@ -209,7 +209,7 @@ async def test_turning_off_and_on.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_OFF
     assert not mp.is_on.opp, TEST_ENTITY_ID)
 
@@ -221,7 +221,7 @@ async def test_playing_pausing.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING
 
     await.opp.services.async_call(
@@ -230,7 +230,7 @@ async def test_playing_pausing.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PAUSED
 
     await.opp.services.async_call(
@@ -239,7 +239,7 @@ async def test_playing_pausing.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING
 
     await.opp.services.async_call(
@@ -248,7 +248,7 @@ async def test_playing_pausing.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PAUSED
 
     await.opp.services.async_call(
@@ -257,7 +257,7 @@ async def test_playing_pausing.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING
 
 
@@ -268,7 +268,7 @@ async def test_prev_next_track.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_TRACK) == 1
 
     await.opp.services.async_call(
@@ -277,7 +277,7 @@ async def test_prev_next_track.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_TRACK) == 2
 
     await.opp.services.async_call(
@@ -286,7 +286,7 @@ async def test_prev_next_track.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_TRACK) == 3
 
     await.opp.services.async_call(
@@ -295,7 +295,7 @@ async def test_prev_next_track.opp):
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_TRACK) == 2
 
     assert await async_setup_component(
@@ -304,7 +304,7 @@ async def test_prev_next_track.opp):
     await.opp.async_block_till_done()
 
     ent_id = "media_player.lounge_room"
-    state =.opp.states.get(ent_id)
+    state = opp.states.get(ent_id)
     assert state.attributes.get(mp.ATTR_MEDIA_EPISODE) == 1
 
     await.opp.services.async_call(
@@ -313,7 +313,7 @@ async def test_prev_next_track.opp):
         {ATTR_ENTITY_ID: ent_id},
         blocking=True,
     )
-    state =.opp.states.get(ent_id)
+    state = opp.states.get(ent_id)
     assert state.attributes.get(mp.ATTR_MEDIA_EPISODE) == 2
 
     await.opp.services.async_call(
@@ -322,7 +322,7 @@ async def test_prev_next_track.opp):
         {ATTR_ENTITY_ID: ent_id},
         blocking=True,
     )
-    state =.opp.states.get(ent_id)
+    state = opp.states.get(ent_id)
     assert state.attributes.get(mp.ATTR_MEDIA_EPISODE) == 1
 
 
@@ -334,7 +334,7 @@ async def test_play_media.opp):
     await.opp.async_block_till_done()
 
     ent_id = "media_player.living_room"
-    state =.opp.states.get(ent_id)
+    state = opp.states.get(ent_id)
     assert mp.SUPPORT_PLAY_MEDIA & state.attributes.get(ATTR_SUPPORTED_FEATURES) > 0
     assert state.attributes.get(mp.ATTR_MEDIA_CONTENT_ID) is not None
 
@@ -345,7 +345,7 @@ async def test_play_media.opp):
             {ATTR_ENTITY_ID: ent_id, mp.ATTR_MEDIA_CONTENT_ID: "some_id"},
             blocking=True,
         )
-    state =.opp.states.get(ent_id)
+    state = opp.states.get(ent_id)
     assert mp.SUPPORT_PLAY_MEDIA & state.attributes.get(ATTR_SUPPORTED_FEATURES) > 0
     assert state.attributes.get(mp.ATTR_MEDIA_CONTENT_ID) != "some_id"
 
@@ -359,7 +359,7 @@ async def test_play_media.opp):
         },
         blocking=True,
     )
-    state =.opp.states.get(ent_id)
+    state = opp.states.get(ent_id)
     assert mp.SUPPORT_PLAY_MEDIA & state.attributes.get(ATTR_SUPPORTED_FEATURES) > 0
     assert state.attributes.get(mp.ATTR_MEDIA_CONTENT_ID) == "some_id"
 
@@ -372,7 +372,7 @@ async def test_seek.opp, mock_media_seek):
     await.opp.async_block_till_done()
 
     ent_id = "media_player.living_room"
-    state =.opp.states.get(ent_id)
+    state = opp.states.get(ent_id)
     assert state.attributes[ATTR_SUPPORTED_FEATURES] & mp.SUPPORT_SEEK
     assert not mock_media_seek.called
 
@@ -436,7 +436,7 @@ async def test_media_image_proxy.opp,.opp_client):
 
    .opp.data[DATA_CLIENTSESSION] = MockWebsession()
 
-    state =.opp.states.get(TEST_ENTITY_ID)
+    state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING
     client = await.opp_client()
     req = await client.get(state.attributes.get(ATTR_ENTITY_PICTURE))

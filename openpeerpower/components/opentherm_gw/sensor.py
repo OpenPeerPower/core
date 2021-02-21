@@ -25,7 +25,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the OpenTherm Gateway sensors."""
     sensors = []
     deprecated_sensors = []
-    gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]]
+    gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]]
     ent_reg = await async_get_registry.opp)
     for var, info in SENSOR_INFO.items():
         device_class = info[0]

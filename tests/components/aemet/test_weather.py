@@ -36,7 +36,7 @@ async def test_aemet_weather.opp):
     ):
         await async_init_integration.opp)
 
-    state =.opp.states.get("weather.aemet_daily")
+    state = opp.states.get("weather.aemet_daily")
     assert state
     assert state.state == ATTR_CONDITION_SNOWY
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -57,5 +57,5 @@ async def test_aemet_weather.opp):
     assert forecast.get(ATTR_FORECAST_WIND_BEARING) == 45.0
     assert forecast.get(ATTR_FORECAST_WIND_SPEED) == 20
 
-    state =.opp.states.get("weather.aemet_hourly")
+    state = opp.states.get("weather.aemet_hourly")
     assert state is None

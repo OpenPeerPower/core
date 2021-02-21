@@ -50,7 +50,7 @@ async def async_setup.opp: OpenPeerPower, config: dict) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Elexa Guardian from a config entry."""
-    client =.opp.data[DOMAIN][DATA_CLIENT][entry.entry_id] = Client(
+    client = opp.data[DOMAIN][DATA_CLIENT][entry.entry_id] = Client(
         entry.data[CONF_IP_ADDRESS], port=entry.data[CONF_PORT]
     )
    .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {
@@ -71,7 +71,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         (API_VALVE_STATUS, client.valve.status),
         (API_WIFI_STATUS, client.wifi.status),
     ]:
-        coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+        coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             api
         ] = GuardianDataUpdateCoordinator(
            .opp,
@@ -87,7 +87,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     # Set up an object to evaluate each batch of paired sensor UIDs and add/remove
     # devices as appropriate:
-    paired_sensor_manager =.opp.data[DOMAIN][DATA_PAIRED_SENSOR_MANAGER][
+    paired_sensor_manager = opp.data[DOMAIN][DATA_PAIRED_SENSOR_MANAGER][
         entry.entry_id
     ] = PairedSensorManager.opp, entry, client, api_lock)
     await paired_sensor_manager.async_process_latest_paired_sensor_uids()
@@ -147,7 +147,7 @@ class PairedSensorManager:
         self._api_lock = api_lock
         self._client = client
         self._entry = entry
-        self._opp =.opp
+        self._opp = opp
         self._listeners = []
         self._paired_uids = set()
 

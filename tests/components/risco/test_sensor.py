@@ -145,7 +145,7 @@ async def test_unauthorized.opp):
 def _check_state.opp, category, entity_id):
     event_index = CATEGORIES_TO_EVENTS[category]
     event = TEST_EVENTS[event_index]
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == event.time
     assert state.attributes["category_id"] == event.category_id
     assert state.attributes["category_name"] == event.category_name

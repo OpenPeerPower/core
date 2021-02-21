@@ -139,7 +139,7 @@ async def test_update_connection_failure.opp, discovery, device, mock_now):
     await.opp.async_block_till_done()
 
     # First update to make the device available
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.name == "fake-device-1"
     assert state.state != STATE_UNAVAILABLE
 
@@ -154,7 +154,7 @@ async def test_update_connection_failure.opp, discovery, device, mock_now):
     await.opp.async_block_till_done()
 
     # Then two more update failures to make the device unavailable
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.name == "fake-device-1"
     assert state.state == STATE_UNAVAILABLE
 
@@ -175,7 +175,7 @@ async def test_update_connection_failure_recovery.opp, discovery, device, mock_n
         async_fire_time_changed.opp, next_update)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.name == "fake-device-1"
     assert state.state == STATE_UNAVAILABLE
 
@@ -185,7 +185,7 @@ async def test_update_connection_failure_recovery.opp, discovery, device, mock_n
         async_fire_time_changed.opp, next_update)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.name == "fake-device-1"
     assert state.state != STATE_UNAVAILABLE
 
@@ -196,7 +196,7 @@ async def test_update_unhandled_exception.opp, discovery, device, mock_now):
 
     await async_setup_gree.opp)
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.name == "fake-device-1"
     assert state.state != STATE_UNAVAILABLE
 
@@ -205,7 +205,7 @@ async def test_update_unhandled_exception.opp, discovery, device, mock_now):
         async_fire_time_changed.opp, next_update)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.name == "fake-device-1"
     assert state.state == STATE_UNAVAILABLE
 
@@ -220,7 +220,7 @@ async def test_send_command_device_timeout.opp, discovery, device, mock_now):
         async_fire_time_changed.opp, next_update)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.name == "fake-device-1"
     assert state.state != STATE_UNAVAILABLE
 
@@ -235,7 +235,7 @@ async def test_send_command_device_timeout.opp, discovery, device, mock_now):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
 
@@ -251,7 +251,7 @@ async def test_send_power_on.opp, discovery, device, mock_now):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state != HVAC_MODE_OFF
 
@@ -269,7 +269,7 @@ async def test_send_power_on_device_timeout.opp, discovery, device, mock_now):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state != HVAC_MODE_OFF
 
@@ -290,7 +290,7 @@ async def test_send_power_off.opp, discovery, device, mock_now):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state == HVAC_MODE_OFF
 
@@ -313,7 +313,7 @@ async def test_send_power_off_device_timeout.opp, discovery, device, mock_now):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state == HVAC_MODE_OFF
 
@@ -329,7 +329,7 @@ async def test_send_target_temperature.opp, discovery, device, mock_now):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_TEMPERATURE) == 25
 
@@ -349,7 +349,7 @@ async def test_send_target_temperature_device_timeout(
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_TEMPERATURE) == 25
 
@@ -360,7 +360,7 @@ async def test_update_target_temperature.opp, discovery, device, mock_now):
 
     await async_setup_gree.opp)
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_TEMPERATURE) == 32
 
@@ -379,7 +379,7 @@ async def test_send_preset_mode.opp, discovery, device, mock_now, preset):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_PRESET_MODE) == preset
 
@@ -396,7 +396,7 @@ async def test_send_invalid_preset_mode.opp, discovery, device, mock_now):
             blocking=True,
         )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_PRESET_MODE) != "invalid"
 
@@ -419,7 +419,7 @@ async def test_send_preset_mode_device_timeout(
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_PRESET_MODE) == preset
 
@@ -436,7 +436,7 @@ async def test_update_preset_mode.opp, discovery, device, mock_now, preset):
 
     await async_setup_gree.opp)
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_PRESET_MODE) == preset
 
@@ -463,7 +463,7 @@ async def test_send_hvac_mode.opp, discovery, device, mock_now, hvac_mode):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state == hvac_mode
 
@@ -487,7 +487,7 @@ async def test_send_hvac_mode_device_timeout(
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state == hvac_mode
 
@@ -510,7 +510,7 @@ async def test_update_hvac_mode.opp, discovery, device, mock_now, hvac_mode):
 
     await async_setup_gree.opp)
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state == hvac_mode
 
@@ -530,7 +530,7 @@ async def test_send_fan_mode.opp, discovery, device, mock_now, fan_mode):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_FAN_MODE) == fan_mode
 
@@ -547,7 +547,7 @@ async def test_send_invalid_fan_mode.opp, discovery, device, mock_now):
             blocking=True,
         )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_FAN_MODE) != "invalid"
 
@@ -571,7 +571,7 @@ async def test_send_fan_mode_device_timeout(
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_FAN_MODE) == fan_mode
 
@@ -586,7 +586,7 @@ async def test_update_fan_mode.opp, discovery, device, mock_now, fan_mode):
 
     await async_setup_gree.opp)
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_FAN_MODE) == fan_mode
 
@@ -605,7 +605,7 @@ async def test_send_swing_mode.opp, discovery, device, mock_now, swing_mode):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_SWING_MODE) == swing_mode
 
@@ -622,7 +622,7 @@ async def test_send_invalid_swing_mode.opp, discovery, device, mock_now):
             blocking=True,
         )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_SWING_MODE) != "invalid"
 
@@ -645,7 +645,7 @@ async def test_send_swing_mode_device_timeout(
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_SWING_MODE) == swing_mode
 
@@ -668,7 +668,7 @@ async def test_update_swing_mode.opp, discovery, device, mock_now, swing_mode):
 
     await async_setup_gree.opp)
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.attributes.get(ATTR_SWING_MODE) == swing_mode
 
@@ -676,12 +676,12 @@ async def test_update_swing_mode.opp, discovery, device, mock_now, swing_mode):
 async def test_name.opp, discovery, device):
     """Test for name property."""
     await async_setup_gree.opp)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "fake-device-1"
 
 
 async def test_supported_features_with_turnon.opp, discovery, device):
     """Test for supported_features property."""
     await async_setup_gree.opp)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORTED_FEATURES

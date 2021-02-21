@@ -34,7 +34,7 @@ def.opp_recorder():
 
 def test_recorder_bad_commit.opp_recorder):
     """Bad _commit should retry 3 times."""
-    opp =.opp_recorder()
+    opp = opp_recorder()
 
     def work(session):
         """Bad work."""
@@ -144,9 +144,9 @@ def test_validate_or_move_away_sqlite_database_without_integrity_check(
 
 def test_last_run_was_recently_clean.opp_recorder):
     """Test we can check if the last recorder run was recently clean."""
-    opp =.opp_recorder()
+    opp = opp_recorder()
 
-    cursor =.opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
+    cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 
     assert util.last_run_was_recently_clean(cursor) is False
 
@@ -166,9 +166,9 @@ def test_last_run_was_recently_clean.opp_recorder):
 
 def test_basic_sanity_check.opp_recorder):
     """Test the basic sanity checks with a missing table."""
-    opp =.opp_recorder()
+    opp = opp_recorder()
 
-    cursor =.opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
+    cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 
     assert util.basic_sanity_check(cursor) is True
 
@@ -180,11 +180,11 @@ def test_basic_sanity_check.opp_recorder):
 
 def test_combined_checks.opp_recorder):
     """Run Checks on the open database."""
-    opp =.opp_recorder()
+    opp = opp_recorder()
 
     db_integrity_check = False
 
-    cursor =.opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
+    cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 
     assert (
         util.run_checks_on_open_db("fake_db_path", cursor, db_integrity_check) is None

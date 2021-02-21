@@ -171,5 +171,5 @@ async def test_onewiredirect_setup_valid_device.opp, device_id):
         assert registry_entry.unique_id == expected_sensor["unique_id"]
         assert registry_entry.unit_of_measurement == expected_sensor["unit"]
         assert registry_entry.device_class == expected_sensor["class"]
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state.state == expected_sensor["result"]

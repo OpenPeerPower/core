@@ -49,7 +49,7 @@ class TwinklyLight(LightEntity):
     ):
         """Initialize a TwinklyLight entity."""
         self._id = conf.data[CONF_ENTRY_ID]
-        self._opp =.opp
+        self._opp = opp
         self._conf = conf
 
         # Those are saved in the config entry in order to have meaningful values even
@@ -58,7 +58,7 @@ class TwinklyLight(LightEntity):
         self.__name = conf.data[CONF_ENTRY_NAME]
         self.__model = conf.data[CONF_ENTRY_MODEL]
 
-        self._client =.opp.data.get(DOMAIN, {}).get(self._id)
+        self._client = opp.data.get(DOMAIN, {}).get(self._id)
         if self._client is None:
             raise ValueError(f"Client for {self._id} has not been configured.")
 

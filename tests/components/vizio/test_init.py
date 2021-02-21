@@ -42,7 +42,7 @@ async def test_tv_load_and_unload(
 
     assert await config_entry.async_unload.opp)
     await.opp.async_block_till_done()
-    entities =.opp.states.async_entity_ids(MP_DOMAIN)
+    entities = opp.states.async_entity_ids(MP_DOMAIN)
     assert len(entities) == 1
     for entity in entities:
         assert.opp.states.get(entity).state == STATE_UNAVAILABLE
@@ -66,7 +66,7 @@ async def test_speaker_load_and_unload(
 
     assert await config_entry.async_unload.opp)
     await.opp.async_block_till_done()
-    entities =.opp.states.async_entity_ids(MP_DOMAIN)
+    entities = opp.states.async_entity_ids(MP_DOMAIN)
     assert len(entities) == 1
     for entity in entities:
         assert.opp.states.get(entity).state == STATE_UNAVAILABLE

@@ -69,7 +69,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up the Zigbee Home Automation sensor from config entry."""
-    entities_to_create =.opp.data[DATA_ZHA][DOMAIN]
+    entities_to_create = opp.data[DATA_ZHA][DOMAIN]
 
     unsub = async_dispatcher_connect(
        .opp,

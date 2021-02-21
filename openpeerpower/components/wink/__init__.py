@@ -211,11 +211,11 @@ WINK_HUBS = []
 def _request_app_setup.opp, config):
     """Assist user with configuring the Wink dev application."""
    .opp.data[DOMAIN]["configurator"] = True
-    configurator =.opp.components.configurator
+    configurator = opp.components.configurator
 
     def wink_configuration_callback(callback_data):
         """Handle configuration updates."""
-        _config_path =.opp.config.path(WINK_CONFIG_FILE)
+        _config_path = opp.config.path(WINK_CONFIG_FILE)
         if not os.path.isfile(_config_path):
             setup.opp, config)
             return
@@ -230,7 +230,7 @@ def _request_app_setup.opp, config):
             setup.opp, config)
             return
         error_msg = "Your input was invalid. Please try again."
-        _configurator =.opp.data[DOMAIN]["configuring"][DOMAIN]
+        _configurator = opp.data[DOMAIN]["configuring"][DOMAIN]
         configurator.notify_errors(_configurator, error_msg)
 
     start_url = f"{get_url.opp)}{WINK_AUTH_CALLBACK_PATH}"
@@ -259,7 +259,7 @@ def _request_app_setup.opp, config):
 def _request_oauth_completion.opp, config):
     """Request user complete Wink OAuth2 flow."""
    .opp.data[DOMAIN]["configurator"] = True
-    configurator =.opp.components.configurator
+    configurator = opp.components.configurator
     if DOMAIN in.opp.data[DOMAIN]["configuring"]:
         configurator.notify_errors(
            .opp.data[DOMAIN]["configuring"][DOMAIN],
@@ -319,7 +319,7 @@ def setup.opp, config):
         _LOGGER.info("Using OAuth authentication")
         if not local_control:
             pywink.disable_local_control()
-        config_path =.opp.config.path(WINK_CONFIG_FILE)
+        config_path = opp.config.path(WINK_CONFIG_FILE)
         if os.path.isfile(config_path):
             config_file = load_json(config_path)
             if config_file == DEFAULT_CONFIG:
@@ -332,7 +332,7 @@ def setup.opp, config):
             return True
 
         if DOMAIN in.opp.data[DOMAIN]["configuring"]:
-            _configurator =.opp.data[DOMAIN]["configuring"]
+            _configurator = opp.data[DOMAIN]["configuring"]
            .opp.components.configurator.request_done(_configurator.pop(DOMAIN))
 
         # Using oauth
@@ -411,7 +411,7 @@ def setup.opp, config):
     def save_credentials(event):
         """Save currently set OAuth credentials."""
         if.opp.data[DOMAIN]["oauth"].get("email") is None:
-            config_path =.opp.config.path(WINK_CONFIG_FILE)
+            config_path = opp.config.path(WINK_CONFIG_FILE)
             _config = pywink.get_current_oauth_credentials()
             save_json(config_path, _config)
 
@@ -726,7 +726,7 @@ class WinkDevice(Entity):
 
     def __init__(self, wink,.opp):
         """Initialize the Wink device."""
-        self.opp =.opp
+        self.opp = opp
         self.wink = wink
        .opp.data[DOMAIN]["pubnub"].add_subscription(
             self.wink.pubnub_channel, self._pubnub_update

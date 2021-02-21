@@ -22,5 +22,5 @@ async def test_smoke_test_setup_component.opp):
     await.opp.async_block_till_done()
 
     for cond in CONDITIONS:
-        state =.opp.states.get(f"sensor.volkel_{cond}")
+        state = opp.states.get(f"sensor.volkel_{cond}")
         assert state.state == "unknown"

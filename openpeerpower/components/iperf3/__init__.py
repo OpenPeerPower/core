@@ -84,7 +84,7 @@ async def async_setup.opp, config):
 
     conf = config[DOMAIN]
     for host in conf[CONF_HOSTS]:
-        data =.opp.data[DOMAIN][host[CONF_HOST]] = Iperf3Data.opp, host)
+        data = opp.data[DOMAIN][host[CONF_HOST]] = Iperf3Data.opp, host)
 
         if not conf[CONF_MANUAL]:
             async_track_time_interval.opp, data.update, conf[CONF_SCAN_INTERVAL])
@@ -114,7 +114,7 @@ class Iperf3Data:
 
     def __init__(self,.opp, host):
         """Initialize the data object."""
-        self._opp =.opp
+        self._opp = opp
         self._host = host
         self.data = {ATTR_DOWNLOAD: None, ATTR_UPLOAD: None, ATTR_VERSION: None}
 

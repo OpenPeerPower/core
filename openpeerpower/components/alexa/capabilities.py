@@ -320,7 +320,7 @@ class AlexaEndpointHealth(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp =.opp
+        self.opp = opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -849,7 +849,7 @@ class AlexaTemperatureSensor(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp =.opp
+        self.opp = opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -915,7 +915,7 @@ class AlexaContactSensor(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp =.opp
+        self.opp = opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -964,7 +964,7 @@ class AlexaMotionSensor(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp =.opp
+        self.opp = opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -1015,7 +1015,7 @@ class AlexaThermostatController(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp =.opp
+        self.opp = opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -1188,7 +1188,7 @@ class AlexaSecurityPanelController(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp =.opp
+        self.opp = opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -1850,7 +1850,7 @@ class AlexaEventDetectionSensor(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp =.opp
+        self.opp = opp
 
     def name(self):
         """Return the Alexa API name of this interface."""

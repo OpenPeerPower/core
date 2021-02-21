@@ -59,7 +59,7 @@ def create_event_op.dler(patterns,.opp):
         def __init__(self, patterns,.opp):
             """Initialise the EventHandler."""
             super().__init__(patterns)
-            self.opp =.opp
+            self.opp = opp
 
         def process(self, event):
             """On Watcher event, fire HA event."""

@@ -216,13 +216,13 @@ async def test_lights.opp, mock_bridge):
     # 2 lights
     assert len.opp.states.async_all()) == 2
 
-    lamp_1 =.opp.states.get("light.hue_lamp_1")
+    lamp_1 = opp.states.get("light.hue_lamp_1")
     assert lamp_1 is not None
     assert lamp_1.state == "on"
     assert lamp_1.attributes["brightness"] == 145
     assert lamp_1.attributes["hs_color"] == (36.067, 69.804)
 
-    lamp_2 =.opp.states.get("light.hue_lamp_2")
+    lamp_2 = opp.states.get("light.hue_lamp_2")
     assert lamp_2 is not None
     assert lamp_2.state == "off"
 
@@ -232,7 +232,7 @@ async def test_lights_color_mode.opp, mock_bridge):
     mock_bridge.mock_light_responses.append(LIGHT_RESPONSE)
     await setup_bridge.opp, mock_bridge)
 
-    lamp_1 =.opp.states.get("light.hue_lamp_1")
+    lamp_1 = opp.states.get("light.hue_lamp_1")
     assert lamp_1 is not None
     assert lamp_1.state == "on"
     assert lamp_1.attributes["brightness"] == 145
@@ -252,7 +252,7 @@ async def test_lights_color_mode.opp, mock_bridge):
     # 2x light update, 1 turn on request
     assert len(mock_bridge.mock_requests) == 3
 
-    lamp_1 =.opp.states.get("light.hue_lamp_1")
+    lamp_1 = opp.states.get("light.hue_lamp_1")
     assert lamp_1 is not None
     assert lamp_1.state == "on"
     assert lamp_1.attributes["brightness"] == 145
@@ -271,13 +271,13 @@ async def test_groups.opp, mock_bridge):
     # 2 hue group lights
     assert len.opp.states.async_all()) == 2
 
-    lamp_1 =.opp.states.get("light.group_1")
+    lamp_1 = opp.states.get("light.group_1")
     assert lamp_1 is not None
     assert lamp_1.state == "on"
     assert lamp_1.attributes["brightness"] == 255
     assert lamp_1.attributes["color_temp"] == 250
 
-    lamp_2 =.opp.states.get("light.group_2")
+    lamp_2 = opp.states.get("light.group_2")
     assert lamp_2 is not None
     assert lamp_2.state == "on"
 
@@ -322,7 +322,7 @@ async def test_new_group_discovered.opp, mock_bridge):
     assert len(mock_bridge.mock_requests) == 4
     assert len.opp.states.async_all()) == 3
 
-    new_group =.opp.states.get("light.group_3")
+    new_group = opp.states.get("light.group_3")
     assert new_group is not None
     assert new_group.state == "on"
     assert new_group.attributes["brightness"] == 154
@@ -370,7 +370,7 @@ async def test_new_light_discovered.opp, mock_bridge):
     assert len(mock_bridge.mock_requests) == 3
     assert len.opp.states.async_all()) == 3
 
-    light =.opp.states.get("light.hue_lamp_3")
+    light = opp.states.get("light.hue_lamp_3")
     assert light is not None
     assert light.state == "off"
 
@@ -397,10 +397,10 @@ async def test_group_removed.opp, mock_bridge):
     assert len(mock_bridge.mock_requests) == 4
     assert len.opp.states.async_all()) == 1
 
-    group =.opp.states.get("light.group_1")
+    group = opp.states.get("light.group_1")
     assert group is not None
 
-    removed_group =.opp.states.get("light.group_2")
+    removed_group = opp.states.get("light.group_2")
     assert removed_group is None
 
 
@@ -424,10 +424,10 @@ async def test_light_removed.opp, mock_bridge):
     assert len(mock_bridge.mock_requests) == 3
     assert len.opp.states.async_all()) == 1
 
-    light =.opp.states.get("light.hue_lamp_1")
+    light = opp.states.get("light.hue_lamp_1")
     assert light is not None
 
-    removed_light =.opp.states.get("light.hue_lamp_2")
+    removed_light = opp.states.get("light.hue_lamp_2")
     assert removed_light is None
 
 
@@ -441,7 +441,7 @@ async def test_other_group_update.opp, mock_bridge):
     assert len(mock_bridge.mock_requests) == 2
     assert len.opp.states.async_all()) == 2
 
-    group_2 =.opp.states.get("light.group_2")
+    group_2 = opp.states.get("light.group_2")
     assert group_2 is not None
     assert group_2.name == "Group 2"
     assert group_2.state == "on"
@@ -478,7 +478,7 @@ async def test_other_group_update.opp, mock_bridge):
     assert len(mock_bridge.mock_requests) == 4
     assert len.opp.states.async_all()) == 2
 
-    group_2 =.opp.states.get("light.group_2")
+    group_2 = opp.states.get("light.group_2")
     assert group_2 is not None
     assert group_2.name == "Group 2 new"
     assert group_2.state == "off"
@@ -492,7 +492,7 @@ async def test_other_light_update.opp, mock_bridge):
     assert len(mock_bridge.mock_requests) == 1
     assert len.opp.states.async_all()) == 2
 
-    lamp_2 =.opp.states.get("light.hue_lamp_2")
+    lamp_2 = opp.states.get("light.hue_lamp_2")
     assert lamp_2 is not None
     assert lamp_2.name == "Hue Lamp 2"
     assert lamp_2.state == "off"
@@ -530,7 +530,7 @@ async def test_other_light_update.opp, mock_bridge):
     assert len(mock_bridge.mock_requests) == 3
     assert len.opp.states.async_all()) == 2
 
-    lamp_2 =.opp.states.get("light.hue_lamp_2")
+    lamp_2 = opp.states.get("light.hue_lamp_2")
     assert lamp_2 is not None
     assert lamp_2.name == "Hue Lamp 2 new"
     assert lamp_2.state == "on"
@@ -560,7 +560,7 @@ async def test_light_turn_on_service.opp, mock_bridge):
     """Test calling the turn on service on a light."""
     mock_bridge.mock_light_responses.append(LIGHT_RESPONSE)
     await setup_bridge.opp, mock_bridge)
-    light =.opp.states.get("light.hue_lamp_2")
+    light = opp.states.get("light.hue_lamp_2")
     assert light is not None
     assert light.state == "off"
 
@@ -587,7 +587,7 @@ async def test_light_turn_on_service.opp, mock_bridge):
 
     assert len.opp.states.async_all()) == 2
 
-    light =.opp.states.get("light.hue_lamp_2")
+    light = opp.states.get("light.hue_lamp_2")
     assert light is not None
     assert light.state == "on"
 
@@ -612,7 +612,7 @@ async def test_light_turn_off_service.opp, mock_bridge):
     """Test calling the turn on service on a light."""
     mock_bridge.mock_light_responses.append(LIGHT_RESPONSE)
     await setup_bridge.opp, mock_bridge)
-    light =.opp.states.get("light.hue_lamp_1")
+    light = opp.states.get("light.hue_lamp_1")
     assert light is not None
     assert light.state == "on"
 
@@ -631,7 +631,7 @@ async def test_light_turn_off_service.opp, mock_bridge):
 
     assert len.opp.states.async_all()) == 2
 
-    light =.opp.states.get("light.hue_lamp_1")
+    light = opp.states.get("light.hue_lamp_1")
     assert light is not None
     assert light.state == "off"
 
@@ -904,11 +904,11 @@ async def test_group_features.opp, mock_bridge):
     color_temp_feature = hue_light.SUPPORT_HUE["Color temperature light"]
     extended_color_feature = hue_light.SUPPORT_HUE["Extended color light"]
 
-    group_1 =.opp.states.get("light.group_1")
+    group_1 = opp.states.get("light.group_1")
     assert group_1.attributes["supported_features"] == color_temp_feature
 
-    group_2 =.opp.states.get("light.group_2")
+    group_2 = opp.states.get("light.group_2")
     assert group_2.attributes["supported_features"] == extended_color_feature
 
-    group_3 =.opp.states.get("light.group_3")
+    group_3 = opp.states.get("light.group_3")
     assert group_3.attributes["supported_features"] == extended_color_feature

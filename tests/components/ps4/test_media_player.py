@@ -143,7 +143,7 @@ async def setup_mock_component.opp, entry=None):
 
     await.opp.async_block_till_done()
 
-    mock_entities =.opp.states.async_entity_ids()
+    mock_entities = opp.states.async_entity_ids()
 
     mock_entity_id = mock_entities[0]
 
@@ -152,7 +152,7 @@ async def setup_mock_component.opp, entry=None):
 
 async def mock_ddp_response.opp, mock_status_data):
     """Mock raw UDP response from device."""
-    mock_protocol =.opp.data[PS4_DATA].protocol
+    mock_protocol = opp.data[PS4_DATA].protocol
     assert mock_protocol.local_port == DEFAULT_UDP_PORT
     mock_code = mock_status_data.get("status_code")
     mock_status = mock_status_data.get("status")
@@ -166,7 +166,7 @@ async def mock_ddp_response.opp, mock_status_data):
 async def test_media_player_is_setup_correctly_with_entry.opp):
     """Test entity is setup correctly with entry correctly."""
     mock_entity_id = await setup_mock_component.opp)
-    mock_state =.opp.states.get(mock_entity_id).state
+    mock_state = opp.states.get(mock_entity_id).state
 
     # Assert status updated callback is added to protocol.
     assert len.opp.data[PS4_DATA].protocol.callbacks) == 1
@@ -233,7 +233,7 @@ async def test_media_attributes_are_fetched.opp):
     with patch(mock_func, return_value=mock_result) as mock_fetch:
         await mock_ddp_response.opp, MOCK_STATUS_PLAYING)
 
-    mock_state =.opp.states.get(mock_entity_id)
+    mock_state = opp.states.get(mock_entity_id)
     mock_attrs = dict(mock_state.attributes)
 
     assert len(mock_fetch.mock_calls) == 1
@@ -254,7 +254,7 @@ async def test_media_attributes_are_fetched.opp):
     with patch(mock_func, return_value=mock_result) as mock_fetch_app:
         await mock_ddp_response.opp, MOCK_STATUS_PLAYING)
 
-    mock_state =.opp.states.get(mock_entity_id)
+    mock_state = opp.states.get(mock_entity_id)
     mock_attrs = dict(mock_state.attributes)
 
     assert len(mock_fetch_app.mock_calls) == 1
@@ -273,7 +273,7 @@ async def test_media_attributes_are_loaded.opp, patch_load_json):
     ) as mock_fetch:
         await mock_ddp_response.opp, MOCK_STATUS_PLAYING)
 
-    mock_state =.opp.states.get(mock_entity_id)
+    mock_state = opp.states.get(mock_entity_id)
     mock_attrs = dict(mock_state.attributes)
 
     # Ensure that data is not fetched.
@@ -301,7 +301,7 @@ async def test_device_info_is_set_from_status_correctly.opp, patch_get_status):
     mock_version = mock_version[1:4]
     mock_version = "{}.{}".format(mock_version[0], mock_version[1:])
 
-    mock_state =.opp.states.get(mock_entity_id).state
+    mock_state = opp.states.get(mock_entity_id).state
 
     mock_d_entries = mock_d_registry.devices
     mock_entry = mock_d_registry.async_get_device(identifiers={(DOMAIN, MOCK_HOST_ID)})
@@ -339,13 +339,13 @@ async def test_device_info_is_assummed.opp):
     )
 
     mock_entity_id = await setup_mock_component.opp)
-    mock_state =.opp.states.get(mock_entity_id).state
+    mock_state = opp.states.get(mock_entity_id).state
 
     # Ensure that state is not set.
     assert mock_state == STATE_UNKNOWN
 
     # Ensure that entity_id is the same as the existing.
-    mock_entities =.opp.states.async_entity_ids()
+    mock_entities = opp.states.async_entity_ids()
     assert len(mock_entities) == 1
     assert mock_entities[0] == mock_entity_id
 
@@ -354,7 +354,7 @@ async def test_device_info_assummed_works.opp):
     """Reverse test that device info assumption works."""
     mock_d_registry = mock_device_registry.opp)
     mock_entity_id = await setup_mock_component.opp)
-    mock_state =.opp.states.get(mock_entity_id).state
+    mock_state = opp.states.get(mock_entity_id).state
     mock_d_entries = mock_d_registry.devices
 
     # Ensure that state is not set.

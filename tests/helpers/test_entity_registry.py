@@ -562,15 +562,15 @@ async def test_restore_states.opp):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await.opp.async_block_till_done()
 
-    simple =.opp.states.get("light.simple")
+    simple = opp.states.get("light.simple")
     assert simple is not None
     assert simple.state == STATE_UNAVAILABLE
     assert simple.attributes == {"restored": True, "supported_features": 0}
 
-    disabled =.opp.states.get("light.disabled")
+    disabled = opp.states.get("light.disabled")
     assert disabled is None
 
-    all_info_set =.opp.states.get("light.all_info_set")
+    all_info_set = opp.states.get("light.all_info_set")
     assert all_info_set is not None
     assert all_info_set.state == STATE_UNAVAILABLE
     assert all_info_set.attributes == {

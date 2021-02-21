@@ -32,7 +32,7 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=1)
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Greenwave Reality Platform."""
     host = config.get(CONF_HOST)
-    tokenfile =.opp.config.path(".greenwave")
+    tokenfile = opp.config.path(".greenwave")
     if config.get(CONF_VERSION) == 3:
         if os.path.exists(tokenfile):
             with open(tokenfile) as tokenfile:

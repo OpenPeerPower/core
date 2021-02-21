@@ -664,7 +664,7 @@ async def test_light_context.opp,.opp_admin_user):
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.ceiling")
+    state = opp.states.get("light.ceiling")
     assert state is not None
 
     await.opp.services.async_call(
@@ -675,10 +675,10 @@ async def test_light_context.opp,.opp_admin_user):
         context=core.Context(user_id.opp_admin_user.id),
     )
 
-    state2 =.opp.states.get("light.ceiling")
+    state2 = opp.states.get("light.ceiling")
     assert state2 is not None
     assert state.state != state2.state
-    assert state2.context.user_id ==.opp_admin_user.id
+    assert state2.context.user_id == opp_admin_user.id
 
 
 async def test_light_turn_on_auth.opp,.opp_admin_user):
@@ -688,7 +688,7 @@ async def test_light_turn_on_auth.opp,.opp_admin_user):
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.ceiling")
+    state = opp.states.get("light.ceiling")
     assert state is not None
 
    .opp_admin_user.mock_policy({})
@@ -713,7 +713,7 @@ async def test_light_brightness_step.opp):
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity.entity_id)
+    state = opp.states.get(entity.entity_id)
     assert state is not None
     assert state.attributes["brightness"] == 100
 
@@ -748,7 +748,7 @@ async def test_light_brightness_pct_conversion.opp):
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity.entity_id)
+    state = opp.states.get(entity.entity_id)
     assert state is not None
     assert state.attributes["brightness"] == 100
 

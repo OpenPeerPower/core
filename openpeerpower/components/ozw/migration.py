@@ -46,8 +46,8 @@ CC_ID_LABELS = {
 async def async_get_migration_data.opp):
     """Return dict with ozw side migration info."""
     data = {}
-    nodes_values =.opp.data[DOMAIN][NODES_VALUES]
-    ozw_config_entries =.opp.config_entries.async_entries(DOMAIN)
+    nodes_values = opp.data[DOMAIN][NODES_VALUES]
+    ozw_config_entries = opp.config_entries.async_entries(DOMAIN)
     config_entry = ozw_config_entries[0]  # ozw only has a single config entry
     ent_reg = await async_get_entity_registry.opp)
     entity_entries = async_entries_for_config_entry(ent_reg, config_entry.entry_id)
@@ -160,10 +160,10 @@ async def async_migrate.opp, migration_map):
             icon=entity_entry.icon,
         )
 
-    zwave_config_entry =.opp.config_entries.async_entries("zwave")[0]
+    zwave_config_entry = opp.config_entries.async_entries("zwave")[0]
     await.opp.config_entries.async_remove(zwave_config_entry.entry_id)
 
-    ozw_config_entry =.opp.config_entries.async_entries("ozw")[0]
+    ozw_config_entry = opp.config_entries.async_entries("ozw")[0]
     updates = {
         **ozw_config_entry.data,
         MIGRATED: True,

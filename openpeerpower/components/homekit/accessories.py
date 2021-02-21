@@ -238,7 +238,7 @@ class HomeAccessory(Accessory):
 
         self.category = category
         self.entity_id = entity_id
-        self.opp =.opp
+        self.opp = opp
         self._subscriptions = []
         self._char_battery = None
         self._char_charging = None
@@ -482,7 +482,7 @@ class HomeBridge(Bridge):
             model=BRIDGE_MODEL,
             serial_number=BRIDGE_SERIAL_NUMBER,
         )
-        self.opp =.opp
+        self.opp = opp
 
     def setup_message(self):
         """Prevent print of pyhap setup message to terminal."""
@@ -506,7 +506,7 @@ class HomeDriver(AccessoryDriver):
     def __init__(self,.opp, entry_id, bridge_name, **kwargs):
         """Initialize a AccessoryDriver object."""
         super().__init__(**kwargs)
-        self.opp =.opp
+        self.opp = opp
         self._entry_id = entry_id
         self._bridge_name = bridge_name
 

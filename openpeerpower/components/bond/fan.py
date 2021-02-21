@@ -33,7 +33,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up Bond fan devices."""
-    data =.opp.data[DOMAIN][entry.entry_id]
+    data = opp.data[DOMAIN][entry.entry_id]
     hub: BondHub = data[HUB]
     bpup_subs: BPUPSubscriptions = data[BPUP_SUBS]
 

@@ -48,7 +48,7 @@ async def test_config_with_accesspoint_passed_to_config_entry(
         )
 
     # config_entry created for access point
-    config_entries =.opp.config_entries.async_entries(HMIPC_DOMAIN)
+    config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 1
     assert config_entries[0].data == {
         "authtoken": "123",
@@ -68,7 +68,7 @@ async def test_config_already_registered_not_passed_to_config_entry(
     MockConfigEntry(domain=HMIPC_DOMAIN, data=mock_config).add_to_opp.opp)
 
     # one config_entry exists
-    config_entries =.opp.config_entries.async_entries(HMIPC_DOMAIN)
+    config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 1
     assert config_entries[0].data == {
         "authtoken": "123",
@@ -92,7 +92,7 @@ async def test_config_already_registered_not_passed_to_config_entry(
         )
 
     # no new config_entry created / still one config_entry
-    config_entries =.opp.config_entries.async_entries(HMIPC_DOMAIN)
+    config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 1
     assert config_entries[0].data == {
         "authtoken": "123",
@@ -155,7 +155,7 @@ async def test_unload_entry.opp):
     assert mock_op..return_value.mock_calls[0][0] == "async_setup"
 
     assert.opp.data[HMIPC_DOMAIN]["ABC123"]
-    config_entries =.opp.config_entries.async_entries(HMIPC_DOMAIN)
+    config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 1
     assert config_entries[0].state == ENTRY_STATE_LOADED
     await.opp.config_entries.async_unload(config_entries[0].entry_id)
@@ -196,10 +196,10 @@ async def test_setup_services_and_unload_services.opp):
         assert await async_setup_component.opp, HMIPC_DOMAIN, {})
 
     # Check services are created
-    hmipc_services =.opp.services.async_services()[HMIPC_DOMAIN]
+    hmipc_services = opp.services.async_services()[HMIPC_DOMAIN]
     assert len(hmipc_services) == 8
 
-    config_entries =.opp.config_entries.async_entries(HMIPC_DOMAIN)
+    config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 1
 
     await.opp.config_entries.async_unload(config_entries[0].entry_id)
@@ -229,16 +229,16 @@ async def test_setup_two_op.s_unload_one_by_one.opp):
 
         assert await async_setup_component.opp, HMIPC_DOMAIN, {})
 
-    hmipc_services =.opp.services.async_services()[HMIPC_DOMAIN]
+    hmipc_services = opp.services.async_services()[HMIPC_DOMAIN]
     assert len(hmipc_services) == 8
 
-    config_entries =.opp.config_entries.async_entries(HMIPC_DOMAIN)
+    config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 2
     # unload the first AP
     await.opp.config_entries.async_unload(config_entries[0].entry_id)
 
     # services still exists
-    hmipc_services =.opp.services.async_services()[HMIPC_DOMAIN]
+    hmipc_services = opp.services.async_services()[HMIPC_DOMAIN]
     assert len(hmipc_services) == 8
 
     # unload the second AP

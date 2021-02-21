@@ -84,7 +84,7 @@ async def test_on_node_added_ready(
     event = {"node": node}
     air_temperature_device_id = f"{client.driver.controller.home_id}-{node.node_id}"
 
-    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert not state  # entity and device not yet added
     assert not device_registry.async_get_device(
@@ -94,7 +94,7 @@ async def test_on_node_added_ready(
     client.driver.controller.emit("node added", event)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert state  # entity and device added
     assert state.state != STATE_UNAVAILABLE
@@ -113,7 +113,7 @@ async def test_on_node_added_not_ready(
     event = {"node": node}
     air_temperature_device_id = f"{client.driver.controller.home_id}-{node.node_id}"
 
-    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert not state  # entity and device not yet added
     assert not device_registry.async_get_device(
@@ -123,7 +123,7 @@ async def test_on_node_added_not_ready(
     client.driver.controller.emit("node added", event)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert not state  # entity not yet added but device added in registry
     assert device_registry.async_get_device(
@@ -134,7 +134,7 @@ async def test_on_node_added_not_ready(
     node.emit("ready", event)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert state  # entity added
     assert state.state != STATE_UNAVAILABLE
@@ -147,7 +147,7 @@ async def test_existing_node_ready(
     node = multisensor_6
     air_temperature_device_id = f"{client.driver.controller.home_id}-{node.node_id}"
 
-    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert state  # entity and device added
     assert state.state != STATE_UNAVAILABLE
@@ -169,7 +169,7 @@ async def test_existing_node_not_ready.opp, client, multisensor_6, device_regist
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert not state  # entity not yet added
     assert device_registry.async_get_device(  # device should be added
@@ -180,7 +180,7 @@ async def test_existing_node_not_ready.opp, client, multisensor_6, device_regist
     node.emit("ready", event)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert state  # entity and device added
     assert state.state != STATE_UNAVAILABLE

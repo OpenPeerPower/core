@@ -33,7 +33,7 @@ async def test_services.opp, coap_wrapper, monkeypatch):
         {ATTR_ENTITY_ID: "cover.test_name", ATTR_POSITION: 50},
         blocking=True,
     )
-    state =.opp.states.get("cover.test_name")
+    state = opp.states.get("cover.test_name")
     assert state.attributes[ATTR_CURRENT_POSITION] == 50
 
     await.opp.services.async_call(

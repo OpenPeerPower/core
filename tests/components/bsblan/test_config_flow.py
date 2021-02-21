@@ -116,7 +116,7 @@ async def test_full_user_flow_implementation(
     assert result["title"] == "RVS21.831F/127"
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    entries =.opp.config_entries.async_entries(config_flow.DOMAIN)
+    entries = opp.config_entries.async_entries(config_flow.DOMAIN)
     assert entries[0].unique_id == "RVS21.831F/127"
 
 
@@ -155,5 +155,5 @@ async def test_full_user_flow_implementation_without_auth(
     assert result["title"] == "RVS21.831F/127"
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    entries =.opp.config_entries.async_entries(config_flow.DOMAIN)
+    entries = opp.config_entries.async_entries(config_flow.DOMAIN)
     assert entries[0].unique_id == "RVS21.831F/127"

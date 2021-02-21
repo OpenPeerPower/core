@@ -116,7 +116,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     controller.on_close += op.dle_closed_connection
     controller.on_expander_message += op.dle_rel_message
 
-    remove_stop_listener =.opp.bus.async_listen_once(
+    remove_stop_listener = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, stop_alarmdecoder
     )
 

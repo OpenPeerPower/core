@@ -3167,7 +3167,7 @@ async def test_track_point_in_utc_time_cancel.opp):
         with pytest.raises(TypeError):
             track_point_in_utc_time("no.opp", run_callback, utc_now)
 
-        unsub1 =.opp.helpers.event.track_point_in_utc_time(
+        unsub1 = opp.helpers.event.track_point_in_utc_time(
             run_callback, utc_now + timedelta(seconds=0.1)
         )
        .opp.helpers.event.track_point_in_utc_time(
@@ -3199,7 +3199,7 @@ async def test_async_track_point_in_time_cancel.opp):
     utc_now = dt_util.utcnow()
     hst_now = utc_now.astimezone(hst_tz)
 
-    unsub1 =.opp.helpers.event.async_track_point_in_time(
+    unsub1 = opp.helpers.event.async_track_point_in_time(
         run_callback, hst_now + timedelta(seconds=0.1)
     )
    .opp.helpers.event.async_track_point_in_time(
@@ -3229,10 +3229,10 @@ async def test_async_track_entity_registry_updated_event.opp):
     def run_callback(event):
         event_data.append(event.data)
 
-    unsub1 =.opp.helpers.event.async_track_entity_registry_updated_event(
+    unsub1 = opp.helpers.event.async_track_entity_registry_updated_event(
         entity_id, run_callback
     )
-    unsub2 =.opp.helpers.event.async_track_entity_registry_updated_event(
+    unsub2 = opp.helpers.event.async_track_entity_registry_updated_event(
         new_entity_id, run_callback
     )
    .opp.bus.async_fire(
@@ -3299,10 +3299,10 @@ async def test_async_track_entity_registry_updated_event_with_a_callback_that_th
     def failing_callback(event):
         raise ValueError
 
-    unsub1 =.opp.helpers.event.async_track_entity_registry_updated_event(
+    unsub1 = opp.helpers.event.async_track_entity_registry_updated_event(
         entity_id, failing_callback
     )
-    unsub2 =.opp.helpers.event.async_track_entity_registry_updated_event(
+    unsub2 = opp.helpers.event.async_track_entity_registry_updated_event(
         entity_id, run_callback
     )
    .opp.bus.async_fire(
@@ -3317,10 +3317,10 @@ async def test_async_track_entity_registry_updated_event_with_a_callback_that_th
 
 async def test_async_track_entity_registry_updated_event_with_empty_list.opp):
     """Test async_track_entity_registry_updated_event passing an empty list of entities."""
-    unsub_single =.opp.helpers.event.async_track_entity_registry_updated_event(
+    unsub_single = opp.helpers.event.async_track_entity_registry_updated_event(
         [], op.callback(lambda event: None)
     )
-    unsub_single2 =.opp.helpers.event.async_track_entity_registry_updated_event(
+    unsub_single2 = opp.helpers.event.async_track_entity_registry_updated_event(
         [], op.callback(lambda event: None)
     )
 

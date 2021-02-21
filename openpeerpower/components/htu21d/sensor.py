@@ -38,7 +38,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up the HTU21D sensor."""
     name = config.get(CONF_NAME)
     bus_number = config.get(CONF_I2C_BUS)
-    temp_unit =.opp.config.units.temperature_unit
+    temp_unit = opp.config.units.temperature_unit
 
     bus = smbus.SMBus(config.get(CONF_I2C_BUS))
     sensor = await.opp.async_add_executor_job(partial(HTU21D, bus, logger=_LOGGER))

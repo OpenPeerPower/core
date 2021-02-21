@@ -50,7 +50,7 @@ class HueBridge:
     def __init__(self,.opp, config_entry):
         """Initialize the system."""
         self.config_entry = config_entry
-        self.opp =.opp
+        self.opp = opp
         self.available = True
         self.authorized = False
         self.api = None

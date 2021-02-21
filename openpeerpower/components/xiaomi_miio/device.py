@@ -16,7 +16,7 @@ class ConnectXiaomiDevice:
 
     def __init__(self,.opp):
         """Initialize the entity."""
-        self._opp =.opp
+        self._opp = opp
         self._device = None
         self._device_info = None
 

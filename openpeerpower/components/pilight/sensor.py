@@ -45,7 +45,7 @@ class PilightSensor(Entity):
     def __init__(self,.opp, name, variable, payload, unit_of_measurement):
         """Initialize the sensor."""
         self._state = None
-        self._opp =.opp
+        self._opp = opp
         self._name = name
         self._variable = variable
         self._payload = payload

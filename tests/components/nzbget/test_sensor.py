@@ -47,7 +47,7 @@ async def test_sensors.opp, nzbget_api) -> None:
         assert entity_entry.device_class == data[3]
         assert entity_entry.unique_id == f"{entry.entry_id}_{data[0]}"
 
-        state =.opp.states.get(f"sensor.nzbgettest_{sensor_id}")
+        state = opp.states.get(f"sensor.nzbgettest_{sensor_id}")
         assert state
         assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == data[2]
         assert state.state == data[1]

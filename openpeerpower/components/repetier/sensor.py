@@ -31,7 +31,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     entities = []
     for info in discovery_info:
         printer_name = info["printer_name"]
-        api =.opp.data[REPETIER_API][printer_name]
+        api = opp.data[REPETIER_API][printer_name]
         printer_id = info["printer_id"]
         sensor_type = info["sensor_type"]
         temp_id = info["temp_id"]

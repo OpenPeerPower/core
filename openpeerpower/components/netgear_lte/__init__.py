@@ -183,7 +183,7 @@ async def async_setup.opp, config):
             """Apply a service."""
             host = service.data.get(ATTR_HOST)
             conf = {CONF_HOST: host}
-            modem_data =.opp.data[DATA_KEY].get_modem_data(conf)
+            modem_data = opp.data[DATA_KEY].get_modem_data(conf)
 
             if not modem_data:
                 _LOGGER.error("%s: host %s unavailable", service.service, host)
@@ -268,7 +268,7 @@ async def _setup_lte.opp, lte_config):
     host = lte_config[CONF_HOST]
     password = lte_config[CONF_PASSWORD]
 
-    websession =.opp.data[DATA_KEY].websession
+    websession = opp.data[DATA_KEY].websession
     modem = eternalegypt.Modem(hostname=host, websession=websession)
 
     modem_data = ModemData.opp, host, modem)
@@ -276,7 +276,7 @@ async def _setup_lte.opp, lte_config):
     try:
         await _login.opp, modem_data, password)
     except eternalegypt.Error:
-        retry_task =.opp.loop.create_task(_retry_login.opp, modem_data, password))
+        retry_task = opp.loop.create_task(_retry_login.opp, modem_data, password))
 
         @callback
         def cleanup_retry(event):

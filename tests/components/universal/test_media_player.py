@@ -39,7 +39,7 @@ class MockMediaPlayer(media_player.MediaPlayerEntity):
 
     def __init__(self,.opp, name):
         """Initialize the media player."""
-        self.opp =.opp
+        self.opp = opp
         self._name = name
         self.entity_id = media_player.ENTITY_ID_FORMAT.format(name)
         self._state = STATE_OFF

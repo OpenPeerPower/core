@@ -79,7 +79,7 @@ async def async_get_service.opp, config, discovery_info=None):
     if session is None:
         credential_name = aws_config.get(CONF_CREDENTIAL_NAME)
         if credential_name is not None:
-            session =.opp.data[DATA_SESSIONS].get(credential_name)
+            session = opp.data[DATA_SESSIONS].get(credential_name)
             if session is None:
                 _LOGGER.warning("No available aws session for %s", credential_name)
             del aws_config[CONF_CREDENTIAL_NAME]

@@ -64,10 +64,10 @@ class XiaomiCamera(Camera):
         self._extra_arguments = config.get(CONF_FFMPEG_ARGUMENTS)
         self._last_image = None
         self._last_url = None
-        self._manager =.opp.data[DATA_FFMPEG]
+        self._manager = opp.data[DATA_FFMPEG]
         self._name = config[CONF_NAME]
         self.host = config[CONF_HOST]
-        self.host.opp =.opp
+        self.host.opp = opp
         self._model = config[CONF_MODEL]
         self.port = config[CONF_PORT]
         self.path = config[CONF_PATH]

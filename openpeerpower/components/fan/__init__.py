@@ -105,7 +105,7 @@ class NotValidPresetModeError(ValueError):
 @bind_opp
 def is_on.opp, entity_id: str) -> bool:
     """Return if the fans are on based on the statemachine."""
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     if ATTR_SPEED in state.attributes:
         return state.attributes[ATTR_SPEED] not in OFF_SPEED_VALUES
     return state.state == STATE_ON
@@ -113,7 +113,7 @@ def is_on.opp, entity_id: str) -> bool:
 
 async def async_setup.opp, config: dict):
     """Expose fan control via statemachine and services."""
-    component =.opp.data[DOMAIN] = EntityComponent(
+    component = opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
     )
 

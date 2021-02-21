@@ -121,7 +121,7 @@ async def test_correct_config_discovery(
     entity_entry = entity_reg.async_get("switch.test")
     assert entity_entry is not None
 
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state is not None
     assert state.name == "Test"
 
@@ -249,7 +249,7 @@ async def test_device_remove_stale.opp, mqtt_mock, caplog, device_reg, setup_tas
     """Test removing a stale (undiscovered) device does not throw."""
     mac = "00000049A3BC"
 
-    config_entry =.opp.config_entries.async_entries("tasmota")[0]
+    config_entry = opp.config_entries.async_entries("tasmota")[0]
 
     # Create a device
     device_reg.async_get_or_create(
@@ -329,8 +329,8 @@ async def test_entity_duplicate_discovery.opp, mqtt_mock, caplog, setup_tasmota)
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test")
-    state_duplicate =.opp.states.get("binary_sensor.beer1")
+    state = opp.states.get("switch.test")
+    state_duplicate = opp.states.get("binary_sensor.beer1")
 
     assert state is not None
     assert state.name == "Test"

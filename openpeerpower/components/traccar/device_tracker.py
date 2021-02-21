@@ -204,7 +204,7 @@ class TraccarScanner:
         self._async_see = async_see
         self._api = api
         self.connected = False
-        self._opp =.opp
+        self._opp = opp
         self._max_accuracy = max_accuracy
         self._skip_accuracy_on = skip_accuracy_on
 

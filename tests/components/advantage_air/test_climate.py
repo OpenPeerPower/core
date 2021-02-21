@@ -51,7 +51,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
 
     # Test Main Climate Entity
     entity_id = "climate.ac_one"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == HVAC_MODE_FAN_ONLY
     assert state.attributes.get("min_temp") == 16
@@ -122,7 +122,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
 
     # Test Climate Zone Entity
     entity_id = "climate.zone_open_with_sensor"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.attributes.get("min_temp") == 16
     assert state.attributes.get("max_temp") == 32

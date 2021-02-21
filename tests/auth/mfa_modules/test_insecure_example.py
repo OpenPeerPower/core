@@ -98,7 +98,7 @@ async def test_login.opp):
         ),
     )
 
-    provider =.opp.auth.auth_providers[0]
+    provider = opp.auth.auth_providers[0]
     result = await.opp.auth.login_flow.async_init((provider.type, provider.id))
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 

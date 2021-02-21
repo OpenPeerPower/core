@@ -30,7 +30,7 @@ async def test_api_list_state_entities.opp, mock_api_client):
     json = await resp.json()
 
     remote_data = [op.State.from_dict(item) for item in json]
-    assert remote_data ==.opp.states.async_all()
+    assert remote_data == opp.states.async_all()
 
 
 async def test_api_get_state.opp, mock_api_client):
@@ -42,7 +42,7 @@ async def test_api_get_state.opp, mock_api_client):
 
     data = op.State.from_dict(json)
 
-    state =.opp.states.get("hello.world")
+    state = opp.states.get("hello.world")
 
     assert data.state == state.state
     assert data.last_changed == state.last_changed
@@ -224,7 +224,7 @@ async def test_api_get_components.opp, mock_api_client):
     """Test the return of the components."""
     resp = await mock_api_client.get(const.URL_API_COMPONENTS)
     result = await resp.json()
-    assert set(result) ==.opp.config.components
+    assert set(result) == opp.config.components
 
 
 async def test_api_get_event_listeners.opp, mock_api_client):
@@ -232,7 +232,7 @@ async def test_api_get_event_listeners.opp, mock_api_client):
     resp = await mock_api_client.get(const.URL_API_EVENTS)
     data = await resp.json()
 
-    local =.opp.bus.async_listeners()
+    local = opp.bus.async_listeners()
 
     for event in data:
         assert local.pop(event["event"]) == event["listener_count"]
@@ -244,7 +244,7 @@ async def test_api_get_services.opp, mock_api_client):
     """Test if we can get a dict describing current services."""
     resp = await mock_api_client.get(const.URL_API_SERVICES)
     data = await resp.json()
-    local_services =.opp.services.async_services()
+    local_services = opp.services.async_services()
 
     for serv_domain in data:
         local = local_services.pop(serv_domain["domain"])
@@ -395,7 +395,7 @@ async def test_api_error_log.opp, aiohttp_client,.opp_access_token,.opp_admin_us
         )
 
     assert len(mock_file.mock_calls) == 1
-    assert mock_file.mock_calls[0][1][0] ==.opp.data[DATA_LOGGING]
+    assert mock_file.mock_calls[0][1][0] == opp.data[DATA_LOGGING]
     assert resp.status == 200
     assert await resp.text() == "Hello"
 
@@ -457,7 +457,7 @@ async def test_api_set_state_context.opp, mock_api_client,.opp_access_token):
 
     refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
 
-    state =.opp.states.get("light.kitchen")
+    state = opp.states.get("light.kitchen")
     assert state.context.user_id == refresh_token.user.id
 
 

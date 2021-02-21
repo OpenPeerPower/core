@@ -70,7 +70,7 @@ ATTR_TRANSFER = "transfer_id"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Roon MediaPlayer from Config Entry."""
-    roon_server =.opp.data[DOMAIN][config_entry.entry_id]
+    roon_server = opp.data[DOMAIN][config_entry.entry_id]
     media_players = set()
 
     # Register entity services

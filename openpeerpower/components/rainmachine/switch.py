@@ -151,11 +151,11 @@ async def async_setup_entry(
     ]:
         platform.async_register_entity_service(service_name, schema, method)
 
-    controller =.opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id]
-    programs_coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+    controller = opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id]
+    programs_coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
         DATA_PROGRAMS
     ]
-    zones_coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][DATA_ZONES]
+    zones_coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][DATA_ZONES]
 
     entities = []
     for uid, program in programs_coordinator.data.items():

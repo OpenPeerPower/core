@@ -56,7 +56,7 @@ def async_evaluate_event.opp, event_data):
         for person in event_data.get(ATTR_PERSONS):
             person_event_data = dict(event_data)
             person_event_data[ATTR_ID] = person.get(ATTR_ID)
-            person_event_data[ATTR_NAME] =.opp.data[DOMAIN][DATA_PERSONS].get(
+            person_event_data[ATTR_NAME] = opp.data[DOMAIN][DATA_PERSONS].get(
                 person_event_data[ATTR_ID], DEFAULT_PERSON
             )
             person_event_data[ATTR_IS_KNOWN] = person.get(ATTR_IS_KNOWN)

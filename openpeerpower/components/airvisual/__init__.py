@@ -98,7 +98,7 @@ def async_get_cloud_coordinators_by_api_key.opp, api_key):
     """Get all DataUpdateCoordinator objects related to a particular API key."""
     coordinators = []
     for entry_id, coordinator in.opp.data[DOMAIN][DATA_COORDINATOR].items():
-        config_entry =.opp.config_entries.async_get_entry(entry_id)
+        config_entry = opp.config_entries.async_get_entry(entry_id)
         if config_entry.data.get(CONF_API_KEY) == api_key:
             coordinators.append(coordinator)
     return coordinators
@@ -330,7 +330,7 @@ async def async_unload_entry.opp, config_entry):
     )
     if unload_ok:
        .opp.data[DOMAIN][DATA_COORDINATOR].pop(config_entry.entry_id)
-        remove_listener =.opp.data[DOMAIN][DATA_LISTENER].pop(config_entry.entry_id)
+        remove_listener = opp.data[DOMAIN][DATA_LISTENER].pop(config_entry.entry_id)
         remove_listener()
 
         if (

@@ -60,7 +60,7 @@ async def test_no_switches.opp):
 async def test_switches_with_port_cgi.opp):
     """Test that switches are loaded properly using port.cgi."""
     config_entry = await setup_axis_integration.opp)
-    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.vapix.ports = {"0": AsyncMock(), "1": AsyncMock()}
     device.api.vapix.ports["0"].name = "Doorbell"
@@ -73,13 +73,13 @@ async def test_switches_with_port_cgi.opp):
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
-    relay_1 =.opp.states.get(f"{SWITCH_DOMAIN}.{NAME}_relay_1")
+    relay_1 = opp.states.get(f"{SWITCH_DOMAIN}.{NAME}_relay_1")
     assert relay_1.state == STATE_ON
     assert relay_1.name == f"{NAME} Relay 1"
 
     entity_id = f"{SWITCH_DOMAIN}.{NAME}_doorbell"
 
-    relay_0 =.opp.states.get(entity_id)
+    relay_0 = opp.states.get(entity_id)
     assert relay_0.state == STATE_OFF
     assert relay_0.name == f"{NAME} Doorbell"
 
@@ -107,7 +107,7 @@ async def test_switches_with_port_management.opp):
 
     with patch.dict(API_DISCOVERY_RESPONSE, api_discovery):
         config_entry = await setup_axis_integration.opp)
-        device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+        device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.vapix.ports = {"0": AsyncMock(), "1": AsyncMock()}
     device.api.vapix.ports["0"].name = "Doorbell"
@@ -120,13 +120,13 @@ async def test_switches_with_port_management.opp):
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
-    relay_1 =.opp.states.get(f"{SWITCH_DOMAIN}.{NAME}_relay_1")
+    relay_1 = opp.states.get(f"{SWITCH_DOMAIN}.{NAME}_relay_1")
     assert relay_1.state == STATE_ON
     assert relay_1.name == f"{NAME} Relay 1"
 
     entity_id = f"{SWITCH_DOMAIN}.{NAME}_doorbell"
 
-    relay_0 =.opp.states.get(entity_id)
+    relay_0 = opp.states.get(entity_id)
     assert relay_0.state == STATE_OFF
     assert relay_0.name == f"{NAME} Doorbell"
 

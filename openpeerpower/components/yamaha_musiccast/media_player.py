@@ -64,9 +64,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Yamaha MusicCast platform."""
 
-    known_hosts =.opp.data.get(KNOWN_HOSTS_KEY)
+    known_hosts = opp.data.get(KNOWN_HOSTS_KEY)
     if known_hosts is None:
-        known_hosts =.opp.data[KNOWN_HOSTS_KEY] = []
+        known_hosts = opp.data[KNOWN_HOSTS_KEY] = []
     _LOGGER.debug("known_hosts: %s", known_hosts)
 
     host = config.get(CONF_HOST)

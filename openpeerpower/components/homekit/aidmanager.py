@@ -67,7 +67,7 @@ class AccessoryAidStorage:
 
     def __init__(self,.opp: OpenPeerPower, entry: ConfigEntry):
         """Create a new entity map store."""
-        self.opp =.opp
+        self.opp = opp
         self.allocations = {}
         self.allocated_aids = set()
         self._entry = entry

@@ -16,9 +16,9 @@ NAME_AWAY_MODE = "Water Away Mode"
 
 def setup_platform.opp, config, add_devices, discovery_info=None):
     """Set up the StreamLabsWater mode sensor."""
-    client =.opp.data[STREAMLABSWATER_DOMAIN]["client"]
-    location_id =.opp.data[STREAMLABSWATER_DOMAIN]["location_id"]
-    location_name =.opp.data[STREAMLABSWATER_DOMAIN]["location_name"]
+    client = opp.data[STREAMLABSWATER_DOMAIN]["client"]
+    location_id = opp.data[STREAMLABSWATER_DOMAIN]["location_id"]
+    location_name = opp.data[STREAMLABSWATER_DOMAIN]["location_name"]
 
     streamlabs_location_data = StreamlabsLocationData(location_id, client)
     streamlabs_location_data.update()

@@ -69,7 +69,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         and CONF_ON_ACTION in.opp.data[DOMAIN][ip_address]
         and.opp.data[DOMAIN][ip_address][CONF_ON_ACTION]
     ):
-        turn_on_action =.opp.data[DOMAIN][ip_address][CONF_ON_ACTION]
+        turn_on_action = opp.data[DOMAIN][ip_address][CONF_ON_ACTION]
         on_script = Script(
            .opp, turn_on_action, config_entry.data.get(CONF_NAME, DEFAULT_NAME), DOMAIN
         )

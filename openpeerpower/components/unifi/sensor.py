@@ -19,7 +19,7 @@ UPTIME_SENSOR = "uptime"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up sensors for UniFi integration."""
-    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     controller.entities[DOMAIN] = {
         RX_SENSOR: set(),
         TX_SENSOR: set(),

@@ -56,7 +56,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the raspihats binary_sensor devices."""
-    I2CHatBinarySensor.I2C_HATS_MANAGER =.opp.data[I2C_HATS_MANAGER]
+    I2CHatBinarySensor.I2C_HATS_MANAGER = opp.data[I2C_HATS_MANAGER]
     binary_sensors = []
     i2c_op._configs = config.get(CONF_I2C_HATS)
     for i2c_op._config in i2c_op._configs:

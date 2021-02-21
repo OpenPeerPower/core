@@ -47,7 +47,7 @@ def setup.opp, config):
 
     # If path is relative, we assume relative to Open Peer Power config dir
     if not os.path.isabs(download_path):
-        download_path =.opp.config.path(download_path)
+        download_path = opp.config.path(download_path)
 
     if not os.path.isdir(download_path):
         _LOGGER.error(

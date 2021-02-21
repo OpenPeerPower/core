@@ -94,7 +94,7 @@ class Dominos:
         """Set up main service."""
         conf = config[DOMAIN]
 
-        self.opp =.opp
+        self.opp = opp
         self.customer = Customer(
             conf.get(ATTR_FIRST_NAME),
             conf.get(ATTR_LAST_NAME),

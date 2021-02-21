@@ -516,7 +516,7 @@ def ws_list_person(
    .opp: OpenPeerPowerType, connection: websocket_api.ActiveConnection, msg
 ):
     """List persons."""
-    yaml, storage =.opp.data[DOMAIN]
+    yaml, storage = opp.data[DOMAIN]
     connection.send_result(
         msg[ATTR_ID], {"storage": storage.async_items(), "config": yaml.async_items()}
     )

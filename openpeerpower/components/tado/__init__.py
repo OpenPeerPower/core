@@ -138,7 +138,7 @@ class TadoConnector:
 
     def __init__(self,.opp, username, password, fallback):
         """Initialize Tado Connector."""
-        self.opp =.opp
+        self.opp = opp
         self._username = username
         self._password = password
         self._fallback = fallback

@@ -71,7 +71,7 @@ async def test_device_remove_stale_tasmota_device(
    .opp, device_reg,.opp_ws_client, mqtt_mock, setup_tasmota
 ):
     """Test removing a stale (undiscovered) Tasmota device through device registry."""
-    config_entry =.opp.config_entries.async_entries("tasmota")[0]
+    config_entry = opp.config_entries.async_entries("tasmota")[0]
 
     mac = "12:34:56:AB:CD:EF"
     device_entry = device_reg.async_get_or_create(

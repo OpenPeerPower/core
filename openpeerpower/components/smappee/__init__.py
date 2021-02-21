@@ -122,7 +122,7 @@ class SmappeeBase:
 
     def __init__(self,.opp, smappee):
         """Initialize the Smappee API wrapper class."""
-        self.opp =.opp
+        self.opp = opp
         self.smappee = smappee
 
     @Throttle(MIN_TIME_BETWEEN_UPDATES)

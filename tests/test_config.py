@@ -225,7 +225,7 @@ async def _compute_state.opp, config):
 
     entity = Entity()
     entity.entity_id = "test.test"
-    entity.opp =.opp
+    entity.opp = opp
     entity.schedule_update_op.state()
 
     await.opp.async_block_till_done()
@@ -261,7 +261,7 @@ def test_remove_lib_on_upgrade(mock_docker, mock_os, mock_shutil,.opp):
         opened_file.readline.return_value = op.version
        .opp.config.path = mock.Mock()
         config_util.process_op.config_upgrade.opp)
-       .opp_path =.opp.config.path.return_value
+       .opp_path = opp.config.path.return_value
 
         assert mock_os.path.isdir.call_count == 1
         assert mock_os.path.isdir.call_args == mock.call.opp_path)
@@ -283,7 +283,7 @@ def test_remove_lib_on_upgrade_94(mock_docker, mock_os, mock_shutil,.opp):
         opened_file.readline.return_value = op.version
        .opp.config.path = mock.Mock()
         config_util.process_op.config_upgrade.opp)
-       .opp_path =.opp.config.path.return_value
+       .opp_path = opp.config.path.return_value
 
         assert mock_os.path.isdir.call_count == 1
         assert mock_os.path.isdir.call_args == mock.call.opp_path)

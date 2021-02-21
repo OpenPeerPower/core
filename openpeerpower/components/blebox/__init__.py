@@ -44,7 +44,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         _LOGGER.error("Identify failed at %s:%d (%s)", api_host.host, api_host.port, ex)
         raise ConfigEntryNotReady from ex
 
-    domain =.opp.data.setdefault(DOMAIN, {})
+    domain = opp.data.setdefault(DOMAIN, {})
     domain_entry = domain.setdefault(entry.entry_id, {})
     product = domain_entry.setdefault(PRODUCT, product)
 
@@ -79,7 +79,7 @@ def create_blebox_entities(
 ):
     """Create entities from a BleBox product's features."""
 
-    product =.opp.data[DOMAIN][config_entry.entry_id][PRODUCT]
+    product = opp.data[DOMAIN][config_entry.entry_id][PRODUCT]
 
     entities = []
     if entity_type in product.features:

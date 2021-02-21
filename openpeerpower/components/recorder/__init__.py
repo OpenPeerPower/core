@@ -132,7 +132,7 @@ def run_information_from_instance.opp, point_in_time: Optional[datetime] = None)
 
     Does not query the database for older runs.
     """
-    ins =.opp.data[DATA_INSTANCE]
+    ins = opp.data[DATA_INSTANCE]
 
     if point_in_time is None or point_in_time > ins.recording_start:
         return ins.run_info
@@ -170,7 +170,7 @@ async def async_setup.opp: OpenPeerPower, config: ConfigType) -> bool:
         db_url = DEFAULT_URL.format.opp_config_path.opp.config.path(DEFAULT_DB_FILE))
     exclude = conf[CONF_EXCLUDE]
     exclude_t = exclude.get(CONF_EVENT_TYPES, [])
-    instance =.opp.data[DATA_INSTANCE] = Recorder(
+    instance = opp.data[DATA_INSTANCE] = Recorder(
        .opp.opp,
         auto_purge=auto_purge,
         keep_days=keep_days,
@@ -222,7 +222,7 @@ class Recorder(threading.Thread):
         """Initialize the recorder."""
         threading.Thread.__init__(self, name="Recorder")
 
-        self.opp =.opp
+        self.opp = opp
         self.auto_purge = auto_purge
         self.keep_days = keep_days
         self.commit_interval = commit_interval
@@ -344,7 +344,7 @@ class Recorder(threading.Thread):
                 )
 
         self.opp.add_job(register)
-        result =.opp_started.result()
+        result = opp_started.result()
 
         # If shutdown happened before Open Peer Power finished starting
         if result is shutdown_task:

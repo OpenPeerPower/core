@@ -109,7 +109,7 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unloading the AVM Fritz!Box platforms."""
-    fritz =.opp.data[DOMAIN][CONF_CONNECTIONS][entry.entry_id]
+    fritz = opp.data[DOMAIN][CONF_CONNECTIONS][entry.entry_id]
     await.opp.async_add_executor_job(fritz.logout)
 
     unload_ok = all(

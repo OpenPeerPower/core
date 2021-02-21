@@ -54,7 +54,7 @@ class EntityPlatform:
         entity_namespace: Optional[str],
     ):
         """Initialize the entity platform."""
-        self.opp =.opp
+        self.opp = opp
         self.logger = logger
         self.domain = domain
         self.platform_name = platform_name
@@ -184,7 +184,7 @@ class EntityPlatform:
         full_name = f"{self.domain}.{self.platform_name}"
 
         logger.info("Setting up %s", full_name)
-        warn_task =.opp.loop.call_later(
+        warn_task = opp.loop.call_later(
             SLOW_SETUP_WARNING,
             logger.warning,
             "Setup of %s platform %s is taking over %s seconds.",
@@ -636,6 +636,6 @@ def async_get_platforms(
     ):
         return []
 
-    platforms: List[EntityPlatform] =.opp.data[DATA_ENTITY_PLATFORM][integration_name]
+    platforms: List[EntityPlatform] = opp.data[DATA_ENTITY_PLATFORM][integration_name]
 
     return platforms

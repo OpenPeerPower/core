@@ -64,7 +64,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     async def _close(event):
         await conn.close()
 
-    remove_stop_listener =.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _close)
+    remove_stop_listener = opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _close)
 
    .opp.data[DOMAIN][entry.entry_id] = {
         DATA_CONNECTION: conn,
@@ -91,7 +91,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
         )
     )
     if unload_ok:
-        data =.opp.data[DOMAIN].pop(entry.entry_id)
+        data = opp.data[DOMAIN].pop(entry.entry_id)
         await data[DATA_CONNECTION].close()
         data[DATA_REMOVE_LISTENER]()
 

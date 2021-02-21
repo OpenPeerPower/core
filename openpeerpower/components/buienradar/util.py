@@ -61,7 +61,7 @@ class BrData:
         """Initialize the data object."""
         self.devices = devices
         self.data = {}
-        self.opp =.opp
+        self.opp = opp
         self.coordinates = coordinates
         self.timeframe = timeframe
 

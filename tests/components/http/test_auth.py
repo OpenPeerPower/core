@@ -51,7 +51,7 @@ async def get_legacy_user(auth):
 def app.opp):
     """Fixture to set up a web.Application."""
     app = web.Application()
-    app["opp"] =.opp
+    app["opp"] = opp
     app.router.add_get("/", mock_op.dler)
     async_setup_forwarded(app, [])
     return app
@@ -61,7 +61,7 @@ def app.opp):
 def app2.opp):
     """Fixture to set up a web.Application without real_ip middleware."""
     app = web.Application()
-    app["opp"] =.opp
+    app["opp"] = opp
     app.router.add_get("/", mock_op.dler)
     return app
 
@@ -159,7 +159,7 @@ async def test_auth_active_access_with_access_token_in_header(
    .opp, app, aiohttp_client,.opp_access_token
 ):
     """Test access with access token in header."""
-    token =.opp_access_token
+    token = opp_access_token
     setup_auth.opp, app)
     client = await aiohttp_client(app)
     refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)

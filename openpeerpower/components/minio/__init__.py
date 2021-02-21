@@ -123,7 +123,7 @@ def setup.opp, config):
 
     def _render_service_value(service, key):
         value = service.data[key]
-        value.opp =.opp
+        value.opp = opp
         return value.async_render(parse_result=False)
 
     def put_file(service):
@@ -175,7 +175,7 @@ class QueueListener(threading.Thread):
     def __init__(self,.opp):
         """Create queue."""
         super().__init__()
-        self._opp =.opp
+        self._opp = opp
         self._queue = Queue()
 
     def run(self):

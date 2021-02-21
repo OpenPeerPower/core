@@ -259,7 +259,7 @@ def config_entries_progress.opp, connection, msg):
 async def system_options_list.opp, connection, msg):
     """List all system options for a config entry."""
     entry_id = msg["entry_id"]
-    entry =.opp.config_entries.async_get_entry(entry_id)
+    entry = opp.config_entries.async_get_entry(entry_id)
 
     if entry:
         connection.send_result(msg["id"], entry.system_options.as_dict())
@@ -280,7 +280,7 @@ async def system_options_update.opp, connection, msg):
     changes.pop("id")
     changes.pop("type")
     entry_id = changes.pop("entry_id")
-    entry =.opp.config_entries.async_get_entry(entry_id)
+    entry = opp.config_entries.async_get_entry(entry_id)
 
     if entry is None:
         connection.send_error(
@@ -304,7 +304,7 @@ async def config_entry_update.opp, connection, msg):
     changes.pop("type")
     entry_id = changes.pop("entry_id")
 
-    entry =.opp.config_entries.async_get_entry(entry_id)
+    entry = opp.config_entries.async_get_entry(entry_id)
 
     if entry is None:
         connection.send_error(

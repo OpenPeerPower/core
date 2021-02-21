@@ -110,7 +110,7 @@ async def _async_setup_platform(
         )
         return
 
-    entity_component =.opp.data[integration_platform]
+    entity_component = opp.data[integration_platform]
     tasks = [
         entity_component.async_setup_platform(integration_name, p_config)
         for p_config in platform_configs

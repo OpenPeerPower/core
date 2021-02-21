@@ -70,7 +70,7 @@ class GeoJsonFeedEntityManager:
     ):
         """Initialize the GeoJSON Feed Manager."""
 
-        self._opp =.opp
+        self._opp = opp
         self._feed_manager = GenericFeedManager(
             self._generate_entity,
             self._update_entity,

@@ -126,7 +126,7 @@ DEVICE_CLASSES_SCHEMA = vol.All(vol.Lower, vol.In(DEVICE_CLASSES))
 
 async def async_setup.opp, config):
     """Track states and offer events for binary sensors."""
-    component =.opp.data[DOMAIN] = EntityComponent(
+    component = opp.data[DOMAIN] = EntityComponent(
         logging.getLogger(__name__), DOMAIN,.opp, SCAN_INTERVAL
     )
 

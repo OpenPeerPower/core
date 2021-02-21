@@ -15,7 +15,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List, bool], None],
 ) -> bool:
     """Load Roku remote based on a config entry."""
-    coordinator =.opp.data[DOMAIN][entry.entry_id]
+    coordinator = opp.data[DOMAIN][entry.entry_id]
     unique_id = coordinator.data.info.serial_number
     async_add_entities([RokuRemote(unique_id, coordinator)], True)
 

@@ -55,37 +55,37 @@ async def test_sensors(
         assert entity
         assert entity.unique_id == f"{entry.entry_id}_{unique}"
 
-    state =.opp.states.get("sensor.sonarr_commands")
+    state = opp.states.get("sensor.sonarr_commands")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:code-braces"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == "Commands"
     assert state.state == "2"
 
-    state =.opp.states.get("sensor.sonarr_disk_space")
+    state = opp.states.get("sensor.sonarr_disk_space")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:harddisk"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "263.10"
 
-    state =.opp.states.get("sensor.sonarr_queue")
+    state = opp.states.get("sensor.sonarr_queue")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:download"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == "Episodes"
     assert state.state == "1"
 
-    state =.opp.states.get("sensor.sonarr_shows")
+    state = opp.states.get("sensor.sonarr_shows")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:television"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == "Series"
     assert state.state == "1"
 
-    state =.opp.states.get("sensor.sonarr_upcoming")
+    state = opp.states.get("sensor.sonarr_upcoming")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:television"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == "Episodes"
     assert state.state == "1"
 
-    state =.opp.states.get("sensor.sonarr_wanted")
+    state = opp.states.get("sensor.sonarr_wanted")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:television"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == "Episodes"
@@ -110,7 +110,7 @@ async def test_disabled_by_default_sensors(
     registry = await.opp.helpers.entity_registry.async_get_registry()
     print(registry.entities)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is None
 
     entry = registry.async_get(entity_id)

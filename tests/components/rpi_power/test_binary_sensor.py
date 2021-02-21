@@ -33,7 +33,7 @@ async def _async_setup_component.opp, detected):
 async def test_new.opp, caplog):
     """Test new entry."""
     await _async_setup_component.opp, False)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
     assert not any(x.levelno == logging.WARNING for x in caplog.records)
 
@@ -41,7 +41,7 @@ async def test_new.opp, caplog):
 async def test_new_detected.opp, caplog):
     """Test new entry with under voltage detected."""
     mocked_under_voltage = await _async_setup_component.opp, True)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
     assert (
         len(
@@ -60,7 +60,7 @@ async def test_new_detected.opp, caplog):
     future = dt_util.utcnow() + timedelta(minutes=1)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert (
         len(
             [

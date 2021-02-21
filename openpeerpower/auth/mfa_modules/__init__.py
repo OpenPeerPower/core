@@ -40,7 +40,7 @@ class MultiFactorAuthModule:
 
     def __init__(self,.opp: OpenPeerPower, config: Dict[str, Any]) -> None:
         """Initialize an auth module."""
-        self.opp =.opp
+        self.opp = opp
         self.config = config
 
     @property
@@ -159,11 +159,11 @@ async def _load_mfa_module.opp: OpenPeerPower, module_name: str) -> types.Module
     if.opp.config.skip_pip or not hasattr(module, "REQUIREMENTS"):
         return module
 
-    processed =.opp.data.get(DATA_REQS)
+    processed = opp.data.get(DATA_REQS)
     if processed and module_name in processed:
         return module
 
-    processed =.opp.data[DATA_REQS] = set()
+    processed = opp.data[DATA_REQS] = set()
 
     # https://github.com/python/mypy/issues/1424
     await requirements.async_process_requirements(

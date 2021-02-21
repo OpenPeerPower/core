@@ -31,27 +31,27 @@ async def setup_comp.opp):
 
 async def test_locking.opp):
     """Test the locking of a lock."""
-    state =.opp.states.get(KITCHEN)
+    state = opp.states.get(KITCHEN)
     assert state.state == STATE_UNLOCKED
 
     await.opp.services.async_call(
         LOCK_DOMAIN, SERVICE_LOCK, {ATTR_ENTITY_ID: KITCHEN}, blocking=True
     )
 
-    state =.opp.states.get(KITCHEN)
+    state = opp.states.get(KITCHEN)
     assert state.state == STATE_LOCKED
 
 
 async def test_unlocking.opp):
     """Test the unlocking of a lock."""
-    state =.opp.states.get(FRONT)
+    state = opp.states.get(FRONT)
     assert state.state == STATE_LOCKED
 
     await.opp.services.async_call(
         LOCK_DOMAIN, SERVICE_UNLOCK, {ATTR_ENTITY_ID: FRONT}, blocking=True
     )
 
-    state =.opp.states.get(FRONT)
+    state = opp.states.get(FRONT)
     assert state.state == STATE_UNLOCKED
 
 

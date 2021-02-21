@@ -110,7 +110,7 @@ class ZHAGateway:
 
     def __init__(self,.opp, config, config_entry):
         """Initialize the gateway."""
-        self._opp =.opp
+        self._opp = opp
         self._config = config
         self._devices = {}
         self._groups = {}
@@ -721,7 +721,7 @@ class LogRelayHandler(logging.Handler):
     def __init__(self,.opp, gateway):
         """Initialize a new LogErrorHandler."""
         super().__init__()
-        self.opp =.opp
+        self.opp = opp
         self.gateway = gateway
 
     def emit(self, record):

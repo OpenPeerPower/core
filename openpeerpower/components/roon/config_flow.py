@@ -28,7 +28,7 @@ class RoonHub:
 
     def __init__(self,.opp):
         """Initialise the RoonHub."""
-        self._opp =.opp
+        self._opp = opp
 
     async def discover(self):
         """Try and discover roon servers."""

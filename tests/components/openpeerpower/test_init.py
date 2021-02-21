@@ -263,7 +263,7 @@ async def test_turn_on_skips_domains_without_service.opp, caplog):
         "turn_on",
         {"entity_id": ["light.test", "sensor.bla", "binary_sensor.blub", "light.bla"]},
     )
-    service =.opp.services._services["openpeerpowerr"]["turn_on"]
+    service = opp.services._services["openpeerpowerr"]["turn_on"]
 
     with patch(
         "openpeerpowerr.core.ServiceRegistry.async_call",

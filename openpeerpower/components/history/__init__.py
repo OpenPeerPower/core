@@ -113,7 +113,7 @@ def _get_significant_states(
     """
     timer_start = time.perf_counter()
 
-    baked_query =.opp.data[HISTORY_BAKERY](
+    baked_query = opp.data[HISTORY_BAKERY](
         lambda session: session.query(*QUERY_STATES)
     )
 
@@ -167,7 +167,7 @@ def _get_significant_states(
 def state_changes_during_period.opp, start_time, end_time=None, entity_id=None):
     """Return states changes during UTC period start_time - end_time."""
     with session_scope.opp.opp) as session:
-        baked_query =.opp.data[HISTORY_BAKERY](
+        baked_query = opp.data[HISTORY_BAKERY](
             lambda session: session.query(*QUERY_STATES)
         )
 
@@ -203,7 +203,7 @@ def get_last_state_changes.opp, number_of_states, entity_id):
     start_time = dt_util.utcnow()
 
     with session_scope.opp.opp) as session:
-        baked_query =.opp.data[HISTORY_BAKERY](
+        baked_query = opp.data[HISTORY_BAKERY](
             lambda session: session.query(*QUERY_STATES)
         )
         baked_query += lambda q: q.filter(States.last_changed == States.last_updated)
@@ -318,7 +318,7 @@ def _get_states_with_session(
 def _get_single_entity_states_with_session.opp, session, utc_point_in_time, entity_id):
     # Use an entirely different (and extremely fast) query if we only
     # have a single entity id
-    baked_query =.opp.data[HISTORY_BAKERY](
+    baked_query = opp.data[HISTORY_BAKERY](
         lambda session: session.query(*QUERY_STATES)
     )
     baked_query += lambda q: q.filter(
@@ -674,7 +674,7 @@ def _entities_may_op.e_state_changes_after(
 ) -> bool:
     """Check the state machine to see if entities have changed since start time."""
     for entity_id in entity_ids:
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
 
         if state is None or state.last_changed > start_time:
             return True

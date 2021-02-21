@@ -36,7 +36,7 @@ async def test_attributes.opp):
     """Test the alarm control panel attributes are correct."""
     await setup_platform.opp, ALARM_DOMAIN)
 
-    state =.opp.states.get(DEVICE_ID)
+    state = opp.states.get(DEVICE_ID)
     assert state.state == STATE_ALARM_DISARMED
     assert state.attributes.get(ATTR_DEVICE_ID) == "area_1"
     assert not state.attributes.get("battery_backup")
@@ -70,7 +70,7 @@ async def test_set_alarm_away.opp):
             await.opp.async_add_executor_job(update_callback, "area_1")
             await.opp.async_block_till_done()
 
-            state =.opp.states.get(DEVICE_ID)
+            state = opp.states.get(DEVICE_ID)
             assert state.state == STATE_ALARM_ARMED_AWAY
 
 
@@ -98,7 +98,7 @@ async def test_set_alarm_home.opp):
             await.opp.async_add_executor_job(update_callback, "area_1")
             await.opp.async_block_till_done()
 
-            state =.opp.states.get(DEVICE_ID)
+            state = opp.states.get(DEVICE_ID)
             assert state.state == STATE_ALARM_ARMED_HOME
 
 
@@ -125,7 +125,7 @@ async def test_set_alarm_standby.opp):
             await.opp.async_add_executor_job(update_callback, "area_1")
             await.opp.async_block_till_done()
 
-            state =.opp.states.get(DEVICE_ID)
+            state = opp.states.get(DEVICE_ID)
             assert state.state == STATE_ALARM_DISARMED
 
 
@@ -137,5 +137,5 @@ async def test_state_unknown.opp):
 
         mock_mode.return_value = None
 
-        state =.opp.states.get(DEVICE_ID)
+        state = opp.states.get(DEVICE_ID)
         assert state.state == "unknown"

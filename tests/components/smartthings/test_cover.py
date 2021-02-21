@@ -67,7 +67,7 @@ async def test_open.opp, device_factory):
     )
     # Assert
     for entity_id in entity_ids:
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OPENING
 
@@ -92,7 +92,7 @@ async def test_close.opp, device_factory):
     )
     # Assert
     for entity_id in entity_ids:
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_CLOSING
 
@@ -114,7 +114,7 @@ async def test_set_cover_position.opp, device_factory):
         blocking=True,
     )
 
-    state =.opp.states.get("cover.shade")
+    state = opp.states.get("cover.shade")
     # Result of call does not update state
     assert state.state == STATE_OPENING
     assert state.attributes[ATTR_BATTERY_LEVEL] == 95
@@ -139,7 +139,7 @@ async def test_set_cover_position_unsupported.opp, device_factory):
         blocking=True,
     )
 
-    state =.opp.states.get("cover.shade")
+    state = opp.states.get("cover.shade")
     assert ATTR_CURRENT_POSITION not in state.attributes
 
     # Ensure API was not called
@@ -160,7 +160,7 @@ async def test_update_to_open_from_signal.opp, device_factory):
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.garage")
+    state = opp.states.get("cover.garage")
     assert state is not None
     assert state.state == STATE_OPEN
 
@@ -178,7 +178,7 @@ async def test_update_to_closed_from_signal.opp, device_factory):
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await.opp.async_block_till_done()
-    state =.opp.states.get("cover.garage")
+    state = opp.states.get("cover.garage")
     assert state is not None
     assert state.state == STATE_CLOSED
 

@@ -141,7 +141,7 @@ async def async_get_addon_info.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio =.opp.data[DOMAIN]
+    oppio = opp.data[DOMAIN]
     return await oppio.get_addon_info(slug)
 
 
@@ -152,7 +152,7 @@ async def async_install_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio =.opp.data[DOMAIN]
+    oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/install"
     return await oppio.send_command(command, timeout=None)
 
@@ -164,7 +164,7 @@ async def async_uninstall_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio =.opp.data[DOMAIN]
+    oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/uninstall"
     return await oppio.send_command(command, timeout=60)
 
@@ -176,7 +176,7 @@ async def async_start_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio =.opp.data[DOMAIN]
+    oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/start"
     return await oppio.send_command(command, timeout=60)
 
@@ -188,7 +188,7 @@ async def async_stop_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio =.opp.data[DOMAIN]
+    oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/stop"
     return await oppio.send_command(command, timeout=60)
 
@@ -202,7 +202,7 @@ async def async_set_addon_options(
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio =.opp.data[DOMAIN]
+    oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/options"
     return await oppio.send_command(command, payload=options)
 
@@ -212,7 +212,7 @@ async def async_get_addon_discovery_info(
    .opp: OpenPeerPowerType, slug: str
 ) -> Optional[dict]:
     """Return discovery data for an add-on."""
-    oppio =.opp.data[DOMAIN]
+    oppio = opp.data[DOMAIN]
     data = await oppio.retrieve_discovery_messages()
     discovered_addons = data[ATTR_DISCOVERY]
     return next((addon for addon in discovered_addons if addon["addon"] == slug), None)
@@ -298,13 +298,13 @@ async def async_setup.opp, config):
     async_load_websocket_api.opp)
 
     host = os.environ["OPPIO"]
-    websession =.opp.helpers.aiohttp_client.async_get_clientsession()
+    websession = opp.helpers.aiohttp_client.async_get_clientsession()
    .opp.data[DOMAIN] = oppio = OppIO.opp.loop, websession, host)
 
     if not await oppio.is_connected():
         _LOGGER.warning("Not connected with Opp.io / system too busy!")
 
-    store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+    store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
     data = await store.async_load()
 
     if data is None:

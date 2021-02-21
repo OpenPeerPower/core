@@ -175,7 +175,7 @@ def async_prepare_call_from_config(
 
     if isinstance(domain_service, template.Template):
         try:
-            domain_service.opp =.opp
+            domain_service.opp = opp
             domain_service = domain_service.async_render(variables)
             domain_service = cv.service(domain_service)
         except TemplateError as ex:
@@ -308,7 +308,7 @@ async def async_extract_referenced_entity_ids(
             entity_ids = [entity_ids]
 
         if expand_group:
-            entity_ids =.opp.components.group.expand_entity_ids(entity_ids)
+            entity_ids = opp.components.group.expand_entity_ids(entity_ids)
 
         selected.referenced.update(entity_ids)
 
@@ -402,9 +402,9 @@ async def async_get_all_descriptions(
    .opp: OpenPeerPowerType,
 ) -> Dict[str, Dict[str, Any]]:
     """Return descriptions (i.e. user documentation) for all service calls."""
-    descriptions_cache =.opp.data.setdefault(SERVICE_DESCRIPTION_CACHE, {})
+    descriptions_cache = opp.data.setdefault(SERVICE_DESCRIPTION_CACHE, {})
     format_cache_key = "{}.{}".format
-    services =.opp.services.async_services()
+    services = opp.services.async_services()
 
     # See if there are new services not seen before.
     # Any service that we saw before already has an entry in description_cache.
@@ -649,9 +649,9 @@ async def _op.dle_entity_call(
     entity.async_set_context(context)
 
     if isinstance(func, str):
-        result =.opp.async_run_job(partial(getattr(entity, func), **data))  # type: ignore
+        result = opp.async_run_job(partial(getattr(entity, func), **data))  # type: ignore
     else:
-        result =.opp.async_run_job(func, entity, data)
+        result = opp.async_run_job(func, entity, data)
 
     # Guard because callback functions do not return a task when passed to async_run_job.
     if result is not None:
@@ -686,7 +686,7 @@ def async_register_admin_service(
             if not user.is_admin:
                 raise Unauthorized(context=call.context)
 
-        result =.opp.async_run_job(service_func, call)
+        result = opp.async_run_job(service_func, call)
         if result is not None:
             await result
 

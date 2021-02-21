@@ -79,7 +79,7 @@ class ThresholdSensor(BinarySensorEntity):
 
     def __init__(self,.opp, entity_id, name, lower, upper, hysteresis, device_class):
         """Initialize the Threshold sensor."""
-        self._opp =.opp
+        self._opp = opp
         self._entity_id = entity_id
         self._name = name
         self._threshold_lower = lower

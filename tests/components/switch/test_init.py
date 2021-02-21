@@ -55,7 +55,7 @@ async def test_switch_context.opp, entities,.opp_admin_user):
 
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.ac")
+    state = opp.states.get("switch.ac")
     assert state is not None
 
     await.opp.services.async_call(
@@ -66,10 +66,10 @@ async def test_switch_context.opp, entities,.opp_admin_user):
         core.Context(user_id.opp_admin_user.id),
     )
 
-    state2 =.opp.states.get("switch.ac")
+    state2 = opp.states.get("switch.ac")
     assert state2 is not None
     assert state.state != state2.state
-    assert state2.context.user_id ==.opp_admin_user.id
+    assert state2.context.user_id == opp_admin_user.id
 
 
 def test_deprecated_base_class(caplog):

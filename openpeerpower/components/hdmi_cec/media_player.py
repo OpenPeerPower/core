@@ -60,7 +60,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _LOGGER.debug("Setting up HDMI devices %s", discovery_info[ATTR_NEW])
         entities = []
         for device in discovery_info[ATTR_NEW]:
-            hdmi_device =.opp.data.get(device)
+            hdmi_device = opp.data.get(device)
             entities.append(CecPlayerEntity(hdmi_device, hdmi_device.logical_address))
         add_entities(entities, True)
 

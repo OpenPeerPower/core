@@ -12,7 +12,7 @@ def display_temp(
 ) -> Optional[float]:
     """Convert temperature into preferred units/precision for display."""
     temperature_unit = unit
-    ha_unit =.opp.config.units.temperature_unit
+    ha_unit = opp.config.units.temperature_unit
 
     if temperature is None:
         return temperature

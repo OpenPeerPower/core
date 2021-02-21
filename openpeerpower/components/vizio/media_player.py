@@ -119,7 +119,7 @@ async def async_setup_entry(
         _LOGGER.warning("Failed to connect to %s", host)
         raise PlatformNotReady
 
-    apps_coordinator =.opp.data[DOMAIN].get(CONF_APPS)
+    apps_coordinator = opp.data[DOMAIN].get(CONF_APPS)
 
     entity = VizioDevice(config_entry, device, name, device_class, apps_coordinator)
 

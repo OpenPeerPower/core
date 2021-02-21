@@ -58,7 +58,7 @@ async def test_update_not_playing.opp, lastfm_network):
 
     entity_id = "sensor.test"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
 
     assert state.state == STATE_NOT_SCROBBLING
 
@@ -79,6 +79,6 @@ async def test_update_playing.opp, lastfm_network):
 
     entity_id = "sensor.test"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
 
     assert state.state == "artist - title"

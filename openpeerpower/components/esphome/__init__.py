@@ -83,7 +83,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     store = Store(
        .opp, STORAGE_VERSION, f"esphome.{entry.entry_id}", encoder=JSONEncoder
     )
-    entry_data =.opp.data[DOMAIN][entry.entry_id] = RuntimeEntryData(
+    entry_data = opp.data[DOMAIN][entry.entry_id] = RuntimeEntryData(
         client=cli, entry_id=entry.entry_id, store=store
     )
 
@@ -168,7 +168,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
            .opp, [entity_id], send_home_assistant_state_event
         )
         entry_data.disconnect_callbacks.append(unsub)
-        new_state =.opp.states.get(entity_id)
+        new_state = opp.states.get(entity_id)
         if new_state is None:
             return
         # Send initial state
@@ -233,7 +233,7 @@ async def _setup_auto_reconnect_logic(
                 # Don't attempt to connect if it's disabled
                 return
 
-        data: RuntimeEntryData =.opp.data[DOMAIN][entry.entry_id]
+        data: RuntimeEntryData = opp.data[DOMAIN][entry.entry_id]
         for disconnect_cb in data.disconnect_callbacks:
             disconnect_cb()
         data.disconnect_callbacks = []
@@ -273,7 +273,7 @@ async def _setup_auto_reconnect_logic(
             )
             # Schedule re-connect in event loop in order not to delay HA
             # startup. First connect is scheduled in tracked tasks.
-            data.reconnect_task =.opp.loop.create_task(
+            data.reconnect_task = opp.loop.create_task(
                 try_connect(tries + 1, is_disconnect=False)
             )
         else:
@@ -362,7 +362,7 @@ async def _cleanup_instance(
    .opp: OpenPeerPowerType, entry: ConfigEntry
 ) -> RuntimeEntryData:
     """Cleanup the esphome client if it exists."""
-    data: RuntimeEntryData =.opp.data[DOMAIN].pop(entry.entry_id)
+    data: RuntimeEntryData = opp.data[DOMAIN].pop(entry.entry_id)
     if data.reconnect_task is not None:
         data.reconnect_task.cancel()
     for disconnect_cb in data.disconnect_callbacks:
@@ -399,7 +399,7 @@ async def platform_async_setup_entry(
     This method is in charge of receiving, distributing and storing
     info and state updates.
     """
-    entry_data: RuntimeEntryData =.opp.data[DOMAIN][entry.entry_id]
+    entry_data: RuntimeEntryData = opp.data[DOMAIN][entry.entry_id]
     entry_data.info[component_key] = {}
     entry_data.old_info[component_key] = {}
     entry_data.state[component_key] = {}

@@ -182,9 +182,9 @@ async def async_setup.opp, config):
     await prefs.async_initialize()
 
     # Initialize Cloud
-    websession =.opp.helpers.aiohttp_client.async_get_clientsession()
+    websession = opp.helpers.aiohttp_client.async_get_clientsession()
     client = CloudClient.opp, prefs, websession, alexa_conf, google_conf)
-    cloud =.opp.data[DOMAIN] = Cloud(client, **kwargs)
+    cloud = opp.data[DOMAIN] = Cloud(client, **kwargs)
 
     async def _shutdown(event):
         """Shutdown event."""

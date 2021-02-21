@@ -487,7 +487,7 @@ def setup_platform(
     discovery_info: Optional[DiscoveryInfoType] = None,
 ) -> None:
     """Set up the GTFS sensor."""
-    gtfs_dir =.opp.config.path(DEFAULT_PATH)
+    gtfs_dir = opp.config.path(DEFAULT_PATH)
     data = config[CONF_DATA]
     origin = config.get(CONF_ORIGIN)
     destination = config.get(CONF_DESTINATION)

@@ -23,7 +23,7 @@ FILTER_ATTRS = ("ip_address", "mac_address")
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up device tracker for Mikrotik component."""
-    hub =.opp.data[DOMAIN][config_entry.entry_id]
+    hub = opp.data[DOMAIN][config_entry.entry_id]
 
     tracked = {}
 

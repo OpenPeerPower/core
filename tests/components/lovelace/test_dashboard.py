@@ -476,7 +476,7 @@ async def test_storage_dashboard_migrate.opp,.opp_ws_client,.opp_storage):
 
     assert (
         with_hyphen
-        ==.opp_storage[dashboard.DASHBOARDS_STORAGE_KEY]["data"]["items"][1]
+        == opp_storage[dashboard.DASHBOARDS_STORAGE_KEY]["data"]["items"][1]
     )
 
 

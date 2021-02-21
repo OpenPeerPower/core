@@ -48,7 +48,7 @@ class AlexaDirective:
         _endpoint_id = self._directive[API_ENDPOINT]["endpointId"]
         self.entity_id = _endpoint_id.replace("#", ".")
 
-        self.entity =.opp.states.get(self.entity_id)
+        self.entity = opp.states.get(self.entity_id)
         if not self.entity or not config.should_expose(self.entity_id):
             raise AlexaInvalidEndpointError(_endpoint_id)
 

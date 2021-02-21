@@ -188,7 +188,7 @@ class FluxSwitch(SwitchEntity, RestoreEntity):
     ):
         """Initialize the Flux switch."""
         self._name = name
-        self.opp =.opp
+        self.opp = opp
         self._lights = lights
         self._start_time = start_time
         self._stop_time = stop_time

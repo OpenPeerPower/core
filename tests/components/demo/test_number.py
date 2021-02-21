@@ -27,18 +27,18 @@ async def setup_demo_number.opp):
 
 def test_setup_params.opp):
     """Test the initial parameters."""
-    state =.opp.states.get(ENTITY_VOLUME)
+    state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
 
 
 def test_default_setup_params.opp):
     """Test the setup with default parameters."""
-    state =.opp.states.get(ENTITY_VOLUME)
+    state = opp.states.get(ENTITY_VOLUME)
     assert state.attributes.get(ATTR_MIN) == 0.0
     assert state.attributes.get(ATTR_MAX) == 100.0
     assert state.attributes.get(ATTR_STEP) == 1.0
 
-    state =.opp.states.get(ENTITY_PWM)
+    state = opp.states.get(ENTITY_PWM)
     assert state.attributes.get(ATTR_MIN) == 0.0
     assert state.attributes.get(ATTR_MAX) == 1.0
     assert state.attributes.get(ATTR_STEP) == 0.01
@@ -46,7 +46,7 @@ def test_default_setup_params.opp):
 
 async def test_set_value_bad_attr.opp):
     """Test setting the value without required attribute."""
-    state =.opp.states.get(ENTITY_VOLUME)
+    state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
 
     with pytest.raises(vol.Invalid):
@@ -58,13 +58,13 @@ async def test_set_value_bad_attr.opp):
         )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_VOLUME)
+    state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
 
 
 async def test_set_value_bad_range.opp):
     """Test setting the value out of range."""
-    state =.opp.states.get(ENTITY_VOLUME)
+    state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
 
     with pytest.raises(vol.Invalid):
@@ -76,13 +76,13 @@ async def test_set_value_bad_range.opp):
         )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_VOLUME)
+    state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
 
 
 async def test_set_set_value.opp):
     """Test the setting of the value."""
-    state =.opp.states.get(ENTITY_VOLUME)
+    state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
 
     await.opp.services.async_call(
@@ -93,5 +93,5 @@ async def test_set_set_value.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_VOLUME)
+    state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "23.0"

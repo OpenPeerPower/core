@@ -416,7 +416,7 @@ async def test_create_cast_device_without_uuid.opp):
 
 async def test_create_cast_device_with_uuid.opp):
     """Test create cast devices with UUID creates entities."""
-    added_casts =.opp.data[cast.ADDED_CAST_DEVICES_KEY] = set()
+    added_casts = opp.data[cast.ADDED_CAST_DEVICES_KEY] = set()
     info = get_fake_chromecast_info()
 
     cast_device = cast._async_create_cast_device.opp, info)
@@ -633,21 +633,21 @@ async def test_entity_availability.opp: OpenPeerPowerType):
     chromecast, _ = await async_setup_media_player_cast.opp, info)
     _, conn_status_cb, _ = get_status_callbacks(chromecast)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == "unavailable"
 
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == "unknown"
 
     connection_status = MagicMock()
     connection_status.status = "DISCONNECTED"
     conn_status_cb(connection_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == "unavailable"
 
 
@@ -669,7 +669,7 @@ async def test_entity_cast_status.opp: OpenPeerPowerType):
     conn_status_cb(connection_status)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is not None
     assert state.name == "Speaker"
     assert state.state == "unknown"
@@ -691,7 +691,7 @@ async def test_entity_cast_status.opp: OpenPeerPowerType):
     cast_status.volume_muted = False
     cast_status_cb(cast_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get("volume_level") == 0.5
     assert not state.attributes.get("is_volume_muted")
 
@@ -700,7 +700,7 @@ async def test_entity_cast_status.opp: OpenPeerPowerType):
     cast_status.volume_muted = True
     cast_status_cb(cast_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get("volume_level") == 0.2
     assert state.attributes.get("is_volume_muted")
 
@@ -709,7 +709,7 @@ async def test_entity_cast_status.opp: OpenPeerPowerType):
     cast_status.volume_control_type = "fixed"
     cast_status_cb(cast_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get("supported_features") == (
         SUPPORT_PAUSE
         | SUPPORT_PLAY
@@ -738,7 +738,7 @@ async def test_entity_play_media.opp: OpenPeerPowerType):
     conn_status_cb(connection_status)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is not None
     assert state.name == "Speaker"
     assert state.state == "unknown"
@@ -767,7 +767,7 @@ async def test_entity_play_media_cast.opp: OpenPeerPowerType, quick_play_mock):
     conn_status_cb(connection_status)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is not None
     assert state.name == "Speaker"
     assert state.state == "unknown"
@@ -800,7 +800,7 @@ async def test_entity_play_media_cast_invalid.opp, caplog, quick_play_mock):
     conn_status_cb(connection_status)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is not None
     assert state.name == "Speaker"
     assert state.state == "unknown"
@@ -873,7 +873,7 @@ async def test_entity_media_content_type.opp: OpenPeerPowerType):
     conn_status_cb(connection_status)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is not None
     assert state.name == "Speaker"
     assert state.state == "unknown"
@@ -885,27 +885,27 @@ async def test_entity_media_content_type.opp: OpenPeerPowerType):
     media_status.media_is_tvshow = False
     media_status_cb(media_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get("media_content_type") is None
 
     media_status.media_is_tvshow = True
     media_status_cb(media_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get("media_content_type") == "tvshow"
 
     media_status.media_is_tvshow = False
     media_status.media_is_musictrack = True
     media_status_cb(media_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get("media_content_type") == "music"
 
     media_status.media_is_musictrack = True
     media_status.media_is_movie = True
     media_status_cb(media_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get("media_content_type") == "movie"
 
 
@@ -927,7 +927,7 @@ async def test_entity_control.opp: OpenPeerPowerType):
     conn_status_cb(connection_status)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is not None
     assert state.name == "Speaker"
     assert state.state == "unknown"
@@ -990,7 +990,7 @@ async def test_entity_control.opp: OpenPeerPowerType):
     media_status_cb(media_status)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get("supported_features") == (
         SUPPORT_PAUSE
         | SUPPORT_PLAY
@@ -1036,7 +1036,7 @@ async def test_entity_media_states.opp: OpenPeerPowerType):
     conn_status_cb(connection_status)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is not None
     assert state.name == "Speaker"
     assert state.state == "unknown"
@@ -1046,34 +1046,34 @@ async def test_entity_media_states.opp: OpenPeerPowerType):
     media_status.player_is_playing = True
     media_status_cb(media_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == "playing"
 
     media_status.player_is_playing = False
     media_status.player_is_paused = True
     media_status_cb(media_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == "paused"
 
     media_status.player_is_paused = False
     media_status.player_is_idle = True
     media_status_cb(media_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == "idle"
 
     media_status.player_is_idle = False
     chromecast.is_idle = True
     media_status_cb(media_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == "off"
 
     chromecast.is_idle = False
     media_status_cb(media_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == "unknown"
 
 
@@ -1097,7 +1097,7 @@ async def test_group_media_states.opp, mz_mock):
     conn_status_cb(connection_status)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is not None
     assert state.name == "Speaker"
     assert state.state == "unknown"
@@ -1110,7 +1110,7 @@ async def test_group_media_states.opp, mz_mock):
     group_media_status.player_is_playing = True
     group_media_status_cb(str(FakeGroupUUID), group_media_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == "playing"
 
     # Player is paused, group is playing -> Should report 'paused'
@@ -1119,14 +1119,14 @@ async def test_group_media_states.opp, mz_mock):
     media_status_cb(player_media_status)
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == "paused"
 
     # Player is in unknown state, group is playing -> Should report 'playing'
     player_media_status.player_state = "UNKNOWN"
     media_status_cb(player_media_status)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == "playing"
 
 
@@ -1151,7 +1151,7 @@ async def test_group_media_control.opp, mz_mock):
     conn_status_cb(connection_status)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is not None
     assert state.name == "Speaker"
     assert state.state == "unknown"

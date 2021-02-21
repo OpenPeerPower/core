@@ -44,7 +44,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
    .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, kill_raspistill)
 
-    setup_config =.opp.data[DOMAIN]
+    setup_config = opp.data[DOMAIN]
     file_path = setup_config[CONF_FILE_PATH]
 
     def delete_temp_file(*args):

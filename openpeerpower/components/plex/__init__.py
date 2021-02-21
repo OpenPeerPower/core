@@ -59,7 +59,7 @@ async def async_setup.opp, config):
 
     await async_setup_services.opp)
 
-    gdm =.opp.data[PLEX_DOMAIN][GDM_SCANNER] = GDM()
+    gdm = opp.data[PLEX_DOMAIN][GDM_SCANNER] = GDM()
 
    .opp.data[PLEX_DOMAIN][GDM_DEBOUNCER] = Debouncer(
        .opp,
@@ -199,13 +199,13 @@ async def async_setup_entry.opp, entry):
     def close_websocket_session(_):
         websocket.close()
 
-    unsub =.opp.bus.async_listen_once(
+    unsub = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, close_websocket_session
     )
    .opp.data[PLEX_DOMAIN][DISPATCHERS][server_id].append(unsub)
 
     for platform in PLATFORMS:
-        task =.opp.async_create_task(
+        task = opp.async_create_task(
            .opp.config_entries.async_forward_entry_setup(entry, platform)
         )
         task.add_done_callback(partial(start_websocket_session, platform))
@@ -225,10 +225,10 @@ async def async_unload_entry.opp, entry):
     """Unload a config entry."""
     server_id = entry.data[CONF_SERVER_IDENTIFIER]
 
-    websocket =.opp.data[PLEX_DOMAIN][WEBSOCKETS].pop(server_id)
+    websocket = opp.data[PLEX_DOMAIN][WEBSOCKETS].pop(server_id)
     websocket.close()
 
-    dispatchers =.opp.data[PLEX_DOMAIN][DISPATCHERS].pop(server_id)
+    dispatchers = opp.data[PLEX_DOMAIN][DISPATCHERS].pop(server_id)
     for unsub in dispatchers:
         unsub()
 

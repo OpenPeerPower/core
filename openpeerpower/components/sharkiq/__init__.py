@@ -104,7 +104,7 @@ async def async_unload_entry.opp, config_entry):
         )
     )
     if unload_ok:
-        domain_data =.opp.data[DOMAIN][config_entry.entry_id]
+        domain_data = opp.data[DOMAIN][config_entry.entry_id]
         try:
             await async_disconnect_or_timeout(coordinator=domain_data)
         except SharkIqAuthError:

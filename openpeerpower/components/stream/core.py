@@ -45,7 +45,7 @@ class IdleTimer:
         self,.opp: OpenPeerPower, timeout: int, idle_callback: Callable[[], None]
     ):
         """Initialize IdleTimer."""
-        self._opp =.opp
+        self._opp = opp
         self._timeout = timeout
         self._callback = idle_callback
         self._unsub = None
@@ -81,7 +81,7 @@ class StreamOutput(abc.ABC):
 
     def __init__(self,.opp: OpenPeerPower):
         """Initialize a stream output."""
-        self._opp =.opp
+        self._opp = opp
 
     @property
     def container_options(self) -> Callable[[int], dict]:

@@ -188,7 +188,7 @@ class ProxyCamera(Camera):
     def __init__(self,.opp, config):
         """Initialize a proxy camera component."""
         super().__init__()
-        self.opp =.opp
+        self.opp = opp
         self._proxied_camera = config.get(CONF_ENTITY_ID)
         self._name = (
             config.get(CONF_NAME) or f"{DEFAULT_BASENAME} - {self._proxied_camera}"

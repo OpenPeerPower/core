@@ -29,7 +29,7 @@ async def test_attributes.opp):
     """Test the cover attributes are correct."""
     await setup_platform.opp, COVER_DOMAIN)
 
-    state =.opp.states.get(DEVICE_ID)
+    state = opp.states.get(DEVICE_ID)
     assert state.state == STATE_CLOSED
     assert state.attributes.get(ATTR_DEVICE_ID) == "ZW:00000007"
     assert not state.attributes.get("battery_low")

@@ -480,7 +480,7 @@ class ConfigEntryWithingsApi(AbstractWithingsApi):
         implementation: AbstractOAuth2Implementation,
     ):
         """Initialize object."""
-        self._opp =.opp
+        self._opp = opp
         self._config_entry = config_entry
         self._implementation = implementation
         self.session = OAuth2Session.opp, config_entry, implementation)
@@ -522,7 +522,7 @@ class WebhookUpdateCoordinator:
 
     def __init__(self,.opp: OpenPeerPower, user_id: int) -> None:
         """Initialize the object."""
-        self._opp =.opp
+        self._opp = opp
         self._user_id = user_id
         self._listeners: List[CALLBACK_TYPE] = []
         self.data: MeasurementData = {}
@@ -564,7 +564,7 @@ class DataManager:
         webhook_config: WebhookConfig,
     ):
         """Initialize the data manager."""
-        self._opp =.opp
+        self._opp = opp
         self._api = api
         self._user_id = user_id
         self._profile = profile
@@ -1024,7 +1024,7 @@ async def async_get_data_manager(
     """Get the data manager for a config entry."""
    .opp.data.setdefault(const.DOMAIN, {})
    .opp.data[const.DOMAIN].setdefault(config_entry.entry_id, {})
-    config_entry_data =.opp.data[const.DOMAIN][config_entry.entry_id]
+    config_entry_data = opp.data[const.DOMAIN][config_entry.entry_id]
 
     if const.DATA_MANAGER not in config_entry_data:
         profile = config_entry.data.get(const.PROFILE)

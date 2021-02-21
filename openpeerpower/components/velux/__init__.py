@@ -47,7 +47,7 @@ class VeluxModule:
     def __init__(self,.opp, domain_config):
         """Initialize for velux component."""
         self.pyvlx = None
-        self._opp =.opp
+        self._opp = opp
         self._domain_config = domain_config
 
     def setup(self):

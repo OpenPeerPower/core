@@ -69,7 +69,7 @@ async def test_update_entity.opp,.opp_client):
     result = await resp.json()
     assert result == {"result": "ok"}
 
-    state =.opp.states.get("hello.world")
+    state = opp.states.get("hello.world")
     assert state.state == "state"
     assert dict(state.attributes) == {
         "a": "b",

@@ -31,7 +31,7 @@ async def test_scene_activate.opp, scene):
         {ATTR_ENTITY_ID: "scene.test_scene"},
         blocking=True,
     )
-    state =.opp.states.get("scene.test_scene")
+    state = opp.states.get("scene.test_scene")
     assert state.attributes["icon"] == scene.icon
     assert state.attributes["color"] == scene.color
     assert state.attributes["location_id"] == scene.location_id

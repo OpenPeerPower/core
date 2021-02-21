@@ -20,15 +20,15 @@ async def test_setting_rising.opp, legacy_patchable_time):
         )
 
     await.opp.async_block_till_done()
-    state =.opp.states.get(sun.ENTITY_ID)
+    state = opp.states.get(sun.ENTITY_ID)
 
     from astral import Astral
 
     astral = Astral()
     utc_today = utc_now.date()
 
-    latitude =.opp.config.latitude
-    longitude =.opp.config.longitude
+    latitude = opp.config.latitude
+    longitude = opp.config.longitude
 
     mod = -1
     while True:
@@ -117,7 +117,7 @@ async def test_state_change.opp, legacy_patchable_time):
     )
     assert test_time is not None
 
-    assert sun.STATE_BELOW_HORIZON ==.opp.states.get(sun.ENTITY_ID).state
+    assert sun.STATE_BELOW_HORIZON == opp.states.get(sun.ENTITY_ID).state
 
     patched_time = test_time + timedelta(seconds=5)
     with patch(
@@ -126,13 +126,13 @@ async def test_state_change.opp, legacy_patchable_time):
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: patched_time})
         await.opp.async_block_till_done()
 
-    assert sun.STATE_ABOVE_HORIZON ==.opp.states.get(sun.ENTITY_ID).state
+    assert sun.STATE_ABOVE_HORIZON == opp.states.get(sun.ENTITY_ID).state
 
     with patch("openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=now):
         await.opp.config.async_update(longitude.opp.config.longitude + 90)
         await.opp.async_block_till_done()
 
-    assert sun.STATE_ABOVE_HORIZON ==.opp.states.get(sun.ENTITY_ID).state
+    assert sun.STATE_ABOVE_HORIZON == opp.states.get(sun.ENTITY_ID).state
 
 
 async def test_norway_in_june.opp):
@@ -147,7 +147,7 @@ async def test_norway_in_june.opp):
            .opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
         )
 
-    state =.opp.states.get(sun.ENTITY_ID)
+    state = opp.states.get(sun.ENTITY_ID)
     assert state is not None
 
     assert dt_util.parse_datetime(

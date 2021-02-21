@@ -93,7 +93,7 @@ class NikoHomeControlData:
     def __init__(self,.opp, nhc):
         """Set up Niko Home Control Data object."""
         self._nhc = nhc
-        self.opp =.opp
+        self.opp = opp
         self.available = True
         self.data = {}
         self._system_info = None

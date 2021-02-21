@@ -202,7 +202,7 @@ async def async_op.dle_location_message.opp, context, message):
 
 async def _async_transition_message_enter.opp, context, message, location):
     """Execute enter event."""
-    zone =.opp.states.get(f"zone.{slugify(location)}")
+    zone = opp.states.get(f"zone.{slugify(location)}")
     dev_id, kwargs = _parse_see_args(message, context.mqtt_topic)
 
     if zone is None and message.get("t") == "b":
@@ -243,7 +243,7 @@ async def _async_transition_message_leave.opp, context, message, location):
         new_region = regions[-1] if regions else None
         if new_region:
             # Exit to previous region
-            zone =.opp.states.get(f"zone.{slugify(new_region)}")
+            zone = opp.states.get(f"zone.{slugify(new_region)}")
             _set_gps_from_zone(kwargs, new_region, zone)
             _LOGGER.info("Exit to %s", new_region)
             context.async_see(**kwargs)
@@ -314,7 +314,7 @@ async def async_op.dle_waypoint.opp, name_base, waypoint):
             zone_comp.CONF_PASSIVE: False,
         },
     )
-    zone.opp =.opp
+    zone.opp = opp
     zone.entity_id = entity_id
     zone.async_write_op.state()
 

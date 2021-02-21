@@ -171,6 +171,6 @@ async def async_setup_entry(
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    bridge =.opp.data[DOMAIN].pop(entry.entry_id)
+    bridge = opp.data[DOMAIN].pop(entry.entry_id)
    .opp.services.async_remove(DOMAIN, SERVICE_HUE_SCENE)
     return await bridge.async_reset()

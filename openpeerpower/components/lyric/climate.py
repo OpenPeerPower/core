@@ -76,7 +76,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the Honeywell Lyric climate platform based on a config entry."""
-    coordinator: DataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id]
+    coordinator: DataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id]
 
     entities = []
 

@@ -15,7 +15,7 @@ def async_describe_events.opp, async_describe_event):
         entity_id = data["request"].get("entity_id")
 
         if entity_id:
-            state =.opp.states.get(entity_id)
+            state = opp.states.get(entity_id)
             name = state.name if state else entity_id
             message = f"send command {data['request']['namespace']}/{data['request']['name']} for {name}"
         else:

@@ -25,7 +25,7 @@ SENSORS = {
 
 async def async_setup_entry.opp, config, async_add_entities):
     """Initialize a Blink sensor."""
-    data =.opp.data[DOMAIN][config.entry_id]
+    data = opp.data[DOMAIN][config.entry_id]
     entities = []
     for camera in data.cameras:
         for sensor_type in SENSORS:

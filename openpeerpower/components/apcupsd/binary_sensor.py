@@ -15,7 +15,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up an APCUPSd Online Status binary sensor."""
-    apcups_data =.opp.data[DOMAIN]
+    apcups_data = opp.data[DOMAIN]
 
     add_entities([OnlineStatus(config, apcups_data)], True)
 

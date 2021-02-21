@@ -135,7 +135,7 @@ async def test_all_day_event.opp, mock_next_event):
     assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
     assert state.name == TEST_ENTITY_NAME
     assert state.state == STATE_OFF
     assert dict(state.attributes) == {
@@ -164,7 +164,7 @@ async def test_future_event.opp, mock_next_event):
     assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
     assert state.name == TEST_ENTITY_NAME
     assert state.state == STATE_OFF
     assert dict(state.attributes) == {
@@ -193,7 +193,7 @@ async def test_in_progress_event.opp, mock_next_event):
     assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
     assert state.name == TEST_ENTITY_NAME
     assert state.state == STATE_ON
     assert dict(state.attributes) == {
@@ -224,7 +224,7 @@ async def test_offset_in_progress_event.opp, mock_next_event):
     assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
     assert state.name == TEST_ENTITY_NAME
     assert state.state == STATE_OFF
     assert dict(state.attributes) == {
@@ -256,7 +256,7 @@ async def test_all_day_offset_in_progress_event.opp, mock_next_event):
     assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
     assert state.name == TEST_ENTITY_NAME
     assert state.state == STATE_OFF
     assert dict(state.attributes) == {
@@ -288,7 +288,7 @@ async def test_all_day_offset_event.opp, mock_next_event):
     assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
     assert state.name == TEST_ENTITY_NAME
     assert state.state == STATE_OFF
     assert dict(state.attributes) == {
@@ -311,6 +311,6 @@ async def test_update_error.opp, google_service):
     assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
     assert state.name == TEST_ENTITY_NAME
     assert state.state == "off"

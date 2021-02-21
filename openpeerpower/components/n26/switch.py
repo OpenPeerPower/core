@@ -12,7 +12,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    api_list =.opp.data[DOMAIN][DATA]
+    api_list = opp.data[DOMAIN][DATA]
 
     switch_entities = []
     for api_data in api_list:

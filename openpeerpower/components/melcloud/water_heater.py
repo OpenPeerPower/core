@@ -25,7 +25,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ):
     """Set up MelCloud device climate based on config_entry."""
-    mel_devices =.opp.data[DOMAIN][entry.entry_id]
+    mel_devices = opp.data[DOMAIN][entry.entry_id]
     async_add_entities(
         [
             AtwWaterHeater(mel_device, mel_device.device)

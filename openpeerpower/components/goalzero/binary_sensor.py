@@ -11,7 +11,7 @@ PARALLEL_UPDATES = 0
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the Goal Zero Yeti sensor."""
     name = entry.data[CONF_NAME]
-    goalzero_data =.opp.data[DOMAIN][entry.entry_id]
+    goalzero_data = opp.data[DOMAIN][entry.entry_id]
     sensors = [
         YetiBinarySensor(
             goalzero_data[DATA_KEY_API],

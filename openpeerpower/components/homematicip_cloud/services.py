@@ -345,7 +345,7 @@ async def _async_reset_energy_counter(
 
 def _get_home.opp: OpenPeerPowerType, hapid: str) -> Optional[AsyncHome]:
     """Return a HmIP home."""
-    hap =.opp.data[HMIPC_DOMAIN].get(hapid)
+    hap = opp.data[HMIPC_DOMAIN].get(hapid)
     if hap:
         return hap.home
 

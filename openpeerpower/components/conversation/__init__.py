@@ -154,9 +154,9 @@ class ConversationProcessView(http.OpenPeerPowerView):
 
 async def _get_agent.opp: core.OpenPeerPower) -> AbstractConversationAgent:
     """Get the active conversation agent."""
-    agent =.opp.data.get(DATA_AGENT)
+    agent = opp.data.get(DATA_AGENT)
     if agent is None:
-        agent =.opp.data[DATA_AGENT] = DefaultAgent.opp)
+        agent = opp.data[DATA_AGENT] = DefaultAgent.opp)
         await agent.async_initialize.opp.data.get(DATA_CONFIG))
     return agent
 

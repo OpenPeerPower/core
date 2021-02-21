@@ -41,7 +41,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the FFmpeg noise binary sensor."""
-    manager =.opp.data[DATA_FFMPEG]
+    manager = opp.data[DATA_FFMPEG]
     entity = FFmpegNoise.opp, manager, config)
     async_add_entities([entity])
 

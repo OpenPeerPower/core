@@ -318,7 +318,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload an Ambient PWS config entry."""
-    ambient =.opp.data[DOMAIN][DATA_CLIENT].pop(config_entry.entry_id)
+    ambient = opp.data[DOMAIN][DATA_CLIENT].pop(config_entry.entry_id)
    .opp.async_create_task(ambient.ws_disconnect())
 
     tasks = [
@@ -360,7 +360,7 @@ class AmbientStation:
         """Initialize."""
         self._config_entry = config_entry
         self._entry_setup_complete = False
-        self._opp =.opp
+        self._opp = opp
         self._ws_reconnect_delay = DEFAULT_SOCKET_MIN_RETRY
         self.client = client
         self.stations = {}

@@ -174,7 +174,7 @@ class LogErrorHandler(logging.Handler):
     def __init__(self,.opp, maxlen, fire_event):
         """Initialize a new LogErrorHandler."""
         super().__init__()
-        self.opp =.opp
+        self.opp = opp
         self.records = DedupStore(maxlen=maxlen)
         self.fire_event = fire_event
 

@@ -25,7 +25,7 @@ async def test_binary_sensors.opp, surepetcare) -> None:
         await.opp.async_block_till_done()
 
     entity_registry = await.opp.helpers.entity_registry.async_get_registry()
-    state_entity_ids =.opp.states.async_entity_ids()
+    state_entity_ids = opp.states.async_entity_ids()
 
     for entity_id, unique_id in EXPECTED_ENTITY_IDS.items():
         assert entity_id in state_entity_ids

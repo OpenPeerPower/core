@@ -253,7 +253,7 @@ async def test_setup_get_xml.opp):
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
     assert state.state == "abc"
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == DATA_MEGABYTES
 
@@ -306,7 +306,7 @@ async def test_update_with_json_attrs.opp):
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
     assert state.state == "some_json_value"
     assert state.attributes["key"] == "some_json_value"
 
@@ -339,7 +339,7 @@ async def test_update_with_no_template.opp):
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
     assert state.state == '{"key": "some_json_value"}'
 
 
@@ -373,7 +373,7 @@ async def test_update_with_json_attrs_no_data.opp, caplog):
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
     assert state.state == STATE_UNKNOWN
     assert state.attributes == {"unit_of_measurement": "MB", "friendly_name": "foo"}
     assert "Empty reply" in caplog.text
@@ -408,7 +408,7 @@ async def test_update_with_json_attrs_not_dict.opp, caplog):
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
     assert state.state == ""
     assert state.attributes == {"unit_of_measurement": "MB", "friendly_name": "foo"}
     assert "not a dictionary or list" in caplog.text
@@ -444,7 +444,7 @@ async def test_update_with_json_attrs_bad_JSON.opp, caplog):
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
     assert state.state == STATE_UNKNOWN
     assert state.attributes == {"unit_of_measurement": "MB", "friendly_name": "foo"}
     assert "Erroneous JSON" in caplog.text
@@ -487,7 +487,7 @@ async def test_update_with_json_attrs_with_json_attrs_path.opp):
     )
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
 
     assert state.state == "master"
     assert state.attributes["some_json_key"] == "some_json_value"
@@ -523,7 +523,7 @@ async def test_update_with_xml_convert_json_attrs_with_json_attrs_path.opp):
     )
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
 
     assert state.state == "master"
     assert state.attributes["some_json_key"] == "some_json_value"
@@ -559,7 +559,7 @@ async def test_update_with_xml_convert_json_attrs_with_jsonattr_template.opp):
     )
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
 
     assert state.state == "bogus"
     assert state.attributes["led0"] == "0"
@@ -600,7 +600,7 @@ async def test_update_with_application_xml_convert_json_attrs_with_jsonattr_temp
     )
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
 
     assert state.state == "1"
     assert state.attributes["dog"] == "1"
@@ -635,7 +635,7 @@ async def test_update_with_xml_convert_bad_xml.opp, caplog):
     )
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
 
     assert state.state == STATE_UNKNOWN
     assert "Erroneous XML" in caplog.text
@@ -670,7 +670,7 @@ async def test_update_with_failed_get.opp, caplog):
     )
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
-    state =.opp.states.get("sensor.foo")
+    state = opp.states.get("sensor.foo")
 
     assert state.state == STATE_UNKNOWN
     assert "Erroneous XML" in caplog.text

@@ -46,7 +46,7 @@ async def async_setup_entry(
 ):
     """Set up the Tado sensor platform."""
 
-    tado =.opp.data[DOMAIN][entry.entry_id][DATA]
+    tado = opp.data[DOMAIN][entry.entry_id][DATA]
     zones = tado.zones
     entities = []
 

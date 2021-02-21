@@ -192,7 +192,7 @@ class HikvisionBinarySensor(BinarySensorEntity):
 
     def __init__(self,.opp, sensor, channel, cam, delay):
         """Initialize the binary_sensor."""
-        self._opp =.opp
+        self._opp = opp
         self._cam = cam
         self._sensor = sensor
         self._channel = channel

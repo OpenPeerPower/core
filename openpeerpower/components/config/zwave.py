@@ -60,7 +60,7 @@ class ZWaveLogView(OpenPeerPowerView):
 
     def _get_log(self,.opp, lines):
         """Retrieve the logfile content."""
-        logfilepath =.opp.config.path(OZW_LOG_FILENAME)
+        logfilepath = opp.config.path(OZW_LOG_FILENAME)
         with open(logfilepath) as logfile:
             data = (line.rstrip() for line in logfile)
             if lines == 0:
@@ -80,7 +80,7 @@ class ZWaveConfigWriteView(OpenPeerPowerView):
     def post(self, request):
         """Save cache configuration to zwcfg_xxxxx.xml."""
         opp = request.app["opp"]
-        network =.opp.data.get(const.DATA_NETWORK)
+        network = opp.data.get(const.DATA_NETWORK)
         if network is None:
             return self.json_message("No Z-Wave network data found", HTTP_NOT_FOUND)
         _LOGGER.info("Z-Wave configuration written to file")
@@ -99,7 +99,7 @@ class ZWaveNodeValueView(OpenPeerPowerView):
         """Retrieve groups of node."""
         nodeid = int(node_id)
         opp = request.app["opp"]
-        values_list =.opp.data[const.DATA_ENTITY_VALUES]
+        values_list = opp.data[const.DATA_ENTITY_VALUES]
 
         values_data = {}
         # Return a list of values for this node that are used as a
@@ -128,7 +128,7 @@ class ZWaveNodeGroupView(OpenPeerPowerView):
         """Retrieve groups of node."""
         nodeid = int(node_id)
         opp = request.app["opp"]
-        network =.opp.data.get(const.DATA_NETWORK)
+        network = opp.data.get(const.DATA_NETWORK)
         node = network.nodes.get(nodeid)
         if node is None:
             return self.json_message("Node not found", HTTP_NOT_FOUND)
@@ -155,7 +155,7 @@ class ZWaveNodeConfigView(OpenPeerPowerView):
         """Retrieve configurations of node."""
         nodeid = int(node_id)
         opp = request.app["opp"]
-        network =.opp.data.get(const.DATA_NETWORK)
+        network = opp.data.get(const.DATA_NETWORK)
         node = network.nodes.get(nodeid)
         if node is None:
             return self.json_message("Node not found", HTTP_NOT_FOUND)
@@ -186,7 +186,7 @@ class ZWaveUserCodeView(OpenPeerPowerView):
         """Retrieve usercodes of node."""
         nodeid = int(node_id)
         opp = request.app["opp"]
-        network =.opp.data.get(const.DATA_NETWORK)
+        network = opp.data.get(const.DATA_NETWORK)
         node = network.nodes.get(nodeid)
         if node is None:
             return self.json_message("Node not found", HTTP_NOT_FOUND)
@@ -214,7 +214,7 @@ class ZWaveProtectionView(OpenPeerPowerView):
         """Retrieve the protection commandclass options of node."""
         nodeid = int(node_id)
         opp = request.app["opp"]
-        network =.opp.data.get(const.DATA_NETWORK)
+        network = opp.data.get(const.DATA_NETWORK)
 
         def _fetch_protection():
             """Get protection data."""
@@ -238,7 +238,7 @@ class ZWaveProtectionView(OpenPeerPowerView):
         """Change the selected option in protection commandclass."""
         nodeid = int(node_id)
         opp = request.app["opp"]
-        network =.opp.data.get(const.DATA_NETWORK)
+        network = opp.data.get(const.DATA_NETWORK)
         protection_data = await request.json()
 
         def _set_protection():

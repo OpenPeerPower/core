@@ -201,7 +201,7 @@ def assert_state.opp, entity_id, state, unit_of_measurement):
     This is used to ensure that the logic in each sensor class handled the
     attribute report it received correctly.
     """
-   .opp_state =.opp.states.get(entity_id)
+   .opp_state = opp.states.get(entity_id)
     assert.opp_state.state == state
     assert.opp_state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == unit_of_measurement
 
@@ -310,7 +310,7 @@ async def test_temp_uom(
 
     await send_attribute_report.opp, cluster, 0, raw_temp)
     await.opp.async_block_till_done()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is not None
     assert round(float(state.state)) == expected
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == uom

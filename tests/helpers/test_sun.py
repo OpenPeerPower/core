@@ -16,8 +16,8 @@ def test_next_events.opp):
     astral = Astral()
     utc_today = utc_now.date()
 
-    latitude =.opp.config.latitude
-    longitude =.opp.config.longitude
+    latitude = opp.config.latitude
+    longitude = opp.config.longitude
 
     mod = -1
     while True:
@@ -88,8 +88,8 @@ def test_date_events.opp):
     astral = Astral()
     utc_today = utc_now.date()
 
-    latitude =.opp.config.latitude
-    longitude =.opp.config.longitude
+    latitude = opp.config.latitude
+    longitude = opp.config.longitude
 
     dawn = astral.dawn_utc(utc_today, latitude, longitude)
     dusk = astral.dusk_utc(utc_today, latitude, longitude)
@@ -114,8 +114,8 @@ def test_date_events_default_date.opp):
     astral = Astral()
     utc_today = utc_now.date()
 
-    latitude =.opp.config.latitude
-    longitude =.opp.config.longitude
+    latitude = opp.config.latitude
+    longitude = opp.config.longitude
 
     dawn = astral.dawn_utc(utc_today, latitude, longitude)
     dusk = astral.dusk_utc(utc_today, latitude, longitude)
@@ -141,8 +141,8 @@ def test_date_events_accepts_datetime.opp):
     astral = Astral()
     utc_today = utc_now.date()
 
-    latitude =.opp.config.latitude
-    longitude =.opp.config.longitude
+    latitude = opp.config.latitude
+    longitude = opp.config.longitude
 
     dawn = astral.dawn_utc(utc_today, latitude, longitude)
     dusk = astral.dusk_utc(utc_today, latitude, longitude)

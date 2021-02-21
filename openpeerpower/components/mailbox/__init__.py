@@ -139,7 +139,7 @@ class Mailbox:
 
     def __init__(self,.opp, name):
         """Initialize mailbox object."""
-        self.opp =.opp
+        self.opp = opp
         self.name = name
 
     @callback

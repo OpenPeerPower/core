@@ -28,7 +28,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Flick Sensor Setup."""
-    api: FlickAPI =.opp.data[DOMAIN][entry.entry_id]
+    api: FlickAPI = opp.data[DOMAIN][entry.entry_id]
 
     async_add_entities([FlickPricingSensor(api)], True)
 

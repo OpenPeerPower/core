@@ -29,7 +29,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the NUT sensors."""
 
-    pynut_data =.opp.data[DOMAIN][config_entry.entry_id]
+    pynut_data = opp.data[DOMAIN][config_entry.entry_id]
     unique_id = pynut_data[PYNUT_UNIQUE_ID]
     manufacturer = pynut_data[PYNUT_MANUFACTURER]
     model = pynut_data[PYNUT_MODEL]

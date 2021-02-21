@@ -14,7 +14,7 @@ async def test_pr3000rt2u.opp):
     assert entry
     assert entry.unique_id == "CPS_PR3000RT2U_PYVJO2000034_battery.charge"
 
-    state =.opp.states.get("sensor.ups1_battery_charge")
+    state = opp.states.get("sensor.ups1_battery_charge")
     assert state.state == "100"
 
     expected_attributes = {
@@ -40,7 +40,7 @@ async def test_cp1350c.opp):
     assert entry
     assert entry.unique_id == f"{config_entry.entry_id}_battery.charge"
 
-    state =.opp.states.get("sensor.ups1_battery_charge")
+    state = opp.states.get("sensor.ups1_battery_charge")
     assert state.state == "100"
 
     expected_attributes = {
@@ -65,7 +65,7 @@ async def test_5e850i.opp):
     assert entry
     assert entry.unique_id == f"{config_entry.entry_id}_battery.charge"
 
-    state =.opp.states.get("sensor.ups1_battery_charge")
+    state = opp.states.get("sensor.ups1_battery_charge")
     assert state.state == "100"
 
     expected_attributes = {
@@ -90,7 +90,7 @@ async def test_5e650i.opp):
     assert entry
     assert entry.unique_id == f"{config_entry.entry_id}_battery.charge"
 
-    state =.opp.states.get("sensor.ups1_battery_charge")
+    state = opp.states.get("sensor.ups1_battery_charge")
     assert state.state == "100"
 
     expected_attributes = {
@@ -118,7 +118,7 @@ async def test_backupsses600m1.opp):
         == "American Power Conversion_Back-UPS ES 600M1_4B1713P32195 _battery.charge"
     )
 
-    state =.opp.states.get("sensor.ups1_battery_charge")
+    state = opp.states.get("sensor.ups1_battery_charge")
     assert state.state == "100"
 
     expected_attributes = {
@@ -145,7 +145,7 @@ async def test_cp1500pfclcd.opp):
     assert entry
     assert entry.unique_id == f"{config_entry.entry_id}_battery.charge"
 
-    state =.opp.states.get("sensor.ups1_battery_charge")
+    state = opp.states.get("sensor.ups1_battery_charge")
     assert state.state == "100"
 
     expected_attributes = {
@@ -170,7 +170,7 @@ async def test_dl650elcd.opp):
     assert entry
     assert entry.unique_id == f"{config_entry.entry_id}_battery.charge"
 
-    state =.opp.states.get("sensor.ups1_battery_charge")
+    state = opp.states.get("sensor.ups1_battery_charge")
     assert state.state == "100"
 
     expected_attributes = {
@@ -195,7 +195,7 @@ async def test_blazer_usb.opp):
     assert entry
     assert entry.unique_id == f"{config_entry.entry_id}_battery.charge"
 
-    state =.opp.states.get("sensor.ups1_battery_charge")
+    state = opp.states.get("sensor.ups1_battery_charge")
     assert state.state == "100"
 
     expected_attributes = {

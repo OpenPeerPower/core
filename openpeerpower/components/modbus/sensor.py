@@ -131,7 +131,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             continue
 
         hub_name = register[CONF_HUB]
-        hub =.opp.data[MODBUS_DOMAIN][hub_name]
+        hub = opp.data[MODBUS_DOMAIN][hub_name]
         sensors.append(
             ModbusRegisterSensor(
                 hub,

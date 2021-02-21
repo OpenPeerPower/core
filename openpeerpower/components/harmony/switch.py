@@ -14,7 +14,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up harmony activity switches."""
-    data =.opp.data[DOMAIN][entry.entry_id]
+    data = opp.data[DOMAIN][entry.entry_id]
     activities = data.activities
 
     switches = []

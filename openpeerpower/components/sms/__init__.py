@@ -66,7 +66,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     if unload_ok:
-        gateway =.opp.data[DOMAIN].pop(SMS_GATEWAY)
+        gateway = opp.data[DOMAIN].pop(SMS_GATEWAY)
         await gateway.terminate_async()
 
     return unload_ok

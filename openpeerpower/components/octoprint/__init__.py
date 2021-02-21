@@ -129,7 +129,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 def setup.opp, config):
     """Set up the OctoPrint component."""
-    printers =.opp.data[DOMAIN] = {}
+    printers = opp.data[DOMAIN] = {}
     success = False
 
     def device_discovered(service, info):

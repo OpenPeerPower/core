@@ -83,7 +83,7 @@ async def test_sensors_pro.opp, canary) -> None:
         assert entity_entry.unique_id == data[0]
         assert entity_entry.original_icon == data[4]
 
-        state =.opp.states.get(f"sensor.{sensor_id}")
+        state = opp.states.get(f"sensor.{sensor_id}")
         assert state
         assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == data[2]
         assert state.state == data[1]
@@ -118,7 +118,7 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
         await.opp.async_block_till_done()
 
     entity_id = "sensor.home_dining_room_air_quality"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.attributes[ATTR_AIR_QUALITY] == STATE_AIR_QUALITY_ABNORMAL
 
@@ -133,7 +133,7 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
     await.opp.helpers.entity_component.async_update_entity(entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.attributes[ATTR_AIR_QUALITY] == STATE_AIR_QUALITY_VERY_ABNORMAL
 
@@ -148,7 +148,7 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
     await.opp.helpers.entity_component.async_update_entity(entity_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.attributes[ATTR_AIR_QUALITY] == STATE_AIR_QUALITY_NORMAL
 
@@ -201,7 +201,7 @@ async def test_sensors_flex.opp, canary) -> None:
         assert entity_entry.unique_id == data[0]
         assert entity_entry.original_icon == data[4]
 
-        state =.opp.states.get(f"sensor.{sensor_id}")
+        state = opp.states.get(f"sensor.{sensor_id}")
         assert state
         assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == data[2]
         assert state.state == data[1]

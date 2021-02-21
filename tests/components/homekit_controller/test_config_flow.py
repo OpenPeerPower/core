@@ -68,7 +68,7 @@ VALID_PAIRING_CODES = [
 
 def _setup_flow_op.dler.opp, pairing=None):
     flow = config_flow.HomekitControllerFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {}
 
     finish_pairing = unittest.mock.AsyncMock(return_value=pairing)

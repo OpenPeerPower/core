@@ -177,7 +177,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
     if DOMAIN not in config:
         return True
 
-    current_entries =.opp.config_entries.async_entries(DOMAIN)
+    current_entries = opp.config_entries.async_entries(DOMAIN)
     entries_by_name = _async_get_entries_by_name(current_entries)
 
     for index, conf in enumerate(config[DOMAIN]):
@@ -300,7 +300,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
    .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
-    homekit =.opp.data[DOMAIN][entry.entry_id][HOMEKIT]
+    homekit = opp.data[DOMAIN][entry.entry_id][HOMEKIT]
 
     if homekit.status == STATUS_RUNNING:
         await homekit.async_stop()
@@ -349,7 +349,7 @@ def _async_register_events_and_services.opp: OpenPeerPower):
         for entry_id in.opp.data[DOMAIN]:
             if HOMEKIT not in.opp.data[DOMAIN][entry_id]:
                 continue
-            homekit =.opp.data[DOMAIN][entry_id][HOMEKIT]
+            homekit = opp.data[DOMAIN][entry_id][HOMEKIT]
             if homekit.status != STATUS_RUNNING:
                 _LOGGER.warning(
                     "HomeKit is not running. Either it is waiting to be "
@@ -373,7 +373,7 @@ def _async_register_events_and_services.opp: OpenPeerPower):
         for entry_id in.opp.data[DOMAIN]:
             if HOMEKIT not in.opp.data[DOMAIN][entry_id]:
                 continue
-            homekit =.opp.data[DOMAIN][entry_id][HOMEKIT]
+            homekit = opp.data[DOMAIN][entry_id][HOMEKIT]
             if homekit.status == STATUS_RUNNING:
                 _LOGGER.debug("HomeKit is already running")
                 continue
@@ -397,7 +397,7 @@ def _async_register_events_and_services.opp: OpenPeerPower):
         if not config or DOMAIN not in config:
             return
 
-        current_entries =.opp.config_entries.async_entries(DOMAIN)
+        current_entries = opp.config_entries.async_entries(DOMAIN)
         entries_by_name = _async_get_entries_by_name(current_entries)
 
         for conf in config[DOMAIN]:
@@ -433,7 +433,7 @@ class HomeKit:
         entry_id=None,
     ):
         """Initialize a HomeKit object."""
-        self.opp =.opp
+        self.opp = opp
         self._name = name
         self._port = port
         self._ip_address = ip_address

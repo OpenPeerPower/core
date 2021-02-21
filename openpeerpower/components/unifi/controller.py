@@ -92,7 +92,7 @@ class UniFiController:
 
     def __init__(self,.opp, config_entry):
         """Initialize the system."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.available = True
         self.api = None
@@ -417,7 +417,7 @@ class UniFiController:
         """
         if config_entry.entry_id not in.opp.data[UNIFI_DOMAIN]:
             return
-        controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+        controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
         controller.load_config_entry_options()
         async_dispatcher_send.opp, controller.signal_options_update)
 

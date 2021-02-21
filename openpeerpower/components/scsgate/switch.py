@@ -24,7 +24,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the SCSGate switches."""
     logger = logging.getLogger(__name__)
-    scsgate =.opp.data[DOMAIN]
+    scsgate = opp.data[DOMAIN]
 
     _setup_traditional_switches(
         logger=logger,
@@ -162,7 +162,7 @@ class SCSGateScenarioSwitch:
         self._name = name
         self._scs_id = scs_id
         self._logger = logger
-        self._opp =.opp
+        self._opp = opp
 
     @property
     def scs_id(self):

@@ -27,7 +27,7 @@ async def test_sensor_state.opp):
         await.opp.async_block_till_done()
 
         entity_id = "sensor.test_name"
-        test_openerz_state =.opp.states.get(entity_id)
+        test_openerz_state = opp.states.get(entity_id)
 
         assert test_openerz_state.state == "2020-12-12"
         assert test_openerz_state.name == "test_name"

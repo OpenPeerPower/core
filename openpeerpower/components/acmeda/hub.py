@@ -16,7 +16,7 @@ class PulseHub:
     def __init__(self,.opp, config_entry):
         """Initialize the system."""
         self.config_entry = config_entry
-        self.opp =.opp
+        self.opp = opp
         self.api: Optional[aiopulse.Hub] = None
         self.tasks = []
         self.current_rollers = {}

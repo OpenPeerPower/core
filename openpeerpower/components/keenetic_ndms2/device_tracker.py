@@ -97,7 +97,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ):
     """Set up device tracker for Keenetic NDMS2 component."""
-    router: KeeneticRouter =.opp.data[DOMAIN][config_entry.entry_id][ROUTER]
+    router: KeeneticRouter = opp.data[DOMAIN][config_entry.entry_id][ROUTER]
 
     tracked = set()
 

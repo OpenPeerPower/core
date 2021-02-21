@@ -52,7 +52,7 @@ async def test_switch_turn_on_off.opp: OpenPeerPowerType) -> None:
         await setup_test_config_entry.opp, hyperion_client=client)
 
     # Verify switch is on (as per TEST_COMPONENTS above).
-    entity_state =.opp.states.get(TEST_SWITCH_COMPONENT_ALL_ENTITY_ID)
+    entity_state = opp.states.get(TEST_SWITCH_COMPONENT_ALL_ENTITY_ID)
     assert entity_state
     assert entity_state.state == "on"
 
@@ -76,7 +76,7 @@ async def test_switch_turn_on_off.opp: OpenPeerPowerType) -> None:
     call_registered_callback(client, "components-update")
 
     # Verify the switch turns off.
-    entity_state =.opp.states.get(TEST_SWITCH_COMPONENT_ALL_ENTITY_ID)
+    entity_state = opp.states.get(TEST_SWITCH_COMPONENT_ALL_ENTITY_ID)
     assert entity_state
     assert entity_state.state == "off"
 
@@ -100,7 +100,7 @@ async def test_switch_turn_on_off.opp: OpenPeerPowerType) -> None:
     call_registered_callback(client, "components-update")
 
     # Verify the switch turns on.
-    entity_state =.opp.states.get(TEST_SWITCH_COMPONENT_ALL_ENTITY_ID)
+    entity_state = opp.states.get(TEST_SWITCH_COMPONENT_ALL_ENTITY_ID)
     assert entity_state
     assert entity_state.state == "on"
 
@@ -117,7 +117,7 @@ async def test_switch_op._correct_entities.opp: OpenPeerPowerType) -> None:
         enabled_by_default_mock.return_value = True
         await setup_test_config_entry.opp, hyperion_client=client)
 
-    entity_state =.opp.states.get(TEST_SWITCH_COMPONENT_ALL_ENTITY_ID)
+    entity_state = opp.states.get(TEST_SWITCH_COMPONENT_ALL_ENTITY_ID)
 
     for component in (
         KEY_COMPONENTID_ALL,
@@ -134,5 +134,5 @@ async def test_switch_op._correct_entities.opp: OpenPeerPowerType) -> None:
             + "_"
             + slugify(COMPONENT_TO_NAME[component])
         )
-        entity_state =.opp.states.get(entity_id)
+        entity_state = opp.states.get(entity_id)
         assert entity_state, f"Couldn't find entity: {entity_id}"

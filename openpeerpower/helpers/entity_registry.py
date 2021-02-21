@@ -150,10 +150,10 @@ class EntityRegistry:
 
     def __init__(self,.opp: OpenPeerPowerType):
         """Initialize the registry."""
-        self.opp =.opp
+        self.opp = opp
         self.entities: Dict[str, RegistryEntry]
         self._index: Dict[Tuple[str, str, str], str] = {}
-        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
         self.opp.bus.async_listen(
             EVENT_DEVICE_REGISTRY_UPDATED, self.async_device_modified
         )
@@ -649,7 +649,7 @@ def async_setup_entity_restore(
     @callback
     def cleanup_restored_states(event: Event) -> None:
         """Clean up restored states."""
-        state =.opp.states.get(event.data["entity_id"])
+        state = opp.states.get(event.data["entity_id"])
 
         if state is None or not state.attributes.get(ATTR_RESTORED):
             return

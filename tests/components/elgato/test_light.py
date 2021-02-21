@@ -31,7 +31,7 @@ async def test_light_state(
     entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     # First segment of the strip
-    state =.opp.states.get("light.frenck")
+    state = opp.states.get("light.frenck")
     assert state
     assert state.attributes.get(ATTR_BRIGHTNESS) == 54
     assert state.attributes.get(ATTR_COLOR_TEMP) == 297
@@ -48,7 +48,7 @@ async def test_light_change_state(
     """Test the change of state of a Elgato Key Light device."""
     await init_integration.opp, aioclient_mock)
 
-    state =.opp.states.get("light.frenck")
+    state = opp.states.get("light.frenck")
     assert state.state == STATE_ON
 
     with patch(
@@ -104,5 +104,5 @@ async def test_light_unavailable(
                 blocking=True,
             )
             await.opp.async_block_till_done()
-            state =.opp.states.get("light.frenck")
+            state = opp.states.get("light.frenck")
             assert state.state == STATE_UNAVAILABLE

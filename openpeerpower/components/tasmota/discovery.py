@@ -171,5 +171,5 @@ async def async_start(
 async def async_stop.opp: OpenPeerPowerType) -> bool:
     """Stop Tasmota device discovery."""
    .opp.data.pop(ALREADY_DISCOVERED)
-    tasmota_discovery =.opp.data.pop(TASMOTA_DISCOVERY_INSTANCE)
+    tasmota_discovery = opp.data.pop(TASMOTA_DISCOVERY_INSTANCE)
     await tasmota_discovery.stop_discovery()

@@ -22,7 +22,7 @@ async def test_binary_sensors.opp, config_entry, aioclient_mock_fixture):
     assert len.opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
 
     # we should have 6 entities for the device
-    state =.opp.states.get("binary_sensor.pending_system_alerts")
+    state = opp.states.get("binary_sensor.pending_system_alerts")
     assert state.state == STATE_ON
     assert state.attributes.get("info") == 0
     assert state.attributes.get("warning") == 2

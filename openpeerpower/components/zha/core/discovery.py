@@ -160,7 +160,7 @@ class ProbeEndpoint:
 
     def initialize(self,.opp: OpenPeerPowerType) -> None:
         """Update device overrides config."""
-        zha_config =.opp.data[zha_const.DATA_ZHA].get(zha_const.DATA_ZHA_CONFIG, {})
+        zha_config = opp.data[zha_const.DATA_ZHA].get(zha_const.DATA_ZHA_CONFIG, {})
         overrides = zha_config.get(zha_const.CONF_DEVICE_CONFIG)
         if overrides:
             self._device_configs.update(overrides)
@@ -176,7 +176,7 @@ class GroupProbe:
 
     def initialize(self,.opp: OpenPeerPowerType) -> None:
         """Initialize the group probe."""
-        self._opp =.opp
+        self._opp = opp
         self._unsubs.append(
             async_dispatcher_connect(
                .opp, zha_const.SIGNAL_GROUP_ENTITY_REMOVED, self._reprobe_group
@@ -238,7 +238,7 @@ class GroupProbe:
     ) -> List[str]:
         """Determine the entity domains for this group."""
         entity_domains: List[str] = []
-        zha_gateway =.opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
+        zha_gateway = opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
         all_domain_occurrences = []
         for member in group.members:
             if member.device.is_coordinator:

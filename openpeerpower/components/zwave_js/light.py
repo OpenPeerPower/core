@@ -35,7 +35,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up Z-Wave Light from Config Entry."""
-    client: ZwaveClient =.opp.data[DOMAIN][config_entry.entry_id][DATA_CLIENT]
+    client: ZwaveClient = opp.data[DOMAIN][config_entry.entry_id][DATA_CLIENT]
 
     @callback
     def async_add_light(info: ZwaveDiscoveryInfo) -> None:

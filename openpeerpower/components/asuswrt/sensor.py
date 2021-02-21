@@ -90,7 +90,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up the asuswrt sensors."""
 
-    router =.opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
+    router = opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
     api: AsusWrt = router.api
     device_name = entry.data.get(CONF_NAME, "AsusWRT")
 

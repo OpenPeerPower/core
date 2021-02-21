@@ -127,7 +127,7 @@ PUBLIC = "public"
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the Netatmo weather and homecoach platform."""
-    data_op.dler =.opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
+    data_op.dler = opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
 
     async def find_entities(data_class_name):
         """Find all entities."""

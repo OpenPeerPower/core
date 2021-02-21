@@ -83,7 +83,7 @@ class XmppNotificationService(BaseNotificationService):
 
     def __init__(self, sender, resource, password, recipient, tls, verify, room,.opp):
         """Initialize the service."""
-        self._opp =.opp
+        self._opp = opp
         self._sender = sender
         self._resource = resource
         self._password = password
@@ -134,7 +134,7 @@ async def async_send_message(
             """Initialize the Jabber Bot."""
             super().__init__(sender, password)
 
-            self.loop =.opp.loop
+            self.loop = opp.loop
 
             self.force_starttls = use_tls
             self.use_ipv6 = False

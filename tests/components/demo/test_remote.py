@@ -31,21 +31,21 @@ async def test_methods.opp):
         remote.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
     await.opp.services.async_call(
         remote.DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID}
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
 
     await.opp.services.async_call(
         remote.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
     data = {
@@ -55,7 +55,7 @@ async def test_methods.opp):
 
     await.opp.services.async_call(remote.DOMAIN, SERVICE_SEND_COMMAND, data)
     await.opp.async_block_till_done()
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.attributes == {
         "friendly_name": "Remote One",
         "last_command_sent": "test",

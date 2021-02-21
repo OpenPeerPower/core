@@ -218,11 +218,11 @@ class ManualMQTTAlarm(alarm.AlarmControlPanelEntity):
     ):
         """Init the manual MQTT alarm panel."""
         self._state = STATE_ALARM_DISARMED
-        self._opp =.opp
+        self._opp = opp
         self._name = name
         if code_template:
             self._code = code_template
-            self._code.opp =.opp
+            self._code.opp = opp
         else:
             self._code = code or None
         self._disarm_after_trigger = disarm_after_trigger

@@ -55,7 +55,7 @@ class WebSocketHandler:
 
     def __init__(self,.opp, request):
         """Initialize an active connection."""
-        self.opp =.opp
+        self.opp = opp
         self.request = request
         self.wsock: Optional[web.WebSocketResponse] = None
         self._to_write: asyncio.Queue = asyncio.Queue(maxsize=MAX_PENDING_MSG)

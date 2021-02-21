@@ -115,7 +115,7 @@ async def test_step_auth_user_falls.opp):
     with requests_mock.Mocker() as mock:
         mock.post("https://id.starline.ru/apiV3/user/login/", text='{"state": 0}')
         flow = config_flow.StarlineFlowHandler()
-        flow.opp =.opp
+        flow.opp = opp
         result = await flow.async_step_auth_user(
             user_input={
                 config_flow.CONF_USERNAME: TEST_APP_USERNAME,

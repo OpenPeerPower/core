@@ -35,7 +35,7 @@ async def test_weather_without_forecast.opp):
     await init_integration.opp)
     registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state =.opp.states.get("weather.home")
+    state = opp.states.get("weather.home")
     assert state
     assert state.state == "sunny"
     assert not state.attributes.get(ATTR_FORECAST)
@@ -58,7 +58,7 @@ async def test_weather_with_forecast.opp):
     await init_integration.opp, forecast=True)
     registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state =.opp.states.get("weather.home")
+    state = opp.states.get("weather.home")
     assert state
     assert state.state == "sunny"
     assert state.attributes.get(ATTR_WEATHER_HUMIDITY) == 67
@@ -88,7 +88,7 @@ async def test_availability.opp):
     """Ensure that we mark the entities unavailable correctly when service is offline."""
     await init_integration.opp)
 
-    state =.opp.states.get("weather.home")
+    state = opp.states.get("weather.home")
     assert state
     assert state.state != STATE_UNAVAILABLE
     assert state.state == "sunny"
@@ -101,7 +101,7 @@ async def test_availability.opp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("weather.home")
+        state = opp.states.get("weather.home")
         assert state
         assert state.state == STATE_UNAVAILABLE
 
@@ -115,7 +115,7 @@ async def test_availability.opp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("weather.home")
+        state = opp.states.get("weather.home")
         assert state
         assert state.state != STATE_UNAVAILABLE
         assert state.state == "sunny"
@@ -151,5 +151,5 @@ async def test_unsupported_condition_icon_data.opp):
     """Test with unsupported condition icon data."""
     await init_integration.opp, forecast=True, unsupported_icon=True)
 
-    state =.opp.states.get("weather.home")
+    state = opp.states.get("weather.home")
     assert state.attributes.get(ATTR_FORECAST_CONDITION) is None

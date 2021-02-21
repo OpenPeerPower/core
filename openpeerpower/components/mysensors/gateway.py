@@ -117,7 +117,7 @@ def get_mysensors_gateway(
     """Return the Gateway for a given GatewayId."""
     if MYSENSORS_GATEWAYS not in.opp.data[DOMAIN]:
        .opp.data[DOMAIN][MYSENSORS_GATEWAYS] = {}
-    gateways =.opp.data[DOMAIN].get(MYSENSORS_GATEWAYS)
+    gateways = opp.data[DOMAIN].get(MYSENSORS_GATEWAYS)
     return gateways.get(gateway_id)
 
 
@@ -160,13 +160,13 @@ async def _get_gateway(
 
     if persistence_file is not None:
         # interpret relative paths to be in opp config folder. absolute paths will be left as they are
-        persistence_file =.opp.config.path(persistence_file)
+        persistence_file = opp.config.path(persistence_file)
 
     if device == MQTT_COMPONENT:
         # what is the purpose of this?
         # if not await async_setup_component.opp, MQTT_COMPONENT, entry):
         #    return None
-        mqtt =.opp.components.mqtt
+        mqtt = opp.components.mqtt
 
         def pub_callback(topic, payload, qos, retain):
             """Call MQTT publish function."""
@@ -268,7 +268,7 @@ async def _discover_persistent_devices(
 
 async def gw_stop.opp, entry: ConfigEntry, gateway: BaseAsyncGateway):
     """Stop the gateway."""
-    connect_task =.opp.data[DOMAIN].get(
+    connect_task = opp.data[DOMAIN].get(
         MYSENSORS_GATEWAY_START_TASK.format(entry.entry_id)
     )
     if connect_task is not None and not connect_task.done():

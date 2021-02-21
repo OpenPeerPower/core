@@ -69,7 +69,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    known_devices =.opp.data.setdefault(DYSON_KNOWN_CLIMATE_DEVICES, set())
+    known_devices = opp.data.setdefault(DYSON_KNOWN_CLIMATE_DEVICES, set())
 
     # Get Dyson Devices from parent component
     new_entities = []

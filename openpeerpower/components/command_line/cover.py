@@ -49,7 +49,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     for device_name, device_config in devices.items():
         value_template = device_config.get(CONF_VALUE_TEMPLATE)
         if value_template is not None:
-            value_template.opp =.opp
+            value_template.opp = opp
 
         covers.append(
             CommandCover(
@@ -86,7 +86,7 @@ class CommandCover(CoverEntity):
         timeout,
     ):
         """Initialize the cover."""
-        self._opp =.opp
+        self._opp = opp
         self._name = name
         self._state = None
         self._command_open = command_open
