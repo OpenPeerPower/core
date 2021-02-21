@@ -5,7 +5,7 @@ from openpeerpower import data_entry_flow
 from openpeerpower.components.elgato.const import CONF_SERIAL_NUMBER, DOMAIN
 from openpeerpower.config_entries import SOURCE_USER, SOURCE_ZEROCONF
 from openpeerpower.const import CONF_HOST, CONF_PORT, CONF_SOURCE, CONTENT_TYPE_JSON
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from . import init_integration
 
@@ -24,7 +24,7 @@ async def test_full_user_flow_implementation(
     )
 
     # Start a discovered configuration flow, to guarantee a user flow doesn't abort
-    await opp..config_entries.flow.async_init(
+    await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_ZEROCONF},
         data={
@@ -35,7 +35,7 @@ async def test_full_user_flow_implementation(
         },
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
     )
@@ -43,7 +43,7 @@ async def test_full_user_flow_implementation(
     assert result["step_id"] == "user"
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={CONF_HOST: "127.0.0.1", CONF_PORT: 9123}
     )
 
@@ -53,7 +53,7 @@ async def test_full_user_flow_implementation(
     assert result["title"] == "CN11A1A00001"
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert entries[0].unique_id == "CN11A1A00001"
 
 
@@ -67,7 +67,7 @@ async def test_full_zeroconf_flow_implementation(
         headers={"Content-Type": CONTENT_TYPE_JSON},
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_ZEROCONF},
         data={
@@ -82,7 +82,7 @@ async def test_full_zeroconf_flow_implementation(
     assert result["step_id"] == "zeroconf_confirm"
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["data"][CONF_HOST] == "127.0.0.1"
@@ -100,7 +100,7 @@ async def test_connection_error(
         "http://127.0.0.1/elgato/accessory-info", exc=aiohttp.ClientError
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data={CONF_HOST: "127.0.0.1", CONF_PORT: 9123},
@@ -119,7 +119,7 @@ async def test_zeroconf_connection_error(
         "http://127.0.0.1/elgato/accessory-info", exc=aiohttp.ClientError
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data={"host": "127.0.0.1", "port": 9123},
@@ -135,7 +135,7 @@ async def test_user_device_exists_abort(
     """Test we abort zeroconf flow if Elgato Key Light device already configured."""
     await init_integration.opp, aioclient_mock)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data={CONF_HOST: "127.0.0.1", CONF_PORT: 9123},
@@ -150,7 +150,7 @@ async def test_zeroconf_device_exists_abort(
     """Test we abort zeroconf flow if Elgato Key Light device already configured."""
     await init_integration.opp, aioclient_mock)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_ZEROCONF},
         data={"host": "127.0.0.1", "port": 9123},
@@ -159,7 +159,7 @@ async def test_zeroconf_device_exists_abort(
     assert result["reason"] == "already_configured"
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_ZEROCONF},
         data={"host": "127.0.0.2", "port": 9123},
@@ -168,5 +168,5 @@ async def test_zeroconf_device_exists_abort(
     assert result["reason"] == "already_configured"
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert entries[0].data[CONF_HOST] == "127.0.0.2"

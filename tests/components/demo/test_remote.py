@@ -10,7 +10,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 ENTITY_ID = "remote.remote_one"
 SERVICE_SEND_COMMAND = "send_command"
@@ -22,30 +22,30 @@ async def setup_component.opp):
     assert await async_setup_component(
        .opp, remote.DOMAIN, {"remote": {"platform": "demo"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_methods.opp):
     """Test if services call the entity methods as expected."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         remote.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get(ENTITY_ID)
+    await.opp.async_block_till_done()
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         remote.DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get(ENTITY_ID)
+    await.opp.async_block_till_done()
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         remote.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get(ENTITY_ID)
+    await.opp.async_block_till_done()
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
     data = {
@@ -53,9 +53,9 @@ async def test_methods.opp):
         ATTR_COMMAND: ["test"],
     }
 
-    await opp..services.async_call(remote.DOMAIN, SERVICE_SEND_COMMAND, data)
-    await opp..async_block_till_done()
-    state = opp.states.get(ENTITY_ID)
+    await.opp.services.async_call(remote.DOMAIN, SERVICE_SEND_COMMAND, data)
+    await.opp.async_block_till_done()
+    state =.opp.states.get(ENTITY_ID)
     assert state.attributes == {
         "friendly_name": "Remote One",
         "last_command_sent": "test",

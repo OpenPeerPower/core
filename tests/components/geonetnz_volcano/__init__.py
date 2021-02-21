@@ -21,5 +21,5 @@ def _generate_mock_feed_entry(
     feed_entry.coordinates = coordinates
     feed_entry.attribution = attribution
     feed_entry.activity = activity
-    feed_entry.hazards = op.ards
+    feed_entry.hazards = hazards
     return feed_entry

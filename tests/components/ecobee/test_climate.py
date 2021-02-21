@@ -208,14 +208,14 @@ async def test_set_temperature(ecobee_fixture, thermostat, data):
     # Auto -> Auto
     data.reset_mock()
     thermostat.set_temperature(target_temp_low=20, target_temp_high=30)
-    data.ecobee.set_hold_temp.assert_op._calls(
+    data.ecobee.set_hold_temp.assert_has_calls(
         [mock.call(1, 30, 20, "nextTransition", None)]
     )
 
     # Auto -> Hold
     data.reset_mock()
     thermostat.set_temperature(temperature=20)
-    data.ecobee.set_hold_temp.assert_op._calls(
+    data.ecobee.set_hold_temp.assert_has_calls(
         [mock.call(1, 25, 15, "nextTransition", None)]
     )
 
@@ -223,7 +223,7 @@ async def test_set_temperature(ecobee_fixture, thermostat, data):
     data.reset_mock()
     ecobee_fixture["settings"]["hvacMode"] = "cool"
     thermostat.set_temperature(temperature=20.5)
-    data.ecobee.set_hold_temp.assert_op._calls(
+    data.ecobee.set_hold_temp.assert_has_calls(
         [mock.call(1, 20.5, 20.5, "nextTransition", None)]
     )
 
@@ -231,7 +231,7 @@ async def test_set_temperature(ecobee_fixture, thermostat, data):
     data.reset_mock()
     ecobee_fixture["settings"]["hvacMode"] = "heat"
     thermostat.set_temperature(temperature=20)
-    data.ecobee.set_hold_temp.assert_op._calls(
+    data.ecobee.set_hold_temp.assert_has_calls(
         [mock.call(1, 20, 20, "nextTransition", None)]
     )
 
@@ -246,20 +246,20 @@ async def test_set_hvac_mode(thermostat, data):
     """Test operation mode setter."""
     data.reset_mock()
     thermostat.set_hvac_mode("heat_cool")
-    data.ecobee.set_hvac_mode.assert_op._calls([mock.call(1, "auto")])
+    data.ecobee.set_hvac_mode.assert_has_calls([mock.call(1, "auto")])
     data.reset_mock()
     thermostat.set_hvac_mode("heat")
-    data.ecobee.set_hvac_mode.assert_op._calls([mock.call(1, "heat")])
+    data.ecobee.set_hvac_mode.assert_has_calls([mock.call(1, "heat")])
 
 
 async def test_set_fan_min_on_time(thermostat, data):
     """Test fan min on time setter."""
     data.reset_mock()
     thermostat.set_fan_min_on_time(15)
-    data.ecobee.set_fan_min_on_time.assert_op._calls([mock.call(1, 15)])
+    data.ecobee.set_fan_min_on_time.assert_has_calls([mock.call(1, 15)])
     data.reset_mock()
     thermostat.set_fan_min_on_time(20)
-    data.ecobee.set_fan_min_on_time.assert_op._calls([mock.call(1, 20)])
+    data.ecobee.set_fan_min_on_time.assert_has_calls([mock.call(1, 20)])
 
 
 async def test_resume_program(thermostat, data):
@@ -267,21 +267,21 @@ async def test_resume_program(thermostat, data):
     # False
     data.reset_mock()
     thermostat.resume_program(False)
-    data.ecobee.resume_program.assert_op._calls([mock.call(1, "false")])
+    data.ecobee.resume_program.assert_has_calls([mock.call(1, "false")])
     data.reset_mock()
     thermostat.resume_program(None)
-    data.ecobee.resume_program.assert_op._calls([mock.call(1, "false")])
+    data.ecobee.resume_program.assert_has_calls([mock.call(1, "false")])
     data.reset_mock()
     thermostat.resume_program(0)
-    data.ecobee.resume_program.assert_op._calls([mock.call(1, "false")])
+    data.ecobee.resume_program.assert_has_calls([mock.call(1, "false")])
 
     # True
     data.reset_mock()
     thermostat.resume_program(True)
-    data.ecobee.resume_program.assert_op._calls([mock.call(1, "true")])
+    data.ecobee.resume_program.assert_has_calls([mock.call(1, "true")])
     data.reset_mock()
     thermostat.resume_program(1)
-    data.ecobee.resume_program.assert_op._calls([mock.call(1, "true")])
+    data.ecobee.resume_program.assert_has_calls([mock.call(1, "true")])
 
 
 async def test_hold_preference(ecobee_fixture, thermostat):
@@ -318,7 +318,7 @@ async def test_set_fan_mode_on(thermostat, data):
     """Test set fan mode to on."""
     data.reset_mock()
     thermostat.set_fan_mode("on")
-    data.ecobee.set_fan_mode.assert_op._calls(
+    data.ecobee.set_fan_mode.assert_has_calls(
         [mock.call(1, "on", 20, 40, "nextTransition")]
     )
 
@@ -327,6 +327,6 @@ async def test_set_fan_mode_auto(thermostat, data):
     """Test set fan mode to auto."""
     data.reset_mock()
     thermostat.set_fan_mode("auto")
-    data.ecobee.set_fan_mode.assert_op._calls(
+    data.ecobee.set_fan_mode.assert_has_calls(
         [mock.call(1, "auto", 20, 40, "nextTransition")]
     )

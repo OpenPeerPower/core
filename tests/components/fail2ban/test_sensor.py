@@ -7,7 +7,7 @@ from openpeerpower.components.fail2ban.sensor import (
     BanLogParser,
     BanSensor,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import assert_setup_component
 
@@ -64,7 +64,7 @@ async def test_setup.opp):
     mock_fh = mock_open()
     with patch("openpeerpower.components.fail2ban.sensor.open", mock_fh, create=True):
         assert await async_setup_component.opp, "sensor", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     assert_setup_component(1, "sensor")
 
 
@@ -75,7 +75,7 @@ async def test_multi_jails.opp):
     mock_fh = mock_open()
     with patch("openpeerpower.components.fail2ban.sensor.open", mock_fh, create=True):
         assert await async_setup_component.opp, "sensor", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     assert_setup_component(2, "sensor")
 
 

@@ -15,13 +15,13 @@ from openpeerpower.components.device_tracker import (
     DOMAIN,
     SERVICE_SEE,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.typing import GPSType, OpenPeerPowerType
-from openpeerpowerr.loader import bind_opp
+from openpeerpower.core import callback
+from openpeerpower.helpers.typing import GPSType, OpenPeerPowerType
+from openpeerpower.loader import bind.opp
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_see(
    .opp: OpenPeerPowerType,
     mac: str = None,

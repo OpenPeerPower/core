@@ -4,10 +4,10 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from openpeerpower import config_entries
-from openpeerpowerr.bootstrap import async_setup_component
+from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components import discovery
 from openpeerpower.const import EVENT_OPENPEERPOWER_STARTED
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.util.dt import utcnow
 
 from tests.common import async_fire_time_changed, mock_coro
 
@@ -16,7 +16,7 @@ from tests.common import async_fire_time_changed, mock_coro
 SERVICE = "yamaha"
 SERVICE_COMPONENT = "media_player"
 
-SERVICE_NO_PLATFORM = "opp_ios"
+SERVICE_NO_PLATFORM = .opp_ios"
 SERVICE_NO_PLATFORM_COMPONENT = "ios"
 SERVICE_INFO = {"key": "value"}  # Can be anything
 
@@ -45,14 +45,14 @@ async def mock_discovery.opp, discoveries, config=BASE_CONFIG):
         return_value=mock_coro(),
     ) as mock_platform:
         assert await async_setup_component.opp, "discovery", config)
-        await opp..async_block_till_done()
-        await opp..async_start()
+        await.opp.async_block_till_done()
+        await.opp.async_start()
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         async_fire_time_changed.opp, utcnow())
         # Work around an issue where our loop.call_soon not get caught
-        await opp..async_block_till_done()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
+        await.opp.async_block_till_done()
 
     return mock_discover, mock_platform
 
@@ -153,7 +153,7 @@ async def test_discover_config_flow.opp):
 
     with patch.dict(
         discovery.CONFIG_ENTRY_HANDLERS, {"mock-service": "mock-component"}
-    ), patch("openpeerpowerr.data_entry_flow.FlowManager.async_init") as m_init:
+    ), patch("openpeerpower.data_entry_flow.FlowManager.async_init") as m_init:
         await mock_discovery.opp, discover)
 
     assert len(m_init.mock_calls) == 1

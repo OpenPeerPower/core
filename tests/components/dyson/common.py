@@ -12,7 +12,7 @@ from libpurecool.dyson_pure_cool_link import DysonPureCoolLink
 
 from openpeerpower.components.dyson import CONF_LANGUAGE, DOMAIN
 from openpeerpower.const import CONF_DEVICES, CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.core import OpenPeerPower, callback
+from openpeerpower.core import OpenPeerPower, callback
 
 SERIAL = "XX-XXXXX-XX"
 NAME = "Temp Name"
@@ -99,5 +99,5 @@ async def async_update_device(
         for callback_fn in callbacks:
             callback_fn(message)
 
-    await opp..async_add_executor_job(_run_callbacks)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(_run_callbacks)
+    await.opp.async_block_till_done()

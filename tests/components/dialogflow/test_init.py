@@ -6,9 +6,9 @@ import pytest
 
 from openpeerpower import data_entry_flow
 from openpeerpower.components import dialogflow, intent_script
-from openpeerpower.config import async_process_op.core_config
-from openpeerpowerr.core import callback
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.core import callback
+from openpeerpower.setup import async_setup_component
 
 SESSION_ID = "a9b84cec-46b6-484e-8f31-f65dba03ae6d"
 INTENT_ID = "c6a74079-a8f0-46cd-b372-5a934d23591c"
@@ -78,17 +78,17 @@ async def fixture.opp, aiohttp_client):
         },
     )
 
-    await async_process_op.core_config(
+    await async_process_ha_core_config(
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         "dialogflow", context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     webhook_id = result["result"].data["webhook_id"]
 
@@ -205,12 +205,12 @@ async def test_intent_slot_filling_v1(fixture):
                 "lifespan": 2,
             },
             {
-                "name": "tests_op.dialog_context",
+                "name": "tests_ha_dialog_context",
                 "parameters": {"ZodiacSign.original": "", "ZodiacSign": ""},
                 "lifespan": 2,
             },
             {
-                "name": "tests_op.dialog_params_zodiacsign",
+                "name": "tests_ha_dialog_params_zodiacsign",
                 "parameters": {"ZodiacSign.original": "", "ZodiacSign": ""},
                 "lifespan": 1,
             },

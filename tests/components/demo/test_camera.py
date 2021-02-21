@@ -15,8 +15,8 @@ from openpeerpower.components.camera import (
 )
 from openpeerpower.components.demo import DOMAIN
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.setup import async_setup_component
 
 ENTITY_CAMERA = "camera.demo_camera"
 
@@ -27,12 +27,12 @@ async def demo_camera.opp):
     assert await async_setup_component(
        .opp, CAMERA_DOMAIN, {CAMERA_DOMAIN: {"platform": DOMAIN}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_init_state_is_streaming.opp):
     """Demo camera initialize as streaming."""
-    state = opp.states.get(ENTITY_CAMERA)
+    state =.opp.states.get(ENTITY_CAMERA)
     assert state.state == STATE_STREAMING
 
     with patch(
@@ -45,27 +45,27 @@ async def test_init_state_is_streaming.opp):
 
 async def test_turn_on_state_back_to_streaming.opp):
     """After turn on state back to streaming."""
-    state = opp.states.get(ENTITY_CAMERA)
+    state =.opp.states.get(ENTITY_CAMERA)
     assert state.state == STATE_STREAMING
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CAMERA_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_CAMERA}, blocking=True
     )
 
-    state = opp.states.get(ENTITY_CAMERA)
+    state =.opp.states.get(ENTITY_CAMERA)
     assert state.state == STATE_IDLE
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CAMERA_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_CAMERA}, blocking=True
     )
 
-    state = opp.states.get(ENTITY_CAMERA)
+    state =.opp.states.get(ENTITY_CAMERA)
     assert state.state == STATE_STREAMING
 
 
 async def test_turn_off_image.opp):
     """After turn off, Demo camera raise error."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CAMERA_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_CAMERA}, blocking=True
     )
 
@@ -76,17 +76,17 @@ async def test_turn_off_image.opp):
 
 async def test_turn_off_invalid_camera.opp):
     """Turn off non-exist camera should quietly fail."""
-    state = opp.states.get(ENTITY_CAMERA)
+    state =.opp.states.get(ENTITY_CAMERA)
     assert state.state == STATE_STREAMING
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CAMERA_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "camera.invalid_camera"},
         blocking=True,
     )
 
-    state = opp.states.get(ENTITY_CAMERA)
+    state =.opp.states.get(ENTITY_CAMERA)
     assert state.state == STATE_STREAMING
 
 
@@ -94,11 +94,11 @@ async def test_motion_detection.opp):
     """Test motion detection services."""
 
     # Fetch state and check motion detection attribute
-    state = opp.states.get(ENTITY_CAMERA)
+    state =.opp.states.get(ENTITY_CAMERA)
     assert not state.attributes.get("motion_detection")
 
     # Call service to turn on motion detection
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CAMERA_DOMAIN,
         SERVICE_ENABLE_MOTION,
         {ATTR_ENTITY_ID: ENTITY_CAMERA},
@@ -106,11 +106,11 @@ async def test_motion_detection.opp):
     )
 
     # Check if state has been updated.
-    state = opp.states.get(ENTITY_CAMERA)
+    state =.opp.states.get(ENTITY_CAMERA)
     assert state.attributes.get("motion_detection")
 
     # Call service to turn off motion detection
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CAMERA_DOMAIN,
         SERVICE_DISABLE_MOTION,
         {ATTR_ENTITY_ID: ENTITY_CAMERA},
@@ -118,5 +118,5 @@ async def test_motion_detection.opp):
     )
 
     # Check if state has been updated.
-    state = opp.states.get(ENTITY_CAMERA)
+    state =.opp.states.get(ENTITY_CAMERA)
     assert not state.attributes.get("motion_detection")

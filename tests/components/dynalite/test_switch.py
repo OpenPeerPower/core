@@ -23,7 +23,7 @@ def mock_device():
 async def test_switch_setup.opp, mock_device):
     """Test a successful setup."""
     await create_entity_from_device.opp, mock_device)
-    entity_state = opp.states.get("switch.name")
+    entity_state =.opp.states.get("switch.name")
     assert entity_state.attributes[ATTR_FRIENDLY_NAME] == mock_device.name
     await run_service_tests(
        .opp,

@@ -9,10 +9,10 @@ from openpeerpower.components.ffmpeg import (
     SERVICE_STOP,
 )
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.core import callback
-from openpeerpowerr.setup import async_setup_component, setup_component
+from openpeerpower.core import callback
+from openpeerpower.setup import async_setup_component, setup_component
 
-from tests.common import assert_setup_component, get_test_home_assistant
+from tests.common import assert_setup_component, get_test_open_peer_power
 
 
 @callback
@@ -52,7 +52,7 @@ class MockFFmpegDev(ffmpeg.FFmpegBase):
         """Initialize mock."""
         super().__init__(initial_state)
 
-        self.opp = opp
+        self.opp =.opp
         self.entity_id = entity_id
         self.ffmpeg = MagicMock
         self.called_stop = False
@@ -76,7 +76,7 @@ class TestFFmpegSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self):
         """Stop everything that was started."""
@@ -106,7 +106,7 @@ async def test_setup_component_test_register.opp):
 
    .opp.bus.async_listen_once = MagicMock()
     ffmpeg_dev = MockFFmpegDev.opp)
-    await ffmpeg_dev.async_added_to_opp()
+    await ffmpeg_dev.async_added_to.opp()
 
     assert.opp.bus.async_listen_once.called
     assert.opp.bus.async_listen_once.call_count == 2
@@ -119,7 +119,7 @@ async def test_setup_component_test_register_no_startup.opp):
 
    .opp.bus.async_listen_once = MagicMock()
     ffmpeg_dev = MockFFmpegDev.opp, False)
-    await ffmpeg_dev.async_added_to_opp()
+    await ffmpeg_dev.async_added_to.opp()
 
     assert.opp.bus.async_listen_once.called
     assert.opp.bus.async_listen_once.call_count == 1
@@ -131,10 +131,10 @@ async def test_setup_component_test_service_start.opp):
         await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
     ffmpeg_dev = MockFFmpegDev.opp, False)
-    await ffmpeg_dev.async_added_to_opp()
+    await ffmpeg_dev.async_added_to.opp()
 
     async_start.opp)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert ffmpeg_dev.called_start
 
@@ -145,10 +145,10 @@ async def test_setup_component_test_service_stop.opp):
         await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
     ffmpeg_dev = MockFFmpegDev.opp, False)
-    await ffmpeg_dev.async_added_to_opp()
+    await ffmpeg_dev.async_added_to.opp()
 
     async_stop.opp)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert ffmpeg_dev.called_stop
 
@@ -159,10 +159,10 @@ async def test_setup_component_test_service_restart.opp):
         await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
     ffmpeg_dev = MockFFmpegDev.opp, False)
-    await ffmpeg_dev.async_added_to_opp()
+    await ffmpeg_dev.async_added_to.opp()
 
     async_restart.opp)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert ffmpeg_dev.called_stop
     assert ffmpeg_dev.called_start
@@ -174,10 +174,10 @@ async def test_setup_component_test_service_start_with_entity.opp):
         await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
     ffmpeg_dev = MockFFmpegDev.opp, False)
-    await ffmpeg_dev.async_added_to_opp()
+    await ffmpeg_dev.async_added_to.opp()
 
     async_start.opp, "test.ffmpeg_device")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert ffmpeg_dev.called_start
     assert ffmpeg_dev.called_entities == ["test.ffmpeg_device"]

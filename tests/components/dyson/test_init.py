@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 
 from openpeerpower.components.dyson import DOMAIN
 from openpeerpower.const import CONF_DEVICES
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from .common import (
     BASE_PATH,
@@ -57,7 +57,7 @@ async def test_setup_manual.opp: OpenPeerPower):
         f"{BASE_PATH}.DYSON_PLATFORMS", ["fan", "vacuum"]
     ):  # Patch platforms to get rid of sensors
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     login.assert_called_once_with()
     devices_method.assert_called_once_with()
 
@@ -88,7 +88,7 @@ async def test_setup_autoconnect.opp: OpenPeerPower):
         f"{BASE_PATH}.DYSON_PLATFORMS", ["fan"]
     ):  # Patch platforms to get rid of sensors
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert.opp.states.async_entity_ids_count() == 1
 
@@ -97,4 +97,4 @@ async def test_login_failed.opp: OpenPeerPower):
     """Test login failure during setup."""
     with patch(f"{BASE_PATH}.DysonAccount.login", return_value=False):
         assert not await async_setup_component.opp, DOMAIN, CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()

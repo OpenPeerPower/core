@@ -14,7 +14,7 @@ from tests.components.dexcom import CONFIG
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -29,11 +29,11 @@ async def test_form.opp):
         "openpeerpower.components.dexcom.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             CONFIG,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == CONFIG[CONF_USERNAME]
@@ -44,7 +44,7 @@ async def test_form.opp):
 
 async def test_form_account_error.opp):
     """Test we handle account error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -52,7 +52,7 @@ async def test_form_account_error.opp):
         "openpeerpower.components.dexcom.config_flow.Dexcom",
         side_effect=AccountError,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             CONFIG,
         )
@@ -63,7 +63,7 @@ async def test_form_account_error.opp):
 
 async def test_form_session_error.opp):
     """Test we handle session error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -71,7 +71,7 @@ async def test_form_session_error.opp):
         "openpeerpower.components.dexcom.config_flow.Dexcom",
         side_effect=SessionError,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             CONFIG,
         )
@@ -82,7 +82,7 @@ async def test_form_session_error.opp):
 
 async def test_form_unknown_error.opp):
     """Test we handle unknown error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -90,7 +90,7 @@ async def test_form_unknown_error.opp):
         "openpeerpower.components.dexcom.config_flow.Dexcom",
         side_effect=Exception,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             CONFIG,
         )
@@ -106,14 +106,14 @@ async def test_option_flow_default.opp):
         data=CONFIG,
         options=None,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    result = await opp..config_entries.options.async_init(entry.entry_id)
+    result = await.opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result2 = await opp..config_entries.options.async_configure(
+    result2 = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={},
     )
@@ -130,14 +130,14 @@ async def test_option_flow.opp):
         data=CONFIG,
         options={CONF_UNIT_OF_MEASUREMENT: MG_DL},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    result = await opp..config_entries.options.async_init(entry.entry_id)
+    result = await.opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_UNIT_OF_MEASUREMENT: MMOL_L},
     )

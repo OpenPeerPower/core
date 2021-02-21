@@ -6,8 +6,8 @@ import pytest
 
 from openpeerpower.components.demo import DOMAIN
 from openpeerpower.components.device_tracker.legacy import YAML_DEVICES
-from openpeerpowerr.helpers.json import JSONEncoder
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers.json import JSONEncoder
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(autouse=True)
@@ -29,8 +29,8 @@ def demo_cleanup.opp):
 async def test_setting_up_demo.opp):
     """Test if we can set up the demo and dump it to JSON."""
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
-    await opp..async_block_till_done()
-    await opp..async_start()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
 
     # This is done to make sure entity components don't accidentally store
     # non-JSON-serializable data in the state machine.

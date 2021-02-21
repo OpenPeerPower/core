@@ -17,8 +17,8 @@ from openpeerpower.const import (
     PERCENTAGE,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.exceptions import PlatformNotReady
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.exceptions import PlatformNotReady
+from openpeerpower.setup import async_setup_component
 
 from tests.common import load_fixture
 
@@ -39,7 +39,7 @@ async def test_default_setup.opp, aioclient_mock):
         re.compile("api.foobot.io/v2/device/.*"), text=load_fixture("foobot_data.json")
     )
     assert await async_setup_component.opp, sensor.DOMAIN, {"sensor": VALID_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     metrics = {
         "co2": ["1232.0", CONCENTRATION_PARTS_PER_MILLION],
@@ -51,7 +51,7 @@ async def test_default_setup.opp, aioclient_mock):
     }
 
     for name, value in metrics.items():
-        state = opp.states.get("sensor.foobot_op.pybot_%s" % name)
+        state =.opp.states.get("sensor.foobot_happybot_%s" % name)
         assert state.state == value[0]
         assert state.attributes.get("unit_of_measurement") == value[1]
 

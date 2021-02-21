@@ -11,8 +11,8 @@ from openpeerpower.const import (
     CONF_USERNAME,
     STATE_UNAVAILABLE,
 )
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.setup import async_setup_component
 
 from . import MOCK_CONFIG, FritzDeviceSwitchMock
 
@@ -22,8 +22,8 @@ from tests.common import MockConfigEntry
 async def test_setup.opp: OpenPeerPowerType, fritz: Mock):
     """Test setup of integration."""
     assert await async_setup_component.opp, FB_DOMAIN, MOCK_CONFIG)
-    await opp..async_block_till_done()
-    entries = opp.config_entries.async_entries()
+    await.opp.async_block_till_done()
+    entries =.opp.config_entries.async_entries()
     assert entries
     assert entries[0].data[CONF_HOST] == "fake_host"
     assert entries[0].data[CONF_PASSWORD] == "fake_pass"
@@ -45,7 +45,7 @@ async def test_setup_duplicate_config.opp: OpenPeerPowerType, fritz: Mock, caplo
         }
     }
     assert not await async_setup_component.opp, FB_DOMAIN, DUPLICATE)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert not.opp.states.async_entity_ids()
     assert not.opp.states.async_all()
     assert "duplicate host entries found" in caplog.text
@@ -61,30 +61,30 @@ async def test_unload_remove.opp: OpenPeerPowerType, fritz: Mock):
         data=MOCK_CONFIG[FB_DOMAIN][CONF_DEVICES][0],
         unique_id=entity_id,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    config_entries = opp.config_entries.async_entries(FB_DOMAIN)
+    config_entries =.opp.config_entries.async_entries(FB_DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
 
     assert await async_setup_component.opp, FB_DOMAIN, {}) is True
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_LOADED
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
 
-    await opp..config_entries.async_unload(entry.entry_id)
+    await.opp.config_entries.async_unload(entry.entry_id)
 
     assert fritz().logout.call_count == 1
     assert entry.state == ENTRY_STATE_NOT_LOADED
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_UNAVAILABLE
 
-    await opp..config_entries.async_remove(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_remove(entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert fritz().logout.call_count == 1
     assert entry.state == ENTRY_STATE_NOT_LOADED
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state is None

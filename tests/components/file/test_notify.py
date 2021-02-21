@@ -6,8 +6,8 @@ import pytest
 
 import openpeerpower.components.notify as notify
 from openpeerpower.components.notify import ATTR_TITLE_DEFAULT
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import assert_setup_component
 
@@ -49,7 +49,7 @@ async def test_notify_file.opp, timestamp):
     m_open = mock_open()
     with patch("openpeerpower.components.file.notify.open", m_open, create=True), patch(
         "openpeerpower.components.file.notify.os.stat"
-    ) as mock_st, patch("openpeerpowerr.util.dt.utcnow", return_value=dt_util.utcnow()):
+    ) as mock_st, patch("openpeerpower.util.dt.utcnow", return_value=dt_util.utcnow()):
 
         mock_st.return_value.st_size = 0
         title = (
@@ -57,7 +57,7 @@ async def test_notify_file.opp, timestamp):
             f"(Log started: {dt_util.utcnow().isoformat()})\n{'-' * 80}\n"
         )
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "notify", "test", {"message": message}, blocking=True
         )
 

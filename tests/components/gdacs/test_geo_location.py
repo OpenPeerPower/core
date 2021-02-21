@@ -29,10 +29,10 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_START,
     LENGTH_KILOMETERS,
 )
-from openpeerpowerr.helpers.entity_registry import async_get_registry
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
-from openpeerpowerr.util.unit_system import IMPERIAL_SYSTEM
+from openpeerpower.helpers.entity_registry import async_get_registry
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
+from openpeerpower.util.unit_system import IMPERIAL_SYSTEM
 
 from tests.common import async_fire_time_changed
 from tests.components.gdacs import _generate_mock_feed_entry
@@ -86,23 +86,23 @@ async def test_setup.opp, legacy_patchable_time):
 
     # Patching 'utcnow' to gain more control over the timed update.
     utcnow = dt_util.utcnow()
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=utcnow), patch(
+    with patch("openpeerpower.util.dt.utcnow", return_value=utcnow), patch(
         "aio_georss_client.feed.GeoRssFeed.update"
     ) as mock_feed_update:
         mock_feed_update.return_value = "OK", [mock_entry_1, mock_entry_2, mock_entry_3]
         assert await async_setup_component.opp, gdacs.DOMAIN, CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         # Artificially trigger update and collect events.
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        all_states = opp.states.async_all()
+        all_states =.opp.states.async_all()
         # 3 geolocation and 1 sensor entities
         assert len(all_states) == 4
         entity_registry = await async_get_registry.opp)
         assert len(entity_registry.entities) == 4
 
-        state = opp.states.get("geo_location.drought_name_1")
+        state =.opp.states.get("geo_location.drought_name_1")
         assert state is not None
         assert state.name == "Drought: Name 1"
         assert state.attributes == {
@@ -131,7 +131,7 @@ async def test_setup.opp, legacy_patchable_time):
         }
         assert float(state.state) == 15.5
 
-        state = opp.states.get("geo_location.tropical_cyclone_name_2")
+        state =.opp.states.get("geo_location.tropical_cyclone_name_2")
         assert state is not None
         assert state.name == "Tropical Cyclone: Name 2"
         assert state.attributes == {
@@ -147,7 +147,7 @@ async def test_setup.opp, legacy_patchable_time):
         }
         assert float(state.state) == 20.5
 
-        state = opp.states.get("geo_location.tropical_cyclone_name_3")
+        state =.opp.states.get("geo_location.tropical_cyclone_name_3")
         assert state is not None
         assert state.name == "Tropical Cyclone: Name 3"
         assert state.attributes == {
@@ -167,26 +167,26 @@ async def test_setup.opp, legacy_patchable_time):
         # Simulate an update - two existing, one new entry, one outdated entry
         mock_feed_update.return_value = "OK", [mock_entry_1, mock_entry_4, mock_entry_3]
         async_fire_time_changed.opp, utcnow + DEFAULT_SCAN_INTERVAL)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        all_states = opp.states.async_all()
+        all_states =.opp.states.async_all()
         assert len(all_states) == 4
 
         # Simulate an update - empty data, but successful update,
         # so no changes to entities.
         mock_feed_update.return_value = "OK_NO_DATA", None
         async_fire_time_changed.opp, utcnow + 2 * DEFAULT_SCAN_INTERVAL)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        all_states = opp.states.async_all()
+        all_states =.opp.states.async_all()
         assert len(all_states) == 4
 
         # Simulate an update - empty data, removes all entities
         mock_feed_update.return_value = "ERROR", None
         async_fire_time_changed.opp, utcnow + 3 * DEFAULT_SCAN_INTERVAL)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        all_states = opp.states.async_all()
+        all_states =.opp.states.async_all()
         assert len(all_states) == 1
         assert len(entity_registry.entities) == 1
 
@@ -207,30 +207,30 @@ async def test_setup_imperial.opp, legacy_patchable_time):
 
     # Patching 'utcnow' to gain more control over the timed update.
     utcnow = dt_util.utcnow()
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=utcnow), patch(
+    with patch("openpeerpower.util.dt.utcnow", return_value=utcnow), patch(
         "aio_georss_client.feed.GeoRssFeed.update"
     ) as mock_feed_update, patch(
         "aio_georss_client.feed.GeoRssFeed.last_timestamp", create=True
     ):
         mock_feed_update.return_value = "OK", [mock_entry_1]
         assert await async_setup_component.opp, gdacs.DOMAIN, CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         # Artificially trigger update and collect events.
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        all_states = opp.states.async_all()
+        all_states =.opp.states.async_all()
         assert len(all_states) == 2
 
         # Test conversion of 200 miles to kilometers.
-        feeds = opp.data[DOMAIN][FEED]
+        feeds =.opp.data[DOMAIN][FEED]
         assert feeds is not None
         assert len(feeds) == 1
         manager = list(feeds.values())[0]
         # Ensure that the filter value in km is correctly set.
         assert manager._feed_manager._feed._filter_radius == 321.8688
 
-        state = opp.states.get("geo_location.drought_name_1")
+        state =.opp.states.get("geo_location.drought_name_1")
         assert state is not None
         assert state.name == "Drought: Name 1"
         assert state.attributes == {

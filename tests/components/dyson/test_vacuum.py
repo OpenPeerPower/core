@@ -23,8 +23,8 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers import entity_registry
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers import entity_registry
 
 from .common import (
     ENTITY_NAME,
@@ -48,7 +48,7 @@ async def test_state.opp: OpenPeerPower, device: Dyson360Eye) -> None:
     er = await entity_registry.async_get_registry.opp)
     assert er.async_get(ENTITY_ID).unique_id == SERIAL
 
-    state = opp.states.get(ENTITY_ID)
+    state =.opp.states.get(ENTITY_ID)
     assert state.name == NAME
     assert state.state == STATE_ON
     attributes = state.attributes
@@ -62,14 +62,14 @@ async def test_state.opp: OpenPeerPower, device: Dyson360Eye) -> None:
     device.state.state = Dyson360EyeMode.INACTIVE_CHARGING
     device.state.power_mode = PowerMode.MAX
     await async_update_device.opp, device)
-    state = opp.states.get(ENTITY_ID)
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
     assert state.attributes[ATTR_STATUS] == "Stopped - Charging"
     assert state.attributes[ATTR_FAN_SPEED] == "Max"
 
     device.state.state = Dyson360EyeMode.FULL_CLEAN_PAUSED
     await async_update_device.opp, device)
-    state = opp.states.get(ENTITY_ID)
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
     assert state.attributes[ATTR_STATUS] == "Paused"
 
@@ -93,7 +93,7 @@ async def test_commands(
    .opp: OpenPeerPower, device: Dyson360Eye, service: str, command: str
 ) -> None:
     """Test sending commands to the vacuum."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         PLATFORM_DOMAIN, service, {ATTR_ENTITY_ID: ENTITY_ID}, blocking=True
     )
     getattr(device, command).assert_called_once_with()
@@ -106,7 +106,7 @@ async def test_set_fan_speed.opp: OpenPeerPower, device: Dyson360Eye):
         "Quiet": PowerMode.QUIET,
     }
     for service_speed, command_speed in fan_speed_map.items():
-        await opp..services.async_call(
+        await.opp.services.async_call(
             PLATFORM_DOMAIN,
             SERVICE_SET_FAN_SPEED,
             {ATTR_ENTITY_ID: ENTITY_ID, ATTR_FAN_SPEED: service_speed},

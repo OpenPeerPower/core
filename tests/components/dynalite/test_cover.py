@@ -25,7 +25,7 @@ def mock_device():
 async def test_cover_setup.opp, mock_device):
     """Test a successful setup."""
     await create_entity_from_device.opp, mock_device)
-    entity_state = opp.states.get("cover.name")
+    entity_state =.opp.states.get("cover.name")
     assert entity_state.attributes[ATTR_FRIENDLY_NAME] == mock_device.name
     assert (
         entity_state.attributes["current_position"]
@@ -65,10 +65,10 @@ async def test_cover_without_tilt.opp, mock_device):
     """Test a cover with no tilt."""
     mock_device.has_tilt = False
     await create_entity_from_device.opp, mock_device)
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "cover", "open_cover_tilt", {"entity_id": "cover.name"}, blocking=True
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     mock_device.async_open_cover_tilt.assert_not_called()
 
 
@@ -80,8 +80,8 @@ async def check_cover_position(
     device.is_opening = opening
     device.is_closed = closed
     update_func(device)
-    await opp..async_block_till_done()
-    entity_state = opp.states.get("cover.name")
+    await.opp.async_block_till_done()
+    entity_state =.opp.states.get("cover.name")
     assert entity_state.state == expected
 
 

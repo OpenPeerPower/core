@@ -4,8 +4,8 @@ import pytest
 import openpeerpower.components.automation as automation
 from openpeerpower.components.websocket_api.const import TYPE_RESULT
 from openpeerpower.const import CONF_PLATFORM, STATE_OFF, STATE_ON
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -42,7 +42,7 @@ async def test_websocket_get_actions.opp,.opp_ws_client, device_reg, entity_reg)
     """Test we get the expected conditions from a light through websocket."""
     await async_setup_component.opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -69,7 +69,7 @@ async def test_websocket_get_actions.opp,.opp_ws_client, device_reg, entity_reg)
         },
     ]
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 1, "type": "device_automation/action/list", "device_id": device_entry.id}
     )
@@ -86,7 +86,7 @@ async def test_websocket_get_conditions.opp,.opp_ws_client, device_reg, entity_r
     """Test we get the expected conditions from a light through websocket."""
     await async_setup_component.opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -109,7 +109,7 @@ async def test_websocket_get_conditions.opp,.opp_ws_client, device_reg, entity_r
         },
     ]
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 1,
@@ -130,7 +130,7 @@ async def test_websocket_get_triggers.opp,.opp_ws_client, device_reg, entity_reg
     """Test we get the expected triggers from a light through websocket."""
     await async_setup_component.opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -153,7 +153,7 @@ async def test_websocket_get_triggers.opp,.opp_ws_client, device_reg, entity_reg
         },
     ]
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 1,
@@ -176,7 +176,7 @@ async def test_websocket_get_action_capabilities(
     """Test we get the expected action capabilities for an alarm through websocket."""
     await async_setup_component.opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -197,7 +197,7 @@ async def test_websocket_get_action_capabilities(
         "trigger": {"extra_fields": []},
     }
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 1, "type": "device_automation/action/list", "device_id": device_entry.id}
     )
@@ -234,7 +234,7 @@ async def test_websocket_get_bad_action_capabilities(
     await async_setup_component.opp, "device_automation", {})
     expected_capabilities = {}
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 1,
@@ -257,7 +257,7 @@ async def test_websocket_get_no_action_capabilities(
     await async_setup_component.opp, "device_automation", {})
     expected_capabilities = {}
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 1,
@@ -279,7 +279,7 @@ async def test_websocket_get_condition_capabilities(
     """Test we get the expected condition capabilities for a light through websocket."""
     await async_setup_component.opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -291,7 +291,7 @@ async def test_websocket_get_condition_capabilities(
         ]
     }
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 1,
@@ -332,7 +332,7 @@ async def test_websocket_get_bad_condition_capabilities(
     await async_setup_component.opp, "device_automation", {})
     expected_capabilities = {}
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 1,
@@ -355,7 +355,7 @@ async def test_websocket_get_no_condition_capabilities(
     await async_setup_component.opp, "device_automation", {})
     expected_capabilities = {}
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 1,
@@ -377,7 +377,7 @@ async def test_websocket_get_trigger_capabilities(
     """Test we get the expected trigger capabilities for a light through websocket."""
     await async_setup_component.opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -389,7 +389,7 @@ async def test_websocket_get_trigger_capabilities(
         ]
     }
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 1,
@@ -430,7 +430,7 @@ async def test_websocket_get_bad_trigger_capabilities(
     await async_setup_component.opp, "device_automation", {})
     expected_capabilities = {}
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 1,
@@ -453,7 +453,7 @@ async def test_websocket_get_no_trigger_capabilities(
     await async_setup_component.opp, "device_automation", {})
     expected_capabilities = {}
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 1,
@@ -622,7 +622,7 @@ async def test_automation_with_sub_condition.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     ent1, ent2, ent3 = platform.ENTITIES
 
     assert await async_setup_component(
@@ -695,30 +695,30 @@ async def test_automation_with_sub_condition.opp, calls):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
     assert.opp.states.get(ent2.entity_id).state == STATE_OFF
     assert len(calls) == 0
 
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "or event - test_event1"
 
    .opp.states.async_set(ent1.entity_id, STATE_OFF)
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set(ent2.entity_id, STATE_ON)
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "or event - test_event1"
 
    .opp.states.async_set(ent1.entity_id, STATE_ON)
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 4
     assert _same_lists(
         [calls[2].data["some"], calls[3].data["some"]],
@@ -767,7 +767,7 @@ async def test_automation_with_bad_trigger.opp, caplog):
 async def test_websocket_device_not_found.opp,.opp_ws_client):
     """Test calling command with unknown device."""
     await async_setup_component.opp, "device_automation", {})
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 1, "type": "device_automation/action/list", "device_id": "non-existing"}
     )

@@ -11,7 +11,7 @@ from openpeerpower.components.air_quality import (
     DOMAIN as PLATFORM_DOMAIN,
 )
 from openpeerpower.components.dyson.air_quality import ATTR_VOC
-from openpeerpowerr.core import OpenPeerPower, callback
+from openpeerpower.core import OpenPeerPower, callback
 
 from .common import ENTITY_NAME, async_get_purecool_device, async_update_device
 
@@ -50,7 +50,7 @@ def async_get_device() -> DysonPureCool:
 
 async def test_air_quality.opp: OpenPeerPower, device: DysonPureCool) -> None:
     """Test the state and attributes of the air quality entity."""
-    state = opp.states.get(ENTITY_ID)
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == str(MOCKED_VALUES[ATTR_PM_2_5])
     attributes = state.attributes
     for attr, value in MOCKED_VALUES.items():
@@ -59,7 +59,7 @@ async def test_air_quality.opp: OpenPeerPower, device: DysonPureCool) -> None:
 
     _async_assign_values(device, MOCKED_UPDATED_VALUES)
     await async_update_device.opp, device, DysonEnvironmentalSensorV2State)
-    state = opp.states.get(ENTITY_ID)
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == str(MOCKED_UPDATED_VALUES[ATTR_PM_2_5])
     attributes = state.attributes
     for attr, value in MOCKED_UPDATED_VALUES.items():

@@ -22,7 +22,7 @@ async def test_events_fired_properly.opp):
     )
 
     events = []
-    roku_event_op.dler = None
+    roku_event_handler = None
 
     def instantiate(
         loop,
@@ -34,8 +34,8 @@ async def test_events_fired_properly.opp):
         advertise_port=None,
         bind_multicast=None,
     ):
-        nonlocal roku_event_op.dler
-        roku_event_op.dler = op.dler
+        nonlocal roku_event_handler
+        roku_event_handler = handler
 
         return Mock(start=AsyncMock(), close=AsyncMock())
 
@@ -49,14 +49,14 @@ async def test_events_fired_properly.opp):
 
         assert await binding.setup() is True
 
-        assert roku_event_op.dler is not None
+        assert roku_event_handler is not None
 
-        roku_event_op.dler.on_keydown("Test Emulated Roku", "A")
-        roku_event_op.dler.on_keyup("Test Emulated Roku", "A")
-        roku_event_op.dler.on_keypress("Test Emulated Roku", "C")
-        roku_event_op.dler.launch("Test Emulated Roku", "1")
+        roku_event_handler.on_keydown("Test Emulated Roku", "A")
+        roku_event_handler.on_keyup("Test Emulated Roku", "A")
+        roku_event_handler.on_keypress("Test Emulated Roku", "C")
+        roku_event_handler.launch("Test Emulated Roku", "1")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(events) == 4
 

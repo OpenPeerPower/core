@@ -6,8 +6,8 @@ import pytest
 
 from openpeerpower import config_entries
 from openpeerpower.const import ATTR_UNIT_OF_MEASUREMENT, STATE_UNAVAILABLE
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import MockConfigEntry, async_fire_time_changed
 
@@ -33,11 +33,11 @@ async def async_setup_test_fixture.opp, mock_get_station, initial_value):
         title="Viking Recorder",
         connection_class=config_entries.CONN_CLASS_CLOUD_PUSH,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     assert await async_setup_component.opp, "eafm", {})
     assert entry.state == config_entries.ENTRY_STATE_LOADED
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async def poll(value):
         mock_get_station.reset_mock(return_value=True, side_effect=True)
@@ -49,7 +49,7 @@ async def async_setup_test_fixture.opp, mock_get_station, initial_value):
 
         next_update = dt_util.utcnow() + datetime.timedelta(60 * 15)
         async_fire_time_changed.opp, next_update)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     return entry, poll
 
@@ -76,7 +76,7 @@ async def test_reading_measures_not_list.opp, mock_get_station):
         },
     )
 
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "5"
 
 
@@ -104,7 +104,7 @@ async def test_reading_no_unit.opp, mock_get_station):
         },
     )
 
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "5"
 
 
@@ -140,10 +140,10 @@ async def test_ignore_invalid_latest_reading.opp, mock_get_station):
         },
     )
 
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state is None
 
-    state = opp.states.get("sensor.my_station_other_stage")
+    state =.opp.states.get("sensor.my_station_other_stage")
     assert state.state == "5"
 
 
@@ -169,11 +169,11 @@ async def test_reading_unavailable.opp, mock_get_station, exception):
             ],
         },
     )
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "5"
 
     await poll(exception)
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "unavailable"
 
 
@@ -199,11 +199,11 @@ async def test_recover_from_failure.opp, mock_get_station, exception):
             ],
         },
     )
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "5"
 
     await poll(exception)
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "unavailable"
 
     await poll(
@@ -223,7 +223,7 @@ async def test_recover_from_failure.opp, mock_get_station, exception):
             ],
         },
     )
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "56"
 
 
@@ -249,7 +249,7 @@ async def test_reading_is_sampled.opp, mock_get_station):
         },
     )
 
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "5"
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == "m"
 
@@ -286,11 +286,11 @@ async def test_multiple_readings_are_sampled.opp, mock_get_station):
         },
     )
 
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "5"
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == "m"
 
-    state = opp.states.get("sensor.my_station_water_level_second_stage")
+    state =.opp.states.get("sensor.my_station_water_level_second_stage")
     assert state.state == "4"
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == "m"
 
@@ -326,11 +326,11 @@ async def test_ignore_no_latest_reading.opp, mock_get_station):
         },
     )
 
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "5"
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == "m"
 
-    state = opp.states.get("sensor.my_station_water_level_second_stage")
+    state =.opp.states.get("sensor.my_station_water_level_second_stage")
     assert state is None
 
 
@@ -356,7 +356,7 @@ async def test_mark_existing_as_unavailable_if_no_latest.opp, mock_get_station):
         },
     )
 
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "5"
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == "m"
 
@@ -376,7 +376,7 @@ async def test_mark_existing_as_unavailable_if_no_latest.opp, mock_get_station):
             ],
         }
     )
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "unavailable"
 
     await poll(
@@ -396,7 +396,7 @@ async def test_mark_existing_as_unavailable_if_no_latest.opp, mock_get_station):
             ],
         }
     )
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "5"
 
 
@@ -423,7 +423,7 @@ async def test_unload_entry.opp, mock_get_station):
     )
 
     # And there should be an entity
-    state = opp.states.get("sensor.my_station_water_level_stage")
+    state =.opp.states.get("sensor.my_station_water_level_stage")
     assert state.state == "5"
 
     assert await entry.async_unload.opp)

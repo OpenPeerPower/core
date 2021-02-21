@@ -1,5 +1,5 @@
 """Test reproduce state for Fan."""
-from openpeerpowerr.core import State
+from openpeerpower.core import State
 
 from tests.common import async_mock_service
 
@@ -19,7 +19,7 @@ async def test_reproducing_states.opp, caplog):
     set_speed_calls = async_mock_service.opp, "fan", "set_speed")
 
     # These calls should do nothing as entities already in desired state
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State("fan.entity_off", "off"),
             State("fan.entity_on", "on"),
@@ -36,7 +36,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(set_speed_calls) == 0
 
     # Test invalid state is handled
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [State("fan.entity_off", "not_supported")]
     )
 
@@ -48,7 +48,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(set_speed_calls) == 0
 
     # Make sure correct services are called
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State("fan.entity_on", "off"),
             State("fan.entity_off", "on"),

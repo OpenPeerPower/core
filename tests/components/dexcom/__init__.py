@@ -35,8 +35,8 @@ async def init_integration.opp) -> MockConfigEntry:
         "openpeerpower.components.dexcom.Dexcom.create_session",
         return_value="test_session_id",
     ):
-        entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     return entry

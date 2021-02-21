@@ -17,9 +17,9 @@ from openpeerpower.components.filter.sensor import (
 )
 from openpeerpower.components.sensor import DEVICE_CLASS_TEMPERATURE
 from openpeerpower.const import SERVICE_RELOAD, STATE_UNAVAILABLE, STATE_UNKNOWN
-import openpeerpowerr.core as ha
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.core as ha
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import assert_setup_component, async_init_recorder_component
 
@@ -31,7 +31,7 @@ def values():
     raw_values = [20, 19, 18, 21, 22, 0]
     timestamp = dt_util.utcnow()
     for val in raw_values:
-        values.append(op.State("sensor.test_monitored", val, last_updated=timestamp))
+        values.append(ha.State("sensor.test_monitored", val, last_updated=timestamp))
         timestamp += timedelta(minutes=1)
     return values
 
@@ -47,7 +47,7 @@ async def test_setup_fail.opp):
     }
     with assert_setup_component(0):
         assert await async_setup_component.opp, "sensor", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
 
 async def test_chain.opp, values):
@@ -68,13 +68,13 @@ async def test_chain.opp, values):
 
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component.opp, "sensor", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         for value in values:
            .opp.states.async_set(config["sensor"]["entity_id"], value.state)
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
-        state = opp.states.get("sensor.test")
+        state =.opp.states.get("sensor.test")
         assert "18.05" == state.state
 
 
@@ -106,10 +106,10 @@ async def test_chain_history.opp, values, missing=False):
     else:
         fake_states = {
             "sensor.test_monitored": [
-                op.State("sensor.test_monitored", 18.0, last_changed=t_0),
-                op.State("sensor.test_monitored", "unknown", last_changed=t_1),
-                op.State("sensor.test_monitored", 19.0, last_changed=t_2),
-                op.State("sensor.test_monitored", 18.2, last_changed=t_3),
+                ha.State("sensor.test_monitored", 18.0, last_changed=t_0),
+                ha.State("sensor.test_monitored", "unknown", last_changed=t_1),
+                ha.State("sensor.test_monitored", 19.0, last_changed=t_2),
+                ha.State("sensor.test_monitored", 18.2, last_changed=t_3),
             ]
         }
 
@@ -123,13 +123,13 @@ async def test_chain_history.opp, values, missing=False):
         ):
             with assert_setup_component(1, "sensor"):
                 assert await async_setup_component.opp, "sensor", config)
-                await opp..async_block_till_done()
+                await.opp.async_block_till_done()
 
             for value in values:
                .opp.states.async_set(config["sensor"]["entity_id"], value.state)
-                await opp..async_block_till_done()
+                await.opp.async_block_till_done()
 
-            state = opp.states.get("sensor.test")
+            state =.opp.states.get("sensor.test")
             if missing:
                 assert "18.05" == state.state
             else:
@@ -165,16 +165,16 @@ async def test_source_state_none.opp, values):
         ]
     }
     await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_state", 0)
 
-    await opp..async_block_till_done()
-    state = opp.states.get("sensor.template_test")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("sensor.template_test")
     assert state.state == "0"
 
-    await opp..async_block_till_done()
-    state = opp.states.get("sensor.test")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("sensor.test")
     assert state.state == "0.0"
 
     # Force Template Reload
@@ -184,20 +184,20 @@ async def test_source_state_none.opp, values):
         "template/sensor_configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "template",
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     # Template state gets to None
-    state = opp.states.get("sensor.template_test")
+    state =.opp.states.get("sensor.template_test")
     assert state is None
 
     # Filter sensor ignores None state setting state to STATE_UNKNOWN
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
     assert state.state == STATE_UNKNOWN
 
 
@@ -226,9 +226,9 @@ async def test_history_time.opp):
 
     fake_states = {
         "sensor.test_monitored": [
-            op.State("sensor.test_monitored", 18.0, last_changed=t_0),
-            op.State("sensor.test_monitored", 19.0, last_changed=t_1),
-            op.State("sensor.test_monitored", 18.2, last_changed=t_2),
+            ha.State("sensor.test_monitored", 18.0, last_changed=t_0),
+            ha.State("sensor.test_monitored", 19.0, last_changed=t_1),
+            ha.State("sensor.test_monitored", 18.2, last_changed=t_2),
         ]
     }
     with patch(
@@ -241,10 +241,10 @@ async def test_history_time.opp):
         ):
             with assert_setup_component(1, "sensor"):
                 assert await async_setup_component.opp, "sensor", config)
-                await opp..async_block_till_done()
+                await.opp.async_block_till_done()
 
-            await opp..async_block_till_done()
-            state = opp.states.get("sensor.test")
+            await.opp.async_block_till_done()
+            state =.opp.states.get("sensor.test")
             assert "18.0" == state.state
 
 
@@ -265,15 +265,15 @@ async def test_setup.opp):
 
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component.opp, "sensor", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
        .opp.states.async_set(
             "sensor.test_monitored",
             1,
             {"icon": "mdi:test", "device_class": DEVICE_CLASS_TEMPERATURE},
         )
-        await opp..async_block_till_done()
-        state = opp.states.get("sensor.test")
+        await.opp.async_block_till_done()
+        state =.opp.states.get("sensor.test")
         assert state.attributes["icon"] == "mdi:test"
         assert state.attributes["device_class"] == DEVICE_CLASS_TEMPERATURE
         assert state.state == "1.0"
@@ -296,18 +296,18 @@ async def test_invalid_state.opp):
 
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component.opp, "sensor", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
        .opp.states.async_set("sensor.test_monitored", STATE_UNAVAILABLE)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("sensor.test")
+        state =.opp.states.get("sensor.test")
         assert state.state == STATE_UNAVAILABLE
 
        .opp.states.async_set("sensor.test_monitored", "invalid")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("sensor.test")
+        state =.opp.states.get("sensor.test")
         assert state.state == STATE_UNAVAILABLE
 
 
@@ -337,7 +337,7 @@ def test_outlier_step(values):
 def test_initial_outlier(values):
     """Test issue #13363."""
     filt = OutlierFilter(window_size=3, precision=2, entity=None, radius=4.0)
-    out = op.State("sensor.test_monitored", 4000)
+    out = ha.State("sensor.test_monitored", 4000)
     for state in [out] + values:
         filtered = filt.filter_state(state)
     assert 21 == filtered.state
@@ -346,7 +346,7 @@ def test_initial_outlier(values):
 def test_unknown_state_outlier(values):
     """Test issue #32395."""
     filt = OutlierFilter(window_size=3, precision=2, entity=None, radius=4.0)
-    out = op.State("sensor.test_monitored", "unknown")
+    out = ha.State("sensor.test_monitored", "unknown")
     for state in [out] + values + [out]:
         try:
             filtered = filt.filter_state(state)
@@ -366,7 +366,7 @@ def test_precision_zero(values):
 def test_lowpass(values):
     """Test if lowpass filter works."""
     filt = LowPassFilter(window_size=10, precision=2, entity=None, time_constant=10)
-    out = op.State("sensor.test_monitored", "unknown")
+    out = ha.State("sensor.test_monitored", "unknown")
     for state in [out] + values + [out]:
         try:
             filtered = filt.filter_state(state)
@@ -462,9 +462,9 @@ async def test_reload.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 
@@ -476,13 +476,13 @@ async def test_reload.opp):
         "filter/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 

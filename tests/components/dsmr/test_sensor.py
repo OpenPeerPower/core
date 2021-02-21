@@ -19,7 +19,7 @@ from openpeerpower.const import (
     VOLUME_CUBIC_METERS,
     VOLUME_FLOW_RATE_CUBIC_METERS_PER_HOUR,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry, patch
 
@@ -47,12 +47,12 @@ async def test_setup_platform.opp, dsmr_connection_fixture):
         assert await async_setup_component(
            .opp, SENSOR_DOMAIN, {SENSOR_DOMAIN: entry_data}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert not async_add_entities.called
 
     # Check config entry
-    conf_entries = opp.config_entries.async_entries(DOMAIN)
+    conf_entries =.opp.config_entries.async_entries(DOMAIN)
 
     assert len(conf_entries) == 1
 
@@ -102,12 +102,12 @@ async def test_default_setup.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entry = registry.async_get("sensor.power_consumption")
     assert entry
@@ -120,7 +120,7 @@ async def test_default_setup.opp, dsmr_connection_fixture):
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
     # make sure entities have been created and return 'unknown' state
-    power_consumption = opp.states.get("sensor.power_consumption")
+    power_consumption =.opp.states.get("sensor.power_consumption")
     assert power_consumption.state == "unknown"
     assert power_consumption.attributes.get("unit_of_measurement") is None
 
@@ -131,19 +131,19 @@ async def test_default_setup.opp, dsmr_connection_fixture):
     await asyncio.sleep(0)
 
     # ensure entities have new state value after incoming telegram
-    power_consumption = opp.states.get("sensor.power_consumption")
+    power_consumption =.opp.states.get("sensor.power_consumption")
     assert power_consumption.state == "0.0"
     assert (
         power_consumption.attributes.get("unit_of_measurement") == ENERGY_KILO_WATT_HOUR
     )
 
     # tariff should be translated in human readable and have no unit
-    power_tariff = opp.states.get("sensor.power_tariff")
+    power_tariff =.opp.states.get("sensor.power_tariff")
     assert power_tariff.state == "low"
     assert power_tariff.attributes.get("unit_of_measurement") == ""
 
     # check if gas consumption is parsed correctly
-    gas_consumption = opp.states.get("sensor.gas_consumption")
+    gas_consumption =.opp.states.get("sensor.gas_consumption")
     assert gas_consumption.state == "745.695"
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
@@ -162,12 +162,12 @@ async def test_setup_only_energy.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entry = registry.async_get("sensor.power_consumption")
     assert entry
@@ -253,10 +253,10 @@ async def test_v4_meter.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
@@ -267,12 +267,12 @@ async def test_v4_meter.opp, dsmr_connection_fixture):
     await asyncio.sleep(0)
 
     # tariff should be translated in human readable and have no unit
-    power_tariff = opp.states.get("sensor.power_tariff")
+    power_tariff =.opp.states.get("sensor.power_tariff")
     assert power_tariff.state == "low"
     assert power_tariff.attributes.get("unit_of_measurement") == ""
 
     # check if gas consumption is parsed correctly
-    gas_consumption = opp.states.get("sensor.gas_consumption")
+    gas_consumption =.opp.states.get("sensor.gas_consumption")
     assert gas_consumption.state == "745.695"
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
@@ -313,10 +313,10 @@ async def test_v5_meter.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
@@ -327,12 +327,12 @@ async def test_v5_meter.opp, dsmr_connection_fixture):
     await asyncio.sleep(0)
 
     # tariff should be translated in human readable and have no unit
-    power_tariff = opp.states.get("sensor.power_tariff")
+    power_tariff =.opp.states.get("sensor.power_tariff")
     assert power_tariff.state == "low"
     assert power_tariff.attributes.get("unit_of_measurement") == ""
 
     # check if gas consumption is parsed correctly
-    gas_consumption = opp.states.get("sensor.gas_consumption")
+    gas_consumption =.opp.states.get("sensor.gas_consumption")
     assert gas_consumption.state == "745.695"
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
@@ -379,10 +379,10 @@ async def test_luxembourg_meter.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
@@ -392,16 +392,16 @@ async def test_luxembourg_meter.opp, dsmr_connection_fixture):
     # after receiving telegram entities need to have the chance to update
     await asyncio.sleep(0)
 
-    power_tariff = opp.states.get("sensor.energy_consumption_total")
+    power_tariff =.opp.states.get("sensor.energy_consumption_total")
     assert power_tariff.state == "123.456"
     assert power_tariff.attributes.get("unit_of_measurement") == ENERGY_KILO_WATT_HOUR
 
-    power_tariff = opp.states.get("sensor.energy_production_total")
+    power_tariff =.opp.states.get("sensor.energy_production_total")
     assert power_tariff.state == "654.321"
     assert power_tariff.attributes.get("unit_of_measurement") == ENERGY_KILO_WATT_HOUR
 
     # check if gas consumption is parsed correctly
-    gas_consumption = opp.states.get("sensor.gas_consumption")
+    gas_consumption =.opp.states.get("sensor.gas_consumption")
     assert gas_consumption.state == "745.695"
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
@@ -442,10 +442,10 @@ async def test_belgian_meter.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
@@ -456,12 +456,12 @@ async def test_belgian_meter.opp, dsmr_connection_fixture):
     await asyncio.sleep(0)
 
     # tariff should be translated in human readable and have no unit
-    power_tariff = opp.states.get("sensor.power_tariff")
+    power_tariff =.opp.states.get("sensor.power_tariff")
     assert power_tariff.state == "normal"
     assert power_tariff.attributes.get("unit_of_measurement") == ""
 
     # check if gas consumption is parsed correctly
-    gas_consumption = opp.states.get("sensor.gas_consumption")
+    gas_consumption =.opp.states.get("sensor.gas_consumption")
     assert gas_consumption.state == "745.695"
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
@@ -491,10 +491,10 @@ async def test_belgian_meter_low.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
@@ -505,7 +505,7 @@ async def test_belgian_meter_low.opp, dsmr_connection_fixture):
     await asyncio.sleep(0)
 
     # tariff should be translated in human readable and have no unit
-    power_tariff = opp.states.get("sensor.power_tariff")
+    power_tariff =.opp.states.get("sensor.power_tariff")
     assert power_tariff.state == "low"
     assert power_tariff.attributes.get("unit_of_measurement") == ""
 
@@ -528,10 +528,10 @@ async def test_tcp.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert connection_factory.call_args_list[0][0][0] == "localhost"
     assert connection_factory.call_args_list[0][0][1] == "1234"
@@ -560,17 +560,17 @@ async def test_connection_errors_retry.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.dsmr.sensor.create_dsmr_reader",
         first_fail_connection_factory,
     ):
-        await opp..config_entries.async_setup(mock_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await.opp.async_block_till_done()
 
         # wait for sleep to resolve
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert first_fail_connection_factory.call_count >= 2, "connecting not retried"
 
 
@@ -602,10 +602,10 @@ async def test_reconnect.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert connection_factory.call_count == 1
 
@@ -616,12 +616,12 @@ async def test_reconnect.opp, dsmr_connection_fixture):
     closed2.clear()
     closed.clear()
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert connection_factory.call_count >= 2, "connecting not retried"
     # setting it so teardown can be successful
     closed.set()
 
-    await opp..config_entries.async_unload(mock_entry.entry_id)
+    await.opp.config_entries.async_unload(mock_entry.entry_id)
 
     assert mock_entry.state == "not_loaded"

@@ -51,8 +51,8 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+import openpeerpower.util.dt as dt_util
 
 from tests.common import (
     async_fire_time_changed,
@@ -99,7 +99,7 @@ ENTITY_NUMBERS_BY_ID = {v: k for k, v in ENTITY_IDS_BY_NUMBER.items()}
 def.opp_hue(loop,.opp):
     """Set up a Open Peer Power instance for these tests."""
     # We need to do this to get access to openpeerpower/turn_(on,off)
-    loop.run_until_complete(setup.async_setup_component.opp, "openpeerpowerr", {}))
+    loop.run_until_complete(setup.async_setup_component.opp, "openpeerpower", {}))
 
     loop.run_until_complete(
         setup.async_setup_component(
@@ -208,7 +208,7 @@ def.opp_hue(loop,.opp):
 @pytest.fixture
 def hue_client(loop,.opp_hue, aiohttp_client):
     """Create web client for emulated hue api."""
-    web_app = opp_hue.http.app
+    web_app =.opp_hue.http.app
     config = Config(
         None,
         {
@@ -302,7 +302,7 @@ async def test_lights_all_dimmable.opp, aiohttp_client):
     await setup.async_setup_component(
        .opp, http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: HTTP_SERVER_PORT}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     hue_config = {
         emulated_hue.CONF_LISTEN_PORT: BRIDGE_SERVER_PORT,
         emulated_hue.CONF_EXPOSE_BY_DEFAULT: True,
@@ -314,10 +314,10 @@ async def test_lights_all_dimmable.opp, aiohttp_client):
             emulated_hue.DOMAIN,
             {emulated_hue.DOMAIN: hue_config},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     config = Config(None, hue_config)
     config.numbers = ENTITY_IDS_BY_NUMBER
-    web_app = opp.http.app
+    web_app =.opp.http.app
     HueOneLightStateView(config).register(web_app, web_app.router)
     client = await aiohttp_client(web_app)
     light_without_brightness_json = await perform_get_light_state(
@@ -357,7 +357,7 @@ async def test_light_without_brightness_can_be_turned_off.opp_hue, hue_client):
     assert len(no_brightness_result_json) == 1
 
     # Verify that SERVICE_TURN_OFF has been called
-    await opp._hue.async_block_till_done()
+    await.opp_hue.async_block_till_done()
     assert len(turn_off_calls) == 1
     call = turn_off_calls[-1]
 
@@ -399,7 +399,7 @@ async def test_light_without_brightness_can_be_turned_on.opp_hue, hue_client):
     assert len(no_brightness_result_json) == 1
 
     # Verify that SERVICE_TURN_ON has been called
-    await opp._hue.async_block_till_done()
+    await.opp_hue.async_block_till_done()
     assert 1 == len(turn_on_calls)
     call = turn_on_calls[-1]
 
@@ -466,7 +466,7 @@ async def test_discover_full_state(hue_client):
     assert "whitelist" in config_json
     assert HUE_API_USERNAME in config_json["whitelist"]
     assert "name" in config_json["whitelist"][HUE_API_USERNAME]
-    assert "OPP BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
+    assert "HASS BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
 
     # Make sure the correct ip in config
     assert "ipaddress" in config_json
@@ -505,7 +505,7 @@ async def test_discover_config(hue_client):
     assert "whitelist" in config_json
     assert HUE_API_USERNAME in config_json["whitelist"]
     assert "name" in config_json["whitelist"][HUE_API_USERNAME]
-    assert "OPP BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
+    assert "HASS BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
 
     # Make sure the correct ip in config
     assert "ipaddress" in config_json
@@ -537,7 +537,7 @@ async def test_discover_config(hue_client):
 async def test_get_light_state.opp_hue, hue_client):
     """Test the getting of light state."""
     # Turn ceiling lights on and set to 127 brightness, and set light color
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_ON,
         {
@@ -574,7 +574,7 @@ async def test_get_light_state.opp_hue, hue_client):
     )
 
     # Turn office light off
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_OFF,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights"},
@@ -602,14 +602,14 @@ async def test_put_light_state.opp,.opp_hue, hue_client):
     await perform_put_test_on_ceiling_lights.opp_hue, hue_client)
 
     # Turn the bedroom light on first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_ON,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights", light.ATTR_BRIGHTNESS: 153},
         blocking=True,
     )
 
-    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_ON
     assert ceiling_lights.attributes[light.ATTR_BRIGHTNESS] == 153
 
@@ -702,7 +702,7 @@ async def test_put_light_state.opp,.opp_hue, hue_client):
     assert len(ceiling_result_json) == 1
 
     # Check to make sure the state changed
-    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_OFF
     ceiling_json = await perform_get_light_state(
         hue_client, "light.ceiling_lights", HTTP_OK
@@ -724,7 +724,7 @@ async def test_put_light_state.opp,.opp_hue, hue_client):
     assert kitchen_result.status == HTTP_UNAUTHORIZED
 
     # Turn the ceiling lights on first and color temp.
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_ON,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights", light.ATTR_COLOR_TEMP: 20},
@@ -757,7 +757,7 @@ async def test_put_light_state.opp,.opp_hue, hue_client):
         transitiontime=60,
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_turn_on[0]
     assert call_turn_on[0].data[ATTR_ENTITY_ID] == ["light.ceiling_lights"]
     assert call_turn_on[0].data[light.ATTR_BRIGHTNESS] == 99
@@ -768,7 +768,7 @@ async def test_put_light_state.opp,.opp_hue, hue_client):
 async def test_put_light_state_script.opp,.opp_hue, hue_client):
     """Test the setting of script variables."""
     # Turn the kitchen light off first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_OFF,
         {const.ATTR_ENTITY_ID: "light.kitchen_lights"},
@@ -788,7 +788,7 @@ async def test_put_light_state_script.opp,.opp_hue, hue_client):
     assert script_result.status == HTTP_OK
     assert len(script_result_json) == 2
 
-    kitchen_light = opp_hue.states.get("light.kitchen_lights")
+    kitchen_light =.opp_hue.states.get("light.kitchen_lights")
     assert kitchen_light.state == "on"
     assert kitchen_light.attributes[light.ATTR_BRIGHTNESS] == level
 
@@ -811,7 +811,7 @@ async def test_put_light_state_climate_set_temperature.opp_hue, hue_client):
     assert hvac_result.status == HTTP_OK
     assert len(hvac_result_json) == 2
 
-    hvac = opp_hue.states.get("climate.hvac")
+    hvac =.opp_hue.states.get("climate.hvac")
     assert hvac.state == climate.const.HVAC_MODE_COOL
     assert hvac.attributes[climate.ATTR_TEMPERATURE] == temperature
 
@@ -825,7 +825,7 @@ async def test_put_light_state_climate_set_temperature.opp_hue, hue_client):
 async def test_put_light_state_humidifier_set_humidity.opp_hue, hue_client):
     """Test setting humidifier target humidity."""
     # Turn the humidifier off first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         humidifier.DOMAIN,
         const.SERVICE_TURN_OFF,
         {const.ATTR_ENTITY_ID: "humidifier.humidifier"},
@@ -844,7 +844,7 @@ async def test_put_light_state_humidifier_set_humidity.opp_hue, hue_client):
     assert humidifier_result.status == HTTP_OK
     assert len(humidifier_result_json) == 2
 
-    hvac = opp_hue.states.get("humidifier.humidifier")
+    hvac =.opp_hue.states.get("humidifier.humidifier")
     assert hvac.state == "on"
     assert hvac.attributes[humidifier.ATTR_HUMIDITY] == humidity
 
@@ -858,7 +858,7 @@ async def test_put_light_state_humidifier_set_humidity.opp_hue, hue_client):
 async def test_put_light_state_media_player.opp_hue, hue_client):
     """Test turning on media player and setting volume."""
     # Turn the music player off first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         media_player.DOMAIN,
         const.SERVICE_TURN_OFF,
         {const.ATTR_ENTITY_ID: "media_player.walkman"},
@@ -878,7 +878,7 @@ async def test_put_light_state_media_player.opp_hue, hue_client):
     assert mp_result.status == HTTP_OK
     assert len(mp_result_json) == 2
 
-    walkman = opp_hue.states.get("media_player.walkman")
+    walkman =.opp_hue.states.get("media_player.walkman")
     assert walkman.state == "playing"
     assert walkman.attributes[media_player.ATTR_MEDIA_VOLUME_LEVEL] == level
 
@@ -887,22 +887,22 @@ async def test_close_cover.opp_hue, hue_client):
     """Test opening cover ."""
     cover_id = "cover.living_room_window"
     # Turn the office light off first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         cover.DOMAIN,
         const.SERVICE_CLOSE_COVER,
         {const.ATTR_ENTITY_ID: cover_id},
         blocking=True,
     )
 
-    cover_test = opp_hue.states.get(cover_id)
+    cover_test =.opp_hue.states.get(cover_id)
     assert cover_test.state == "closing"
 
     for _ in range(7):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp_hue, future)
-        await opp._hue.async_block_till_done()
+        await.opp_hue.async_block_till_done()
 
-    cover_test = opp_hue.states.get(cover_id)
+    cover_test =.opp_hue.states.get(cover_id)
     assert cover_test.state == "closed"
 
     # Go through the API to turn it on
@@ -916,14 +916,14 @@ async def test_close_cover.opp_hue, hue_client):
     for _ in range(7):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp_hue, future)
-        await opp._hue.async_block_till_done()
+        await.opp_hue.async_block_till_done()
 
     cover_result_json = await cover_result.json()
 
     assert len(cover_result_json) == 2
 
     # Check to make sure the state changed
-    cover_test_2 = opp_hue.states.get(cover_id)
+    cover_test_2 =.opp_hue.states.get(cover_id)
     assert cover_test_2.state == "open"
 
 
@@ -932,22 +932,22 @@ async def test_set_position_cover.opp_hue, hue_client):
     cover_id = "cover.living_room_window"
     cover_number = ENTITY_NUMBERS_BY_ID[cover_id]
     # Turn the office light off first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         cover.DOMAIN,
         const.SERVICE_CLOSE_COVER,
         {const.ATTR_ENTITY_ID: cover_id},
         blocking=True,
     )
 
-    cover_test = opp_hue.states.get(cover_id)
+    cover_test =.opp_hue.states.get(cover_id)
     assert cover_test.state == "closing"
 
     for _ in range(7):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp_hue, future)
-        await opp._hue.async_block_till_done()
+        await.opp_hue.async_block_till_done()
 
-    cover_test = opp_hue.states.get(cover_id)
+    cover_test =.opp_hue.states.get(cover_id)
     assert cover_test.state == "closed"
 
     level = 20
@@ -970,10 +970,10 @@ async def test_set_position_cover.opp_hue, hue_client):
     for _ in range(100):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp_hue, future)
-        await opp._hue.async_block_till_done()
+        await.opp_hue.async_block_till_done()
 
     # Check to make sure the state changed
-    cover_test_2 = opp_hue.states.get(cover_id)
+    cover_test_2 =.opp_hue.states.get(cover_id)
     assert cover_test_2.state == "open"
     assert cover_test_2.attributes.get("current_position") == level
 
@@ -981,7 +981,7 @@ async def test_set_position_cover.opp_hue, hue_client):
 async def test_put_light_state_fan.opp_hue, hue_client):
     """Test turning on fan and setting speed."""
     # Turn the fan off first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         fan.DOMAIN,
         const.SERVICE_TURN_OFF,
         {const.ATTR_ENTITY_ID: "fan.living_room_fan"},
@@ -1001,7 +1001,7 @@ async def test_put_light_state_fan.opp_hue, hue_client):
     assert fan_result.status == HTTP_OK
     assert len(fan_result_json) == 2
 
-    living_room_fan = opp_hue.states.get("fan.living_room_fan")
+    living_room_fan =.opp_hue.states.get("fan.living_room_fan")
     assert living_room_fan.state == "on"
     assert living_room_fan.attributes[fan.ATTR_SPEED] == fan.SPEED_MEDIUM
 
@@ -1162,14 +1162,14 @@ async def perform_put_test_on_ceiling_lights(
 ):
     """Test the setting of a light."""
     # Turn the office light off first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_OFF,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights"},
         blocking=True,
     )
 
-    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_OFF
 
     # Go through the API to turn it on
@@ -1185,7 +1185,7 @@ async def perform_put_test_on_ceiling_lights(
     assert len(office_result_json) == 2
 
     # Check to make sure the state changed
-    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_ON
     assert ceiling_lights.attributes[light.ATTR_BRIGHTNESS] == 56
 
@@ -1255,7 +1255,7 @@ async def perform_put_light_state(
     )
 
     # Wait until state change is complete before continuing
-    await opp._hue.async_block_till_done()
+    await.opp_hue.async_block_till_done()
 
     return result
 
@@ -1305,14 +1305,14 @@ async def test_put_then_get_cached_properly.opp,.opp_hue, hue_client):
     """Test the setting of light states and an immediate readback reads the same values."""
 
     # Turn the bedroom light on first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_ON,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights", light.ATTR_BRIGHTNESS: 153},
         blocking=True,
     )
 
-    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_ON
     assert ceiling_lights.attributes[light.ATTR_BRIGHTNESS] == 153
 
@@ -1334,7 +1334,7 @@ async def test_put_then_get_cached_properly.opp,.opp_hue, hue_client):
 
     # Make sure that the GET response is the same as the PUT response within 2 seconds if the service call is successful and the state doesn't change.
     # We simulate a long latence for the actual setting of the entity by forcibly sitting different values directly.
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_ON,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights", light.ATTR_BRIGHTNESS: 153},
@@ -1351,7 +1351,7 @@ async def test_put_then_get_cached_properly.opp,.opp_hue, hue_client):
     assert ceiling_json["state"][HUE_API_STATE_BRI] == 254
 
     # Make sure that the GET response does not use the cache if PUT response within 2 seconds if the service call is Unsuccessful and the state does not change.
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_OFF,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights"},
@@ -1371,7 +1371,7 @@ async def test_put_then_get_cached_properly.opp,.opp_hue, hue_client):
     # Ensure we read the actual value after exceeding the timeout time.
 
     # Turn the bedroom light back on first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_ON,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights"},
@@ -1389,7 +1389,7 @@ async def test_put_then_get_cached_properly.opp,.opp_hue, hue_client):
         brightness=254,
     )
 
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_ON,
         {
@@ -1428,7 +1428,7 @@ async def test_put_than_get_when_service_call_fails.opp,.opp_hue, hue_client):
     """Test putting and getting the light state when the service call fails."""
 
     # Turn the bedroom light off first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_OFF,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights"},
@@ -1447,7 +1447,7 @@ async def test_put_than_get_when_service_call_fails.opp,.opp_hue, hue_client):
         light.DOMAIN, SERVICE_TURN_ON, mock_service_call, schema=None
     )
 
-    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_OFF
 
     with patch.object(hue_api, "STATE_CHANGE_WAIT_TIMEOUT", 0.000001):
@@ -1484,7 +1484,7 @@ async def test_get_invalid_entity.opp,.opp_hue, hue_client):
 async def test_put_light_state_scene.opp,.opp_hue, hue_client):
     """Test the setting of scene variables."""
     # Turn the kitchen lights off first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_OFF,
         {const.ATTR_ENTITY_ID: "light.kitchen_lights"},
@@ -1502,7 +1502,7 @@ async def test_put_light_state_scene.opp,.opp_hue, hue_client):
     assert.opp_hue.states.get("light.kitchen_lights").state == STATE_ON
 
     # Set the brightness on the entity; changing a scene brightness via the hue API will do nothing.
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_ON,
         {const.ATTR_ENTITY_ID: "light.kitchen_lights", light.ATTR_BRIGHTNESS: 127},
@@ -1527,7 +1527,7 @@ async def test_only_change_contrast.opp,.opp_hue, hue_client):
     """Test when only changing the contrast of a light state."""
 
     # Turn the kitchen lights off first
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_OFF,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights"},
@@ -1547,7 +1547,7 @@ async def test_only_change_contrast.opp,.opp_hue, hue_client):
     # TODO: It should be noted that a real Hue hub will not allow to change the brightness if the underlying entity is off.
     # giving the error: [{"error":{"type":201,"address":"/lights/20/state/bri","description":"parameter, bri, is not modifiable. Device is set to off."}}]
     # emulated_hue however will always turn on the light.
-    ceiling_lights = opp_hue.states.get("light.ceiling_lights")
+    ceiling_lights =.opp_hue.states.get("light.ceiling_lights")
     assert ceiling_lights.state == STATE_ON
     assert ceiling_lights.attributes[light.ATTR_BRIGHTNESS] == 255
 
@@ -1559,7 +1559,7 @@ async def test_only_change_hue_or_saturation.opp,.opp_hue, hue_client):
     # The return values also appear wrong.
 
     # Turn the ceiling lights on first and set hue and saturation.
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_ON,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights", light.ATTR_HS_COLOR: (10, 10)},
@@ -1574,7 +1574,7 @@ async def test_only_change_hue_or_saturation.opp,.opp_hue, hue_client):
         light.ATTR_HS_COLOR
     ] == (24, 0)
 
-    await opp._hue.services.async_call(
+    await.opp_hue.services.async_call(
         light.DOMAIN,
         const.SERVICE_TURN_ON,
         {const.ATTR_ENTITY_ID: "light.ceiling_lights", light.ATTR_HS_COLOR: (10, 10)},

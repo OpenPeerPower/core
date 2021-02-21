@@ -5,7 +5,7 @@ from libpurecool.dyson_device import DysonDevice
 import pytest
 
 from openpeerpower.components.dyson import DOMAIN
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from .common import BASE_PATH, CONFIG
 
@@ -33,6 +33,6 @@ async def device.opp: OpenPeerPower, request) -> DysonDevice:
             DOMAIN,
             CONFIG,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     return device

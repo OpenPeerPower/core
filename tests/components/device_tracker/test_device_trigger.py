@@ -5,8 +5,8 @@ import voluptuous_serialize
 import openpeerpower.components.automation as automation
 from openpeerpower.components.device_tracker import DOMAIN, device_trigger
 import openpeerpower.components.zone as zone
-from openpeerpowerr.helpers import config_validation as cv, device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import config_validation as cv, device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -65,7 +65,7 @@ def setup_zone.opp):
 async def test_get_triggers.opp, device_reg, entity_reg):
     """Test we get the expected triggers from a device_tracker."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -154,7 +154,7 @@ async def test_if_fires_on_zone_change.opp, calls):
         "state",
         {"latitude": HOME_LATITUDE, "longitude": HOME_LONGITUDE},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "enter - device - {} - -117.235 - -117.238".format(
         "device_tracker.entity"
@@ -166,7 +166,7 @@ async def test_if_fires_on_zone_change.opp, calls):
         "state",
         {"latitude": AWAY_LATITUDE, "longitude": AWAY_LONGITUDE},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "leave - device - {} - -117.238 - -117.235".format(
         "device_tracker.entity"
@@ -176,7 +176,7 @@ async def test_if_fires_on_zone_change.opp, calls):
 async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a device_tracker trigger."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},

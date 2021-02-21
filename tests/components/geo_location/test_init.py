@@ -3,7 +3,7 @@ import pytest
 
 from openpeerpower.components import geo_location
 from openpeerpower.components.geo_location import GeolocationEvent
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_setup_component.opp):

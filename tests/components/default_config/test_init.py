@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 

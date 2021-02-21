@@ -2,7 +2,7 @@
 import os
 
 from openpeerpower.components.folder.sensor import CONF_FOLDER_PATHS
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 CWD = os.path.join(os.path.dirname(__file__))
 TEST_FOLDER = "test_folder"
@@ -40,9 +40,9 @@ async def test_valid_path.opp):
    .opp.config.allowlist_external_dirs = {TEST_DIR}
     config = {"sensor": {"platform": "folder", CONF_FOLDER_PATHS: TEST_DIR}}
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == 1
-    state = opp.states.get("sensor.test_folder")
+    state =.opp.states.get("sensor.test_folder")
     assert state.state == "0.0"
     assert state.attributes.get("number_of_files") == 1
 

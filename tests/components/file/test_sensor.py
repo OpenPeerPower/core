@@ -4,7 +4,7 @@ from unittest.mock import Mock, mock_open, patch
 import pytest
 
 from openpeerpower.const import STATE_UNKNOWN
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import mock_registry
 
@@ -28,9 +28,9 @@ async def test_file_value.opp, entity_reg):
         "openpeerpower.components.file.sensor.open", m_open, create=True
     ), patch.object.opp.config, "is_allowed_path", return_value=True):
         assert await async_setup_component.opp, "sensor", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.file1")
+    state =.opp.states.get("sensor.file1")
     assert state.state == "21"
 
 
@@ -54,9 +54,9 @@ async def test_file_value_template.opp, entity_reg):
         "openpeerpower.components.file.sensor.open", m_open, create=True
     ), patch.object.opp.config, "is_allowed_path", return_value=True):
         assert await async_setup_component.opp, "sensor", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.file2")
+    state =.opp.states.get("sensor.file2")
     assert state.state == "26"
 
 
@@ -71,7 +71,7 @@ async def test_file_empty.opp, entity_reg):
         "openpeerpower.components.file.sensor.open", m_open, create=True
     ), patch.object.opp.config, "is_allowed_path", return_value=True):
         assert await async_setup_component.opp, "sensor", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.file3")
+    state =.opp.states.get("sensor.file3")
     assert state.state == STATE_UNKNOWN

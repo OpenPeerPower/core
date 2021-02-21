@@ -11,7 +11,7 @@ from openpeerpower.components import emulated_hue
 from openpeerpower.components.emulated_hue import upnp
 from openpeerpower.const import CONTENT_TYPE_JSON, HTTP_OK
 
-from tests.common import get_test_home_assistant, get_test_instance_port
+from tests.common import get_test_open_peer_power, get_test_instance_port
 
 HTTP_SERVER_PORT = get_test_instance_port()
 BRIDGE_SERVER_PORT = get_test_instance_port()
@@ -35,12 +35,12 @@ class MockTransport:
 class TestEmulatedHue(unittest.TestCase):
     """Test the emulated Hue component."""
 
-    opp = None
+   .opp = None
 
     @classmethod
     def setUpClass(cls):
         """Set up the class."""
-        cls.opp = opp = get_test_home_assistant()
+        cls.opp =.opp = get_test_open_peer_power()
 
         setup.setup_component(
            .opp,

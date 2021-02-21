@@ -2,7 +2,7 @@
 from unittest.mock import AsyncMock, Mock, patch
 
 from openpeerpower.components import emulated_roku
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_config_required_fields.opp):
@@ -80,7 +80,7 @@ async def test_setup_entry_successful.opp):
     assert len(instantiate.mock_calls) == 1
     assert.opp.data[emulated_roku.DOMAIN]
 
-    roku_instance = opp.data[emulated_roku.DOMAIN]["Emulated Roku Test"]
+    roku_instance =.opp.data[emulated_roku.DOMAIN]["Emulated Roku Test"]
 
     assert roku_instance.roku_usn == "Emulated Roku Test"
     assert roku_instance.host_ip == "1.2.3.5"
@@ -103,7 +103,7 @@ async def test_unload_entry.opp):
 
     assert emulated_roku.DOMAIN in.opp.data
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert await emulated_roku.async_unload_entry.opp, entry)
 

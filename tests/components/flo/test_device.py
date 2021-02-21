@@ -4,8 +4,8 @@ from datetime import timedelta
 from openpeerpower.components.flo.const import DOMAIN as FLO_DOMAIN
 from openpeerpower.components.flo.device import FloDeviceDataUpdateCoordinator
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt
 
 from .common import TEST_PASSWORD, TEST_USER_ID
 
@@ -14,14 +14,14 @@ from tests.common import async_fire_time_changed
 
 async def test_device.opp, config_entry, aioclient_mock_fixture, aioclient_mock):
     """Test Flo by Moen device."""
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     assert await async_setup_component(
        .opp, FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
 
-    device: FloDeviceDataUpdateCoordinator = opp.data[FLO_DOMAIN][
+    device: FloDeviceDataUpdateCoordinator =.opp.data[FLO_DOMAIN][
         config_entry.entry_id
     ]["devices"][0]
     assert device.api_client is not None
@@ -53,6 +53,6 @@ async def test_device.opp, config_entry, aioclient_mock_fixture, aioclient_mock)
     call_count = aioclient_mock.call_count
 
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=90))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert aioclient_mock.call_count == call_count + 2

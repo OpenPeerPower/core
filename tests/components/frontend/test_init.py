@@ -16,9 +16,9 @@ from openpeerpower.components.frontend import (
 )
 from openpeerpower.components.websocket_api.const import TYPE_RESULT
 from openpeerpower.const import HTTP_NOT_FOUND
-from openpeerpowerr.loader import async_get_integration
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt
+from openpeerpower.loader import async_get_integration
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt
 
 from tests.common import async_capture_events, async_fire_time_changed
 
@@ -70,13 +70,13 @@ async def mock_http_client.opp, aiohttp_client, frontend):
 @pytest.fixture
 async def themes_ws_client.opp,.opp_ws_client, frontend_themes):
     """Start the Open Peer Power HTTP component."""
-    return await opp._ws_client.opp)
+    return await.opp_ws_client.opp)
 
 
 @pytest.fixture
 async def ws_client.opp,.opp_ws_client, frontend):
     """Start the Open Peer Power HTTP component."""
-    return await opp._ws_client.opp)
+    return await.opp_ws_client.opp)
 
 
 @pytest.fixture
@@ -176,7 +176,7 @@ async def test_themes_persist.opp,.opp_storage,.opp_ws_client, ignore_frontend_d
     }
 
     assert await async_setup_component.opp, "frontend", CONFIG_THEMES)
-    themes_ws_client = await opp._ws_client.opp)
+    themes_ws_client = await.opp_ws_client.opp)
 
     await themes_ws_client.send_json({"id": 5, "type": "frontend/get_themes"})
     msg = await themes_ws_client.receive_json()
@@ -188,18 +188,18 @@ async def test_themes_persist.opp,.opp_storage,.opp_ws_client, ignore_frontend_d
 async def test_themes_save_storage.opp,.opp_storage, frontend_themes):
     """Test that theme settings are restores after restart."""
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "set_theme", {"name": "happy"}, blocking=True
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "set_theme", {"name": "dark", "mode": "dark"}, blocking=True
     )
 
     # To trigger the call_later
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=60))
     # To execute the save
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp_storage[THEMES_STORAGE_KEY]["data"] == {
         "frontend_default_theme": "happy",
@@ -209,7 +209,7 @@ async def test_themes_save_storage.opp,.opp_storage, frontend_themes):
 
 async def test_themes_set_theme.opp, themes_ws_client):
     """Test frontend.set_theme service."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "set_theme", {"name": "happy"}, blocking=True
     )
 
@@ -218,7 +218,7 @@ async def test_themes_set_theme.opp, themes_ws_client):
 
     assert msg["result"]["default_theme"] == "happy"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "set_theme", {"name": "default"}, blocking=True
     )
 
@@ -227,11 +227,11 @@ async def test_themes_set_theme.opp, themes_ws_client):
 
     assert msg["result"]["default_theme"] == "default"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "set_theme", {"name": "happy"}, blocking=True
     )
 
-    await opp..services.async_call(DOMAIN, "set_theme", {"name": "none"}, blocking=True)
+    await.opp.services.async_call(DOMAIN, "set_theme", {"name": "none"}, blocking=True)
 
     await themes_ws_client.send_json({"id": 7, "type": "frontend/get_themes"})
     msg = await themes_ws_client.receive_json()
@@ -242,7 +242,7 @@ async def test_themes_set_theme.opp, themes_ws_client):
 async def test_themes_set_theme_wrong_name.opp, themes_ws_client):
     """Test frontend.set_theme service called with wrong name."""
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "set_theme", {"name": "wrong"}, blocking=True
     )
 
@@ -256,7 +256,7 @@ async def test_themes_set_theme_wrong_name.opp, themes_ws_client):
 async def test_themes_set_dark_theme.opp, themes_ws_client):
     """Test frontend.set_theme service called with dark mode."""
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "set_theme", {"name": "dark", "mode": "dark"}, blocking=True
     )
 
@@ -265,7 +265,7 @@ async def test_themes_set_dark_theme.opp, themes_ws_client):
 
     assert msg["result"]["default_dark_theme"] == "dark"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "set_theme", {"name": "default", "mode": "dark"}, blocking=True
     )
 
@@ -274,7 +274,7 @@ async def test_themes_set_dark_theme.opp, themes_ws_client):
 
     assert msg["result"]["default_dark_theme"] == "default"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "set_theme", {"name": "none", "mode": "dark"}, blocking=True
     )
 
@@ -286,7 +286,7 @@ async def test_themes_set_dark_theme.opp, themes_ws_client):
 
 async def test_themes_set_dark_theme_wrong_name.opp, frontend, themes_ws_client):
     """Test frontend.set_theme service called with mode dark and wrong name."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "set_theme", {"name": "wrong", "mode": "dark"}, blocking=True
     )
 
@@ -301,13 +301,13 @@ async def test_themes_reload_themes.opp, frontend, themes_ws_client):
     """Test frontend.reload_themes service."""
 
     with patch(
-        "openpeerpower.components.frontend.async_opp_config_yaml",
+        "openpeerpower.components.frontend.async.opp_config_yaml",
         return_value={DOMAIN: {CONF_THEMES: {"sad": {"primary-color": "blue"}}}},
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN, "set_theme", {"name": "happy"}, blocking=True
         )
-        await opp..services.async_call(DOMAIN, "reload_themes", blocking=True)
+        await.opp.services.async_call(DOMAIN, "reload_themes", blocking=True)
 
     await themes_ws_client.send_json({"id": 5, "type": "frontend/get_themes"})
 
@@ -346,7 +346,7 @@ async def test_get_panels.opp,.opp_ws_client, mock_http_client):
 
     assert len(events) == 1
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "get_panels"})
 
     msg = await client.receive_json()
@@ -455,7 +455,7 @@ async def test_get_version.opp, ws_client):
     cur_version = next(
         req.split("==", 1)[1]
         for req in frontend.requirements
-        if req.startswith("openpeerpower-frontend==")
+        if req.startswith("open-peer-power-frontend==")
     )
 
     await ws_client.send_json({"id": 5, "type": "frontend/get_version"})

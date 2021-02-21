@@ -15,7 +15,7 @@ from .common import (
     ATTR_SERVICE,
     create_entity_from_device,
     create_mock_device,
-    get_entry_id_from_opp,
+    get_entry_id_from.opp,
     run_service_tests,
 )
 
@@ -29,7 +29,7 @@ def mock_device():
 async def test_light_setup.opp, mock_device):
     """Test a successful setup."""
     await create_entity_from_device.opp, mock_device)
-    entity_state = opp.states.get("light.name")
+    entity_state =.opp.states.get("light.name")
     assert entity_state.attributes[ATTR_FRIENDLY_NAME] == mock_device.name
     assert entity_state.attributes["brightness"] == mock_device.brightness
     assert entity_state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORT_BRIGHTNESS
@@ -48,9 +48,9 @@ async def test_unload_config_entry.opp, mock_device):
     """Test when a config entry is unloaded from HA."""
     await create_entity_from_device.opp, mock_device)
     assert.opp.states.get("light.name")
-    entry_id = await get_entry_id_from_opp.opp)
-    assert await opp..config_entries.async_unload(entry_id)
-    await opp..async_block_till_done()
+    entry_id = await get_entry_id_from.opp.opp)
+    assert await.opp.config_entries.async_unload(entry_id)
+    await.opp.async_block_till_done()
     assert.opp.states.get("light.name").state == STATE_UNAVAILABLE
 
 
@@ -58,7 +58,7 @@ async def test_remove_config_entry.opp, mock_device):
     """Test when a config entry is removed from HA."""
     await create_entity_from_device.opp, mock_device)
     assert.opp.states.get("light.name")
-    entry_id = await get_entry_id_from_opp.opp)
-    assert await opp..config_entries.async_remove(entry_id)
-    await opp..async_block_till_done()
+    entry_id = await get_entry_id_from.opp.opp)
+    assert await.opp.config_entries.async_remove(entry_id)
+    await.opp.async_block_till_done()
     assert not.opp.states.get("light.name")

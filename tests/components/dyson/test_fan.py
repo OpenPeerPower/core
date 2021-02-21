@@ -51,8 +51,8 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers import entity_registry
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers import entity_registry
 
 from .common import (
     ENTITY_NAME,
@@ -82,7 +82,7 @@ async def test_state_purecoollink(
     er = await entity_registry.async_get_registry.opp)
     assert er.async_get(ENTITY_ID).unique_id == SERIAL
 
-    state = opp.states.get(ENTITY_ID)
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
     assert state.name == NAME
     attributes = state.attributes
@@ -105,7 +105,7 @@ async def test_state_purecoollink(
 
     device.state.fan_mode = FanMode.OFF.value
     await async_update_device.opp, device, DysonPureCoolState)
-    state = opp.states.get(ENTITY_ID)
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
 
     device.state.fan_mode = FanMode.AUTO.value
@@ -113,7 +113,7 @@ async def test_state_purecoollink(
     device.state.night_mode = "OFF"
     device.state.oscillation = "OFF"
     await async_update_device.opp, device, DysonPureCoolState)
-    state = opp.states.get(ENTITY_ID)
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
     attributes = state.attributes
     assert attributes[ATTR_NIGHT_MODE] is False
@@ -131,7 +131,7 @@ async def test_state_purecool.opp: OpenPeerPower, device: DysonPureCool) -> None
     er = await entity_registry.async_get_registry.opp)
     assert er.async_get(ENTITY_ID).unique_id == SERIAL
 
-    state = opp.states.get(ENTITY_ID)
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
     assert state.name == NAME
     attributes = state.attributes
@@ -166,7 +166,7 @@ async def test_state_purecool.opp: OpenPeerPower, device: DysonPureCool) -> None
     device.state.sleep_timer = "0120"
     device.state.carbon_filter_state = "INV"
     await async_update_device.opp, device, DysonPureCoolV2State)
-    state = opp.states.get(ENTITY_ID)
+    state =.opp.states.get(ENTITY_ID)
     attributes = state.attributes
     assert attributes[ATTR_NIGHT_MODE] is False
     assert attributes[ATTR_OSCILLATING] is False
@@ -181,7 +181,7 @@ async def test_state_purecool.opp: OpenPeerPower, device: DysonPureCool) -> None
 
     device.state.fan_power = "OFF"
     await async_update_device.opp, device, DysonPureCoolV2State)
-    state = opp.states.get(ENTITY_ID)
+    state =.opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
 
 
@@ -236,7 +236,7 @@ async def test_commands_purecoollink(
     configuration_args: dict,
 ) -> None:
     """Test sending commands to a PureCoolLink fan."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         PLATFORM_DOMAIN,
         service,
         {
@@ -303,7 +303,7 @@ async def test_commands_purecool(
     command_args: list,
 ) -> None:
     """Test sending commands to a PureCool fan."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         PLATFORM_DOMAIN,
         service,
         {
@@ -346,7 +346,7 @@ async def test_custom_services_purecoollink(
     configuration_args: dict,
 ) -> None:
     """Test custom services of a PureCoolLink fan."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         service,
         {
@@ -404,7 +404,7 @@ async def test_custom_services_purecool(
     command_args: list,
 ) -> None:
     """Test custom services of a PureCool fan."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         service,
         {
@@ -430,7 +430,7 @@ async def test_custom_services_invalid_data(
 ) -> None:
     """Test custom services calling with invalid data."""
     with pytest.raises(ValueError):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             domain,
             service,
             {

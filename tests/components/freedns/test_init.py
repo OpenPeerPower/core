@@ -2,8 +2,8 @@
 import pytest
 
 from openpeerpower.components import freedns
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.dt import utcnow
 
 from tests.common import async_fire_time_changed
 
@@ -57,7 +57,7 @@ async def test_setup.opp, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
     async_fire_time_changed.opp, utcnow() + UPDATE_INTERVAL)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert aioclient_mock.call_count == 2
 
 

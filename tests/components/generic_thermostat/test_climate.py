@@ -33,10 +33,10 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-import openpeerpowerr.core as ha
-from openpeerpowerr.core import DOMAIN as OPP_DOMAIN, CoreState, State, callback
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.unit_system import METRIC_SYSTEM
+import openpeerpower.core as ha
+from openpeerpower.core import DOMAIN as HASS_DOMAIN, CoreState, State, callback
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.unit_system import METRIC_SYSTEM
 
 from tests.common import (
     assert_setup_component,
@@ -89,8 +89,8 @@ async def test_valid_conf.opp):
 async def setup_comp_1.opp):
     """Initialize components."""
    .opp.config.units = METRIC_SYSTEM
-    assert await async_setup_component.opp, "openpeerpowerr", {})
-    await opp..async_block_till_done()
+    assert await async_setup_component.opp, "openpeerpower", {})
+    await.opp.async_block_till_done()
 
 
 async def test_heater_input_boolean.opp, setup_comp_1):
@@ -113,15 +113,15 @@ async def test_heater_input_boolean.opp, setup_comp_1):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    assert STATE_OFF == opp.states.get(heater_switch).state
+    assert STATE_OFF ==.opp.states.get(heater_switch).state
 
     _setup_sensor.opp, 18)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 23)
 
-    assert STATE_ON == opp.states.get(heater_switch).state
+    assert STATE_ON ==.opp.states.get(heater_switch).state
 
 
 async def test_heater_switch.opp, setup_comp_1):
@@ -132,7 +132,7 @@ async def test_heater_switch.opp, setup_comp_1):
     assert await async_setup_component(
        .opp, switch.DOMAIN, {"switch": {"platform": "test"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     heater_switch = switch_1.entity_id
 
     assert await async_setup_component(
@@ -149,14 +149,14 @@ async def test_heater_switch.opp, setup_comp_1):
         },
     )
 
-    await opp..async_block_till_done()
-    assert STATE_OFF == opp.states.get(heater_switch).state
+    await.opp.async_block_till_done()
+    assert STATE_OFF ==.opp.states.get(heater_switch).state
 
     _setup_sensor.opp, 18)
     await common.async_set_temperature.opp, 23)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    assert STATE_ON == opp.states.get(heater_switch).state
+    assert STATE_ON ==.opp.states.get(heater_switch).state
 
 
 async def test_unique_id.opp, setup_comp_1):
@@ -177,9 +177,9 @@ async def test_unique_id.opp, setup_comp_1):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get(ENTITY)
     assert entry
@@ -211,7 +211,7 @@ async def setup_comp_2.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_setup_defaults_to_unknown.opp):
@@ -232,15 +232,15 @@ async def test_setup_defaults_to_unknown.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    assert HVAC_MODE_OFF == opp.states.get(ENTITY).state
+    await.opp.async_block_till_done()
+    assert HVAC_MODE_OFF ==.opp.states.get(ENTITY).state
 
 
 async def test_setup_gets_current_temp_from_sensor.opp):
     """Test that current temperature is updated on entity addition."""
    .opp.config.units = METRIC_SYSTEM
     _setup_sensor.opp, 18)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await async_setup_component(
        .opp,
         DOMAIN,
@@ -256,13 +256,13 @@ async def test_setup_gets_current_temp_from_sensor.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(ENTITY).attributes["current_temperature"] == 18
 
 
 async def test_default_setup_params.opp, setup_comp_2):
     """Test the setup with default parameters."""
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert 7 == state.attributes.get("min_temp")
     assert 35 == state.attributes.get("max_temp")
     assert 7 == state.attributes.get("temperature")
@@ -270,7 +270,7 @@ async def test_default_setup_params.opp, setup_comp_2):
 
 async def test_get_hvac_modes.opp, setup_comp_2):
     """Test that the operation list returns the correct modes."""
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     modes = state.attributes.get("hvac_modes")
     assert [HVAC_MODE_HEAT, HVAC_MODE_OFF] == modes
 
@@ -278,11 +278,11 @@ async def test_get_hvac_modes.opp, setup_comp_2):
 async def test_set_target_temp.opp, setup_comp_2):
     """Test the setting of the target temperature."""
     await common.async_set_temperature.opp, 30)
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert 30.0 == state.attributes.get("temperature")
     with pytest.raises(vol.Invalid):
         await common.async_set_temperature.opp, None)
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert 30.0 == state.attributes.get("temperature")
 
 
@@ -290,7 +290,7 @@ async def test_set_away_mode.opp, setup_comp_2):
     """Test the setting away mode."""
     await common.async_set_temperature.opp, 23)
     await common.async_set_preset_mode.opp, PRESET_AWAY)
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert 16 == state.attributes.get("temperature")
 
 
@@ -301,10 +301,10 @@ async def test_set_away_mode_and_restore_prev_temp.opp, setup_comp_2):
     """
     await common.async_set_temperature.opp, 23)
     await common.async_set_preset_mode.opp, PRESET_AWAY)
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert 16 == state.attributes.get("temperature")
     await common.async_set_preset_mode.opp, PRESET_NONE)
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert 23 == state.attributes.get("temperature")
 
 
@@ -316,22 +316,22 @@ async def test_set_away_mode_twice_and_restore_prev_temp.opp, setup_comp_2):
     await common.async_set_temperature.opp, 23)
     await common.async_set_preset_mode.opp, PRESET_AWAY)
     await common.async_set_preset_mode.opp, PRESET_AWAY)
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert 16 == state.attributes.get("temperature")
     await common.async_set_preset_mode.opp, PRESET_NONE)
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert 23 == state.attributes.get("temperature")
 
 
 async def test_sensor_bad_value.opp, setup_comp_2):
     """Test sensor that have None as state."""
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     temp = state.attributes.get("current_temperature")
 
     _setup_sensor.opp, None)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert temp == state.attributes.get("current_temperature")
 
 
@@ -350,8 +350,8 @@ async def test_sensor_unknown.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("climate.unknown")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("climate.unknown")
     assert state.attributes.get("current_temperature") is None
 
 
@@ -370,8 +370,8 @@ async def test_sensor_unavailable.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("climate.unavailable")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("climate.unavailable")
     assert state.attributes.get("current_temperature") is None
 
 
@@ -379,11 +379,11 @@ async def test_set_target_temp_heater_on.opp, setup_comp_2):
     """Test if target temperature turn heater on."""
     calls = _setup_switch.opp, False)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 30)
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -392,11 +392,11 @@ async def test_set_target_temp_heater_off.opp, setup_comp_2):
     """Test if target temperature turn heater off."""
     calls = _setup_switch.opp, True)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 25)
     assert 2 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -406,7 +406,7 @@ async def test_temp_change_heater_on_within_tolerance.opp, setup_comp_2):
     calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 29)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -415,10 +415,10 @@ async def test_temp_change_heater_on_outside_tolerance.opp, setup_comp_2):
     calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 27)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -428,7 +428,7 @@ async def test_temp_change_heater_off_within_tolerance.opp, setup_comp_2):
     calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 33)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -437,10 +437,10 @@ async def test_temp_change_heater_off_outside_tolerance.opp, setup_comp_2):
     calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 35)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -452,7 +452,7 @@ async def test_running_when_hvac_mode_is_off.opp, setup_comp_2):
     await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -463,7 +463,7 @@ async def test_no_state_change_when_hvac_mode_off.opp, setup_comp_2):
     await common.async_set_temperature.opp, 30)
     await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -475,12 +475,12 @@ async def test_hvac_mode_heat.opp, setup_comp_2):
     await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     calls = _setup_switch.opp, False)
     await common.async_set_hvac_mode.opp, HVAC_MODE_HEAT)
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -495,8 +495,8 @@ def _setup_switch.opp, is_on):
         """Log service calls."""
         calls.append(call)
 
-   .opp.services.async_register(op.DOMAIN, SERVICE_TURN_ON, log_call)
-   .opp.services.async_register(op.DOMAIN, SERVICE_TURN_OFF, log_call)
+   .opp.services.async_register(ha.DOMAIN, SERVICE_TURN_ON, log_call)
+   .opp.services.async_register(ha.DOMAIN, SERVICE_TURN_OFF, log_call)
 
     return calls
 
@@ -522,18 +522,18 @@ async def setup_comp_3.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_set_target_temp_ac_off.opp, setup_comp_3):
     """Test if target temperature turn ac off."""
     calls = _setup_switch.opp, True)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 30)
     assert 2 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -542,10 +542,10 @@ async def test_turn_away_mode_on_cooling.opp, setup_comp_3):
     """Test the setting away mode when cooling."""
     _setup_switch.opp, True)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 19)
     await common.async_set_preset_mode.opp, PRESET_AWAY)
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert 30 == state.attributes.get("temperature")
 
 
@@ -557,12 +557,12 @@ async def test_hvac_mode_cool.opp, setup_comp_3):
     await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     calls = _setup_switch.opp, False)
     await common.async_set_hvac_mode.opp, HVAC_MODE_COOL)
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -571,11 +571,11 @@ async def test_set_target_temp_ac_on.opp, setup_comp_3):
     """Test if target temperature turn ac on."""
     calls = _setup_switch.opp, False)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 25)
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -585,7 +585,7 @@ async def test_temp_change_ac_off_within_tolerance.opp, setup_comp_3):
     calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 29.8)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -594,10 +594,10 @@ async def test_set_temp_change_ac_off_outside_tolerance.opp, setup_comp_3):
     calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 27)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -607,7 +607,7 @@ async def test_temp_change_ac_on_within_tolerance.opp, setup_comp_3):
     calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 25.2)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -616,10 +616,10 @@ async def test_temp_change_ac_on_outside_tolerance.opp, setup_comp_3):
     calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -631,7 +631,7 @@ async def test_running_when_operating_mode_is_off_2.opp, setup_comp_3):
     await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -642,7 +642,7 @@ async def test_no_state_change_when_operation_mode_off_2.opp, setup_comp_3):
     await common.async_set_temperature.opp, 30)
     await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
     _setup_sensor.opp, 35)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -667,7 +667,7 @@ async def setup_comp_4.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_temp_change_ac_trigger_on_not_long_enough.opp, setup_comp_4):
@@ -675,7 +675,7 @@ async def test_temp_change_ac_trigger_on_not_long_enough.opp, setup_comp_4):
     calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -685,15 +685,15 @@ async def test_temp_change_ac_trigger_on_long_enough.opp, setup_comp_4):
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
     )
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=fake_changed
+        "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
         calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -703,7 +703,7 @@ async def test_temp_change_ac_trigger_off_not_long_enough.opp, setup_comp_4):
     calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -713,15 +713,15 @@ async def test_temp_change_ac_trigger_off_long_enough.opp, setup_comp_4):
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
     )
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=fake_changed
+        "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
         calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -731,12 +731,12 @@ async def test_mode_change_ac_trigger_off_not_long_enough.opp, setup_comp_4):
     calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
-    assert "openpeerpowerr" == call.domain
+    assert "openpeerpower" == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -746,12 +746,12 @@ async def test_mode_change_ac_trigger_on_not_long_enough.opp, setup_comp_4):
     calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     await common.async_set_hvac_mode.opp, HVAC_MODE_HEAT)
     assert 1 == len(calls)
     call = calls[0]
-    assert "openpeerpowerr" == call.domain
+    assert "openpeerpower" == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -777,7 +777,7 @@ async def setup_comp_5.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_temp_change_ac_trigger_on_not_long_enough_2.opp, setup_comp_5):
@@ -785,7 +785,7 @@ async def test_temp_change_ac_trigger_on_not_long_enough_2.opp, setup_comp_5):
     calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -795,15 +795,15 @@ async def test_temp_change_ac_trigger_on_long_enough_2.opp, setup_comp_5):
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
     )
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=fake_changed
+        "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
         calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -813,7 +813,7 @@ async def test_temp_change_ac_trigger_off_not_long_enough_2.opp, setup_comp_5):
     calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -823,15 +823,15 @@ async def test_temp_change_ac_trigger_off_long_enough_2.opp, setup_comp_5):
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
     )
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=fake_changed
+        "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
         calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -841,12 +841,12 @@ async def test_mode_change_ac_trigger_off_not_long_enough_2.opp, setup_comp_5):
     calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
-    assert "openpeerpowerr" == call.domain
+    assert "openpeerpower" == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -856,12 +856,12 @@ async def test_mode_change_ac_trigger_on_not_long_enough_2.opp, setup_comp_5):
     calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     await common.async_set_hvac_mode.opp, HVAC_MODE_HEAT)
     assert 1 == len(calls)
     call = calls[0]
-    assert "openpeerpowerr" == call.domain
+    assert "openpeerpower" == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -886,7 +886,7 @@ async def setup_comp_6.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_temp_change_heater_trigger_off_not_long_enough.opp, setup_comp_6):
@@ -894,7 +894,7 @@ async def test_temp_change_heater_trigger_off_not_long_enough.opp, setup_comp_6)
     calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -903,7 +903,7 @@ async def test_temp_change_heater_trigger_on_not_long_enough.opp, setup_comp_6):
     calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
 
 
@@ -913,15 +913,15 @@ async def test_temp_change_heater_trigger_on_long_enough.opp, setup_comp_6):
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
     )
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=fake_changed
+        "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
         calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -932,15 +932,15 @@ async def test_temp_change_heater_trigger_off_long_enough.opp, setup_comp_6):
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
     )
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=fake_changed
+        "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
         calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -950,12 +950,12 @@ async def test_mode_change_heater_trigger_off_not_long_enough.opp, setup_comp_6)
     calls = _setup_switch.opp, True)
     await common.async_set_temperature.opp, 25)
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
-    assert "openpeerpowerr" == call.domain
+    assert "openpeerpower" == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -965,12 +965,12 @@ async def test_mode_change_heater_trigger_on_not_long_enough.opp, setup_comp_6):
     calls = _setup_switch.opp, False)
     await common.async_set_temperature.opp, 30)
     _setup_sensor.opp, 25)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     await common.async_set_hvac_mode.opp, HVAC_MODE_HEAT)
     assert 1 == len(calls)
     call = calls[0]
-    assert "openpeerpowerr" == call.domain
+    assert "openpeerpower" == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -999,28 +999,28 @@ async def setup_comp_7.opp):
         },
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_temp_change_ac_trigger_on_long_enough_3.opp, setup_comp_7):
     """Test if turn on signal is sent at keep-alive intervals."""
     calls = _setup_switch.opp, True)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 25)
     test_time = datetime.datetime.now(pytz.UTC)
     async_fire_time_changed.opp, test_time)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=5))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=10))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -1028,22 +1028,22 @@ async def test_temp_change_ac_trigger_on_long_enough_3.opp, setup_comp_7):
 async def test_temp_change_ac_trigger_off_long_enough_3.opp, setup_comp_7):
     """Test if turn on signal is sent at keep-alive intervals."""
     calls = _setup_switch.opp, False)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     _setup_sensor.opp, 20)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 25)
     test_time = datetime.datetime.now(pytz.UTC)
     async_fire_time_changed.opp, test_time)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=5))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=10))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -1070,28 +1070,28 @@ async def setup_comp_8.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_temp_change_heater_trigger_on_long_enough_2.opp, setup_comp_8):
     """Test if turn on signal is sent at keep-alive intervals."""
     calls = _setup_switch.opp, True)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     _setup_sensor.opp, 20)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 25)
     test_time = datetime.datetime.now(pytz.UTC)
     async_fire_time_changed.opp, test_time)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=5))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=10))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -1099,22 +1099,22 @@ async def test_temp_change_heater_trigger_on_long_enough_2.opp, setup_comp_8):
 async def test_temp_change_heater_trigger_off_long_enough_2.opp, setup_comp_8):
     """Test if turn on signal is sent at keep-alive intervals."""
     calls = _setup_switch.opp, False)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     _setup_sensor.opp, 30)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await common.async_set_temperature.opp, 25)
     test_time = datetime.datetime.now(pytz.UTC)
     async_fire_time_changed.opp, test_time)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=5))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len(calls)
     async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=10))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert OPP_DOMAIN == call.domain
+    assert HASS_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -1141,13 +1141,13 @@ async def setup_comp_9.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_precision.opp, setup_comp_9):
     """Test that setting precision to tenths works as intended."""
     await common.async_set_temperature.opp, 23.27)
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert 23.3 == state.attributes.get("temperature")
 
 
@@ -1169,8 +1169,8 @@ async def test_custom_setup_params.opp):
         },
     )
     assert result
-    await opp..async_block_till_done()
-    state = opp.states.get(ENTITY)
+    await.opp.async_block_till_done()
+    state =.opp.states.get(ENTITY)
     assert state.attributes.get("min_temp") == MIN_TEMP
     assert state.attributes.get("max_temp") == MAX_TEMP
     assert state.attributes.get("temperature") == TARGET_TEMP
@@ -1204,8 +1204,8 @@ async def test_restore_state.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("climate.test_thermostat")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("climate.test_thermostat")
     assert state.attributes[ATTR_TEMPERATURE] == 20
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_AWAY
     assert state.state == HVAC_MODE_OFF
@@ -1242,8 +1242,8 @@ async def test_no_restore_state.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("climate.test_thermostat")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("climate.test_thermostat")
     assert state.attributes[ATTR_TEMPERATURE] == 22
     assert state.state == HVAC_MODE_OFF
 
@@ -1260,16 +1260,16 @@ async def test_restore_state_uncoherence_case.opp):
     calls = _setup_switch.opp, False)
     _setup_sensor.opp, 15)
     await _setup_climate.opp)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(ENTITY)
+    state =.opp.states.get(ENTITY)
     assert 20 == state.attributes[ATTR_TEMPERATURE]
     assert HVAC_MODE_OFF == state.state
     assert 0 == len(calls)
 
     calls = _setup_switch.opp, False)
-    await opp..async_block_till_done()
-    state = opp.states.get(ENTITY)
+    await.opp.async_block_till_done()
+    state =.opp.states.get(ENTITY)
     assert HVAC_MODE_OFF == state.state
 
 
@@ -1321,7 +1321,7 @@ async def test_reload.opp):
         },
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
     assert.opp.states.get("climate.test") is not None
 
@@ -1331,13 +1331,13 @@ async def test_reload.opp):
         "generic_thermostat/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             GENERIC_THERMOSTAT_DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
     assert.opp.states.get("climate.test") is None

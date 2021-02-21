@@ -7,7 +7,7 @@ from openpeerpower.const import (
     HTTP_FORBIDDEN,
     HTTP_INTERNAL_SERVER_ERROR,
 )
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from tests.common import MockConfigEntry, load_fixture
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -118,10 +118,10 @@ async def setup_integration(
         data={CONF_HOST: HOST, CONF_RECEIVER_ID: RECEIVER_ID},
     )
 
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     if not skip_entry_setup:
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     return entry

@@ -35,12 +35,12 @@ def _get_mock_doorbirdapi_side_effects(ready=None, info=None):
 
 async def test_user_form.opp):
     """Test we get the user form."""
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         init_recorder_component,.opp
     )  # force in memory db
 
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -58,11 +58,11 @@ async def test_user_form.opp):
         "openpeerpower.components.doorbird.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             VALID_CONFIG,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "1.2.3.4"
@@ -78,7 +78,7 @@ async def test_user_form.opp):
 
 async def test_form_import.opp):
     """Test we get the form with import source."""
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         init_recorder_component,.opp
     )  # force in memory db
 
@@ -103,12 +103,12 @@ async def test_form_import.opp):
         "openpeerpower.components.doorbird.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=import_config,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "1.2.3.4"
@@ -120,7 +120,7 @@ async def test_form_import.opp):
         "events": ["event1", "event2", "event3"],
         "token": "imported_token",
         # This will go away once we convert to cloud hooks
-        "opp_url_override": "http://legacy.custom.url/should/only/come/in/from/yaml",
+        .opp_url_override": "http://legacy.custom.url/should/only/come/in/from/yaml",
     }
     # It is not possible to import options at this time
     # so they end up in the config entry data and are
@@ -131,7 +131,7 @@ async def test_form_import.opp):
 
 async def test_form_import_with_zeroconf_already_discovered.opp):
     """Test we get the form with import source."""
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         init_recorder_component,.opp
     )  # force in memory db
 
@@ -139,7 +139,7 @@ async def test_form_import_with_zeroconf_already_discovered.opp):
 
     # Running the zeroconf init will make the unique id
     # in progress
-    zero_conf = await opp..config_entries.flow.async_init(
+    zero_conf = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -171,12 +171,12 @@ async def test_form_import_with_zeroconf_already_discovered.opp):
         "openpeerpower.components.doorbird.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=import_config,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "1.2.3.4"
@@ -188,7 +188,7 @@ async def test_form_import_with_zeroconf_already_discovered.opp):
         "events": ["event1", "event2", "event3"],
         "token": "imported_token",
         # This will go away once we convert to cloud hooks
-        "opp_url_override": "http://legacy.custom.url/should/only/come/in/from/yaml",
+        .opp_url_override": "http://legacy.custom.url/should/only/come/in/from/yaml",
     }
     # It is not possible to import options at this time
     # so they end up in the config entry data and are
@@ -199,13 +199,13 @@ async def test_form_import_with_zeroconf_already_discovered.opp):
 
 async def test_form_zeroconf_wrong_oui.opp):
     """Test we abort when we get the wrong OUI via zeroconf."""
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         init_recorder_component,.opp
     )  # force in memory db
 
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -220,13 +220,13 @@ async def test_form_zeroconf_wrong_oui.opp):
 
 async def test_form_zeroconf_link_local_ignored.opp):
     """Test we abort when we get a link local address via zeroconf."""
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         init_recorder_component,.opp
     )  # force in memory db
 
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -241,13 +241,13 @@ async def test_form_zeroconf_link_local_ignored.opp):
 
 async def test_form_zeroconf_correct_oui.opp):
     """Test we can setup from zeroconf with the correct OUI source."""
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         init_recorder_component,.opp
     )  # force in memory db
 
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -271,10 +271,10 @@ async def test_form_zeroconf_correct_oui.opp):
         "openpeerpower.components.doorbird.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], VALID_CONFIG
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "1.2.3.4"
@@ -290,11 +290,11 @@ async def test_form_zeroconf_correct_oui.opp):
 
 async def test_form_user_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         init_recorder_component,.opp
     )  # force in memory db
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -303,7 +303,7 @@ async def test_form_user_cannot_connect.opp):
         "openpeerpower.components.doorbird.config_flow.DoorBird",
         return_value=doorbirdapi,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             VALID_CONFIG,
         )
@@ -314,11 +314,11 @@ async def test_form_user_cannot_connect.opp):
 
 async def test_form_user_invalid_auth.opp):
     """Test we handle cannot invalid auth error."""
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         init_recorder_component,.opp
     )  # force in memory db
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -330,7 +330,7 @@ async def test_form_user_invalid_auth.opp):
         "openpeerpower.components.doorbird.config_flow.DoorBird",
         return_value=doorbirdapi,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             VALID_CONFIG,
         )
@@ -348,17 +348,17 @@ async def test_options_flow.opp):
         data=VALID_CONFIG,
         options={CONF_EVENTS: ["event1", "event2", "event3"]},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.doorbird.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_EVENTS: "eventa,   eventc,    eventq"}
         )
 

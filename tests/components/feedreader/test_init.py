@@ -18,10 +18,10 @@ from openpeerpower.components.feedreader import (
     StoredData,
 )
 from openpeerpower.const import CONF_SCAN_INTERVAL, EVENT_OPENPEERPOWER_START
-from openpeerpowerr.core import callback
-from openpeerpowerr.setup import setup_component
+from openpeerpower.core import callback
+from openpeerpower.setup import setup_component
 
-from tests.common import get_test_home_assistant, load_fixture
+from tests.common import get_test_open_peer_power, load_fixture
 
 URL = "http://some.rss.local/rss_feed.xml"
 VALID_CONFIG_1 = {feedreader.DOMAIN: {CONF_URLS: [URL]}}
@@ -34,7 +34,7 @@ class TestFeedreaderComponent(unittest.TestCase):
 
     def setUp(self):
         """Initialize values for this testcase class."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.addCleanup(self.tear_down_cleanup)
 
     def tear_down_cleanup(self):

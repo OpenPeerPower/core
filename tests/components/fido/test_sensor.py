@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 
 from pyfido.client import PyFidoError
 
-from openpeerpowerr.bootstrap import async_setup_component
+from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components.fido import sensor as fido
 
 from tests.common import assert_setup_component
@@ -54,11 +54,11 @@ async def test_fido_sensor(loop,.opp):
         }
         with assert_setup_component(1):
             await async_setup_component.opp, "sensor", config)
-            await opp..async_block_till_done()
-        state = opp.states.get("sensor.fido_1112223344_balance")
+            await.opp.async_block_till_done()
+        state =.opp.states.get("sensor.fido_1112223344_balance")
         assert state.state == "160.12"
         assert state.attributes.get("number") == "1112223344"
-        state = opp.states.get("sensor.fido_1112223344_data_remaining")
+        state =.opp.states.get("sensor.fido_1112223344_data_remaining")
         assert state.state == "100.33"
 
 

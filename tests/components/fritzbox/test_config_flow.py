@@ -14,12 +14,12 @@ from openpeerpower.components.ssdp import (
 )
 from openpeerpower.config_entries import SOURCE_REAUTH, SOURCE_SSDP, SOURCE_USER
 from openpeerpower.const import CONF_DEVICES, CONF_HOST, CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.data_entry_flow import (
+from openpeerpower.data_entry_flow import (
     RESULT_TYPE_ABORT,
     RESULT_TYPE_CREATE_ENTRY,
     RESULT_TYPE_FORM,
 )
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import MOCK_CONFIG
 
@@ -42,13 +42,13 @@ def fritz_fixture() -> Mock:
 
 async def test_user.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow by user."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_USER_DATA
     )
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
@@ -63,7 +63,7 @@ async def test_user_auth_failed.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow by user with authentication failure."""
     fritz().login.side_effect = [LoginError("Boom"), mock.DEFAULT]
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_DATA
     )
     assert result["type"] == RESULT_TYPE_FORM
@@ -75,7 +75,7 @@ async def test_user_not_successful.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow by user but no connection found."""
     fritz().login.side_effect = OSError("Boom")
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_DATA
     )
     assert result["type"] == RESULT_TYPE_ABORT
@@ -84,13 +84,13 @@ async def test_user_not_successful.opp: OpenPeerPowerType, fritz: Mock):
 
 async def test_user_already_configured.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow by user when already configured."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_DATA
     )
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert not result["result"].unique_id
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_DATA
     )
     assert result["type"] == RESULT_TYPE_ABORT
@@ -100,15 +100,15 @@ async def test_user_already_configured.opp: OpenPeerPowerType, fritz: Mock):
 async def test_reauth_success.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a reauthentication flow."""
     mock_config = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_DATA)
-    mock_config.add_to_opp.opp)
+    mock_config.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_REAUTH}, data=mock_config
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "reauth_confirm"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_USERNAME: "other_fake_user",
@@ -127,15 +127,15 @@ async def test_reauth_auth_failed.opp: OpenPeerPowerType, fritz: Mock):
     fritz().login.side_effect = LoginError("Boom")
 
     mock_config = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_DATA)
-    mock_config.add_to_opp.opp)
+    mock_config.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_REAUTH}, data=mock_config
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "reauth_confirm"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_USERNAME: "other_fake_user",
@@ -153,15 +153,15 @@ async def test_reauth_not_successful.opp: OpenPeerPowerType, fritz: Mock):
     fritz().login.side_effect = OSError("Boom")
 
     mock_config = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_DATA)
-    mock_config.add_to_opp.opp)
+    mock_config.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_REAUTH}, data=mock_config
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "reauth_confirm"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_USERNAME: "other_fake_user",
@@ -175,7 +175,7 @@ async def test_reauth_not_successful.opp: OpenPeerPowerType, fritz: Mock):
 
 async def test_import.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow by import."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "import"}, data=MOCK_USER_DATA
     )
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
@@ -188,13 +188,13 @@ async def test_import.opp: OpenPeerPowerType, fritz: Mock):
 
 async def test_ssdp.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow from discovery."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_SSDP}, data=MOCK_SSDP_DATA
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "confirm"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={CONF_PASSWORD: "fake_pass", CONF_USERNAME: "fake_user"},
     )
@@ -210,13 +210,13 @@ async def test_ssdp_no_friendly_name.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow from discovery without friendly name."""
     MOCK_NO_NAME = MOCK_SSDP_DATA.copy()
     del MOCK_NO_NAME[ATTR_UPNP_FRIENDLY_NAME]
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_SSDP}, data=MOCK_NO_NAME
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "confirm"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={CONF_PASSWORD: "fake_pass", CONF_USERNAME: "fake_user"},
     )
@@ -232,14 +232,14 @@ async def test_ssdp_auth_failed.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow from discovery with authentication failure."""
     fritz().login.side_effect = LoginError("Boom")
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_SSDP}, data=MOCK_SSDP_DATA
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "confirm"
     assert result["errors"] == {}
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={CONF_PASSWORD: "whatever", CONF_USERNAME: "whatever"},
     )
@@ -252,13 +252,13 @@ async def test_ssdp_not_successful.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow from discovery but no device found."""
     fritz().login.side_effect = OSError("Boom")
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_SSDP}, data=MOCK_SSDP_DATA
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "confirm"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={CONF_PASSWORD: "whatever", CONF_USERNAME: "whatever"},
     )
@@ -270,13 +270,13 @@ async def test_ssdp_not_supported.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow from discovery with unsupported device."""
     fritz().get_device_elements.side_effect = HTTPError("Boom")
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_SSDP}, data=MOCK_SSDP_DATA
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "confirm"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={CONF_PASSWORD: "whatever", CONF_USERNAME: "whatever"},
     )
@@ -286,13 +286,13 @@ async def test_ssdp_not_supported.opp: OpenPeerPowerType, fritz: Mock):
 
 async def test_ssdp_already_in_progress_unique_id.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow from discovery twice."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_SSDP}, data=MOCK_SSDP_DATA
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "confirm"
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_SSDP}, data=MOCK_SSDP_DATA
     )
     assert result["type"] == RESULT_TYPE_ABORT
@@ -301,7 +301,7 @@ async def test_ssdp_already_in_progress_unique_id.opp: OpenPeerPowerType, fritz:
 
 async def test_ssdp_already_in_progress_host.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow from discovery twice."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_SSDP}, data=MOCK_SSDP_DATA
     )
     assert result["type"] == RESULT_TYPE_FORM
@@ -309,7 +309,7 @@ async def test_ssdp_already_in_progress_host.opp: OpenPeerPowerType, fritz: Mock
 
     MOCK_NO_UNIQUE_ID = MOCK_SSDP_DATA.copy()
     del MOCK_NO_UNIQUE_ID[ATTR_UPNP_UDN]
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_SSDP}, data=MOCK_NO_UNIQUE_ID
     )
     assert result["type"] == RESULT_TYPE_ABORT
@@ -318,13 +318,13 @@ async def test_ssdp_already_in_progress_host.opp: OpenPeerPowerType, fritz: Mock
 
 async def test_ssdp_already_configured.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a flow from discovery when already configured."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_DATA
     )
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert not result["result"].unique_id
 
-    result2 = await opp..config_entries.flow.async_init(
+    result2 = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_SSDP}, data=MOCK_SSDP_DATA
     )
     assert result2["type"] == RESULT_TYPE_ABORT

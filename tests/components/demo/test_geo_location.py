@@ -15,8 +15,8 @@ from openpeerpower.const import (
     ATTR_UNIT_OF_MEASUREMENT,
     LENGTH_KILOMETERS,
 )
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import assert_setup_component, async_fire_time_changed
 
@@ -33,10 +33,10 @@ async def test_setup_platform.opp):
     """Test setup of demo platform via configuration."""
     utcnow = dt_util.utcnow()
     # Patching 'utcnow' to gain more control over the timed update.
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=utcnow):
+    with patch("openpeerpower.util.dt.utcnow", return_value=utcnow):
         with assert_setup_component(1, geo_location.DOMAIN):
             assert await async_setup_component.opp, geo_location.DOMAIN, CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         # In this test, one zone and geolocation entities have been
         # generated.
@@ -57,7 +57,7 @@ async def test_setup_platform.opp):
 
         # Update (replaces 1 device).
         async_fire_time_changed.opp, utcnow + DEFAULT_UPDATE_INTERVAL)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         # Get all states again, ensure that the number of states is still
         # the same, but the lists are different.
         all_states_updated = [

@@ -7,7 +7,7 @@ from openpeerpower.components.remote import (
     SERVICE_SEND_COMMAND,
 )
 from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TURN_OFF, SERVICE_TURN_ON
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from tests.components.directv import setup_integration
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -36,7 +36,7 @@ async def test_unique_id(
     """Test unique id."""
     await setup_integration.opp, aioclient_mock)
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     main = entity_registry.async_get(MAIN_ENTITY_ID)
     assert main.unique_id == "028877455858"
@@ -55,7 +55,7 @@ async def test_main_services(
     await setup_integration.opp, aioclient_mock)
 
     with patch("directv.DIRECTV.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             REMOTE_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID},
@@ -64,7 +64,7 @@ async def test_main_services(
         remote_mock.assert_called_once_with("poweroff", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             REMOTE_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID},
@@ -73,7 +73,7 @@ async def test_main_services(
         remote_mock.assert_called_once_with("poweron", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             REMOTE_DOMAIN,
             SERVICE_SEND_COMMAND,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID, ATTR_COMMAND: ["dash"]},

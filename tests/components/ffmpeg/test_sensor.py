@@ -1,9 +1,9 @@
 """The tests for Open Peer Power ffmpeg binary sensor."""
 from unittest.mock import patch
 
-from openpeerpowerr.setup import setup_component
+from openpeerpower.setup import setup_component
 
-from tests.common import assert_setup_component, get_test_home_assistant, mock_coro
+from tests.common import assert_setup_component, get_test_open_peer_power, mock_coro
 
 
 class TestFFmpegNoiseSetup:
@@ -11,7 +11,7 @@ class TestFFmpegNoiseSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         self.config = {
             "binary_sensor": {"platform": "ffmpeg_noise", "input": "testinputvideo"}
@@ -73,7 +73,7 @@ class TestFFmpegMotionSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         self.config = {
             "binary_sensor": {"platform": "ffmpeg_motion", "input": "testinputvideo"}

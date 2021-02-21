@@ -20,8 +20,8 @@ from openpeerpower.const import (
     HTTP_UNAUTHORIZED,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import callback
+from openpeerpower.setup import async_setup_component
 
 MOCK_IP = "192.168.0.1"
 MOCK_PORT = "8080"
@@ -156,7 +156,7 @@ def test_valid_file_path():
 async def test_setup_platform.opp, mock_healthybox):
     """Set up platform with one entity."""
     await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
 
@@ -167,14 +167,14 @@ async def test_setup_platform_with_auth.opp, mock_healthybox):
     valid_config_auth[ip.DOMAIN][CONF_PASSWORD] = MOCK_PASSWORD
 
     await async_setup_component.opp, ip.DOMAIN, valid_config_auth)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
 
 async def test_process_image.opp, mock_healthybox, mock_image):
     """Test successful processing of an image."""
     await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
     face_events = []
@@ -190,10 +190,10 @@ async def test_process_image.opp, mock_healthybox, mock_image):
         url = f"http://{MOCK_IP}:{MOCK_PORT}/facebox/check"
         mock_req.post(url, json=MOCK_JSON)
         data = {ATTR_ENTITY_ID: VALID_ENTITY_ID}
-        await opp..services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
-        await opp..async_block_till_done()
+        await.opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(VALID_ENTITY_ID)
+    state =.opp.states.get(VALID_ENTITY_ID)
     assert state.state == "1"
     assert state.attributes.get("matched_faces") == MATCHED_FACES
     assert state.attributes.get("total_matched_faces") == 1
@@ -218,7 +218,7 @@ async def test_process_image.opp, mock_healthybox, mock_image):
 async def test_process_image_errors.opp, mock_healthybox, mock_image, caplog):
     """Test process_image errors."""
     await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
     # Test connection error.
@@ -226,11 +226,11 @@ async def test_process_image_errors.opp, mock_healthybox, mock_image, caplog):
         url = f"http://{MOCK_IP}:{MOCK_PORT}/facebox/check"
         mock_req.register_uri("POST", url, exc=requests.exceptions.ConnectTimeout)
         data = {ATTR_ENTITY_ID: VALID_ENTITY_ID}
-        await opp..services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
-        await opp..async_block_till_done()
+        await.opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
+        await.opp.async_block_till_done()
         assert "ConnectionError: Is facebox running?" in caplog.text
 
-    state = opp.states.get(VALID_ENTITY_ID)
+    state =.opp.states.get(VALID_ENTITY_ID)
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get("faces") == []
     assert state.attributes.get("matched_faces") == {}
@@ -240,8 +240,8 @@ async def test_process_image_errors.opp, mock_healthybox, mock_image, caplog):
         url = f"http://{MOCK_IP}:{MOCK_PORT}/facebox/check"
         mock_req.register_uri("POST", url, status_code=HTTP_UNAUTHORIZED)
         data = {ATTR_ENTITY_ID: VALID_ENTITY_ID}
-        await opp..services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
-        await opp..async_block_till_done()
+        await.opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
+        await.opp.async_block_till_done()
         assert "AuthenticationError on facebox" in caplog.text
 
 
@@ -250,7 +250,7 @@ async def test_teach_service(
 ):
     """Test teaching of facebox."""
     await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
     # Patch out 'is_allowed_path' as the mock files aren't allowed
@@ -265,10 +265,10 @@ async def test_teach_service(
             ATTR_NAME: MOCK_NAME,
             fb.FILE_PATH: MOCK_FILE_PATH,
         }
-        await opp..services.async_call(
+        await.opp.services.async_call(
             fb.DOMAIN, fb.SERVICE_TEACH_FACE, service_data=data
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     # Now test with bad auth.
     with requests_mock.Mocker() as mock_req:
@@ -279,10 +279,10 @@ async def test_teach_service(
             ATTR_NAME: MOCK_NAME,
             fb.FILE_PATH: MOCK_FILE_PATH,
         }
-        await opp..services.async_call(
+        await.opp.services.async_call(
             fb.DOMAIN, fb.SERVICE_TEACH_FACE, service_data=data
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert "AuthenticationError on facebox" in caplog.text
 
     # Now test the failed teaching.
@@ -294,10 +294,10 @@ async def test_teach_service(
             ATTR_NAME: MOCK_NAME,
             fb.FILE_PATH: MOCK_FILE_PATH,
         }
-        await opp..services.async_call(
+        await.opp.services.async_call(
             fb.DOMAIN, fb.SERVICE_TEACH_FACE, service_data=data
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert MOCK_ERROR_NO_FACE in caplog.text
 
     # Now test connection error.
@@ -309,10 +309,10 @@ async def test_teach_service(
             ATTR_NAME: MOCK_NAME,
             fb.FILE_PATH: MOCK_FILE_PATH,
         }
-        await opp..services.async_call(
+        await.opp.services.async_call(
             fb.DOMAIN, fb.SERVICE_TEACH_FACE, service_data=data
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert "ConnectionError: Is facebox running?" in caplog.text
 
 
@@ -324,7 +324,7 @@ async def test_setup_platform_with_name.opp, mock_healthybox):
     valid_config_named[ip.DOMAIN][ip.CONF_SOURCE][ip.CONF_NAME] = MOCK_NAME
 
     await async_setup_component.opp, ip.DOMAIN, valid_config_named)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(named_entity_id)
-    state = opp.states.get(named_entity_id)
+    state =.opp.states.get(named_entity_id)
     assert state.attributes.get(CONF_FRIENDLY_NAME) == MOCK_NAME
