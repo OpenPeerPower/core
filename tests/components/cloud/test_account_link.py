@@ -8,8 +8,8 @@ import pytest
 
 from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components.cloud import account_link
-from openpeerpowerr.helpers import config_entry_oauth2_flow
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.helpers import config_entry_oauth2_flow
+from openpeerpower.util.dt import utcnow
 
 from tests.common import async_fire_time_changed, mock_platform
 
@@ -17,7 +17,7 @@ TEST_DOMAIN = "oauth2_test"
 
 
 @pytest.fixture
-def flow_op.dler.opp):
+def flow_handler.opp):
     """Return a registered config flow."""
 
     mock_platform.opp, f"{TEST_DOMAIN}.config_flow")
@@ -74,7 +74,7 @@ async def test_get_services_cached.opp):
     services = 1
 
     with patch.object(account_link, "CACHE_TIMEOUT", 0), patch(
-        "opp_nabucasa.account_link.async_fetch_available_services",
+        .opp_nabucasa.account_link.async_fetch_available_services",
         side_effect=lambda _: services,
     ) as mock_fetch:
         assert await account_link._get_services.opp) == 1
@@ -90,7 +90,7 @@ async def test_get_services_cached.opp):
 
         services = 4
         async_fire_time_changed.opp, utcnow())
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         # Check cache purged
         assert await account_link._get_services.opp) == 4
@@ -101,14 +101,14 @@ async def test_get_services_error.opp):
    .opp.data["cloud"] = None
 
     with patch.object(account_link, "CACHE_TIMEOUT", 0), patch(
-        "opp_nabucasa.account_link.async_fetch_available_services",
+        .opp_nabucasa.account_link.async_fetch_available_services",
         side_effect=asyncio.TimeoutError,
     ):
         assert await account_link._get_services.opp) == []
         assert account_link.DATA_SERVICES not in.opp.data
 
 
-async def test_implementation.opp, flow_op.dler):
+async def test_implementation.opp, flow_handler):
     """Test Cloud OAuth2 implementation."""
    .opp.data["cloud"] = None
 
@@ -116,7 +116,7 @@ async def test_implementation.opp, flow_op.dler):
     assert impl.name == "Open Peer Power Cloud"
     assert impl.domain == "cloud"
 
-    flow_op.dler.async_register_implementation.opp, impl)
+    flow_handler.async_register_implementation.opp, impl)
 
     flow_finished = asyncio.Future()
 
@@ -126,9 +126,9 @@ async def test_implementation.opp, flow_op.dler):
     )
 
     with patch(
-        "opp_nabucasa.account_link.AuthorizeAccountHelper", return_value=helper
+        .opp_nabucasa.account_link.AuthorizeAccountHelper", return_value=helper
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             TEST_DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
 
@@ -143,10 +143,10 @@ async def test_implementation.opp, flow_op.dler):
             "token_type": "bearer",
         }
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Flow finished!
-    result = await opp..config_entries.flow.async_configure(result["flow_id"])
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["data"]["auth_implementation"] == "cloud"
 
@@ -160,7 +160,7 @@ async def test_implementation.opp, flow_op.dler):
         "expires_in": 10,
     }
 
-    entry = opp.config_entries.async_entries(TEST_DOMAIN)[0]
+    entry =.opp.config_entries.async_entries(TEST_DOMAIN)[0]
 
     assert (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(

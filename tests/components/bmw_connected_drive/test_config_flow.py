@@ -38,7 +38,7 @@ FIXTURE_CONFIG_ENTRY = {
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -56,7 +56,7 @@ async def test_connection_error.opp):
         "bimmer_connected.account.ConnectedDriveAccount._get_oauth_token",
         side_effect=OSError,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data=FIXTURE_USER_INPUT,
@@ -78,7 +78,7 @@ async def test_full_user_flow_implementation.opp):
         "openpeerpower.components.bmw_connected_drive.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_init(
+        result2 = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data=FIXTURE_USER_INPUT,
@@ -102,7 +102,7 @@ async def test_full_config_flow_implementation.opp):
         "openpeerpower.components.bmw_connected_drive.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=FIXTURE_USER_INPUT,
@@ -128,20 +128,20 @@ async def test_options_flow_implementation.opp):
         return_value=True,
     ) as mock_setup_entry:
         config_entry = MockConfigEntry(**FIXTURE_CONFIG_ENTRY)
-        config_entry.add_to_opp.opp)
+        config_entry.add_to.opp.opp)
 
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "account_options"
 
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input={CONF_READ_ONLY: False, CONF_USE_LOCATION: False},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["data"] == {

@@ -15,7 +15,7 @@ from tests.common import MockConfigEntry
 
 async def test_user.opp):
     """Test user config."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -24,7 +24,7 @@ async def test_user.opp):
     with patch(
         "openpeerpower.components.cert_expiry.config_flow.get_cert_expiry_timestamp"
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_HOST: HOST, CONF_PORT: PORT}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -34,12 +34,12 @@ async def test_user.opp):
     assert result["result"].unique_id == f"{HOST}:{PORT}"
 
     with patch("openpeerpower.components.cert_expiry.sensor.async_setup_entry"):
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
 
 async def test_user_with_bad_cert.opp):
     """Test user config with bad certificate."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -49,7 +49,7 @@ async def test_user_with_bad_cert.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=ssl.SSLError("some error"),
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_HOST: HOST, CONF_PORT: PORT}
         )
 
@@ -60,7 +60,7 @@ async def test_user_with_bad_cert.opp):
     assert result["result"].unique_id == f"{HOST}:{PORT}"
 
     with patch("openpeerpower.components.cert_expiry.sensor.async_setup_entry"):
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
 
 async def test_import_host_only.opp):
@@ -71,10 +71,10 @@ async def test_import_host_only.opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=future_timestamp(1),
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "import"}, data={CONF_HOST: HOST}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == HOST
@@ -91,12 +91,12 @@ async def test_import_host_and_port.opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=future_timestamp(1),
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "import"},
             data={CONF_HOST: HOST, CONF_PORT: PORT},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == HOST
@@ -113,10 +113,10 @@ async def test_import_non_default_port.opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=future_timestamp(1),
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "import"}, data={CONF_HOST: HOST, CONF_PORT: 888}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == f"{HOST}:888"
@@ -133,12 +133,12 @@ async def test_import_with_name.opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=future_timestamp(1),
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "import"},
             data={CONF_NAME: "legacy", CONF_HOST: HOST, CONF_PORT: PORT},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == HOST
@@ -153,7 +153,7 @@ async def test_bad_import.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=ConnectionRefusedError(),
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "import"}, data={CONF_HOST: HOST}
         )
 
@@ -167,15 +167,15 @@ async def test_abort_if_already_setup.opp):
         domain=DOMAIN,
         data={CONF_HOST: HOST, CONF_PORT: PORT},
         unique_id=f"{HOST}:{PORT}",
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "import"}, data={CONF_HOST: HOST, CONF_PORT: PORT}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data={CONF_HOST: HOST, CONF_PORT: PORT}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -184,7 +184,7 @@ async def test_abort_if_already_setup.opp):
 
 async def test_abort_on_socket_failed.opp):
     """Test we abort of we have errors during socket creation."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
 
@@ -192,7 +192,7 @@ async def test_abort_on_socket_failed.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=socket.gaierror(),
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_HOST: HOST}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -202,7 +202,7 @@ async def test_abort_on_socket_failed.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=socket.timeout(),
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_HOST: HOST}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -212,7 +212,7 @@ async def test_abort_on_socket_failed.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=ConnectionRefusedError,
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_HOST: HOST}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

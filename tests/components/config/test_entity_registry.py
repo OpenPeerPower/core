@@ -5,7 +5,7 @@ import pytest
 
 from openpeerpower.components.config import entity_registry
 from openpeerpower.const import ATTR_ICON
-from openpeerpowerr.helpers.entity_registry import RegistryEntry
+from openpeerpower.helpers.entity_registry import RegistryEntry
 
 from tests.common import (
     MockConfigEntry,
@@ -154,7 +154,7 @@ async def test_update_entity.opp, client):
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
-    state = opp.states.get("test_domain.world")
+    state =.opp.states.get("test_domain.world")
     assert state is not None
     assert state.name == "before update"
     assert state.attributes[ATTR_ICON] == "icon:before update"
@@ -190,7 +190,7 @@ async def test_update_entity.opp, client):
         }
     }
 
-    state = opp.states.get("test_domain.world")
+    state =.opp.states.get("test_domain.world")
     assert state.name == "after update"
     assert state.attributes[ATTR_ICON] == "icon:after update"
 
@@ -243,7 +243,7 @@ async def test_update_entity.opp, client):
 async def test_update_entity_require_restart.opp, client):
     """Test updating entity."""
     config_entry = MockConfigEntry(domain="test_platform")
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     mock_registry(
        .opp,
         {
@@ -260,7 +260,7 @@ async def test_update_entity_require_restart.opp, client):
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
-    state = opp.states.get("test_domain.world")
+    state =.opp.states.get("test_domain.world")
     assert state is not None
 
     # UPDATE DISABLED_BY TO NONE
@@ -297,7 +297,7 @@ async def test_update_entity_require_restart.opp, client):
 async def test_enable_entity_disabled_device.opp, client, device_registry):
     """Test enabling entity of disabled device."""
     config_entry = MockConfigEntry(domain="test_platform")
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     device = device_registry.async_get_or_create(
         config_entry_id="1234",
@@ -325,7 +325,7 @@ async def test_enable_entity_disabled_device.opp, client, device_registry):
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
-    state = opp.states.get("test_domain.world")
+    state =.opp.states.get("test_domain.world")
     assert state is not None
 
     # UPDATE DISABLED_BY TO NONE
@@ -361,7 +361,7 @@ async def test_update_entity_no_changes.opp, client):
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
-    state = opp.states.get("test_domain.world")
+    state =.opp.states.get("test_domain.world")
     assert state is not None
     assert state.name == "name of entity"
 
@@ -393,7 +393,7 @@ async def test_update_entity_no_changes.opp, client):
         }
     }
 
-    state = opp.states.get("test_domain.world")
+    state =.opp.states.get("test_domain.world")
     assert state.name == "name of entity"
 
 

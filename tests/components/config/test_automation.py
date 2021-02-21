@@ -2,7 +2,7 @@
 import json
 from unittest.mock import patch
 
-from openpeerpowerr.bootstrap import async_setup_component
+from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components import config
 
 from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
@@ -13,7 +13,7 @@ async def test_get_device_config.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["automation"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     def mock_read(path):
         """Mock reading data."""
@@ -33,7 +33,7 @@ async def test_update_device_config.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["automation"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     orig_data = [{"id": "sun"}, {"id": "moon"}]
 
@@ -49,7 +49,7 @@ async def test_update_device_config.opp,.opp_client):
 
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
-    ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
+    ), patch("openpeerpower.config.async.opp_config_yaml", return_value={}):
         resp = await client.post(
             "/api/config/automation/config/moon",
             data=json.dumps({"trigger": [], "action": [], "condition": []}),
@@ -69,7 +69,7 @@ async def test_bad_formatted_automations.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["automation"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     orig_data = [
         {
@@ -91,12 +91,12 @@ async def test_bad_formatted_automations.opp,.opp_client):
 
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
-    ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
+    ), patch("openpeerpower.config.async.opp_config_yaml", return_value={}):
         resp = await client.post(
             "/api/config/automation/config/moon",
             data=json.dumps({"trigger": [], "action": [], "condition": []}),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert resp.status == 200
     result = await resp.json()
@@ -110,7 +110,7 @@ async def test_bad_formatted_automations.opp,.opp_client):
 
 async def test_delete_automation.opp,.opp_client):
     """Test deleting an automation."""
-    ent_reg = await opp..helpers.entity_registry.async_get_registry()
+    ent_reg = await.opp.helpers.entity_registry.async_get_registry()
 
     assert await async_setup_component(
        .opp,
@@ -136,7 +136,7 @@ async def test_delete_automation.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["automation"]):
         assert await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     orig_data = [{"id": "sun"}, {"id": "moon"}]
 
@@ -152,9 +152,9 @@ async def test_delete_automation.opp,.opp_client):
 
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
-    ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
+    ), patch("openpeerpower.config.async.opp_config_yaml", return_value={}):
         resp = await client.delete("/api/config/automation/config/sun")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert resp.status == 200
     result = await resp.json()

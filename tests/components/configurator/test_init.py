@@ -12,7 +12,7 @@ async def test_request_least_info.opp):
        .opp.services.async_services().get(configurator.DOMAIN, [])
     ), "No new service registered"
 
-    states = opp.states.async_all()
+    states =.opp.states.async_all()
 
     assert 1 == len(states), "Expected a new state registered"
 
@@ -48,7 +48,7 @@ async def test_request_all_info.opp):
         ),
     }
 
-    states = opp.states.async_all()
+    states =.opp.states.async_all()
     assert 1 == len(states)
     state = states[0]
 
@@ -63,13 +63,13 @@ async def test_callback_called_on_configure.opp):
        .opp, "Test Request", lambda _: calls.append(1)
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         configurator.DOMAIN,
         configurator.SERVICE_CONFIGURE,
         {configurator.ATTR_CONFIGURE_ID: request_id},
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 1 == len(calls), "Callback not called"
 
 
@@ -79,7 +79,7 @@ async def test_state_change_on_notify_errors.opp):
     error = "Oh no bad bad bad"
     configurator.async_notify_errors.opp, request_id, error)
 
-    states = opp.states.async_all()
+    states =.opp.states.async_all()
     assert 1 == len(states)
     state = states[0]
     assert error == state.attributes.get(configurator.ATTR_ERRORS)
@@ -97,7 +97,7 @@ async def test_request_done_works.opp):
     assert 1 == len.opp.states.async_all())
 
    .opp.bus.async_fire(EVENT_TIME_CHANGED)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert 0 == len.opp.states.async_all())
 
 

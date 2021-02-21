@@ -10,8 +10,8 @@ from openpeerpower.const import (
     STATE_OPEN,
     STATE_OPENING,
 )
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -50,7 +50,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
     ent = platform.ENTITIES[0]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -101,7 +101,7 @@ async def test_get_triggers_set_pos.opp, device_reg, entity_reg):
     ent = platform.ENTITIES[1]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -159,7 +159,7 @@ async def test_get_triggers_set_tilt_pos.opp, device_reg, entity_reg):
     ent = platform.ENTITIES[2]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -217,7 +217,7 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
     ent = platform.ENTITIES[0]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -244,7 +244,7 @@ async def test_get_trigger_capabilities_set_pos.opp, device_reg, entity_reg):
     ent = platform.ENTITIES[1]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -294,7 +294,7 @@ async def test_get_trigger_capabilities_set_tilt_pos.opp, device_reg, entity_reg
     ent = platform.ENTITIES[2]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -428,7 +428,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is opened.
    .opp.states.async_set("cover.entity", STATE_OPEN)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data[
         "some"
@@ -436,7 +436,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is closed.
    .opp.states.async_set("cover.entity", STATE_CLOSED)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data[
         "some"
@@ -444,7 +444,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is opening.
    .opp.states.async_set("cover.entity", STATE_OPENING)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[2].data[
         "some"
@@ -452,7 +452,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is closing.
    .opp.states.async_set("cover.entity", STATE_CLOSING)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data[
         "some"
@@ -465,7 +465,7 @@ async def test_if_fires_on_position.opp, calls):
     platform.init()
     ent = platform.ENTITIES[1]
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -542,17 +542,21 @@ async def test_if_fires_on_position.opp, calls):
             ]
         },
     )
+   .opp.states.async_set(ent.entity_id, STATE_OPEN, attributes={"current_position": 1})
    .opp.states.async_set(
-        ent.entity_id, STATE_CLOSED, attributes={"current_position": 50}
+        ent.entity_id, STATE_CLOSED, attributes={"current_position": 95}
     )
-    await opp..async_block_till_done()
+   .opp.states.async_set(
+        ent.entity_id, STATE_OPEN, attributes={"current_position": 50}
+    )
+    await.opp.async_block_till_done()
     assert len(calls) == 3
     assert sorted(
         [calls[0].data["some"], calls[1].data["some"], calls[2].data["some"]]
     ) == sorted(
         [
-            "is_pos_gt_45_lt_90 - device - cover.set_position_cover - open - closed - None",
-            "is_pos_lt_90 - device - cover.set_position_cover - open - closed - None",
+            "is_pos_gt_45_lt_90 - device - cover.set_position_cover - closed - open - None",
+            "is_pos_lt_90 - device - cover.set_position_cover - closed - open - None",
             "is_pos_gt_45 - device - cover.set_position_cover - open - closed - None",
         ]
     )
@@ -560,11 +564,11 @@ async def test_if_fires_on_position.opp, calls):
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 95}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 45}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 4
     assert (
         calls[3].data["some"]
@@ -574,7 +578,7 @@ async def test_if_fires_on_position.opp, calls):
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 90}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 5
     assert (
         calls[4].data["some"]
@@ -588,7 +592,7 @@ async def test_if_fires_on_tilt_position.opp, calls):
     platform.init()
     ent = platform.ENTITIES[1]
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -666,16 +670,22 @@ async def test_if_fires_on_tilt_position.opp, calls):
         },
     )
    .opp.states.async_set(
-        ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 50}
+        ent.entity_id, STATE_OPEN, attributes={"current_tilt_position": 1}
     )
-    await opp..async_block_till_done()
+   .opp.states.async_set(
+        ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 95}
+    )
+   .opp.states.async_set(
+        ent.entity_id, STATE_OPEN, attributes={"current_tilt_position": 50}
+    )
+    await.opp.async_block_till_done()
     assert len(calls) == 3
     assert sorted(
         [calls[0].data["some"], calls[1].data["some"], calls[2].data["some"]]
     ) == sorted(
         [
-            "is_pos_gt_45_lt_90 - device - cover.set_position_cover - open - closed - None",
-            "is_pos_lt_90 - device - cover.set_position_cover - open - closed - None",
+            "is_pos_gt_45_lt_90 - device - cover.set_position_cover - closed - open - None",
+            "is_pos_lt_90 - device - cover.set_position_cover - closed - open - None",
             "is_pos_gt_45 - device - cover.set_position_cover - open - closed - None",
         ]
     )
@@ -683,11 +693,11 @@ async def test_if_fires_on_tilt_position.opp, calls):
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 95}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 45}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 4
     assert (
         calls[3].data["some"]
@@ -697,7 +707,7 @@ async def test_if_fires_on_tilt_position.opp, calls):
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 90}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 5
     assert (
         calls[4].data["some"]

@@ -8,10 +8,10 @@ from requests.exceptions import ConnectionError
 import requests_mock
 
 from openpeerpower.components import weather
-from openpeerpowerr.setup import setup_component
-from openpeerpowerr.util.unit_system import METRIC_SYSTEM
+from openpeerpower.setup import setup_component
+from openpeerpower.util.unit_system import METRIC_SYSTEM
 
-from tests.common import get_test_home_assistant, load_fixture
+from tests.common import get_test_open_peer_power, load_fixture
 
 
 class TestDarkSky(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestDarkSky(unittest.TestCase):
 
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.opp.config.units = METRIC_SYSTEM
         self.lat = self.opp.config.latitude = 37.8267
         self.lon = self.opp.config.longitude = -122.423

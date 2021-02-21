@@ -6,8 +6,8 @@ from caldav.objects import Event
 import pytest
 
 from openpeerpower.const import STATE_OFF, STATE_ON
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt
 
 # pylint: disable=redefined-outer-name
 
@@ -281,11 +281,11 @@ def _mock_calendar(name):
 async def test_setup_component.opp, mock_dav_client):
     """Test setup component with calendars."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.first")
+    state =.opp.states.get("calendar.first")
     assert state.name == "First"
-    state = opp.states.get("calendar.second")
+    state =.opp.states.get("calendar.second")
     assert state.name == "Second"
 
 
@@ -295,9 +295,9 @@ async def test_setup_component_with_no_calendar_matching.opp, mock_dav_client):
     config["calendars"] = ["none"]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    all_calendar_states = opp.states.async_entity_ids("calendar")
+    all_calendar_states =.opp.states.async_entity_ids("calendar")
     assert not all_calendar_states
 
 
@@ -307,11 +307,11 @@ async def test_setup_component_with_a_calendar_match.opp, mock_dav_client):
     config["calendars"] = ["Second"]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    all_calendar_states = opp.states.async_entity_ids("calendar")
+    all_calendar_states =.opp.states.async_entity_ids("calendar")
     assert len(all_calendar_states) == 1
-    state = opp.states.get("calendar.second")
+    state =.opp.states.get("calendar.second")
     assert state.name == "Second"
 
 
@@ -323,21 +323,21 @@ async def test_setup_component_with_one_custom_calendar.opp, mock_dav_client):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    all_calendar_states = opp.states.async_entity_ids("calendar")
+    all_calendar_states =.opp.states.async_entity_ids("calendar")
     assert len(all_calendar_states) == 1
-    state = opp.states.get("calendar.second_homeoffice")
+    state =.opp.states.get("calendar.second_homeoffice")
     assert state.name == "HomeOffice"
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(17, 45))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(17, 45))
 async def test_ongoing_event(mock_now,.opp, calendar):
     """Test that the ongoing event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_ON
     assert dict(state.attributes) == {
@@ -352,13 +352,13 @@ async def test_ongoing_event(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(17, 30))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(17, 30))
 async def test_just_ended_event(mock_now,.opp, calendar):
     """Test that the next ongoing event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_ON
     assert dict(state.attributes) == {
@@ -373,13 +373,13 @@ async def test_just_ended_event(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(17, 00))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(17, 00))
 async def test_ongoing_event_different_tz(mock_now,.opp, calendar):
     """Test that the ongoing event with another timezone is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_ON
     assert dict(state.attributes) == {
@@ -394,13 +394,13 @@ async def test_ongoing_event_different_tz(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(19, 10))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(19, 10))
 async def test_ongoing_floating_event_returned(mock_now,.opp, calendar):
     """Test that floating events without timezones work."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     print(dt.DEFAULT_TIME_ZONE)
     print(state)
     assert state.name == calendar.name
@@ -417,13 +417,13 @@ async def test_ongoing_floating_event_returned(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(8, 30))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(8, 30))
 async def test_ongoing_event_with_offset(mock_now,.opp, calendar):
     """Test that the offset is taken into account."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_OFF
     assert dict(state.attributes) == {
@@ -438,7 +438,7 @@ async def test_ongoing_event_with_offset(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(12, 00))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(12, 00))
 async def test_matching_filter(mock_now,.opp, calendar):
     """Test that the matching event is returned."""
     config = dict(CALDAV_CONFIG)
@@ -447,9 +447,9 @@ async def test_matching_filter(mock_now,.opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private_private")
+    state =.opp.states.get("calendar.private_private")
     assert state.name == calendar.name
     assert state.state == STATE_OFF
     assert dict(state.attributes) == {
@@ -464,7 +464,7 @@ async def test_matching_filter(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(12, 00))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(12, 00))
 async def test_matching_filter_real_regexp(mock_now,.opp, calendar):
     """Test that the event matching the regexp is returned."""
     config = dict(CALDAV_CONFIG)
@@ -473,9 +473,9 @@ async def test_matching_filter_real_regexp(mock_now,.opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private_private")
+    state =.opp.states.get("calendar.private_private")
     assert state.name == calendar.name
     assert state.state == STATE_OFF
     assert dict(state.attributes) == {
@@ -490,7 +490,7 @@ async def test_matching_filter_real_regexp(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(20, 00))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(20, 00))
 async def test_filter_matching_past_event(mock_now,.opp, calendar):
     """Test that the matching past event is not returned."""
     config = dict(CALDAV_CONFIG)
@@ -499,14 +499,14 @@ async def test_filter_matching_past_event(mock_now,.opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private_private")
+    state =.opp.states.get("calendar.private_private")
     assert state.name == calendar.name
     assert state.state == "off"
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(12, 00))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(12, 00))
 async def test_no_result_with_filtering(mock_now,.opp, calendar):
     """Test that nothing is returned since nothing matches."""
     config = dict(CALDAV_CONFIG)
@@ -519,14 +519,14 @@ async def test_no_result_with_filtering(mock_now,.opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private_private")
+    state =.opp.states.get("calendar.private_private")
     assert state.name == calendar.name
     assert state.state == "off"
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(17, 30))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(17, 30))
 async def test_all_day_event_returned(mock_now,.opp, calendar):
     """Test that the event lasting the whole day is returned."""
     config = dict(CALDAV_CONFIG)
@@ -535,9 +535,9 @@ async def test_all_day_event_returned(mock_now,.opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private_private")
+    state =.opp.states.get("calendar.private_private")
     assert state.name == calendar.name
     assert state.state == STATE_ON
     assert dict(state.attributes) == {
@@ -552,13 +552,13 @@ async def test_all_day_event_returned(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(21, 45))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(21, 45))
 async def test_event_rrule(mock_now,.opp, calendar):
     """Test that the future recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_OFF
     assert dict(state.attributes) == {
@@ -573,13 +573,13 @@ async def test_event_rrule(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(22, 15))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(22, 15))
 async def test_event_rrule_ongoing(mock_now,.opp, calendar):
     """Test that the current recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_ON
     assert dict(state.attributes) == {
@@ -594,13 +594,13 @@ async def test_event_rrule_ongoing(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(22, 45))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(22, 45))
 async def test_event_rrule_duration(mock_now,.opp, calendar):
     """Test that the future recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_OFF
     assert dict(state.attributes) == {
@@ -615,13 +615,13 @@ async def test_event_rrule_duration(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(23, 15))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(23, 15))
 async def test_event_rrule_duration_ongoing(mock_now,.opp, calendar):
     """Test that the ongoing recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_ON
     assert dict(state.attributes) == {
@@ -636,13 +636,13 @@ async def test_event_rrule_duration_ongoing(mock_now,.opp, calendar):
     }
 
 
-@patch("openpeerpowerr.util.dt.now", return_value=_local_datetime(23, 37))
+@patch("openpeerpower.util.dt.now", return_value=_local_datetime(23, 37))
 async def test_event_rrule_endless(mock_now,.opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_OFF
     assert dict(state.attributes) == {
@@ -658,7 +658,7 @@ async def test_event_rrule_endless(mock_now,.opp, calendar):
 
 
 @patch(
-    "openpeerpowerr.util.dt.now",
+    "openpeerpower.util.dt.now",
     return_value=dt.as_local(datetime.datetime(2016, 12, 1, 17, 30)),
 )
 async def test_event_rrule_all_day(mock_now,.opp, calendar):
@@ -669,9 +669,9 @@ async def test_event_rrule_all_day(mock_now,.opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private_private")
+    state =.opp.states.get("calendar.private_private")
     assert state.name == calendar.name
     assert state.state == STATE_ON
     assert dict(state.attributes) == {
@@ -687,15 +687,15 @@ async def test_event_rrule_all_day(mock_now,.opp, calendar):
 
 
 @patch(
-    "openpeerpowerr.util.dt.now",
+    "openpeerpower.util.dt.now",
     return_value=dt.as_local(datetime.datetime(2015, 11, 27, 0, 15)),
 )
 async def test_event_rrule_hourly_on_first(mock_now,.opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_ON
     assert dict(state.attributes) == {
@@ -711,15 +711,15 @@ async def test_event_rrule_hourly_on_first(mock_now,.opp, calendar):
 
 
 @patch(
-    "openpeerpowerr.util.dt.now",
+    "openpeerpower.util.dt.now",
     return_value=dt.as_local(datetime.datetime(2015, 11, 27, 11, 15)),
 )
 async def test_event_rrule_hourly_on_last(mock_now,.opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_ON
     assert dict(state.attributes) == {
@@ -735,43 +735,43 @@ async def test_event_rrule_hourly_on_last(mock_now,.opp, calendar):
 
 
 @patch(
-    "openpeerpowerr.util.dt.now",
+    "openpeerpower.util.dt.now",
     return_value=dt.as_local(datetime.datetime(2015, 11, 27, 0, 45)),
 )
 async def test_event_rrule_hourly_off_first(mock_now,.opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_OFF
 
 
 @patch(
-    "openpeerpowerr.util.dt.now",
+    "openpeerpower.util.dt.now",
     return_value=dt.as_local(datetime.datetime(2015, 11, 27, 11, 45)),
 )
 async def test_event_rrule_hourly_off_last(mock_now,.opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_OFF
 
 
 @patch(
-    "openpeerpowerr.util.dt.now",
+    "openpeerpower.util.dt.now",
     return_value=dt.as_local(datetime.datetime(2015, 11, 27, 12, 15)),
 )
 async def test_event_rrule_hourly_ended(mock_now,.opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("calendar.private")
+    state =.opp.states.get("calendar.private")
     assert state.name == calendar.name
     assert state.state == STATE_OFF
 
@@ -779,8 +779,8 @@ async def test_event_rrule_hourly_ended(mock_now,.opp, calendar):
 async def test_get_events.opp, calendar):
     """Test that all events are returned on API."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await opp..async_block_till_done()
-    entity = opp.data["calendar"].get_entity("calendar.private")
+    await.opp.async_block_till_done()
+    entity =.opp.data["calendar"].get_entity("calendar.private")
     events = await entity.async_get_events(
        .opp, datetime.date(2015, 11, 27), datetime.date(2015, 11, 28)
     )
@@ -795,9 +795,9 @@ async def test_get_events_custom_calendars.opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    entity = opp.data["calendar"].get_entity("calendar.private_private")
+    entity =.opp.data["calendar"].get_entity("calendar.private_private")
     events = await entity.async_get_events(
        .opp, datetime.date(2015, 11, 27), datetime.date(2015, 11, 28)
     )

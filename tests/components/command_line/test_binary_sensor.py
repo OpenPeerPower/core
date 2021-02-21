@@ -3,9 +3,9 @@ import unittest
 
 from openpeerpower.components.command_line import binary_sensor as command_line
 from openpeerpower.const import STATE_OFF, STATE_ON
-from openpeerpowerr.helpers import template
+from openpeerpower.helpers import template
 
-from tests.common import get_test_home_assistant
+from tests.common import get_test_open_peer_power
 
 
 class TestCommandSensorBinarySensor(unittest.TestCase):
@@ -13,7 +13,7 @@ class TestCommandSensorBinarySensor(unittest.TestCase):
 
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.addCleanup(self.opp.stop)
 
     def test_setup(self):

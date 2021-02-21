@@ -8,12 +8,12 @@ from pycfdns.exceptions import (
 from openpeerpower.components.cloudflare.const import CONF_RECORDS, DOMAIN
 from openpeerpower.config_entries import SOURCE_USER
 from openpeerpower.const import CONF_API_TOKEN, CONF_SOURCE, CONF_ZONE
-from openpeerpowerr.data_entry_flow import (
+from openpeerpower.data_entry_flow import (
     RESULT_TYPE_ABORT,
     RESULT_TYPE_CREATE_ENTRY,
     RESULT_TYPE_FORM,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import (
     ENTRY_CONFIG,
@@ -31,39 +31,39 @@ async def test_user_form.opp, cfupdate_flow):
     """Test we get the user initiated form."""
     await async_setup_component.opp, "persistent_notification", {})
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         USER_INPUT,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "zone"
     assert result["errors"] == {}
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         USER_INPUT_ZONE,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "records"
     assert result["errors"] == {}
 
     with _patch_async_setup() as mock_setup, _patch_async_setup_entry() as mock_setup_entry:
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             USER_INPUT_RECORDS,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == USER_INPUT_ZONE[CONF_ZONE]
@@ -84,12 +84,12 @@ async def test_user_form_cannot_connect.opp, cfupdate_flow):
     """Test we handle cannot connect error."""
     instance = cfupdate_flow.return_value
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}
     )
 
     instance.get_zones.side_effect = CloudflareConnectionException()
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         USER_INPUT,
     )
@@ -102,12 +102,12 @@ async def test_user_form_invalid_auth.opp, cfupdate_flow):
     """Test we handle invalid auth error."""
     instance = cfupdate_flow.return_value
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}
     )
 
     instance.get_zones.side_effect = CloudflareAuthenticationException()
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         USER_INPUT,
     )
@@ -120,12 +120,12 @@ async def test_user_form_invalid_zone.opp, cfupdate_flow):
     """Test we handle invalid zone error."""
     instance = cfupdate_flow.return_value
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}
     )
 
     instance.get_zones.side_effect = CloudflareZoneException()
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         USER_INPUT,
     )
@@ -138,12 +138,12 @@ async def test_user_form_unexpected_exception.opp, cfupdate_flow):
     """Test we handle unexpected exception."""
     instance = cfupdate_flow.return_value
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}
     )
 
     instance.get_zones.side_effect = Exception()
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         USER_INPUT,
     )
@@ -155,9 +155,9 @@ async def test_user_form_unexpected_exception.opp, cfupdate_flow):
 async def test_user_form_single_instance_allowed.opp):
     """Test that configuring more than one instance is rejected."""
     entry = MockConfigEntry(domain=DOMAIN, data=ENTRY_CONFIG)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data=USER_INPUT,

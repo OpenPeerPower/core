@@ -7,7 +7,7 @@ from unittest.mock import patch
 from openpeerpower.components.cert_expiry.const import DOMAIN
 from openpeerpower.config_entries import ENTRY_STATE_SETUP_RETRY
 from openpeerpower.const import CONF_HOST, CONF_PORT, STATE_UNAVAILABLE, STATE_UNKNOWN
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.util.dt import utcnow
 
 from .const import HOST, PORT
 from .helpers import future_timestamp, static_datetime
@@ -15,7 +15,7 @@ from .helpers import future_timestamp, static_datetime
 from tests.common import MockConfigEntry, async_fire_time_changed
 
 
-@patch("openpeerpowerr.util.dt.utcnow", return_value=static_datetime())
+@patch("openpeerpower.util.dt.utcnow", return_value=static_datetime())
 async def test_async_setup_entry(mock_now,.opp):
     """Test async_setup_entry."""
     entry = MockConfigEntry(
@@ -30,11 +30,11 @@ async def test_async_setup_entry(mock_now,.opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=timestamp,
     ):
-        entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.state == timestamp.isoformat()
@@ -54,11 +54,11 @@ async def test_async_setup_entry_bad_cert.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=ssl.SSLError("some error"),
     ):
-        entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.attributes.get("error") == "some error"
@@ -77,9 +77,9 @@ async def test_async_setup_entry_host_unavailable.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=socket.gaierror,
     ):
-        entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(entry.entry_id) is False
-        await opp..async_block_till_done()
+        entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(entry.entry_id) is False
+        await.opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -89,9 +89,9 @@ async def test_async_setup_entry_host_unavailable.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=socket.gaierror,
     ):
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is None
 
 
@@ -106,15 +106,15 @@ async def test_update_sensor.opp):
     starting_time = static_datetime()
     timestamp = future_timestamp(100)
 
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=starting_time), patch(
+    with patch("openpeerpower.util.dt.utcnow", return_value=starting_time), patch(
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=timestamp,
     ):
-        entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.state == timestamp.isoformat()
@@ -122,14 +122,14 @@ async def test_update_sensor.opp):
     assert state.attributes.get("is_valid")
 
     next_update = starting_time + timedelta(hours=24)
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=next_update), patch(
+    with patch("openpeerpower.util.dt.utcnow", return_value=next_update), patch(
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=timestamp,
     ):
         async_fire_time_changed.opp, utcnow() + timedelta(hours=24))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.state == timestamp.isoformat()
@@ -148,15 +148,15 @@ async def test_update_sensor_network_errors.opp):
     starting_time = static_datetime()
     timestamp = future_timestamp(100)
 
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=starting_time), patch(
+    with patch("openpeerpower.util.dt.utcnow", return_value=starting_time), patch(
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=timestamp,
     ):
-        entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.state == timestamp.isoformat()
@@ -165,26 +165,26 @@ async def test_update_sensor_network_errors.opp):
 
     next_update = starting_time + timedelta(hours=24)
 
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=next_update), patch(
+    with patch("openpeerpower.util.dt.utcnow", return_value=next_update), patch(
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=socket.gaierror,
     ):
         async_fire_time_changed.opp, utcnow() + timedelta(hours=24))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     next_update = starting_time + timedelta(hours=48)
 
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state.state == STATE_UNAVAILABLE
 
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=next_update), patch(
+    with patch("openpeerpower.util.dt.utcnow", return_value=next_update), patch(
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=timestamp,
     ):
         async_fire_time_changed.opp, utcnow() + timedelta(hours=48))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+        state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
         assert state is not None
         assert state.state != STATE_UNAVAILABLE
         assert state.state == timestamp.isoformat()
@@ -193,14 +193,14 @@ async def test_update_sensor_network_errors.opp):
 
     next_update = starting_time + timedelta(hours=72)
 
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=next_update), patch(
+    with patch("openpeerpower.util.dt.utcnow", return_value=next_update), patch(
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=ssl.SSLError("something bad"),
     ):
         async_fire_time_changed.opp, utcnow() + timedelta(hours=72))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is not None
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get("error") == "something bad"
@@ -208,11 +208,11 @@ async def test_update_sensor_network_errors.opp):
 
     next_update = starting_time + timedelta(hours=96)
 
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=next_update), patch(
+    with patch("openpeerpower.util.dt.utcnow", return_value=next_update), patch(
         "openpeerpower.components.cert_expiry.helper.get_cert", side_effect=Exception()
     ):
         async_fire_time_changed.opp, utcnow() + timedelta(hours=96))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state.state == STATE_UNAVAILABLE

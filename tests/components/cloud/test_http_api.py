@@ -10,13 +10,13 @@ from.opp_nabucasa.const import STATE_CONNECTED
 from jose import jwt
 import pytest
 
-from openpeerpowerr.auth.providers import trusted_networks as tn_auth
+from openpeerpower.auth.providers import trusted_networks as tn_auth
 from openpeerpower.components.alexa import errors as alexa_errors
 from openpeerpower.components.alexa.entities import LightCapabilities
 from openpeerpower.components.cloud.const import DOMAIN, RequireRelink
 from openpeerpower.components.google_assistant.helpers import GoogleEntity
 from openpeerpower.const import HTTP_INTERNAL_SERVER_ERROR
-from openpeerpowerr.core import State
+from openpeerpower.core import State
 
 from . import mock_cloud, mock_cloud_prefs
 
@@ -28,7 +28,7 @@ SUBSCRIPTION_INFO_URL = "https://api-test.opp.io/subscription_info"
 @pytest.fixture(name="mock_auth")
 def mock_auth_fixture():
     """Mock check token."""
-    with patch("opp_nabucasa.auth.CognitoAuth.async_check_token"):
+    with patch(.opp_nabucasa.auth.CognitoAuth.async_check_token"):
         yield
 
 
@@ -37,7 +37,7 @@ def mock_cloud_login_fixture.opp, setup_api):
     """Mock cloud is logged in."""
    .opp.data[DOMAIN].id_token = jwt.encode(
         {
-            "email": "hello@openpeerpower.io",
+            "email": "hello@open-peer-power.io",
             "custom:sub-exp": "2018-01-03",
             "cognito:username": "abcdefghjkl",
         },
@@ -71,21 +71,21 @@ def setup_api_fixture.opp, aioclient_mock):
 @pytest.fixture(name="cloud_client")
 def cloud_client_fixture.opp,.opp_client):
     """Fixture that can fetch from the cloud client."""
-    with patch("opp_nabucasa.Cloud.write_user_info"):
+    with patch(.opp_nabucasa.Cloud.write_user_info"):
         yield.opp.loop.run_until_complete.opp_client())
 
 
 @pytest.fixture(name="mock_cognito")
 def mock_cognito_fixture():
     """Mock warrant."""
-    with patch("opp_nabucasa.auth.CognitoAuth._cognito") as mock_cog:
+    with patch(.opp_nabucasa.auth.CognitoAuth._cognito") as mock_cog:
         yield mock_cog()
 
 
 async def test_google_actions_sync(mock_cognito, mock_cloud_login, cloud_client):
     """Test syncing Google Actions."""
     with patch(
-        "opp_nabucasa.cloud_api.async_google_actions_request_sync",
+        .opp_nabucasa.cloud_api.async_google_actions_request_sync",
         return_value=Mock(status=200),
     ) as mock_request_sync:
         req = await cloud_client.post("/api/cloud/google_actions/sync")
@@ -96,7 +96,7 @@ async def test_google_actions_sync(mock_cognito, mock_cloud_login, cloud_client)
 async def test_google_actions_sync_fails(mock_cognito, mock_cloud_login, cloud_client):
     """Test syncing Google Actions gone bad."""
     with patch(
-        "opp_nabucasa.cloud_api.async_google_actions_request_sync",
+        .opp_nabucasa.cloud_api.async_google_actions_request_sync",
         return_value=Mock(status=HTTP_INTERNAL_SERVER_ERROR),
     ) as mock_request_sync:
         req = await cloud_client.post("/api/cloud/google_actions/sync")
@@ -130,7 +130,7 @@ async def test_login_view_random_exception(cloud_client):
 
 async def test_login_view_invalid_json(cloud_client):
     """Try logging in with invalid JSON."""
-    with patch("opp_nabucasa.auth.CognitoAuth.async_login") as mock_login:
+    with patch(.opp_nabucasa.auth.CognitoAuth.async_login") as mock_login:
         req = await cloud_client.post("/api/cloud/login", data="Not JSON")
     assert req.status == 400
     assert len(mock_login.mock_calls) == 0
@@ -138,7 +138,7 @@ async def test_login_view_invalid_json(cloud_client):
 
 async def test_login_view_invalid_schema(cloud_client):
     """Try logging in with invalid schema."""
-    with patch("opp_nabucasa.auth.CognitoAuth.async_login") as mock_login:
+    with patch(.opp_nabucasa.auth.CognitoAuth.async_login") as mock_login:
         req = await cloud_client.post("/api/cloud/login", json={"invalid": "schema"})
     assert req.status == 400
     assert len(mock_login.mock_calls) == 0
@@ -147,7 +147,7 @@ async def test_login_view_invalid_schema(cloud_client):
 async def test_login_view_request_timeout(cloud_client):
     """Test request timeout while trying to log in."""
     with patch(
-        "opp_nabucasa.auth.CognitoAuth.async_login", side_effect=asyncio.TimeoutError
+        .opp_nabucasa.auth.CognitoAuth.async_login", side_effect=asyncio.TimeoutError
     ):
         req = await cloud_client.post(
             "/api/cloud/login", json={"email": "my_username", "password": "my_password"}
@@ -159,7 +159,7 @@ async def test_login_view_request_timeout(cloud_client):
 async def test_login_view_invalid_credentials(cloud_client):
     """Test logging in with invalid credentials."""
     with patch(
-        "opp_nabucasa.auth.CognitoAuth.async_login", side_effect=Unauthenticated
+        .opp_nabucasa.auth.CognitoAuth.async_login", side_effect=Unauthenticated
     ):
         req = await cloud_client.post(
             "/api/cloud/login", json={"email": "my_username", "password": "my_password"}
@@ -170,7 +170,7 @@ async def test_login_view_invalid_credentials(cloud_client):
 
 async def test_login_view_unknown_error(cloud_client):
     """Test unknown error while logging in."""
-    with patch("opp_nabucasa.auth.CognitoAuth.async_login", side_effect=UnknownError):
+    with patch(.opp_nabucasa.auth.CognitoAuth.async_login", side_effect=UnknownError):
         req = await cloud_client.post(
             "/api/cloud/login", json={"email": "my_username", "password": "my_password"}
         )
@@ -180,7 +180,7 @@ async def test_login_view_unknown_error(cloud_client):
 
 async def test_logout_view.opp, cloud_client):
     """Test logging out."""
-    cloud = opp.data["cloud"] = MagicMock()
+    cloud =.opp.data["cloud"] = MagicMock()
     cloud.logout = AsyncMock(return_value=None)
     req = await cloud_client.post("/api/cloud/logout")
     assert req.status == 200
@@ -191,7 +191,7 @@ async def test_logout_view.opp, cloud_client):
 
 async def test_logout_view_request_timeout.opp, cloud_client):
     """Test timeout while logging out."""
-    cloud = opp.data["cloud"] = MagicMock()
+    cloud =.opp.data["cloud"] = MagicMock()
     cloud.logout.side_effect = asyncio.TimeoutError
     req = await cloud_client.post("/api/cloud/logout")
     assert req.status == 502
@@ -199,7 +199,7 @@ async def test_logout_view_request_timeout.opp, cloud_client):
 
 async def test_logout_view_unknown_error.opp, cloud_client):
     """Test unknown error while logging out."""
-    cloud = opp.data["cloud"] = MagicMock()
+    cloud =.opp.data["cloud"] = MagicMock()
     cloud.logout.side_effect = UnknownError
     req = await cloud_client.post("/api/cloud/logout")
     assert req.status == 502
@@ -332,7 +332,7 @@ async def test_websocket_status(
 ):
     """Test querying the status."""
    .opp.data[DOMAIN].iot.state = STATE_CONNECTED
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch.dict(
         "openpeerpower.components.google_assistant.const.DOMAIN_TO_GOOGLE_TYPES",
@@ -347,7 +347,7 @@ async def test_websocket_status(
         response = await client.receive_json()
     assert response["result"] == {
         "logged_in": True,
-        "email": "hello@openpeerpower.io",
+        "email": "hello@open-peer-power.io",
         "cloud": "connected",
         "prefs": {
             "alexa_enabled": True,
@@ -387,7 +387,7 @@ async def test_websocket_status(
 
 async def test_websocket_status_not_logged_in.opp,.opp_ws_client):
     """Test querying the status."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "cloud/status"})
     response = await client.receive_json()
     assert response["result"] == {"logged_in": False, "cloud": "disconnected"}
@@ -398,11 +398,11 @@ async def test_websocket_subscription_reconnect(
 ):
     """Test querying the status and connecting because valid account."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, json={"provider": "stripe"})
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
-        "opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
-    ) as mock_renew, patch("opp_nabucasa.iot.CloudIoT.connect") as mock_connect:
+        .opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
+    ) as mock_renew, patch(.opp_nabucasa.iot.CloudIoT.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/subscription"})
         response = await client.receive_json()
 
@@ -417,11 +417,11 @@ async def test_websocket_subscription_no_reconnect_if_connected(
     """Test querying the status and not reconnecting because still expired."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, json={"provider": "stripe"})
    .opp.data[DOMAIN].iot.state = STATE_CONNECTED
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
-        "opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
-    ) as mock_renew, patch("opp_nabucasa.iot.CloudIoT.connect") as mock_connect:
+        .opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
+    ) as mock_renew, patch(.opp_nabucasa.iot.CloudIoT.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/subscription"})
         response = await client.receive_json()
 
@@ -435,11 +435,11 @@ async def test_websocket_subscription_no_reconnect_if_expired(
 ):
     """Test querying the status and not reconnecting because still expired."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, json={"provider": "stripe"})
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
-        "opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
-    ) as mock_renew, patch("opp_nabucasa.iot.CloudIoT.connect") as mock_connect:
+        .opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
+    ) as mock_renew, patch(.opp_nabucasa.iot.CloudIoT.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/subscription"})
         response = await client.receive_json()
 
@@ -453,7 +453,7 @@ async def test_websocket_subscription_fail(
 ):
     """Test querying the status."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, status=HTTP_INTERNAL_SERVER_ERROR)
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "cloud/subscription"})
     response = await client.receive_json()
 
@@ -463,9 +463,9 @@ async def test_websocket_subscription_fail(
 
 async def test_websocket_subscription_not_logged_in.opp,.opp_ws_client):
     """Test querying the status."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     with patch(
-        "opp_nabucasa.Cloud.fetch_subscription_info",
+        .opp_nabucasa.Cloud.fetch_subscription_info",
         return_value={"return": "value"},
     ):
         await client.send_json({"id": 5, "type": "cloud/subscription"})
@@ -482,7 +482,7 @@ async def test_websocket_update_preferences(
     assert setup_api.google_enabled
     assert setup_api.alexa_enabled
     assert setup_api.google_secure_devices_pin is None
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -510,7 +510,7 @@ async def test_websocket_update_preferences_require_relink(
    .opp,.opp_ws_client, aioclient_mock, setup_api, mock_cloud_login
 ):
     """Test updating preference requires relink."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
         "openpeerpower.components.cloud.alexa_config.AlexaConfig"
@@ -530,7 +530,7 @@ async def test_websocket_update_preferences_no_token(
    .opp,.opp_ws_client, aioclient_mock, setup_api, mock_cloud_login
 ):
     """Test updating preference no token available."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
         "openpeerpower.components.cloud.alexa_config.AlexaConfig"
@@ -548,9 +548,9 @@ async def test_websocket_update_preferences_no_token(
 
 async def test_enabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to enable webhooks."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     with patch(
-        "opp_nabucasa.cloudhooks.Cloudhooks.async_create", return_value={}
+        .opp_nabucasa.cloudhooks.Cloudhooks.async_create", return_value={}
     ) as mock_enable:
         await client.send_json(
             {"id": 5, "type": "cloud/cloudhook/create", "webhook_id": "mock-webhook-id"}
@@ -564,8 +564,8 @@ async def test_enabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login)
 
 async def test_disabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to disable webhooks."""
-    client = await opp._ws_client.opp)
-    with patch("opp_nabucasa.cloudhooks.Cloudhooks.async_delete") as mock_disable:
+    client = await.opp_ws_client.opp)
+    with patch(.opp_nabucasa.cloudhooks.Cloudhooks.async_delete") as mock_disable:
         await client.send_json(
             {"id": 5, "type": "cloud/cloudhook/delete", "webhook_id": "mock-webhook-id"}
         )
@@ -578,10 +578,10 @@ async def test_disabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login
 
 async def test_enabling_remote.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to enable remote UI."""
-    client = await opp._ws_client.opp)
-    cloud = opp.data[DOMAIN]
+    client = await.opp_ws_client.opp)
+    cloud =.opp.data[DOMAIN]
 
-    with patch("opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
+    with patch(.opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()
     assert response["success"]
@@ -592,10 +592,10 @@ async def test_enabling_remote.opp,.opp_ws_client, setup_api, mock_cloud_login):
 
 async def test_disabling_remote.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to disable remote UI."""
-    client = await opp._ws_client.opp)
-    cloud = opp.data[DOMAIN]
+    client = await.opp_ws_client.opp)
+    cloud =.opp.data[DOMAIN]
 
-    with patch("opp_nabucasa.remote.RemoteUI.disconnect") as mock_disconnect:
+    with patch(.opp_nabucasa.remote.RemoteUI.disconnect") as mock_disconnect:
         await client.send_json({"id": 5, "type": "cloud/remote/disconnect"})
         response = await client.receive_json()
     assert response["success"]
@@ -619,10 +619,10 @@ async def test_enabling_remote_trusted_networks_local4(
         ),
     )
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
-        "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
+        .opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
     ) as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()
@@ -652,10 +652,10 @@ async def test_enabling_remote_trusted_networks_local6(
         ),
     )
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
-        "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
+        .opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
     ) as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()
@@ -685,10 +685,10 @@ async def test_enabling_remote_trusted_networks_other(
         ),
     )
 
-    client = await opp._ws_client.opp)
-    cloud = opp.data[DOMAIN]
+    client = await.opp_ws_client.opp)
+    cloud =.opp.data[DOMAIN]
 
-    with patch("opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
+    with patch(.opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()
 
@@ -700,7 +700,7 @@ async def test_enabling_remote_trusted_networks_other(
 
 async def test_list_google_entities.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can list Google entities."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     entity = GoogleEntity(
        .opp, MockConfig(should_expose=lambda *_: False), State("light.kitchen", "on")
     )
@@ -732,7 +732,7 @@ async def test_list_google_entities.opp,.opp_ws_client, setup_api, mock_cloud_lo
 
 async def test_update_google_entity.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can update config of a Google entity."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -747,7 +747,7 @@ async def test_update_google_entity.opp,.opp_ws_client, setup_api, mock_cloud_lo
     response = await client.receive_json()
 
     assert response["success"]
-    prefs = opp.data[DOMAIN].client.prefs
+    prefs =.opp.data[DOMAIN].client.prefs
     assert prefs.google_entity_configs["light.kitchen"] == {
         "should_expose": False,
         "override_name": "updated name",
@@ -766,7 +766,7 @@ async def test_update_google_entity.opp,.opp_ws_client, setup_api, mock_cloud_lo
     response = await client.receive_json()
 
     assert response["success"]
-    prefs = opp.data[DOMAIN].client.prefs
+    prefs =.opp.data[DOMAIN].client.prefs
     assert prefs.google_entity_configs["light.kitchen"] == {
         "should_expose": None,
         "override_name": "updated name",
@@ -781,10 +781,10 @@ async def test_enabling_remote_trusted_proxies_local4(
     """Test we cannot enable remote UI when trusted networks active."""
    .opp.http.trusted_proxies.append(ip_network("127.0.0.1"))
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
-        "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
+        .opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
     ) as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()
@@ -805,10 +805,10 @@ async def test_enabling_remote_trusted_proxies_local6(
     """Test we cannot enable remote UI when trusted networks active."""
    .opp.http.trusted_proxies.append(ip_network("::1"))
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
-        "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
+        .opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
     ) as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()
@@ -825,7 +825,7 @@ async def test_enabling_remote_trusted_proxies_local6(
 
 async def test_list_alexa_entities.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can list Alexa entities."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     entity = LightCapabilities(
        .opp, MagicMock(entity_config={}), State("light.kitchen", "on")
     )
@@ -847,7 +847,7 @@ async def test_list_alexa_entities.opp,.opp_ws_client, setup_api, mock_cloud_log
 
 async def test_update_alexa_entity.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can update config of an Alexa entity."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -859,7 +859,7 @@ async def test_update_alexa_entity.opp,.opp_ws_client, setup_api, mock_cloud_log
     response = await client.receive_json()
 
     assert response["success"]
-    prefs = opp.data[DOMAIN].client.prefs
+    prefs =.opp.data[DOMAIN].client.prefs
     assert prefs.alexa_entity_configs["light.kitchen"] == {"should_expose": False}
 
     await client.send_json(
@@ -873,7 +873,7 @@ async def test_update_alexa_entity.opp,.opp_ws_client, setup_api, mock_cloud_log
     response = await client.receive_json()
 
     assert response["success"]
-    prefs = opp.data[DOMAIN].client.prefs
+    prefs =.opp.data[DOMAIN].client.prefs
     assert prefs.alexa_entity_configs["light.kitchen"] == {"should_expose": None}
 
 
@@ -881,7 +881,7 @@ async def test_sync_alexa_entities_timeout(
    .opp,.opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test that timeout syncing Alexa entities."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     with patch(
         "openpeerpower.components.cloud.alexa_config.AlexaConfig"
         ".async_sync_entities",
@@ -898,7 +898,7 @@ async def test_sync_alexa_entities_no_token(
    .opp,.opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test sync Alexa entities when we have no token."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     with patch(
         "openpeerpower.components.cloud.alexa_config.AlexaConfig"
         ".async_sync_entities",
@@ -915,7 +915,7 @@ async def test_enable_alexa_state_report_fail(
    .opp,.opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test enable Alexa entities state reporting when no token available."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     with patch(
         "openpeerpower.components.cloud.alexa_config.AlexaConfig"
         ".async_sync_entities",
@@ -930,7 +930,7 @@ async def test_enable_alexa_state_report_fail(
 
 async def test_thingtalk_convert.opp,.opp_ws_client, setup_api):
     """Test that we can convert a query."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
         "openpeerpower.components.cloud.http_api.thingtalk.async_convert",
@@ -947,7 +947,7 @@ async def test_thingtalk_convert.opp,.opp_ws_client, setup_api):
 
 async def test_thingtalk_convert_timeout.opp,.opp_ws_client, setup_api):
     """Test that we can convert a query."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
         "openpeerpower.components.cloud.http_api.thingtalk.async_convert",
@@ -964,7 +964,7 @@ async def test_thingtalk_convert_timeout.opp,.opp_ws_client, setup_api):
 
 async def test_thingtalk_convert_internal.opp,.opp_ws_client, setup_api):
     """Test that we can convert a query."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
         "openpeerpower.components.cloud.http_api.thingtalk.async_convert",
@@ -985,7 +985,7 @@ async def test_tts_info.opp,.opp_ws_client, setup_api):
     # Verify the format is as expected
     assert voice.MAP_VOICE[("en-US", voice.Gender.FEMALE)] == "JennyNeural"
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch.dict(
         "openpeerpower.components.cloud.http_api.MAP_VOICE",

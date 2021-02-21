@@ -3,9 +3,9 @@ import unittest
 from unittest.mock import patch
 
 from openpeerpower.components.command_line import sensor as command_line
-from openpeerpowerr.helpers.template import Template
+from openpeerpower.helpers.template import Template
 
-from tests.common import get_test_home_assistant
+from tests.common import get_test_open_peer_power
 
 
 class TestCommandSensorSensor(unittest.TestCase):
@@ -13,7 +13,7 @@ class TestCommandSensorSensor(unittest.TestCase):
 
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.addCleanup(self.opp.stop)
 
     def update_side_effect(self, data):

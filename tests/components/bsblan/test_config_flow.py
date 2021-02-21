@@ -12,7 +12,7 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONTENT_TYPE_JSON,
 )
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from . import init_integration
 
@@ -22,7 +22,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 async def test_show_user_form.opp: OpenPeerPower) -> None:
     """Test that the user set up form is served."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -40,7 +40,7 @@ async def test_connection_error(
         exc=aiohttp.ClientError,
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
         data={
@@ -63,7 +63,7 @@ async def test_user_device_exists_abort(
     """Test we abort zeroconf flow if BSBLan device already configured."""
     await init_integration.opp, aioclient_mock)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
         data={
@@ -88,7 +88,7 @@ async def test_full_user_flow_implementation(
         headers={"Content-Type": CONTENT_TYPE_JSON},
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -96,7 +96,7 @@ async def test_full_user_flow_implementation(
     assert result["step_id"] == "user"
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_HOST: "example.local",
@@ -116,7 +116,7 @@ async def test_full_user_flow_implementation(
     assert result["title"] == "RVS21.831F/127"
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    entries = opp.config_entries.async_entries(config_flow.DOMAIN)
+    entries =.opp.config_entries.async_entries(config_flow.DOMAIN)
     assert entries[0].unique_id == "RVS21.831F/127"
 
 
@@ -130,7 +130,7 @@ async def test_full_user_flow_implementation_without_auth(
         headers={"Content-Type": CONTENT_TYPE_JSON},
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -138,7 +138,7 @@ async def test_full_user_flow_implementation_without_auth(
     assert result["step_id"] == "user"
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_HOST: "example2.local",
@@ -155,5 +155,5 @@ async def test_full_user_flow_implementation_without_auth(
     assert result["title"] == "RVS21.831F/127"
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    entries = opp.config_entries.async_entries(config_flow.DOMAIN)
+    entries =.opp.config_entries.async_entries(config_flow.DOMAIN)
     assert entries[0].unique_id == "RVS21.831F/127"

@@ -1,7 +1,7 @@
 """Test Cloud preferences."""
 from unittest.mock import patch
 
-from openpeerpowerr.auth.const import GROUP_ID_ADMIN
+from openpeerpower.auth.const import GROUP_ID_ADMIN
 from openpeerpower.components.cloud.prefs import STORAGE_KEY, CloudPreferences
 
 
@@ -50,7 +50,7 @@ async def test_load_invalid_cloud_user.opp,.opp_storage):
 
     assert cloud_user_id != "non-existing"
 
-    cloud_user = await opp..auth.async_get_user(
+    cloud_user = await.opp.auth.async_get_user(
        .opp_storage[STORAGE_KEY]["data"]["cloud_user"]
     )
 
@@ -66,14 +66,14 @@ async def test_setup_remove_cloud_user.opp,.opp_storage):
     await prefs.async_initialize()
     await prefs.async_set_username("user1")
 
-    cloud_user = await opp..auth.async_get_user(await prefs.get_cloud_user())
+    cloud_user = await.opp.auth.async_get_user(await prefs.get_cloud_user())
 
     assert cloud_user
     assert cloud_user.groups[0].id == GROUP_ID_ADMIN
 
     await prefs.async_set_username("user2")
 
-    cloud_user2 = await opp..auth.async_get_user(await prefs.get_cloud_user())
+    cloud_user2 = await.opp.auth.async_get_user(await prefs.get_cloud_user())
 
     assert cloud_user2
     assert cloud_user2.groups[0].id == GROUP_ID_ADMIN

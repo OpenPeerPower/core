@@ -12,7 +12,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_state_none.opp):
@@ -33,29 +33,29 @@ async def test_state_none.opp):
                 }
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.test"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_ON == state.state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.test"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
 
@@ -79,29 +79,29 @@ async def test_state_value.opp):
                 }
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.test"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_ON == state.state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.test"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
 
@@ -127,29 +127,29 @@ async def test_state_json_value.opp):
                 }
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.test"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_ON == state.state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.test"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
 
@@ -172,29 +172,29 @@ async def test_state_code.opp):
                 }
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.test"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_ON == state.state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.test"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.test")
+        state =.opp.states.get("switch.test")
         assert STATE_ON == state.state
 
 

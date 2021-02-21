@@ -1,6 +1,6 @@
 """The tests for the buienradar weather component."""
 from openpeerpower.components import weather
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 # Example config snippet from documentation.
 BASE_CONFIG = {
@@ -19,7 +19,7 @@ BASE_CONFIG = {
 async def test_smoke_test_setup_component.opp):
     """Smoke test for successfully set-up with default config."""
     assert await async_setup_component.opp, weather.DOMAIN, BASE_CONFIG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("weather.volkel")
+    state =.opp.states.get("weather.volkel")
     assert state.state == "unknown"

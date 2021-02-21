@@ -12,7 +12,7 @@ from tests.common import MockConfigEntry
 ENTRY_CONFIG = {
     CONF_API_TOKEN: "mock-api-token",
     CONF_ZONE: "mock.com",
-    CONF_RECORDS: ["op.mock.com", "openpeerpowerr.mock.com"],
+    CONF_RECORDS: ["ha.mock.com", "openpeerpower.mock.com"],
 }
 
 ENTRY_OPTIONS = {}
@@ -23,7 +23,7 @@ USER_INPUT = {
 
 USER_INPUT_ZONE = {CONF_ZONE: "mock.com"}
 
-USER_INPUT_RECORDS = {CONF_RECORDS: ["op.mock.com", "openpeerpowerr.mock.com"]}
+USER_INPUT_RECORDS = {CONF_RECORDS: ["ha.mock.com", "openpeerpower.mock.com"]}
 
 MOCK_ZONE = "mock.com"
 MOCK_ZONE_ID = "mock-zone-id"
@@ -31,14 +31,14 @@ MOCK_ZONE_RECORDS = [
     {
         "id": "zone-record-id",
         "type": "A",
-        "name": "op.mock.com",
+        "name": "ha.mock.com",
         "proxied": True,
         "content": "127.0.0.1",
     },
     {
         "id": "zone-record-id-2",
         "type": "A",
-        "name": "openpeerpowerr.mock.com",
+        "name": "openpeerpower.mock.com",
         "proxied": True,
         "content": "127.0.0.1",
     },
@@ -60,10 +60,10 @@ async def init_integration(
 ) -> MockConfigEntry:
     """Set up the Cloudflare integration in Open Peer Power."""
     entry = MockConfigEntry(domain=DOMAIN, data=data, options=options)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
     return entry
 

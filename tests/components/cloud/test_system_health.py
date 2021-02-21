@@ -4,8 +4,8 @@ from unittest.mock import Mock
 
 from aiohttp import ClientError
 
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.dt import utcnow
 
 from tests.common import get_system_health_info
 

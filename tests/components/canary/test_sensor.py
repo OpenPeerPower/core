@@ -19,8 +19,8 @@ from openpeerpower.const import (
     SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.dt import utcnow
 
 from . import mock_device, mock_location, mock_reading
 
@@ -50,7 +50,7 @@ async def test_sensors_pro.opp, canary) -> None:
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["sensor"]):
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     sensors = {
         "home_dining_room_temperature": (
@@ -83,7 +83,7 @@ async def test_sensors_pro.opp, canary) -> None:
         assert entity_entry.unique_id == data[0]
         assert entity_entry.original_icon == data[4]
 
-        state = opp.states.get(f"sensor.{sensor_id}")
+        state =.opp.states.get(f"sensor.{sensor_id}")
         assert state
         assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == data[2]
         assert state.state == data[1]
@@ -115,10 +115,10 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["sensor"]):
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     entity_id = "sensor.home_dining_room_air_quality"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert state.attributes[ATTR_AIR_QUALITY] == STATE_AIR_QUALITY_ABNORMAL
 
@@ -130,10 +130,10 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
 
     future = utcnow() + timedelta(seconds=30)
     async_fire_time_changed.opp, future)
-    await opp..helpers.entity_component.async_update_entity(entity_id)
-    await opp..async_block_till_done()
+    await.opp.helpers.entity_component.async_update_entity(entity_id)
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert state.attributes[ATTR_AIR_QUALITY] == STATE_AIR_QUALITY_VERY_ABNORMAL
 
@@ -145,10 +145,10 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
 
     future += timedelta(seconds=30)
     async_fire_time_changed.opp, future)
-    await opp..helpers.entity_component.async_update_entity(entity_id)
-    await opp..async_block_till_done()
+    await.opp.helpers.entity_component.async_update_entity(entity_id)
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert state.attributes[ATTR_AIR_QUALITY] == STATE_AIR_QUALITY_NORMAL
 
@@ -175,7 +175,7 @@ async def test_sensors_flex.opp, canary) -> None:
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["sensor"]):
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     sensors = {
         "home_dining_room_battery": (
@@ -201,7 +201,7 @@ async def test_sensors_flex.opp, canary) -> None:
         assert entity_entry.unique_id == data[0]
         assert entity_entry.original_icon == data[4]
 
-        state = opp.states.get(f"sensor.{sensor_id}")
+        state =.opp.states.get(f"sensor.{sensor_id}")
         assert state
         assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == data[2]
         assert state.state == data[1]

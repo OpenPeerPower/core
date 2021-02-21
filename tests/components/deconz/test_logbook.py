@@ -7,7 +7,7 @@ from openpeerpower.components.deconz.const import CONF_GESTURE
 from openpeerpower.components.deconz.deconz_event import CONF_DECONZ_EVENT
 from openpeerpower.components.deconz.gateway import get_gateway_from_config_entry
 from openpeerpower.const import CONF_DEVICE_ID, CONF_EVENT, CONF_ID, CONF_UNIQUE_ID
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .test_gateway import DECONZ_WEB_REQUEST, setup_deconz_integration
 

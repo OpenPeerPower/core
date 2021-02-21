@@ -3,11 +3,11 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpowerr.bootstrap import async_setup_component
+from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components import config
 from openpeerpower.components.websocket_api.const import TYPE_RESULT
 from openpeerpower.const import CONF_UNIT_SYSTEM, CONF_UNIT_SYSTEM_IMPERIAL
-from openpeerpowerr.util import dt as dt_util, location
+from openpeerpower.util import dt as dt_util, location
 
 ORIG_TIME_ZONE = dt_util.DEFAULT_TIME_ZONE
 
@@ -17,7 +17,7 @@ async def client.opp,.opp_ws_client):
     """Fixture that can interact with the config manager API."""
     with patch.object(config, "SECTIONS", ["core"]):
         assert await async_setup_component.opp, "config", {})
-    return await opp._ws_client.opp)
+    return await.opp_ws_client.opp)
 
 
 async def test_validate_config_ok.opp,.opp_client):
@@ -25,10 +25,10 @@ async def test_validate_config_ok.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["core"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     with patch(
-        "openpeerpower.components.config.core.async_check_op.config_file",
+        "openpeerpower.components.config.core.async_check_ha_config_file",
         return_value=None,
     ):
         resp = await client.post("/api/config/core/check_config")
@@ -39,7 +39,7 @@ async def test_validate_config_ok.opp,.opp_client):
     assert result["errors"] is None
 
     with patch(
-        "openpeerpower.components.config.core.async_check_op.config_file",
+        "openpeerpower.components.config.core.async_check_ha_config_file",
         return_value="beer",
     ):
         resp = await client.post("/api/config/core/check_config")
@@ -61,7 +61,7 @@ async def test_websocket_core_update.opp, client):
     assert.opp.config.external_url != "https://www.example.com"
     assert.opp.config.internal_url != "http://example.com"
 
-    with patch("openpeerpowerr.util.dt.set_default_time_zone") as mock_set_tz:
+    with patch("openpeerpower.util.dt.set_default_time_zone") as mock_set_tz:
         await client.send_json(
             {
                 "id": 5,
@@ -100,7 +100,7 @@ async def test_websocket_core_update_not_admin.opp,.opp_ws_client,.opp_admin_use
     with patch.object(config, "SECTIONS", ["core"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json({"id": 6, "type": "config/core/update", "latitude": 23})
 
     msg = await client.receive_json()
@@ -126,7 +126,7 @@ async def test_websocket_bad_core_update.opp, client):
 async def test_detect_config.opp, client):
     """Test detect config."""
     with patch(
-        "openpeerpowerr.util.location.async_detect_location_info",
+        "openpeerpower.util.location.async_detect_location_info",
         return_value=None,
     ):
         await client.send_json({"id": 1, "type": "config/core/detect"})
@@ -140,7 +140,7 @@ async def test_detect_config.opp, client):
 async def test_detect_config_fail.opp, client):
     """Test detect config."""
     with patch(
-        "openpeerpowerr.util.location.async_detect_location_info",
+        "openpeerpower.util.location.async_detect_location_info",
         return_value=location.LocationInfo(
             ip=None,
             country_code=None,

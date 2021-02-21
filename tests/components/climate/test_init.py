@@ -25,8 +25,8 @@ async def test_set_temp_schema_no_req.opp, caplog):
 
     data = {"hvac_mode": "off", "entity_id": ["climate.test_id"]}
     with pytest.raises(vol.Invalid):
-        await opp..services.async_call(domain, service, data)
-    await opp..async_block_till_done()
+        await.opp.services.async_call(domain, service, data)
+    await.opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -39,8 +39,8 @@ async def test_set_temp_schema.opp, caplog):
     calls = async_mock_service.opp, domain, service, schema)
 
     data = {"temperature": 20.0, "hvac_mode": "heat", "entity_id": ["climate.test_id"]}
-    await opp..services.async_call(domain, service, data)
-    await opp..async_block_till_done()
+    await.opp.services.async_call(domain, service, data)
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[-1].data == data
@@ -75,7 +75,7 @@ class MockClimateEntity(ClimateEntity):
 async def test_sync_turn_on.opp):
     """Test if async turn_on calls sync turn_on."""
     climate = MockClimateEntity()
-    climate.opp = opp
+    climate.opp =.opp
 
     climate.turn_on = MagicMock()
     await climate.async_turn_on()
@@ -86,7 +86,7 @@ async def test_sync_turn_on.opp):
 async def test_sync_turn_off.opp):
     """Test if async turn_off calls sync turn_off."""
     climate = MockClimateEntity()
-    climate.opp = opp
+    climate.opp =.opp
 
     climate.turn_off = MagicMock()
     await climate.async_turn_off()

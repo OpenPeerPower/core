@@ -14,7 +14,7 @@ def _flow_data():
 
 async def test_form.opp):
     """Test we get the form."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -29,10 +29,10 @@ async def test_form.opp):
         "openpeerpower.components.coolmaster.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], _flow_data()
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "1.1.1.1"
@@ -47,7 +47,7 @@ async def test_form.opp):
 
 async def test_form_timeout.opp):
     """Test we handle a connection timeout."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -55,7 +55,7 @@ async def test_form_timeout.opp):
         "openpeerpower.components.coolmaster.config_flow.CoolMasterNet.status",
         side_effect=TimeoutError(),
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], _flow_data()
         )
 
@@ -65,7 +65,7 @@ async def test_form_timeout.opp):
 
 async def test_form_connection_refused.opp):
     """Test we handle a connection error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -73,7 +73,7 @@ async def test_form_connection_refused.opp):
         "openpeerpower.components.coolmaster.config_flow.CoolMasterNet.status",
         side_effect=ConnectionRefusedError(),
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], _flow_data()
         )
 
@@ -83,7 +83,7 @@ async def test_form_connection_refused.opp):
 
 async def test_form_no_units.opp):
     """Test we handle no units found."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -91,7 +91,7 @@ async def test_form_no_units.opp):
         "openpeerpower.components.coolmaster.config_flow.CoolMasterNet.status",
         return_value={},
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], _flow_data()
         )
 

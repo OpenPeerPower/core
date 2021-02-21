@@ -10,9 +10,9 @@ from openpeerpower.components.cloud import DOMAIN
 from openpeerpower.components.cloud.client import CloudClient
 from openpeerpower.components.cloud.const import PREF_ENABLE_ALEXA, PREF_ENABLE_GOOGLE
 from openpeerpower.const import CONTENT_TYPE_JSON
-from openpeerpowerr.core import State
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.core import State
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt as dt_util
 
 from . import mock_cloud, mock_cloud_prefs
 
@@ -26,7 +26,7 @@ def mock_cloud_inst():
     return MagicMock(subscription_expired=False)
 
 
-async def test_op.dler_alexa.opp):
+async def test_handler_alexa.opp):
     """Test handler Alexa."""
    .opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
    .opp.states.async_set("switch.test2", "on", {"friendly_name": "Test switch 2"})
@@ -48,7 +48,7 @@ async def test_op.dler_alexa.opp):
     )
 
     mock_cloud_prefs.opp)
-    cloud = opp.data["cloud"]
+    cloud =.opp.data["cloud"]
 
     resp = await cloud.client.async_alexa_message(
         test_alexa.get_new_request("Alexa.Discovery", "Discover")
@@ -65,10 +65,10 @@ async def test_op.dler_alexa.opp):
     assert device["manufacturerName"] == "Open Peer Power"
 
 
-async def test_op.dler_alexa_disabled.opp, mock_cloud_fixture):
+async def test_handler_alexa_disabled.opp, mock_cloud_fixture):
     """Test handler Alexa when user has disabled it."""
     mock_cloud_fixture._prefs[PREF_ENABLE_ALEXA] = False
-    cloud = opp.data["cloud"]
+    cloud =.opp.data["cloud"]
 
     resp = await cloud.client.async_alexa_message(
         test_alexa.get_new_request("Alexa.Discovery", "Discover")
@@ -79,7 +79,7 @@ async def test_op.dler_alexa_disabled.opp, mock_cloud_fixture):
     assert resp["event"]["payload"]["type"] == "BRIDGE_UNREACHABLE"
 
 
-async def test_op.dler_google_actions.opp):
+async def test_handler_google_actions.opp):
     """Test handler Google Actions."""
    .opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
    .opp.states.async_set("switch.test2", "on", {"friendly_name": "Test switch 2"})
@@ -102,13 +102,13 @@ async def test_op.dler_google_actions.opp):
     )
 
     mock_cloud_prefs.opp)
-    cloud = opp.data["cloud"]
+    cloud =.opp.data["cloud"]
 
     reqid = "5711642932632160983"
     data = {"requestId": reqid, "inputs": [{"intent": "action.devices.SYNC"}]}
 
     with patch(
-        "opp_nabucasa.Cloud._decode_claims",
+        .opp_nabucasa.Cloud._decode_claims",
         return_value={"cognito:username": "myUserName"},
     ):
         await cloud.client.get_google_config()
@@ -130,17 +130,17 @@ async def test_op.dler_google_actions.opp):
     assert device["roomHint"] == "living room"
 
 
-async def test_op.dler_google_actions_disabled.opp, mock_cloud_fixture):
+async def test_handler_google_actions_disabled.opp, mock_cloud_fixture):
     """Test handler Google Actions when user has disabled it."""
     mock_cloud_fixture._prefs[PREF_ENABLE_GOOGLE] = False
 
-    with patch("opp_nabucasa.Cloud.start"):
+    with patch(.opp_nabucasa.Cloud.start"):
         assert await async_setup_component.opp, "cloud", {})
 
     reqid = "5711642932632160983"
     data = {"requestId": reqid, "inputs": [{"intent": "action.devices.SYNC"}]}
 
-    cloud = opp.data["cloud"]
+    cloud =.opp.data["cloud"]
     resp = await cloud.client.async_google_message(data)
 
     assert resp["requestId"] == reqid
@@ -149,10 +149,10 @@ async def test_op.dler_google_actions_disabled.opp, mock_cloud_fixture):
 
 async def test_webhook_msg.opp, caplog):
     """Test webhook msg."""
-    with patch("opp_nabucasa.Cloud.start"):
+    with patch(.opp_nabucasa.Cloud.start"):
         setup = await async_setup_component.opp, "cloud", {"cloud": {}})
         assert setup
-    cloud = opp.data["cloud"]
+    cloud =.opp.data["cloud"]
 
     await cloud.client.prefs.async_initialize()
     await cloud.client.prefs.async_update(
@@ -224,7 +224,7 @@ async def test_webhook_msg.opp, caplog):
 
 async def test_google_config_expose_entity.opp, mock_cloud_setup, mock_cloud_login):
     """Test Google config exposing entity method uses latest config."""
-    cloud_client = opp.data[DOMAIN].client
+    cloud_client =.opp.data[DOMAIN].client
     state = State("light.kitchen", "on")
     gconf = await cloud_client.get_google_config()
 
@@ -239,7 +239,7 @@ async def test_google_config_expose_entity.opp, mock_cloud_setup, mock_cloud_log
 
 async def test_google_config_should_2fa.opp, mock_cloud_setup, mock_cloud_login):
     """Test Google config disabling 2FA method uses latest config."""
-    cloud_client = opp.data[DOMAIN].client
+    cloud_client =.opp.data[DOMAIN].client
     gconf = await cloud_client.get_google_config()
     state = State("light.kitchen", "on")
 
@@ -284,6 +284,6 @@ async def test_login_recovers_bad_internet.opp, caplog):
     assert "Unable to activate Alexa Report State" in caplog.text
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=30))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(client._alexa_config.async_enable_proactive_mode.mock_calls) == 2

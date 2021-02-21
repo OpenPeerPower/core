@@ -5,7 +5,7 @@ from unittest.mock import patch
 import pytest
 
 from openpeerpower.components.blueprint import errors, models
-from openpeerpowerr.util.yaml import Input
+from openpeerpower.util.yaml import Input
 
 
 @pytest.fixture
@@ -16,7 +16,7 @@ def blueprint_1():
             "blueprint": {
                 "name": "Hello",
                 "domain": "automation",
-                "source_url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
+                "source_url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
                 "input": {"test-input": {"name": "Name", "description": "Description"}},
             },
             "example": Input("test-input"),
@@ -32,7 +32,7 @@ def blueprint_2():
             "blueprint": {
                 "name": "Hello",
                 "domain": "automation",
-                "source_url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
+                "source_url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
                 "input": {
                     "test-input": {"name": "Name", "description": "Description"},
                     "test-input-default": {"default": "test"},
@@ -79,7 +79,7 @@ def test_blueprint_properties(blueprint_1):
     assert blueprint_1.metadata == {
         "name": "Hello",
         "domain": "automation",
-        "source_url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
+        "source_url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
         "input": {"test-input": {"name": "Name", "description": "Description"}},
     }
     assert blueprint_1.domain == "automation"
@@ -124,7 +124,7 @@ def test_blueprint_validate():
                 "blueprint": {
                     "name": "Hello",
                     "domain": "automation",
-                    "openpeerpowerr": {"min_version": "100000.0.0"},
+                    "openpeerpower": {"min_version": "100000.0.0"},
                 },
             }
         ).validate()
@@ -205,12 +205,12 @@ async def test_domain_blueprints_get_blueprint_errors.opp, domain_bps):
     assert.opp.data["blueprint"]["automation"] is domain_bps
 
     with pytest.raises(errors.FailedToLoad), patch(
-        "openpeerpowerr.util.yaml.load_yaml", side_effect=FileNotFoundError
+        "openpeerpower.util.yaml.load_yaml", side_effect=FileNotFoundError
     ):
         await domain_bps.async_get_blueprint("non-existing-path")
 
     with patch(
-        "openpeerpowerr.util.yaml.load_yaml", return_value={"blueprint": "invalid"}
+        "openpeerpower.util.yaml.load_yaml", return_value={"blueprint": "invalid"}
     ), pytest.raises(errors.FailedToLoad):
         await domain_bps.async_get_blueprint("non-existing-path")
 

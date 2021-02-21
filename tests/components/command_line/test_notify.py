@@ -5,9 +5,9 @@ import unittest
 from unittest.mock import patch
 
 import openpeerpower.components.notify as notify
-from openpeerpowerr.setup import async_setup_component, setup_component
+from openpeerpower.setup import async_setup_component, setup_component
 
-from tests.common import assert_setup_component, get_test_home_assistant
+from tests.common import assert_setup_component, get_test_open_peer_power
 
 
 class TestCommandLine(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestCommandLine(unittest.TestCase):
 
     def setUp(self):  # pylint: disable=invalid-name
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.addCleanup(self.tear_down_cleanup)
 
     def tear_down_cleanup(self):
@@ -109,9 +109,9 @@ async def test_timeout.opp, caplog):
             }
         },
     )
-    await opp..async_block_till_done()
-    assert await opp..services.async_call(
+    await.opp.async_block_till_done()
+    assert await.opp.services.async_call(
         "notify", "test", {"message": "error"}, blocking=True
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert "Timeout" in caplog.text

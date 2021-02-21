@@ -1,6 +1,6 @@
 """The tests for the Buienradar sensor platform."""
 from openpeerpower.components import sensor
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 CONDITIONS = ["stationname", "temperature"]
 BASE_CONFIG = {
@@ -19,8 +19,8 @@ BASE_CONFIG = {
 async def test_smoke_test_setup_component.opp):
     """Smoke test for successfully set-up with default config."""
     assert await async_setup_component.opp, sensor.DOMAIN, BASE_CONFIG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     for cond in CONDITIONS:
-        state = opp.states.get(f"sensor.volkel_{cond}")
+        state =.opp.states.get(f"sensor.volkel_{cond}")
         assert state.state == "unknown"

@@ -9,9 +9,9 @@ from requests.exceptions import HTTPError
 import requests_mock
 
 from openpeerpower.components.darksky import sensor as darksky
-from openpeerpowerr.setup import setup_component
+from openpeerpower.setup import setup_component
 
-from tests.common import get_test_home_assistant, load_fixture
+from tests.common import get_test_open_peer_power, load_fixture
 
 VALID_CONFIG_MINIMAL = {
     "sensor": {
@@ -100,7 +100,7 @@ class TestDarkSkySetup(unittest.TestCase):
 
     def setUp(self):
         """Initialize values for this testcase class."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.key = "foo"
         self.lat = self.opp.config.latitude = 37.8267
         self.lon = self.opp.config.longitude = -122.423

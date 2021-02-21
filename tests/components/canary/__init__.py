@@ -10,7 +10,7 @@ from openpeerpower.components.canary.const import (
     DOMAIN,
 )
 from openpeerpower.const import CONF_PASSWORD, CONF_TIMEOUT, CONF_USERNAME
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from tests.common import MockConfigEntry
 
@@ -59,11 +59,11 @@ async def init_integration(
 ) -> MockConfigEntry:
     """Set up the Canary integration in Open Peer Power."""
     entry = MockConfigEntry(domain=DOMAIN, data=data, options=options)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     if not skip_entry_setup:
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     return entry
 

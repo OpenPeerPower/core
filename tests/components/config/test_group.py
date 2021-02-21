@@ -2,7 +2,7 @@
 import json
 from unittest.mock import AsyncMock, patch
 
-from openpeerpowerr.bootstrap import async_setup_component
+from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components import config
 
 VIEW_NAME = "api:config:group:config"
@@ -13,7 +13,7 @@ async def test_get_device_config.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["group"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     def mock_read(path):
         """Mock reading data."""
@@ -33,7 +33,7 @@ async def test_update_device_config.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["group"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     orig_data = {
         "hello.beer": {"ignored": True},
@@ -61,7 +61,7 @@ async def test_update_device_config.opp,.opp_client):
                 {"name": "Beer", "entities": ["light.top", "light.bottom"]}
             ),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert resp.status == 200
     result = await resp.json()
@@ -79,7 +79,7 @@ async def test_update_device_config_invalid_key.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["group"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     resp = await client.post(
         "/api/config/group/config/not a slug", data=json.dumps({"name": "YO"})
@@ -93,7 +93,7 @@ async def test_update_device_config_invalid_data.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["group"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     resp = await client.post(
         "/api/config/group/config/hello_beer", data=json.dumps({"invalid_option": 2})
@@ -107,7 +107,7 @@ async def test_update_device_config_invalid_json.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["group"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     resp = await client.post("/api/config/group/config/hello_beer", data="not json")
 

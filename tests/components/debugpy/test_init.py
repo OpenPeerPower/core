@@ -11,8 +11,8 @@ from openpeerpower.components.debugpy import (
     DOMAIN,
     SERVICE_START,
 )
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture
@@ -52,7 +52,7 @@ async def test_on_demand.opp: OpenPeerPower, mock_debugpy) -> None:
     mock_debugpy.wait_for_client.assert_not_called()
     assert len(mock_debugpy.method_calls) == 0
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_START,
         blocking=True,

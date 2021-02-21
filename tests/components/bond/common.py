@@ -8,8 +8,8 @@ from unittest.mock import MagicMock, patch
 from openpeerpower import core
 from openpeerpower.components.bond.const import DOMAIN as BOND_DOMAIN
 from openpeerpower.const import CONF_ACCESS_TOKEN, CONF_HOST, STATE_UNAVAILABLE
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import utcnow
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import utcnow
 
 from tests.common import MockConfigEntry, async_fire_time_changed
 
@@ -29,13 +29,16 @@ async def setup_bond_entity(
     patch_version=False,
     patch_device_ids=False,
     patch_platforms=False,
+    patch_bridge=False,
 ):
     """Set up Bond entity."""
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
-    with patch_start_bpup(), patch_bond_version(
-        enabled=patch_version
-    ), patch_bond_device_ids(enabled=patch_device_ids), patch_setup_entry(
+    with patch_start_bpup(), patch_bond_bridge(
+        enabled=patch_bridge
+    ), patch_bond_version(enabled=patch_version), patch_bond_device_ids(
+        enabled=patch_device_ids
+    ), patch_setup_entry(
         "cover", enabled=patch_platforms
     ), patch_setup_entry(
         "fan", enabled=patch_platforms
@@ -44,7 +47,7 @@ async def setup_bond_entity(
     ), patch_setup_entry(
         "switch", enabled=patch_platforms
     ):
-        return await opp..config_entries.async_setup(config_entry.entry_id)
+        return await.opp.config_entries.async_setup(config_entry.entry_id)
 
 
 async def setup_platform(
@@ -56,16 +59,19 @@ async def setup_platform(
     bond_version: Dict[str, Any] = None,
     props: Dict[str, Any] = None,
     state: Dict[str, Any] = None,
+    bridge: Dict[str, Any] = None,
 ):
     """Set up the specified Bond platform."""
     mock_entry = MockConfigEntry(
         domain=BOND_DOMAIN,
         data={CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
     )
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
     with patch("openpeerpower.components.bond.PLATFORMS", [platform]):
-        with patch_bond_version(return_value=bond_version), patch_bond_device_ids(
+        with patch_bond_version(return_value=bond_version), patch_bond_bridge(
+            return_value=bridge
+        ), patch_bond_device_ids(
             return_value=[bond_device_id]
         ), patch_start_bpup(), patch_bond_device(
             return_value=discovered_device
@@ -75,7 +81,7 @@ async def setup_platform(
             return_value=state
         ):
             assert await async_setup_component.opp, BOND_DOMAIN, {})
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
     return mock_entry
 
@@ -92,6 +98,27 @@ def patch_bond_version(
 
     return patch(
         "openpeerpower.components.bond.Bond.version",
+        return_value=return_value,
+        side_effect=side_effect,
+    )
+
+
+def patch_bond_bridge(
+    enabled: bool = True, return_value: Optional[dict] = None, side_effect=None
+):
+    """Patch Bond API bridge endpoint."""
+    if not enabled:
+        return nullcontext()
+
+    if return_value is None:
+        return_value = {
+            "name": "bond-name",
+            "location": "bond-location",
+            "bluelight": 127,
+        }
+
+    return patch(
+        "openpeerpower.components.bond.Bond.bridge",
         return_value=return_value,
         side_effect=side_effect,
     )
@@ -166,10 +193,10 @@ async def help_test_entity_available(
 
     with patch_bond_device_state(side_effect=AsyncIOTimeoutError()):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     with patch_bond_device_state(return_value={}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     assert.opp.states.get(entity_id).state != STATE_UNAVAILABLE

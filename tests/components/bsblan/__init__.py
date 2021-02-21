@@ -12,7 +12,7 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONTENT_TYPE_JSON,
 )
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry, load_fixture
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -45,11 +45,11 @@ async def init_integration(
         },
     )
 
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     if not skip_setup:
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     return entry
 
@@ -79,10 +79,10 @@ async def init_integration_without_auth(
         },
     )
 
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     if not skip_setup:
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     return entry

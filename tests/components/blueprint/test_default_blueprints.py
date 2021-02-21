@@ -7,7 +7,7 @@ import pytest
 
 from openpeerpower.components.blueprint import models
 from openpeerpower.components.blueprint.const import BLUEPRINT_FOLDER
-from openpeerpowerr.util import yaml
+from openpeerpower.util import yaml
 
 DOMAINS = ["automation"]
 LOGGER = logging.getLogger(__name__)

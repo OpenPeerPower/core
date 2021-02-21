@@ -4,8 +4,8 @@ import voluptuous_serialize
 
 import openpeerpower.components.automation as automation
 from openpeerpower.components.climate import DOMAIN, const, device_condition
-from openpeerpowerr.helpers import config_validation as cv, device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import config_validation as cv, device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -39,7 +39,7 @@ def calls.opp):
 async def test_get_conditions.opp, device_reg, entity_reg):
     """Test we get the expected conditions from a climate."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -78,7 +78,7 @@ async def test_get_conditions.opp, device_reg, entity_reg):
 async def test_get_conditions_hvac_only.opp, device_reg, entity_reg):
     """Test we get the expected conditions from a climate."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -165,7 +165,7 @@ async def test_if_state.opp, calls):
         },
     )
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_hvac_mode - event - test_event1"
 
@@ -180,11 +180,11 @@ async def test_if_state.opp, calls):
 
     # Should not fire
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_preset_mode - event - test_event2"
@@ -200,7 +200,7 @@ async def test_if_state.opp, calls):
 
     # Should not fire
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
 
 

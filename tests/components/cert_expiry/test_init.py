@@ -11,8 +11,8 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_START,
     STATE_UNAVAILABLE,
 )
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from .const import HOST, PORT
 from .helpers import future_timestamp, static_datetime
@@ -29,9 +29,9 @@ async def test_setup_with_config.opp):
         ],
     }
     assert await async_setup_component.opp, SENSOR_DOMAIN, config) is True
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     next_update = dt_util.utcnow() + timedelta(seconds=20)
     async_fire_time_changed.opp, next_update)
 
@@ -41,7 +41,7 @@ async def test_setup_with_config.opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=future_timestamp(1),
     ):
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 2
 
@@ -49,9 +49,9 @@ async def test_setup_with_config.opp):
 async def test_update_unique_id.opp):
     """Test updating a config entry without a unique_id."""
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_HOST: HOST, CONF_PORT: PORT})
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    config_entries = opp.config_entries.async_entries(DOMAIN)
+    config_entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
     assert not entry.unique_id
@@ -61,13 +61,13 @@ async def test_update_unique_id.opp):
         return_value=future_timestamp(1),
     ):
         assert await async_setup_component.opp, DOMAIN, {}) is True
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_LOADED
     assert entry.unique_id == f"{HOST}:{PORT}"
 
 
-@patch("openpeerpowerr.util.dt.utcnow", return_value=static_datetime())
+@patch("openpeerpower.util.dt.utcnow", return_value=static_datetime())
 async def test_unload_config_entry(mock_now,.opp):
     """Test unloading a config entry."""
     entry = MockConfigEntry(
@@ -75,9 +75,9 @@ async def test_unload_config_entry(mock_now,.opp):
         data={CONF_HOST: HOST, CONF_PORT: PORT},
         unique_id=f"{HOST}:{PORT}",
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    config_entries = opp.config_entries.async_entries(DOMAIN)
+    config_entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
 
@@ -87,21 +87,21 @@ async def test_unload_config_entry(mock_now,.opp):
         return_value=timestamp,
     ):
         assert await async_setup_component.opp, DOMAIN, {}) is True
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_LOADED
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state.state == timestamp.isoformat()
     assert state.attributes.get("error") == "None"
     assert state.attributes.get("is_valid")
 
-    await opp..config_entries.async_unload(entry.entry_id)
+    await.opp.config_entries.async_unload(entry.entry_id)
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state.state == STATE_UNAVAILABLE
 
-    await opp..config_entries.async_remove(entry.entry_id)
-    await opp..async_block_till_done()
-    state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
+    await.opp.config_entries.async_remove(entry.entry_id)
+    await.opp.async_block_till_done()
+    state =.opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is None

@@ -93,7 +93,7 @@ async def test_power_plugs.opp, aioclient_mock):
         "id": "1",
         "state": {"on": False},
     }
-    gateway.api.event_op.dler(state_changed_event)
+    gateway.api.event_handler(state_changed_event)
 
     assert.opp.states.get("switch.on_off_switch").state == STATE_OFF
 
@@ -103,7 +103,7 @@ async def test_power_plugs.opp, aioclient_mock):
 
     # Service turn on power plug
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: "switch.on_off_switch"},
@@ -113,7 +113,7 @@ async def test_power_plugs.opp, aioclient_mock):
 
     # Service turn off power plug
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "switch.on_off_switch"},
@@ -121,15 +121,15 @@ async def test_power_plugs.opp, aioclient_mock):
     )
     assert aioclient_mock.mock_calls[2][2] == {"on": False}
 
-    await opp..config_entries.async_unload(config_entry.entry_id)
+    await.opp.config_entries.async_unload(config_entry.entry_id)
 
-    states = opp.states.async_all()
+    states =.opp.states.async_all()
     assert len.opp.states.async_all()) == 4
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
-    await opp..config_entries.async_remove(config_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_remove(config_entry.entry_id)
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -153,7 +153,7 @@ async def test_sirens.opp, aioclient_mock):
         "id": "1",
         "state": {"alert": None},
     }
-    gateway.api.event_op.dler(state_changed_event)
+    gateway.api.event_handler(state_changed_event)
 
     assert.opp.states.get("switch.warning_device").state == STATE_OFF
 
@@ -163,7 +163,7 @@ async def test_sirens.opp, aioclient_mock):
 
     # Service turn on siren
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: "switch.warning_device"},
@@ -173,7 +173,7 @@ async def test_sirens.opp, aioclient_mock):
 
     # Service turn off siren
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "switch.warning_device"},
@@ -181,13 +181,13 @@ async def test_sirens.opp, aioclient_mock):
     )
     assert aioclient_mock.mock_calls[2][2] == {"alert": "none"}
 
-    await opp..config_entries.async_unload(config_entry.entry_id)
+    await.opp.config_entries.async_unload(config_entry.entry_id)
 
-    states = opp.states.async_all()
+    states =.opp.states.async_all()
     assert len.opp.states.async_all()) == 2
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
-    await opp..config_entries.async_remove(config_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_remove(config_entry.entry_id)
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0

@@ -10,12 +10,12 @@ from openpeerpower.components.counter import (
     SERVICE_RESET,
 )
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.core import callback
-from openpeerpowerr.loader import bind_opp
+from openpeerpower.core import callback
+from openpeerpower.loader import bind.opp
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_increment.opp, entity_id):
     """Increment a counter."""
    .opp.async_add_job(
@@ -24,7 +24,7 @@ def async_increment.opp, entity_id):
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_decrement.opp, entity_id):
     """Decrement a counter."""
    .opp.async_add_job(
@@ -33,7 +33,7 @@ def async_decrement.opp, entity_id):
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_reset.opp, entity_id):
     """Reset a counter."""
    .opp.async_add_job(

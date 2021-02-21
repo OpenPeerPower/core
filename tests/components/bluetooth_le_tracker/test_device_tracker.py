@@ -10,8 +10,8 @@ from openpeerpower.components.device_tracker.const import (
     DOMAIN,
 )
 from openpeerpower.const import CONF_PLATFORM
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt as dt_util, slugify
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt as dt_util, slugify
 
 from tests.common import async_fire_time_changed
 
@@ -49,8 +49,8 @@ async def test_preserve_new_tracked_device_name.opp, mock_device_tracker_conf):
                .opp,
                 dt_util.utcnow() + config[CONF_SCAN_INTERVAL] + timedelta(seconds=1),
             )
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert state.name == name

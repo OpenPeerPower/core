@@ -9,8 +9,8 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-import openpeerpowerr.core as ha
-from openpeerpowerr.setup import async_setup_component
+import openpeerpower.core as ha
+from openpeerpower.setup import async_setup_component
 
 from tests.common import assert_setup_component
 
@@ -37,8 +37,8 @@ async def test_datadog_setup_full.opp):
         assert mock_init.call_args == mock.call(statsd_host="host", statsd_port=123)
 
     assert.opp.bus.listen.called
-    assert EVENT_LOGBOOK_ENTRY == opp.bus.listen.call_args_list[0][0][0]
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[1][0][0]
+    assert EVENT_LOGBOOK_ENTRY ==.opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[1][0][0]
 
 
 async def test_datadog_setup_defaults.opp):
@@ -79,7 +79,7 @@ async def test_logbook_entry.opp):
         )
 
         assert.opp.bus.listen.called
-        handler_method = opp.bus.listen.call_args_list[0][0][1]
+        handler_method =.opp.bus.listen.call_args_list[0][0][1]
 
         event = {
             "domain": "automation",
@@ -119,7 +119,7 @@ async def test_state_changed.opp):
         )
 
         assert.opp.bus.listen.called
-        handler_method = opp.bus.listen.call_args_list[1][0][1]
+        handler_method =.opp.bus.listen.call_args_list[1][0][1]
 
         valid = {"1": 1, "1.0": 1.0, STATE_ON: 1, STATE_OFF: 0}
 
@@ -138,10 +138,10 @@ async def test_state_changed.opp):
 
             for attribute, value in attributes.items():
                 value = int(value) if isinstance(value, bool) else value
-                mock_statsd.gauge.assert_op._calls(
+                mock_statsd.gauge.assert_has_calls(
                     [
                         mock.call(
-                            f"op.sensor.{attribute}",
+                            f"ha.sensor.{attribute}",
                             value,
                             sample_rate=1,
                             tags=[f"entity:{state.entity_id}"],
@@ -150,7 +150,7 @@ async def test_state_changed.opp):
                 )
 
             assert mock_statsd.gauge.call_args == mock.call(
-                "op.sensor",
+                "ha.sensor",
                 out,
                 sample_rate=1,
                 tags=[f"entity:{state.entity_id}"],
@@ -160,6 +160,6 @@ async def test_state_changed.opp):
 
         for invalid in ("foo", "", object):
             handler_method(
-                mock.MagicMock(data={"new_state": op.State("domain.test", invalid, {})})
+                mock.MagicMock(data={"new_state": ha.State("domain.test", invalid, {})})
             )
             assert not mock_statsd.gauge.called

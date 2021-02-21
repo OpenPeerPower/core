@@ -9,9 +9,9 @@ import voluptuous as vol
 from openpeerpower import config_entries as core_ce, data_entry_flow
 from openpeerpower.components.config import config_entries
 from openpeerpower.config_entries import HANDLERS
-from openpeerpowerr.core import callback
-from openpeerpowerr.generated import config_flows
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import callback
+from openpeerpower.generated import config_flows
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -60,14 +60,20 @@ async def test_get_entries.opp, client):
             connection_class=core_ce.CONN_CLASS_LOCAL_POLL,
         )
         entry.supports_unload = True
-        entry.add_to_opp.opp)
+        entry.add_to.opp.opp)
         MockConfigEntry(
             domain="comp2",
             title="Test 2",
             source="bla2",
             state=core_ce.ENTRY_STATE_LOADED,
             connection_class=core_ce.CONN_CLASS_ASSUMED,
-        ).add_to_opp.opp)
+        ).add_to.opp.opp)
+        MockConfigEntry(
+            domain="comp3",
+            title="Test 3",
+            source="bla3",
+            disabled_by="user",
+        ).add_to.opp.opp)
 
         resp = await client.get("/api/config/config_entries/entry")
         assert resp.status == 200
@@ -83,6 +89,7 @@ async def test_get_entries.opp, client):
                 "connection_class": "local_poll",
                 "supports_options": True,
                 "supports_unload": True,
+                "disabled_by": None,
             },
             {
                 "domain": "comp2",
@@ -92,6 +99,17 @@ async def test_get_entries.opp, client):
                 "connection_class": "assumed",
                 "supports_options": False,
                 "supports_unload": False,
+                "disabled_by": None,
+            },
+            {
+                "domain": "comp3",
+                "title": "Test 3",
+                "source": "bla3",
+                "state": "not_loaded",
+                "connection_class": "unknown",
+                "supports_options": False,
+                "supports_unload": False,
+                "disabled_by": "user",
             },
         ]
 
@@ -99,7 +117,7 @@ async def test_get_entries.opp, client):
 async def test_remove_entry.opp, client):
     """Test removing an entry via the API."""
     entry = MockConfigEntry(domain="demo", state=core_ce.ENTRY_STATE_LOADED)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     resp = await client.delete(f"/api/config/config_entries/entry/{entry.entry_id}")
     assert resp.status == 200
     data = await resp.json()
@@ -110,7 +128,7 @@ async def test_remove_entry.opp, client):
 async def test_reload_entry.opp, client):
     """Test reloading an entry via the API."""
     entry = MockConfigEntry(domain="demo", state=core_ce.ENTRY_STATE_LOADED)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     resp = await client.post(
         f"/api/config/config_entries/entry/{entry.entry_id}/reload"
     )
@@ -130,7 +148,7 @@ async def test_remove_entry_unauth.opp, client,.opp_admin_user):
     """Test removing an entry via the API."""
    .opp_admin_user.groups = []
     entry = MockConfigEntry(domain="demo", state=core_ce.ENTRY_STATE_LOADED)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     resp = await client.delete(f"/api/config/config_entries/entry/{entry.entry_id}")
     assert resp.status == 401
     assert len.opp.config_entries.async_entries()) == 1
@@ -140,7 +158,7 @@ async def test_reload_entry_unauth.opp, client,.opp_admin_user):
     """Test reloading an entry via the API."""
    .opp_admin_user.groups = []
     entry = MockConfigEntry(domain="demo", state=core_ce.ENTRY_STATE_LOADED)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     resp = await client.post(
         f"/api/config/config_entries/entry/{entry.entry_id}/reload"
     )
@@ -151,7 +169,7 @@ async def test_reload_entry_unauth.opp, client,.opp_admin_user):
 async def test_reload_entry_in_failed_state.opp, client,.opp_admin_user):
     """Test reloading an entry via the API that has already failed to unload."""
     entry = MockConfigEntry(domain="demo", state=core_ce.ENTRY_STATE_FAILED_UNLOAD)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     resp = await client.post(
         f"/api/config/config_entries/entry/{entry.entry_id}/reload"
     )
@@ -162,7 +180,7 @@ async def test_reload_entry_in_failed_state.opp, client,.opp_admin_user):
 async def test_available_flows.opp, client):
     """Test querying the available flows."""
     with patch.object(config_flows, "FLOWS", ["hello", "world"]):
-        resp = await client.get("/api/config/config_entries/flow_op.dlers")
+        resp = await client.get("/api/config/config_entries/flow_handlers")
         assert resp.status == 200
         data = await resp.json()
         assert set(data) == {"hello", "world"}
@@ -292,7 +310,7 @@ async def test_create_account.opp, client):
 
     assert resp.status == 200
 
-    entries = opp.config_entries.async_entries("test")
+    entries =.opp.config_entries.async_entries("test")
     assert len(entries) == 1
 
     data = await resp.json()
@@ -351,7 +369,7 @@ async def test_two_step_flow.opp, client):
         )
         assert resp.status == 200
 
-        entries = opp.config_entries.async_entries("test")
+        entries =.opp.config_entries.async_entries("test")
         assert len(entries) == 1
 
         data = await resp.json()
@@ -416,20 +434,20 @@ async def test_get_progress_index.opp,.opp_ws_client):
     """Test querying for the flows that are in progress."""
     assert await async_setup_component.opp, "config", {})
     mock_entity_platform.opp, "config_flow.test", None)
-    ws_client = await opp._ws_client.opp)
+    ws_client = await.opp_ws_client.opp)
 
     class TestFlow(core_ce.ConfigFlow):
         VERSION = 5
 
-        async def async_step_oppio(self, info):
+        async def async_step.oppio(self, info):
             return await self.async_step_account()
 
         async def async_step_account(self, user_input=None):
             return self.async_show_form(step_id="account")
 
     with patch.dict(HANDLERS, {"test": TestFlow}):
-        form = await opp..config_entries.flow.async_init(
-            "test", context={"source": "oppio"}
+        form = await.opp.config_entries.flow.async_init(
+            "test", context={"source": .oppio"}
         )
 
     await ws_client.send_json({"id": 5, "type": "config_entries/flow/progress"})
@@ -441,7 +459,7 @@ async def test_get_progress_index.opp,.opp_ws_client):
             "flow_id": form["flow_id"],
             "handler": "test",
             "step_id": "account",
-            "context": {"source": "oppio"},
+            "context": {"source": .oppio"},
         }
     ]
 
@@ -450,7 +468,7 @@ async def test_get_progress_index_unauth.opp,.opp_ws_client,.opp_admin_user):
     """Test we can't get flows that are in progress."""
     assert await async_setup_component.opp, "config", {})
    .opp_admin_user.groups = []
-    ws_client = await opp._ws_client.opp)
+    ws_client = await.opp_ws_client.opp)
 
     await ws_client.send_json({"id": 5, "type": "config_entries/flow/progress"})
     response = await ws_client.receive_json()
@@ -550,8 +568,8 @@ async def test_options_flow.opp, client):
         entry_id="test1",
         source="bla",
         connection_class=core_ce.CONN_CLASS_LOCAL_POLL,
-    ).add_to_opp.opp)
-    entry = opp.config_entries._entries[0]
+    ).add_to.opp.opp)
+    entry =.opp.config_entries._entries[0]
 
     with patch.dict(HANDLERS, {"test": TestFlow}):
         url = "/api/config/config_entries/options/flow"
@@ -599,8 +617,8 @@ async def test_two_step_options_flow.opp, client):
         entry_id="test1",
         source="bla",
         connection_class=core_ce.CONN_CLASS_LOCAL_POLL,
-    ).add_to_opp.opp)
-    entry = opp.config_entries._entries[0]
+    ).add_to.opp.opp)
+    entry =.opp.config_entries._entries[0]
 
     with patch.dict(HANDLERS, {"test": TestFlow}):
         url = "/api/config/config_entries/options/flow"
@@ -639,10 +657,10 @@ async def test_two_step_options_flow.opp, client):
 async def test_list_system_options.opp,.opp_ws_client):
     """Test that we can list an entries system options."""
     assert await async_setup_component.opp, "config", {})
-    ws_client = await opp._ws_client.opp)
+    ws_client = await.opp_ws_client.opp)
 
     entry = MockConfigEntry(domain="demo")
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     await ws_client.send_json(
         {
@@ -660,10 +678,10 @@ async def test_list_system_options.opp,.opp_ws_client):
 async def test_update_system_options.opp,.opp_ws_client):
     """Test that we can update system options."""
     assert await async_setup_component.opp, "config", {})
-    ws_client = await opp._ws_client.opp)
+    ws_client = await.opp_ws_client.opp)
 
     entry = MockConfigEntry(domain="demo")
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     await ws_client.send_json(
         {
@@ -680,13 +698,32 @@ async def test_update_system_options.opp,.opp_ws_client):
     assert entry.system_options.disable_new_entities
 
 
+async def test_update_system_options_nonexisting.opp,.opp_ws_client):
+    """Test that we can update entry."""
+    assert await async_setup_component.opp, "config", {})
+    ws_client = await.opp_ws_client.opp)
+
+    await ws_client.send_json(
+        {
+            "id": 5,
+            "type": "config_entries/system_options/update",
+            "entry_id": "non_existing",
+            "disable_new_entities": True,
+        }
+    )
+    response = await ws_client.receive_json()
+
+    assert not response["success"]
+    assert response["error"]["code"] == "not_found"
+
+
 async def test_update_entry.opp,.opp_ws_client):
     """Test that we can update entry."""
     assert await async_setup_component.opp, "config", {})
-    ws_client = await opp._ws_client.opp)
+    ws_client = await.opp_ws_client.opp)
 
     entry = MockConfigEntry(domain="demo", title="Initial Title")
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     await ws_client.send_json(
         {
@@ -706,7 +743,7 @@ async def test_update_entry.opp,.opp_ws_client):
 async def test_update_entry_nonexisting.opp,.opp_ws_client):
     """Test that we can update entry."""
     assert await async_setup_component.opp, "config", {})
-    ws_client = await opp._ws_client.opp)
+    ws_client = await.opp_ws_client.opp)
 
     await ws_client.send_json(
         {
@@ -714,6 +751,83 @@ async def test_update_entry_nonexisting.opp,.opp_ws_client):
             "type": "config_entries/update",
             "entry_id": "non_existing",
             "title": "Updated Title",
+        }
+    )
+    response = await ws_client.receive_json()
+
+    assert not response["success"]
+    assert response["error"]["code"] == "not_found"
+
+
+async def test_disable_entry.opp,.opp_ws_client):
+    """Test that we can disable entry."""
+    assert await async_setup_component.opp, "config", {})
+    ws_client = await.opp_ws_client.opp)
+
+    entry = MockConfigEntry(domain="demo", state="loaded")
+    entry.add_to.opp.opp)
+    assert entry.disabled_by is None
+
+    # Disable
+    await ws_client.send_json(
+        {
+            "id": 5,
+            "type": "config_entries/disable",
+            "entry_id": entry.entry_id,
+            "disabled_by": "user",
+        }
+    )
+    response = await ws_client.receive_json()
+
+    assert response["success"]
+    assert response["result"] == {"require_restart": True}
+    assert entry.disabled_by == "user"
+    assert entry.state == "failed_unload"
+
+    # Enable
+    await ws_client.send_json(
+        {
+            "id": 6,
+            "type": "config_entries/disable",
+            "entry_id": entry.entry_id,
+            "disabled_by": None,
+        }
+    )
+    response = await ws_client.receive_json()
+
+    assert response["success"]
+    assert response["result"] == {"require_restart": True}
+    assert entry.disabled_by is None
+    assert entry.state == "failed_unload"
+
+    # Enable again -> no op
+    await ws_client.send_json(
+        {
+            "id": 7,
+            "type": "config_entries/disable",
+            "entry_id": entry.entry_id,
+            "disabled_by": None,
+        }
+    )
+    response = await ws_client.receive_json()
+
+    assert response["success"]
+    assert response["result"] == {"require_restart": False}
+    assert entry.disabled_by is None
+    assert entry.state == "failed_unload"
+
+
+async def test_disable_entry_nonexisting.opp,.opp_ws_client):
+    """Test that we can disable entry."""
+    assert await async_setup_component.opp, "config", {})
+    ws_client = await.opp_ws_client.opp)
+
+    await ws_client.send_json(
+        {
+            "id": 5,
+            "type": "config_entries/disable",
+            "entry_id": "non_existing",
+            "disabled_by": "user",
         }
     )
     response = await ws_client.receive_json()
@@ -737,10 +851,10 @@ async def test_ignore_flow.opp,.opp_ws_client):
             await self.async_set_unique_id("mock-unique-id")
             return self.async_show_form(step_id="account", data_schema=vol.Schema({}))
 
-    ws_client = await opp._ws_client.opp)
+    ws_client = await.opp_ws_client.opp)
 
     with patch.dict(HANDLERS, {"test": TestFlow}):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             "test", context={"source": "user"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -759,7 +873,26 @@ async def test_ignore_flow.opp,.opp_ws_client):
 
     assert len.opp.config_entries.flow.async_progress()) == 0
 
-    entry = opp.config_entries.async_entries("test")[0]
+    entry =.opp.config_entries.async_entries("test")[0]
     assert entry.source == "ignore"
     assert entry.unique_id == "mock-unique-id"
     assert entry.title == "Test Integration"
+
+
+async def test_ignore_flow_nonexisting.opp,.opp_ws_client):
+    """Test we can ignore a flow."""
+    assert await async_setup_component.opp, "config", {})
+    ws_client = await.opp_ws_client.opp)
+
+    await ws_client.send_json(
+        {
+            "id": 5,
+            "type": "config_entries/ignore_flow",
+            "flow_id": "non_existing",
+            "title": "Test Integration",
+        }
+    )
+    response = await ws_client.receive_json()
+
+    assert not response["success"]
+    assert response["error"]["code"] == "not_found"

@@ -37,7 +37,7 @@ IMPORT_CONFIG_IP = {CONF_HOST: "10.10.10.12", CONF_PIN: "1234"}
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -54,7 +54,7 @@ async def test_import.opp):
     ), patch(
         "openpeerpower.components.braviatv.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=IMPORT_CONFIG_HOSTNAME
         )
 
@@ -73,7 +73,7 @@ async def test_import_cannot_connect.opp):
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=False
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=IMPORT_CONFIG_HOSTNAME
         )
 
@@ -86,7 +86,7 @@ async def test_import_model_unsupported.opp):
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True
     ), patch("bravia_tv.BraviaRC.get_system_info", return_value={}):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=IMPORT_CONFIG_IP
         )
 
@@ -97,7 +97,7 @@ async def test_import_model_unsupported.opp):
 async def test_import_no_ip_control.opp):
     """Test that errors are shown when IP Control is disabled on the TV during import."""
     with patch("bravia_tv.BraviaRC.connect", side_effect=NoIPControl("No IP Control")):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=IMPORT_CONFIG_IP
         )
 
@@ -117,13 +117,13 @@ async def test_import_duplicate_error.opp):
         },
         title="TV-Model",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True
     ), patch("bravia_tv.BraviaRC.get_system_info", return_value=BRAVIA_SYSTEM_INFO):
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=IMPORT_CONFIG_HOSTNAME
         )
 
@@ -133,7 +133,7 @@ async def test_import_duplicate_error.opp):
 
 async def test_user_invalid_host.opp):
     """Test that errors are shown when the host is invalid."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data={CONF_HOST: "invalid/host"}
     )
 
@@ -143,10 +143,10 @@ async def test_user_invalid_host.opp):
 async def test_authorize_cannot_connect.opp):
     """Test that errors are shown when cannot connect to host at the authorize step."""
     with patch("bravia_tv.BraviaRC.connect", return_value=True):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data={CONF_HOST: "bravia-host"}
         )
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_PIN: "1234"}
         )
 
@@ -158,10 +158,10 @@ async def test_authorize_model_unsupported.opp):
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True
     ), patch("bravia_tv.BraviaRC.get_system_info", return_value={}):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data={CONF_HOST: "10.10.10.12"}
         )
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_PIN: "1234"}
         )
 
@@ -171,7 +171,7 @@ async def test_authorize_model_unsupported.opp):
 async def test_authorize_no_ip_control.opp):
     """Test that errors are shown when IP Control is disabled on the TV."""
     with patch("bravia_tv.BraviaRC.connect", side_effect=NoIPControl("No IP Control")):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data={CONF_HOST: "bravia-host"}
         )
 
@@ -191,16 +191,16 @@ async def test_duplicate_error.opp):
         },
         title="TV-Model",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True
     ), patch("bravia_tv.BraviaRC.get_system_info", return_value=BRAVIA_SYSTEM_INFO):
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data={CONF_HOST: "bravia-host"}
         )
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_PIN: "1234"}
         )
 
@@ -218,14 +218,14 @@ async def test_create_entry.opp):
         "openpeerpower.components.braviatv.async_setup_entry", return_value=True
     ):
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data={CONF_HOST: "bravia-host"}
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "authorize"
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_PIN: "1234"}
         )
 
@@ -251,21 +251,21 @@ async def test_options_flow.opp):
         },
         title="TV-Model",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True
     ), patch("bravia_tv.BraviaRC.get_system_info", return_value=BRAVIA_SYSTEM_INFO):
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
     with patch("bravia_tv.BraviaRC.load_source_list", return_value=BRAVIA_SOURCE_LIST):
-        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "user"
 
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_IGNORED_SOURCES: ["HDMI 1", "HDMI 2"]}
         )
 

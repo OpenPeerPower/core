@@ -8,14 +8,14 @@ from openpeerpower.components import cloud
 from openpeerpower.components.cloud.const import DOMAIN
 from openpeerpower.components.cloud.prefs import STORAGE_KEY
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
-from openpeerpowerr.core import Context
-from openpeerpowerr.exceptions import Unauthorized
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import Context
+from openpeerpower.exceptions import Unauthorized
+from openpeerpower.setup import async_setup_component
 
 
 async def test_constructor_loads_info_from_config.opp):
     """Test non-dev mode loads info from SERVERS constant."""
-    with patch("opp_nabucasa.Cloud.start"):
+    with patch(.opp_nabucasa.Cloud.start"):
         result = await async_setup_component(
            .opp,
             "cloud",
@@ -38,7 +38,7 @@ async def test_constructor_loads_info_from_config.opp):
         )
         assert result
 
-    cl = opp.data["cloud"]
+    cl =.opp.data["cloud"]
     assert cl.mode == cloud.MODE_DEV
     assert cl.cognito_client_id == "test-cognito_client_id"
     assert cl.user_pool_id == "test-user_pool_id"
@@ -57,19 +57,19 @@ async def test_constructor_loads_info_from_config.opp):
 
 async def test_remote_services.opp, mock_cloud_fixture,.opp_read_only_user):
     """Setup cloud component and test services."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
 
     assert.opp.services.has_service(DOMAIN, "remote_connect")
     assert.opp.services.has_service(DOMAIN, "remote_disconnect")
 
-    with patch("opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
-        await opp..services.async_call(DOMAIN, "remote_connect", blocking=True)
+    with patch(.opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
+        await.opp.services.async_call(DOMAIN, "remote_connect", blocking=True)
 
     assert mock_connect.called
     assert cloud.client.remote_autostart
 
-    with patch("opp_nabucasa.remote.RemoteUI.disconnect") as mock_disconnect:
-        await opp..services.async_call(DOMAIN, "remote_disconnect", blocking=True)
+    with patch(.opp_nabucasa.remote.RemoteUI.disconnect") as mock_disconnect:
+        await.opp.services.async_call(DOMAIN, "remote_disconnect", blocking=True)
 
     assert mock_disconnect.called
     assert not cloud.client.remote_autostart
@@ -77,19 +77,19 @@ async def test_remote_services.opp, mock_cloud_fixture,.opp_read_only_user):
     # Test admin access required
     non_admin_context = Context(user_id.opp_read_only_user.id)
 
-    with patch("opp_nabucasa.remote.RemoteUI.connect") as mock_connect, pytest.raises(
+    with patch(.opp_nabucasa.remote.RemoteUI.connect") as mock_connect, pytest.raises(
         Unauthorized
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN, "remote_connect", blocking=True, context=non_admin_context
         )
 
     assert mock_connect.called is False
 
     with patch(
-        "opp_nabucasa.remote.RemoteUI.disconnect"
+        .opp_nabucasa.remote.RemoteUI.disconnect"
     ) as mock_disconnect, pytest.raises(Unauthorized):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN, "remote_disconnect", blocking=True, context=non_admin_context
         )
 
@@ -98,18 +98,18 @@ async def test_remote_services.opp, mock_cloud_fixture,.opp_read_only_user):
 
 async def test_startup_shutdown_events.opp, mock_cloud_fixture):
     """Test if the cloud will start on startup event."""
-    with patch("opp_nabucasa.Cloud.stop") as mock_stop:
+    with patch(.opp_nabucasa.Cloud.stop") as mock_stop:
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert mock_stop.called
 
 
 async def test_setup_existing_cloud_user.opp,.opp_storage):
     """Test setup with API push default data."""
-    user = await opp..auth.async_create_system_user("Cloud test")
+    user = await.opp.auth.async_create_system_user("Cloud test")
    .opp_storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": user.id}}
-    with patch("opp_nabucasa.Cloud.start"):
+    with patch(.opp_nabucasa.Cloud.start"):
         result = await async_setup_component(
            .opp,
             "cloud",
@@ -131,7 +131,7 @@ async def test_setup_existing_cloud_user.opp,.opp_storage):
 
 async def test_on_connect.opp, mock_cloud_fixture):
     """Test cloud on connect triggers."""
-    cl = opp.data["cloud"]
+    cl =.opp.data["cloud"]
 
     assert len(cl.iot._on_connect) == 3
 
@@ -139,20 +139,20 @@ async def test_on_connect.opp, mock_cloud_fixture):
 
     assert "async_setup" in str(cl.iot._on_connect[-1])
     await cl.iot._on_connect[-1]()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids("binary_sensor")) == 1
 
-    with patch("openpeerpowerr.helpers.discovery.async_load_platform") as mock_load:
+    with patch("openpeerpower.helpers.discovery.async_load_platform") as mock_load:
         await cl.iot._on_connect[-1]()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_load.mock_calls) == 0
 
 
 async def test_remote_ui_url.opp, mock_cloud_fixture):
     """Test getting remote ui url."""
-    cl = opp.data["cloud"]
+    cl =.opp.data["cloud"]
 
     # Not logged in
     with pytest.raises(cloud.CloudNotAvailable):

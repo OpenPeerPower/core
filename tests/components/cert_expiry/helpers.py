@@ -1,7 +1,7 @@
 """Helpers for Cert Expiry tests."""
 from datetime import datetime, timedelta
 
-from openpeerpowerr.util import dt
+from openpeerpower.util import dt
 
 
 def static_datetime():

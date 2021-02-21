@@ -5,8 +5,8 @@ import voluptuous_serialize
 import openpeerpower.components.automation as automation
 from openpeerpower.components.climate import DOMAIN, const, device_trigger
 from openpeerpower.const import TEMP_CELSIUS
-from openpeerpowerr.helpers import config_validation as cv, device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import config_validation as cv, device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -40,7 +40,7 @@ def calls.opp):
 async def test_get_triggers.opp, device_reg, entity_reg):
     """Test we get the expected triggers from a climate device."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -156,7 +156,7 @@ async def test_if_fires_on_state_change.opp, calls):
             const.ATTR_CURRENT_TEMPERATURE: 18,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "hvac_mode_changed"
 
@@ -170,7 +170,7 @@ async def test_if_fires_on_state_change.opp, calls):
             const.ATTR_CURRENT_TEMPERATURE: 23,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "current_temperature_changed"
 
@@ -184,7 +184,7 @@ async def test_if_fires_on_state_change.opp, calls):
             const.ATTR_CURRENT_TEMPERATURE: 23,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[2].data["some"] == "current_humidity_changed"
 

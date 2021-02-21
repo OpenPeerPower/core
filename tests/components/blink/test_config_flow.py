@@ -13,7 +13,7 @@ from tests.common import MockConfigEntry
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -28,11 +28,11 @@ async def test_form.opp):
         "openpeerpower.components.blink.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "blink@example.com", "password": "example"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "blink"
@@ -54,7 +54,7 @@ async def test_form.opp):
 async def test_form_2fa.opp):
     """Test we get the 2fa form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -64,7 +64,7 @@ async def test_form_2fa.opp):
     ), patch(
         "openpeerpower.components.blink.async_setup", return_value=True
     ) as mock_setup:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "blink@example.com", "password": "example"},
         )
@@ -86,10 +86,10 @@ async def test_form_2fa.opp):
     ) as mock_setup, patch(
         "openpeerpower.components.blink.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result3 = await opp..config_entries.flow.async_configure(
+        result3 = await.opp.config_entries.flow.async_configure(
             result2["flow_id"], {"pin": "1234"}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result3["type"] == "create_entry"
     assert result3["title"] == "blink"
@@ -101,7 +101,7 @@ async def test_form_2fa.opp):
 async def test_form_2fa_connect_error.opp):
     """Test we report a connect error during 2fa setup."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -109,7 +109,7 @@ async def test_form_2fa_connect_error.opp):
         "openpeerpower.components.blink.config_flow.Auth.check_key_required",
         return_value=True,
     ), patch("openpeerpower.components.blink.async_setup", return_value=True):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "blink@example.com", "password": "example"},
         )
@@ -131,7 +131,7 @@ async def test_form_2fa_connect_error.opp):
     ), patch(
         "openpeerpower.components.blink.async_setup_entry", return_value=True
     ):
-        result3 = await opp..config_entries.flow.async_configure(
+        result3 = await.opp.config_entries.flow.async_configure(
             result2["flow_id"], {"pin": "1234"}
         )
 
@@ -142,7 +142,7 @@ async def test_form_2fa_connect_error.opp):
 async def test_form_2fa_invalid_key.opp):
     """Test we report an error if key is invalid."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -150,7 +150,7 @@ async def test_form_2fa_invalid_key.opp):
         "openpeerpower.components.blink.config_flow.Auth.check_key_required",
         return_value=True,
     ), patch("openpeerpower.components.blink.async_setup", return_value=True):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "blink@example.com", "password": "example"},
         )
@@ -172,7 +172,7 @@ async def test_form_2fa_invalid_key.opp):
     ), patch(
         "openpeerpower.components.blink.async_setup_entry", return_value=True
     ):
-        result3 = await opp..config_entries.flow.async_configure(
+        result3 = await.opp.config_entries.flow.async_configure(
             result2["flow_id"], {"pin": "1234"}
         )
 
@@ -183,7 +183,7 @@ async def test_form_2fa_invalid_key.opp):
 async def test_form_2fa_unknown_error.opp):
     """Test we report an unknown error during 2fa setup."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -191,7 +191,7 @@ async def test_form_2fa_unknown_error.opp):
         "openpeerpower.components.blink.config_flow.Auth.check_key_required",
         return_value=True,
     ), patch("openpeerpower.components.blink.async_setup", return_value=True):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "blink@example.com", "password": "example"},
         )
@@ -213,7 +213,7 @@ async def test_form_2fa_unknown_error.opp):
     ), patch(
         "openpeerpower.components.blink.async_setup_entry", return_value=True
     ):
-        result3 = await opp..config_entries.flow.async_configure(
+        result3 = await.opp.config_entries.flow.async_configure(
             result2["flow_id"], {"pin": "1234"}
         )
 
@@ -223,7 +223,7 @@ async def test_form_2fa_unknown_error.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -231,7 +231,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.blink.config_flow.Auth.startup",
         side_effect=LoginError,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"username": "blink@example.com", "password": "example"}
         )
 
@@ -241,7 +241,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_unknown_error.opp):
     """Test we handle unknown error at startup."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -249,7 +249,7 @@ async def test_form_unknown_error.opp):
         "openpeerpower.components.blink.config_flow.Auth.startup",
         side_effect=KeyError,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"username": "blink@example.com", "password": "example"}
         )
 
@@ -259,7 +259,7 @@ async def test_form_unknown_error.opp):
 
 async def test_reauth_shows_user_step.opp):
     """Test reauth shows the user form."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -275,7 +275,7 @@ async def test_options_flow.opp):
         entry_id=1,
         version=2,
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     mock_auth = Mock(
         startup=Mock(return_value=True), check_key_required=Mock(return_value=False)
@@ -285,17 +285,17 @@ async def test_options_flow.opp):
     with patch("openpeerpower.components.blink.Auth", return_value=mock_auth), patch(
         "openpeerpower.components.blink.Blink", return_value=mock_blink
     ):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-    result = await opp..config_entries.options.async_init(
+    result = await.opp.config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "simple_options"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"scan_interval": 5},
     )

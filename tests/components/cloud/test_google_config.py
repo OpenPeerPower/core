@@ -7,9 +7,9 @@ from openpeerpower.components.cloud import GACTIONS_SCHEMA
 from openpeerpower.components.cloud.google_config import CloudGoogleConfig
 from openpeerpower.components.google_assistant import helpers as ga_helpers
 from openpeerpower.const import EVENT_OPENPEERPOWER_STARTED, HTTP_NOT_FOUND
-from openpeerpowerr.core import CoreState, State
-from openpeerpowerr.helpers.entity_registry import EVENT_ENTITY_REGISTRY_UPDATED
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.core import CoreState, State
+from openpeerpower.helpers.entity_registry import EVENT_ENTITY_REGISTRY_UPDATED
+from openpeerpower.util.dt import utcnow
 
 from tests.common import async_fire_time_changed
 
@@ -35,7 +35,7 @@ async def test_google_update_report_state(mock_conf,.opp, cloud_prefs):
         "openpeerpower.components.google_assistant.report_state.async_enable_report_state"
     ) as mock_report_state:
         await cloud_prefs.async_update(google_report_state=True)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_sync.mock_calls) == 1
     assert len(mock_report_state.mock_calls) == 1
@@ -52,7 +52,7 @@ async def test_sync_entities(aioclient_mock,.opp, cloud_prefs):
     )
 
     with patch(
-        "opp_nabucasa.cloud_api.async_google_actions_request_sync",
+        .opp_nabucasa.cloud_api.async_google_actions_request_sync",
         return_value=Mock(status=HTTP_NOT_FOUND),
     ) as mock_request_sync:
         assert await config.async_sync_entities("user") == HTTP_NOT_FOUND
@@ -79,9 +79,9 @@ async def test_google_update_expose_trigger_sync(
         await cloud_prefs.async_update_google_entity_config(
             entity_id="light.kitchen", should_expose=True
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         async_fire_time_changed.opp, utcnow())
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_sync.mock_calls) == 1
 
@@ -97,9 +97,9 @@ async def test_google_update_expose_trigger_sync(
         await cloud_prefs.async_update_google_entity_config(
             entity_id="sensor.temp", should_expose=True
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         async_fire_time_changed.opp, utcnow())
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_sync.mock_calls) == 1
 
@@ -120,7 +120,7 @@ async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
             EVENT_ENTITY_REGISTRY_UPDATED,
             {"action": "create", "entity_id": "light.kitchen"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len(mock_sync.mock_calls) == 1
 
@@ -129,7 +129,7 @@ async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
             EVENT_ENTITY_REGISTRY_UPDATED,
             {"action": "remove", "entity_id": "light.kitchen"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len(mock_sync.mock_calls) == 2
 
@@ -142,7 +142,7 @@ async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
                 "changes": ["entity_id"],
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len(mock_sync.mock_calls) == 3
 
@@ -151,23 +151,23 @@ async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
             EVENT_ENTITY_REGISTRY_UPDATED,
             {"action": "update", "entity_id": "light.kitchen", "changes": ["icon"]},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len(mock_sync.mock_calls) == 3
 
-        # When opp is not started yet we wait till started
+        # When.opp is not started yet we wait till started
        .opp.state = CoreState.starting
        .opp.bus.async_fire(
             EVENT_ENTITY_REGISTRY_UPDATED,
             {"action": "create", "entity_id": "light.kitchen"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len(mock_sync.mock_calls) == 3
 
     with patch.object(config, "async_sync_entities_all") as mock_sync:
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert len(mock_sync.mock_calls) == 1
 
 

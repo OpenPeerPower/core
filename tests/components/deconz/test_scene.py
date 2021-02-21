@@ -49,7 +49,7 @@ async def test_scenes.opp, aioclient_mock):
 
     # Service turn on scene
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SCENE_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: "scene.light_group_scene"},
@@ -57,6 +57,6 @@ async def test_scenes.opp, aioclient_mock):
     )
     assert aioclient_mock.mock_calls[1][2] == {}
 
-    await opp..config_entries.async_unload(config_entry.entry_id)
+    await.opp.config_entries.async_unload(config_entry.entry_id)
 
     assert len.opp.states.async_all()) == 0

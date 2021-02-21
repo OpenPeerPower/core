@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(autouse=True)
@@ -18,7 +18,7 @@ async def setup_bp.opp):
 
 async def test_list_blueprints.opp,.opp_ws_client):
     """Test listing blueprints."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "blueprint/list", "domain": "automation"})
 
     msg = await client.receive_json()
@@ -46,7 +46,7 @@ async def test_list_blueprints.opp,.opp_ws_client):
 
 async def test_list_blueprints_non_existing_domain.opp,.opp_ws_client):
     """Test listing blueprints."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "blueprint/list", "domain": "not_existsing"}
     )
@@ -66,16 +66,16 @@ async def test_import_blueprint.opp, aioclient_mock,.opp_ws_client):
     ).read_text()
 
     aioclient_mock.get(
-        "https://raw.githubusercontent.com/balloob/openpeerpower-config/main/blueprints/automation/motion_light.yaml",
+        "https://raw.githubusercontent.com/balloob/open-peer-power-config/main/blueprints/automation/motion_light.yaml",
         text=raw_data,
     )
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 5,
             "type": "blueprint/import",
-            "url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
+            "url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
         }
     )
 
@@ -91,7 +91,7 @@ async def test_import_blueprint.opp, aioclient_mock,.opp_ws_client):
                 "domain": "automation",
                 "input": {"service_to_call": None, "trigger_event": None},
                 "name": "Call service based on event",
-                "source_url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
+                "source_url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
             },
         },
         "validation_errors": None,
@@ -105,7 +105,7 @@ async def test_save_blueprint.opp, aioclient_mock,.opp_ws_client):
     ).read_text()
 
     with patch("pathlib.Path.write_text") as write_mock:
-        client = await opp._ws_client.opp)
+        client = await.opp_ws_client.opp)
         await client.send_json(
             {
                 "id": 6,
@@ -113,7 +113,7 @@ async def test_save_blueprint.opp, aioclient_mock,.opp_ws_client):
                 "path": "test_save",
                 "yaml": raw_data,
                 "domain": "automation",
-                "source_url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
+                "source_url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
             }
         )
 
@@ -123,14 +123,14 @@ async def test_save_blueprint.opp, aioclient_mock,.opp_ws_client):
         assert msg["success"]
         assert write_mock.mock_calls
         assert write_mock.call_args[0] == (
-            "blueprint:\n  name: Call service based on event\n  domain: automation\n  input:\n    trigger_event:\n    service_to_call:\n  source_url: https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml\ntrigger:\n  platform: event\n  event_type: !input 'trigger_event'\naction:\n  service: !input 'service_to_call'\n  entity_id: light.kitchen\n",
+            "blueprint:\n  name: Call service based on event\n  domain: automation\n  input:\n    trigger_event:\n    service_to_call:\n  source_url: https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml\ntrigger:\n  platform: event\n  event_type: !input 'trigger_event'\naction:\n  service: !input 'service_to_call'\n  entity_id: light.kitchen\n",
         )
 
 
 async def test_save_existing_file.opp, aioclient_mock,.opp_ws_client):
     """Test saving blueprints."""
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 7,
@@ -138,7 +138,7 @@ async def test_save_existing_file.opp, aioclient_mock,.opp_ws_client):
             "path": "test_event_service",
             "yaml": 'blueprint: {name: "name", domain: "automation"}',
             "domain": "automation",
-            "source_url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
+            "source_url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
         }
     )
 
@@ -152,7 +152,7 @@ async def test_save_existing_file.opp, aioclient_mock,.opp_ws_client):
 async def test_save_file_error.opp, aioclient_mock,.opp_ws_client):
     """Test saving blueprints with OS error."""
     with patch("pathlib.Path.write_text", side_effect=OSError):
-        client = await opp._ws_client.opp)
+        client = await.opp_ws_client.opp)
         await client.send_json(
             {
                 "id": 8,
@@ -160,7 +160,7 @@ async def test_save_file_error.opp, aioclient_mock,.opp_ws_client):
                 "path": "test_save",
                 "yaml": "raw_data",
                 "domain": "automation",
-                "source_url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
+                "source_url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
             }
         )
 
@@ -173,7 +173,7 @@ async def test_save_file_error.opp, aioclient_mock,.opp_ws_client):
 async def test_save_invalid_blueprint.opp, aioclient_mock,.opp_ws_client):
     """Test saving invalid blueprints."""
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 8,
@@ -181,7 +181,7 @@ async def test_save_invalid_blueprint.opp, aioclient_mock,.opp_ws_client):
             "path": "test_wrong",
             "yaml": "wrong_blueprint",
             "domain": "automation",
-            "source_url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
+            "source_url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
         }
     )
 
@@ -199,7 +199,7 @@ async def test_delete_blueprint.opp, aioclient_mock,.opp_ws_client):
     """Test deleting blueprints."""
 
     with patch("pathlib.Path.unlink", return_value=Mock()) as unlink_mock:
-        client = await opp._ws_client.opp)
+        client = await.opp_ws_client.opp)
         await client.send_json(
             {
                 "id": 9,
@@ -219,7 +219,7 @@ async def test_delete_blueprint.opp, aioclient_mock,.opp_ws_client):
 async def test_delete_non_exist_file_blueprint.opp, aioclient_mock,.opp_ws_client):
     """Test deleting non existing blueprints."""
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 9,

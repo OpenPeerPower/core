@@ -30,7 +30,7 @@ from openpeerpower.components.ssdp import (
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
 from openpeerpower.config_entries import CONN_CLASS_LOCAL_PUSH, SOURCE_SSDP
 from openpeerpower.const import CONF_API_KEY, CONF_HOST, CONF_PORT, CONTENT_TYPE_JSON
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from tests.common import MockConfigEntry
 
@@ -111,14 +111,14 @@ async def setup_deconz_integration(
         entry_id=entry_id,
         unique_id=unique_id,
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     if aioclient_mock:
         mock_deconz_request(aioclient_mock, config, get_state_response)
 
     with patch("pydeconz.DeconzSession.start", return_value=True):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-    await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+    await.opp.async_block_till_done()
 
     return config_entry
 
@@ -182,7 +182,7 @@ async def test_connection_status_signalling.opp, aioclient_mock):
     unsub = async_dispatcher_connect.opp, gateway.signal_reachable, event_call)
 
     gateway.async_connection_status_callback(False)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert gateway.available is False
     assert len(event_call.mock_calls) == 1
@@ -200,7 +200,7 @@ async def test_update_address.opp, aioclient_mock):
         "openpeerpower.components.deconz.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        await opp..config_entries.flow.async_init(
+        await.opp.config_entries.flow.async_init(
             DECONZ_DOMAIN,
             data={
                 ATTR_SSDP_LOCATION: "http://2.3.4.5:80/",
@@ -210,7 +210,7 @@ async def test_update_address.opp, aioclient_mock):
             },
             context={"source": SOURCE_SSDP},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert gateway.api.host == "2.3.4.5"
     assert len(mock_setup_entry.mock_calls) == 1
@@ -234,7 +234,7 @@ async def test_reset_after_successful_setup.opp, aioclient_mock):
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
     result = await gateway.async_reset()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert result is True
 

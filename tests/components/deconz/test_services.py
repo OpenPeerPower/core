@@ -23,7 +23,7 @@ from openpeerpower.components.deconz.services import (
     async_unload_services,
 )
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
-from openpeerpowerr.helpers.entity_registry import async_entries_for_config_entry
+from openpeerpower.helpers.entity_registry import async_entries_for_config_entry
 
 from .test_gateway import (
     BRIDGEID,
@@ -82,7 +82,7 @@ async def test_service_setup.opp):
     """Verify service setup works."""
     assert DECONZ_SERVICES not in.opp.data
     with patch(
-        "openpeerpowerr.core.ServiceRegistry.async_register", return_value=Mock(True)
+        "openpeerpower.core.ServiceRegistry.async_register", return_value=Mock(True)
     ) as async_register:
         await async_setup_services.opp)
         assert.opp.data[DECONZ_SERVICES] is True
@@ -93,7 +93,7 @@ async def test_service_setup_already_registered.opp):
     """Make sure that services are only registered once."""
    .opp.data[DECONZ_SERVICES] = True
     with patch(
-        "openpeerpowerr.core.ServiceRegistry.async_register", return_value=Mock(True)
+        "openpeerpower.core.ServiceRegistry.async_register", return_value=Mock(True)
     ) as async_register:
         await async_setup_services.opp)
         async_register.assert_not_called()
@@ -103,7 +103,7 @@ async def test_service_unload.opp):
     """Verify service unload works."""
    .opp.data[DECONZ_SERVICES] = True
     with patch(
-        "openpeerpowerr.core.ServiceRegistry.async_remove", return_value=Mock(True)
+        "openpeerpower.core.ServiceRegistry.async_remove", return_value=Mock(True)
     ) as async_remove:
         await async_unload_services.opp)
         assert.opp.data[DECONZ_SERVICES] is False
@@ -113,7 +113,7 @@ async def test_service_unload.opp):
 async def test_service_unload_not_registered.opp):
     """Make sure that services can only be unloaded once."""
     with patch(
-        "openpeerpowerr.core.ServiceRegistry.async_remove", return_value=Mock(True)
+        "openpeerpower.core.ServiceRegistry.async_remove", return_value=Mock(True)
     ) as async_remove:
         await async_unload_services.opp)
         assert DECONZ_SERVICES not in.opp.data
@@ -132,7 +132,7 @@ async def test_configure_service_with_field.opp, aioclient_mock):
 
     mock_deconz_put_request(aioclient_mock, config_entry.data, "/lights/2")
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DECONZ_DOMAIN, SERVICE_CONFIGURE_DEVICE, service_data=data, blocking=True
     )
     assert aioclient_mock.mock_calls[1][2] == {"on": True, "attr1": 10, "attr2": 20}
@@ -151,7 +151,7 @@ async def test_configure_service_with_entity.opp, aioclient_mock):
 
     mock_deconz_put_request(aioclient_mock, config_entry.data, "/lights/1")
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DECONZ_DOMAIN, SERVICE_CONFIGURE_DEVICE, service_data=data, blocking=True
     )
     assert aioclient_mock.mock_calls[1][2] == {"on": True, "attr1": 10, "attr2": 20}
@@ -171,7 +171,7 @@ async def test_configure_service_with_entity_and_field.opp, aioclient_mock):
 
     mock_deconz_put_request(aioclient_mock, config_entry.data, "/lights/1/state")
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DECONZ_DOMAIN, SERVICE_CONFIGURE_DEVICE, service_data=data, blocking=True
     )
     assert aioclient_mock.mock_calls[1][2] == {"on": True, "attr1": 10, "attr2": 20}
@@ -184,10 +184,10 @@ async def test_configure_service_with_faulty_field.opp, aioclient_mock):
     data = {SERVICE_FIELD: "light/2", SERVICE_DATA: {}}
 
     with pytest.raises(vol.Invalid):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DECONZ_DOMAIN, SERVICE_CONFIGURE_DEVICE, service_data=data
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
 
 async def test_configure_service_with_faulty_entity.opp, aioclient_mock):
@@ -200,10 +200,10 @@ async def test_configure_service_with_faulty_entity.opp, aioclient_mock):
     }
 
     with patch("pydeconz.DeconzSession.request", return_value=Mock(True)) as put_state:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DECONZ_DOMAIN, SERVICE_CONFIGURE_DEVICE, service_data=data
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         put_state.assert_not_called()
 
 
@@ -221,10 +221,10 @@ async def test_service_refresh_devices.opp, aioclient_mock):
         {"groups": GROUP, "lights": LIGHT, "sensors": SENSOR},
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DECONZ_DOMAIN, SERVICE_DEVICE_REFRESH, service_data=data
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert gateway.deconz_ids == {
         "light.group_1_name": "/groups/1",
@@ -245,7 +245,7 @@ async def test_remove_orphaned_entries_service.opp, aioclient_mock):
 
     data = {CONF_BRIDGE_ID: BRIDGEID}
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id, identifiers={("mac", "123")}
     )
@@ -261,7 +261,7 @@ async def test_remove_orphaned_entries_service.opp, aioclient_mock):
         == 5  # Host, gateway, light, switch and orphan
     )
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     entity_registry.async_get_or_create(
         SENSOR_DOMAIN,
         DECONZ_DOMAIN,
@@ -276,12 +276,12 @@ async def test_remove_orphaned_entries_service.opp, aioclient_mock):
         == 3  # Light, switch battery and orphan
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DECONZ_DOMAIN,
         SERVICE_REMOVE_ORPHANED_ENTRIES,
         service_data=data,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert (
         len(

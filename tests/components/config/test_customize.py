@@ -2,7 +2,7 @@
 import json
 from unittest.mock import patch
 
-from openpeerpowerr.bootstrap import async_setup_component
+from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components import config
 from openpeerpower.config import DATA_CUSTOMIZE
 
@@ -12,7 +12,7 @@ async def test_get_entity.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     def mock_read(path):
         """Mock reading data."""
@@ -33,7 +33,7 @@ async def test_update_entity.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     orig_data = {
         "hello.beer": {"ignored": True},
@@ -54,7 +54,7 @@ async def test_update_entity.opp,.opp_client):
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
     ), patch(
-        "openpeerpower.config.async_opp_config_yaml",
+        "openpeerpower.config.async.opp_config_yaml",
         return_value={},
     ):
         resp = await client.post(
@@ -63,13 +63,13 @@ async def test_update_entity.opp,.opp_client):
                 {"name": "Beer", "entities": ["light.top", "light.bottom"]}
             ),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert resp.status == 200
     result = await resp.json()
     assert result == {"result": "ok"}
 
-    state = opp.states.get("hello.world")
+    state =.opp.states.get("hello.world")
     assert state.state == "state"
     assert dict(state.attributes) == {
         "a": "b",
@@ -88,7 +88,7 @@ async def test_update_entity_invalid_key.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     resp = await client.post(
         "/api/config/customize/config/not_entity", data=json.dumps({"name": "YO"})
@@ -102,7 +102,7 @@ async def test_update_entity_invalid_json.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     resp = await client.post("/api/config/customize/config/hello.beer", data="not json")
 

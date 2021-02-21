@@ -16,7 +16,7 @@ from openpeerpower.components.deconz.const import (
 )
 from openpeerpower.components.light import DOMAIN as LIGHT_DOMAIN
 from openpeerpower.const import CONF_API_KEY, CONF_HOST, CONF_PORT
-from openpeerpowerr.helpers import entity_registry
+from openpeerpower.helpers import entity_registry
 
 from .test_gateway import DECONZ_WEB_REQUEST, setup_deconz_integration
 

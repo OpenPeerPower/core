@@ -1,7 +1,7 @@
 """Test init of Coronavirus integration."""
 from openpeerpower.components.coronavirus.const import DOMAIN, OPTION_WORLDWIDE
-from openpeerpowerr.helpers import entity_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import entity_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry, mock_registry
 
@@ -9,11 +9,11 @@ from tests.common import MockConfigEntry, mock_registry
 async def test_migration.opp):
     """Test that we can migrate coronavirus to stable unique ID."""
     nl_entry = MockConfigEntry(domain=DOMAIN, title="Netherlands", data={"country": 34})
-    nl_entry.add_to_opp.opp)
+    nl_entry.add_to.opp.opp)
     worldwide_entry = MockConfigEntry(
         domain=DOMAIN, title="Worldwide", data={"country": OPTION_WORLDWIDE}
     )
-    worldwide_entry.add_to_opp.opp)
+    worldwide_entry.add_to.opp.opp)
     mock_registry(
        .opp,
         {
@@ -32,7 +32,7 @@ async def test_migration.opp):
         },
     )
     assert await async_setup_component.opp, DOMAIN, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     ent_reg = await entity_registry.async_get_registry.opp)
 

@@ -1,7 +1,7 @@
 """Tests for config/script."""
 from unittest.mock import patch
 
-from openpeerpowerr.bootstrap import async_setup_component
+from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components import config
 
 
@@ -10,7 +10,7 @@ async def test_delete_script.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["script"]):
         await async_setup_component.opp, "config", {})
 
-    client = await opp._client()
+    client = await.opp_client()
 
     orig_data = {"one": {}, "two": {}}
 

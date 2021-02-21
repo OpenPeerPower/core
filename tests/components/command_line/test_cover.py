@@ -17,7 +17,7 @@ from openpeerpower.const import (
     SERVICE_RELOAD,
     SERVICE_STOP_COVER,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture
@@ -73,24 +73,24 @@ async def test_state_value.opp):
             )
             is True
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        assert "unknown" == opp.states.get("cover.test").state
+        assert "unknown" ==.opp.states.get("cover.test").state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
         )
-        assert "open" == opp.states.get("cover.test").state
+        assert "open" ==.opp.states.get("cover.test").state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
         )
-        assert "open" == opp.states.get("cover.test").state
+        assert "open" ==.opp.states.get("cover.test").state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN, SERVICE_STOP_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
         )
-        assert "closed" == opp.states.get("cover.test").state
+        assert "closed" ==.opp.states.get("cover.test").state
 
 
 async def test_reload.opp):
@@ -105,7 +105,7 @@ async def test_reload.opp):
         DOMAIN,
         {"cover": {"platform": "command_line", "covers": {"test": test_cover}}},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
     assert.opp.states.get("cover.test").state
@@ -116,13 +116,13 @@ async def test_reload.opp):
         "command_line/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "command_line",
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 
