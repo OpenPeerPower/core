@@ -65,7 +65,7 @@ class ImportCollector(ast.NodeVisitor):
 
         # self.opp.components.hue.async_create()
         # Name(id=self)
-        #   .Attribute(attr.opp) or .Attribute(attr=_opp)
+        #   .Attribute(attr.opp) or .Attribute(attr=.opp)
         #   .Attribute(attr=hue)
         #   .Attribute(attr=async_create)
         if (
@@ -74,11 +74,11 @@ class ImportCollector(ast.NodeVisitor):
             and (
                 (
                     isinstance(node.value.value, ast.Name)
-                    and node.value.value.id == "opp"
+                    and node.value.value.id == .opp"
                 )
                 or (
                     isinstance(node.value.value, ast.Attribute)
-                    and node.value.value.attr in ("opp", "_opp")
+                    and node.value.value.attr in (.opp", ".opp")
                 )
             )
         ):
@@ -96,7 +96,7 @@ ALLOWED_USED_COMPONENTS = {
     "device_automation",
     "frontend",
     "group",
-    "oppio",
+    .oppio",
     "openpeerpower",
     "input_boolean",
     "input_datetime",
