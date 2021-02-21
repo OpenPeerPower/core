@@ -24,7 +24,7 @@ from . import DEMO_DEVICES
 
 API_PASSWORD = "test1234"
 
-PROJECT_ID = "opptest-1234"
+PROJECT_ID = .opptest-1234"
 CLIENT_ID = "helloworld"
 ACCESS_TOKEN = "superdoublesecret"
 
@@ -248,7 +248,7 @@ async def test_query_climate_request_f.opp_fixture, assistant_client, auth_heade
     # Mock demo devices as fahrenheit to see if we convert to celsius
    .opp_fixture.config.units.temperature_unit = const.TEMP_FAHRENHEIT
     for entity_id in ("climate.hvac", "climate.heatpump", "climate.ecobee"):
-        state = opp_fixture.states.get(entity_id)
+        state =.opp_fixture.states.get(entity_id)
         attr = dict(state.attributes)
        .opp_fixture.states.async_set(entity_id, state.state, attr)
 
@@ -448,29 +448,29 @@ async def test_execute_request.opp_fixture, assistant_client, auth_header):
 
     assert not any(result["status"] == "ERROR" for result in commands)
 
-    ceiling = opp_fixture.states.get("light.ceiling_lights")
+    ceiling =.opp_fixture.states.get("light.ceiling_lights")
     assert ceiling.state == "off"
 
-    kitchen = opp_fixture.states.get("light.kitchen_lights")
+    kitchen =.opp_fixture.states.get("light.kitchen_lights")
     assert kitchen.attributes.get(light.ATTR_RGB_COLOR) == (255, 0, 0)
 
-    bed = opp_fixture.states.get("light.bed_light")
+    bed =.opp_fixture.states.get("light.bed_light")
     assert bed.attributes.get(light.ATTR_COLOR_TEMP) == 212
 
     assert.opp_fixture.states.get("switch.decorative_lights").state == "off"
 
-    walkman = opp_fixture.states.get("media_player.walkman")
+    walkman =.opp_fixture.states.get("media_player.walkman")
     assert walkman.state == "playing"
     assert walkman.attributes.get(media_player.ATTR_MEDIA_VOLUME_LEVEL) == 0.7
 
-    lounge = opp_fixture.states.get("media_player.lounge_room")
+    lounge =.opp_fixture.states.get("media_player.lounge_room")
     assert lounge.state == "off"
 
-    humidifier_state = opp_fixture.states.get("humidifier.humidifier")
+    humidifier_state =.opp_fixture.states.get("humidifier.humidifier")
     assert humidifier_state.state == "off"
 
-    dehumidifier = opp_fixture.states.get("humidifier.dehumidifier")
+    dehumidifier =.opp_fixture.states.get("humidifier.dehumidifier")
     assert dehumidifier.attributes.get(humidifier.ATTR_HUMIDITY) == 45
 
-    hygrostat = opp_fixture.states.get("humidifier.hygrostat")
+    hygrostat =.opp_fixture.states.get("humidifier.hygrostat")
     assert hygrostat.attributes.get(humidifier.ATTR_MODE) == "eco"

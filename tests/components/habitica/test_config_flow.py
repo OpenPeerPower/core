@@ -1,11 +1,10 @@
 """Test the habitica config flow."""
-from asyncio import Future
 from unittest.mock import AsyncMock, MagicMock, patch
 
+from aiohttp import ClientResponseError
+
 from openpeerpower import config_entries, setup
-from openpeerpower.components.habitica.config_flow import InvalidAuth
 from openpeerpower.components.habitica.const import DEFAULT_URL, DOMAIN
-from openpeerpower.const import HTTP_OK
 
 from tests.common import MockConfigEntry
 
@@ -13,18 +12,14 @@ from tests.common import MockConfigEntry
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["errors"] == {}
 
-    request_mock = MagicMock()
-    type(request_mock).status_code = HTTP_OK
-
     mock_obj = MagicMock()
-    mock_obj.user.get.return_value = Future()
-    mock_obj.user.get.return_value.set_result(None)
+    mock_obj.user.get = AsyncMock()
 
     with patch(
         "openpeerpower.components.habitica.config_flow.HabitipyAsync",
@@ -35,11 +30,11 @@ async def test_form.opp):
         "openpeerpower.components.habitica.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"api_user": "test-api-user", "api_key": "test-api-key"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Default username"
@@ -54,15 +49,18 @@ async def test_form.opp):
 
 async def test_form_invalid_credentials.opp):
     """Test we handle invalid credentials error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
+    mock_obj = MagicMock()
+    mock_obj.user.get = AsyncMock(side_effect=ClientResponseError(MagicMock(), ()))
+
     with patch(
-        "habitipy.aio.HabitipyAsync",
-        side_effect=InvalidAuth,
+        "openpeerpower.components.habitica.config_flow.HabitipyAsync",
+        return_value=mock_obj,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "url": DEFAULT_URL,
@@ -77,15 +75,18 @@ async def test_form_invalid_credentials.opp):
 
 async def test_form_unexpected_exception.opp):
     """Test we handle unexpected exception error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
+    mock_obj = MagicMock()
+    mock_obj.user.get = AsyncMock(side_effect=Exception)
+
     with patch(
         "openpeerpower.components.habitica.config_flow.HabitipyAsync",
-        side_effect=Exception,
+        return_value=mock_obj,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "url": DEFAULT_URL,
@@ -98,15 +99,15 @@ async def test_form_unexpected_exception.opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_manual_flow_config_exist.opp, aioclient_mock):
+async def test_manual_flow_config_exist.opp):
     """Test config flow discovers only already configured config."""
     MockConfigEntry(
         domain=DOMAIN,
         unique_id="test-api-user",
         data={"api_user": "test-api-user", "api_key": "test-api-key"},
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
     )
 
@@ -114,15 +115,13 @@ async def test_manual_flow_config_exist.opp, aioclient_mock):
     assert result["step_id"] == "user"
 
     mock_obj = MagicMock()
-    mock_obj.user.get.side_effect = AsyncMock(
-        return_value={"api_user": "test-api-user"}
-    )
+    mock_obj.user.get = AsyncMock(return_value={"api_user": "test-api-user"})
 
     with patch(
         "openpeerpower.components.habitica.config_flow.HabitipyAsync",
         return_value=mock_obj,
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "url": DEFAULT_URL,

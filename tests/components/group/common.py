@@ -12,24 +12,24 @@ from openpeerpower.components.group import (
     SERVICE_SET,
 )
 from openpeerpower.const import ATTR_ICON, ATTR_NAME, SERVICE_RELOAD
-from openpeerpowerr.core import callback
-from openpeerpowerr.loader import bind_opp
+from openpeerpower.core import callback
+from openpeerpower.loader import bind.opp
 
 
-@bind_opp
+@bind.opp
 def reload.opp):
     """Reload the automation from config."""
    .opp.add_job(async_reload,.opp)
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_reload.opp):
     """Reload the automation from config."""
    .opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_RELOAD))
 
 
-@bind_opp
+@bind.opp
 def set_group(
    .opp,
     object_id,
@@ -51,7 +51,7 @@ def set_group(
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_set_group(
    .opp,
     object_id,
@@ -77,7 +77,7 @@ def async_set_group(
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_remove.opp, object_id):
     """Remove a user group."""
     data = {ATTR_OBJECT_ID: object_id}

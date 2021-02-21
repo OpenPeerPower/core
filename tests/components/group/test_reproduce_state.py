@@ -4,7 +4,7 @@ from asyncio import Future
 from unittest.mock import patch
 
 from openpeerpower.components.group.reproduce_state import async_reproduce_states
-from openpeerpowerr.core import Context, State
+from openpeerpower.core import Context, State
 
 
 async def test_reproduce_group.opp):

@@ -19,11 +19,11 @@ async def test_duplicate_error.opp, ping_client):
     """Test that errors are shown when duplicate entries are added."""
     conf = {CONF_IP_ADDRESS: "192.168.1.100", CONF_PORT: 7777}
 
-    MockConfigEntry(domain=DOMAIN, unique_id="guardian_3456", data=conf).add_to_opp(
+    MockConfigEntry(domain=DOMAIN, unique_id="guardian_3456", data=conf).add_to.opp(
        .opp
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
 
@@ -39,7 +39,7 @@ async def test_connect_error.opp):
         "aioguardian.client.Client.connect",
         side_effect=GuardianError,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -62,13 +62,13 @@ async def test_step_user.opp, ping_client):
     """Test the user step."""
     conf = {CONF_IP_ADDRESS: "192.168.1.100", CONF_PORT: 7777}
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -91,13 +91,13 @@ async def test_step_zeroconf.opp, ping_client):
         "properties": {"_raw": {}},
     }
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=zeroconf_data
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "zeroconf_confirm"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -120,13 +120,13 @@ async def test_step_zeroconf_already_in_progress.opp):
         "properties": {"_raw": {}},
     }
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=zeroconf_data
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "zeroconf_confirm"
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=zeroconf_data
     )
     assert result["type"] == "abort"
@@ -135,7 +135,7 @@ async def test_step_zeroconf_already_in_progress.opp):
 
 async def test_step_zeroconf_no_discovery_info.opp):
     """Test the zeroconf step aborting because no discovery info came along."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

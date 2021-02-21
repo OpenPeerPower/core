@@ -21,7 +21,7 @@ CONFIG = {
 async def test_show_form.opp):
     """Test that the form is served with no input."""
     flow = config_flow.GiosFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
 
     result = await flow.async_step_user(user_input=None)
 
@@ -35,7 +35,7 @@ async def test_invalid_station_id.opp):
         "openpeerpower.components.gios.Gios._get_stations", return_value=STATIONS
     ):
         flow = config_flow.GiosFlowHandler()
-        flow.opp = opp
+        flow.opp =.opp
         flow.context = {}
 
         result = await flow.async_step_user(
@@ -56,7 +56,7 @@ async def test_invalid_sensor_data.opp):
         "openpeerpower.components.gios.Gios._get_sensor", return_value={}
     ):
         flow = config_flow.GiosFlowHandler()
-        flow.opp = opp
+        flow.opp =.opp
         flow.context = {}
 
         result = await flow.async_step_user(user_input=CONFIG)
@@ -70,7 +70,7 @@ async def test_cannot_connect.opp):
         "openpeerpower.components.gios.Gios._async_get", side_effect=ApiError("error")
     ):
         flow = config_flow.GiosFlowHandler()
-        flow.opp = opp
+        flow.opp =.opp
         flow.context = {}
 
         result = await flow.async_step_user(user_input=CONFIG)
@@ -93,7 +93,7 @@ async def test_create_entry.opp):
         return_value=json.loads(load_fixture("gios/indexes.json")),
     ):
         flow = config_flow.GiosFlowHandler()
-        flow.opp = opp
+        flow.opp =.opp
         flow.context = {}
 
         result = await flow.async_step_user(user_input=CONFIG)

@@ -14,8 +14,8 @@ from openpeerpower.const import (
     CONF_PASSWORD,
     CONF_USERNAME,
 )
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
 
 from tests.common import MockConfigEntry
 
@@ -37,10 +37,10 @@ async def test_config_update(gogogate2api_mock,.opp: OpenPeerPower) -> None:
             CONF_PASSWORD: "password",
         },
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
-    assert not await opp..config_entries.async_setup(entry_id=config_entry.entry_id)
-    await opp..async_block_till_done()
+    assert not await.opp.config_entries.async_setup(entry_id=config_entry.entry_id)
+    await.opp.async_block_till_done()
     assert config_entry.data == {
         CONF_DEVICE: DEVICE_TYPE_GOGOGATE2,
         CONF_IP_ADDRESS: "127.0.0.1",
@@ -66,10 +66,10 @@ async def test_config_no_update(ismartgateapi_mock,.opp: OpenPeerPower) -> None:
             CONF_PASSWORD: "password",
         },
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
-    assert not await opp..config_entries.async_setup(entry_id=config_entry.entry_id)
-    await opp..async_block_till_done()
+    assert not await.opp.config_entries.async_setup(entry_id=config_entry.entry_id)
+    await.opp.async_block_till_done()
     assert config_entry.data == {
         CONF_DEVICE: DEVICE_TYPE_ISMARTGATE,
         CONF_IP_ADDRESS: "127.0.0.1",
@@ -87,7 +87,7 @@ async def test_auth_fail.opp: OpenPeerPower) -> None:
     coordinator_mock.last_update_success = False
 
     config_entry = MockConfigEntry()
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.gogogate2.get_data_update_coordinator",

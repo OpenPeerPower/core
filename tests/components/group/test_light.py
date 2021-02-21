@@ -31,7 +31,7 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_default_state.opp):
@@ -48,11 +48,11 @@ async def test_default_state.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("light.bedroom_group")
+    state =.opp.states.get("light.bedroom_group")
     assert state is not None
     assert state.state == STATE_ON
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 0
@@ -77,28 +77,28 @@ async def test_state_reporting.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("light.test1", STATE_ON)
    .opp.states.async_set("light.test2", STATE_UNAVAILABLE)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("light.light_group").state == STATE_ON
 
    .opp.states.async_set("light.test1", STATE_ON)
    .opp.states.async_set("light.test2", STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("light.light_group").state == STATE_ON
 
    .opp.states.async_set("light.test1", STATE_OFF)
    .opp.states.async_set("light.test2", STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("light.light_group").state == STATE_OFF
 
    .opp.states.async_set("light.test1", STATE_UNAVAILABLE)
    .opp.states.async_set("light.test2", STATE_UNAVAILABLE)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("light.light_group").state == STATE_UNAVAILABLE
 
 
@@ -114,15 +114,15 @@ async def test_brightness.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set(
         "light.test1", STATE_ON, {ATTR_BRIGHTNESS: 255, ATTR_SUPPORTED_FEATURES: 1}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.state == STATE_ON
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 1
     assert state.attributes[ATTR_BRIGHTNESS] == 255
@@ -130,16 +130,16 @@ async def test_brightness.opp):
    .opp.states.async_set(
         "light.test2", STATE_ON, {ATTR_BRIGHTNESS: 100, ATTR_SUPPORTED_FEATURES: 1}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 177
 
    .opp.states.async_set(
         "light.test1", STATE_OFF, {ATTR_BRIGHTNESS: 255, ATTR_SUPPORTED_FEATURES: 1}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.state == STATE_ON
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 1
     assert state.attributes[ATTR_BRIGHTNESS] == 100
@@ -157,15 +157,15 @@ async def test_color.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set(
         "light.test1", STATE_ON, {ATTR_HS_COLOR: (0, 100), ATTR_SUPPORTED_FEATURES: 16}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.state == STATE_ON
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 16
     assert state.attributes[ATTR_HS_COLOR] == (0, 100)
@@ -173,15 +173,15 @@ async def test_color.opp):
    .opp.states.async_set(
         "light.test2", STATE_ON, {ATTR_HS_COLOR: (0, 50), ATTR_SUPPORTED_FEATURES: 16}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_HS_COLOR] == (0, 75)
 
    .opp.states.async_set(
         "light.test1", STATE_OFF, {ATTR_HS_COLOR: (0, 0), ATTR_SUPPORTED_FEATURES: 16}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_HS_COLOR] == (0, 50)
 
 
@@ -197,29 +197,29 @@ async def test_white_value.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set(
         "light.test1", STATE_ON, {ATTR_WHITE_VALUE: 255, ATTR_SUPPORTED_FEATURES: 128}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_WHITE_VALUE] == 255
 
    .opp.states.async_set(
         "light.test2", STATE_ON, {ATTR_WHITE_VALUE: 100, ATTR_SUPPORTED_FEATURES: 128}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_WHITE_VALUE] == 177
 
    .opp.states.async_set(
         "light.test1", STATE_OFF, {ATTR_WHITE_VALUE: 255, ATTR_SUPPORTED_FEATURES: 128}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_WHITE_VALUE] == 100
 
 
@@ -235,29 +235,29 @@ async def test_color_temp.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set(
         "light.test1", STATE_ON, {"color_temp": 2, ATTR_SUPPORTED_FEATURES: 2}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_COLOR_TEMP] == 2
 
    .opp.states.async_set(
         "light.test2", STATE_ON, {"color_temp": 1000, ATTR_SUPPORTED_FEATURES: 2}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_COLOR_TEMP] == 501
 
    .opp.states.async_set(
         "light.test1", STATE_OFF, {"color_temp": 2, ATTR_SUPPORTED_FEATURES: 2}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_COLOR_TEMP] == 1000
 
 
@@ -280,9 +280,9 @@ async def test_emulated_color_temp_group.opp):
             ]
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("light.bed_light", STATE_ON, {ATTR_SUPPORTED_FEATURES: 2})
    .opp.states.async_set(
@@ -291,26 +291,26 @@ async def test_emulated_color_temp_group.opp):
    .opp.states.async_set(
         "light.kitchen_lights", STATE_ON, {ATTR_SUPPORTED_FEATURES: 61}
     )
-    await opp..async_block_till_done()
-    await opp..services.async_call(
+    await.opp.async_block_till_done()
+    await.opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: "light.light_group", ATTR_COLOR_TEMP: 200},
         blocking=True,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("light.bed_light")
+    state =.opp.states.get("light.bed_light")
     assert state.state == STATE_ON
     assert state.attributes[ATTR_COLOR_TEMP] == 200
     assert ATTR_HS_COLOR not in state.attributes.keys()
 
-    state = opp.states.get("light.ceiling_lights")
+    state =.opp.states.get("light.ceiling_lights")
     assert state.state == STATE_ON
     assert state.attributes[ATTR_COLOR_TEMP] == 200
     assert ATTR_HS_COLOR not in state.attributes.keys()
 
-    state = opp.states.get("light.kitchen_lights")
+    state =.opp.states.get("light.kitchen_lights")
     assert state.state == STATE_ON
     assert state.attributes[ATTR_HS_COLOR] == (27.001, 19.243)
 
@@ -327,17 +327,17 @@ async def test_min_max_mireds.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set(
         "light.test1",
         STATE_ON,
         {ATTR_MIN_MIREDS: 2, ATTR_MAX_MIREDS: 5, ATTR_SUPPORTED_FEATURES: 2},
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_MIN_MIREDS] == 2
     assert state.attributes[ATTR_MAX_MIREDS] == 5
 
@@ -346,8 +346,8 @@ async def test_min_max_mireds.opp):
         STATE_ON,
         {ATTR_MIN_MIREDS: 7, ATTR_MAX_MIREDS: 1234567890, ATTR_SUPPORTED_FEATURES: 2},
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_MIN_MIREDS] == 2
     assert state.attributes[ATTR_MAX_MIREDS] == 1234567890
 
@@ -356,8 +356,8 @@ async def test_min_max_mireds.opp):
         STATE_OFF,
         {ATTR_MIN_MIREDS: 1, ATTR_MAX_MIREDS: 2, ATTR_SUPPORTED_FEATURES: 2},
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_MIN_MIREDS] == 1
     assert state.attributes[ATTR_MAX_MIREDS] == 1234567890
 
@@ -374,17 +374,17 @@ async def test_effect_list.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set(
         "light.test1",
         STATE_ON,
         {ATTR_EFFECT_LIST: ["None", "Random", "Colorloop"], ATTR_SUPPORTED_FEATURES: 4},
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert set(state.attributes[ATTR_EFFECT_LIST]) == {"None", "Random", "Colorloop"}
 
    .opp.states.async_set(
@@ -392,8 +392,8 @@ async def test_effect_list.opp):
         STATE_ON,
         {ATTR_EFFECT_LIST: ["None", "Random", "Rainbow"], ATTR_SUPPORTED_FEATURES: 4},
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert set(state.attributes[ATTR_EFFECT_LIST]) == {
         "None",
         "Random",
@@ -406,8 +406,8 @@ async def test_effect_list.opp):
         STATE_OFF,
         {ATTR_EFFECT_LIST: ["None", "Colorloop", "Seven"], ATTR_SUPPORTED_FEATURES: 4},
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert set(state.attributes[ATTR_EFFECT_LIST]) == {
         "None",
         "Random",
@@ -429,29 +429,29 @@ async def test_effect.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set(
         "light.test1", STATE_ON, {ATTR_EFFECT: "None", ATTR_SUPPORTED_FEATURES: 6}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_EFFECT] == "None"
 
    .opp.states.async_set(
         "light.test2", STATE_ON, {ATTR_EFFECT: "None", ATTR_SUPPORTED_FEATURES: 6}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_EFFECT] == "None"
 
    .opp.states.async_set(
         "light.test3", STATE_ON, {ATTR_EFFECT: "Random", ATTR_SUPPORTED_FEATURES: 6}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_EFFECT] == "None"
 
    .opp.states.async_set(
@@ -460,8 +460,8 @@ async def test_effect.opp):
    .opp.states.async_set(
         "light.test2", STATE_OFF, {ATTR_EFFECT: "None", ATTR_SUPPORTED_FEATURES: 6}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_EFFECT] == "Random"
 
 
@@ -477,28 +477,28 @@ async def test_supported_features.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("light.test1", STATE_ON, {ATTR_SUPPORTED_FEATURES: 0})
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 0
 
    .opp.states.async_set("light.test2", STATE_ON, {ATTR_SUPPORTED_FEATURES: 2})
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 2
 
    .opp.states.async_set("light.test1", STATE_OFF, {ATTR_SUPPORTED_FEATURES: 41})
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 43
 
    .opp.states.async_set("light.test2", STATE_OFF, {ATTR_SUPPORTED_FEATURES: 256})
-    await opp..async_block_till_done()
-    state = opp.states.get("light.light_group")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.light_group")
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 41
 
 
@@ -521,12 +521,12 @@ async def test_service_calls.opp):
             ]
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("light.light_group").state == STATE_ON
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TOGGLE,
         {ATTR_ENTITY_ID: "light.light_group"},
@@ -537,7 +537,7 @@ async def test_service_calls.opp):
     assert.opp.states.get("light.ceiling_lights").state == STATE_OFF
     assert.opp.states.get("light.kitchen_lights").state == STATE_OFF
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: "light.light_group"},
@@ -548,7 +548,7 @@ async def test_service_calls.opp):
     assert.opp.states.get("light.ceiling_lights").state == STATE_ON
     assert.opp.states.get("light.kitchen_lights").state == STATE_ON
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "light.light_group"},
@@ -559,7 +559,7 @@ async def test_service_calls.opp):
     assert.opp.states.get("light.ceiling_lights").state == STATE_OFF
     assert.opp.states.get("light.kitchen_lights").state == STATE_OFF
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -571,18 +571,18 @@ async def test_service_calls.opp):
         blocking=True,
     )
 
-    state = opp.states.get("light.bed_light")
+    state =.opp.states.get("light.bed_light")
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 128
     assert state.attributes[ATTR_EFFECT] == "Random"
     assert state.attributes[ATTR_RGB_COLOR] == (42, 255, 255)
 
-    state = opp.states.get("light.ceiling_lights")
+    state =.opp.states.get("light.ceiling_lights")
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 128
     assert state.attributes[ATTR_RGB_COLOR] == (42, 255, 255)
 
-    state = opp.states.get("light.kitchen_lights")
+    state =.opp.states.get("light.kitchen_lights")
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 128
     assert state.attributes[ATTR_RGB_COLOR] == (42, 255, 255)
@@ -594,13 +594,13 @@ async def test_invalid_service_calls.opp):
     await group.async_setup_platform(
        .opp, {"entities": ["light.test1", "light.test2"]}, add_entities
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert add_entities.call_count == 1
     grouped_light = add_entities.call_args[0][0][0]
-    grouped_light.opp = opp
+    grouped_light.opp =.opp
 
     with unittest.mock.patch.object.opp.services, "async_call") as mock_call:
         await grouped_light.async_turn_on(brightness=150, four_oh_four="404")
@@ -655,12 +655,12 @@ async def test_reload.opp):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_block_till_done()
-    await opp..async_start()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("light.light_group").state == STATE_ON
 
     yaml_path = path.join(
@@ -669,16 +669,16 @@ async def test_reload.opp):
         "group/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert.opp.states.get("light.light_group") is None
-    assert.opp.states.get("light.master_op.l_lights_g") is not None
+    assert.opp.states.get("light.master_hall_lights_g") is not None
     assert.opp.states.get("light.outside_patio_lights_g") is not None
 
 
@@ -703,7 +703,7 @@ async def test_reload_with_platform_not_setup.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -711,16 +711,16 @@ async def test_reload_with_platform_not_setup.opp):
         "group/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert.opp.states.get("light.light_group") is None
-    assert.opp.states.get("light.master_op.l_lights_g") is not None
+    assert.opp.states.get("light.master_hall_lights_g") is not None
     assert.opp.states.get("light.outside_patio_lights_g") is not None
 
 
@@ -735,9 +735,9 @@ async def test_reload_with_base_integration_platform_not_setup.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-   .opp.states.async_set("light.master_op.l_lights", STATE_ON)
-   .opp.states.async_set("light.master_op.l_lights_2", STATE_OFF)
+    await.opp.async_block_till_done()
+   .opp.states.async_set("light.master_hall_lights", STATE_ON)
+   .opp.states.async_set("light.master_hall_lights_2", STATE_OFF)
 
    .opp.states.async_set("light.outside_patio_lights", STATE_OFF)
    .opp.states.async_set("light.outside_patio_lights_2", STATE_OFF)
@@ -748,18 +748,18 @@ async def test_reload_with_base_integration_platform_not_setup.opp):
         "group/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert.opp.states.get("light.light_group") is None
-    assert.opp.states.get("light.master_op.l_lights_g") is not None
+    assert.opp.states.get("light.master_hall_lights_g") is not None
     assert.opp.states.get("light.outside_patio_lights_g") is not None
-    assert.opp.states.get("light.master_op.l_lights_g").state == STATE_ON
+    assert.opp.states.get("light.master_hall_lights_g").state == STATE_ON
     assert.opp.states.get("light.outside_patio_lights_g").state == STATE_OFF
 
 
@@ -784,16 +784,16 @@ async def test_nested_group.opp):
             ]
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("light.bedroom_group")
+    state =.opp.states.get("light.bedroom_group")
     assert state is not None
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_ENTITY_ID) == ["light.kitchen", "light.bedroom"]
 
-    state = opp.states.get("light.nested_group")
+    state =.opp.states.get("light.nested_group")
     assert state is not None
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_ENTITY_ID) == ["light.bedroom_group"]

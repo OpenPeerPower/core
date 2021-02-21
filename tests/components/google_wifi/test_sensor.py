@@ -4,8 +4,8 @@ from unittest.mock import Mock, patch
 
 import openpeerpower.components.google_wifi.sensor as google_wifi
 from openpeerpower.const import STATE_UNKNOWN
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt as dt_util
 
 from tests.common import assert_setup_component, async_fire_time_changed
 
@@ -73,7 +73,7 @@ def setup_api(data, requests_mock):
     resource = f"http://localhost{google_wifi.ENDPOINT}"
     now = datetime(1970, month=1, day=1)
     sensor_dict = {}
-    with patch("openpeerpowerr.util.dt.now", return_value=now):
+    with patch("openpeerpower.util.dt.now", return_value=now):
         requests_mock.get(resource, text=data, status_code=200)
         conditions = google_wifi.MONITORED_CONDITIONS.keys()
         api = google_wifi.GoogleWifiAPI("localhost", conditions)
@@ -90,7 +90,7 @@ def setup_api(data, requests_mock):
 def fake_delay.opp, ha_delay):
     """Fake delay to prevent update throttle."""
    .opp_now = dt_util.utcnow()
-    shifted_time = opp_now + timedelta(seconds=ha_delay)
+    shifted_time =.opp_now + timedelta(seconds=ha_delay)
     async_fire_time_changed.opp, shifted_time)
 
 
@@ -123,7 +123,7 @@ def test_state.opp, requests_mock):
     """Test the initial state."""
     api, sensor_dict = setup_api(MOCK_DATA, requests_mock)
     now = datetime(1970, month=1, day=1)
-    with patch("openpeerpowerr.util.dt.now", return_value=now):
+    with patch("openpeerpower.util.dt.now", return_value=now):
         for name in sensor_dict:
             sensor = sensor_dict[name]["sensor"]
             fake_delay.opp, 2)
@@ -152,7 +152,7 @@ def test_update_when_value_changed.opp, requests_mock):
     """Test state gets updated when sensor returns a new status."""
     api, sensor_dict = setup_api(MOCK_DATA_NEXT, requests_mock)
     now = datetime(1970, month=1, day=1)
-    with patch("openpeerpowerr.util.dt.now", return_value=now):
+    with patch("openpeerpower.util.dt.now", return_value=now):
         for name in sensor_dict:
             sensor = sensor_dict[name]["sensor"]
             fake_delay.opp, 2)
@@ -175,7 +175,7 @@ def test_when_api_data_missing.opp, requests_mock):
     """Test state logs an error when data is missing."""
     api, sensor_dict = setup_api(MOCK_DATA_MISSING, requests_mock)
     now = datetime(1970, month=1, day=1)
-    with patch("openpeerpowerr.util.dt.now", return_value=now):
+    with patch("openpeerpower.util.dt.now", return_value=now):
         for name in sensor_dict:
             sensor = sensor_dict[name]["sensor"]
             fake_delay.opp, 2)

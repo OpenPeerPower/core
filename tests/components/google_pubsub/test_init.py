@@ -8,8 +8,8 @@ import pytest
 import openpeerpower.components.google_pubsub as google_pubsub
 from openpeerpower.components.google_pubsub import DateTimeJSONEncoder as victim
 from openpeerpower.const import EVENT_STATE_CHANGED
-from openpeerpowerr.core import split_entity_id
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import split_entity_id
+from openpeerpower.setup import async_setup_component
 
 GOOGLE_PUBSUB_PATH = "openpeerpower.components.google_pubsub"
 
@@ -80,9 +80,9 @@ async def test_minimal_config.opp, mock_client):
         }
     }
     assert await async_setup_component.opp, google_pubsub.DOMAIN, config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
     assert mock_client.PublisherClient.from_service_account_json.call_count == 1
     assert (
         mock_client.PublisherClient.from_service_account_json.call_args[0][0] == "path"
@@ -107,9 +107,9 @@ async def test_full_config.opp, mock_client):
         }
     }
     assert await async_setup_component.opp, google_pubsub.DOMAIN, config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
     assert mock_client.PublisherClient.from_service_account_json.call_count == 1
     assert (
         mock_client.PublisherClient.from_service_account_json.call_args[0][0] == "path"
@@ -140,7 +140,7 @@ async def _setup.opp, filter_config):
         }
     }
     assert await async_setup_component.opp, google_pubsub.DOMAIN, config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     return.opp.bus.listen.call_args_list[0][0][1]
 
 

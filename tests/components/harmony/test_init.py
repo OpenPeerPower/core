@@ -1,8 +1,8 @@
 """Test init of Logitch Harmony Hub integration."""
 from openpeerpower.components.harmony.const import DOMAIN
 from openpeerpower.const import CONF_HOST, CONF_NAME
-from openpeerpowerr.helpers import entity_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import entity_registry
+from openpeerpower.setup import async_setup_component
 
 from .const import (
     ENTITY_NILE_TV,
@@ -23,7 +23,7 @@ async def test_unique_id_migration(mock_hc,.opp, mock_write_config):
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}
     )
 
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     mock_registry(
        .opp,
         {
@@ -58,7 +58,7 @@ async def test_unique_id_migration(mock_hc,.opp, mock_write_config):
         },
     )
     assert await async_setup_component.opp, DOMAIN, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     ent_reg = await entity_registry.async_get_registry.opp)
 

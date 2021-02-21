@@ -1,7 +1,7 @@
 """The tests for google-assistant init."""
 from openpeerpower.components import google_assistant as ga
-from openpeerpowerr.core import Context
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import Context
+from openpeerpower.setup import async_setup_component
 
 from .test_http import DUMMY_CONFIG
 
@@ -23,7 +23,7 @@ async def test_request_sync_service(aioclient_mock,.opp):
     )
 
     assert aioclient_mock.call_count == 0
-    await opp..services.async_call(
+    await.opp.services.async_call(
         ga.const.DOMAIN,
         ga.const.SERVICE_REQUEST_SYNC,
         blocking=True,

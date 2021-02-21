@@ -32,8 +32,8 @@ from openpeerpower.const import (
     STATE_OPEN,
     STATE_OPENING,
 )
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import assert_setup_component, async_fire_time_changed
 
@@ -87,15 +87,15 @@ async def setup_comp.opp, config_count):
     config, count = config_count
     with assert_setup_component(count, DOMAIN):
         await async_setup_component.opp, DOMAIN, config)
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ATTRIBUTES, 1)])
 async def test_attributes.opp, setup_comp):
     """Test handling of state attributes."""
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_CLOSED
     assert state.attributes[ATTR_FRIENDLY_NAME] == DEFAULT_NAME
     assert state.attributes[ATTR_ENTITY_ID] == [
@@ -111,9 +111,9 @@ async def test_attributes.opp, setup_comp):
 
     # Add Entity that supports open / close / stop
    .opp.states.async_set(DEMO_COVER, STATE_OPEN, {ATTR_SUPPORTED_FEATURES: 11})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 11
@@ -126,9 +126,9 @@ async def test_attributes.opp, setup_comp):
         STATE_OPEN,
         {ATTR_SUPPORTED_FEATURES: 4, ATTR_CURRENT_POSITION: 70},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 15
@@ -137,9 +137,9 @@ async def test_attributes.opp, setup_comp):
 
     # Add Entity that supports open tilt / close tilt / stop tilt
    .opp.states.async_set(DEMO_TILT, STATE_OPEN, {ATTR_SUPPORTED_FEATURES: 112})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 127
@@ -152,9 +152,9 @@ async def test_attributes.opp, setup_comp):
         STATE_OPEN,
         {ATTR_SUPPORTED_FEATURES: 128, ATTR_CURRENT_TILT_POSITION: 60},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 255
@@ -168,9 +168,9 @@ async def test_attributes.opp, setup_comp):
    .opp.states.async_set(
         DEMO_COVER, STATE_OPEN, {ATTR_SUPPORTED_FEATURES: 4, ATTR_CURRENT_POSITION: 100}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_ASSUMED_STATE] is True
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 244
@@ -179,9 +179,9 @@ async def test_attributes.opp, setup_comp):
 
    .opp.states.async_remove(DEMO_COVER)
    .opp.states.async_remove(DEMO_COVER_POS)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 240
@@ -194,9 +194,9 @@ async def test_attributes.opp, setup_comp):
         STATE_OPEN,
         {ATTR_SUPPORTED_FEATURES: 128, ATTR_CURRENT_TILT_POSITION: 100},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_ASSUMED_STATE] is True
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 128
@@ -205,9 +205,9 @@ async def test_attributes.opp, setup_comp):
 
    .opp.states.async_remove(DEMO_COVER_TILT)
    .opp.states.async_set(DEMO_TILT, STATE_CLOSED)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_CLOSED
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 0
@@ -215,9 +215,9 @@ async def test_attributes.opp, setup_comp):
     assert ATTR_CURRENT_TILT_POSITION not in state.attributes
 
    .opp.states.async_set(DEMO_TILT, STATE_CLOSED, {ATTR_ASSUMED_STATE: True})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.attributes[ATTR_ASSUMED_STATE] is True
 
 
@@ -234,7 +234,7 @@ async def test_cover_that_only_supports_tilt_removed.opp, setup_comp):
         STATE_OPEN,
         {ATTR_SUPPORTED_FEATURES: 128, ATTR_CURRENT_TILT_POSITION: 60},
     )
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_FRIENDLY_NAME] == DEFAULT_NAME
     assert state.attributes[ATTR_ENTITY_ID] == [
@@ -246,22 +246,22 @@ async def test_cover_that_only_supports_tilt_removed.opp, setup_comp):
 
    .opp.states.async_remove(DEMO_COVER_TILT)
    .opp.states.async_set(DEMO_TILT, STATE_CLOSED)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
 async def test_open_covers.opp, setup_comp):
     """Test open cover function."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
 
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
 
@@ -273,16 +273,16 @@ async def test_open_covers.opp, setup_comp):
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
 async def test_close_covers.opp, setup_comp):
     """Test close cover function."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
 
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_CLOSED
     assert state.attributes[ATTR_CURRENT_POSITION] == 0
 
@@ -295,27 +295,27 @@ async def test_close_covers.opp, setup_comp):
 async def test_toggle_covers.opp, setup_comp):
     """Test toggle cover function."""
     # Start covers in open state
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
 
     # Toggle will close covers
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_CLOSED
     assert state.attributes[ATTR_CURRENT_POSITION] == 0
 
@@ -324,15 +324,15 @@ async def test_toggle_covers.opp, setup_comp):
     assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 0
 
     # Toggle again will open covers
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
 
@@ -344,21 +344,21 @@ async def test_toggle_covers.opp, setup_comp):
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
 async def test_stop_covers.opp, setup_comp):
     """Test stop cover function."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     future = dt_util.utcnow() + timedelta(seconds=1)
     async_fire_time_changed.opp, future)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_STOP_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     future = dt_util.utcnow() + timedelta(seconds=1)
     async_fire_time_changed.opp, future)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
 
@@ -370,7 +370,7 @@ async def test_stop_covers.opp, setup_comp):
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
 async def test_set_cover_position.opp, setup_comp):
     """Test set cover position function."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_SET_COVER_POSITION,
         {ATTR_ENTITY_ID: COVER_GROUP, ATTR_POSITION: 50},
@@ -379,9 +379,9 @@ async def test_set_cover_position.opp, setup_comp):
     for _ in range(4):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 50
 
@@ -393,15 +393,15 @@ async def test_set_cover_position.opp, setup_comp):
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
 async def test_open_tilts.opp, setup_comp):
     """Test open tilt function."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER_TILT, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     for _ in range(5):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
@@ -413,15 +413,15 @@ async def test_open_tilts.opp, setup_comp):
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
 async def test_close_tilts.opp, setup_comp):
     """Test close tilt function."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_CLOSE_COVER_TILT, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     for _ in range(5):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
@@ -432,15 +432,15 @@ async def test_close_tilts.opp, setup_comp):
 async def test_toggle_tilts.opp, setup_comp):
     """Test toggle tilt function."""
     # Start tilted open
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER_TILT, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
@@ -449,30 +449,30 @@ async def test_toggle_tilts.opp, setup_comp):
     )
 
     # Toggle will tilt closed
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE_COVER_TILT, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
     assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
     # Toggle again will tilt open
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE_COVER_TILT, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
@@ -484,21 +484,21 @@ async def test_toggle_tilts.opp, setup_comp):
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
 async def test_stop_tilts.opp, setup_comp):
     """Test stop tilts function."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER_TILT, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     future = dt_util.utcnow() + timedelta(seconds=1)
     async_fire_time_changed.opp, future)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_STOP_COVER_TILT, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     future = dt_util.utcnow() + timedelta(seconds=1)
     async_fire_time_changed.opp, future)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 60
 
@@ -508,7 +508,7 @@ async def test_stop_tilts.opp, setup_comp):
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
 async def test_set_tilt_positions.opp, setup_comp):
     """Test set tilt position function."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_SET_COVER_TILT_POSITION,
         {ATTR_ENTITY_ID: COVER_GROUP, ATTR_TILT_POSITION: 80},
@@ -517,9 +517,9 @@ async def test_set_tilt_positions.opp, setup_comp):
     for _ in range(3):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(COVER_GROUP)
+    state =.opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 80
 
@@ -529,10 +529,10 @@ async def test_set_tilt_positions.opp, setup_comp):
 @pytest.mark.parametrize("config_count", [(CONFIG_POS, 2)])
 async def test_is_opening_closing.opp, setup_comp):
     """Test is_opening property."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(DEMO_COVER_POS).state == STATE_OPENING
     assert.opp.states.get(DEMO_COVER_TILT).state == STATE_OPENING
@@ -541,9 +541,9 @@ async def test_is_opening_closing.opp, setup_comp):
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
 
@@ -552,13 +552,13 @@ async def test_is_opening_closing.opp, setup_comp):
     assert.opp.states.get(COVER_GROUP).state == STATE_CLOSING
 
    .opp.states.async_set(DEMO_COVER_POS, STATE_OPENING, {ATTR_SUPPORTED_FEATURES: 11})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(DEMO_COVER_POS).state == STATE_OPENING
     assert.opp.states.get(COVER_GROUP).state == STATE_OPENING
 
    .opp.states.async_set(DEMO_COVER_POS, STATE_CLOSING, {ATTR_SUPPORTED_FEATURES: 11})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(DEMO_COVER_POS).state == STATE_CLOSING
     assert.opp.states.get(COVER_GROUP).state == STATE_CLOSING

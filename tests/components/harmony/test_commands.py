@@ -34,11 +34,11 @@ async def test_async_send_command(mock_hc,.opp, mock_write_config):
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}
     )
 
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    data = opp.data[DOMAIN][entry.entry_id]
+    data =.opp.data[DOMAIN][entry.entry_id]
     send_commands_mock = data._client.send_commands
 
     # No device provided
@@ -172,11 +172,11 @@ async def test_async_send_command_custom_delay(mock_hc,.opp, mock_write_config):
         },
     )
 
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    data = opp.data[DOMAIN][entry.entry_id]
+    data =.opp.data[DOMAIN][entry.entry_id]
     send_commands_mock = data._client.send_commands
 
     # Tell the TV to play by id
@@ -208,21 +208,21 @@ async def test_change_channel(mock_hc,.opp, mock_write_config):
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}
     )
 
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    data = opp.data[DOMAIN][entry.entry_id]
+    data =.opp.data[DOMAIN][entry.entry_id]
     change_channel_mock = data._client.change_channel
 
     # Tell the remote to change channels
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_CHANGE_CHANNEL,
         {ATTR_ENTITY_ID: ENTITY_REMOTE, ATTR_CHANNEL: 100},
         blocking=True,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     change_channel_mock.assert_awaited_once_with(100)
 
@@ -233,31 +233,31 @@ async def test_sync(mock_hc, mock_write_config,.opp):
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}
     )
 
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    data = opp.data[DOMAIN][entry.entry_id]
+    data =.opp.data[DOMAIN][entry.entry_id]
     sync_mock = data._client.sync
 
     # Tell the remote to change channels
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_SYNC,
         {ATTR_ENTITY_ID: ENTITY_REMOTE},
         blocking=True,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     sync_mock.assert_awaited_once()
     mock_write_config.assert_called()
 
 
 async def _send_commands_and_wait.opp, service_data):
-    await opp..services.async_call(
+    await.opp.services.async_call(
         REMOTE_DOMAIN,
         SERVICE_SEND_COMMAND,
         service_data,
         blocking=True,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()

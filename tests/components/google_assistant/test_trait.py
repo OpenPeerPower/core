@@ -26,7 +26,7 @@ from openpeerpower.components.climate import const as climate
 from openpeerpower.components.google_assistant import const, error, helpers, trait
 from openpeerpower.components.google_assistant.error import SmartHomeError
 from openpeerpower.components.humidifier import const as humidifier
-from openpeerpower.config import async_process_op.core_config
+from openpeerpower.config import async_process_ha_core_config
 from openpeerpower.const import (
     ATTR_ASSUMED_STATE,
     ATTR_DEVICE_CLASS,
@@ -49,8 +49,8 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.core import DOMAIN as HA_DOMAIN, EVENT_CALL_SERVICE, State
-from openpeerpowerr.util import color
+from openpeerpower.core import DOMAIN as HA_DOMAIN, EVENT_CALL_SERVICE, State
+from openpeerpower.util import color
 
 from . import BASIC_CONFIG, MockConfig
 
@@ -91,7 +91,7 @@ async def test_brightness_light.opp):
     await trt.execute(
         trait.COMMAND_BRIGHTNESS_ABSOLUTE, BASIC_DATA, {"brightness": 50}, {}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data == {ATTR_ENTITY_ID: "light.bla", light.ATTR_BRIGHTNESS_PCT: 50}
@@ -106,7 +106,7 @@ async def test_brightness_light.opp):
 
 async def test_camera_stream.opp):
     """Test camera stream trait support for camera domain."""
-    await async_process_op.core_config(
+    await async_process_ha_core_config(
        .opp,
         {"external_url": "https://example.com"},
     )
@@ -680,7 +680,7 @@ async def test_scene_script.opp):
     await trt.execute(trait.COMMAND_ACTIVATE_SCENE, BASIC_DATA, {}, {})
 
     # We don't wait till script execution is done.
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data == {ATTR_ENTITY_ID: "script.bla"}
@@ -2489,7 +2489,7 @@ async def test_transport_control.opp):
     )
 
     # Patch to avoid time ticking over during the command failing the test
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         await trt.execute(
             trait.COMMAND_MEDIA_SEEK_RELATIVE,
             BASIC_DATA,
