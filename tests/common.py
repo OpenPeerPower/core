@@ -287,7 +287,7 @@ async def async_test_home_assistant(loop, load_registries=True):
             entity_registry.async_load.opp),
             area_registry.async_load.opp),
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
    .opp.state = op.CoreState.running
 
@@ -1057,7 +1057,7 @@ async def flush_store(store):
 
 async def get_system_health_info.opp, domain):
     """Get system health info."""
-    return await.opp.data["system_health"][domain].info_callback.opp)
+    return await opp..data["system_health"][domain].info_callback.opp)
 
 
 def mock_integration.opp, module):

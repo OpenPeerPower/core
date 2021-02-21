@@ -49,7 +49,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     api = nuheat.NuHeat(username, password)
 
     try:
-        thermostat = await opp.async_add_executor_job(
+        thermostat = await opp..async_add_executor_job(
             _get_thermostat, api, serial_number
         )
     except requests.exceptions.Timeout as ex:
@@ -68,7 +68,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     async def _async_update_data():
         """Fetch data from API endpoint."""
-        await opp.async_add_executor_job(thermostat.get_data)
+        await opp..async_add_executor_job(thermostat.get_data)
 
     coordinator = DataUpdateCoordinator(
        .opp,

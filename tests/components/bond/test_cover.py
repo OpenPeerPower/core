@@ -39,7 +39,7 @@ async def test_entity_registry.opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await.opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = await opp..helpers.entity_registry.async_get_registry()
     entity = registry.entities["cover.name_1"]
     assert entity.unique_id == "test-hub-id_test-device-id"
 
@@ -51,13 +51,13 @@ async def test_open_cover.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_open, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp..services.async_call(
             COVER_DOMAIN,
             SERVICE_OPEN_COVER,
             {ATTR_ENTITY_ID: "cover.name_1"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     mock_open.assert_called_once_with("test-device-id", Action.open())
 
@@ -69,13 +69,13 @@ async def test_close_cover.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_close, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp..services.async_call(
             COVER_DOMAIN,
             SERVICE_CLOSE_COVER,
             {ATTR_ENTITY_ID: "cover.name_1"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     mock_close.assert_called_once_with("test-device-id", Action.close())
 
@@ -87,13 +87,13 @@ async def test_stop_cover.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_hold, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp..services.async_call(
             COVER_DOMAIN,
             SERVICE_STOP_COVER,
             {ATTR_ENTITY_ID: "cover.name_1"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     mock_hold.assert_called_once_with("test-device-id", Action.hold())
 
@@ -104,7 +104,7 @@ async def test_update_reports_open_cover.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"open": 1}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert.opp.states.get("cover.name_1").state == "open"
 
@@ -115,7 +115,7 @@ async def test_update_reports_closed_cover.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"open": 0}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert.opp.states.get("cover.name_1").state == "closed"
 

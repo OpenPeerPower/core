@@ -22,13 +22,13 @@ def mock_setup():
 
 async def test_flow_works.opp):
     """Test user config."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         islamic_prayer_times.DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -45,12 +45,12 @@ async def test_options.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"], user_input={CONF_CALC_METHOD: "makkah"}
     )
 
@@ -60,7 +60,7 @@ async def test_options.opp):
 
 async def test_import.opp):
     """Test import step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         islamic_prayer_times.DOMAIN,
         context={"source": "import"},
         data={CONF_CALC_METHOD: "makkah"},
@@ -79,7 +79,7 @@ async def test_integration_already_configured.opp):
         options={},
     )
     entry.add_to_opp.opp)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         islamic_prayer_times.DOMAIN, context={"source": "user"}
     )
 

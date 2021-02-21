@@ -69,7 +69,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     bus = smbus.SMBus(bus_number)
 
-    sensor = await opp.async_add_executor_job(
+    sensor = await opp..async_add_executor_job(
         partial(
             BH1750,
             bus,

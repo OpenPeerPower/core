@@ -254,7 +254,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up 1-Wire platform."""
     onewirehub = opp.data[DOMAIN][config_entry.unique_id]
-    entities = await opp.async_add_executor_job(
+    entities = await opp..async_add_executor_job(
         get_entities, onewirehub, config_entry.data
     )
     async_add_entities(entities, True)

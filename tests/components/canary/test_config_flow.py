@@ -25,18 +25,18 @@ async def test_user_form.opp, canary_config_flow):
     """Test we get the user initiated form."""
     await async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["errors"] == {}
 
     with _patch_async_setup() as mock_setup, _patch_async_setup_entry() as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             USER_INPUT,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == "test-username"
@@ -50,11 +50,11 @@ async def test_user_form_cannot_connect.opp, canary_config_flow):
     """Test we handle errors that should trigger the cannot connect error."""
     canary_config_flow.side_effect = HTTPError()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         USER_INPUT,
     )
@@ -64,7 +64,7 @@ async def test_user_form_cannot_connect.opp, canary_config_flow):
 
     canary_config_flow.side_effect = ConnectTimeout()
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         USER_INPUT,
     )
@@ -77,11 +77,11 @@ async def test_user_form_unexpected_exception.opp, canary_config_flow):
     """Test we handle unexpected exception."""
     canary_config_flow.side_effect = Exception()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         USER_INPUT,
     )
@@ -94,7 +94,7 @@ async def test_user_form_single_instance_allowed.opp, canary_config_flow):
     """Test that configuring more than one instance is rejected."""
     await init_integration.opp, skip_entry_setup=True)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data=USER_INPUT,
@@ -111,16 +111,16 @@ async def test_options_flow.opp, canary):
     assert entry.options[CONF_FFMPEG_ARGUMENTS] == DEFAULT_FFMPEG_ARGUMENTS
     assert entry.options[CONF_TIMEOUT] == DEFAULT_TIMEOUT
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
     with _patch_async_setup(), _patch_async_setup_entry():
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp..config_entries.options.async_configure(
             result["flow_id"],
             user_input={CONF_FFMPEG_ARGUMENTS: "-v", CONF_TIMEOUT: 7},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["data"][CONF_FFMPEG_ARGUMENTS] == "-v"

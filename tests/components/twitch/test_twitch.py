@@ -55,7 +55,7 @@ async def test_init.opp):
         "openpeerpower.components.twitch.sensor.TwitchClient", return_value=twitch_mock
     ):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG) is True
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.state == "offline"
@@ -79,7 +79,7 @@ async def test_offline.opp):
         return_value=twitch_mock,
     ):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG) is True
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.state == "offline"
@@ -99,7 +99,7 @@ async def test_streaming.opp):
         return_value=twitch_mock,
     ):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG) is True
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.state == "streaming"
@@ -124,7 +124,7 @@ async def test_oauth_without_sub_and_follow.opp):
         return_value=twitch_mock,
     ):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.attributes["subscribed"] is False
@@ -147,7 +147,7 @@ async def test_oauth_with_sub.opp):
         return_value=twitch_mock,
     ):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.attributes["subscribed"] is True
@@ -172,7 +172,7 @@ async def test_oauth_with_follow.opp):
         return_value=twitch_mock,
     ):
         assert await async_setup_component.opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)
     assert sensor_state.attributes["subscribed"] is False

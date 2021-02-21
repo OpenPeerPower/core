@@ -29,9 +29,9 @@ async def test_zwave_ws_api.opp, mock_openzwave,.opp_ws_client):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json({ID: 5, TYPE: "zwave/get_config"})
 
@@ -59,9 +59,9 @@ async def test_zwave_ozw_migration_api.opp, mock_openzwave,.opp_ws_client):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json({ID: 6, TYPE: "zwave/get_migration_config"})
     msg = await client.receive_json()

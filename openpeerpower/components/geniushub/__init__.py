@@ -135,7 +135,7 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
         """Set the system mode."""
         entity_id = call.data[ATTR_ENTITY_ID]
 
-        registry = await.opp.helpers.entity_registry.async_get_registry()
+        registry = await opp..helpers.entity_registry.async_get_registry()
         registry_entry = registry.async_get(entity_id)
 
         if registry_entry is None or registry_entry.platform != DOMAIN:

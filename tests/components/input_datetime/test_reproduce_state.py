@@ -28,7 +28,7 @@ async def test_reproducing_states.opp, caplog):
     datetime_calls = async_mock_service.opp, "input_datetime", "set_datetime")
 
     # These calls should do nothing as entities already in desired state
-    await.opp.helpers.state.async_reproduce_state(
+    await opp..helpers.state.async_reproduce_state(
         [
             State("input_datetime.entity_datetime", "2010-10-10 01:20:00"),
             State("input_datetime.entity_time", "01:20:00"),
@@ -39,7 +39,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(datetime_calls) == 0
 
     # Test invalid state is handled
-    await.opp.helpers.state.async_reproduce_state(
+    await opp..helpers.state.async_reproduce_state(
         [
             State("input_datetime.entity_datetime", "not_supported"),
             State("input_datetime.entity_datetime", "not-valid-date"),
@@ -55,7 +55,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(datetime_calls) == 0
 
     # Make sure correct services are called
-    await.opp.helpers.state.async_reproduce_state(
+    await opp..helpers.state.async_reproduce_state(
         [
             State("input_datetime.entity_datetime", "2011-10-10 02:20:00"),
             State("input_datetime.entity_time", "02:20:00"),

@@ -25,7 +25,7 @@ DISCOVERY_INFO = {
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -47,11 +47,11 @@ async def test_form.opp):
         "openpeerpower.components.shelly.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.1.1.1"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "Test name"
@@ -67,7 +67,7 @@ async def test_form.opp):
 async def test_title_without_name.opp):
     """Test we set the title to the hostname when the device doesn't have a name."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -93,11 +93,11 @@ async def test_title_without_name.opp):
         "openpeerpower.components.shelly.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.1.1.1"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "shelly1pm-12345"
@@ -112,7 +112,7 @@ async def test_title_without_name.opp):
 
 async def test_form_auth.opp):
     """Test manual configuration if auth is required."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -122,7 +122,7 @@ async def test_form_auth.opp):
         "aioshelly.get_info",
         return_value={"mac": "test-mac", "type": "SHSW-1", "auth": True},
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.1.1.1"},
         )
@@ -143,11 +143,11 @@ async def test_form_auth.opp):
         "openpeerpower.components.shelly.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp..config_entries.flow.async_configure(
             result2["flow_id"],
             {"username": "test username", "password": "test password"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result3["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result3["title"] == "Test name"
@@ -168,12 +168,12 @@ async def test_form_auth.opp):
 async def test_form_errors_get_info.opp, error):
     """Test we handle errors."""
     exc, base_error = error
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch("aioshelly.get_info", side_effect=exc):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.1.1.1"},
         )
@@ -188,14 +188,14 @@ async def test_form_errors_get_info.opp, error):
 async def test_form_errors_test_connection.opp, error):
     """Test we handle errors."""
     exc, base_error = error
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(
         "aioshelly.get_info", return_value={"mac": "test-mac", "auth": False}
     ), patch("aioshelly.Device.create", new=AsyncMock(side_effect=exc)):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.1.1.1"},
         )
@@ -212,7 +212,7 @@ async def test_form_already_configured.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -220,7 +220,7 @@ async def test_form_already_configured.opp):
         "aioshelly.get_info",
         return_value={"mac": "test-mac", "type": "SHSW-1", "auth": False},
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.1.1.1"},
         )
@@ -243,7 +243,7 @@ async def test_user_setup_ignored_device.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -268,7 +268,7 @@ async def test_user_setup_ignored_device.opp):
         return_value=True,
     ) as mock_setup_entry:
 
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.1.1.1"},
         )
@@ -283,12 +283,12 @@ async def test_user_setup_ignored_device.opp):
 
 async def test_form_firmware_unsupported.opp):
     """Test we abort if device firmware is unsupported."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch("aioshelly.get_info", side_effect=aioshelly.FirmwareUnsupported):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.1.1.1"},
         )
@@ -309,12 +309,12 @@ async def test_form_firmware_unsupported.opp):
 async def test_form_auth_errors_test_connection.opp, error):
     """Test we handle errors in authenticated devices."""
     exc, base_error = error
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch("aioshelly.get_info", return_value={"mac": "test-mac", "auth": True}):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.1.1.1"},
         )
@@ -323,7 +323,7 @@ async def test_form_auth_errors_test_connection.opp, error):
         "aioshelly.Device.create",
         new=AsyncMock(side_effect=exc),
     ):
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp..config_entries.flow.async_configure(
             result2["flow_id"],
             {"username": "test username", "password": "test password"},
         )
@@ -339,7 +339,7 @@ async def test_zeroconf.opp):
         "aioshelly.get_info",
         return_value={"mac": "test-mac", "type": "SHSW-1", "auth": False},
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             data=DISCOVERY_INFO,
             context={"source": config_entries.SOURCE_ZEROCONF},
@@ -365,11 +365,11 @@ async def test_zeroconf.opp):
         "openpeerpower.components.shelly.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "Test name"
@@ -410,7 +410,7 @@ async def test_zeroconf_sleeping_device.opp):
             )
         ),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             data=DISCOVERY_INFO,
             context={"source": config_entries.SOURCE_ZEROCONF},
@@ -429,11 +429,11 @@ async def test_zeroconf_sleeping_device.opp):
         "openpeerpower.components.shelly.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "Test name"
@@ -470,7 +470,7 @@ async def test_zeroconf_sleeping_device_error.opp, error):
         "aioshelly.Device.create",
         new=AsyncMock(side_effect=exc),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             data=DISCOVERY_INFO,
             context={"source": config_entries.SOURCE_ZEROCONF},
@@ -491,7 +491,7 @@ async def test_zeroconf_confirm_error.opp, error):
         "aioshelly.get_info",
         return_value={"mac": "test-mac", "type": "SHSW-1", "auth": False},
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             data=DISCOVERY_INFO,
             context={"source": config_entries.SOURCE_ZEROCONF},
@@ -503,7 +503,7 @@ async def test_zeroconf_confirm_error.opp, error):
         "aioshelly.Device.create",
         new=AsyncMock(side_effect=exc),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )
@@ -524,7 +524,7 @@ async def test_zeroconf_already_configured.opp):
         "aioshelly.get_info",
         return_value={"mac": "test-mac", "type": "SHSW-1", "auth": False},
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             data=DISCOVERY_INFO,
             context={"source": config_entries.SOURCE_ZEROCONF},
@@ -539,7 +539,7 @@ async def test_zeroconf_already_configured.opp):
 async def test_zeroconf_firmware_unsupported.opp):
     """Test we abort if device firmware is unsupported."""
     with patch("aioshelly.get_info", side_effect=aioshelly.FirmwareUnsupported):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             data=DISCOVERY_INFO,
             context={"source": config_entries.SOURCE_ZEROCONF},
@@ -552,7 +552,7 @@ async def test_zeroconf_firmware_unsupported.opp):
 async def test_zeroconf_cannot_connect.opp):
     """Test we get the form."""
     with patch("aioshelly.get_info", side_effect=asyncio.TimeoutError):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             data=DISCOVERY_INFO,
             context={"source": config_entries.SOURCE_ZEROCONF},
@@ -569,7 +569,7 @@ async def test_zeroconf_require_auth.opp):
         "aioshelly.get_info",
         return_value={"mac": "test-mac", "type": "SHSW-1", "auth": True},
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             data=DISCOVERY_INFO,
             context={"source": config_entries.SOURCE_ZEROCONF},
@@ -577,7 +577,7 @@ async def test_zeroconf_require_auth.opp):
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {}
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
@@ -597,11 +597,11 @@ async def test_zeroconf_require_auth.opp):
         "openpeerpower.components.shelly.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp..config_entries.flow.async_configure(
             result2["flow_id"],
             {"username": "test username", "password": "test password"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result3["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result3["title"] == "Test name"

@@ -32,7 +32,7 @@ async def test_invalid_path.opp):
     """Test that an invalid path is caught."""
     config = {"sensor": {"platform": "filesize", CONF_FILE_PATHS: ["invalid_path"]}}
     assert await async_setup_component.opp, "sensor", config)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len.opp.states.async_entity_ids()) == 0
 
 
@@ -42,7 +42,7 @@ async def test_valid_path.opp):
     config = {"sensor": {"platform": "filesize", CONF_FILE_PATHS: [TEST_FILE]}}
    .opp.config.allowlist_external_dirs = {TEST_DIR}
     assert await async_setup_component.opp, "sensor", config)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len.opp.states.async_entity_ids()) == 1
     state = opp.states.get("sensor.mock_file_test_filesize_txt")
     assert state.state == "0.0"
@@ -52,7 +52,7 @@ async def test_valid_path.opp):
 async def test_reload.opp, tmpdir):
     """Verify we can reload filesize sensors."""
     testfile = f"{tmpdir}/file"
-    await opp.async_add_executor_job(create_file, testfile)
+    await opp..async_add_executor_job(create_file, testfile)
     with patch.object.opp.config, "is_allowed_path", return_value=True):
         await async_setup_component(
            .opp,
@@ -64,7 +64,7 @@ async def test_reload.opp, tmpdir):
                 }
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 
@@ -78,13 +78,13 @@ async def test_reload.opp, tmpdir):
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path), patch.object(
        .opp.config, "is_allowed_path", return_value=True
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert.opp.states.get("sensor.file") is None
 

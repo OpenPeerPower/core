@@ -316,10 +316,10 @@ def _async_setup_services.opp: OpenPeerPower):
         params = {**service_call.data}
         params.pop(ATTR_ENTITY_ID)
         params[ATTR_TRANSITIONS] = _transitions_config_parser(params[ATTR_TRANSITIONS])
-        await opp.async_add_executor_job(partial(entity.start_flow, **params))
+        await opp..async_add_executor_job(partial(entity.start_flow, **params))
 
     async def _async_set_color_scene(entity, service_call):
-        await opp.async_add_executor_job(
+        await opp..async_add_executor_job(
             partial(
                 entity.set_scene,
                 SceneClass.COLOR,
@@ -329,7 +329,7 @@ def _async_setup_services.opp: OpenPeerPower):
         )
 
     async def _async_set_hsv_scene(entity, service_call):
-        await opp.async_add_executor_job(
+        await opp..async_add_executor_job(
             partial(
                 entity.set_scene,
                 SceneClass.HSV,
@@ -339,7 +339,7 @@ def _async_setup_services.opp: OpenPeerPower):
         )
 
     async def _async_set_color_temp_scene(entity, service_call):
-        await opp.async_add_executor_job(
+        await opp..async_add_executor_job(
             partial(
                 entity.set_scene,
                 SceneClass.CT,
@@ -354,7 +354,7 @@ def _async_setup_services.opp: OpenPeerPower):
             action=Flow.actions[service_call.data[ATTR_ACTION]],
             transitions=_transitions_config_parser(service_call.data[ATTR_TRANSITIONS]),
         )
-        await opp.async_add_executor_job(
+        await opp..async_add_executor_job(
             partial(
                 entity.set_scene,
                 SceneClass.CF,
@@ -363,7 +363,7 @@ def _async_setup_services.opp: OpenPeerPower):
         )
 
     async def _async_set_auto_delay_off_scene(entity, service_call):
-        await opp.async_add_executor_job(
+        await opp..async_add_executor_job(
             partial(
                 entity.set_scene,
                 SceneClass.AUTO_DELAY_OFF,

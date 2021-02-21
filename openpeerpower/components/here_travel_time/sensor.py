@@ -151,7 +151,7 @@ async def async_setup_platform(
     api_key = config[CONF_API_KEY]
     here_client = herepy.RoutingApi(api_key)
 
-    if not await opp.async_add_executor_job(
+    if not await opp..async_add_executor_job(
         _are_valid_client_credentials, here_client
     ):
         _LOGGER.error(

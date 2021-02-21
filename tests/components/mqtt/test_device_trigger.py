@@ -48,7 +48,7 @@ async def test_get_triggers.opp, device_reg, entity_reg, mqtt_mock):
         '  "subtype": "button_1" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     expected_triggers = [
@@ -74,7 +74,7 @@ async def test_get_unknown_triggers.opp, device_reg, entity_reg, mqtt_mock):
         '  "unique_id": "unique" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
@@ -114,7 +114,7 @@ async def test_get_non_existing_triggers.opp, device_reg, entity_reg, mqtt_mock)
         '  "unique_id": "unique" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
@@ -134,7 +134,7 @@ async def test_discover_bad_triggers.opp, device_reg, entity_reg, mqtt_mock):
         '  "subtype": "button_1" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data0)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert device_reg.async_get_device({("mqtt", "0AFFD2")}) is None
 
     # Test sending correct data
@@ -147,7 +147,7 @@ async def test_discover_bad_triggers.opp, device_reg, entity_reg, mqtt_mock):
         '  "subtype": "button_1" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     expected_triggers = [
@@ -183,7 +183,7 @@ async def test_update_remove_triggers.opp, device_reg, entity_reg, mqtt_mock):
         '  "subtype": "button_2" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     expected_triggers1 = [
@@ -204,14 +204,14 @@ async def test_update_remove_triggers.opp, device_reg, entity_reg, mqtt_mock):
 
     # Update trigger
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data2)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
     assert_lists_same(triggers, expected_triggers2)
 
     # Remove trigger
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     assert device_entry is None
@@ -237,7 +237,7 @@ async def test_if_fires_on_mqtt_message.opp, device_reg, calls, mqtt_mock):
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla2/config", data2)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
@@ -279,13 +279,13 @@ async def test_if_fires_on_mqtt_message.opp, device_reg, calls, mqtt_mock):
 
     # Fake short press.
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "short_press"
 
     # Fake long press.
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "long_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "long_press"
 
@@ -316,7 +316,7 @@ async def test_if_fires_on_mqtt_message_late_discover(
         '  "subtype": "button_2" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla0/config", data0)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
@@ -358,17 +358,17 @@ async def test_if_fires_on_mqtt_message_late_discover(
 
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla2/config", data2)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Fake short press.
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "short_press"
 
     # Fake long press.
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "long_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "long_press"
 
@@ -392,7 +392,7 @@ async def test_if_fires_on_mqtt_message_after_update(
         '  "subtype": "button_2" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
@@ -420,31 +420,31 @@ async def test_if_fires_on_mqtt_message_after_update(
 
     # Fake short press.
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
     # Update the trigger with different topic
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data2)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
     async_fire_mqtt_message.opp, "foobar/triggers/buttonOne", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
 
     # Update the trigger with same topic
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data2)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
 
     async_fire_mqtt_message.opp, "foobar/triggers/buttonOne", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 3
 
 
@@ -458,7 +458,7 @@ async def test_no_resubscribe_same_topic.opp, device_reg, mqtt_mock):
         '  "subtype": "button_1" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
@@ -486,7 +486,7 @@ async def test_no_resubscribe_same_topic.opp, device_reg, mqtt_mock):
 
     call_count = mqtt_mock.async_subscribe.call_count
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert mqtt_mock.async_subscribe.call_count == call_count
 
 
@@ -502,7 +502,7 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt(
         '  "subtype": "button_1" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
@@ -530,23 +530,23 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt(
 
     # Fake short press.
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
     # Remove the trigger
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
     # Rediscover the trigger
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
 
 
@@ -562,7 +562,7 @@ async def test_not_fires_on_mqtt_message_after_remove_from_registry(
         '  "subtype": "button_1" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
@@ -590,15 +590,15 @@ async def test_not_fires_on_mqtt_message_after_remove_from_registry(
 
     # Fake short press.
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
     # Remove the device
     device_reg.async_remove_device(device_entry.id)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -613,7 +613,7 @@ async def test_attach_remove.opp, device_reg, mqtt_mock):
         '  "subtype": "button_1" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     calls = []
@@ -637,17 +637,17 @@ async def test_attach_remove.opp, device_reg, mqtt_mock):
 
     # Fake short press.
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0] == "short_press"
 
     # Remove the trigger
     remove()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify the triggers are no longer active
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -667,7 +667,7 @@ async def test_attach_remove_late.opp, device_reg, mqtt_mock):
         '  "subtype": "button_1" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla0/config", data0)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     calls = []
@@ -690,21 +690,21 @@ async def test_attach_remove_late.opp, device_reg, mqtt_mock):
     )
 
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Fake short press.
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0] == "short_press"
 
     # Remove the trigger
     remove()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify the triggers are no longer active
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -724,7 +724,7 @@ async def test_attach_remove_late2.opp, device_reg, mqtt_mock):
         '  "subtype": "button_1" }'
     )
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla0/config", data0)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     calls = []
@@ -748,20 +748,20 @@ async def test_attach_remove_late2.opp, device_reg, mqtt_mock):
 
     # Remove the trigger
     remove()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify the triggers are no longer active
     async_fire_mqtt_message.opp, "foobar/triggers/button1", "short_press")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
 async def test_entity_device_info_with_connection.opp, mqtt_mock):
     """Test MQTT device registry integration."""
-    registry = await.opp.helpers.device_registry.async_get_registry()
+    registry = await opp..helpers.device_registry.async_get_registry()
 
     data = json.dumps(
         {
@@ -779,7 +779,7 @@ async def test_entity_device_info_with_connection.opp, mqtt_mock):
         }
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     device = registry.async_get_device(set(), {("mac", "02:5b:26:a8:dc:12")})
     assert device is not None
@@ -792,7 +792,7 @@ async def test_entity_device_info_with_connection.opp, mqtt_mock):
 
 async def test_entity_device_info_with_identifier.opp, mqtt_mock):
     """Test MQTT device registry integration."""
-    registry = await.opp.helpers.device_registry.async_get_registry()
+    registry = await opp..helpers.device_registry.async_get_registry()
 
     data = json.dumps(
         {
@@ -810,7 +810,7 @@ async def test_entity_device_info_with_identifier.opp, mqtt_mock):
         }
     )
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
@@ -823,7 +823,7 @@ async def test_entity_device_info_with_identifier.opp, mqtt_mock):
 
 async def test_entity_device_info_update.opp, mqtt_mock):
     """Test device registry update."""
-    registry = await.opp.helpers.device_registry.async_get_registry()
+    registry = await opp..helpers.device_registry.async_get_registry()
 
     config = {
         "automation_type": "trigger",
@@ -842,7 +842,7 @@ async def test_entity_device_info_update.opp, mqtt_mock):
 
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
@@ -851,7 +851,7 @@ async def test_entity_device_info_update.opp, mqtt_mock):
     config["device"]["name"] = "Milk"
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
@@ -870,7 +870,7 @@ async def test_cleanup_trigger.opp, device_reg, entity_reg, mqtt_mock):
 
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is created
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -880,8 +880,8 @@ async def test_cleanup_trigger.opp, device_reg, entity_reg, mqtt_mock):
     assert triggers[0]["type"] == "foo"
 
     device_reg.async_remove_device(device_entry.id)
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -905,7 +905,7 @@ async def test_cleanup_device.opp, device_reg, entity_reg, mqtt_mock):
 
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is created
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -915,7 +915,7 @@ async def test_cleanup_device.opp, device_reg, entity_reg, mqtt_mock):
     assert triggers[0]["type"] == "foo"
 
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -943,9 +943,9 @@ async def test_cleanup_device_several_triggers.opp, device_reg, entity_reg, mqtt
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla2/config", data2)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is created
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -957,7 +957,7 @@ async def test_cleanup_device_several_triggers.opp, device_reg, entity_reg, mqtt
     assert triggers[1]["type"] == "foo2"
 
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is not cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -968,7 +968,7 @@ async def test_cleanup_device_several_triggers.opp, device_reg, entity_reg, mqtt
     assert triggers[0]["type"] == "foo2"
 
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla2/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -998,9 +998,9 @@ async def test_cleanup_device_with_entity1.opp, device_reg, entity_reg, mqtt_moc
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla2/config", data2)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is created
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -1010,7 +1010,7 @@ async def test_cleanup_device_with_entity1.opp, device_reg, entity_reg, mqtt_moc
     assert len(triggers) == 3  # 2 binary_sensor triggers + device trigger
 
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is not cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -1020,7 +1020,7 @@ async def test_cleanup_device_with_entity1.opp, device_reg, entity_reg, mqtt_moc
     assert len(triggers) == 2  # 2 binary_sensor triggers
 
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla2/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -1050,9 +1050,9 @@ async def test_cleanup_device_with_entity2.opp, device_reg, entity_reg, mqtt_moc
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", data1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla2/config", data2)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is created
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -1062,7 +1062,7 @@ async def test_cleanup_device_with_entity2.opp, device_reg, entity_reg, mqtt_moc
     assert len(triggers) == 3  # 2 binary_sensor triggers + device trigger
 
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla2/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is not cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -1072,7 +1072,7 @@ async def test_cleanup_device_with_entity2.opp, device_reg, entity_reg, mqtt_moc
     assert len(triggers) == 1  # device trigger
 
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla1/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device registry entry is cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -1084,7 +1084,7 @@ async def test_trigger_debug_info.opp, mqtt_mock):
 
     This is a test helper for MQTT debug_info.
     """
-    registry = await.opp.helpers.device_registry.async_get_registry()
+    registry = await opp..helpers.device_registry.async_get_registry()
 
     config = {
         "platform": "mqtt",
@@ -1102,7 +1102,7 @@ async def test_trigger_debug_info.opp, mqtt_mock):
     }
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla/config", data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     device = registry.async_get_device(set(), {("mac", "02:5b:26:a8:dc:12")})
     assert device is not None

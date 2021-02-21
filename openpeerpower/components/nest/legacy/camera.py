@@ -25,7 +25,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
 async def async_setup_legacy_entry.opp, entry, async_add_entities):
     """Set up a Nest sensor based on a config entry."""
-    camera_devices = await opp.async_add_executor_job.opp.data[DATA_NEST].cameras)
+    camera_devices = await opp..async_add_executor_job.opp.data[DATA_NEST].cameras)
     cameras = [NestCamera(structure, device) for structure, device in camera_devices]
     async_add_entities(cameras, True)
 

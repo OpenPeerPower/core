@@ -154,7 +154,7 @@ async def test_if_fires_on_zone_change.opp, calls):
         "state",
         {"latitude": HOME_LATITUDE, "longitude": HOME_LONGITUDE},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "enter - device - {} - -117.235 - -117.238".format(
         "device_tracker.entity"
@@ -166,7 +166,7 @@ async def test_if_fires_on_zone_change.opp, calls):
         "state",
         {"latitude": AWAY_LATITUDE, "longitude": AWAY_LONGITUDE},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "leave - device - {} - -117.238 - -117.235".format(
         "device_tracker.entity"

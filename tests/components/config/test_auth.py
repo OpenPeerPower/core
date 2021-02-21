@@ -15,7 +15,7 @@ def setup_config.opp, aiohttp_client):
 
 async def test_list_requires_admin.opp,.opp_ws_client,.opp_read_only_access_token):
     """Test get users requires auth."""
-    client = await.opp_ws_client.opp,.opp_read_only_access_token)
+    client = await opp._ws_client.opp,.opp_read_only_access_token)
 
     await client.send_json({"id": 5, "type": auth_config.WS_TYPE_LIST})
 
@@ -48,12 +48,12 @@ async def test_list.opp,.opp_ws_client,.opp_admin_user):
         id="hij", name="Inactive User", is_active=False, groups=[group]
     ).add_to_opp.opp)
 
-    refresh_token = await opp.auth.async_create_refresh_token(
+    refresh_token = await opp..auth.async_create_refresh_token(
         owner, CLIENT_ID, credential=owner.credentials[0]
     )
     access_token = opp.auth.async_create_access_token(refresh_token)
 
-    client = await.opp_ws_client.opp, access_token)
+    client = await opp._ws_client.opp, access_token)
     await client.send_json({"id": 5, "type": auth_config.WS_TYPE_LIST})
 
     result = await client.receive_json()
@@ -104,7 +104,7 @@ async def test_list.opp,.opp_ws_client,.opp_admin_user):
 
 async def test_delete_requires_admin.opp,.opp_ws_client,.opp_read_only_access_token):
     """Test delete command requires an admin."""
-    client = await.opp_ws_client.opp,.opp_read_only_access_token)
+    client = await opp._ws_client.opp,.opp_read_only_access_token)
 
     await client.send_json(
         {"id": 5, "type": auth_config.WS_TYPE_DELETE, "user_id": "abcd"}
@@ -117,8 +117,8 @@ async def test_delete_requires_admin.opp,.opp_ws_client,.opp_read_only_access_to
 
 async def test_delete_unable_self_account.opp,.opp_ws_client,.opp_access_token):
     """Test we cannot delete our own account."""
-    client = await.opp_ws_client.opp,.opp_access_token)
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    client = await opp._ws_client.opp,.opp_access_token)
+    refresh_token = await opp..auth.async_validate_access_token.opp_access_token)
 
     await client.send_json(
         {"id": 5, "type": auth_config.WS_TYPE_DELETE, "user_id": refresh_token.user.id}
@@ -131,7 +131,7 @@ async def test_delete_unable_self_account.opp,.opp_ws_client,.opp_access_token):
 
 async def test_delete_unknown_user.opp,.opp_ws_client,.opp_access_token):
     """Test we cannot delete an unknown user."""
-    client = await.opp_ws_client.opp,.opp_access_token)
+    client = await opp._ws_client.opp,.opp_access_token)
 
     await client.send_json(
         {"id": 5, "type": auth_config.WS_TYPE_DELETE, "user_id": "abcd"}
@@ -144,10 +144,10 @@ async def test_delete_unknown_user.opp,.opp_ws_client,.opp_access_token):
 
 async def test_delete.opp,.opp_ws_client,.opp_access_token):
     """Test delete command works."""
-    client = await.opp_ws_client.opp,.opp_access_token)
+    client = await opp._ws_client.opp,.opp_access_token)
     test_user = MockUser(id="efg").add_to_opp.opp)
 
-    assert len(await opp.auth.async_get_users()) == 2
+    assert len(await opp..auth.async_get_users()) == 2
 
     await client.send_json(
         {"id": 5, "type": auth_config.WS_TYPE_DELETE, "user_id": test_user.id}
@@ -155,22 +155,22 @@ async def test_delete.opp,.opp_ws_client,.opp_access_token):
 
     result = await client.receive_json()
     assert result["success"], result
-    assert len(await opp.auth.async_get_users()) == 1
+    assert len(await opp..auth.async_get_users()) == 1
 
 
 async def test_create.opp,.opp_ws_client,.opp_access_token):
     """Test create command works."""
-    client = await.opp_ws_client.opp,.opp_access_token)
+    client = await opp._ws_client.opp,.opp_access_token)
 
-    assert len(await opp.auth.async_get_users()) == 1
+    assert len(await opp..auth.async_get_users()) == 1
 
     await client.send_json({"id": 5, "type": "config/auth/create", "name": "Paulus"})
 
     result = await client.receive_json()
     assert result["success"], result
-    assert len(await opp.auth.async_get_users()) == 2
+    assert len(await opp..auth.async_get_users()) == 2
     data_user = result["result"]["user"]
-    user = await opp.auth.async_get_user(data_user["id"])
+    user = await opp..auth.async_get_user(data_user["id"])
     assert user is not None
     assert user.name == data_user["name"]
     assert user.is_active
@@ -182,9 +182,9 @@ async def test_create.opp,.opp_ws_client,.opp_access_token):
 
 async def test_create_user_group.opp,.opp_ws_client,.opp_access_token):
     """Test create user with a group."""
-    client = await.opp_ws_client.opp,.opp_access_token)
+    client = await opp._ws_client.opp,.opp_access_token)
 
-    assert len(await opp.auth.async_get_users()) == 1
+    assert len(await opp..auth.async_get_users()) == 1
 
     await client.send_json(
         {
@@ -197,9 +197,9 @@ async def test_create_user_group.opp,.opp_ws_client,.opp_access_token):
 
     result = await client.receive_json()
     assert result["success"], result
-    assert len(await opp.auth.async_get_users()) == 2
+    assert len(await opp..auth.async_get_users()) == 2
     data_user = result["result"]["user"]
-    user = await opp.auth.async_get_user(data_user["id"])
+    user = await opp..auth.async_get_user(data_user["id"])
     assert user is not None
     assert user.name == data_user["name"]
     assert user.is_active
@@ -211,7 +211,7 @@ async def test_create_user_group.opp,.opp_ws_client,.opp_access_token):
 
 async def test_create_requires_admin.opp,.opp_ws_client,.opp_read_only_access_token):
     """Test create command requires an admin."""
-    client = await.opp_ws_client.opp,.opp_read_only_access_token)
+    client = await opp._ws_client.opp,.opp_read_only_access_token)
 
     await client.send_json({"id": 5, "type": "config/auth/create", "name": "YO"})
 
@@ -222,9 +222,9 @@ async def test_create_requires_admin.opp,.opp_ws_client,.opp_read_only_access_to
 
 async def test_update.opp,.opp_ws_client):
     """Test update command works."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
-    user = await opp.auth.async_create_user("Test user")
+    user = await opp..auth.async_create_user("Test user")
 
     await client.send_json(
         {
@@ -249,9 +249,9 @@ async def test_update.opp,.opp_ws_client):
 
 async def test_update_requires_admin.opp,.opp_ws_client,.opp_read_only_access_token):
     """Test update command requires an admin."""
-    client = await.opp_ws_client.opp,.opp_read_only_access_token)
+    client = await opp._ws_client.opp,.opp_read_only_access_token)
 
-    user = await opp.auth.async_create_user("Test user")
+    user = await opp..auth.async_create_user("Test user")
 
     await client.send_json(
         {
@@ -270,9 +270,9 @@ async def test_update_requires_admin.opp,.opp_ws_client,.opp_read_only_access_to
 
 async def test_update_system_generated.opp,.opp_ws_client):
     """Test update command cannot update a system generated."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
-    user = await opp.auth.async_create_system_user("Test user")
+    user = await opp..auth.async_create_system_user("Test user")
 
     await client.send_json(
         {
@@ -291,9 +291,9 @@ async def test_update_system_generated.opp,.opp_ws_client):
 
 async def test_deactivate.opp,.opp_ws_client):
     """Test deactivation and reactivation of regular user."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
-    user = await opp.auth.async_create_user("Test user")
+    user = await opp..auth.async_create_user("Test user")
     assert user.is_active is True
 
     await client.send_json(
@@ -334,7 +334,7 @@ async def test_deactivate_owner.opp,.opp_ws_client):
     assert user.is_active is True
     assert user.is_owner is True
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "config/auth/update", "user_id": user.id, "is_active": False}
     )
@@ -346,9 +346,9 @@ async def test_deactivate_owner.opp,.opp_ws_client):
 
 async def test_deactivate_system_generated.opp,.opp_ws_client):
     """Test that owner cannot be deactivated."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
-    user = await opp.auth.async_create_system_user("Test user")
+    user = await opp..auth.async_create_system_user("Test user")
     assert user.is_active is True
     assert user.system_generated is True
     assert user.is_owner is False

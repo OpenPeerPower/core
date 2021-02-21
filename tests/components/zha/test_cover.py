@@ -120,7 +120,7 @@ async def test_cover(m1,.opp, zha_device_joined_restored, zigpy_cover_device):
 
     # allow traffic to flow through the gateway and device
     await async_enable_traffic.opp, [zha_device])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # test that the state has changed from unavailable to off
     await send_attributes_report.opp, cluster, {0: 0, 8: 100, 1: 1})
@@ -134,7 +134,7 @@ async def test_cover(m1,.opp, zha_device_joined_restored, zigpy_cover_device):
     with patch(
         "zigpy.zcl.Cluster.request", return_value=mock_coro([0x1, zcl_f.Status.SUCCESS])
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {"entity_id": entity_id}, blocking=True
         )
         assert cluster.request.call_count == 1
@@ -147,7 +147,7 @@ async def test_cover(m1,.opp, zha_device_joined_restored, zigpy_cover_device):
     with patch(
         "zigpy.zcl.Cluster.request", return_value=mock_coro([0x0, zcl_f.Status.SUCCESS])
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {"entity_id": entity_id}, blocking=True
         )
         assert cluster.request.call_count == 1
@@ -160,7 +160,7 @@ async def test_cover(m1,.opp, zha_device_joined_restored, zigpy_cover_device):
     with patch(
         "zigpy.zcl.Cluster.request", return_value=mock_coro([0x5, zcl_f.Status.SUCCESS])
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_COVER_POSITION,
             {"entity_id": entity_id, "position": 47},
@@ -177,7 +177,7 @@ async def test_cover(m1,.opp, zha_device_joined_restored, zigpy_cover_device):
     with patch(
         "zigpy.zcl.Cluster.request", return_value=mock_coro([0x2, zcl_f.Status.SUCCESS])
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, SERVICE_STOP_COVER, {"entity_id": entity_id}, blocking=True
         )
         assert cluster.request.call_count == 1
@@ -208,7 +208,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
 
     # allow traffic to flow through the gateway and device
     await async_enable_traffic.opp, [zha_device])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # test that the state has changed from unavailable to off
     await send_attributes_report.opp, cluster_on_off, {8: 0, 0: False, 1: 1})
@@ -220,7 +220,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
 
     # close from UI command fails
     with patch("zigpy.zcl.Cluster.request", side_effect=asyncio.TimeoutError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {"entity_id": entity_id}, blocking=True
         )
         assert cluster_on_off.request.call_count == 1
@@ -231,7 +231,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
     with patch(
         "zigpy.zcl.Cluster.request", AsyncMock(return_value=[0x1, zcl_f.Status.SUCCESS])
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {"entity_id": entity_id}, blocking=True
         )
         assert cluster_on_off.request.call_count == 1
@@ -243,7 +243,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
     assert ATTR_CURRENT_POSITION not in.opp.states.get(entity_id).attributes
     await send_attributes_report.opp, cluster_level, {0: 0})
     with patch("zigpy.zcl.Cluster.request", side_effect=asyncio.TimeoutError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {"entity_id": entity_id}, blocking=True
         )
         assert cluster_on_off.request.call_count == 1
@@ -255,7 +255,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
     with patch(
         "zigpy.zcl.Cluster.request", AsyncMock(return_value=[0x0, zcl_f.Status.SUCCESS])
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {"entity_id": entity_id}, blocking=True
         )
         assert cluster_on_off.request.call_count == 1
@@ -265,7 +265,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
 
     # set position UI command fails
     with patch("zigpy.zcl.Cluster.request", side_effect=asyncio.TimeoutError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_COVER_POSITION,
             {"entity_id": entity_id, "position": 47},
@@ -281,7 +281,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
     with patch(
         "zigpy.zcl.Cluster.request", AsyncMock(return_value=[0x5, zcl_f.Status.SUCCESS])
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_COVER_POSITION,
             {"entity_id": entity_id, "position": 47},
@@ -307,7 +307,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
 
     # test cover stop
     with patch("zigpy.zcl.Cluster.request", side_effect=asyncio.TimeoutError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_STOP_COVER,
             {"entity_id": entity_id},
@@ -360,7 +360,7 @@ async def test_keen_vent.opp, zha_device_joined_restored, zigpy_keen_vent):
 
     # allow traffic to flow through the gateway and device
     await async_enable_traffic.opp, [zha_device])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # test that the state has changed from unavailable to off
     await send_attributes_report.opp, cluster_on_off, {8: 0, 0: False, 1: 1})
@@ -371,7 +371,7 @@ async def test_keen_vent.opp, zha_device_joined_restored, zigpy_keen_vent):
     p2 = patch.object(cluster_level, "request", AsyncMock(return_value=[4, 0]))
 
     with p1, p2:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {"entity_id": entity_id}, blocking=True
         )
         assert cluster_on_off.request.call_count == 1
@@ -385,7 +385,7 @@ async def test_keen_vent.opp, zha_device_joined_restored, zigpy_keen_vent):
     p2 = patch.object(cluster_level, "request", AsyncMock(return_value=[4, 0]))
 
     with p1, p2:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {"entity_id": entity_id}, blocking=True
         )
         await asyncio.sleep(0)
@@ -411,7 +411,7 @@ async def test_cover_remote.opp, zha_device_joined_restored, zigpy_cover_remote)
     # up command
     hdr = make_zcl_header(0, global_command=False)
     cluster.handle_message(hdr, [])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(zha_events) == 1
     assert zha_events[0].data[ATTR_COMMAND] == "up_open"
@@ -419,7 +419,7 @@ async def test_cover_remote.opp, zha_device_joined_restored, zigpy_cover_remote)
     # down command
     hdr = make_zcl_header(1, global_command=False)
     cluster.handle_message(hdr, [])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(zha_events) == 2
     assert zha_events[1].data[ATTR_COMMAND] == "down_close"

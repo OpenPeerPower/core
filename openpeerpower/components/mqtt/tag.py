@@ -58,7 +58,7 @@ async def async_setup_tag.opp, config, config_entry, discovery_data):
     if CONF_DEVICE in config:
         await _update_device.opp, config_entry, config)
 
-        device_registry = await.opp.helpers.device_registry.async_get_registry()
+        device_registry = await opp..helpers.device_registry.async_get_registry()
         device = device_registry.async_get_device(
             {(DOMAIN, id_) for id_ in config[CONF_DEVICE][CONF_IDENTIFIERS]},
             {tuple(x) for x in config[CONF_DEVICE][CONF_CONNECTIONS]},
@@ -213,7 +213,7 @@ class MQTTTagScanner:
 
 async def _update_device.opp, config_entry, config):
     """Update device registry."""
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     config_entry_id = config_entry.entry_id
     device_info = device_info_from_config(config[CONF_DEVICE])
 

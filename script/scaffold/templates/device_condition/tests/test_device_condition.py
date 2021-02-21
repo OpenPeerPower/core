@@ -114,13 +114,13 @@ async def test_if_state.opp, calls):
     )
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_on - event - test_event1"
 
    .opp.states.async_set("NEW_DOMAIN.entity", STATE_OFF)
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_off - event - test_event2"

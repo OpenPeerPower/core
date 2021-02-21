@@ -46,7 +46,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     flume_token_full_path = opp.config.path(f"{BASE_TOKEN_FILENAME}-{username}")
 
     try:
-        flume_auth = await opp.async_add_executor_job(
+        flume_auth = await opp..async_add_executor_job(
             partial(
                 FlumeAuth,
                 username,
@@ -56,7 +56,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
                 flume_token_file=flume_token_full_path,
             )
         )
-        flume_devices = await opp.async_add_executor_job(FlumeDeviceList, flume_auth)
+        flume_devices = await opp..async_add_executor_job(FlumeDeviceList, flume_auth)
     except RequestException as err:
         raise CannotConnect from err
     except Exception as err:

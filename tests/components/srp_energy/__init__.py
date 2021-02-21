@@ -50,7 +50,7 @@ async def init_integration(
     ):
 
         config_entry.add_to_opp.opp)
-        await opp.config_entries.async_setup(config_entry.entry_id)
-        await opp.async_block_till_done()
+        await opp..config_entries.async_setup(config_entry.entry_id)
+        await opp..async_block_till_done()
 
     return config_entry

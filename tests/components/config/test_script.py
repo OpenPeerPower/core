@@ -10,7 +10,7 @@ async def test_delete_script.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["script"]):
         await async_setup_component.opp, "config", {})
 
-    client = await.opp_client()
+    client = await opp._client()
 
     orig_data = {"one": {}, "two": {}}
 

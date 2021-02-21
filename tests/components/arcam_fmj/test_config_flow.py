@@ -56,7 +56,7 @@ def dummy_client_fixture.opp):
 
 async def test_ssdp.opp, dummy_client):
     """Test a ssdp import flow."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_SSDP},
         data=MOCK_DISCOVER,
@@ -64,7 +64,7 @@ async def test_ssdp.opp, dummy_client):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "confirm"
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == f"Arcam FMJ ({MOCK_HOST})"
     assert result["data"] == MOCK_CONFIG_ENTRY
@@ -77,7 +77,7 @@ async def test_ssdp_abort.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_SSDP},
         data=MOCK_DISCOVER,
@@ -90,7 +90,7 @@ async def test_ssdp_unable_to_connect.opp, dummy_client):
     """Test a ssdp import flow."""
     dummy_client.start.side_effect = AsyncMock(side_effect=ConnectionFailed)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_SSDP},
         data=MOCK_DISCOVER,
@@ -98,7 +98,7 @@ async def test_ssdp_unable_to_connect.opp, dummy_client):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "confirm"
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "cannot_connect"
 
@@ -113,7 +113,7 @@ async def test_ssdp_update.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_SSDP},
         data=MOCK_DISCOVER,
@@ -127,7 +127,7 @@ async def test_ssdp_update.opp):
 async def test_user.opp, aioclient_mock):
     """Test a manual user configuration flow."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data=None,
@@ -142,7 +142,7 @@ async def test_user.opp, aioclient_mock):
     }
 
     aioclient_mock.get(MOCK_UPNP_LOCATION, text=MOCK_UPNP_DEVICE)
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], user_input
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -159,7 +159,7 @@ async def test_invalid_ssdp.opp, aioclient_mock):
     }
 
     aioclient_mock.get(MOCK_UPNP_LOCATION, text="")
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data=user_input,
@@ -178,7 +178,7 @@ async def test_user_wrong.opp, aioclient_mock):
     }
 
     aioclient_mock.get(MOCK_UPNP_LOCATION, status=404)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data=user_input,

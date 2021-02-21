@@ -60,7 +60,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload the config entry."""
-    await opp.config_entries.async_forward_entry_unload(entry, SENSOR_DOMAIN)
+    await opp..config_entries.async_forward_entry_unload(entry, SENSOR_DOMAIN)
    .opp.data[DOMAIN].pop(entry.entry_id, None)
     return True
 

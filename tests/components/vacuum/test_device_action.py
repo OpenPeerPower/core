@@ -89,11 +89,11 @@ async def test_action.opp):
     clean_calls = async_mock_service.opp, "vacuum", "start")
 
    .opp.bus.async_fire("test_event_dock")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(dock_calls) == 1
     assert len(clean_calls) == 0
 
    .opp.bus.async_fire("test_event_clean")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(dock_calls) == 1
     assert len(clean_calls) == 1

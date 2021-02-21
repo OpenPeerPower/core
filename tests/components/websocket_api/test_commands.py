@@ -116,7 +116,7 @@ async def test_call_service_child_not_found.opp, websocket_client):
     """Test not reporting not found errors if it's not the called service."""
 
     async def serv_op.dler(call):
-        await.opp.services.async_call("non", "existing")
+        await opp..services.async_call("non", "existing")
 
    .opp.services.async_register("domain_test", "test_service", serv_op.dler)
 
@@ -396,7 +396,7 @@ async def test_call_service_context_with_user.opp, aiohttp_client,.opp_access_to
         msg = await ws.receive_json()
         assert msg["success"]
 
-        refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+        refresh_token = await opp..auth.async_validate_access_token.opp_access_token)
 
         assert len(calls) == 1
         call = calls[0]
@@ -657,7 +657,7 @@ async def test_render_template_error_in_template_code.opp, websocket_client, cap
 async def test_render_template_with_delayed_error.opp, websocket_client, caplog):
     """Test a template with an error that only happens after a state change."""
    .opp.states.async_set("sensor.test", "on")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     template_str = """
 {% if states.sensor.test.state %}
@@ -670,7 +670,7 @@ async def test_render_template_with_delayed_error.opp, websocket_client, caplog)
     await websocket_client.send_json(
         {"id": 5, "type": "render_template", "template": template_str}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     msg = await websocket_client.receive_json()
 
@@ -679,7 +679,7 @@ async def test_render_template_with_delayed_error.opp, websocket_client, caplog)
     assert msg["success"]
 
    .opp.states.async_remove("sensor.test")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     msg = await websocket_client.receive_json()
     assert msg["id"] == 5

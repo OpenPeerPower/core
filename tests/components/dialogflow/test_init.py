@@ -83,12 +83,12 @@ async def fixture.opp, aiohttp_client):
         {"internal_url": "http://example.local:8123"},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "dialogflow", context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     webhook_id = result["result"].data["webhook_id"]
 

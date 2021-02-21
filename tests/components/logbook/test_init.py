@@ -309,19 +309,19 @@ def create_state_changed_event_from_old_new(
 
 async def test_logbook_view.opp,.opp_client):
     """Test the logbook view."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    client = await.opp_client()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    client = await opp._client()
     response = await client.get(f"/api/logbook/{dt_util.utcnow().isoformat()}")
     assert response.status == 200
 
 
 async def test_logbook_view_period_entity.opp,.opp_client):
     """Test the logbook view with period and entity."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "switch.test"
    .opp.states.async_set(entity_id_test, STATE_OFF)
@@ -329,11 +329,11 @@ async def test_logbook_view_period_entity.opp,.opp_client):
     entity_id_second = "switch.second"
    .opp.states.async_set(entity_id_second, STATE_OFF)
    .opp.states.async_set(entity_id_second, STATE_ON)
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -403,7 +403,7 @@ async def test_logbook_view_period_entity.opp,.opp_client):
 
 async def test_logbook_describe_event.opp,.opp_client):
     """Test teaching logbook about a new event."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
 
     def _describe(event):
         """Describe an event."""
@@ -426,14 +426,14 @@ async def test_logbook_describe_event.opp,.opp_client):
         return_value=dt_util.utcnow() - timedelta(seconds=5),
     ):
        .opp.bus.async_fire("some_event")
-        await opp.async_block_till_done()
-        await opp.async_add_executor_job(trigger_db_commit,.opp)
-        await opp.async_block_till_done()
-        await opp.async_add_executor_job(
+        await opp..async_block_till_done()
+        await opp..async_add_executor_job(trigger_db_commit,.opp)
+        await opp..async_block_till_done()
+        await opp..async_add_executor_job(
            .opp.data[recorder.DATA_INSTANCE].block_till_done
         )
 
-    client = await.opp_client()
+    client = await opp._client()
     response = await client.get("/api/logbook")
     results = await response.json()
     assert len(results) == 1
@@ -470,7 +470,7 @@ async def test_exclude_described_event.opp,.opp_client):
         Mock(async_describe_events=async_describe_events),
     )
 
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     assert await async_setup_component(
        .opp,
         logbook.DOMAIN,
@@ -496,14 +496,14 @@ async def test_exclude_described_event.opp,.opp_client):
        .opp.bus.async_fire(
             "some_event", {logbook.ATTR_NAME: name, logbook.ATTR_ENTITY_ID: entity_id3}
         )
-        await opp.async_block_till_done()
-        await opp.async_add_executor_job(trigger_db_commit,.opp)
-        await opp.async_block_till_done()
-        await opp.async_add_executor_job(
+        await opp..async_block_till_done()
+        await opp..async_add_executor_job(trigger_db_commit,.opp)
+        await opp..async_block_till_done()
+        await opp..async_add_executor_job(
            .opp.data[recorder.DATA_INSTANCE].block_till_done
         )
 
-    client = await.opp_client()
+    client = await opp._client()
     response = await client.get("/api/logbook")
     results = await response.json()
     assert len(results) == 1
@@ -514,9 +514,9 @@ async def test_exclude_described_event.opp,.opp_client):
 
 async def test_logbook_view_end_time_entity.opp,.opp_client):
     """Test the logbook view with end_time and entity."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "switch.test"
    .opp.states.async_set(entity_id_test, STATE_OFF)
@@ -524,11 +524,11 @@ async def test_logbook_view_end_time_entity.opp,.opp_client):
     entity_id_second = "switch.second"
    .opp.states.async_set(entity_id_second, STATE_OFF)
    .opp.states.async_set(entity_id_second, STATE_ON)
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -572,12 +572,12 @@ async def test_logbook_view_end_time_entity.opp,.opp_client):
 
 async def test_logbook_entity_filter_with_automations.opp,.opp_client):
     """Test the logbook view with end_time and entity with automations and scripts."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     await async_setup_component.opp, "automation", {})
     await async_setup_component.opp, "script", {})
 
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "alarm_control_panel.area_001"
    .opp.states.async_set(entity_id_test, STATE_OFF)
@@ -596,11 +596,11 @@ async def test_logbook_entity_filter_with_automations.opp,.opp_client):
     )
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -647,9 +647,9 @@ async def test_logbook_entity_filter_with_automations.opp,.opp_client):
 
 async def test_filter_continuous_sensor_values.opp,.opp_client):
     """Test remove continuous sensor events from logbook."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "switch.test"
    .opp.states.async_set(entity_id_test, STATE_OFF)
@@ -661,11 +661,11 @@ async def test_filter_continuous_sensor_values.opp,.opp_client):
    .opp.states.async_set(entity_id_third, STATE_OFF, {"unit_of_measurement": "foo"})
    .opp.states.async_set(entity_id_third, STATE_ON, {"unit_of_measurement": "foo"})
 
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -683,9 +683,9 @@ async def test_filter_continuous_sensor_values.opp,.opp_client):
 
 async def test_exclude_new_entities.opp,.opp_client):
     """Test if events are excluded on first update."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id = "climate.bla"
     entity_id2 = "climate.blu"
@@ -695,11 +695,11 @@ async def test_exclude_new_entities.opp,.opp_client):
    .opp.states.async_set(entity_id2, STATE_OFF)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -718,9 +718,9 @@ async def test_exclude_new_entities.opp,.opp_client):
 
 async def test_exclude_removed_entities.opp,.opp_client):
     """Test if events are excluded on last update."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id = "climate.bla"
     entity_id2 = "climate.blu"
@@ -736,11 +736,11 @@ async def test_exclude_removed_entities.opp,.opp_client):
    .opp.states.async_remove(entity_id)
    .opp.states.async_remove(entity_id2)
 
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -760,9 +760,9 @@ async def test_exclude_removed_entities.opp,.opp_client):
 
 async def test_exclude_attribute_changes.opp,.opp_client):
     """Test if events of attribute changes are filtered."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
@@ -773,13 +773,13 @@ async def test_exclude_attribute_changes.opp,.opp_client):
    .opp.states.async_set("light.kitchen", STATE_ON, {"brightness": 400})
    .opp.states.async_set("light.kitchen", STATE_OFF)
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -798,12 +798,12 @@ async def test_exclude_attribute_changes.opp,.opp_client):
 
 async def test_logbook_entity_context_id.opp,.opp_client):
     """Test the logbook view with end_time and entity with automations and scripts."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     await async_setup_component.opp, "automation", {})
     await async_setup_component.opp, "script", {})
 
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     context = op.Context(
         id="ac5bd62de45711eaaeb351041eec8dd9",
@@ -831,19 +831,19 @@ async def test_logbook_entity_context_id.opp,.opp_client):
 
     entity_id_test = "alarm_control_panel.area_001"
    .opp.states.async_set(entity_id_test, STATE_OFF, context=context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
    .opp.states.async_set(entity_id_test, STATE_ON, context=context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     entity_id_second = "alarm_control_panel.area_002"
    .opp.states.async_set(entity_id_second, STATE_OFF, context=context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
    .opp.states.async_set(entity_id_second, STATE_ON, context=context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    await opp.async_add_executor_job(
+    await opp..async_add_executor_job(
         logbook.log_entry,
        .opp,
         "mock_name",
@@ -852,9 +852,9 @@ async def test_logbook_entity_context_id.opp,.opp_client):
         "alarm_control_panel.area_003",
         context,
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    await opp.async_add_executor_job(
+    await opp..async_add_executor_job(
         logbook.log_entry,
        .opp,
         "mock_name",
@@ -863,7 +863,7 @@ async def test_logbook_entity_context_id.opp,.opp_client):
         None,
         context,
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # A service call
     light_turn_off_service_context = op.Context(
@@ -871,7 +871,7 @@ async def test_logbook_entity_context_id.opp,.opp_client):
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
    .opp.states.async_set("light.switch", STATE_ON)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.bus.async_fire(
         EVENT_CALL_SERVICE,
@@ -882,18 +882,18 @@ async def test_logbook_entity_context_id.opp,.opp_client):
         },
         context=light_turn_off_service_context,
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.states.async_set(
         "light.switch", STATE_OFF, context=light_turn_off_service_context
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -950,12 +950,12 @@ async def test_logbook_entity_context_id.opp,.opp_client):
 
 async def test_logbook_entity_context_parent_id.opp,.opp_client):
     """Test the logbook view links events via context parent_id."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     await async_setup_component.opp, "automation", {})
     await async_setup_component.opp, "script", {})
 
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     context = op.Context(
         id="ac5bd62de45711eaaeb351041eec8dd9",
@@ -989,17 +989,17 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
 
     entity_id_test = "alarm_control_panel.area_001"
    .opp.states.async_set(entity_id_test, STATE_OFF, context=child_context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
    .opp.states.async_set(entity_id_test, STATE_ON, context=child_context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     entity_id_second = "alarm_control_panel.area_002"
    .opp.states.async_set(entity_id_second, STATE_OFF, context=child_context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
    .opp.states.async_set(entity_id_second, STATE_ON, context=child_context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     logbook.async_log_entry(
        .opp,
@@ -1009,7 +1009,7 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
         "alarm_control_panel.area_003",
         child_context,
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     logbook.async_log_entry(
        .opp,
@@ -1019,7 +1019,7 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
         None,
         child_context,
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # A state change via service call with the script as the parent
     light_turn_off_service_context = op.Context(
@@ -1028,7 +1028,7 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
    .opp.states.async_set("light.switch", STATE_ON)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.bus.async_fire(
         EVENT_CALL_SERVICE,
@@ -1039,12 +1039,12 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
         },
         context=light_turn_off_service_context,
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.states.async_set(
         "light.switch", STATE_OFF, context=light_turn_off_service_context
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # An event with a parent event, but the parent event isn't available
     missing_parent_context = op.Context(
@@ -1060,13 +1060,13 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
         "alarm_control_panel.area_009",
         missing_parent_context,
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -1131,7 +1131,7 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
 
 async def test_logbook_context_from_template.opp,.opp_client):
     """Test the logbook view with end_time and entity with automations and scripts."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
        .opp,
@@ -1155,18 +1155,18 @@ async def test_logbook_context_from_template.opp,.opp_client):
             }
         },
     )
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     # Entity added (should not be logged)
    .opp.states.async_set("switch.test_state", STATE_ON)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # First state change (should be logged)
    .opp.states.async_set("switch.test_state", STATE_OFF)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     switch_turn_off_context = op.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
@@ -1175,13 +1175,13 @@ async def test_logbook_context_from_template.opp,.opp_client):
    .opp.states.async_set(
         "switch.test_state", STATE_ON, context=switch_turn_off_context
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -1217,7 +1217,7 @@ async def test_logbook_context_from_template.opp,.opp_client):
 
 async def test_logbook_entity_matches_only.opp,.opp_client):
     """Test the logbook view with a single entity and entity_matches_only."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
        .opp,
@@ -1241,18 +1241,18 @@ async def test_logbook_entity_matches_only.opp,.opp_client):
             }
         },
     )
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     # Entity added (should not be logged)
    .opp.states.async_set("switch.test_state", STATE_ON)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # First state change (should be logged)
    .opp.states.async_set("switch.test_state", STATE_OFF)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     switch_turn_off_context = op.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
@@ -1261,13 +1261,13 @@ async def test_logbook_entity_matches_only.opp,.opp_client):
    .opp.states.async_set(
         "switch.test_state", STATE_ON, context=switch_turn_off_context
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -1291,7 +1291,7 @@ async def test_logbook_entity_matches_only.opp,.opp_client):
 
 async def test_logbook_entity_matches_only_multiple.opp,.opp_client):
     """Test the logbook view with a multiple entities and entity_matches_only."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
        .opp,
@@ -1315,22 +1315,22 @@ async def test_logbook_entity_matches_only_multiple.opp,.opp_client):
             }
         },
     )
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     # Entity added (should not be logged)
    .opp.states.async_set("switch.test_state", STATE_ON)
    .opp.states.async_set("light.test_state", STATE_ON)
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # First state change (should be logged)
    .opp.states.async_set("switch.test_state", STATE_OFF)
    .opp.states.async_set("light.test_state", STATE_OFF)
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     switch_turn_off_context = op.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
@@ -1340,13 +1340,13 @@ async def test_logbook_entity_matches_only_multiple.opp,.opp_client):
         "switch.test_state", STATE_ON, context=switch_turn_off_context
     )
    .opp.states.async_set("light.test_state", STATE_ON, context=switch_turn_off_context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -1375,10 +1375,10 @@ async def test_logbook_entity_matches_only_multiple.opp,.opp_client):
 
 async def test_logbook_invalid_entity.opp,.opp_client):
     """Test the logbook view with requesting an invalid entity."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp.async_block_till_done()
-    client = await.opp_client()
+    await opp..async_block_till_done()
+    client = await opp._client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -1394,9 +1394,9 @@ async def test_logbook_invalid_entity.opp,.opp_client):
 
 async def test_icon_and_state.opp,.opp_client):
     """Test to ensure state and custom icons are returned."""
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
@@ -1417,7 +1417,7 @@ async def test_icon_and_state.opp,.opp_client):
 
     await _async_commit_and_wait.opp)
 
-    client = await.opp_client()
+    client = await opp._client()
     response_json = await _async_fetch_logbook(client)
 
     assert len(response_json) == 3
@@ -1441,9 +1441,9 @@ async def test_exclude_events_domain.opp,.opp_client):
             logbook.DOMAIN: {CONF_EXCLUDE: {CONF_DOMAINS: ["switch", "alexa"]}},
         }
     )
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1454,7 +1454,7 @@ async def test_exclude_events_domain.opp,.opp_client):
 
     await _async_commit_and_wait.opp)
 
-    client = await.opp_client()
+    client = await opp._client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 2
@@ -1481,9 +1481,9 @@ async def test_exclude_events_domain_glob.opp,.opp_client):
             },
         }
     )
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1495,7 +1495,7 @@ async def test_exclude_events_domain_glob.opp,.opp_client):
    .opp.states.async_set(entity_id3, 30)
 
     await _async_commit_and_wait.opp)
-    client = await.opp_client()
+    client = await opp._client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 2
@@ -1521,9 +1521,9 @@ async def test_include_events_entity.opp,.opp_client):
             },
         }
     )
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1533,7 +1533,7 @@ async def test_include_events_entity.opp,.opp_client):
    .opp.states.async_set(entity_id2, 20)
 
     await _async_commit_and_wait.opp)
-    client = await.opp_client()
+    client = await opp._client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 2
@@ -1554,9 +1554,9 @@ async def test_exclude_events_entity.opp,.opp_client):
             logbook.DOMAIN: {CONF_EXCLUDE: {CONF_ENTITIES: [entity_id]}},
         }
     )
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1566,7 +1566,7 @@ async def test_exclude_events_entity.opp,.opp_client):
    .opp.states.async_set(entity_id2, 20)
 
     await _async_commit_and_wait.opp)
-    client = await.opp_client()
+    client = await opp._client()
     entries = await _async_fetch_logbook(client)
     assert len(entries) == 2
     _assert_entry(
@@ -1588,9 +1588,9 @@ async def test_include_events_domain.opp,.opp_client):
             },
         }
     )
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1604,7 +1604,7 @@ async def test_include_events_domain.opp,.opp_client):
    .opp.states.async_set(entity_id2, 20)
 
     await _async_commit_and_wait.opp)
-    client = await.opp_client()
+    client = await opp._client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 3
@@ -1632,9 +1632,9 @@ async def test_include_events_domain_glob.opp,.opp_client):
             },
         }
     )
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1650,7 +1650,7 @@ async def test_include_events_domain_glob.opp,.opp_client):
    .opp.states.async_set(entity_id3, 30)
 
     await _async_commit_and_wait.opp)
-    client = await.opp_client()
+    client = await opp._client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 4
@@ -1684,9 +1684,9 @@ async def test_include_exclude_events.opp,.opp_client):
             },
         }
     )
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1702,7 +1702,7 @@ async def test_include_exclude_events.opp,.opp_client):
    .opp.states.async_set(entity_id4, 10)
 
     await _async_commit_and_wait.opp)
-    client = await.opp_client()
+    client = await opp._client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 3
@@ -1738,9 +1738,9 @@ async def test_include_exclude_events_with_glob_filters.opp,.opp_client):
             },
         }
     )
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1760,7 +1760,7 @@ async def test_include_exclude_events_with_glob_filters.opp,.opp_client):
    .opp.states.async_set(entity_id6, 30)
 
     await _async_commit_and_wait.opp)
-    client = await.opp_client()
+    client = await opp._client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 3
@@ -1781,9 +1781,9 @@ async def test_empty_config.opp,.opp_client):
             logbook.DOMAIN: {},
         }
     )
-    await opp.async_add_executor_job(init_recorder_component,.opp)
+    await opp..async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1791,7 +1791,7 @@ async def test_empty_config.opp,.opp_client):
    .opp.states.async_set(entity_id, 10)
 
     await _async_commit_and_wait.opp)
-    client = await.opp_client()
+    client = await opp._client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 2
@@ -1817,11 +1817,11 @@ async def _async_fetch_logbook(client):
 
 
 async def _async_commit_and_wait.opp):
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job(trigger_db_commit,.opp)
-    await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job(trigger_db_commit,.opp)
+    await opp..async_block_till_done()
+    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp..async_block_till_done()
 
 
 def _assert_entry(

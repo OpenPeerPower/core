@@ -22,7 +22,7 @@ def turn_on.opp, entity_id=ENTITY_MATCH_ALL):
 async def async_turn_on.opp, entity_id=ENTITY_MATCH_ALL):
     """Turn all or specified switch on."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else None
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
+    await opp..services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
 
 @bind_opp
@@ -34,4 +34,4 @@ def turn_off.opp, entity_id=ENTITY_MATCH_ALL):
 async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL):
     """Turn all or specified switch off."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else None
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
+    await opp..services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)

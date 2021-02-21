@@ -189,7 +189,7 @@ class ImageServeView(OpenPeerPowerView):
             async with self.transform_lock:
                 # Another check in case another request already finished it while waiting
                 if not target_file.is_file():
-                    await opp.async_add_executor_job(
+                    await opp..async_add_executor_job(
                         _generate_thumbnail,
                         self.image_folder / image_id / "original",
                         image_info["content_type"],

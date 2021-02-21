@@ -69,9 +69,9 @@ async def test_setup_entry.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             {},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         # pylint: disable=no-member
         assert insteon.devices.async_save.call_count == 1
         assert mock_close.called
@@ -94,7 +94,7 @@ async def test_import_plm.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             config,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         await asyncio.sleep(0.01)
     assert.opp.config_entries.async_entries(DOMAIN)
     data = opp.config_entries.async_entries(DOMAIN)[0].data
@@ -119,7 +119,7 @@ async def test_import_hub1.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             config,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         await asyncio.sleep(0.01)
         assert.opp.config_entries.async_entries(DOMAIN)
     data = opp.config_entries.async_entries(DOMAIN)[0].data
@@ -146,7 +146,7 @@ async def test_import_hub2.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             config,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         await asyncio.sleep(0.01)
         assert.opp.config_entries.async_entries(DOMAIN)
     data = opp.config_entries.async_entries(DOMAIN)[0].data
@@ -173,7 +173,7 @@ async def test_import_options.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             config,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         await asyncio.sleep(0.01)  # Need to yield to async processes
         # pylint: disable=no-member
         assert insteon.devices.add_x10_device.call_count == 2
@@ -204,7 +204,7 @@ async def test_import_failed_connection.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             config,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert not.opp.config_entries.async_entries(DOMAIN)
 
 

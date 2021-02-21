@@ -34,7 +34,7 @@ async def test_reproducing_states.opp, caplog):
     set_away_calls = async_mock_service.opp, "water_heater", SERVICE_SET_AWAY_MODE)
 
     # These calls should do nothing as entities already in desired state
-    await.opp.helpers.state.async_reproduce_state(
+    await opp..helpers.state.async_reproduce_state(
         [
             State("water_heater.entity_off", STATE_OFF),
             State("water_heater.entity_on", STATE_ON, {ATTR_TEMPERATURE: 45}),
@@ -55,7 +55,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(set_away_calls) == 0
 
     # Test invalid state is handled
-    await.opp.helpers.state.async_reproduce_state(
+    await opp..helpers.state.async_reproduce_state(
         [State("water_heater.entity_off", "not_supported")]
     )
 
@@ -67,7 +67,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(set_away_calls) == 0
 
     # Make sure correct services are called
-    await.opp.helpers.state.async_reproduce_state(
+    await opp..helpers.state.async_reproduce_state(
         [
             State("water_heater.entity_on", STATE_OFF),
             State("water_heater.entity_off", STATE_ON, {ATTR_TEMPERATURE: 45}),

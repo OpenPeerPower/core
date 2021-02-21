@@ -18,7 +18,7 @@ async def test_download_switch.opp, nzbget_api) -> None:
     entry = await init_integration.opp)
     assert entry
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
     entity_id = "switch.nzbgettest_download"
     entity_entry = registry.async_get(entity_id)
     assert entity_entry
@@ -31,8 +31,8 @@ async def test_download_switch.opp, nzbget_api) -> None:
     # test download paused
     instance.status.return_value["DownloadPaused"] = True
 
-    await.opp.helpers.entity_component.async_update_entity(entity_id)
-    await opp.async_block_till_done()
+    await opp..helpers.entity_component.async_update_entity(entity_id)
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state
@@ -47,7 +47,7 @@ async def test_download_switch_services.opp, nzbget_api) -> None:
     entity_id = "switch.nzbgettest_download"
     assert entry
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: entity_id},
@@ -55,7 +55,7 @@ async def test_download_switch_services.opp, nzbget_api) -> None:
     )
     instance.pausedownload.assert_called_once()
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity_id},

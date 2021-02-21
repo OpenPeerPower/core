@@ -69,7 +69,7 @@ async def async_setup_entry.opp, config_entry):
         return False
 
    .opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = hub
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(DOMAIN, hub.serial_num)},
@@ -84,7 +84,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
-    await opp.config_entries.async_forward_entry_unload(config_entry, "device_tracker")
+    await opp..config_entries.async_forward_entry_unload(config_entry, "device_tracker")
 
    .opp.data[DOMAIN].pop(config_entry.entry_id)
 

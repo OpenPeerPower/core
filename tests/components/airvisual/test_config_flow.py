@@ -46,12 +46,12 @@ async def test_duplicate_error.opp):
         domain=DOMAIN, unique_id="51.528308, -0.3817765", data=geography_conf
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={"type": INTEGRATION_TYPE_GEOGRAPHY_COORDS},
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], user_input=geography_conf
     )
 
@@ -64,10 +64,10 @@ async def test_duplicate_error.opp):
         domain=DOMAIN, unique_id="192.168.1.100", data=node_pro_conf
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data={"type": "AirVisual Node/Pro"}
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], user_input=node_pro_conf
     )
 
@@ -81,12 +81,12 @@ async def test_invalid_identifier_geography_api_key.opp):
         "pyairvisual.air_quality.AirQuality.nearest_city",
         side_effect=InvalidKeyError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={"type": INTEGRATION_TYPE_GEOGRAPHY_COORDS},
         )
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_API_KEY: "abcde12345",
@@ -105,12 +105,12 @@ async def test_invalid_identifier_geography_name.opp):
         "pyairvisual.air_quality.AirQuality.city",
         side_effect=NotFoundError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={"type": INTEGRATION_TYPE_GEOGRAPHY_NAME},
         )
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_API_KEY: "abcde12345",
@@ -130,12 +130,12 @@ async def test_invalid_identifier_geography_unknown.opp):
         "pyairvisual.air_quality.AirQuality.city",
         side_effect=AirVisualError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={"type": INTEGRATION_TYPE_GEOGRAPHY_NAME},
         )
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_API_KEY: "abcde12345",
@@ -157,10 +157,10 @@ async def test_invalid_identifier_node_pro.opp):
         "pyairvisual.node.NodeSamba.async_connect",
         side_effect=NodeProError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data={"type": "AirVisual Node/Pro"}
         )
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=node_pro_conf
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -188,7 +188,7 @@ async def test_migration.opp):
         "pyairvisual.air_quality.AirQuality.nearest_city"
     ), patch.object.opp.config_entries, "async_forward_entry_setup"):
         assert await async_setup_component.opp, DOMAIN, {DOMAIN: conf})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     config_entries = opp.config_entries.async_entries(DOMAIN)
 
@@ -233,13 +233,13 @@ async def test_options_flow.opp):
     with patch(
         "openpeerpower.components.airvisual.async_setup_entry", return_value=True
     ):
-        await opp.config_entries.async_setup(config_entry.entry_id)
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+        await opp..config_entries.async_setup(config_entry.entry_id)
+        result = await opp..config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp..config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_SHOW_ON_MAP: False}
         )
 
@@ -258,12 +258,12 @@ async def test_step_geography_by_coords.opp):
     with patch(
         "openpeerpower.components.airvisual.async_setup_entry", return_value=True
     ), patch("pyairvisual.air_quality.AirQuality.nearest_city"):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={"type": INTEGRATION_TYPE_GEOGRAPHY_COORDS},
         )
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=conf
         )
 
@@ -289,12 +289,12 @@ async def test_step_geography_by_name.opp):
     with patch(
         "openpeerpower.components.airvisual.async_setup_entry", return_value=True
     ), patch("pyairvisual.air_quality.AirQuality.city"):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={"type": INTEGRATION_TYPE_GEOGRAPHY_NAME},
         )
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=conf
         )
 
@@ -320,10 +320,10 @@ async def test_step_node_pro.opp):
     ), patch(
         "pyairvisual.node.NodeSamba.async_disconnect"
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data={"type": "AirVisual Node/Pro"}
         )
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=conf
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -348,19 +348,19 @@ async def test_step_reauth.opp):
         domain=DOMAIN, unique_id="51.528308, -0.3817765", data=entry_data
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=entry_data
     )
     assert result["step_id"] == "reauth_confirm"
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp..config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "reauth_confirm"
 
     with patch(
         "openpeerpower.components.airvisual.async_setup_entry", return_value=True
     ), patch("pyairvisual.air_quality.AirQuality.nearest_city", return_value=True):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_API_KEY: "defgh67890"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -371,14 +371,14 @@ async def test_step_reauth.opp):
 
 async def test_step_user.opp):
     """Test the user ("pick the integration type") step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={"type": INTEGRATION_TYPE_GEOGRAPHY_COORDS},
@@ -387,7 +387,7 @@ async def test_step_user.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "geography_by_coords"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={"type": INTEGRATION_TYPE_GEOGRAPHY_NAME},
@@ -396,7 +396,7 @@ async def test_step_user.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "geography_by_name"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={"type": INTEGRATION_TYPE_NODE_PRO},

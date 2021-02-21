@@ -10,7 +10,7 @@ async def test_api_ping(oppio_op.dler, aioclient_mock):
     """Test setup with API ping."""
     aioclient_mock.get("http://127.0.0.1/supervisor/ping", json={"result": "ok"})
 
-    assert await oppio_op.dler.is_connected()
+    assert await opp.io_op.dler.is_connected()
     assert aioclient_mock.call_count == 1
 
 
@@ -18,7 +18,7 @@ async def test_api_ping_error(oppio_op.dler, aioclient_mock):
     """Test setup with API ping error."""
     aioclient_mock.get("http://127.0.0.1/supervisor/ping", json={"result": "error"})
 
-    assert not (await oppio_op.dler.is_connected())
+    assert not (await opp.io_op.dler.is_connected())
     assert aioclient_mock.call_count == 1
 
 
@@ -26,7 +26,7 @@ async def test_api_ping_exeption(oppio_op.dler, aioclient_mock):
     """Test setup with API ping exception."""
     aioclient_mock.get("http://127.0.0.1/supervisor/ping", exc=aiohttp.ClientError())
 
-    assert not (await oppio_op.dler.is_connected())
+    assert not (await opp.io_op.dler.is_connected())
     assert aioclient_mock.call_count == 1
 
 
@@ -40,7 +40,7 @@ async def test_api_info(oppio_op.dler, aioclient_mock):
         },
     )
 
-    data = await oppio_op.dler.get_info()
+    data = await opp.io_op.dler.get_info()
     assert aioclient_mock.call_count == 1
     assert data["oppos"] is None
     assert data["openpeerpowerr"] == "0.110.0"
@@ -54,7 +54,7 @@ async def test_api_info_error(oppio_op.dler, aioclient_mock):
     )
 
     with pytest.raises(OppioAPIError):
-        await oppio_op.dler.get_info()
+        await opp.io_op.dler.get_info()
 
     assert aioclient_mock.call_count == 1
 
@@ -73,7 +73,7 @@ async def test_api_host_info(oppio_op.dler, aioclient_mock):
         },
     )
 
-    data = await oppio_op.dler.get_host_info()
+    data = await opp.io_op.dler.get_host_info()
     assert aioclient_mock.call_count == 1
     assert data[".oppis"] == "vm"
     assert data["kernel"] == "4.19.0-6-amd64"
@@ -90,7 +90,7 @@ async def test_api_supervisor_info(oppio_op.dler, aioclient_mock):
         },
     )
 
-    data = await oppio_op.dler.get_supervisor_info()
+    data = await opp.io_op.dler.get_supervisor_info()
     assert aioclient_mock.call_count == 1
     assert data["supported"]
     assert data["version"] == "2020.11.1"
@@ -107,7 +107,7 @@ async def test_api_os_info(oppio_op.dler, aioclient_mock):
         },
     )
 
-    data = await oppio_op.dler.get_os_info()
+    data = await opp.io_op.dler.get_os_info()
     assert aioclient_mock.call_count == 1
     assert data["board"] == "odroid-n2"
     assert data["version"] == "2020.11.1"
@@ -120,7 +120,7 @@ async def test_api_host_info_error(oppio_op.dler, aioclient_mock):
     )
 
     with pytest.raises(OppioAPIError):
-        await oppio_op.dler.get_host_info()
+        await opp.io_op.dler.get_host_info()
 
     assert aioclient_mock.call_count == 1
 
@@ -132,7 +132,7 @@ async def test_api_core_info(oppio_op.dler, aioclient_mock):
         json={"result": "ok", "data": {"version_latest": "1.0.0"}},
     )
 
-    data = await oppio_op.dler.get_core_info()
+    data = await opp.io_op.dler.get_core_info()
     assert aioclient_mock.call_count == 1
     assert data["version_latest"] == "1.0.0"
 
@@ -144,7 +144,7 @@ async def test_api_core_info_error(oppio_op.dler, aioclient_mock):
     )
 
     with pytest.raises(OppioAPIError):
-        await oppio_op.dler.get_core_info()
+        await opp.io_op.dler.get_core_info()
 
     assert aioclient_mock.call_count == 1
 
@@ -153,7 +153,7 @@ async def test_api_openpeerpowerr_stop(oppio_op.dler, aioclient_mock):
     """Test setup with API Open Peer Power stop."""
     aioclient_mock.post("http://127.0.0.1/openpeerpower/stop", json={"result": "ok"})
 
-    assert await oppio_op.dler.stop_openpeerpowerr()
+    assert await opp.io_op.dler.stop_openpeerpowerr()
     assert aioclient_mock.call_count == 1
 
 
@@ -161,7 +161,7 @@ async def test_api_openpeerpowerr_restart(oppio_op.dler, aioclient_mock):
     """Test setup with API Open Peer Power restart."""
     aioclient_mock.post("http://127.0.0.1/openpeerpower/restart", json={"result": "ok"})
 
-    assert await oppio_op.dler.restart_openpeerpowerr()
+    assert await opp.io_op.dler.restart_openpeerpowerr()
     assert aioclient_mock.call_count == 1
 
 
@@ -172,7 +172,7 @@ async def test_api_addon_info(oppio_op.dler, aioclient_mock):
         json={"result": "ok", "data": {"name": "bla"}},
     )
 
-    data = await oppio_op.dler.get_addon_info("test")
+    data = await opp.io_op.dler.get_addon_info("test")
     assert data["name"] == "bla"
     assert aioclient_mock.call_count == 1
 
@@ -184,7 +184,7 @@ async def test_api_discovery_message(oppio_op.dler, aioclient_mock):
         json={"result": "ok", "data": {"service": "mqtt"}},
     )
 
-    data = await oppio_op.dler.get_discovery_message("test")
+    data = await opp.io_op.dler.get_discovery_message("test")
     assert data["service"] == "mqtt"
     assert aioclient_mock.call_count == 1
 
@@ -196,7 +196,7 @@ async def test_api_retrieve_discovery(oppio_op.dler, aioclient_mock):
         json={"result": "ok", "data": {"discovery": [{"service": "mqtt"}]}},
     )
 
-    data = await oppio_op.dler.retrieve_discovery_messages()
+    data = await opp.io_op.dler.retrieve_discovery_messages()
     assert data["discovery"][-1]["service"] == "mqtt"
     assert aioclient_mock.call_count == 1
 
@@ -220,7 +220,7 @@ async def test_api_ingress_panels(oppio_op.dler, aioclient_mock):
         },
     )
 
-    data = await oppio_op.dler.get_ingress_panels()
+    data = await opp.io_op.dler.get_ingress_panels()
     assert aioclient_mock.call_count == 1
     assert data["panels"]
     assert "slug" in data["panels"]

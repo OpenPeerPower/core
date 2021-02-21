@@ -8,19 +8,19 @@ from openpeerpowerr.setup import async_setup_component
 async def test_remote_connection_sensor.opp):
     """Test the remote connection sensor."""
     assert await async_setup_component.opp, "cloud", {"cloud": {}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("binary_sensor.remote_ui") is None
 
     # Fake connection/discovery
-    await.opp.helpers.discovery.async_load_platform(
+    await opp..helpers.discovery.async_load_platform(
         "binary_sensor", "cloud", {}, {"cloud": {}}
     )
 
     # Mock test env
     cloud = opp.data["cloud"] = Mock()
     cloud.remote.certificate = None
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("binary_sensor.remote_ui")
     assert state is not None
@@ -30,14 +30,14 @@ async def test_remote_connection_sensor.opp):
         cloud.remote.is_connected = False
         cloud.remote.certificate = object()
        .opp.helpers.dispatcher.async_dispatcher_send(DISPATCHER_REMOTE_UPDATE, {})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         state = opp.states.get("binary_sensor.remote_ui")
         assert state.state == "off"
 
         cloud.remote.is_connected = True
        .opp.helpers.dispatcher.async_dispatcher_send(DISPATCHER_REMOTE_UPDATE, {})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         state = opp.states.get("binary_sensor.remote_ui")
         assert state.state == "on"

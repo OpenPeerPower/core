@@ -79,7 +79,7 @@ async def test_async_setup.opp):
                 }
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 1
 
 
@@ -104,54 +104,54 @@ async def test_service_request_area_preset.opp):
                 }
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 2
-        await.opp.services.async_call(
+        await opp..services.async_call(
             dynalite.DOMAIN,
             "request_area_preset",
             {"host": "1.2.3.4", "area": 2},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_req_area_pres.assert_called_once_with(2, 1)
         mock_req_area_pres.reset_mock()
-        await.opp.services.async_call(
+        await opp..services.async_call(
             dynalite.DOMAIN,
             "request_area_preset",
             {"area": 3},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock_req_area_pres.mock_calls == [call(3, 1), call(3, 1)]
         mock_req_area_pres.reset_mock()
-        await.opp.services.async_call(
+        await opp..services.async_call(
             dynalite.DOMAIN,
             "request_area_preset",
             {"host": "5.6.7.8", "area": 4},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_req_area_pres.assert_called_once_with(4, 1)
         mock_req_area_pres.reset_mock()
-        await.opp.services.async_call(
+        await opp..services.async_call(
             dynalite.DOMAIN,
             "request_area_preset",
             {"host": "6.5.4.3", "area": 5},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_req_area_pres.assert_not_called()
         mock_req_area_pres.reset_mock()
-        await.opp.services.async_call(
+        await opp..services.async_call(
             dynalite.DOMAIN,
             "request_area_preset",
             {"host": "1.2.3.4", "area": 6, "channel": 9},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_req_area_pres.assert_called_once_with(6, 9)
         mock_req_area_pres.reset_mock()
-        await.opp.services.async_call(
+        await opp..services.async_call(
             dynalite.DOMAIN,
             "request_area_preset",
             {"host": "1.2.3.4", "area": 7},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_req_area_pres.assert_called_once_with(7, 1)
 
 
@@ -179,30 +179,30 @@ async def test_service_request_channel_level.opp):
                 }
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 2
-        await.opp.services.async_call(
+        await opp..services.async_call(
             dynalite.DOMAIN,
             "request_channel_level",
             {"host": "1.2.3.4", "area": 2, "channel": 3},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_req_chan_lvl.assert_called_once_with(2, 3)
         mock_req_chan_lvl.reset_mock()
         with pytest.raises(MultipleInvalid):
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 dynalite.DOMAIN,
                 "request_channel_level",
                 {"area": 3},
             )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_req_chan_lvl.assert_not_called()
-        await.opp.services.async_call(
+        await opp..services.async_call(
             dynalite.DOMAIN,
             "request_channel_level",
             {"area": 4, "channel": 5},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock_req_chan_lvl.mock_calls == [call(4, 5), call(4, 5)]
 
 
@@ -232,7 +232,7 @@ async def test_async_setup_bad_config1.opp):
                 }
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
 
 async def test_async_setup_bad_config2.opp):
@@ -256,7 +256,7 @@ async def test_async_setup_bad_config2.opp):
                 }
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 0
 
 
@@ -269,14 +269,14 @@ async def test_unload_entry.opp):
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
         return_value=True,
     ):
-        assert await opp.config_entries.async_setup(entry.entry_id)
-        await opp.async_block_till_done()
+        assert await opp..config_entries.async_setup(entry.entry_id)
+        await opp..async_block_till_done()
     assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 1
     with patch.object(
        .opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_unload:
-        assert await opp.config_entries.async_unload(entry.entry_id)
-        await opp.async_block_till_done()
+        assert await opp..config_entries.async_unload(entry.entry_id)
+        await opp..async_block_till_done()
         assert mock_unload.call_count == len(dynalite.ENTITY_PLATFORMS)
         expected_calls = [
             call(entry, platform) for platform in dynalite.ENTITY_PLATFORMS

@@ -363,7 +363,7 @@ async def async_setup.opp, config):
         _LOGGER.debug("New telegram message %s: %s", msgtype, kwargs)
 
         if msgtype == SERVICE_SEND_MESSAGE:
-            await opp.async_add_executor_job(
+            await opp..async_add_executor_job(
                 partial(notify_service.send_message, **kwargs)
             )
         elif msgtype in [
@@ -374,23 +374,23 @@ async def async_setup.opp, config):
             SERVICE_SEND_VOICE,
             SERVICE_SEND_DOCUMENT,
         ]:
-            await opp.async_add_executor_job(
+            await opp..async_add_executor_job(
                 partial(notify_service.send_file, msgtype, **kwargs)
             )
         elif msgtype == SERVICE_SEND_LOCATION:
-            await opp.async_add_executor_job(
+            await opp..async_add_executor_job(
                 partial(notify_service.send_location, **kwargs)
             )
         elif msgtype == SERVICE_ANSWER_CALLBACK_QUERY:
-            await opp.async_add_executor_job(
+            await opp..async_add_executor_job(
                 partial(notify_service.answer_callback_query, **kwargs)
             )
         elif msgtype == SERVICE_DELETE_MESSAGE:
-            await opp.async_add_executor_job(
+            await opp..async_add_executor_job(
                 partial(notify_service.delete_message, **kwargs)
             )
         else:
-            await opp.async_add_executor_job(
+            await opp..async_add_executor_job(
                 partial(notify_service.edit_message, msgtype, **kwargs)
             )
 

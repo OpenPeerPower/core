@@ -9,7 +9,7 @@ from tests.common import load_fixture
 async def test_entity_registry.opp, requests_mock):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform.opp, SWITCH_DOMAIN)
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get("switch.front_siren")
     assert entry.unique_id == "765432-siren"
@@ -50,11 +50,11 @@ async def test_siren_can_be_turned_on.opp, requests_mock):
     state = opp.states.get("switch.front_siren")
     assert state.state == "off"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "switch", "turn_on", {"entity_id": "switch.front_siren"}, blocking=True
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("switch.front_siren")
     assert state.state == "on"
 
@@ -70,9 +70,9 @@ async def test_updates_work.opp, requests_mock):
         text=load_fixture("ring_devices_updated.json"),
     )
 
-    await.opp.services.async_call("ring", "update", {}, blocking=True)
+    await opp..services.async_call("ring", "update", {}, blocking=True)
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("switch.front_siren")
     assert state.state == "on"

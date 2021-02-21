@@ -100,7 +100,7 @@ async def test_yaml_import.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data=MOCK_YAML_CONFIG,
@@ -114,7 +114,7 @@ async def test_yaml_import.opp: OpenPeerPower) -> None:
 
 async def test_setup_one_phonebook.opp: OpenPeerPower) -> None:
     """Test setting up manually."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -144,7 +144,7 @@ async def test_setup_one_phonebook.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_USER_DATA
         )
 
@@ -156,7 +156,7 @@ async def test_setup_one_phonebook.opp: OpenPeerPower) -> None:
 
 async def test_setup_multiple_phonebooks.opp: OpenPeerPower) -> None:
     """Test setting up manually."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -180,7 +180,7 @@ async def test_setup_multiple_phonebooks.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.base.FritzPhonebook.phonebook_info",
         side_effect=[MOCK_PHONEBOOK_INFO_1, MOCK_PHONEBOOK_INFO_2],
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_USER_DATA
         )
 
@@ -195,7 +195,7 @@ async def test_setup_multiple_phonebooks.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_PHONEBOOK: MOCK_PHONEBOOK_NAME_2},
         )
@@ -216,7 +216,7 @@ async def test_setup_multiple_phonebooks.opp: OpenPeerPower) -> None:
 
 async def test_setup_cannot_connect.opp: OpenPeerPower) -> None:
     """Test we handle cannot connect."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -225,7 +225,7 @@ async def test_setup_cannot_connect.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.base.FritzPhonebook.__init__",
         side_effect=RequestsConnectionError,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_USER_DATA
         )
 
@@ -235,7 +235,7 @@ async def test_setup_cannot_connect.opp: OpenPeerPower) -> None:
 
 async def test_setup_insufficient_permissions.opp: OpenPeerPower) -> None:
     """Test we handle insufficient permissions."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -244,7 +244,7 @@ async def test_setup_insufficient_permissions.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.base.FritzPhonebook.__init__",
         side_effect=FritzSecurityError,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_USER_DATA
         )
 
@@ -254,7 +254,7 @@ async def test_setup_insufficient_permissions.opp: OpenPeerPower) -> None:
 
 async def test_setup_invalid_auth.opp: OpenPeerPower) -> None:
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -263,7 +263,7 @@ async def test_setup_invalid_auth.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.base.FritzPhonebook.__init__",
         side_effect=FritzConnectionException,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_USER_DATA
         )
 
@@ -286,13 +286,13 @@ async def test_options_flow_correct_prefixes.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
         return_value=True,
     ):
-        await opp.config_entries.async_setup(config_entry.entry_id)
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+        await opp..config_entries.async_setup(config_entry.entry_id)
+        result = await opp..config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp..config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_PREFIXES: "+49, 491234"}
         )
 
@@ -315,13 +315,13 @@ async def test_options_flow_incorrect_prefixes.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
         return_value=True,
     ):
-        await opp.config_entries.async_setup(config_entry.entry_id)
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+        await opp..config_entries.async_setup(config_entry.entry_id)
+        result = await opp..config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp..config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_PREFIXES: ""}
         )
 
@@ -344,13 +344,13 @@ async def test_options_flow_no_prefixes.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
         return_value=True,
     ):
-        await opp.config_entries.async_setup(config_entry.entry_id)
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+        await opp..config_entries.async_setup(config_entry.entry_id)
+        result = await opp..config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp..config_entries.options.async_configure(
             result["flow_id"], user_input={}
         )
 

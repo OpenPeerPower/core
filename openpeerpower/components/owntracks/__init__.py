@@ -115,7 +115,7 @@ async def async_setup_entry.opp, entry):
 async def async_unload_entry.opp, entry):
     """Unload an OwnTracks config entry."""
    .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
-    await opp.config_entries.async_forward_entry_unload(entry, "device_tracker")
+    await opp..config_entries.async_forward_entry_unload(entry, "device_tracker")
    .opp.data[DOMAIN]["unsub"]()
 
     return True
@@ -126,7 +126,7 @@ async def async_remove_entry.opp, entry):
     if not entry.data.get("cloudhook"):
         return
 
-    await.opp.components.cloud.async_delete_cloudhook(entry.data[CONF_WEBHOOK_ID])
+    await opp..components.cloud.async_delete_cloudhook(entry.data[CONF_WEBHOOK_ID])
 
 
 async def async_connect_mqtt.opp, component):
@@ -145,7 +145,7 @@ async def async_connect_mqtt.opp, component):
         message["topic"] = msg.topic
        .opp.helpers.dispatcher.async_dispatcher_send(DOMAIN,.opp, context, message)
 
-    await.opp.components.mqtt.async_subscribe(
+    await opp..components.mqtt.async_subscribe(
         context.mqtt_topic, async_op.dle_mqtt_message, 1
     )
 

@@ -19,27 +19,27 @@ async def test_one_cover.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
 
     state = opp.states.get("cover.lightwaverf_siemens_0213c7_242")
     assert state
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "open_cover",
         {"entity_id": "cover.lightwaverf_siemens_0213c7_242"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "close_cover",
         {"entity_id": "cover.lightwaverf_siemens_0213c7_242"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "stop_cover",
         {"entity_id": "cover.lightwaverf_siemens_0213c7_242"},
@@ -68,8 +68,8 @@ async def test_state_restore.opp, rfxtrx, state):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
 
     assert.opp.states.get(entity_id).state == state
 
@@ -87,8 +87,8 @@ async def test_several_covers.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
 
     state = opp.states.get("cover.lightwaverf_siemens_0213c7_242")
     assert state
@@ -133,8 +133,8 @@ async def test_duplicate_cover.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
 
     state = opp.states.get("cover.lightwaverf_siemens_0213c7_242")
     assert state
@@ -158,42 +158,42 @@ async def test_rfy_cover.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
 
     # Test a blind with no venetian mode setting
     state = opp.states.get("cover.rfy_010203_1")
     assert state
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "stop_cover",
         {"entity_id": "cover.rfy_010203_1"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "open_cover",
         {"entity_id": "cover.rfy_010203_1"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "close_cover",
         {"entity_id": "cover.rfy_010203_1"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "open_cover_tilt",
         {"entity_id": "cover.rfy_010203_1"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "close_cover_tilt",
         {"entity_id": "cover.rfy_010203_1"},
@@ -211,42 +211,42 @@ async def test_rfy_cover.opp, rfxtrx):
     assert state
     rfxtrx.transport.send.mock_calls = []
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "stop_cover",
         {"entity_id": "cover.rfy_010203_2"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "open_cover",
         {"entity_id": "cover.rfy_010203_2"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "close_cover",
         {"entity_id": "cover.rfy_010203_2"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "open_cover_tilt",
         {"entity_id": "cover.rfy_010203_2"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "close_cover_tilt",
         {"entity_id": "cover.rfy_010203_2"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "stop_cover_tilt",
         {"entity_id": "cover.rfy_010203_2"},
@@ -267,42 +267,42 @@ async def test_rfy_cover.opp, rfxtrx):
     assert state
     rfxtrx.transport.send.mock_calls = []
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "stop_cover",
         {"entity_id": "cover.rfy_010203_3"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "open_cover",
         {"entity_id": "cover.rfy_010203_3"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "close_cover",
         {"entity_id": "cover.rfy_010203_3"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "open_cover_tilt",
         {"entity_id": "cover.rfy_010203_3"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "close_cover_tilt",
         {"entity_id": "cover.rfy_010203_3"},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "stop_cover_tilt",
         {"entity_id": "cover.rfy_010203_3"},

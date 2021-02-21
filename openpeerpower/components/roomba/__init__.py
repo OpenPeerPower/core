@@ -68,7 +68,7 @@ async def async_connect_or_timeout.opp, roomba):
         name = None
         with async_timeout.timeout(10):
             _LOGGER.debug("Initialize connection to vacuum")
-            await opp.async_add_executor_job(roomba.connect)
+            await opp..async_add_executor_job(roomba.connect)
             while not roomba.roomba_connected or name is None:
                 # Waiting for connection and check datas ready
                 name = roomba_reported_state(roomba).get("name", None)
@@ -91,13 +91,13 @@ async def async_disconnect_or_timeout.opp, roomba):
     """Disconnect to vacuum."""
     _LOGGER.debug("Disconnect vacuum")
     with async_timeout.timeout(3):
-        await opp.async_add_executor_job(roomba.disconnect)
+        await opp..async_add_executor_job(roomba.disconnect)
     return True
 
 
 async def async_update_options.opp, config_entry):
     """Update options."""
-    await opp.config_entries.async_reload(config_entry.entry_id)
+    await opp..config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry.opp, config_entry):

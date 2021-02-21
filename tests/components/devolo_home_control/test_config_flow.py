@@ -13,7 +13,7 @@ from tests.common import MockConfigEntry
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -29,11 +29,11 @@ async def test_form.opp):
         "openpeerpower.components.devolo_home_control.config_flow.Mydevolo.uuid",
         return_value="123456",
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "test-username", "password": "test-password"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "devolo Home Control"
@@ -51,13 +51,13 @@ async def test_form.opp):
 async def test_form_invalid_credentials.opp):
     """Test if we get the error message on invalid credentials."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {"username": "test-username", "password": "test-password"},
     )
@@ -72,7 +72,7 @@ async def test_form_already_configured.opp):
         return_value="123456",
     ):
         MockConfigEntry(domain=DOMAIN, unique_id="123456", data={}).add_to_opp.opp)
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={"username": "test-username", "password": "test-password"},
@@ -83,7 +83,7 @@ async def test_form_already_configured.opp):
 
 async def test_form_advanced_options.opp):
     """Test if we get the advanced options if user has enabled it."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user", "show_advanced_options": True}
     )
     assert result["type"] == "form"
@@ -99,7 +99,7 @@ async def test_form_advanced_options.opp):
         "openpeerpower.components.devolo_home_control.config_flow.Mydevolo.uuid",
         return_value="123456",
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "username": "test-username",
@@ -107,7 +107,7 @@ async def test_form_advanced_options.opp):
                 "mydevolo_url": "https://test_mydevolo_url.test",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "devolo Home Control"

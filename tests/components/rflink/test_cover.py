@@ -55,7 +55,7 @@ async def test_default_setup.opp, monkeypatch):
 
     # mock incoming command event for this device
     event_callback({"id": "protocol_0_0", "command": "up"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     cover_after_first_command = opp.states.get(f"{DOMAIN}.test")
     assert cover_after_first_command.state == STATE_OPEN
@@ -64,27 +64,27 @@ async def test_default_setup.opp, monkeypatch):
 
     # mock incoming command event for this device
     event_callback({"id": "protocol_0_0", "command": "down"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
 
     # should respond to group command
     event_callback({"id": "protocol_0_0", "command": "allon"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     cover_after_first_command = opp.states.get(f"{DOMAIN}.test")
     assert cover_after_first_command.state == STATE_OPEN
 
     # should respond to group command
     event_callback({"id": "protocol_0_0", "command": "alloff"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
 
     # test following aliases
     # mock incoming command event for this device alias
     event_callback({"id": "test_alias_0_0", "command": "up"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
@@ -94,7 +94,7 @@ async def test_default_setup.opp, monkeypatch):
             DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[0][0][0] == "protocol_0_0"
     assert protocol.send_command_ack.call_args_list[0][0][1] == "DOWN"
@@ -104,7 +104,7 @@ async def test_default_setup.opp, monkeypatch):
             DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[1][0][1] == "UP"
 
@@ -138,8 +138,8 @@ async def test_firing_bus_event.opp, monkeypatch):
 
     # test event for new unconfigured sensor
     event_callback({"id": "protocol_0_0", "command": "down"})
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert calls[0].data == {"state": "down", "entity_id": f"{DOMAIN}.test"}
 
@@ -169,7 +169,7 @@ async def test_signal_repetitions.opp, monkeypatch):
     )
 
     # wait for commands and repetitions to finish
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert protocol.send_command_ack.call_count == 2
 
@@ -181,7 +181,7 @@ async def test_signal_repetitions.opp, monkeypatch):
     )
 
     # wait for commands and repetitions to finish
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert protocol.send_command_ack.call_count == 5
 
@@ -213,7 +213,7 @@ async def test_signal_repetitions_alternation.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert protocol.send_command_ack.call_args_list[0][0][0] == "protocol_0_0"
     assert protocol.send_command_ack.call_args_list[1][0][0] == "protocol_0_1"
@@ -246,7 +246,7 @@ async def test_signal_repetitions_cancelling.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert protocol.send_command_ack.call_args_list[0][0][1] == "DOWN"
     assert protocol.send_command_ack.call_args_list[1][0][1] == "UP"
@@ -273,13 +273,13 @@ async def test_group_alias.opp, monkeypatch):
 
     # test sending group command to group alias
     event_callback({"id": "test_group_0_0", "command": "allon"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
     # test sending group command to group alias
     event_callback({"id": "test_group_0_0", "command": "down"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
@@ -306,13 +306,13 @@ async def test_nogroup_alias.opp, monkeypatch):
 
     # test sending group command to nogroup alias
     event_callback({"id": "test_nogroup_0_0", "command": "allon"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     # should not affect state
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
 
     # test sending group command to nogroup alias
     event_callback({"id": "test_nogroup_0_0", "command": "up"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     # should affect state
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
@@ -334,13 +334,13 @@ async def test_nogroup_device_id.opp, monkeypatch):
 
     # test sending group command to nogroup
     event_callback({"id": "test_nogroup_0_0", "command": "allon"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     # should not affect state
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
 
     # test sending group command to nogroup
     event_callback({"id": "test_nogroup_0_0", "command": "up"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     # should affect state
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
@@ -432,7 +432,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     # mock incoming up command event for nonkaku_device_1
     event_callback({"id": "nonkaku_device_1", "command": "up"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     standard_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_standard")
     assert standard_cover.state == STATE_OPEN
@@ -440,7 +440,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     # mock incoming up command event for nonkaku_device_2
     event_callback({"id": "nonkaku_device_2", "command": "up"})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     standard_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_none")
     assert standard_cover.state == STATE_OPEN
@@ -449,7 +449,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # mock incoming up command event for nonkaku_device_3
     event_callback({"id": "nonkaku_device_3", "command": "up"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
     assert inverted_cover.state == STATE_OPEN
@@ -458,7 +458,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # mock incoming up command event for newkaku_device_4
     event_callback({"id": "newkaku_device_4", "command": "up"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_standard")
     assert inverted_cover.state == STATE_OPEN
@@ -467,7 +467,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # mock incoming up command event for newkaku_device_5
     event_callback({"id": "newkaku_device_5", "command": "up"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_none")
     assert inverted_cover.state == STATE_OPEN
@@ -476,7 +476,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # mock incoming up command event for newkaku_device_6
     event_callback({"id": "newkaku_device_6", "command": "up"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
     assert inverted_cover.state == STATE_OPEN
@@ -485,7 +485,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # mock incoming down command event for nonkaku_device_1
     event_callback({"id": "nonkaku_device_1", "command": "down"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     standard_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_standard")
     assert standard_cover.state == STATE_CLOSED
@@ -494,7 +494,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # mock incoming down command event for nonkaku_device_2
     event_callback({"id": "nonkaku_device_2", "command": "down"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     standard_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_none")
     assert standard_cover.state == STATE_CLOSED
@@ -503,7 +503,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # mock incoming down command event for nonkaku_device_3
     event_callback({"id": "nonkaku_device_3", "command": "down"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
     assert inverted_cover.state == STATE_CLOSED
@@ -512,7 +512,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # mock incoming down command event for newkaku_device_4
     event_callback({"id": "newkaku_device_4", "command": "down"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_standard")
     assert inverted_cover.state == STATE_CLOSED
@@ -521,7 +521,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # mock incoming down command event for newkaku_device_5
     event_callback({"id": "newkaku_device_5", "command": "down"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_none")
     assert inverted_cover.state == STATE_CLOSED
@@ -530,7 +530,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # mock incoming down command event for newkaku_device_6
     event_callback({"id": "newkaku_device_6", "command": "down"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
     assert inverted_cover.state == STATE_CLOSED
@@ -542,7 +542,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # should respond to group command
     event_callback({"id": "nonkaku_device_3", "command": "alloff"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
     assert inverted_cover.state == STATE_CLOSED
@@ -550,7 +550,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # should respond to group command
     event_callback({"id": "nonkaku_device_3", "command": "allon"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
     assert inverted_cover.state == STATE_OPEN
@@ -558,7 +558,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # should respond to group command
     event_callback({"id": "newkaku_device_4", "command": "alloff"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_standard")
     assert inverted_cover.state == STATE_CLOSED
@@ -566,7 +566,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # should respond to group command
     event_callback({"id": "newkaku_device_4", "command": "allon"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_standard")
     assert inverted_cover.state == STATE_OPEN
@@ -574,7 +574,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # should respond to group command
     event_callback({"id": "newkaku_device_5", "command": "alloff"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_none")
     assert inverted_cover.state == STATE_CLOSED
@@ -582,7 +582,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # should respond to group command
     event_callback({"id": "newkaku_device_5", "command": "allon"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_none")
     assert inverted_cover.state == STATE_OPEN
@@ -590,7 +590,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # should respond to group command
     event_callback({"id": "newkaku_device_6", "command": "alloff"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
     assert inverted_cover.state == STATE_CLOSED
@@ -598,7 +598,7 @@ async def test_inverted_cover.opp, monkeypatch):
     # should respond to group command
     event_callback({"id": "newkaku_device_6", "command": "allon"})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
     assert inverted_cover.state == STATE_OPEN
@@ -614,7 +614,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.nonkaku_type_standard").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[0][0][0] == "nonkaku_device_1"
@@ -631,7 +631,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.nonkaku_type_standard").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[1][0][0] == "nonkaku_device_1"
@@ -646,7 +646,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.nonkaku_type_none").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[2][0][0] == "nonkaku_device_2"
@@ -661,7 +661,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.nonkaku_type_none").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[3][0][0] == "nonkaku_device_2"
@@ -678,7 +678,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.nonkaku_type_inverted").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[4][0][0] == "nonkaku_device_3"
@@ -695,7 +695,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.nonkaku_type_inverted").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[5][0][0] == "nonkaku_device_3"
@@ -712,7 +712,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.newkaku_type_standard").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[6][0][0] == "newkaku_device_4"
@@ -729,7 +729,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.newkaku_type_standard").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[7][0][0] == "newkaku_device_4"
@@ -744,7 +744,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.newkaku_type_none").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[8][0][0] == "newkaku_device_5"
@@ -759,7 +759,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.newkaku_type_none").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[9][0][0] == "newkaku_device_5"
@@ -776,7 +776,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.newkaku_type_inverted").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[10][0][0] == "newkaku_device_6"
@@ -793,7 +793,7 @@ async def test_inverted_cover.opp, monkeypatch):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.newkaku_type_inverted").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[11][0][0] == "newkaku_device_6"

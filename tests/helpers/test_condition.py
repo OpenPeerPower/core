@@ -262,7 +262,7 @@ async def test_time_using_input_datetime.opp):
         },
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "input_datetime",
         "set_datetime",
         {
@@ -276,7 +276,7 @@ async def test_time_using_input_datetime.opp):
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "input_datetime",
         "set_datetime",
         {
@@ -557,7 +557,7 @@ async def test_state_using_input_entities.opp):
    .opp.states.async_set("sensor.salut", "hello")
     assert not test.opp)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "input_text",
         "set_value",
         {
@@ -574,7 +574,7 @@ async def test_state_using_input_entities.opp):
    .opp.states.async_set("sensor.salut", "cya")
     assert test.opp)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "input_select",
         "select_option",
         {
@@ -790,7 +790,7 @@ async def test_numeric_state_using_input_number.opp):
    .opp.states.async_set("sensor.temperature", 100)
     assert not test.opp)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "input_number",
         "set_value",
         {

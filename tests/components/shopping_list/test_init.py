@@ -50,7 +50,7 @@ async def test_deprecated_api_get_all.opp,.opp_client, sl_setup):
        .opp, "test", "OppShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
-    client = await.opp_client()
+    client = await opp._client()
     resp = await client.get("/api/shopping_list")
 
     assert resp.status == 200
@@ -72,7 +72,7 @@ async def test_ws_get_items.opp,.opp_ws_client, sl_setup):
        .opp, "test", "OppShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json({"id": 5, "type": "shopping_list/items"})
     msg = await client.receive_json()
@@ -102,7 +102,7 @@ async def test_deprecated_api_update.opp,.opp_client, sl_setup):
     beer_id = opp.data["shopping_list"].items[0]["id"]
     wine_id = opp.data["shopping_list"].items[1]["id"]
 
-    client = await.opp_client()
+    client = await opp._client()
     resp = await client.post(
         f"/api/shopping_list/item/{beer_id}", json={"name": "soda"}
     )
@@ -135,7 +135,7 @@ async def test_ws_update_item.opp,.opp_ws_client, sl_setup):
 
     beer_id = opp.data["shopping_list"].items[0]["id"]
     wine_id = opp.data["shopping_list"].items[1]["id"]
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -173,7 +173,7 @@ async def test_api_update_fails.opp,.opp_client, sl_setup):
        .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
     )
 
-    client = await.opp_client()
+    client = await opp._client()
     resp = await client.post("/api/shopping_list/non_existing", json={"name": "soda"})
 
     assert resp.status == HTTP_NOT_FOUND
@@ -189,7 +189,7 @@ async def test_ws_update_item_fail.opp,.opp_ws_client, sl_setup):
     await intent.async_op.dle(
        .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
     )
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -220,7 +220,7 @@ async def test_deprecated_api_clear_completed.opp,.opp_client, sl_setup):
     beer_id = opp.data["shopping_list"].items[0]["id"]
     wine_id = opp.data["shopping_list"].items[1]["id"]
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Mark beer as completed
     resp = await client.post(
@@ -247,7 +247,7 @@ async def test_ws_clear_items.opp,.opp_ws_client, sl_setup):
     )
     beer_id = opp.data["shopping_list"].items[0]["id"]
     wine_id = opp.data["shopping_list"].items[1]["id"]
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -269,7 +269,7 @@ async def test_ws_clear_items.opp,.opp_ws_client, sl_setup):
 async def test_deprecated_api_create.opp,.opp_client, sl_setup):
     """Test the API."""
 
-    client = await.opp_client()
+    client = await opp._client()
     resp = await client.post("/api/shopping_list/item", json={"name": "soda"})
 
     assert resp.status == 200
@@ -286,7 +286,7 @@ async def test_deprecated_api_create.opp,.opp_client, sl_setup):
 async def test_deprecated_api_create_fail.opp,.opp_client, sl_setup):
     """Test the API."""
 
-    client = await.opp_client()
+    client = await opp._client()
     resp = await client.post("/api/shopping_list/item", json={"name": 1234})
 
     assert resp.status == 400
@@ -295,7 +295,7 @@ async def test_deprecated_api_create_fail.opp,.opp_client, sl_setup):
 
 async def test_ws_add_item.opp,.opp_ws_client, sl_setup):
     """Test adding shopping_list item websocket command."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json({"id": 5, "type": "shopping_list/items/add", "name": "soda"})
     msg = await client.receive_json()
     assert msg["success"] is True
@@ -310,7 +310,7 @@ async def test_ws_add_item.opp,.opp_ws_client, sl_setup):
 
 async def test_ws_add_item_fail.opp,.opp_ws_client, sl_setup):
     """Test adding shopping_list item failure websocket command."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json({"id": 5, "type": "shopping_list/items/add", "name": 123})
     msg = await client.receive_json()
     assert msg["success"] is False
@@ -333,7 +333,7 @@ async def test_ws_reorder_items.opp,.opp_ws_client, sl_setup):
     wine_id = opp.data["shopping_list"].items[1]["id"]
     apple_id = opp.data["shopping_list"].items[2]["id"]
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {
             "id": 6,
@@ -412,7 +412,7 @@ async def test_ws_reorder_items_failure.opp,.opp_ws_client, sl_setup):
     wine_id = opp.data["shopping_list"].items[1]["id"]
     apple_id = opp.data["shopping_list"].items[2]["id"]
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     # Testing sending bad item id.
     await client.send_json(

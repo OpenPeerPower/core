@@ -55,7 +55,7 @@ async def test_state_changed_event_sends_message.opp, mqtt_mock):
 
     # Add the statestream component for publishing state updates
     assert await add_statestream.opp, base_topic=base_topic)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -63,8 +63,8 @@ async def test_state_changed_event_sends_message.opp, mqtt_mock):
 
     # Set a state of an entity
     mock_state_change_event.opp, State(e_id, "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with("pub/fake/entity/state", "on", 1, True)
@@ -80,7 +80,7 @@ async def test_state_changed_event_sends_message_and_timestamp.opp, mqtt_mock):
     assert await add_statestream(
        .opp, base_topic=base_topic, publish_attributes=None, publish_timestamps=True
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -88,8 +88,8 @@ async def test_state_changed_event_sends_message_and_timestamp.opp, mqtt_mock):
 
     # Set a state of an entity
     mock_state_change_event.opp, State(e_id, "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     calls = [
@@ -109,7 +109,7 @@ async def test_state_changed_attr_sends_message.opp, mqtt_mock):
 
     # Add the statestream component for publishing state updates
     assert await add_statestream.opp, base_topic=base_topic, publish_attributes=True)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -119,8 +119,8 @@ async def test_state_changed_attr_sends_message.opp, mqtt_mock):
 
     # Set a state of an entity
     mock_state_change_event.opp, State(e_id, "off", attributes=test_attributes))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     calls = [
@@ -146,7 +146,7 @@ async def test_state_changed_event_include_domain.opp, mqtt_mock):
     assert await add_statestream(
        .opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -154,8 +154,8 @@ async def test_state_changed_event_include_domain.opp, mqtt_mock):
 
     # Set a state of an entity
     mock_state_change_event.opp, State("fake.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with("pub/fake/entity/state", "on", 1, True)
@@ -164,8 +164,8 @@ async def test_state_changed_event_include_domain.opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that shouldn't be included
     mock_state_change_event.opp, State("fake2.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
@@ -182,7 +182,7 @@ async def test_state_changed_event_include_entity.opp, mqtt_mock):
     assert await add_statestream(
        .opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -190,8 +190,8 @@ async def test_state_changed_event_include_entity.opp, mqtt_mock):
 
     # Set a state of an entity
     mock_state_change_event.opp, State("fake.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with("pub/fake/entity/state", "on", 1, True)
@@ -200,8 +200,8 @@ async def test_state_changed_event_include_entity.opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that shouldn't be included
     mock_state_change_event.opp, State("fake.entity2", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
@@ -218,7 +218,7 @@ async def test_state_changed_event_exclude_domain.opp, mqtt_mock):
     assert await add_statestream(
        .opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -226,8 +226,8 @@ async def test_state_changed_event_exclude_domain.opp, mqtt_mock):
 
     # Set a state of an entity
     mock_state_change_event.opp, State("fake.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with("pub/fake/entity/state", "on", 1, True)
@@ -236,8 +236,8 @@ async def test_state_changed_event_exclude_domain.opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that shouldn't be included
     mock_state_change_event.opp, State("fake2.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
@@ -254,7 +254,7 @@ async def test_state_changed_event_exclude_entity.opp, mqtt_mock):
     assert await add_statestream(
        .opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -262,8 +262,8 @@ async def test_state_changed_event_exclude_entity.opp, mqtt_mock):
 
     # Set a state of an entity
     mock_state_change_event.opp, State("fake.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with("pub/fake/entity/state", "on", 1, True)
@@ -272,8 +272,8 @@ async def test_state_changed_event_exclude_entity.opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that shouldn't be included
     mock_state_change_event.opp, State("fake.entity2", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
@@ -290,7 +290,7 @@ async def test_state_changed_event_exclude_domain_include_entity.opp, mqtt_mock)
     assert await add_statestream(
        .opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -298,8 +298,8 @@ async def test_state_changed_event_exclude_domain_include_entity.opp, mqtt_mock)
 
     # Set a state of an entity
     mock_state_change_event.opp, State("fake.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with("pub/fake/entity/state", "on", 1, True)
@@ -308,8 +308,8 @@ async def test_state_changed_event_exclude_domain_include_entity.opp, mqtt_mock)
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that shouldn't be included
     mock_state_change_event.opp, State("fake.entity2", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
@@ -326,7 +326,7 @@ async def test_state_changed_event_include_domain_exclude_entity.opp, mqtt_mock)
     assert await add_statestream(
        .opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -334,8 +334,8 @@ async def test_state_changed_event_include_domain_exclude_entity.opp, mqtt_mock)
 
     # Set a state of an entity
     mock_state_change_event.opp, State("fake.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with("pub/fake/entity/state", "on", 1, True)
@@ -344,8 +344,8 @@ async def test_state_changed_event_include_domain_exclude_entity.opp, mqtt_mock)
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that shouldn't be included
     mock_state_change_event.opp, State("fake.entity2", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
@@ -362,7 +362,7 @@ async def test_state_changed_event_include_globs.opp, mqtt_mock):
     assert await add_statestream(
        .opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -370,8 +370,8 @@ async def test_state_changed_event_include_globs.opp, mqtt_mock):
 
     # Set a state of an entity with included glob
     mock_state_change_event.opp, State("fake2.included_entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake2/included_entity/state
     mqtt_mock.async_publish.assert_called_with(
@@ -382,8 +382,8 @@ async def test_state_changed_event_include_globs.opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that shouldn't be included
     mock_state_change_event.opp, State("fake2.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
@@ -400,7 +400,7 @@ async def test_state_changed_event_exclude_globs.opp, mqtt_mock):
     assert await add_statestream(
        .opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -408,8 +408,8 @@ async def test_state_changed_event_exclude_globs.opp, mqtt_mock):
 
     # Set a state of an entity
     mock_state_change_event.opp, State("fake.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with("pub/fake/entity/state", "on", 1, True)
@@ -418,8 +418,8 @@ async def test_state_changed_event_exclude_globs.opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that shouldn't be included by glob
     mock_state_change_event.opp, State("fake.excluded_entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
@@ -436,7 +436,7 @@ async def test_state_changed_event_exclude_domain_globs_include_entity.opp, mqtt
     assert await add_statestream(
        .opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -444,8 +444,8 @@ async def test_state_changed_event_exclude_domain_globs_include_entity.opp, mqtt
 
     # Set a state of an entity
     mock_state_change_event.opp, State("fake.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with("pub/fake/entity/state", "on", 1, True)
@@ -454,8 +454,8 @@ async def test_state_changed_event_exclude_domain_globs_include_entity.opp, mqtt
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that doesn't match any filters
     mock_state_change_event.opp, State("fake2.included_entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with(
@@ -466,16 +466,16 @@ async def test_state_changed_event_exclude_domain_globs_include_entity.opp, mqtt
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that shouldn't be included by domain
     mock_state_change_event.opp, State("fake.entity2", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that shouldn't be included by glob
     mock_state_change_event.opp, State("fake.excluded_entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
@@ -492,7 +492,7 @@ async def test_state_changed_event_include_domain_globs_exclude_entity.opp, mqtt
     assert await add_statestream(
        .opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_statestream state change on initialization, etc.
@@ -500,8 +500,8 @@ async def test_state_changed_event_include_domain_globs_exclude_entity.opp, mqtt
 
     # Set a state of an entity included by domain
     mock_state_change_event.opp, State("fake.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with("pub/fake/entity/state", "on", 1, True)
@@ -510,8 +510,8 @@ async def test_state_changed_event_include_domain_globs_exclude_entity.opp, mqtt
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity included by glob
     mock_state_change_event.opp, State("fake.included_entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Make sure 'on' was published to pub/fake/entity/state
     mqtt_mock.async_publish.assert_called_with(
@@ -522,15 +522,15 @@ async def test_state_changed_event_include_domain_globs_exclude_entity.opp, mqtt
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that shouldn't be included
     mock_state_change_event.opp, State("fake.entity2", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
     mqtt_mock.async_publish.reset_mock()
     # Set a state of an entity that doesn't match any filters
     mock_state_change_event.opp, State("fake2.entity", "on"))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not mqtt_mock.async_publish.called

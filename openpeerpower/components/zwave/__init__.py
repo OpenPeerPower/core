@@ -443,7 +443,7 @@ async def async_setup_entry.opp, config_entry):
     if config.get(CONF_NETWORK_KEY):
         options.addOption("NetworkKey", config[CONF_NETWORK_KEY])
 
-    await opp.async_add_executor_job(options.lock)
+    await opp..async_add_executor_job(options.lock)
     network = opp.data[DATA_NETWORK] = ZWaveNetwork(options, autostart=False)
    .opp.data[DATA_DEVICES] = {}
    .opp.data[DATA_ENTITY_VALUES] = []

@@ -1267,7 +1267,7 @@ class SonosEntity(MediaPlayerEntity):
     async def join_multi.opp, master, entities):
         """Form a group with other players."""
         async with.opp.data[DATA_SONOS].topology_condition:
-            group = await opp.async_add_executor_job(master.join, entities)
+            group = await opp..async_add_executor_job(master.join, entities)
             await SonosEntity.wait_for_groups.opp, [group])
 
     @soco_error()
@@ -1290,7 +1290,7 @@ class SonosEntity(MediaPlayerEntity):
                 entity.unjoin()
 
         async with.opp.data[DATA_SONOS].topology_condition:
-            await opp.async_add_executor_job(_unjoin_all, entities)
+            await opp..async_add_executor_job(_unjoin_all, entities)
             await SonosEntity.wait_for_groups.opp, [[e] for e in entities])
 
     @soco_error()
@@ -1320,7 +1320,7 @@ class SonosEntity(MediaPlayerEntity):
                 entities.update(entity._sonos_group)
 
         async with.opp.data[DATA_SONOS].topology_condition:
-            await opp.async_add_executor_job(_snapshot_all, entities)
+            await opp..async_add_executor_job(_snapshot_all, entities)
 
     @soco_error()
     def restore(self):
@@ -1376,13 +1376,13 @@ class SonosEntity(MediaPlayerEntity):
                 entities.update(entity._snapshot_group)
 
         async with.opp.data[DATA_SONOS].topology_condition:
-            groups = await opp.async_add_executor_job(
+            groups = await opp..async_add_executor_job(
                 _restore_groups, entities, with_group
             )
 
             await SonosEntity.wait_for_groups.opp, groups)
 
-            await opp.async_add_executor_job(_restore_players, entities)
+            await opp..async_add_executor_job(_restore_players, entities)
 
     @staticmethod
     async def wait_for_groups.opp, groups):
@@ -1408,7 +1408,7 @@ class SonosEntity(MediaPlayerEntity):
         try:
             with async_timeout.timeout(5):
                 while not _test_groups(groups):
-                    await.opp.data[DATA_SONOS].topology_condition.wait()
+                    await opp..data[DATA_SONOS].topology_condition.wait()
         except asyncio.TimeoutError:
             _LOGGER.warning("Timeout waiting for target groups %s", groups)
 

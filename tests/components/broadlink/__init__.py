@@ -100,8 +100,8 @@ class BroadlinkDevice:
             "openpeerpower.components.broadlink.updater.blk.discover",
             return_value=[mock_api],
         ):
-            await opp.config_entries.async_setup(mock_entry.entry_id)
-            await opp.async_block_till_done()
+            await opp..config_entries.async_setup(mock_entry.entry_id)
+            await opp..async_block_till_done()
 
         return mock_api, mock_entry
 

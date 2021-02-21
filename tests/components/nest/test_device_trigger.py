@@ -101,7 +101,7 @@ async def test_get_triggers.opp):
     )
     await async_setup_camera.opp, {DEVICE_ID: camera})
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     device_entry = device_registry.async_get_device({("nest", DEVICE_ID)})
 
     expected_triggers = [
@@ -140,7 +140,7 @@ async def test_multiple_devices.opp):
     )
     await async_setup_camera.opp, {"device-id-1": camera1, "device-id-2": camera2})
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
     entry1 = registry.async_get("camera.camera_1")
     assert entry1.unique_id == "device-id-1-camera"
     entry2 = registry.async_get("camera.camera_2")
@@ -176,7 +176,7 @@ async def test_triggers_for_invalid_device_id.opp):
     )
     await async_setup_camera.opp, {DEVICE_ID: camera})
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     device_entry = device_registry.async_get_device({("nest", DEVICE_ID)})
     assert device_entry is not None
 
@@ -198,7 +198,7 @@ async def test_no_triggers.opp):
     camera = make_camera(device_id=DEVICE_ID, traits={})
     await async_setup_camera.opp, {DEVICE_ID: camera})
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
     entry = registry.async_get("camera.my_camera")
     assert entry.unique_id == "some-device-id-camera"
 
@@ -212,7 +212,7 @@ async def test_fires_on_camera_motion.opp, calls):
 
     message = {"device_id": DEVICE_ID, "type": "camera_motion", "timestamp": utcnow()}
    .opp.bus.async_fire(NEST_EVENT, message)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data == DATA_MESSAGE
 
@@ -223,7 +223,7 @@ async def test_fires_on_camera_person.opp, calls):
 
     message = {"device_id": DEVICE_ID, "type": "camera_person", "timestamp": utcnow()}
    .opp.bus.async_fire(NEST_EVENT, message)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data == DATA_MESSAGE
 
@@ -234,7 +234,7 @@ async def test_fires_on_camera_sound.opp, calls):
 
     message = {"device_id": DEVICE_ID, "type": "camera_sound", "timestamp": utcnow()}
    .opp.bus.async_fire(NEST_EVENT, message)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data == DATA_MESSAGE
 
@@ -245,7 +245,7 @@ async def test_fires_on_doorbell_chime.opp, calls):
 
     message = {"device_id": DEVICE_ID, "type": "doorbell_chime", "timestamp": utcnow()}
    .opp.bus.async_fire(NEST_EVENT, message)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data == DATA_MESSAGE
 
@@ -260,7 +260,7 @@ async def test_trigger_for_wrong_device_id.opp, calls):
         "timestamp": utcnow(),
     }
    .opp.bus.async_fire(NEST_EVENT, message)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
@@ -274,7 +274,7 @@ async def test_trigger_for_wrong_event_type.opp, calls):
         "timestamp": utcnow(),
     }
    .opp.bus.async_fire(NEST_EVENT, message)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
@@ -288,7 +288,7 @@ async def test_subscriber_automation.opp, calls):
     )
     subscriber = await async_setup_camera.opp, {DEVICE_ID: camera})
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     device_entry = device_registry.async_get_device({("nest", DEVICE_ID)})
 
     assert await setup_automation.opp, device_entry.id, "camera_motion")
@@ -311,7 +311,7 @@ async def test_subscriber_automation.opp, calls):
         auth=None,
     )
     await subscriber.async_receive_event(event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data == DATA_MESSAGE

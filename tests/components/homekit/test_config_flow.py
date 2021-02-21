@@ -35,13 +35,13 @@ def _mock_config_entry_with_options_populated():
 async def test_setup_in_bridge_mode.opp):
     """Test we can setup a new instance in bridge mode."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["errors"] == {}
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {"mode": "bridge"},
     )
@@ -52,7 +52,7 @@ async def test_setup_in_bridge_mode.opp):
         "openpeerpower.components.homekit.config_flow.async_find_next_available_port",
         return_value=12345,
     ):
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp..config_entries.flow.async_configure(
             result2["flow_id"],
             {"include_domains": ["light"]},
         )
@@ -65,11 +65,11 @@ async def test_setup_in_bridge_mode.opp):
         "openpeerpower.components.homekit.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result4 = await.opp.config_entries.flow.async_configure(
+        result4 = await opp..config_entries.flow.async_configure(
             result3["flow_id"],
             {},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result4["title"][:11] == "OPP Bridge"
@@ -94,13 +94,13 @@ async def test_setup_in_accessory_mode.opp):
     await setup.async_setup_component.opp, "persistent_notification", {})
    .opp.states.async_set("camera.mine", "off")
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["errors"] == {}
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {"mode": "accessory"},
     )
@@ -111,7 +111,7 @@ async def test_setup_in_accessory_mode.opp):
         "openpeerpower.components.homekit.config_flow.async_find_next_available_port",
         return_value=12345,
     ):
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp..config_entries.flow.async_configure(
             result2["flow_id"],
             {"entity_id": "camera.mine"},
         )
@@ -124,11 +124,11 @@ async def test_setup_in_accessory_mode.opp):
         "openpeerpower.components.homekit.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result4 = await.opp.config_entries.flow.async_configure(
+        result4 = await opp..config_entries.flow.async_configure(
             result3["flow_id"],
             {},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result4["title"][:14] == "OPP Accessory"
@@ -157,9 +157,9 @@ async def test_import.opp):
         domain=DOMAIN, data={CONF_NAME: "mock_name", CONF_PORT: 12345}
     )
     entry.add_to_opp.opp)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_IMPORT},
         data={CONF_NAME: "mock_name", CONF_PORT: 12345},
@@ -173,12 +173,12 @@ async def test_import.opp):
         "openpeerpower.components.homekit.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_init(
+        result2 = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_NAME: "othername", CONF_PORT: 56789},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "othername:56789"
@@ -198,16 +198,16 @@ async def test_options_flow_exclude_mode_advanced(auto_start,.opp):
     config_entry.add_to_opp.opp)
 
    .opp.states.async_set("climate.old", "off")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": True}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"domains": ["fan", "vacuum", "climate", "humidifier"]},
     )
@@ -215,7 +215,7 @@ async def test_options_flow_exclude_mode_advanced(auto_start,.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "include_exclude"
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"entities": ["climate.old"], "include_exclude_mode": "exclude"},
     )
@@ -223,7 +223,7 @@ async def test_options_flow_exclude_mode_advanced(auto_start,.opp):
     assert result2["step_id"] == "advanced"
 
     with patch("openpeerpower.components.homekit.async_setup_entry", return_value=True):
-        result3 = await.opp.config_entries.options.async_configure(
+        result3 = await opp..config_entries.options.async_configure(
             result2["flow_id"],
             user_input={"auto_start": auto_start},
         )
@@ -248,16 +248,16 @@ async def test_options_flow_exclude_mode_basic.opp):
     config_entry.add_to_opp.opp)
 
    .opp.states.async_set("climate.old", "off")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"domains": ["fan", "vacuum", "climate"]},
     )
@@ -265,7 +265,7 @@ async def test_options_flow_exclude_mode_basic.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "include_exclude"
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"entities": ["climate.old"], "include_exclude_mode": "exclude"},
     )
@@ -291,16 +291,16 @@ async def test_options_flow_include_mode_basic.opp):
    .opp.states.async_set("climate.old", "off")
    .opp.states.async_set("climate.new", "off")
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"domains": ["fan", "vacuum", "climate"]},
     )
@@ -308,7 +308,7 @@ async def test_options_flow_include_mode_basic.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "include_exclude"
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"entities": ["climate.new"], "include_exclude_mode": "include"},
     )
@@ -336,16 +336,16 @@ async def test_options_flow_exclude_mode_with_cameras.opp):
    .opp.states.async_set("camera.transcode_h264", "off")
    .opp.states.async_set("camera.excluded", "off")
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"domains": ["fan", "vacuum", "climate", "camera"]},
     )
@@ -353,7 +353,7 @@ async def test_options_flow_exclude_mode_with_cameras.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "include_exclude"
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "entities": ["climate.old", "camera.excluded"],
@@ -363,7 +363,7 @@ async def test_options_flow_exclude_mode_with_cameras.opp):
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["step_id"] == "cameras"
 
-    result3 = await.opp.config_entries.options.async_configure(
+    result3 = await opp..config_entries.options.async_configure(
         result2["flow_id"],
         user_input={"camera_copy": ["camera.native_h264"]},
     )
@@ -383,14 +383,14 @@ async def test_options_flow_exclude_mode_with_cameras.opp):
 
     # Now run though again and verify we can turn off copy
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"domains": ["fan", "vacuum", "climate", "camera"]},
     )
@@ -398,7 +398,7 @@ async def test_options_flow_exclude_mode_with_cameras.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "include_exclude"
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "entities": ["climate.old", "camera.excluded"],
@@ -408,7 +408,7 @@ async def test_options_flow_exclude_mode_with_cameras.opp):
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["step_id"] == "cameras"
 
-    result3 = await.opp.config_entries.options.async_configure(
+    result3 = await opp..config_entries.options.async_configure(
         result2["flow_id"],
         user_input={"camera_copy": ["camera.native_h264"]},
     )
@@ -439,16 +439,16 @@ async def test_options_flow_include_mode_with_cameras.opp):
    .opp.states.async_set("camera.transcode_h264", "off")
    .opp.states.async_set("camera.excluded", "off")
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"domains": ["fan", "vacuum", "climate", "camera"]},
     )
@@ -456,7 +456,7 @@ async def test_options_flow_include_mode_with_cameras.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "include_exclude"
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "entities": ["camera.native_h264", "camera.transcode_h264"],
@@ -466,7 +466,7 @@ async def test_options_flow_include_mode_with_cameras.opp):
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["step_id"] == "cameras"
 
-    result3 = await.opp.config_entries.options.async_configure(
+    result3 = await opp..config_entries.options.async_configure(
         result2["flow_id"],
         user_input={"camera_copy": ["camera.native_h264"]},
     )
@@ -486,7 +486,7 @@ async def test_options_flow_include_mode_with_cameras.opp):
 
     # Now run though again and verify we can turn off copy
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
     )
 
@@ -505,7 +505,7 @@ async def test_options_flow_include_mode_with_cameras.opp):
     ]
     assert _get_schema_default(schema, "mode") == "bridge"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"domains": ["fan", "vacuum", "climate", "camera"]},
     )
@@ -523,7 +523,7 @@ async def test_options_flow_include_mode_with_cameras.opp):
     ]
     assert _get_schema_default(schema, "include_exclude_mode") == "include"
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "entities": ["climate.old", "camera.excluded"],
@@ -536,7 +536,7 @@ async def test_options_flow_include_mode_with_cameras.opp):
     schema = result2["data_schema"].schema
     assert _get_schema_default(schema, "camera_copy") == ["camera.native_h264"]
 
-    result3 = await.opp.config_entries.options.async_configure(
+    result3 = await opp..config_entries.options.async_configure(
         result2["flow_id"],
         user_input={"camera_copy": []},
     )
@@ -579,15 +579,15 @@ async def test_options_flow_blocked_when_from_yaml.opp):
     )
     config_entry.add_to_opp.opp)
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp..config_entries.options.async_init(config_entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "yaml"
 
     with patch("openpeerpower.components.homekit.async_setup_entry", return_value=True):
-        result2 = await.opp.config_entries.options.async_configure(
+        result2 = await opp..config_entries.options.async_configure(
             result["flow_id"],
             user_input={},
         )
@@ -603,9 +603,9 @@ async def test_options_flow_include_mode_basic_accessory.opp):
    .opp.states.async_set("media_player.tv", "off")
    .opp.states.async_set("media_player.sonos", "off")
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
     )
 
@@ -623,7 +623,7 @@ async def test_options_flow_include_mode_basic_accessory.opp):
         "mode": "bridge",
     }
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"domains": ["media_player"], "mode": "accessory"},
     )
@@ -632,7 +632,7 @@ async def test_options_flow_include_mode_basic_accessory.opp):
     assert result2["step_id"] == "include_exclude"
     assert _get_schema_default(result2["data_schema"].schema, "entities") == []
 
-    result3 = await.opp.config_entries.options.async_configure(
+    result3 = await opp..config_entries.options.async_configure(
         result2["flow_id"],
         user_input={"entities": "media_player.tv"},
     )
@@ -652,13 +652,13 @@ async def test_options_flow_include_mode_basic_accessory.opp):
 async def test_converting_bridge_to_accessory_mode.opp, hk_driver):
     """Test we can convert a bridge to accessory mode."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["errors"] == {}
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {"mode": "bridge"},
     )
@@ -669,7 +669,7 @@ async def test_converting_bridge_to_accessory_mode.opp, hk_driver):
         "openpeerpower.components.homekit.config_flow.async_find_next_available_port",
         return_value=12345,
     ):
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp..config_entries.flow.async_configure(
             result2["flow_id"],
             {"include_domains": ["light"]},
         )
@@ -682,11 +682,11 @@ async def test_converting_bridge_to_accessory_mode.opp, hk_driver):
         "openpeerpower.components.homekit.HomeKit.async_start",
         return_value=True,
     ) as mock_async_start:
-        result4 = await.opp.config_entries.flow.async_configure(
+        result4 = await opp..config_entries.flow.async_configure(
             result3["flow_id"],
             {},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result4["title"][:11] == "OPP Bridge"
@@ -709,9 +709,9 @@ async def test_converting_bridge_to_accessory_mode.opp, hk_driver):
    .opp.states.async_set("camera.tv", "off")
    .opp.states.async_set("camera.sonos", "off")
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
     )
 
@@ -721,7 +721,7 @@ async def test_converting_bridge_to_accessory_mode.opp, hk_driver):
     assert _get_schema_default(schema, "mode") == "bridge"
     assert _get_schema_default(schema, "domains") == ["light"]
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"domains": ["camera"], "mode": "accessory"},
     )
@@ -729,14 +729,14 @@ async def test_converting_bridge_to_accessory_mode.opp, hk_driver):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "include_exclude"
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"entities": "camera.tv"},
     )
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["step_id"] == "cameras"
 
-    result3 = await.opp.config_entries.options.async_configure(
+    result3 = await opp..config_entries.options.async_configure(
         result2["flow_id"],
         user_input={"camera_copy": ["camera.tv"]},
     )

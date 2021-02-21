@@ -73,7 +73,7 @@ async def setup_verisure_locks.opp, config):
     """Set up mock verisure locks."""
     with mock_hub(config):
         await async_setup_component.opp, VERISURE_DOMAIN, config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         # lock.door_lock, ethernet_status
         assert len.opp.states.async_all()) == 2
 
@@ -84,31 +84,31 @@ async def test_verisure_no_default_code.opp):
     with mock_hub(NO_DEFAULT_LOCK_CODE_CONFIG, STATE_UNLOCKED) as hub:
 
         mock = hub.session.set_lock_state
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LOCK_DOMAIN, SERVICE_LOCK, {"entity_id": "lock.door_lock"}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock.call_count == 0
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LOCK_DOMAIN, SERVICE_LOCK, {"entity_id": "lock.door_lock", "code": "12345"}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock.call_args == call("12345", LOCKS[0], "lock")
 
         mock.reset_mock()
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LOCK_DOMAIN, SERVICE_UNLOCK, {"entity_id": "lock.door_lock"}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock.call_count == 0
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LOCK_DOMAIN,
             SERVICE_UNLOCK,
             {"entity_id": "lock.door_lock", "code": "12345"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock.call_args == call("12345", LOCKS[0], "unlock")
 
 
@@ -117,28 +117,28 @@ async def test_verisure_default_code.opp):
     await setup_verisure_locks.opp, DEFAULT_LOCK_CODE_CONFIG)
     with mock_hub(DEFAULT_LOCK_CODE_CONFIG, STATE_UNLOCKED) as hub:
         mock = hub.session.set_lock_state
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LOCK_DOMAIN, SERVICE_LOCK, {"entity_id": "lock.door_lock"}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock.call_args == call("9999", LOCKS[0], "lock")
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LOCK_DOMAIN, SERVICE_UNLOCK, {"entity_id": "lock.door_lock"}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock.call_args == call("9999", LOCKS[0], "unlock")
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LOCK_DOMAIN, SERVICE_LOCK, {"entity_id": "lock.door_lock", "code": "12345"}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock.call_args == call("12345", LOCKS[0], "lock")
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LOCK_DOMAIN,
             SERVICE_UNLOCK,
             {"entity_id": "lock.door_lock", "code": "12345"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock.call_args == call("12345", LOCKS[0], "unlock")

@@ -70,7 +70,7 @@ async def test_call_setup_entry.opp):
 
     with patch("openpeerpower.config_entries.support_entry_unload", return_value=True):
         result = await async_setup_component.opp, "comp", {})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert result
     assert len(mock_migrate_entry.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 1
@@ -99,7 +99,7 @@ async def test_call_setup_entry_without_reload_support.opp):
 
     with patch("openpeerpower.config_entries.support_entry_unload", return_value=False):
         result = await async_setup_component.opp, "comp", {})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert result
     assert len(mock_migrate_entry.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 1
@@ -129,7 +129,7 @@ async def test_call_async_migrate_entry.opp):
 
     with patch("openpeerpower.config_entries.support_entry_unload", return_value=True):
         result = await async_setup_component.opp, "comp", {})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert result
     assert len(mock_migrate_entry.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
@@ -252,7 +252,7 @@ async def test_remove_entry.opp, manager):
 
     async def mock_unload_entry.opp, entry):
         """Mock unloading an entry."""
-        result = await opp.config_entries.async_forward_entry_unload(entry, "light")
+        result = await opp..config_entries.async_forward_entry_unload(entry, "light")
         assert result
         return result
 
@@ -292,21 +292,21 @@ async def test_remove_entry.opp, manager):
 
     # Setup entry
     await entry.async_setup.opp)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Check entity state got added
     assert.opp.states.get("light.test_entity") is not None
     assert len.opp.states.async_all()) == 1
 
     # Check entity got added to entity registry
-    ent_reg = await.opp.helpers.entity_registry.async_get_registry()
+    ent_reg = await opp..helpers.entity_registry.async_get_registry()
     assert len(ent_reg.entities) == 1
     entity_entry = list(ent_reg.entities.values())[0]
     assert entity_entry.config_entry_id == entry.entry_id
 
     # Remove entry
     result = await manager.async_remove("test2")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Check that unload went well and so no need to restart
     assert result == {"require_restart": False}
@@ -346,11 +346,11 @@ async def test_remove_entry_op.dles_callback_error.opp, manager):
     assert [item.entry_id for item in manager.async_entries()] == ["test1"]
     # Setup entry
     await entry.async_setup.opp)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Remove entry
     result = await manager.async_remove("test1")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     # Check that unload went well and so no need to restart
     assert result == {"require_restart": False}
     # Check the remove callback was invoked.
@@ -452,7 +452,7 @@ async def test_add_entry_calls_setup_entry.opp, manager):
         await manager.flow.async_init(
             "comp", context={"source": config_entries.SOURCE_USER}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(mock_setup_entry.mock_calls) == 1
     p_opp, p_entry = mock_setup_entry.mock_calls[0][1]
@@ -502,7 +502,7 @@ async def test_saving_and_loading.opp):
             return self.async_create_entry(title="Test Title", data={"token": "abcd"})
 
     with patch.dict(config_entries.HANDLERS, {"test": TestFlow}):
-        await.opp.config_entries.flow.async_init(
+        await opp..config_entries.flow.async_init(
             "test", context={"source": config_entries.SOURCE_USER}
         )
 
@@ -519,7 +519,7 @@ async def test_saving_and_loading.opp):
             )
 
     with patch("openpeerpower.config_entries.HANDLERS.get", return_value=Test2Flow):
-        await.opp.config_entries.flow.async_init(
+        await opp..config_entries.flow.async_init(
             "test", context={"source": config_entries.SOURCE_USER}
         )
 
@@ -528,7 +528,7 @@ async def test_saving_and_loading.opp):
     # To trigger the call_later
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=1))
     # To execute the save
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Now load written data in new config manager
     manager = config_entries.ConfigEntries.opp, {})
@@ -563,7 +563,7 @@ async def test_forward_entry_sets_up_component.opp):
        .opp, MockModule("forwarded", async_setup_entry=mock_forwarded_setup_entry)
     )
 
-    await opp.config_entries.async_forward_entry_setup(entry, "forwarded")
+    await opp..config_entries.async_forward_entry_setup(entry, "forwarded")
     assert len(mock_original_setup_entry.mock_calls) == 0
     assert len(mock_forwarded_setup_entry.mock_calls) == 1
 
@@ -581,7 +581,7 @@ async def test_forward_entry_does_not_setup_entry_if_setup_fails.opp):
         ),
     )
 
-    await opp.config_entries.async_forward_entry_setup(entry, "forwarded")
+    await opp..config_entries.async_forward_entry_setup(entry, "forwarded")
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 0
 
@@ -610,31 +610,31 @@ async def test_discovery_notification.opp):
                 )
 
         # Start first discovery flow to assert that reconfigure notification fires
-        flow1 = await.opp.config_entries.flow.async_init(
+        flow1 = await opp..config_entries.flow.async_init(
             "test", context={"source": config_entries.SOURCE_DISCOVERY}
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get("persistent_notification.config_entry_discovery")
         assert state is not None
 
         # Start a second discovery flow so we can finish the first and assert that
         # the discovery notification persists until the second one is complete
-        flow2 = await.opp.config_entries.flow.async_init(
+        flow2 = await opp..config_entries.flow.async_init(
             "test", context={"source": config_entries.SOURCE_DISCOVERY}
         )
 
-        flow1 = await.opp.config_entries.flow.async_configure(flow1["flow_id"], {})
+        flow1 = await opp..config_entries.flow.async_configure(flow1["flow_id"], {})
         assert flow1["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get("persistent_notification.config_entry_discovery")
         assert state is not None
 
-        flow2 = await.opp.config_entries.flow.async_configure(flow2["flow_id"], {})
+        flow2 = await opp..config_entries.flow.async_configure(flow2["flow_id"], {})
         assert flow2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get("persistent_notification.config_entry_discovery")
         assert state is None
 
@@ -669,40 +669,40 @@ async def test_reauth_notification.opp):
                 return self.async_abort(reason="test")
 
         # Start user flow to assert that reconfigure notification doesn't fire
-        await.opp.config_entries.flow.async_init(
+        await opp..config_entries.flow.async_init(
             "test", context={"source": config_entries.SOURCE_USER}
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get("persistent_notification.config_entry_reconfigure")
         assert state is None
 
         # Start first reauth flow to assert that reconfigure notification fires
-        flow1 = await.opp.config_entries.flow.async_init(
+        flow1 = await opp..config_entries.flow.async_init(
             "test", context={"source": config_entries.SOURCE_REAUTH}
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get("persistent_notification.config_entry_reconfigure")
         assert state is not None
 
         # Start a second reauth flow so we can finish the first and assert that
         # the reconfigure notification persists until the second one is complete
-        flow2 = await.opp.config_entries.flow.async_init(
+        flow2 = await opp..config_entries.flow.async_init(
             "test", context={"source": config_entries.SOURCE_REAUTH}
         )
 
-        flow1 = await.opp.config_entries.flow.async_configure(flow1["flow_id"], {})
+        flow1 = await opp..config_entries.flow.async_configure(flow1["flow_id"], {})
         assert flow1["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get("persistent_notification.config_entry_reconfigure")
         assert state is not None
 
-        flow2 = await.opp.config_entries.flow.async_configure(flow2["flow_id"], {})
+        flow2 = await opp..config_entries.flow.async_configure(flow2["flow_id"], {})
         assert flow2["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get("persistent_notification.config_entry_reconfigure")
         assert state is None
 
@@ -723,11 +723,11 @@ async def test_discovery_notification_not_created.opp):
             return self.async_abort(reason="test")
 
     with patch.dict(config_entries.HANDLERS, {"test": TestFlow}):
-        await.opp.config_entries.flow.async_init(
+        await opp..config_entries.flow.async_init(
             "test", context={"source": config_entries.SOURCE_DISCOVERY}
         )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("persistent_notification.config_entry_discovery")
     assert state is None
 
@@ -1121,7 +1121,7 @@ async def test_init_custom_integration.opp):
             "openpeerpowerr.loader.async_get_integration",
             return_value=integration,
         ):
-            await.opp.config_entries.flow.async_init("bla")
+            await opp..config_entries.flow.async_init("bla")
 
 
 async def test_support_entry_unload.opp):
@@ -1138,7 +1138,7 @@ async def test_reload_entry_entity_registry_ignores_no_entry.opp):
     # Test we ignore entities without config entry
     entry = registry.async_get_or_create("light", "hue", "123")
     registry.async_update_entity(entry.entity_id, disabled_by="user")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert not handler.changed
     assert handler._remove_call_later is None
 
@@ -1171,19 +1171,19 @@ async def test_reload_entry_entity_registry_works.opp):
         "light", "hue", "123", config_entry=config_entry
     )
     registry.async_update_entity(entity_entry.entity_id, name="yo")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert not handler.changed
     assert handler._remove_call_later is None
 
     # Disable entity, we should not do anything, only act when enabled.
     registry.async_update_entity(entity_entry.entity_id, disabled_by="user")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert not handler.changed
     assert handler._remove_call_later is None
 
     # Enable entity, check we are reloading config entry.
     registry.async_update_entity(entity_entry.entity_id, disabled_by=None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert handler.changed == {config_entry.entry_id}
     assert handler._remove_call_later is not None
 
@@ -1191,7 +1191,7 @@ async def test_reload_entry_entity_registry_works.opp):
        .opp,
         dt.utcnow() + timedelta(seconds=config_entries.RELOAD_AFTER_UPDATE_DELAY + 1),
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(mock_unload_entry.mock_calls) == 1
 
@@ -1313,7 +1313,7 @@ async def test_unique_id_update_existing_entry_without_reload.opp, manager):
         result = await manager.flow.async_init(
             "comp", context={"source": config_entries.SOURCE_USER}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
@@ -1358,7 +1358,7 @@ async def test_unique_id_update_existing_entry_with_reload.opp, manager):
         result = await manager.flow.async_init(
             "comp", context={"source": config_entries.SOURCE_USER}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
@@ -1375,7 +1375,7 @@ async def test_unique_id_update_existing_entry_with_reload.opp, manager):
         result = await manager.flow.async_init(
             "comp", context={"source": config_entries.SOURCE_USER}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
@@ -1418,7 +1418,7 @@ async def test_unique_id_not_update_existing_entry.opp, manager):
         result = await manager.flow.async_init(
             "comp", context={"source": config_entries.SOURCE_USER}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
@@ -1577,7 +1577,7 @@ async def test_manual_add_overrides_ignored_entry.opp, manager):
         result = await manager.flow.async_init(
             "comp", context={"source": config_entries.SOURCE_USER}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert entry.data["host"] == "1.1.1.1"
@@ -1615,7 +1615,7 @@ async def test_manual_add_overrides_ignored_entry_singleton.opp, manager):
         await manager.flow.async_init(
             "comp", context={"source": config_entries.SOURCE_USER}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(mock_setup_entry.mock_calls) == 1
     p_opp, p_entry = mock_setup_entry.mock_calls[0][1]
@@ -1662,7 +1662,7 @@ async def test_unignore_step_form.opp, manager):
         assert len.opp.config_entries.flow.async_progress()) == 0
 
         # But after a 'tick' the unignore step has run and we can see an active flow again.
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len.opp.config_entries.flow.async_progress()) == 1
 
         # and still not config entries
@@ -1707,7 +1707,7 @@ async def test_unignore_create_entry.opp, manager):
         assert len.opp.config_entries.async_entries("comp")) == 0
 
         # But after a 'tick' the unignore step has run and we can see a config entry.
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         entry = opp.config_entries.async_entries("comp")[0]
         assert entry.source == "unignore"
         assert entry.unique_id == "mock-unique-id"
@@ -1743,7 +1743,7 @@ async def test_unignore_default_impl.opp, manager):
         assert entry.title == "Ignored Title"
 
         await manager.async_remove(entry.entry_id)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert len.opp.config_entries.async_entries("comp")) == 0
         assert len.opp.config_entries.flow.async_progress()) == 0
@@ -1790,7 +1790,7 @@ async def test_partial_flows_hidden.opp, manager):
         # While it's blocked it shouldn't be visible or trigger discovery notifications
         assert len.opp.config_entries.flow.async_progress()) == 0
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get("persistent_notification.config_entry_discovery")
         assert state is None
 
@@ -1803,7 +1803,7 @@ async def test_partial_flows_hidden.opp, manager):
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert len.opp.config_entries.flow.async_progress()) == 1
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get("persistent_notification.config_entry_discovery")
         assert state is not None
 
@@ -1844,7 +1844,7 @@ async def test_async_setup_init_entry.opp):
     with patch.dict(config_entries.HANDLERS, {"comp": TestFlow}):
         assert await async_setup_component.opp, "comp", {})
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert len(async_setup_entry.mock_calls) == 1
 

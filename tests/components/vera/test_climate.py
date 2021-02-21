@@ -40,89 +40,89 @@ async def test_climate(
 
     assert.opp.states.get(entity_id).state == HVAC_MODE_OFF
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": entity_id, "hvac_mode": HVAC_MODE_COOL},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.turn_cool_on.assert_called()
     vera_device.get_hvac_mode.return_value = "CoolOn"
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == HVAC_MODE_COOL
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": entity_id, "hvac_mode": HVAC_MODE_HEAT},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.turn_heat_on.assert_called()
     vera_device.get_hvac_mode.return_value = "HeatOn"
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == HVAC_MODE_HEAT
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": entity_id, "hvac_mode": HVAC_MODE_HEAT_COOL},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.turn_auto_on.assert_called()
     vera_device.get_hvac_mode.return_value = "AutoChangeOver"
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == HVAC_MODE_HEAT_COOL
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": entity_id, "hvac_mode": HVAC_MODE_OFF},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.turn_auto_on.assert_called()
     vera_device.get_hvac_mode.return_value = "Off"
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == HVAC_MODE_OFF
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         "set_fan_mode",
         {"entity_id": entity_id, "fan_mode": "on"},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.turn_auto_on.assert_called()
     vera_device.get_fan_mode.return_value = "ContinuousOn"
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).attributes["fan_mode"] == FAN_ON
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         "set_fan_mode",
         {"entity_id": entity_id, "fan_mode": "off"},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.turn_auto_on.assert_called()
     vera_device.get_fan_mode.return_value = "Auto"
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).attributes["fan_mode"] == FAN_AUTO
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         "set_temperature",
         {"entity_id": entity_id, "temperature": 30},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.set_temperature.assert_called_with(30)
     vera_device.get_current_goal_temperature.return_value = 30
     vera_device.get_current_temperature.return_value = 25
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).attributes["current_temperature"] == 25
     assert.opp.states.get(entity_id).attributes["temperature"] == 30
 
@@ -154,16 +154,16 @@ async def test_climate_f(
     )
     update_callback = component_data.controller_data[0].update_callback
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         "set_temperature",
         {"entity_id": entity_id, "temperature": 30},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.set_temperature.assert_called_with(86)
     vera_device.get_current_goal_temperature.return_value = 30
     vera_device.get_current_temperature.return_value = 25
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).attributes["current_temperature"] == -3.9
     assert.opp.states.get(entity_id).attributes["temperature"] == -1.1

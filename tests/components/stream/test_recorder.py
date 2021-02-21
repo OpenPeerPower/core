@@ -143,7 +143,7 @@ async def test_recorder_timeout(
         # Wait a minute
         future = dt_util.utcnow() + timedelta(minutes=1)
         async_fire_time_changed.opp, future)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert mock_timeout.called
 
@@ -153,8 +153,8 @@ async def test_recorder_timeout(
         record_worker_sync.join()
 
         stream.stop()
-        await opp.async_block_till_done()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
+        await opp..async_block_till_done()
 
 
 async def test_record_path_not_allowed.opp,.opp_client):

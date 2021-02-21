@@ -12,7 +12,7 @@ from tests.common import get_system_health_info, mock_platform
 
 async def gather_system_health_info.opp,.opp_ws_client):
     """Gather all info."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     resp = await client.send_json({"id": 6, "type": "system_health/info"})
 

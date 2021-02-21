@@ -89,13 +89,13 @@ async def test_if_fires_on_turn_on_request.opp, calls, player_setup, state):
         },
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "media_player",
         "turn_on",
         {"entity_id": player_setup},
         blocking=True,
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == player_setup

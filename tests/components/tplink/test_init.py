@@ -28,17 +28,17 @@ async def test_creating_entry_tries_discover.opp):
         "openpeerpower.components.tplink.common.Discover.discover",
         return_value={"host": 1234},
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             tplink.DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
 
         # Confirmation form
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
 
@@ -48,7 +48,7 @@ async def test_configuring_tplink_causes_discovery.opp):
     with patch("openpeerpower.components.tplink.common.Discover.discover") as discover:
         discover.return_value = {"host": 1234}
         await async_setup_component.opp, tplink.DOMAIN, {tplink.DOMAIN: {}})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(discover.mock_calls) == 1
 
@@ -76,7 +76,7 @@ async def test_configuring_device_types.opp, name, cls, platform, count):
         }
         discover.return_value = discovery_data
         await async_setup_component.opp, tplink.DOMAIN, {tplink.DOMAIN: {}})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(discover.mock_calls) == 1
     assert len.opp.data[tplink.DOMAIN][platform]) == count
@@ -141,7 +141,7 @@ async def test_configuring_devices_from_multiple_sources.opp):
                 }
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert len(discover.mock_calls) == 1
         assert len.opp.data[tplink.DOMAIN][CONF_LIGHT]) == 3
@@ -164,7 +164,7 @@ async def test_is_dimmable.opp):
         discover.return_value = {"host": dimmable_switch}
 
         await async_setup_component.opp, tplink.DOMAIN, {tplink.DOMAIN: {}})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(discover.mock_calls) == 1
     assert len(setup.mock_calls) == 1
@@ -183,7 +183,7 @@ async def test_configuring_discovery_disabled.opp):
         await async_setup_component(
            .opp, tplink.DOMAIN, {tplink.DOMAIN: {tplink.CONF_DISCOVERY: False}}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert discover.call_count == 0
     assert mock_setup.call_count == 1
@@ -214,7 +214,7 @@ async def test_platforms_are_initialized.opp):
     ):
         # patching is_dimmable is necessray to avoid misdetection as light.
         await async_setup_component.opp, tplink.DOMAIN, config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert discover.call_count == 0
     assert light_setup.call_count == 1
@@ -228,7 +228,7 @@ async def test_no_config_creates_no_entry.opp):
         return_value=mock_coro(True),
     ) as mock_setup:
         await async_setup_component.opp, tplink.DOMAIN, {})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert mock_setup.call_count == 0
 
@@ -253,7 +253,7 @@ async def test_unload.opp, platform):
             }
         }
         assert await async_setup_component.opp, tplink.DOMAIN, config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert len(light_setup.mock_calls) == 1
         assert tplink.DOMAIN in.opp.data

@@ -199,7 +199,7 @@ async def test_if_state.opp, calls):
    .opp.bus.async_fire("test_event3")
    .opp.bus.async_fire("test_event4")
    .opp.bus.async_fire("test_event5")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_on - event - test_event1"
 
@@ -209,7 +209,7 @@ async def test_if_state.opp, calls):
    .opp.bus.async_fire("test_event3")
    .opp.bus.async_fire("test_event4")
    .opp.bus.async_fire("test_event5")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_off - event - test_event2"
 
@@ -219,7 +219,7 @@ async def test_if_state.opp, calls):
    .opp.bus.async_fire("test_event3")
    .opp.bus.async_fire("test_event4")
    .opp.bus.async_fire("test_event5")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 3
     assert calls[2].data["some"] == "is_idle - event - test_event3"
 
@@ -229,7 +229,7 @@ async def test_if_state.opp, calls):
    .opp.bus.async_fire("test_event3")
    .opp.bus.async_fire("test_event4")
    .opp.bus.async_fire("test_event5")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data["some"] == "is_paused - event - test_event4"
 
@@ -239,6 +239,6 @@ async def test_if_state.opp, calls):
    .opp.bus.async_fire("test_event3")
    .opp.bus.async_fire("test_event4")
    .opp.bus.async_fire("test_event5")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 5
     assert calls[4].data["some"] == "is_playing - event - test_event5"

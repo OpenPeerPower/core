@@ -22,7 +22,7 @@ async def test_simpleconnect_cover_setup.opp):
     accessories = await setup_accessories_from_file.opp, "velux_gateway.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     # Check that the cover is correctly found and set up
     cover_id = "cover.velux_window"
@@ -64,7 +64,7 @@ async def test_simpleconnect_cover_setup.opp):
     # The cover and sensor are different devices (accessories) attached to the same bridge
     assert cover.device_id != sensor.device_id
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
 
     device = device_registry.async_get(cover.device_id)
     assert device.manufacturer == "VELUX"

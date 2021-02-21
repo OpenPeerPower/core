@@ -13,7 +13,7 @@ async def test_setup_comp.opp):
 async def test_demo_settings_not_exists.opp,.opp_client):
     """Test retrieve settings from demo provider."""
     assert await async_setup_component.opp, stt.DOMAIN, {"stt": {}})
-    client = await.opp_client()
+    client = await opp._client()
 
     response = await client.get("/api/stt/beer")
 
@@ -23,7 +23,7 @@ async def test_demo_settings_not_exists.opp,.opp_client):
 async def test_demo_speech_not_exists.opp,.opp_client):
     """Test retrieve settings from demo provider."""
     assert await async_setup_component.opp, stt.DOMAIN, {"stt": {}})
-    client = await.opp_client()
+    client = await opp._client()
 
     response = await client.post("/api/stt/beer", data=b"test")
 

@@ -52,7 +52,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     miio_device = Device(host, token)
 
     try:
-        device_info = await opp.async_add_executor_job(miio_device.info)
+        device_info = await opp..async_add_executor_job(miio_device.info)
     except DeviceException as ex:
         raise PlatformNotReady from ex
 

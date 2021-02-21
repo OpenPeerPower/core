@@ -76,7 +76,7 @@ async def async_migrate_entry.opp, config_entry: ConfigEntry):
             verbose=False,
         )
 
-        ret, response = await opp.async_add_executor_job(camera.get_port_info)
+        ret, response = await opp..async_add_executor_job(camera.get_port_info)
 
         rtsp_port = DEFAULT_RTSP_PORT
 

@@ -79,7 +79,7 @@ async def async_setup_entry(
     """Set up the Tado climate platform."""
 
     tado = opp.data[DOMAIN][entry.entry_id][DATA]
-    entities = await opp.async_add_executor_job(_generate_entities, tado)
+    entities = await opp..async_add_executor_job(_generate_entities, tado)
 
     platform = entity_platform.current_platform.get()
 

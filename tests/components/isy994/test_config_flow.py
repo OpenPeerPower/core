@@ -73,7 +73,7 @@ PATCH_ASYNC_SETUP_ENTRY = "openpeerpower.components.isy994.async_setup_entry"
 async def test_form.opp: OpenPeerPowerType):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -90,11 +90,11 @@ async def test_form.opp: OpenPeerPowerType):
         isy_conn = mock_connection_class.return_value
         isy_conn.get_config.return_value = None
         mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             MOCK_USER_INPUT,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == f"{MOCK_DEVICE_NAME} ({MOCK_HOSTNAME})"
     assert result2["result"].unique_id == MOCK_UUID
@@ -105,11 +105,11 @@ async def test_form.opp: OpenPeerPowerType):
 
 async def test_form_invalid_host.opp: OpenPeerPowerType):
     """Test we handle invalid host."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {
             "host": MOCK_HOSTNAME,  # Test with missing protocol (http://)
@@ -125,14 +125,14 @@ async def test_form_invalid_host.opp: OpenPeerPowerType):
 
 async def test_form_invalid_auth.opp: OpenPeerPowerType):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     with patch(PATCH_CONFIGURATION), patch(
         PATCH_CONNECTION,
         side_effect=ValueError("PyISY could not connect to the ISY."),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             MOCK_USER_INPUT,
         )
@@ -143,14 +143,14 @@ async def test_form_invalid_auth.opp: OpenPeerPowerType):
 
 async def test_form_cannot_connect.opp: OpenPeerPowerType):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     with patch(PATCH_CONFIGURATION), patch(
         PATCH_CONNECTION,
         side_effect=CannotConnect,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             MOCK_USER_INPUT,
         )
@@ -163,7 +163,7 @@ async def test_form_existing_config_entry.opp: OpenPeerPowerType):
     """Test if config entry already exists."""
     MockConfigEntry(domain=DOMAIN, unique_id=MOCK_UUID).add_to_opp.opp)
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -175,7 +175,7 @@ async def test_form_existing_config_entry.opp: OpenPeerPowerType):
         isy_conn = mock_connection_class.return_value
         isy_conn.get_config.return_value = None
         mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             MOCK_USER_INPUT,
         )
@@ -193,7 +193,7 @@ async def test_import_flow_some_fields.opp: OpenPeerPowerType) -> None:
         isy_conn = mock_connection_class.return_value
         isy_conn.get_config.return_value = None
         mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data=MOCK_IMPORT_BASIC_CONFIG,
@@ -217,7 +217,7 @@ async def test_import_flow_with_https.opp: OpenPeerPowerType) -> None:
         isy_conn = mock_connection_class.return_value
         isy_conn.get_config.return_value = None
         mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data=MOCK_IMPORT_WITH_SSL,
@@ -240,7 +240,7 @@ async def test_import_flow_all_fields.opp: OpenPeerPowerType) -> None:
         isy_conn = mock_connection_class.return_value
         isy_conn.get_config.return_value = None
         mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data=MOCK_IMPORT_FULL_CONFIG,
@@ -267,7 +267,7 @@ async def test_form_ssdp_already_configured.opp: OpenPeerPowerType) -> None:
         unique_id=MOCK_UUID,
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_SSDP},
         data={
@@ -283,7 +283,7 @@ async def test_form_ssdp.opp: OpenPeerPowerType):
     """Test we can setup from ssdp."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_SSDP},
         data={
@@ -307,11 +307,11 @@ async def test_form_ssdp.opp: OpenPeerPowerType):
         isy_conn = mock_connection_class.return_value
         isy_conn.get_config.return_value = None
         mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             MOCK_USER_INPUT,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == f"{MOCK_DEVICE_NAME} ({MOCK_HOSTNAME})"

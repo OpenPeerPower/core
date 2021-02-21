@@ -40,7 +40,7 @@ async def device_ias.opp, zigpy_device_mock, zha_device_joined_restored):
 
     zha_device = await zha_device_joined_restored(zigpy_device)
     zha_device.update_available(True)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     return zigpy_device, zha_device
 
 
@@ -102,12 +102,12 @@ async def test_action.opp, device_ias):
             },
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         calls = async_mock_service.opp, DOMAIN, "warning_device_warn")
 
         channel = zha_device.channels.pools[0].client_channels["1:0x0006"]
         channel.zha_send_event(COMMAND_SINGLE, [])
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert len(calls) == 1
         assert calls[0].domain == DOMAIN

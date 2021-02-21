@@ -12,7 +12,7 @@ async def test_update_scene.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["scene"]):
         await async_setup_component.opp, "config", {})
 
-    client = await.opp_client()
+    client = await opp._client()
 
     orig_data = [{"id": "light_on"}, {"id": "light_off"}]
 
@@ -64,7 +64,7 @@ async def test_bad_formatted_scene.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["scene"]):
         await async_setup_component.opp, "config", {})
 
-    client = await.opp_client()
+    client = await opp._client()
 
     orig_data = [
         {
@@ -114,7 +114,7 @@ async def test_bad_formatted_scene.opp,.opp_client):
 
 async def test_delete_scene.opp,.opp_client):
     """Test deleting a scene."""
-    ent_reg = await.opp.helpers.entity_registry.async_get_registry()
+    ent_reg = await opp..helpers.entity_registry.async_get_registry()
 
     assert await async_setup_component(
        .opp,
@@ -132,7 +132,7 @@ async def test_delete_scene.opp,.opp_client):
     with patch.object(config, "SECTIONS", ["scene"]):
         assert await async_setup_component.opp, "config", {})
 
-    client = await.opp_client()
+    client = await opp._client()
 
     orig_data = [{"id": "light_on"}, {"id": "light_off"}]
 
@@ -150,7 +150,7 @@ async def test_delete_scene.opp,.opp_client):
         "openpeerpower.components.config._write", mock_write
     ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
         resp = await client.delete("/api/config/scene/config/light_on")
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert resp.status == 200
     result = await resp.json()

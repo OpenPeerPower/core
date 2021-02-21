@@ -133,7 +133,7 @@ async def async_setup.opp: op.OpenPeerPower, config: dict) -> bool:
     async def async_op.dle_update_service(call):
         """Service handler for updating an entity."""
         if call.context.user_id:
-            user = await opp.auth.async_get_user(call.context.user_id)
+            user = await opp..auth.async_get_user(call.context.user_id)
 
             if user is None:
                 raise UnknownUser(
@@ -192,7 +192,7 @@ async def async_setup.opp: op.OpenPeerPower, config: dict) -> bool:
 
     async def async_set_location(call):
         """Service handler to set location."""
-        await.opp.config.async_update(
+        await opp..config.async_update(
             latitude=call.data[ATTR_LATITUDE], longitude=call.data[ATTR_LONGITUDE]
         )
 

@@ -61,7 +61,7 @@ async def test_setup_platform_valid_config.opp, mock_socket):
     """Check a valid configuration and call add_entities with sensor."""
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component.opp, "sensor", TEST_CONFIG)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
 
 async def test_setup_platform_invalid_config.opp, mock_socket):
@@ -70,13 +70,13 @@ async def test_setup_platform_invalid_config.opp, mock_socket):
         assert await async_setup_component(
            .opp, "sensor", {"sensor": {"platform": "tcp", "porrt": 1234}}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
 
 async def test_state.opp, mock_socket, mock_select):
     """Return the contents of _state."""
     assert await async_setup_component.opp, "sensor", TEST_CONFIG)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
 
@@ -108,7 +108,7 @@ async def test_config_uses_defaults.opp, mock_socket):
 
     with assert_setup_component(1) as result_config:
         assert await async_setup_component.opp, "sensor", {"sensor": config})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     state = opp.states.get("sensor.tcp_sensor")
 
@@ -126,7 +126,7 @@ async def test_update_socket_error.opp, mock_socket, sock_attr):
     socket_method.side_effect = OSError("Boom")
 
     assert await async_setup_component.opp, "sensor", TEST_CONFIG)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
 
@@ -139,7 +139,7 @@ async def test_update_select_fails.opp, mock_socket, mock_select):
     mock_select.return_value = (False, False, False)
 
     assert await async_setup_component.opp, "sensor", TEST_CONFIG)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
 
@@ -153,7 +153,7 @@ async def test_update_returns_if_template_render_fails.opp, mock_socket):
     config[tcp.CONF_VALUE_TEMPLATE] = "{{ value / 0 }}"
 
     assert await async_setup_component.opp, "sensor", {"sensor": config})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
 

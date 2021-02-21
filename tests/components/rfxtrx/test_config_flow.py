@@ -44,7 +44,7 @@ def com_port():
 )
 async def test_setup_network(connect_mock,.opp):
     """Test we can setup network."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -52,7 +52,7 @@ async def test_setup_network(connect_mock,.opp):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {"type": "Network"},
     )
@@ -62,7 +62,7 @@ async def test_setup_network(connect_mock,.opp):
     assert result["errors"] == {}
 
     with patch("openpeerpower.components.rfxtrx.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], {"host": "10.10.0.1", "port": 1234}
         )
 
@@ -90,7 +90,7 @@ async def test_setup_serial(com_mock, connect_mock,.opp):
     """Test we can setup serial."""
     port = com_port()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -98,7 +98,7 @@ async def test_setup_serial(com_mock, connect_mock,.opp):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {"type": "Serial"},
     )
@@ -108,7 +108,7 @@ async def test_setup_serial(com_mock, connect_mock,.opp):
     assert result["errors"] == {}
 
     with patch("openpeerpower.components.rfxtrx.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], {"device": port.device}
         )
 
@@ -134,7 +134,7 @@ async def test_setup_serial(com_mock, connect_mock,.opp):
 )
 async def test_setup_serial_manual(com_mock, connect_mock,.opp):
     """Test we can setup serial with manual entry."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -142,7 +142,7 @@ async def test_setup_serial_manual(com_mock, connect_mock,.opp):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {"type": "Serial"},
     )
@@ -151,7 +151,7 @@ async def test_setup_serial_manual(com_mock, connect_mock,.opp):
     assert result["step_id"] == "setup_serial"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], {"device": "Enter Manually"}
     )
 
@@ -160,7 +160,7 @@ async def test_setup_serial_manual(com_mock, connect_mock,.opp):
     assert result["errors"] == {}
 
     with patch("openpeerpower.components.rfxtrx.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], {"device": "/dev/ttyUSB0"}
         )
 
@@ -181,7 +181,7 @@ async def test_setup_serial_manual(com_mock, connect_mock,.opp):
 )
 async def test_setup_network_fail(connect_mock,.opp):
     """Test we can setup network."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -189,7 +189,7 @@ async def test_setup_network_fail(connect_mock,.opp):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {"type": "Network"},
     )
@@ -198,7 +198,7 @@ async def test_setup_network_fail(connect_mock,.opp):
     assert result["step_id"] == "setup_network"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], {"host": "10.10.0.1", "port": 1234}
     )
 
@@ -216,7 +216,7 @@ async def test_setup_serial_fail(com_mock, connect_mock,.opp):
     """Test setup serial failed connection."""
     port = com_port()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -224,7 +224,7 @@ async def test_setup_serial_fail(com_mock, connect_mock,.opp):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {"type": "Serial"},
     )
@@ -233,7 +233,7 @@ async def test_setup_serial_fail(com_mock, connect_mock,.opp):
     assert result["step_id"] == "setup_serial"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], {"device": port.device}
     )
 
@@ -249,7 +249,7 @@ async def test_setup_serial_fail(com_mock, connect_mock,.opp):
 )
 async def test_setup_serial_manual_fail(com_mock,.opp):
     """Test setup serial failed connection."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -257,7 +257,7 @@ async def test_setup_serial_manual_fail(com_mock,.opp):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {"type": "Serial"},
     )
@@ -266,7 +266,7 @@ async def test_setup_serial_manual_fail(com_mock,.opp):
     assert result["step_id"] == "setup_serial"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], {"device": "Enter Manually"}
     )
 
@@ -274,7 +274,7 @@ async def test_setup_serial_manual_fail(com_mock,.opp):
     assert result["step_id"] == "setup_serial_manual_path"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], {"device": "/dev/ttyUSB0"}
     )
 
@@ -296,7 +296,7 @@ async def test_import_serial(connect_mock,.opp):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     with patch("openpeerpower.components.rfxtrx.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": None, "port": None, "device": "/dev/tty123", "debug": False},
@@ -321,7 +321,7 @@ async def test_import_network(connect_mock,.opp):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     with patch("openpeerpower.components.rfxtrx.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": "localhost", "port": 1234, "device": None, "debug": False},
@@ -346,7 +346,7 @@ async def test_import_network_connection_fail(connect_mock,.opp):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     with patch("openpeerpower.components.rfxtrx.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": "localhost", "port": 1234, "device": None, "debug": False},
@@ -373,7 +373,7 @@ async def test_import_update.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_IMPORT},
         data={
@@ -401,7 +401,7 @@ async def test_import_migrate.opp):
     entry.add_to_opp.opp)
 
     with patch("openpeerpower.components.rfxtrx.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -437,18 +437,18 @@ async def test_options_global.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"], user_input={"automatic_add": True}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert entry.data["automatic_add"]
 
@@ -470,13 +470,13 @@ async def test_options_add_device.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
     # Try with invalid event code
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"automatic_add": True, "event_code": "1234"},
     )
@@ -487,7 +487,7 @@ async def test_options_add_device.opp):
     assert result["errors"]["event_code"] == "invalid_event_code"
 
     # Try with valid event code
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "automatic_add": True,
@@ -498,13 +498,13 @@ async def test_options_add_device.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "set_device_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"], user_input={"fire_event": True, "signal_repetitions": 5}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert entry.data["automatic_add"]
 
@@ -537,12 +537,12 @@ async def test_options_add_duplicate_device.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "automatic_add": True,
@@ -573,12 +573,12 @@ async def test_options_add_remove_device.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "automatic_add": True,
@@ -589,14 +589,14 @@ async def test_options_add_remove_device.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "set_device_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={"fire_event": True, "signal_repetitions": 5, "off_delay": "4"},
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert entry.data["automatic_add"]
 
@@ -615,12 +615,12 @@ async def test_options_add_remove_device.opp):
 
     assert device_entries[0].id
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "automatic_add": False,
@@ -630,7 +630,7 @@ async def test_options_add_remove_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not entry.data["automatic_add"]
 
@@ -660,8 +660,8 @@ async def test_options_replace_sensor_device.opp):
     )
     entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(entry.entry_id)
+    await opp..async_block_till_done()
 
     state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_f0_04_rssi_numeric"
@@ -724,12 +724,12 @@ async def test_options_replace_sensor_device.opp):
         None,
     )
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "automatic_add": False,
@@ -740,7 +740,7 @@ async def test_options_replace_sensor_device.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "set_device_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "replace_device": new_device,
@@ -749,7 +749,7 @@ async def test_options_replace_sensor_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     entity_registry = await async_get_entity_registry.opp)
 
@@ -827,8 +827,8 @@ async def test_options_replace_control_device.opp):
     )
     entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(entry.entry_id)
+    await opp..async_block_till_done()
 
     state = opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
@@ -863,12 +863,12 @@ async def test_options_replace_control_device.opp):
         None,
     )
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "automatic_add": False,
@@ -879,7 +879,7 @@ async def test_options_replace_control_device.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "set_device_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "replace_device": new_device,
@@ -888,7 +888,7 @@ async def test_options_replace_control_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     entity_registry = await async_get_entity_registry.opp)
 
@@ -931,8 +931,8 @@ async def test_options_remove_multiple_devices.opp):
     )
     entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(entry.entry_id)
+    await opp..async_block_till_done()
 
     state = opp.states.get("binary_sensor.ac_213c7f2_48")
     assert state
@@ -956,12 +956,12 @@ async def test_options_remove_multiple_devices.opp):
 
     remove_devices = [elem.id for elem in device_entries if match_device_id(elem)]
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "automatic_add": False,
@@ -971,7 +971,7 @@ async def test_options_remove_multiple_devices.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("binary_sensor.ac_213c7f2_48")
     assert not state
@@ -998,12 +998,12 @@ async def test_options_add_and_configure_device.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "automatic_add": True,
@@ -1014,7 +1014,7 @@ async def test_options_add_and_configure_device.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "set_device_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "fire_event": False,
@@ -1033,7 +1033,7 @@ async def test_options_add_and_configure_device.opp):
     assert result["errors"]["command_on"] == "invalid_input_2262_on"
     assert result["errors"]["command_off"] == "invalid_input_2262_off"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "fire_event": False,
@@ -1047,7 +1047,7 @@ async def test_options_add_and_configure_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert entry.data["automatic_add"]
 
@@ -1066,12 +1066,12 @@ async def test_options_add_and_configure_device.opp):
 
     assert device_entries[0].id
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "automatic_add": False,
@@ -1082,7 +1082,7 @@ async def test_options_add_and_configure_device.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "set_device_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "fire_event": True,
@@ -1095,7 +1095,7 @@ async def test_options_add_and_configure_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert entry.data["devices"]["0913000022670e013970"]
     assert entry.data["devices"]["0913000022670e013970"]["fire_event"]
@@ -1120,15 +1120,15 @@ async def test_options_configure_rfy_cover_device.opp):
     )
     entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(entry.entry_id)
+    await opp..async_block_till_done()
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "automatic_add": True,
@@ -1139,7 +1139,7 @@ async def test_options_configure_rfy_cover_device.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "set_device_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "fire_event": False,
@@ -1147,7 +1147,7 @@ async def test_options_configure_rfy_cover_device.opp):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert entry.data["devices"]["071a000001020301"]["venetian_blind_mode"] == "EU"
 
@@ -1156,12 +1156,12 @@ async def test_options_configure_rfy_cover_device.opp):
 
     assert device_entries[0].id
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "prompt_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "automatic_add": False,
@@ -1172,7 +1172,7 @@ async def test_options_configure_rfy_cover_device.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "set_device_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "fire_event": False,
@@ -1182,7 +1182,7 @@ async def test_options_configure_rfy_cover_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert entry.data["devices"]["071a000001020301"]["venetian_blind_mode"] == "EU"
 

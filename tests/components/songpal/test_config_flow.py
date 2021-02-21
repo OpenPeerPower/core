@@ -56,7 +56,7 @@ def _patch_setup():
 
 async def test_flow_ssdp.opp):
     """Test working ssdp flow."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_SSDP},
         data=SSDP_DATA,
@@ -71,7 +71,7 @@ async def test_flow_ssdp.opp):
     assert flow["context"]["unique_id"] == UDN
 
     with _patch_setup():
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["type"] == RESULT_TYPE_CREATE_ENTRY
@@ -84,7 +84,7 @@ async def test_flow_user.opp):
     mocked_device = _create_mocked_device()
 
     with _patch_config_flow_device(mocked_device), _patch_setup():
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
         )
@@ -93,7 +93,7 @@ async def test_flow_user.opp):
         assert result["errors"] is None
         _flow_next.opp, result["flow_id"])
 
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             user_input={CONF_ENDPOINT: ENDPOINT},
         )
@@ -113,7 +113,7 @@ async def test_flow_import.opp):
     mocked_device = _create_mocked_device()
 
     with _patch_config_flow_device(mocked_device), _patch_setup():
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=CONF_DATA
         )
         assert result["type"] == RESULT_TYPE_CREATE_ENTRY
@@ -129,7 +129,7 @@ async def test_flow_import_without_name.opp):
     mocked_device = _create_mocked_device()
 
     with _patch_config_flow_device(mocked_device), _patch_setup():
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data={CONF_ENDPOINT: ENDPOINT}
         )
         assert result["type"] == RESULT_TYPE_CREATE_ENTRY
@@ -154,7 +154,7 @@ async def test_ssdp_bravia.opp):
     ssdp_data["X_ScalarWebAPI_DeviceInfo"]["X_ScalarWebAPI_ServiceList"][
         "X_ScalarWebAPI_ServiceType"
     ].append("videoScreen")
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_SSDP},
         data=ssdp_data,
@@ -166,7 +166,7 @@ async def test_ssdp_bravia.opp):
 async def test_sddp_exist.opp):
     """Test discovering existed device."""
     _create_mock_config_entry.opp)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_SSDP},
         data=SSDP_DATA,
@@ -181,7 +181,7 @@ async def test_user_exist.opp):
     _create_mock_config_entry.opp)
 
     with _patch_config_flow_device(mocked_device):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONF_DATA
         )
         assert result["type"] == RESULT_TYPE_ABORT
@@ -197,7 +197,7 @@ async def test_import_exist.opp):
     _create_mock_config_entry.opp)
 
     with _patch_config_flow_device(mocked_device):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=CONF_DATA
         )
         assert result["type"] == RESULT_TYPE_ABORT
@@ -213,7 +213,7 @@ async def test_user_invalid.opp):
     _create_mock_config_entry.opp)
 
     with _patch_config_flow_device(mocked_device):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONF_DATA
         )
         assert result["type"] == RESULT_TYPE_FORM
@@ -230,7 +230,7 @@ async def test_import_invalid.opp):
     _create_mock_config_entry.opp)
 
     with _patch_config_flow_device(mocked_device):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=CONF_DATA
         )
         assert result["type"] == RESULT_TYPE_ABORT

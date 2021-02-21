@@ -34,7 +34,7 @@ async def test_schema_update_calls.opp):
         await async_setup_component(
            .opp, "recorder", {"recorder": {"db_url": "sqlite://"}}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     update.assert_op._calls(
         [
@@ -57,7 +57,7 @@ async def test_schema_migrate.opp):
         await async_setup_component(
            .opp, "recorder", {"recorder": {"db_url": "sqlite://"}}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert setup_run.called
 
 

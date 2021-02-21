@@ -57,7 +57,7 @@ async def test_notify_file.opp, timestamp):
             f"(Log started: {dt_util.utcnow().isoformat()})\n{'-' * 80}\n"
         )
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             "notify", "test", {"message": message}, blocking=True
         )
 

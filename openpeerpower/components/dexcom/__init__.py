@@ -35,7 +35,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Dexcom from a config entry."""
     try:
-        dexcom = await opp.async_add_executor_job(
+        dexcom = await opp..async_add_executor_job(
             Dexcom,
             entry.data[CONF_USERNAME],
             entry.data[CONF_PASSWORD],
@@ -53,7 +53,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     async def async_update_data():
         try:
-            return await opp.async_add_executor_job(dexcom.get_current_glucose_reading)
+            return await opp..async_add_executor_job(dexcom.get_current_glucose_reading)
         except SessionError as error:
             raise UpdateFailed(error) from error
 
@@ -68,7 +68,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         UNDO_UPDATE_LISTENER: entry.add_update_listener(update_listener),
     }
 
-    await.opp.data[DOMAIN][entry.entry_id][COORDINATOR].async_refresh()
+    await opp..data[DOMAIN][entry.entry_id][COORDINATOR].async_refresh()
 
     for component in PLATFORMS:
        .opp.async_create_task(
@@ -97,4 +97,4 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def update_listener.opp, entry):
     """Handle options update."""
-    await opp.config_entries.async_reload(entry.entry_id)
+    await opp..config_entries.async_reload(entry.entry_id)

@@ -36,7 +36,7 @@ async def test_cover_async_setup_entry.opp, aioclient_mock):
 
     await add_mock_config.opp)
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     assert len(aioclient_mock.mock_calls) == 1
 
@@ -50,7 +50,7 @@ async def test_cover_async_setup_entry.opp, aioclient_mock):
     assert entry
     assert entry.unique_id == "uniqueid-ac1-freshair"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: [entity_id]},
@@ -64,7 +64,7 @@ async def test_cover_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: [entity_id]},

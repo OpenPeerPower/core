@@ -251,7 +251,7 @@ async def test_action.opp):
     assert len(toggle_calls) == 0
 
    .opp.bus.async_fire("test_event_set_humidity")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(set_humidity_calls) == 1
     assert len(set_mode_calls) == 0
     assert len(turn_on_calls) == 0
@@ -259,7 +259,7 @@ async def test_action.opp):
     assert len(toggle_calls) == 0
 
    .opp.bus.async_fire("test_event_set_mode")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(set_humidity_calls) == 1
     assert len(set_mode_calls) == 1
     assert len(turn_on_calls) == 0
@@ -267,7 +267,7 @@ async def test_action.opp):
     assert len(toggle_calls) == 0
 
    .opp.bus.async_fire("test_event_turn_off")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(set_humidity_calls) == 1
     assert len(set_mode_calls) == 1
     assert len(turn_on_calls) == 0
@@ -275,7 +275,7 @@ async def test_action.opp):
     assert len(toggle_calls) == 0
 
    .opp.bus.async_fire("test_event_turn_on")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(set_humidity_calls) == 1
     assert len(set_mode_calls) == 1
     assert len(turn_on_calls) == 1
@@ -283,7 +283,7 @@ async def test_action.opp):
     assert len(toggle_calls) == 0
 
    .opp.bus.async_fire("test_event_toggle")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(set_humidity_calls) == 1
     assert len(set_mode_calls) == 1
     assert len(turn_on_calls) == 1

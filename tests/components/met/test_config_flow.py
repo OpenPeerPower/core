@@ -18,7 +18,7 @@ def met_setup_fixture():
 
 async def test_show_config_form.opp):
     """Test show configuration form."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
 
@@ -36,7 +36,7 @@ async def test_flow_with_home_location.opp):
    .opp.config.longitude = 2
    .opp.config.elevation = 3
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
 
@@ -59,7 +59,7 @@ async def test_create_entry.opp):
         CONF_ELEVATION: 0,
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=test_data
     )
 
@@ -87,7 +87,7 @@ async def test_flow_entry_already_exists.opp):
         CONF_ELEVATION: 0,
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=test_data
     )
 
@@ -97,7 +97,7 @@ async def test_flow_entry_already_exists.opp):
 
 async def test_onboarding_step.opp):
     """Test initializing via onboarding step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "onboarding"}, data={}
     )
 
@@ -115,7 +115,7 @@ async def test_import_step.opp):
         CONF_ELEVATION: 0,
         "track_home": True,
     }
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "import"}, data=test_data
     )
 

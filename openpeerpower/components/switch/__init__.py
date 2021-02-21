@@ -70,12 +70,12 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await.opp.data[DOMAIN].async_setup_entry(entry)
+    return await opp..data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await.opp.data[DOMAIN].async_unload_entry(entry)
+    return await opp..data[DOMAIN].async_unload_entry(entry)
 
 
 class SwitchEntity(ToggleEntity):

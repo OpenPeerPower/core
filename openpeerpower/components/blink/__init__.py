@@ -70,7 +70,7 @@ async def async_migrate_entry.opp, entry):
     data = {**entry.data}
     if entry.version == 1:
         data.pop("login_response", None)
-        await opp.async_add_executor_job(_reauth_flow_wrapper,.opp, data)
+        await opp..async_add_executor_job(_reauth_flow_wrapper,.opp, data)
         return False
     return True
 
@@ -79,7 +79,7 @@ async def async_setup_entry.opp, entry):
     """Set up Blink via config entry."""
     _async_import_options_from_data_if_missing.opp, entry)
 
-   .opp.data[DOMAIN][entry.entry_id] = await opp.async_add_executor_job(
+   .opp.data[DOMAIN][entry.entry_id] = await opp..async_add_executor_job(
         _blink_startup_wrapper,.opp, entry
     )
 
@@ -169,6 +169,6 @@ async def async_op.dle_save_video_service.opp, entry, call):
             all_cameras[camera_name].video_to_file(video_path)
 
     try:
-        await opp.async_add_executor_job(_write_video, camera_name, video_path)
+        await opp..async_add_executor_job(_write_video, camera_name, video_path)
     except OSError as err:
         _LOGGER.error("Can't write image to file: %s", err)

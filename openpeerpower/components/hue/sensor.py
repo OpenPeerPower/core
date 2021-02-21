@@ -26,7 +26,7 @@ TEMPERATURE_NAME_FORMAT = "{} temperature"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Defer sensor setup to the shared sensor module."""
-    await.opp.data[HUE_DOMAIN][
+    await opp..data[HUE_DOMAIN][
         config_entry.entry_id
     ].sensor_manager.async_register_component("sensor", async_add_entities)
 

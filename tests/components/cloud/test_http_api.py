@@ -332,7 +332,7 @@ async def test_websocket_status(
 ):
     """Test querying the status."""
    .opp.data[DOMAIN].iot.state = STATE_CONNECTED
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch.dict(
         "openpeerpower.components.google_assistant.const.DOMAIN_TO_GOOGLE_TYPES",
@@ -387,7 +387,7 @@ async def test_websocket_status(
 
 async def test_websocket_status_not_logged_in.opp,.opp_ws_client):
     """Test querying the status."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json({"id": 5, "type": "cloud/status"})
     response = await client.receive_json()
     assert response["result"] == {"logged_in": False, "cloud": "disconnected"}
@@ -398,7 +398,7 @@ async def test_websocket_subscription_reconnect(
 ):
     """Test querying the status and connecting because valid account."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, json={"provider": "stripe"})
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
@@ -417,7 +417,7 @@ async def test_websocket_subscription_no_reconnect_if_connected(
     """Test querying the status and not reconnecting because still expired."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, json={"provider": "stripe"})
    .opp.data[DOMAIN].iot.state = STATE_CONNECTED
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
@@ -435,7 +435,7 @@ async def test_websocket_subscription_no_reconnect_if_expired(
 ):
     """Test querying the status and not reconnecting because still expired."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, json={"provider": "stripe"})
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
@@ -453,7 +453,7 @@ async def test_websocket_subscription_fail(
 ):
     """Test querying the status."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, status=HTTP_INTERNAL_SERVER_ERROR)
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json({"id": 5, "type": "cloud/subscription"})
     response = await client.receive_json()
 
@@ -463,7 +463,7 @@ async def test_websocket_subscription_fail(
 
 async def test_websocket_subscription_not_logged_in.opp,.opp_ws_client):
     """Test querying the status."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     with patch(
         "opp_nabucasa.Cloud.fetch_subscription_info",
         return_value={"return": "value"},
@@ -482,7 +482,7 @@ async def test_websocket_update_preferences(
     assert setup_api.google_enabled
     assert setup_api.alexa_enabled
     assert setup_api.google_secure_devices_pin is None
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -510,7 +510,7 @@ async def test_websocket_update_preferences_require_relink(
    .opp,.opp_ws_client, aioclient_mock, setup_api, mock_cloud_login
 ):
     """Test updating preference requires relink."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "openpeerpower.components.cloud.alexa_config.AlexaConfig"
@@ -530,7 +530,7 @@ async def test_websocket_update_preferences_no_token(
    .opp,.opp_ws_client, aioclient_mock, setup_api, mock_cloud_login
 ):
     """Test updating preference no token available."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "openpeerpower.components.cloud.alexa_config.AlexaConfig"
@@ -548,7 +548,7 @@ async def test_websocket_update_preferences_no_token(
 
 async def test_enabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to enable webhooks."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     with patch(
         "opp_nabucasa.cloudhooks.Cloudhooks.async_create", return_value={}
     ) as mock_enable:
@@ -564,7 +564,7 @@ async def test_enabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login)
 
 async def test_disabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to disable webhooks."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     with patch("opp_nabucasa.cloudhooks.Cloudhooks.async_delete") as mock_disable:
         await client.send_json(
             {"id": 5, "type": "cloud/cloudhook/delete", "webhook_id": "mock-webhook-id"}
@@ -578,7 +578,7 @@ async def test_disabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login
 
 async def test_enabling_remote.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to enable remote UI."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     cloud = opp.data[DOMAIN]
 
     with patch("opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
@@ -592,7 +592,7 @@ async def test_enabling_remote.opp,.opp_ws_client, setup_api, mock_cloud_login):
 
 async def test_disabling_remote.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to disable remote UI."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     cloud = opp.data[DOMAIN]
 
     with patch("opp_nabucasa.remote.RemoteUI.disconnect") as mock_disconnect:
@@ -619,7 +619,7 @@ async def test_enabling_remote_trusted_networks_local4(
         ),
     )
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
@@ -652,7 +652,7 @@ async def test_enabling_remote_trusted_networks_local6(
         ),
     )
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
@@ -685,7 +685,7 @@ async def test_enabling_remote_trusted_networks_other(
         ),
     )
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     cloud = opp.data[DOMAIN]
 
     with patch("opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
@@ -700,7 +700,7 @@ async def test_enabling_remote_trusted_networks_other(
 
 async def test_list_google_entities.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can list Google entities."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     entity = GoogleEntity(
        .opp, MockConfig(should_expose=lambda *_: False), State("light.kitchen", "on")
     )
@@ -732,7 +732,7 @@ async def test_list_google_entities.opp,.opp_ws_client, setup_api, mock_cloud_lo
 
 async def test_update_google_entity.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can update config of a Google entity."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -781,7 +781,7 @@ async def test_enabling_remote_trusted_proxies_local4(
     """Test we cannot enable remote UI when trusted networks active."""
    .opp.http.trusted_proxies.append(ip_network("127.0.0.1"))
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
@@ -805,7 +805,7 @@ async def test_enabling_remote_trusted_proxies_local6(
     """Test we cannot enable remote UI when trusted networks active."""
    .opp.http.trusted_proxies.append(ip_network("::1"))
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
@@ -825,7 +825,7 @@ async def test_enabling_remote_trusted_proxies_local6(
 
 async def test_list_alexa_entities.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can list Alexa entities."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     entity = LightCapabilities(
        .opp, MagicMock(entity_config={}), State("light.kitchen", "on")
     )
@@ -847,7 +847,7 @@ async def test_list_alexa_entities.opp,.opp_ws_client, setup_api, mock_cloud_log
 
 async def test_update_alexa_entity.opp,.opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can update config of an Alexa entity."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -881,7 +881,7 @@ async def test_sync_alexa_entities_timeout(
    .opp,.opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test that timeout syncing Alexa entities."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     with patch(
         "openpeerpower.components.cloud.alexa_config.AlexaConfig"
         ".async_sync_entities",
@@ -898,7 +898,7 @@ async def test_sync_alexa_entities_no_token(
    .opp,.opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test sync Alexa entities when we have no token."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     with patch(
         "openpeerpower.components.cloud.alexa_config.AlexaConfig"
         ".async_sync_entities",
@@ -915,7 +915,7 @@ async def test_enable_alexa_state_report_fail(
    .opp,.opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test enable Alexa entities state reporting when no token available."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     with patch(
         "openpeerpower.components.cloud.alexa_config.AlexaConfig"
         ".async_sync_entities",
@@ -930,7 +930,7 @@ async def test_enable_alexa_state_report_fail(
 
 async def test_thingtalk_convert.opp,.opp_ws_client, setup_api):
     """Test that we can convert a query."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "openpeerpower.components.cloud.http_api.thingtalk.async_convert",
@@ -947,7 +947,7 @@ async def test_thingtalk_convert.opp,.opp_ws_client, setup_api):
 
 async def test_thingtalk_convert_timeout.opp,.opp_ws_client, setup_api):
     """Test that we can convert a query."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "openpeerpower.components.cloud.http_api.thingtalk.async_convert",
@@ -964,7 +964,7 @@ async def test_thingtalk_convert_timeout.opp,.opp_ws_client, setup_api):
 
 async def test_thingtalk_convert_internal.opp,.opp_ws_client, setup_api):
     """Test that we can convert a query."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "openpeerpower.components.cloud.http_api.thingtalk.async_convert",
@@ -985,7 +985,7 @@ async def test_tts_info.opp,.opp_ws_client, setup_api):
     # Verify the format is as expected
     assert voice.MAP_VOICE[("en-US", voice.Gender.FEMALE)] == "JennyNeural"
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch.dict(
         "openpeerpower.components.cloud.http_api.MAP_VOICE",

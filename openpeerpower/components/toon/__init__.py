@@ -140,7 +140,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload Toon config entry."""
 
     # Remove webhooks registration
-    await.opp.data[DOMAIN][entry.entry_id].unregister_webhook()
+    await opp..data[DOMAIN][entry.entry_id].unregister_webhook()
 
     # Unload entities for this entry/device.
     unload_ok = all(

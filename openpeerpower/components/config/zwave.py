@@ -54,7 +54,7 @@ class ZWaveLogView(OpenPeerPowerView):
             return Response(text="Invalid datetime", status=HTTP_BAD_REQUEST)
 
         opp = request.app["opp"]
-        response = await opp.async_add_executor_job(self._get_log,.opp, lines)
+        response = await opp..async_add_executor_job(self._get_log,.opp, lines)
 
         return Response(text="\n".join(response))
 
@@ -232,7 +232,7 @@ class ZWaveProtectionView(OpenPeerPowerView):
             }
             return self.json(protection_options)
 
-        return await opp.async_add_executor_job(_fetch_protection)
+        return await opp..async_add_executor_job(_fetch_protection)
 
     async def post(self, request, node_id):
         """Change the selected option in protection commandclass."""
@@ -259,4 +259,4 @@ class ZWaveProtectionView(OpenPeerPowerView):
                 )
             return self.json_message("Protection setting succsessfully set", HTTP_OK)
 
-        return await opp.async_add_executor_job(_set_protection)
+        return await opp..async_add_executor_job(_set_protection)

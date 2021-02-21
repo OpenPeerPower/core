@@ -23,10 +23,10 @@ async def test_sensors.opp):
     ), patch(
         "openpeerpower.components.powerwall.Powerwall", return_value=mock_powerwall
     ):
-        assert await opp.config_entries.async_setup(config_entry.entry_id)
-        await opp.async_block_till_done()
+        assert await opp..config_entries.async_setup(config_entry.entry_id)
+        await opp..async_block_till_done()
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     reg_device = device_registry.async_get_device(
         identifiers={("powerwall", "TG0123456789AB_TG9876543210BA")},
     )

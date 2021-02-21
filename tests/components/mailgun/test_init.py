@@ -34,12 +34,12 @@ async def webhook_id_with_api_key.opp):
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "mailgun", context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
     return result["result"].data["webhook_id"]
@@ -54,12 +54,12 @@ async def webhook_id_without_api_key.opp):
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "mailgun", context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
     return result["result"].data["webhook_id"]

@@ -46,7 +46,7 @@ async def test_run_camera_setup.opp, aiohttp_client, mqtt_mock):
         "camera",
         {"camera": {"platform": "mqtt", "topic": topic, "name": "Test Camera"}},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     url = opp.states.get("camera.test_camera").attributes["entity_picture"]
 

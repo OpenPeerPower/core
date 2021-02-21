@@ -25,13 +25,13 @@ async def test_calling_intent.opp):
 
     context = Context()
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "conversation",
         "process",
         {conversation.ATTR_TEXT: "I would like the Grolsch beer"},
         context=context,
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(intents) == 1
     intent = intents[0]
@@ -55,10 +55,10 @@ async def test_register_before_setup.opp):
     )
     assert result
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: "A Grolsch beer, please"}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(intents) == 1
     intent = intents[0]
@@ -67,12 +67,12 @@ async def test_register_before_setup.opp):
     assert intent.slots == {"type": {"value": "Grolsch"}}
     assert intent.text_input == "A Grolsch beer, please"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "conversation",
         "process",
         {conversation.ATTR_TEXT: "I would like the Grolsch beer"},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(intents) == 2
     intent = intents[1]
@@ -111,7 +111,7 @@ async def test_http_processing_intent.opp,.opp_client,.opp_admin_user):
     )
     assert result
 
-    client = await.opp_client()
+    client = await opp._client()
     resp = await client.post(
         "/api/conversation/process", json={"text": "I would like the Grolsch beer"}
     )
@@ -139,10 +139,10 @@ async def test_turn_on_intent.opp, sentence):
    .opp.states.async_set("light.kitchen", "off")
     calls = async_mock_service.opp, OPP_DOMAIN, "turn_on")
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 1
     call = calls[0]
@@ -163,10 +163,10 @@ async def test_turn_off_intent.opp, sentence):
    .opp.states.async_set("light.kitchen", "on")
     calls = async_mock_service.opp, OPP_DOMAIN, "turn_off")
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 1
     call = calls[0]
@@ -187,10 +187,10 @@ async def test_toggle_intent.opp, sentence):
    .opp.states.async_set("light.kitchen", "on")
     calls = async_mock_service.opp, OPP_DOMAIN, "toggle")
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 1
     call = calls[0]
@@ -205,7 +205,7 @@ async def test_http_api.opp,.opp_client):
     assert await async_setup_component.opp, "conversation", {})
     assert await async_setup_component.opp, "intent", {})
 
-    client = await.opp_client()
+    client = await opp._client()
    .opp.states.async_set("light.kitchen", "off")
     calls = async_mock_service.opp, OPP_DOMAIN, "turn_on")
 
@@ -229,7 +229,7 @@ async def test_http_api_wrong_data.opp,.opp_client):
     result = await async_setup_component.opp, "conversation", {})
     assert result
 
-    client = await.opp_client()
+    client = await opp._client()
 
     resp = await client.post("/api/conversation/process", json={"text": 123})
     assert resp.status == 400
@@ -257,7 +257,7 @@ async def test_custom_agent.opp,.opp_client,.opp_admin_user):
 
     assert await async_setup_component.opp, "conversation", {})
 
-    client = await.opp_client()
+    client = await opp._client()
 
     resp = await client.post(
         "/api/conversation/process",

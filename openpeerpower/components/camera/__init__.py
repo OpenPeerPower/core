@@ -302,12 +302,12 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await.opp.data[DOMAIN].async_setup_entry(entry)
+    return await opp..data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await.opp.data[DOMAIN].async_unload_entry(entry)
+    return await opp..data[DOMAIN].async_unload_entry(entry)
 
 
 class Camera(Entity):
@@ -650,7 +650,7 @@ async def async_op.dle_snapshot_service(camera, service):
             img_file.write(image_data)
 
     try:
-        await opp.async_add_executor_job(_write_image, snapshot_file, image)
+        await opp..async_add_executor_job(_write_image, snapshot_file, image)
     except OSError as err:
         _LOGGER.error("Can't write image to file: %s", err)
 
@@ -676,7 +676,7 @@ async def async_op.dle_play_stream_service(camera, service_call):
     other_entity_ids = list(set(entity_ids) - set(cast_entity_ids))
 
     if cast_entity_ids:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN_MP,
             SERVICE_PLAY_MEDIA,
             {
@@ -694,7 +694,7 @@ async def async_op.dle_play_stream_service(camera, service_call):
         )
 
     if other_entity_ids:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN_MP,
             SERVICE_PLAY_MEDIA,
             {

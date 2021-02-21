@@ -91,7 +91,7 @@ CONFIG_SCHEMA = vol.Schema(
 @bind_opp
 async def async_create_person.opp, name, *, user_id=None, device_trackers=None):
     """Create a new person."""
-    await.opp.data[DOMAIN][1].async_create_item(
+    await opp..data[DOMAIN][1].async_create_item(
         {
             ATTR_NAME: name,
             ATTR_USER_ID: user_id,
@@ -266,7 +266,7 @@ async def filter_yaml_data.opp: OpenPeerPowerType, persons: List[dict]) -> List[
         user_id = person_conf.get(CONF_USER_ID)
 
         if user_id is not None:
-            if await opp.auth.async_get_user(user_id) is None:
+            if await opp..auth.async_get_user(user_id) is None:
                 _LOGGER.error(
                     "Invalid user_id detected for person %s",
                     person_conf[collection.CONF_ID],

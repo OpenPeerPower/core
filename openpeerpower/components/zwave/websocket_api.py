@@ -71,7 +71,7 @@ async def websocket_start_ozw_config_flow.opp, connection, msg):
         "usb_path": config[CONF_USB_STICK_PATH],
         "network_key": config[CONF_NETWORK_KEY],
     }
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         OZW_DOMAIN, context={"source": SOURCE_IMPORT}, data=data
     )
     connection.send_result(

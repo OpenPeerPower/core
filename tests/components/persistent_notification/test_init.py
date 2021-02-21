@@ -143,7 +143,7 @@ async def test_ws_get_notifications.opp,.opp_ws_client):
     """Test websocket endpoint for retrieving persistent notifications."""
     await async_setup_component.opp, pn.DOMAIN, {})
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json({"id": 5, "type": "persistent_notification/get"})
     msg = await client.receive_json()
@@ -172,7 +172,7 @@ async def test_ws_get_notifications.opp,.opp_ws_client):
     assert notification["created_at"] is not None
 
     # Mark Read
-    await.opp.services.async_call(
+    await opp..services.async_call(
         pn.DOMAIN, pn.SERVICE_MARK_READ, {"notification_id": "Beer 2"}
     )
     await client.send_json({"id": 7, "type": "persistent_notification/get"})

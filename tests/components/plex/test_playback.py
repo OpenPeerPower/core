@@ -26,7 +26,7 @@ async def test_media_player_playback(
     requests_mock.get("/player/playback/playMedia", status_code=200)
 
     # Test movie success
-    assert await.opp.services.async_call(
+    assert await opp..services.async_call(
         MP_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -38,7 +38,7 @@ async def test_media_player_playback(
     )
 
     # Test movie incomplete dict
-    assert await.opp.services.async_call(
+    assert await opp..services.async_call(
         MP_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -50,7 +50,7 @@ async def test_media_player_playback(
     )
 
     # Test movie failure with options
-    assert await.opp.services.async_call(
+    assert await opp..services.async_call(
         MP_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -63,7 +63,7 @@ async def test_media_player_playback(
 
     # Test movie failure with nothing found
     with patch("plexapi.library.LibrarySection.search", return_value=None):
-        assert await.opp.services.async_call(
+        assert await opp..services.async_call(
             MP_DOMAIN,
             SERVICE_PLAY_MEDIA,
             {
@@ -75,7 +75,7 @@ async def test_media_player_playback(
         )
 
     # Test movie success with dict
-    assert await.opp.services.async_call(
+    assert await opp..services.async_call(
         MP_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -87,7 +87,7 @@ async def test_media_player_playback(
     )
 
     # Test TV show episoe lookup failure
-    assert await.opp.services.async_call(
+    assert await opp..services.async_call(
         MP_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -99,7 +99,7 @@ async def test_media_player_playback(
     )
 
     # Test track name lookup failure
-    assert await.opp.services.async_call(
+    assert await opp..services.async_call(
         MP_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -112,7 +112,7 @@ async def test_media_player_playback(
 
     # Test media lookup failure by key
     requests_mock.get("/library/metadata/999", status_code=404)
-    assert await.opp.services.async_call(
+    assert await opp..services.async_call(
         MP_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -124,7 +124,7 @@ async def test_media_player_playback(
     )
 
     # Test invalid Plex server requested
-    assert await.opp.services.async_call(
+    assert await opp..services.async_call(
         MP_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {

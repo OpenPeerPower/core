@@ -58,7 +58,7 @@ async def test_remote_send_command.opp):
         assert len(remotes) == 1
 
         remote = remotes.pop()
-        await.opp.services.async_call(
+        await opp..services.async_call(
             REMOTE_DOMAIN,
             SERVICE_SEND_COMMAND,
             {"entity_id": remote.entity_id, "command": "b64:" + IR_PACKET},
@@ -85,7 +85,7 @@ async def test_remote_turn_off_turn_on.opp):
         assert len(remotes) == 1
 
         remote = remotes.pop()
-        await.opp.services.async_call(
+        await opp..services.async_call(
             REMOTE_DOMAIN,
             SERVICE_TURN_OFF,
             {"entity_id": remote.entity_id},
@@ -93,7 +93,7 @@ async def test_remote_turn_off_turn_on.opp):
         )
         assert.opp.states.get(remote.entity_id).state == STATE_OFF
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             REMOTE_DOMAIN,
             SERVICE_SEND_COMMAND,
             {"entity_id": remote.entity_id, "command": "b64:" + IR_PACKET},
@@ -101,7 +101,7 @@ async def test_remote_turn_off_turn_on.opp):
         )
         assert mock_api.send_data.call_count == 0
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             REMOTE_DOMAIN,
             SERVICE_TURN_ON,
             {"entity_id": remote.entity_id},
@@ -109,7 +109,7 @@ async def test_remote_turn_off_turn_on.opp):
         )
         assert.opp.states.get(remote.entity_id).state == STATE_ON
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             REMOTE_DOMAIN,
             SERVICE_SEND_COMMAND,
             {"entity_id": remote.entity_id, "command": "b64:" + IR_PACKET},

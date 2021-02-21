@@ -21,7 +21,7 @@ TEST_LOGIN = {CONF_USERNAME: "test-username", CONF_PASSWORD: "test-password"}
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -33,10 +33,10 @@ async def test_form.opp):
         "openpeerpower.components.smart_meter_texas.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"], TEST_LOGIN
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == TEST_LOGIN[CONF_USERNAME]
@@ -47,7 +47,7 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -55,7 +55,7 @@ async def test_form_invalid_auth.opp):
         "smart_meter_texas.Client.authenticate",
         side_effect=SmartMeterTexasAuthError,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             TEST_LOGIN,
         )
@@ -69,7 +69,7 @@ async def test_form_invalid_auth.opp):
 )
 async def test_form_cannot_connect.opp, side_effect):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -77,7 +77,7 @@ async def test_form_cannot_connect.opp, side_effect):
         "smart_meter_texas.Client.authenticate",
         side_effect=side_effect,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"], TEST_LOGIN
         )
 
@@ -87,7 +87,7 @@ async def test_form_cannot_connect.opp, side_effect):
 
 async def test_form_unknown_exception.opp):
     """Test base exception is handled."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -95,7 +95,7 @@ async def test_form_unknown_exception.opp):
         "smart_meter_texas.Client.authenticate",
         side_effect=Exception,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             TEST_LOGIN,
         )
@@ -116,7 +116,7 @@ async def test_form_duplicate_account.opp):
         "smart_meter_texas.Client.authenticate",
         return_value=True,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data={"username": "user123", "password": "password123"},

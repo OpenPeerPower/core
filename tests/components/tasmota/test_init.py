@@ -19,14 +19,14 @@ async def test_device_remove(
     mac = config["mac"]
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device entry is created
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
     assert device_entry is not None
 
     device_reg.async_remove_device(device_entry.id)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device entry is removed
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -57,7 +57,7 @@ async def test_device_remove_non_tasmota_device(
     assert device_entry is not None
 
     device_reg.async_remove_device(device_entry.id)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device entry is removed
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -81,7 +81,7 @@ async def test_device_remove_stale_tasmota_device(
     assert device_entry is not None
 
     device_reg.async_remove_device(device_entry.id)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device entry is removed
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -106,13 +106,13 @@ async def test_tasmota_ws_remove_discovered_device(
     mac = config["mac"]
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device entry is created
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
     assert device_entry is not None
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "tasmota/device/remove", "device_id": device_entry.id}
     )
@@ -132,13 +132,13 @@ async def test_tasmota_ws_remove_discovered_device_twice(
     mac = config["mac"]
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device entry is created
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
     assert device_entry is not None
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "tasmota/device/remove", "device_id": device_entry.id}
     )
@@ -167,7 +167,7 @@ async def test_tasmota_ws_remove_non_tasmota_device(
     )
     assert device_entry is not None
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "tasmota/device/remove", "device_id": device_entry.id}
     )

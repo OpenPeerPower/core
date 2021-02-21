@@ -71,7 +71,7 @@ async def test_get_clientsession_cleanup.opp):
     assert isinstance.opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.data[client.DATA_CLIENTSESSION].closed
     assert.opp.data[client.DATA_CONNECTOR].closed
@@ -87,7 +87,7 @@ async def test_get_clientsession_cleanup_without_ssl.opp):
     assert isinstance.opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.data[client.DATA_CLIENTSESSION_NOTVERIFY].closed
     assert.opp.data[client.DATA_CONNECTOR_NOTVERIFY].closed

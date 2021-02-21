@@ -46,9 +46,9 @@ async def test_missing_optional_config.opp, calls):
             },
         )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     _verify.opp, STATE_UNKNOWN, None)
 
@@ -67,9 +67,9 @@ async def test_missing_start_config.opp, calls):
             },
         )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -88,9 +88,9 @@ async def test_invalid_config.opp, calls):
             },
         )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -119,15 +119,15 @@ async def test_templates_with_entities.opp, calls):
             },
         )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     _verify.opp, STATE_UNKNOWN, None)
 
    .opp.states.async_set(_STATE_INPUT_SELECT, STATE_CLEANING)
    .opp.states.async_set(_BATTERY_LEVEL_INPUT_NUMBER, 100)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     _verify.opp, STATE_CLEANING, 100)
 
@@ -152,9 +152,9 @@ async def test_templates_with_valid_values.opp, calls):
             },
         )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     _verify.opp, STATE_CLEANING, 100)
 
@@ -179,9 +179,9 @@ async def test_templates_invalid_values.opp, calls):
             },
         )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     _verify.opp, STATE_UNKNOWN, None)
 
@@ -207,9 +207,9 @@ async def test_invalid_templates.opp, calls):
             },
         )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     _verify.opp, STATE_UNKNOWN, None)
 
@@ -233,20 +233,20 @@ async def test_available_template_with_entities.opp, calls):
         },
     )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     # When template returns true..
    .opp.states.async_set("availability_state.state", STATE_ON)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Device State should not be unavailable
     assert.opp.states.get("vacuum.test_template_vacuum").state != STATE_UNAVAILABLE
 
     # When Availability template returns false
    .opp.states.async_set("availability_state.state", STATE_OFF)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # device state should be unavailable
     assert.opp.states.get("vacuum.test_template_vacuum").state == STATE_UNAVAILABLE
@@ -270,9 +270,9 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
         },
     )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("vacuum.test_template_vacuum") != STATE_UNAVAILABLE
     assert ("UndefinedError: 'x' is undefined") in caplog.text
@@ -299,16 +299,16 @@ async def test_attribute_templates.opp, calls):
         },
     )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     state = opp.states.get("vacuum.test_template_vacuum")
     assert state.attributes["test_attribute"] == "It ."
 
    .opp.states.async_set("sensor.test_state", "Works")
-    await opp.async_block_till_done()
-    await.opp.helpers.entity_component.async_update_entity(
+    await opp..async_block_till_done()
+    await opp..helpers.entity_component.async_update_entity(
         "vacuum.test_template_vacuum"
     )
     state = opp.states.get("vacuum.test_template_vacuum")
@@ -335,11 +335,11 @@ async def test_invalid_attribute_template.opp, caplog):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     assert "test_attribute" in caplog.text
     assert "TemplateError" in caplog.text
@@ -355,7 +355,7 @@ async def test_state_services.opp, calls):
 
     # Start vacuum
     await common.async_start.opp, _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # verify
     assert.opp.states.get(_STATE_INPUT_SELECT).state == STATE_CLEANING
@@ -363,7 +363,7 @@ async def test_state_services.opp, calls):
 
     # Pause vacuum
     await common.async_pause.opp, _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # verify
     assert.opp.states.get(_STATE_INPUT_SELECT).state == STATE_PAUSED
@@ -371,7 +371,7 @@ async def test_state_services.opp, calls):
 
     # Stop vacuum
     await common.async_stop.opp, _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # verify
     assert.opp.states.get(_STATE_INPUT_SELECT).state == STATE_IDLE
@@ -379,7 +379,7 @@ async def test_state_services.opp, calls):
 
     # Return vacuum to base
     await common.async_return_to_base.opp, _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # verify
     assert.opp.states.get(_STATE_INPUT_SELECT).state == STATE_RETURNING
@@ -392,27 +392,27 @@ async def test_unused_services.opp, calls):
 
     # Pause vacuum
     await common.async_pause.opp, _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Stop vacuum
     await common.async_stop.opp, _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Return vacuum to base
     await common.async_return_to_base.opp, _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Spot cleaning
     await common.async_clean_spot.opp, _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Locate vacuum
     await common.async_locate.opp, _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Set fan's speed
     await common.async_set_fan_speed.opp, "medium", _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     _verify.opp, STATE_UNKNOWN, None)
 
@@ -423,7 +423,7 @@ async def test_clean_spot_service.opp, calls):
 
     # Clean spot
     await common.async_clean_spot.opp, _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # verify
     assert.opp.states.get(_SPOT_CLEANING_INPUT_BOOLEAN).state == STATE_ON
@@ -435,7 +435,7 @@ async def test_locate_service.opp, calls):
 
     # Locate vacuum
     await common.async_locate.opp, _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # verify
     assert.opp.states.get(_LOCATING_INPUT_BOOLEAN).state == STATE_ON
@@ -447,14 +447,14 @@ async def test_set_fan_speed.opp, calls):
 
     # Set vacuum's fan speed to high
     await common.async_set_fan_speed.opp, "high", _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # verify
     assert.opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "high"
 
     # Set fan's speed to medium
     await common.async_set_fan_speed.opp, "medium", _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # verify
     assert.opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "medium"
@@ -466,14 +466,14 @@ async def test_set_invalid_fan_speed.opp, calls):
 
     # Set vacuum's fan speed to high
     await common.async_set_fan_speed.opp, "high", _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # verify
     assert.opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "high"
 
     # Set vacuum's fan speed to 'invalid'
     await common.async_set_fan_speed.opp, "invalid", _TEST_VACUUM)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # verify fan speed is unchanged
     assert.opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "high"
@@ -518,9 +518,9 @@ async def _register_basic_vacuum.opp):
             },
         )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
 
 async def _register_components.opp):
@@ -608,9 +608,9 @@ async def _register_components.opp):
             },
         )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
 
 async def test_unique_id.opp):
@@ -637,8 +637,8 @@ async def test_unique_id.opp):
         },
     )
 
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

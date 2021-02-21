@@ -47,7 +47,7 @@ def _get_mock_c4_director(getAllItemInfo={}):
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -67,7 +67,7 @@ async def test_form.opp):
         "openpeerpower.components.control4.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: "1.1.1.1",
@@ -75,7 +75,7 @@ async def test_form.opp):
                 CONF_PASSWORD: "test-password",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "control4_model_00AA00AA00AA"
@@ -91,7 +91,7 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -99,7 +99,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.control4.config_flow.C4Account",
         side_effect=Unauthorized("message"),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: "1.1.1.1",
@@ -114,7 +114,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_unexpected_exception.opp):
     """Test we handle an unexpected exception."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -122,7 +122,7 @@ async def test_form_unexpected_exception.opp):
         "openpeerpower.components.control4.config_flow.C4Account",
         side_effect=ValueError("message"),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: "1.1.1.1",
@@ -137,7 +137,7 @@ async def test_form_unexpected_exception.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -148,7 +148,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.control4.config_flow.C4Director",
         side_effect=Unauthorized("message"),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: "1.1.1.1",
@@ -166,12 +166,12 @@ async def test_option_flow.opp):
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_SCAN_INTERVAL: 4},
     )
@@ -186,12 +186,12 @@ async def test_option_flow_defaults.opp):
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "create_entry"

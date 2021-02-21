@@ -14,4 +14,4 @@ async def setup_platform.opp, platform):
     )
     with patch("openpeerpower.components.ring.PLATFORMS", [platform]):
         assert await async_setup_component.opp, DOMAIN, {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()

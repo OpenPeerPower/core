@@ -49,7 +49,7 @@ async def test_new_message.opp, mock_device_tracker_conf):
        .opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: topic}}}
     )
     async_fire_mqtt_message.opp, topic, location)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == location
 
 
@@ -68,7 +68,7 @@ async def test_single_level_wildcard_topic.opp, mock_device_tracker_conf):
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
     async_fire_mqtt_message.opp, topic, location)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == location
 
 
@@ -87,7 +87,7 @@ async def test_multi_level_wildcard_topic.opp, mock_device_tracker_conf):
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
     async_fire_mqtt_message.opp, topic, location)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == location
 
 
@@ -106,7 +106,7 @@ async def test_single_level_wildcard_topic_not_matching.opp, mock_device_tracker
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
     async_fire_mqtt_message.opp, topic, location)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id) is None
 
 
@@ -125,7 +125,7 @@ async def test_multi_level_wildcard_topic_not_matching.opp, mock_device_tracker_
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
     async_fire_mqtt_message.opp, topic, location)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id) is None
 
 
@@ -153,11 +153,11 @@ async def test_matching_custom_payload_for_home_and_not_home(
         },
     )
     async_fire_mqtt_message.opp, topic, payload_home)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == STATE_HOME
 
     async_fire_mqtt_message.opp, topic, payload_not_home)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == STATE_NOT_HOME
 
 
@@ -186,7 +186,7 @@ async def test_not_matching_custom_payload_for_home_and_not_home(
         },
     )
     async_fire_mqtt_message.opp, topic, payload_not_matching)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state != STATE_HOME
     assert.opp.states.get(entity_id).state != STATE_NOT_HOME
 
@@ -213,5 +213,5 @@ async def test_matching_source_type.opp, mock_device_tracker_conf):
     )
 
     async_fire_mqtt_message.opp, topic, location)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).attributes["source_type"] == SOURCE_TYPE_BLUETOOTH

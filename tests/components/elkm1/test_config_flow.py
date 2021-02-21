@@ -27,7 +27,7 @@ def mock_elk(invalid_auth=None, sync_complete=None):
 async def test_form_user_with_secure_elk.opp):
     """Test we can setup a secure elk."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -44,7 +44,7 @@ async def test_form_user_with_secure_elk.opp):
         "openpeerpower.components.elkm1.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "protocol": "secure",
@@ -55,7 +55,7 @@ async def test_form_user_with_secure_elk.opp):
                 "prefix": "",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "ElkM1"
@@ -74,7 +74,7 @@ async def test_form_user_with_secure_elk.opp):
 async def test_form_user_with_non_secure_elk.opp):
     """Test we can setup a non-secure elk."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -91,7 +91,7 @@ async def test_form_user_with_non_secure_elk.opp):
         "openpeerpower.components.elkm1.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "protocol": "non-secure",
@@ -100,7 +100,7 @@ async def test_form_user_with_non_secure_elk.opp):
                 "prefix": "guest_house",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "guest_house"
@@ -119,7 +119,7 @@ async def test_form_user_with_non_secure_elk.opp):
 async def test_form_user_with_serial_elk.opp):
     """Test we can setup a serial elk."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -136,7 +136,7 @@ async def test_form_user_with_serial_elk.opp):
         "openpeerpower.components.elkm1.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "protocol": "serial",
@@ -145,7 +145,7 @@ async def test_form_user_with_serial_elk.opp):
                 "prefix": "",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "ElkM1"
@@ -163,7 +163,7 @@ async def test_form_user_with_serial_elk.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -176,7 +176,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.elkm1.config_flow.VALIDATE_TIMEOUT",
         0,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "protocol": "secure",
@@ -194,7 +194,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -204,7 +204,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.elkm1.config_flow.elkm1.Elk",
         return_value=mocked_elk,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "protocol": "secure",
@@ -234,7 +234,7 @@ async def test_form_import.opp):
         "openpeerpower.components.elkm1.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -263,7 +263,7 @@ async def test_form_import.opp):
                 },
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "ohana"

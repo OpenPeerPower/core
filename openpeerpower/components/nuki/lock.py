@@ -59,7 +59,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         entities.extend([NukiOpenerEntity(opener) for opener in bridge.openers])
         return entities
 
-    entities = await opp.async_add_executor_job(get_entities)
+    entities = await opp..async_add_executor_job(get_entities)
 
     async_add_entities(entities)
 

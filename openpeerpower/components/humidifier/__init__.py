@@ -88,12 +88,12 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
-    return await.opp.data[DOMAIN].async_setup_entry(entry)
+    return await opp..data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    return await.opp.data[DOMAIN].async_unload_entry(entry)
+    return await opp..data[DOMAIN].async_unload_entry(entry)
 
 
 class HumidifierEntity(ToggleEntity):

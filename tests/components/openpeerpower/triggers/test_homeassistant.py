@@ -24,8 +24,8 @@ async def test_if_fires_on_opp_start.opp):
     assert automation.is_on.opp, "automation.hello")
     assert len(calls) == 0
 
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
     assert automation.is_on.opp, "automation.hello")
     assert len(calls) == 1
 
@@ -33,7 +33,7 @@ async def test_if_fires_on_opp_start.opp):
         "openpeerpower.config.async_opp_config_yaml",
         AsyncMock(return_value=config),
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             automation.DOMAIN, automation.SERVICE_RELOAD, blocking=True
         )
 
@@ -60,11 +60,11 @@ async def test_if_fires_on_opp_shutdown.opp):
     assert automation.is_on.opp, "automation.hello")
     assert len(calls) == 0
 
-    await opp.async_start()
+    await opp..async_start()
     assert automation.is_on.opp, "automation.hello")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
     with patch.object.opp.loop, "stop"):
-        await opp.async_stop()
+        await opp..async_stop()
     assert len(calls) == 1

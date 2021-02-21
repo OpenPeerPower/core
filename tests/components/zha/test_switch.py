@@ -77,7 +77,7 @@ async def device_switch_1.opp, zigpy_device_mock, zha_device_joined):
     )
     zha_device = await zha_device_joined(zigpy_device)
     zha_device.available = True
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     return zha_device
 
 
@@ -97,7 +97,7 @@ async def device_switch_2.opp, zigpy_device_mock, zha_device_joined):
     )
     zha_device = await zha_device_joined(zigpy_device)
     zha_device.available = True
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     return zha_device
 
 
@@ -134,7 +134,7 @@ async def test_switch.opp, zha_device_joined_restored, zigpy_device):
         return_value=mock_coro([0x00, zcl_f.Status.SUCCESS]),
     ):
         # turn on via UI
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, "turn_on", {"entity_id": entity_id}, blocking=True
         )
         assert len(cluster.request.mock_calls) == 1
@@ -148,7 +148,7 @@ async def test_switch.opp, zha_device_joined_restored, zigpy_device):
         return_value=mock_coro([0x01, zcl_f.Status.SUCCESS]),
     ):
         # turn off via UI
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, "turn_off", {"entity_id": entity_id}, blocking=True
         )
         assert len(cluster.request.mock_calls) == 1
@@ -178,7 +178,7 @@ async def test_zha_group_switch_entity(
 
     # test creating a group with 2 members
     zha_group = await zha_gateway.async_create_zigpy_group("Test Group", members)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert zha_group is not None
     assert len(zha_group.members) == 2
@@ -195,14 +195,14 @@ async def test_zha_group_switch_entity(
     dev2_cluster_on_off = device_switch_2.device.endpoints[1].on_off
 
     await async_enable_traffic.opp, [device_switch_1, device_switch_2], enabled=False)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # test that the lights were created and that they are off
     assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     # allow traffic to flow through the gateway and device
     await async_enable_traffic.opp, [device_switch_1, device_switch_2])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # test that the lights were created and are off
     assert.opp.states.get(entity_id).state == STATE_OFF
@@ -213,7 +213,7 @@ async def test_zha_group_switch_entity(
         return_value=mock_coro([0x00, zcl_f.Status.SUCCESS]),
     ):
         # turn on via UI
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, "turn_on", {"entity_id": entity_id}, blocking=True
         )
         assert len(group_cluster_on_off.request.mock_calls) == 1
@@ -228,7 +228,7 @@ async def test_zha_group_switch_entity(
         return_value=mock_coro([0x01, zcl_f.Status.SUCCESS]),
     ):
         # turn off via UI
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, "turn_off", {"entity_id": entity_id}, blocking=True
         )
         assert len(group_cluster_on_off.request.mock_calls) == 1
@@ -240,25 +240,25 @@ async def test_zha_group_switch_entity(
     # test some of the group logic to make sure we key off states correctly
     await send_attributes_report.opp, dev1_cluster_on_off, {0: 1})
     await send_attributes_report.opp, dev2_cluster_on_off, {0: 1})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # test that group light is on
     assert.opp.states.get(entity_id).state == STATE_ON
 
     await send_attributes_report.opp, dev1_cluster_on_off, {0: 0})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # test that group light is still on
     assert.opp.states.get(entity_id).state == STATE_ON
 
     await send_attributes_report.opp, dev2_cluster_on_off, {0: 0})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # test that group light is now off
     assert.opp.states.get(entity_id).state == STATE_OFF
 
     await send_attributes_report.opp, dev1_cluster_on_off, {0: 1})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # test that group light is now back on
     assert.opp.states.get(entity_id).state == STATE_ON

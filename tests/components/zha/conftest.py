@@ -70,7 +70,7 @@ def setup_zha.opp, config_entry, zigpy_app_controller):
                .opp, zha_const.DOMAIN, {zha_const.DOMAIN: {**zha_config, **config}}
             )
             assert status is True
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
 
     return _setup
 
@@ -136,7 +136,7 @@ def zha_device_joined.opp, setup_zha):
         await setup_zha()
         zha_gateway = get_zha_gateway.opp)
         await zha_gateway.async_device_initialized(zigpy_dev)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         return zha_gateway.get_device(zigpy_dev.ieee)
 
     return _zha_device

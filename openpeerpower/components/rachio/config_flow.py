@@ -31,13 +31,13 @@ async def validate_input.opp: core.OpenPeerPower, data):
     rachio = Rachio(data[CONF_API_KEY])
     username = None
     try:
-        data = await opp.async_add_executor_job(rachio.person.info)
+        data = await opp..async_add_executor_job(rachio.person.info)
         _LOGGER.debug("rachio.person.getInfo: %s", data)
         if int(data[0][KEY_STATUS]) != HTTP_OK:
             raise InvalidAuth
 
         rachio_id = data[1][KEY_ID]
-        data = await opp.async_add_executor_job(rachio.person.get, rachio_id)
+        data = await opp..async_add_executor_job(rachio.person.get, rachio_id)
         _LOGGER.debug("rachio.person.get: %s", data)
         if int(data[0][KEY_STATUS]) != HTTP_OK:
             raise CannotConnect

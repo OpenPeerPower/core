@@ -110,7 +110,7 @@ async def test_climate_change_thermostat_state.opp, utcnow):
     """Test that we can turn a HomeKit thermostat on and off again."""
     helper = await setup_test_component.opp, create_thermostat_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT},
@@ -119,7 +119,7 @@ async def test_climate_change_thermostat_state.opp, utcnow):
 
     assert helper.characteristics[HEATING_COOLING_TARGET].value == 1
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_COOL},
@@ -127,7 +127,7 @@ async def test_climate_change_thermostat_state.opp, utcnow):
     )
     assert helper.characteristics[HEATING_COOLING_TARGET].value == 2
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT_COOL},
@@ -135,7 +135,7 @@ async def test_climate_change_thermostat_state.opp, utcnow):
     )
     assert helper.characteristics[HEATING_COOLING_TARGET].value == 3
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_OFF},
@@ -148,7 +148,7 @@ async def test_climate_check_min_max_values_per_mode.opp, utcnow):
     """Test that we we get the appropriate min/max values for each mode."""
     helper = await setup_test_component.opp, create_thermostat_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT},
@@ -158,7 +158,7 @@ async def test_climate_check_min_max_values_per_mode.opp, utcnow):
     assert climate_state.attributes["min_temp"] == 7
     assert climate_state.attributes["max_temp"] == 35
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_COOL},
@@ -168,7 +168,7 @@ async def test_climate_check_min_max_values_per_mode.opp, utcnow):
     assert climate_state.attributes["min_temp"] == 7
     assert climate_state.attributes["max_temp"] == 35
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT_COOL},
@@ -183,7 +183,7 @@ async def test_climate_change_thermostat_temperature.opp, utcnow):
     """Test that we can turn a HomeKit thermostat on and off again."""
     helper = await setup_test_component.opp, create_thermostat_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {"entity_id": "climate.testdevice", "temperature": 21},
@@ -191,7 +191,7 @@ async def test_climate_change_thermostat_temperature.opp, utcnow):
     )
     assert helper.characteristics[TEMPERATURE_TARGET].value == 21
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {"entity_id": "climate.testdevice", "temperature": 25},
@@ -204,14 +204,14 @@ async def test_climate_change_thermostat_temperature_range.opp, utcnow):
     """Test that we can set separate heat and cool setpoints in heat_cool mode."""
     helper = await setup_test_component.opp, create_thermostat_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT_COOL},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -231,14 +231,14 @@ async def test_climate_change_thermostat_temperature_range_iphone.opp, utcnow):
     """Test that we can set all three set points at once (iPhone heat_cool mode support)."""
     helper = await setup_test_component.opp, create_thermostat_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT_COOL},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -259,14 +259,14 @@ async def test_climate_cannot_set_thermostat_temp_range_in_wrong_mode.opp, utcno
     """Test that we cannot set range values when not in heat_cool mode."""
     helper = await setup_test_component.opp, create_thermostat_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -312,7 +312,7 @@ async def test_climate_check_min_max_values_per_mode_sspa_device.opp, utcnow):
     """Test appropriate min/max values for each mode on sspa devices."""
     helper = await setup_test_component.opp, create_thermostat_single_set_point_auto)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT},
@@ -322,7 +322,7 @@ async def test_climate_check_min_max_values_per_mode_sspa_device.opp, utcnow):
     assert climate_state.attributes["min_temp"] == 7
     assert climate_state.attributes["max_temp"] == 35
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_COOL},
@@ -332,7 +332,7 @@ async def test_climate_check_min_max_values_per_mode_sspa_device.opp, utcnow):
     assert climate_state.attributes["min_temp"] == 7
     assert climate_state.attributes["max_temp"] == 35
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT_COOL},
@@ -347,14 +347,14 @@ async def test_climate_set_thermostat_temp_on_sspa_device.opp, utcnow):
     """Test setting temperature in different modes on device with single set point in auto."""
     helper = await setup_test_component.opp, create_thermostat_single_set_point_auto)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT},
         blocking=True,
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {"entity_id": "climate.testdevice", "temperature": 21},
@@ -362,7 +362,7 @@ async def test_climate_set_thermostat_temp_on_sspa_device.opp, utcnow):
     )
     assert helper.characteristics[TEMPERATURE_TARGET].value == 21
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT_COOL},
@@ -370,7 +370,7 @@ async def test_climate_set_thermostat_temp_on_sspa_device.opp, utcnow):
     )
     assert helper.characteristics[TEMPERATURE_TARGET].value == 21
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -387,7 +387,7 @@ async def test_climate_change_thermostat_humidity.opp, utcnow):
     """Test that we can turn a HomeKit thermostat on and off again."""
     helper = await setup_test_component.opp, create_thermostat_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HUMIDITY,
         {"entity_id": "climate.testdevice", "humidity": 50},
@@ -395,7 +395,7 @@ async def test_climate_change_thermostat_humidity.opp, utcnow):
     )
     assert helper.characteristics[HUMIDITY_TARGET].value == 50
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HUMIDITY,
         {"entity_id": "climate.testdevice", "humidity": 45},
@@ -548,7 +548,7 @@ async def test_heater_cooler_change_thermostat_state.opp, utcnow):
     """Test that we can change the operational mode."""
     helper = await setup_test_component.opp, create_heater_cooler_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT},
@@ -560,7 +560,7 @@ async def test_heater_cooler_change_thermostat_state.opp, utcnow):
         == TargetHeaterCoolerStateValues.HEAT
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_COOL},
@@ -571,7 +571,7 @@ async def test_heater_cooler_change_thermostat_state.opp, utcnow):
         == TargetHeaterCoolerStateValues.COOL
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT_COOL},
@@ -582,7 +582,7 @@ async def test_heater_cooler_change_thermostat_state.opp, utcnow):
         == TargetHeaterCoolerStateValues.AUTOMATIC
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_OFF},
@@ -598,13 +598,13 @@ async def test_heater_cooler_change_thermostat_temperature.opp, utcnow):
     """Test that we can change the target temperature."""
     helper = await setup_test_component.opp, create_heater_cooler_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_HEAT},
         blocking=True,
     )
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {"entity_id": "climate.testdevice", "temperature": 20},
@@ -612,13 +612,13 @@ async def test_heater_cooler_change_thermostat_temperature.opp, utcnow):
     )
     assert helper.characteristics[TEMPERATURE_HEATING_THRESHOLD].value == 20
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {"entity_id": "climate.testdevice", "hvac_mode": HVAC_MODE_COOL},
         blocking=True,
     )
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {"entity_id": "climate.testdevice", "temperature": 26},
@@ -714,7 +714,7 @@ async def test_heater_cooler_change_swing_mode.opp, utcnow):
     """Test that we can change the swing mode."""
     helper = await setup_test_component.opp, create_heater_cooler_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_SWING_MODE,
         {"entity_id": "climate.testdevice", "swing_mode": "vertical"},
@@ -722,7 +722,7 @@ async def test_heater_cooler_change_swing_mode.opp, utcnow):
     )
     assert helper.characteristics[SWING_MODE].value == SwingModeValues.ENABLED
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_SWING_MODE,
         {"entity_id": "climate.testdevice", "swing_mode": "off"},

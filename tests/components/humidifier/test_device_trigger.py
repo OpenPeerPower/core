@@ -203,25 +203,25 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the humidity is changing
    .opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 7})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "target_humidity_changed_below"
 
     # Fake that the humidity is changing
    .opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 37})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "target_humidity_changed_above"
 
     # Wait 6 minutes
     async_fire_time_changed.opp, dt_util.utcnow() + datetime.timedelta(minutes=6))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 3
     assert calls[2].data["some"] == "target_humidity_changed_above_for"
 
     # Fake turn off
    .opp.states.async_set("humidifier.entity", STATE_OFF, {const.ATTR_HUMIDITY: 37})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 4
     assert (
         calls[3].data["some"] == "turn_off device - humidifier.entity - on - off - None"
@@ -229,7 +229,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake turn on
    .opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 37})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 5
     assert (
         calls[4].data["some"] == "turn_on device - humidifier.entity - off - on - None"
@@ -275,7 +275,7 @@ async def test_invalid_config.opp, calls):
 
     # Fake that the humidity is changing
    .opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 7})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     # Should not trigger for invalid config
     assert len(calls) == 0
 

@@ -71,7 +71,7 @@ async def async_unload_entry.opp, config_entry):
         )
     )
 
-    await.opp.data[AGENT_DOMAIN][config_entry.entry_id][CONNECTION].close()
+    await opp..data[AGENT_DOMAIN][config_entry.entry_id][CONNECTION].close()
 
     if unload_ok:
        .opp.data[AGENT_DOMAIN].pop(config_entry.entry_id)

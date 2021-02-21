@@ -21,7 +21,7 @@ async def test_sma_config.opp):
         assert await async_setup_component(
            .opp, DOMAIN, {DOMAIN: dict(BASE_CFG, sensors=sensors)}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     state = opp.states.get("sensor.current_consumption")
     assert state

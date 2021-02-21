@@ -85,9 +85,9 @@ async def async_check_op.config_file.opp: OpenPeerPower) -> OpenPeerPowerConfig:
     # Load configuration.yaml
     config_path = opp.config.path(YAML_CONFIG_FILE)
     try:
-        if not await opp.async_add_executor_job(os.path.isfile, config_path):
+        if not await opp..async_add_executor_job(os.path.isfile, config_path):
             return result.add_error("File configuration.yaml not found.")
-        config = await opp.async_add_executor_job(load_yaml_config_file, config_path)
+        config = await opp..async_add_executor_job(load_yaml_config_file, config_path)
     except FileNotFoundError:
         return result.add_error(f"File not found: {config_path}")
     except OpenPeerPowerError as err:

@@ -25,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_remove_shelly_entity.opp, domain, unique_id):
     """Remove a Shelly entity."""
-    entity_reg = await.opp.helpers.entity_registry.async_get_registry()
+    entity_reg = await opp..helpers.entity_registry.async_get_registry()
     entity_id = entity_reg.async_get_entity_id(domain, DOMAIN, unique_id)
     if entity_id:
         _LOGGER.debug("Removing entity: %s", entity_id)

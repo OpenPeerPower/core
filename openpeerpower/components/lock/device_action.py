@@ -89,6 +89,6 @@ async def async_call_action_from_config(
     elif config[CONF_TYPE] == "open":
         service = SERVICE_OPEN
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, service, service_data, blocking=True, context=context
     )

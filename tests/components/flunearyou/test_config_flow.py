@@ -19,7 +19,7 @@ async def test_duplicate_error.opp):
         domain=DOMAIN, unique_id="51.528308, -0.3817765", data=conf
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
 
@@ -35,7 +35,7 @@ async def test_general_error.opp):
         "pyflunearyou.cdc.CdcReport.status_by_coordinates",
         side_effect=FluNearYouError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
         assert result["errors"] == {"base": "unknown"}
@@ -43,7 +43,7 @@ async def test_general_error.opp):
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -58,7 +58,7 @@ async def test_step_user.opp):
     with patch(
         "openpeerpower.components.flunearyou.async_setup_entry", return_value=True
     ), patch("pyflunearyou.cdc.CdcReport.status_by_coordinates"):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
 

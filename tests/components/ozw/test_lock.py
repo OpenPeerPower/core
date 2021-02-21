@@ -12,7 +12,7 @@ async def test_lock.opp, lock_data, sent_messages, lock_msg, caplog):
     assert state.state == "unlocked"
 
     # Test locking
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "lock", "lock", {"entity_id": "lock.danalock_v3_btze_locked"}, blocking=True
     )
     assert len(sent_messages) == 1
@@ -25,14 +25,14 @@ async def test_lock.opp, lock_data, sent_messages, lock_msg, caplog):
     lock_msg.payload["Value"] = True
     lock_msg.encode()
     receive_message(lock_msg)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("lock.danalock_v3_btze_locked")
     assert state is not None
     assert state.state == "locked"
 
     # Test unlocking
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "lock", "unlock", {"entity_id": "lock.danalock_v3_btze_locked"}, blocking=True
     )
     assert len(sent_messages) == 2
@@ -41,7 +41,7 @@ async def test_lock.opp, lock_data, sent_messages, lock_msg, caplog):
     assert msg["payload"] == {"Value": False, "ValueIDKey": 173572112}
 
     # Test set_usercode
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "ozw",
         "set_usercode",
         {
@@ -57,7 +57,7 @@ async def test_lock.opp, lock_data, sent_messages, lock_msg, caplog):
     assert msg["payload"] == {"Value": "123456", "ValueIDKey": 281475150299159}
 
     # Test clear_usercode
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "ozw",
         "clear_usercode",
         {"entity_id": "lock.danalock_v3_btze_locked", "code_slot": 1},
@@ -69,7 +69,7 @@ async def test_lock.opp, lock_data, sent_messages, lock_msg, caplog):
     assert msg["payload"] == {"Value": 1, "ValueIDKey": 72057594219905046}
 
     # Test set_usercode invalid length
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "ozw",
         "set_usercode",
         {

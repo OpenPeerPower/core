@@ -57,7 +57,7 @@ async def test_switch_turn_on_off.opp: OpenPeerPowerType) -> None:
     assert entity_state.state == "on"
 
     # Turn switch off.
-    await.opp.services.async_call(
+    await opp..services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: TEST_SWITCH_COMPONENT_ALL_ENTITY_ID},
@@ -81,7 +81,7 @@ async def test_switch_turn_on_off.opp: OpenPeerPowerType) -> None:
     assert entity_state.state == "off"
 
     # Turn switch on.
-    await.opp.services.async_call(
+    await opp..services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: TEST_SWITCH_COMPONENT_ALL_ENTITY_ID},

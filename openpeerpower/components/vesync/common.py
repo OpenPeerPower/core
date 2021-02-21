@@ -14,7 +14,7 @@ async def async_process_devices.opp, manager):
     devices[VS_SWITCHES] = []
     devices[VS_FANS] = []
 
-    await opp.async_add_executor_job(manager.update)
+    await opp..async_add_executor_job(manager.update)
 
     if manager.fans:
         devices[VS_FANS].extend(manager.fans)

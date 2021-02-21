@@ -24,7 +24,7 @@ async def async_set_txt.opp, txt):
 
     This is a legacy helper method. Do not use it for new tests.
     """
-    await.opp.services.async_call(
+    await opp..services.async_call(
         duckdns.DOMAIN, duckdns.SERVICE_SET_TXT, {duckdns.ATTR_TXT: txt}, blocking=True
     )
 
@@ -53,13 +53,13 @@ async def test_setup.opp, aioclient_mock):
        .opp, duckdns.DOMAIN, {"duckdns": {"domain": DOMAIN, "access_token": TOKEN}}
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert result
     assert aioclient_mock.call_count == 1
 
     async_fire_time_changed.opp, utcnow() + timedelta(minutes=5))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert aioclient_mock.call_count == 2
 
 
@@ -73,7 +73,7 @@ async def test_setup_backoff.opp, aioclient_mock):
        .opp, duckdns.DOMAIN, {"duckdns": {"domain": DOMAIN, "access_token": TOKEN}}
     )
     assert result
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert aioclient_mock.call_count == 1
 
     # Copy of the DuckDNS intervals from duckdns/__init__.py
@@ -85,13 +85,13 @@ async def test_setup_backoff.opp, aioclient_mock):
         timedelta(minutes=30),
     )
     tme = utcnow()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     _LOGGER.debug("Backoff...")
     for idx in range(1, len(intervals)):
         tme += intervals[idx]
         async_fire_time_changed.opp, tme)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert aioclient_mock.call_count == idx + 1
 
@@ -152,7 +152,7 @@ async def test_async_track_time_interval_backoff.opp):
     )
 
     async_track_time_interval_backoff.opp, _return, intervals)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert call_count == 1
 
@@ -160,7 +160,7 @@ async def test_async_track_time_interval_backoff.opp):
     for idx in range(1, len(intervals)):
         tme += intervals[idx]
         async_fire_time_changed.opp, tme + timedelta(seconds=0.1))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert call_count == idx + 1
 
@@ -168,7 +168,7 @@ async def test_async_track_time_interval_backoff.opp):
     for _idx in range(1, 10):
         tme += intervals[-1]
         async_fire_time_changed.opp, tme + timedelta(seconds=0.1))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert call_count == idx + 1 + _idx
 
@@ -177,13 +177,13 @@ async def test_async_track_time_interval_backoff.opp):
     ret_val = True
     tme += intervals[-1]
     async_fire_time_changed.opp, tme + timedelta(seconds=0.1))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert call_count == 1
 
     _LOGGER.debug("No backoff - intervals[0]")
     for _idx in range(2, 10):
         tme += intervals[0]
         async_fire_time_changed.opp, tme + timedelta(seconds=0.1))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert call_count == _idx

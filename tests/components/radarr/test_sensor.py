@@ -207,7 +207,7 @@ async def test_diskspace_no_paths.opp):
         side_effect=mocked_requests_get,
     ):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         entity = opp.states.get("sensor.radarr_disk_space")
         assert entity is not None
@@ -236,7 +236,7 @@ async def test_diskspace_paths.opp):
         side_effect=mocked_requests_get,
     ):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         entity = opp.states.get("sensor.radarr_disk_space")
         assert entity is not None
@@ -265,7 +265,7 @@ async def test_commands.opp):
         side_effect=mocked_requests_get,
     ):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         entity = opp.states.get("sensor.radarr_commands")
         assert entity is not None
@@ -294,7 +294,7 @@ async def test_movies.opp):
         side_effect=mocked_requests_get,
     ):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         entity = opp.states.get("sensor.radarr_movies")
         assert entity is not None
@@ -323,7 +323,7 @@ async def test_upcoming_multiple_days.opp):
         side_effect=mocked_requests_get,
     ):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         entity = opp.states.get("sensor.radarr_upcoming")
         assert entity is not None
@@ -355,7 +355,7 @@ async def test_upcoming_today.opp):
         side_effect=mocked_requests_get,
     ):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         entity = opp.states.get("sensor.radarr_upcoming")
         assert 1 == int(entity.state)
         assert "mdi:television" == entity.attributes["icon"]
@@ -381,7 +381,7 @@ async def test_system_status.opp):
         side_effect=mocked_requests_get,
     ):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         entity = opp.states.get("sensor.radarr_status")
         assert entity is not None
         assert "0.2.0.210" == entity.state
@@ -408,7 +408,7 @@ async def test_ssl.opp):
         side_effect=mocked_requests_get,
     ):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         entity = opp.states.get("sensor.radarr_upcoming")
         assert entity is not None
         assert 1 == int(entity.state)
@@ -435,7 +435,7 @@ async def test_exception_op.dling.opp):
         side_effect=mocked_exception,
     ):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         entity = opp.states.get("sensor.radarr_upcoming")
         assert entity is not None
         assert "unavailable" == entity.state

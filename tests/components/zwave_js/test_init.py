@@ -52,7 +52,7 @@ async def test_entry_setup_unload.opp, client, integration):
     assert client.connect.call_count == 1
     assert entry.state == ENTRY_STATE_LOADED
 
-    await opp.config_entries.async_unload(entry.entry_id)
+    await opp..config_entries.async_unload(entry.entry_id)
 
     assert client.disconnect.call_count == 1
     assert entry.state == ENTRY_STATE_NOT_LOADED
@@ -60,7 +60,7 @@ async def test_entry_setup_unload.opp, client, integration):
 
 async def test_home_assistant_stop.opp, client, integration):
     """Test we clean up on Open Peer Power stop."""
-    await opp.async_stop()
+    await opp..async_stop()
 
     assert client.disconnect.call_count == 1
 
@@ -70,8 +70,8 @@ async def test_initialized_timeout.opp, client, connect_timeout):
     entry = MockConfigEntry(domain="zwave_js", data={"url": "ws://test.org"})
     entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(entry.entry_id)
+    await opp..async_block_till_done()
 
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -92,7 +92,7 @@ async def test_on_node_added_ready(
     )
 
     client.driver.controller.emit("node added", event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
@@ -121,7 +121,7 @@ async def test_on_node_added_not_ready(
     )
 
     client.driver.controller.emit("node added", event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
@@ -132,7 +132,7 @@ async def test_on_node_added_not_ready(
 
     node.data["ready"] = True
     node.emit("ready", event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
@@ -166,8 +166,8 @@ async def test_existing_node_not_ready.opp, client, multisensor_6, device_regist
     entry = MockConfigEntry(domain="zwave_js", data={"url": "ws://test.org"})
     entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(entry.entry_id)
+    await opp..async_block_till_done()
 
     state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
@@ -178,7 +178,7 @@ async def test_existing_node_not_ready.opp, client, multisensor_6, device_regist
 
     node.data["ready"] = True
     node.emit("ready", event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
@@ -202,7 +202,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-    await opp.config_entries.async_remove(entry.entry_id)
+    await opp..config_entries.async_remove(entry.entry_id)
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert len.opp.config_entries.async_entries(DOMAIN)) == 0
@@ -217,7 +217,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     entry.add_to_opp.opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-    await opp.config_entries.async_remove(entry.entry_id)
+    await opp..config_entries.async_remove(entry.entry_id)
 
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 1
@@ -231,7 +231,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     stop_addon.side_effect = OppioAPIError()
 
-    await opp.config_entries.async_remove(entry.entry_id)
+    await opp..config_entries.async_remove(entry.entry_id)
 
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 0
@@ -247,7 +247,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     uninstall_addon.side_effect = OppioAPIError()
 
-    await opp.config_entries.async_remove(entry.entry_id)
+    await opp..config_entries.async_remove(entry.entry_id)
 
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 1
@@ -279,8 +279,8 @@ async def test_removed_device.opp, client, multiple_devices, integration):
 
     # Remove a node and reload the entry
     old_node = nodes.pop(13)
-    await opp.config_entries.async_reload(integration.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_reload(integration.entry_id)
+    await opp..async_block_till_done()
 
     # Assert that the node and all of it's entities were removed from the device and
     # entity registry

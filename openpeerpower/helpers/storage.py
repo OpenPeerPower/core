@@ -47,7 +47,7 @@ async def async_migrator(
 
         return json_util.load_json(old_path)
 
-    config = await opp.async_add_executor_job(load_old_config)
+    config = await opp..async_add_executor_job(load_old_config)
 
     if config is None:
         return None
@@ -56,7 +56,7 @@ async def async_migrator(
         config = await old_conf_migrate_func(config)
 
     await store.async_save(config)
-    await opp.async_add_executor_job(os.remove, old_path)
+    await opp..async_add_executor_job(os.remove, old_path)
     return config
 
 

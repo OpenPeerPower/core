@@ -23,7 +23,7 @@ async def test_lock_device_registry.opp):
     lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
     await _create_august_with_devices.opp, [lock_one])
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
 
     reg_device = device_registry.async_get_device(
         identifiers={("august", "online_with_doorsense")}
@@ -67,10 +67,10 @@ async def test_one_lock_operation.opp):
     )
 
     data = {ATTR_ENTITY_ID: "lock.online_with_doorsense_name"}
-    assert await.opp.services.async_call(
+    assert await opp..services.async_call(
         LOCK_DOMAIN, SERVICE_UNLOCK, data, blocking=True
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     lock_online_with_doorsense_name = opp.states.get("lock.online_with_doorsense_name")
     assert lock_online_with_doorsense_name.state == STATE_UNLOCKED
@@ -81,16 +81,16 @@ async def test_one_lock_operation.opp):
         == "online_with_doorsense Name"
     )
 
-    assert await.opp.services.async_call(
+    assert await opp..services.async_call(
         LOCK_DOMAIN, SERVICE_LOCK, data, blocking=True
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     lock_online_with_doorsense_name = opp.states.get("lock.online_with_doorsense_name")
     assert lock_online_with_doorsense_name.state == STATE_LOCKED
 
     # No activity means it will be unavailable until the activity feed has data
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
     lock_operator_sensor = entity_registry.async_get(
         "sensor.online_with_doorsense_name_operator"
     )

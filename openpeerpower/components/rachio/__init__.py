@@ -54,7 +54,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def async_remove_entry.opp, entry):
     """Remove a rachio config entry."""
     if CONF_CLOUDHOOK_URL in entry.data:
-        await.opp.components.cloud.async_delete_cloudhook(entry.data[CONF_WEBHOOK_ID])
+        await opp..components.cloud.async_delete_cloudhook(entry.data[CONF_WEBHOOK_ID])
 
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
@@ -84,7 +84,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     # Get the API user
     try:
-        await opp.async_add_executor_job(person.setup,.opp)
+        await opp..async_add_executor_job(person.setup,.opp)
     except ConnectTimeout as error:
         _LOGGER.error("Could not reach the Rachio API: %s", error)
         raise ConfigEntryNotReady from error

@@ -79,7 +79,7 @@ async def async_setup_entry.opp, entry):
     )
 
     try:
-        await opp.async_add_executor_job(fritz.login)
+        await opp..async_add_executor_job(fritz.login)
     except LoginError:
        .opp.async_create_task(
            .opp.config_entries.flow.async_init(
@@ -110,7 +110,7 @@ async def async_setup_entry.opp, entry):
 async def async_unload_entry.opp, entry):
     """Unloading the AVM Fritz!Box platforms."""
     fritz = opp.data[DOMAIN][CONF_CONNECTIONS][entry.entry_id]
-    await opp.async_add_executor_job(fritz.logout)
+    await opp..async_add_executor_job(fritz.logout)
 
     unload_ok = all(
         await asyncio.gather(

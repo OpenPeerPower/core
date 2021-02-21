@@ -18,7 +18,7 @@ async def test_service_show_view.opp, mock_zeroconf):
     await home_assistant_cast.async_setup_op.cast.opp, MockConfigEntry())
     calls = async_mock_signal.opp, home_assistant_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cast",
         "show_lovelace_view",
         {"entity_id": "media_player.kitchen", "view_path": "mock_path"},
@@ -45,7 +45,7 @@ async def test_service_show_view_dashboard.opp, mock_zeroconf):
     await home_assistant_cast.async_setup_op.cast.opp, MockConfigEntry())
     calls = async_mock_signal.opp, home_assistant_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cast",
         "show_lovelace_view",
         {
@@ -78,7 +78,7 @@ async def test_use_cloud_url.opp, mock_zeroconf):
         "openpeerpower.components.cloud.async_remote_ui_url",
         return_value="https://something.nabu.casa",
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             "cast",
             "show_lovelace_view",
             {"entity_id": "media_player.kitchen", "view_path": "mock_path"},
@@ -108,12 +108,12 @@ async def test_remove_entry.opp, mock_zeroconf):
     ), patch(
         "pychromecast.discovery.stop_discovery"
     ):
-        assert await opp.config_entries.async_setup(entry.entry_id)
-        await opp.async_block_till_done()
+        assert await opp..config_entries.async_setup(entry.entry_id)
+        await opp..async_block_till_done()
     assert "cast" in.opp.config.components
 
     user_id = entry.data.get("user_id")
-    assert await opp.auth.async_get_user(user_id)
+    assert await opp..auth.async_get_user(user_id)
 
-    assert await opp.config_entries.async_remove(entry.entry_id)
-    assert not await opp.auth.async_get_user(user_id)
+    assert await opp..config_entries.async_remove(entry.entry_id)
+    assert not await opp..auth.async_get_user(user_id)

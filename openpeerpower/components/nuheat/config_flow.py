@@ -35,7 +35,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     api = nuheat.NuHeat(data[CONF_USERNAME], data[CONF_PASSWORD])
 
     try:
-        await opp.async_add_executor_job(api.authenticate)
+        await opp..async_add_executor_job(api.authenticate)
     except requests.exceptions.Timeout as ex:
         raise CannotConnect from ex
     except requests.exceptions.HTTPError as ex:
@@ -52,7 +52,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
         raise InvalidAuth from ex
 
     try:
-        thermostat = await opp.async_add_executor_job(
+        thermostat = await opp..async_add_executor_job(
             api.get_thermostat, data[CONF_SERIAL_NUMBER]
         )
     except requests.exceptions.HTTPError as ex:

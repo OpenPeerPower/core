@@ -27,7 +27,7 @@ async def test_bad_posting.opp, aiohttp_client):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get("camera.config_test") is not None
 
     client = await aiohttp_client.opp.http.app)
@@ -58,7 +58,7 @@ async def test_posting_url.opp, aiohttp_client):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
     files = {"image": io.BytesIO(b"fake")}
@@ -78,7 +78,7 @@ async def test_posting_url.opp, aiohttp_client):
     # await timeout
     shifted_time = dt_util.utcnow() + timedelta(seconds=15)
     async_fire_time_changed.opp, shifted_time)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # back to initial state
     camera_state = opp.states.get("camera.config_test")

@@ -45,7 +45,7 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a Coolmaster config entry."""
-    unload_ok = await opp.config_entries.async_forward_entry_unload(entry, "climate")
+    unload_ok = await opp..config_entries.async_forward_entry_unload(entry, "climate")
 
     if unload_ok:
        .opp.data[DOMAIN].pop(entry.entry_id)

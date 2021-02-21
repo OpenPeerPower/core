@@ -67,9 +67,9 @@ def configured_servers.opp):
 async def async_discover.opp):
     """Scan for available Plex servers."""
     gdm = GDM()
-    await opp.async_add_executor_job(gdm.scan)
+    await opp..async_add_executor_job(gdm.scan)
     for server_data in gdm.entries:
-        await.opp.config_entries.flow.async_init(
+        await opp..config_entries.flow.async_init(
             DOMAIN,
             context={CONF_SOURCE: config_entries.SOURCE_INTEGRATION_DISCOVERY},
             data=server_data,
@@ -418,7 +418,7 @@ class PlexAuthorizationCallbackView(OpenPeerPowerView):
     async def get(self, request):
         """Receive authorization confirmation."""
         opp = request.app["opp"]
-        await.opp.config_entries.flow.async_configure(
+        await opp..config_entries.flow.async_configure(
             flow_id=request.query["flow_id"], user_input=None
         )
 

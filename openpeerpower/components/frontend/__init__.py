@@ -498,7 +498,7 @@ class IndexView(web_urldispatcher.AbstractResource):
         template = self._template_cache
 
         if template is None:
-            template = await opp.async_add_executor_job(self.get_template)
+            template = await opp..async_add_executor_job(self.get_template)
 
         return web.Response(
             text=template.render(

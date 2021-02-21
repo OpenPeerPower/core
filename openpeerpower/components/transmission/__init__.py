@@ -129,7 +129,7 @@ async def async_unload_entry.opp, config_entry):
         client.unsub_timer()
 
     for platform in PLATFORMS:
-        await opp.config_entries.async_forward_entry_unload(config_entry, platform)
+        await opp..config_entries.async_forward_entry_unload(config_entry, platform)
 
     if not.opp.data[DOMAIN]:
        .opp.services.async_remove(DOMAIN, SERVICE_ADD_TORRENT)
@@ -148,7 +148,7 @@ async def get_api.opp, entry):
     password = entry.get(CONF_PASSWORD)
 
     try:
-        api = await opp.async_add_executor_job(
+        api = await opp..async_add_executor_job(
             transmissionrpc.Client, host, port, username, password
         )
         _LOGGER.debug("Successfully connected to %s", host)
@@ -335,7 +335,7 @@ class TransmissionClient:
         """Triggered by config entry options updates."""
         tm_client = opp.data[DOMAIN][entry.entry_id]
         tm_client.set_scan_interval(entry.options[CONF_SCAN_INTERVAL])
-        await opp.async_add_executor_job(tm_client.api.update)
+        await opp..async_add_executor_job(tm_client.api.update)
 
 
 class TransmissionData:

@@ -33,7 +33,7 @@ async def traccar_client(loop,.opp, aiohttp_client):
 
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     with patch("openpeerpower.components.device_tracker.legacy.update_config"):
         return await aiohttp_client.opp.http.app)
@@ -54,7 +54,7 @@ async def setup_zones(loop,.opp):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 @pytest.fixture(name="webhook_id")
@@ -64,15 +64,15 @@ async def webhook_id_fixture.opp, client):
        .opp,
         {"external_url": "http://example.com"},
     )
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     return result["result"].data["webhook_id"]
 
 
@@ -83,21 +83,21 @@ async def test_missing_data.opp, client, webhook_id):
 
     # No data
     req = await client.post(url)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_UNPROCESSABLE_ENTITY
 
     # No latitude
     copy = data.copy()
     del copy["lat"]
     req = await client.post(url, params=copy)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_UNPROCESSABLE_ENTITY
 
     # No device
     copy = data.copy()
     del copy["id"]
     req = await client.post(url, params=copy)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_UNPROCESSABLE_ENTITY
 
 
@@ -108,7 +108,7 @@ async def test_enter_and_exit.opp, client, webhook_id):
 
     # Enter the Home
     req = await client.post(url, params=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
@@ -117,7 +117,7 @@ async def test_enter_and_exit.opp, client, webhook_id):
 
     # Enter Home again
     req = await client.post(url, params=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
@@ -129,17 +129,17 @@ async def test_enter_and_exit.opp, client, webhook_id):
 
     # Enter Somewhere else
     req = await client.post(url, params=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
     ).state
     assert STATE_NOT_HOME == state_name
 
-    dev_reg = await.opp.helpers.device_registry.async_get_registry()
+    dev_reg = await opp..helpers.device_registry.async_get_registry()
     assert len(dev_reg.devices) == 1
 
-    ent_reg = await.opp.helpers.entity_registry.async_get_registry()
+    ent_reg = await opp..helpers.entity_registry.async_get_registry()
     assert len(ent_reg.entities) == 1
 
 
@@ -159,7 +159,7 @@ async def test_enter_with_attrs.opp, client, webhook_id):
     }
 
     req = await client.post(url, params=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
     state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"]))
     assert state.state == STATE_NOT_HOME
@@ -181,7 +181,7 @@ async def test_enter_with_attrs.opp, client, webhook_id):
     }
 
     req = await client.post(url, params=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
     state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"]))
     assert state.state == STATE_HOME
@@ -200,7 +200,7 @@ async def test_two_devices.opp, client, webhook_id):
 
     # Exit Home
     req = await client.post(url, params=data_device_1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
 
     state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data_device_1["id"]))
@@ -212,7 +212,7 @@ async def test_two_devices.opp, client, webhook_id):
     data_device_2["lon"] = str(HOME_LONGITUDE)
     data_device_2["id"] = "device_2"
     req = await client.post(url, params=data_device_2)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
 
     state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data_device_2["id"]))
@@ -231,7 +231,7 @@ async def test_load_unload_entry.opp, client, webhook_id):
 
     # Enter the Home
     req = await client.post(url, params=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
@@ -242,5 +242,5 @@ async def test_load_unload_entry.opp, client, webhook_id):
     entry = opp.config_entries.async_entries(DOMAIN)[0]
 
     assert await traccar.async_unload_entry.opp, entry)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert not.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]

@@ -24,7 +24,7 @@ async def test_binary_sensor_async_setup_entry.opp, aioclient_mock):
     )
     await add_mock_config.opp)
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     assert len(aioclient_mock.mock_calls) == 1
 

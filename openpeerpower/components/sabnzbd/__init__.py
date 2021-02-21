@@ -110,7 +110,7 @@ async def async_configure_sabnzbd(
     uri_scheme = "https" if use_ssl else "http"
     base_url = BASE_URL_FORMAT.format(uri_scheme, host, port)
     if api_key is None:
-        conf = await opp.async_add_executor_job(
+        conf = await opp..async_add_executor_job(
             load_json,.opp.config.path(CONFIG_FILE)
         )
         api_key = conf.get(base_url, {}).get(CONF_API_KEY, "")

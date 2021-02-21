@@ -228,7 +228,7 @@ class DeviceTrackerPlatform:
                    .opp, {DOMAIN: self.config}
                 )
             elif hasattr(self.platform, "get_scanner"):
-                scanner = await opp.async_add_executor_job(
+                scanner = await opp..async_add_executor_job(
                     self.platform.get_scanner,.opp, {DOMAIN: self.config}
                 )
             elif hasattr(self.platform, "async_setup_scanner"):
@@ -236,7 +236,7 @@ class DeviceTrackerPlatform:
                    .opp, self.config, tracker.async_see, discovery_info
                 )
             elif hasattr(self.platform, "setup_scanner"):
-                setup = await opp.async_add_executor_job(
+                setup = await opp..async_add_executor_job(
                     self.platform.setup_scanner,
                    .opp,
                     self.config,
@@ -835,7 +835,7 @@ async def async_load_config(
     )
     result = []
     try:
-        devices = await opp.async_add_executor_job(load_yaml_config_file, path)
+        devices = await opp..async_add_executor_job(load_yaml_config_file, path)
     except OpenPeerPowerError as err:
         LOGGER.error("Unable to load %s: %s", path, str(err))
         return []

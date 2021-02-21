@@ -34,8 +34,8 @@ async def test_thermostat(coordinator, spa,.opp, config_entry):
         "setTemperature": 39,
     }
     config_entry.add_to_opp.opp)
-    await opp.config_entries.async_setup(config_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(config_entry.entry_id)
+    await opp..async_block_till_done()
 
     entity_id = f"climate.{spa.brand}_{spa.model}_thermostat"
     state = opp.states.get(entity_id)
@@ -44,7 +44,7 @@ async def test_thermostat(coordinator, spa,.opp, config_entry):
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
 
     spa.get_status.return_value["heater"] = "OFF"
-    await.opp.helpers.entity_component.async_update_entity(entity_id)
+    await opp..helpers.entity_component.async_update_entity(entity_id)
     state = opp.states.get(entity_id)
 
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
@@ -57,7 +57,7 @@ async def test_thermostat(coordinator, spa,.opp, config_entry):
     assert state.attributes[ATTR_MAX_TEMP] == DEFAULT_MAX_TEMP
     assert state.attributes[ATTR_MIN_TEMP] == DEFAULT_MIN_TEMP
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: entity_id, ATTR_TEMPERATURE: 37},
@@ -65,7 +65,7 @@ async def test_thermostat(coordinator, spa,.opp, config_entry):
     )
     spa.set_temperature.assert_called_with(37)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_HVAC_MODE: HVAC_MODE_HEAT},

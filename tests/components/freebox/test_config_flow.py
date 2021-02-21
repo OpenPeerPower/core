@@ -39,14 +39,14 @@ def mock_controller_connect():
 
 async def test_user.opp):
     """Test user config."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
     # test with all provided
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_HOST: HOST, CONF_PORT: PORT},
@@ -57,7 +57,7 @@ async def test_user.opp):
 
 async def test_import.opp):
     """Test import step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data={CONF_HOST: HOST, CONF_PORT: PORT},
@@ -68,7 +68,7 @@ async def test_import.opp):
 
 async def test_discovery.opp):
     """Test discovery step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_DISCOVERY},
         data={CONF_HOST: HOST, CONF_PORT: PORT},
@@ -79,13 +79,13 @@ async def test_discovery.opp):
 
 async def test_link.opp, connect):
     """Test linking."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_HOST: HOST, CONF_PORT: PORT},
     )
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["result"].unique_id == HOST
     assert result["title"] == HOST
@@ -100,7 +100,7 @@ async def test_abort_if_already_setup.opp):
     ).add_to_opp.opp)
 
     # Should fail, same HOST (import)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data={CONF_HOST: HOST, CONF_PORT: PORT},
@@ -109,7 +109,7 @@ async def test_abort_if_already_setup.opp):
     assert result["reason"] == "already_configured"
 
     # Should fail, same HOST (flow)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_HOST: HOST, CONF_PORT: PORT},
@@ -120,7 +120,7 @@ async def test_abort_if_already_setup.opp):
 
 async def test_on_link_failed.opp):
     """Test when we have errors during linking the router."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_HOST: HOST, CONF_PORT: PORT},
@@ -130,7 +130,7 @@ async def test_on_link_failed.opp):
         "openpeerpower.components.freebox.router.Freepybox.open",
         side_effect=AuthorizationError(),
     ):
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {"base": "register_failed"}
 
@@ -138,7 +138,7 @@ async def test_on_link_failed.opp):
         "openpeerpower.components.freebox.router.Freepybox.open",
         side_effect=HttpRequestError(),
     ):
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {"base": "cannot_connect"}
 
@@ -146,6 +146,6 @@ async def test_on_link_failed.opp):
         "openpeerpower.components.freebox.router.Freepybox.open",
         side_effect=InvalidTokenError(),
     ):
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {"base": "unknown"}

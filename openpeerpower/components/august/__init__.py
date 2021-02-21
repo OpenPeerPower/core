@@ -135,7 +135,7 @@ async def async_setup_august.opp, config_entry, august_gateway):
 
    .opp.data[DOMAIN][entry_id][DATA_AUGUST] = AugustData.opp, august_gateway)
 
-    await.opp.data[DOMAIN][entry_id][DATA_AUGUST].async_setup()
+    await opp..data[DOMAIN][entry_id][DATA_AUGUST].async_setup()
 
     for component in AUGUST_COMPONENTS:
        .opp.async_create_task(

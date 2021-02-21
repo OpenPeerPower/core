@@ -339,10 +339,10 @@ async def async_migrate_entry.opp, config_entry):
 
     # 1 -> 2: Unique ID format changed, so delete and re-import:
     if version == 1:
-        dev_reg = await.opp.helpers.device_registry.async_get_registry()
+        dev_reg = await opp..helpers.device_registry.async_get_registry()
         dev_reg.async_clear_config_entry(config_entry)
 
-        en_reg = await.opp.helpers.entity_registry.async_get_registry()
+        en_reg = await opp..helpers.entity_registry.async_get_registry()
         en_reg.async_clear_config_entry(config_entry)
 
         version = config_entry.version = 2

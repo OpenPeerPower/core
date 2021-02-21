@@ -27,7 +27,7 @@ async def test_discover_device_tracker.opp, mqtt_mock, caplog):
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "test", "state_topic": "test_topic" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("device_tracker.test")
 
@@ -44,7 +44,7 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("device_tracker.beer")
     assert state is None
@@ -54,7 +54,7 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "required-topic" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("device_tracker.beer")
     assert state is not None
@@ -73,7 +73,7 @@ async def test_non_duplicate_device_tracker_discovery.opp, mqtt_mock, caplog):
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("device_tracker.beer")
     state_duplicate = opp.states.get("device_tracker.beer1")
@@ -91,12 +91,12 @@ async def test_device_tracker_removal.opp, mqtt_mock, caplog):
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("device_tracker.beer")
     assert state is not None
 
     async_fire_mqtt_message.opp, "openpeerpower/device_tracker/bla/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("device_tracker.beer")
     assert state is None
 
@@ -108,12 +108,12 @@ async def test_device_tracker_rediscover.opp, mqtt_mock, caplog):
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("device_tracker.beer")
     assert state is not None
 
     async_fire_mqtt_message.opp, "openpeerpower/device_tracker/bla/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("device_tracker.beer")
     assert state is None
 
@@ -122,7 +122,7 @@ async def test_device_tracker_rediscover.opp, mqtt_mock, caplog):
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("device_tracker.beer")
     assert state is not None
 
@@ -134,13 +134,13 @@ async def test_duplicate_device_tracker_removal.opp, mqtt_mock, caplog):
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     async_fire_mqtt_message.opp, "openpeerpower/device_tracker/bla/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert "Component has already been discovered: device_tracker bla" in caplog.text
     caplog.clear()
     async_fire_mqtt_message.opp, "openpeerpower/device_tracker/bla/config", "")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert (
         "Component has already been discovered: device_tracker bla" not in caplog.text
@@ -154,7 +154,7 @@ async def test_device_tracker_discovery_update.opp, mqtt_mock, caplog):
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("device_tracker.beer")
     assert state is not None
@@ -165,7 +165,7 @@ async def test_device_tracker_discovery_update.opp, mqtt_mock, caplog):
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Cider", "state_topic": "test-topic" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("device_tracker.beer")
     assert state is not None
@@ -181,7 +181,7 @@ async def test_cleanup_device_tracker.opp, device_reg, entity_reg, mqtt_mock):
         '  "state_topic": "foobar/tracker",'
         '  "unique_id": "unique" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device and registry entries are created
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
@@ -193,8 +193,8 @@ async def test_cleanup_device_tracker.opp, device_reg, entity_reg, mqtt_mock):
     assert state is not None
 
     device_reg.async_remove_device(device_entry.id)
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify device and registry entries are cleared
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
@@ -205,7 +205,7 @@ async def test_cleanup_device_tracker.opp, device_reg, entity_reg, mqtt_mock):
     # Verify state is removed
     state = opp.states.get("device_tracker.mqtt_unique")
     assert state is None
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Verify retained discovery topic has been cleared
     mqtt_mock.async_publish.assert_called_once_with(
@@ -221,7 +221,7 @@ async def test_setting_device_tracker_value_via_mqtt_message.opp, mqtt_mock, cap
         '{ "name": "test", "state_topic": "test-topic" }',
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("device_tracker.test")
 
@@ -249,7 +249,7 @@ async def test_setting_device_tracker_value_via_mqtt_message_and_template(
         '"value_template": "{% if value is equalto \\"proxy_for_home\\" %}home{% else %}not_home{% endif %}" '
         "}",
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async_fire_mqtt_message.opp, "test-topic", "proxy_for_home")
     state = opp.states.get("device_tracker.test")
@@ -273,7 +273,7 @@ async def test_setting_device_tracker_value_via_mqtt_message_and_template2(
         '"value_template": "{{ value | lower }}" '
         "}",
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("device_tracker.test")
     assert state.state == STATE_UNKNOWN
@@ -296,7 +296,7 @@ async def test_setting_device_tracker_location_via_mqtt_message(
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "test", "state_topic": "test-topic" }',
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("device_tracker.test")
 
@@ -320,7 +320,7 @@ async def test_setting_device_tracker_location_via_lat_lon_message(
         '"json_attributes_topic": "attributes-topic" '
         "}",
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("device_tracker.test")
 

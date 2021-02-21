@@ -62,7 +62,7 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
@@ -97,7 +97,7 @@ async def test_controlling_non_default_state_via_topic.opp, mqtt_mock):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
@@ -133,7 +133,7 @@ async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
@@ -170,7 +170,7 @@ async def test_controlling_non_default_state_via_topic_and_json_message(
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
@@ -203,13 +203,13 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         LOCK_DOMAIN, SERVICE_LOCK, {ATTR_ENTITY_ID: "lock.test"}, blocking=True
     )
 
@@ -219,7 +219,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     assert state.state is STATE_LOCKED
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         LOCK_DOMAIN, SERVICE_UNLOCK, {ATTR_ENTITY_ID: "lock.test"}, blocking=True
     )
 
@@ -249,13 +249,13 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         LOCK_DOMAIN, SERVICE_LOCK, {ATTR_ENTITY_ID: "lock.test"}, blocking=True
     )
 
@@ -265,7 +265,7 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
     assert state.state is STATE_LOCKED
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         LOCK_DOMAIN, SERVICE_UNLOCK, {ATTR_ENTITY_ID: "lock.test"}, blocking=True
     )
 

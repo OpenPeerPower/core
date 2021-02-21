@@ -106,13 +106,13 @@ async def test_set_value.opp):
     assert str(state.state) == "test"
 
     set_value.opp, entity_id, "testing")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert str(state.state) == "testing"
 
     set_value.opp, entity_id, "testing too long")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert str(state.state) == "testing"
@@ -226,7 +226,7 @@ async def test_input_text_context.opp,.opp_admin_user):
     state = opp.states.get("input_text.t1")
     assert state is not None
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "input_text",
         "set_value",
         {"entity_id": state.entity_id, "value": "new_value"},
@@ -289,19 +289,19 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
         },
     ):
         with pytest.raises(Unauthorized):
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 DOMAIN,
                 SERVICE_RELOAD,
                 blocking=True,
                 context=Context(user_id.opp_read_only_user.id),
             )
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
@@ -371,7 +371,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
         }
     )
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -399,7 +399,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}
@@ -427,7 +427,7 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     assert state.state == "loaded from storage"
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json(
         {
@@ -463,7 +463,7 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json(
         {
@@ -493,12 +493,12 @@ async def test_setup_no_config.opp,.opp_admin_user):
     with patch(
         "openpeerpower.config.load_yaml_config_file", autospec=True, return_value={}
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert count_start == len.opp.states.async_entity_ids())

@@ -20,6 +20,6 @@ async def setup_platform.opp, platform):
         "abodepy.event_controller.sio"
     ), patch("abodepy.utils.save_cache"):
         assert await async_setup_component.opp, ABODE_DOMAIN, {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     return mock_entry

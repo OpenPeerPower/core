@@ -11,7 +11,7 @@ from . import get_new_request
 async def do_http_discovery(config,.opp,.opp_client):
     """Submit a request to the Smart Home HTTP API."""
     await async_setup_component.opp, DOMAIN, config)
-    http_client = await.opp_client()
+    http_client = await opp._client()
 
     request = get_new_request("Alexa.Discovery", "Discover")
     response = await http_client.post(

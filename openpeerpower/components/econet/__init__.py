@@ -76,7 +76,7 @@ async def async_setup_entry.opp, config_entry):
 
     async def resubscribe(now):
         """Resubscribe to the MQTT updates."""
-        await opp.async_add_executor_job(api.unsubscribe)
+        await opp..async_add_executor_job(api.unsubscribe)
         api.subscribe()
 
     async def fetch_update(now):

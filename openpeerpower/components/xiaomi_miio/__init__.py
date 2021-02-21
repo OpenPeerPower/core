@@ -82,7 +82,7 @@ async def async_setup_gateway_entry(
         """Fetch data from the subdevice."""
         try:
             for sub_device in gateway.gateway_device.devices.values():
-                await opp.async_add_executor_job(sub_device.update)
+                await opp..async_add_executor_job(sub_device.update)
         except GatewayException as ex:
             raise UpdateFailed("Got exception while fetching the state") from ex
 

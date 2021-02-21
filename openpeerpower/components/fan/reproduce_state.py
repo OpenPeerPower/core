@@ -89,7 +89,7 @@ async def _async_reproduce_state(
         service_calls[SERVICE_TURN_OFF] = service_data
 
     for service, data in service_calls.items():
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, service, data, context=context, blocking=True
         )
 

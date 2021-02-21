@@ -124,7 +124,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigType) -> bool:
    .opp.services.async_remove(DOMAIN, SERVICE_REFRESH)
 
     for component in "sensor", "switch":
-        await opp.config_entries.async_forward_entry_unload(entry, component)
+        await opp..config_entries.async_forward_entry_unload(entry, component)
 
     del.opp.data[DOMAIN]
 

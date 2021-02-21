@@ -67,13 +67,13 @@ async def mock_failed_connection(*args, **kwargs):
 
 async def _init_form.opp, modem_type):
     """Run the user form."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {}
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {MODEM_TYPE: modem_type},
     )
@@ -88,8 +88,8 @@ async def _device_form.opp, flow_id, connection, user_input):
         PATCH_ASYNC_SETUP_ENTRY,
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(flow_id, user_input)
-        await opp.async_block_till_done()
+        result = await opp..config_entries.flow.async_configure(flow_id, user_input)
+        await opp..async_block_till_done()
     return result, mock_setup, mock_setup_entry
 
 
@@ -112,7 +112,7 @@ async def test_fail_on_existing.opp: OpenPeerPowerType):
     config_entry.add_to_opp.opp)
     assert config_entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         data={**MOCK_USER_INPUT_HUB_V2, CONF_HUB_VERSION: 2},
         context={"source": config_entries.SOURCE_USER},
@@ -201,7 +201,7 @@ async def _import_config.opp, config):
     with patch(PATCH_CONNECTION, new=mock_successful_connection,), patch(
         PATCH_ASYNC_SETUP, return_value=True
     ), patch(PATCH_ASYNC_SETUP_ENTRY, return_value=True):
-        return await.opp.config_entries.flow.async_init(
+        return await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=config
         )
 
@@ -221,12 +221,12 @@ async def test_import_plm.opp: OpenPeerPowerType):
 async def _options_init_form.opp, entry_id, step):
     """Run the init options form."""
     with patch(PATCH_ASYNC_SETUP_ENTRY, return_value=True):
-        result = await.opp.config_entries.options.async_init(entry_id)
+        result = await opp..config_entries.options.async_init(entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp..config_entries.options.async_configure(
         result["flow_id"],
         {step: True},
     )
@@ -292,7 +292,7 @@ async def test_import_failed_connection.opp: OpenPeerPowerType):
     with patch(PATCH_CONNECTION, new=mock_failed_connection,), patch(
         PATCH_ASYNC_SETUP, return_value=True
     ), patch(PATCH_ASYNC_SETUP_ENTRY, return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={**MOCK_IMPORT_MINIMUM_HUB_V2, CONF_PORT: 25105, CONF_HUB_VERSION: 2},
@@ -306,7 +306,7 @@ async def _options_form.opp, flow_id, user_input):
     """Test an options form."""
 
     with patch(PATCH_ASYNC_SETUP_ENTRY, return_value=True) as mock_setup_entry:
-        result = await.opp.config_entries.options.async_configure(flow_id, user_input)
+        result = await opp..config_entries.options.async_configure(flow_id, user_input)
         return result, mock_setup_entry
 
 
@@ -567,12 +567,12 @@ async def test_options_dup_selection.opp: OpenPeerPowerType):
         options={},
     )
     config_entry.add_to_opp.opp)
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp..config_entries.options.async_init(config_entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp..config_entries.options.async_configure(
         result["flow_id"],
         {STEP_ADD_OVERRIDE: True, STEP_ADD_X10: True},
     )

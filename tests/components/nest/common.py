@@ -110,5 +110,5 @@ async def async_setup_sdm_platform.opp, platform, devices={}, structures={}):
         "openpeerpower.components.nest.GoogleNestSubscriber", return_value=subscriber
     ):
         assert await async_setup_component.opp, DOMAIN, CONFIG)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     return subscriber

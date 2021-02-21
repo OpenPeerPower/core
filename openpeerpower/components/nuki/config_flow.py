@@ -34,7 +34,7 @@ async def validate_input.opp, data):
     """
 
     try:
-        bridge = await opp.async_add_executor_job(
+        bridge = await opp..async_add_executor_job(
             NukiBridge,
             data[CONF_HOST],
             data[CONF_TOKEN],

@@ -20,13 +20,13 @@ async def test_change_settings.opp):
     await setup_platform.opp, ALARM_DOMAIN)
 
     with patch("abodepy.Abode.set_setting") as mock_set_setting:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             ABODE_DOMAIN,
             SERVICE_SETTINGS,
             {"setting": "confirm_snd", "value": "loud"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_set_setting.assert_called_once()
 
 
@@ -35,13 +35,13 @@ async def test_add_unique_id.opp):
     mock_entry = await setup_platform.opp, ALARM_DOMAIN)
     # Set unique_id to None to match previous config entries
    .opp.config_entries.async_update_entry(entry=mock_entry, unique_id=None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert mock_entry.unique_id is None
 
     with patch("abodepy.UTILS"):
-        await opp.config_entries.async_reload(mock_entry.entry_id)
-        await opp.async_block_till_done()
+        await opp..config_entries.async_reload(mock_entry.entry_id)
+        await opp..async_block_till_done()
 
     assert mock_entry.unique_id == mock_entry.data[CONF_USERNAME]
 
@@ -53,7 +53,7 @@ async def test_unload_entry.opp):
     with patch("abodepy.Abode.logout") as mock_logout, patch(
         "abodepy.event_controller.AbodeEventController.stop"
     ) as mock_events_stop:
-        assert await opp.config_entries.async_unload(mock_entry.entry_id)
+        assert await opp..config_entries.async_unload(mock_entry.entry_id)
         mock_logout.assert_called_once()
         mock_events_stop.assert_called_once()
 

@@ -13,7 +13,7 @@ from .mocks import _get_mock_thermostat_run
 async def test_form_user.opp):
     """Test we get the form with user source."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -32,7 +32,7 @@ async def test_form_user.opp):
     ) as mock_setup, patch(
         "openpeerpower.components.nuheat.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_SERIAL_NUMBER: "12345",
@@ -40,7 +40,7 @@ async def test_form_user.opp):
                 CONF_PASSWORD: "test-password",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Master bathroom"
@@ -55,7 +55,7 @@ async def test_form_user.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -63,7 +63,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.nuheat.config_flow.nuheat.NuHeat.authenticate",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_SERIAL_NUMBER: "12345",
@@ -81,7 +81,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.nuheat.config_flow.nuheat.NuHeat.authenticate",
         side_effect=requests.HTTPError(response=response_mock),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_SERIAL_NUMBER: "12345",
@@ -96,7 +96,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_invalid_thermostat.opp):
     """Test we handle invalid thermostats."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -110,7 +110,7 @@ async def test_form_invalid_thermostat.opp):
         "openpeerpower.components.nuheat.config_flow.nuheat.NuHeat.get_thermostat",
         side_effect=requests.HTTPError(response=response_mock),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_SERIAL_NUMBER: "12345",
@@ -125,7 +125,7 @@ async def test_form_invalid_thermostat.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -133,7 +133,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.nuheat.config_flow.nuheat.NuHeat.authenticate",
         side_effect=requests.exceptions.Timeout,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_SERIAL_NUMBER: "12345",

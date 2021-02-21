@@ -35,8 +35,8 @@ async def setup_onewire_sysbus_integration.opp):
     with patch(
         "openpeerpower.components.onewire.onewirehub.os.path.isdir", return_value=True
     ):
-        await opp.config_entries.async_setup(config_entry.entry_id)
-        await opp.async_block_till_done()
+        await opp..config_entries.async_setup(config_entry.entry_id)
+        await opp..async_block_till_done()
 
     return config_entry
 
@@ -60,8 +60,8 @@ async def setup_onewire_owserver_integration.opp):
     with patch(
         "openpeerpower.components.onewire.onewirehub.protocol.proxy",
     ):
-        await opp.config_entries.async_setup(config_entry.entry_id)
-        await opp.async_block_till_done()
+        await opp..config_entries.async_setup(config_entry.entry_id)
+        await opp..async_block_till_done()
 
         return config_entry
 
@@ -85,7 +85,7 @@ async def setup_onewire_patched_owserver_integration.opp):
     )
     config_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(config_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(config_entry.entry_id)
+    await opp..async_block_till_done()
 
     return config_entry

@@ -34,8 +34,8 @@ REALLY_FAR_MESSAGE = {"id": DEVICE_ID, "name": NAME, "distance": 20}
 async def send_message.opp, topic, message):
     """Test the sending of a message."""
     async_fire_mqtt_message.opp, topic, json.dumps(message))
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def assert_state.opp, room):
@@ -66,7 +66,7 @@ async def test_room_update.opp, mqtt_mock):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     await send_message.opp, BEDROOM_TOPIC, FAR_MESSAGE)
     await assert_state.opp, BEDROOM)

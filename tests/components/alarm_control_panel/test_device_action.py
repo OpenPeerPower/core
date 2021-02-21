@@ -134,7 +134,7 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
         device_id=device_entry.id,
     )
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     expected_capabilities = {
         "arm_away": {"extra_fields": []},
@@ -172,7 +172,7 @@ async def test_get_action_capabilities_arm_code.opp, device_reg, entity_reg):
         device_id=device_entry.id,
     )
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     expected_capabilities = {
         "arm_away": {
@@ -270,42 +270,42 @@ async def test_action.opp):
         },
     )
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert (
        .opp.states.get("alarm_control_panel.alarm_no_arm_code").state == STATE_UNKNOWN
     )
 
    .opp.bus.async_fire("test_event_arm_away")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert (
        .opp.states.get("alarm_control_panel.alarm_no_arm_code").state
         == STATE_ALARM_ARMED_AWAY
     )
 
    .opp.bus.async_fire("test_event_arm_home")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert (
        .opp.states.get("alarm_control_panel.alarm_no_arm_code").state
         == STATE_ALARM_ARMED_HOME
     )
 
    .opp.bus.async_fire("test_event_arm_night")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert (
        .opp.states.get("alarm_control_panel.alarm_no_arm_code").state
         == STATE_ALARM_ARMED_NIGHT
     )
 
    .opp.bus.async_fire("test_event_disarm")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert (
        .opp.states.get("alarm_control_panel.alarm_no_arm_code").state
         == STATE_ALARM_DISARMED
     )
 
    .opp.bus.async_fire("test_event_trigger")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert (
        .opp.states.get("alarm_control_panel.alarm_no_arm_code").state
         == STATE_ALARM_TRIGGERED

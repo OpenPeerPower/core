@@ -147,7 +147,7 @@ async def async_setup_entry(
         return False
 
     # Connect to ISY controller.
-    isy = await opp.async_add_executor_job(
+    isy = await opp..async_add_executor_job(
         partial(
             ISY,
             host.hostname,
@@ -163,7 +163,7 @@ async def async_setup_entry(
         return False
 
     # Trigger a status update for all nodes, not done automatically in PyISY v2.x
-    await opp.async_add_executor_job(isy.nodes.update)
+    await opp..async_add_executor_job(isy.nodes.update)
 
     _categorize_nodes.opp_isy_data, isy.nodes, ignore_identifier, sensor_identifier)
     _categorize_programs.opp_isy_data, isy.programs)
@@ -186,7 +186,7 @@ async def async_setup_entry(
         _LOGGER.debug("ISY Starting Event Stream and automatic updates")
         isy.auto_update = True
 
-    await opp.async_add_executor_job(_start_auto_update)
+    await opp..async_add_executor_job(_start_auto_update)
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
@@ -202,7 +202,7 @@ async def _async_update_listener(
    .opp: OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Handle options update."""
-    await opp.config_entries.async_reload(entry.entry_id)
+    await opp..config_entries.async_reload(entry.entry_id)
 
 
 @callback
@@ -262,7 +262,7 @@ async def async_unload_entry(
         _LOGGER.debug("ISY Stopping Event Stream and automatic updates")
         isy.auto_update = False
 
-    await opp.async_add_executor_job(_stop_auto_update)
+    await opp..async_add_executor_job(_stop_auto_update)
 
    .opp_isy_data[UNDO_UPDATE_LISTENER]()
 

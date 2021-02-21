@@ -12,7 +12,7 @@ from tests.common import MockConfigEntry
 async def test_setup_simple.opp, discovery, device):
     """Test gree integration is setup."""
     await async_setup_component.opp, GREE_DOMAIN, {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # No flows started
     assert len.opp.config_entries.flow.async_progress()) == 0
@@ -29,11 +29,11 @@ async def test_unload_config_entry.opp, discovery, device):
         return_value=True,
     ) as climate_setup:
         assert await async_setup_component.opp, GREE_DOMAIN, {})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert len(climate_setup.mock_calls) == 1
         assert entry.state == ENTRY_STATE_LOADED
 
-    await opp.config_entries.async_unload(entry.entry_id)
+    await opp..config_entries.async_unload(entry.entry_id)
 
     assert entry.state == ENTRY_STATE_NOT_LOADED

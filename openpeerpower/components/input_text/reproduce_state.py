@@ -35,7 +35,7 @@ async def _async_reproduce_state(
     service = SERVICE_SET_VALUE
     service_data = {ATTR_ENTITY_ID: state.entity_id, ATTR_VALUE: state.state}
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, service, service_data, context=context, blocking=True
     )
 

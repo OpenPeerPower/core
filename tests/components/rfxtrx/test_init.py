@@ -75,9 +75,9 @@ async def test_fire_event.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
-    await opp.async_start()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
+    await opp..async_start()
 
     device_registry: DeviceRegistry = await async_get_device_registry.opp)
 
@@ -133,10 +133,10 @@ async def test_send.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "rfxtrx", "send", {"event": "0a520802060101ff0f0269"}, blocking=True
     )
 

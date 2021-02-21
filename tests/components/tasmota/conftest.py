@@ -72,8 +72,8 @@ async def setup_tasmota_helper.opp):
 
     entry.add_to_opp.opp)
 
-    assert await opp.config_entries.async_setup(entry.entry_id)
-    await opp.async_block_till_done()
+    assert await opp..config_entries.async_setup(entry.entry_id)
+    await opp..async_block_till_done()
 
     assert "tasmota" in.opp.config.components
 

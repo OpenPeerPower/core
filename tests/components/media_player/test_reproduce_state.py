@@ -56,7 +56,7 @@ async def test_state.opp, service, state):
 
     await async_reproduce_states.opp, [State(ENTITY_1, state)])
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls_1) == 1
     assert calls_1[0].data == {"entity_id": ENTITY_1}
@@ -71,7 +71,7 @@ async def test_turn_on_with_mode.opp):
        .opp, [State(ENTITY_1, "on", {ATTR_SOUND_MODE: "dummy"})]
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls_1) == 1
     assert calls_1[0].data == {"entity_id": ENTITY_1}
@@ -86,7 +86,7 @@ async def test_multiple_same_state.opp):
 
     await async_reproduce_states.opp, [State(ENTITY_1, "on"), State(ENTITY_2, "on")])
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls_1) == 2
     # order is not guaranteed
@@ -101,7 +101,7 @@ async def test_multiple_different_state.opp):
 
     await async_reproduce_states.opp, [State(ENTITY_1, "on"), State(ENTITY_2, "off")])
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls_1) == 1
     assert calls_1[0].data == {"entity_id": "media_player.test1"}
@@ -117,7 +117,7 @@ async def test_state_with_context.opp):
 
     await async_reproduce_states.opp, [State(ENTITY_1, "on")], context=context)
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data == {"entity_id": ENTITY_1}
@@ -136,7 +136,7 @@ async def test_attribute_no_state.opp):
        .opp, [State(ENTITY_1, None, {ATTR_SOUND_MODE: value})]
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls_1) == 0
     assert len(calls_2) == 0
@@ -161,7 +161,7 @@ async def test_attribute.opp, service, attribute):
 
     await async_reproduce_states.opp, [State(ENTITY_1, None, {attribute: value})])
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls_1) == 1
     assert calls_1[0].data == {"entity_id": ENTITY_1, attribute: value}
@@ -201,7 +201,7 @@ async def test_play_media.opp):
         ],
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls_1) == 2
     assert calls_1[0].data == {

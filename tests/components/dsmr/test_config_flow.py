@@ -25,7 +25,7 @@ async def test_import_usb.opp, dsmr_connection_send_validate_fixture):
     }
 
     with patch("openpeerpower.components.dsmr.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=entry_data,
@@ -63,7 +63,7 @@ async def test_import_usb_failed_connection(
         "openpeerpower.components.dsmr.config_flow.create_dsmr_reader",
         first_fail_connection_factory,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=entry_data,
@@ -95,7 +95,7 @@ async def test_import_usb_no_data.opp, dsmr_connection_send_validate_fixture):
     protocol.wait_closed = wait_closed
 
     with patch("openpeerpower.components.dsmr.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=entry_data,
@@ -121,7 +121,7 @@ async def test_import_usb_wrong_telegram.opp, dsmr_connection_send_validate_fixt
     protocol.telegram = {}
 
     with patch("openpeerpower.components.dsmr.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=entry_data,
@@ -144,7 +144,7 @@ async def test_import_network.opp, dsmr_connection_send_validate_fixture):
     }
 
     with patch("openpeerpower.components.dsmr.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=entry_data,
@@ -176,9 +176,9 @@ async def test_import_update.opp, dsmr_connection_send_validate_fixture):
     with patch(
         "openpeerpower.components.dsmr.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.dsmr.async_unload_entry", return_value=True):
-        await opp.config_entries.async_setup(entry.entry_id)
+        await opp..config_entries.async_setup(entry.entry_id)
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     new_entry_data = {
         "port": "/dev/ttyUSB0",
@@ -190,13 +190,13 @@ async def test_import_update.opp, dsmr_connection_send_validate_fixture):
     with patch(
         "openpeerpower.components.dsmr.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.dsmr.async_unload_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=new_entry_data,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
@@ -222,12 +222,12 @@ async def test_options_flow.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp..config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "time_between_update": 15,
@@ -239,7 +239,7 @@ async def test_options_flow.opp):
     ), patch("openpeerpower.components.dsmr.async_unload_entry", return_value=True):
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert entry.options == {"time_between_update": 15}
 
@@ -256,7 +256,7 @@ async def test_import_luxembourg.opp, dsmr_connection_send_validate_fixture):
     }
 
     with patch("openpeerpower.components.dsmr.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=entry_data,

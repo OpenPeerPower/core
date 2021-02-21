@@ -242,7 +242,7 @@ class HTML5PushRegistrationView(OpenPeerPowerView):
         try:
             opp = request.app["opp"]
 
-            await opp.async_add_executor_job(
+            await opp..async_add_executor_job(
                 save_json, self.json_path, self.registrations
             )
             return self.json_message("Push notification subscriber registered.")
@@ -290,7 +290,7 @@ class HTML5PushRegistrationView(OpenPeerPowerView):
         try:
             opp = request.app["opp"]
 
-            await opp.async_add_executor_job(
+            await opp..async_add_executor_job(
                 save_json, self.json_path, self.registrations
             )
         except OpenPeerPowerError:

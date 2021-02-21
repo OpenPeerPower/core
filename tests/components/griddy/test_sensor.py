@@ -12,7 +12,7 @@ from tests.common import load_fixture
 
 
 async def _load_json_fixture.opp, path):
-    fixture = await opp.async_add_executor_job(
+    fixture = await opp..async_add_executor_job(
         load_fixture, os.path.join("griddy", path)
     )
     return json.loads(fixture)
@@ -33,7 +33,7 @@ async def test_houston_loadzone.opp):
         return_value=griddy_price_data,
     ):
         assert await async_setup_component.opp, DOMAIN, _mock_get_config())
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     sensor_lz_houston_price_now = opp.states.get("sensor.lz_houston_price_now")
     assert sensor_lz_houston_price_now.state == "1.269"

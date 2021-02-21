@@ -34,9 +34,9 @@ async def test_fetching_url.opp,.opp_client):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp._client()
 
     resp = await client.get("/api/camera_proxy/camera.config_test")
 
@@ -67,9 +67,9 @@ async def test_fetching_without_verify_ssl(aioclient_mock,.opp,.opp_client):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp._client()
 
     resp = await client.get("/api/camera_proxy/camera.config_test")
 
@@ -94,9 +94,9 @@ async def test_fetching_url_with_verify_ssl(aioclient_mock,.opp,.opp_client):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp._client()
 
     resp = await client.get("/api/camera_proxy/camera.config_test")
 
@@ -123,9 +123,9 @@ async def test_limit_refetch.opp,.opp_client):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp._client()
 
     resp = await client.get("/api/camera_proxy/camera.config_test")
 
@@ -184,7 +184,7 @@ async def test_stream_source(aioclient_mock,.opp,.opp_client,.opp_ws_client):
         },
     )
     assert await async_setup_component.opp, "stream", {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.states.async_set("sensor.temp", "5")
 
@@ -193,7 +193,7 @@ async def test_stream_source(aioclient_mock,.opp,.opp_client,.opp_ws_client):
         return_value="http://home.assistant/playlist.m3u8",
     ) as mock_stream_url:
         # Request playlist through WebSocket
-        client = await.opp_ws_client.opp)
+        client = await opp._ws_client.opp)
 
         await client.send_json(
             {"id": 1, "type": "camera/stream", "entity_id": "camera.config_test"}
@@ -225,14 +225,14 @@ async def test_stream_source_error(aioclient_mock,.opp,.opp_client,.opp_ws_clien
         },
     )
     assert await async_setup_component.opp, "stream", {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     with patch(
         "openpeerpower.components.camera.Stream.endpoint_url",
         return_value="http://home.assistant/playlist.m3u8",
     ) as mock_stream_url:
         # Request playlist through WebSocket
-        client = await.opp_ws_client.opp)
+        client = await opp._ws_client.opp)
 
         await client.send_json(
             {"id": 1, "type": "camera/stream", "entity_id": "camera.config_test"}
@@ -264,14 +264,14 @@ async def test_no_stream_source(aioclient_mock,.opp,.opp_client,.opp_ws_client):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     with patch(
         "openpeerpower.components.camera.Stream.endpoint_url",
         return_value="http://home.assistant/playlist.m3u8",
     ) as mock_request_stream:
         # Request playlist through WebSocket
-        client = await.opp_ws_client.opp)
+        client = await opp._ws_client.opp)
 
         await client.send_json(
             {"id": 3, "type": "camera/stream", "entity_id": "camera.config_test"}
@@ -309,9 +309,9 @@ async def test_camera_content_type.opp,.opp_client):
     await async_setup_component(
        .opp, "camera", {"camera": [cam_config_svg, cam_config_normal]}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp._client()
 
     resp_1 = await client.get("/api/camera_proxy/camera.config_test_svg")
     assert respx.calls.call_count == 1
@@ -346,9 +346,9 @@ async def test_reloading.opp,.opp_client):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp._client()
 
     resp = await client.get("/api/camera_proxy/camera.config_test")
 
@@ -363,13 +363,13 @@ async def test_reloading.opp,.opp_client):
         "generic/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 

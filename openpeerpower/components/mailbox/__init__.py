@@ -62,7 +62,7 @@ async def async_setup.opp, config):
                    .opp, p_config, discovery_info
                 )
             elif hasattr(platform, "get_op.dler"):
-                mailbox = await opp.async_add_executor_job(
+                mailbox = await opp..async_add_executor_job(
                     platform.get_op.dler,.opp, p_config, discovery_info
                 )
             else:

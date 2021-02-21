@@ -261,7 +261,7 @@ async def async_send_message(
                     url, verify=data.get(ATTR_VERIFY, True), timeout=timeout
                 )
 
-            result = await opp.async_add_executor_job(get_url, url)
+            result = await opp..async_add_executor_job(get_url, url)
 
             if result.status_code >= HTTP_BAD_REQUEST:
                 _LOGGER.error("Could not load file from %s", url)

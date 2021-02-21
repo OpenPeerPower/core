@@ -79,4 +79,4 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await opp.config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN)
+    return await opp..config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN)

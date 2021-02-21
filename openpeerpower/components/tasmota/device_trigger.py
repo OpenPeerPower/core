@@ -195,7 +195,7 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_op.h
        .opp, TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_op.h), discovery_update
     )
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     device = device_registry.async_get_device(
         set(),
         {(CONNECTION_NETWORK_MAC, tasmota_trigger.cfg.mac)},
@@ -286,6 +286,6 @@ async def async_attach_trigger(
             subtype=config[CONF_SUBTYPE],
             tasmota_trigger=None,
         )
-    return await.opp.data[DEVICE_TRIGGERS][discovery_id].add_trigger(
+    return await opp..data[DEVICE_TRIGGERS][discovery_id].add_trigger(
         action, automation_info
     )

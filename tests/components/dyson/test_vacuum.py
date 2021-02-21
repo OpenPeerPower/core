@@ -93,7 +93,7 @@ async def test_commands(
    .opp: OpenPeerPower, device: Dyson360Eye, service: str, command: str
 ) -> None:
     """Test sending commands to the vacuum."""
-    await.opp.services.async_call(
+    await opp..services.async_call(
         PLATFORM_DOMAIN, service, {ATTR_ENTITY_ID: ENTITY_ID}, blocking=True
     )
     getattr(device, command).assert_called_once_with()
@@ -106,7 +106,7 @@ async def test_set_fan_speed.opp: OpenPeerPower, device: Dyson360Eye):
         "Quiet": PowerMode.QUIET,
     }
     for service_speed, command_speed in fan_speed_map.items():
-        await.opp.services.async_call(
+        await opp..services.async_call(
             PLATFORM_DOMAIN,
             SERVICE_SET_FAN_SPEED,
             {ATTR_ENTITY_ID: ENTITY_ID, ATTR_FAN_SPEED: service_speed},

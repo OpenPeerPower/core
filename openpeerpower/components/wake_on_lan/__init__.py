@@ -45,7 +45,7 @@ async def async_setup.opp, config):
             broadcast_port,
         )
 
-        await opp.async_add_executor_job(
+        await opp..async_add_executor_job(
             partial(wakeonlan.send_magic_packet, mac_address, **service_kwargs)
         )
 

@@ -77,7 +77,7 @@ async def async_setup.opp, config):
     radius = conf[CONF_RADIUS]
     additional_stations = conf[CONF_STATIONS]
 
-    setup_ok = await opp.async_add_executor_job(
+    setup_ok = await opp..async_add_executor_job(
         tankerkoenig.setup, latitude, longitude, radius, additional_stations
     )
     if not setup_ok:

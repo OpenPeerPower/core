@@ -42,7 +42,7 @@ async def test_config_not_ready.opp, aioclient_mock):
 
     aioclient_mock.get(API_POINT_URL, exc=ConnectionError())
     entry.add_to_opp.opp)
-    await opp.config_entries.async_setup(entry.entry_id)
+    await opp..config_entries.async_setup(entry.entry_id)
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
@@ -61,7 +61,7 @@ async def test_config_without_unique_id.opp, aioclient_mock):
 
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_valid_station.json"))
     entry.add_to_opp.opp)
-    await opp.config_entries.async_setup(entry.entry_id)
+    await opp..config_entries.async_setup(entry.entry_id)
     assert entry.state == ENTRY_STATE_LOADED
     assert entry.unique_id == "123-456"
 
@@ -82,7 +82,7 @@ async def test_config_with_turned_off_station.opp, aioclient_mock):
 
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_no_station.json"))
     entry.add_to_opp.opp)
-    await opp.config_entries.async_setup(entry.entry_id)
+    await opp..config_entries.async_setup(entry.entry_id)
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
@@ -112,8 +112,8 @@ async def test_update_interval.opp, aioclient_mock):
         text=load_fixture("airly_valid_station.json"),
     )
     entry.add_to_opp.opp)
-    await opp.config_entries.async_setup(entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(entry.entry_id)
+    await opp..async_block_till_done()
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 2
     assert entry.state == ENTRY_STATE_LOADED
@@ -128,8 +128,8 @@ async def test_unload_entry.opp, aioclient_mock):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
-    assert await opp.config_entries.async_unload(entry.entry_id)
-    await opp.async_block_till_done()
+    assert await opp..config_entries.async_unload(entry.entry_id)
+    await opp..async_block_till_done()
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert not.opp.data.get(DOMAIN)

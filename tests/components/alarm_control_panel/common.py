@@ -25,7 +25,7 @@ async def async_alarm_disarm.opp, code=None, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_ALARM_DISARM, data, blocking=True)
+    await opp..services.async_call(DOMAIN, SERVICE_ALARM_DISARM, data, blocking=True)
 
 
 async def async_alarm_arm_home.opp, code=None, entity_id=ENTITY_MATCH_ALL):
@@ -36,7 +36,7 @@ async def async_alarm_arm_home.opp, code=None, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_ALARM_ARM_HOME, data, blocking=True)
+    await opp..services.async_call(DOMAIN, SERVICE_ALARM_ARM_HOME, data, blocking=True)
 
 
 async def async_alarm_arm_away.opp, code=None, entity_id=ENTITY_MATCH_ALL):
@@ -47,7 +47,7 @@ async def async_alarm_arm_away.opp, code=None, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_ALARM_ARM_AWAY, data, blocking=True)
+    await opp..services.async_call(DOMAIN, SERVICE_ALARM_ARM_AWAY, data, blocking=True)
 
 
 async def async_alarm_arm_night.opp, code=None, entity_id=ENTITY_MATCH_ALL):
@@ -58,7 +58,7 @@ async def async_alarm_arm_night.opp, code=None, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_ALARM_ARM_NIGHT, data, blocking=True)
+    await opp..services.async_call(DOMAIN, SERVICE_ALARM_ARM_NIGHT, data, blocking=True)
 
 
 async def async_alarm_trigger.opp, code=None, entity_id=ENTITY_MATCH_ALL):
@@ -69,7 +69,7 @@ async def async_alarm_trigger.opp, code=None, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_ALARM_TRIGGER, data, blocking=True)
+    await opp..services.async_call(DOMAIN, SERVICE_ALARM_TRIGGER, data, blocking=True)
 
 
 async def async_alarm_arm_custom_bypass.opp, code=None, entity_id=ENTITY_MATCH_ALL):
@@ -80,6 +80,6 @@ async def async_alarm_arm_custom_bypass.opp, code=None, entity_id=ENTITY_MATCH_A
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, SERVICE_ALARM_ARM_CUSTOM_BYPASS, data, blocking=True
     )

@@ -94,7 +94,7 @@ async def async_setup_entry.opp, entry):
         entry.entry_id,
     )
     try:
-        await opp.async_add_executor_job(plex_server.connect)
+        await opp..async_add_executor_job(plex_server.connect)
     except ShouldUpdateConfigEntry:
         new_server_data = {
             **entry.data[PLEX_SERVER_CONFIG],
@@ -146,7 +146,7 @@ async def async_setup_entry.opp, entry):
     entry.add_update_listener(async_options_updated)
 
     async def async_update_plex():
-        await.opp.data[PLEX_DOMAIN][GDM_DEBOUNCER]()
+        await opp..data[PLEX_DOMAIN][GDM_DEBOUNCER]()
         await plex_server.async_update_platforms()
 
     unsub = async_dispatcher_connect(
@@ -216,7 +216,7 @@ async def async_setup_entry.opp, entry):
         except (plexapi.exceptions.BadRequest, plexapi.exceptions.Unauthorized):
             return None
 
-    await opp.async_add_executor_job(get_plex_account, plex_server)
+    await opp..async_add_executor_job(get_plex_account, plex_server)
 
     return True
 

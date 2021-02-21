@@ -82,7 +82,7 @@ async def test_config_local_sdk.opp,.opp_client):
         local_sdk_user_id="mock-user-id",
     )
 
-    client = await.opp_client()
+    client = await opp._client()
 
     config.async_enable_local_sdk()
 
@@ -141,7 +141,7 @@ async def test_config_local_sdk_if_disabled.opp,.opp_client):
         enabled=False,
     )
 
-    client = await.opp_client()
+    client = await opp._client()
 
     config.async_enable_local_sdk()
 
@@ -183,7 +183,7 @@ async def test_agent_user_id_storage.opp,.opp_storage):
 
     async def _check_after_delay(data):
         async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=2))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert.opp_storage["google_assistant"] == {
             "version": 1,

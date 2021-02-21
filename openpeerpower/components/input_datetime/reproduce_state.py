@@ -71,7 +71,7 @@ async def _async_reproduce_state(
     elif has_date:
         service_data[ATTR_DATE] = state.state
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, "set_datetime", service_data, context=context, blocking=True
     )
 

@@ -115,7 +115,7 @@ async def test_op._reset_unloads_entry_if_setup.opp, default_mock_op._factory):
     config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 1
     # hap_reset is called during unload
-    await opp.config_entries.async_unload(config_entries[0].entry_id)
+    await opp..config_entries.async_unload(config_entries[0].entry_id)
     # entry is unloaded
     assert config_entries[0].state == ENTRY_STATE_NOT_LOADED
     assert.opp.data[HMIPC_DOMAIN] == {}
@@ -161,7 +161,7 @@ async def test_auth_create.opp, simple_mock_auth):
         return_value=simple_mock_auth,
     ):
         assert await hmip_auth.async_setup()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert hmip_auth.auth.pin == HAPPIN
 
 

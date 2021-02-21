@@ -117,10 +117,10 @@ async def test_cannot_connect.opp):
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
         config_entry.add_to_opp.opp)
-        await opp.config_entries.async_setup(config_entry.entry_id)
-        await opp.async_block_till_done()
+        await opp..config_entries.async_setup(config_entry.entry_id)
+        await opp..async_block_till_done()
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
     for id in ENTITY_IDS.values():
         assert not registry.async_is_registered(id)
 
@@ -134,10 +134,10 @@ async def test_unauthorized.opp):
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
         config_entry.add_to_opp.opp)
-        await opp.config_entries.async_setup(config_entry.entry_id)
-        await opp.async_block_till_done()
+        await opp..config_entries.async_setup(config_entry.entry_id)
+        await opp..async_block_till_done()
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
     for id in ENTITY_IDS.values():
         assert not registry.async_is_registered(id)
 
@@ -167,7 +167,7 @@ def _check_state.opp, category, entity_id):
 
 async def test_setup.opp, two_zone_alarm):  # noqa: F811
     """Test entity setup."""
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     for id in ENTITY_IDS.values():
         assert not registry.async_is_registered(id)
@@ -195,7 +195,7 @@ async def test_setup.opp, two_zone_alarm):  # noqa: F811
         return_value={LAST_EVENT_TIMESTAMP_KEY: TEST_EVENTS[0].time},
     ):
         async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=65))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         events_mock.assert_awaited_once_with(TEST_EVENTS[0].time, 10)
 
     for category, entity_id in ENTITY_IDS.items():

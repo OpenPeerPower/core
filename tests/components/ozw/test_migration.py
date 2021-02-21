@@ -145,7 +145,7 @@ def zwave_integration_fixture.opp, zwave_migration_data):
 async def test_migrate_zwave.opp, migration_data,.opp_ws_client, zwave_integration):
     """Test the zwave to ozw migration websocket api."""
     await setup_ozw.opp, fixture=migration_data)
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     assert.opp.config_entries.async_entries("zwave")
 
@@ -222,7 +222,7 @@ async def test_migrate_zwave.opp, migration_data,.opp_ws_client, zwave_integrati
     # Check that the zwave integration fails entry setup after migration
     zwave_config_entry = MockConfigEntry(domain="zwave")
     zwave_config_entry.add_to_opp.opp)
-    assert not await opp.config_entries.async_setup(zwave_config_entry.entry_id)
+    assert not await opp..config_entries.async_setup(zwave_config_entry.entry_id)
 
 
 async def test_migrate_zwave_dry_run(
@@ -230,7 +230,7 @@ async def test_migrate_zwave_dry_run(
 ):
     """Test the zwave to ozw migration websocket api dry run."""
     await setup_ozw.opp, fixture=migration_data)
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json({ID: 5, TYPE: "ozw/migrate_zwave"})
     msg = await client.receive_json()
@@ -276,13 +276,13 @@ async def test_migrate_zwave_dry_run(
     # Check that the zwave integration can be setup after dry run
     zwave_config_entry = zwave_integration
     with patch("openzwave.option.ZWaveOption"), patch("openzwave.network.ZWaveNetwork"):
-        assert await opp.config_entries.async_setup(zwave_config_entry.entry_id)
+        assert await opp..config_entries.async_setup(zwave_config_entry.entry_id)
 
 
 async def test_migrate_zwave_not_setup.opp, migration_data,.opp_ws_client):
     """Test the zwave to ozw migration websocket without zwave setup."""
     await setup_ozw.opp, fixture=migration_data)
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json({ID: 5, TYPE: "ozw/migrate_zwave"})
     msg = await client.receive_json()

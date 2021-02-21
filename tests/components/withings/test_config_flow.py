@@ -25,7 +25,7 @@ async def test_config_non_unique_profile.opp: OpenPeerPower) -> None:
     )
     config_entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         const.DOMAIN, context={"source": "profile"}, data={const.PROFILE: "person0"}
     )
 
@@ -50,14 +50,14 @@ async def test_config_reauth_profile(
     }
     await async_process_op.core_config.opp,.opp_config.get(HA_DOMAIN))
     assert await async_setup_component.opp, const.DOMAIN,.opp_config)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     config_entry = MockConfigEntry(
         domain=const.DOMAIN, data={const.PROFILE: "person0"}, unique_id="0"
     )
     config_entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         const.DOMAIN, context={"source": "reauth", "profile": "person0"}
     )
     assert result
@@ -65,7 +65,7 @@ async def test_config_reauth_profile(
     assert result["step_id"] == "reauth"
     assert result["description_placeholders"] == {const.PROFILE: "person0"}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
@@ -96,7 +96,7 @@ async def test_config_reauth_profile(
         },
     )
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp..config_entries.flow.async_configure(result["flow_id"])
     assert result
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"

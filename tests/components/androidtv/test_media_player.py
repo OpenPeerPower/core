@@ -138,9 +138,9 @@ async def _test_reconnect.opp, caplog, config):
         patch_key
     ], patchers.PATCH_KEYGEN, patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
@@ -152,7 +152,7 @@ async def _test_reconnect.opp, caplog, config):
         patch_key
     ], patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
         for _ in range(5):
-            await.opp.helpers.entity_component.async_update_entity(entity_id)
+            await opp..helpers.entity_component.async_update_entity(entity_id)
             state = opp.states.get(entity_id)
             assert state is not None
             assert state.state == STATE_UNAVAILABLE
@@ -165,7 +165,7 @@ async def _test_reconnect.opp, caplog, config):
     with patchers.patch_connect(True)[patch_key], patchers.patch_shell(
         SHELL_RESPONSE_STANDBY
     )[patch_key], patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..helpers.entity_component.async_update_entity(entity_id)
 
         state = opp.states.get(entity_id)
         assert state is not None
@@ -198,8 +198,8 @@ async def _test_adb_shell_returns_none.opp, config):
         patch_key
     ], patchers.PATCH_KEYGEN, patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp.async_block_till_done()
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..async_block_till_done()
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state != STATE_UNAVAILABLE
@@ -207,7 +207,7 @@ async def _test_adb_shell_returns_none.opp, config):
     with patchers.patch_shell(None)[patch_key], patchers.patch_shell(error=True)[
         patch_key
     ], patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_UNAVAILABLE
@@ -307,8 +307,8 @@ async def test_setup_with_adbkey.opp):
         patch_key
     ], patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER, patchers.PATCH_ISFILE, patchers.PATCH_ACCESS:
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp.async_block_till_done()
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..async_block_till_done()
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
@@ -328,8 +328,8 @@ async def _test_sources.opp, config0):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp.async_block_till_done()
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..async_block_till_done()
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
@@ -353,7 +353,7 @@ async def _test_sources.opp, config0):
         )
 
     with patch_update:
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_PLAYING
@@ -379,7 +379,7 @@ async def _test_sources.opp, config0):
         )
 
     with patch_update:
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_PLAYING
@@ -413,8 +413,8 @@ async def _test_exclude_sources.opp, config0, expected_sources):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp.async_block_till_done()
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..async_block_till_done()
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
@@ -450,7 +450,7 @@ async def _test_exclude_sources.opp, config0, expected_sources):
         )
 
     with patch_update:
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_PLAYING
@@ -488,14 +488,14 @@ async def _test_select_source.opp, config0, source, expected_arg, method_patch):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp.async_block_till_done()
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..async_block_till_done()
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
 
     with method_patch as method_patch_:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SELECT_SOURCE,
             {ATTR_ENTITY_ID: entity_id, ATTR_INPUT_SOURCE: source},
@@ -706,8 +706,8 @@ async def _test_setup_fail.opp, config):
         patch_key
     ], patchers.PATCH_KEYGEN, patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp.async_block_till_done()
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..async_block_till_done()
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is None
 
@@ -739,10 +739,10 @@ async def test_setup_two_devices.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         for entity_id in ["media_player.android_tv", "media_player.fire_tv"]:
-            await.opp.helpers.entity_component.async_update_entity(entity_id)
+            await opp..helpers.entity_component.async_update_entity(entity_id)
             state = opp.states.get(entity_id)
             assert state is not None
             assert state.state == STATE_OFF
@@ -756,7 +756,7 @@ async def test_setup_same_device_twice.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         assert state is not None
 
@@ -766,7 +766,7 @@ async def test_setup_same_device_twice.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
 
 async def test_adb_command.opp):
@@ -779,12 +779,12 @@ async def test_adb_command.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     with patch(
         "androidtv.basetv.basetv_async.BaseTVAsync.adb_shell", return_value=response
     ) as patch_shell:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             ANDROIDTV_DOMAIN,
             SERVICE_ADB_COMMAND,
             {ATTR_ENTITY_ID: entity_id, ATTR_COMMAND: command},
@@ -807,13 +807,13 @@ async def test_adb_command_unicode_decode_error.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     with patch(
         "androidtv.basetv.basetv_async.BaseTVAsync.adb_shell",
         side_effect=UnicodeDecodeError("utf-8", response, 0, len(response), "TEST"),
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             ANDROIDTV_DOMAIN,
             SERVICE_ADB_COMMAND,
             {ATTR_ENTITY_ID: entity_id, ATTR_COMMAND: command},
@@ -837,12 +837,12 @@ async def test_adb_command_key.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     with patch(
         "androidtv.basetv.basetv_async.BaseTVAsync.adb_shell", return_value=response
     ) as patch_shell:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             ANDROIDTV_DOMAIN,
             SERVICE_ADB_COMMAND,
             {ATTR_ENTITY_ID: entity_id, ATTR_COMMAND: command},
@@ -866,13 +866,13 @@ async def test_adb_command_get_properties.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     with patch(
         "androidtv.androidtv.androidtv_async.AndroidTVAsync.get_properties_dict",
         return_value=response,
     ) as patch_get_props:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             ANDROIDTV_DOMAIN,
             SERVICE_ADB_COMMAND,
             {ATTR_ENTITY_ID: entity_id, ATTR_COMMAND: command},
@@ -895,13 +895,13 @@ async def test_learn_sendevent.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         with patch(
             "androidtv.basetv.basetv_async.BaseTVAsync.learn_sendevent",
             return_value=response,
         ) as patch_learn_sendevent:
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 ANDROIDTV_DOMAIN,
                 SERVICE_LEARN_SENDEVENT,
                 {ATTR_ENTITY_ID: entity_id},
@@ -922,10 +922,10 @@ async def test_update_lock_not_acquired.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     with patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
@@ -935,13 +935,13 @@ async def test_update_lock_not_acquired.opp):
         side_effect=LockNotAcquiredException,
     ):
         with patchers.patch_shell(SHELL_RESPONSE_STANDBY)[patch_key]:
-            await.opp.helpers.entity_component.async_update_entity(entity_id)
+            await opp..helpers.entity_component.async_update_entity(entity_id)
             state = opp.states.get(entity_id)
             assert state is not None
             assert state.state == STATE_OFF
 
     with patchers.patch_shell(SHELL_RESPONSE_STANDBY)[patch_key]:
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_STANDBY
@@ -957,11 +957,11 @@ async def test_download.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     # Failed download because path is not whitelisted
     with patch("androidtv.basetv.basetv_async.BaseTVAsync.adb_pull") as patch_pull:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             ANDROIDTV_DOMAIN,
             SERVICE_DOWNLOAD,
             {
@@ -977,7 +977,7 @@ async def test_download.opp):
     with patch(
         "androidtv.basetv.basetv_async.BaseTVAsync.adb_pull"
     ) as patch_pull, patch.object.opp.config, "is_allowed_path", return_value=True):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             ANDROIDTV_DOMAIN,
             SERVICE_DOWNLOAD,
             {
@@ -1000,11 +1000,11 @@ async def test_upload.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     # Failed upload because path is not whitelisted
     with patch("androidtv.basetv.basetv_async.BaseTVAsync.adb_push") as patch_push:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             ANDROIDTV_DOMAIN,
             SERVICE_UPLOAD,
             {
@@ -1020,7 +1020,7 @@ async def test_upload.opp):
     with patch(
         "androidtv.basetv.basetv_async.BaseTVAsync.adb_push"
     ) as patch_push, patch.object.opp.config, "is_allowed_path", return_value=True):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             ANDROIDTV_DOMAIN,
             SERVICE_UPLOAD,
             {
@@ -1041,12 +1041,12 @@ async def test_androidtv_volume_set.opp):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     with patch(
         "androidtv.basetv.basetv_async.BaseTVAsync.set_volume_level", return_value=0.5
     ) as patch_set_volume_level:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_VOLUME_SET,
             {ATTR_ENTITY_ID: entity_id, ATTR_MEDIA_VOLUME_LEVEL: 0.5},
@@ -1067,12 +1067,12 @@ async def test_get_image.opp,.opp_ws_client):
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     with patchers.patch_shell("11")[patch_key]:
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..helpers.entity_component.async_update_entity(entity_id)
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     with patch(
         "androidtv.basetv.basetv_async.BaseTVAsync.adb_screencap", return_value=b"image"
@@ -1126,7 +1126,7 @@ async def _test_service(
     with patch(
         f"androidtv.{androidtv_patch}.{androidtv_method}", return_value=return_value
     ) as service_call:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             ha_service_name,
             service_data=service_data,
@@ -1144,7 +1144,7 @@ async def test_services_androidtv.opp):
             assert await async_setup_component(
                .opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER
             )
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
 
         with patchers.patch_shell(SHELL_RESPONSE_STANDBY)[patch_key]:
             await _test_service(
@@ -1194,7 +1194,7 @@ async def test_services_firetv.opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[patch_key]:
         with patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
             assert await async_setup_component.opp, DOMAIN, config)
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
 
         with patchers.patch_shell(SHELL_RESPONSE_STANDBY)[patch_key]:
             await _test_service.opp, entity_id, SERVICE_MEDIA_STOP, "back")
@@ -1211,13 +1211,13 @@ async def test_connection_closed_on_op.stop.opp):
             assert await async_setup_component(
                .opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER
             )
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
 
             with patch(
                 "androidtv.androidtv.androidtv_async.AndroidTVAsync.adb_close"
             ) as adb_close:
                .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-                await opp.async_block_till_done()
+                await opp..async_block_till_done()
                 assert adb_close.called
 
 
@@ -1234,22 +1234,22 @@ async def test_exception.opp):
         patch_key
     ], patchers.PATCH_KEYGEN, patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
         assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_PYTHON_ADB)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF
 
         # When an unforessen exception occurs, we close the ADB connection and raise the exception
         with patchers.PATCH_ANDROIDTV_UPDATE_EXCEPTION, pytest.raises(Exception):
-            await.opp.helpers.entity_component.async_update_entity(entity_id)
+            await opp..helpers.entity_component.async_update_entity(entity_id)
             state = opp.states.get(entity_id)
             assert state is not None
             assert state.state == STATE_UNAVAILABLE
 
         # On the next update, HA will reconnect to the device
-        await.opp.helpers.entity_component.async_update_entity(entity_id)
+        await opp..helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None
         assert state.state == STATE_OFF

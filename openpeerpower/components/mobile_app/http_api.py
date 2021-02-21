@@ -68,7 +68,7 @@ class RegistrationsView(OpenPeerPowerView):
         if.opp.components.cloud.async_active_subscription():
             data[
                 CONF_CLOUDHOOK_URL
-            ] = await.opp.components.cloud.async_create_cloudhook(webhook_id)
+            ] = await opp..components.cloud.async_create_cloudhook(webhook_id)
 
         data[CONF_WEBHOOK_ID] = webhook_id
 
@@ -91,7 +91,7 @@ class RegistrationsView(OpenPeerPowerView):
             # Fallback to DEVICE_ID
             data[ATTR_DEVICE_NAME] = data[ATTR_DEVICE_ID]
 
-        await opp.async_create_task(
+        await opp..async_create_task(
            .opp.config_entries.flow.async_init(
                 DOMAIN, data=data, context={"source": "registration"}
             )

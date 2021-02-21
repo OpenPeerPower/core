@@ -38,8 +38,8 @@ async def test_owserver_connect_failure.opp):
         "openpeerpower.components.onewire.onewirehub.protocol.proxy",
         side_effect=ConnError,
     ):
-        await opp.config_entries.async_setup(config_entry_owserver.entry_id)
-        await opp.async_block_till_done()
+        await opp..config_entries.async_setup(config_entry_owserver.entry_id)
+        await opp..async_block_till_done()
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert config_entry_owserver.state == ENTRY_STATE_SETUP_RETRY
@@ -65,8 +65,8 @@ async def test_failed_owserver_listing.opp):
 
     with patch("openpeerpower.components.onewire.onewirehub.protocol.proxy") as owproxy:
         owproxy.return_value.dir.side_effect = OwnetError
-        await opp.config_entries.async_setup(config_entry_owserver.entry_id)
-        await opp.async_block_till_done()
+        await opp..config_entries.async_setup(config_entry_owserver.entry_id)
+        await opp..async_block_till_done()
 
         return config_entry_owserver
 
@@ -80,9 +80,9 @@ async def test_unload_entry.opp):
     assert config_entry_owserver.state == ENTRY_STATE_LOADED
     assert config_entry_sysbus.state == ENTRY_STATE_LOADED
 
-    assert await opp.config_entries.async_unload(config_entry_owserver.entry_id)
-    assert await opp.config_entries.async_unload(config_entry_sysbus.entry_id)
-    await opp.async_block_till_done()
+    assert await opp..config_entries.async_unload(config_entry_owserver.entry_id)
+    assert await opp..config_entries.async_unload(config_entry_sysbus.entry_id)
+    await opp..async_block_till_done()
 
     assert config_entry_owserver.state == ENTRY_STATE_NOT_LOADED
     assert config_entry_sysbus.state == ENTRY_STATE_NOT_LOADED

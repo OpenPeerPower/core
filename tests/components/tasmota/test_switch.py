@@ -41,7 +41,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("switch.test")
     assert state.state == "unavailable"
@@ -84,13 +84,13 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Turn the switch on and verify MQTT message is sent
@@ -126,7 +126,7 @@ async def test_relay_as_light.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("switch.test")
     assert state is None

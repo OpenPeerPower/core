@@ -246,7 +246,7 @@ class LogbookView(OpenPeerPowerView):
                 )
             )
 
-        return await opp.async_add_executor_job(json_events)
+        return await opp..async_add_executor_job(json_events)
 
 
 def humanify.opp, events, entity_attr_cache, context_lookup):

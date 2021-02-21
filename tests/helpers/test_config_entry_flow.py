@@ -71,14 +71,14 @@ async def test_user_op._confirmation.opp, discovery_flow_conf):
     discovery_flow_conf["discovered"] = True
     mock_entity_platform.opp, "config_flow.test", None)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_USER}, data={}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "confirm"
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
@@ -116,13 +116,13 @@ async def test_multiple_discoveries.opp, discovery_flow_conf):
     """Test we only create one instance for multiple discoveries."""
     mock_entity_platform.opp, "config_flow.test", None)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_DISCOVERY}, data={}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
     # Second discovery
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_DISCOVERY}, data={}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -133,13 +133,13 @@ async def test_only_one_in_progress.opp, discovery_flow_conf):
     mock_entity_platform.opp, "config_flow.test", None)
 
     # Discovery starts flow
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_DISCOVERY}, data={}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
     # User starts flow
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_USER}, data={}
     )
 
@@ -149,7 +149,7 @@ async def test_only_one_in_progress.opp, discovery_flow_conf):
     assert len.opp.config_entries.flow.async_progress()) == 2
 
     # Discovery should be aborted once user confirms
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert len.opp.config_entries.flow.async_progress()) == 0
 
@@ -159,13 +159,13 @@ async def test_import_abort_discovery.opp, discovery_flow_conf):
     mock_entity_platform.opp, "config_flow.test", None)
 
     # Discovery starts flow
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_DISCOVERY}, data={}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
     # Start import flow
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_IMPORT}, data={}
     )
 
@@ -202,7 +202,7 @@ async def test_ignored_discoveries.opp, discovery_flow_conf):
     """Test we can ignore discovered entries."""
     mock_entity_platform.opp, "config_flow.test", None)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_DISCOVERY}, data={}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -217,14 +217,14 @@ async def test_ignored_discoveries.opp, discovery_flow_conf):
     )
 
     # Ignore it.
-    await.opp.config_entries.flow.async_init(
+    await opp..config_entries.flow.async_init(
         flow["handler"],
         context={"source": config_entries.SOURCE_IGNORE},
         data={"unique_id": flow["context"]["unique_id"], "title": "Ignored Entry"},
     )
 
     # Second discovery should be aborted
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_DISCOVERY}, data={}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -287,7 +287,7 @@ async def test_webhook_create_cloudhook.opp, webhook_flow_conf):
     )
     mock_entity_platform.opp, "config_flow.test_single", None)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "test_single", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -301,7 +301,7 @@ async def test_webhook_create_cloudhook.opp, webhook_flow_conf):
         "openpeerpower.components.cloud.async_is_logged_in", return_value=True
     ):
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["description_placeholders"]["webhook_url"] == "https://example.com"
@@ -313,7 +313,7 @@ async def test_webhook_create_cloudhook.opp, webhook_flow_conf):
         return_value={"cloudhook_url": "https://example.com"},
     ) as mock_delete:
 
-        result = await opp.config_entries.async_remove(result["result"].entry_id)
+        result = await opp..config_entries.async_remove(result["result"].entry_id)
 
     assert len(mock_delete.mock_calls) == 1
     assert result["require_restart"] is False

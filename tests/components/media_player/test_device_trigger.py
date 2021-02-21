@@ -103,7 +103,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is turning on.
    .opp.states.async_set("media_player.entity", STATE_ON)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert (
         calls[0].data["some"]
@@ -112,7 +112,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is turning off.
    .opp.states.async_set("media_player.entity", STATE_OFF)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
     assert (
         calls[1].data["some"]
@@ -121,7 +121,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity becomes idle.
    .opp.states.async_set("media_player.entity", STATE_IDLE)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 3
     assert (
         calls[2].data["some"]
@@ -130,7 +130,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity starts playing.
    .opp.states.async_set("media_player.entity", STATE_PLAYING)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 4
     assert (
         calls[3].data["some"]
@@ -139,7 +139,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is paused.
    .opp.states.async_set("media_player.entity", STATE_PAUSED)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 5
     assert (
         calls[4].data["some"]

@@ -148,7 +148,7 @@ async def async_call_from_config(
             raise
         _LOGGER.error(ex)
     else:
-        await.opp.services.async_call(**params, blocking=blocking, context=context)
+        await opp..services.async_call(**params, blocking=blocking, context=context)
 
 
 @op.callback
@@ -424,7 +424,7 @@ async def async_get_all_descriptions(
             *(async_get_integration.opp, domain) for domain in missing),
         )
 
-        contents = await opp.async_add_executor_job(
+        contents = await opp..async_add_executor_job(
             _load_services_files,.opp, integrations
         )
 
@@ -492,7 +492,7 @@ async def entity_service_call(
     Calls all platforms simultaneously.
     """
     if call.context.user_id:
-        user = await opp.auth.async_get_user(call.context.user_id)
+        user = await opp..auth.async_get_user(call.context.user_id)
         if user is None:
             raise UnknownUser(context=call.context)
         entity_perms: Optional[
@@ -680,7 +680,7 @@ def async_register_admin_service(
     @wraps(service_func)
     async def admin_op.dler(call: op.ServiceCall) -> None:
         if call.context.user_id:
-            user = await opp.auth.async_get_user(call.context.user_id)
+            user = await opp..auth.async_get_user(call.context.user_id)
             if user is None:
                 raise UnknownUser(context=call.context)
             if not user.is_admin:
@@ -712,7 +712,7 @@ def verify_domain_control(
             if not call.context.user_id:
                 return await service_op.dler(call)
 
-            user = await opp.auth.async_get_user(call.context.user_id)
+            user = await opp..auth.async_get_user(call.context.user_id)
 
             if user is None:
                 raise UnknownUser(
@@ -721,7 +721,7 @@ def verify_domain_control(
                     user_id=call.context.user_id,
                 )
 
-            reg = await.opp.helpers.entity_registry.async_get_registry()
+            reg = await opp..helpers.entity_registry.async_get_registry()
 
             authorized = False
 

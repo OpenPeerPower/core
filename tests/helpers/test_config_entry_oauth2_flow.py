@@ -159,7 +159,7 @@ async def test_abort_if_oauth_error(
        .opp, TEST_DOMAIN, MockOAuth2Implementation()
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -167,7 +167,7 @@ async def test_abort_if_oauth_error(
     assert result["step_id"] == "pick_implementation"
 
     # Pick implementation
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], user_input={"implementation": TEST_DOMAIN}
     )
 
@@ -201,7 +201,7 @@ async def test_abort_if_oauth_error(
         },
     )
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp..config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "oauth_error"
@@ -214,7 +214,7 @@ async def test_step_discovery.opp, flow_op.dler, local_impl):
        .opp, TEST_DOMAIN, MockOAuth2Implementation()
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}
     )
 
@@ -229,14 +229,14 @@ async def test_abort_discovered_multiple.opp, flow_op.dler, local_impl):
        .opp, TEST_DOMAIN, MockOAuth2Implementation()
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_SSDP}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pick_implementation"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}
     )
 
@@ -257,7 +257,7 @@ async def test_abort_discovered_existing_entries.opp, flow_op.dler, local_impl):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_SSDP}
     )
 
@@ -279,7 +279,7 @@ async def test_full_flow(
        .opp, TEST_DOMAIN, MockOAuth2Implementation()
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -287,7 +287,7 @@ async def test_full_flow(
     assert result["step_id"] == "pick_implementation"
 
     # Pick implementation
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], user_input={"implementation": TEST_DOMAIN}
     )
 
@@ -321,7 +321,7 @@ async def test_full_flow(
         },
     )
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp..config_entries.flow.async_configure(result["flow_id"])
 
     assert result["data"]["auth_implementation"] == TEST_DOMAIN
 

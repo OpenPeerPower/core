@@ -17,7 +17,7 @@ async def test_random_binary_sensor_on.opp):
             "binary_sensor",
             config,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
 
@@ -37,7 +37,7 @@ async def test_random_binary_sensor_off.opp):
             "binary_sensor",
             config,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
 

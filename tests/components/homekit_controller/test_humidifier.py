@@ -85,13 +85,13 @@ async def test_humidifier_active_state.opp, utcnow):
     """Test that we can turn a HomeKit humidifier on and off again."""
     helper = await setup_test_component.opp, create_humidifier_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, "turn_on", {"entity_id": helper.entity_id}, blocking=True
     )
 
     assert helper.characteristics[ACTIVE].value == 1
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, "turn_off", {"entity_id": helper.entity_id}, blocking=True
     )
 
@@ -102,13 +102,13 @@ async def test_dehumidifier_active_state.opp, utcnow):
     """Test that we can turn a HomeKit dehumidifier on and off again."""
     helper = await setup_test_component.opp, create_dehumidifier_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, "turn_on", {"entity_id": helper.entity_id}, blocking=True
     )
 
     assert helper.characteristics[ACTIVE].value == 1
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, "turn_off", {"entity_id": helper.entity_id}, blocking=True
     )
 
@@ -161,7 +161,7 @@ async def test_humidifier_set_humidity.opp, utcnow):
     """Test that we can set the state of a HomeKit humidifier accessory."""
     helper = await setup_test_component.opp, create_humidifier_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         "set_humidity",
         {"entity_id": helper.entity_id, "humidity": 20},
@@ -174,7 +174,7 @@ async def test_dehumidifier_set_humidity.opp, utcnow):
     """Test that we can set the state of a HomeKit dehumidifier accessory."""
     helper = await setup_test_component.opp, create_dehumidifier_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         "set_humidity",
         {"entity_id": helper.entity_id, "humidity": 20},
@@ -187,7 +187,7 @@ async def test_humidifier_set_mode.opp, utcnow):
     """Test that we can set the mode of a HomeKit humidifier accessory."""
     helper = await setup_test_component.opp, create_humidifier_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         "set_mode",
         {"entity_id": helper.entity_id, "mode": MODE_AUTO},
@@ -196,7 +196,7 @@ async def test_humidifier_set_mode.opp, utcnow):
     assert helper.characteristics[TARGET_HUMIDIFIER_DEHUMIDIFIER_STATE].value == 0
     assert helper.characteristics[ACTIVE].value == 1
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         "set_mode",
         {"entity_id": helper.entity_id, "mode": MODE_NORMAL},
@@ -210,7 +210,7 @@ async def test_dehumidifier_set_mode.opp, utcnow):
     """Test that we can set the mode of a HomeKit dehumidifier accessory."""
     helper = await setup_test_component.opp, create_dehumidifier_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         "set_mode",
         {"entity_id": helper.entity_id, "mode": MODE_AUTO},
@@ -219,7 +219,7 @@ async def test_dehumidifier_set_mode.opp, utcnow):
     assert helper.characteristics[TARGET_HUMIDIFIER_DEHUMIDIFIER_STATE].value == 0
     assert helper.characteristics[ACTIVE].value == 1
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         "set_mode",
         {"entity_id": helper.entity_id, "mode": MODE_NORMAL},

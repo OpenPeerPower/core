@@ -135,7 +135,7 @@ async def _async_get_custom_components(
             if entry.is_dir()
         ]
 
-    dirs = await opp.async_add_executor_job(
+    dirs = await opp..async_add_executor_job(
         get_sub_directories, custom_components.__path__
     )
 
@@ -544,7 +544,7 @@ async def async_get_integration(opp: "OpenPeerPower", domain: str) -> Integratio
 
     from openpeerpower import components  # pylint: disable=import-outside-toplevel
 
-    integration = await opp.async_add_executor_job(
+    integration = await opp..async_add_executor_job(
         Integration.resolve_from_root, opp, components, domain
     )
 

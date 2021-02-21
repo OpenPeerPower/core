@@ -128,7 +128,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     platform = entry.data[CONF_PLATFORM]
 
     try:
-        await opp.async_add_executor_job(
+        await opp..async_add_executor_job(
             tuya.init, username, password, country_code, platform
         )
     except (
@@ -206,7 +206,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         """Check if accesstoken is expired and pull device list from server."""
         _LOGGER.debug("Pull devices from Tuya")
         # Add new discover device.
-        device_list = await opp.async_add_executor_job(_get_updated_devices)
+        device_list = await opp..async_add_executor_job(_get_updated_devices)
         await async_load_devices(device_list)
         # Delete not exist device.
         newlist_ids = []
@@ -271,8 +271,8 @@ async def update_listener.opp: OpenPeerPower, entry: ConfigEntry):
 async def cleanup_device_registry.opp: OpenPeerPower, device_id):
     """Remove device registry entry if there are no remaining entities."""
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
     if device_id and not.opp.helpers.entity_registry.async_entries_for_device(
         entity_registry, device_id, include_disabled_entities=True
     ):

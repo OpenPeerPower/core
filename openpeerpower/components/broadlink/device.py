@@ -59,7 +59,7 @@ class BroadlinkDevice:
         device_registry = await dr.async_get_registry.opp)
         device_entry = device_registry.async_get_device({(DOMAIN, entry.unique_id)})
         device_registry.async_update_device(device_entry.id, name=entry.title)
-        await opp.config_entries.async_reload(entry.entry_id)
+        await opp..config_entries.async_reload(entry.entry_id)
 
     async def async_setup(self):
         """Set up the device and related entities."""

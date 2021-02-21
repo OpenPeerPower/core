@@ -112,7 +112,7 @@ async def websocket_update_entity.opp, connection, msg):
     if "disabled_by" in msg and msg["disabled_by"] is None:
         entity = registry.entities[msg["entity_id"]]
         if entity.device_id:
-            device_registry = await.opp.helpers.device_registry.async_get_registry()
+            device_registry = await opp..helpers.device_registry.async_get_registry()
             device = device_registry.async_get(entity.device_id)
             if device.disabled:
                 connection.send_message(

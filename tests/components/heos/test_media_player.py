@@ -60,7 +60,7 @@ async def setup_platform.opp, config_entry, config):
     """Set up the media player platform for testing."""
     config_entry.add_to_opp.opp)
     assert await async_setup_component.opp, DOMAIN, config)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def test_state_attributes.opp, config_entry, config, controller):
@@ -110,7 +110,7 @@ async def test_updates_from_signals.opp, config_entry, config, controller, favor
     player.heos.dispatcher.send(
         const.SIGNAL_PLAYER_EVENT, 2, const.EVENT_PLAYER_STATE_CHANGED
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("media_player.test_player")
     assert state.state == STATE_IDLE
 
@@ -119,7 +119,7 @@ async def test_updates_from_signals.opp, config_entry, config, controller, favor
     player.heos.dispatcher.send(
         const.SIGNAL_PLAYER_EVENT, player.player_id, const.EVENT_PLAYER_STATE_CHANGED
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("media_player.test_player")
     assert state.state == STATE_PLAYING
@@ -132,7 +132,7 @@ async def test_updates_from_signals.opp, config_entry, config, controller, favor
         player.player_id,
         const.EVENT_PLAYER_NOW_PLAYING_PROGRESS,
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_MEDIA_POSITION_UPDATED_AT] is not None
     assert state.attributes[ATTR_MEDIA_DURATION] == 360
@@ -228,7 +228,7 @@ async def test_updates_from_players_changed(
         const.SIGNAL_CONTROLLER_EVENT, const.EVENT_PLAYERS_CHANGED, change_data
     )
     await event.wait()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get("media_player.test_player").state == STATE_PLAYING
 
 
@@ -237,8 +237,8 @@ async def test_updates_from_players_changed_new_ids(
 ):
     """Test player updates from changes to available players."""
     await setup_platform.opp, config_entry, config)
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
     player = controller.players[1]
     event = asyncio.Event()
 
@@ -302,7 +302,7 @@ async def test_clear_playlist.opp, config_entry, config, controller, caplog):
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             MEDIA_PLAYER_DOMAIN,
             SERVICE_CLEAR_PLAYLIST,
             {ATTR_ENTITY_ID: "media_player.test_player"},
@@ -320,7 +320,7 @@ async def test_pause.opp, config_entry, config, controller, caplog):
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             MEDIA_PLAYER_DOMAIN,
             SERVICE_MEDIA_PAUSE,
             {ATTR_ENTITY_ID: "media_player.test_player"},
@@ -338,7 +338,7 @@ async def test_play.opp, config_entry, config, controller, caplog):
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             MEDIA_PLAYER_DOMAIN,
             SERVICE_MEDIA_PLAY,
             {ATTR_ENTITY_ID: "media_player.test_player"},
@@ -356,7 +356,7 @@ async def test_previous_track.opp, config_entry, config, controller, caplog):
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             MEDIA_PLAYER_DOMAIN,
             SERVICE_MEDIA_PREVIOUS_TRACK,
             {ATTR_ENTITY_ID: "media_player.test_player"},
@@ -374,7 +374,7 @@ async def test_next_track.opp, config_entry, config, controller, caplog):
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             MEDIA_PLAYER_DOMAIN,
             SERVICE_MEDIA_NEXT_TRACK,
             {ATTR_ENTITY_ID: "media_player.test_player"},
@@ -392,7 +392,7 @@ async def test_stop.opp, config_entry, config, controller, caplog):
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             MEDIA_PLAYER_DOMAIN,
             SERVICE_MEDIA_STOP,
             {ATTR_ENTITY_ID: "media_player.test_player"},
@@ -410,7 +410,7 @@ async def test_volume_mute.opp, config_entry, config, controller, caplog):
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             MEDIA_PLAYER_DOMAIN,
             SERVICE_VOLUME_MUTE,
             {ATTR_ENTITY_ID: "media_player.test_player", ATTR_MEDIA_VOLUME_MUTED: True},
@@ -428,7 +428,7 @@ async def test_shuffle_set.opp, config_entry, config, controller, caplog):
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             MEDIA_PLAYER_DOMAIN,
             SERVICE_SHUFFLE_SET,
             {ATTR_ENTITY_ID: "media_player.test_player", ATTR_MEDIA_SHUFFLE: True},
@@ -446,7 +446,7 @@ async def test_volume_set.opp, config_entry, config, controller, caplog):
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             MEDIA_PLAYER_DOMAIN,
             SERVICE_VOLUME_SET,
             {ATTR_ENTITY_ID: "media_player.test_player", ATTR_MEDIA_VOLUME_LEVEL: 1},
@@ -464,7 +464,7 @@ async def test_select_favorite.opp, config_entry, config, controller, favorites)
     player = controller.players[1]
     # Test set music service preset
     favorite = favorites[1]
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_SELECT_SOURCE,
         {ATTR_ENTITY_ID: "media_player.test_player", ATTR_INPUT_SOURCE: favorite.name},
@@ -476,7 +476,7 @@ async def test_select_favorite.opp, config_entry, config, controller, favorites)
     player.heos.dispatcher.send(
         const.SIGNAL_PLAYER_EVENT, player.player_id, const.EVENT_PLAYER_STATE_CHANGED
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_INPUT_SOURCE] == favorite.name
 
@@ -487,7 +487,7 @@ async def test_select_radio_favorite.opp, config_entry, config, controller, favo
     player = controller.players[1]
     # Test set radio preset
     favorite = favorites[2]
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_SELECT_SOURCE,
         {ATTR_ENTITY_ID: "media_player.test_player", ATTR_INPUT_SOURCE: favorite.name},
@@ -500,7 +500,7 @@ async def test_select_radio_favorite.opp, config_entry, config, controller, favo
     player.heos.dispatcher.send(
         const.SIGNAL_PLAYER_EVENT, player.player_id, const.EVENT_PLAYER_STATE_CHANGED
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_INPUT_SOURCE] == favorite.name
 
@@ -514,7 +514,7 @@ async def test_select_radio_favorite_command_error(
     # Test set radio preset
     favorite = favorites[2]
     player.play_favorite.side_effect = CommandFailedError(None, "Failure", 1)
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_SELECT_SOURCE,
         {ATTR_ENTITY_ID: "media_player.test_player", ATTR_INPUT_SOURCE: favorite.name},
@@ -532,7 +532,7 @@ async def test_select_input_source(
     player = controller.players[1]
     # Test proper service called
     input_source = input_sources[0]
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_SELECT_SOURCE,
         {
@@ -548,7 +548,7 @@ async def test_select_input_source(
     player.heos.dispatcher.send(
         const.SIGNAL_PLAYER_EVENT, player.player_id, const.EVENT_PLAYER_STATE_CHANGED
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_INPUT_SOURCE] == input_source.name
 
@@ -556,7 +556,7 @@ async def test_select_input_source(
 async def test_select_input_unknown.opp, config_entry, config, controller, caplog):
     """Tests selecting an unknown input."""
     await setup_platform.opp, config_entry, config)
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_SELECT_SOURCE,
         {ATTR_ENTITY_ID: "media_player.test_player", ATTR_INPUT_SOURCE: "Unknown"},
@@ -573,7 +573,7 @@ async def test_select_input_command_error(
     player = controller.players[1]
     input_source = input_sources[0]
     player.play_input_source.side_effect = CommandFailedError(None, "Failure", 1)
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_SELECT_SOURCE,
         {
@@ -600,7 +600,7 @@ async def test_play_media_url.opp, config_entry, config, controller, caplog):
     url = "http://news/podcast.mp3"
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             MEDIA_PLAYER_DOMAIN,
             SERVICE_PLAY_MEDIA,
             {
@@ -623,7 +623,7 @@ async def test_play_media_music.opp, config_entry, config, controller, caplog):
     url = "http://news/podcast.mp3"
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             MEDIA_PLAYER_DOMAIN,
             SERVICE_PLAY_MEDIA,
             {
@@ -649,7 +649,7 @@ async def test_play_media_quick_select(
     index = quick_select[0]
     name = quick_select[1]
     # Play by index
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -662,7 +662,7 @@ async def test_play_media_quick_select(
     player.play_quick_select.assert_called_once_with(index)
     # Play by name
     player.play_quick_select.reset_mock()
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -675,7 +675,7 @@ async def test_play_media_quick_select(
     player.play_quick_select.assert_called_once_with(index)
     # Invalid name
     player.play_quick_select.reset_mock()
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -697,7 +697,7 @@ async def test_play_media_playlist(
     player = controller.players[1]
     playlist = playlists[0]
     # Play without enqueuing
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -712,7 +712,7 @@ async def test_play_media_playlist(
     )
     # Play with enqueuing
     player.add_to_queue.reset_mock()
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -726,7 +726,7 @@ async def test_play_media_playlist(
     player.add_to_queue.assert_called_once_with(playlist, const.ADD_QUEUE_ADD_TO_END)
     # Invalid name
     player.add_to_queue.reset_mock()
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -750,7 +750,7 @@ async def test_play_media_favorite(
     index = quick_select[0]
     name = quick_select[1].name
     # Play by index
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -763,7 +763,7 @@ async def test_play_media_favorite(
     player.play_favorite.assert_called_once_with(index)
     # Play by name
     player.play_favorite.reset_mock()
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -776,7 +776,7 @@ async def test_play_media_favorite(
     player.play_favorite.assert_called_once_with(index)
     # Invalid name
     player.play_favorite.reset_mock()
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -793,7 +793,7 @@ async def test_play_media_favorite(
 async def test_play_media_invalid_type.opp, config_entry, config, controller, caplog):
     """Test the play media service with an invalid type."""
     await setup_platform.opp, config_entry, config)
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {

@@ -14,7 +14,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     assert state.state == "on"
 
     # Test turning off
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "fan",
         "turn_off",
         {"entity_id": "fan.in_wall_smart_fan_control_level"},
@@ -31,14 +31,14 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     fan_msg.payload["Value"] = 0
     fan_msg.encode()
     receive_message(fan_msg)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
     assert state.state == "off"
 
     # Test turning on
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "fan",
         "turn_on",
         {"entity_id": "fan.in_wall_smart_fan_control_level", "percentage": 66},
@@ -58,7 +58,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     fan_msg.payload["Value"] = 66
     fan_msg.encode()
     receive_message(fan_msg)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
@@ -66,7 +66,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     assert state.attributes["percentage"] == 66
 
     # Test turn on without speed
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "fan",
         "turn_on",
         {"entity_id": "fan.in_wall_smart_fan_control_level"},
@@ -86,7 +86,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     fan_msg.payload["Value"] = 99
     fan_msg.encode()
     receive_message(fan_msg)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
@@ -94,7 +94,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     assert state.attributes["percentage"] == 100
 
     # Test set percentage to 0
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "fan",
         "set_percentage",
         {"entity_id": "fan.in_wall_smart_fan_control_level", "percentage": 0},
@@ -114,7 +114,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     fan_msg.payload["Value"] = 0
     fan_msg.encode()
     receive_message(fan_msg)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
@@ -123,7 +123,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     # Test invalid speed
     new_speed = "invalid"
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             "fan",
             "set_speed",
             {"entity_id": "fan.in_wall_smart_fan_control_level", "speed": new_speed},

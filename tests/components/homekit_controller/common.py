@@ -58,12 +58,12 @@ async def time_changed.opp, seconds):
     """Trigger time changed."""
     next_update = dt_util.utcnow() + timedelta(seconds)
     async_fire_time_changed.opp, next_update)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def setup_accessories_from_file.opp, path):
     """Load an collection of accessory defs from JSON data."""
-    accessories_fixture = await opp.async_add_executor_job(
+    accessories_fixture = await opp..async_add_executor_job(
         load_fixture, os.path.join("homekit_controller", path)
     )
     accessories_json = json.loads(accessories_fixture)
@@ -103,8 +103,8 @@ async def setup_test_accessories.opp, accessories):
     )
     config_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(config_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(config_entry.entry_id)
+    await opp..async_block_till_done()
 
     return config_entry, pairing
 
@@ -142,8 +142,8 @@ async def device_config_changed.opp, accessories):
     assert result["reason"] == "already_configured"
 
     # Wait for services to reconfigure
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def setup_test_component.opp, setup_accessory, capitalize=False, suffix=None):

@@ -79,7 +79,7 @@ async def test_setup_component_and_test_service.opp):
     with assert_setup_component(1, notify.DOMAIN):
         assert await async_setup_component.opp, notify.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         notify.DOMAIN,
         "tts_test",
         {
@@ -88,6 +88,6 @@ async def test_setup_component_and_test_service.opp):
         blocking=True,
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 1

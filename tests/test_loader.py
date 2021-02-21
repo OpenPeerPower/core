@@ -73,7 +73,7 @@ async def test_component_wrapper.opp):
 
     components = loader.Components.opp)
     components.persistent_notification.async_create("message")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 1
 
@@ -92,7 +92,7 @@ async def test_helpers_wrapper.opp):
     helpers.discovery.async_listen("service_name", discovery_callback)
 
     await helpers.discovery.async_discover("service_name", "hello", None, {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert result == ["hello"]
 

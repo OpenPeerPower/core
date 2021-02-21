@@ -21,7 +21,7 @@ VALID_CONFIG = {
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -33,7 +33,7 @@ async def test_api_key_too_short.opp):
     """Test that errors are shown when API key is too short."""
     # The API key length check is done by the library without polling the AccuWeather
     # server so we don't need to patch the library method.
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={
@@ -54,7 +54,7 @@ async def test_invalid_api_key.opp):
         side_effect=InvalidApiKeyError("Invalid API key"),
     ):
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data=VALID_CONFIG,
@@ -70,7 +70,7 @@ async def test_api_error.opp):
         side_effect=ApiError("Invalid response from AccuWeather API"),
     ):
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data=VALID_CONFIG,
@@ -88,7 +88,7 @@ async def test_requests_exceeded_error.opp):
         ),
     ):
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data=VALID_CONFIG,
@@ -109,7 +109,7 @@ async def test_integration_already_exists.opp):
             data=VALID_CONFIG,
         ).add_to_opp.opp)
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data=VALID_CONFIG,
@@ -128,7 +128,7 @@ async def test_create_entry.opp):
         "openpeerpower.components.accuweather.async_setup_entry", return_value=True
     ):
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data=VALID_CONFIG,
@@ -162,21 +162,21 @@ async def test_options_flow.opp):
     ), patch(
         "accuweather.AccuWeather.async_get_forecast"
     ):
-        assert await opp.config_entries.async_setup(config_entry.entry_id)
-        await opp.async_block_till_done()
+        assert await opp..config_entries.async_setup(config_entry.entry_id)
+        await opp..async_block_till_done()
 
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+        result = await opp..config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "user"
 
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp..config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_FORECAST: True}
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert config_entry.options == {CONF_FORECAST: True}
 
-        await opp.async_block_till_done()
-        assert await opp.config_entries.async_unload(config_entry.entry_id)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
+        assert await opp..config_entries.async_unload(config_entry.entry_id)
+        await opp..async_block_till_done()

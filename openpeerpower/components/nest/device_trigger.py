@@ -29,7 +29,7 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 
 async def async_get_nest_device_id.opp: OpenPeerPower, device_id: str) -> str:
     """Get the nest API device_id from the OpenPeerPower device_id."""
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     device = device_registry.async_get(device_id)
     for (domain, unique_id) in device.identifiers:
         if domain == DOMAIN:

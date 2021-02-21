@@ -319,13 +319,13 @@ async def mock_api_object_fixture.opp, config_entry, get_request_return_values):
         mock_api.return_value.get_playlists.return_value = SAMPLE_PLAYLISTS
         config_entry.add_to_opp.opp)
         await config_entry.async_setup.opp)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     mock_api.return_value.start_websocket_op.dler.assert_called_once()
     mock_api.return_value.get_request.assert_called_once()
     updater_update = mock_api.return_value.start_websocket_op.dler.call_args[0][2]
     await updater_update(["player", "outputs", "queue"])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async def add_to_queue_side_effect(
         uris, playback=None, playback_from_position=None, clear=None
@@ -393,7 +393,7 @@ async def test_no_update_when_get_request_returns_none(
        .opp, SIGNAL_UPDATE_QUEUE.format(config_entry.entry_id)
     )
     await updater_update(["outputs", "player", "queue"])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(signal_output_call) == 0
     assert len(signal_player_call) == 0
     assert len(signal_queue_call) == 0
@@ -404,7 +404,7 @@ async def _service_call(
 ):
     if additional_service_data is None:
         additional_service_data = {}
-    return await.opp.services.async_call(
+    return await opp..services.async_call(
         MP_DOMAIN,
         service,
         service_data={ATTR_ENTITY_ID: entity_name, **additional_service_data},
@@ -511,7 +511,7 @@ async def test_bunch_of_stuff_master.opp, get_request_return_values, mock_api_ob
     get_request_return_values["player"] = SAMPLE_PLAYER_STOPPED
     updater_update = mock_api_object.start_websocket_op.dler.call_args[0][2]
     await updater_update(["player"])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     # mute from volume==0
     state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0
@@ -524,7 +524,7 @@ async def test_bunch_of_stuff_master.opp, get_request_return_values, mock_api_ob
     # now turn off (stopped and all outputs unselected)
     get_request_return_values["outputs"] = SAMPLE_OUTPUTS_UNSELECTED
     await updater_update(["outputs"])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     # toggle from off
     await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_TOGGLE)
     for output in SAMPLE_OUTPUTS_ON:
@@ -575,7 +575,7 @@ async def test_async_play_media_from_stopped(
 
     get_request_return_values["player"] = SAMPLE_PLAYER_STOPPED
     await updater_update(["player"])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
        .opp,
@@ -660,11 +660,11 @@ async def pipe_control_api_object_fixture(
         autospec=True,
     ) as pipe_control_api:
        .opp.config_entries.async_update_entry(config_entry, options=OPTIONS_DATA)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     get_request_return_values["player"] = SAMPLE_PLAYER_PLAYING
     updater_update = mock_api_object.start_websocket_op.dler.call_args[0][2]
     await updater_update(["player"])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async def pause_side_effect():
         await updater_update(["player"])
@@ -710,7 +710,7 @@ async def test_librespot_java_stuff(
     get_request_return_values["queue"] = SAMPLE_QUEUE_PIPE
     updater_update = mock_api_object.start_websocket_op.dler.call_args[0][2]
     await updater_update(["queue"])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.attributes[ATTR_INPUT_SOURCE] == "librespot-java (pipe)"
     # test title and album not reversed when data_kind not url
@@ -762,7 +762,7 @@ async def test_unsupported_update.opp, mock_api_object):
     last_updated = opp.states.get(TEST_MASTER_ENTITY_NAME).last_updated
     updater_update = mock_api_object.start_websocket_op.dler.call_args[0][2]
     await updater_update(["config"])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(TEST_MASTER_ENTITY_NAME).last_updated == last_updated
 
 
@@ -775,7 +775,7 @@ async def test_invalid_websocket_port.opp, config_entry):
         mock_api.return_value.get_request.return_value = SAMPLE_CONFIG_NO_WEBSOCKET
         config_entry.add_to_opp.opp)
         await config_entry.async_setup.opp)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert.opp.states.get(TEST_MASTER_ENTITY_NAME).state == STATE_UNAVAILABLE
 
 
@@ -785,6 +785,6 @@ async def test_websocket_disconnect.opp, mock_api_object):
     assert.opp.states.get(TEST_ZONE_ENTITY_NAMES[0]).state != STATE_UNAVAILABLE
     updater_disconnected = mock_api_object.start_websocket_op.dler.call_args[0][4]
     updater_disconnected()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(TEST_MASTER_ENTITY_NAME).state == STATE_UNAVAILABLE
     assert.opp.states.get(TEST_ZONE_ENTITY_NAMES[0]).state == STATE_UNAVAILABLE

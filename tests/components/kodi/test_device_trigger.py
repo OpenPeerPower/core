@@ -117,26 +117,26 @@ async def test_if_fires_on_state_change.opp, calls, kodi_media_player):
             ]
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MP_DOMAIN,
         "turn_on",
         {"entity_id": kodi_media_player},
         blocking=True,
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == f"turn_on - {kodi_media_player}"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         MP_DOMAIN,
         "turn_off",
         {"entity_id": kodi_media_player},
         blocking=True,
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == f"turn_off - {kodi_media_player}"

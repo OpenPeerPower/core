@@ -333,11 +333,11 @@ async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry) -> None:
         return
 
     try:
-        await.opp.components.oppio.async_stop_addon("core_zwave_js")
+        await opp..components.oppio.async_stop_addon("core_zwave_js")
     except OppioAPIError as err:
         LOGGER.error("Failed to stop the Z-Wave JS add-on: %s", err)
         return
     try:
-        await.opp.components.oppio.async_uninstall_addon("core_zwave_js")
+        await opp..components.oppio.async_uninstall_addon("core_zwave_js")
     except OppioAPIError as err:
         LOGGER.error("Failed to uninstall the Z-Wave JS add-on: %s", err)

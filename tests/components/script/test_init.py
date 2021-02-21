@@ -164,12 +164,12 @@ async def test_turn_on_off_toggle.opp, toggle):
     assert not script.is_on.opp, ENTITY_ID)
 
     if toggle:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_ID}
         )
     else:
-        await.opp.services.async_call(DOMAIN, split_entity_id(ENTITY_ID)[1])
-    await opp.async_block_till_done()
+        await opp..services.async_call(DOMAIN, split_entity_id(ENTITY_ID)[1])
+    await opp..async_block_till_done()
 
     assert not script.is_on.opp, ENTITY_ID)
     assert was_on
@@ -226,7 +226,7 @@ async def test_reload_service.opp, running):
 
     if running != "no":
         _, object_id = split_entity_id(ENTITY_ID)
-        await.opp.services.async_call(DOMAIN, object_id)
+        await opp..services.async_call(DOMAIN, object_id)
         await asyncio.wait_for(event_flag.wait(), 1)
 
         assert script.is_on.opp, ENTITY_ID)
@@ -236,8 +236,8 @@ async def test_reload_service.opp, running):
         "openpeerpower.config.load_yaml_config_file",
         return_value={"script": {object_id: {"sequence": [{"delay": {"seconds": 5}}]}}},
     ):
-        await.opp.services.async_call(DOMAIN, SERVICE_RELOAD, blocking=True)
-        await opp.async_block_till_done()
+        await opp..services.async_call(DOMAIN, SERVICE_RELOAD, blocking=True)
+        await opp..async_block_till_done()
 
     if running != "same":
         assert.opp.states.get(ENTITY_ID) is None
@@ -289,7 +289,7 @@ async def test_service_descriptions.opp):
             }
         },
     ):
-        await.opp.services.async_call(DOMAIN, SERVICE_RELOAD, blocking=True)
+        await opp..services.async_call(DOMAIN, SERVICE_RELOAD, blocking=True)
 
     descriptions = await async_get_all_descriptions.opp)
 
@@ -319,10 +319,10 @@ async def test_shared_context.opp):
        .opp, "script", {"script": {"test": {"sequence": [{"event": event}]}}}
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}, context=context
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert event_mock.call_count == 1
     assert run_mock.call_count == 1
@@ -351,7 +351,7 @@ async def test_logging_script_error.opp, caplog):
         {"script": {"hello": {"sequence": [{"service": "non.existing"}]}}},
     )
     with pytest.raises(ServiceNotFound) as err:
-        await.opp.services.async_call("script", "hello", blocking=True)
+        await opp..services.async_call("script", "hello", blocking=True)
 
     assert err.value.domain == "non"
     assert err.value.service == "existing"
@@ -363,7 +363,7 @@ async def test_turning_no_scripts_off.opp):
     assert await async_setup_component.opp, "script", {})
 
     # Testing it doesn't raise
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {"entity_id": []}, blocking=True
     )
 
@@ -387,7 +387,7 @@ async def test_async_get_descriptions_script.opp):
     }
 
     await async_setup_component.opp, DOMAIN, script_config)
-    descriptions = await.opp.helpers.service.async_get_all_descriptions()
+    descriptions = await opp..helpers.service.async_get_all_descriptions()
 
     assert descriptions[DOMAIN]["test1"]["description"] == ""
     assert not descriptions[DOMAIN]["test1"]["fields"]
@@ -583,7 +583,7 @@ async def test_concurrent_script.opp, concurrently):
    .opp.states.async_set("input_boolean.test1", "off")
    .opp.states.async_set("input_boolean.test2", "off")
 
-    await.opp.services.async_call("script", "script1")
+    await opp..services.async_call("script", "script1")
     await asyncio.wait_for(service_called.wait(), 1)
     service_called.clear()
 
@@ -612,7 +612,7 @@ async def test_concurrent_script.opp, concurrently):
 
         assert "script2b" == service_values[-1]
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not script.is_on.opp, "script.script1")
     assert not script.is_on.opp, "script.script2")
@@ -672,7 +672,7 @@ async def test_script_variables.opp, caplog):
 
     mock_calls = async_mock_service.opp, "test", "script")
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "script", "script1", {"var_from_service": "hello"}, blocking=True
     )
 
@@ -680,7 +680,7 @@ async def test_script_variables.opp, caplog):
     assert mock_calls[0].data["value"] == "from_config"
     assert mock_calls[0].data["templated_config_var"] == "hello"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "script", "script1", {"test_var": "from_service"}, blocking=True
     )
 
@@ -689,7 +689,7 @@ async def test_script_variables.opp, caplog):
     assert mock_calls[1].data["templated_config_var"] == "config-default"
 
     # Call script with vars but no templates in it
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "script", "script2", {"test_var": "from_service"}, blocking=True
     )
 
@@ -698,11 +698,11 @@ async def test_script_variables.opp, caplog):
 
     assert "Error rendering variables" not in caplog.text
     with pytest.raises(template.TemplateError):
-        await.opp.services.async_call("script", "script3", blocking=True)
+        await opp..services.async_call("script", "script3", blocking=True)
     assert "Error rendering variables" in caplog.text
     assert len(mock_calls) == 3
 
-    await.opp.services.async_call("script", "script3", {"break": 0}, blocking=True)
+    await opp..services.async_call("script", "script3", {"break": 0}, blocking=True)
 
     assert len(mock_calls) == 4
     assert mock_calls[3].data["value"] == 1

@@ -64,7 +64,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigType) -> bool:
     """Unload Azure DevOps config entry."""
     del.opp.data[f"{DOMAIN}_{entry.data[CONF_ORG]}_{entry.data[CONF_PROJECT]}"]
 
-    return await opp.config_entries.async_forward_entry_unload(entry, "sensor")
+    return await opp..config_entries.async_forward_entry_unload(entry, "sensor")
 
 
 class AzureDevOpsEntity(Entity):

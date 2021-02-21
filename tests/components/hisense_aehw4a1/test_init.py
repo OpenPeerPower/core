@@ -18,19 +18,19 @@ async def test_creating_entry_sets_up_climate_discovery.opp):
             "openpeerpower.components.hisense_aehw4a1.climate.async_setup_entry",
             return_value=True,
         ) as mock_setup:
-            result = await.opp.config_entries.flow.async_init(
+            result = await opp..config_entries.flow.async_init(
                 hisense_aehw4a1.DOMAIN, context={"source": config_entries.SOURCE_USER}
             )
 
             # Confirmation form
             assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-            result = await.opp.config_entries.flow.async_configure(
+            result = await opp..config_entries.flow.async_configure(
                 result["flow_id"], {}
             )
             assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
 
@@ -50,7 +50,7 @@ async def test_configuring_hisense_w4a1_create_entry.opp):
                 hisense_aehw4a1.DOMAIN,
                 {"hisense_aehw4a1": {"ip_address": ["1.2.3.4"]}},
             )
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
 
@@ -70,7 +70,7 @@ async def test_configuring_hisense_w4a1_not_creates_entry_for_device_not_found.o
                 hisense_aehw4a1.DOMAIN,
                 {"hisense_aehw4a1": {"ip_address": ["1.2.3.4"]}},
             )
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 0
 
@@ -82,6 +82,6 @@ async def test_configuring_hisense_w4a1_not_creates_entry_for_empty_import.opp):
         return_value=True,
     ) as mock_setup:
         await async_setup_component.opp, hisense_aehw4a1.DOMAIN, {})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 0

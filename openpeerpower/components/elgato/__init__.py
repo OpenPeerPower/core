@@ -45,7 +45,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload Elgato Key Light config entry."""
     # Unload entities for this entry/device.
-    await opp.config_entries.async_forward_entry_unload(entry, LIGHT_DOMAIN)
+    await opp..config_entries.async_forward_entry_unload(entry, LIGHT_DOMAIN)
 
     # Cleanup
     del.opp.data[DOMAIN][entry.entry_id]

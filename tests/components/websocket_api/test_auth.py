@@ -56,7 +56,7 @@ async def test_auth_events(
     assert not track_connected["disconnected"]
 
     await no_auth_websocket_client.close()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(track_connected["disconnected"]) == 1
 
@@ -123,10 +123,10 @@ async def test_auth_active_with_token(
 
 async def test_auth_active_user_inactive.opp, aiohttp_client,.opp_access_token):
     """Test authenticating with a token."""
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp..auth.async_validate_access_token.opp_access_token)
     refresh_token.user.is_active = False
     assert await async_setup_component.opp, "websocket_api", {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
 
@@ -143,7 +143,7 @@ async def test_auth_active_user_inactive.opp, aiohttp_client,.opp_access_token):
 async def test_auth_active_with_password_not_allow.opp, aiohttp_client):
     """Test authenticating with a token."""
     assert await async_setup_component.opp, "websocket_api", {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
 
@@ -160,7 +160,7 @@ async def test_auth_active_with_password_not_allow.opp, aiohttp_client):
 async def test_auth_legacy_support_with_password.opp, aiohttp_client, legacy_auth):
     """Test authenticating with a token."""
     assert await async_setup_component.opp, "websocket_api", {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
 
@@ -177,7 +177,7 @@ async def test_auth_legacy_support_with_password.opp, aiohttp_client, legacy_aut
 async def test_auth_with_invalid_token.opp, aiohttp_client):
     """Test authenticating with a token."""
     assert await async_setup_component.opp, "websocket_api", {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
 

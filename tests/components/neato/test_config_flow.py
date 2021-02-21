@@ -31,7 +31,7 @@ async def test_full_flow(
         },
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "neato", context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
@@ -68,7 +68,7 @@ async def test_full_flow(
     with patch(
         "openpeerpower.components.neato.async_setup_entry", return_value=True
     ) as mock_setup:
-        await.opp.config_entries.flow.async_configure(result["flow_id"])
+        await opp..config_entries.flow.async_configure(result["flow_id"])
 
     assert len.opp.config_entries.async_entries(NEATO_DOMAIN)) == 1
     assert len(mock_setup.mock_calls) == 1
@@ -83,7 +83,7 @@ async def test_abort_if_already_setup.opp: OpenPeerPowerType):
     entry.add_to_opp.opp)
 
     # Should fail
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "neato", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -110,14 +110,14 @@ async def test_reauth(
     ).add_to_opp.opp)
 
     # Should show form
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "neato", context={"source": config_entries.SOURCE_REAUTH}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "reauth_confirm"
 
     # Confirm reauth flow
-    result2 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result2 = await opp..config_entries.flow.async_configure(result["flow_id"], {})
 
     state = config_entry_oauth2_flow._encode_jwt(
        .opp,
@@ -145,8 +145,8 @@ async def test_reauth(
     with patch(
         "openpeerpower.components.neato.async_setup_entry", return_value=True
     ) as mock_setup:
-        result3 = await.opp.config_entries.flow.async_configure(result2["flow_id"])
-        await opp.async_block_till_done()
+        result3 = await opp..config_entries.flow.async_configure(result2["flow_id"])
+        await opp..async_block_till_done()
 
     new_entry = opp.config_entries.async_get_entry("my_entry")
 

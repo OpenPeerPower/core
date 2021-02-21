@@ -14,7 +14,7 @@ from tests.common import MockConfigEntry
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -31,14 +31,14 @@ async def test_form.opp):
         "openpeerpower.components.huisbaasje.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        form_result = await.opp.config_entries.flow.async_configure(
+        form_result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "username": "test-username",
                 "password": "test-password",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert form_result["type"] == "create_entry"
     assert form_result["title"] == "test-username"
@@ -55,7 +55,7 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -63,7 +63,7 @@ async def test_form_invalid_auth.opp):
         "huisbaasje.Huisbaasje.authenticate",
         side_effect=HuisbaasjeException,
     ):
-        form_result = await.opp.config_entries.flow.async_configure(
+        form_result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "username": "test-username",
@@ -77,7 +77,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -85,7 +85,7 @@ async def test_form_cannot_connect.opp):
         "huisbaasje.Huisbaasje.authenticate",
         side_effect=HuisbaasjeConnectionException,
     ):
-        form_result = await.opp.config_entries.flow.async_configure(
+        form_result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "username": "test-username",
@@ -99,7 +99,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_unknown_error.opp):
     """Test we handle an unknown error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -107,7 +107,7 @@ async def test_form_unknown_error.opp):
         "huisbaasje.Huisbaasje.authenticate",
         side_effect=Exception,
     ):
-        form_result = await.opp.config_entries.flow.async_configure(
+        form_result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "username": "test-username",
@@ -132,7 +132,7 @@ async def test_form_entry_exists.opp):
         title="test-username",
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -145,7 +145,7 @@ async def test_form_entry_exists.opp):
         "openpeerpower.components.huisbaasje.async_setup_entry",
         return_value=True,
     ):
-        form_result = await.opp.config_entries.flow.async_configure(
+        form_result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "username": "test-username",

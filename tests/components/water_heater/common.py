@@ -22,7 +22,7 @@ async def async_set_away_mode.opp, away_mode, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_AWAY_MODE, data, blocking=True)
+    await opp..services.async_call(DOMAIN, SERVICE_SET_AWAY_MODE, data, blocking=True)
 
 
 async def async_set_temperature(
@@ -39,7 +39,7 @@ async def async_set_temperature(
         if value is not None
     }
     _LOGGER.debug("set_temperature start data=%s", kwargs)
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, SERVICE_SET_TEMPERATURE, kwargs, blocking=True
     )
 
@@ -51,6 +51,6 @@ async def async_set_operation_mode.opp, operation_mode, entity_id=ENTITY_MATCH_A
     if entity_id is not None:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, SERVICE_SET_OPERATION_MODE, data, blocking=True
     )

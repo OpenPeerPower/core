@@ -56,7 +56,7 @@ async def test_service_say.opp, mock_gtts, calls):
        .opp, tts.DOMAIN, {tts.DOMAIN: {"platform": "google_translate"}}
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         tts.DOMAIN,
         "google_translate_say",
         {
@@ -85,7 +85,7 @@ async def test_service_say_german_config.opp, mock_gtts, calls):
         {tts.DOMAIN: {"platform": "google_translate", "language": "de"}},
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         tts.DOMAIN,
         "google_translate_say",
         {
@@ -112,7 +112,7 @@ async def test_service_say_german_service.opp, mock_gtts, calls):
 
     await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         tts.DOMAIN,
         "google_say",
         {
@@ -138,7 +138,7 @@ async def test_service_say_error.opp, mock_gtts, calls):
        .opp, tts.DOMAIN, {tts.DOMAIN: {"platform": "google_translate"}}
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         tts.DOMAIN,
         "google_translate_say",
         {

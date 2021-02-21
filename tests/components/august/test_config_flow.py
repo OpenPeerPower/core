@@ -24,7 +24,7 @@ from tests.common import MockConfigEntry
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -39,7 +39,7 @@ async def test_form.opp):
         "openpeerpower.components.august.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_LOGIN_METHOD: "email",
@@ -47,7 +47,7 @@ async def test_form.opp):
                 CONF_PASSWORD: "test-password",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "my@email.tld"
@@ -65,7 +65,7 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -73,7 +73,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.august.config_flow.AugustGateway.async_authenticate",
         side_effect=InvalidAuth,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_LOGIN_METHOD: "email",
@@ -88,7 +88,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_user_unexpected_exception.opp):
     """Test we handle an unexpected exception."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -96,7 +96,7 @@ async def test_user_unexpected_exception.opp):
         "openpeerpower.components.august.config_flow.AugustGateway.async_authenticate",
         side_effect=ValueError,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_LOGIN_METHOD: "email",
@@ -111,7 +111,7 @@ async def test_user_unexpected_exception.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -119,7 +119,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.august.config_flow.AugustGateway.async_authenticate",
         side_effect=CannotConnect,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_LOGIN_METHOD: "email",
@@ -134,7 +134,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_needs_validate.opp):
     """Test we present validation when we need to validate."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -145,7 +145,7 @@ async def test_form_needs_validate.opp):
         "openpeerpower.components.august.gateway.AuthenticatorAsync.async_send_verification_code",
         return_value=True,
     ) as mock_send_verification_code:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_LOGIN_METHOD: "email",
@@ -174,7 +174,7 @@ async def test_form_needs_validate.opp):
     ) as mock_setup, patch(
         "openpeerpower.components.august.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {VERIFICATION_CODE_KEY: "incorrect"},
         )
@@ -202,11 +202,11 @@ async def test_form_needs_validate.opp):
     ) as mock_setup, patch(
         "openpeerpower.components.august.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result4 = await.opp.config_entries.flow.async_configure(
+        result4 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {VERIFICATION_CODE_KEY: "correct"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(mock_send_verification_code.mock_calls) == 0
     assert len(mock_validate_verification_code.mock_calls) == 1
@@ -241,7 +241,7 @@ async def test_form_reauth.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=entry.data
     )
     assert result["type"] == "form"
@@ -256,13 +256,13 @@ async def test_form_reauth.opp):
         "openpeerpower.components.august.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_PASSWORD: "new-test-password",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "abort"
     assert result2["reason"] == "reauth_successful"

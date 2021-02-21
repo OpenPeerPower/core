@@ -156,12 +156,12 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry):
     """Set up a config entry."""
-    return await.opp.data[DOMAIN].async_setup_entry(entry)
+    return await opp..data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry):
     """Unload a config entry."""
-    return await.opp.data[DOMAIN].async_unload_entry(entry)
+    return await opp..data[DOMAIN].async_unload_entry(entry)
 
 
 class ClimateEntity(Entity):

@@ -40,7 +40,7 @@ async def test_valid_path.opp):
    .opp.config.allowlist_external_dirs = {TEST_DIR}
     config = {"sensor": {"platform": "folder", CONF_FOLDER_PATHS: TEST_DIR}}
     assert await async_setup_component.opp, "sensor", config)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len.opp.states.async_entity_ids()) == 1
     state = opp.states.get("sensor.test_folder")
     assert state.state == "0.0"

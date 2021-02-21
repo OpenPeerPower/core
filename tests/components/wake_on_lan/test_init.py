@@ -17,7 +17,7 @@ async def test_send_magic_packet.opp):
 
         await async_setup_component.opp, DOMAIN, {})
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SEND_MAGIC_PACKET,
             {"mac": mac, "broadcast_address": bc_ip, "broadcast_port": bc_port},
@@ -28,7 +28,7 @@ async def test_send_magic_packet.opp):
         assert mocked_wakeonlan.mock_calls[-1][2]["ip_address"] == bc_ip
         assert mocked_wakeonlan.mock_calls[-1][2]["port"] == bc_port
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SEND_MAGIC_PACKET,
             {"mac": mac, "broadcast_address": bc_ip},
@@ -39,7 +39,7 @@ async def test_send_magic_packet.opp):
         assert mocked_wakeonlan.mock_calls[-1][2]["ip_address"] == bc_ip
         assert "port" not in mocked_wakeonlan.mock_calls[-1][2]
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SEND_MAGIC_PACKET,
             {"mac": mac, "broadcast_port": bc_port},
@@ -51,7 +51,7 @@ async def test_send_magic_packet.opp):
         assert "ip_address" not in mocked_wakeonlan.mock_calls[-1][2]
 
         with pytest.raises(vol.Invalid):
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 DOMAIN,
                 SERVICE_SEND_MAGIC_PACKET,
                 {"broadcast_address": bc_ip},
@@ -59,7 +59,7 @@ async def test_send_magic_packet.opp):
             )
         assert len(mocked_wakeonlan.mock_calls) == 3
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, SERVICE_SEND_MAGIC_PACKET, {"mac": mac}, blocking=True
         )
         assert len(mocked_wakeonlan.mock_calls) == 4

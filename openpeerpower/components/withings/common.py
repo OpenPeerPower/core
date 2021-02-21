@@ -910,7 +910,7 @@ async def async_get_entity_id(
 ) -> Optional[str]:
     """Get an entity id for a user's attribute."""
     entity_registry: EntityRegistry = (
-        await.opp.helpers.entity_registry.async_get_registry()
+        await opp..helpers.entity_registry.async_get_registry()
     )
     unique_id = get_attribute_unique_id(attribute, user_id)
 

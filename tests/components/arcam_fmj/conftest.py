@@ -94,6 +94,6 @@ async def player_setup_fixture.opp, state_1, state_2, client):
     with patch("openpeerpower.components.arcam_fmj.Client", return_value=client), patch(
         "openpeerpower.components.arcam_fmj.media_player.State", side_effect=state_mock
     ), patch("openpeerpower.components.arcam_fmj._run_client", return_value=None):
-        assert await opp.config_entries.async_setup(config_entry.entry_id)
-        await opp.async_block_till_done()
+        assert await opp..config_entries.async_setup(config_entry.entry_id)
+        await opp..async_block_till_done()
         yield MOCK_ENTITY_ID

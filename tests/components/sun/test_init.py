@@ -19,7 +19,7 @@ async def test_setting_rising.opp, legacy_patchable_time):
            .opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
         )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get(sun.ENTITY_ID)
 
     from astral import Astral
@@ -110,7 +110,7 @@ async def test_state_change.opp, legacy_patchable_time):
            .opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
         )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     test_time = dt_util.parse_datetime(
        .opp.states.get(sun.ENTITY_ID).attributes[sun.STATE_ATTR_NEXT_RISING]
@@ -124,13 +124,13 @@ async def test_state_change.opp, legacy_patchable_time):
         "openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=patched_time
     ):
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: patched_time})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert sun.STATE_ABOVE_HORIZON == opp.states.get(sun.ENTITY_ID).state
 
     with patch("openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=now):
-        await.opp.config.async_update(longitude.opp.config.longitude + 90)
-        await opp.async_block_till_done()
+        await opp..config.async_update(longitude.opp.config.longitude + 90)
+        await opp..async_block_till_done()
 
     assert sun.STATE_ABOVE_HORIZON == opp.states.get(sun.ENTITY_ID).state
 
@@ -183,11 +183,11 @@ async def test_state_change_count.opp):
             events.append(event)
 
    .opp.bus.async_listen(EVENT_STATE_CHANGED, state_change_listener)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     for _ in range(24 * 60 * 60):
         now += timedelta(seconds=1)
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: now})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(events) < 721

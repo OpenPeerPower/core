@@ -121,7 +121,7 @@ async def test_2ch(player, state, fmt, result):
 )
 async def test_select_source.opp, player_setup, state, source, value):
     """Test selection of source."""
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "media_player",
         SERVICE_SELECT_SOURCE,
         service_data={ATTR_ENTITY_ID: player_setup, ATTR_INPUT_SOURCE: source},

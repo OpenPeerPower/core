@@ -235,7 +235,7 @@ async def setup_smartapp_endpoint.opp: OpenPeerPowerType):
         and.opp.components.cloud.async_active_subscription()
         and not.opp.config_entries.async_entries(DOMAIN)
     ):
-        cloudhook_url = await.opp.components.cloud.async_create_cloudhook(
+        cloudhook_url = await opp..components.cloud.async_create_cloudhook(
             config[CONF_WEBHOOK_ID]
         )
         config[CONF_CLOUDHOOK_URL] = cloudhook_url
@@ -283,7 +283,7 @@ async def unload_smartapp_endpoint.opp: OpenPeerPowerType):
     # Remove the cloudhook if it was created
     cloudhook_url = opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
     if cloudhook_url and.opp.components.cloud.async_is_logged_in():
-        await.opp.components.cloud.async_delete_cloudhook(
+        await opp..components.cloud.async_delete_cloudhook(
            .opp.data[DOMAIN][CONF_WEBHOOK_ID]
         )
         # Remove cloudhook from storage
@@ -414,7 +414,7 @@ async def _continue_flow(
         None,
     )
     if flow is not None:
-        await.opp.config_entries.flow.async_configure(
+        await opp..config_entries.flow.async_configure(
             flow["flow_id"],
             {
                 CONF_INSTALLED_APP_ID: installed_app_id,
@@ -487,7 +487,7 @@ async def smartapp_uninstall.opp: OpenPeerPowerType, req, resp, app):
     if entry:
         # Add as job not needed because the current coroutine was invoked
         # from the dispatcher and is not being awaited.
-        await opp.config_entries.async_remove(entry.entry_id)
+        await opp..config_entries.async_remove(entry.entry_id)
 
     _LOGGER.debug(
         "Uninstalled SmartApp '%s' under parent app '%s'",

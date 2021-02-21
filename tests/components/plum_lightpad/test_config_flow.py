@@ -13,7 +13,7 @@ async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -27,11 +27,11 @@ async def test_form.opp):
         "openpeerpower.components.plum_lightpad.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "test-plum-username", "password": "test-plum-password"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "test-plum-username"
@@ -45,7 +45,7 @@ async def test_form.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -53,7 +53,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.plum_lightpad.utils.Plum.loadCloudData",
         side_effect=ConnectTimeout,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "test-plum-username", "password": "test-plum-password"},
         )
@@ -72,7 +72,7 @@ async def test_form_one_entry_per_email_allowed.opp):
 
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -81,13 +81,13 @@ async def test_form_one_entry_per_email_allowed.opp):
     ), patch("openpeerpower.components.plum_lightpad.async_setup") as mock_setup, patch(
         "openpeerpower.components.plum_lightpad.async_setup_entry"
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "test-plum-username", "password": "test-plum-password"},
         )
 
     assert result2["type"] == "abort"
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0
 
@@ -104,7 +104,7 @@ async def test_import.opp):
         "openpeerpower.components.plum_lightpad.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"username": "test-plum-username", "password": "test-plum-password"},
@@ -115,6 +115,6 @@ async def test_import.opp):
             "username": "test-plum-username",
             "password": "test-plum-password",
         }
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1

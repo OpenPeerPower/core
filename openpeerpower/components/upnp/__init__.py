@@ -65,7 +65,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
     _LOGGER.debug("async_setup, config: %s", config)
     conf_default = CONFIG_SCHEMA({DOMAIN: {}})[DOMAIN]
     conf = config.get(DOMAIN, conf_default)
-    local_ip = await opp.async_add_executor_job(get_local_ip)
+    local_ip = await opp..async_add_executor_job(get_local_ip)
    .opp.data[DOMAIN] = {
         DOMAIN_CONFIG: conf,
         DOMAIN_COORDINATORS: {},
@@ -148,4 +148,4 @@ async def async_unload_entry(
         del.opp.data[DOMAIN][DOMAIN_COORDINATORS][udn]
 
     _LOGGER.debug("Deleting sensors")
-    return await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
+    return await opp..config_entries.async_forward_entry_unload(config_entry, "sensor")

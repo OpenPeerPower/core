@@ -75,7 +75,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload FireServiceRota config entry."""
 
-    await opp.async_add_executor_job(
+    await opp..async_add_executor_job(
        .opp.data[DOMAIN][entry.entry_id].websocket.stop_listener
     )
 

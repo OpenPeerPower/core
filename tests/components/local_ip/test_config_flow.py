@@ -8,15 +8,15 @@ from tests.common import MockConfigEntry
 
 async def test_config_flow.opp):
     """Test we can finish a config flow."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get(f"sensor.{DOMAIN}")
     assert state
 
@@ -29,7 +29,7 @@ async def test_already_setup.opp):
     ).add_to_opp.opp)
 
     # Should fail, same NAME
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

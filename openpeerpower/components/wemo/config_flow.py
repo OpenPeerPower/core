@@ -10,7 +10,7 @@ from . import DOMAIN
 
 async def _async_op._devices.opp):
     """Return if there are devices that can be discovered."""
-    return bool(await opp.async_add_executor_job(pywemo.discover_devices))
+    return bool(await opp..async_add_executor_job(pywemo.discover_devices))
 
 
 config_entry_flow.register_discovery_flow(

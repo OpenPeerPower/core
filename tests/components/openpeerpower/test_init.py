@@ -295,7 +295,7 @@ async def test_entity_update.opp):
         "openpeerpowerr.helpers.entity_component.async_update_entity",
         return_value=None,
     ) as mock_update:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             "openpeerpowerr",
             "update_entity",
             {"entity_id": ["light.kitchen"]},
@@ -313,7 +313,7 @@ async def test_setting_location.opp):
     # Just to make sure that we are updating values.
     assert.opp.config.latitude != 30
     assert.opp.config.longitude != 40
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "openpeerpowerr",
         "set_location",
         {"latitude": 30, "longitude": 40},
@@ -335,7 +335,7 @@ async def test_require_admin.opp,.opp_read_only_user):
         SERVICE_RELOAD_CORE_CONFIG,
     ):
         with pytest.raises(Unauthorized):
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 op.DOMAIN,
                 service,
                 {},
@@ -345,7 +345,7 @@ async def test_require_admin.opp,.opp_read_only_user):
             assert False, f"Should have raises for {service}"
 
     with pytest.raises(Unauthorized):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             op.DOMAIN,
             SERVICE_SET_LOCATION,
             {"latitude": 0, "longitude": 0},
@@ -361,7 +361,7 @@ async def test_turn_on_off_toggle_schema.opp,.opp_read_only_user):
     for service in SERVICE_TURN_ON, SERVICE_TURN_OFF, SERVICE_TOGGLE:
         for invalid in None, "nothing", ENTITY_MATCH_ALL, ENTITY_MATCH_NONE:
             with pytest.raises(vol.Invalid):
-                await.opp.services.async_call(
+                await opp..services.async_call(
                     op.DOMAIN,
                     service,
                     {"entity_id": invalid},
@@ -375,7 +375,7 @@ async def test_not_allowing_recursion.opp, caplog):
     await async_setup_component.opp, "openpeerpowerr", {})
 
     for service in SERVICE_TURN_ON, SERVICE_TURN_OFF, SERVICE_TOGGLE:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             op.DOMAIN,
             service,
             {"entity_id": "openpeerpowerr.light"},

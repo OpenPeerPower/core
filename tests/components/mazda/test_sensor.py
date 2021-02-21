@@ -19,7 +19,7 @@ async def test_device_nickname.opp):
     """Test creation of the device when vehicle has a nickname."""
     await init_integration.opp, use_nickname=True)
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     reg_device = device_registry.async_get_device(
         identifiers={(DOMAIN, "JM000000000000000")},
     )
@@ -33,7 +33,7 @@ async def test_device_no_nickname.opp):
     """Test creation of the device when vehicle has no nickname."""
     await init_integration.opp, use_nickname=False)
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     reg_device = device_registry.async_get_device(
         identifiers={(DOMAIN, "JM000000000000000")},
     )
@@ -47,7 +47,7 @@ async def test_sensors.opp):
     """Test creation of the sensors."""
     await init_integration.opp)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     # Fuel Remaining Percentage
     state = opp.states.get("sensor.my_mazda3_fuel_remaining_percentage")

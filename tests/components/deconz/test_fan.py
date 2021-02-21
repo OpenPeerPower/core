@@ -76,7 +76,7 @@ async def test_fans.opp, aioclient_mock):
         "state": {"speed": 0},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("fan.ceiling_fan").state == STATE_OFF
     assert.opp.states.get("fan.ceiling_fan").attributes["speed"] == SPEED_OFF
@@ -87,7 +87,7 @@ async def test_fans.opp, aioclient_mock):
 
     # Service turn on fan
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         FAN_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: "fan.ceiling_fan"},
@@ -97,7 +97,7 @@ async def test_fans.opp, aioclient_mock):
 
     # Service turn off fan
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         FAN_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "fan.ceiling_fan"},
@@ -107,7 +107,7 @@ async def test_fans.opp, aioclient_mock):
 
     # Service set fan speed to low
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         FAN_DOMAIN,
         SERVICE_SET_SPEED,
         {ATTR_ENTITY_ID: "fan.ceiling_fan", ATTR_SPEED: SPEED_LOW},
@@ -117,7 +117,7 @@ async def test_fans.opp, aioclient_mock):
 
     # Service set fan speed to medium
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         FAN_DOMAIN,
         SERVICE_SET_SPEED,
         {ATTR_ENTITY_ID: "fan.ceiling_fan", ATTR_SPEED: SPEED_MEDIUM},
@@ -127,7 +127,7 @@ async def test_fans.opp, aioclient_mock):
 
     # Service set fan speed to high
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         FAN_DOMAIN,
         SERVICE_SET_SPEED,
         {ATTR_ENTITY_ID: "fan.ceiling_fan", ATTR_SPEED: SPEED_HIGH},
@@ -137,7 +137,7 @@ async def test_fans.opp, aioclient_mock):
 
     # Service set fan speed to off
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         FAN_DOMAIN,
         SERVICE_SET_SPEED,
         {ATTR_ENTITY_ID: "fan.ceiling_fan", ATTR_SPEED: SPEED_OFF},
@@ -148,7 +148,7 @@ async def test_fans.opp, aioclient_mock):
     # Service set fan speed to unsupported value
 
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             FAN_DOMAIN,
             SERVICE_SET_SPEED,
             {ATTR_ENTITY_ID: "fan.ceiling_fan", ATTR_SPEED: "bad value"},
@@ -165,18 +165,18 @@ async def test_fans.opp, aioclient_mock):
         "state": {"speed": 3},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("fan.ceiling_fan").state == STATE_ON
     assert.opp.states.get("fan.ceiling_fan").attributes["speed"] == SPEED_MEDIUM
 
-    await opp.config_entries.async_unload(config_entry.entry_id)
+    await opp..config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
     assert len.opp.states.async_all()) == 2
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
-    await opp.config_entries.async_remove(config_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_remove(config_entry.entry_id)
+    await opp..async_block_till_done()
     assert len.opp.states.async_all()) == 0

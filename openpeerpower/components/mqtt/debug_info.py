@@ -117,7 +117,7 @@ def remove_trigger_discovery_data.opp, discovery_op.h):
 async def info_for_device.opp, device_id):
     """Get debug info for a device."""
     mqtt_info = {"entities": [], "triggers": []}
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     entries = opp.helpers.entity_registry.async_entries_for_device(
         entity_registry, device_id, include_disabled_entities=True

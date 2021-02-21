@@ -126,7 +126,7 @@ async def async_unload_entry.opp, entry):
     """Unload a config entry."""
     client = opp.data[DOMAIN][entry.entry_id].pop(DATA_DEVICE_REGISTER)
     client.stop()
-    unload_ok = await opp.config_entries.async_forward_entry_unload(entry, "switch")
+    unload_ok = await opp..config_entries.async_forward_entry_unload(entry, "switch")
 
     if unload_ok:
         if.opp.data[DOMAIN][entry.entry_id]:

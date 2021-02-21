@@ -81,7 +81,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
-    await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
+    await opp..config_entries.async_forward_entry_unload(config_entry, "sensor")
    .opp.data[DOMAIN].pop(config_entry.entry_id)
     return True
 

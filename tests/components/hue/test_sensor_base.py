@@ -373,7 +373,7 @@ async def test_new_sensor_discovered.opp, mock_bridge):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 2
     assert len.opp.states.async_all()) == 10
@@ -402,7 +402,7 @@ async def test_sensor_removed.opp, mock_bridge):
     await mock_bridge.sensor_manager.coordinator.async_refresh()
 
     # To flush out the service call to update the group
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 2
     assert len.opp.states.async_all()) == 3
@@ -452,7 +452,7 @@ async def test_hue_events.opp, mock_bridge):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 2
     assert len.opp.states.async_all()) == 7
@@ -473,7 +473,7 @@ async def test_hue_events.opp, mock_bridge):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 3
     assert len.opp.states.async_all()) == 7
@@ -522,7 +522,7 @@ async def test_hue_events.opp, mock_bridge):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 4
     assert len.opp.states.async_all()) == 8
@@ -534,7 +534,7 @@ async def test_hue_events.opp, mock_bridge):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 5
     assert len.opp.states.async_all()) == 8

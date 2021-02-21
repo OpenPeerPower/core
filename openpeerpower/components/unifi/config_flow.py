@@ -420,6 +420,6 @@ class UnifiOptionsFlowHandler(config_entries.OptionsFlow):
 async def async_discover_unifi.opp):
     """Discover UniFi address."""
     try:
-        return await opp.async_add_executor_job(socket.gethostbyname, "unifi")
+        return await opp..async_add_executor_job(socket.gethostbyname, "unifi")
     except socket.gaierror:
         return None

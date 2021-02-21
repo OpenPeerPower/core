@@ -18,7 +18,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     auth = Auth(f"OpenPeerPower/{const.__version__}")
 
     try:
-        token = await opp.async_add_executor_job(
+        token = await opp..async_add_executor_job(
             auth.fetch_token,
             data["username"],
             data["password"],

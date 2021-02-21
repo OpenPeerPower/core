@@ -9,12 +9,12 @@ from openpeerpowerr.setup import async_setup_component
 async def setup_comp.opp):
     """Set up demo component."""
     assert await async_setup_component.opp, stt.DOMAIN, {"stt": {"platform": "demo"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def test_demo_settings.opp_client):
     """Test retrieve settings from demo provider."""
-    client = await.opp_client()
+    client = await opp._client()
 
     response = await client.get("/api/stt/demo")
     response_data = await response.json()
@@ -32,7 +32,7 @@ async def test_demo_settings.opp_client):
 
 async def test_demo_speech_no_metadata.opp_client):
     """Test retrieve settings from demo provider."""
-    client = await.opp_client()
+    client = await opp._client()
 
     response = await client.post("/api/stt/demo", data=b"Test")
     assert response.status == 400
@@ -40,7 +40,7 @@ async def test_demo_speech_no_metadata.opp_client):
 
 async def test_demo_speech_wrong_metadata.opp_client):
     """Test retrieve settings from demo provider."""
-    client = await.opp_client()
+    client = await opp._client()
 
     response = await client.post(
         "/api/stt/demo",
@@ -54,7 +54,7 @@ async def test_demo_speech_wrong_metadata.opp_client):
 
 async def test_demo_speech.opp_client):
     """Test retrieve settings from demo provider."""
-    client = await.opp_client()
+    client = await opp._client()
 
     response = await client.post(
         "/api/stt/demo",

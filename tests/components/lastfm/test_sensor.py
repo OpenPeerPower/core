@@ -54,7 +54,7 @@ async def test_update_not_playing.opp, lastfm_network):
         sensor.DOMAIN,
         {"sensor": {"platform": "lastfm", "api_key": "secret-key", "users": ["test"]}},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     entity_id = "sensor.test"
 
@@ -75,7 +75,7 @@ async def test_update_playing.opp, lastfm_network):
         sensor.DOMAIN,
         {"sensor": {"platform": "lastfm", "api_key": "secret-key", "users": ["test"]}},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     entity_id = "sensor.test"
 

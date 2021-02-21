@@ -298,8 +298,8 @@ class EntityPlatform:
 
         opp = self.opp
 
-        device_registry = await.opp.helpers.device_registry.async_get_registry()
-        entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+        device_registry = await opp..helpers.device_registry.async_get_registry()
+        entity_registry = await opp..helpers.entity_registry.async_get_registry()
         tasks = [
             self._async_add_entity(  # type: ignore
                 entity, update_before_add, entity_registry, device_registry

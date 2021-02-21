@@ -22,9 +22,9 @@ async def test_binary_sensors.opp, surepetcare) -> None:
 
     with _patch_sensor_setup():
         assert await async_setup_component.opp, DOMAIN, MOCK_CONFIG)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
     state_entity_ids = opp.states.async_entity_ids()
 
     for entity_id, unique_id in EXPECTED_ENTITY_IDS.items():

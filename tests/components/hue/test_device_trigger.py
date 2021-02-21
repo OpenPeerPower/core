@@ -148,7 +148,7 @@ async def test_if_fires_on_state_change.opp, mock_bridge, device_reg, calls):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 2
 
@@ -165,6 +165,6 @@ async def test_if_fires_on_state_change.opp, mock_bridge, device_reg, calls):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(mock_bridge.mock_requests) == 3
     assert len(calls) == 1

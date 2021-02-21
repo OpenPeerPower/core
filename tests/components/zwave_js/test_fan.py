@@ -16,7 +16,7 @@ async def test_fan.opp, client, in_wall_smart_fan_control, integration):
     assert state.state == "off"
 
     # Test turn on setting speed
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "fan",
         "turn_on",
         {"entity_id": FAN_ENTITY, "speed": SPEED_MEDIUM},
@@ -49,7 +49,7 @@ async def test_fan.opp, client, in_wall_smart_fan_control, integration):
 
     # Test setting unknown speed
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             "fan",
             "set_speed",
             {"entity_id": FAN_ENTITY, "speed": 99},
@@ -59,7 +59,7 @@ async def test_fan.opp, client, in_wall_smart_fan_control, integration):
     client.async_send_command.reset_mock()
 
     # Test turn on no speed
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "fan",
         "turn_on",
         {"entity_id": FAN_ENTITY},
@@ -91,7 +91,7 @@ async def test_fan.opp, client, in_wall_smart_fan_control, integration):
     client.async_send_command.reset_mock()
 
     # Test turning off
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "fan",
         "turn_off",
         {"entity_id": FAN_ENTITY},

@@ -41,7 +41,7 @@ async def test_hmip_light.opp, default_mock_op._factory):
     assert ha_state.state == STATE_ON
 
     service_call_counter = len(hmip_device.mock_calls)
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light", "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -52,7 +52,7 @@ async def test_hmip_light.opp, default_mock_op._factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light", "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 3
@@ -81,7 +81,7 @@ async def test_hmip_notification_light.opp, default_mock_op._factory):
     service_call_counter = len(hmip_device.mock_calls)
 
     # Send all color via service call.
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light",
         "turn_on",
         {"entity_id": entity_id, "brightness_pct": "100", "transition": 100},
@@ -107,7 +107,7 @@ async def test_hmip_notification_light.opp, default_mock_op._factory):
     }
 
     for color, hs_color in color_list.items():
-        await.opp.services.async_call(
+        await opp..services.async_call(
             "light",
             "turn_on",
             {"entity_id": entity_id, "hs_color": hs_color},
@@ -133,7 +133,7 @@ async def test_hmip_notification_light.opp, default_mock_op._factory):
     assert ha_state.attributes[ATTR_COLOR_NAME] == RGBColorState.PURPLE
     assert ha_state.attributes[ATTR_BRIGHTNESS] == 255
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light", "turn_off", {"entity_id": entity_id, "transition": 100}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 11
@@ -171,13 +171,13 @@ async def test_hmip_dimmer.opp, default_mock_op._factory):
     assert ha_state.state == STATE_OFF
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light", "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert hmip_device.mock_calls[-1][0] == "set_dim_level"
     assert hmip_device.mock_calls[-1][1] == (1, 1)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light",
         "turn_on",
         {"entity_id": entity_id, "brightness_pct": "100"},
@@ -191,7 +191,7 @@ async def test_hmip_dimmer.opp, default_mock_op._factory):
     assert ha_state.state == STATE_ON
     assert ha_state.attributes[ATTR_BRIGHTNESS] == 255
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light", "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 4
@@ -223,7 +223,7 @@ async def test_hmip_light_measuring.opp, default_mock_op._factory):
     assert ha_state.state == STATE_OFF
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light", "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -236,7 +236,7 @@ async def test_hmip_light_measuring.opp, default_mock_op._factory):
     assert ha_state.attributes[ATTR_CURRENT_POWER_W] == 50
     assert ha_state.attributes[ATTR_TODAY_ENERGY_KWH] == 6.33
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light", "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 4
@@ -263,13 +263,13 @@ async def test_hmip_wired_multi_dimmer.opp, default_mock_op._factory):
     assert ha_state.state == STATE_OFF
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light", "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert hmip_device.mock_calls[-1][0] == "set_dim_level"
     assert hmip_device.mock_calls[-1][1] == (1, 1)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light",
         "turn_on",
         {"entity_id": entity_id, "brightness": "100"},
@@ -283,7 +283,7 @@ async def test_hmip_wired_multi_dimmer.opp, default_mock_op._factory):
     assert ha_state.state == STATE_ON
     assert ha_state.attributes[ATTR_BRIGHTNESS] == 255
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "light", "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 4

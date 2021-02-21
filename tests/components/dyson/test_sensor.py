@@ -175,7 +175,7 @@ async def test_temperature(
             DOMAIN,
             CONFIG,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     state = opp.states.get(f"{ENTITY_ID_PREFIX}_temperature")
     assert state.state == str(temperature)

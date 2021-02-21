@@ -47,7 +47,7 @@ async def test_setup_loads_platforms.opp):
 
     component.setup({DOMAIN: {"platform": "mod2"}})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert component_setup.called
     assert platform_setup.called
 
@@ -75,7 +75,7 @@ async def test_setup_recovers_when_setup_raises.opp):
         )
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert platform1_setup.called
     assert platform2_setup.called
 
@@ -94,7 +94,7 @@ async def test_setup_does_discovery(mock_setup_component, mock_setup,.opp):
        .opp, DOMAIN, "platform_test", {"msg": "discovery_info"}, {DOMAIN: {}}
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert mock_setup.called
     assert ("platform_test", {}, {"msg": "discovery_info"}) == mock_setup.call_args[0]
@@ -116,7 +116,7 @@ async def test_set_scan_interval_via_config(mock_track,.opp):
         {DOMAIN: {"platform": "platform", "scan_interval": timedelta(seconds=30)}}
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert mock_track.called
     assert timedelta(seconds=30) == mock_track.call_args[0][2]
 
@@ -136,7 +136,7 @@ async def test_set_entity_namespace_via_config.opp):
 
     component.setup({DOMAIN: {"platform": "platform", "entity_namespace": "yummy"}})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert sorted.opp.states.async_entity_ids()) == [
         "test_domain.yummy_beer",
@@ -182,7 +182,7 @@ async def test_platform_not_ready.opp, legacy_patchable_time):
     component = EntityComponent(_LOGGER, DOMAIN,.opp)
 
     await component.async_setup({DOMAIN: {"platform": "mod1"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(platform1_setup.mock_calls) == 1
     assert "test_domain.mod1" not in.opp.config.components
 
@@ -191,23 +191,23 @@ async def test_platform_not_ready.opp, legacy_patchable_time):
     with patch("openpeerpowerr.util.dt.utcnow", return_value=utcnow):
         # Should not trigger attempt 2
         async_fire_time_changed.opp, utcnow + timedelta(seconds=29))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(platform1_setup.mock_calls) == 1
 
         # Should trigger attempt 2
         async_fire_time_changed.opp, utcnow + timedelta(seconds=30))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(platform1_setup.mock_calls) == 2
         assert "test_domain.mod1" not in.opp.config.components
 
         # This should not trigger attempt 3
         async_fire_time_changed.opp, utcnow + timedelta(seconds=59))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(platform1_setup.mock_calls) == 2
 
         # Trigger attempt 3, which succeeds
         async_fire_time_changed.opp, utcnow + timedelta(seconds=60))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(platform1_setup.mock_calls) == 3
         assert "test_domain.mod1" in.opp.config.components
 
@@ -282,7 +282,7 @@ async def test_setup_dependencies_platform.opp):
     component = EntityComponent(_LOGGER, DOMAIN,.opp)
 
     await component.async_setup({DOMAIN: {"platform": "test_component"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert "test_component" in.opp.config.components
     assert "test_component2" in.opp.config.components
     assert "test_domain.test_component" in.opp.config.components
@@ -353,7 +353,7 @@ async def test_unload_entry_resets_platform.opp):
     assert len(mock_setup_entry.mock_calls) == 1
     add_entities = mock_setup_entry.mock_calls[0][1][2]
     add_entities([MockEntity()])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len.opp.states.async_entity_ids()) == 1
 
@@ -381,7 +381,7 @@ async def test_update_entity.opp):
     # Called as part of async_add_entities
     assert len(entity.async_write_op.state.mock_calls) == 1
 
-    await.opp.helpers.entity_component.async_update_entity(entity.entity_id)
+    await opp..helpers.entity_component.async_update_entity(entity.entity_id)
 
     assert len(entity.async_update_op.state.mock_calls) == 1
     assert entity.async_update_op.state.mock_calls[-1][1][0] is True
@@ -404,7 +404,7 @@ async def test_set_service_race.opp):
     for _ in range(2):
        .opp.async_create_task(component.async_add_entities([MockEntity()]))
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert not exception
 
 
@@ -458,7 +458,7 @@ async def test_register_entity_service.opp):
     )
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             "hello",
             {"entity_id": entity.entity_id, "invalid": "data"},
@@ -466,24 +466,24 @@ async def test_register_entity_service.opp):
         )
         assert len(calls) == 0
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, "hello", {"entity_id": entity.entity_id, "some": "data"}, blocking=True
     )
     assert len(calls) == 1
     assert calls[0] == {"some": "data"}
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, "hello", {"entity_id": ENTITY_MATCH_ALL, "some": "data"}, blocking=True
     )
     assert len(calls) == 2
     assert calls[1] == {"some": "data"}
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, "hello", {"entity_id": ENTITY_MATCH_NONE, "some": "data"}, blocking=True
     )
     assert len(calls) == 2
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, "hello", {"area_id": ENTITY_MATCH_NONE, "some": "data"}, blocking=True
     )
     assert len(calls) == 2

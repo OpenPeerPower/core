@@ -57,15 +57,15 @@ async def test_triggers.opp, tag_setup, calls):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     await async_scan_tag.opp, "abc123", None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data["message"] == "service called"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         automation.DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "automation.test"},
@@ -73,7 +73,7 @@ async def test_triggers.opp, tag_setup, calls):
     )
 
     await async_scan_tag.opp, "abc123", None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 1
 
@@ -96,7 +96,7 @@ async def test_exception_bad_trigger.opp, calls, caplog):
             ]
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert "Invalid config for [automation]" in caplog.text
 
 
@@ -123,22 +123,22 @@ async def test_multiple_tags_and_devices_trigger.opp, tag_setup, calls):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Should not trigger
     await async_scan_tag.opp, tag_id="abc123", device_id=None)
     await async_scan_tag.opp, tag_id="abc123", device_id="invalid")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Should trigger
     await async_scan_tag.opp, tag_id="abc123", device_id="ghi789")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     await async_scan_tag.opp, tag_id="abc123", device_id="jkl0123")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     await async_scan_tag.opp, "def456", device_id="ghi789")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     await async_scan_tag.opp, "def456", device_id="jkl0123")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 4
     assert calls[0].data["message"] == "service called"

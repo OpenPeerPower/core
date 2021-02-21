@@ -88,7 +88,7 @@ def get_mock_remote(
 async def test_flow_non_encrypted.opp):
     """Test flow without encryption."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -101,7 +101,7 @@ async def test_flow_non_encrypted.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
         )
@@ -125,7 +125,7 @@ async def test_flow_non_encrypted.opp):
 async def test_flow_not_connected_error.opp):
     """Test flow with connection error."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -136,7 +136,7 @@ async def test_flow_not_connected_error.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         side_effect=TimeoutError,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
         )
@@ -149,7 +149,7 @@ async def test_flow_not_connected_error.opp):
 async def test_flow_unknown_abort.opp):
     """Test flow with unknown error abortion."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -160,7 +160,7 @@ async def test_flow_unknown_abort.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
         )
@@ -172,7 +172,7 @@ async def test_flow_unknown_abort.opp):
 async def test_flow_encrypted_not_connected_pin_code_request.opp):
     """Test flow with encryption and PIN code request connection error abortion during pairing request step."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -185,7 +185,7 @@ async def test_flow_encrypted_not_connected_pin_code_request.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
         )
@@ -197,7 +197,7 @@ async def test_flow_encrypted_not_connected_pin_code_request.opp):
 async def test_flow_encrypted_unknown_pin_code_request.opp):
     """Test flow with encryption and PIN code request unknown error abortion during pairing request step."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -210,7 +210,7 @@ async def test_flow_encrypted_unknown_pin_code_request.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
         )
@@ -222,7 +222,7 @@ async def test_flow_encrypted_unknown_pin_code_request.opp):
 async def test_flow_encrypted_valid_pin_code.opp):
     """Test flow with encryption and valid PIN code."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -239,7 +239,7 @@ async def test_flow_encrypted_valid_pin_code.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
         )
@@ -247,7 +247,7 @@ async def test_flow_encrypted_valid_pin_code.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "pairing"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_PIN: "1234"},
     )
@@ -273,7 +273,7 @@ async def test_flow_encrypted_valid_pin_code.opp):
 async def test_flow_encrypted_invalid_pin_code_error.opp):
     """Test flow with encryption and invalid PIN code error during pairing step."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -286,7 +286,7 @@ async def test_flow_encrypted_invalid_pin_code_error.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
         )
@@ -298,7 +298,7 @@ async def test_flow_encrypted_invalid_pin_code_error.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_PIN: "0000"},
         )
@@ -311,7 +311,7 @@ async def test_flow_encrypted_invalid_pin_code_error.opp):
 async def test_flow_encrypted_not_connected_abort.opp):
     """Test flow with encryption and PIN code connection error abortion during pairing step."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -324,7 +324,7 @@ async def test_flow_encrypted_not_connected_abort.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
         )
@@ -332,7 +332,7 @@ async def test_flow_encrypted_not_connected_abort.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "pairing"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_PIN: "0000"},
     )
@@ -344,7 +344,7 @@ async def test_flow_encrypted_not_connected_abort.opp):
 async def test_flow_encrypted_unknown_abort.opp):
     """Test flow with encryption and PIN code unknown error abortion during pairing step."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -357,7 +357,7 @@ async def test_flow_encrypted_unknown_abort.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
         )
@@ -365,7 +365,7 @@ async def test_flow_encrypted_unknown_abort.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "pairing"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_PIN: "0000"},
     )
@@ -383,7 +383,7 @@ async def test_flow_non_encrypted_already_configured_abort.opp):
         data={CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME, CONF_PORT: DEFAULT_PORT},
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data={CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
@@ -408,7 +408,7 @@ async def test_flow_encrypted_already_configured_abort.opp):
         },
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data={CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
@@ -427,7 +427,7 @@ async def test_imported_flow_non_encrypted.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -467,7 +467,7 @@ async def test_imported_flow_encrypted_valid_pin_code.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -481,7 +481,7 @@ async def test_imported_flow_encrypted_valid_pin_code.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "pairing"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_PIN: "1234"},
     )
@@ -513,7 +513,7 @@ async def test_imported_flow_encrypted_invalid_pin_code_error.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -531,7 +531,7 @@ async def test_imported_flow_encrypted_invalid_pin_code_error.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_PIN: "0000"},
         )
@@ -550,7 +550,7 @@ async def test_imported_flow_encrypted_not_connected_abort.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -564,7 +564,7 @@ async def test_imported_flow_encrypted_not_connected_abort.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "pairing"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_PIN: "0000"},
     )
@@ -582,7 +582,7 @@ async def test_imported_flow_encrypted_unknown_abort.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         return_value=mock_remote,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -596,7 +596,7 @@ async def test_imported_flow_encrypted_unknown_abort.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "pairing"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_PIN: "0000"},
     )
@@ -612,7 +612,7 @@ async def test_imported_flow_not_connected_error.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         side_effect=TimeoutError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -635,7 +635,7 @@ async def test_imported_flow_unknown_abort.opp):
         "openpeerpower.components.panasonic_viera.config_flow.RemoteControl",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -664,7 +664,7 @@ async def test_imported_flow_non_encrypted_already_configured_abort.opp):
         },
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_IMPORT},
         data={CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},
@@ -690,7 +690,7 @@ async def test_imported_flow_encrypted_already_configured_abort.opp):
         },
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_IMPORT},
         data={CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME},

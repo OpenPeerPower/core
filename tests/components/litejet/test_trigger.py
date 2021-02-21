@@ -74,8 +74,8 @@ async def simulate_press.opp, mock_lj, number):
         return_value=mock_lj.start_time + mock_lj.last_delta,
     ):
         if callback is not None:
-            await opp.async_add_executor_job(callback)
-        await opp.async_block_till_done()
+            await opp..async_add_executor_job(callback)
+        await opp..async_block_till_done()
 
 
 async def simulate_release.opp, mock_lj, number):
@@ -87,8 +87,8 @@ async def simulate_release.opp, mock_lj, number):
         return_value=mock_lj.start_time + mock_lj.last_delta,
     ):
         if callback is not None:
-            await opp.async_add_executor_job(callback)
-        await opp.async_block_till_done()
+            await opp..async_add_executor_job(callback)
+        await opp..async_block_till_done()
 
 
 async def simulate_time.opp, mock_lj, delta):
@@ -103,7 +103,7 @@ async def simulate_time.opp, mock_lj, delta):
     ):
         _LOGGER.info("now=%s", dt_util.utcnow())
         async_fire_time_changed.opp, mock_lj.start_time + delta)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         _LOGGER.info("done with now=%s", dt_util.utcnow())
 
 
@@ -122,7 +122,7 @@ async def setup_automation.opp, trigger):
             ]
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def test_simple.opp, calls, mock_lj):

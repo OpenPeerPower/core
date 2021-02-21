@@ -13,10 +13,10 @@ async def test_async_browse_media.opp):
     await async_process_op.core_config(
        .opp, {"media_dirs": {"local": local_media, "recordings": local_media}}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert await async_setup_component.opp, const.DOMAIN, {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Test path not exists
     with pytest.raises(media_source.BrowseError) as excinfo:
@@ -69,12 +69,12 @@ async def test_media_view.opp,.opp_client):
     await async_process_op.core_config(
        .opp, {"media_dirs": {"local": local_media, "recordings": local_media}}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert await async_setup_component.opp, const.DOMAIN, {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp._client()
 
     # Protects against non-existent files
     resp = await client.get("/media/local/invalid.txt")

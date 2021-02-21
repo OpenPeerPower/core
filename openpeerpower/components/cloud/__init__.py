@@ -128,7 +128,7 @@ async def async_create_cloudhook.opp, webhook_id: str) -> str:
     if not async_is_logged_in.opp):
         raise CloudNotAvailable
 
-    hook = await.opp.data[DOMAIN].cloudhooks.async_create(webhook_id, True)
+    hook = await opp..data[DOMAIN].cloudhooks.async_create(webhook_id, True)
     return hook["cloudhook_url"]
 
 
@@ -138,7 +138,7 @@ async def async_delete_cloudhook.opp, webhook_id: str) -> None:
     if DOMAIN not in.opp.data:
         raise CloudNotAvailable
 
-    await.opp.data[DOMAIN].cloudhooks.async_delete(webhook_id)
+    await opp..data[DOMAIN].cloudhooks.async_delete(webhook_id)
 
 
 @bind_opp
@@ -219,11 +219,11 @@ async def async_setup.opp, config):
             return
         loaded = True
 
-        await.opp.helpers.discovery.async_load_platform(
+        await opp..helpers.discovery.async_load_platform(
             "binary_sensor", DOMAIN, {}, config
         )
-        await.opp.helpers.discovery.async_load_platform("stt", DOMAIN, {}, config)
-        await.opp.helpers.discovery.async_load_platform("tts", DOMAIN, {}, config)
+        await opp..helpers.discovery.async_load_platform("stt", DOMAIN, {}, config)
+        await opp..helpers.discovery.async_load_platform("tts", DOMAIN, {}, config)
 
     cloud.iot.register_on_connect(_on_connect)
 

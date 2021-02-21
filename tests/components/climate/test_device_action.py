@@ -132,12 +132,12 @@ async def test_action.opp):
     set_preset_mode_calls = async_mock_service.opp, "climate", "set_preset_mode")
 
    .opp.bus.async_fire("test_event_set_hvac_mode")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(set_hvac_mode_calls) == 1
     assert len(set_preset_mode_calls) == 0
 
    .opp.bus.async_fire("test_event_set_preset_mode")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(set_hvac_mode_calls) == 1
     assert len(set_preset_mode_calls) == 1
 

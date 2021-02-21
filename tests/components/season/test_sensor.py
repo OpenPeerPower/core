@@ -76,7 +76,7 @@ async def test_season_northern_hemisphere.opp, type, day, expected):
 
     with patch("openpeerpower.components.season.sensor.utcnow", return_value=day):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     state = opp.states.get("sensor.season")
     assert state
@@ -95,7 +95,7 @@ async def test_season_southern_hemisphere.opp, type, day, expected):
 
     with patch("openpeerpower.components.season.sensor.utcnow", return_value=day):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     state = opp.states.get("sensor.season")
     assert state
@@ -109,7 +109,7 @@ async def test_season_equator.opp):
 
     with patch("openpeerpower.components.season.sensor.utcnow", return_value=day):
         assert await async_setup_component.opp, "sensor", HEMISPHERE_EQUATOR)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     state = opp.states.get("sensor.season")
     assert state
@@ -120,5 +120,5 @@ async def test_setup_hemisphere_empty.opp):
     """Test platform setup of missing latlong."""
    .opp.config.latitude = None
     assert await async_setup_component.opp, "sensor", HEMISPHERE_EMPTY)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.config.as_dict()["latitude"] is None

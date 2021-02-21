@@ -95,7 +95,7 @@ async def async_setup_entry.opp, entry):
            .opp.config_entries.async_forward_entry_setup(entry, domain)
         )
 
-    await.opp_notify.async_reload.opp, DOMAIN)
+    await opp._notify.async_reload.opp, DOMAIN)
 
     return True
 
@@ -118,7 +118,7 @@ async def async_unload_entry.opp, entry):
     webhook_unregister.opp, webhook_id)
     del.opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id]
     del.opp.data[DOMAIN][DATA_DEVICES][webhook_id]
-    await.opp_notify.async_reload.opp, DOMAIN)
+    await opp._notify.async_reload.opp, DOMAIN)
 
     return True
 

@@ -21,14 +21,14 @@ CONFIG = {CONF_URL: "https://some.url:1234"}
 async def test_form.opp):
     """Test we get the user initiated form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {}
 
     with _patch_glucose_readings(), _patch_server_status(), _patch_async_setup() as mock_setup, _patch_async_setup_entry() as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             CONFIG,
         )
@@ -36,14 +36,14 @@ async def test_form.opp):
         assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result2["title"] == SERVER_STATUS.name  # pylint: disable=maybe-no-member
         assert result2["data"] == CONFIG
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 
 
 async def test_user_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -51,7 +51,7 @@ async def test_user_form_cannot_connect.opp):
         "openpeerpower.components.nightscout.NightscoutAPI.get_server_status",
         side_effect=ClientConnectionError(),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_URL: "https://some.url:1234"},
         )
@@ -62,7 +62,7 @@ async def test_user_form_cannot_connect.opp):
 
 async def test_user_form_api_key_required.opp):
     """Test we handle an unauthorized error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -73,7 +73,7 @@ async def test_user_form_api_key_required.opp):
         "openpeerpower.components.nightscout.NightscoutAPI.get_sgvs",
         side_effect=ClientResponseError(None, None, status=401),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_URL: "https://some.url:1234"},
         )
@@ -84,7 +84,7 @@ async def test_user_form_api_key_required.opp):
 
 async def test_user_form_unexpected_exception.opp):
     """Test we handle unexpected exception."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -92,7 +92,7 @@ async def test_user_form_unexpected_exception.opp):
         "openpeerpower.components.nightscout.NightscoutAPI.get_server_status",
         side_effect=Exception(),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_URL: "https://some.url:1234"},
         )
@@ -106,8 +106,8 @@ async def test_user_form_duplicate.opp):
     with _patch_glucose_readings(), _patch_server_status():
         unique_id = op.h_from_url(CONFIG[CONF_URL])
         entry = MockConfigEntry(domain=DOMAIN, unique_id=unique_id)
-        await opp.config_entries.async_add(entry)
-        result = await.opp.config_entries.flow.async_init(
+        await opp..config_entries.async_add(entry)
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data=CONFIG,

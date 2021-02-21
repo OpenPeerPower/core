@@ -53,7 +53,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     devices = opp.data[FRITZBOX_DOMAIN][CONF_DEVICES]
     fritz = opp.data[FRITZBOX_DOMAIN][CONF_CONNECTIONS][config_entry.entry_id]
 
-    for device in await opp.async_add_executor_job(fritz.get_devices):
+    for device in await opp..async_add_executor_job(fritz.get_devices):
         if device.has_thermostat and device.ain not in devices:
             entities.append(FritzboxThermostat(device, fritz))
             devices.add(device.ain)

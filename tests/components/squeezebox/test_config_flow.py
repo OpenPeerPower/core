@@ -52,7 +52,7 @@ async def test_user_form.opp):
     ) as mock_setup_entry, patch(
         "openpeerpower.components.squeezebox.config_flow.async_discover", mock_discover
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
         assert result["type"] == RESULT_TYPE_FORM
@@ -63,7 +63,7 @@ async def test_user_form.opp):
                 assert key.description == {"suggested_value": HOST}
 
         # test the edit step
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: HOST, CONF_PORT: PORT, CONF_USERNAME: "", CONF_PASSWORD: ""},
         )
@@ -76,7 +76,7 @@ async def test_user_form.opp):
             CONF_PASSWORD: "",
         }
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 
@@ -87,14 +87,14 @@ async def test_user_form_timeout.opp):
         "openpeerpower.components.squeezebox.config_flow.async_discover",
         mock_failed_discover,
     ), patch("openpeerpower.components.squeezebox.config_flow.TIMEOUT", 0.1):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
         assert result["type"] == RESULT_TYPE_FORM
         assert result["errors"] == {"base": "no_server_found"}
 
         # simulate manual input of host
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"], {CONF_HOST: HOST2}
         )
         assert result2["type"] == RESULT_TYPE_FORM
@@ -117,8 +117,8 @@ async def test_user_form_duplicate.opp):
         return_value=True,
     ):
         entry = MockConfigEntry(domain=DOMAIN, unique_id=UUID)
-        await opp.config_entries.async_add(entry)
-        result = await.opp.config_entries.flow.async_init(
+        await opp..config_entries.async_add(entry)
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
         assert result["type"] == RESULT_TYPE_FORM
@@ -127,7 +127,7 @@ async def test_user_form_duplicate.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "edit"}
     )
 
@@ -136,7 +136,7 @@ async def test_form_invalid_auth.opp):
         return False
 
     with patch("pysqueezebox.Server.async_query", new=patch_async_query):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: HOST,
@@ -152,7 +152,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "edit"}
     )
 
@@ -160,7 +160,7 @@ async def test_form_cannot_connect.opp):
         "pysqueezebox.Server.async_query",
         return_value=False,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: HOST,
@@ -180,7 +180,7 @@ async def test_discovery.opp):
         "pysqueezebox.Server.async_query",
         return_value={"uuid": UUID},
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_DISCOVERY},
             data={CONF_HOST: HOST, CONF_PORT: PORT, "uuid": UUID},
@@ -192,7 +192,7 @@ async def test_discovery.opp):
 async def test_discovery_no_uuid.opp):
     """Test handling of discovered server with unavailable uuid."""
     with patch("pysqueezebox.Server.async_query", new=patch_async_query_unauthorized):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_DISCOVERY},
             data={CONF_HOST: HOST, CONF_PORT: PORT},
@@ -209,14 +209,14 @@ async def test_import.opp):
         "openpeerpower.components.squeezebox.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_HOST: HOST, CONF_PORT: PORT},
         )
         assert result["type"] == RESULT_TYPE_CREATE_ENTRY
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 
@@ -224,7 +224,7 @@ async def test_import.opp):
 async def test_import_bad_host.opp):
     """Test handling of configuration imported with bad host."""
     with patch("pysqueezebox.Server.async_query", return_value=False):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_HOST: HOST, CONF_PORT: PORT},
@@ -236,7 +236,7 @@ async def test_import_bad_host.opp):
 async def test_import_bad_auth.opp):
     """Test handling of configuration import with bad authentication."""
     with patch("pysqueezebox.Server.async_query", new=patch_async_query_unauthorized):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -262,8 +262,8 @@ async def test_import_existing.opp):
         return_value={"ip": HOST, "uuid": UUID},
     ):
         entry = MockConfigEntry(domain=DOMAIN, unique_id=UUID)
-        await opp.config_entries.async_add(entry)
-        result = await.opp.config_entries.flow.async_init(
+        await opp..config_entries.async_add(entry)
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_HOST: HOST, CONF_PORT: PORT},

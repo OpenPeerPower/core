@@ -75,7 +75,7 @@ async def test_saving_with_delay.opp, store,.opp_storage):
     assert store.key not in.opp_storage
 
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=1))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
@@ -91,14 +91,14 @@ async def test_saving_on_final_write.opp,.opp_storage):
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
    .opp.state = CoreState.stopping
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=10))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert store.key not in.opp_storage
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_FINAL_WRITE)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
@@ -110,12 +110,12 @@ async def test_not_delayed_saving_while_stopping.opp,.opp_storage):
     """Test delayed saves don't write after the stop event has fired."""
     store = storage.Store.opp, MOCK_VERSION, MOCK_KEY)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
    .opp.state = CoreState.stopping
 
     store.async_delay_save(lambda: MOCK_DATA, 1)
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=2))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert store.key not in.opp_storage
 
 
@@ -127,11 +127,11 @@ async def test_not_delayed_saving_after_stopping.opp,.opp_storage):
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
    .opp.state = CoreState.stopping
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert store.key not in.opp_storage
 
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=15))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert store.key not in.opp_storage
 
 
@@ -175,7 +175,7 @@ async def test_writing_while_writing_delay.opp, store,.opp_storage):
     }
 
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=1))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
@@ -201,7 +201,7 @@ async def test_multiple_delay_save_calls.opp, store,.opp_storage):
     }
 
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=1))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,

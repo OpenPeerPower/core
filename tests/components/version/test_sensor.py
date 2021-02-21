@@ -19,7 +19,7 @@ async def test_version.opp):
 
     with patch("openpeerpower.const.__version__", MOCK_VERSION):
         assert await async_setup_component.opp, "sensor", config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     state = opp.states.get("sensor.test")
 

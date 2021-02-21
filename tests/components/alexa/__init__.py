@@ -104,7 +104,7 @@ async def assert_request_calls_service(
     calls = async_mock_service.opp, domain, service_name)
 
     msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request, context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 1
     call = calls[0]
@@ -128,7 +128,7 @@ async def assert_request_fails(
     call = async_mock_service.opp, domain, service_name)
 
     msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert not call
     assert "event" in msg
@@ -185,7 +185,7 @@ async def reported_properties.opp, endpoint):
     """
     request = get_new_request("Alexa", "ReportState", endpoint)
     msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     return ReportedProperties(msg["context"]["properties"])
 
 

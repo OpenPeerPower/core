@@ -32,17 +32,17 @@ async def get_form(
 ):
     """Get a form for the given gateway type."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    stepuser = await.opp.config_entries.flow.async_init(
+    stepuser = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert stepuser["type"] == "form"
     assert not stepuser["errors"]
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         stepuser["flow_id"],
         {CONF_GATEWAY_TYPE: gatway_type},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert result["type"] == "form"
     assert result["step_id"] == expected_step_id
 
@@ -60,7 +60,7 @@ async def test_config_mqtt.opp: OpenPeerPowerType):
         "openpeerpower.components.mysensors.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             flow_id,
             {
                 CONF_RETAIN: True,
@@ -69,7 +69,7 @@ async def test_config_mqtt.opp: OpenPeerPowerType):
                 CONF_VERSION: "2.4",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     if "errors" in result2:
         assert not result2["errors"]
@@ -102,7 +102,7 @@ async def test_config_serial.opp: OpenPeerPowerType):
         "openpeerpower.components.mysensors.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             flow_id,
             {
                 CONF_BAUD_RATE: 115200,
@@ -110,7 +110,7 @@ async def test_config_serial.opp: OpenPeerPowerType):
                 CONF_VERSION: "2.4",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     if "errors" in result2:
         assert not result2["errors"]
@@ -138,7 +138,7 @@ async def test_config_tcp.opp: OpenPeerPowerType):
         "openpeerpower.components.mysensors.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             flow_id,
             {
                 CONF_TCP_PORT: 5003,
@@ -146,7 +146,7 @@ async def test_config_tcp.opp: OpenPeerPowerType):
                 CONF_VERSION: "2.4",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     if "errors" in result2:
         assert not result2["errors"]
@@ -174,7 +174,7 @@ async def test_fail_to_connect.opp: OpenPeerPowerType):
         "openpeerpower.components.mysensors.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             flow_id,
             {
                 CONF_TCP_PORT: 5003,
@@ -182,7 +182,7 @@ async def test_fail_to_connect.opp: OpenPeerPowerType):
                 CONF_VERSION: "2.4",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "form"
     assert "errors" in result2
@@ -362,11 +362,11 @@ async def test_config_invalid(
         "openpeerpower.components.mysensors.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             flow_id,
             user_input,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "form"
     assert "errors" in result2
@@ -427,10 +427,10 @@ async def test_import.opp: OpenPeerPowerType, user_input: Dict):
         "openpeerpower.components.mysensors.async_setup_entry",
         return_value=True,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, data=user_input, context={"source": config_entries.SOURCE_IMPORT}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "create_entry"
 
@@ -724,10 +724,10 @@ async def test_duplicate(
     ):
         MockConfigEntry(domain=DOMAIN, data=first_input).add_to_opp.opp)
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, data=second_input, context={"source": config_entries.SOURCE_IMPORT}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         if expected_result is None:
             assert result["type"] == "create_entry"
         else:

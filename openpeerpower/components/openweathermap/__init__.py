@@ -100,7 +100,7 @@ async def async_migrate_entry.opp, entry):
 
 async def async_update_options.opp: OpenPeerPower, config_entry: ConfigEntry):
     """Update options."""
-    await opp.config_entries.async_reload(config_entry.entry_id)
+    await opp..config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):

@@ -124,7 +124,7 @@ def _async_start_reauth.opp: OpenPeerPowerType, entry: ConfigEntry):
 
 async def _async_update_listener.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     """Handle options update."""
-    await opp.config_entries.async_reload(entry.entry_id)
+    await opp..config_entries.async_reload(entry.entry_id)
 
 
 class SonarrEntity(Entity):

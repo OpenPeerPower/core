@@ -33,6 +33,6 @@ async def device.opp: OpenPeerPower, request) -> DysonDevice:
             DOMAIN,
             CONFIG,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     return device

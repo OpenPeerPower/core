@@ -77,6 +77,6 @@ async def test_async_create_catching_coro.opp, caplog):
         raise Exception("This is a bad coroutine")
 
    .opp.async_create_task(logging_util.async_create_catching_coro(job()))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert "This is a bad coroutine" in caplog.text
     assert "in test_async_create_catching_coro" in caplog.text

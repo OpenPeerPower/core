@@ -162,7 +162,7 @@ def _async_register_services(
 
 async def _async_update_listener.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     """Handle options update."""
-    await opp.config_entries.async_reload(entry.entry_id)
+    await opp..config_entries.async_reload(entry.entry_id)
 
 
 class NZBGetEntity(CoordinatorEntity):

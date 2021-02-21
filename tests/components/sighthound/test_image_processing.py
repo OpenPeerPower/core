@@ -88,7 +88,7 @@ async def test_bad_api_key.opp, caplog):
         "simplehound.core.cloud.detect", side_effect=hound.SimplehoundException
     ):
         await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert "Sighthound error" in caplog.text
         assert not.opp.states.get(VALID_ENTITY_ID)
 
@@ -96,14 +96,14 @@ async def test_bad_api_key.opp, caplog):
 async def test_setup_platform.opp, mock_detections):
     """Set up platform with one entity."""
     await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
 
 async def test_process_image.opp, mock_image, mock_detections):
     """Process an image."""
     await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
     person_events = []
@@ -116,8 +116,8 @@ async def test_process_image.opp, mock_image, mock_detections):
    .opp.bus.async_listen(sh.EVENT_PERSON_DETECTED, capture_person_event)
 
     data = {ATTR_ENTITY_ID: VALID_ENTITY_ID}
-    await.opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
-    await opp.async_block_till_done()
+    await opp..services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
+    await opp..async_block_till_done()
 
     state = opp.states.get(VALID_ENTITY_ID)
     assert state.state == "2"
@@ -131,12 +131,12 @@ async def test_catch_bad_image(
     valid_config_save_file = deepcopy(VALID_CONFIG)
     valid_config_save_file[ip.DOMAIN].update({sh.CONF_SAVE_FILE_FOLDER: TEST_DIR})
     await async_setup_component.opp, ip.DOMAIN, valid_config_save_file)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
     data = {ATTR_ENTITY_ID: VALID_ENTITY_ID}
-    await.opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
-    await opp.async_block_till_done()
+    await opp..services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
+    await opp..async_block_till_done()
     assert "Sighthound unable to process image" in caplog.text
 
 
@@ -145,7 +145,7 @@ async def test_save_image.opp, mock_image, mock_detections):
     valid_config_save_file = deepcopy(VALID_CONFIG)
     valid_config_save_file[ip.DOMAIN].update({sh.CONF_SAVE_FILE_FOLDER: TEST_DIR})
     await async_setup_component.opp, ip.DOMAIN, valid_config_save_file)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
     with mock.patch(
@@ -154,8 +154,8 @@ async def test_save_image.opp, mock_image, mock_detections):
         pil_img = pil_img_open.return_value
         pil_img = pil_img.convert.return_value
         data = {ATTR_ENTITY_ID: VALID_ENTITY_ID}
-        await.opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
-        await opp.async_block_till_done()
+        await opp..services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
+        await opp..async_block_till_done()
         state = opp.states.get(VALID_ENTITY_ID)
         assert state.state == "2"
         assert pil_img.save.call_count == 1
@@ -171,7 +171,7 @@ async def test_save_timestamped_image.opp, mock_image, mock_detections, mock_now
     valid_config_save_ts_file[ip.DOMAIN].update({sh.CONF_SAVE_FILE_FOLDER: TEST_DIR})
     valid_config_save_ts_file[ip.DOMAIN].update({sh.CONF_SAVE_TIMESTAMPTED_FILE: True})
     await async_setup_component.opp, ip.DOMAIN, valid_config_save_ts_file)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
     with mock.patch(
@@ -180,8 +180,8 @@ async def test_save_timestamped_image.opp, mock_image, mock_detections, mock_now
         pil_img = pil_img_open.return_value
         pil_img = pil_img.convert.return_value
         data = {ATTR_ENTITY_ID: VALID_ENTITY_ID}
-        await.opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
-        await opp.async_block_till_done()
+        await opp..services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
+        await opp..async_block_till_done()
         state = opp.states.get(VALID_ENTITY_ID)
         assert state.state == "2"
         assert pil_img.save.call_count == 2

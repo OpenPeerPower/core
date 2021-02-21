@@ -127,7 +127,7 @@ async def test_cors_middleware_with_cors_allowed_view.opp):
    .opp.http.register_view(MyView("/api/test2", "api:test"))
 
    .opp.http.app._on_startup.freeze()
-    await.opp.http.app.startup()
+    await opp..http.app.startup()
 
 
 async def test_cors_works_with_frontend.opp,.opp_client):
@@ -137,7 +137,7 @@ async def test_cors_works_with_frontend.opp,.opp_client):
         "frontend",
         {"http": {"cors_allowed_origins": ["http://openpeerpower.io"]}},
     )
-    client = await.opp_client()
+    client = await opp._client()
     resp = await client.get("/")
     assert resp.status == 200
 
@@ -149,7 +149,7 @@ async def test_cors_on_static_files.opp,.opp_client):
     )
    .opp.http.register_static_path("/something", str(Path(__file__).parent))
 
-    client = await.opp_client()
+    client = await opp._client()
     resp = await client.options(
         "/something/__init__.py",
         headers={

@@ -37,17 +37,17 @@ async def test_not_found.opp, mock_disco):
         return_value=None,
     ) as stop_disco:
         start_disco.side_effect = _mock_start_discovery.opp, mock_disco)
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             IZONE, context={"source": config_entries.SOURCE_USER}
         )
 
         # Confirmation form
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     stop_disco.assert_called_once()
 
@@ -66,16 +66,16 @@ async def test_found.opp, mock_disco):
         return_value=None,
     ):
         start_disco.side_effect = _mock_start_discovery.opp, mock_disco)
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             IZONE, context={"source": config_entries.SOURCE_USER}
         )
 
         # Confirmation form
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     mock_setup.assert_called_once()

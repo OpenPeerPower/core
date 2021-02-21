@@ -36,7 +36,7 @@ async def async_setup.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Ruckus Unleashed from a config entry."""
     try:
-        ruckus = await opp.async_add_executor_job(
+        ruckus = await opp..async_add_executor_job(
             Ruckus,
             entry.data[CONF_HOST],
             entry.data[CONF_USERNAME],
@@ -51,10 +51,10 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-    system_info = await opp.async_add_executor_job(ruckus.system_info)
+    system_info = await opp..async_add_executor_job(ruckus.system_info)
 
     registry = await device_registry.async_get_registry.opp)
-    ap_info = await opp.async_add_executor_job(ruckus.ap_info)
+    ap_info = await opp..async_add_executor_job(ruckus.ap_info)
     for device in ap_info[API_AP][API_ID].values():
         registry.async_get_or_create(
             config_entry_id=entry.entry_id,

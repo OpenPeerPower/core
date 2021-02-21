@@ -15,7 +15,7 @@ async def test_apprise_config_load_fail01.opp):
 
     with patch("apprise.AppriseConfig.add", return_value=False):
         assert await async_setup_component.opp, BASE_COMPONENT, config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         # Test that our service failed to load
         assert not.opp.services.has_service(BASE_COMPONENT, "test")
@@ -31,7 +31,7 @@ async def test_apprise_config_load_fail02.opp):
     with patch("apprise.Apprise.add", return_value=False):
         with patch("apprise.AppriseConfig.add", return_value=True):
             assert await async_setup_component.opp, BASE_COMPONENT, config)
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
 
             # Test that our service failed to load
             assert not.opp.services.has_service(BASE_COMPONENT, "test")
@@ -49,7 +49,7 @@ async def test_apprise_config_load_okay.opp, tmp_path):
     config = {BASE_COMPONENT: {"name": "test", "platform": "apprise", "config": str(f)}}
 
     assert await async_setup_component.opp, BASE_COMPONENT, config)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Valid configuration was loaded; our service is good
     assert.opp.services.has_service(BASE_COMPONENT, "test")
@@ -67,7 +67,7 @@ async def test_apprise_url_load_fail.opp):
     }
     with patch("apprise.Apprise.add", return_value=False):
         assert await async_setup_component.opp, BASE_COMPONENT, config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         # Test that our service failed to load
         assert not.opp.services.has_service(BASE_COMPONENT, "test")
@@ -93,14 +93,14 @@ async def test_apprise_notification.opp):
         obj.notify.return_value = True
         mock_apprise.return_value = obj
         assert await async_setup_component.opp, BASE_COMPONENT, config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         # Test the existence of our service
         assert.opp.services.has_service(BASE_COMPONENT, "test")
 
         # Test the call to our underlining notify() call
-        await.opp.services.async_call(BASE_COMPONENT, "test", data)
-        await opp.async_block_till_done()
+        await opp..services.async_call(BASE_COMPONENT, "test", data)
+        await opp..async_block_till_done()
 
         # Validate calls were made under the hood correctly
         obj.add.assert_called_once_with([config[BASE_COMPONENT]["url"]])
@@ -132,14 +132,14 @@ async def test_apprise_notification_with_target.opp, tmp_path):
         apprise_obj.notify.return_value = True
         mock_apprise.return_value = apprise_obj
         assert await async_setup_component.opp, BASE_COMPONENT, config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         # Test the existence of our service
         assert.opp.services.has_service(BASE_COMPONENT, "test")
 
         # Test the call to our underlining notify() call
-        await.opp.services.async_call(BASE_COMPONENT, "test", data)
-        await opp.async_block_till_done()
+        await opp..services.async_call(BASE_COMPONENT, "test", data)
+        await opp..async_block_till_done()
 
         # Validate calls were made under the hood correctly
         apprise_obj.notify.assert_called_once_with(

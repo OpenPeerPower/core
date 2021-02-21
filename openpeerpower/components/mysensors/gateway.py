@@ -196,7 +196,7 @@ async def _get_gateway(
         )
     else:
         try:
-            await opp.async_add_executor_job(is_serial_port, device)
+            await opp..async_add_executor_job(is_serial_port, device)
             gateway = mysensors.AsyncSerialGateway(
                 device,
                 baud=baud_rate,
@@ -208,7 +208,7 @@ async def _get_gateway(
             )
         except vol.Invalid:
             try:
-                await opp.async_add_executor_job(is_socket_address, device)
+                await opp..async_add_executor_job(is_socket_address, device)
                 # valid ip address
                 gateway = mysensors.AsyncTCPGateway(
                     device,

@@ -99,7 +99,7 @@ async def async_set_lights_xy.opp, lights, x_val, y_val, brightness, transition)
                 service_data[ATTR_WHITE_VALUE] = brightness
             if transition is not None:
                 service_data[ATTR_TRANSITION] = transition
-            await.opp.services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
+            await opp..services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
 
 
 async def async_set_lights_temp.opp, lights, mired, brightness, transition):
@@ -113,7 +113,7 @@ async def async_set_lights_temp.opp, lights, mired, brightness, transition):
                 service_data[ATTR_BRIGHTNESS] = brightness
             if transition is not None:
                 service_data[ATTR_TRANSITION] = transition
-            await.opp.services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
+            await opp..services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
 
 
 async def async_set_lights_rgb.opp, lights, rgb, transition):
@@ -125,7 +125,7 @@ async def async_set_lights_rgb.opp, lights, rgb, transition):
                 service_data[ATTR_RGB_COLOR] = rgb
             if transition is not None:
                 service_data[ATTR_TRANSITION] = transition
-            await.opp.services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
+            await opp..services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
 
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):

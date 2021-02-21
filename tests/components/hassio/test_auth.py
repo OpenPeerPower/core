@@ -11,7 +11,7 @@ async def test_auth_success.opp, oppio_client_supervisor):
         "openpeerpowerr.auth.providers.openpeerpowerr."
         "OppAuthProvider.async_validate_login",
     ) as mock_login:
-        resp = await oppio_client_supervisor.post(
+        resp = await opp.io_client_supervisor.post(
             "/api/oppio_auth",
             json={"username": "test", "password": "123456", "addon": "samba"},
         )
@@ -27,7 +27,7 @@ async def test_auth_fails_no_supervisor.opp, oppio_client):
         "openpeerpowerr.auth.providers.openpeerpowerr."
         "OppAuthProvider.async_validate_login",
     ) as mock_login:
-        resp = await oppio_client.post(
+        resp = await opp.io_client.post(
             "/api/oppio_auth",
             json={"username": "test", "password": "123456", "addon": "samba"},
         )
@@ -43,7 +43,7 @@ async def test_auth_fails_no_auth.opp, oppio_noauth_client):
         "openpeerpowerr.auth.providers.openpeerpowerr."
         "OppAuthProvider.async_validate_login",
     ) as mock_login:
-        resp = await oppio_noauth_client.post(
+        resp = await opp.io_noauth_client.post(
             "/api/oppio_auth",
             json={"username": "test", "password": "123456", "addon": "samba"},
         )
@@ -60,7 +60,7 @@ async def test_login_error.opp, oppio_client_supervisor):
         "OppAuthProvider.async_validate_login",
         Mock(side_effect=InvalidAuth()),
     ) as mock_login:
-        resp = await oppio_client_supervisor.post(
+        resp = await opp.io_client_supervisor.post(
             "/api/oppio_auth",
             json={"username": "test", "password": "123456", "addon": "samba"},
         )
@@ -77,7 +77,7 @@ async def test_login_no_data.opp, oppio_client_supervisor):
         "OppAuthProvider.async_validate_login",
         Mock(side_effect=InvalidAuth()),
     ) as mock_login:
-        resp = await oppio_client_supervisor.post("/api/oppio_auth")
+        resp = await opp.io_client_supervisor.post("/api/oppio_auth")
 
         # Check we got right response
         assert resp.status == 400
@@ -91,7 +91,7 @@ async def test_login_no_username.opp, oppio_client_supervisor):
         "OppAuthProvider.async_validate_login",
         Mock(side_effect=InvalidAuth()),
     ) as mock_login:
-        resp = await oppio_client_supervisor.post(
+        resp = await opp.io_client_supervisor.post(
             "/api/oppio_auth", json={"password": "123456", "addon": "samba"}
         )
 
@@ -106,7 +106,7 @@ async def test_login_success_extra.opp, oppio_client_supervisor):
         "openpeerpowerr.auth.providers.openpeerpowerr."
         "OppAuthProvider.async_validate_login",
     ) as mock_login:
-        resp = await oppio_client_supervisor.post(
+        resp = await opp.io_client_supervisor.post(
             "/api/oppio_auth",
             json={
                 "username": "test",
@@ -127,7 +127,7 @@ async def test_password_success.opp, oppio_client_supervisor):
         "openpeerpowerr.auth.providers.openpeerpowerr."
         "OppAuthProvider.async_change_password",
     ) as mock_change:
-        resp = await oppio_client_supervisor.post(
+        resp = await opp.io_client_supervisor.post(
             "/api/oppio_auth/password_reset",
             json={"username": "test", "password": "123456"},
         )
@@ -139,7 +139,7 @@ async def test_password_success.opp, oppio_client_supervisor):
 
 async def test_password_fails_no_supervisor.opp, oppio_client):
     """Test if only supervisor can access."""
-    resp = await oppio_client.post(
+    resp = await opp.io_client.post(
         "/api/oppio_auth/password_reset",
         json={"username": "test", "password": "123456"},
     )
@@ -150,7 +150,7 @@ async def test_password_fails_no_supervisor.opp, oppio_client):
 
 async def test_password_fails_no_auth.opp, oppio_noauth_client):
     """Test if only supervisor can access."""
-    resp = await oppio_noauth_client.post(
+    resp = await opp.io_noauth_client.post(
         "/api/oppio_auth/password_reset",
         json={"username": "test", "password": "123456"},
     )
@@ -161,7 +161,7 @@ async def test_password_fails_no_auth.opp, oppio_noauth_client):
 
 async def test_password_no_user.opp, oppio_client_supervisor):
     """Test changing password for invalid user."""
-    resp = await oppio_client_supervisor.post(
+    resp = await opp.io_client_supervisor.post(
         "/api/oppio_auth/password_reset",
         json={"username": "test", "password": "123456"},
     )

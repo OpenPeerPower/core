@@ -31,7 +31,7 @@ async def test_switch_state(
     """Test the creation and values of the WLED switches."""
     await init_integration.opp, aioclient_mock)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     state = opp.states.get("switch.wled_rgb_light_nightlight")
     assert state
@@ -74,65 +74,65 @@ async def test_switch_change_state(
 
     # Nightlight
     with patch("wled.WLED.nightlight") as nightlight_mock:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             SWITCH_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_nightlight"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         nightlight_mock.assert_called_once_with(on=True)
 
     with patch("wled.WLED.nightlight") as nightlight_mock:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             SWITCH_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_nightlight"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         nightlight_mock.assert_called_once_with(on=False)
 
     # Sync send
     with patch("wled.WLED.sync") as sync_mock:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             SWITCH_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_sync_send"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         sync_mock.assert_called_once_with(send=True)
 
     with patch("wled.WLED.sync") as sync_mock:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             SWITCH_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_sync_send"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         sync_mock.assert_called_once_with(send=False)
 
     # Sync receive
     with patch("wled.WLED.sync") as sync_mock:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             SWITCH_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_sync_receive"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         sync_mock.assert_called_once_with(receive=False)
 
     with patch("wled.WLED.sync") as sync_mock:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             SWITCH_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_sync_receive"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         sync_mock.assert_called_once_with(receive=True)
 
 
@@ -144,13 +144,13 @@ async def test_switch_error(
     await init_integration.opp, aioclient_mock)
 
     with patch("openpeerpower.components.wled.WLED.update"):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             SWITCH_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_nightlight"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         state = opp.states.get("switch.wled_rgb_light_nightlight")
         assert state.state == STATE_OFF
@@ -166,13 +166,13 @@ async def test_switch_connection_error(
     with patch("openpeerpower.components.wled.WLED.update"), patch(
         "openpeerpower.components.wled.WLED.nightlight", side_effect=WLEDConnectionError
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             SWITCH_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_nightlight"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         state = opp.states.get("switch.wled_rgb_light_nightlight")
         assert state.state == STATE_UNAVAILABLE

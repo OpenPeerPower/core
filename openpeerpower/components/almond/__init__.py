@@ -172,14 +172,14 @@ async def _configure_almond_for_op.
 
     user = None
     if "almond_user" in data:
-        user = await opp.auth.async_get_user(data["almond_user"])
+        user = await opp..auth.async_get_user(data["almond_user"])
 
     if user is None:
-        user = await opp.auth.async_create_system_user("Almond", [GROUP_ID_ADMIN])
+        user = await opp..auth.async_create_system_user("Almond", [GROUP_ID_ADMIN])
         data["almond_user"] = user.id
         await store.async_save(data)
 
-    refresh_token = await opp.auth.async_create_refresh_token(
+    refresh_token = await opp..auth.async_create_refresh_token(
         user,
         # Almond will be fine as long as we restart once every 5 years
         access_token_expiration=timedelta(days=365 * 5),
@@ -207,13 +207,13 @@ async def _configure_almond_for_op.
         else:
             msg = err
         _LOGGER.warning("Unable to configure Almond: %s", msg)
-        await opp.auth.async_remove_refresh_token(refresh_token)
+        await opp..auth.async_remove_refresh_token(refresh_token)
         raise ConfigEntryNotReady from err
 
     # Clear all other refresh tokens
     for token in list(user.refresh_tokens.values()):
         if token.id != refresh_token.id:
-            await opp.auth.async_remove_refresh_token(token)
+            await opp..auth.async_remove_refresh_token(token)
 
 
 async def async_unload_entry.opp, entry):

@@ -159,13 +159,13 @@ async def test_select_option.opp):
     assert "some option" == state.state
 
     select_option.opp, entity_id, "another option")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "another option" == state.state
 
     select_option.opp, entity_id, "non existing option")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "another option" == state.state
@@ -191,13 +191,13 @@ async def test_select_next.opp):
     assert "middle option" == state.state
 
     select_next.opp, entity_id)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "last option" == state.state
 
     select_next.opp, entity_id)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "first option" == state.state
@@ -223,13 +223,13 @@ async def test_select_previous.opp):
     assert "middle option" == state.state
 
     select_previous.opp, entity_id)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "first option" == state.state
 
     select_previous.opp, entity_id)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "last option" == state.state
@@ -255,13 +255,13 @@ async def test_select_first_last.opp):
     assert "middle option" == state.state
 
     select_first.opp, entity_id)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "first option" == state.state
 
     select_last.opp, entity_id)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "last option" == state.state
@@ -327,19 +327,19 @@ async def test_set_options_service.opp):
     assert "middle option" == state.state
 
     data = {ATTR_OPTIONS: ["test1", "test2"], "entity_id": entity_id}
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_OPTIONS, data)
-    await opp.async_block_till_done()
+    await opp..services.async_call(DOMAIN, SERVICE_SET_OPTIONS, data)
+    await opp..async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "test1" == state.state
 
     select_option.opp, entity_id, "first option")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get(entity_id)
     assert "test1" == state.state
 
     select_option.opp, entity_id, "test2")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get(entity_id)
     assert "test2" == state.state
 
@@ -408,7 +408,7 @@ async def test_input_select_context.opp,.opp_admin_user):
     state = opp.states.get("input_select.s1")
     assert state is not None
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "input_select",
         "select_next",
         {"entity_id": state.entity_id},
@@ -476,19 +476,19 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
         },
     ):
         with pytest.raises(Unauthorized):
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 DOMAIN,
                 SERVICE_RELOAD,
                 blocking=True,
                 context=Context(user_id.opp_read_only_user.id),
             )
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
@@ -537,7 +537,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
         config={DOMAIN: {"from_yaml": {"options": ["yaml option"]}}}
     )
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -565,7 +565,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}
@@ -598,7 +598,7 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     assert state.attributes[ATTR_OPTIONS] == ["yaml update 1", "yaml update 2"]
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json(
         {
@@ -639,7 +639,7 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     await client.send_json(
         {
@@ -665,12 +665,12 @@ async def test_setup_no_config.opp,.opp_admin_user):
     with patch(
         "openpeerpower.config.load_yaml_config_file", autospec=True, return_value={}
     ):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert count_start == len.opp.states.async_entity_ids())

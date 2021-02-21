@@ -19,7 +19,7 @@ DEVICE_ID = "lock.test_lock"
 async def test_entity_registry.opp):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform.opp, LOCK_DOMAIN)
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get(DEVICE_ID)
     assert entry.unique_id == "51cab3b545d2o34ed7fz02731bda5324"
@@ -43,10 +43,10 @@ async def test_lock.opp):
     await setup_platform.opp, LOCK_DOMAIN)
 
     with patch("abodepy.AbodeLock.lock") as mock_lock:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LOCK_DOMAIN, SERVICE_LOCK, {ATTR_ENTITY_ID: DEVICE_ID}, blocking=True
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_lock.assert_called_once()
 
 
@@ -55,8 +55,8 @@ async def test_unlock.opp):
     await setup_platform.opp, LOCK_DOMAIN)
 
     with patch("abodepy.AbodeLock.unlock") as mock_unlock:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LOCK_DOMAIN, SERVICE_UNLOCK, {ATTR_ENTITY_ID: DEVICE_ID}, blocking=True
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_unlock.assert_called_once()

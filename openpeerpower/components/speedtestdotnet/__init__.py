@@ -109,7 +109,7 @@ async def async_unload_entry.opp, config_entry):
 
    .opp.data[DOMAIN].async_unload()
 
-    await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
+    await opp..config_entries.async_forward_entry_unload(config_entry, "sensor")
 
    .opp.data.pop(DOMAIN)
 
@@ -227,4 +227,4 @@ async def options_updated_listener.opp, entry):
    .opp.data[DOMAIN].update_interval = timedelta(
         minutes=entry.options[CONF_SCAN_INTERVAL]
     )
-    await.opp.data[DOMAIN].async_request_refresh()
+    await opp..data[DOMAIN].async_request_refresh()

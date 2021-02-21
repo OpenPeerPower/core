@@ -32,7 +32,7 @@ async def async_setup_platform.opp, config):
 
     bot = initialize_bot(config)
 
-    current_status = await opp.async_add_executor_job(bot.getWebhookInfo)
+    current_status = await opp..async_add_executor_job(bot.getWebhookInfo)
     base_url = config.get(
         CONF_URL, get_url.opp, require_ssl=True, allow_internal=False)
     )
@@ -64,7 +64,7 @@ async def async_setup_platform.opp, config):
                 _LOGGER.warning("Timeout trying to set webhook (retry #%d)", retry_num)
 
     if current_status and current_status["url"] != op.dler_url:
-        result = await opp.async_add_executor_job(_try_to_set_webhook)
+        result = await opp..async_add_executor_job(_try_to_set_webhook)
         if result:
             _LOGGER.info("Set new telegram webhook %s", handler_url)
         else:

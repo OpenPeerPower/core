@@ -20,7 +20,7 @@ async def test_open_cover_intent.opp):
     response = await intent.async_op.dle(
        .opp, "test", "OppOpenCover", {"name": {"value": "garage door"}}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Opened garage door"
     assert len(calls) == 1
@@ -40,7 +40,7 @@ async def test_close_cover_intent.opp):
     response = await intent.async_op.dle(
        .opp, "test", "OppCloseCover", {"name": {"value": "garage door"}}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Closed garage door"
     assert len(calls) == 1

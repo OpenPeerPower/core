@@ -39,7 +39,7 @@ async def async_setup.opp, config):
         if old_cache.is_file():
             old_cache.unlink()
 
-    await opp.async_add_executor_job(legacy_cleanup)
+    await opp..async_add_executor_job(legacy_cleanup)
 
     return True
 
@@ -62,7 +62,7 @@ async def async_setup_entry.opp, entry):
     ring = Ring(auth)
 
     try:
-        await opp.async_add_executor_job(ring.update_data)
+        await opp..async_add_executor_job(ring.update_data)
     except AccessDeniedError:
         _LOGGER.error("Access token is no longer valid. Please set up Ring again")
         return False
@@ -112,8 +112,8 @@ async def async_setup_entry.opp, entry):
         for info in.opp.data[DOMAIN].values():
             await info["device_data"].async_refresh_all()
             await info["dings_data"].async_refresh_all()
-            await opp.async_add_executor_job(info["history_data"].refresh_all)
-            await opp.async_add_executor_job(info["health_data"].refresh_all)
+            await opp..async_add_executor_job(info["history_data"].refresh_all)
+            await opp..async_add_executor_job(info["health_data"].refresh_all)
 
     # register service
    .opp.services.async_register(DOMAIN, "update", async_refresh_all)

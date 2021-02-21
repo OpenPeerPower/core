@@ -24,7 +24,7 @@ def _mock_rachio_return_value(get=None, info=None):
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -43,7 +43,7 @@ async def test_form.opp):
         "openpeerpower.components.rachio.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_API_KEY: "api_key",
@@ -51,7 +51,7 @@ async def test_form.opp):
                 CONF_MANUAL_RUN_MINS: 5,
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "myusername"
@@ -66,7 +66,7 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -77,7 +77,7 @@ async def test_form_invalid_auth.opp):
     with patch(
         "openpeerpower.components.rachio.config_flow.Rachio", return_value=rachio_mock
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_API_KEY: "api_key"},
         )
@@ -88,7 +88,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -99,7 +99,7 @@ async def test_form_cannot_connect.opp):
     with patch(
         "openpeerpower.components.rachio.config_flow.Rachio", return_value=rachio_mock
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_API_KEY: "api_key"},
         )
@@ -112,7 +112,7 @@ async def test_form_homekit.opp):
     """Test that we abort from homekit if rachio is already setup."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": "homekit"},
         data={"properties": {"id": "AA:BB:CC:DD:EE:FF"}},
@@ -129,7 +129,7 @@ async def test_form_homekit.opp):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "api_key"})
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": "homekit"},
         data={"properties": {"id": "AA:BB:CC:DD:EE:FF"}},

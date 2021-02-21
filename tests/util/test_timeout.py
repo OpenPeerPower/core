@@ -22,7 +22,7 @@ async def test_simple_global_timeout_with_executor_job.opp):
 
     with pytest.raises(asyncio.TimeoutError):
         async with timeout.async_timeout(0.1):
-            await opp.async_add_executor_job(lambda: time.sleep(0.2))
+            await opp..async_add_executor_job(lambda: time.sleep(0.2))
 
 
 async def test_simple_global_timeout_freeze():
@@ -44,7 +44,7 @@ async def test_simple_zone_timeout_freeze_inside_executor_job.opp):
 
     async with timeout.async_timeout(1.0):
         async with timeout.async_timeout(0.2, zone_name="recorder"):
-            await opp.async_add_executor_job(_some_sync_work)
+            await opp..async_add_executor_job(_some_sync_work)
 
 
 async def test_simple_global_timeout_freeze_inside_executor_job.opp):
@@ -56,7 +56,7 @@ async def test_simple_global_timeout_freeze_inside_executor_job.opp):
             time.sleep(0.3)
 
     async with timeout.async_timeout(0.2):
-        await opp.async_add_executor_job(_some_sync_work)
+        await opp..async_add_executor_job(_some_sync_work)
 
 
 async def test_mix_global_timeout_freeze_and_zone_freeze_inside_executor_job.opp):
@@ -69,7 +69,7 @@ async def test_mix_global_timeout_freeze_and_zone_freeze_inside_executor_job.opp
 
     async with timeout.async_timeout(0.1):
         async with timeout.async_timeout(0.2, zone_name="recorder"):
-            await opp.async_add_executor_job(_some_sync_work)
+            await opp..async_add_executor_job(_some_sync_work)
 
 
 async def test_mix_global_timeout_freeze_and_zone_freeze_different_order.opp):
@@ -100,7 +100,7 @@ async def test_mix_global_timeout_freeze_and_zone_freeze_other_zone_inside_execu
         async with timeout.async_timeout(0.1):
             async with timeout.async_timeout(0.2, zone_name="recorder"):
                 async with timeout.async_timeout(0.2, zone_name="not_recorder"):
-                    await opp.async_add_executor_job(_some_sync_work)
+                    await opp..async_add_executor_job(_some_sync_work)
 
 
 async def test_mix_global_timeout_freeze_and_zone_freeze_inside_executor_job_second_job_outside_zone_context(
@@ -116,8 +116,8 @@ async def test_mix_global_timeout_freeze_and_zone_freeze_inside_executor_job_sec
     with pytest.raises(asyncio.TimeoutError):
         async with timeout.async_timeout(0.1):
             async with timeout.async_timeout(0.2, zone_name="recorder"):
-                await opp.async_add_executor_job(_some_sync_work)
-            await opp.async_add_executor_job(lambda: time.sleep(0.2))
+                await opp..async_add_executor_job(_some_sync_work)
+            await opp..async_add_executor_job(lambda: time.sleep(0.2))
 
 
 async def test_simple_global_timeout_freeze_with_executor_job.opp):
@@ -126,7 +126,7 @@ async def test_simple_global_timeout_freeze_with_executor_job.opp):
 
     async with timeout.async_timeout(0.2):
         async with timeout.async_freeze():
-            await opp.async_add_executor_job(lambda: time.sleep(0.3))
+            await opp..async_add_executor_job(lambda: time.sleep(0.3))
 
 
 async def test_simple_global_timeout_freeze_reset():

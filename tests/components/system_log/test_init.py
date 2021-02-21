@@ -27,18 +27,18 @@ def simple_queue():
 
 async def _async_block_until_queue_empty.opp, sq):
     # Unfortunately we are stuck with polling
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     while not sq.empty():
         await asyncio.sleep(0.01)
    .opp.data[system_log.DOMAIN].acquire()
    .opp.data[system_log.DOMAIN].release()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def get_error_log.opp,.opp_client, expected_count):
     """Fetch all entries from system_log via the API."""
 
-    client = await.opp_client()
+    client = await opp._client()
     resp = await client.get("/api/error/all")
     assert resp.status == 200
 
@@ -229,7 +229,7 @@ async def test_clear_logs.opp, simple_queue,.opp_client):
     _LOGGER.error("error message")
     await _async_block_until_queue_empty.opp, simple_queue)
 
-    await.opp.services.async_call(system_log.DOMAIN, system_log.SERVICE_CLEAR, {})
+    await opp..services.async_call(system_log.DOMAIN, system_log.SERVICE_CLEAR, {})
     await _async_block_until_queue_empty.opp, simple_queue)
 
     # Assert done by get_error_log
@@ -241,10 +241,10 @@ async def test_write_log.opp):
     await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
     logger = MagicMock()
     with patch("logging.getLogger", return_value=logger) as mock_logging:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             system_log.DOMAIN, system_log.SERVICE_WRITE, {"message": "test_message"}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     mock_logging.assert_called_once_with("openpeerpower.components.system_log.external")
     assert logger.method_calls[0] == ("error", ("test_message",))
 
@@ -253,12 +253,12 @@ async def test_write_choose_logger.opp):
     """Test that correct logger is chosen."""
     await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
     with patch("logging.getLogger") as mock_logging:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             system_log.DOMAIN,
             system_log.SERVICE_WRITE,
             {"message": "test_message", "logger": "myLogger"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     mock_logging.assert_called_once_with("myLogger")
 
 
@@ -267,12 +267,12 @@ async def test_write_choose_level.opp):
     await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
     logger = MagicMock()
     with patch("logging.getLogger", return_value=logger):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             system_log.DOMAIN,
             system_log.SERVICE_WRITE,
             {"message": "test_message", "level": "debug"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert logger.method_calls[0] == ("debug", ("test_message",))
 
 

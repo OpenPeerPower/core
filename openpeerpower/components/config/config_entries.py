@@ -86,7 +86,7 @@ class ConfigManagerEntryResourceView(OpenPeerPowerView):
         opp = request.app["opp"]
 
         try:
-            result = await opp.config_entries.async_remove(entry_id)
+            result = await opp..config_entries.async_remove(entry_id)
         except config_entries.UnknownEntry:
             return self.json_message("Invalid entry specified", HTTP_NOT_FOUND)
 
@@ -107,7 +107,7 @@ class ConfigManagerEntryResourceReloadView(OpenPeerPowerView):
         opp = request.app["opp"]
 
         try:
-            result = await opp.config_entries.async_reload(entry_id)
+            result = await opp..config_entries.async_reload(entry_id)
         except config_entries.OperationNotAllowed:
             return self.json_message("Entry cannot be reloaded", HTTP_FORBIDDEN)
         except config_entries.UnknownEntry:
@@ -344,7 +344,7 @@ async def ignore_config_flow.opp, connection, msg):
         )
         return
 
-    await.opp.config_entries.flow.async_init(
+    await opp..config_entries.flow.async_init(
         flow["handler"],
         context={"source": config_entries.SOURCE_IGNORE},
         data={"unique_id": flow["context"]["unique_id"], "title": msg["title"]},

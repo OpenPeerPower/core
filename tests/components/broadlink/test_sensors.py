@@ -72,7 +72,7 @@ async def test_a1_sensor_update.opp):
         "light": 3,
         "noise": 2,
     }
-    await.opp.helpers.entity_component.async_update_entity(
+    await opp..helpers.entity_component.async_update_entity(
         next(iter(sensors)).entity_id
     )
     assert mock_api.check_sensors_raw.call_count == 2
@@ -131,7 +131,7 @@ async def test_rm_pro_sensor_update.opp):
     assert len(sensors) == 1
 
     mock_api.check_sensors.return_value = {"temperature": 25.8}
-    await.opp.helpers.entity_component.async_update_entity(
+    await opp..helpers.entity_component.async_update_entity(
         next(iter(sensors)).entity_id
     )
     assert mock_api.check_sensors.call_count == 2
@@ -205,7 +205,7 @@ async def test_rm4_pro_hts2_sensor_update.opp):
     assert len(sensors) == 2
 
     mock_api.check_sensors.return_value = {"temperature": 16.8, "humidity": 34.0}
-    await.opp.helpers.entity_component.async_update_entity(
+    await opp..helpers.entity_component.async_update_entity(
         next(iter(sensors)).entity_id
     )
     assert mock_api.check_sensors.call_count == 2

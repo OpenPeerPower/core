@@ -90,7 +90,7 @@ async def test_get_services_cached.opp):
 
         services = 4
         async_fire_time_changed.opp, utcnow())
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         # Check cache purged
         assert await account_link._get_services.opp) == 4
@@ -128,7 +128,7 @@ async def test_implementation.opp, flow_op.dler):
     with patch(
         "opp_nabucasa.account_link.AuthorizeAccountHelper", return_value=helper
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             TEST_DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
 
@@ -143,10 +143,10 @@ async def test_implementation.opp, flow_op.dler):
             "token_type": "bearer",
         }
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Flow finished!
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp..config_entries.flow.async_configure(result["flow_id"])
 
     assert result["data"]["auth_implementation"] == "cloud"
 

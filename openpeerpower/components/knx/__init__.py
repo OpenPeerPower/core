@@ -179,7 +179,7 @@ async def async_setup.opp, config):
     try:
        .opp.data[DOMAIN] = KNXModule.opp, config)
        .opp.data[DOMAIN].async_create_exposures()
-        await.opp.data[DOMAIN].start()
+        await opp..data[DOMAIN].start()
     except XKNXException as ex:
         _LOGGER.warning("Could not connect to KNX interface: %s", ex)
        .opp.components.persistent_notification.async_create(
@@ -228,7 +228,7 @@ async def async_setup.opp, config):
         if not config or DOMAIN not in config:
             return
 
-        await.opp.data[DOMAIN].xknx.stop()
+        await opp..data[DOMAIN].xknx.stop()
 
         await asyncio.gather(
             *[platform.async_reset() for platform in async_get_platforms.opp, DOMAIN)]

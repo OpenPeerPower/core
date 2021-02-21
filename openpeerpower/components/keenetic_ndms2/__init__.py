@@ -57,7 +57,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> b
    .opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     for component in PLATFORMS:
-        await opp.config_entries.async_forward_entry_unload(config_entry, component)
+        await opp..config_entries.async_forward_entry_unload(config_entry, component)
 
     router: KeeneticRouter = opp.data[DOMAIN][config_entry.entry_id][ROUTER]
 
@@ -70,7 +70,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> b
 
 async def update_listener.opp, config_entry):
     """Handle options update."""
-    await opp.config_entries.async_reload(config_entry.entry_id)
+    await opp..config_entries.async_reload(config_entry.entry_id)
 
 
 def async_add_defaults.opp: OpenPeerPower, config_entry: ConfigEntry):

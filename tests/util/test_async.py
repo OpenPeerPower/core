@@ -193,7 +193,7 @@ async def test_run_callback_threadsafe.opp):
 
     # Verify that async_block_till_done will flush
     # out the callback
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert it_ran is True
 
 

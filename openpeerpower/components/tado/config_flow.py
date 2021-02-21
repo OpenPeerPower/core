@@ -26,10 +26,10 @@ async def validate_input.opp: core.OpenPeerPower, data):
     """
 
     try:
-        tado = await opp.async_add_executor_job(
+        tado = await opp..async_add_executor_job(
             Tado, data[CONF_USERNAME], data[CONF_PASSWORD]
         )
-        tado_me = await opp.async_add_executor_job(tado.getMe)
+        tado_me = await opp..async_add_executor_job(tado.getMe)
     except KeyError as ex:
         raise InvalidAuth from ex
     except RuntimeError as ex:

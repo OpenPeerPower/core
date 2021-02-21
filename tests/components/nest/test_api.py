@@ -32,7 +32,7 @@ FAKE_UPDATED_TOKEN = "fake-updated-token"
 async def async_setup_sdm.opp):
     """Set up the integration."""
     assert await async_setup_component.opp, DOMAIN, CONFIG)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def test_auth.opp, aioclient_mock):

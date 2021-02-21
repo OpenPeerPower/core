@@ -144,7 +144,7 @@ async def test_simple_climate_device.opp, aioclient_mock):
         "state": {"on": False},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("climate.thermostat").state == STATE_OFF
 
@@ -158,7 +158,7 @@ async def test_simple_climate_device.opp, aioclient_mock):
         "state": {"on": True},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("climate.thermostat").state == HVAC_MODE_HEAT
 
@@ -168,7 +168,7 @@ async def test_simple_climate_device.opp, aioclient_mock):
 
     # Service turn on thermostat
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: "climate.thermostat", ATTR_HVAC_MODE: HVAC_MODE_HEAT},
@@ -178,7 +178,7 @@ async def test_simple_climate_device.opp, aioclient_mock):
 
     # Service turn on thermostat
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: "climate.thermostat", ATTR_HVAC_MODE: HVAC_MODE_OFF},
@@ -189,7 +189,7 @@ async def test_simple_climate_device.opp, aioclient_mock):
     # Service set HVAC mode to unsupported value
 
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_HVAC_MODE,
             {ATTR_ENTITY_ID: "climate.thermostat", ATTR_HVAC_MODE: HVAC_MODE_AUTO},
@@ -231,7 +231,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
         "config": {"mode": "off"},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("climate.thermostat").state == STATE_OFF
 
@@ -246,7 +246,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
         "state": {"on": True},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("climate.thermostat").state == HVAC_MODE_HEAT
 
@@ -260,7 +260,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
         "state": {"on": False},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("climate.thermostat").state == STATE_OFF
 
@@ -270,7 +270,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
 
     # Service set HVAC mode to auto
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: "climate.thermostat", ATTR_HVAC_MODE: HVAC_MODE_AUTO},
@@ -280,7 +280,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
 
     # Service set HVAC mode to heat
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: "climate.thermostat", ATTR_HVAC_MODE: HVAC_MODE_HEAT},
@@ -290,7 +290,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
 
     # Service set HVAC mode to off
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: "climate.thermostat", ATTR_HVAC_MODE: HVAC_MODE_OFF},
@@ -301,7 +301,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
     # Service set HVAC mode to unsupported value
 
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_HVAC_MODE,
             {ATTR_ENTITY_ID: "climate.thermostat", ATTR_HVAC_MODE: HVAC_MODE_COOL},
@@ -310,7 +310,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
 
     # Service set temperature to 20
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: "climate.thermostat", ATTR_TEMPERATURE: 20},
@@ -321,7 +321,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
     # Service set temperature without providing temperature attribute
 
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_TEMPERATURE,
             {
@@ -332,15 +332,15 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
             blocking=True,
         )
 
-    await opp.config_entries.async_unload(config_entry.entry_id)
+    await opp..config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
     assert len.opp.states.async_all()) == 2
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
-    await opp.config_entries.async_remove(config_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_remove(config_entry.entry_id)
+    await opp..async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -402,7 +402,7 @@ async def test_climate_device_with_cooling_support.opp, aioclient_mock):
         "config": {"mode": "cool"},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("climate.zen_01").state == HVAC_MODE_COOL
 
@@ -412,7 +412,7 @@ async def test_climate_device_with_cooling_support.opp, aioclient_mock):
 
     # Service set temperature to 20
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: "climate.zen_01", ATTR_TEMPERATURE: 20},
@@ -480,7 +480,7 @@ async def test_climate_device_with_fan_support.opp, aioclient_mock):
         "config": {"fanmode": "unsupported"},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("climate.zen_01").attributes["fan_mode"] == FAN_OFF
 
@@ -495,7 +495,7 @@ async def test_climate_device_with_fan_support.opp, aioclient_mock):
         "state": {"on": True},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("climate.zen_01").attributes["fan_mode"] == FAN_ON
 
@@ -509,7 +509,7 @@ async def test_climate_device_with_fan_support.opp, aioclient_mock):
         "config": {"fanmode": "unsupported"},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("climate.zen_01").attributes["fan_mode"] == FAN_ON
 
@@ -519,7 +519,7 @@ async def test_climate_device_with_fan_support.opp, aioclient_mock):
 
     # Service set fan mode to off
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_FAN_MODE,
         {ATTR_ENTITY_ID: "climate.zen_01", ATTR_FAN_MODE: FAN_OFF},
@@ -529,7 +529,7 @@ async def test_climate_device_with_fan_support.opp, aioclient_mock):
 
     # Service set fan mode to custom deCONZ mode smart
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_FAN_MODE,
         {ATTR_ENTITY_ID: "climate.zen_01", ATTR_FAN_MODE: DECONZ_FAN_SMART},
@@ -540,7 +540,7 @@ async def test_climate_device_with_fan_support.opp, aioclient_mock):
     # Service set fan mode to unsupported value
 
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_FAN_MODE,
             {ATTR_ENTITY_ID: "climate.zen_01", ATTR_FAN_MODE: "unsupported"},
@@ -611,7 +611,7 @@ async def test_climate_device_with_preset.opp, aioclient_mock):
         "config": {"preset": "manual"},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert (
        .opp.states.get("climate.zen_01").attributes["preset_mode"]
@@ -628,7 +628,7 @@ async def test_climate_device_with_preset.opp, aioclient_mock):
         "config": {"preset": "unsupported"},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("climate.zen_01").attributes["preset_mode"] is None
 
@@ -638,7 +638,7 @@ async def test_climate_device_with_preset.opp, aioclient_mock):
 
     # Service set preset to OPP preset
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: "climate.zen_01", ATTR_PRESET_MODE: PRESET_COMFORT},
@@ -648,7 +648,7 @@ async def test_climate_device_with_preset.opp, aioclient_mock):
 
     # Service set preset to custom deCONZ preset
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: "climate.zen_01", ATTR_PRESET_MODE: DECONZ_PRESET_MANUAL},
@@ -659,7 +659,7 @@ async def test_climate_device_with_preset.opp, aioclient_mock):
     # Service set preset to unsupported value
 
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_PRESET_MODE,
             {ATTR_ENTITY_ID: "climate.zen_01", ATTR_PRESET_MODE: "unsupported"},
@@ -689,7 +689,7 @@ async def test_clip_climate_device.opp, aioclient_mock):
    .opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_CLIP_SENSOR: False}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
     assert.opp.states.get("climate.clip_thermostat") is None
@@ -699,7 +699,7 @@ async def test_clip_climate_device.opp, aioclient_mock):
    .opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_CLIP_SENSOR: True}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len.opp.states.async_all()) == 3
     assert.opp.states.get("climate.clip_thermostat").state == HVAC_MODE_HEAT
@@ -724,7 +724,7 @@ async def test_verify_state_update.opp, aioclient_mock):
         "state": {"on": False},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert.opp.states.get("climate.thermostat").state == HVAC_MODE_AUTO
     assert gateway.api.sensors["1"].changed_keys == {"state", "r", "t", "on", "e", "id"}
@@ -744,7 +744,7 @@ async def test_add_new_climate_device.opp, aioclient_mock):
         "sensor": deepcopy(SENSORS["1"]),
     }
     gateway.api.event_op.dler(state_added_event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
     assert.opp.states.get("climate.thermostat").state == HVAC_MODE_AUTO

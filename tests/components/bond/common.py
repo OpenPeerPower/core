@@ -44,7 +44,7 @@ async def setup_bond_entity(
     ), patch_setup_entry(
         "switch", enabled=patch_platforms
     ):
-        return await opp.config_entries.async_setup(config_entry.entry_id)
+        return await opp..config_entries.async_setup(config_entry.entry_id)
 
 
 async def setup_platform(
@@ -75,7 +75,7 @@ async def setup_platform(
             return_value=state
         ):
             assert await async_setup_component.opp, BOND_DOMAIN, {})
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
 
     return mock_entry
 
@@ -166,10 +166,10 @@ async def help_test_entity_available(
 
     with patch_bond_device_state(side_effect=AsyncIOTimeoutError()):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     with patch_bond_device_state(return_value={}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state != STATE_UNAVAILABLE

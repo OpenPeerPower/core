@@ -58,7 +58,7 @@ async def async_setup_entry.opp, entry):
     if CONF_HOST in conf:
         # Session(**conf) does blocking IO when
         # communicating with local devices.
-        session = await opp.async_add_executor_job(partial(Session, **conf))
+        session = await opp..async_add_executor_job(partial(Session, **conf))
     else:
         session = Session(
             PUBLIC_KEY, NOT_SO_PRIVATE_KEY, application=APPLICATION_NAME, **conf
@@ -83,7 +83,7 @@ async def async_new_client.opp, session, entry):
     _LOGGER.debug("Update interval %s seconds", interval)
     client = TelldusLiveClient.opp, entry, session, interval)
    .opp.data[DOMAIN] = client
-    dev_reg = await.opp.helpers.device_registry.async_get_registry()
+    dev_reg = await opp..helpers.device_registry.async_get_registry()
     for hub in await client.async_get_hubs():
         _LOGGER.debug("Connected hub %s", hub["name"])
         dev_reg.async_get_or_create(

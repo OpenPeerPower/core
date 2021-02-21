@@ -89,7 +89,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     i2c_address = config[CONF_I2C_ADDRESS]
 
     bus = smbus.SMBus(config[CONF_I2C_BUS])
-    sensor = await opp.async_add_executor_job(
+    sensor = await opp..async_add_executor_job(
         partial(
             BME280,
             bus,
@@ -108,7 +108,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         _LOGGER.error("BME280 sensor not detected at %s", i2c_address)
         return False
 
-    sensor_op.dler = await opp.async_add_executor_job(BME280Handler, sensor)
+    sensor_op.dler = await opp..async_add_executor_job(BME280Handler, sensor)
 
     dev = []
     try:

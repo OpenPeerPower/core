@@ -25,7 +25,7 @@ async def test_adam_climate_switch_negative_testing.opp, mock_smile_adam):
     entry = await async_init_integration.opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "switch",
         "turn_off",
         {"entity_id": "switch.cv_pomp"},
@@ -34,7 +34,7 @@ async def test_adam_climate_switch_negative_testing.opp, mock_smile_adam):
     state = opp.states.get("switch.cv_pomp")
     assert str(state.state) == "on"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "switch",
         "turn_on",
         {"entity_id": "switch.fibaro_hc2"},
@@ -49,7 +49,7 @@ async def test_adam_climate_switch_changes.opp, mock_smile_adam):
     entry = await async_init_integration.opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "switch",
         "turn_off",
         {"entity_id": "switch.cv_pomp"},
@@ -58,7 +58,7 @@ async def test_adam_climate_switch_changes.opp, mock_smile_adam):
     state = opp.states.get("switch.cv_pomp")
     assert str(state.state) == "off"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "switch",
         "toggle",
         {"entity_id": "switch.fibaro_hc2"},
@@ -67,7 +67,7 @@ async def test_adam_climate_switch_changes.opp, mock_smile_adam):
     state = opp.states.get("switch.fibaro_hc2")
     assert str(state.state) == "off"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "switch",
         "toggle",
         {"entity_id": "switch.fibaro_hc2"},
@@ -94,7 +94,7 @@ async def test_stretch_switch_changes.opp, mock_stretch):
     entry = await async_init_integration.opp, mock_stretch)
     assert entry.state == ENTRY_STATE_LOADED
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "switch",
         "turn_off",
         {"entity_id": "switch.koelkast_92c4a"},
@@ -104,7 +104,7 @@ async def test_stretch_switch_changes.opp, mock_stretch):
     state = opp.states.get("switch.koelkast_92c4a")
     assert str(state.state) == "off"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "switch",
         "toggle",
         {"entity_id": "switch.droger_52559"},
@@ -113,7 +113,7 @@ async def test_stretch_switch_changes.opp, mock_stretch):
     state = opp.states.get("switch.droger_52559")
     assert str(state.state) == "off"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "switch",
         "toggle",
         {"entity_id": "switch.droger_52559"},

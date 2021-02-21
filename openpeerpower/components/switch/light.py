@@ -42,7 +42,7 @@ async def async_setup_platform(
 ) -> None:
     """Initialize Light Switch platform."""
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
     wrapped_switch = registry.async_get(config[CONF_ENTITY_ID])
     unique_id = wrapped_switch.unique_id if wrapped_switch else None
 

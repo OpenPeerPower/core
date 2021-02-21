@@ -22,7 +22,7 @@ async def test_cached_event_message.opp):
 
    .opp.states.async_set("light.window", "on")
    .opp.states.async_set("light.window", "off")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(events) == 2
     lru_event_cache.cache_clear()
@@ -59,7 +59,7 @@ async def test_cached_event_message_with_different_idens.opp):
    .opp.bus.async_listen(EVENT_STATE_CHANGED, _event_listener)
 
    .opp.states.async_set("light.window", "on")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(events) == 1
 

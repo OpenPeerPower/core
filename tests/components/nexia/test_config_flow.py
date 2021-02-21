@@ -11,7 +11,7 @@ from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -29,11 +29,11 @@ async def test_form.opp):
         "openpeerpower.components.nexia.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "myhouse"
@@ -47,12 +47,12 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch("openpeerpower.components.nexia.config_flow.NexiaHome.login"):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
         )
@@ -63,7 +63,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -71,7 +71,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.nexia.config_flow.NexiaHome.login",
         side_effect=ConnectTimeout,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
         )
@@ -82,7 +82,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_invalid_auth_http_401.opp):
     """Test we handle invalid auth error from http 401."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -92,7 +92,7 @@ async def test_form_invalid_auth_http_401.opp):
         "openpeerpower.components.nexia.config_flow.NexiaHome.login",
         side_effect=HTTPError(response=response_mock),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
         )
@@ -103,7 +103,7 @@ async def test_form_invalid_auth_http_401.opp):
 
 async def test_form_cannot_connect_not_found.opp):
     """Test we handle cannot connect from an http not found error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -113,7 +113,7 @@ async def test_form_cannot_connect_not_found.opp):
         "openpeerpower.components.nexia.config_flow.NexiaHome.login",
         side_effect=HTTPError(response=response_mock),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
         )
@@ -124,7 +124,7 @@ async def test_form_cannot_connect_not_found.opp):
 
 async def test_form_broad_exception.opp):
     """Test we handle invalid auth error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -132,7 +132,7 @@ async def test_form_broad_exception.opp):
         "openpeerpower.components.nexia.config_flow.NexiaHome.login",
         side_effect=ValueError,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
         )

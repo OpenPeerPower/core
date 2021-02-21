@@ -303,4 +303,4 @@ async def _async_verify_working_pcap.opp, cap_filter):
     If we cannot create a filter we will be listening for
     all traffic which is too intensive.
     """
-    await opp.async_add_executor_job(compile_filter, cap_filter)
+    await opp..async_add_executor_job(compile_filter, cap_filter)

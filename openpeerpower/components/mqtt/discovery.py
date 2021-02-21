@@ -219,7 +219,7 @@ async def async_start(
 
                         await tag.async_setup_entry.opp, config_entry)
                     else:
-                        await opp.config_entries.async_forward_entry_setup(
+                        await opp..config_entries.async_forward_entry_setup(
                             config_entry, component
                         )
                    .opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
@@ -269,7 +269,7 @@ async def async_start(
                 if key not in.opp.data[INTEGRATION_UNSUBSCRIBE]:
                     return
 
-                result = await.opp.config_entries.flow.async_init(
+                result = await opp..config_entries.flow.async_init(
                     integration, context={"source": DOMAIN}, data=msg
                 )
                 if (

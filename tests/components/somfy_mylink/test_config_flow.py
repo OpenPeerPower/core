@@ -22,7 +22,7 @@ from tests.common import MockConfigEntry
 async def test_form_user.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -37,7 +37,7 @@ async def test_form_user.opp):
         "openpeerpower.components.somfy_mylink.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: "1.1.1.1",
@@ -45,7 +45,7 @@ async def test_form_user.opp):
                 CONF_SYSTEM_ID: "456",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "MyLink 1.1.1.1"
@@ -67,7 +67,7 @@ async def test_form_user_already_configured.opp):
         data={CONF_HOST: "1.1.1.1", CONF_PORT: 12, CONF_SYSTEM_ID: 46},
     )
     config_entry.add_to_opp.opp)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -82,7 +82,7 @@ async def test_form_user_already_configured.opp):
         "openpeerpower.components.somfy_mylink.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: "1.1.1.1",
@@ -90,7 +90,7 @@ async def test_form_user_already_configured.opp):
                 CONF_SYSTEM_ID: "456",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "abort"
     assert len(mock_setup.mock_calls) == 0
@@ -110,7 +110,7 @@ async def test_form_import.opp):
         "openpeerpower.components.somfy_mylink.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -119,7 +119,7 @@ async def test_form_import.opp):
                 CONF_SYSTEM_ID: 456,
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "MyLink 1.1.1.1"
@@ -145,7 +145,7 @@ async def test_form_import_with_entity_config.opp):
         "openpeerpower.components.somfy_mylink.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -156,7 +156,7 @@ async def test_form_import_with_entity_config.opp):
                 CONF_ENTITY_CONFIG: {"cover.xyz": {CONF_REVERSE: False}},
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "MyLink 1.1.1.1"
@@ -190,7 +190,7 @@ async def test_form_import_already_exists.opp):
         "openpeerpower.components.somfy_mylink.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -199,7 +199,7 @@ async def test_form_import_already_exists.opp):
                 CONF_SYSTEM_ID: "456",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "abort"
     assert len(mock_setup.mock_calls) == 0
@@ -208,7 +208,7 @@ async def test_form_import_already_exists.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -220,7 +220,7 @@ async def test_form_invalid_auth.opp):
             "id": 818,
         },
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: "1.1.1.1",
@@ -235,7 +235,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -243,7 +243,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.somfy_mylink.config_flow.SomfyMyLinkSynergy.status_info",
         side_effect=asyncio.TimeoutError,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: "1.1.1.1",
@@ -258,7 +258,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_unknown_error.opp):
     """Test we handle broad exception."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -266,7 +266,7 @@ async def test_form_unknown_error.opp):
         "openpeerpower.components.somfy_mylink.config_flow.SomfyMyLinkSynergy.status_info",
         side_effect=ValueError,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: "1.1.1.1",
@@ -293,8 +293,8 @@ async def test_options_not_loaded.opp):
         "openpeerpower.components.somfy_mylink.SomfyMyLinkSynergy.status_info",
         return_value={"result": []},
     ):
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
-        await opp.async_block_till_done()
+        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        await opp..async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
@@ -321,27 +321,27 @@ async def test_options_with_targets.opp, reversed):
             ]
         },
     ):
-        assert await opp.config_entries.async_setup(config_entry.entry_id)
-        await opp.async_block_till_done()
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
-        await opp.async_block_till_done()
+        assert await opp..config_entries.async_setup(config_entry.entry_id)
+        await opp..async_block_till_done()
+        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        await opp..async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result2 = await.opp.config_entries.options.async_configure(
+        result2 = await opp..config_entries.options.async_configure(
             result["flow_id"],
             user_input={"target_id": "a"},
         )
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
-        result3 = await.opp.config_entries.options.async_configure(
+        result3 = await opp..config_entries.options.async_configure(
             result2["flow_id"],
             user_input={"reverse": reversed},
         )
 
         assert result3["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result4 = await.opp.config_entries.options.async_configure(
+        result4 = await opp..config_entries.options.async_configure(
             result3["flow_id"],
             user_input={"target_id": None},
         )
@@ -351,7 +351,7 @@ async def test_options_with_targets.opp, reversed):
             CONF_REVERSED_TARGET_IDS: {"a": reversed},
         }
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
 
 @pytest.mark.parametrize("reversed", [True, False])
@@ -382,36 +382,36 @@ async def test_form_import_with_entity_config_modify_options.opp, reversed):
         "openpeerpower.components.somfy_mylink.SomfyMyLinkSynergy.status_info",
         return_value=mock_status_info,
     ):
-        assert await opp.config_entries.async_setup(
+        assert await opp..config_entries.async_setup(
             mock_imported_config_entry.entry_id
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert mock_imported_config_entry.options == {
             "reversed_target_ids": {"1.2": True}
         }
 
-        result = await.opp.config_entries.options.async_init(
+        result = await opp..config_entries.options.async_init(
             mock_imported_config_entry.entry_id
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result2 = await.opp.config_entries.options.async_configure(
+        result2 = await opp..config_entries.options.async_configure(
             result["flow_id"],
             user_input={"target_id": "1.2"},
         )
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
-        result3 = await.opp.config_entries.options.async_configure(
+        result3 = await opp..config_entries.options.async_configure(
             result2["flow_id"],
             user_input={"reverse": reversed},
         )
 
         assert result3["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result4 = await.opp.config_entries.options.async_configure(
+        result4 = await opp..config_entries.options.async_configure(
             result3["flow_id"],
             user_input={"target_id": None},
         )
@@ -422,7 +422,7 @@ async def test_form_import_with_entity_config_modify_options.opp, reversed):
             CONF_REVERSED_TARGET_IDS: {"1.2": reversed},
         }
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
 
 async def test_form_user_already_configured_from_dhcp.opp):
@@ -444,7 +444,7 @@ async def test_form_user_already_configured_from_dhcp.opp):
         "openpeerpower.components.somfy_mylink.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_DHCP},
             data={
@@ -454,7 +454,7 @@ async def test_form_user_already_configured_from_dhcp.opp):
             },
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "abort"
     assert len(mock_setup.mock_calls) == 0
@@ -468,7 +468,7 @@ async def test_already_configured_with_ignored.opp):
     config_entry = MockConfigEntry(domain=DOMAIN, data={}, source="ignore")
     config_entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_DHCP},
         data={
@@ -483,7 +483,7 @@ async def test_already_configured_with_ignored.opp):
 async def test_dhcp_discovery.opp):
     """Test we can process the discovery from dhcp."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_DHCP},
         data={
@@ -504,7 +504,7 @@ async def test_dhcp_discovery.opp):
         "openpeerpower.components.somfy_mylink.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: "1.1.1.1",
@@ -512,7 +512,7 @@ async def test_dhcp_discovery.opp):
                 CONF_SYSTEM_ID: "456",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "MyLink 1.1.1.1"

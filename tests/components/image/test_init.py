@@ -19,8 +19,8 @@ async def test_upload_image.opp,.opp_client,.opp_ws_client):
        .opp.config, "path", return_value=tempdir
     ), patch("openpeerpowerr.util.dt.utcnow", return_value=now):
         assert await async_setup_component.opp, "image", {})
-        ws_client: ClientWebSocketResponse = await.opp_ws_client()
-        client: ClientSession = await.opp_client()
+        ws_client: ClientWebSocketResponse = await opp._ws_client()
+        client: ClientSession = await opp._client()
 
         with test_image.open("rb") as fp:
             res = await client.post("/api/image/upload", data={"file": fp})

@@ -22,7 +22,7 @@ async def test_import.opp):
             DOMAIN,
             {DOMAIN: {"type": "local", "host": "http://localhost:3000"}},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     entry = opp.config_entries.async_entries(DOMAIN)[0]
@@ -40,14 +40,14 @@ async def test_import_cannot_connect.opp):
             DOMAIN,
             {DOMAIN: {"type": "local", "host": "http://localhost:3000"}},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 0
 
 
 async def test_oppio.opp):
     """Test that Opp.io can discover this integration."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": "oppio"},
         data={"addon": "Almond add-on", "host": "almond-addon", "port": "1234"},
@@ -59,7 +59,7 @@ async def test_oppio.opp):
     with patch(
         "openpeerpower.components.almond.async_setup_entry", return_value=True
     ) as mock_setup:
-        result2 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result2 = await opp..config_entries.flow.async_configure(result["flow_id"], {})
 
     assert len(mock_setup.mock_calls) == 1
 
@@ -108,7 +108,7 @@ async def test_full_flow(
         },
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
@@ -145,7 +145,7 @@ async def test_full_flow(
     with patch(
         "openpeerpower.components.almond.async_setup_entry", return_value=True
     ) as mock_setup:
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
 
     assert len(mock_setup.mock_calls) == 1
 

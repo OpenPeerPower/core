@@ -133,7 +133,7 @@ async def async_setup.opp: OpenPeerPower, config: dict) -> bool:
                     remove = False
                     break
             if remove:
-                await opp.config_entries.async_remove(entry.entry_id)
+                await opp..config_entries.async_remove(entry.entry_id)
 
     # Setup new entries and update old entries
     for board in config[DOMAIN]:
@@ -219,6 +219,6 @@ async def async_unload_entry(
     results = []
     if unload_entries:
         results = await asyncio.gather(*unload_entries)
-    results.append(await.opp.data[DOMAIN].pop(config_entry.entry_id).async_reset())
+    results.append(await opp..data[DOMAIN].pop(config_entry.entry_id).async_reset())
 
     return False not in results

@@ -47,12 +47,12 @@ async def async_test_iaszone_on_off.opp, cluster, entity_id):
     """Test getting on and off messages for iaszone binary sensors."""
     # binary sensor on
     cluster.listener_event("cluster_command", 1, 0, [1])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == STATE_ON
 
     # binary sensor off
     cluster.listener_event("cluster_command", 1, 0, [0])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == STATE_OFF
 
 

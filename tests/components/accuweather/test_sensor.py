@@ -32,7 +32,7 @@ from tests.components.accuweather import init_integration
 async def test_sensor_without_forecast.opp):
     """Test states of the sensor without forecast."""
     await init_integration.opp)
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     state = opp.states.get("sensor.home_cloud_ceiling")
     assert state
@@ -94,7 +94,7 @@ async def test_sensor_without_forecast.opp):
 async def test_sensor_with_forecast.opp):
     """Test states of the sensor with forecast."""
     await init_integration.opp, forecast=True)
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     state = opp.states.get("sensor.home_hours_of_sun_0d")
     assert state
@@ -166,7 +166,7 @@ async def test_sensor_with_forecast.opp):
 async def test_sensor_disabled.opp):
     """Test sensor disabled by default."""
     await init_integration.opp)
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     entry = registry.async_get("sensor.home_apparent_temperature")
     assert entry
@@ -185,7 +185,7 @@ async def test_sensor_disabled.opp):
 
 async def test_sensor_enabled_without_forecast.opp):
     """Test enabling an advanced sensor."""
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     registry.async_get_or_create(
         SENSOR_DOMAIN,
@@ -603,7 +603,7 @@ async def test_availability.opp):
         side_effect=ConnectionError(),
     ):
         async_fire_time_changed.opp, future)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         state = opp.states.get("sensor.home_cloud_ceiling")
         assert state
@@ -617,7 +617,7 @@ async def test_availability.opp):
         ),
     ):
         async_fire_time_changed.opp, future)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         state = opp.states.get("sensor.home_cloud_ceiling")
         assert state
@@ -641,7 +641,7 @@ async def test_manual_update_entity.opp):
         "openpeerpower.components.accuweather.AccuWeather.async_get_forecast",
         return_value=forecast,
     ) as mock_forecast:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             "openpeerpowerr",
             "update_entity",
             {ATTR_ENTITY_ID: ["sensor.home_cloud_ceiling"]},

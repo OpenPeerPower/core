@@ -25,10 +25,10 @@ def mock_dev_track(mock_device_tracker_conf):
 async def locative_client(loop,.opp,.opp_client):
     """Locative mock client."""
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     with patch("openpeerpower.components.device_tracker.legacy.update_config"):
-        return await.opp_client()
+        return await opp._client()
 
 
 @pytest.fixture
@@ -38,14 +38,14 @@ async def webhook_id.opp, locative_client):
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         "locative", context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     return result["result"].data["webhook_id"]
 
@@ -124,7 +124,7 @@ async def test_enter_and_exit.opp, locative_client, webhook_id):
 
     # Enter the Home
     req = await locative_client.post(url, data=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"])
@@ -136,7 +136,7 @@ async def test_enter_and_exit.opp, locative_client, webhook_id):
 
     # Exit Home
     req = await locative_client.post(url, data=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"])
@@ -148,7 +148,7 @@ async def test_enter_and_exit.opp, locative_client, webhook_id):
 
     # Enter Home again
     req = await locative_client.post(url, data=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"])
@@ -159,7 +159,7 @@ async def test_enter_and_exit.opp, locative_client, webhook_id):
 
     # Exit Home
     req = await locative_client.post(url, data=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"])
@@ -171,7 +171,7 @@ async def test_enter_and_exit.opp, locative_client, webhook_id):
 
     # Enter Work
     req = await locative_client.post(url, data=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"])
@@ -193,7 +193,7 @@ async def test_exit_after_enter.opp, locative_client, webhook_id):
 
     # Enter Home
     req = await locative_client.post(url, data=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
 
     state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
@@ -203,7 +203,7 @@ async def test_exit_after_enter.opp, locative_client, webhook_id):
 
     # Enter Work
     req = await locative_client.post(url, data=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
 
     state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
@@ -214,7 +214,7 @@ async def test_exit_after_enter.opp, locative_client, webhook_id):
 
     # Exit Home
     req = await locative_client.post(url, data=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
 
     state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
@@ -235,7 +235,7 @@ async def test_exit_first.opp, locative_client, webhook_id):
 
     # Exit Home
     req = await locative_client.post(url, data=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
 
     state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
@@ -256,7 +256,7 @@ async def test_two_devices.opp, locative_client, webhook_id):
 
     # Exit Home
     req = await locative_client.post(url, data=data_device_1)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
 
     state = opp.states.get(
@@ -269,7 +269,7 @@ async def test_two_devices.opp, locative_client, webhook_id):
     data_device_2["device"] = "device_2"
     data_device_2["trigger"] = "enter"
     req = await locative_client.post(url, data=data_device_2)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
 
     state = opp.states.get(
@@ -299,7 +299,7 @@ async def test_load_unload_entry.opp, locative_client, webhook_id):
 
     # Exit Home
     req = await locative_client.post(url, data=data)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert req.status == HTTP_OK
 
     state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
@@ -309,5 +309,5 @@ async def test_load_unload_entry.opp, locative_client, webhook_id):
     entry = opp.config_entries.async_entries(DOMAIN)[0]
 
     await locative.async_unload_entry.opp, entry)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert not.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]

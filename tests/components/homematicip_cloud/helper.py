@@ -68,7 +68,7 @@ async def async_manipulate_test_data(
     else:
         fire_target.fire_update_event()
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 class HomeFactory:

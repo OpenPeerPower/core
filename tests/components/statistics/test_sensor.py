@@ -453,7 +453,7 @@ class TestStatisticsSensor(unittest.TestCase):
 
 async def test_reload.opp):
     """Verify we can reload filter sensors."""
-    await opp.async_add_executor_job(
+    await opp..async_add_executor_job(
         init_recorder_component,.opp
     )  # force in memory db
 
@@ -470,9 +470,9 @@ async def test_reload.opp):
             }
         },
     )
-    await opp.async_block_till_done()
-    await opp.async_start()
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
+    await opp..async_start()
+    await opp..async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 
@@ -484,13 +484,13 @@ async def test_reload.opp):
         "statistics/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 

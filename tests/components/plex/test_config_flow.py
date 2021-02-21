@@ -51,7 +51,7 @@ async def test_bad_credentials.opp):
         {"internal_url": "http://example.local:8123"},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -62,15 +62,15 @@ async def test_bad_credentials.opp):
     ), patch("plexauth.PlexAuth.initiate_auth"), patch(
         "plexauth.PlexAuth.token", return_value="BAD TOKEN"
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["type"] == "external"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "external_done"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
 
         assert result["type"] == "form"
         assert result["step_id"] == "user"
@@ -84,7 +84,7 @@ async def test_bad_hostname.opp, mock_plex_calls):
         {"internal_url": "http://example.local:8123"},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -96,15 +96,15 @@ async def test_bad_hostname.opp, mock_plex_calls):
     ), patch("plexauth.PlexAuth.initiate_auth"), patch(
         "plexauth.PlexAuth.token", return_value=MOCK_TOKEN
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["type"] == "external"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "external_done"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
 
         assert result["type"] == "form"
         assert result["step_id"] == "user"
@@ -118,7 +118,7 @@ async def test_unknown_exception.opp):
         {"internal_url": "http://example.local:8123"},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -127,15 +127,15 @@ async def test_unknown_exception.opp):
     with patch("plexapi.myplex.MyPlexAccount", side_effect=Exception), patch(
         "plexauth.PlexAuth.initiate_auth"
     ), patch("plexauth.PlexAuth.token", return_value="MOCK_TOKEN"):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["type"] == "external"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "external_done"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "abort"
         assert result["reason"] == "unknown"
 
@@ -149,7 +149,7 @@ async def test_no_servers_found.opp, mock_plex_calls, requests_mock, empty_paylo
         {"internal_url": "http://example.local:8123"},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -158,15 +158,15 @@ async def test_no_servers_found.opp, mock_plex_calls, requests_mock, empty_paylo
     with patch("plexauth.PlexAuth.initiate_auth"), patch(
         "plexauth.PlexAuth.token", return_value=MOCK_TOKEN
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["type"] == "external"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "external_done"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "form"
         assert result["step_id"] == "user"
         assert result["errors"]["base"] == "no_servers"
@@ -180,7 +180,7 @@ async def test_single_available_server.opp, mock_plex_calls):
         {"internal_url": "http://example.local:8123"},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -189,15 +189,15 @@ async def test_single_available_server.opp, mock_plex_calls):
     with patch("plexauth.PlexAuth.initiate_auth"), patch(
         "plexauth.PlexAuth.token", return_value=MOCK_TOKEN
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["type"] == "external"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "external_done"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "create_entry"
 
         server_id = result["data"][CONF_SERVER_IDENTIFIER]
@@ -225,7 +225,7 @@ async def test_multiple_servers_with_selection(
         {"internal_url": "http://example.local:8123"},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -238,19 +238,19 @@ async def test_multiple_servers_with_selection(
     with patch("plexauth.PlexAuth.initiate_auth"), patch(
         "plexauth.PlexAuth.token", return_value=MOCK_TOKEN
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["type"] == "external"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "external_done"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "form"
         assert result["step_id"] == "select_server"
 
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             user_input={CONF_SERVER: MOCK_SERVERS[0][CONF_SERVER]},
         )
@@ -289,7 +289,7 @@ async def test_adding_last_unconfigured_server(
         },
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -303,15 +303,15 @@ async def test_adding_last_unconfigured_server(
     with patch("plexauth.PlexAuth.initiate_auth"), patch(
         "plexauth.PlexAuth.token", return_value=MOCK_TOKEN
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["type"] == "external"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "external_done"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "create_entry"
 
         server_id = result["data"][CONF_SERVER_IDENTIFIER]
@@ -349,7 +349,7 @@ async def test_all_available_servers_configured(
         },
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -364,15 +364,15 @@ async def test_all_available_servers_configured(
     with patch("plexauth.PlexAuth.initiate_auth"), patch(
         "plexauth.PlexAuth.token", return_value=MOCK_TOKEN
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["type"] == "external"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "external_done"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "abort"
         assert result["reason"] == "all_configured"
 
@@ -382,13 +382,13 @@ async def test_option_flow.opp, entry, mock_plex_server):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}, data=None
     )
     assert result["type"] == "form"
     assert result["step_id"] == "plex_mp_settings"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_USE_EPISODE_ART: True,
@@ -414,13 +414,13 @@ async def test_missing_option_flow.opp, entry, mock_plex_server):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}, data=None
     )
     assert result["type"] == "form"
     assert result["step_id"] == "plex_mp_settings"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_USE_EPISODE_ART: True,
@@ -448,7 +448,7 @@ async def test_option_flow_new_users_available.opp, entry, setup_plex_server):
     entry.options = OPTIONS_OWNER_ONLY
 
     mock_plex_server = await setup_plex_server(config_entry=entry)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     server_id = mock_plex_server.machine_identifier
     monitored_users = opp.data[DOMAIN][SERVERS][server_id].option_monitored_users
@@ -457,7 +457,7 @@ async def test_option_flow_new_users_available.opp, entry, setup_plex_server):
     assert len(monitored_users) == 1
     assert len(new_users) == 2
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp..config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}, data=None
     )
     assert result["type"] == "form"
@@ -477,7 +477,7 @@ async def test_external_timed_out.opp):
         {"internal_url": "http://example.local:8123"},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -486,15 +486,15 @@ async def test_external_timed_out.opp):
     with patch("plexauth.PlexAuth.initiate_auth"), patch(
         "plexauth.PlexAuth.token", return_value=None
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["type"] == "external"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "external_done"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "abort"
         assert result["reason"] == "token_request_timeout"
 
@@ -507,7 +507,7 @@ async def test_callback_view.opp, aiohttp_client):
         {"internal_url": "http://example.local:8123"},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -516,7 +516,7 @@ async def test_callback_view.opp, aiohttp_client):
     with patch("plexauth.PlexAuth.initiate_auth"), patch(
         "plexauth.PlexAuth.token", return_value=MOCK_TOKEN
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["type"] == "external"
@@ -544,7 +544,7 @@ async def test_manual_config.opp, mock_plex_calls):
             )
 
     # Basic mode
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": "user"}
     )
 
@@ -554,7 +554,7 @@ async def test_manual_config.opp, mock_plex_calls):
    .opp.config_entries.flow.async_abort(result["flow_id"])
 
     # Advanced automatic
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": "user", "show_advanced_options": True}
     )
 
@@ -563,7 +563,7 @@ async def test_manual_config.opp, mock_plex_calls):
     assert result["step_id"] == "user_advanced"
 
     with patch("plexauth.PlexAuth.initiate_auth"):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={"setup_method": AUTOMATIC_SETUP_STRING}
         )
 
@@ -571,7 +571,7 @@ async def test_manual_config.opp, mock_plex_calls):
    .opp.config_entries.flow.async_abort(result["flow_id"])
 
     # Advanced manual
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": "user", "show_advanced_options": True}
     )
 
@@ -579,7 +579,7 @@ async def test_manual_config.opp, mock_plex_calls):
     assert result["type"] == "form"
     assert result["step_id"] == "user_advanced"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], user_input={"setup_method": MANUAL_SETUP_STRING}
     )
 
@@ -600,7 +600,7 @@ async def test_manual_config.opp, mock_plex_calls):
         CONF_VERIFY_SSL: True,
     }
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], user_input=MANUAL_SERVER_NO_HOST_OR_TOKEN
     )
 
@@ -612,7 +612,7 @@ async def test_manual_config.opp, mock_plex_calls):
         "plexapi.server.PlexServer",
         side_effect=requests.exceptions.SSLError,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=MANUAL_SERVER
         )
 
@@ -624,7 +624,7 @@ async def test_manual_config.opp, mock_plex_calls):
         "plexapi.server.PlexServer",
         side_effect=WrongCertValidaitionException,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=MANUAL_SERVER
         )
 
@@ -636,7 +636,7 @@ async def test_manual_config.opp, mock_plex_calls):
         "openpeerpower.components.plex.PlexServer.connect",
         side_effect=requests.exceptions.SSLError,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=MANUAL_SERVER
         )
 
@@ -647,7 +647,7 @@ async def test_manual_config.opp, mock_plex_calls):
     with patch("openpeerpower.components.plex.PlexWebsocket", autospec=True), patch(
         "openpeerpower.components.plex.GDM", return_value=MockGDM(disabled=True)
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input=MANUAL_SERVER
         )
 
@@ -666,14 +666,14 @@ async def test_manual_config.opp, mock_plex_calls):
 async def test_manual_config_with_token.opp, mock_plex_calls):
     """Test creating via manual configuration with only token."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": "user", "show_advanced_options": True}
     )
 
     assert result["type"] == "form"
     assert result["step_id"] == "user_advanced"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"], user_input={"setup_method": MANUAL_SETUP_STRING}
     )
 
@@ -683,7 +683,7 @@ async def test_manual_config_with_token.opp, mock_plex_calls):
     with patch(
         "openpeerpower.components.plex.GDM", return_value=MockGDM(disabled=True)
     ), patch("openpeerpower.components.plex.PlexWebsocket", autospec=True):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_TOKEN: MOCK_TOKEN}
         )
 
@@ -767,13 +767,13 @@ async def test_trigger_reauth.opp, entry, mock_plex_server, mock_websocket):
     with patch("plexauth.PlexAuth.initiate_auth"), patch(
         "plexauth.PlexAuth.token", return_value="BRAND_NEW_TOKEN"
     ):
-        result = await.opp.config_entries.flow.async_configure(flow_id, user_input={})
+        result = await opp..config_entries.flow.async_configure(flow_id, user_input={})
         assert result["type"] == "external"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "external_done"
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp..config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == "abort"
         assert result["reason"] == "reauth_successful"
         assert result["flow_id"] == flow_id

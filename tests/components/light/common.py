@@ -107,7 +107,7 @@ async def async_turn_on(
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
+    await opp..services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
 
 @bind_opp
@@ -124,7 +124,7 @@ async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL, transition=None):
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
+    await opp..services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
 
 
 @bind_opp
@@ -205,4 +205,4 @@ async def async_toggle(
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_TOGGLE, data, blocking=True)
+    await opp..services.async_call(DOMAIN, SERVICE_TOGGLE, data, blocking=True)

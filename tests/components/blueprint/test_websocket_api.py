@@ -18,7 +18,7 @@ async def setup_bp.opp):
 
 async def test_list_blueprints.opp,.opp_ws_client):
     """Test listing blueprints."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json({"id": 5, "type": "blueprint/list", "domain": "automation"})
 
     msg = await client.receive_json()
@@ -46,7 +46,7 @@ async def test_list_blueprints.opp,.opp_ws_client):
 
 async def test_list_blueprints_non_existing_domain.opp,.opp_ws_client):
     """Test listing blueprints."""
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "blueprint/list", "domain": "not_existsing"}
     )
@@ -70,7 +70,7 @@ async def test_import_blueprint.opp, aioclient_mock,.opp_ws_client):
         text=raw_data,
     )
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -105,7 +105,7 @@ async def test_save_blueprint.opp, aioclient_mock,.opp_ws_client):
     ).read_text()
 
     with patch("pathlib.Path.write_text") as write_mock:
-        client = await.opp_ws_client.opp)
+        client = await opp._ws_client.opp)
         await client.send_json(
             {
                 "id": 6,
@@ -130,7 +130,7 @@ async def test_save_blueprint.opp, aioclient_mock,.opp_ws_client):
 async def test_save_existing_file.opp, aioclient_mock,.opp_ws_client):
     """Test saving blueprints."""
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {
             "id": 7,
@@ -152,7 +152,7 @@ async def test_save_existing_file.opp, aioclient_mock,.opp_ws_client):
 async def test_save_file_error.opp, aioclient_mock,.opp_ws_client):
     """Test saving blueprints with OS error."""
     with patch("pathlib.Path.write_text", side_effect=OSError):
-        client = await.opp_ws_client.opp)
+        client = await opp._ws_client.opp)
         await client.send_json(
             {
                 "id": 8,
@@ -173,7 +173,7 @@ async def test_save_file_error.opp, aioclient_mock,.opp_ws_client):
 async def test_save_invalid_blueprint.opp, aioclient_mock,.opp_ws_client):
     """Test saving invalid blueprints."""
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {
             "id": 8,
@@ -199,7 +199,7 @@ async def test_delete_blueprint.opp, aioclient_mock,.opp_ws_client):
     """Test deleting blueprints."""
 
     with patch("pathlib.Path.unlink", return_value=Mock()) as unlink_mock:
-        client = await.opp_ws_client.opp)
+        client = await opp._ws_client.opp)
         await client.send_json(
             {
                 "id": 9,
@@ -219,7 +219,7 @@ async def test_delete_blueprint.opp, aioclient_mock,.opp_ws_client):
 async def test_delete_non_exist_file_blueprint.opp, aioclient_mock,.opp_ws_client):
     """Test deleting non existing blueprints."""
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
     await client.send_json(
         {
             "id": 9,

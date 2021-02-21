@@ -21,7 +21,7 @@ async def test_ingress_request_get(oppio_client, build_type, aioclient_mock):
         text="test",
     )
 
-    resp = await oppio_client.get(
+    resp = await opp.io_client.get(
         "/api/oppio_ingress/{}/{}".format(build_type[0], build_type[1]),
         headers={"X-Test-Header": "beer"},
     )
@@ -60,7 +60,7 @@ async def test_ingress_request_post(oppio_client, build_type, aioclient_mock):
         text="test",
     )
 
-    resp = await oppio_client.post(
+    resp = await opp.io_client.post(
         "/api/oppio_ingress/{}/{}".format(build_type[0], build_type[1]),
         headers={"X-Test-Header": "beer"},
     )
@@ -99,7 +99,7 @@ async def test_ingress_request_put(oppio_client, build_type, aioclient_mock):
         text="test",
     )
 
-    resp = await oppio_client.put(
+    resp = await opp.io_client.put(
         "/api/oppio_ingress/{}/{}".format(build_type[0], build_type[1]),
         headers={"X-Test-Header": "beer"},
     )
@@ -138,7 +138,7 @@ async def test_ingress_request_delete(oppio_client, build_type, aioclient_mock):
         text="test",
     )
 
-    resp = await oppio_client.delete(
+    resp = await opp.io_client.delete(
         "/api/oppio_ingress/{}/{}".format(build_type[0], build_type[1]),
         headers={"X-Test-Header": "beer"},
     )
@@ -177,7 +177,7 @@ async def test_ingress_request_patch(oppio_client, build_type, aioclient_mock):
         text="test",
     )
 
-    resp = await oppio_client.patch(
+    resp = await opp.io_client.patch(
         "/api/oppio_ingress/{}/{}".format(build_type[0], build_type[1]),
         headers={"X-Test-Header": "beer"},
     )
@@ -216,7 +216,7 @@ async def test_ingress_request_options(oppio_client, build_type, aioclient_mock)
         text="test",
     )
 
-    resp = await oppio_client.options(
+    resp = await opp.io_client.options(
         "/api/oppio_ingress/{}/{}".format(build_type[0], build_type[1]),
         headers={"X-Test-Header": "beer"},
     )
@@ -255,7 +255,7 @@ async def test_ingress_websocket(oppio_client, build_type, aioclient_mock):
     )
 
     # Ignore error because we can setup a full IO infrastructure
-    await oppio_client.ws_connect(
+    await opp.io_client.ws_connect(
         "/api/oppio_ingress/{}/{}".format(build_type[0], build_type[1]),
         headers={"X-Test-Header": "beer"},
     )

@@ -111,7 +111,7 @@ async def test_get_translations.opp, mock_config_flows):
     assert translations == {}
 
     assert await async_setup_component.opp, "switch", {"switch": {"platform": "test"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     translations = await translation.async_get_translations.opp, "en", "state")
 

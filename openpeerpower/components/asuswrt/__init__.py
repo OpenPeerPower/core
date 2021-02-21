@@ -171,4 +171,4 @@ async def update_listener.opp: OpenPeerPowerType, entry: ConfigEntry):
     router = opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
 
     if router.update_options(entry.options):
-        await opp.config_entries.async_reload(entry.entry_id)
+        await opp..config_entries.async_reload(entry.entry_id)

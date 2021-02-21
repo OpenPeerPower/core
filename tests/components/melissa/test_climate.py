@@ -246,9 +246,9 @@ async def test_fan_mode.opp):
         device = (await api.async_fetch_devices())[_SERIAL]
         thermostat = MelissaClimate(api, _SERIAL, device)
         await thermostat.async_update()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         await thermostat.async_set_fan_mode(SPEED_HIGH)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert SPEED_HIGH == thermostat.fan_mode
 
 
@@ -259,9 +259,9 @@ async def test_set_operation_mode.opp):
         device = (await api.async_fetch_devices())[_SERIAL]
         thermostat = MelissaClimate(api, _SERIAL, device)
         await thermostat.async_update()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         await thermostat.async_set_hvac_mode(HVAC_MODE_COOL)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert HVAC_MODE_COOL == thermostat.hvac_mode
 
 
@@ -272,14 +272,14 @@ async def test_send.opp):
         device = (await api.async_fetch_devices())[_SERIAL]
         thermostat = MelissaClimate(api, _SERIAL, device)
         await thermostat.async_update()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         await thermostat.async_send({"fan": api.FAN_MEDIUM})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert SPEED_MEDIUM == thermostat.fan_mode
         api.async_send.return_value = AsyncMock(return_value=False)
         thermostat._cur_settings = None
         await thermostat.async_send({"fan": api.FAN_LOW})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert SPEED_LOW != thermostat.fan_mode
         assert thermostat._cur_settings is None
 

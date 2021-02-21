@@ -105,7 +105,7 @@ async def async_setup_entry.opp, config_entry):
         coro = opp.config_entries.async_forward_entry_setup(config_entry, component)
         zha_data[DATA_ZHA_PLATFORM_LOADED].append.opp.async_create_task(coro))
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(CONNECTION_ZIGBEE, str(zha_gateway.application_controller.ieee))},
@@ -129,7 +129,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload ZHA config entry."""
-    await.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY].shutdown()
+    await opp..data[DATA_ZHA][DATA_ZHA_GATEWAY].shutdown()
 
     GROUP_PROBE.cleanup()
     api.async_unload_api.opp)
@@ -139,14 +139,14 @@ async def async_unload_entry.opp, config_entry):
         unsub_dispatcher()
 
     for component in COMPONENTS:
-        await opp.config_entries.async_forward_entry_unload(config_entry, component)
+        await opp..config_entries.async_forward_entry_unload(config_entry, component)
 
     return True
 
 
 async def async_load_entities.opp: OpenPeerPowerType) -> None:
     """Load entities after integration was setup."""
-    await.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY].async_initialize_devices_and_entities()
+    await opp..data[DATA_ZHA][DATA_ZHA_GATEWAY].async_initialize_devices_and_entities()
     to_setup = opp.data[DATA_ZHA][DATA_ZHA_PLATFORM_LOADED]
     results = await asyncio.gather(*to_setup, return_exceptions=True)
     for res in results:

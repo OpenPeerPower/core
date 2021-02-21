@@ -122,7 +122,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
     mode = get_ip_mode(host)
-    mac = await opp.async_add_executor_job(partial(get_mac_address, **{mode: host}))
+    mac = await opp..async_add_executor_job(partial(get_mac_address, **{mode: host}))
     unique_id = f"kef-{mac}" if mac is not None else None
 
     media_player = KefMediaPlayer(

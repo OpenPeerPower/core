@@ -56,7 +56,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
         so entities can quickly look up their data.
         """
         try:
-            return await opp.async_add_executor_job(api.get_all_pools_data)
+            return await opp..async_add_executor_job(api.get_all_pools_data)
 
         except OndiloError as err:
             raise UpdateFailed(f"Error communicating with API: {err}") from err

@@ -39,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the EDL21 sensor."""
    .opp.data[DOMAIN] = EDL21.opp, config, async_add_entities)
-    await.opp.data[DOMAIN].connect()
+    await opp..data[DOMAIN].connect()
 
 
 class EDL21:

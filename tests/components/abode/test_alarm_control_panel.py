@@ -25,7 +25,7 @@ DEVICE_ID = "alarm_control_panel.abode_alarm"
 async def test_entity_registry.opp):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform.opp, ALARM_DOMAIN)
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get(DEVICE_ID)
     # Abode alarm device unique_id is the MAC address
@@ -51,13 +51,13 @@ async def test_set_alarm_away.opp):
         with patch("abodepy.ALARM.AbodeAlarm.set_away") as mock_set_away:
             await setup_platform.opp, ALARM_DOMAIN)
 
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 ALARM_DOMAIN,
                 SERVICE_ALARM_ARM_AWAY,
                 {ATTR_ENTITY_ID: DEVICE_ID},
                 blocking=True,
             )
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
             mock_set_away.assert_called_once()
 
         with patch(
@@ -67,8 +67,8 @@ async def test_set_alarm_away.opp):
             mock_mode.return_value = CONST.MODE_AWAY
 
             update_callback = mock_callback.call_args[0][1]
-            await opp.async_add_executor_job(update_callback, "area_1")
-            await opp.async_block_till_done()
+            await opp..async_add_executor_job(update_callback, "area_1")
+            await opp..async_block_till_done()
 
             state = opp.states.get(DEVICE_ID)
             assert state.state == STATE_ALARM_ARMED_AWAY
@@ -80,13 +80,13 @@ async def test_set_alarm_home.opp):
         with patch("abodepy.ALARM.AbodeAlarm.set_home") as mock_set_home:
             await setup_platform.opp, ALARM_DOMAIN)
 
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 ALARM_DOMAIN,
                 SERVICE_ALARM_ARM_HOME,
                 {ATTR_ENTITY_ID: DEVICE_ID},
                 blocking=True,
             )
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
             mock_set_home.assert_called_once()
 
         with patch(
@@ -95,8 +95,8 @@ async def test_set_alarm_home.opp):
             mock_mode.return_value = CONST.MODE_HOME
 
             update_callback = mock_callback.call_args[0][1]
-            await opp.async_add_executor_job(update_callback, "area_1")
-            await opp.async_block_till_done()
+            await opp..async_add_executor_job(update_callback, "area_1")
+            await opp..async_block_till_done()
 
             state = opp.states.get(DEVICE_ID)
             assert state.state == STATE_ALARM_ARMED_HOME
@@ -107,13 +107,13 @@ async def test_set_alarm_standby.opp):
     with patch("abodepy.AbodeEventController.add_device_callback") as mock_callback:
         with patch("abodepy.ALARM.AbodeAlarm.set_standby") as mock_set_standby:
             await setup_platform.opp, ALARM_DOMAIN)
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 ALARM_DOMAIN,
                 SERVICE_ALARM_DISARM,
                 {ATTR_ENTITY_ID: DEVICE_ID},
                 blocking=True,
             )
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
             mock_set_standby.assert_called_once()
 
         with patch(
@@ -122,8 +122,8 @@ async def test_set_alarm_standby.opp):
             mock_mode.return_value = CONST.MODE_STANDBY
 
             update_callback = mock_callback.call_args[0][1]
-            await opp.async_add_executor_job(update_callback, "area_1")
-            await opp.async_block_till_done()
+            await opp..async_add_executor_job(update_callback, "area_1")
+            await opp..async_block_till_done()
 
             state = opp.states.get(DEVICE_ID)
             assert state.state == STATE_ALARM_DISARMED
@@ -133,7 +133,7 @@ async def test_state_unknown.opp):
     """Test an unknown alarm control panel state."""
     with patch("abodepy.ALARM.AbodeAlarm.mode", new_callable=PropertyMock) as mock_mode:
         await setup_platform.opp, ALARM_DOMAIN)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         mock_mode.return_value = None
 

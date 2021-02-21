@@ -51,7 +51,7 @@ async def _async_reproduce_state(
         service = SERVICE_SET_OPTIONS
         service_data[ATTR_OPTIONS] = state.attributes[ATTR_OPTIONS]
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, service, service_data, context=context, blocking=True
         )
 
@@ -62,7 +62,7 @@ async def _async_reproduce_state(
     service = SERVICE_SELECT_OPTION
     service_data[ATTR_OPTION] = state.state
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, service, service_data, context=context, blocking=True
     )
 

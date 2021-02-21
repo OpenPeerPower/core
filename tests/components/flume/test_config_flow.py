@@ -22,7 +22,7 @@ def _get_mocked_flume_device_list():
 async def test_form.opp):
     """Test we get the form and can setup from user input."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -42,7 +42,7 @@ async def test_form.opp):
         "openpeerpower.components.flume.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_USERNAME: "test-username",
@@ -51,7 +51,7 @@ async def test_form.opp):
                 CONF_CLIENT_SECRET: "client_secret",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "test-username"
@@ -82,7 +82,7 @@ async def test_form_import.opp):
         "openpeerpower.components.flume.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -92,7 +92,7 @@ async def test_form_import.opp):
                 CONF_CLIENT_SECRET: "client_secret",
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "test-username"
@@ -108,7 +108,7 @@ async def test_form_import.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -119,7 +119,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.flume.config_flow.FlumeDeviceList",
         side_effect=Exception,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_USERNAME: "test-username",
@@ -135,7 +135,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     with patch(
@@ -145,7 +145,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.flume.config_flow.FlumeDeviceList",
         side_effect=requests.exceptions.ConnectionError(),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_USERNAME: "test-username",

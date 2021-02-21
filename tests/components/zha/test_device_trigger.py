@@ -67,7 +67,7 @@ async def mock_devices.opp, zigpy_device_mock, zha_device_joined_restored):
 
     zha_device = await zha_device_joined_restored(zigpy_device)
     zha_device.update_available(True)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     return zigpy_device, zha_device
 
 
@@ -198,11 +198,11 @@ async def test_if_fires_on_event.opp, mock_devices, calls):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     channel = zha_device.channels.pools[0].client_channels["1:0x0006"]
     channel.zha_send_event(COMMAND_SINGLE, [])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data["message"] == "service called"
@@ -225,7 +225,7 @@ async def test_device_offline_fires(
 
     zha_device = await zha_device_restored(zigpy_device, last_seen=time.time())
     await async_enable_traffic.opp, [zha_device])
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -249,7 +249,7 @@ async def test_device_offline_fires(
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert zha_device.available is True
 
     zigpy_device.last_seen = (
@@ -259,17 +259,17 @@ async def test_device_offline_fires(
     # there are 3 checkins to perform before marking the device unavailable
     future = dt_util.utcnow() + timedelta(seconds=90)
     async_fire_time_changed.opp, future)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     future = dt_util.utcnow() + timedelta(seconds=90)
     async_fire_time_changed.opp, future)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     future = dt_util.utcnow() + timedelta(
         seconds=zha_core_device.CONSIDER_UNAVAILABLE_BATTERY + 100
     )
     async_fire_time_changed.opp, future)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert zha_device.available is False
     assert len(calls) == 1
@@ -306,7 +306,7 @@ async def test_exception_no_triggers.opp, mock_devices, calls, caplog):
             ]
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert "Invalid config for [automation]" in caplog.text
 
 
@@ -348,5 +348,5 @@ async def test_exception_bad_trigger.opp, mock_devices, calls, caplog):
             ]
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert "Invalid config for [automation]" in caplog.text

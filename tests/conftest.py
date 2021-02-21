@@ -189,8 +189,8 @@ async def stop_opp():
             continue
 
         with patch.object.opp_inst.loop, "stop"):
-            await.opp_inst.async_block_till_done()
-            await.opp_inst.async_stop(force=True)
+            await opp._inst.async_block_till_done()
+            await opp._inst.async_stop(force=True)
 
 
 @pytest.fixture
@@ -241,9 +241,9 @@ async def.opp_admin_credential.opp, local_auth):
 @pytest.fixture
 async def.opp_access_token.opp,.opp_admin_user,.opp_admin_credential):
     """Return an access token to access Open Peer Power."""
-    await opp.auth.async_link_user.opp_admin_user,.opp_admin_credential)
+    await opp..auth.async_link_user.opp_admin_user,.opp_admin_credential)
 
-    refresh_token = await opp.auth.async_create_refresh_token(
+    refresh_token = await opp..auth.async_create_refresh_token(
        .opp_admin_user, CLIENT_ID, credential.opp_admin_credential
     )
     return.opp.auth.async_create_access_token(refresh_token)
@@ -456,7 +456,7 @@ async def mqtt_mock.opp, mqtt_client_mock, mqtt_config):
 
     result = await async_setup_component.opp, mqtt.DOMAIN, {mqtt.DOMAIN: mqtt_config})
     assert result
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Workaround: asynctest==0.13 fails on @functools.lru_cache
     spec = dir.opp.data["mqtt"])

@@ -39,7 +39,7 @@ async def test_user_flow(detect_mock,.opp):
     port = com_port()
     port_select = f"{port}, s/n: {port.serial_number} - {port.manufacturer}"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data={zigpy.config.CONF_DEVICE_PATH: port_select},
@@ -62,7 +62,7 @@ async def test_user_flow_not_detected(detect_mock,.opp):
     port = com_port()
     port_select = f"{port}, s/n: {port.serial_number} - {port.manufacturer}"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data={zigpy.config.CONF_DEVICE_PATH: port_select},
@@ -77,7 +77,7 @@ async def test_user_flow_not_detected(detect_mock,.opp):
 @patch("serial.tools.list_ports.comports", MagicMock(return_value=[com_port()]))
 async def test_user_flow_show_form.opp):
     """Test user step form."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
     )
@@ -88,7 +88,7 @@ async def test_user_flow_show_form.opp):
 
 async def test_user_flow_show_manual.opp):
     """Test user flow manual entry when no comport detected."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
     )
@@ -100,7 +100,7 @@ async def test_user_flow_show_manual.opp):
 async def test_user_flow_manual.opp):
     """Test user flow manual entry."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data={zigpy.config.CONF_DEVICE_PATH: config_flow.CONF_MANUAL_PATH},
@@ -113,7 +113,7 @@ async def test_user_flow_manual.opp):
 async def test_pick_radio_flow.opp, radio_type):
     """Test radio picker."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: "pick_radio"}, data={CONF_RADIO_TYPE: radio_type}
     )
     assert result["type"] == RESULT_TYPE_FORM
@@ -124,7 +124,7 @@ async def test_user_flow_existing_config_entry.opp):
     """Test if config entry already exists."""
     MockConfigEntry(domain=DOMAIN, data={"usb_path": "/dev/ttyUSB1"}).add_to_opp.opp)
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}
     )
 
@@ -170,13 +170,13 @@ async def test_probe_radios(xbee_probe, zigate_probe, deconz_probe, cc_probe,.op
 async def test_user_port_config_fail(probe_mock,.opp):
     """Test port config flow."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: "pick_radio"},
         data={CONF_RADIO_TYPE: RadioType.ezsp.description},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         user_input={zigpy.config.CONF_DEVICE_PATH: "/dev/ttyUSB33"},
     )
@@ -192,13 +192,13 @@ async def test_user_port_config(probe_mock,.opp):
     """Test port config."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: "pick_radio"},
         data={CONF_RADIO_TYPE: RadioType.ezsp.description},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         user_input={zigpy.config.CONF_DEVICE_PATH: "/dev/ttyUSB33"},
     )

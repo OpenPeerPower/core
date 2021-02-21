@@ -78,7 +78,7 @@ async def test_user_valid.opp):
     """Test valid config from user input."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -94,12 +94,12 @@ async def test_user_valid.opp):
     ) as mock_setup_entry:
         setup_mock_foscam_camera(mock_foscam_camera)
 
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             VALID_CONFIG,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == CAMERA_NAME
@@ -113,7 +113,7 @@ async def test_user_invalid_auth.opp):
     """Test we handle invalid auth from user input."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -127,12 +127,12 @@ async def test_user_invalid_auth.opp):
         invalid_user = VALID_CONFIG.copy()
         invalid_user[config_flow.CONF_USERNAME] = "invalid"
 
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             invalid_user,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {"base": "invalid_auth"}
@@ -142,7 +142,7 @@ async def test_user_cannot_connect.opp):
     """Test we handle cannot connect error from user input."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -156,12 +156,12 @@ async def test_user_cannot_connect.opp):
         invalid_host = VALID_CONFIG.copy()
         invalid_host[config_flow.CONF_HOST] = "127.0.0.1"
 
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             invalid_host,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {"base": "cannot_connect"}
@@ -171,7 +171,7 @@ async def test_user_invalid_response.opp):
     """Test we handle invalid response error from user input."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -187,12 +187,12 @@ async def test_user_invalid_response.opp):
             config_flow.CONF_USERNAME
         ]
 
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             invalid_response,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {"base": "invalid_response"}
@@ -208,7 +208,7 @@ async def test_user_already_configured.opp):
     )
     entry.add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -219,12 +219,12 @@ async def test_user_already_configured.opp):
     ) as mock_foscam_camera:
         setup_mock_foscam_camera(mock_foscam_camera)
 
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             VALID_CONFIG,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "already_configured"
@@ -234,7 +234,7 @@ async def test_user_unknown_exception.opp):
     """Test we handle unknown exceptions from user input."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -245,12 +245,12 @@ async def test_user_unknown_exception.opp):
     ) as mock_foscam_camera:
         mock_foscam_camera.side_effect = Exception("test")
 
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             VALID_CONFIG,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {"base": "unknown"}
@@ -270,13 +270,13 @@ async def test_import_user_valid.opp):
     ) as mock_setup_entry:
         setup_mock_foscam_camera(mock_foscam_camera)
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=VALID_CONFIG,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == CAMERA_NAME
@@ -304,13 +304,13 @@ async def test_import_user_valid_with_name.opp):
         with_name = VALID_CONFIG.copy()
         with_name[config_flow.CONF_NAME] = name
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=with_name,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == name
@@ -332,13 +332,13 @@ async def test_import_invalid_auth.opp):
         invalid_user = VALID_CONFIG.copy()
         invalid_user[config_flow.CONF_USERNAME] = "invalid"
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=invalid_user,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "invalid_auth"
@@ -356,13 +356,13 @@ async def test_import_cannot_connect.opp):
         invalid_host = VALID_CONFIG.copy()
         invalid_host[config_flow.CONF_HOST] = "127.0.0.1"
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=invalid_host,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "cannot_connect"
@@ -382,13 +382,13 @@ async def test_import_invalid_response.opp):
             config_flow.CONF_USERNAME
         ]
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=invalid_response,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "invalid_response"
@@ -409,13 +409,13 @@ async def test_import_already_configured.opp):
     ) as mock_foscam_camera:
         setup_mock_foscam_camera(mock_foscam_camera)
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=VALID_CONFIG,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "already_configured"
@@ -430,13 +430,13 @@ async def test_import_unknown_exception.opp):
     ) as mock_foscam_camera:
         mock_foscam_camera.side_effect = Exception("test")
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=VALID_CONFIG,
         )
 
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "unknown"

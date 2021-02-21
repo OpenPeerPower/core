@@ -64,7 +64,7 @@ async def test_get_or_create_returns_same_entry.opp, registry, update_events):
     assert entry3.name == "name"
     assert entry3.sw_version == "sw-version"
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     # Only 2 update events. The third entry did not generate any changes.
     assert len(update_events) == 2
@@ -237,7 +237,7 @@ async def test_removing_config_entries.opp, registry, update_events):
     assert entry.config_entries == {"456"}
     assert entry3_removed is None
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(update_events) == 5
     assert update_events[0]["action"] == "create"
@@ -288,7 +288,7 @@ async def test_deleted_device_removing_config_entries.opp, registry, update_even
     assert len(registry.devices) == 0
     assert len(registry.deleted_devices) == 2
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(update_events) == 5
     assert update_events[0]["action"] == "create"
     assert update_events[0]["device_id"] == entry.id
@@ -310,7 +310,7 @@ async def test_deleted_device_removing_config_entries.opp, registry, update_even
     assert len(registry.deleted_devices) == 2
 
     # No event when a deleted device is purged
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(update_events) == 5
 
     # Re-add, expect to keep the device id
@@ -673,7 +673,7 @@ async def test_update_remove_config_entries.opp, registry, update_events):
 
     assert removed_entry is None
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(update_events) == 5
     assert update_events[0]["action"] == "create"
@@ -780,7 +780,7 @@ async def test_cleanup_startup.opp):
         "openpeerpowerr.helpers.device_registry.Debouncer.async_call"
     ) as mock_call:
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
 
@@ -800,22 +800,22 @@ async def test_cleanup_entity_registry_change.opp):
         "openpeerpowerr.helpers.device_registry.Debouncer.async_call"
     ) as mock_call:
         entity = ent_reg.async_get_or_create("light", "hue", "e1")
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(mock_call.mock_calls) == 0
 
         # Normal update does not trigger
         ent_reg.async_update_entity(entity.entity_id, name="updated")
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(mock_call.mock_calls) == 0
 
         # Device ID update triggers
         ent_reg.async_get_or_create("light", "hue", "e1", device_id="bla")
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(mock_call.mock_calls) == 1
 
         # Removal also triggers
         ent_reg.async_remove(entity.entity_id)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(mock_call.mock_calls) == 2
 
 
@@ -861,7 +861,7 @@ async def test_restore_device.opp, registry, update_events):
     assert isinstance(entry3.connections, set)
     assert isinstance(entry3.identifiers, set)
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(update_events) == 4
     assert update_events[0]["action"] == "create"
@@ -906,7 +906,7 @@ async def test_restore_simple_device.opp, registry, update_events):
     assert len(registry.devices) == 2
     assert len(registry.deleted_devices) == 0
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(update_events) == 4
     assert update_events[0]["action"] == "create"
@@ -998,7 +998,7 @@ async def test_restore_shared_device.opp, registry, update_events):
     assert isinstance(entry4.connections, set)
     assert isinstance(entry4.identifiers, set)
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(update_events) == 7
     assert update_events[0]["action"] == "create"

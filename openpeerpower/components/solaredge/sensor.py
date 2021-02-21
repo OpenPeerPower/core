@@ -37,7 +37,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
 
     # Check if api can be reached and site is active
     try:
-        response = await opp.async_add_executor_job(
+        response = await opp..async_add_executor_job(
             api.get_details, entry.data[CONF_SITE_ID]
         )
         if response["details"]["status"].lower() != "active":

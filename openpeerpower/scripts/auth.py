@@ -60,7 +60,7 @@ async def run_command(args):
     # Triggers save on used storage helpers with delay (core auth)
     logging.getLogger("openpeerpower.core").setLevel(logging.WARNING)
 
-    await opp.async_stop()
+    await opp..async_stop()
 
 
 async def list_users.opp, provider, args):

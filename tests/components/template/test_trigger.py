@@ -53,10 +53,10 @@ async def test_if_fires_on_change_bool.opp, calls):
     assert len(calls) == 0
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         automation.DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: ENTITY_MATCH_ALL},
@@ -64,7 +64,7 @@ async def test_if_fires_on_change_bool.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "planet")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -87,7 +87,7 @@ async def test_if_fires_on_change_str.opp, calls):
     assert len(calls) == 0
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -108,7 +108,7 @@ async def test_if_fires_on_change_str_crazy.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -131,7 +131,7 @@ async def test_if_not_fires_when_true_at_setup.opp, calls):
     assert len(calls) == 0
 
    .opp.states.async_set("test.entity", "hello", force_update=True)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
@@ -156,15 +156,15 @@ async def test_if_not_fires_because_fail.opp, calls):
     assert len(calls) == 0
 
    .opp.states.async_set("test.number", "2")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set("test.number", "0")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set("test.number", "2")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -185,7 +185,7 @@ async def test_if_not_fires_on_change_bool.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
@@ -203,7 +203,7 @@ async def test_if_not_fires_on_change_str.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
@@ -224,7 +224,7 @@ async def test_if_not_fires_on_change_str_crazy.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
@@ -241,11 +241,11 @@ async def test_if_fires_on_no_change.opp, calls):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     cur_len = len(calls)
 
    .opp.states.async_set("test.entity", "hello")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert cur_len == len(calls)
 
 
@@ -267,12 +267,12 @@ async def test_if_fires_on_two_change.opp, calls):
 
     # Trigger once
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
     # Trigger again
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -293,7 +293,7 @@ async def test_if_fires_on_change_with_template.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -313,10 +313,10 @@ async def test_if_not_fires_on_change_with_template.opp, calls):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
@@ -351,10 +351,10 @@ async def test_if_fires_on_change_with_template_advanced.opp, calls):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.states.async_set("test.entity", "world", context=context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].context.parent_id == context.id
     assert "template - test.entity - hello - world - None" == calls[0].data["some"]
@@ -382,12 +382,12 @@ async def test_if_fires_on_no_change_with_template_advanced.opp, calls):
 
     # Different state
    .opp.states.async_set("test.entity", "worldz")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
     # Different state
    .opp.states.async_set("test.entity", "hello")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
@@ -407,30 +407,30 @@ async def test_if_fires_on_change_with_template_2.opp, calls):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
    .opp.states.async_set("test.entity", "home")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set("test.entity", "work")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set("test.entity", "not_home")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set("test.entity", "home")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
 
 
@@ -455,17 +455,17 @@ async def test_if_action.opp, calls):
 
     # Condition is not true yet
    .opp.bus.async_fire("test_event")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
     # Change condition to true, but it shouldn't be triggered yet
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
     # Condition is true and event is triggered
    .opp.bus.async_fire("test_event")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -501,7 +501,7 @@ async def test_if_fires_on_change_with_bad_template_2.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
@@ -539,7 +539,7 @@ async def test_wait_template_with_trigger.opp, calls):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     @callback
     def event_op.dler(event):
@@ -548,7 +548,7 @@ async def test_wait_template_with_trigger.opp, calls):
    .opp.bus.async_listen_once("test_event", event_op.dler)
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "template - test.entity - hello - world - None"
 
@@ -571,10 +571,10 @@ async def test_if_fires_on_change_with_for.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -610,13 +610,13 @@ async def test_if_fires_on_change_with_for_advanced.opp, calls):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.states.async_set("test.entity", "world", context=context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].context.parent_id == context.id
     assert "template - test.entity - hello - world - 0:00:05" == calls[0].data["some"]
@@ -640,7 +640,7 @@ async def test_if_fires_on_change_with_for_0.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -676,10 +676,10 @@ async def test_if_fires_on_change_with_for_0_advanced.opp, calls):
         },
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
    .opp.states.async_set("test.entity", "world", context=context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].context.parent_id == context.id
     assert calls[0].data["some"] == "template - test.entity - hello - world - 0:00:00"
@@ -718,10 +718,10 @@ async def test_if_fires_on_change_with_for_2.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world", context=context)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].context.parent_id == context.id
     assert calls[0].data["some"] == "template - test.entity - hello - world - 0:00:05"
@@ -745,16 +745,16 @@ async def test_if_not_fires_on_change_with_for.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=4))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
    .opp.states.async_set("test.entity", "hello")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=6))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
@@ -776,12 +776,12 @@ async def test_if_not_fires_when_turned_off_with_for.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=4))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
-    await.opp.services.async_call(
+    await opp..services.async_call(
         automation.DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: ENTITY_MATCH_ALL},
@@ -789,7 +789,7 @@ async def test_if_not_fires_when_turned_off_with_for.opp, calls):
     )
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=6))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
 
 
@@ -811,10 +811,10 @@ async def test_if_fires_on_change_with_for_template_1.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -836,10 +836,10 @@ async def test_if_fires_on_change_with_for_template_2.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -861,10 +861,10 @@ async def test_if_fires_on_change_with_for_template_3.opp, calls):
     )
 
    .opp.states.async_set("test.entity", "world")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -887,7 +887,7 @@ async def test_invalid_for_template_1.opp, calls):
 
     with mock.patch.object(template_trigger, "_LOGGER") as mock_logger:
        .opp.states.async_set("test.entity", "world")
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock_logger.error.called
 
 
@@ -911,36 +911,36 @@ async def test_if_fires_on_time_change.opp, calls):
                 }
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(calls) == 0
 
     # Trigger once (match template)
     first_time = start_time.replace(minute=2, second=0)
     with patch("openpeerpowerr.util.dt.utcnow", return_value=first_time):
         async_fire_time_changed.opp, first_time)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert len(calls) == 1
 
     # Trigger again (match template)
     second_time = start_time.replace(minute=4, second=0)
     with patch("openpeerpowerr.util.dt.utcnow", return_value=second_time):
         async_fire_time_changed.opp, second_time)
-        await opp.async_block_till_done()
-    await opp.async_block_till_done()
+        await opp..async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
     # Trigger again (do not match template)
     third_time = start_time.replace(minute=5, second=0)
     with patch("openpeerpowerr.util.dt.utcnow", return_value=third_time):
         async_fire_time_changed.opp, third_time)
-        await opp.async_block_till_done()
-    await opp.async_block_till_done()
+        await opp..async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
     # Trigger again (match template)
     forth_time = start_time.replace(minute=8, second=0)
     with patch("openpeerpowerr.util.dt.utcnow", return_value=forth_time):
         async_fire_time_changed.opp, forth_time)
-        await opp.async_block_till_done()
-    await opp.async_block_till_done()
+        await opp..async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2

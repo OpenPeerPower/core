@@ -581,7 +581,7 @@ async def async_load.opp: OpenPeerPowerType) -> None:
     """Load entity registry."""
     assert DATA_REGISTRY not in.opp.data
    .opp.data[DATA_REGISTRY] = EntityRegistry.opp)
-    await.opp.data[DATA_REGISTRY].async_load()
+    await opp..data[DATA_REGISTRY].async_load()
 
 
 @bind_opp

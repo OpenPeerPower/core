@@ -110,7 +110,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     _async_migrate_options_from_data_if_missing.opp, entry)
 
     try:
-        account = await opp.async_add_executor_job(
+        account = await opp..async_add_executor_job(
             setup_account, entry,.opp, entry.data[CONF_USERNAME]
         )
     except OSError as ex:
@@ -118,7 +118,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     async def _async_update_all(service_call=None):
         """Update all BMW accounts."""
-        await opp.async_add_executor_job(_update_all)
+        await opp..async_add_executor_job(_update_all)
 
     def _update_all() -> None:
         """Update all BMW accounts."""
@@ -194,7 +194,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def update_listener.opp, config_entry):
     """Handle options update."""
-    await opp.config_entries.async_reload(config_entry.entry_id)
+    await opp..config_entries.async_reload(config_entry.entry_id)
 
 
 def setup_account(entry: ConfigEntry,.opp, name: str) -> BMWConnectedDriveAccount:

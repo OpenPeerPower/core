@@ -259,7 +259,7 @@ async def async_create_default_config.opp: OpenPeerPower) -> bool:
 
     Return if creation was successful.
     """
-    return await opp.async_add_executor_job(
+    return await opp..async_add_executor_job(
         _write_default_config,.opp.config.config_dir
     )
 
@@ -312,7 +312,7 @@ async def async_opp_config_yaml.opp: OpenPeerPower) -> Dict:
     configuration by itself. Include package merge.
     """
     # Not using async_add_executor_job because this is an internal method.
-    config = await.opp.loop.run_in_executor(
+    config = await opp..loop.run_in_executor(
         None, load_yaml_config_file,.opp.config.path(YAML_CONFIG_FILE)
     )
     core_config = config.get(CONF_CORE, {})
@@ -479,7 +479,7 @@ async def async_process_op.core_config.opp: OpenPeerPower, config: Dict) -> None
            .opp, "auth", await auth.auth_manager_from_config.opp, auth_conf, mfa_conf)
         )
 
-    await.opp.config.async_load()
+    await opp..config.async_load()
 
     hac = opp.config
 

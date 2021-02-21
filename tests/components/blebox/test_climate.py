@@ -79,7 +79,7 @@ async def test_init(saunabox,.opp, config):
 
     assert state.state == STATE_UNKNOWN
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
 
     assert device.name == "My sauna"
@@ -128,7 +128,7 @@ async def test_on_when_below_desired(saunabox,.opp, config):
         feature_mock.current = 25.7
 
     feature_mock.async_on = AsyncMock(side_effect=turn_on)
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         SERVICE_SET_HVAC_MODE,
         {"entity_id": entity_id, ATTR_HVAC_MODE: HVAC_MODE_HEAT},
@@ -163,7 +163,7 @@ async def test_on_when_above_desired(saunabox,.opp, config):
 
     feature_mock.async_on = AsyncMock(side_effect=turn_on)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         SERVICE_SET_HVAC_MODE,
         {"entity_id": entity_id, ATTR_HVAC_MODE: HVAC_MODE_HEAT},
@@ -198,7 +198,7 @@ async def test_off(saunabox,.opp, config):
         feature_mock.current = 22.7
 
     feature_mock.async_off = AsyncMock(side_effect=turn_off)
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         SERVICE_SET_HVAC_MODE,
         {"entity_id": entity_id, ATTR_HVAC_MODE: HVAC_MODE_OFF},
@@ -233,7 +233,7 @@ async def test_set_thermo(saunabox,.opp, config):
         feature_mock.current = 29.1
 
     feature_mock.async_set_temperature = AsyncMock(side_effect=set_temp)
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "climate",
         SERVICE_SET_TEMPERATURE,
         {"entity_id": entity_id, ATTR_TEMPERATURE: 43.21},

@@ -106,7 +106,7 @@ async def test_sensors.opp, aioclient_mock):
 
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": clients}
     controller.api.message_op.dler(event)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     wireless_client_rx = opp.states.get("sensor.wireless_client_name_rx")
     assert wireless_client_rx.state == "2345.0"
@@ -124,7 +124,7 @@ async def test_sensors.opp, aioclient_mock):
             CONF_ALLOW_UPTIME_SENSORS: False,
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     wireless_client_rx = opp.states.get("sensor.wireless_client_name_rx")
     assert wireless_client_rx is None
@@ -145,7 +145,7 @@ async def test_sensors.opp, aioclient_mock):
             CONF_ALLOW_UPTIME_SENSORS: True,
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     wireless_client_rx = opp.states.get("sensor.wireless_client_name_rx")
     assert wireless_client_rx.state == "2345.0"
@@ -173,7 +173,7 @@ async def test_sensors.opp, aioclient_mock):
         devices_connected,
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 6
 
@@ -214,7 +214,7 @@ async def test_remove_sensors.opp, aioclient_mock):
         "data": [CLIENTS[0]],
     }
     controller.api.session_op.dler(SIGNAL_DATA)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 3
     assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1

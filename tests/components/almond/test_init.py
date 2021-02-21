@@ -46,9 +46,9 @@ async def test_set_up_oauth_remote_url.opp, aioclient_mock):
         return_value="https://example.nabu.casa",
     ), patch("pyalmond.WebAlmondAPI.async_create_device") as mock_create_device:
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         async_fire_time_changed.opp, utcnow())
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(mock_create_device.mock_calls) == 1
 

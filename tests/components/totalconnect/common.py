@@ -125,6 +125,6 @@ async def setup_platform.opp, platform):
     ):
         assert await async_setup_component.opp, DOMAIN, {})
         assert mock_request.call_count == 2
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     return mock_entry

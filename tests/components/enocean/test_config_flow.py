@@ -20,7 +20,7 @@ async def test_user_flow_cannot_create_multiple_instances.opp):
     entry.add_to_opp.opp)
 
     with patch(DONGLE_VALIDATE_PATH_METHOD, Mock(return_value=True)):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
 
@@ -33,7 +33,7 @@ async def test_user_flow_with_detected_dongle.opp):
     FAKE_DONGLE_PATH = "/fake/dongle"
 
     with patch(DONGLE_DETECT_METHOD, Mock(return_value=[FAKE_DONGLE_PATH])):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
 
@@ -47,7 +47,7 @@ async def test_user_flow_with_detected_dongle.opp):
 async def test_user_flow_with_no_detected_dongle.opp):
     """Test the user flow with a detected ENOcean dongle."""
     with patch(DONGLE_DETECT_METHOD, Mock(return_value=[])):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
 
@@ -60,7 +60,7 @@ async def test_detection_flow_with_valid_path.opp):
     USER_PROVIDED_PATH = "/user/provided/path"
 
     with patch(DONGLE_VALIDATE_PATH_METHOD, Mock(return_value=True)):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": "detect"}, data={CONF_DEVICE: USER_PROVIDED_PATH}
         )
 
@@ -75,7 +75,7 @@ async def test_detection_flow_with_custom_path.opp):
 
     with patch(DONGLE_VALIDATE_PATH_METHOD, Mock(return_value=True)):
         with patch(DONGLE_DETECT_METHOD, Mock(return_value=[FAKE_DONGLE_PATH])):
-            result = await.opp.config_entries.flow.async_init(
+            result = await opp..config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": "detect"},
                 data={CONF_DEVICE: USER_PROVIDED_PATH},
@@ -92,7 +92,7 @@ async def test_detection_flow_with_invalid_path.opp):
 
     with patch(DONGLE_VALIDATE_PATH_METHOD, Mock(return_value=False)):
         with patch(DONGLE_DETECT_METHOD, Mock(return_value=[FAKE_DONGLE_PATH])):
-            result = await.opp.config_entries.flow.async_init(
+            result = await opp..config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": "detect"},
                 data={CONF_DEVICE: USER_PROVIDED_PATH},
@@ -108,7 +108,7 @@ async def test_manual_flow_with_valid_path.opp):
     USER_PROVIDED_PATH = "/user/provided/path"
 
     with patch(DONGLE_VALIDATE_PATH_METHOD, Mock(return_value=True)):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": "manual"}, data={CONF_DEVICE: USER_PROVIDED_PATH}
         )
 
@@ -124,7 +124,7 @@ async def test_manual_flow_with_invalid_path.opp):
         DONGLE_VALIDATE_PATH_METHOD,
         Mock(return_value=False),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": "manual"}, data={CONF_DEVICE: USER_PROVIDED_PATH}
         )
 
@@ -138,7 +138,7 @@ async def test_import_flow_with_valid_path.opp):
     DATA_TO_IMPORT = {CONF_DEVICE: "/valid/path/to/import"}
 
     with patch(DONGLE_VALIDATE_PATH_METHOD, Mock(return_value=True)):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": "import"}, data=DATA_TO_IMPORT
         )
 
@@ -154,7 +154,7 @@ async def test_import_flow_with_invalid_path.opp):
         DONGLE_VALIDATE_PATH_METHOD,
         Mock(return_value=False),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": "import"}, data=DATA_TO_IMPORT
         )
 

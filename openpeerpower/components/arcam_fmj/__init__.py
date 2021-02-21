@@ -69,7 +69,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: config_entries.Config
 
 async def async_unload_entry.opp, entry):
     """Cleanup before removing config entry."""
-    await opp.config_entries.async_forward_entry_unload(entry, "media_player")
+    await opp..config_entries.async_forward_entry_unload(entry, "media_player")
 
     task = opp.data[DOMAIN_DATA_TASKS].pop(entry.entry_id)
     await _await_cancel(task)

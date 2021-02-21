@@ -19,7 +19,7 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Remove forked-daapd component."""
-    status = await opp.config_entries.async_forward_entry_unload(entry, MP_DOMAIN)
+    status = await opp..config_entries.async_forward_entry_unload(entry, MP_DOMAIN)
     if status and.opp.data.get(DOMAIN) and.opp.data[DOMAIN].get(entry.entry_id):
        .opp.data[DOMAIN][entry.entry_id][
             OPP_DATA_UPDATER_KEY

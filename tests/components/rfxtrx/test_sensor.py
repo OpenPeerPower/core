@@ -22,8 +22,8 @@ async def test_default_config.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
 
     assert len.opp.states.async_all()) == 0
 
@@ -35,8 +35,8 @@ async def test_one_sensor.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
 
     state = opp.states.get("sensor.wt260_wt260h_wt440h_wt450_wt450h_05_02_temperature")
     assert state
@@ -64,8 +64,8 @@ async def test_state_restore.opp, rfxtrx, state, event):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
 
     assert.opp.states.get(entity_id).state == state
 
@@ -77,8 +77,8 @@ async def test_one_sensor_no_datatype.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
 
     base_id = "sensor.wt260_wt260h_wt440h_wt450_wt450h_05_02"
     base_name = "WT260,WT260H,WT440H,WT450,WT450H 05:02"
@@ -129,9 +129,9 @@ async def test_several_sensors.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
-    await opp.async_start()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
+    await opp..async_start()
 
     state = opp.states.get("sensor.wt260_wt260h_wt440h_wt450_wt450h_05_02_temperature")
     assert state
@@ -276,9 +276,9 @@ async def test_update_of_sensors.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
-    await opp.async_start()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
+    await opp..async_start()
 
     state = opp.states.get("sensor.wt260_wt260h_wt440h_wt450_wt450h_05_02_temperature")
     assert state
@@ -324,9 +324,9 @@ async def test_rssi_sensor.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await opp.config_entries.async_setup(mock_entry.entry_id)
-    await opp.async_block_till_done()
-    await opp.async_start()
+    await opp..config_entries.async_setup(mock_entry.entry_id)
+    await opp..async_block_till_done()
+    await opp..async_start()
 
     state = opp.states.get("sensor.pt2262_22670e_rssi_numeric")
     assert state

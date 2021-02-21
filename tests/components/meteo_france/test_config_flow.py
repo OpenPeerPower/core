@@ -118,14 +118,14 @@ def mock_controller_client_empty():
 
 async def test_user.opp, client_single):
     """Test user config."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
     # test with all provided with search returning only 1 place
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_CITY: CITY_1_POSTAL},
@@ -141,7 +141,7 @@ async def test_user_list.opp, client_multiple):
     """Test user config."""
 
     # test with all provided with search returning more than 1 place
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_CITY: CITY_2_NAME},
@@ -149,7 +149,7 @@ async def test_user_list.opp, client_multiple):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "cities"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         result["flow_id"],
         user_input={CONF_CITY: f"{CITY_3};{CITY_3_LAT};{CITY_3_LON}"},
     )
@@ -163,7 +163,7 @@ async def test_user_list.opp, client_multiple):
 async def test_import.opp, client_multiple):
     """Test import step."""
     # import with all
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data={CONF_CITY: CITY_2_NAME},
@@ -177,7 +177,7 @@ async def test_import.opp, client_multiple):
 
 async def test_search_failed.opp, client_empty):
     """Test error displayed if no result in search."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_CITY: CITY_1_POSTAL},
@@ -196,7 +196,7 @@ async def test_abort_if_already_setup.opp, client_single):
     ).add_to_opp.opp)
 
     # Should fail, same CITY same postal code (import)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data={CONF_CITY: CITY_1_POSTAL},
@@ -205,7 +205,7 @@ async def test_abort_if_already_setup.opp, client_single):
     assert result["reason"] == "already_configured"
 
     # Should fail, same CITY same postal code (flow)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_CITY: CITY_1_POSTAL},
@@ -225,12 +225,12 @@ async def test_options_flow.opp: OpenPeerPowerType):
 
     assert config_entry.options == {}
 
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp..config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
     # Default
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={},
     )
@@ -238,8 +238,8 @@ async def test_options_flow.opp: OpenPeerPowerType):
     assert config_entry.options[CONF_MODE] == FORECAST_MODE_DAILY
 
     # Manual
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp..config_entries.options.async_init(config_entry.entry_id)
+    result = await opp..config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_MODE: FORECAST_MODE_HOURLY},
     )

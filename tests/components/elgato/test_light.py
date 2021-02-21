@@ -28,7 +28,7 @@ async def test_light_state(
     """Test the creation and values of the Elgato Key Lights."""
     await init_integration.opp, aioclient_mock)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     # First segment of the strip
     state = opp.states.get("light.frenck")
@@ -55,7 +55,7 @@ async def test_light_change_state(
         "openpeerpower.components.elgato.light.Elgato.light",
         return_value=mock_coro(),
     ) as mock_light:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {
@@ -65,7 +65,7 @@ async def test_light_change_state(
             },
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(mock_light.mock_calls) == 1
         mock_light.assert_called_with(on=True, brightness=100, temperature=100)
 
@@ -73,13 +73,13 @@ async def test_light_change_state(
         "openpeerpower.components.elgato.light.Elgato.light",
         return_value=mock_coro(),
     ) as mock_light:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "light.frenck"},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(mock_light.mock_calls) == 1
         mock_light.assert_called_with(on=False)
 
@@ -97,12 +97,12 @@ async def test_light_unavailable(
             "openpeerpower.components.elgato.light.Elgato.state",
             side_effect=ElgatoError,
         ):
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 LIGHT_DOMAIN,
                 SERVICE_TURN_OFF,
                 {ATTR_ENTITY_ID: "light.frenck"},
                 blocking=True,
             )
-            await opp.async_block_till_done()
+            await opp..async_block_till_done()
             state = opp.states.get("light.frenck")
             assert state.state == STATE_UNAVAILABLE

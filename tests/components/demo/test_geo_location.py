@@ -36,7 +36,7 @@ async def test_setup_platform.opp):
     with patch("openpeerpowerr.util.dt.utcnow", return_value=utcnow):
         with assert_setup_component(1, geo_location.DOMAIN):
             assert await async_setup_component.opp, geo_location.DOMAIN, CONFIG)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         # In this test, one zone and geolocation entities have been
         # generated.
@@ -57,7 +57,7 @@ async def test_setup_platform.opp):
 
         # Update (replaces 1 device).
         async_fire_time_changed.opp, utcnow + DEFAULT_UPDATE_INTERVAL)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         # Get all states again, ensure that the number of states is still
         # the same, but the lists are different.
         all_states_updated = [

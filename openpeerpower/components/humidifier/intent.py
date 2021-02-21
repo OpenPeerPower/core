@@ -49,7 +49,7 @@ class HumidityHandler(intent.IntentHandler):
         humidity = slots["humidity"]["value"]
 
         if state.state == STATE_OFF:
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 DOMAIN, SERVICE_TURN_ON, service_data, context=intent_obj.context
             )
             speech = f"Turned {state.name} on and set humidity to {humidity}%"
@@ -57,7 +57,7 @@ class HumidityHandler(intent.IntentHandler):
             speech = f"The {state.name} is set to {humidity}%"
 
         service_data[ATTR_HUMIDITY] = humidity
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_HUMIDITY,
             service_data,
@@ -100,7 +100,7 @@ class SetModeHandler(intent.IntentHandler):
             )
 
         if state.state == STATE_OFF:
-            await.opp.services.async_call(
+            await opp..services.async_call(
                 DOMAIN,
                 SERVICE_TURN_ON,
                 service_data,
@@ -112,7 +112,7 @@ class SetModeHandler(intent.IntentHandler):
             speech = f"The mode for {state.name} is set to {mode}"
 
         service_data[ATTR_MODE] = mode
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_MODE,
             service_data,

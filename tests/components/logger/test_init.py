@@ -44,7 +44,7 @@ async def test_setting_level.opp):
                 }
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert len(mocks) == 4
 
@@ -65,7 +65,7 @@ async def test_setting_level.opp):
 
     # Test set default level
     with patch("logging.getLogger", mocks.__getitem__):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             "logger", "set_default_level", {"level": "fatal"}, blocking=True
         )
     assert len(mocks[""].orig_setLevel.mock_calls) == 2
@@ -73,7 +73,7 @@ async def test_setting_level.opp):
 
     # Test update other loggers
     with patch("logging.getLogger", mocks.__getitem__):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             "logger",
             "set_level",
             {"test.child": "info", "new_logger": "notset"},
@@ -161,7 +161,7 @@ async def test_can_set_level.opp):
     assert logging.getLogger(ZONE_NS).isEnabledFor(logging.DEBUG) is True
     assert logging.getLogger(f"{ZONE_NS}.any").isEnabledFor(logging.DEBUG) is True
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         logger.DOMAIN, "set_level", {f"{UNCONFIG_NS}.any": "debug"}, blocking=True
     )
 
@@ -169,7 +169,7 @@ async def test_can_set_level.opp):
     logging.getLogger(f"{UNCONFIG_NS}.any").level == logging.DEBUG
     logging.getLogger(UNCONFIG_NS).level == logging.NOTSET
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         logger.DOMAIN, "set_default_level", {"level": "debug"}, blocking=True
     )
 

@@ -47,6 +47,6 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     # unload srp client
    .opp.data[SRP_ENERGY_DOMAIN] = None
     # Remove config entry
-    await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
+    await opp..config_entries.async_forward_entry_unload(config_entry, "sensor")
 
     return True

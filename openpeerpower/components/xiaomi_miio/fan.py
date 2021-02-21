@@ -568,7 +568,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if model is None:
         try:
             miio_device = Device(host, token)
-            device_info = await opp.async_add_executor_job(miio_device.info)
+            device_info = await opp..async_add_executor_job(miio_device.info)
             model = device_info.model
             unique_id = f"{model}-{device_info.mac_address}"
             _LOGGER.info(

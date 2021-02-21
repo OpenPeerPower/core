@@ -291,4 +291,4 @@ async def authenticate_bridge.opp: core.OpenPeerPower, bridge: aiohue.Bridge):
 
 async def _update_listener.opp, entry):
     """Handle options update."""
-    await opp.config_entries.async_reload(entry.entry_id)
+    await opp..config_entries.async_reload(entry.entry_id)

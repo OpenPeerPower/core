@@ -62,7 +62,7 @@ async def _mock_setup_august.opp, api_instance, authenticate_mock, api_mock):
     )
     api_mock.return_value = api_instance
     assert await async_setup_component.opp, DOMAIN, _mock_get_config())
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     return True
 
 
@@ -284,7 +284,7 @@ async def _mock_doorbell_from_fixture.opp, path):
 
 
 async def _load_json_fixture.opp, path):
-    fixture = await opp.async_add_executor_job(
+    fixture = await opp..async_add_executor_job(
         load_fixture, os.path.join("august", path)
     )
     return json.loads(fixture)

@@ -37,7 +37,7 @@ def mock_connection(aioclient_mock):
 
 async def test_show_setup_form.opp):
     """Test that the setup form is served."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=None
     )
 
@@ -57,7 +57,7 @@ async def test_already_configured_by_url.opp, aioclient_mock):
     ).add_to_opp.opp)
     mock_connection(aioclient_mock)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data=FIXTURE_USER_INPUT,
@@ -72,7 +72,7 @@ async def test_already_configured_by_url.opp, aioclient_mock):
 async def test_syncthru_not_supported.opp):
     """Test we show user form on unsupported device."""
     with patch.object(SyncThru, "update", side_effect=ValueError):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data=FIXTURE_USER_INPUT,
@@ -88,7 +88,7 @@ async def test_unknown_state.opp):
     with patch.object(SyncThru, "update", return_value=mock_coro()), patch.object(
         SyncThru, "is_unknown_state", return_value=True
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data=FIXTURE_USER_INPUT,
@@ -107,7 +107,7 @@ async def test_success.opp, aioclient_mock):
     with patch(
         "openpeerpower.components.syncthru.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data=FIXTURE_USER_INPUT,
@@ -115,7 +115,7 @@ async def test_success.opp, aioclient_mock):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["data"][CONF_URL] == FIXTURE_USER_INPUT[CONF_URL]
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -125,7 +125,7 @@ async def test_ssdp.opp, aioclient_mock):
     mock_connection(aioclient_mock)
 
     url = "http://192.168.1.2/"
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
         data={

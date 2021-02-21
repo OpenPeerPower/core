@@ -152,7 +152,7 @@ async def test_auth_failure(
     assert flow["context"]["profile"] == person0.profile
     assert flow["context"]["userid"] == person0.user_id
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp..config_entries.flow.async_configure(
         flow["flow_id"], user_input={}
     )
     assert result
@@ -185,7 +185,7 @@ async def test_set_config_unique_id(
         mock.return_value = data_manager
         config_entry.add_to_opp.opp)
 
-        await opp.config_entries.async_setup(config_entry.entry_id)
+        await opp..config_entries.async_setup(config_entry.entry_id)
         assert config_entry.unique_id == "my_user_id"
 
 
@@ -221,6 +221,6 @@ async def test_set_convert_unique_id_to_string.opp: OpenPeerPower) -> None:
         assert await async_setup_component.opp, HA_DOMAIN, {})
         assert await async_setup_component.opp, webhook.DOMAIN,.opp_config)
         assert await async_setup_component.opp, const.DOMAIN,.opp_config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert config_entry.unique_id == "1234"

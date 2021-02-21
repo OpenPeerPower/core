@@ -40,7 +40,7 @@ async def _async_reproduce_states(
             if key in state.attributes:
                 data[key] = state.attributes[key]
 
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, service, data, blocking=True, context=context
         )
 

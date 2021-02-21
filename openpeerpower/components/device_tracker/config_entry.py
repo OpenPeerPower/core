@@ -28,7 +28,7 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload an entry."""
-    return await.opp.data[DOMAIN].async_unload_entry(entry)
+    return await opp..data[DOMAIN].async_unload_entry(entry)
 
 
 class BaseTrackerEntity(Entity):

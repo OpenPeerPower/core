@@ -35,7 +35,7 @@ from tests.components.airly import init_integration
 async def test_air_quality.opp, aioclient_mock):
     """Test states of the air_quality."""
     await init_integration.opp, aioclient_mock)
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     state = opp.states.get("air_quality.home")
     assert state
@@ -78,7 +78,7 @@ async def test_availability.opp, aioclient_mock):
     future = utcnow() + timedelta(minutes=60)
 
     async_fire_time_changed.opp, future)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("air_quality.home")
     assert state
@@ -89,7 +89,7 @@ async def test_availability.opp, aioclient_mock):
     future = utcnow() + timedelta(minutes=120)
 
     async_fire_time_changed.opp, future)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("air_quality.home")
     assert state
@@ -103,7 +103,7 @@ async def test_manual_update_entity.opp, aioclient_mock):
 
     call_count = aioclient_mock.call_count
     await async_setup_component.opp, "openpeerpowerr", {})
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "openpeerpowerr",
         "update_entity",
         {ATTR_ENTITY_ID: ["air_quality.home"]},

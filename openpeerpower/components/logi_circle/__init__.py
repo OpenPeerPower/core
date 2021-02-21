@@ -220,7 +220,7 @@ async def async_setup_entry.opp, entry):
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
     for component in "camera", "sensor":
-        await opp.config_entries.async_forward_entry_unload(entry, component)
+        await opp..config_entries.async_forward_entry_unload(entry, component)
 
     logi_circle = opp.data.pop(DATA_LOGI)
 

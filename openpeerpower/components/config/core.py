@@ -55,7 +55,7 @@ async def websocket_update_config.opp, connection, msg):
     data.pop("type")
 
     try:
-        await.opp.config.async_update(**data)
+        await opp..config.async_update(**data)
         connection.send_result(msg["id"])
     except ValueError as err:
         connection.send_error(msg["id"], "invalid_info", str(err))

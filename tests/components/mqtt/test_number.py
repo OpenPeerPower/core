@@ -60,18 +60,18 @@ async def test_run_number_setup.opp, mqtt_mock):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async_fire_mqtt_message.opp, topic, "10")
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("number.test_number")
     assert state.state == "10"
 
     async_fire_mqtt_message.opp, topic, "20.5")
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("number.test_number")
     assert state.state == "20.5"
@@ -98,14 +98,14 @@ async def test_run_number_service_optimistic.opp, mqtt_mock):
                 }
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     state = opp.states.get("number.test_number")
     assert state.state == "3"
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
     # Integer
-    await.opp.services.async_call(
+    await opp..services.async_call(
         NUMBER_DOMAIN,
         SERVICE_SET_VALUE,
         {ATTR_ENTITY_ID: "number.test_number", ATTR_VALUE: 30},
@@ -118,7 +118,7 @@ async def test_run_number_service_optimistic.opp, mqtt_mock):
     assert state.state == "30"
 
     # Float with no decimal -> integer
-    await.opp.services.async_call(
+    await opp..services.async_call(
         NUMBER_DOMAIN,
         SERVICE_SET_VALUE,
         {ATTR_ENTITY_ID: "number.test_number", ATTR_VALUE: 42.0},
@@ -131,7 +131,7 @@ async def test_run_number_service_optimistic.opp, mqtt_mock):
     assert state.state == "42"
 
     # Float with decimal -> float
-    await.opp.services.async_call(
+    await opp..services.async_call(
         NUMBER_DOMAIN,
         SERVICE_SET_VALUE,
         {ATTR_ENTITY_ID: "number.test_number", ATTR_VALUE: 42.1},
@@ -161,13 +161,13 @@ async def test_run_number_service.opp, mqtt_mock):
             }
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     async_fire_mqtt_message.opp, state_topic, "32")
     state = opp.states.get("number.test_number")
     assert state.state == "32"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         NUMBER_DOMAIN,
         SERVICE_SET_VALUE,
         {ATTR_ENTITY_ID: "number.test_number", ATTR_VALUE: 30},

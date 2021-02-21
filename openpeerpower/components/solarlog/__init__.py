@@ -18,4 +18,4 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await opp.config_entries.async_forward_entry_unload(entry, "sensor")
+    return await opp..config_entries.async_forward_entry_unload(entry, "sensor")

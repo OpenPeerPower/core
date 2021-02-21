@@ -16,7 +16,7 @@ from tests.common import MockConfigEntry
 async def test_user_form.opp: core.OpenPeerPower):
     """Test we get the user initiated form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -25,11 +25,11 @@ async def test_user_form.opp: core.OpenPeerPower):
     with patch_bond_version(
         return_value={"bondid": "test-bond-id"}
     ), patch_bond_device_ids(), _patch_async_setup() as mock_setup, _patch_async_setup_entry() as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "test-bond-id"
@@ -43,7 +43,7 @@ async def test_user_form.opp: core.OpenPeerPower):
 
 async def test_user_form_invalid_auth.opp: core.OpenPeerPower):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -52,7 +52,7 @@ async def test_user_form_invalid_auth.opp: core.OpenPeerPower):
     ), patch_bond_device_ids(
         side_effect=ClientResponseError(Mock(), Mock(), status=401),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
         )
@@ -63,14 +63,14 @@ async def test_user_form_invalid_auth.opp: core.OpenPeerPower):
 
 async def test_user_form_cannot_connect.opp: core.OpenPeerPower):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch_bond_version(
         side_effect=ClientConnectionError()
     ), patch_bond_device_ids():
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
         )
@@ -81,14 +81,14 @@ async def test_user_form_cannot_connect.opp: core.OpenPeerPower):
 
 async def test_user_form_old_firmware.opp: core.OpenPeerPower):
     """Test we handle unsupported old firmware."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch_bond_version(
         return_value={"no_bond_id": "present"}
     ), patch_bond_device_ids():
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
         )
@@ -127,14 +127,14 @@ async def test_user_form_one_entry_per_device_allowed.opp: core.OpenPeerPower):
 
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch_bond_version(
         return_value={"bondid": "already-registered-bond-id"}
     ), patch_bond_device_ids(), _patch_async_setup() as mock_setup, _patch_async_setup_entry() as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
         )
@@ -142,7 +142,7 @@ async def test_user_form_one_entry_per_device_allowed.opp: core.OpenPeerPower):
     assert result2["type"] == "abort"
     assert result2["reason"] == "already_configured"
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0
 
@@ -150,7 +150,7 @@ async def test_user_form_one_entry_per_device_allowed.opp: core.OpenPeerPower):
 async def test_zeroconf_form.opp: core.OpenPeerPower):
     """Test we get the discovery form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={"name": "test-bond-id.some-other-tail-info", "host": "test-host"},
@@ -161,11 +161,11 @@ async def test_zeroconf_form.opp: core.OpenPeerPower):
     with patch_bond_version(
         return_value={"bondid": "test-bond-id"}
     ), patch_bond_device_ids(), _patch_async_setup() as mock_setup, _patch_async_setup_entry() as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_ACCESS_TOKEN: "test-token"},
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "test-bond-id"
@@ -189,7 +189,7 @@ async def test_zeroconf_already_configured.opp: core.OpenPeerPower):
     entry.add_to_opp.opp)
 
     with _patch_async_setup() as mock_setup, _patch_async_setup_entry() as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_ZEROCONF},
             data={
@@ -202,7 +202,7 @@ async def test_zeroconf_already_configured.opp: core.OpenPeerPower):
     assert result["reason"] == "already_configured"
     assert entry.data["host"] == "updated-host"
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0
 
@@ -230,14 +230,14 @@ async def _help_test_form_unexpected_error(
     error: Exception,
 ):
     """Test we handle unexpected error gracefully."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": source}, data=initial_input
     )
 
     with patch_bond_version(
         return_value={"bond_id": "test-bond-id"}
     ), patch_bond_device_ids(side_effect=error):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input
         )
 

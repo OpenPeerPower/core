@@ -31,56 +31,56 @@ async def test_cover(
     assert.opp.states.get(entity_id).state == "closed"
     assert.opp.states.get(entity_id).attributes["current_position"] == 0
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "open_cover",
         {"entity_id": entity_id},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.open.assert_called()
     vera_device.is_open.return_value = True
     vera_device.get_level.return_value = 100
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == "open"
     assert.opp.states.get(entity_id).attributes["current_position"] == 100
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "set_cover_position",
         {"entity_id": entity_id, "position": 50},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.set_level.assert_called_with(50)
     vera_device.is_open.return_value = True
     vera_device.get_level.return_value = 50
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == "open"
     assert.opp.states.get(entity_id).attributes["current_position"] == 50
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "stop_cover",
         {"entity_id": entity_id},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.stop.assert_called()
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == "open"
     assert.opp.states.get(entity_id).attributes["current_position"] == 50
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "close_cover",
         {"entity_id": entity_id},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     vera_device.close.assert_called()
     vera_device.is_open.return_value = False
     vera_device.get_level.return_value = 00
     update_callback(vera_device)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(entity_id).state == "closed"
     assert.opp.states.get(entity_id).attributes["current_position"] == 00

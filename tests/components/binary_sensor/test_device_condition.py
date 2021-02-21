@@ -61,7 +61,7 @@ async def test_get_conditions.opp, device_reg, entity_reg):
         )
 
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     expected_conditions = [
         {
@@ -106,7 +106,7 @@ async def test_if_state.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
 
@@ -156,19 +156,19 @@ async def test_if_state.opp, calls):
             ]
         },
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert.opp.states.get(sensor1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
    .opp.bus.async_fire("test_event1")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_on event - test_event1"
 
    .opp.states.async_set(sensor1.entity_id, STATE_OFF)
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_off event - test_event2"
 
@@ -183,7 +183,7 @@ async def test_if_fires_on_for_condition.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
 
@@ -217,28 +217,28 @@ async def test_if_fires_on_for_condition.opp, calls):
                 ]
             },
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert.opp.states.get(sensor1.entity_id).state == STATE_ON
         assert len(calls) == 0
 
        .opp.bus.async_fire("test_event1")
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(calls) == 0
 
         # Time travel 10 secs into the future
         mock_utcnow.return_value = point2
        .opp.bus.async_fire("test_event1")
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(calls) == 0
 
        .opp.states.async_set(sensor1.entity_id, STATE_OFF)
        .opp.bus.async_fire("test_event1")
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(calls) == 0
 
         # Time travel 20 secs into the future
         mock_utcnow.return_value = point3
        .opp.bus.async_fire("test_event1")
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert len(calls) == 1
         assert calls[0].data["some"] == "is_off event - test_event1"

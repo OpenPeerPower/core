@@ -26,7 +26,7 @@ async def setup_comp.opp):
     assert await async_setup_component(
        .opp, LOCK_DOMAIN, {LOCK_DOMAIN: {"platform": DOMAIN}}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def test_locking.opp):
@@ -34,7 +34,7 @@ async def test_locking.opp):
     state = opp.states.get(KITCHEN)
     assert state.state == STATE_UNLOCKED
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         LOCK_DOMAIN, SERVICE_LOCK, {ATTR_ENTITY_ID: KITCHEN}, blocking=True
     )
 
@@ -47,7 +47,7 @@ async def test_unlocking.opp):
     state = opp.states.get(FRONT)
     assert state.state == STATE_LOCKED
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         LOCK_DOMAIN, SERVICE_UNLOCK, {ATTR_ENTITY_ID: FRONT}, blocking=True
     )
 
@@ -58,7 +58,7 @@ async def test_unlocking.opp):
 async def test_opening.opp):
     """Test the opening of a lock."""
     calls = async_mock_service.opp, LOCK_DOMAIN, SERVICE_OPEN)
-    await.opp.services.async_call(
+    await opp..services.async_call(
         LOCK_DOMAIN, SERVICE_OPEN, {ATTR_ENTITY_ID: OPENABLE_LOCK}, blocking=True
     )
     assert len(calls) == 1

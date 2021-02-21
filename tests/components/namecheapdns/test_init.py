@@ -49,7 +49,7 @@ async def test_setup.opp, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
     async_fire_time_changed.opp, utcnow() + timedelta(minutes=5))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert aioclient_mock.call_count == 2
 
 

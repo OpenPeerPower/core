@@ -37,7 +37,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     password = data[CONF_PASSWORD]
 
     try:
-        site_info = await opp.async_add_executor_job(
+        site_info = await opp..async_add_executor_job(
             _login_and_fetch_site_info, power_wall, password
         )
     except MissingAttributeError as err:

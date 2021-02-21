@@ -428,7 +428,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is opened.
    .opp.states.async_set("cover.entity", STATE_OPEN)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data[
         "some"
@@ -436,7 +436,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is closed.
    .opp.states.async_set("cover.entity", STATE_CLOSED)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data[
         "some"
@@ -444,7 +444,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is opening.
    .opp.states.async_set("cover.entity", STATE_OPENING)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 3
     assert calls[2].data[
         "some"
@@ -452,7 +452,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is closing.
    .opp.states.async_set("cover.entity", STATE_CLOSING)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data[
         "some"
@@ -465,7 +465,7 @@ async def test_if_fires_on_position.opp, calls):
     platform.init()
     ent = platform.ENTITIES[1]
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -545,7 +545,7 @@ async def test_if_fires_on_position.opp, calls):
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 50}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 3
     assert sorted(
         [calls[0].data["some"], calls[1].data["some"], calls[2].data["some"]]
@@ -560,11 +560,11 @@ async def test_if_fires_on_position.opp, calls):
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 95}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 45}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 4
     assert (
         calls[3].data["some"]
@@ -574,7 +574,7 @@ async def test_if_fires_on_position.opp, calls):
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 90}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 5
     assert (
         calls[4].data["some"]
@@ -588,7 +588,7 @@ async def test_if_fires_on_tilt_position.opp, calls):
     platform.init()
     ent = platform.ENTITIES[1]
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -668,7 +668,7 @@ async def test_if_fires_on_tilt_position.opp, calls):
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 50}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 3
     assert sorted(
         [calls[0].data["some"], calls[1].data["some"], calls[2].data["some"]]
@@ -683,11 +683,11 @@ async def test_if_fires_on_tilt_position.opp, calls):
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 95}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 45}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 4
     assert (
         calls[3].data["some"]
@@ -697,7 +697,7 @@ async def test_if_fires_on_tilt_position.opp, calls):
    .opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 90}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 5
     assert (
         calls[4].data["some"]

@@ -40,8 +40,8 @@ async def test_static_duplicate_static_entry.opp, pywemo_device):
             },
         },
     )
-    await opp.async_block_till_done()
-    entity_reg = await.opp.helpers.entity_registry.async_get_registry()
+    await opp..async_block_till_done()
+    entity_reg = await opp..helpers.entity_registry.async_get_registry()
     entity_entries = list(entity_reg.entities.values())
     assert len(entity_entries) == 1
 
@@ -58,8 +58,8 @@ async def test_static_config_with_port.opp, pywemo_device):
             },
         },
     )
-    await opp.async_block_till_done()
-    entity_reg = await.opp.helpers.entity_registry.async_get_registry()
+    await opp..async_block_till_done()
+    entity_reg = await opp..helpers.entity_registry.async_get_registry()
     entity_entries = list(entity_reg.entities.values())
     assert len(entity_entries) == 1
 
@@ -76,8 +76,8 @@ async def test_static_config_without_port.opp, pywemo_device):
             },
         },
     )
-    await opp.async_block_till_done()
-    entity_reg = await.opp.helpers.entity_registry.async_get_registry()
+    await opp..async_block_till_done()
+    entity_reg = await opp..helpers.entity_registry.async_get_registry()
     entity_entries = list(entity_reg.entities.values())
     assert len(entity_entries) == 1
 
@@ -129,13 +129,13 @@ async def test_discovery.opp, pywemo_registry):
             dt.utcnow()
             + timedelta(seconds=WemoDiscovery.ADDITIONAL_SECONDS_BETWEEN_SCANS + 1),
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     # Verify that the expected number of devices were setup.
-    entity_reg = await.opp.helpers.entity_registry.async_get_registry()
+    entity_reg = await opp..helpers.entity_registry.async_get_registry()
     entity_entries = list(entity_reg.entities.values())
     assert len(entity_entries) == 3
 
     # Verify that opp stops cleanly.
-    await opp.async_stop()
-    await opp.async_block_till_done()
+    await opp..async_stop()
+    await opp..async_block_till_done()

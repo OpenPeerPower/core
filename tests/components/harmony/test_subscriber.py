@@ -30,7 +30,7 @@ async def test_no_callbacks.opp):
     """Ensure we handle no subscriptions."""
     subscriber = HarmonySubscriberMixin.opp)
     _call_all_callbacks(subscriber)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def test_empty_callbacks.opp):
@@ -40,7 +40,7 @@ async def test_empty_callbacks.opp):
     callbacks = {k: None for k in _ALL_CALLBACK_NAMES}
     subscriber.async_subscribe(HarmonyCallback(**callbacks))
     _call_all_callbacks(subscriber)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def test_async_callbacks.opp):
@@ -50,7 +50,7 @@ async def test_async_callbacks.opp):
     callbacks = {k: AsyncMock() for k in _ALL_CALLBACK_NAMES}
     subscriber.async_subscribe(HarmonyCallback(**callbacks))
     _call_all_callbacks(subscriber)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     for callback_name in _NO_PARAM_CALLBACKS.keys():
         callback_mock = callbacks[callback_name]
@@ -94,7 +94,7 @@ async def test_callbacks.opp):
     callbacks = {k: MagicMock() for k in _ALL_CALLBACK_NAMES}
     subscriber.async_subscribe(HarmonyCallback(**callbacks))
     _call_all_callbacks(subscriber)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     for callback_name in _NO_PARAM_CALLBACKS.keys():
         callback_mock = callbacks[callback_name]
@@ -120,7 +120,7 @@ async def test_subscribe_unsubscribe.opp):
     unsub_three()
 
     _call_all_callbacks(subscriber)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     for callback_name in _NO_PARAM_CALLBACKS.keys():
         callback_one[callback_name].assert_not_called()

@@ -101,8 +101,8 @@ async def update_all_devices.opp, entry):
     data = opp.data[DOMAIN]
     hc_api = data[entry.entry_id]
     try:
-        await opp.async_add_executor_job(hc_api.get_devices)
+        await opp..async_add_executor_job(hc_api.get_devices)
         for device_dict in hc_api.devices:
-            await opp.async_add_executor_job(device_dict["device"].initialize)
+            await opp..async_add_executor_job(device_dict["device"].initialize)
     except HTTPError as err:
         _LOGGER.warning("Cannot update devices: %s", err.response.status_code)

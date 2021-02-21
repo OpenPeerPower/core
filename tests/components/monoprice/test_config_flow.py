@@ -26,7 +26,7 @@ CONFIG = {
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -41,10 +41,10 @@ async def test_form.opp):
         "openpeerpower.components.monoprice.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"], CONFIG
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == CONFIG[CONF_PORT]
@@ -58,7 +58,7 @@ async def test_form.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -66,7 +66,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.monoprice.config_flow.get_async_monoprice",
         side_effect=SerialException,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"], CONFIG
         )
 
@@ -76,7 +76,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_generic_exception.opp):
     """Test we handle cannot generic exception."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -84,7 +84,7 @@ async def test_generic_exception.opp):
         "openpeerpower.components.monoprice.config_flow.get_async_monoprice",
         side_effect=Exception,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"], CONFIG
         )
 
@@ -105,15 +105,15 @@ async def test_options_flow.opp):
     with patch(
         "openpeerpower.components.monoprice.async_setup_entry", return_value=True
     ):
-        assert await opp.config_entries.async_setup(config_entry.entry_id)
-        await opp.async_block_till_done()
+        assert await opp..config_entries.async_setup(config_entry.entry_id)
+        await opp..async_block_till_done()
 
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+        result = await opp..config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp..config_entries.options.async_configure(
             result["flow_id"],
             user_input={CONF_SOURCE_1: "one", CONF_SOURCE_4: "", CONF_SOURCE_5: "five"},
         )

@@ -342,8 +342,8 @@ async def cleanup_device_registry.opp, device_id):
     # pylint: disable=import-outside-toplevel
     from . import device_trigger, tag
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
     if (
         device_id
         and not.opp.helpers.entity_registry.async_entries_for_device(

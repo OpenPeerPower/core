@@ -154,7 +154,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
 
         if change_type == collection.CHANGE_REMOVED:
             frontend.async_remove_panel.opp, url_path)
-            await.opp.data[DOMAIN]["dashboards"].pop(url_path).async_delete()
+            await opp..data[DOMAIN]["dashboards"].pop(url_path).async_delete()
             return
 
         if change_type == collection.CHANGE_ADDED:

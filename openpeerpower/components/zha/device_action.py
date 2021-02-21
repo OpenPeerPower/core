@@ -91,7 +91,7 @@ async def _execute_service_based_action(
 
     service_data = {ATTR_IEEE: str(zha_device.ieee)}
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, service_name, service_data, blocking=True, context=context
     )
 

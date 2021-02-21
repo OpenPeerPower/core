@@ -17,7 +17,7 @@ from tests.common import MockConfigEntry
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -29,7 +29,7 @@ async def test_form.opp):
         "openpeerpower.components.sharkiq.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             CONFIG,
         )
@@ -40,7 +40,7 @@ async def test_form.opp):
         "username": TEST_USERNAME,
         "password": TEST_PASSWORD,
     }
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     mock_setup.assert_called_once()
     mock_setup_entry.assert_called_once()
 
@@ -55,12 +55,12 @@ async def test_form.opp):
 )
 async def test_form_error.opp: OpenPeerPower, exc: Exception, base_error: str):
     """Test form errors."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch.object(AylaApi, "async_sign_in", side_effect=exc):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp..config_entries.flow.async_configure(
             result["flow_id"],
             CONFIG,
         )
@@ -75,7 +75,7 @@ async def test_reauth_success.opp: OpenPeerPower):
         mock_config = MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG)
         mock_config.add_to_opp.opp)
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth", "unique_id": UNIQUE_ID}, data=CONFIG
         )
 
@@ -100,7 +100,7 @@ async def test_reauth(
 ):
     """Test reauth failures."""
     with patch("sharkiqpy.AylaApi.async_sign_in", side_effect=side_effect):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": "reauth", "unique_id": UNIQUE_ID},
             data=CONFIG,

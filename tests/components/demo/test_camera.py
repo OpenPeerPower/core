@@ -27,7 +27,7 @@ async def demo_camera.opp):
     assert await async_setup_component(
        .opp, CAMERA_DOMAIN, {CAMERA_DOMAIN: {"platform": DOMAIN}}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def test_init_state_is_streaming.opp):
@@ -48,14 +48,14 @@ async def test_turn_on_state_back_to_streaming.opp):
     state = opp.states.get(ENTITY_CAMERA)
     assert state.state == STATE_STREAMING
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CAMERA_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_CAMERA}, blocking=True
     )
 
     state = opp.states.get(ENTITY_CAMERA)
     assert state.state == STATE_IDLE
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CAMERA_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_CAMERA}, blocking=True
     )
 
@@ -65,7 +65,7 @@ async def test_turn_on_state_back_to_streaming.opp):
 
 async def test_turn_off_image.opp):
     """After turn off, Demo camera raise error."""
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CAMERA_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_CAMERA}, blocking=True
     )
 
@@ -79,7 +79,7 @@ async def test_turn_off_invalid_camera.opp):
     state = opp.states.get(ENTITY_CAMERA)
     assert state.state == STATE_STREAMING
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CAMERA_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "camera.invalid_camera"},
@@ -98,7 +98,7 @@ async def test_motion_detection.opp):
     assert not state.attributes.get("motion_detection")
 
     # Call service to turn on motion detection
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CAMERA_DOMAIN,
         SERVICE_ENABLE_MOTION,
         {ATTR_ENTITY_ID: ENTITY_CAMERA},
@@ -110,7 +110,7 @@ async def test_motion_detection.opp):
     assert state.attributes.get("motion_detection")
 
     # Call service to turn off motion detection
-    await.opp.services.async_call(
+    await opp..services.async_call(
         CAMERA_DOMAIN,
         SERVICE_DISABLE_MOTION,
         {ATTR_ENTITY_ID: ENTITY_CAMERA},

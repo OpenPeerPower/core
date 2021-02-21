@@ -22,7 +22,7 @@ async def test_duplicate_error.opp):
        .opp
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
 
@@ -41,7 +41,7 @@ async def test_invalid_credentials.opp):
         "openpeerpower.components.tile.config_flow.async_login",
         side_effect=TileError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -58,7 +58,7 @@ async def test_step_import.opp):
     with patch(
         "openpeerpower.components.tile.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.tile.config_flow.async_login"):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -79,13 +79,13 @@ async def test_step_user.opp):
     with patch(
         "openpeerpower.components.tile.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.tile.config_flow.async_login"):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "user"
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY

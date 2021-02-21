@@ -202,7 +202,7 @@ async def test_async_schedule_update_op.state.opp):
     mock_entity.async_update = async_update
 
     mock_entity.async_schedule_update_op.state(True)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert update_call is True
 
@@ -617,14 +617,14 @@ async def test_disabled_in_entity_registry.opp):
     assert.opp.states.get("hello.world") is not None
 
     entry2 = registry.async_update_entity("hello.world", disabled_by="user")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert entry2 != entry
     assert ent.registry_entry == entry2
     assert ent.enabled is False
     assert.opp.states.get("hello.world") is None
 
     entry3 = registry.async_update_entity("hello.world", disabled_by=None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert entry3 != entry2
     # Entry is no longer updated, entity is no longer tracking changes
     assert ent.registry_entry == entry2

@@ -29,12 +29,12 @@ async def test_intent_set_humidity.opp):
     turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
-    result = await.opp.helpers.intent.async_op.dle(
+    result = await opp..helpers.intent.async_op.dle(
         "test",
         intent.INTENT_HUMIDITY,
         {"name": {"value": "Bedroom humidifier"}, "humidity": {"value": "50"}},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert result.speech["plain"]["speech"] == "The bedroom humidifier is set to 50%"
 
@@ -56,12 +56,12 @@ async def test_intent_set_humidity_and_turn_on.opp):
     turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
-    result = await.opp.helpers.intent.async_op.dle(
+    result = await opp..helpers.intent.async_op.dle(
         "test",
         intent.INTENT_HUMIDITY,
         {"name": {"value": "Bedroom humidifier"}, "humidity": {"value": "50"}},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert (
         result.speech["plain"]["speech"]
@@ -97,12 +97,12 @@ async def test_intent_set_mode.opp):
     turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
-    result = await.opp.helpers.intent.async_op.dle(
+    result = await opp..helpers.intent.async_op.dle(
         "test",
         intent.INTENT_MODE,
         {"name": {"value": "Bedroom humidifier"}, "mode": {"value": "away"}},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert (
         result.speech["plain"]["speech"]
@@ -134,12 +134,12 @@ async def test_intent_set_mode_and_turn_on.opp):
     turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
-    result = await.opp.helpers.intent.async_op.dle(
+    result = await opp..helpers.intent.async_op.dle(
         "test",
         intent.INTENT_MODE,
         {"name": {"value": "Bedroom humidifier"}, "mode": {"value": "away"}},
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert (
         result.speech["plain"]["speech"]
@@ -168,7 +168,7 @@ async def test_intent_set_mode_tests_feature.opp):
     await intent.async_setup_intents.opp)
 
     try:
-        await.opp.helpers.intent.async_op.dle(
+        await opp..helpers.intent.async_op.dle(
             "test",
             intent.INTENT_MODE,
             {"name": {"value": "Bedroom humidifier"}, "mode": {"value": "away"}},
@@ -196,7 +196,7 @@ async def test_intent_set_unknown_mode.opp):
     await intent.async_setup_intents.opp)
 
     try:
-        await.opp.helpers.intent.async_op.dle(
+        await opp..helpers.intent.async_op.dle(
             "test",
             intent.INTENT_MODE,
             {"name": {"value": "Bedroom humidifier"}, "mode": {"value": "eco"}},

@@ -24,8 +24,8 @@ async def async_get_code.opp, aiohttp_client):
         },
     ]
     client = await async_setup_auth.opp, aiohttp_client, config)
-    user = await opp.auth.async_create_user(name="Hello")
-    refresh_token = await opp.auth.async_create_refresh_token(user, CLIENT_ID)
+    user = await opp..auth.async_create_user(name="Hello")
+    refresh_token = await opp..auth.async_create_refresh_token(user, CLIENT_ID)
     access_token = opp.auth.async_create_access_token(refresh_token)
 
     # Now authenticate with the 2nd flow

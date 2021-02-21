@@ -52,7 +52,7 @@ def mock_controller_connect():
 
 async def test_user.opp, connect):
     """Test user config."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -66,12 +66,12 @@ async def test_user.opp, connect):
         "openpeerpower.components.asuswrt.config_flow.socket.gethostbyname",
         return_value=IP_ADDRESS,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data=CONFIG_DATA,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == HOST
@@ -89,12 +89,12 @@ async def test_import.opp, connect):
         "openpeerpower.components.asuswrt.config_flow.socket.gethostbyname",
         return_value=IP_ADDRESS,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data=CONFIG_DATA,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == HOST
@@ -122,12 +122,12 @@ async def test_import_ssh.opp, connect):
         "openpeerpower.components.asuswrt.config_flow.os.access",
         return_value=True,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data=config_data,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == HOST
@@ -140,7 +140,7 @@ async def test_error_no_password_ssh.opp):
     """Test we abort if component is already setup."""
     config_data = CONFIG_DATA.copy()
     config_data.pop(CONF_PASSWORD)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data=config_data,
@@ -154,7 +154,7 @@ async def test_error_both_password_ssh.opp):
     """Test we abort if component is already setup."""
     config_data = CONFIG_DATA.copy()
     config_data[CONF_SSH_KEY] = SSH_KEY
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data=config_data,
@@ -169,7 +169,7 @@ async def test_error_invalid_ssh.opp):
     config_data = CONFIG_DATA.copy()
     config_data.pop(CONF_PASSWORD)
     config_data[CONF_SSH_KEY] = SSH_KEY
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data=config_data,
@@ -185,7 +185,7 @@ async def test_error_invalid_host.opp):
         "openpeerpower.components.asuswrt.config_flow.socket.gethostbyname",
         side_effect=gaierror,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data=CONFIG_DATA,
@@ -207,7 +207,7 @@ async def test_abort_if_already_setup.opp):
         return_value=IP_ADDRESS,
     ):
         # Should fail, same HOST (flow)
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data=CONFIG_DATA,
@@ -216,7 +216,7 @@ async def test_abort_if_already_setup.opp):
         assert result["reason"] == "single_instance_allowed"
 
         # Should fail, same HOST (import)
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data=CONFIG_DATA,
@@ -227,7 +227,7 @@ async def test_abort_if_already_setup.opp):
 
 async def test_on_connect_failed.opp):
     """Test when we have errors connecting the router."""
-    flow_result = await.opp.config_entries.flow.async_init(
+    flow_result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -235,7 +235,7 @@ async def test_on_connect_failed.opp):
     with patch("openpeerpower.components.asuswrt.router.AsusWrt") as asus_wrt:
         asus_wrt.return_value.connection.async_connect = AsyncMock()
         asus_wrt.return_value.is_connected = False
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             flow_result["flow_id"], user_input=CONFIG_DATA
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -243,7 +243,7 @@ async def test_on_connect_failed.opp):
 
     with patch("openpeerpower.components.asuswrt.router.AsusWrt") as asus_wrt:
         asus_wrt.return_value.connection.async_connect = AsyncMock(side_effect=OSError)
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             flow_result["flow_id"], user_input=CONFIG_DATA
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -253,7 +253,7 @@ async def test_on_connect_failed.opp):
         asus_wrt.return_value.connection.async_connect = AsyncMock(
             side_effect=TypeError
         )
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             flow_result["flow_id"], user_input=CONFIG_DATA
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -270,14 +270,14 @@ async def test_options_flow.opp):
     config_entry.add_to_opp.opp)
 
     with patch("openpeerpower.components.asuswrt.async_setup_entry", return_value=True):
-        await opp.config_entries.async_setup(config_entry.entry_id)
-        await opp.async_block_till_done()
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+        await opp..config_entries.async_setup(config_entry.entry_id)
+        await opp..async_block_till_done()
+        result = await opp..config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp..config_entries.options.async_configure(
             result["flow_id"],
             user_input={
                 CONF_CONSIDER_HOME: 20,

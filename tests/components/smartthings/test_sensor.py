@@ -78,8 +78,8 @@ async def test_entity_and_device_attributes.opp, device_factory):
     """Test the attributes of the entity are correct."""
     # Arrange
     device = device_factory("Sensor 1", [Capability.battery], {Attribute.battery: 100})
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     # Act
     await setup_platform.opp, SENSOR_DOMAIN, devices=[device])
     # Assert
@@ -104,7 +104,7 @@ async def test_update_from_signal.opp, device_factory):
     # Act
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     state = opp.states.get("sensor.sensor_1_battery")
     assert state is not None
     assert state.state == "75"
@@ -116,6 +116,6 @@ async def test_unload_config_entry.opp, device_factory):
     device = device_factory("Sensor 1", [Capability.battery], {Attribute.battery: 100})
     config_entry = await setup_platform.opp, SENSOR_DOMAIN, devices=[device])
     # Act
-    await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
+    await opp..config_entries.async_forward_entry_unload(config_entry, "sensor")
     # Assert
     assert.opp.states.get("sensor.sensor_1_battery").state == STATE_UNAVAILABLE

@@ -19,7 +19,7 @@ async def test_aqara_switch_setup.opp):
     accessories = await setup_accessories_from_file.opp, "aqara_switch.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     battery_id = "sensor.programmable_switch_battery"
     battery = entity_registry.async_get(battery_id)

@@ -144,7 +144,7 @@ async def test_webhook_head.opp, mock_client):
 async def test_listing_webhook.opp,.opp_ws_client,.opp_access_token):
     """Test unregistering a webhook."""
     assert await async_setup_component.opp, "webhook", {})
-    client = await.opp_ws_client.opp,.opp_access_token)
+    client = await opp._ws_client.opp,.opp_access_token)
 
    .opp.components.webhook.async_register("test", "Test hook", "my-id", None)
 

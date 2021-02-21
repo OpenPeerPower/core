@@ -73,12 +73,12 @@ async def test_change_window_cover_state.opp, utcnow):
     """Test that we can turn a HomeKit alarm on and off again."""
     helper = await setup_test_component.opp, create_window_covering_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover", "open_cover", {"entity_id": helper.entity_id}, blocking=True
     )
     assert helper.characteristics[POSITION_TARGET].value == 100
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover", "close_cover", {"entity_id": helper.entity_id}, blocking=True
     )
     assert helper.characteristics[POSITION_TARGET].value == 0
@@ -133,7 +133,7 @@ async def test_write_window_cover_tilt_horizontal.opp, utcnow):
        .opp, create_window_covering_service_with_h_tilt
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "set_cover_tilt_position",
         {"entity_id": helper.entity_id, "tilt_position": 90},
@@ -148,7 +148,7 @@ async def test_write_window_cover_tilt_vertical.opp, utcnow):
        .opp, create_window_covering_service_with_v_tilt
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "set_cover_tilt_position",
         {"entity_id": helper.entity_id, "tilt_position": 90},
@@ -163,7 +163,7 @@ async def test_window_cover_stop.opp, utcnow):
        .opp, create_window_covering_service_with_v_tilt
     )
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover", "stop_cover", {"entity_id": helper.entity_id}, blocking=True
     )
     assert helper.characteristics[POSITION_HOLD].value == 1
@@ -192,12 +192,12 @@ async def test_change_door_state.opp, utcnow):
     """Test that we can turn open and close a HomeKit garage door."""
     helper = await setup_test_component.opp, create_garage_door_opener_service)
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover", "open_cover", {"entity_id": helper.entity_id}, blocking=True
     )
     assert helper.characteristics[DOOR_TARGET].value == 0
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover", "close_cover", {"entity_id": helper.entity_id}, blocking=True
     )
     assert helper.characteristics[DOOR_TARGET].value == 1

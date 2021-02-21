@@ -32,7 +32,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
             device_name.opp.config.location_name,
             state_file=state_file,
         )
-        await opp.async_add_executor_job(nexia_home.login)
+        await opp..async_add_executor_job(nexia_home.login)
     except ConnectTimeout as ex:
         _LOGGER.error("Unable to connect to Nexia service: %s", ex)
         raise CannotConnect from ex

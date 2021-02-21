@@ -123,7 +123,7 @@ def async_is_bindable_target(source_zha_device, target_zha_device):
 
 async def async_get_zha_device.opp, device_id):
     """Get a ZHA device for the given device registry id."""
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     registry_device = device_registry.async_get(device_id)
     zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     ieee_address = list(list(registry_device.identifiers)[0])[1]

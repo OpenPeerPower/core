@@ -68,8 +68,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     # Additional/extra data collection
     channel = get_channel(current_version)
-    huuid = await.opp.helpers.instance_id.async_get()
-    system_info = await.opp.helpers.system_info.async_get_system_info()
+    huuid = await opp..helpers.instance_id.async_get()
+    system_info = await opp..helpers.system_info.async_get_system_info()
     custom_components = await async_get_custom_components.opp)
 
     tracing = {}
@@ -100,7 +100,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     async def update_system_info(now):
         nonlocal system_info
-        system_info = await.opp.helpers.system_info.async_get_system_info()
+        system_info = await opp..helpers.system_info.async_get_system_info()
 
         # Update system info every hour
        .opp.helpers.event.async_call_later(3600, update_system_info)

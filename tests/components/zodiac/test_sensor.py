@@ -39,7 +39,7 @@ async def test_zodiac_day.opp, now, sign, element, modality):
 
     with patch("openpeerpower.components.zodiac.sensor.utcnow", return_value=now):
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     state = opp.states.get("sensor.zodiac")
     assert state

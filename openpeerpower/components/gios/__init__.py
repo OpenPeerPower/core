@@ -45,7 +45,7 @@ async def async_setup_entry.opp, config_entry):
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
    .opp.data[DOMAIN].pop(config_entry.entry_id)
-    await opp.config_entries.async_forward_entry_unload(config_entry, "air_quality")
+    await opp..config_entries.async_forward_entry_unload(config_entry, "air_quality")
     return True
 
 

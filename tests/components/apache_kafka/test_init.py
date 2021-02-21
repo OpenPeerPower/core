@@ -56,7 +56,7 @@ async def test_minimal_config.opp, mock_client):
     """Test the minimal config and defaults of component."""
     config = {apache_kafka.DOMAIN: MIN_CONFIG}
     assert await async_setup_component.opp, apache_kafka.DOMAIN, config)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert mock_client.start.called_once
 
 
@@ -77,7 +77,7 @@ async def test_full_config.opp, mock_client):
     config[apache_kafka.DOMAIN].update(MIN_CONFIG)
 
     assert await async_setup_component.opp, apache_kafka.DOMAIN, config)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert mock_client.start.called_once
 
 
@@ -87,14 +87,14 @@ async def _setup.opp, filter_config):
     config[apache_kafka.DOMAIN].update(MIN_CONFIG)
 
     assert await async_setup_component.opp, apache_kafka.DOMAIN, config)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 async def _run_filter_tests.opp, tests, mock_client):
     """Run a series of filter tests on apache kafka."""
     for test in tests:
        .opp.states.async_set(test.id, STATE_ON)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
         if test.should_pass:
             mock_client.send_and_wait.assert_called_once()

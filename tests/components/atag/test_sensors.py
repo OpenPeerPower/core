@@ -12,7 +12,7 @@ async def test_sensors(
 ) -> None:
     """Test the creation of ATAG sensors."""
     entry = await init_integration.opp, aioclient_mock)
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     for item in SENSORS:
         sensor_id = "_".join(f"sensor.{item}".lower().split())

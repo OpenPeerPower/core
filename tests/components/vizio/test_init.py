@@ -21,7 +21,7 @@ async def test_setup_component(
     assert await async_setup_component(
        .opp, DOMAIN, {DOMAIN: MOCK_USER_VALID_TV_CONFIG}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len.opp.states.async_entity_ids(MP_DOMAIN)) == 1
 
 
@@ -35,13 +35,13 @@ async def test_tv_load_and_unload(
         domain=DOMAIN, data=MOCK_USER_VALID_TV_CONFIG, unique_id=UNIQUE_ID
     )
     config_entry.add_to_opp.opp)
-    assert await opp.config_entries.async_setup(config_entry.entry_id)
-    await opp.async_block_till_done()
+    assert await opp..config_entries.async_setup(config_entry.entry_id)
+    await opp..async_block_till_done()
     assert len.opp.states.async_entity_ids(MP_DOMAIN)) == 1
     assert DOMAIN in.opp.data
 
     assert await config_entry.async_unload.opp)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     entities = opp.states.async_entity_ids(MP_DOMAIN)
     assert len(entities) == 1
     for entity in entities:
@@ -59,13 +59,13 @@ async def test_speaker_load_and_unload(
         domain=DOMAIN, data=MOCK_SPEAKER_CONFIG, unique_id=UNIQUE_ID
     )
     config_entry.add_to_opp.opp)
-    assert await opp.config_entries.async_setup(config_entry.entry_id)
-    await opp.async_block_till_done()
+    assert await opp..config_entries.async_setup(config_entry.entry_id)
+    await opp..async_block_till_done()
     assert len.opp.states.async_entity_ids(MP_DOMAIN)) == 1
     assert DOMAIN in.opp.data
 
     assert await config_entry.async_unload.opp)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     entities = opp.states.async_entity_ids(MP_DOMAIN)
     assert len(entities) == 1
     for entity in entities:

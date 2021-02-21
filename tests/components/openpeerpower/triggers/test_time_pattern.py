@@ -52,10 +52,10 @@ async def test_if_fires_when_hour_matches.opp, calls):
         )
 
     async_fire_time_changed.opp, now.replace(year=now.year + 2, hour=0))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         automation.DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: ENTITY_MATCH_ALL},
@@ -63,7 +63,7 @@ async def test_if_fires_when_hour_matches.opp, calls):
     )
 
     async_fire_time_changed.opp, now.replace(year=now.year + 1, hour=0))
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -94,7 +94,7 @@ async def test_if_fires_when_minute_matches.opp, calls):
 
     async_fire_time_changed.opp, now.replace(year=now.year + 2, minute=0))
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -125,7 +125,7 @@ async def test_if_fires_when_second_matches.opp, calls):
 
     async_fire_time_changed.opp, now.replace(year=now.year + 2, second=0))
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -158,7 +158,7 @@ async def test_if_fires_when_second_as_string_matches.opp, calls):
        .opp, time_that_will_not_match_right_away + timedelta(seconds=15)
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -191,7 +191,7 @@ async def test_if_fires_when_all_matches.opp, calls):
        .opp, now.replace(year=now.year + 2, hour=1, minute=2, second=3)
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -224,7 +224,7 @@ async def test_if_fires_periodic_seconds.opp, calls):
        .opp, now.replace(year=now.year + 2, hour=0, minute=0, second=10)
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) >= 1
 
 
@@ -258,7 +258,7 @@ async def test_if_fires_periodic_minutes.opp, calls):
        .opp, now.replace(year=now.year + 2, hour=0, minute=2, second=0)
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -291,7 +291,7 @@ async def test_if_fires_periodic_hours.opp, calls):
        .opp, now.replace(year=now.year + 2, hour=2, minute=0, second=0)
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
 
@@ -319,21 +319,21 @@ async def test_default_values.opp, calls):
        .opp, now.replace(year=now.year + 2, hour=1, minute=2, second=0)
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
     async_fire_time_changed(
        .opp, now.replace(year=now.year + 2, hour=1, minute=2, second=1)
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 1
 
     async_fire_time_changed(
        .opp, now.replace(year=now.year + 2, hour=2, minute=2, second=0)
     )
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(calls) == 2
 
 

@@ -274,7 +274,7 @@ async def test_storage_collection_websocket.opp,.opp_ws_client):
         {vol.Optional("name"): str},
     ).async_setup.opp)
 
-    client = await.opp_ws_client.opp)
+    client = await opp._ws_client.opp)
 
     # Create invalid
     await client.send_json(

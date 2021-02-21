@@ -75,7 +75,7 @@ async def async_lock.opp, cluster, entity_id):
         "zigpy.zcl.Cluster.request", return_value=mock_coro([zcl_f.Status.SUCCESS])
     ):
         # lock via UI
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, "lock", {"entity_id": entity_id}, blocking=True
         )
         assert cluster.request.call_count == 1
@@ -89,7 +89,7 @@ async def async_unlock.opp, cluster, entity_id):
         "zigpy.zcl.Cluster.request", return_value=mock_coro([zcl_f.Status.SUCCESS])
     ):
         # lock via UI
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN, "unlock", {"entity_id": entity_id}, blocking=True
         )
         assert cluster.request.call_count == 1

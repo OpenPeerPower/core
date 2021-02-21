@@ -30,7 +30,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up a Logi Circle sensor based on a config entry."""
-    devices = await.opp.data[LOGI_CIRCLE_DOMAIN].cameras
+    devices = await opp..data[LOGI_CIRCLE_DOMAIN].cameras
     time_zone = str.opp.config.time_zone)
 
     sensors = []

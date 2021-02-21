@@ -271,7 +271,7 @@ async def test_external_step.opp, manager):
     result = await manager.async_configure(result["flow_id"], {"title": "Hello"})
     assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP_DONE
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(events) == 1
     assert events[0].data == {
         "handler": "test",
@@ -328,7 +328,7 @@ async def test_show_progress.opp, manager):
     assert result["type"] == data_entry_flow.RESULT_TYPE_SHOW_PROGRESS
     assert result["progress_action"] == "task_two"
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(events) == 1
     assert events[0].data == {
         "handler": "test",
@@ -341,7 +341,7 @@ async def test_show_progress.opp, manager):
     result = await manager.async_configure(result["flow_id"], {"title": "Hello"})
     assert result["type"] == data_entry_flow.RESULT_TYPE_SHOW_PROGRESS_DONE
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert len(events) == 2
     assert events[1].data == {
         "handler": "test",

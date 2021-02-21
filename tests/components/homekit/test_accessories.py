@@ -71,7 +71,7 @@ async def test_home_accessory.opp, hk_driver):
    .opp.states.async_set(entity_id, None)
    .opp.states.async_set(entity_id2, STATE_UNAVAILABLE)
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     acc = HomeAccessory(
        .opp, hk_driver, "Home Accessory", entity_id, 2, {"platform": "isy994"}
@@ -117,17 +117,17 @@ async def test_home_accessory.opp, hk_driver):
     assert serv.get_characteristic(CHAR_SERIAL_NUMBER).value == "light.accessory"
 
    .opp.states.async_set(entity_id, "on")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     with patch(
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ) as mock_async_update_state:
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
        .opp.states.async_remove(entity_id)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         assert mock_async_update_state.call_count == 1
 
     with pytest.raises(NotImplementedError):
@@ -136,7 +136,7 @@ async def test_home_accessory.opp, hk_driver):
     # Test model name from domain
     entity_id = "test_model.demo"
    .opp.states.async_set(entity_id, None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     acc = HomeAccessory.opp, hk_driver, "test_name", entity_id, 2, None)
     serv = acc.services[0]  # SERV_ACCESSORY_INFO
     assert serv.get_characteristic(CHAR_MODEL).value == "Test Model"
@@ -146,7 +146,7 @@ async def test_battery_service.opp, hk_driver, caplog):
     """Test battery service."""
     entity_id = "homekit.accessory"
    .opp.states.async_set(entity_id, None, {ATTR_BATTERY_LEVEL: 50})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     acc = HomeAccessory.opp, hk_driver, "Battery Service", entity_id, 2, None)
     assert acc._char_battery.value == 0
@@ -157,7 +157,7 @@ async def test_battery_service.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ) as mock_async_update_state:
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
@@ -169,7 +169,7 @@ async def test_battery_service.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ) as mock_async_update_state:
        .opp.states.async_set(entity_id, None, {ATTR_BATTERY_LEVEL: 15})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
@@ -181,7 +181,7 @@ async def test_battery_service.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ) as mock_async_update_state:
        .opp.states.async_set(entity_id, None, {ATTR_BATTERY_LEVEL: "error"})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
@@ -197,7 +197,7 @@ async def test_battery_service.opp, hk_driver, caplog):
        .opp.states.async_set(
             entity_id, None, {ATTR_BATTERY_LEVEL: 10, ATTR_BATTERY_CHARGING: True}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
@@ -213,7 +213,7 @@ async def test_battery_service.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ) as mock_async_update_state:
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery.value == 10
@@ -226,7 +226,7 @@ async def test_battery_service.opp, hk_driver, caplog):
        .opp.states.async_set(
             entity_id, None, {ATTR_BATTERY_LEVEL: 100, ATTR_BATTERY_CHARGING: False}
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert acc._char_battery.value == 100
     assert acc._char_low_battery.value == 0
     assert acc._char_charging.value == 0
@@ -238,7 +238,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
     linked_battery = "sensor.battery"
    .opp.states.async_set(entity_id, "open", {ATTR_BATTERY_LEVEL: 100})
    .opp.states.async_set(linked_battery, 50, None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     acc = HomeAccessory(
        .opp,
@@ -254,7 +254,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ) as mock_async_update_state:
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery.value == 50
@@ -262,7 +262,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
     assert acc._char_charging.value == 2
 
    .opp.states.async_set(linked_battery, 10, None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert acc._char_battery.value == 10
     assert acc._char_low_battery.value == 1
 
@@ -271,7 +271,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ):
        .opp.states.async_set(entity_id, "open", {ATTR_BATTERY_LEVEL: 90})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert acc._char_battery.value == 10
 
     # Test none numeric state for linked_battery
@@ -279,13 +279,13 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ):
        .opp.states.async_set(linked_battery, "error", None)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert acc._char_battery.value == 10
     assert "ERROR" not in caplog.text
 
     # Test charging & low battery threshold
    .opp.states.async_set(linked_battery, 20, {ATTR_BATTERY_CHARGING: True})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     acc = HomeAccessory(
        .opp,
@@ -299,7 +299,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ) as mock_async_update_state:
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery.value == 20
@@ -307,13 +307,13 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
     assert acc._char_charging.value == 1
 
    .opp.states.async_set(linked_battery, 100, {ATTR_BATTERY_CHARGING: False})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert acc._char_battery.value == 100
     assert acc._char_low_battery.value == 0
     assert acc._char_charging.value == 0
 
    .opp.states.async_remove(linked_battery)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert acc._char_battery.value == 100
     assert acc._char_low_battery.value == 0
     assert acc._char_charging.value == 0
@@ -325,7 +325,7 @@ async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
     linked_battery_charging_sensor = "binary_sensor.battery_charging"
    .opp.states.async_set(entity_id, "open", {ATTR_BATTERY_LEVEL: 100})
    .opp.states.async_set(linked_battery_charging_sensor, STATE_ON, None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     acc = HomeAccessory(
        .opp,
@@ -341,7 +341,7 @@ async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ) as mock_async_update_state:
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery.value == 100
@@ -353,7 +353,7 @@ async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
     ) as mock_async_update_state:
        .opp.states.async_set(linked_battery_charging_sensor, STATE_OFF, None)
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_charging.value == 0
@@ -363,7 +363,7 @@ async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
     ) as mock_async_update_state:
        .opp.states.async_set(linked_battery_charging_sensor, STATE_ON, None)
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_charging.value == 1
@@ -373,7 +373,7 @@ async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
     ) as mock_async_update_state:
        .opp.states.async_remove(linked_battery_charging_sensor)
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert acc._char_charging.value == 1
 
 
@@ -387,7 +387,7 @@ async def test_linked_battery_sensor_and_linked_battery_charging_sensor(
    .opp.states.async_set(entity_id, "open", {ATTR_BATTERY_LEVEL: 100})
    .opp.states.async_set(linked_battery, 50, None)
    .opp.states.async_set(linked_battery_charging_sensor, STATE_ON, None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     acc = HomeAccessory(
        .opp,
@@ -406,7 +406,7 @@ async def test_linked_battery_sensor_and_linked_battery_charging_sensor(
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ) as mock_async_update_state:
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery.value == 50
@@ -414,13 +414,13 @@ async def test_linked_battery_sensor_and_linked_battery_charging_sensor(
     assert acc._char_charging.value == 1
 
    .opp.states.async_set(linked_battery_charging_sensor, STATE_OFF, None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert acc._char_battery.value == 50
     assert acc._char_low_battery.value == 0
     assert acc._char_charging.value == 0
 
    .opp.states.async_remove(linked_battery_charging_sensor)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert acc._char_battery.value == 50
     assert acc._char_low_battery.value == 0
     assert acc._char_charging.value == 0
@@ -431,7 +431,7 @@ async def test_missing_linked_battery_charging_sensor.opp, hk_driver, caplog):
     entity_id = "homekit.accessory"
     linked_battery_charging_sensor = "binary_sensor.battery_charging"
    .opp.states.async_set(entity_id, "open", {ATTR_BATTERY_LEVEL: 100})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     acc = HomeAccessory(
        .opp,
@@ -450,7 +450,7 @@ async def test_missing_linked_battery_charging_sensor.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ):
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     # Make sure we don't throw if the entity_id
     # is removed
@@ -459,7 +459,7 @@ async def test_missing_linked_battery_charging_sensor.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ):
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
 
 async def test_missing_linked_battery_sensor.opp, hk_driver, caplog):
@@ -467,7 +467,7 @@ async def test_missing_linked_battery_sensor.opp, hk_driver, caplog):
     entity_id = "homekit.accessory"
     linked_battery = "sensor.battery"
    .opp.states.async_set(entity_id, "open")
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     acc = HomeAccessory(
        .opp,
@@ -483,7 +483,7 @@ async def test_missing_linked_battery_sensor.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ) as mock_async_update_state:
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
@@ -497,7 +497,7 @@ async def test_missing_linked_battery_sensor.opp, hk_driver, caplog):
     ) as mock_async_update_state:
        .opp.states.async_remove(entity_id)
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
     assert not acc.linked_battery_sensor
     assert acc._char_battery is None
@@ -509,7 +509,7 @@ async def test_battery_appears_after_startup.opp, hk_driver, caplog):
     """Test battery level appears after homekit is started."""
     entity_id = "homekit.accessory"
    .opp.states.async_set(entity_id, None, {})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     acc = HomeAccessory.opp, hk_driver, "Accessory without battery", entity_id, 2, {})
     assert acc._char_battery is None
@@ -518,7 +518,7 @@ async def test_battery_appears_after_startup.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ) as mock_async_update_state:
         await acc.run_op.dler()
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery is None
@@ -527,14 +527,14 @@ async def test_battery_appears_after_startup.opp, hk_driver, caplog):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ):
        .opp.states.async_set(entity_id, None, {ATTR_BATTERY_LEVEL: 15})
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert acc._char_battery is None
 
     with patch(
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ):
        .opp.states.async_remove(entity_id)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
     assert acc._char_battery is None
 
 
@@ -542,7 +542,7 @@ async def test_call_service.opp, hk_driver, events):
     """Test call_service method."""
     entity_id = "homekit.accessory"
    .opp.states.async_set(entity_id, None)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     acc = HomeAccessory.opp, hk_driver, "Home Accessory", entity_id, 2, {})
     call_service = async_mock_service.opp, "cover", "open_cover")
@@ -554,7 +554,7 @@ async def test_call_service.opp, hk_driver, events):
     await acc.async_call_service(
         test_domain, test_service, {ATTR_ENTITY_ID: entity_id}, test_value
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len(events) == 1
     assert events[0].data == {

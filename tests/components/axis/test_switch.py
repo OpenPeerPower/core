@@ -69,7 +69,7 @@ async def test_switches_with_port_cgi.opp):
     device.api.vapix.ports["1"].name = ""
 
     device.api.event.update(EVENTS)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
@@ -83,7 +83,7 @@ async def test_switches_with_port_cgi.opp):
     assert relay_0.state == STATE_OFF
     assert relay_0.name == f"{NAME} Doorbell"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity_id},
@@ -91,7 +91,7 @@ async def test_switches_with_port_cgi.opp):
     )
     device.api.vapix.ports["0"].close.assert_called_once()
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: entity_id},
@@ -116,7 +116,7 @@ async def test_switches_with_port_management.opp):
     device.api.vapix.ports["1"].name = ""
 
     device.api.event.update(EVENTS)
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
@@ -130,7 +130,7 @@ async def test_switches_with_port_management.opp):
     assert relay_0.state == STATE_OFF
     assert relay_0.name == f"{NAME} Doorbell"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity_id},
@@ -138,7 +138,7 @@ async def test_switches_with_port_management.opp):
     )
     device.api.vapix.ports["0"].close.assert_called_once()
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: entity_id},

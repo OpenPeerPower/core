@@ -17,7 +17,7 @@ MODULE = "openpeerpower.components.rpi_power.config_flow.new_under_voltage"
 
 async def test_setup.opp: OpenPeerPower) -> None:
     """Test setting up manually."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -26,19 +26,19 @@ async def test_setup.opp: OpenPeerPower) -> None:
     assert not result["errors"]
 
     with patch(MODULE, return_value=MagicMock()):
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
 
 
 async def test_not_supported.opp: OpenPeerPower) -> None:
     """Test setting up on not supported system."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
 
     with patch(MODULE, return_value=None):
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "no_devices_found"
 
@@ -46,7 +46,7 @@ async def test_not_supported.opp: OpenPeerPower) -> None:
 async def test_onboarding.opp: OpenPeerPower) -> None:
     """Test setting up via onboarding."""
     with patch(MODULE, return_value=MagicMock()):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": "onboarding"},
         )
@@ -56,7 +56,7 @@ async def test_onboarding.opp: OpenPeerPower) -> None:
 async def test_onboarding_not_supported.opp: OpenPeerPower) -> None:
     """Test setting up via onboarding with unsupported system."""
     with patch(MODULE, return_value=None):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN,
             context={"source": "onboarding"},
         )

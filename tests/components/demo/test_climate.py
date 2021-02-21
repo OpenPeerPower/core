@@ -56,7 +56,7 @@ async def setup_demo_climate.opp):
     """Initialize setup demo climate."""
    .opp.config.units = METRIC_SYSTEM
     assert await async_setup_component.opp, DOMAIN, {"climate": {"platform": "demo"}})
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
 
 def test_setup_params.opp):
@@ -95,7 +95,7 @@ async def test_set_only_target_temp_bad_attr.opp):
     assert state.attributes.get(ATTR_TEMPERATURE) == 21
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_TEMPERATURE,
             {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_TEMPERATURE: None},
@@ -111,7 +111,7 @@ async def test_set_only_target_temp.opp):
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_TEMPERATURE) == 21
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_TEMPERATURE: 30},
@@ -127,7 +127,7 @@ async def test_set_only_target_temp_with_convert.opp):
     state = opp.states.get(ENTITY_HEATPUMP)
     assert state.attributes.get(ATTR_TEMPERATURE) == 20
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: ENTITY_HEATPUMP, ATTR_TEMPERATURE: 21},
@@ -145,7 +145,7 @@ async def test_set_target_temp_range.opp):
     assert state.attributes.get(ATTR_TARGET_TEMP_LOW) == 21.0
     assert state.attributes.get(ATTR_TARGET_TEMP_HIGH) == 24.0
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -170,7 +170,7 @@ async def test_set_target_temp_range_bad_attr.opp):
     assert state.attributes.get(ATTR_TARGET_TEMP_HIGH) == 24.0
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_TEMPERATURE,
             {
@@ -193,7 +193,7 @@ async def test_set_target_humidity_bad_attr.opp):
     assert state.attributes.get(ATTR_HUMIDITY) == 67
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_HUMIDITY,
             {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_HUMIDITY: None},
@@ -209,7 +209,7 @@ async def test_set_target_humidity.opp):
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_HUMIDITY) == 67
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HUMIDITY,
         {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_HUMIDITY: 64},
@@ -226,7 +226,7 @@ async def test_set_fan_mode_bad_attr.opp):
     assert state.attributes.get(ATTR_FAN_MODE) == "On High"
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_FAN_MODE,
             {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_FAN_MODE: None},
@@ -242,7 +242,7 @@ async def test_set_fan_mode.opp):
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_FAN_MODE) == "On High"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_FAN_MODE,
         {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_FAN_MODE: "On Low"},
@@ -259,7 +259,7 @@ async def test_set_swing_mode_bad_attr.opp):
     assert state.attributes.get(ATTR_SWING_MODE) == "Off"
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_SWING_MODE,
             {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_SWING_MODE: None},
@@ -275,7 +275,7 @@ async def test_set_swing.opp):
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_SWING_MODE) == "Off"
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_SWING_MODE,
         {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_SWING_MODE: "Auto"},
@@ -296,7 +296,7 @@ async def test_set_hvac_bad_attr_and_state.opp):
     assert state.state == HVAC_MODE_COOL
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_HVAC_MODE,
             {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_HVAC_MODE: None},
@@ -313,7 +313,7 @@ async def test_set_hvac.opp):
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.state == HVAC_MODE_COOL
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_HVAC_MODE: HVAC_MODE_HEAT},
@@ -326,7 +326,7 @@ async def test_set_hvac.opp):
 
 async def test_set_hold_mode_away.opp):
     """Test setting the hold mode away."""
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: ENTITY_ECOBEE, ATTR_PRESET_MODE: PRESET_AWAY},
@@ -339,7 +339,7 @@ async def test_set_hold_mode_away.opp):
 
 async def test_set_hold_mode_eco.opp):
     """Test setting the hold mode eco."""
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: ENTITY_ECOBEE, ATTR_PRESET_MODE: PRESET_ECO},
@@ -356,7 +356,7 @@ async def test_set_aux_heat_bad_attr.opp):
     assert state.attributes.get(ATTR_AUX_HEAT) == STATE_OFF
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp..services.async_call(
             DOMAIN,
             SERVICE_SET_AUX_HEAT,
             {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_AUX_HEAT: None},
@@ -369,7 +369,7 @@ async def test_set_aux_heat_bad_attr.opp):
 
 async def test_set_aux_heat_on.opp):
     """Test setting the axillary heater on/true."""
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_AUX_HEAT,
         {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_AUX_HEAT: True},
@@ -382,7 +382,7 @@ async def test_set_aux_heat_on.opp):
 
 async def test_set_aux_heat_off.opp):
     """Test setting the auxiliary heater off/false."""
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_AUX_HEAT,
         {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_AUX_HEAT: False},
@@ -395,7 +395,7 @@ async def test_set_aux_heat_off.opp):
 
 async def test_turn_on.opp):
     """Test turn on device."""
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_HVAC_MODE: HVAC_MODE_OFF},
@@ -405,7 +405,7 @@ async def test_turn_on.opp):
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.state == HVAC_MODE_OFF
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_CLIMATE}, blocking=True
     )
     state = opp.states.get(ENTITY_CLIMATE)
@@ -414,7 +414,7 @@ async def test_turn_on.opp):
 
 async def test_turn_off.opp):
     """Test turn on device."""
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: ENTITY_CLIMATE, ATTR_HVAC_MODE: HVAC_MODE_HEAT},
@@ -424,7 +424,7 @@ async def test_turn_off.opp):
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.state == HVAC_MODE_HEAT
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_CLIMATE}, blocking=True
     )
     state = opp.states.get(ENTITY_CLIMATE)

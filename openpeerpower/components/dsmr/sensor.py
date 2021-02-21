@@ -235,7 +235,7 @@ async def async_setup_entry(
         while.opp.state != CoreState.stopping:
             # Start DSMR asyncio.Protocol reader
             try:
-                transport, protocol = await.opp.loop.create_task(reader_factory())
+                transport, protocol = await opp..loop.create_task(reader_factory())
 
                 if transport:
                     # Register listener to close transport on HA shutdown

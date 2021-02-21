@@ -43,7 +43,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         if device.model_name == "Dimmer":
             async_add_entities([WemoDimmer(device)])
         else:
-            await opp.async_add_executor_job(
+            await opp..async_add_executor_job(
                 setup_bridge,.opp, device, async_add_entities
             )
 

@@ -20,7 +20,7 @@ async def test_time.opp, time_zone):
         "sensor",
         config,
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("sensor.worldclock_sensor")
     assert state is not None
@@ -44,7 +44,7 @@ async def test_time_format.opp, time_zone):
         "sensor",
         config,
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("sensor.worldclock_sensor")
     assert state is not None

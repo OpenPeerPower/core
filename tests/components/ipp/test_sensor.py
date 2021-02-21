@@ -19,7 +19,7 @@ async def test_sensors(
     mock_connection(aioclient_mock)
 
     entry = await init_integration.opp, aioclient_mock, skip_setup=True)
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     # Pre-create registry entries for disabled by default sensors
     registry.async_get_or_create(
@@ -32,8 +32,8 @@ async def test_sensors(
 
     test_time = datetime(2019, 11, 11, 9, 10, 32, tzinfo=dt_util.UTC)
     with patch("openpeerpower.components.ipp.sensor.utcnow", return_value=test_time):
-        await opp.config_entries.async_setup(entry.entry_id)
-        await opp.async_block_till_done()
+        await opp..config_entries.async_setup(entry.entry_id)
+        await opp..async_block_till_done()
 
     state = opp.states.get("sensor.epson_xp_6000_series")
     assert state
@@ -86,7 +86,7 @@ async def test_disabled_by_default_sensors(
 ) -> None:
     """Test the disabled by default IPP sensors."""
     await init_integration.opp, aioclient_mock)
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     state = opp.states.get("sensor.epson_xp_6000_series_uptime")
     assert state is None
@@ -102,7 +102,7 @@ async def test_missing_entry_unique_id(
 ) -> None:
     """Test the unique_id of IPP sensor when printer is missing identifiers."""
     entry = await init_integration.opp, aioclient_mock, uuid=None, unique_id=None)
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp..helpers.entity_registry.async_get_registry()
 
     entity = registry.async_get("sensor.epson_xp_6000_series")
     assert entity

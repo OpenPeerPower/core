@@ -30,7 +30,7 @@ async def test_ecobee3_setup.opp):
     accessories = await setup_accessories_from_file.opp, "ecobee3.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     climate = entity_registry.async_get("climate.homew")
     assert climate.unique_id == "homekit-123456789012-16"
@@ -73,7 +73,7 @@ async def test_ecobee3_setup.opp):
     occ3 = entity_registry.async_get("binary_sensor.basement")
     assert occ3.unique_id == "homekit-AB3C-56"
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
 
     climate_device = device_registry.async_get(climate.device_id)
     assert climate_device.manufacturer == "ecobee Inc."
@@ -112,7 +112,7 @@ async def test_ecobee3_setup_from_cache.opp,.opp_storage):
 
     await setup_test_accessories.opp, accessories)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     climate = entity_registry.async_get("climate.homew")
     assert climate.unique_id == "homekit-123456789012-16"
@@ -131,7 +131,7 @@ async def test_ecobee3_setup_connection_failure.opp):
     """Test that Ecbobee can be correctly setup from its cached entity map."""
     accessories = await setup_accessories_from_file.opp, "ecobee3.json")
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     # Test that the connection fails during initial setup.
     # No entities should be created.
@@ -170,7 +170,7 @@ async def test_ecobee3_setup_connection_failure.opp):
 
 async def test_ecobee3_add_sensors_at_runtime.opp):
     """Test that new sensors are automatically added."""
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     # Set up a base Ecobee 3 with no additional sensors.
     # There shouldn't be any entities but climate visible.

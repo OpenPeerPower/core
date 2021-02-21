@@ -31,7 +31,7 @@ async def test_window_cover.opp, client, chain_actuator_zws12, integration):
     assert state.attributes[ATTR_CURRENT_POSITION] == 0
 
     # Test setting position
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "set_cover_position",
         {"entity_id": WINDOW_COVER_ENTITY, "position": 50},
@@ -63,7 +63,7 @@ async def test_window_cover.opp, client, chain_actuator_zws12, integration):
     client.async_send_command.reset_mock()
 
     # Test setting position
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "set_cover_position",
         {"entity_id": WINDOW_COVER_ENTITY, "position": 0},
@@ -95,7 +95,7 @@ async def test_window_cover.opp, client, chain_actuator_zws12, integration):
     client.async_send_command.reset_mock()
 
     # Test opening
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "open_cover",
         {"entity_id": WINDOW_COVER_ENTITY},
@@ -126,7 +126,7 @@ async def test_window_cover.opp, client, chain_actuator_zws12, integration):
 
     client.async_send_command.reset_mock()
     # Test stop after opening
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "stop_cover",
         {"entity_id": WINDOW_COVER_ENTITY},
@@ -197,7 +197,7 @@ async def test_window_cover.opp, client, chain_actuator_zws12, integration):
     assert state.state == "open"
 
     # Test closing
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "close_cover",
         {"entity_id": WINDOW_COVER_ENTITY},
@@ -228,7 +228,7 @@ async def test_window_cover.opp, client, chain_actuator_zws12, integration):
     client.async_send_command.reset_mock()
 
     # Test stop after closing
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "cover",
         "stop_cover",
         {"entity_id": WINDOW_COVER_ENTITY},
@@ -310,7 +310,7 @@ async def test_motor_barrier_cover.opp, client, gdc_zw062, integration):
     assert state.state == STATE_CLOSED
 
     # Test open
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, SERVICE_OPEN_COVER, {"entity_id": GDC_COVER_ENTITY}, blocking=True
     )
 
@@ -344,7 +344,7 @@ async def test_motor_barrier_cover.opp, client, gdc_zw062, integration):
     client.async_send_command.reset_mock()
 
     # Test close
-    await.opp.services.async_call(
+    await opp..services.async_call(
         DOMAIN, SERVICE_CLOSE_COVER, {"entity_id": GDC_COVER_ENTITY}, blocking=True
     )
 

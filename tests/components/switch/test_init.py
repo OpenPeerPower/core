@@ -23,7 +23,7 @@ async def test_methods.opp, entities):
     assert await async_setup_component(
        .opp, switch.DOMAIN, {switch.DOMAIN: {CONF_PLATFORM: "test"}}
     )
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
     assert switch.is_on.opp, switch_1.entity_id)
     assert not switch.is_on.opp, switch_2.entity_id)
     assert not switch.is_on.opp, switch_3.entity_id)
@@ -53,12 +53,12 @@ async def test_switch_context.opp, entities,.opp_admin_user):
     """Test that switch context works."""
     assert await async_setup_component.opp, "switch", {"switch": {"platform": "test"}})
 
-    await opp.async_block_till_done()
+    await opp..async_block_till_done()
 
     state = opp.states.get("switch.ac")
     assert state is not None
 
-    await.opp.services.async_call(
+    await opp..services.async_call(
         "switch",
         "toggle",
         {"entity_id": state.entity_id},

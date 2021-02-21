@@ -34,8 +34,8 @@ async def test_client_connected.opp):
         },
     ):
         async_fire_time_changed.opp, future)
-        await opp.async_block_till_done()
-        await.opp.helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
+        await opp..async_block_till_done()
+        await opp..helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
 
     test_client = opp.states.get(TEST_CLIENT_ENTITY_ID)
     assert test_client.state == STATE_HOME
@@ -51,9 +51,9 @@ async def test_client_disconnected.opp):
         return_value={},
     ):
         async_fire_time_changed.opp, future)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
-        await.opp.helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
+        await opp..helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
         test_client = opp.states.get(TEST_CLIENT_ENTITY_ID)
         assert test_client.state == STATE_NOT_HOME
 
@@ -68,9 +68,9 @@ async def test_clients_update_failed.opp):
         side_effect=ConnectionError,
     ):
         async_fire_time_changed.opp, future)
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
 
-        await.opp.helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
+        await opp..helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
         test_client = opp.states.get(TEST_CLIENT_ENTITY_ID)
         assert test_client.state == STATE_UNAVAILABLE
 
@@ -106,8 +106,8 @@ async def test_restoring_clients.opp):
         return_value={},
     ):
         entry.add_to_opp.opp)
-        await opp.config_entries.async_setup(entry.entry_id)
-        await opp.async_block_till_done()
+        await opp..config_entries.async_setup(entry.entry_id)
+        await opp..async_block_till_done()
 
     device = opp.states.get(TEST_CLIENT_ENTITY_ID)
     assert device is not None
@@ -120,7 +120,7 @@ async def test_client_device_setup.opp):
 
     router_info = DEFAULT_AP_INFO[API_AP][API_ID]["1"]
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp..helpers.device_registry.async_get_registry()
     client_device = device_registry.async_get_device(
         identifiers={},
         connections={(CONNECTION_NETWORK_MAC, TEST_CLIENT[API_MAC])},

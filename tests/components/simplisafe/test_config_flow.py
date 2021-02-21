@@ -36,7 +36,7 @@ async def test_duplicate_error.opp):
         data={CONF_USERNAME: "user@email.com", CONF_TOKEN: "12345", CONF_CODE: "1234"},
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
 
@@ -52,7 +52,7 @@ async def test_invalid_credentials.opp):
         "simplipy.API.login_via_credentials",
         new=AsyncMock(side_effect=InvalidCredentialsError),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
         assert result["errors"] == {"base": "invalid_auth"}
@@ -73,13 +73,13 @@ async def test_options_flow.opp):
     with patch(
         "openpeerpower.components.simplisafe.async_setup_entry", return_value=True
     ):
-        await opp.config_entries.async_setup(config_entry.entry_id)
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+        await opp..config_entries.async_setup(config_entry.entry_id)
+        result = await opp..config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp..config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_CODE: "4321"}
         )
 
@@ -89,7 +89,7 @@ async def test_options_flow.opp):
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -105,14 +105,14 @@ async def test_step_reauth.opp):
         data={CONF_USERNAME: "user@email.com", CONF_TOKEN: "12345", CONF_CODE: "1234"},
     ).add_to_opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp..config_entries.flow.async_init(
         DOMAIN,
         context={"source": "reauth"},
         data={CONF_CODE: "1234", CONF_USERNAME: "user@email.com"},
     )
     assert result["step_id"] == "reauth_confirm"
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp..config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "reauth_confirm"
 
@@ -121,7 +121,7 @@ async def test_step_reauth.opp):
     ), patch(
         "simplipy.API.login_via_credentials", new=AsyncMock(return_value=mock_api())
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_PASSWORD: "password"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -143,7 +143,7 @@ async def test_step_user.opp):
     ), patch(
         "simplipy.API.login_via_credentials", new=AsyncMock(return_value=mock_api())
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
 
@@ -168,7 +168,7 @@ async def test_step_user_mfa.opp):
         "simplipy.API.login_via_credentials",
         new=AsyncMock(side_effect=PendingAuthorizationError),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
         assert result["step_id"] == "mfa"
@@ -179,7 +179,7 @@ async def test_step_user_mfa.opp):
     ):
         # Simulate the user pressing the MFA submit button without having clicked
         # the link in the MFA email:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
         assert result["step_id"] == "mfa"
@@ -189,7 +189,7 @@ async def test_step_user_mfa.opp):
     ), patch(
         "simplipy.API.login_via_credentials", new=AsyncMock(return_value=mock_api())
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp..config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
 
@@ -210,7 +210,7 @@ async def test_unknown_error.opp):
         "simplipy.API.login_via_credentials",
         new=AsyncMock(side_effect=SimplipyError),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp..config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
         assert result["errors"] == {"base": "unknown"}

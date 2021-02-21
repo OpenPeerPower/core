@@ -25,7 +25,7 @@ DEVICE_ID = "light.living_room_lamp"
 async def test_entity_registry.opp):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform.opp, LIGHT_DOMAIN)
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp..helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get(DEVICE_ID)
     assert entry.unique_id == "741385f4388b2637df4c6b398fe50581"
@@ -53,10 +53,10 @@ async def test_switch_off.opp):
     await setup_platform.opp, LIGHT_DOMAIN)
 
     with patch("abodepy.AbodeLight.switch_off") as mock_switch_off:
-        assert await.opp.services.async_call(
+        assert await opp..services.async_call(
             LIGHT_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: DEVICE_ID}, blocking=True
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_switch_off.assert_called_once()
 
 
@@ -65,10 +65,10 @@ async def test_switch_on.opp):
     await setup_platform.opp, LIGHT_DOMAIN)
 
     with patch("abodepy.AbodeLight.switch_on") as mock_switch_on:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: DEVICE_ID}, blocking=True
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_switch_on.assert_called_once()
 
 
@@ -77,13 +77,13 @@ async def test_set_brightness.opp):
     await setup_platform.opp, LIGHT_DOMAIN)
 
     with patch("abodepy.AbodeLight.set_level") as mock_set_level:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: DEVICE_ID, "brightness": 100},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         # Brightness is converted in abode.light.AbodeLight.turn_on
         mock_set_level.assert_called_once_with(39)
 
@@ -93,13 +93,13 @@ async def test_set_color.opp):
     await setup_platform.opp, LIGHT_DOMAIN)
 
     with patch("abodepy.AbodeLight.set_color") as mock_set_color:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: DEVICE_ID, "hs_color": [240, 100]},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         mock_set_color.assert_called_once_with((240.0, 100.0))
 
 
@@ -108,12 +108,12 @@ async def test_set_color_temp.opp):
     await setup_platform.opp, LIGHT_DOMAIN)
 
     with patch("abodepy.AbodeLight.set_color_temp") as mock_set_color_temp:
-        await.opp.services.async_call(
+        await opp..services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: DEVICE_ID, "color_temp": 309},
             blocking=True,
         )
-        await opp.async_block_till_done()
+        await opp..async_block_till_done()
         # Color temp is converted in abode.light.AbodeLight.turn_on
         mock_set_color_temp.assert_called_once_with(3236)

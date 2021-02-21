@@ -39,4 +39,4 @@ async def async_unload_entry.opp, entry):
        .opp.data[DOMAIN][DISCOVERY_TASK].cancel()
        .opp.data[DOMAIN].pop(DISCOVERY_TASK)
 
-    return await opp.config_entries.async_forward_entry_unload(entry, MP_DOMAIN)
+    return await opp..config_entries.async_forward_entry_unload(entry, MP_DOMAIN)
