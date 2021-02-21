@@ -23,8 +23,8 @@ from openpeerpower.const import (
     HTTP_INTERNAL_SERVER_ERROR,
     STATE_UNAVAILABLE,
 )
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.dt import utcnow
 
 from . import API_POINT_URL
 
@@ -35,9 +35,9 @@ from tests.components.airly import init_integration
 async def test_air_quality.opp, aioclient_mock):
     """Test states of the air_quality."""
     await init_integration.opp, aioclient_mock)
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state = opp.states.get("air_quality.home")
+    state =.opp.states.get("air_quality.home")
     assert state
     assert state.state == "14"
     assert state.attributes.get(ATTR_AQI) == 23
@@ -66,7 +66,7 @@ async def test_availability.opp, aioclient_mock):
     """Ensure that we mark the entities unavailable correctly when service causes an error."""
     await init_integration.opp, aioclient_mock)
 
-    state = opp.states.get("air_quality.home")
+    state =.opp.states.get("air_quality.home")
     assert state
     assert state.state != STATE_UNAVAILABLE
     assert state.state == "14"
@@ -78,9 +78,9 @@ async def test_availability.opp, aioclient_mock):
     future = utcnow() + timedelta(minutes=60)
 
     async_fire_time_changed.opp, future)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("air_quality.home")
+    state =.opp.states.get("air_quality.home")
     assert state
     assert state.state == STATE_UNAVAILABLE
 
@@ -89,9 +89,9 @@ async def test_availability.opp, aioclient_mock):
     future = utcnow() + timedelta(minutes=120)
 
     async_fire_time_changed.opp, future)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("air_quality.home")
+    state =.opp.states.get("air_quality.home")
     assert state
     assert state.state != STATE_UNAVAILABLE
     assert state.state == "14"
@@ -102,9 +102,9 @@ async def test_manual_update_entity.opp, aioclient_mock):
     await init_integration.opp, aioclient_mock)
 
     call_count = aioclient_mock.call_count
-    await async_setup_component.opp, "openpeerpowerr", {})
-    await opp..services.async_call(
-        "openpeerpowerr",
+    await async_setup_component.opp, "openpeerpower", {})
+    await.opp.services.async_call(
+        "openpeerpower",
         "update_entity",
         {ATTR_ENTITY_ID: ["air_quality.home"]},
         blocking=True,

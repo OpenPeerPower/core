@@ -43,7 +43,7 @@ async def test_show_form_no_hubs.opp, mock_hub_discover):
     """Test that flow aborts if no hubs are discovered."""
     mock_hub_discover.return_value = async_generator([])
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -62,7 +62,7 @@ async def test_show_form_one_hub.opp, mock_hub_discover, mock_hub_run):
 
     mock_hub_discover.return_value = async_generator([dummy_hub_1])
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -87,7 +87,7 @@ async def test_show_form_two_hubs.opp, mock_hub_discover):
 
     mock_hub_discover.return_value = async_generator([dummy_hub_1, dummy_hub_2])
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -109,11 +109,11 @@ async def test_create_second_entry.opp, mock_hub_run, mock_hub_discover):
 
     mock_hub_discover.return_value = async_generator([dummy_hub_1, dummy_hub_2])
 
-    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to_opp(
+    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to.opp(
        .opp
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -132,11 +132,11 @@ async def test_already_configured.opp, mock_hub_discover):
 
     mock_hub_discover.return_value = async_generator([dummy_hub_1])
 
-    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to_opp(
+    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to.opp(
        .opp
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 

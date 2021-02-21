@@ -23,7 +23,7 @@ CONF_POLLING = "polling"
 async def test_show_form.opp):
     """Test that the form is served with no input."""
     flow = config_flow.AbodeFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
 
     result = await flow.async_step_user(user_input=None)
 
@@ -34,12 +34,12 @@ async def test_show_form.opp):
 async def test_one_config_allowed.opp):
     """Test that only one Abode configuration is allowed."""
     flow = config_flow.AbodeFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
 
     MockConfigEntry(
         domain=DOMAIN,
         data={CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"},
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
     step_user_result = await flow.async_step_user()
 
@@ -63,7 +63,7 @@ async def test_invalid_credentials.opp):
     conf = {CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"}
 
     flow = config_flow.AbodeFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
 
     with patch(
         "openpeerpower.components.abode.config_flow.Abode",
@@ -78,7 +78,7 @@ async def test_connection_error.opp):
     conf = {CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"}
 
     flow = config_flow.AbodeFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
 
     with patch(
         "openpeerpower.components.abode.config_flow.Abode",
@@ -101,7 +101,7 @@ async def test_step_import.opp):
     with patch("openpeerpower.components.abode.config_flow.Abode"), patch(
         "abodepy.UTILS"
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -121,7 +121,7 @@ async def test_step_user.opp):
         "abodepy.UTILS"
     ):
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
 
@@ -142,7 +142,7 @@ async def test_step_mfa.opp):
         "openpeerpower.components.abode.config_flow.Abode",
         side_effect=AbodeAuthenticationException(MFA_CODE_REQUIRED),
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
 
@@ -153,7 +153,7 @@ async def test_step_mfa.opp):
         "openpeerpower.components.abode.config_flow.Abode",
         side_effect=AbodeAuthenticationException((HTTP_BAD_REQUEST, "invalid mfa")),
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={"mfa_code": "123456"}
         )
 
@@ -162,7 +162,7 @@ async def test_step_mfa.opp):
     with patch("openpeerpower.components.abode.config_flow.Abode"), patch(
         "abodepy.UTILS"
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={"mfa_code": "123456"}
         )
 
@@ -183,12 +183,12 @@ async def test_step_reauth.opp):
         domain=DOMAIN,
         unique_id="user@email.com",
         data=conf,
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
     with patch("openpeerpower.components.abode.config_flow.Abode"), patch(
         "abodepy.UTILS"
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "reauth"},
             data=conf,
@@ -198,7 +198,7 @@ async def test_step_reauth.opp):
         assert result["step_id"] == "reauth_confirm"
 
         with patch("openpeerpower.config_entries.ConfigEntries.async_reload"):
-            result = await opp..config_entries.flow.async_configure(
+            result = await.opp.config_entries.flow.async_configure(
                 result["flow_id"],
                 user_input=conf,
             )

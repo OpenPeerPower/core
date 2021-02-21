@@ -3,7 +3,7 @@ import json
 
 from openpeerpower.components.alexa import DOMAIN, smart_home_http
 from openpeerpower.const import CONTENT_TYPE_JSON, HTTP_NOT_FOUND
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import get_new_request
 
@@ -11,7 +11,7 @@ from . import get_new_request
 async def do_http_discovery(config,.opp,.opp_client):
     """Submit a request to the Smart Home HTTP API."""
     await async_setup_component.opp, DOMAIN, config)
-    http_client = await opp._client()
+    http_client = await.opp_client()
 
     request = get_new_request("Alexa.Discovery", "Discover")
     response = await http_client.post(

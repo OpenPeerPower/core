@@ -4,7 +4,7 @@ import requests_mock
 
 from openpeerpower.components.aemet import DOMAIN
 from openpeerpower.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry, load_fixture
 
@@ -86,8 +86,8 @@ async def async_init_integration(
                 CONF_NAME: "AEMET",
             },
         )
-        entry.add_to_opp.opp)
+        entry.add_to.opp.opp)
 
         if not skip_setup:
-            await opp..config_entries.async_setup(entry.entry_id)
-            await opp..async_block_till_done()
+            await.opp.config_entries.async_setup(entry.entry_id)
+            await.opp.async_block_till_done()

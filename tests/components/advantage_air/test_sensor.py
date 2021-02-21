@@ -31,13 +31,13 @@ async def test_sensor_platform.opp, aioclient_mock):
     )
     await add_mock_config.opp)
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     assert len(aioclient_mock.mock_calls) == 1
 
     # Test First TimeToOn Sensor
     entity_id = "sensor.ac_one_time_to_on"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert int(state.state) == 0
 
@@ -46,7 +46,7 @@ async def test_sensor_platform.opp, aioclient_mock):
     assert entry.unique_id == "uniqueid-ac1-timetoOn"
 
     value = 20
-    await opp..services.async_call(
+    await.opp.services.async_call(
         ADVANTAGE_AIR_DOMAIN,
         ADVANTAGE_AIR_SERVICE_SET_TIME_TO,
         {ATTR_ENTITY_ID: [entity_id], ADVANTAGE_AIR_SET_COUNTDOWN_VALUE: value},
@@ -62,7 +62,7 @@ async def test_sensor_platform.opp, aioclient_mock):
 
     # Test First TimeToOff Sensor
     entity_id = "sensor.ac_one_time_to_off"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert int(state.state) == 10
 
@@ -71,7 +71,7 @@ async def test_sensor_platform.opp, aioclient_mock):
     assert entry.unique_id == "uniqueid-ac1-timetoOff"
 
     value = 0
-    await opp..services.async_call(
+    await.opp.services.async_call(
         ADVANTAGE_AIR_DOMAIN,
         ADVANTAGE_AIR_SERVICE_SET_TIME_TO,
         {ATTR_ENTITY_ID: [entity_id], ADVANTAGE_AIR_SET_COUNTDOWN_VALUE: value},
@@ -87,7 +87,7 @@ async def test_sensor_platform.opp, aioclient_mock):
 
     # Test First Zone Vent Sensor
     entity_id = "sensor.zone_open_with_sensor_vent"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert int(state.state) == 100
 
@@ -97,7 +97,7 @@ async def test_sensor_platform.opp, aioclient_mock):
 
     # Test Second Zone Vent Sensor
     entity_id = "sensor.zone_closed_with_sensor_vent"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert int(state.state) == 0
 
@@ -107,7 +107,7 @@ async def test_sensor_platform.opp, aioclient_mock):
 
     # Test First Zone Signal Sensor
     entity_id = "sensor.zone_open_with_sensor_signal"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert int(state.state) == 40
 
@@ -117,7 +117,7 @@ async def test_sensor_platform.opp, aioclient_mock):
 
     # Test Second Zone Signal Sensor
     entity_id = "sensor.zone_closed_with_sensor_signal"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert int(state.state) == 10
 

@@ -27,7 +27,7 @@ CONFIG = {
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -44,7 +44,7 @@ async def test_invalid_api_key.opp, aioclient_mock):
         ),
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
     )
 
@@ -60,7 +60,7 @@ async def test_invalid_location.opp, aioclient_mock):
         exc=AirlyError(HTTP_NOT_FOUND, {"message": "Installation was not found"}),
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
     )
 
@@ -70,9 +70,9 @@ async def test_invalid_location.opp, aioclient_mock):
 async def test_duplicate_error.opp, aioclient_mock):
     """Test that errors are shown when duplicates are added."""
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_valid_station.json"))
-    MockConfigEntry(domain=DOMAIN, unique_id="123-456", data=CONFIG).add_to_opp.opp)
+    MockConfigEntry(domain=DOMAIN, unique_id="123-456", data=CONFIG).add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
     )
 
@@ -85,7 +85,7 @@ async def test_create_entry.opp, aioclient_mock):
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_valid_station.json"))
 
     with patch("openpeerpower.components.airly.async_setup_entry", return_value=True):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 
@@ -105,7 +105,7 @@ async def test_create_entry_with_nearest_method.opp, aioclient_mock):
     aioclient_mock.get(API_NEAREST_URL, text=load_fixture("airly_valid_station.json"))
 
     with patch("openpeerpower.components.airly.async_setup_entry", return_value=True):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 

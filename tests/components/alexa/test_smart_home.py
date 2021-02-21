@@ -24,11 +24,11 @@ from openpeerpower.components.media_player.const import (
     SUPPORT_VOLUME_STEP,
 )
 import openpeerpower.components.vacuum as vacuum
-from openpeerpower.config import async_process_op.core_config
+from openpeerpower.config import async_process_ha_core_config
 from openpeerpower.const import TEMP_CELSIUS, TEMP_FAHRENHEIT
-from openpeerpowerr.core import Context, callback
-from openpeerpowerr.helpers import entityfilter
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import Context, callback
+from openpeerpower.helpers import entityfilter
+from openpeerpower.setup import async_setup_component
 
 from . import (
     DEFAULT_CONFIG,
@@ -61,14 +61,14 @@ async def mock_camera.opp):
     assert await async_setup_component(
        .opp, "camera", {camera.DOMAIN: {"platform": "demo"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 @pytest.fixture
 async def mock_stream.opp):
     """Initialize a demo camera platform with streaming."""
     assert await async_setup_component.opp, "stream", {"stream": {}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 def test_create_api_message_defaults.opp):
@@ -125,7 +125,7 @@ async def test_wrong_version.opp):
     msg["directive"]["header"]["payloadVersion"] = "2"
 
     with pytest.raises(AssertionError):
-        await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, msg)
+        await smart_home.async_handle_message.opp, DEFAULT_CONFIG, msg)
 
 
 async def discovery_test(device,.opp, expected_endpoints=1):
@@ -135,7 +135,7 @@ async def discovery_test(device,.opp, expected_endpoints=1):
     # setup test devices
    .opp.states.async_set(*device)
 
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
 
     assert "event" in msg
     msg = msg["event"]
@@ -383,6 +383,7 @@ async def test_variable_fan.opp):
             "supported_features": 1,
             "speed_list": ["low", "medium", "high"],
             "speed": "high",
+            "percentage": 100,
         },
     )
     appliance = await discovery_test(device,.opp)
@@ -423,82 +424,82 @@ async def test_variable_fan.opp):
         "Alexa.PercentageController",
         "SetPercentage",
         "fan#test_2",
-        "fan.set_speed",
+        "fan.set_percentage",
        .opp,
         payload={"percentage": "50"},
     )
-    assert call.data["speed"] == "medium"
+    assert call.data["percentage"] == 50
 
     call, _ = await assert_request_calls_service(
         "Alexa.PercentageController",
         "SetPercentage",
         "fan#test_2",
-        "fan.set_speed",
+        "fan.set_percentage",
        .opp,
         payload={"percentage": "33"},
     )
-    assert call.data["speed"] == "low"
+    assert call.data["percentage"] == 33
 
     call, _ = await assert_request_calls_service(
         "Alexa.PercentageController",
         "SetPercentage",
         "fan#test_2",
-        "fan.set_speed",
+        "fan.set_percentage",
        .opp,
         payload={"percentage": "100"},
     )
-    assert call.data["speed"] == "high"
+    assert call.data["percentage"] == 100
 
     await assert_percentage_changes(
        .opp,
-        [("high", "-5"), ("off", "5"), ("low", "-80"), ("medium", "-34")],
+        [(95, "-5"), (100, "5"), (20, "-80"), (66, "-34")],
         "Alexa.PercentageController",
         "AdjustPercentage",
         "fan#test_2",
         "percentageDelta",
-        "fan.set_speed",
-        "speed",
+        "fan.set_percentage",
+        "percentage",
     )
 
     call, _ = await assert_request_calls_service(
         "Alexa.PowerLevelController",
         "SetPowerLevel",
         "fan#test_2",
-        "fan.set_speed",
+        "fan.set_percentage",
        .opp,
         payload={"powerLevel": "20"},
     )
-    assert call.data["speed"] == "low"
+    assert call.data["percentage"] == 20
 
     call, _ = await assert_request_calls_service(
         "Alexa.PowerLevelController",
         "SetPowerLevel",
         "fan#test_2",
-        "fan.set_speed",
+        "fan.set_percentage",
        .opp,
         payload={"powerLevel": "50"},
     )
-    assert call.data["speed"] == "medium"
+    assert call.data["percentage"] == 50
 
     call, _ = await assert_request_calls_service(
         "Alexa.PowerLevelController",
         "SetPowerLevel",
         "fan#test_2",
-        "fan.set_speed",
+        "fan.set_percentage",
        .opp,
         payload={"powerLevel": "99"},
     )
-    assert call.data["speed"] == "high"
+    assert call.data["percentage"] == 99
 
     await assert_percentage_changes(
        .opp,
-        [("high", "-5"), ("medium", "-50"), ("low", "-80")],
+        [(95, "-5"), (50, "-50"), (20, "-80")],
         "Alexa.PowerLevelController",
         "AdjustPowerLevel",
         "fan#test_2",
         "powerLevelDelta",
-        "fan.set_speed",
-        "speed",
+        "fan.set_percentage",
+        "percentage",
     )
 
 
@@ -1515,7 +1516,7 @@ async def test_group.opp):
     )
 
     await assert_power_controller_works(
-        "group#test", "openpeerpowerr.turn_on", "openpeerpowerr.turn_off",.opp
+        "group#test", "openpeerpower.turn_on", "openpeerpower.turn_off",.opp
     )
 
 
@@ -2173,8 +2174,8 @@ async def test_exclude_filters.opp):
         exclude_entities=["cover.deny"],
     )
 
-    msg = await smart_home.async_op.dle_message.opp, alexa_config, request)
-    await opp..async_block_till_done()
+    msg = await smart_home.async_handle_message.opp, alexa_config, request)
+    await.opp.async_block_till_done()
 
     msg = msg["event"]
 
@@ -2204,8 +2205,8 @@ async def test_include_filters.opp):
         exclude_entities=[],
     )
 
-    msg = await smart_home.async_op.dle_message.opp, alexa_config, request)
-    await opp..async_block_till_done()
+    msg = await smart_home.async_handle_message.opp, alexa_config, request)
+    await.opp.async_block_till_done()
 
     msg = msg["event"]
 
@@ -2229,8 +2230,8 @@ async def test_never_exposed_entities.opp):
         exclude_entities=[],
     )
 
-    msg = await smart_home.async_op.dle_message.opp, alexa_config, request)
-    await opp..async_block_till_done()
+    msg = await smart_home.async_handle_message.opp, alexa_config, request)
+    await.opp.async_block_till_done()
 
     msg = msg["event"]
 
@@ -2243,8 +2244,8 @@ async def test_api_entity_not_exists.opp):
 
     call_switch = async_mock_service.opp, "switch", "turn_on")
 
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await opp..async_block_till_done()
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    await.opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -2258,7 +2259,7 @@ async def test_api_entity_not_exists.opp):
 async def test_api_function_not_implemented.opp):
     """Test api call that is not implemented to us."""
     request = get_new_request("Alexa.HAHAAH", "Sweet")
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
 
     assert "event" in msg
     msg = msg["event"]
@@ -2282,8 +2283,8 @@ async def test_api_accept_grant.opp):
     }
 
     # setup test devices
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await opp..async_block_till_done()
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    await.opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -2308,7 +2309,7 @@ async def test_entity_config.opp):
         "scene.test_1": {"description": "Config description"},
     }
 
-    msg = await smart_home.async_op.dle_message.opp, alexa_config, request)
+    msg = await smart_home.async_handle_message.opp, alexa_config, request)
 
     assert "event" in msg
     msg = msg["event"]
@@ -2335,10 +2336,10 @@ async def test_logging_request.opp, events):
     """Test that we log requests."""
     context = Context()
     request = get_new_request("Alexa.Discovery", "Discover")
-    await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request, context)
+    await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
 
     # To trigger event listener
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(events) == 1
     event = events[0]
@@ -2355,10 +2356,10 @@ async def test_logging_request_with_entity.opp, events):
     """Test that we log requests."""
     context = Context()
     request = get_new_request("Alexa.PowerController", "TurnOn", "switch#xy")
-    await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request, context)
+    await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
 
     # To trigger event listener
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(events) == 1
     event = events[0]
@@ -2380,10 +2381,10 @@ async def test_disabled.opp):
 
     call_switch = async_mock_service.opp, "switch", "turn_on")
 
-    msg = await smart_home.async_op.dle_message(
+    msg = await smart_home.async_handle_message(
        .opp, DEFAULT_CONFIG, request, enabled=False
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -2564,7 +2565,7 @@ async def test_range_unsupported_domain.opp):
     request["directive"]["payload"] = {"rangeValue": 1}
     request["directive"]["header"]["instance"] = "switch.speed"
 
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request, context)
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
 
     assert "event" in msg
     msg = msg["event"]
@@ -2583,7 +2584,7 @@ async def test_mode_unsupported_domain.opp):
     request["directive"]["payload"] = {"mode": "testMode"}
     request["directive"]["header"]["instance"] = "switch.direction"
 
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request, context)
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
 
     assert "event" in msg
     msg = msg["event"]
@@ -3322,7 +3323,7 @@ async def test_media_player_eq_bands_not_supported.opp):
         "Alexa.EqualizerController", "SetBands", "media_player#test_bands"
     )
     request["directive"]["payload"] = {"bands": [{"name": "BASS", "value": -2}]}
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request, context)
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
 
     assert "event" in msg
     msg = msg["event"]
@@ -3337,7 +3338,7 @@ async def test_media_player_eq_bands_not_supported.opp):
     request["directive"]["payload"] = {
         "bands": [{"name": "BASS", "levelDelta": 3, "levelDirection": "UP"}]
     }
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request, context)
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
 
     assert "event" in msg
     msg = msg["event"]
@@ -3352,7 +3353,7 @@ async def test_media_player_eq_bands_not_supported.opp):
     request["directive"]["payload"] = {
         "bands": [{"name": "BASS", "levelDelta": 3, "levelDirection": "UP"}]
     }
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request, context)
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
 
     assert "event" in msg
     msg = msg["event"]
@@ -3825,14 +3826,14 @@ async def test_camera_discovery_without_stream.opp):
         ("https://correctschemaandport.org", 3),
     ],
 )
-async def test_camera_opp_urls.opp, mock_stream, url, result):
+async def test_camera.opp_urls.opp, mock_stream, url, result):
     """Test camera discovery with unsupported urls."""
     device = (
         "camera.test",
         "idle",
         {"friendly_name": "Test camera", "supported_features": 3},
     )
-    await async_process_op.core_config.opp, {"external_url": url})
+    await async_process_ha_core_config.opp, {"external_url": url})
 
     appliance = await discovery_test(device,.opp)
     assert len(appliance["capabilities"]) == result
@@ -3844,7 +3845,7 @@ async def test_initialize_camera_stream.opp, mock_camera, mock_stream):
         "Alexa.CameraStreamController", "InitializeCameraStreams", "camera#demo_camera"
     )
 
-    await async_process_op.core_config(
+    await async_process_ha_core_config(
        .opp, {"external_url": "https://mycamerastream.test"}
     )
 
@@ -3852,8 +3853,8 @@ async def test_initialize_camera_stream.opp, mock_camera, mock_stream):
         "openpeerpower.components.demo.camera.DemoCamera.stream_source",
         return_value="rtsp://example.local",
     ):
-        msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-        await opp..async_block_till_done()
+        msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+        await.opp.async_block_till_done()
 
     assert "event" in msg
     response = msg["event"]

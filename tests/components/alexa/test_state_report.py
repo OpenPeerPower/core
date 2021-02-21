@@ -26,7 +26,7 @@ async def test_report_state.opp, aioclient_mock):
     )
 
     # To trigger event listener
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(aioclient_mock.mock_calls) == 1
     call = aioclient_mock.mock_calls
@@ -72,7 +72,7 @@ async def test_report_state_instance.opp, aioclient_mock):
     )
 
     # To trigger event listener
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(aioclient_mock.mock_calls) == 1
     call = aioclient_mock.mock_calls
@@ -164,7 +164,7 @@ async def test_doorbell_event.opp, aioclient_mock):
     )
 
     # To trigger event listener
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(aioclient_mock.mock_calls) == 1
     call = aioclient_mock.mock_calls
@@ -187,7 +187,7 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
         "on",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(aioclient_mock.mock_calls) == 1
 
     aioclient_mock.clear_requests()
@@ -200,15 +200,15 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
     )
     assert len(aioclient_mock.mock_calls) == 0
 
-    # opp not running should not report
+    #.opp not running should not report
    .opp.states.async_set(
         "binary_sensor.test_contact",
         "off",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
     with patch.object.opp, "state", core.CoreState.stopping):
-        await opp..async_block_till_done()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
+        await.opp.async_block_till_done()
     assert len(aioclient_mock.mock_calls) == 0
 
     # unsupported entity should not report
@@ -220,8 +220,8 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
     with patch.dict(
         "openpeerpower.components.alexa.state_report.ENTITY_ADAPTERS", {}, clear=True
     ):
-        await opp..async_block_till_done()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
+        await.opp.async_block_till_done()
     assert len(aioclient_mock.mock_calls) == 0
 
     # Not exposed by config should not report
@@ -231,14 +231,14 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
     with patch.object(DEFAULT_CONFIG, "should_expose", return_value=False):
-        await opp..async_block_till_done()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
+        await.opp.async_block_till_done()
     assert len(aioclient_mock.mock_calls) == 0
 
     # Removing an entity
    .opp.states.async_remove("binary_sensor.test_contact")
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(aioclient_mock.mock_calls) == 0
 
     # If serializes to same properties, it should not report
@@ -252,12 +252,12 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
             "off",
             {"friendly_name": "Test Contact Sensor", "device_class": "door"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
        .opp.states.async_set(
             "binary_sensor.same_serialize",
             "off",
             {"friendly_name": "Test Contact Sensor", "device_class": "door"},
         )
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     assert len(aioclient_mock.mock_calls) == 1

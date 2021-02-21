@@ -13,7 +13,7 @@ from openpeerpower.const import (
     STATE_ALARM_DISARMED,
     STATE_ALARM_TRIGGERED,
 )
-from openpeerpowerr.core import State
+from openpeerpower.core import State
 
 from tests.common import async_mock_service
 
@@ -59,7 +59,7 @@ async def test_reproducing_states.opp, caplog):
     )
 
     # These calls should do nothing as entities already in desired state
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State("alarm_control_panel.entity_armed_away", STATE_ALARM_ARMED_AWAY),
             State(
@@ -81,7 +81,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(trigger_calls) == 0
 
     # Test invalid state is handled
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [State("alarm_control_panel.entity_triggered", "not_supported")]
     )
 
@@ -94,7 +94,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(trigger_calls) == 0
 
     # Make sure correct services are called
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State("alarm_control_panel.entity_armed_away", STATE_ALARM_TRIGGERED),
             State(

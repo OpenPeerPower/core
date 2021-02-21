@@ -9,7 +9,7 @@ from openpeerpower.const import (
     ATTR_UNIT_OF_MEASUREMENT,
     CONCENTRATION_MICROGRAMS_PER_CUBIC_METER,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_state.opp):
@@ -17,9 +17,9 @@ async def test_state.opp):
     config = {"air_quality": {"platform": "demo"}}
 
     assert await async_setup_component.opp, "air_quality", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("air_quality.demo_air_quality_home")
+    state =.opp.states.get("air_quality.demo_air_quality_home")
     assert state is not None
 
     assert state.state == "14"
@@ -30,9 +30,9 @@ async def test_attributes.opp):
     config = {"air_quality": {"platform": "demo"}}
 
     assert await async_setup_component.opp, "air_quality", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("air_quality.demo_air_quality_office")
+    state =.opp.states.get("air_quality.demo_air_quality_office")
     assert state is not None
 
     data = state.attributes

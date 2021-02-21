@@ -23,8 +23,8 @@ from openpeerpower.components.weather import (
     ATTR_WEATHER_WIND_SPEED,
 )
 from openpeerpower.const import ATTR_ATTRIBUTION, ATTR_ENTITY_ID, STATE_UNAVAILABLE
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.dt import utcnow
 
 from tests.common import async_fire_time_changed, load_fixture
 from tests.components.accuweather import init_integration
@@ -33,9 +33,9 @@ from tests.components.accuweather import init_integration
 async def test_weather_without_forecast.opp):
     """Test states of the weather without forecast."""
     await init_integration.opp)
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state = opp.states.get("weather.home")
+    state =.opp.states.get("weather.home")
     assert state
     assert state.state == "sunny"
     assert not state.attributes.get(ATTR_FORECAST)
@@ -56,9 +56,9 @@ async def test_weather_without_forecast.opp):
 async def test_weather_with_forecast.opp):
     """Test states of the weather with forecast."""
     await init_integration.opp, forecast=True)
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state = opp.states.get("weather.home")
+    state =.opp.states.get("weather.home")
     assert state
     assert state.state == "sunny"
     assert state.attributes.get(ATTR_WEATHER_HUMIDITY) == 67
@@ -88,7 +88,7 @@ async def test_availability.opp):
     """Ensure that we mark the entities unavailable correctly when service is offline."""
     await init_integration.opp)
 
-    state = opp.states.get("weather.home")
+    state =.opp.states.get("weather.home")
     assert state
     assert state.state != STATE_UNAVAILABLE
     assert state.state == "sunny"
@@ -99,9 +99,9 @@ async def test_availability.opp):
         side_effect=ConnectionError(),
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("weather.home")
+        state =.opp.states.get("weather.home")
         assert state
         assert state.state == STATE_UNAVAILABLE
 
@@ -113,9 +113,9 @@ async def test_availability.opp):
         ),
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("weather.home")
+        state =.opp.states.get("weather.home")
         assert state
         assert state.state != STATE_UNAVAILABLE
         assert state.state == "sunny"
@@ -125,7 +125,7 @@ async def test_manual_update_entity.opp):
     """Test manual update entity via service homeasasistant/update_entity."""
     await init_integration.opp, forecast=True)
 
-    await async_setup_component.opp, "openpeerpowerr", {})
+    await async_setup_component.opp, "openpeerpower", {})
 
     current = json.loads(load_fixture("accuweather/current_conditions_data.json"))
     forecast = json.loads(load_fixture("accuweather/forecast_data.json"))
@@ -137,8 +137,8 @@ async def test_manual_update_entity.opp):
         "openpeerpower.components.accuweather.AccuWeather.async_get_forecast",
         return_value=forecast,
     ) as mock_forecast:
-        await opp..services.async_call(
-            "openpeerpowerr",
+        await.opp.services.async_call(
+            "openpeerpower",
             "update_entity",
             {ATTR_ENTITY_ID: ["weather.home"]},
             blocking=True,
@@ -151,5 +151,5 @@ async def test_unsupported_condition_icon_data.opp):
     """Test with unsupported condition icon data."""
     await init_integration.opp, forecast=True, unsupported_icon=True)
 
-    state = opp.states.get("weather.home")
+    state =.opp.states.get("weather.home")
     assert state.attributes.get(ATTR_FORECAST_CONDITION) is None

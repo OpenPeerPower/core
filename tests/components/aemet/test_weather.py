@@ -22,7 +22,7 @@ from openpeerpower.components.weather import (
     ATTR_WEATHER_WIND_SPEED,
 )
 from openpeerpower.const import ATTR_ATTRIBUTION
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 from .util import async_init_integration
 
@@ -31,12 +31,12 @@ async def test_aemet_weather.opp):
     """Test states of the weather."""
 
     now = dt_util.parse_datetime("2021-01-09 12:00:00+00:00")
-    with patch("openpeerpowerr.util.dt.now", return_value=now), patch(
-        "openpeerpowerr.util.dt.utcnow", return_value=now
+    with patch("openpeerpower.util.dt.now", return_value=now), patch(
+        "openpeerpower.util.dt.utcnow", return_value=now
     ):
         await async_init_integration.opp)
 
-    state = opp.states.get("weather.aemet_daily")
+    state =.opp.states.get("weather.aemet_daily")
     assert state
     assert state.state == ATTR_CONDITION_SNOWY
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
@@ -57,5 +57,5 @@ async def test_aemet_weather.opp):
     assert forecast.get(ATTR_FORECAST_WIND_BEARING) == 45.0
     assert forecast.get(ATTR_FORECAST_WIND_SPEED) == 20
 
-    state = opp.states.get("weather.aemet_hourly")
+    state =.opp.states.get("weather.aemet_hourly")
     assert state is None

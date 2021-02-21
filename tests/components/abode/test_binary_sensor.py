@@ -18,7 +18,7 @@ from .common import setup_platform
 async def test_entity_registry.opp):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform.opp, BINARY_SENSOR_DOMAIN)
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get("binary_sensor.front_door")
     assert entry.unique_id == "2834013428b6035fba7d4054aa7b25a3"
@@ -28,7 +28,7 @@ async def test_attributes.opp):
     """Test the binary sensor attributes are correct."""
     await setup_platform.opp, BINARY_SENSOR_DOMAIN)
 
-    state = opp.states.get("binary_sensor.front_door")
+    state =.opp.states.get("binary_sensor.front_door")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
     assert state.attributes.get(ATTR_DEVICE_ID) == "RF:01430030"

@@ -3,8 +3,8 @@
 from json import loads
 
 from openpeerpower.components.advantage_air.climate import (
-    OPP_FAN_MODES,
-    OPP_HVAC_MODES,
+    HASS_FAN_MODES,
+    HASS_HVAC_MODES,
 )
 from openpeerpower.components.advantage_air.const import (
     ADVANTAGE_AIR_STATE_OFF,
@@ -45,13 +45,13 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
     )
     await add_mock_config.opp)
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     assert len(aioclient_mock.mock_calls) == 1
 
     # Test Main Climate Entity
     entity_id = "climate.ac_one"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert state.state == HVAC_MODE_FAN_ONLY
     assert state.attributes.get("min_temp") == 16
@@ -63,7 +63,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
     assert entry
     assert entry.unique_id == "uniqueid-ac1"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: [entity_id], ATTR_HVAC_MODE: HVAC_MODE_FAN_ONLY},
@@ -74,11 +74,11 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-2][1].path == "/setAircon"
     data = loads(aioclient_mock.mock_calls[-2][1].query["json"])
     assert data["ac1"]["info"]["state"] == ADVANTAGE_AIR_STATE_ON
-    assert data["ac1"]["info"]["mode"] == OPP_HVAC_MODES[HVAC_MODE_FAN_ONLY]
+    assert data["ac1"]["info"]["mode"] == HASS_HVAC_MODES[HVAC_MODE_FAN_ONLY]
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: [entity_id], ATTR_HVAC_MODE: HVAC_MODE_OFF},
@@ -92,7 +92,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_FAN_MODE,
         {ATTR_ENTITY_ID: [entity_id], ATTR_FAN_MODE: FAN_LOW},
@@ -102,11 +102,11 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-2][0] == "GET"
     assert aioclient_mock.mock_calls[-2][1].path == "/setAircon"
     data = loads(aioclient_mock.mock_calls[-2][1].query["json"])
-    assert data["ac1"]["info"]["fan"] == OPP_FAN_MODES[FAN_LOW]
+    assert data["ac1"]["info"]["fan"] == HASS_FAN_MODES[FAN_LOW]
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: [entity_id], ATTR_TEMPERATURE: 25},
@@ -122,7 +122,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
 
     # Test Climate Zone Entity
     entity_id = "climate.zone_open_with_sensor"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert state.attributes.get("min_temp") == 16
     assert state.attributes.get("max_temp") == 32
@@ -133,7 +133,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
     assert entry
     assert entry.unique_id == "uniqueid-ac1-z01"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: [entity_id], ATTR_HVAC_MODE: HVAC_MODE_FAN_ONLY},
@@ -145,7 +145,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: [entity_id], ATTR_HVAC_MODE: HVAC_MODE_OFF},
@@ -157,7 +157,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: [entity_id], ATTR_TEMPERATURE: 25},
@@ -185,7 +185,7 @@ async def test_climate_async_failed_update.opp, aioclient_mock):
 
     assert len(aioclient_mock.mock_calls) == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: ["climate.ac_one"], ATTR_TEMPERATURE: 25},

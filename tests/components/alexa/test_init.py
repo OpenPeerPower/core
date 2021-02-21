@@ -1,7 +1,7 @@
 """Tests for alexa."""
 from openpeerpower.components import logbook
 from openpeerpower.components.alexa.const import EVENT_ALEXA_SMART_HOME
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.components.logbook.test_init import MockLazyEventPartialState
 

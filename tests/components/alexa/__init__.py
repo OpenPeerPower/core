@@ -2,7 +2,7 @@
 from uuid import uuid4
 
 from openpeerpower.components.alexa import config, smart_home
-from openpeerpowerr.core import Context, callback
+from openpeerpower.core import Context, callback
 
 from tests.common import async_mock_service
 
@@ -92,7 +92,7 @@ async def assert_request_calls_service(
     payload=None,
     instance=None,
 ):
-    """Assert an API request calls a opp service."""
+    """Assert an API request calls a.opp service."""
     context = Context()
     request = get_new_request(namespace, name, endpoint)
     if payload:
@@ -103,8 +103,8 @@ async def assert_request_calls_service(
     domain, service_name = service.split(".")
     calls = async_mock_service.opp, domain, service_name)
 
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request, context)
-    await opp..async_block_till_done()
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     call = calls[0]
@@ -127,8 +127,8 @@ async def assert_request_fails(
     domain, service_name = service_not_called.split(".")
     call = async_mock_service.opp, domain, service_name)
 
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await opp..async_block_till_done()
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    await.opp.async_block_till_done()
 
     assert not call
     assert "event" in msg
@@ -184,8 +184,8 @@ async def reported_properties.opp, endpoint):
     assertions about the properties.
     """
     request = get_new_request("Alexa", "ReportState", endpoint)
-    msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await opp..async_block_till_done()
+    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    await.opp.async_block_till_done()
     return ReportedProperties(msg["context"]["properties"])
 
 
@@ -196,7 +196,7 @@ class ReportedProperties:
         """Initialize class."""
         self.properties = properties
 
-    def assert_not_op._property(self, namespace, name):
+    def assert_not_has_property(self, namespace, name):
         """Assert a property does not exist."""
         for prop in self.properties:
             if prop["namespace"] == namespace and prop["name"] == name:

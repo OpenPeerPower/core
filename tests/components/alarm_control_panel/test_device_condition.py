@@ -11,8 +11,8 @@ from openpeerpower.const import (
     STATE_ALARM_DISARMED,
     STATE_ALARM_TRIGGERED,
 )
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -46,7 +46,7 @@ def calls.opp):
 async def test_get_no_conditions.opp, device_reg, entity_reg):
     """Test we get the expected conditions from a alarm_control_panel."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -59,7 +59,7 @@ async def test_get_no_conditions.opp, device_reg, entity_reg):
 async def test_get_minimum_conditions.opp, device_reg, entity_reg):
     """Test we get the expected conditions from a alarm_control_panel."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -92,7 +92,7 @@ async def test_get_minimum_conditions.opp, device_reg, entity_reg):
 async def test_get_maximum_conditions.opp, device_reg, entity_reg):
     """Test we get the expected conditions from a alarm_control_panel."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -275,7 +275,7 @@ async def test_if_state.opp, calls):
    .opp.bus.async_fire("test_event4")
    .opp.bus.async_fire("test_event5")
    .opp.bus.async_fire("test_event6")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_triggered - event - test_event1"
 
@@ -286,7 +286,7 @@ async def test_if_state.opp, calls):
    .opp.bus.async_fire("test_event4")
    .opp.bus.async_fire("test_event5")
    .opp.bus.async_fire("test_event6")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_disarmed - event - test_event2"
 
@@ -297,7 +297,7 @@ async def test_if_state.opp, calls):
    .opp.bus.async_fire("test_event4")
    .opp.bus.async_fire("test_event5")
    .opp.bus.async_fire("test_event6")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[2].data["some"] == "is_armed_home - event - test_event3"
 
@@ -308,7 +308,7 @@ async def test_if_state.opp, calls):
    .opp.bus.async_fire("test_event4")
    .opp.bus.async_fire("test_event5")
    .opp.bus.async_fire("test_event6")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data["some"] == "is_armed_away - event - test_event4"
 
@@ -319,7 +319,7 @@ async def test_if_state.opp, calls):
    .opp.bus.async_fire("test_event4")
    .opp.bus.async_fire("test_event5")
    .opp.bus.async_fire("test_event6")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 5
     assert calls[4].data["some"] == "is_armed_night - event - test_event5"
 
@@ -330,6 +330,6 @@ async def test_if_state.opp, calls):
    .opp.bus.async_fire("test_event4")
    .opp.bus.async_fire("test_event5")
    .opp.bus.async_fire("test_event6")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 6
     assert calls[5].data["some"] == "is_armed_custom_bypass - event - test_event6"

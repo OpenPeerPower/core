@@ -29,7 +29,7 @@ from openpeerpower.components.alarmdecoder.const import (
 )
 from openpeerpower.components.binary_sensor import DEVICE_CLASS_WINDOW
 from openpeerpower.const import CONF_HOST, CONF_PORT, CONF_PROTOCOL
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry
 
@@ -58,14 +58,14 @@ from tests.common import MockConfigEntry
 async def test_setups.opp: OpenPeerPower, protocol, connection, title):
     """Test flow for setting up the available AlarmDecoder protocols."""
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_PROTOCOL: protocol},
     )
@@ -81,7 +81,7 @@ async def test_setups.opp: OpenPeerPower, protocol, connection, title):
         "openpeerpower.components.alarmdecoder.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], connection
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -90,7 +90,7 @@ async def test_setups.opp: OpenPeerPower, protocol, connection, title):
             **connection,
             CONF_PROTOCOL: protocol,
         }
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
@@ -104,14 +104,14 @@ async def test_setup_connection_error.opp: OpenPeerPower):
     protocol = PROTOCOL_SOCKET
     connection_settings = {CONF_HOST: host, CONF_PORT: port}
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_PROTOCOL: protocol},
     )
@@ -123,7 +123,7 @@ async def test_setup_connection_error.opp: OpenPeerPower):
         "openpeerpower.components.alarmdecoder.config_flow.AdExt.open",
         side_effect=NoDeviceError,
     ), patch("openpeerpower.components.alarmdecoder.config_flow.AdExt.close"):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], connection_settings
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -138,17 +138,17 @@ async def test_options_arm_flow.opp: OpenPeerPower):
         CONF_CODE_ARM_REQUIRED: True,
     }
     entry = MockConfigEntry(domain=DOMAIN)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    result = await opp..config_entries.options.async_init(entry.entry_id)
+    result = await.opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"edit_selection": "Arming Settings"},
     )
@@ -159,7 +159,7 @@ async def test_options_arm_flow.opp: OpenPeerPower):
     with patch(
         "openpeerpower.components.alarmdecoder.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input=user_input,
         )
@@ -176,17 +176,17 @@ async def test_options_zone_flow.opp: OpenPeerPower):
     zone_number = "2"
     zone_settings = {CONF_ZONE_NAME: "Front Entry", CONF_ZONE_TYPE: DEVICE_CLASS_WINDOW}
     entry = MockConfigEntry(domain=DOMAIN)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    result = await opp..config_entries.options.async_init(entry.entry_id)
+    result = await.opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"edit_selection": "Zones"},
     )
@@ -194,7 +194,7 @@ async def test_options_zone_flow.opp: OpenPeerPower):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "zone_select"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_ZONE_NUMBER: zone_number},
     )
@@ -202,7 +202,7 @@ async def test_options_zone_flow.opp: OpenPeerPower):
     with patch(
         "openpeerpower.components.alarmdecoder.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input=zone_settings,
         )
@@ -214,12 +214,12 @@ async def test_options_zone_flow.opp: OpenPeerPower):
     }
 
     # Make sure zone can be removed...
-    result = await opp..config_entries.options.async_init(entry.entry_id)
+    result = await.opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"edit_selection": "Zones"},
     )
@@ -227,7 +227,7 @@ async def test_options_zone_flow.opp: OpenPeerPower):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "zone_select"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_ZONE_NUMBER: zone_number},
     )
@@ -235,7 +235,7 @@ async def test_options_zone_flow.opp: OpenPeerPower):
     with patch(
         "openpeerpower.components.alarmdecoder.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input={},
         )
@@ -252,17 +252,17 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     zone_number = "2"
     zone_settings = {CONF_ZONE_NAME: "Front Entry", CONF_ZONE_TYPE: DEVICE_CLASS_WINDOW}
     entry = MockConfigEntry(domain=DOMAIN)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    result = await opp..config_entries.options.async_init(entry.entry_id)
+    result = await.opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"edit_selection": "Zones"},
     )
@@ -271,7 +271,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     assert result["step_id"] == "zone_select"
 
     # Zone Number must be int
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_ZONE_NUMBER: "asd"},
     )
@@ -280,7 +280,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     assert result["step_id"] == "zone_select"
     assert result["errors"] == {CONF_ZONE_NUMBER: "int"}
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_ZONE_NUMBER: zone_number},
     )
@@ -289,7 +289,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     assert result["step_id"] == "zone_details"
 
     # CONF_RELAY_ADDR & CONF_RELAY_CHAN are inclusive
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={**zone_settings, CONF_RELAY_ADDR: "1"},
     )
@@ -298,7 +298,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     assert result["step_id"] == "zone_details"
     assert result["errors"] == {"base": "relay_inclusive"}
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={**zone_settings, CONF_RELAY_CHAN: "1"},
     )
@@ -308,7 +308,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     assert result["errors"] == {"base": "relay_inclusive"}
 
     # CONF_RELAY_ADDR, CONF_RELAY_CHAN must be int
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={**zone_settings, CONF_RELAY_ADDR: "abc", CONF_RELAY_CHAN: "abc"},
     )
@@ -321,7 +321,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     }
 
     # CONF_ZONE_LOOP depends on CONF_ZONE_RFID
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={**zone_settings, CONF_ZONE_LOOP: "1"},
     )
@@ -331,7 +331,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     assert result["errors"] == {CONF_ZONE_LOOP: "loop_rfid"}
 
     # CONF_ZONE_LOOP must be int
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={**zone_settings, CONF_ZONE_RFID: "rfid123", CONF_ZONE_LOOP: "ab"},
     )
@@ -341,7 +341,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     assert result["errors"] == {CONF_ZONE_LOOP: "int"}
 
     # CONF_ZONE_LOOP must be between [1,4]
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={**zone_settings, CONF_ZONE_RFID: "rfid123", CONF_ZONE_LOOP: "5"},
     )
@@ -354,7 +354,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     with patch(
         "openpeerpower.components.alarmdecoder.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input={
                 **zone_settings,
@@ -402,21 +402,21 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
 async def test_one_device_allowed.opp, protocol, connection):
     """Test that only one AlarmDecoder device is allowed."""
     flow = config_flow.AlarmDecoderFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
 
     MockConfigEntry(
         domain=DOMAIN,
         data=connection,
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_PROTOCOL: protocol},
     )
@@ -424,7 +424,7 @@ async def test_one_device_allowed.opp, protocol, connection):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "protocol"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], connection
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

@@ -7,8 +7,8 @@ import pytest
 from openpeerpower.components import alexa
 from openpeerpower.components.alexa import const
 from openpeerpower.const import HTTP_NOT_FOUND, HTTP_UNAUTHORIZED
-from openpeerpowerr.core import callback
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import callback
+from openpeerpower.setup import async_setup_component
 
 SESSION_ID = "amzn1.echo-api.session.0000000-0000-0000-0000-00000000000"
 APPLICATION_ID = "amzn1.echo-sdk-ams.app.000000-d0ed-0000-ad00-000000d00ebe"
@@ -36,7 +36,7 @@ def alexa_client(loop,.opp,.opp_client):
             alexa.DOMAIN,
             {
                 # Key is here to verify we allow other keys in config too
-                "openpeerpowerr": {},
+                "openpeerpower": {},
                 "alexa": {
                     "flash_briefings": {
                         "password": "pass/abc",

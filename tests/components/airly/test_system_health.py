@@ -5,7 +5,7 @@ from unittest.mock import Mock
 from aiohttp import ClientError
 
 from openpeerpower.components.airly.const import DOMAIN
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import get_system_health_info
 

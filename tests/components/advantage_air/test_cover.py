@@ -39,13 +39,13 @@ async def test_cover_async_setup_entry.opp, aioclient_mock):
 
     await add_mock_config.opp)
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     assert len(aioclient_mock.mock_calls) == 1
 
     # Test Cover Zone Entity
     entity_id = "cover.zone_open_without_sensor"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
     assert state.state == STATE_OPEN
     assert state.attributes.get("device_class") == DEVICE_CLASS_DAMPER
@@ -55,7 +55,7 @@ async def test_cover_async_setup_entry.opp, aioclient_mock):
     assert entry
     assert entry.unique_id == "uniqueid-ac2-z01"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         COVER_DOMAIN,
         SERVICE_CLOSE_COVER,
         {ATTR_ENTITY_ID: [entity_id]},
@@ -69,7 +69,7 @@ async def test_cover_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         COVER_DOMAIN,
         SERVICE_OPEN_COVER,
         {ATTR_ENTITY_ID: [entity_id]},
@@ -84,7 +84,7 @@ async def test_cover_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         COVER_DOMAIN,
         SERVICE_SET_COVER_POSITION,
         {ATTR_ENTITY_ID: [entity_id], ATTR_POSITION: 50},
@@ -98,7 +98,7 @@ async def test_cover_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         COVER_DOMAIN,
         SERVICE_SET_COVER_POSITION,
         {ATTR_ENTITY_ID: [entity_id], ATTR_POSITION: 0},

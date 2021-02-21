@@ -16,7 +16,7 @@ async def test_form.opp, aioclient_mock):
         text=TEST_SYSTEM_DATA,
     )
 
-    result1 = await opp..config_entries.flow.async_init(
+    result1 = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result1["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -27,7 +27,7 @@ async def test_form.opp, aioclient_mock):
         "openpeerpower.components.advantage_air.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result1["flow_id"],
             USER_INPUT,
         )
@@ -36,14 +36,14 @@ async def test_form.opp, aioclient_mock):
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "testname"
     assert result2["data"] == USER_INPUT
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(mock_setup_entry.mock_calls) == 1
 
     # Test Duplicate Config Flow
-    result3 = await opp..config_entries.flow.async_init(
+    result3 = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
-    result4 = await opp..config_entries.flow.async_configure(
+    result4 = await.opp.config_entries.flow.async_configure(
         result3["flow_id"],
         USER_INPUT,
     )
@@ -58,10 +58,10 @@ async def test_form_cannot_connect.opp, aioclient_mock):
         exc=SyntaxError,
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         USER_INPUT,
     )
