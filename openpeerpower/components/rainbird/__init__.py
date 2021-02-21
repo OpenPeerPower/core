@@ -11,8 +11,8 @@ from openpeerpower.const import (
     CONF_PASSWORD,
     CONF_TRIGGER_TIME,
 )
-from openpeerpowerr.helpers import discovery
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers import discovery
+import openpeerpower.helpers.config_validation as cv
 
 CONF_ZONES = "zones"
 

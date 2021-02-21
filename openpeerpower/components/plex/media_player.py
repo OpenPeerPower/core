@@ -80,7 +80,7 @@ def _async_add_entities.opp, registry, async_add_entities, server_id, new_entiti
     """Set up Plex media_player entities."""
     _LOGGER.debug("New entities: %s", new_entities)
     entities = []
-    plexserver = opp.data[PLEX_DOMAIN][SERVERS][server_id]
+    plexserver =.opp.data[PLEX_DOMAIN][SERVERS][server_id]
     for entity_params in new_entities:
         plex_mp = PlexMediaPlayer(plexserver, **entity_params)
         entities.append(plex_mp)
@@ -129,7 +129,7 @@ class PlexMediaPlayer(MediaPlayerEntity):
         # Initializes other attributes
         self.session = session
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
         _LOGGER.debug("Added %s [%s]", self.entity_id, self.unique_id)
         self.async_on_remove(
@@ -156,7 +156,7 @@ class PlexMediaPlayer(MediaPlayerEntity):
         self.session = session
         if source:
             self.player_source = source
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
         async_dispatcher_send(
             self.opp,
@@ -167,7 +167,7 @@ class PlexMediaPlayer(MediaPlayerEntity):
     def async_update_from_websocket(self, state):
         """Update the entity based on new websocket data."""
         self.update_state(state)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
         async_dispatcher_send(
             self.opp,

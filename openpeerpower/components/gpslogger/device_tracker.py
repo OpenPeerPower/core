@@ -118,9 +118,9 @@ class GPSLoggerEntity(TrackerEntity, RestoreEntity):
         """Return the source type, eg gps or router, of the device."""
         return SOURCE_TYPE_GPS
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register state update callback."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self._unsub_dispatcher = async_dispatcher_connect(
             self.opp, TRACKER_UPDATE, self._async_receive_data
         )
@@ -155,9 +155,9 @@ class GPSLoggerEntity(TrackerEntity, RestoreEntity):
         }
         self._battery = attr.get(ATTR_BATTERY_LEVEL)
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Clean up after entity before removal."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         self._unsub_dispatcher()
 
     @callback
@@ -170,4 +170,4 @@ class GPSLoggerEntity(TrackerEntity, RestoreEntity):
         self._battery = battery
         self._accuracy = accuracy
         self._attributes.update(attributes)
-        self.async_write_op.state()
+        self.async_write_ha_state()

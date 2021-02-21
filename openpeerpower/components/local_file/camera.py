@@ -42,7 +42,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         """Update the file path."""
         file_path = call.data.get(CONF_FILE_PATH)
         entity_ids = call.data.get(ATTR_ENTITY_ID)
-        cameras = opp.data[DATA_LOCAL_FILE]
+        cameras =.opp.data[DATA_LOCAL_FILE]
 
         for camera in cameras:
             if camera.entity_id in entity_ids:
@@ -97,7 +97,7 @@ class LocalFile(Camera):
         """Update the file_path."""
         self.check_file_path_access(file_path)
         self._file_path = file_path
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def name(self):

@@ -3,7 +3,7 @@ import asyncio
 from datetime import timedelta
 import logging
 
-from pyControl4.error_op.dling import C4Exception
+from pyControl4.error_handling import C4Exception
 from pyControl4.light import C4Light
 
 from openpeerpower.components.light import (
@@ -33,7 +33,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up Control4 lights from a config entry."""
-    entry_data = opp.data[DOMAIN][entry.entry_id]
+    entry_data =.opp.data[DOMAIN][entry.entry_id]
     scan_interval = entry_data[CONF_SCAN_INTERVAL]
     _LOGGER.debug(
         "Scan interval = %s",

@@ -35,7 +35,7 @@ async def async_setup_platform(
     for config in discovery_info:
         address, connection_id = config[CONF_ADDRESS]
         addr = pypck.lcn_addr.LcnAddr(*address)
-        connections = opp.data[DATA_LCN][CONF_CONNECTIONS]
+        connections =.opp.data[DATA_LCN][CONF_CONNECTIONS]
         connection = get_connection(connections, connection_id)
         address_connection = connection.get_address_conn(addr)
 
@@ -64,12 +64,12 @@ class LcnClimate(LcnEntity, ClimateEntity):
         self._target_temperature = None
         self._is_on = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if not self.device_connection.is_group:
-            await self.device_connection.activate_status_request_op.dler(self.variable)
-            await self.device_connection.activate_status_request_op.dler(self.setpoint)
+            await self.device_connection.activate_status_request_handler(self.variable)
+            await self.device_connection.activate_status_request_handler(self.setpoint)
 
     @property
     def supported_features(self):
@@ -130,13 +130,13 @@ class LcnClimate(LcnEntity, ClimateEntity):
             ):
                 return
             self._is_on = True
-            self.async_write_op.state()
+            self.async_write_ha_state()
         elif hvac_mode == const.HVAC_MODE_OFF:
             if not await self.device_connection.lock_regulator(self.regulator_id, True):
                 return
             self._is_on = False
             self._target_temperature = None
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_set_temperature(self, **kwargs):
         """Set new target temperature."""
@@ -149,7 +149,7 @@ class LcnClimate(LcnEntity, ClimateEntity):
         ):
             return
         self._target_temperature = temperature
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def input_received(self, input_obj):
         """Set temperature value when LCN input object is received."""
@@ -163,4 +163,4 @@ class LcnClimate(LcnEntity, ClimateEntity):
             if self._is_on:
                 self._target_temperature = input_obj.get_value().to_var_unit(self.unit)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()

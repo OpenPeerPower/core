@@ -16,7 +16,7 @@ from . import (
     SUPPORT_COLOR,
 )
 
-INTENT_SET = "OppLightSet"
+INTENT_SET = "HassLightSet"
 
 
 async def async_setup_intents.opp: OpenPeerPower) -> None:
@@ -34,11 +34,11 @@ class SetIntentHandler(intent.IntentHandler):
         vol.Optional("brightness"): vol.All(vol.Coerce(int), vol.Range(0, 100)),
     }
 
-    async def async_op.dle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
-        """Handle the opp intent."""
-        opp = intent_obj.opp
+    async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
+        """Handle the.opp intent."""
+       .opp = intent_obj.opp
         slots = self.async_validate_slots(intent_obj.slots)
-        state = opp.helpers.intent.async_match_state(
+        state =.opp.helpers.intent.async_match_state(
             slots["name"]["value"],.opp.states.async_all(DOMAIN)
         )
 
@@ -57,7 +57,7 @@ class SetIntentHandler(intent.IntentHandler):
             service_data[ATTR_BRIGHTNESS_PCT] = slots["brightness"]["value"]
             speech_parts.append(f"{slots['brightness']['value']}% brightness")
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN, SERVICE_TURN_ON, service_data, context=intent_obj.context
         )
 

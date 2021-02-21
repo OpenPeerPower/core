@@ -29,7 +29,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Add AccuWeather entities from a config_entry."""
     name = config_entry.data[CONF_NAME]
 
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
 
     sensors = []
     for sensor in SENSOR_TYPES:

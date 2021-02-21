@@ -8,9 +8,9 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_NAME, TIME_MINUTES
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -92,7 +92,7 @@ class TMBSensor(Entity):
 
     @property
     def unique_id(self):
-        """Return a unique, OPP-friendly identifier for this entity."""
+        """Return a unique, HASS-friendly identifier for this entity."""
         return f"{self._stop}_{self._line}"
 
     @property

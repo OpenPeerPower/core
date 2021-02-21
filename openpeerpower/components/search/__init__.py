@@ -5,9 +5,9 @@ import logging
 import voluptuous as vol
 
 from openpeerpower.components import automation, group, script, websocket_api
-from openpeerpower.components.openpeerpowerr import scene
-from openpeerpowerr.core import OpenPeerPower, callback, split_entity_id
-from openpeerpowerr.helpers import device_registry, entity_registry
+from openpeerpower.components.openpeerpower import scene
+from openpeerpower.core import OpenPeerPower, callback, split_entity_id
+from openpeerpower.helpers import device_registry, entity_registry
 
 DOMAIN = "search"
 _LOGGER = logging.getLogger(__name__)
@@ -71,7 +71,7 @@ class Searcher:
         entity_reg: entity_registry.EntityRegistry,
     ):
         """Search results."""
-        self.opp = opp
+        self.opp =.opp
         self._device_reg = device_reg
         self._entity_reg = entity_reg
         self.results = defaultdict(set)

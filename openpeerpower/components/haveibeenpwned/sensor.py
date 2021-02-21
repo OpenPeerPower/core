@@ -96,7 +96,7 @@ class HaveIBeenPwnedSensor(Entity):
 
         return val
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Get initial data."""
         # To make sure we get initial data for the sensors ignoring the normal
         # throttle of 15 minutes but using an update throttle of 5 seconds
@@ -109,7 +109,7 @@ class HaveIBeenPwnedSensor(Entity):
         # Schedule a forced update 5 seconds in the future if the update above
         # returned no data for this sensors email. This is mainly to make sure
         # that we don't get HTTP Error "too many requests" and to have initial
-        # data after opp startup once we have the data it will update as
+        # data after.opp startup once we have the data it will update as
         # normal using update
         if self._email not in self._data.data:
             track_point_in_time(
@@ -120,7 +120,7 @@ class HaveIBeenPwnedSensor(Entity):
             return
 
         self._state = len(self._data.data[self._email])
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def update(self):
         """Update data and see if it contains data for our email."""

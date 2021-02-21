@@ -40,7 +40,7 @@ ACTION_DELETE = "delete"
 async def async_setup.opp, config):
     """Set up the config component."""
    .opp.components.frontend.async_register_built_in_panel(
-        "config", "config", "opp:cog", require_admin=True
+        "config", "config", .opp:cog", require_admin=True
     )
 
     async def setup_panel(panel_name):
@@ -119,7 +119,7 @@ class BaseEditConfigView(OpenPeerPowerView):
 
     async def get(self, request, config_key):
         """Fetch device specific config."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
         async with self.mutation_lock:
             current = await self.read_config.opp)
             value = self._get_value.opp, current, config_key)
@@ -141,7 +141,7 @@ class BaseEditConfigView(OpenPeerPowerView):
         except vol.Invalid as err:
             return self.json_message(f"Key malformed: {err}", HTTP_BAD_REQUEST)
 
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         try:
             # We just validate, we don't store that data because
@@ -153,13 +153,13 @@ class BaseEditConfigView(OpenPeerPowerView):
         except (vol.Invalid, OpenPeerPowerError) as err:
             return self.json_message(f"Message malformed: {err}", HTTP_BAD_REQUEST)
 
-        path = opp.config.path(self.path)
+        path =.opp.config.path(self.path)
 
         async with self.mutation_lock:
             current = await self.read_config.opp)
             self._write_value.opp, current, config_key, data)
 
-            await opp..async_add_executor_job(_write, path, current)
+            await.opp.async_add_executor_job(_write, path, current)
 
         if self.post_write_hook is not None:
            .opp.async_create_task(
@@ -170,17 +170,17 @@ class BaseEditConfigView(OpenPeerPowerView):
 
     async def delete(self, request, config_key):
         """Remove an entry."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
         async with self.mutation_lock:
             current = await self.read_config.opp)
             value = self._get_value.opp, current, config_key)
-            path = opp.config.path(self.path)
+            path =.opp.config.path(self.path)
 
             if value is None:
                 return self.json_message("Resource not found", HTTP_NOT_FOUND)
 
             self._delete_value.opp, current, config_key)
-            await opp..async_add_executor_job(_write, path, current)
+            await.opp.async_add_executor_job(_write, path, current)
 
         if self.post_write_hook is not None:
            .opp.async_create_task(self.post_write_hook(ACTION_DELETE, config_key))
@@ -189,7 +189,7 @@ class BaseEditConfigView(OpenPeerPowerView):
 
     async def read_config(self,.opp):
         """Read the config."""
-        current = await opp..async_add_executor_job(_read,.opp.config.path(self.path))
+        current = await.opp.async_add_executor_job(_read,.opp.config.path(self.path))
         if not current:
             current = self._empty_config()
         return current

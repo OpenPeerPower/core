@@ -1,7 +1,7 @@
 {
   "domain": "namecheapdns",
   "name": "Namecheap FreeDNS",
-  "documentation": "https://www.openpeerpower.io/integrations/namecheapdns",
+  "documentation": "https://www.open-peer-power.io/integrations/namecheapdns",
   "requirements": ["defusedxml==0.6.0"],
   "codeowners": []
 }

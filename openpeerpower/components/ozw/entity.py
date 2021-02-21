@@ -33,7 +33,7 @@ class ZWaveDeviceEntityValues:
 
     def __init__(self,.opp, options, schema, primary_value):
         """Initialize the values object with the passed entity schema."""
-        self._opp = opp
+        self..opp =.opp
         self._entity_created = False
         self._schema = copy.deepcopy(schema)
         self._values = {}
@@ -97,7 +97,7 @@ class ZWaveDeviceEntityValues:
             # If the entity has already been created, notify it of the new value.
             if self._entity_created:
                 async_dispatcher_send(
-                    self._opp, f"{DOMAIN}_{self.values_id}_value_added"
+                    self..opp, f"{DOMAIN}_{self.values_id}_value_added"
                 )
 
             # Check if entity has all required values and create the entity if needed.
@@ -137,7 +137,7 @@ class ZWaveDeviceEntityValues:
         self._entity_created = True
 
         if component in PLATFORMS:
-            async_dispatcher_send(self._opp, f"{DOMAIN}_new_{component}", self)
+            async_dispatcher_send(self..opp, f"{DOMAIN}_new_{component}", self)
 
     @property
     def values_id(self):
@@ -160,7 +160,7 @@ class ZWaveDeviceEntity(Entity):
         To be overridden by platforms needing this event.
         """
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added."""
         # Add dispatcher and OZW listeners callbacks.
         # Add to on_remove so they will be cleaned up on entity removal.
@@ -239,7 +239,7 @@ class ZWaveDeviceEntity(Entity):
         """
         if value.value_id_key in (v.value_id_key for v in self.values if v):
             self.on_value_update()
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @callback
     def _value_added(self):
@@ -256,7 +256,7 @@ class ZWaveDeviceEntity(Entity):
         Should not be overridden by subclasses.
         """
         self.on_value_update()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def should_poll(self):

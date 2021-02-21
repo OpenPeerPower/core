@@ -2,7 +2,7 @@
   "domain": "wolflink",
   "name": "Wolf SmartSet Service",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/wolflink",
+  "documentation": "https://www.open-peer-power.io/integrations/wolflink",
   "requirements": ["wolf_smartset==0.1.8"],
   "codeowners": ["@adamkrol93"]
 }

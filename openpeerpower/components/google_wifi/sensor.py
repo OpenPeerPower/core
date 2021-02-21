@@ -13,9 +13,9 @@ from openpeerpower.const import (
     STATE_UNKNOWN,
     TIME_DAYS,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle, dt
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle, dt
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -30,7 +30,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up IPP sensor based on a config entry."""
-    coordinator: IPPDataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id]
+    coordinator: IPPDataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id]
 
     # config flow sets this to either UUID, serial number or None
     unique_id = entry.unique_id

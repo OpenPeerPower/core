@@ -5,14 +5,14 @@ import voluptuous as vol
 
 from openpeerpower.components.mqtt import valid_publish_topic
 from openpeerpower.const import MATCH_ALL
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entityfilter import (
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entityfilter import (
     INCLUDE_EXCLUDE_BASE_FILTER_SCHEMA,
     convert_include_exclude_filter,
 )
-from openpeerpowerr.helpers.event import async_track_state_change
-from openpeerpowerr.helpers.json import JSONEncoder
+from openpeerpower.helpers.event import async_track_state_change
+from openpeerpower.helpers.json import JSONEncoder
 
 CONF_BASE_TOPIC = "base_topic"
 CONF_PUBLISH_ATTRIBUTES = "publish_attributes"

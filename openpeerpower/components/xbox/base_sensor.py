@@ -1,7 +1,7 @@
 """Base Sensor for the Xbox Integration."""
 from typing import Optional
 
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from . import PresenceData, XboxUpdateCoordinator
 from .const import DOMAIN

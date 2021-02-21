@@ -109,9 +109,9 @@ class SignalUpdateCallback:
 
     def __init__(self,.opp: OpenPeerPower):
         """Initialize EventCallback."""
-        self._opp = opp
+        self..opp =.opp
 
-    async def async_op.dle_event(self, event_message: EventMessage):
+    async def async_handle_event(self, event_message: EventMessage):
         """Process an incoming EventMessage."""
         if not event_message.resource_update_name:
             return
@@ -120,7 +120,7 @@ class SignalUpdateCallback:
         if not events:
             return
         _LOGGER.debug("Event Update %s", events.keys())
-        device_registry = await self._opp.helpers.device_registry.async_get_registry()
+        device_registry = await self..opp.helpers.device_registry.async_get_registry()
         device_entry = device_registry.async_get_device({(DOMAIN, device_id)})
         if not device_entry:
             return
@@ -133,7 +133,7 @@ class SignalUpdateCallback:
                 "type": event_type,
                 "timestamp": event_message.timestamp,
             }
-            self._opp.bus.async_fire(NEST_EVENT, message)
+            self..opp.bus.async_fire(NEST_EVENT, message)
 
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
@@ -148,7 +148,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         )
     )
 
-    config = opp.data[DOMAIN][DATA_NEST_CONFIG]
+    config =.opp.data[DOMAIN][DATA_NEST_CONFIG]
 
     session = config_entry_oauth2_flow.OAuth2Session.opp, entry, implementation)
     auth = api.AsyncConfigEntryAuth(
@@ -161,7 +161,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         auth, config[CONF_PROJECT_ID], config[CONF_SUBSCRIBER_ID]
     )
     callback = SignalUpdateCallback.opp)
-    subscriber.set_update_callback(callback.async_op.dle_event)
+    subscriber.set_update_callback(callback.async_handle_event)
 
     try:
         await subscriber.start_async()
@@ -212,7 +212,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
         # Legacy API
         return True
     _LOGGER.debug("Stopping nest subscriber")
-    subscriber = opp.data[DOMAIN][DATA_SUBSCRIBER]
+    subscriber =.opp.data[DOMAIN][DATA_SUBSCRIBER]
     subscriber.stop_async()
     unload_ok = all(
         await asyncio.gather(

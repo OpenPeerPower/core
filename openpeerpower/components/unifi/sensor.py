@@ -5,9 +5,9 @@ Support for uptime sensors of network clients.
 """
 from openpeerpower.components.sensor import DEVICE_CLASS_TIMESTAMP, DOMAIN
 from openpeerpower.const import DATA_MEGABYTES
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+import openpeerpower.util.dt as dt_util
 
 from .const import DOMAIN as UNIFI_DOMAIN
 from .unifi_client import UniFiClient
@@ -19,7 +19,7 @@ UPTIME_SENSOR = "uptime"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up sensors for UniFi integration."""
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     controller.entities[DOMAIN] = {
         RX_SENSOR: set(),
         TX_SENSOR: set(),

@@ -128,7 +128,7 @@ async def async_setup.opp, config):
 
     interval = config[DOMAIN][CONF_SCAN_INTERVAL]
 
-    data = opp.data[DATA_KEY] = VolvoData(config)
+    data =.opp.data[DATA_KEY] = VolvoData(config)
 
     def is_enabled(attr):
         """Return true if the user has enabled the resource."""
@@ -230,11 +230,11 @@ class VolvoEntity(Entity):
         self.component = component
         self.attribute = attribute
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register update dispatcher."""
         self.async_on_remove(
             async_dispatcher_connect(
-                self.opp, SIGNAL_STATE_UPDATED, self.async_write_op.state
+                self.opp, SIGNAL_STATE_UPDATED, self.async_write_ha_state
             )
         )
 

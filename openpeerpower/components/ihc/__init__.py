@@ -295,7 +295,7 @@ def autosetup_ihc_products(
     project = ElementTree.fromstring(project_xml)
 
     # If an auto setup file exist in the configuration it will override
-    yaml_path = opp.config.path(AUTO_SETUP_YAML)
+    yaml_path =.opp.config.path(AUTO_SETUP_YAML)
     if not os.path.isfile(yaml_path):
         yaml_path = os.path.join(os.path.dirname(__file__), AUTO_SETUP_YAML)
     yaml = load_yaml_config_file(yaml_path)

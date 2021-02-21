@@ -10,10 +10,10 @@ import voluptuous as vol
 from openpeerpower.components.media_player.const import DOMAIN as MEDIA_PLAYER_DOMAIN
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST, EVENT_OPENPEERPOWER_STOP
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
-from openpeerpowerr.util import Throttle
+from openpeerpower.exceptions import ConfigEntryNotReady
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.util import Throttle
 
 from . import services
 from .config_flow import format_title
@@ -40,7 +40,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
     if DOMAIN not in config:
         return True
     host = config[DOMAIN][CONF_HOST]
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     if not entries:
         # Create new entry based on config
        .opp.async_create_task(
@@ -123,13 +123,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
-    controller_manager = opp.data[DOMAIN][DATA_CONTROLLER_MANAGER]
+    controller_manager =.opp.data[DOMAIN][DATA_CONTROLLER_MANAGER]
     await controller_manager.disconnect()
    .opp.data.pop(DOMAIN)
 
     services.remove.opp)
 
-    return await opp..config_entries.async_forward_entry_unload(
+    return await.opp.config_entries.async_forward_entry_unload(
         entry, MEDIA_PLAYER_DOMAIN
     )
 
@@ -139,7 +139,7 @@ class ControllerManager:
 
     def __init__(self,.opp, controller):
         """Init the controller manager."""
-        self._opp = opp
+        self..opp =.opp
         self._device_registry = None
         self._entity_registry = None
         self.controller = controller
@@ -148,8 +148,8 @@ class ControllerManager:
     async def connect_listeners(self):
         """Subscribe to events of interest."""
         self._device_registry, self._entity_registry = await asyncio.gather(
-            self._opp.helpers.device_registry.async_get_registry(),
-            self._opp.helpers.entity_registry.async_get_registry(),
+            self..opp.helpers.device_registry.async_get_registry(),
+            self..opp.helpers.entity_registry.async_get_registry(),
         )
         # Handle controller events
         self._signals.append(
@@ -177,7 +177,7 @@ class ControllerManager:
         if event == heos_const.EVENT_PLAYERS_CHANGED:
             self.update_ids(data[heos_const.DATA_MAPPED_IDS])
         # Update players
-        self._opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_HEOS_UPDATED)
+        self..opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_HEOS_UPDATED)
 
     async def _heos_event(self, event):
         """Handle connection event."""
@@ -189,7 +189,7 @@ class ControllerManager:
             except HeosError as ex:
                 _LOGGER.error("Unable to refresh players: %s", ex)
         # Update players
-        self._opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_HEOS_UPDATED)
+        self..opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_HEOS_UPDATED)
 
     def update_ids(self, mapped_ids: Dict[int, int]):
         """Update the IDs in the device and entity registry."""

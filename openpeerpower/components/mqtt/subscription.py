@@ -4,7 +4,7 @@ from typing import Any, Callable, Dict, Optional
 import attr
 
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 from . import debug_info
 from .. import mqtt
@@ -59,7 +59,7 @@ class EntitySubscription:
         )
 
 
-@bind_opp
+@bind.opp
 async def async_subscribe_topics(
    .opp: OpenPeerPowerType,
     new_state: Optional[Dict[str, EntitySubscription]],
@@ -103,7 +103,7 @@ async def async_subscribe_topics(
     return new_state
 
 
-@bind_opp
+@bind.opp
 async def async_unsubscribe_topics.opp: OpenPeerPowerType, sub_state: dict):
     """Unsubscribe from all MQTT topics managed by async_subscribe_topics."""
     return await async_subscribe_topics.opp, sub_state, {})

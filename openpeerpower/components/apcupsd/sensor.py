@@ -17,8 +17,8 @@ from openpeerpower.const import (
     TIME_SECONDS,
     VOLT,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 from . import DOMAIN
 
@@ -119,7 +119,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the APCUPSd sensors."""
-    apcups_data = opp.data[DOMAIN]
+    apcups_data =.opp.data[DOMAIN]
     entities = []
 
     for resource in config[CONF_RESOURCES]:

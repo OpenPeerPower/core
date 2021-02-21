@@ -37,16 +37,15 @@ from openpeerpower.const import (
     STATE_UNKNOWN,
     STATE_UNLOCKED,
 )
-from openpeerpowerr.core import State
-import openpeerpowerr.util.color as color_util
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import State
+import openpeerpower.util.color as color_util
+import openpeerpower.util.dt as dt_util
 
 from .const import (
     API_TEMP_UNITS,
     API_THERMOSTAT_MODES,
     API_THERMOSTAT_PRESETS,
     DATE_FORMAT,
-    PERCENTAGE_FAN_MAP,
     Inputs,
 )
 from .errors import UnsupportedProperty
@@ -320,7 +319,7 @@ class AlexaEndpointHealth(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp = opp
+        self.opp =.opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -668,9 +667,7 @@ class AlexaPercentageController(AlexaCapability):
             raise UnsupportedProperty(name)
 
         if self.entity.domain == fan.DOMAIN:
-            speed = self.entity.attributes.get(fan.ATTR_SPEED)
-
-            return PERCENTAGE_FAN_MAP.get(speed, 0)
+            return self.entity.attributes.get(fan.ATTR_PERCENTAGE) or 0
 
         if self.entity.domain == cover.DOMAIN:
             return self.entity.attributes.get(cover.ATTR_CURRENT_POSITION, 0)
@@ -849,7 +846,7 @@ class AlexaTemperatureSensor(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp = opp
+        self.opp =.opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -915,7 +912,7 @@ class AlexaContactSensor(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp = opp
+        self.opp =.opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -964,7 +961,7 @@ class AlexaMotionSensor(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp = opp
+        self.opp =.opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -1015,7 +1012,7 @@ class AlexaThermostatController(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp = opp
+        self.opp =.opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -1155,9 +1152,7 @@ class AlexaPowerLevelController(AlexaCapability):
             raise UnsupportedProperty(name)
 
         if self.entity.domain == fan.DOMAIN:
-            speed = self.entity.attributes.get(fan.ATTR_SPEED)
-
-            return PERCENTAGE_FAN_MAP.get(speed)
+            return self.entity.attributes.get(fan.ATTR_PERCENTAGE) or 0
 
         return None
 
@@ -1188,7 +1183,7 @@ class AlexaSecurityPanelController(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp = opp
+        self.opp =.opp
 
     def name(self):
         """Return the Alexa API name of this interface."""
@@ -1850,7 +1845,7 @@ class AlexaEventDetectionSensor(AlexaCapability):
     def __init__(self,.opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
-        self.opp = opp
+        self.opp =.opp
 
     def name(self):
         """Return the Alexa API name of this interface."""

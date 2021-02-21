@@ -2,8 +2,8 @@
 from aiohttp import web
 
 from openpeerpower.const import URL_API
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .const import (
     CONF_CLOUDHOOK_URL,
@@ -65,7 +65,7 @@ LISTEN_EVENT_TYPES = [
     "RAIN_SENSOR_DETECTION_EVENT",
     "SCHEDULE_STATUS_EVENT",
 ]
-WEBHOOK_CONST_ID = "openpeerpowerr.rachio:"
+WEBHOOK_CONST_ID = "openpeerpower.rachio:"
 WEBHOOK_PATH = URL_API + DOMAIN
 
 SIGNAL_MAP = {
@@ -81,13 +81,13 @@ SIGNAL_MAP = {
 def async_register_webhook.opp, webhook_id, entry_id):
     """Register a webhook."""
 
-    async def _async_op.dle_rachio_webhook.opp, webhook_id, request):
+    async def _async_handle_rachio_webhook.opp, webhook_id, request):
         """Handle webhook calls from the server."""
         data = await request.json()
 
         try:
             auth = data.get(KEY_EXTERNAL_ID, "").split(":")[1]
-            assert auth == opp.data[DOMAIN][entry_id].rachio.webhook_auth
+            assert auth ==.opp.data[DOMAIN][entry_id].rachio.webhook_auth
         except (AssertionError, IndexError):
             return web.Response(status=web.HTTPForbidden.status_code)
 
@@ -98,7 +98,7 @@ def async_register_webhook.opp, webhook_id, entry_id):
         return web.Response(status=web.HTTPNoContent.status_code)
 
    .opp.components.webhook.async_register(
-        DOMAIN, "Rachio", webhook_id, _async_op.dle_rachio_webhook
+        DOMAIN, "Rachio", webhook_id, _async_handle_rachio_webhook
     )
 
 
@@ -111,14 +111,14 @@ async def async_get_or_create_registered_webhook_id_and_url.opp, entry):
 
     webhook_id = config.get(CONF_WEBHOOK_ID)
     if not webhook_id:
-        webhook_id = opp.components.webhook.async_generate_id()
+        webhook_id =.opp.components.webhook.async_generate_id()
         config[CONF_WEBHOOK_ID] = webhook_id
         updated_config = True
 
     if.opp.components.cloud.async_active_subscription():
         cloudhook_url = config.get(CONF_CLOUDHOOK_URL)
         if not cloudhook_url:
-            cloudhook_url = await opp..components.cloud.async_create_cloudhook(
+            cloudhook_url = await.opp.components.cloud.async_create_cloudhook(
                 webhook_id
             )
             config[CONF_CLOUDHOOK_URL] = cloudhook_url
@@ -126,7 +126,7 @@ async def async_get_or_create_registered_webhook_id_and_url.opp, entry):
         webhook_url = cloudhook_url
 
     if not webhook_url:
-        webhook_url = opp.components.webhook.async_generate_url(webhook_id)
+        webhook_url =.opp.components.webhook.async_generate_url(webhook_id)
 
     if updated_config:
        .opp.config_entries.async_update_entry(entry, data=config)

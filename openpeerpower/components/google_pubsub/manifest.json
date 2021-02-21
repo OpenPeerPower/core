@@ -1,7 +1,7 @@
 {
   "domain": "google_pubsub",
   "name": "Google Pub/Sub",
-  "documentation": "https://www.openpeerpower.io/integrations/google_pubsub",
+  "documentation": "https://www.open-peer-power.io/integrations/google_pubsub",
   "requirements": ["google-cloud-pubsub==2.1.0"],
   "codeowners": []
 }

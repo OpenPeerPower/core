@@ -16,8 +16,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    client = opp.data[DOMAIN]["client"]
-    heaters = opp.data[DOMAIN]["heaters"]
+    client =.opp.data[DOMAIN]["client"]
+    heaters =.opp.data[DOMAIN]["heaters"]
 
     async_add_entities(
         [InComfortClimate(client, h, r) for h in heaters for r in h.rooms]

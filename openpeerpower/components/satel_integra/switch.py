@@ -2,8 +2,8 @@
 import logging
 
 from openpeerpower.components.switch import SwitchEntity
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import (
     CONF_DEVICE_CODE,
@@ -24,7 +24,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     configured_zones = discovery_info[CONF_SWITCHABLE_OUTPUTS]
-    controller = opp.data[DATA_SATEL]
+    controller =.opp.data[DATA_SATEL]
 
     devices = []
 
@@ -50,7 +50,7 @@ class SatelIntegraSwitch(SwitchEntity):
         self._code = code
         self._satel = controller
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         async_dispatcher_connect(
             self.opp, SIGNAL_OUTPUTS_UPDATED, self._devices_updated
@@ -65,13 +65,13 @@ class SatelIntegraSwitch(SwitchEntity):
             _LOGGER.debug("New state: %s", new_state)
             if new_state != self._state:
                 self._state = new_state
-                self.async_write_op.state()
+                self.async_write_ha_state()
 
     async def async_turn_on(self, **kwargs):
         """Turn the device on."""
         _LOGGER.debug("Switch: %s status: %s, turning on", self._name, self._state)
         await self._satel.set_output(self._code, self._device_number, True)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the device off."""
@@ -79,7 +79,7 @@ class SatelIntegraSwitch(SwitchEntity):
             "Switch name: %s status: %s, turning off", self._name, self._state
         )
         await self._satel.set_output(self._code, self._device_number, False)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_on(self):

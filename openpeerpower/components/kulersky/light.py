@@ -17,10 +17,10 @@ from openpeerpower.components.light import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_time_interval
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-import openpeerpowerr.util.color as color_util
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_time_interval
+from openpeerpower.helpers.typing import OpenPeerPowerType
+import openpeerpower.util.color as color_util
 
 from .const import DOMAIN
 
@@ -61,7 +61,7 @@ async def async_setup_entry(
             return
 
         async with.opp.data[DOMAIN]["discovery"]:
-            bluetooth_devices = await opp..async_add_executor_job(
+            bluetooth_devices = await.opp.async_add_executor_job(
                 pykulersky.discover_bluetooth_devices
             )
 
@@ -78,9 +78,9 @@ async def async_setup_entry(
                     # If the connection fails, either this is not a Kuler Sky
                     # light, or it's bluetooth connection is currently locked
                     # by another device. If the vendor's app is connected to
-                    # the light when Open Peer Power tries to connect, this
+                    # the light when open peer power tries to connect, this
                     # connection will fail.
-                    await opp..async_add_executor_job(check_light, light)
+                    await.opp.async_add_executor_job(check_light, light)
                 except pykulersky.PykulerskyException:
                     continue
                 # The light has successfully connected
@@ -105,13 +105,13 @@ class KulerskyLight(LightEntity):
         self._white_value = None
         self._available = True
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Run when entity about to be added to.opp."""
         self.async_on_remove(
             self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self.disconnect)
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Run when entity will be removed from.opp."""
         await self.opp.async_add_executor_job(self.disconnect)
 

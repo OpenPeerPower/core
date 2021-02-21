@@ -53,7 +53,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     config = config_entry.data
 
-    remote = opp.data[DOMAIN][config_entry.entry_id][ATTR_REMOTE]
+    remote =.opp.data[DOMAIN][config_entry.entry_id][ATTR_REMOTE]
     name = config[CONF_NAME]
     device_info = config[ATTR_DEVICE_INFO]
 

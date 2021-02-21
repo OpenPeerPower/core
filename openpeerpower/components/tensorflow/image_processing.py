@@ -146,8 +146,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
    .opp.data[DOMAIN] = {CONF_MODEL: None}
 
-    def tensorflow_opp_start(_event):
-        """Set up TensorFlow model on opp start."""
+    def tensorflow.opp_start(_event):
+        """Set up TensorFlow model on.opp start."""
         start = time.perf_counter()
 
         # Load pipeline config and build a detection model
@@ -178,7 +178,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _LOGGER.debug("Model load took %d seconds", time.perf_counter() - start)
        .opp.data[DOMAIN][CONF_MODEL] = model
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, tensorflow_opp_start)
+   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, tensorflow.opp_start)
 
     category_index = label_map_util.create_category_index_from_labelmap(
         labels, use_display_name=True
@@ -213,7 +213,7 @@ class TensorFlowImageProcessor(ImageProcessingEntity):
     ):
         """Initialize the TensorFlow entity."""
         model_config = config.get(CONF_MODEL)
-        self.opp = opp
+        self.opp =.opp
         self._camera_entity = camera_entity
         if name:
             self._name = name

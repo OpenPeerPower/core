@@ -13,7 +13,7 @@ from openpeerpower.components.media_player.const import (
     SERVICE_PLAY_MEDIA,
 )
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.helpers import config_validation as cv
+from openpeerpower.helpers import config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -68,7 +68,7 @@ class MediaExtractor:
 
     def __init__(self,.opp, component_config, call_data):
         """Initialize media extractor."""
-        self.opp = opp
+        self.opp =.opp
         self.config = component_config
         self.call_data = call_data
 

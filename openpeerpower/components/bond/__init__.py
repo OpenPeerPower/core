@@ -50,14 +50,16 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if not entry.unique_id:
        .opp.config_entries.async_update_entry(entry, unique_id=hub.bond_id)
 
+    hub_name = hub.name or hub.bond_id
     device_registry = await dr.async_get_registry.opp)
     device_registry.async_get_or_create(
         config_entry_id=config_entry_id,
         identifiers={(DOMAIN, hub.bond_id)},
         manufacturer=BRIDGE_MAKE,
-        name=hub.bond_id,
+        name=hub_name,
         model=hub.target,
         sw_version=hub.fw_ver,
+        suggested_area=hub.location,
     )
 
     _async_remove_old_device_identifiers(config_entry_id, device_registry, hub)
@@ -81,7 +83,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         )
     )
 
-    data = opp.data[DOMAIN][entry.entry_id]
+    data =.opp.data[DOMAIN][entry.entry_id]
     if BPUP_STOP in data:
         data[BPUP_STOP]()
 

@@ -78,9 +78,9 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
 async def async_setup_legacy_entry.opp, entry, async_add_entities):
     """Set up a Nest sensor based on a config entry."""
-    nest = opp.data[DATA_NEST]
+    nest =.opp.data[DATA_NEST]
 
-    discovery_info = opp.data.get(DATA_NEST_CONFIG, {}).get(CONF_SENSORS, {})
+    discovery_info =.opp.data.get(DATA_NEST_CONFIG, {}).get(CONF_SENSORS, {})
 
     # Add all available sensors if no Nest sensor config is set
     if discovery_info == {}:
@@ -93,14 +93,14 @@ async def async_setup_legacy_entry.opp, entry, async_add_entities):
             if variable in DEPRECATED_WEATHER_VARS:
                 wstr = (
                     "Nest no longer provides weather data like %s. See "
-                    "https://www.openpeerpower.io/integrations/#weather "
+                    "https://www.open-peer-power.io/integrations/#weather "
                     "for a list of other weather integrations to use." % variable
                 )
             else:
                 wstr = (
                     f"{variable} is no a longer supported "
                     "monitored_conditions. See "
-                    "https://www.openpeerpower.io/integrations/"
+                    "https://www.open-peer-power.io/integrations/"
                     "binary_sensor.nest/ for valid options."
                 )
             _LOGGER.error(wstr)
@@ -134,10 +134,10 @@ async def async_setup_legacy_entry.opp, entry, async_add_entities):
                 if variable in PROTECT_SENSOR_TYPES
             ]
 
-        structures_op._camera = {}
+        structures_has_camera = {}
         for structure, device in nest.cameras():
-            structures_op._camera[structure] = True
-        for structure in structures_op._camera:
+            structures_has_camera[structure] = True
+        for structure in structures_has_camera:
             all_sensors += [
                 NestBasicSensor(structure, None, variable)
                 for variable in conditions
@@ -146,7 +146,7 @@ async def async_setup_legacy_entry.opp, entry, async_add_entities):
 
         return all_sensors
 
-    async_add_entities(await opp..async_add_executor_job(get_sensors), True)
+    async_add_entities(await.opp.async_add_executor_job(get_sensors), True)
 
 
 class NestBasicSensor(NestSensorDevice):

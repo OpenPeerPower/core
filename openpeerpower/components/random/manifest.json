@@ -1,7 +1,7 @@
 {
   "domain": "random",
   "name": "Random",
-  "documentation": "https://www.openpeerpower.io/integrations/random",
+  "documentation": "https://www.open-peer-power.io/integrations/random",
   "codeowners": ["@fabaff"],
   "quality_scale": "internal"
 }

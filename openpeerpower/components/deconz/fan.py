@@ -8,8 +8,8 @@ from openpeerpower.components.fan import (
     SUPPORT_SET_SPEED,
     FanEntity,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import FANS, NEW_LIGHT
 from .deconz_device import DeconzDevice
@@ -20,9 +20,9 @@ SUPPORTED_ON_SPEEDS = {1: SPEED_LOW, 2: SPEED_MEDIUM, 4: SPEED_HIGH}
 
 
 def convert_speed(speed: int) -> str:
-    """Convert speed from deCONZ to OPP.
+    """Convert speed from deCONZ to HASS.
 
-    Fallback to medium speed if unsupported by OPP fan platform.
+    Fallback to medium speed if unsupported by HASS fan platform.
     """
     if speed in SPEEDS.values():
         for.opp_speed, deconz_speed in SPEEDS.items():
@@ -112,7 +112,7 @@ class DeconzFan(DeconzDevice, FanEntity):
     # instead of speeds.
     #
     # Please review
-    # https://developers.openpeerpower.io/docs/core/entity/fan/
+    # https://developers.open-peer-power.io/docs/core/entity/fan/
     #
     async def async_turn_on(
         self,

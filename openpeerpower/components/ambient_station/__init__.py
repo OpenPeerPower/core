@@ -22,15 +22,15 @@ from openpeerpower.const import (
     SPEED_MILES_PER_HOUR,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import aiohttp_client, config_validation as cv
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.core import callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import aiohttp_client, config_validation as cv
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_call_later
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_call_later
 
 from .const import (
     ATTR_LAST_DATA,
@@ -318,7 +318,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload an Ambient PWS config entry."""
-    ambient = opp.data[DOMAIN][DATA_CLIENT].pop(config_entry.entry_id)
+    ambient =.opp.data[DOMAIN][DATA_CLIENT].pop(config_entry.entry_id)
    .opp.async_create_task(ambient.ws_disconnect())
 
     tasks = [
@@ -339,10 +339,10 @@ async def async_migrate_entry.opp, config_entry):
 
     # 1 -> 2: Unique ID format changed, so delete and re-import:
     if version == 1:
-        dev_reg = await opp..helpers.device_registry.async_get_registry()
+        dev_reg = await.opp.helpers.device_registry.async_get_registry()
         dev_reg.async_clear_config_entry(config_entry)
 
-        en_reg = await opp..helpers.entity_registry.async_get_registry()
+        en_reg = await.opp.helpers.entity_registry.async_get_registry()
         en_reg.async_clear_config_entry(config_entry)
 
         version = config_entry.version = 2
@@ -360,7 +360,7 @@ class AmbientStation:
         """Initialize."""
         self._config_entry = config_entry
         self._entry_setup_complete = False
-        self._opp = opp
+        self..opp =.opp
         self._ws_reconnect_delay = DEFAULT_SOCKET_MIN_RETRY
         self.client = client
         self.stations = {}
@@ -377,7 +377,7 @@ class AmbientStation:
         except WebsocketError as err:
             LOGGER.error("Error with the websocket connection: %s", err)
             self._ws_reconnect_delay = min(2 * self._ws_reconnect_delay, 480)
-            async_call_later(self._opp, self._ws_reconnect_delay, connect)
+            async_call_later(self..opp, self._ws_reconnect_delay, connect)
 
     async def ws_connect(self):
         """Register handlers and connect to the websocket."""
@@ -393,7 +393,7 @@ class AmbientStation:
                 LOGGER.debug("New data received: %s", data)
                 self.stations[mac_address][ATTR_LAST_DATA] = data
                 async_dispatcher_send(
-                    self._opp, f"ambient_station_data_update_{mac_address}"
+                    self..opp, f"ambient_station_data_update_{mac_address}"
                 )
 
         def on_disconnect():
@@ -432,8 +432,8 @@ class AmbientStation:
             # already been done):
             if not self._entry_setup_complete:
                 for component in ("binary_sensor", "sensor"):
-                    self._opp.async_create_task(
-                        self._opp.config_entries.async_forward_entry_setup(
+                    self..opp.async_create_task(
+                        self..opp.config_entries.async_forward_entry_setup(
                             self._config_entry, component
                         )
                     )
@@ -518,14 +518,14 @@ class AmbientWeatherEntity(Entity):
         """Return a unique, unchanging string that represents this sensor."""
         return f"{self._mac_address}_{self._sensor_type}"
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
 
         @callback
         def update():
             """Update the state."""
             self.update_from_latest_data()
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self.async_on_remove(
             async_dispatcher_connect(

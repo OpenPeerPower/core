@@ -18,7 +18,7 @@ class WiLightParent:
     def __init__(self,.opp, config_entry):
         """Initialize the system."""
         self._host = config_entry.data[CONF_HOST]
-        self._opp = opp
+        self..opp =.opp
         self._api = None
 
     @property
@@ -34,9 +34,9 @@ class WiLightParent:
     async def async_setup(self):
         """Set up a WiLight Parent Device based on host parameter."""
         host = self._host
-        opp = self._opp
+       .opp = self..opp
 
-        api_device = await opp..async_add_executor_job(create_api_device, host)
+        api_device = await.opp.async_add_executor_job(create_api_device, host)
 
         if api_device is None:
             return False

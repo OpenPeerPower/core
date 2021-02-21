@@ -1,6 +1,6 @@
-"""Adapter to wrap the pyjuicenet api for Open Peer Power."""
+"""Adapter to wrap the pyjuicenet api for open peer power."""
 
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 

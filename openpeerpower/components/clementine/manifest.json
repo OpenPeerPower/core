@@ -1,7 +1,7 @@
 {
   "domain": "clementine",
   "name": "Clementine Music Player",
-  "documentation": "https://www.openpeerpower.io/integrations/clementine",
+  "documentation": "https://www.open-peer-power.io/integrations/clementine",
   "requirements": ["python-clementine-remote==1.0.1"],
   "codeowners": []
 }

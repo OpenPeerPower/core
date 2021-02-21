@@ -30,7 +30,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Plaato from a config entry."""
-    entry_data = opp.data[DOMAIN][entry.entry_id]
+    entry_data =.opp.data[DOMAIN][entry.entry_id]
 
     @callback
     async def _async_update_from_webhook(device_id, sensor_data: PlaatoDevice):

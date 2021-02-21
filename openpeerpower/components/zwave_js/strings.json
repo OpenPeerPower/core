@@ -22,7 +22,7 @@
           "network_key": "Network Key"
         }
       },
-      "oppio_confirm": {
+      .oppio_confirm": {
         "title": "Set up Z-Wave JS integration with the Z-Wave JS add-on"
       }
     },

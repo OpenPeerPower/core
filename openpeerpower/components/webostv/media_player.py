@@ -74,7 +74,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     customize = discovery_info[CONF_CUSTOMIZE]
     turn_on_action = discovery_info.get(CONF_ON_ACTION)
 
-    client = opp.data[DOMAIN][host]["client"]
+    client =.opp.data[DOMAIN][host]["client"]
     on_script = Script.opp, turn_on_action, name, DOMAIN) if turn_on_action else None
 
     entity = LgWebOSMediaPlayerEntity(client, name, customize, on_script)
@@ -128,19 +128,19 @@ class LgWebOSMediaPlayerEntity(MediaPlayerEntity):
         self._current_source = None
         self._source_list = {}
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Connect and subscribe to dispatcher signals and state updates."""
-        async_dispatcher_connect(self.opp, DOMAIN, self.async_signal_op.dler)
+        async_dispatcher_connect(self.opp, DOMAIN, self.async_signal_handler)
 
         await self._client.register_state_update_callback(
-            self.async_op.dle_state_update
+            self.async_handle_state_update
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Call disconnect on removal."""
-        self._client.unregister_state_update_callback(self.async_op.dle_state_update)
+        self._client.unregister_state_update_callback(self.async_handle_state_update)
 
-    async def async_signal_op.dler(self, data):
+    async def async_signal_handler(self, data):
         """Handle domain-specific signal by calling appropriate method."""
         entity_ids = data[ATTR_ENTITY_ID]
         if entity_ids == ENTITY_MATCH_NONE:
@@ -154,11 +154,11 @@ class LgWebOSMediaPlayerEntity(MediaPlayerEntity):
             }
             await getattr(self, data["method"])(**params)
 
-    async def async_op.dle_state_update(self):
+    async def async_handle_state_update(self):
         """Update state from WebOsClient."""
         self.update_sources()
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def update_sources(self):
         """Update list of sources from current source, apps, inputs and configured list."""

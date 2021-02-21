@@ -14,27 +14,27 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_START,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpowerr.core import CoreState, callback
-from openpeerpowerr.helpers import discovery
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.device_registry import (
+from openpeerpower.core import CoreState, callback
+from openpeerpower.helpers import discovery
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.device_registry import (
     async_get_registry as async_get_device_registry,
 )
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpowerr.helpers.entity import generate_entity_id
-from openpeerpowerr.helpers.entity_component import DEFAULT_SCAN_INTERVAL
-from openpeerpowerr.helpers.entity_platform import EntityPlatform
-from openpeerpowerr.helpers.entity_registry import (
+from openpeerpower.helpers.entity import generate_entity_id
+from openpeerpower.helpers.entity_component import DEFAULT_SCAN_INTERVAL
+from openpeerpower.helpers.entity_platform import EntityPlatform
+from openpeerpower.helpers.entity_registry import (
     async_entries_for_config_entry,
     async_get_registry as async_get_entity_registry,
 )
-from openpeerpowerr.helpers.entity_values import EntityValues
-from openpeerpowerr.helpers.event import async_track_time_change
-from openpeerpowerr.util import convert
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.helpers.entity_values import EntityValues
+from openpeerpower.helpers.event import async_track_time_change
+from openpeerpower.util import convert
+import openpeerpower.util.dt as dt_util
 
 from . import const, websocket_api as wsapi, workaround
 from .const import (
@@ -57,7 +57,7 @@ from .const import (
 from .discovery_schemas import DISCOVERY_SCHEMAS
 from .node_entity import ZWaveBaseEntity, ZWaveNodeEntity
 from .util import (
-    check_op._unique_id,
+    check_has_unique_id,
     check_node_schema,
     check_value_schema,
     is_node_parsed,
@@ -256,7 +256,7 @@ async def async_get_ozw_migration_data.opp):
     """Return dict with info for migration to ozw integration."""
     data_to_migrate = {}
 
-    zwave_config_entries = opp.config_entries.async_entries(DOMAIN)
+    zwave_config_entries =.opp.config_entries.async_entries(DOMAIN)
     if not zwave_config_entries:
         _LOGGER.error("Config entry not set up")
         return data_to_migrate
@@ -301,7 +301,7 @@ async def async_get_ozw_migration_data.opp):
 @callback
 def async_is_ozw_migrated.opp):
     """Return True if migration to ozw is done."""
-    ozw_config_entries = opp.config_entries.async_entries("ozw")
+    ozw_config_entries =.opp.config_entries.async_entries("ozw")
     if not ozw_config_entries:
         return False
 
@@ -357,7 +357,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None or DATA_NETWORK not in.opp.data:
         return False
 
-    device = opp.data[DATA_DEVICES].get(discovery_info[const.DISCOVERY_DEVICE])
+    device =.opp.data[DATA_DEVICES].get(discovery_info[const.DISCOVERY_DEVICE])
     if device is None:
         return False
 
@@ -443,8 +443,8 @@ async def async_setup_entry.opp, config_entry):
     if config.get(CONF_NETWORK_KEY):
         options.addOption("NetworkKey", config[CONF_NETWORK_KEY])
 
-    await opp..async_add_executor_job(options.lock)
-    network = opp.data[DATA_NETWORK] = ZWaveNetwork(options, autostart=False)
+    await.opp.async_add_executor_job(options.lock)
+    network =.opp.data[DATA_NETWORK] = ZWaveNetwork(options, autostart=False)
    .opp.data[DATA_DEVICES] = {}
    .opp.data[DATA_ENTITY_VALUES] = []
 
@@ -493,7 +493,7 @@ async def async_setup_entry.opp, config_entry):
 
             # We create a new list and update the reference here so that
             # the list can be safely iterated over in the main thread
-            new_values = opp.data[DATA_ENTITY_VALUES] + [values]
+            new_values =.opp.data[DATA_ENTITY_VALUES] + [values]
            .opp.data[DATA_ENTITY_VALUES] = new_values
 
     platform = EntityPlatform(
@@ -545,7 +545,7 @@ async def async_setup_entry.opp, config_entry):
             )
            .opp.async_add_job(_add_node_to_component)
 
-       .opp.add_job(check_op._unique_id, entity, _on_ready, _on_timeout)
+       .opp.add_job(check_has_unique_id, entity, _on_ready, _on_timeout)
 
     def node_removed(node):
         node_id = node.node_id
@@ -556,14 +556,14 @@ async def async_setup_entry.opp, config_entry):
             if not key.startswith(f"{node_id}-"):
                 continue
 
-            entity = opp.data[DATA_DEVICES][key]
+            entity =.opp.data[DATA_DEVICES][key]
             _LOGGER.debug(
                 "Removing Entity - value: %s - entity_id: %s", key, entity.entity_id
             )
            .opp.add_job(entity.node_removed())
             del.opp.data[DATA_DEVICES][key]
 
-        entity = opp.data[DATA_DEVICES][node_key]
+        entity =.opp.data[DATA_DEVICES][node_key]
        .opp.add_job(entity.node_removed())
         del.opp.data[DATA_DEVICES][node_key]
 
@@ -669,12 +669,12 @@ async def async_setup_entry.opp, config_entry):
         # We want to rename the device, the node entity,
         # and all the contained entities
         node_key = f"node-{node_id}"
-        entity = opp.data[DATA_DEVICES][node_key]
+        entity =.opp.data[DATA_DEVICES][node_key]
         await entity.node_renamed(update_ids)
         for key in list.opp.data[DATA_DEVICES]):
             if not key.startswith(f"{node_id}-"):
                 continue
-            entity = opp.data[DATA_DEVICES][key]
+            entity =.opp.data[DATA_DEVICES][key]
             await entity.value_renamed(update_ids)
 
     async def rename_value(service):
@@ -690,7 +690,7 @@ async def async_setup_entry.opp, config_entry):
         )
         update_ids = service.data.get(const.ATTR_UPDATE_IDS)
         value_key = f"{node_id}-{value_id}"
-        entity = opp.data[DATA_DEVICES][value_key]
+        entity =.opp.data[DATA_DEVICES][value_key]
         await entity.value_renamed(update_ids)
 
     def set_poll_intensity(service):
@@ -1076,7 +1076,7 @@ class ZWaveDeviceEntityValues:
         self,.opp, schema, primary_value, zwave_config, device_config, registry
     ):
         """Initialize the values object with the passed entity schema."""
-        self._opp = opp
+        self..opp =.opp
         self._zwave_config = zwave_config
         self._device_config = device_config
         self._schema = copy.deepcopy(schema)
@@ -1193,7 +1193,7 @@ class ZWaveDeviceEntityValues:
         platform = import_module(f".{component}", __name__)
 
         device = platform.get_device(
-            node=self._node, values=self, node_config=node_config,.opp=self._opp
+            node=self._node, values=self, node_config=node_config,.opp=self..opp
         )
         if device is None:
             # No entity will be created for this value
@@ -1210,7 +1210,7 @@ class ZWaveDeviceEntityValues:
                 self._node.node_id,
                 sec,
             )
-            self._opp.async_add_job(discover_device, component, device)
+            self..opp.async_add_job(discover_device, component, device)
 
         @callback
         def _on_timeout(sec):
@@ -1221,19 +1221,19 @@ class ZWaveDeviceEntityValues:
                 self._node.node_id,
                 sec,
             )
-            self._opp.async_add_job(discover_device, component, device)
+            self..opp.async_add_job(discover_device, component, device)
 
         async def discover_device(component, device):
             """Put device in a dictionary and call discovery on it."""
-            if self._opp.data[DATA_DEVICES].get(device.unique_id):
+            if self..opp.data[DATA_DEVICES].get(device.unique_id):
                 return
 
-            self._opp.data[DATA_DEVICES][device.unique_id] = device
+            self..opp.data[DATA_DEVICES][device.unique_id] = device
             if component in SUPPORTED_PLATFORMS:
-                async_dispatcher_send(self._opp, f"zwave_new_{component}", device)
+                async_dispatcher_send(self..opp, f"zwave_new_{component}", device)
             else:
                 await discovery.async_load_platform(
-                    self._opp,
+                    self..opp,
                     component,
                     DOMAIN,
                     {const.DISCOVERY_DEVICE: device.unique_id},
@@ -1241,9 +1241,9 @@ class ZWaveDeviceEntityValues:
                 )
 
         if device.unique_id:
-            self._opp.add_job(discover_device, component, device)
+            self..opp.add_job(discover_device, component, device)
         else:
-            self._opp.add_job(check_op._unique_id, device, _on_ready, _on_timeout)
+            self..opp.add_job(check_has_unique_id, device, _on_ready, _on_timeout)
 
 
 class ZWaveDeviceEntity(ZWaveBaseEntity):
@@ -1300,9 +1300,9 @@ class ZWaveDeviceEntity(ZWaveBaseEntity):
                 ent_reg.async_update_entity(self.entity_id, new_entity_id=new_entity_id)
                 return
         # else for the above two ifs, update if not using update_entity
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Add device to dict."""
         async_dispatcher_connect(
             self.opp,

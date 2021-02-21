@@ -2,7 +2,7 @@
   "domain": "guardian",
   "name": "Elexa Guardian",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/guardian",
+  "documentation": "https://www.open-peer-power.io/integrations/guardian",
   "requirements": [
     "aioguardian==1.0.4"
   ],

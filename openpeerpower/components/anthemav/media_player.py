@@ -20,9 +20,9 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
@@ -91,10 +91,10 @@ class AnthemAVR(MediaPlayerEntity):
     def _lookup(self, propname, dval=None):
         return getattr(self.avr.protocol, propname, dval)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """When entity is added to.opp."""
         self.async_on_remove(
-            async_dispatcher_connect(self.opp, DOMAIN, self.async_write_op.state)
+            async_dispatcher_connect(self.opp, DOMAIN, self.async_write_ha_state)
         )
 
     @property

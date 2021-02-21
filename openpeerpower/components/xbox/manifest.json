@@ -2,7 +2,7 @@
   "domain": "xbox",
   "name": "Xbox",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/xbox",
+  "documentation": "https://www.open-peer-power.io/integrations/xbox",
   "requirements": ["xbox-webapi==2.0.8"],
   "dependencies": ["http"],
   "codeowners": ["@hunterjm"]

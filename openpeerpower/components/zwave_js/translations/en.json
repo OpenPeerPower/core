@@ -20,7 +20,7 @@
             "install_addon": "Please wait while the Z-Wave JS add-on installation finishes. This can take several minutes."
         },
         "step": {
-            "oppio_confirm": {
+            .oppio_confirm": {
                 "title": "Set up Z-Wave JS integration with the Z-Wave JS add-on"
             },
             "install_addon": {

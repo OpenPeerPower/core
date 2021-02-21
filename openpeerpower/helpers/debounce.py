@@ -3,7 +3,7 @@ import asyncio
 from logging import Logger
 from typing import Any, Awaitable, Callable, Optional
 
-from openpeerpower.core import OppJob, OpenPeerPower, callback
+from openpeerpower.core import HassJob, OpenPeerPower, callback
 
 
 class Debouncer:
@@ -24,7 +24,7 @@ class Debouncer:
                    wait <cooldown> until executing next invocation.
         function: optional and can be instantiated later.
         """
-        self.opp = opp
+        self.opp =.opp
         self.logger = logger
         self._function = function
         self.cooldown = cooldown
@@ -32,7 +32,7 @@ class Debouncer:
         self._timer_task: Optional[asyncio.TimerHandle] = None
         self._execute_at_end_of_timer: bool = False
         self._execute_lock = asyncio.Lock()
-        self._job: Optional[OppJob] = None if function is None else OppJob(function)
+        self._job: Optional[HassJob] = None if function is None else HassJob(function)
 
     @property
     def function(self) -> Optional[Callable[..., Awaitable[Any]]]:
@@ -44,7 +44,7 @@ class Debouncer:
         """Update the function being wrapped by the Debouncer."""
         self._function = function
         if self._job is None or function != self._job.target:
-            self._job = OppJob(function)
+            self._job = HassJob(function)
 
     async def async_call(self) -> None:
         """Call the function."""
@@ -70,13 +70,13 @@ class Debouncer:
             if self._timer_task:
                 return
 
-            task = self.opp.async_run_opp_job(self._job)
+            task = self.opp.async_run.opp_job(self._job)
             if task:
                 await task
 
             self._schedule_timer()
 
-    async def _op.dle_timer_finish(self) -> None:
+    async def _handle_timer_finish(self) -> None:
         """Handle a finished timer."""
         assert self._job is not None
 
@@ -97,7 +97,7 @@ class Debouncer:
                 return  # type: ignore
 
             try:
-                task = self.opp.async_run_opp_job(self._job)
+                task = self.opp.async_run.opp_job(self._job)
                 if task:
                     await task
             except Exception:  # pylint: disable=broad-except
@@ -119,5 +119,5 @@ class Debouncer:
         """Schedule a timer."""
         self._timer_task = self.opp.loop.call_later(
             self.cooldown,
-            lambda: self.opp.async_create_task(self._op.dle_timer_finish()),
+            lambda: self.opp.async_create_task(self._handle_timer_finish()),
         )

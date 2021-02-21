@@ -65,14 +65,14 @@ LAST_DISCOVERY = "mqtt_last_discovery"
 TOPIC_BASE = "~"
 
 
-def clear_discovery_op.h.opp, discovery_op.h):
+def clear_discovery_hash.opp, discovery_hash):
     """Clear entry in ALREADY_DISCOVERED list."""
-    del.opp.data[ALREADY_DISCOVERED][discovery_op.h]
+    del.opp.data[ALREADY_DISCOVERED][discovery_hash]
 
 
-def set_discovery_op.h.opp, discovery_op.h):
+def set_discovery_hash.opp, discovery_hash):
     """Clear entry in ALREADY_DISCOVERED list."""
-   .opp.data[ALREADY_DISCOVERED][discovery_op.h] = {}
+   .opp.data[ALREADY_DISCOVERED][discovery_hash] = {}
 
 
 class MQTTConfig(dict):
@@ -134,13 +134,13 @@ async def async_start(
 
         # If present, the node_id will be included in the discovered object id
         discovery_id = " ".join((node_id, object_id)) if node_id else object_id
-        discovery_op.h = (component, discovery_id)
+        discovery_hash = (component, discovery_id)
 
         if payload:
             # Attach MQTT topic to the payload, used for debug prints
             setattr(payload, "__configuration_source__", f"MQTT (topic: '{topic}')")
             discovery_data = {
-                ATTR_DISCOVERY_HASH: discovery_op.h,
+                ATTR_DISCOVERY_HASH: discovery_hash,
                 ATTR_DISCOVERY_PAYLOAD: payload,
                 ATTR_DISCOVERY_TOPIC: topic,
             }
@@ -148,8 +148,8 @@ async def async_start(
 
             payload[CONF_PLATFORM] = "mqtt"
 
-        if discovery_op.h in.opp.data[PENDING_DISCOVERED]:
-            pending = opp.data[PENDING_DISCOVERED][discovery_op.h]["pending"]
+        if discovery_hash in.opp.data[PENDING_DISCOVERED]:
+            pending =.opp.data[PENDING_DISCOVERED][discovery_hash]["pending"]
             pending.appendleft(payload)
             _LOGGER.info(
                 "Component has already been discovered: %s %s, queuing update",
@@ -163,32 +163,32 @@ async def async_start(
     async def async_process_discovery_payload(component, discovery_id, payload):
 
         _LOGGER.debug("Process discovery payload %s", payload)
-        discovery_op.h = (component, discovery_id)
-        if discovery_op.h in.opp.data[ALREADY_DISCOVERED] or payload:
+        discovery_hash = (component, discovery_id)
+        if discovery_hash in.opp.data[ALREADY_DISCOVERED] or payload:
 
             async def discovery_done(_):
-                pending = opp.data[PENDING_DISCOVERED][discovery_op.h]["pending"]
-                _LOGGER.debug("Pending discovery for %s: %s", discovery_op.h, pending)
+                pending =.opp.data[PENDING_DISCOVERED][discovery_hash]["pending"]
+                _LOGGER.debug("Pending discovery for %s: %s", discovery_hash, pending)
                 if not pending:
-                   .opp.data[PENDING_DISCOVERED][discovery_op.h]["unsub"]()
-                   .opp.data[PENDING_DISCOVERED].pop(discovery_op.h)
+                   .opp.data[PENDING_DISCOVERED][discovery_hash]["unsub"]()
+                   .opp.data[PENDING_DISCOVERED].pop(discovery_hash)
                 else:
                     payload = pending.pop()
                     await async_process_discovery_payload(
                         component, discovery_id, payload
                     )
 
-            if discovery_op.h not in.opp.data[PENDING_DISCOVERED]:
-               .opp.data[PENDING_DISCOVERED][discovery_op.h] = {
+            if discovery_hash not in.opp.data[PENDING_DISCOVERED]:
+               .opp.data[PENDING_DISCOVERED][discovery_hash] = {
                     "unsub": async_dispatcher_connect(
                        .opp,
-                        MQTT_DISCOVERY_DONE.format(discovery_op.h),
+                        MQTT_DISCOVERY_DONE.format(discovery_hash),
                         discovery_done,
                     ),
                     "pending": deque([]),
                 }
 
-        if discovery_op.h in.opp.data[ALREADY_DISCOVERED]:
+        if discovery_hash in.opp.data[ALREADY_DISCOVERED]:
             # Dispatch update
             _LOGGER.info(
                 "Component has already been discovered: %s %s, sending update",
@@ -196,12 +196,12 @@ async def async_start(
                 discovery_id,
             )
             async_dispatcher_send(
-               .opp, MQTT_DISCOVERY_UPDATED.format(discovery_op.h), payload
+               .opp, MQTT_DISCOVERY_UPDATED.format(discovery_hash), payload
             )
         elif payload:
             # Add component
             _LOGGER.info("Found new component: %s %s", component, discovery_id)
-           .opp.data[ALREADY_DISCOVERED][discovery_op.h] = None
+           .opp.data[ALREADY_DISCOVERED][discovery_hash] = None
 
             config_entries_key = f"{component}.mqtt"
             async with.opp.data[DATA_CONFIG_ENTRY_LOCK]:
@@ -219,7 +219,7 @@ async def async_start(
 
                         await tag.async_setup_entry.opp, config_entry)
                     else:
-                        await opp..config_entries.async_forward_entry_setup(
+                        await.opp.config_entries.async_forward_entry_setup(
                             config_entry, component
                         )
                    .opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
@@ -230,7 +230,7 @@ async def async_start(
         else:
             # Unhandled discovery message
             async_dispatcher_send(
-               .opp, MQTT_DISCOVERY_DONE.format(discovery_op.h), None
+               .opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
             )
 
    .opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
@@ -269,7 +269,7 @@ async def async_start(
                 if key not in.opp.data[INTEGRATION_UNSUBSCRIBE]:
                     return
 
-                result = await opp..config_entries.flow.async_init(
+                result = await.opp.config_entries.flow.async_init(
                     integration, context={"source": DOMAIN}, data=msg
                 )
                 if (
@@ -278,7 +278,7 @@ async def async_start(
                     and result["reason"]
                     in ["already_configured", "single_instance_allowed"]
                 ):
-                    unsub = opp.data[INTEGRATION_UNSUBSCRIBE].pop(key, None)
+                    unsub =.opp.data[INTEGRATION_UNSUBSCRIBE].pop(key, None)
                     if unsub is None:
                         return
                     unsub()

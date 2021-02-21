@@ -11,7 +11,7 @@ _LOGGER = logging.getLogger(__name__)
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the LiteJet switch platform."""
-    litejet_ = opp.data["litejet_system"]
+    litejet_ =.opp.data["litejet_system"]
 
     devices = []
     for i in litejet_.button_switches():
@@ -26,7 +26,7 @@ class LiteJetSwitch(SwitchEntity):
 
     def __init__(self,.opp, lj, i, name):
         """Initialize a LiteJet switch."""
-        self._opp = opp
+        self..opp =.opp
         self._lj = lj
         self._index = i
         self._state = False
@@ -38,12 +38,12 @@ class LiteJetSwitch(SwitchEntity):
     def _on_switch_pressed(self):
         _LOGGER.debug("Updating pressed for %s", self._name)
         self._state = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def _on_switch_released(self):
         _LOGGER.debug("Updating released for %s", self._name)
         self._state = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def name(self):

@@ -15,8 +15,8 @@ from openpeerpower.const import (
     CONF_USERNAME,
     TEMP_CELSIUS,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.util import dt as dt_util
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.util import dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -61,7 +61,7 @@ class SmartPlugSwitch(SwitchEntity):
 
     def __init__(self,.opp, data, name):
         """Initialize the switch."""
-        self.units = opp.config.units
+        self.units =.opp.config.units
         self.data = data
         self._name = name
 

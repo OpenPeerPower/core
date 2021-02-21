@@ -1,9 +1,9 @@
 {
   "domain": "synology_dsm",
   "name": "Synology DSM",
-  "documentation": "https://www.openpeerpower.io/integrations/synology_dsm",
+  "documentation": "https://www.open-peer-power.io/integrations/synology_dsm",
   "requirements": ["synologydsm-api==1.0.1"],
-  "codeowners": ["@op.f-fr", "@Quentame", "@mib1185"],
+  "codeowners": ["@hacf-fr", "@Quentame", "@mib1185"],
   "config_flow": true,
   "ssdp": [
     {

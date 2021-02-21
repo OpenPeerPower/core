@@ -18,12 +18,12 @@ class KeyedRateLimit:
        .opp: OpenPeerPower,
     ):
         """Initialize ratelimit tracker."""
-        self.opp = opp
+        self.opp =.opp
         self._last_triggered: Dict[Hashable, datetime] = {}
         self._rate_limit_timers: Dict[Hashable, asyncio.TimerHandle] = {}
 
     @callback
-    def async_op._timer(self, key: Hashable) -> bool:
+    def async_has_timer(self, key: Hashable) -> bool:
         """Check if a rate limit timer is running."""
         if not self._rate_limit_timers:
             return False
@@ -38,7 +38,7 @@ class KeyedRateLimit:
     @callback
     def async_cancel_timer(self, key: Hashable) -> None:
         """Cancel a rate limit time that will call the action."""
-        if not self._rate_limit_timers or not self.async_op._timer(key):
+        if not self._rate_limit_timers or not self.async_has_timer(key):
             return
 
         self._rate_limit_timers.pop(key).cancel()

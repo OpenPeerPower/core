@@ -52,7 +52,7 @@ async def async_setup_entry(
     @callback
     def add_new_paired_sensor(uid: str) -> None:
         """Add a new paired sensor."""
-        coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+        coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             API_SENSOR_PAIRED_SENSOR_STATUS
         ][uid]
 
@@ -67,7 +67,7 @@ async def async_setup_entry(
 
         async_add_entities(entities, True)
 
-    # Handle adding paired sensors after OPP startup:
+    # Handle adding paired sensors after HASS startup:
    .opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id].append(
         async_dispatcher_connect(
            .opp,

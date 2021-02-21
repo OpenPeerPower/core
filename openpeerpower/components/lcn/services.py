@@ -55,8 +55,8 @@ class LcnServiceCall:
 
     def __init__(self,.opp):
         """Initialize service call."""
-        self.opp = opp
-        self.connections = opp.data[DATA_LCN][CONF_CONNECTIONS]
+        self.opp =.opp
+        self.connections =.opp.data[DATA_LCN][CONF_CONNECTIONS]
 
     def get_device_connection(self, service):
         """Get device connection object."""
@@ -359,7 +359,7 @@ class LockKeys(LcnServiceCall):
         else:
             await device_connection.lock_keys(table_id, states)
 
-        handler = device_connection.status_request_op.dler
+        handler = device_connection.status_request_handler
         await handler.request_status_locked_keys_timeout()
 
 

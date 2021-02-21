@@ -1,5 +1,5 @@
 """Support for Vilfo Router sensors."""
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.entity import Entity
 
 from .const import (
     ATTR_API_DATA_FIELD,
@@ -17,7 +17,7 @@ from .const import (
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Add Vilfo Router entities from a config_entry."""
-    vilfo = opp.data[DOMAIN][config_entry.entry_id]
+    vilfo =.opp.data[DOMAIN][config_entry.entry_id]
 
     sensors = []
 

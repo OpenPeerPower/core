@@ -27,7 +27,7 @@ from openpeerpower.helpers.dispatcher import (
 )
 
 from .const import CONF_WEATHER_AREAS, DATA_HANDLER, DOMAIN, MANUFACTURER, SIGNAL_NAME
-from .data_op.dler import (
+from .data_handler import (
     HOMECOACH_DATA_CLASS_NAME,
     PUBLICDATA_DATA_CLASS_NAME,
     WEATHERSTATION_DATA_CLASS_NAME,
@@ -127,14 +127,14 @@ PUBLIC = "public"
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the Netatmo weather and homecoach platform."""
-    data_op.dler = opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
+    data_handler =.opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
 
     async def find_entities(data_class_name):
         """Find all entities."""
-        await data_op.dler.register_data_class(data_class_name, data_class_name, None)
+        await data_handler.register_data_class(data_class_name, data_class_name, None)
 
         all_module_infos = {}
-        data = data_op.dler.data
+        data = data_handler.data
 
         if not data.get(data_class_name):
             return []
@@ -171,7 +171,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
 
             for condition in conditions:
                 entities.append(
-                    NetatmoSensor(data_op.dler, data_class_name, module, condition)
+                    NetatmoSensor(data_handler, data_class_name, module, condition)
                 )
 
         return entities
@@ -182,7 +182,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
     ]:
         async_add_entities(await find_entities(data_class_name), True)
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
 
     async def add_public_entities(update=True):
         """Retrieve Netatmo public weather entities."""
@@ -211,7 +211,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
                     )
                     continue
 
-            await data_op.dler.register_data_class(
+            await data_handler.register_data_class(
                 PUBLICDATA_DATA_CLASS_NAME,
                 signal_name,
                 None,
@@ -222,7 +222,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
             )
             for sensor_type in SUPPORTED_PUBLIC_SENSOR_TYPES:
                 new_entities.append(
-                    NetatmoPublicSensor(data_op.dler, area, sensor_type)
+                    NetatmoPublicSensor(data_handler, area, sensor_type)
                 )
 
         for device_id in entities.values():
@@ -248,9 +248,9 @@ async def async_config_entry_updated.opp: OpenPeerPower, entry: ConfigEntry) -> 
 class NetatmoSensor(NetatmoBase):
     """Implementation of a Netatmo sensor."""
 
-    def __init__(self, data_op.dler, data_class_name, module_info, sensor_type):
+    def __init__(self, data_handler, data_class_name, module_info, sensor_type):
         """Initialize the sensor."""
-        super().__init__(data_op.dler)
+        super().__init__(data_handler)
 
         self._data_classes.append(
             {"name": data_class_name, SIGNAL_NAME: data_class_name}
@@ -477,9 +477,9 @@ def process_wifi(strength):
 class NetatmoPublicSensor(NetatmoBase):
     """Represent a single sensor in a Netatmo."""
 
-    def __init__(self, data_op.dler, area, sensor_type):
+    def __init__(self, data_handler, area, sensor_type):
         """Initialize the sensor."""
-        super().__init__(data_op.dler)
+        super().__init__(data_handler)
 
         self._signal_name = f"{PUBLICDATA_DATA_CLASS_NAME}-{area.uuid}"
 
@@ -548,13 +548,13 @@ class NetatmoPublicSensor(NetatmoBase):
 
     @property
     def _data(self):
-        return self.data_op.dler.data[self._signal_name]
+        return self.data_handler.data[self._signal_name]
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Entity created."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
-        self.data_op.dler.listeners.append(
+        self.data_handler.listeners.append(
             async_dispatcher_connect(
                 self.opp,
                 f"netatmo-config-{self.device_info['name']}",
@@ -567,7 +567,7 @@ class NetatmoPublicSensor(NetatmoBase):
         if self.area == area:
             return
 
-        await self.data_op.dler.unregister_data_class(
+        await self.data_handler.unregister_data_class(
             self._signal_name, self.async_update_callback
         )
 
@@ -586,7 +586,7 @@ class NetatmoPublicSensor(NetatmoBase):
         ]
         self._mode = area.mode
         self._show_on_map = area.show_on_map
-        await self.data_op.dler.register_data_class(
+        await self.data_handler.register_data_class(
             PUBLICDATA_DATA_CLASS_NAME,
             self._signal_name,
             self.async_update_callback,

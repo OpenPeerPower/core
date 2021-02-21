@@ -9,7 +9,7 @@ from openpeerpower.components.binary_sensor import (
     BinarySensorEntity,
 )
 from openpeerpower.const import CONF_DEVICE_CLASS, CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 DEFAULT_NAME = "Random Binary Sensor"
 

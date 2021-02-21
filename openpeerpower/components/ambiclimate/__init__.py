@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.helpers import config_validation as cv
+from openpeerpower.helpers import config_validation as cv
 
 from . import config_flow
 from .const import DOMAIN

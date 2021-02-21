@@ -31,7 +31,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     Uses the 'type' config value to work out which type of Zigbee sensor we're
     dealing with and instantiates the relevant classes to handle it.
     """
-    zigbee_device = opp.data[DOMAIN]
+    zigbee_device =.opp.data[DOMAIN]
     typ = config.get(CONF_TYPE)
 
     try:

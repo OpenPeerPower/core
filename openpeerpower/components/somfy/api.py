@@ -18,7 +18,7 @@ class ConfigEntrySomfyApi(somfy_api.SomfyApi):
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
     ):
         """Initialize the Config Entry Somfy API."""
-        self.opp = opp
+        self.opp =.opp
         self.config_entry = config_entry
         self.session = config_entry_oauth2_flow.OAuth2Session(
            .opp, config_entry, implementation

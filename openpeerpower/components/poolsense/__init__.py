@@ -9,10 +9,10 @@ from poolsense.exceptions import PoolSenseError
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import aiohttp_client
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import aiohttp_client
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
     UpdateFailed,
@@ -106,7 +106,7 @@ class PoolSenseDataUpdateCoordinator(DataUpdateCoordinator):
             entry.data[CONF_EMAIL],
             entry.data[CONF_PASSWORD],
         )
-        self.opp = opp
+        self.opp =.opp
         self.entry = entry
 
         super().__init__.opp, _LOGGER, name=DOMAIN, update_interval=timedelta(hours=1))

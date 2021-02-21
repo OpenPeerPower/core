@@ -273,7 +273,7 @@ THREE_AXIS_NAMES = ["X Coordinate", "Y Coordinate", "Z Coordinate"]
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Add binary sensors for a config entry."""
-    broker = opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
+    broker =.opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
     sensors = []
     for device in broker.devices.values():
         for capability in broker.get_assigned(device.device_id, "sensor"):

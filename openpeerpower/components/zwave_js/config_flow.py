@@ -84,7 +84,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self, user_input: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Handle the initial step."""
-        if self.opp.components.oppio.is_oppio():
+        if self.opp.components.oppio.is.oppio():
             return await self.async_step_on_supervisor()
 
         return await self.async_step_manual()
@@ -119,7 +119,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="manual", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
         )
 
-    async def async_step_oppio(  # type: ignore
+    async def async_step.oppio(  # type: ignore
         self, discovery_info: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Receive configuration from add-on discovery info.
@@ -135,9 +135,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         await self.async_set_unique_id(version_info.home_id)
         self._abort_if_unique_id_configured(updates={CONF_URL: self.ws_address})
 
-        return await self.async_step_oppio_confirm()
+        return await self.async_step.oppio_confirm()
 
-    async def async_step_oppio_confirm(
+    async def async_step.oppio_confirm(
         self, user_input: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Confirm the add-on discovery."""
@@ -146,7 +146,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 user_input={CONF_USE_ADDON: True}
             )
 
-        return self.async_show_form(step_id="oppio_confirm")
+        return self.async_show_form(step_id=.oppio_confirm")
 
     def _async_create_entry_from_vars(self) -> Dict[str, Any]:
         """Return a config entry for the flow."""
@@ -212,7 +212,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         try:
             await self.install_task
-        except self.opp.components.oppio.OppioAPIError as err:
+        except self.opp.components.oppio.HassioAPIError as err:
             _LOGGER.error("Failed to install Z-Wave JS add-on: %s", err)
             return self.async_show_progress_done(next_step_id="install_failed")
 
@@ -249,7 +249,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             try:
                 await self.opp.components.oppio.async_start_addon("core_zwave_js")
-            except self.opp.components.oppio.OppioAPIError as err:
+            except self.opp.components.oppio.HassioAPIError as err:
                 _LOGGER.error("Failed to start Z-Wave JS add-on: %s", err)
                 errors["base"] = "addon_start_failed"
             else:
@@ -296,7 +296,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             addon_info: dict = await self.opp.components.oppio.async_get_addon_info(
                 "core_zwave_js"
             )
-        except self.opp.components.oppio.OppioAPIError as err:
+        except self.opp.components.oppio.HassioAPIError as err:
             _LOGGER.error("Failed to get Z-Wave JS add-on info: %s", err)
             raise AbortFlow("addon_info_failed") from err
 
@@ -324,7 +324,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             await self.opp.components.oppio.async_set_addon_options(
                 "core_zwave_js", options
             )
-        except self.opp.components.oppio.OppioAPIError as err:
+        except self.opp.components.oppio.HassioAPIError as err:
             _LOGGER.error("Failed to set Z-Wave JS add-on config: %s", err)
             raise AbortFlow("addon_set_config_failed") from err
 
@@ -346,7 +346,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     "core_zwave_js"
                 )
             )
-        except self.opp.components.oppio.OppioAPIError as err:
+        except self.opp.components.oppio.HassioAPIError as err:
             _LOGGER.error("Failed to get Z-Wave JS add-on discovery info: %s", err)
             raise AbortFlow("addon_get_discovery_info_failed") from err
 

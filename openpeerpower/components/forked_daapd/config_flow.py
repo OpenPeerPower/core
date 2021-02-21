@@ -23,7 +23,7 @@ from .const import (  # pylint:disable=unused-import
 _LOGGER = logging.getLogger(__name__)
 
 
-# Can't use all vol types: https://github.com/openpeerpower/core/issues/32819
+# Can't use all vol types: https://github.com/open-peer-power/core/issues/32819
 DATA_SCHEMA_DICT = {
     vol.Required(CONF_HOST): str,
     vol.Optional(CONF_PORT, default=DEFAULT_PORT): int,

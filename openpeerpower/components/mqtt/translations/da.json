@@ -17,12 +17,12 @@
                 },
                 "description": "Indtast venligst forbindelsesindstillinger for din MQTT-broker."
             },
-            "oppio_confirm": {
+            .oppio_confirm": {
                 "data": {
                     "discovery": "Aktiv\u00e9r opdagelse"
                 },
                 "description": "Vil du konfigurere Open Peer Power til at oprette forbindelse til MQTT-brokeren, der leveres af.opp.io-tilf\u00f8jelsen {addon}?",
-                "title": "MQTT-broker via Opp.io-tilf\u00f8jelse"
+                "title": "MQTT-broker via Hass.io-tilf\u00f8jelse"
             }
         }
     },

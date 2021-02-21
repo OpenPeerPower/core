@@ -33,7 +33,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
     """Set up Minecraft Server from a config entry."""
-    domain_data = opp.data.setdefault(DOMAIN, {})
+    domain_data =.opp.data.setdefault(DOMAIN, {})
 
     # Create and store server instance.
     unique_id = config_entry.unique_id
@@ -61,7 +61,7 @@ async def async_unload_entry(
 ) -> bool:
     """Unload Minecraft Server config entry."""
     unique_id = config_entry.unique_id
-    server = opp.data[DOMAIN][unique_id]
+    server =.opp.data[DOMAIN][unique_id]
 
     # Unload platforms.
     await asyncio.gather(
@@ -88,7 +88,7 @@ class MinecraftServer:
         self,.opp: OpenPeerPowerType, unique_id: str, config_data: ConfigType
     ) -> None:
         """Initialize server instance."""
-        self._opp = opp
+        self..opp =.opp
 
         # Server data
         self.unique_id = unique_id
@@ -119,7 +119,7 @@ class MinecraftServer:
     def start_periodic_update(self) -> None:
         """Start periodic execution of update method."""
         self._stop_periodic_update = async_track_time_interval(
-            self._opp, self.async_update, timedelta(seconds=SCAN_INTERVAL)
+            self..opp, self.async_update, timedelta(seconds=SCAN_INTERVAL)
         )
 
     def stop_periodic_update(self) -> None:
@@ -131,7 +131,7 @@ class MinecraftServer:
         # Check if host is a valid SRV record, if not already done.
         if not self.srv_record_checked:
             self.srv_record_checked = True
-            srv_record = await helpers.async_check_srv_record(self._opp, self.host)
+            srv_record = await helpers.async_check_srv_record(self..opp, self.host)
             if srv_record is not None:
                 _LOGGER.debug(
                     "'%s' is a valid Minecraft SRV record ('%s:%s')",
@@ -147,7 +147,7 @@ class MinecraftServer:
 
         # Ping the server with a status request.
         try:
-            await self._opp.async_add_executor_job(
+            await self..opp.async_add_executor_job(
                 self._mc_status.status, self._MAX_RETRIES_STATUS
             )
             self.online = True
@@ -178,12 +178,12 @@ class MinecraftServer:
             await self._async_status_request()
 
         # Notify sensors about new data.
-        async_dispatcher_send(self._opp, self.signal_name)
+        async_dispatcher_send(self..opp, self.signal_name)
 
     async def _async_status_request(self) -> None:
         """Request server status and update properties."""
         try:
-            status_response = await self._opp.async_add_executor_job(
+            status_response = await self..opp.async_add_executor_job(
                 self._mc_status.status, self._MAX_RETRIES_STATUS
             )
 
@@ -283,17 +283,17 @@ class MinecraftServerEntity(Entity):
         """Fetch data from the server."""
         raise NotImplementedError()
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Connect dispatcher to signal from server."""
         self._disconnect_dispatcher = async_dispatcher_connect(
             self.opp, self._server.signal_name, self._update_callback
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect dispatcher before removal."""
         self._disconnect_dispatcher()
 
     @callback
     def _update_callback(self) -> None:
         """Triggers update of properties after receiving signal from server."""
-        self.async_schedule_update_op.state(force_refresh=True)
+        self.async_schedule_update_ha_state(force_refresh=True)

@@ -11,7 +11,7 @@ class ConnectDenonAVR:
 
     def __init__(self,.opp, host, timeout, show_all_inputs, zone2, zone3):
         """Initialize the class."""
-        self._opp = opp
+        self..opp =.opp
         self._receiver = None
         self._host = host
         self._show_all_inputs = show_all_inputs
@@ -30,7 +30,7 @@ class ConnectDenonAVR:
 
     async def async_connect_receiver(self):
         """Connect to the DenonAVR receiver."""
-        if not await self._opp.async_add_executor_job(self.init_receiver_class):
+        if not await self..opp.async_add_executor_job(self.init_receiver_class):
             return False
 
         if (

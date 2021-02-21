@@ -4,7 +4,7 @@ import functools
 from typing import Callable, Optional, TypeVar, cast
 
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 T = TypeVar("T")
 
@@ -21,23 +21,23 @@ def singleton(data_key: str) -> Callable[[FUNC], FUNC]:
         """Wrap a function with caching logic."""
         if not asyncio.iscoroutinefunction(func):
 
-            @bind_opp
+            @bind.opp
             @functools.wraps(func)
             def wrapped.opp: OpenPeerPower) -> T:
-                obj: Optional[T] = opp.data.get(data_key)
+                obj: Optional[T] =.opp.data.get(data_key)
                 if obj is None:
-                    obj = opp.data[data_key] = func.opp)
+                    obj =.opp.data[data_key] = func.opp)
                 return obj
 
             return wrapped
 
-        @bind_opp
+        @bind.opp
         @functools.wraps(func)
         async def async_wrapped.opp: OpenPeerPower) -> T:
-            obj_or_evt = opp.data.get(data_key)
+            obj_or_evt =.opp.data.get(data_key)
 
             if not obj_or_evt:
-                evt = opp.data[data_key] = asyncio.Event()
+                evt =.opp.data[data_key] = asyncio.Event()
 
                 result = await func.opp)
 

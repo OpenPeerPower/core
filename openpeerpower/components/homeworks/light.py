@@ -22,7 +22,7 @@ def setup_platform.opp, config, add_entities, discover_info=None):
     if discover_info is None:
         return
 
-    controller = opp.data[HOMEWORKS_CONTROLLER]
+    controller =.opp.data[HOMEWORKS_CONTROLLER]
     devs = []
     for dimmer in discover_info[CONF_DIMMERS]:
         dev = HomeworksLight(
@@ -42,7 +42,7 @@ class HomeworksLight(HomeworksDevice, LightEntity):
         self._level = 0
         self._prev_level = 0
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         signal = f"homeworks_entity_{self._addr}"
         _LOGGER.debug("connecting %s", signal)
@@ -99,4 +99,4 @@ class HomeworksLight(HomeworksDevice, LightEntity):
             self._level = int((values[1] * 255.0) / 100.0)
             if self._level != 0:
                 self._prev_level = self._level
-            self.async_write_op.state()
+            self.async_write_ha_state()

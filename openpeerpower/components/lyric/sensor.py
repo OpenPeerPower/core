@@ -10,9 +10,9 @@ from openpeerpower.const import (
     DEVICE_CLASS_TEMPERATURE,
     DEVICE_CLASS_TIMESTAMP,
 )
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
+from openpeerpower.util import dt as dt_util
 
 from . import LyricDeviceEntity
 from .const import (
@@ -36,7 +36,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the Honeywell Lyric sensor platform based on a config entry."""
-    coordinator: DataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id]
+    coordinator: DataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id]
 
     entities = []
 

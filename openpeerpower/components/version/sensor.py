@@ -4,7 +4,7 @@ from datetime import timedelta
 from pyhaversion import (
     DockerVersion,
     HaIoVersion,
-    OppioVersion,
+    HassioVersion,
     LocalVersion,
     PyPiVersion,
 )
@@ -12,10 +12,10 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import CONF_NAME, CONF_SOURCE
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle
 
 ALL_IMAGES = [
     "default",
@@ -35,7 +35,7 @@ ALL_IMAGES = [
     "odroid-n2",
     "odroid-xu",
 ]
-ALL_SOURCES = ["local", "pypi", "oppio", "docker", "haio"]
+ALL_SOURCES = ["local", "pypi", .oppio", "docker", "haio"]
 
 CONF_BETA = "beta"
 CONF_IMAGE = "image"
@@ -76,8 +76,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     if source == "pypi":
         haversion = VersionData(PyPiVersion.opp.loop, session, branch))
-    elif source == "oppio":
-        haversion = VersionData(OppioVersion.opp.loop, session, branch, image))
+    elif source == .oppio":
+        haversion = VersionData(HassioVersion.opp.loop, session, branch, image))
     elif source == "docker":
         haversion = VersionData(DockerVersion.opp.loop, session, branch, image))
     elif source == "haio":
@@ -99,7 +99,7 @@ class VersionSensor(Entity):
 
     def __init__(self, haversion, name):
         """Initialize the Version sensor."""
-        self.haversion = op.ersion
+        self.haversion = haversion
         self._name = name
         self._state = None
 

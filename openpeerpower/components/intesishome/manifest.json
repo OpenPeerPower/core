@@ -1,7 +1,7 @@
 {
   "domain": "intesishome",
   "name": "IntesisHome",
-  "documentation": "https://www.openpeerpower.io/integrations/intesishome",
+  "documentation": "https://www.open-peer-power.io/integrations/intesishome",
   "codeowners": ["@jnimmo"],
   "requirements": ["pyintesishome==1.7.5"]
 }

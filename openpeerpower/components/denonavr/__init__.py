@@ -40,7 +40,7 @@ SERVICE_TO_METHOD = {
 def setup.opp: core.OpenPeerPower, config: dict):
     """Set up the denonavr platform."""
 
-    def service_op.dler(service):
+    def service_handler(service):
         method = SERVICE_TO_METHOD.get(service.service)
         data = service.data.copy()
         data["method"] = method["method"]
@@ -48,7 +48,7 @@ def setup.opp: core.OpenPeerPower, config: dict):
 
     for service in SERVICE_TO_METHOD:
         schema = SERVICE_TO_METHOD[service]["schema"]
-       .opp.services.register(DOMAIN, service, service_op.dler, schema=schema)
+       .opp.services.register(DOMAIN, service, service_handler, schema=schema)
 
     return True
 
@@ -90,7 +90,7 @@ async def async_unload_entry(
    .opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
-    unload_ok = await opp..config_entries.async_forward_entry_unload(
+    unload_ok = await.opp.config_entries.async_forward_entry_unload(
         config_entry, "media_player"
     )
 
@@ -119,4 +119,4 @@ async def update_listener(
    .opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Handle options update."""
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)

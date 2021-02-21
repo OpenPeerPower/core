@@ -4,7 +4,7 @@ import logging
 import voluptuous as vol
 
 from openpeerpower.components import frontend
-from openpeerpower.config import async_opp_config_yaml, async_process_component_config
+from openpeerpower.config import async.opp_config_yaml, async_process_component_config
 from openpeerpower.const import CONF_FILENAME, CONF_MODE, CONF_RESOURCES
 from openpeerpower.core import callback
 from openpeerpower.exceptions import OpenPeerPowerError
@@ -74,10 +74,10 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
 
     frontend.async_register_built_in_panel.opp, DOMAIN, config={"mode": mode})
 
-    async def reload_resources_service_op.dler(service_call: ServiceCallType) -> None:
+    async def reload_resources_service_handler(service_call: ServiceCallType) -> None:
         """Reload yaml resources."""
         try:
-            conf = await async_opp_config_yaml.opp)
+            conf = await async.opp_config_yaml.opp)
         except OpenPeerPowerError as err:
             _LOGGER.error(err)
             return
@@ -99,7 +99,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
            .opp,
             DOMAIN,
             SERVICE_RELOAD_RESOURCES,
-            reload_resources_service_op.dler,
+            reload_resources_service_handler,
             schema=RESOURCE_RELOAD_SERVICE_SCHEMA,
         )
 
@@ -154,12 +154,12 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
 
         if change_type == collection.CHANGE_REMOVED:
             frontend.async_remove_panel.opp, url_path)
-            await opp..data[DOMAIN]["dashboards"].pop(url_path).async_delete()
+            await.opp.data[DOMAIN]["dashboards"].pop(url_path).async_delete()
             return
 
         if change_type == collection.CHANGE_ADDED:
 
-            existing = opp.data[DOMAIN]["dashboards"].get(url_path)
+            existing =.opp.data[DOMAIN]["dashboards"].get(url_path)
 
             if existing:
                 _LOGGER.warning(

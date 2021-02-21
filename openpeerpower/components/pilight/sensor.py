@@ -45,13 +45,13 @@ class PilightSensor(Entity):
     def __init__(self,.opp, name, variable, payload, unit_of_measurement):
         """Initialize the sensor."""
         self._state = None
-        self._opp = opp
+        self..opp =.opp
         self._name = name
         self._variable = variable
         self._payload = payload
         self._unit_of_measurement = unit_of_measurement
 
-       .opp.bus.listen(pilight.EVENT, self._op.dle_code)
+       .opp.bus.listen(pilight.EVENT, self._handle_code)
 
     @property
     def should_poll(self):
@@ -73,7 +73,7 @@ class PilightSensor(Entity):
         """Return the state of the entity."""
         return self._state
 
-    def _op.dle_code(self, call):
+    def _handle_code(self, call):
         """Handle received code by the pilight-daemon.
 
         If the code matches the defined payload
@@ -86,7 +86,7 @@ class PilightSensor(Entity):
             try:
                 value = call.data[self._variable]
                 self._state = value
-                self.schedule_update_op.state()
+                self.schedule_update_ha_state()
             except KeyError:
                 _LOGGER.error(
                     "No variable %s in received code data %s",

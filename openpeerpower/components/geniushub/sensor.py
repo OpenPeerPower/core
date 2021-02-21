@@ -3,8 +3,8 @@ from datetime import timedelta
 from typing import Any, Dict
 
 from openpeerpower.const import DEVICE_CLASS_BATTERY, PERCENTAGE
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+import openpeerpower.util.dt as dt_util
 
 from . import DOMAIN, GeniusDevice, GeniusEntity
 
@@ -24,7 +24,7 @@ async def async_setup_platform(
     if discovery_info is None:
         return
 
-    broker = opp.data[DOMAIN]["broker"]
+    broker =.opp.data[DOMAIN]["broker"]
 
     sensors = [
         GeniusBattery(broker, d, GH_STATE_ATTR)

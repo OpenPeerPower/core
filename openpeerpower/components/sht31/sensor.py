@@ -15,10 +15,10 @@ from openpeerpower.const import (
     PRECISION_TENTHS,
     TEMP_CELSIUS,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.temperature import display_temp
-from openpeerpowerr.util import Throttle
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.temperature import display_temp
+from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
 

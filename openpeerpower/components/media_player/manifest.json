@@ -1,7 +1,7 @@
 {
   "domain": "media_player",
   "name": "Media Player",
-  "documentation": "https://www.openpeerpower.io/integrations/media_player",
+  "documentation": "https://www.open-peer-power.io/integrations/media_player",
   "dependencies": ["http"],
   "codeowners": [],
   "quality_scale": "internal"

@@ -172,8 +172,8 @@ CUSTOM_ICONS = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Smile sensors from a config entry."""
-    api = opp.data[DOMAIN][config_entry.entry_id]["api"]
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
+    api =.opp.data[DOMAIN][config_entry.entry_id]["api"]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
 
     entities = []
     all_devices = api.get_all_devices()
@@ -301,14 +301,14 @@ class PwThermostatSensor(SmileSensor, Entity):
 
         if not data:
             _LOGGER.error("Received no data for device %s", self._entity_name)
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
         if data.get(self._sensor) is not None:
             self._state = data[self._sensor]
             self._icon = CUSTOM_ICONS.get(self._sensor, self._icon)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class PwAuxDeviceSensor(SmileSensor, Entity):
@@ -328,7 +328,7 @@ class PwAuxDeviceSensor(SmileSensor, Entity):
 
         if not data:
             _LOGGER.error("Received no data for device %s", self._entity_name)
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
         if data.get("heating_state") is not None:
@@ -345,7 +345,7 @@ class PwAuxDeviceSensor(SmileSensor, Entity):
             self._state = "cooling"
             self._icon = COOL_ICON
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class PwPowerSensor(SmileSensor, Entity):
@@ -373,11 +373,11 @@ class PwPowerSensor(SmileSensor, Entity):
 
         if not data:
             _LOGGER.error("Received no data for device %s", self._entity_name)
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
         if data.get(self._sensor) is not None:
             self._state = data[self._sensor]
             self._icon = CUSTOM_ICONS.get(self._sensor, self._icon)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()

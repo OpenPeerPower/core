@@ -30,9 +30,9 @@ from openpeerpower.const import (
     STATE_PAUSED,
     STATE_PLAYING,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.util.dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -147,7 +147,7 @@ class EmbyDevice(MediaPlayerEntity):
         self.media_status_last_position = None
         self.media_status_received = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callback."""
         self.emby.add_update_callback(self.async_update_callback, self.device_id)
 
@@ -164,7 +164,7 @@ class EmbyDevice(MediaPlayerEntity):
             self.media_status_last_position = None
             self.media_status_received = None
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def available(self):
@@ -254,7 +254,7 @@ class EmbyDevice(MediaPlayerEntity):
         """
         When was the position of the current playing media valid.
 
-        Returns value from openpeerpowerr.util.dt.utcnow().
+        Returns value from openpeerpower.util.dt.utcnow().
         """
         return self.media_status_received
 

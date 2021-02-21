@@ -57,15 +57,15 @@ class DemoRemote(RemoteEntity):
     def turn_on(self, **kwargs):
         """Turn the remote on."""
         self._state = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the remote off."""
         self._state = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def send_command(self, command, **kwargs):
         """Send a command to a device."""
         for com in command:
             self._last_command_sent = com
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

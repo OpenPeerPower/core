@@ -8,8 +8,8 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import ATTR_ATTRIBUTION, HTTP_OK, TIME_MINUTES
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -69,7 +69,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 async def async_http_request.opp, uri):
     """Perform actual request."""
     try:
-        session = opp.helpers.aiohttp_client.async_get_clientsession.opp)
+        session =.opp.helpers.aiohttp_client.async_get_clientsession.opp)
         with async_timeout.timeout(REQUEST_TIMEOUT):
             req = await session.get(uri)
         if req.status != HTTP_OK:

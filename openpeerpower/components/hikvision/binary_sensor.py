@@ -192,7 +192,7 @@ class HikvisionBinarySensor(BinarySensorEntity):
 
     def __init__(self,.opp, sensor, channel, cam, delay):
         """Initialize the binary_sensor."""
-        self._opp = opp
+        self..opp =.opp
         self._cam = cam
         self._sensor = sensor
         self._channel = channel
@@ -272,7 +272,7 @@ class HikvisionBinarySensor(BinarySensorEntity):
                 _LOGGER.debug(
                     "%s Called delayed (%ssec) update", self._name, self._delay
                 )
-                self.schedule_update_op.state()
+                self.schedule_update_ha_state()
                 self._timer = None
 
             if self._timer is not None:
@@ -280,7 +280,7 @@ class HikvisionBinarySensor(BinarySensorEntity):
                 self._timer = None
 
             self._timer = track_point_in_utc_time(
-                self._opp, _delay_update, utcnow() + timedelta(seconds=self._delay)
+                self..opp, _delay_update, utcnow() + timedelta(seconds=self._delay)
             )
 
         elif self._delay > 0 and self.is_on:
@@ -289,7 +289,7 @@ class HikvisionBinarySensor(BinarySensorEntity):
                 self._timer()
                 self._timer = None
 
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
         else:
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()

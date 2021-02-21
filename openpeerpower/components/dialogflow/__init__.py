@@ -36,7 +36,7 @@ async def handle_webhook.opp, webhook_id, request):
     _LOGGER.debug("Received Dialogflow request: %s", message)
 
     try:
-        response = await async_op.dle_message.opp, message)
+        response = await async_handle_message.opp, message)
         return b"" if response is None else web.json_response(response)
 
     except DialogFlowError as err:
@@ -103,7 +103,7 @@ def get_api_version(message):
         return V2
 
 
-async def async_op.dle_message.opp, message):
+async def async_handle_message.opp, message):
     """Handle a DialogFlow message."""
     _api_version = get_api_version(message)
     if _api_version is V1:
@@ -130,7 +130,7 @@ async def async_op.dle_message.opp, message):
             "You have not defined an action in your Dialogflow intent."
         )
 
-    intent_response = await intent.async_op.dle(
+    intent_response = await intent.async_handle(
        .opp,
         DOMAIN,
         action,

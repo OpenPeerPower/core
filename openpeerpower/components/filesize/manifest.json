@@ -1,6 +1,6 @@
 {
   "domain": "filesize",
   "name": "File Size",
-  "documentation": "https://www.openpeerpower.io/integrations/filesize",
+  "documentation": "https://www.open-peer-power.io/integrations/filesize",
   "codeowners": []
 }

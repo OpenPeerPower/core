@@ -8,7 +8,7 @@ from openpeerpower.components.device_automation import TRIGGER_BASE_SCHEMA
 from openpeerpower.components.device_automation.exceptions import (
     InvalidDeviceAutomationConfig,
 )
-from openpeerpower.components.openpeerpowerr.triggers import event as event_trigger
+from openpeerpower.components.openpeerpower.triggers import event as event_trigger
 from openpeerpower.const import (
     CONF_DEVICE_ID,
     CONF_DOMAIN,
@@ -16,8 +16,8 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     CONF_TYPE,
 )
-from openpeerpowerr.core import CALLBACK_TYPE, OpenPeerPower
-from openpeerpowerr.helpers.typing import ConfigType
+from openpeerpower.core import CALLBACK_TYPE, OpenPeerPower
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     ACTION_PRESS,
@@ -282,7 +282,7 @@ def get_button_device_by_dr_id.opp: OpenPeerPower, device_id: str):
         return None
 
     for config_entry in.opp.data[DOMAIN]:
-        button_devices = opp.data[DOMAIN][config_entry][BUTTON_DEVICES]
+        button_devices =.opp.data[DOMAIN][config_entry][BUTTON_DEVICES]
         device = button_devices.get(device_id)
         if device:
             return device

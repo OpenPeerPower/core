@@ -38,7 +38,7 @@ ATTR_SERIAL = "serial"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Add Brother entities from a config_entry."""
-    coordinator = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id]
+    coordinator =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id]
 
     sensors = []
 

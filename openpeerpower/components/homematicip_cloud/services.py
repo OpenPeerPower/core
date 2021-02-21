@@ -38,7 +38,7 @@ SERVICE_ACTIVATE_ECO_MODE_WITH_PERIOD = "activate_eco_mode_with_period"
 SERVICE_ACTIVATE_VACATION = "activate_vacation"
 SERVICE_DEACTIVATE_ECO_MODE = "deactivate_eco_mode"
 SERVICE_DEACTIVATE_VACATION = "deactivate_vacation"
-SERVICE_DUMP_HAP_CONFIG = "dump_op._config"
+SERVICE_DUMP_HAP_CONFIG = "dump_hap_config"
 SERVICE_RESET_ENERGY_COUNTER = "reset_energy_counter"
 SERVICE_SET_ACTIVE_CLIMATE_PROFILE = "set_active_climate_profile"
 
@@ -129,7 +129,7 @@ async def async_setup_services.opp: OpenPeerPowerType) -> None:
         elif service_name == SERVICE_DEACTIVATE_VACATION:
             await _async_deactivate_vacation.opp, service)
         elif service_name == SERVICE_DUMP_HAP_CONFIG:
-            await _async_dump_op._config.opp, service)
+            await _async_dump_hap_config.opp, service)
         elif service_name == SERVICE_RESET_ENERGY_COUNTER:
             await _async_reset_energy_counter.opp, service)
         elif service_name == SERVICE_SET_ACTIVE_CLIMATE_PROFILE:
@@ -292,7 +292,7 @@ async def _set_active_climate_profile(
     for hap in.opp.data[HMIPC_DOMAIN].values():
         if entity_id_list != "all":
             for entity_id in entity_id_list:
-                group = op..hmip_device_by_entity_id.get(entity_id)
+                group = hap.hmip_device_by_entity_id.get(entity_id)
                 if group and isinstance(group, AsyncHeatingGroup):
                     await group.set_active_profile(climate_profile_index)
         else:
@@ -301,7 +301,7 @@ async def _set_active_climate_profile(
                     await group.set_active_profile(climate_profile_index)
 
 
-async def _async_dump_op._config(
+async def _async_dump_hap_config(
    .opp: OpenPeerPowerType, service: ServiceCallType
 ) -> None:
     """Service to dump the configuration of a Homematic IP Access Point."""
@@ -310,17 +310,17 @@ async def _async_dump_op._config(
     anonymize = service.data[ATTR_ANONYMIZE]
 
     for hap in.opp.data[HMIPC_DOMAIN].values():
-        hap_sgtin = op..config_entry.unique_id
+        hap_sgtin = hap.config_entry.unique_id
 
         if anonymize:
-            hap_sgtin = op._sgtin[-4:]
+            hap_sgtin = hap_sgtin[-4:]
 
         file_name = f"{config_file_prefix}_{hap_sgtin}.json"
         path = Path(config_path)
         config_file = path / file_name
 
         json_state = await hap.home.download_configuration()
-        json_state = op.dle_config(json_state, anonymize)
+        json_state = handle_config(json_state, anonymize)
 
         config_file.write_text(json_state, encoding="utf8")
 
@@ -334,7 +334,7 @@ async def _async_reset_energy_counter(
     for hap in.opp.data[HMIPC_DOMAIN].values():
         if entity_id_list != "all":
             for entity_id in entity_id_list:
-                device = op..hmip_device_by_entity_id.get(entity_id)
+                device = hap.hmip_device_by_entity_id.get(entity_id)
                 if device and isinstance(device, AsyncSwitchMeasuring):
                     await device.reset_energy_counter()
         else:
@@ -345,7 +345,7 @@ async def _async_reset_energy_counter(
 
 def _get_home.opp: OpenPeerPowerType, hapid: str) -> Optional[AsyncHome]:
     """Return a HmIP home."""
-    hap = opp.data[HMIPC_DOMAIN].get(hapid)
+    hap =.opp.data[HMIPC_DOMAIN].get(hapid)
     if hap:
         return hap.home
 

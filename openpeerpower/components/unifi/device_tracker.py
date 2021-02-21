@@ -18,10 +18,10 @@ from aiounifi.events import (
 from openpeerpower.components.device_tracker import DOMAIN
 from openpeerpower.components.device_tracker.config_entry import ScannerEntity
 from openpeerpower.components.device_tracker.const import SOURCE_TYPE_ROUTER
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.device_registry import CONNECTION_NETWORK_MAC
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+import openpeerpower.util.dt as dt_util
 
 from .const import ATTR_MANUFACTURER, DOMAIN as UNIFI_DOMAIN
 from .unifi_client import UniFiClient
@@ -70,7 +70,7 @@ WIRELESS_CONNECTION = (
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up device tracker for UniFi component."""
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     controller.entities[DOMAIN] = {CLIENT_TRACKER: set(), DEVICE_TRACKER: set()}
 
     @callback
@@ -157,7 +157,7 @@ class UniFiClientTracker(UniFiClient, ScannerEntity):
 
         self.schedule_update = self._is_connected
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Watch object when added."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -166,12 +166,12 @@ class UniFiClientTracker(UniFiClient, ScannerEntity):
                 self._make_disconnected,
             )
         )
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect object when removed."""
         self.controller.async_heartbeat(self.unique_id)
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
 
     @callback
     def async_signal_reachable_callback(self) -> None:
@@ -223,7 +223,7 @@ class UniFiClientTracker(UniFiClient, ScannerEntity):
     def _make_disconnected(self, *_):
         """No heart beat by device."""
         self._is_connected = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_connected(self):
@@ -310,7 +310,7 @@ class UniFiDeviceTracker(UniFiBase, ScannerEntity):
         self._controller_connection_state_changed = False
         self.schedule_update = False
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Watch object when added."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -319,12 +319,12 @@ class UniFiDeviceTracker(UniFiBase, ScannerEntity):
                 self._make_disconnected,
             )
         )
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect object when removed."""
         self.controller.async_heartbeat(self.unique_id)
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
 
     @callback
     def async_signal_reachable_callback(self) -> None:
@@ -370,7 +370,7 @@ class UniFiDeviceTracker(UniFiBase, ScannerEntity):
     def _make_disconnected(self, *_):
         """No heart beat by device."""
         self._is_connected = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_connected(self):

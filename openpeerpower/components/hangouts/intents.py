@@ -13,9 +13,9 @@ class HelpIntent(intent.IntentHandler):
 
     def __init__(self,.opp):
         """Set up the intent."""
-        self.opp = opp
+        self.opp =.opp
 
-    async def async_op.dle(self, intent_obj):
+    async def async_handle(self, intent_obj):
         """Handle the intent."""
         slots = self.async_validate_slots(intent_obj.slots)
         conv_id = slots["conv_id"]["value"]

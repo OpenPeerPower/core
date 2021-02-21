@@ -43,7 +43,7 @@ MANUFACTURER = "ecobee"
 
 # Translates ecobee API weatherSymbol to Open Peer Power usable names
 # https://www.ecobee.com/home/developer/api/documentation/v1/objects/WeatherForecast.shtml
-ECOBEE_WEATHER_SYMBOL_TO_OPP = {
+ECOBEE_WEATHER_SYMBOL_TO_HASS = {
     0: ATTR_CONDITION_SUNNY,
     1: ATTR_CONDITION_PARTLYCLOUDY,
     2: ATTR_CONDITION_PARTLYCLOUDY,

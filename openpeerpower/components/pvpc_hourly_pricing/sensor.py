@@ -7,11 +7,11 @@ from aiopvpc import PVPCData
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_NAME, CURRENCY_EURO, ENERGY_KILO_WATT_HOUR
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.event import async_call_later, async_track_time_change
-from openpeerpowerr.helpers.restore_state import RestoreEntity
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.event import async_call_later, async_track_time_change
+from openpeerpower.helpers.restore_state import RestoreEntity
+import openpeerpower.util.dt as dt_util
 
 from .const import ATTR_TARIFF
 
@@ -29,7 +29,7 @@ async def async_setup_entry(
 ):
     """Set up the electricity price sensor from config_entry."""
     name = config_entry.data[CONF_NAME]
-    pvpc_data_op.dler = PVPCData(
+    pvpc_data_handler = PVPCData(
         tariff=config_entry.data[ATTR_TARIFF],
         local_timezone.opp.config.time_zone,
         websession=async_get_clientsession.opp),
@@ -37,7 +37,7 @@ async def async_setup_entry(
         timeout=_DEFAULT_TIMEOUT,
     )
     async_add_entities(
-        [ElecPriceSensor(name, config_entry.unique_id, pvpc_data_op.dler)], False
+        [ElecPriceSensor(name, config_entry.unique_id, pvpc_data_handler)], False
     )
 
 
@@ -48,24 +48,24 @@ class ElecPriceSensor(RestoreEntity):
     icon = ICON
     should_poll = False
 
-    def __init__(self, name, unique_id, pvpc_data_op.dler):
+    def __init__(self, name, unique_id, pvpc_data_handler):
         """Initialize the sensor object."""
         self._name = name
         self._unique_id = unique_id
-        self._pvpc_data = pvpc_data_op.dler
+        self._pvpc_data = pvpc_data_handler
         self._num_retries = 0
 
         self._hourly_tracker = None
         self._price_tracker = None
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Cancel listeners for sensor updates."""
         self._hourly_tracker()
         self._price_tracker()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         state = await self.async_get_last_state()
         if state:
             self._pvpc_data.state = state.state
@@ -120,7 +120,7 @@ class ElecPriceSensor(RestoreEntity):
     def update_current_price(self, now):
         """Update the sensor state, by selecting the current price for this hour."""
         self._pvpc_data.process_state_and_attributes(now)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_update_prices(self, now):
         """Update electricity prices from the ESIOS API."""

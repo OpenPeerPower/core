@@ -29,10 +29,7 @@ from openpeerpower.const import (
     HTTP_OK,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.reload import setup_reload_service
 from openpeerpower.helpers.template import Template
-
-from . import DOMAIN, PLATFORMS
 
 CONF_DATA = "data"
 CONF_DATA_TEMPLATE = "data_template"
@@ -73,8 +70,6 @@ _LOGGER = logging.getLogger(__name__)
 
 def get_service.opp, config, discovery_info=None):
     """Get the RESTful notification service."""
-    setup_reload_service.opp, DOMAIN, PLATFORMS)
-
     resource = config.get(CONF_RESOURCE)
     method = config.get(CONF_METHOD)
     headers = config.get(CONF_HEADERS)
@@ -132,7 +127,7 @@ class RestNotificationService(BaseNotificationService):
     ):
         """Initialize the service."""
         self._resource = resource
-        self._opp = opp
+        self..opp =.opp
         self._method = method.upper()
         self._headers = headers
         self._params = params
@@ -169,7 +164,7 @@ class RestNotificationService(BaseNotificationService):
                     }
                 if not isinstance(value, Template):
                     return value
-                value.opp = self._opp
+                value.opp = self..opp
                 return value.async_render(kwargs, parse_result=False)
 
             if self._data:

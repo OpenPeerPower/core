@@ -4,7 +4,7 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.components.light import DOMAIN as LIGHT_DOMAIN
 from openpeerpower.const import CONF_PORT
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from .const import DOMAIN
 
@@ -56,6 +56,6 @@ async def async_unload_entry.opp, entry):
     """Unload a config entry."""
    .opp.data.pop(DATA_LIFX_MANAGER).cleanup()
 
-    await opp..config_entries.async_forward_entry_unload(entry, LIGHT_DOMAIN)
+    await.opp.config_entries.async_forward_entry_unload(entry, LIGHT_DOMAIN)
 
     return True

@@ -7,9 +7,9 @@
             "single_instance_allowed": "Allerede konfigurert. Bare \u00e9n enkelt konfigurasjon er mulig."
         },
         "step": {
-            "oppio_confirm": {
-                "description": "Vil du konfigurere Open Peer Power til \u00e5 koble til Almond levert av Opp.io-tillegg: {addon}?",
-                "title": "Almond via Opp.io-tillegg"
+            .oppio_confirm": {
+                "description": "Vil du konfigurere Open Peer Power til \u00e5 koble til Almond levert av Hass.io-tillegg: {addon}?",
+                "title": "Almond via Hass.io-tillegg"
             },
             "pick_implementation": {
                 "title": "Velg godkjenningsmetode"

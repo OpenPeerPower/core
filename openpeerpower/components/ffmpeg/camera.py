@@ -6,8 +6,8 @@ import voluptuous as vol
 
 from openpeerpower.components.camera import PLATFORM_SCHEMA, SUPPORT_STREAM, Camera
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.helpers.aiohttp_client import async_aiohttp_proxy_stream
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_aiohttp_proxy_stream
+import openpeerpower.helpers.config_validation as cv
 
 from . import CONF_EXTRA_ARGUMENTS, CONF_INPUT, DATA_FFMPEG, async_get_image
 
@@ -35,7 +35,7 @@ class FFmpegCamera(Camera):
         """Initialize a FFmpeg camera."""
         super().__init__()
 
-        self._manager = opp.data[DATA_FFMPEG]
+        self._manager =.opp.data[DATA_FFMPEG]
         self._name = config.get(CONF_NAME)
         self._input = config.get(CONF_INPUT)
         self._extra_arguments = config.get(CONF_EXTRA_ARGUMENTS)

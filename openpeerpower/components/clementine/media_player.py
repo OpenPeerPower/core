@@ -25,7 +25,7 @@ from openpeerpower.const import (
     STATE_PAUSED,
     STATE_PLAYING,
 )
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 DEFAULT_NAME = "Clementine Remote"
 DEFAULT_PORT = 5500
@@ -172,7 +172,7 @@ class ClementineDevice(MediaPlayerEntity):
         return SUPPORT_CLEMENTINE
 
     @property
-    def media_image_op.h(self):
+    def media_image_hash(self):
         """Hash value for media image."""
         if self._client.current_track:
             return self._client.current_track["track_id"]

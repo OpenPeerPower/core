@@ -14,11 +14,11 @@ from openpeerpower.const import (
     CONF_SCAN_INTERVAL,
     CONF_USERNAME,
 )
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
-from openpeerpowerr.helpers.event import async_call_later
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.event import async_call_later
+import openpeerpower.util.dt as dt_util
 
 from .const import (
     CONF_CONSIDER_HOME,
@@ -37,7 +37,7 @@ class KeeneticRouter:
 
     def __init__(self,.opp: OpenPeerPower, config_entry: ConfigEntry):
         """Initialize the Client."""
-        self.opp = opp
+        self.opp =.opp
         self.config_entry = config_entry
         self._last_devices: Dict[str, Device] = {}
         self._router_info: Optional[RouterInfo] = None

@@ -32,7 +32,7 @@ DATA_VIEW_REGISTERED = "oauth2_view_reg"
 DATA_IMPLEMENTATIONS = "oauth2_impl"
 DATA_PROVIDERS = "oauth2_providers"
 AUTH_CALLBACK_PATH = "/auth/external/callback"
-HEADER_FRONTEND_BASE = "OP-Frontend-Base"
+HEADER_FRONTEND_BASE = "HA-Frontend-Base"
 
 CLOCK_OUT_OF_SYNC_MAX_SEC = 20
 
@@ -64,7 +64,7 @@ class AbstractOAuth2Implementation(ABC):
 
         Pass external data in with:
 
-        await opp..config_entries.flow.async_configure(
+        await.opp.config_entries.flow.async_configure(
             flow_id=flow_id, user_input={'code': 'abcd', 'state': { … }
         )
 
@@ -105,7 +105,7 @@ class LocalOAuth2Implementation(AbstractOAuth2Implementation):
         token_url: str,
     ):
         """Initialize local auth implementation."""
-        self.opp = opp
+        self.opp =.opp
         self._domain = domain
         self.client_id = client_id
         self.client_secret = client_secret
@@ -278,7 +278,7 @@ class AbstractOAuth2FlowHandler(config_entries.ConfigFlow, metaclass=ABCMeta):
             return self.async_abort(
                 reason="no_url_available",
                 description_placeholders={
-                    "docs_url": "https://www.openpeerpower.io/more-info/no-url-available"
+                    "docs_url": "https://www.open-peer-power.io/more-info/no-url-available"
                 },
             )
 
@@ -350,7 +350,7 @@ def async_register_implementation(
        .opp.http.register_view(OAuth2AuthorizeCallbackView())  # type: ignore
        .opp.data[DATA_VIEW_REGISTERED] = True
 
-    implementations = opp.data.setdefault(DATA_IMPLEMENTATIONS, {})
+    implementations =.opp.data.setdefault(DATA_IMPLEMENTATIONS, {})
     implementations.setdefault(domain, {})[implementation.domain] = implementation
 
 
@@ -420,14 +420,14 @@ class OAuth2AuthorizeCallbackView(http.OpenPeerPowerView):
                 text=f"Missing code or state parameter in {request.url}"
             )
 
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         state = _decode_jwt.opp, request.query["state"])
 
         if state is None:
             return web.Response(text="Invalid state")
 
-        await opp..config_entries.flow.async_configure(
+        await.opp.config_entries.flow.async_configure(
             flow_id=state["flow_id"],
             user_input={"state": state, "code": request.query["code"]},
         )
@@ -448,7 +448,7 @@ class OAuth2Session:
         implementation: AbstractOAuth2Implementation,
     ):
         """Initialize an OAuth2 session."""
-        self.opp = opp
+        self.opp =.opp
         self.config_entry = config_entry
         self.implementation = implementation
 
@@ -509,10 +509,10 @@ async def async_oauth2_request(
 @callback
 def _encode_jwt.opp: OpenPeerPower, data: dict) -> str:
     """JWT encode data."""
-    secret = opp.data.get(DATA_JWT_SECRET)
+    secret =.opp.data.get(DATA_JWT_SECRET)
 
     if secret is None:
-        secret = opp.data[DATA_JWT_SECRET] = secrets.token_hex()
+        secret =.opp.data[DATA_JWT_SECRET] = secrets.token_hex()
 
     return jwt.encode(data, secret, algorithm="HS256").decode()
 

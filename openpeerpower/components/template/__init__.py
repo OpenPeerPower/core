@@ -1,6 +1,6 @@
 """The template component."""
 from openpeerpower.const import SERVICE_RELOAD
-from openpeerpowerr.helpers.reload import async_reload_integration_platforms
+from openpeerpower.helpers.reload import async_reload_integration_platforms
 
 from .const import DOMAIN, EVENT_TEMPLATE_RELOADED, PLATFORMS
 

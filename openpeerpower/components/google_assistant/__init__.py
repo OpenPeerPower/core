@@ -99,7 +99,7 @@ async def async_setup.opp: OpenPeerPower, yaml_config: Dict[str, Any]):
     if google_config.should_report_state:
         google_config.async_enable_report_state()
 
-    async def request_sync_service_op.dler(call: ServiceCall):
+    async def request_sync_service_handler(call: ServiceCall):
         """Handle request sync service calls."""
         agent_user_id = call.data.get("agent_user_id") or call.context.user_id
 
@@ -114,7 +114,7 @@ async def async_setup.opp: OpenPeerPower, yaml_config: Dict[str, Any]):
     # Register service only if key is provided
     if CONF_SERVICE_ACCOUNT in config:
        .opp.services.async_register(
-            DOMAIN, SERVICE_REQUEST_SYNC, request_sync_service_op.dler
+            DOMAIN, SERVICE_REQUEST_SYNC, request_sync_service_handler
         )
 
     return True

@@ -9,7 +9,7 @@ PARALLEL_UPDATES = 0
 
 def devices_from_entities.opp, entry):
     """Parse configuration and add HLK-SW16 switch devices."""
-    device_client = opp.data[DOMAIN][entry.entry_id][DATA_DEVICE_REGISTER]
+    device_client =.opp.data[DOMAIN][entry.entry_id][DATA_DEVICE_REGISTER]
     devices = []
     for i in range(16):
         device_port = f"{i:01x}"

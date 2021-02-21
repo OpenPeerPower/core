@@ -50,7 +50,7 @@ from openpeerpower.helpers.script_variables import ScriptVariables
 from openpeerpower.helpers.service import async_register_admin_service
 from openpeerpower.helpers.trigger import async_initialize_triggers
 from openpeerpower.helpers.typing import TemplateVarsType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util.dt import parse_datetime
 
 # Not used except by packages to check config structure
@@ -88,7 +88,7 @@ SERVICE_TRIGGER = "trigger"
 AutomationActionType = Callable[[OpenPeerPower, TemplateVarsType], Awaitable[None]]
 
 
-@bind_opp
+@bind.opp
 def is_on.opp, entity_id):
     """
     Return true if specified automation entity_id is on.
@@ -104,7 +104,7 @@ def automations_with_entity.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component = opp.data[DOMAIN]
+    component =.opp.data[DOMAIN]
 
     return [
         automation_entity.entity_id
@@ -119,7 +119,7 @@ def entities_in_automation.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component = opp.data[DOMAIN]
+    component =.opp.data[DOMAIN]
 
     automation_entity = component.get_entity(entity_id)
 
@@ -135,7 +135,7 @@ def automations_with_device.opp: OpenPeerPower, device_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component = opp.data[DOMAIN]
+    component =.opp.data[DOMAIN]
 
     return [
         automation_entity.entity_id
@@ -150,7 +150,7 @@ def devices_in_automation.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component = opp.data[DOMAIN]
+    component =.opp.data[DOMAIN]
 
     automation_entity = component.get_entity(entity_id)
 
@@ -170,7 +170,7 @@ async def async_setup.opp, config):
     if not await _async_process_config.opp, config, component):
         await async_get_blueprints.opp).async_populate()
 
-    async def trigger_service_op.dler(entity, service_call):
+    async def trigger_service_handler(entity, service_call):
         """Handle automation triggers."""
         await entity.async_trigger(
             service_call.data[ATTR_VARIABLES],
@@ -184,7 +184,7 @@ async def async_setup.opp, config):
             vol.Optional(ATTR_VARIABLES, default={}): dict,
             vol.Optional(CONF_SKIP_CONDITION, default=True): bool,
         },
-        trigger_service_op.dler,
+        trigger_service_handler,
     )
     component.async_register_entity_service(SERVICE_TOGGLE, {}, "async_toggle")
     component.async_register_entity_service(SERVICE_TURN_ON, {}, "async_turn_on")
@@ -194,7 +194,7 @@ async def async_setup.opp, config):
         "async_turn_off",
     )
 
-    async def reload_service_op.dler(service_call):
+    async def reload_service_handler(service_call):
         """Remove all automations and load new ones from config."""
         conf = await component.async_prepare_reload()
         if conf is None:
@@ -204,7 +204,7 @@ async def async_setup.opp, config):
        .opp.bus.async_fire(EVENT_AUTOMATION_RELOADED, context=service_call.context)
 
     async_register_admin_service(
-       .opp, DOMAIN, SERVICE_RELOAD, reload_service_op.dler, schema=vol.Schema({})
+       .opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
     return True
@@ -231,7 +231,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         self._async_detach_triggers = None
         self._cond_func = cond_func
         self.action_script = action_script
-        self.action_script.change_listener = self.async_write_op.state
+        self.action_script.change_listener = self.async_write_ha_state
         self._initial_state = initial_state
         self._is_enabled = False
         self._referenced_entities: Optional[Set[str]] = None
@@ -311,9 +311,9 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         self._referenced_entities = referenced
         return referenced
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Startup with initial state or previous state."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         self._logger = logging.getLogger(
             f"{__name__}.{split_entity_id(self.entity_id)[1]}"
@@ -416,9 +416,9 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         except Exception:  # pylint: disable=broad-except
             self._logger.exception("While executing automation %s", self.entity_id)
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Remove listeners when removing automation from Open Peer Power."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         await self.async_disable()
 
     async def async_enable(self):
@@ -434,7 +434,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         # OpenPeerPower is starting up
         if self.opp.state != CoreState.not_running:
             self._async_detach_triggers = await self._async_attach_triggers(False)
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
         async def async_enable_automation(event):
@@ -448,7 +448,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         self.opp.bus.async_listen_once(
             EVENT_OPENPEERPOWER_STARTED, async_enable_automation
         )
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_disable(self, stop_actions=DEFAULT_STOP_ACTIONS):
         """Disable the automation entity."""
@@ -464,10 +464,10 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         if stop_actions:
             await self.action_script.async_stop()
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def _async_attach_triggers(
-        self, home_assistant_start: bool
+        self, open_peer_power_start: bool
     ) -> Optional[Callable[[], None]]:
         """Set up the triggers."""
 
@@ -491,7 +491,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
             DOMAIN,
             self._name,
             log_cb,
-            home_assistant_start,
+            open_peer_power_start,
             variables,
         )
 
@@ -615,11 +615,20 @@ async def _async_process_if.opp, config, p_config):
 
     def if_action(variables=None):
         """AND all conditions."""
-        try:
-            return all(check.opp, variables) for check in checks)
-        except ConditionError as ex:
-            LOGGER.warning("Error in 'condition' evaluation: %s", ex)
+        errors = []
+        for check in checks:
+            try:
+                if not check.opp, variables):
+                    return False
+            except ConditionError as ex:
+                errors.append(f"Error in 'condition' evaluation: {ex}")
+
+        if errors:
+            for error in errors:
+                LOGGER.warning("%s", error)
             return False
+
+        return True
 
     if_action.config = if_configs
 

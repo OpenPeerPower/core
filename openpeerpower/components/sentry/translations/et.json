@@ -23,7 +23,7 @@
                 "data": {
                     "environment": "Keskkonna valikuline nimi.",
                     "event_custom_components": "S\u00fcndmuste saatmine kohandatud komponentidest",
-                    "event_op.dled": "K\u00e4ivitatud s\u00fcndmuste saatmine",
+                    "event_handled": "K\u00e4ivitatud s\u00fcndmuste saatmine",
                     "event_third_party_packages": "S\u00fcndmuste saatmine kolmanda osapoole pakettidest",
                     "logging_event_level": "M\u00e4\u00e4ra Sentry s\u00fcndmuse logitase",
                     "logging_level": "M\u00e4\u00e4ra Sentry andme\u00fchikute logitase",

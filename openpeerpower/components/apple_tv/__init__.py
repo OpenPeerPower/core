@@ -52,11 +52,11 @@ async def async_setup_entry.opp, entry):
     manager = AppleTVManager.opp, entry)
    .opp.data.setdefault(DOMAIN, {})[entry.unique_id] = manager
 
-    async def on_opp_stop(event):
-        """Stop push updates when opp stops."""
+    async def on.opp_stop(event):
+        """Stop push updates when.opp stops."""
         await manager.disconnect()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_opp_stop)
+   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on.opp_stop)
 
     async def setup_platforms():
         """Set up platforms and initiate connection."""
@@ -84,7 +84,7 @@ async def async_unload_entry.opp, entry):
         )
     )
     if unload_ok:
-        manager = opp.data[DOMAIN].pop(entry.unique_id)
+        manager =.opp.data[DOMAIN].pop(entry.unique_id)
         await manager.disconnect()
 
     return unload_ok
@@ -100,7 +100,7 @@ class AppleTVEntity(Entity):
         self._name = name
         self._identifier = identifier
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle when an entity is about to be added to Open Peer Power."""
 
         @callback
@@ -108,14 +108,14 @@ class AppleTVEntity(Entity):
             """Handle that a connection was made to a device."""
             self.atv = atv
             self.async_device_connected(atv)
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         @callback
         def _async_disconnected():
             """Handle that a connection to a device was lost."""
             self.async_device_disconnected()
             self.atv = None
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self.async_on_remove(
             async_dispatcher_connect(
@@ -163,7 +163,7 @@ class AppleTVManager:
     def __init__(self,.opp, config_entry):
         """Initialize power manager."""
         self.config_entry = config_entry
-        self.opp = opp
+        self.opp =.opp
         self.atv = None
         self._is_on = not config_entry.options.get(CONF_START_OFF, False)
         self._connection_attempts = 0
@@ -184,16 +184,16 @@ class AppleTVManager:
             'Connection lost to Apple TV "%s"', self.config_entry.data.get(CONF_NAME)
         )
         self._connection_was_lost = True
-        self._op.dle_disconnect()
+        self._handle_disconnect()
 
     def connection_closed(self):
         """Device connection was (intentionally) closed.
 
         This is a callback function from pyatv.interface.DeviceListener.
         """
-        self._op.dle_disconnect()
+        self._handle_disconnect()
 
-    def _op.dle_disconnect(self):
+    def _handle_disconnect(self):
         """Handle that the device disconnected and restart connect loop."""
         if self.atv:
             self.atv.listener = None

@@ -108,8 +108,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 async def async_setup_webhook.opp: OpenPeerPowerType, entry: ConfigEntry, session):
     """Set up a webhook to handle binary sensor events."""
     if CONF_WEBHOOK_ID not in entry.data:
-        webhook_id = opp.components.webhook.async_generate_id()
-        webhook_url = opp.components.webhook.async_generate_url(webhook_id)
+        webhook_id =.opp.components.webhook.async_generate_id()
+        webhook_url =.opp.components.webhook.async_generate_url(webhook_id)
         _LOGGER.info("Registering new webhook at: %s", webhook_url)
 
        .opp.config_entries.async_update_entry(
@@ -134,11 +134,11 @@ async def async_setup_webhook.opp: OpenPeerPowerType, entry: ConfigEntry, sessio
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
    .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
-    session = opp.data[DOMAIN].pop(entry.entry_id)
+    session =.opp.data[DOMAIN].pop(entry.entry_id)
     await session.remove_webhook()
 
     for component in ("binary_sensor", "sensor"):
-        await opp..config_entries.async_forward_entry_unload(entry, component)
+        await.opp.config_entries.async_forward_entry_unload(entry, component)
 
     if not.opp.data[DOMAIN]:
        .opp.data.pop(DOMAIN)
@@ -167,12 +167,12 @@ class MinutPointClient:
         """Initialize the Minut data object."""
         self._known_devices = set()
         self._known_homes = set()
-        self._opp = opp
+        self..opp =.opp
         self._config_entry = config_entry
         self._is_available = True
         self._client = session
 
-        async_track_time_interval(self._opp, self.update, SCAN_INTERVAL)
+        async_track_time_interval(self..opp, self.update, SCAN_INTERVAL)
 
     async def update(self, *args):
         """Periodically poll the cloud for current state."""
@@ -183,21 +183,21 @@ class MinutPointClient:
         if not await self._client.update() and self._is_available:
             self._is_available = False
             _LOGGER.warning("Device is unavailable")
-            async_dispatcher_send(self._opp, SIGNAL_UPDATE_ENTITY)
+            async_dispatcher_send(self..opp, SIGNAL_UPDATE_ENTITY)
             return
 
         async def new_device(device_id, component):
             """Load new device."""
             config_entries_key = f"{component}.{DOMAIN}"
-            async with self._opp.data[DATA_CONFIG_ENTRY_LOCK]:
-                if config_entries_key not in self._opp.data[CONFIG_ENTRY_IS_SETUP]:
-                    await self._opp.config_entries.async_forward_entry_setup(
+            async with self..opp.data[DATA_CONFIG_ENTRY_LOCK]:
+                if config_entries_key not in self..opp.data[CONFIG_ENTRY_IS_SETUP]:
+                    await self..opp.config_entries.async_forward_entry_setup(
                         self._config_entry, component
                     )
-                    self._opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
+                    self..opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
 
             async_dispatcher_send(
-                self._opp, POINT_DISCOVERY_NEW.format(component, DOMAIN), device_id
+                self..opp, POINT_DISCOVERY_NEW.format(component, DOMAIN), device_id
             )
 
         self._is_available = True
@@ -210,7 +210,7 @@ class MinutPointClient:
                 for component in ("sensor", "binary_sensor"):
                     await new_device(device.device_id, component)
                 self._known_devices.add(device.device_id)
-        async_dispatcher_send(self._opp, SIGNAL_UPDATE_ENTITY)
+        async_dispatcher_send(self..opp, SIGNAL_UPDATE_ENTITY)
 
     def device(self, device_id):
         """Return device representation."""
@@ -257,7 +257,7 @@ class MinutPointEntity(Entity):
         """Return string representation of device."""
         return f"MinutPoint {self.name}"
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         _LOGGER.debug("Created device %s", self)
         self._async_unsub_dispatcher_connect = async_dispatcher_connect(
@@ -265,7 +265,7 @@ class MinutPointEntity(Entity):
         )
         await self._update_callback()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect dispatcher listener when removed."""
         if self._async_unsub_dispatcher_connect:
             self._async_unsub_dispatcher_connect()

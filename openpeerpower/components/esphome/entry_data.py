@@ -21,10 +21,10 @@ from aioesphomeapi import (
 import attr
 
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
-from openpeerpowerr.helpers.storage import Store
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.storage import Store
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 if TYPE_CHECKING:
     from . import APIClient

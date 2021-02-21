@@ -1,5 +1,5 @@
 """
-Flux for Open -Peer-Power.
+Flux for Open-Peer-Power.
 
 The idea was taken from https://github.com/KpaBap/hue-flux/
 """
@@ -99,7 +99,7 @@ async def async_set_lights_xy.opp, lights, x_val, y_val, brightness, transition)
                 service_data[ATTR_WHITE_VALUE] = brightness
             if transition is not None:
                 service_data[ATTR_TRANSITION] = transition
-            await opp..services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
+            await.opp.services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
 
 
 async def async_set_lights_temp.opp, lights, mired, brightness, transition):
@@ -113,7 +113,7 @@ async def async_set_lights_temp.opp, lights, mired, brightness, transition):
                 service_data[ATTR_BRIGHTNESS] = brightness
             if transition is not None:
                 service_data[ATTR_TRANSITION] = transition
-            await opp..services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
+            await.opp.services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
 
 
 async def async_set_lights_rgb.opp, lights, rgb, transition):
@@ -125,7 +125,7 @@ async def async_set_lights_rgb.opp, lights, rgb, transition):
                 service_data[ATTR_RGB_COLOR] = rgb
             if transition is not None:
                 service_data[ATTR_TRANSITION] = transition
-            await opp..services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
+            await.opp.services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
 
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
@@ -188,7 +188,7 @@ class FluxSwitch(SwitchEntity, RestoreEntity):
     ):
         """Initialize the Flux switch."""
         self._name = name
-        self.opp = opp
+        self.opp =.opp
         self._lights = lights
         self._start_time = start_time
         self._stop_time = stop_time
@@ -212,7 +212,7 @@ class FluxSwitch(SwitchEntity, RestoreEntity):
         """Return true if switch is on."""
         return self.unsub_tracker is not None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity about to be added to.opp."""
         last_state = await self.async_get_last_state()
         if last_state and last_state.state == STATE_ON:
@@ -232,7 +232,7 @@ class FluxSwitch(SwitchEntity, RestoreEntity):
         # Make initial update
         await self.async_flux_update()
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn off flux."""
@@ -240,7 +240,7 @@ class FluxSwitch(SwitchEntity, RestoreEntity):
             self.unsub_tracker()
             self.unsub_tracker = None
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_flux_update(self, utcnow=None):
         """Update all the lights using flux."""

@@ -17,8 +17,8 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.const import CONF_API_KEY, CONF_DEVICES, CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.util as util
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.util as util
 
 _LOGGER = logging.getLogger(__name__)
 

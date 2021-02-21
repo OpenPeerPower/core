@@ -1,7 +1,7 @@
 {
   "domain": "waze_travel_time",
   "name": "Waze Travel Time",
-  "documentation": "https://www.openpeerpower.io/integrations/waze_travel_time",
+  "documentation": "https://www.open-peer-power.io/integrations/waze_travel_time",
   "requirements": ["WazeRouteCalculator==0.12"],
   "codeowners": []
 }

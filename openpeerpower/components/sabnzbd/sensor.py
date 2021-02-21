@@ -10,7 +10,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    sab_api_data = opp.data[DATA_SABNZBD]
+    sab_api_data =.opp.data[DATA_SABNZBD]
     sensors = sab_api_data.sensors
     client_name = sab_api_data.name
     async_add_entities(
@@ -31,7 +31,7 @@ class SabnzbdSensor(Entity):
         self._type = sensor_type
         self._unit_of_measurement = SENSOR_TYPES[sensor_type][1]
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity about to be added to.opp."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -68,4 +68,4 @@ class SabnzbdSensor(Entity):
         elif "size" in self._type:
             self._state = round(float(self._state), 2)
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

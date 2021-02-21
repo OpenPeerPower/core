@@ -10,7 +10,7 @@ def async_add_acmeda_entities(
    .opp, entity_class, config_entry, current, async_add_entities
 ):
     """Add any new entities."""
-    hub = opp.data[DOMAIN][config_entry.entry_id]
+    hub =.opp.data[DOMAIN][config_entry.entry_id]
     LOGGER.debug("Looking for new %s on: %s", entity_class.__name__, hub.host)
 
     api = hub.api.rollers
@@ -27,7 +27,7 @@ def async_add_acmeda_entities(
 
 
 async def update_devices.opp, config_entry, api):
-    """Tell opp that device info has been updated."""
+    """Tell.opp that device info has been updated."""
     dev_registry = await get_dev_reg.opp)
 
     for api_item in api.values():

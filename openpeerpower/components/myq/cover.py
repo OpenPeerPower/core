@@ -20,14 +20,14 @@ from openpeerpower.components.cover import (
 from openpeerpower.const import STATE_CLOSED, STATE_CLOSING, STATE_OPEN, STATE_OPENING
 from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, MYQ_COORDINATOR, MYQ_GATEWAY, MYQ_TO_OPP
+from .const import DOMAIN, MYQ_COORDINATOR, MYQ_GATEWAY, MYQ_TO_HASS
 
 _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up mysq covers."""
-    data = opp.data[DOMAIN][config_entry.entry_id]
+    data =.opp.data[DOMAIN][config_entry.entry_id]
     myq = data[MYQ_GATEWAY]
     coordinator = data[MYQ_COORDINATOR]
 
@@ -71,22 +71,22 @@ class MyQDevice(CoordinatorEntity, CoverEntity):
     @property
     def is_closed(self):
         """Return true if cover is closed, else False."""
-        return MYQ_TO_OPP.get(self._device.state) == STATE_CLOSED
+        return MYQ_TO_HASS.get(self._device.state) == STATE_CLOSED
 
     @property
     def is_closing(self):
         """Return if the cover is closing or not."""
-        return MYQ_TO_OPP.get(self._device.state) == STATE_CLOSING
+        return MYQ_TO_HASS.get(self._device.state) == STATE_CLOSING
 
     @property
     def is_open(self):
         """Return if the cover is opening or not."""
-        return MYQ_TO_OPP.get(self._device.state) == STATE_OPEN
+        return MYQ_TO_HASS.get(self._device.state) == STATE_OPEN
 
     @property
     def is_opening(self):
         """Return if the cover is opening or not."""
-        return MYQ_TO_OPP.get(self._device.state) == STATE_OPENING
+        return MYQ_TO_HASS.get(self._device.state) == STATE_OPENING
 
     @property
     def supported_features(self):
@@ -112,14 +112,14 @@ class MyQDevice(CoordinatorEntity, CoverEntity):
 
             return
 
-        # Write closing state to OPP
-        self.async_write_op.state()
+        # Write closing state to HASS
+        self.async_write_ha_state()
 
         if not await wait_task:
             _LOGGER.error("Closing of cover %s failed", self._device.name)
 
-        # Write final state to OPP
-        self.async_write_op.state()
+        # Write final state to HASS
+        self.async_write_ha_state()
 
     async def async_open_cover(self, **kwargs):
         """Issue open command to cover."""
@@ -134,14 +134,14 @@ class MyQDevice(CoordinatorEntity, CoverEntity):
             )
             return
 
-        # Write opening state to OPP
-        self.async_write_op.state()
+        # Write opening state to HASS
+        self.async_write_ha_state()
 
         if not await wait_task:
             _LOGGER.error("Opening of cover %s failed", self._device.name)
 
-        # Write final state to OPP
-        self.async_write_op.state()
+        # Write final state to HASS
+        self.async_write_ha_state()
 
     @property
     def device_info(self):
@@ -159,8 +159,8 @@ class MyQDevice(CoordinatorEntity, CoverEntity):
             device_info["via_device"] = (DOMAIN, self._device.parent_device_id)
         return device_info
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates."""
         self.async_on_remove(
-            self.coordinator.async_add_listener(self.async_write_op.state)
+            self.coordinator.async_add_listener(self.async_write_ha_state)
         )

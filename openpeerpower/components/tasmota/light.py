@@ -23,9 +23,9 @@ from openpeerpower.components.light import (
     SUPPORT_WHITE_VALUE,
     LightEntity,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-import openpeerpowerr.util.color as color_util
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+import openpeerpower.util.color as color_util
 
 from .const import DATA_REMOVE_DISCOVER_COMPONENT
 from .discovery import TASMOTA_DISCOVERY_ENTITY_NEW
@@ -39,10 +39,10 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Tasmota light dynamically through discovery."""
 
     @callback
-    def async_discover(tasmota_entity, discovery_op.h):
+    def async_discover(tasmota_entity, discovery_hash):
         """Discover and add a Tasmota light."""
         async_add_entities(
-            [TasmotaLight(tasmota_entity=tasmota_entity, discovery_op.h=discovery_op.h)]
+            [TasmotaLight(tasmota_entity=tasmota_entity, discovery_hash=discovery_hash)]
         )
 
    .opp.data[
@@ -83,7 +83,7 @@ class TasmotaLight(
         """Handle updated discovery message."""
         await super().discovery_update(update, write_state=False)
         self._setup_from_entity()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _setup_from_entity(self):
         """(Re)Setup the entity."""
@@ -134,7 +134,7 @@ class TasmotaLight(
                 self._white_value = None
             if self._white_value is not None and self._white_value > 0:
                 self._hs = None
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def brightness(self):

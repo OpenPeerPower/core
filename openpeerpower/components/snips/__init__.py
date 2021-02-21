@@ -144,7 +144,7 @@ async def async_setup.opp, config):
         slots["confidenceScore"] = {"value": request["intent"]["confidenceScore"]}
 
         try:
-            intent_response = await intent.async_op.dle(
+            intent_response = await intent.async_handle(
                .opp, DOMAIN, intent_type, slots, request["input"]
             )
             notification = {"sessionId": request.get("sessionId", "default")}
@@ -163,7 +163,7 @@ async def async_setup.opp, config):
         except intent.IntentError:
             _LOGGER.exception("Error while handling intent: %s", intent_type)
 
-    await opp..components.mqtt.async_subscribe(INTENT_TOPIC, message_received)
+    await.opp.components.mqtt.async_subscribe(INTENT_TOPIC, message_received)
 
     async def snips_say(call):
         """Send a Snips notification message."""

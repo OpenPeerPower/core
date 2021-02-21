@@ -13,7 +13,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Verisure Camera."""
     if not int(hub.config.get(CONF_SMARTCAM, 1)):
         return False
-    directory_path = opp.config.config_dir
+    directory_path =.opp.config.config_dir
     if not os.access(directory_path, os.R_OK):
         LOGGER.error("file path %s is not readable", directory_path)
         return False

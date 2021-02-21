@@ -115,10 +115,10 @@ def manifest_from_legacy_module(domain: str, module: ModuleType) -> Manifest:
 
 
 async def _async_get_custom_components(
-    opp: "OpenPeerPower",
+   .opp: "OpenPeerPower",
 ) -> Dict[str, Integration]:
     """Return list of custom integrations."""
-    if opp.config.safe_mode:
+    if.opp.config.safe_mode:
         return {}
 
     try:
@@ -135,14 +135,14 @@ async def _async_get_custom_components(
             if entry.is_dir()
         ]
 
-    dirs = await opp..async_add_executor_job(
+    dirs = await.opp.async_add_executor_job(
         get_sub_directories, custom_components.__path__
     )
 
     integrations = await asyncio.gather(
         *(
-            opp.async_add_executor_job(
-                Integration.resolve_from_root, opp, custom_components, comp.name
+           .opp.async_add_executor_job(
+                Integration.resolve_from_root,.opp, custom_components, comp.name
             )
             for comp in dirs
         )
@@ -156,28 +156,28 @@ async def _async_get_custom_components(
 
 
 async def async_get_custom_components(
-    opp: "OpenPeerPower",
+   .opp: "OpenPeerPower",
 ) -> Dict[str, Integration]:
     """Return cached list of custom integrations."""
-    reg_or_evt = opp.data.get(DATA_CUSTOM_COMPONENTS)
+    reg_or_evt =.opp.data.get(DATA_CUSTOM_COMPONENTS)
 
     if reg_or_evt is None:
-        evt = opp.data[DATA_CUSTOM_COMPONENTS] = asyncio.Event()
+        evt =.opp.data[DATA_CUSTOM_COMPONENTS] = asyncio.Event()
 
-        reg = await _async_get_custom_components(opp)
+        reg = await _async_get_custom_components.opp)
 
-        opp.data[DATA_CUSTOM_COMPONENTS] = reg
+       .opp.data[DATA_CUSTOM_COMPONENTS] = reg
         evt.set()
         return reg
 
     if isinstance(reg_or_evt, asyncio.Event):
         await reg_or_evt.wait()
-        return cast(Dict[str, "Integration"],opp.data.get(DATA_CUSTOM_COMPONENTS))
+        return cast(Dict[str, "Integration"],.opp.data.get(DATA_CUSTOM_COMPONENTS))
 
     return cast(Dict[str, "Integration"], reg_or_evt)
 
 
-async def async_get_config_flows(opp: OpenPeerPower) -> Set[str]:
+async def async_get_config_flows.opp: OpenPeerPower) -> Set[str]:
     """Return cached list of config flows."""
     # pylint: disable=import-outside-toplevel
     from openpeerpower.generated.config_flows import FLOWS
@@ -185,7 +185,7 @@ async def async_get_config_flows(opp: OpenPeerPower) -> Set[str]:
     flows: Set[str] = set()
     flows.update(FLOWS)
 
-    integrations = await async_get_custom_components(opp)
+    integrations = await async_get_custom_components.opp)
     flows.update(
         [
             integration.domain
@@ -197,11 +197,11 @@ async def async_get_config_flows(opp: OpenPeerPower) -> Set[str]:
     return flows
 
 
-async def async_get_zeroconf(opp: OpenPeerPower) -> Dict[str, List[Dict[str, str]]]:
+async def async_get_zeroconf.opp: OpenPeerPower) -> Dict[str, List[Dict[str, str]]]:
     """Return cached list of zeroconf types."""
     zeroconf: Dict[str, List[Dict[str, str]]] = ZEROCONF.copy()
 
-    integrations = await async_get_custom_components(opp)
+    integrations = await async_get_custom_components.opp)
     for integration in integrations.values():
         if not integration.zeroconf:
             continue
@@ -220,11 +220,11 @@ async def async_get_zeroconf(opp: OpenPeerPower) -> Dict[str, List[Dict[str, str
     return zeroconf
 
 
-async def async_get_dhcp(opp: OpenPeerPower) -> List[Dict[str, str]]:
+async def async_get_dhcp.opp: OpenPeerPower) -> List[Dict[str, str]]:
     """Return cached list of dhcp types."""
     dhcp: List[Dict[str, str]] = DHCP.copy()
 
-    integrations = await async_get_custom_components(opp)
+    integrations = await async_get_custom_components.opp)
     for integration in integrations.values():
         if not integration.dhcp:
             continue
@@ -234,12 +234,12 @@ async def async_get_dhcp(opp: OpenPeerPower) -> List[Dict[str, str]]:
     return dhcp
 
 
-async def async_get_homekit(opp: OpenPeerPower) -> Dict[str, str]:
+async def async_get_homekit.opp: OpenPeerPower) -> Dict[str, str]:
     """Return cached list of homekit models."""
 
     homekit: Dict[str, str] = HOMEKIT.copy()
 
-    integrations = await async_get_custom_components(opp)
+    integrations = await async_get_custom_components.opp)
     for integration in integrations.values():
         if (
             not integration.homekit
@@ -253,12 +253,12 @@ async def async_get_homekit(opp: OpenPeerPower) -> Dict[str, str]:
     return homekit
 
 
-async def async_get_ssdp(opp: OpenPeerPower) -> Dict[str, List[Dict[str, str]]]:
+async def async_get_ssdp.opp: OpenPeerPower) -> Dict[str, List[Dict[str, str]]]:
     """Return cached list of ssdp mappings."""
 
     ssdp: Dict[str, List[Dict[str, str]]] = SSDP.copy()
 
-    integrations = await async_get_custom_components(opp)
+    integrations = await async_get_custom_components.opp)
     for integration in integrations.values():
         if not integration.ssdp:
             continue
@@ -268,12 +268,12 @@ async def async_get_ssdp(opp: OpenPeerPower) -> Dict[str, List[Dict[str, str]]]:
     return ssdp
 
 
-async def async_get_mqtt(opp: OpenPeerPower) -> Dict[str, List[str]]:
+async def async_get_mqtt.opp: OpenPeerPower) -> Dict[str, List[str]]:
     """Return cached list of MQTT mappings."""
 
     mqtt: Dict[str, List[str]] = MQTT.copy()
 
-    integrations = await async_get_custom_components(opp)
+    integrations = await async_get_custom_components.opp)
     for integration in integrations.values():
         if not integration.mqtt:
             continue
@@ -288,7 +288,7 @@ class Integration:
 
     @classmethod
     def resolve_from_root(
-        cls, opp: "OpenPeerPower", root_module: ModuleType, domain: str
+        cls,.opp: "OpenPeerPower", root_module: ModuleType, domain: str
     ) -> Optional[Integration]:
         """Resolve an integration from a root module."""
         for base in root_module.__path__:  # type: ignore
@@ -306,26 +306,26 @@ class Integration:
                 continue
 
             return cls(
-                opp, f"{root_module.__name__}.{domain}", manifest_path.parent, manifest
+               .opp, f"{root_module.__name__}.{domain}", manifest_path.parent, manifest
             )
 
         return None
 
     @classmethod
     def resolve_legacy(
-        cls, opp: "OpenPeerPower", domain: str
+        cls,.opp: "OpenPeerPower", domain: str
     ) -> Optional[Integration]:
         """Resolve legacy component.
 
         Will create a stub manifest.
         """
-        comp = _load_file(opp, domain, _lookup_path.opp))
+        comp = _load_file.opp, domain, _lookup_path.opp))
 
         if comp is None:
             return None
 
         return cls(
-            opp,
+           .opp,
             comp.__name__,
             pathlib.Path(comp.__file__).parent,
             manifest_from_legacy_module(domain, comp),
@@ -333,13 +333,13 @@ class Integration:
 
     def __init__(
         self,
-        opp: "OpenPeerPower",
+       .opp: "OpenPeerPower",
         pkg_path: str,
         file_path: pathlib.Path,
         manifest: Manifest,
     ):
         """Initialize an integration."""
-        self.opp = opp
+        self.opp =.opp
         self.pkg_path = pkg_path
         self.file_path = file_path
         self.manifest = manifest
@@ -508,13 +508,13 @@ class Integration:
         return f"<Integration {self.domain}: {self.pkg_path}>"
 
 
-async def async_get_integration(opp: "OpenPeerPower", domain: str) -> Integration:
+async def async_get_integration.opp: "OpenPeerPower", domain: str) -> Integration:
     """Get an integration."""
-    cache = opp.data.get(DATA_INTEGRATIONS)
+    cache =.opp.data.get(DATA_INTEGRATIONS)
     if cache is None:
-        if not _async_mount_config_dir(opp):
+        if not _async_mount_config_dir.opp):
             raise IntegrationNotFound(domain)
-        cache = opp.data[DATA_INTEGRATIONS] = {}
+        cache =.opp.data[DATA_INTEGRATIONS] = {}
 
     int_or_evt: Union[Integration, asyncio.Event, None] = cache.get(domain, _UNDEF)
 
@@ -535,7 +535,7 @@ async def async_get_integration(opp: "OpenPeerPower", domain: str) -> Integratio
 
     # Instead of using resolve_from_root we use the cache of custom
     # components to find the integration.
-    integration = (await async_get_custom_components(opp)).get(domain)
+    integration = (await async_get_custom_components.opp)).get(domain)
     if integration is not None:
         custom_integration_warning(integration)
         cache[domain] = integration
@@ -544,8 +544,8 @@ async def async_get_integration(opp: "OpenPeerPower", domain: str) -> Integratio
 
     from openpeerpower import components  # pylint: disable=import-outside-toplevel
 
-    integration = await opp..async_add_executor_job(
-        Integration.resolve_from_root, opp, components, domain
+    integration = await.opp.async_add_executor_job(
+        Integration.resolve_from_root,.opp, components, domain
     )
 
     if integration is not None:
@@ -553,7 +553,7 @@ async def async_get_integration(opp: "OpenPeerPower", domain: str) -> Integratio
         event.set()
         return integration
 
-    integration = Integration.resolve_legacy(opp, domain)
+    integration = Integration.resolve_legacy.opp, domain)
     if integration is not None:
         custom_integration_warning(integration)
         cache[domain] = integration
@@ -593,7 +593,7 @@ class CircularDependency(LoaderError):
 
 
 def _load_file(
-    opp: "OpenPeerPower", comp_or_platform: str, base_paths: List[str]
+   .opp: "OpenPeerPower", comp_or_platform: str, base_paths: List[str]
 ) -> Optional[ModuleType]:
     """Try to load specified file.
 
@@ -602,15 +602,15 @@ def _load_file(
     Async friendly.
     """
     try:
-        return opp.data[DATA_COMPONENTS][comp_or_platform]  # type: ignore
+        return.opp.data[DATA_COMPONENTS][comp_or_platform]  # type: ignore
     except KeyError:
         pass
 
-    cache = opp.data.get(DATA_COMPONENTS)
+    cache =.opp.data.get(DATA_COMPONENTS)
     if cache is None:
-        if not _async_mount_config_dir(opp):
+        if not _async_mount_config_dir.opp):
             return None
-        cache = opp.data[DATA_COMPONENTS] = {}
+        cache =.opp.data[DATA_COMPONENTS] = {}
 
     for path in (f"{base}.{comp_or_platform}" for base in base_paths):
         try:
@@ -652,19 +652,19 @@ def _load_file(
 
 
 class ModuleWrapper:
-    """Class to wrap a Python module and auto fill in opp argument."""
+    """Class to wrap a Python module and auto fill in.opp argument."""
 
-    def __init__(self, opp: "OpenPeerPower", module: ModuleType) -> None:
+    def __init__(self,.opp: "OpenPeerPower", module: ModuleType) -> None:
         """Initialize the module wrapper."""
-        self._opp = opp
+        self..opp =.opp
         self._module = module
 
     def __getattr__(self, attr: str) -> Any:
         """Fetch an attribute."""
         value = getattr(self._module, attr)
 
-        if hasattr(value, "__bind_opp"):
-            value = ft.partial(value, self._opp)
+        if hasattr(value, "__bind.opp"):
+            value = ft.partial(value, self..opp)
 
         setattr(self, attr, value)
         return value
@@ -673,25 +673,25 @@ class ModuleWrapper:
 class Components:
     """Helper to load components."""
 
-    def __init__(self, opp: OpenPeerPower) -> None:
+    def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize the Components class."""
-        self._opp = opp
+        self..opp =.opp
 
     def __getattr__(self, comp_name: str) -> ModuleWrapper:
         """Fetch a component."""
         # Test integration cache
-        integration = self._opp.data.get(DATA_INTEGRATIONS, {}).get(comp_name)
+        integration = self..opp.data.get(DATA_INTEGRATIONS, {}).get(comp_name)
 
         if isinstance(integration, Integration):
             component: Optional[ModuleType] = integration.get_component()
         else:
             # Fallback to importing old-school
-            component = _load_file(self._opp, comp_name, _lookup_path(self._opp))
+            component = _load_file(self..opp, comp_name, _lookup_path(self..opp))
 
         if component is None:
             raise ImportError(f"Unable to load {comp_name}")
 
-        wrapped = ModuleWrapper(self._opp, component)
+        wrapped = ModuleWrapper(self..opp, component)
         setattr(self, comp_name, wrapped)
         return wrapped
 
@@ -699,26 +699,26 @@ class Components:
 class Helpers:
     """Helper to load helpers."""
 
-    def __init__(self, opp: OpenPeerPower) -> None:
+    def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize the Helpers class."""
-        self._opp = opp
+        self..opp =.opp
 
     def __getattr__(self, helper_name: str) -> ModuleWrapper:
         """Fetch a helper."""
         helper = importlib.import_module(f"openpeerpower.helpers.{helper_name}")
-        wrapped = ModuleWrapper(self._opp, helper)
+        wrapped = ModuleWrapper(self..opp, helper)
         setattr(self, helper_name, wrapped)
         return wrapped
 
 
-def bind_opp(func: CALLABLE_T) -> CALLABLE_T:
-    """Decorate function to indicate that first argument is opp."""
-    setattr(func, "__bind_opp", True)
+def bind.opp(func: CALLABLE_T) -> CALLABLE_T:
+    """Decorate function to indicate that first argument is.opp."""
+    setattr(func, "__bind.opp", True)
     return func
 
 
 async def _async_component_dependencies(
-    opp: "OpenPeerPower",
+   .opp: "OpenPeerPower",
     start_domain: str,
     integration: Integration,
     loaded: Set[str],
@@ -742,14 +742,14 @@ async def _async_component_dependencies(
 
         loaded.add(dependency_domain)
 
-        dep_integration = await async_get_integration opp, dependency_domain)
+        dep_integration = await async_get_integration.opp, dependency_domain)
 
         if start_domain in dep_integration.after_dependencies:
             raise CircularDependency(start_domain, dependency_domain)
 
         if dep_integration.dependencies:
             dep_loaded = await _async_component_dependencies(
-                opp, start_domain, dep_integration, loaded, loading
+               .opp, start_domain, dep_integration, loaded, loading
             )
 
             loaded.update(dep_loaded)
@@ -760,22 +760,22 @@ async def _async_component_dependencies(
     return loaded
 
 
-def _async_mount_config_dir opp: OpenPeerPower) -> bool:
+def _async_mount_config_dir.opp: OpenPeerPower) -> bool:
     """Mount config dir in order to load custom_component.
 
     Async friendly but not a coroutine.
     """
-    if opp.config.config_dir is None:
+    if.opp.config.config_dir is None:
         _LOGGER.error("Can't load integrations - configuration directory is not set")
         return False
-    if opp.config.config_dir not in sys.path:
-        sys.path.insert(0, opp.config.config_dir)
+    if.opp.config.config_dir not in sys.path:
+        sys.path.insert(0,.opp.config.config_dir)
     return True
 
 
-def _lookup_path(opp: OpenPeerPower) -> List[str]:
+def _lookup_path.opp: OpenPeerPower) -> List[str]:
     """Return the lookup paths for legacy lookups."""
-    if(opp.config.safe_mode:
+    if.opp.config.safe_mode:
         return [PACKAGE_BUILTIN]
     return [PACKAGE_CUSTOM_COMPONENTS, PACKAGE_BUILTIN]
 
@@ -806,7 +806,7 @@ def custom_integration_warning(integration: Integration) -> None:
         if not validate_custom_integration_version(integration.manifest["version"]):
             _LOGGER.warning(
                 CUSTOM_WARNING_VERSION_TYPE,
-                integration.domain,
                 integration.manifest["version"],
+                integration.domain,
                 integration.domain,
             )

@@ -8,10 +8,10 @@ from vilfo.exceptions import VilfoException
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_ACCESS_TOKEN, CONF_HOST
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
-from openpeerpowerr.util import Throttle
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.util import Throttle
 
 from .const import ATTR_BOOT_TIME, ATTR_LOAD, DOMAIN, ROUTER_DEFAULT_HOST
 
@@ -72,7 +72,7 @@ class VilfoRouterData:
     def __init__(self,.opp, host, access_token):
         """Initialize."""
         self._vilfo = VilfoClient(host, access_token)
-        self.opp = opp
+        self.opp =.opp
         self.host = host
         self.available = False
         self.firmware_version = None

@@ -23,7 +23,7 @@ def async_describe_events.opp, async_describe_event):
             ),
         }
 
-    domain_data = opp.data[DOMAIN]
+    domain_data =.opp.data[DOMAIN]
 
     for config_entry_id in domain_data:
         door_station = domain_data[config_entry_id][DOOR_STATION]

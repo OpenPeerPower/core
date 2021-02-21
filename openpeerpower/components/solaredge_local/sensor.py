@@ -20,9 +20,9 @@ from openpeerpower.const import (
     TEMP_FAHRENHEIT,
     VOLT,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle
 
 DOMAIN = "solaredge_local"
 UPDATE_DELAY = timedelta(seconds=10)
@@ -287,7 +287,7 @@ class SolarEdgeData:
 
     def __init__(self,.opp, api):
         """Initialize the data object."""
-        self.opp = opp
+        self.opp =.opp
         self.api = api
         self.data = {}
         self.info = {}

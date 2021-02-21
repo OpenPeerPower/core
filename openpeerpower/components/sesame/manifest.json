@@ -1,7 +1,7 @@
 {
   "domain": "sesame",
   "name": "Sesame Smart Lock",
-  "documentation": "https://www.openpeerpower.io/integrations/sesame",
+  "documentation": "https://www.open-peer-power.io/integrations/sesame",
   "requirements": ["pysesame2==1.0.1"],
   "codeowners": []
 }

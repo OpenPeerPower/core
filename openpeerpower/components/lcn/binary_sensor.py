@@ -20,7 +20,7 @@ async def async_setup_platform(
     for config in discovery_info:
         address, connection_id = config[CONF_ADDRESS]
         addr = pypck.lcn_addr.LcnAddr(*address)
-        connections = opp.data[DATA_LCN][CONF_CONNECTIONS]
+        connections =.opp.data[DATA_LCN][CONF_CONNECTIONS]
         connection = get_connection(connections, connection_id)
         address_connection = connection.get_address_conn(addr)
 
@@ -47,11 +47,11 @@ class LcnRegulatorLockSensor(LcnEntity, BinarySensorEntity):
 
         self._value = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if not self.device_connection.is_group:
-            await self.device_connection.activate_status_request_op.dler(
+            await self.device_connection.activate_status_request_handler(
                 self.setpoint_variable
             )
 
@@ -69,7 +69,7 @@ class LcnRegulatorLockSensor(LcnEntity, BinarySensorEntity):
             return
 
         self._value = input_obj.get_value().is_locked_regulator()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class LcnBinarySensor(LcnEntity, BinarySensorEntity):
@@ -83,11 +83,11 @@ class LcnBinarySensor(LcnEntity, BinarySensorEntity):
 
         self._value = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if not self.device_connection.is_group:
-            await self.device_connection.activate_status_request_op.dler(
+            await self.device_connection.activate_status_request_handler(
                 self.bin_sensor_port
             )
 
@@ -102,7 +102,7 @@ class LcnBinarySensor(LcnEntity, BinarySensorEntity):
             return
 
         self._value = input_obj.get_state(self.bin_sensor_port.value)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class LcnLockKeysSensor(LcnEntity, BinarySensorEntity):
@@ -115,11 +115,11 @@ class LcnLockKeysSensor(LcnEntity, BinarySensorEntity):
         self.source = pypck.lcn_defs.Key[config[CONF_SOURCE]]
         self._value = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if not self.device_connection.is_group:
-            await self.device_connection.activate_status_request_op.dler(self.source)
+            await self.device_connection.activate_status_request_handler(self.source)
 
     @property
     def is_on(self):
@@ -138,4 +138,4 @@ class LcnLockKeysSensor(LcnEntity, BinarySensorEntity):
         key_id = int(self.source.name[1]) - 1
 
         self._value = input_obj.get_state(table_id, key_id)
-        self.async_write_op.state()
+        self.async_write_ha_state()

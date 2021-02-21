@@ -14,7 +14,7 @@ from openpeerpower.components.media_player.const import (
     SUPPORT_VOLUME_STEP,
 )
 from openpeerpower.const import CONF_PORT, STATE_OFF, STATE_ON
-from openpeerpowerr.helpers import config_validation as cv, entity_platform, service
+from openpeerpower.helpers import config_validation as cv, entity_platform, service
 
 from .const import (
     CONF_SOURCES,
@@ -65,7 +65,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Monoprice 6-zone amplifier platform."""
     port = config_entry.data[CONF_PORT]
 
-    monoprice = opp.data[DOMAIN][config_entry.entry_id][MONOPRICE_OBJECT]
+    monoprice =.opp.data[DOMAIN][config_entry.entry_id][MONOPRICE_OBJECT]
 
     sources = _get_sources(config_entry)
 
@@ -79,7 +79,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             )
 
     # only call update before add if it's the first run so we can try to detect zones
-    first_run = opp.data[DOMAIN][config_entry.entry_id][FIRST_RUN]
+    first_run =.opp.data[DOMAIN][config_entry.entry_id][FIRST_RUN]
     async_add_entities(entities, first_run)
 
     platform = entity_platform.current_platform.get()
@@ -92,7 +92,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                 entity.restore()
 
     @service.verify_domain_control.opp, DOMAIN)
-    async def async_service_op.dle(service_call):
+    async def async_service_handle(service_call):
         """Handle for services."""
         entities = await platform.async_extract_from_service(service_call)
 
@@ -104,14 +104,14 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
    .opp.services.async_register(
         DOMAIN,
         SERVICE_SNAPSHOT,
-        async_service_op.dle,
+        async_service_handle,
         schema=cv.make_entity_service_schema({}),
     )
 
    .opp.services.async_register(
         DOMAIN,
         SERVICE_RESTORE,
-        async_service_op.dle,
+        async_service_handle,
         schema=cv.make_entity_service_schema({}),
     )
 
@@ -231,7 +231,7 @@ class MonopriceZone(MediaPlayerEntity):
         """Restore saved state."""
         if self._snapshot:
             self._monoprice.restore_zone(self._snapshot)
-            self.schedule_update_op.state(True)
+            self.schedule_update_ha_state(True)
 
     def select_source(self, source):
         """Set input source."""

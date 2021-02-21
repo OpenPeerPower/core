@@ -9,7 +9,7 @@ from openpeerpower.components import http, websocket_api
 from openpeerpower.components.http.data_validator import RequestDataValidator
 from openpeerpower.const import HTTP_INTERNAL_SERVER_ERROR
 from openpeerpower.helpers import config_validation as cv, intent
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 from .agent import AbstractConversationAgent
 from .default_agent import DefaultAgent, async_register
@@ -41,11 +41,11 @@ CONFIG_SCHEMA = vol.Schema(
     extra=vol.ALLOW_EXTRA,
 )
 
-async_register = bind_opp(async_register)
+async_register = bind.opp(async_register)
 
 
 @core.callback
-@bind_opp
+@bind.opp
 def async_set_agent.opp: core.OpenPeerPower, agent: AbstractConversationAgent):
     """Set the agent to handle the conversations."""
    .opp.data[DATA_AGENT] = agent
@@ -130,7 +130,7 @@ class ConversationProcessView(http.OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Send a request for processing."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         try:
             intent_result = await _async_converse(
@@ -154,9 +154,9 @@ class ConversationProcessView(http.OpenPeerPowerView):
 
 async def _get_agent.opp: core.OpenPeerPower) -> AbstractConversationAgent:
     """Get the active conversation agent."""
-    agent = opp.data.get(DATA_AGENT)
+    agent =.opp.data.get(DATA_AGENT)
     if agent is None:
-        agent = opp.data[DATA_AGENT] = DefaultAgent.opp)
+        agent =.opp.data[DATA_AGENT] = DefaultAgent.opp)
         await agent.async_initialize.opp.data.get(DATA_CONFIG))
     return agent
 

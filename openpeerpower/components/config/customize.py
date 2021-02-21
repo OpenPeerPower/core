@@ -14,7 +14,7 @@ async def async_setup.opp):
 
     async def hook(action, config_key):
         """post_write_hook for Config View that reloads groups."""
-        await opp..services.async_call(DOMAIN, SERVICE_RELOAD_CORE_CONFIG)
+        await.opp.services.async_call(DOMAIN, SERVICE_RELOAD_CORE_CONFIG)
 
    .opp.http.register_view(
         CustomizeConfigView(
@@ -30,14 +30,14 @@ class CustomizeConfigView(EditKeyBasedConfigView):
 
     def _get_value(self,.opp, data, config_key):
         """Get value."""
-        customize = opp.data.get(DATA_CUSTOMIZE, {}).get(config_key) or {}
+        customize =.opp.data.get(DATA_CUSTOMIZE, {}).get(config_key) or {}
         return {"global": customize, "local": data.get(config_key, {})}
 
     def _write_value(self,.opp, data, config_key, new_value):
         """Set value."""
         data[config_key] = new_value
 
-        state = opp.states.get(config_key)
+        state =.opp.states.get(config_key)
         state_attributes = dict(state.attributes)
         state_attributes.update(new_value)
        .opp.states.async_set(config_key, state.state, state_attributes)

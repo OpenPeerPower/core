@@ -6,7 +6,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from .const import (  # pylint:disable=unused-import
     CONF_MYDEVOLO,

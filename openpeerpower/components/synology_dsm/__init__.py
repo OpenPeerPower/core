@@ -209,7 +209,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
     # For SSDP compat
     if not entry.data.get(CONF_MAC):
-        network = await opp..async_add_executor_job(getattr, api.dsm, "network")
+        network = await.opp.async_add_executor_job(getattr, api.dsm, "network")
        .opp.config_entries.async_update_entry(
             entry, data={**entry.data, CONF_MAC: network.macs}
         )
@@ -220,7 +220,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         surveillance_station = api.surveillance_station
         try:
             async with async_timeout.timeout(10):
-                await opp..async_add_executor_job(surveillance_station.update)
+                await.opp.async_add_executor_job(surveillance_station.update)
         except SynologyDSMAPIErrorException as err:
             raise UpdateFailed(f"Error communicating with API: {err}") from err
 
@@ -263,7 +263,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     )
 
     if unload_ok:
-        entry_data = opp.data[DOMAIN][entry.unique_id]
+        entry_data =.opp.data[DOMAIN][entry.unique_id]
         entry_data[UNDO_UPDATE_LISTENER]()
         await entry_data[SYNO_API].async_unload()
        .opp.data[DOMAIN].pop(entry.unique_id)
@@ -273,16 +273,16 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
 async def _async_update_listener.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Handle options update."""
-    await opp..config_entries.async_reload(entry.entry_id)
+    await.opp.config_entries.async_reload(entry.entry_id)
 
 
 async def _async_setup_services.opp: OpenPeerPowerType):
     """Service handler setup."""
 
-    async def service_op.dler(call: ServiceCall):
+    async def service_handler(call: ServiceCall):
         """Handle service call."""
         serial = call.data.get(CONF_SERIAL)
-        dsm_devices = opp.data[DOMAIN]
+        dsm_devices =.opp.data[DOMAIN]
 
         if serial:
             dsm_device = dsm_devices.get(serial)
@@ -291,14 +291,14 @@ async def _async_setup_services.opp: OpenPeerPowerType):
             serial = next(iter(dsm_devices))
         else:
             _LOGGER.error(
-                "service_op.dler - more than one DSM configured, must specify one of serials %s",
+                "service_handler - more than one DSM configured, must specify one of serials %s",
                 sorted(dsm_devices),
             )
             return
 
         if not dsm_device:
             _LOGGER.error(
-                "service_op.dler - DSM with specified serial %s not found", serial
+                "service_handler - DSM with specified serial %s not found", serial
             )
             return
 
@@ -310,7 +310,7 @@ async def _async_setup_services.opp: OpenPeerPowerType):
             await dsm_api.system.shutdown()
 
     for service in SERVICES:
-       .opp.services.async_register(DOMAIN, service, service_op.dler)
+       .opp.services.async_register(DOMAIN, service, service_handler)
 
 
 class SynoApi:
@@ -318,7 +318,7 @@ class SynoApi:
 
     def __init__(self,.opp: OpenPeerPowerType, entry: ConfigEntry):
         """Initialize the API wrapper class."""
-        self._opp = opp
+        self..opp =.opp
         self._entry = entry
 
         # DSM APIs
@@ -362,7 +362,7 @@ class SynoApi:
             timeout=self._entry.options.get(CONF_TIMEOUT),
             device_token=self._entry.data.get("device_token"),
         )
-        await self._opp.async_add_executor_job(self.dsm.login)
+        await self..opp.async_add_executor_job(self.dsm.login)
 
         # check if surveillance station is used
         self._with_surveillance_station = bool(
@@ -375,11 +375,11 @@ class SynoApi:
 
         self._async_setup_api_requests()
 
-        await self._opp.async_add_executor_job(self._fetch_device_configuration)
+        await self..opp.async_add_executor_job(self._fetch_device_configuration)
         await self.async_update()
 
         self._unsub_dispatcher = async_track_time_interval(
-            self._opp,
+            self..opp,
             self.async_update,
             timedelta(
                 minutes=self._entry.options.get(
@@ -507,14 +507,14 @@ class SynoApi:
         if not self.system:
             _LOGGER.debug("SynoAPI.async_reboot() - System API not ready: %s", self)
             return
-        await self._opp.async_add_executor_job(self.system.reboot)
+        await self..opp.async_add_executor_job(self.system.reboot)
 
     async def async_shutdown(self):
         """Shutdown NAS."""
         if not self.system:
             _LOGGER.debug("SynoAPI.async_shutdown() - System API not ready: %s", self)
             return
-        await self._opp.async_add_executor_job(self.system.shutdown)
+        await self..opp.async_add_executor_job(self.system.shutdown)
 
     async def async_unload(self):
         """Stop interacting with the NAS and prepare for removal from.opp."""
@@ -525,7 +525,7 @@ class SynoApi:
         _LOGGER.debug("SynoAPI.async_update()")
         self._async_setup_api_requests()
         try:
-            await self._opp.async_add_executor_job(
+            await self..opp.async_add_executor_job(
                 self.dsm.update, self._with_information
             )
         except (SynologyDSMLoginFailedException, SynologyDSMRequestException) as err:
@@ -533,9 +533,9 @@ class SynoApi:
                 "async_update - connection error during update, fallback by reloading the entry"
             )
             _LOGGER.debug("SynoAPI.async_update() - exception: %s", err)
-            await self._opp.config_entries.async_reload(self._entry.entry_id)
+            await self..opp.config_entries.async_reload(self._entry.entry_id)
             return
-        async_dispatcher_send(self._opp, self.signal_sensor_update)
+        async_dispatcher_send(self..opp, self.signal_sensor_update)
 
 
 class SynologyDSMBaseEntity(Entity):
@@ -632,11 +632,11 @@ class SynologyDSMDispatcherEntity(SynologyDSMBaseEntity, Entity):
 
         await self._api.async_update()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register state update callback."""
         self.async_on_remove(
             async_dispatcher_connect(
-                self.opp, self._api.signal_sensor_update, self.async_write_op.state
+                self.opp, self._api.signal_sensor_update, self.async_write_ha_state
             )
         )
 

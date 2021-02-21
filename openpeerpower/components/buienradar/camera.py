@@ -9,9 +9,9 @@ import voluptuous as vol
 
 from openpeerpower.components.camera import PLATFORM_SCHEMA, Camera
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.util import dt as dt_util
 
 CONF_DIMENSION = "dimension"
 CONF_DELTA = "delta"

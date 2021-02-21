@@ -9,11 +9,11 @@ import voluptuous as vol
 
 from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import CONF_ACCESS_TOKEN
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import DOMAIN, JUICENET_API, JUICENET_COORDINATOR
 from .device import JuiceNetApi

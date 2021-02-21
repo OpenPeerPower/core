@@ -31,7 +31,7 @@ class JewishCalendarBinarySensor(BinarySensorEntity):
         self._icon = sensor_info[1]
         self._hebrew = data["language"] == "hebrew"
         self._candle_lighting_offset = data["candle_lighting_offset"]
-        self._op.dalah_offset = data["havdalah_offset"]
+        self._havdalah_offset = data["havdalah_offset"]
         self._state = False
         self._prefix = data["prefix"]
 
@@ -61,7 +61,7 @@ class JewishCalendarBinarySensor(BinarySensorEntity):
             date=dt_util.now(),
             location=self._location,
             candle_lighting_offset=self._candle_lighting_offset,
-            havdalah_offset=self._op.dalah_offset,
+            havdalah_offset=self._havdalah_offset,
             hebrew=self._hebrew,
         )
 

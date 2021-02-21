@@ -1,7 +1,7 @@
 """Base class for a device entity integrated in devolo Home Control."""
 import logging
 
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.entity import Entity
 
 from .const import DOMAIN
 from .subscriber import Subscriber
@@ -33,14 +33,14 @@ class DevoloDeviceEntity(Entity):
         self.subscriber = None
         self.sync_callback = self._sync
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Call when entity is added to.opp."""
         self.subscriber = Subscriber(self._name, callback=self.sync_callback)
         self._homecontrol.publisher.register(
             self._device_instance.uid, self.subscriber, self.sync_callback
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Call when entity is removed or disabled."""
         self._homecontrol.publisher.unregister(
             self._device_instance.uid, self.subscriber
@@ -87,7 +87,7 @@ class DevoloDeviceEntity(Entity):
             self._value = message[1]
         else:
             self._generic_message(message)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def _generic_message(self, message):
         """Handle generic messages."""

@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.const import CONF_EVENT, CONF_PLATFORM, EVENT_OPENPEERPOWER_STOP
-from openpeerpower.core import OppJob, callback
+from openpeerpower.core import HassJob, callback
 
 # mypy: allow-untyped-defs
 
@@ -20,14 +20,14 @@ TRIGGER_SCHEMA = vol.Schema(
 async def async_attach_trigger.opp, config, action, automation_info):
     """Listen for events based on configuration."""
     event = config.get(CONF_EVENT)
-    job = OppJob(action)
+    job = HassJob(action)
 
     if event == EVENT_SHUTDOWN:
 
         @callback
         def.opp_shutdown(event):
             """Execute when Open Peer Power is shutting down."""
-           .opp.async_run_opp_job(
+           .opp.async_run.opp_job(
                 job,
                 {
                     "trigger": {
@@ -41,10 +41,10 @@ async def async_attach_trigger.opp, config, action, automation_info):
 
         return.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP,.opp_shutdown)
 
-    # Automation are enabled while opp is starting up, fire right away
+    # Automation are enabled while.opp is starting up, fire right away
     # Check state because a config reload shouldn't trigger it.
-    if automation_info["home_assistant_start"]:
-       .opp.async_run_opp_job(
+    if automation_info["open_peer_power_start"]:
+       .opp.async_run.opp_job(
             job,
             {
                 "trigger": {

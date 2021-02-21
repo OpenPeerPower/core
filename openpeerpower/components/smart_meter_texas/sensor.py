@@ -21,8 +21,8 @@ from .const import (
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Smart Meter Texas sensors."""
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
-    meters = opp.data[DOMAIN][config_entry.entry_id][DATA_SMART_METER].meters
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
+    meters =.opp.data[DOMAIN][config_entry.entry_id][DATA_SMART_METER].meters
 
     async_add_entities(
         [SmartMeterTexasSensor(meter, coordinator) for meter in meters], False
@@ -80,9 +80,9 @@ class SmartMeterTexasSensor(CoordinatorEntity, RestoreEntity):
         self._available = self.coordinator.last_update_success
         if self._available:
             self._state = self.meter.reading
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates."""
         self.async_on_remove(self.coordinator.async_add_listener(self._state_update))
 

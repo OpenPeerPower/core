@@ -17,8 +17,8 @@ from openpeerpower.const import (
     STATE_UNKNOWN,
     TEMP_CELSIUS,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -127,7 +127,7 @@ class Monitor(threading.Thread):
         """Construct interface object."""
         threading.Thread.__init__(self)
         self.daemon = False
-        self.opp = opp
+        self.opp =.opp
         self.mac = mac
         self.name = name
         self.data = {"temp": STATE_UNKNOWN, "humid": STATE_UNKNOWN}
@@ -153,7 +153,7 @@ class Monitor(threading.Thread):
                     # pylint: disable=protected-access
                     device._characteristics[UUID(BLE_TEMP_UUID)] = cached_char
                 # Magic: writing this makes device happy
-                device.char_write_op.dle(0x1B, bytearray([255]), False)
+                device.char_write_handle(0x1B, bytearray([255]), False)
                 device.subscribe(BLE_TEMP_UUID, self._update)
                 _LOGGER.info("Subscribed to %s", self.name)
                 while self.keep_going:

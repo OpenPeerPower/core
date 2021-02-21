@@ -3,10 +3,10 @@ import datetime
 import logging
 
 from openpeerpower.components.binary_sensor import DOMAIN, BinarySensorEntity
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.event import track_point_in_time
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.event import track_point_in_time
+import openpeerpower.util.dt as dt_util
 
 from . import ZWaveDeviceEntity, workaround
 from .const import COMMAND_CLASS_SENSOR_BINARY
@@ -89,7 +89,7 @@ class ZWaveTriggerSensor(ZWaveBinarySensor):
             seconds=self.re_arm_sec
         )
         track_point_in_time(
-            self.opp, self.async_update_op.state, self.invalidate_after
+            self.opp, self.async_update_ha_state, self.invalidate_after
         )
 
     @property

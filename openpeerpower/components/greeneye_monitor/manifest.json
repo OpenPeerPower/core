@@ -1,7 +1,7 @@
 {
   "domain": "greeneye_monitor",
   "name": "GreenEye Monitor (GEM)",
-  "documentation": "https://www.openpeerpower.io/integrations/greeneye_monitor",
+  "documentation": "https://www.open-peer-power.io/integrations/greeneye_monitor",
   "requirements": ["greeneye_monitor==2.1"],
   "codeowners": ["@jkeljo"]
 }

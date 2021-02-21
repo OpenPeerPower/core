@@ -29,12 +29,12 @@ from openpeerpower.const import (
     STATE_ALARM_PENDING,
     STATE_ALARM_TRIGGERED,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import (
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import (
     async_track_state_change_event,
     track_point_in_time,
 )
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -218,11 +218,11 @@ class ManualMQTTAlarm(alarm.AlarmControlPanelEntity):
     ):
         """Init the manual MQTT alarm panel."""
         self._state = STATE_ALARM_DISARMED
-        self._opp = opp
+        self..opp =.opp
         self._name = name
         if code_template:
             self._code = code_template
-            self._code.opp = opp
+            self._code.opp =.opp
         else:
             self._code = code or None
         self._disarm_after_trigger = disarm_after_trigger
@@ -332,7 +332,7 @@ class ManualMQTTAlarm(alarm.AlarmControlPanelEntity):
 
         self._state = STATE_ALARM_DISARMED
         self._state_ts = dt_util.utcnow()
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def alarm_arm_home(self, code=None):
         """Send arm home command."""
@@ -380,23 +380,23 @@ class ManualMQTTAlarm(alarm.AlarmControlPanelEntity):
         self._previous_state = self._state
         self._state = state
         self._state_ts = dt_util.utcnow()
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
         pending_time = self._pending_time(state)
         if state == STATE_ALARM_TRIGGERED:
             track_point_in_time(
-                self._opp, self.async_update_op.state, self._state_ts + pending_time
+                self..opp, self.async_update_ha_state, self._state_ts + pending_time
             )
 
             trigger_time = self._trigger_time_by_state[self._previous_state]
             track_point_in_time(
-                self._opp,
-                self.async_update_op.state,
+                self..opp,
+                self.async_update_ha_state,
                 self._state_ts + pending_time + trigger_time,
             )
         elif state in SUPPORTED_PENDING_STATES and pending_time:
             track_point_in_time(
-                self._opp, self.async_update_op.state, self._state_ts + pending_time
+                self..opp, self.async_update_ha_state, self._state_ts + pending_time
             )
 
     def _validate_code(self, code, state):
@@ -424,7 +424,7 @@ class ManualMQTTAlarm(alarm.AlarmControlPanelEntity):
             ATTR_POST_PENDING_STATE: self._state,
         }
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to MQTT events."""
         async_track_state_change_event(
             self.opp, [self.entity_id], self._async_state_changed_listener

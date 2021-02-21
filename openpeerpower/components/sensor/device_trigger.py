@@ -5,7 +5,7 @@ from openpeerpower.components.device_automation import TRIGGER_BASE_SCHEMA
 from openpeerpower.components.device_automation.exceptions import (
     InvalidDeviceAutomationConfig,
 )
-from openpeerpower.components.openpeerpowerr.triggers import (
+from openpeerpower.components.openpeerpower.triggers import (
     numeric_state as numeric_state_trigger,
 )
 from openpeerpower.const import (
@@ -29,8 +29,8 @@ from openpeerpower.const import (
     DEVICE_CLASS_TIMESTAMP,
     DEVICE_CLASS_VOLTAGE,
 )
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.entity_registry import async_entries_for_device
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.entity_registry import async_entries_for_device
 
 from . import DOMAIN
 
@@ -121,7 +121,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
 async def async_get_triggers.opp, device_id):
     """List device triggers."""
     triggers = []
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entries = [
         entry
@@ -131,7 +131,7 @@ async def async_get_triggers.opp, device_id):
 
     for entry in entries:
         device_class = DEVICE_CLASS_NONE
-        state = opp.states.get(entry.entity_id)
+        state =.opp.states.get(entry.entity_id)
         unit_of_measurement = (
             state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) if state else None
         )
@@ -162,7 +162,7 @@ async def async_get_triggers.opp, device_id):
 
 async def async_get_trigger_capabilities.opp, config):
     """List trigger capabilities."""
-    state = opp.states.get(config[CONF_ENTITY_ID])
+    state =.opp.states.get(config[CONF_ENTITY_ID])
     unit_of_measurement = (
         state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) if state else None
     )

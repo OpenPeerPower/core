@@ -1,6 +1,6 @@
 {
   "domain": "tcp",
   "name": "TCP",
-  "documentation": "https://www.openpeerpower.io/integrations/tcp",
+  "documentation": "https://www.open-peer-power.io/integrations/tcp",
   "codeowners": []
 }

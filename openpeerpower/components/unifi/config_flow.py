@@ -19,9 +19,9 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONF_VERIFY_SSL,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.device_registry import format_mac
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.device_registry import format_mac
 
 from .const import (
     CONF_ALLOW_BANDWIDTH_SENSORS,
@@ -420,6 +420,6 @@ class UnifiOptionsFlowHandler(config_entries.OptionsFlow):
 async def async_discover_unifi.opp):
     """Discover UniFi address."""
     try:
-        return await opp..async_add_executor_job(socket.gethostbyname, "unifi")
+        return await.opp.async_add_executor_job(socket.gethostbyname, "unifi")
     except socket.gaierror:
         return None

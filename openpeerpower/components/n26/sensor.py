@@ -1,5 +1,5 @@
 """Support for N26 bank account sensors."""
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.entity import Entity
 
 from . import DEFAULT_SCAN_INTERVAL, DOMAIN, timestamp_ms_to_date
 from .const import DATA
@@ -28,7 +28,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    api_list = opp.data[DOMAIN][DATA]
+    api_list =.opp.data[DOMAIN][DATA]
 
     sensor_entities = []
     for api_data in api_list:

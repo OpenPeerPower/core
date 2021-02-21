@@ -3,8 +3,8 @@
 
 from openpeerpower.components.group import GroupIntegrationRegistry
 from openpeerpower.const import STATE_OFF
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import callback
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import (
     STATE_ECO,

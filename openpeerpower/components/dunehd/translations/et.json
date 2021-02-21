@@ -13,7 +13,7 @@
                 "data": {
                     "host": ""
                 },
-                "description": "Seadista Dune HD sidumine. Kui seadistamisega on probleeme, mine aadressile https://www.openpeerpower.io/integrations/dunehd\n\n Veendu, et seade on sisse l\u00fclitatud.",
+                "description": "Seadista Dune HD sidumine. Kui seadistamisega on probleeme, mine aadressile https://www.open-peer-power.io/integrations/dunehd\n\n Veendu, et seade on sisse l\u00fclitatud.",
                 "title": ""
             }
         }

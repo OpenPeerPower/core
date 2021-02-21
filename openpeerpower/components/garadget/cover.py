@@ -80,7 +80,7 @@ class GaradgetCover(CoverEntity):
     def __init__(self,.opp, args):
         """Initialize the cover."""
         self.particle_url = "https://api.particle.io"
-        self.opp = opp
+        self.opp =.opp
         self._name = args["name"]
         self.device_id = args["device_id"]
         self.access_token = args["access_token"]
@@ -196,7 +196,7 @@ class GaradgetCover(CoverEntity):
 
     def _check_state(self, now):
         """Check the state of the service during an operation."""
-        self.schedule_update_op.state(True)
+        self.schedule_update_ha_state(True)
 
     def close_cover(self, **kwargs):
         """Close the cover."""

@@ -480,7 +480,7 @@ class ConfigEntryWithingsApi(AbstractWithingsApi):
         implementation: AbstractOAuth2Implementation,
     ):
         """Initialize object."""
-        self._opp = opp
+        self..opp =.opp
         self._config_entry = config_entry
         self._implementation = implementation
         self.session = OAuth2Session.opp, config_entry, implementation)
@@ -490,7 +490,7 @@ class ConfigEntryWithingsApi(AbstractWithingsApi):
     ) -> Dict[str, Any]:
         """Perform an async request."""
         asyncio.run_coroutine_threadsafe(
-            self.session.async_ensure_token_valid(), self._opp.loop
+            self.session.async_ensure_token_valid(), self..opp.loop
         )
 
         access_token = self._config_entry.data["token"]["access_token"]
@@ -522,7 +522,7 @@ class WebhookUpdateCoordinator:
 
     def __init__(self,.opp: OpenPeerPower, user_id: int) -> None:
         """Initialize the object."""
-        self._opp = opp
+        self..opp =.opp
         self._user_id = user_id
         self._listeners: List[CALLBACK_TYPE] = []
         self.data: MeasurementData = {}
@@ -564,7 +564,7 @@ class DataManager:
         webhook_config: WebhookConfig,
     ):
         """Initialize the data manager."""
-        self._opp = opp
+        self..opp =.opp
         self._api = api
         self._user_id = user_id
         self._profile = profile
@@ -598,7 +598,7 @@ class DataManager:
             update_method=self.async_get_all_data,
         )
         self.webhook_update_coordinator = WebhookUpdateCoordinator(
-            self._opp, self._user_id
+            self..opp, self._user_id
         )
         self._cancel_subscription_update: Optional[Callable[[], None]] = None
         self._subscribe_webhook_run_count = 0
@@ -670,7 +670,7 @@ class DataManager:
         self._subscribe_webhook_run_count += 1
 
         # Get the current webhooks.
-        response = await self._opp.async_add_executor_job(self._api.notify_list)
+        response = await self..opp.async_add_executor_job(self._api.notify_list)
 
         subscribed_applis = frozenset(
             [
@@ -701,7 +701,7 @@ class DataManager:
             # Withings will HTTP HEAD the callback_url and needs some downtime
             # between each call or there is a higher chance of failure.
             await asyncio.sleep(self._notify_subscribe_delay.total_seconds())
-            await self._opp.async_add_executor_job(
+            await self..opp.async_add_executor_job(
                 self._api.notify_subscribe, self._webhook_config.url, appli
             )
 
@@ -711,7 +711,7 @@ class DataManager:
 
     async def _async_unsubscribe_webhook(self) -> None:
         # Get the current webhooks.
-        response = await self._opp.async_add_executor_job(self._api.notify_list)
+        response = await self..opp.async_add_executor_job(self._api.notify_list)
 
         # Revoke subscriptions.
         for profile in response.profiles:
@@ -724,7 +724,7 @@ class DataManager:
             # Quick calls to Withings can result in the service returning errors. Give them
             # some time to cool down.
             await asyncio.sleep(self._notify_subscribe_delay.total_seconds())
-            await self._opp.async_add_executor_job(
+            await self..opp.async_add_executor_job(
                 self._api.notify_revoke, profile.callbackurl, profile.appli
             )
 
@@ -747,7 +747,7 @@ class DataManager:
                 flow = next(
                     iter(
                         flow
-                        for flow in self._opp.config_entries.flow.async_progress()
+                        for flow in self..opp.config_entries.flow.async_progress()
                         if flow.context == context
                     ),
                     None,
@@ -756,7 +756,7 @@ class DataManager:
                     return
 
                 # Start a reauth flow.
-                await self._opp.config_entries.flow.async_init(
+                await self..opp.config_entries.flow.async_init(
                     const.DOMAIN,
                     context=context,
                 )
@@ -775,7 +775,7 @@ class DataManager:
         """Get the measures data."""
         _LOGGER.debug("Updating withings measures")
 
-        response = await self._opp.async_add_executor_job(self._api.measure_get_meas)
+        response = await self..opp.async_add_executor_job(self._api.measure_get_meas)
 
         # Sort from oldest to newest.
         groups = sorted(
@@ -834,7 +834,7 @@ class DataManager:
                 ],
             )
 
-        response = await self._opp.async_add_executor_job(get_sleep_summary)
+        response = await self..opp.async_add_executor_job(get_sleep_summary)
 
         # Set the default to empty lists.
         raw_values: Dict[GetSleepSummaryField, List[int]] = {
@@ -910,7 +910,7 @@ async def async_get_entity_id(
 ) -> Optional[str]:
     """Get an entity id for a user's attribute."""
     entity_registry: EntityRegistry = (
-        await opp..helpers.entity_registry.async_get_registry()
+        await.opp.helpers.entity_registry.async_get_registry()
     )
     unique_id = get_attribute_unique_id(attribute, user_id)
 
@@ -997,9 +997,9 @@ class BaseWithingsSensor(Entity):
     def _update_state_data(self, data: MeasurementData) -> None:
         """Update the state data."""
         self._state_data = data.get(self._attribute.measurement)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register update dispatcher."""
         if self._attribute.update_type == UpdateType.POLL:
             self.async_on_remove(
@@ -1024,7 +1024,7 @@ async def async_get_data_manager(
     """Get the data manager for a config entry."""
    .opp.data.setdefault(const.DOMAIN, {})
    .opp.data[const.DOMAIN].setdefault(config_entry.entry_id, {})
-    config_entry_data = opp.data[const.DOMAIN][config_entry.entry_id]
+    config_entry_data =.opp.data[const.DOMAIN][config_entry.entry_id]
 
     if const.DATA_MANAGER not in config_entry_data:
         profile = config_entry.data.get(const.PROFILE)

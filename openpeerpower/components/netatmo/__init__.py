@@ -42,7 +42,7 @@ from .const import (
     OAUTH2_AUTHORIZE,
     OAUTH2_TOKEN,
 )
-from .data_op.dler import NetatmoDataHandler
+from .data_handler import NetatmoDataHandler
 from .webhook import handle_webhook
 
 _LOGGER = logging.getLogger(__name__)
@@ -107,9 +107,9 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         AUTH: api.ConfigEntryNetatmoAuth.opp, entry, implementation)
     }
 
-    data_op.dler = NetatmoDataHandler.opp, entry)
-    await data_op.dler.async_setup()
-   .opp.data[DOMAIN][entry.entry_id][DATA_HANDLER] = data_op.dler
+    data_handler = NetatmoDataHandler.opp, entry)
+    await data_handler.async_setup()
+   .opp.data[DOMAIN][entry.entry_id][DATA_HANDLER] = data_handler
 
     for component in PLATFORMS:
        .opp.async_create_task(
@@ -134,7 +134,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
         if.opp.components.cloud.async_active_subscription():
             if CONF_CLOUDHOOK_URL not in entry.data:
-                webhook_url = await opp..components.cloud.async_create_cloudhook(
+                webhook_url = await.opp.components.cloud.async_create_cloudhook(
                     entry.data[CONF_WEBHOOK_ID]
                 )
                 data = {**entry.data, CONF_CLOUDHOOK_URL: webhook_url}
@@ -142,7 +142,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             else:
                 webhook_url = entry.data[CONF_CLOUDHOOK_URL]
         else:
-            webhook_url = opp.components.webhook.async_generate_url(
+            webhook_url =.opp.components.webhook.async_generate_url(
                 entry.data[CONF_WEBHOOK_ID]
             )
 
@@ -179,7 +179,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
             activation_timeout = async_call_later.opp, 10, unregister_webhook)
 
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                .opp.data[DOMAIN][entry.entry_id][AUTH].addwebhook, webhook_url
             )
             _LOGGER.info("Register Netatmo webhook: %s", webhook_url)
@@ -202,12 +202,12 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     if CONF_WEBHOOK_ID in entry.data:
-        await opp..async_add_executor_job(
+        await.opp.async_add_executor_job(
            .opp.data[DOMAIN][entry.entry_id][AUTH].dropwebhook
         )
         _LOGGER.info("Unregister Netatmo webhook.")
 
-    await opp..data[DOMAIN][entry.entry_id][DATA_HANDLER].async_cleanup()
+    await.opp.data[DOMAIN][entry.entry_id][DATA_HANDLER].async_cleanup()
 
     unload_ok = all(
         await asyncio.gather(

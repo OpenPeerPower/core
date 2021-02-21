@@ -11,9 +11,9 @@ from openpeerpower.components.switch import (
     SwitchEntity,
 )
 from openpeerpower.const import ATTR_VOLTAGE
-from openpeerpowerr.exceptions import PlatformNotReady
-import openpeerpowerr.helpers.device_registry as dr
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.exceptions import PlatformNotReady
+import openpeerpower.helpers.device_registry as dr
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import CONF_SWITCH, DOMAIN as TPLINK_DOMAIN
 from .common import add_available_devices
@@ -31,7 +31,7 @@ SLEEP_TIME = 2
 
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry, async_add_entities):
     """Set up switches."""
-    entities = await opp..async_add_executor_job(
+    entities = await.opp.async_add_executor_job(
         add_available_devices,.opp, CONF_SWITCH, SmartPlugSwitch
     )
 

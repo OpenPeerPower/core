@@ -1,7 +1,7 @@
 {
   "domain": "sense",
   "name": "Sense",
-  "documentation": "https://www.openpeerpower.io/integrations/sense",
+  "documentation": "https://www.open-peer-power.io/integrations/sense",
   "requirements": ["sense_energy==0.9.0"],
   "codeowners": ["@kbickar"],
   "config_flow": true,

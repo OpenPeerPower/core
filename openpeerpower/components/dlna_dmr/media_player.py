@@ -41,12 +41,12 @@ from openpeerpower.const import (
     STATE_PAUSED,
     STATE_PLAYING,
 )
-from openpeerpowerr.exceptions import PlatformNotReady
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.util import get_local_ip
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.exceptions import PlatformNotReady
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.util import get_local_ip
+import openpeerpower.util.dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -69,7 +69,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     }
 )
 
-HOME_ASSISTANT_UPNP_CLASS_MAPPING = {
+OPEN_PEER_POWER_UPNP_CLASS_MAPPING = {
     MEDIA_TYPE_MUSIC: "object.item.audioItem",
     MEDIA_TYPE_TVSHOW: "object.item.videoItem",
     MEDIA_TYPE_MOVIE: "object.item.videoItem",
@@ -80,7 +80,7 @@ HOME_ASSISTANT_UPNP_CLASS_MAPPING = {
     MEDIA_TYPE_PLAYLIST: "object.item.playlistItem",
 }
 UPNP_CLASS_DEFAULT = "object.item"
-HOME_ASSISTANT_UPNP_MIME_TYPE_MAPPING = {
+OPEN_PEER_POWER_UPNP_MIME_TYPE_MAPPING = {
     MEDIA_TYPE_MUSIC: "audio/*",
     MEDIA_TYPE_TVSHOW: "video/*",
     MEDIA_TYPE_MOVIE: "video/*",
@@ -111,7 +111,7 @@ def catch_request_errors():
     return call_wrapper
 
 
-async def async_start_event_op.dler(
+async def async_start_event_handler(
    .opp: OpenPeerPowerType,
     server_host: str,
     server_port: int,
@@ -119,9 +119,9 @@ async def async_start_event_op.dler(
     callback_url_override: Optional[str] = None,
 ):
     """Register notify view."""
-   .opp_data = opp.data[DLNA_DMR_DATA]
-    if "event_op.dler" in.opp_data:
-        return.opp_data["event_op.dler"]
+   .opp_data =.opp.data[DLNA_DMR_DATA]
+    if "event_handler" in.opp_data:
+        return.opp_data["event_handler"]
 
     # start event handler
     server = AiohttpNotifyServer(
@@ -133,7 +133,7 @@ async def async_start_event_op.dler(
     await server.start_server()
     _LOGGER.info("UPNP/DLNA event handler listening, url: %s", server.callback_url)
    .opp_data["notify_server"] = server
-   .opp_data["event_op.dler"] = server.event_op.dler
+   .opp_data["event_handler"] = server.event_handler
 
     # register for graceful shutdown
     async def async_stop_server(event):
@@ -143,7 +143,7 @@ async def async_start_event_op.dler(
 
    .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_server)
 
-    return.opp_data["event_op.dler"]
+    return.opp_data["event_handler"]
 
 
 async def async_setup_platform(
@@ -174,7 +174,7 @@ async def async_setup_platform(
             server_host = get_local_ip()
         server_port = config.get(CONF_LISTEN_PORT, DEFAULT_LISTEN_PORT)
         callback_url_override = config.get(CONF_CALLBACK_URL_OVERRIDE)
-        event_op.dler = await async_start_event_op.dler(
+        event_handler = await async_start_event_handler(
            .opp, server_host, server_port, requester, callback_url_override
         )
 
@@ -186,7 +186,7 @@ async def async_setup_platform(
         raise PlatformNotReady() from err
 
     # wrap with DmrDevice
-    dlna_device = DmrDevice(upnp_device, event_op.dler)
+    dlna_device = DmrDevice(upnp_device, event_handler)
 
     # create our own device
     device = DlnaDmrDevice(dlna_device, name)
@@ -205,20 +205,20 @@ class DlnaDmrDevice(MediaPlayerEntity):
         self._available = False
         self._subscription_renew_time = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle addition."""
         self._device.on_event = self._on_event
 
         # Register unsubscribe on stop
         bus = self.opp.bus
-        bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._async_on_opp_stop)
+        bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._async_on.opp_stop)
 
     @property
     def available(self):
         """Device is available."""
         return self._available
 
-    async def _async_on_opp_stop(self, event):
+    async def _async_on.opp_stop(self, event):
         """Event handler on Open Peer Power stop."""
         async with self.opp.data[DLNA_DMR_DATA]["lock"]:
             await self._device.async_unsubscribe_services()
@@ -249,8 +249,8 @@ class DlnaDmrDevice(MediaPlayerEntity):
                 _LOGGER.debug("Could not (re)subscribe")
 
     def _on_event(self, service, state_variables):
-        """State variable(s) changed, let openpeerpower know."""
-        self.schedule_update_op.state()
+        """State variable(s) changed, let open-peer-power know."""
+        self.schedule_update_ha_state()
 
     @property
     def supported_features(self):
@@ -342,8 +342,8 @@ class DlnaDmrDevice(MediaPlayerEntity):
     async def async_play_media(self, media_type, media_id, **kwargs):
         """Play a piece of media."""
         title = "Open Peer Power"
-        mime_type = HOME_ASSISTANT_UPNP_MIME_TYPE_MAPPING.get(media_type, media_type)
-        upnp_class = HOME_ASSISTANT_UPNP_CLASS_MAPPING.get(
+        mime_type = OPEN_PEER_POWER_UPNP_MIME_TYPE_MAPPING.get(media_type, media_type)
+        upnp_class = OPEN_PEER_POWER_UPNP_CLASS_MAPPING.get(
             media_type, UPNP_CLASS_DEFAULT
         )
 
@@ -421,7 +421,7 @@ class DlnaDmrDevice(MediaPlayerEntity):
     def media_position_updated_at(self):
         """When was the position of the current playing media valid.
 
-        Returns value from openpeerpowerr.util.dt.utcnow().
+        Returns value from openpeerpower.util.dt.utcnow().
         """
         return self._device.media_position_updated_at
 

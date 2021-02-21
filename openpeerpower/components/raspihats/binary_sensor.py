@@ -56,15 +56,15 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the raspihats binary_sensor devices."""
-    I2CHatBinarySensor.I2C_HATS_MANAGER = opp.data[I2C_HATS_MANAGER]
+    I2CHatBinarySensor.I2C_HATS_MANAGER =.opp.data[I2C_HATS_MANAGER]
     binary_sensors = []
-    i2c_op._configs = config.get(CONF_I2C_HATS)
-    for i2c_op._config in i2c_op._configs:
-        address = i2c_op._config[CONF_ADDRESS]
-        board = i2c_op._config[CONF_BOARD]
+    i2c_hat_configs = config.get(CONF_I2C_HATS)
+    for i2c_hat_config in i2c_hat_configs:
+        address = i2c_hat_config[CONF_ADDRESS]
+        board = i2c_hat_config[CONF_BOARD]
         try:
             I2CHatBinarySensor.I2C_HATS_MANAGER.register_board(board, address)
-            for channel_config in i2c_op._config[CONF_CHANNELS]:
+            for channel_config in i2c_hat_config[CONF_CHANNELS]:
                 binary_sensors.append(
                     I2CHatBinarySensor(
                         address,
@@ -97,7 +97,7 @@ class I2CHatBinarySensor(BinarySensorEntity):
 
         def online_callback():
             """Call fired when board is online."""
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
         self.I2C_HATS_MANAGER.register_online_callback(
             self._address, self._channel, online_callback
@@ -106,7 +106,7 @@ class I2CHatBinarySensor(BinarySensorEntity):
         def edge_callback(state):
             """Read digital input state."""
             self._state = state
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
         self.I2C_HATS_MANAGER.register_di_callback(
             self._address, self._channel, edge_callback

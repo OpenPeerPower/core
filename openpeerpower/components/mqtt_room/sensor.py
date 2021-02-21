@@ -10,9 +10,9 @@ from openpeerpower.components.mqtt import CONF_STATE_TOPIC
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import ATTR_ID, CONF_NAME, CONF_TIMEOUT, STATE_NOT_HOME
 from openpeerpower.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import dt, slugify
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import dt, slugify
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -82,7 +82,7 @@ class MQTTRoomSensor(Entity):
         self._distance = None
         self._updated = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to MQTT events."""
 
         @callback
@@ -92,7 +92,7 @@ class MQTTRoomSensor(Entity):
             self._distance = distance
             self._updated = dt.utcnow()
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         @callback
         def message_received(msg):

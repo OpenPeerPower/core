@@ -1,7 +1,7 @@
 {
   "domain": "cover",
   "name": "Cover",
-  "documentation": "https://www.openpeerpower.io/integrations/cover",
-  "codeowners": ["@openpeerpower/core"],
+  "documentation": "https://www.open-peer-power.io/integrations/cover",
+  "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"
 }

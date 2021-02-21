@@ -5,14 +5,14 @@ import voluptuous as vol
 
 from openpeerpower import exceptions
 from openpeerpower.const import CONF_FOR, CONF_PLATFORM, CONF_VALUE_TEMPLATE
-from openpeerpowerr.core import OppJob, callback
-from openpeerpowerr.helpers import config_validation as cv, template
-from openpeerpowerr.helpers.event import (
+from openpeerpower.core import HassJob, callback
+from openpeerpower.helpers import config_validation as cv, template
+from openpeerpower.helpers.event import (
     TrackTemplate,
     async_call_later,
     async_track_template_result,
 )
-from openpeerpowerr.helpers.template import result_as_boolean
+from openpeerpower.helpers.template import result_as_boolean
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 
@@ -32,11 +32,11 @@ async def async_attach_trigger(
 ):
     """Listen for state changes based on configuration."""
     value_template = config.get(CONF_VALUE_TEMPLATE)
-    value_template.opp = opp
+    value_template.opp =.opp
     time_delta = config.get(CONF_FOR)
     template.attach.opp, time_delta)
     delay_cancel = None
-    job = OppJob(action)
+    job = HassJob(action)
     armed = False
 
     # Arm at setup if the template is already false.
@@ -104,7 +104,7 @@ async def async_attach_trigger(
         def call_action(*_):
             """Call action with right context."""
             nonlocal trigger_variables
-           .opp.async_run_opp_job(
+           .opp.async_run.opp_job(
                 job,
                 {"trigger": {**template_variables, **trigger_variables}},
                 (to_s.context if to_s else None),

@@ -31,7 +31,7 @@ CONF_FILTER = "filter"
 DEFAULT_HOST = "localhost"
 DEFAULT_PORT = 8088
 DEFAULT_SSL = False
-DEFAULT_NAME = "OPP"
+DEFAULT_NAME = "HASS"
 
 CONFIG_SCHEMA = vol.Schema(
     {
@@ -62,7 +62,7 @@ async def async_setup.opp, config):
     name = conf.get(CONF_NAME)
     entity_filter = conf[CONF_FILTER]
 
-    event_collector = opp_splunk(
+    event_collector =.opp_splunk(
         session=async_get_clientsession.opp),
         host=host,
         port=port,

@@ -7,9 +7,9 @@ from typing import List, Optional, Tuple
 import aioshelly
 
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP, TEMP_CELSIUS, TEMP_FAHRENHEIT
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers import singleton
-from openpeerpowerr.util.dt import parse_datetime, utcnow
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers import singleton
+from openpeerpower.util.dt import parse_datetime, utcnow
 
 from .const import (
     BASIC_INPUTS_EVENTS_TYPES,
@@ -25,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_remove_shelly_entity.opp, domain, unique_id):
     """Remove a Shelly entity."""
-    entity_reg = await opp..helpers.entity_registry.async_get_registry()
+    entity_reg = await.opp.helpers.entity_registry.async_get_registry()
     entity_id = entity_reg.async_get_entity_id(domain, DOMAIN, unique_id)
     if entity_id:
         _LOGGER.debug("Removing entity: %s", entity_id)
@@ -177,7 +177,7 @@ def get_device_wrapper.opp: OpenPeerPower, device_id: str):
         return None
 
     for config_entry in.opp.data[DOMAIN][DATA_CONFIG_ENTRY]:
-        wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry][COAP]
+        wrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry][COAP]
 
         if wrapper.device_id == device_id:
             return wrapper

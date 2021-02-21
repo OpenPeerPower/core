@@ -12,14 +12,14 @@ from openpeerpower.core import Context, State, T, callback
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 _LOGGER = logging.getLogger(__name__)
 _SlotsType = Dict[str, Any]
 
-INTENT_TURN_OFF = "OppTurnOff"
-INTENT_TURN_ON = "OppTurnOn"
-INTENT_TOGGLE = "OppToggle"
+INTENT_TURN_OFF = "HassTurnOff"
+INTENT_TURN_ON = "HassTurnOn"
+INTENT_TOGGLE = "HassToggle"
 
 SLOT_SCHEMA = vol.Schema({}, extra=vol.ALLOW_EXTRA)
 
@@ -30,12 +30,12 @@ SPEECH_TYPE_SSML = "ssml"
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_register.opp: OpenPeerPowerType, handler: IntentHandler) -> None:
     """Register an intent with Open Peer Power."""
-    intents = opp.data.get(DATA_KEY)
+    intents =.opp.data.get(DATA_KEY)
     if intents is None:
-        intents = opp.data[DATA_KEY] = {}
+        intents =.opp.data[DATA_KEY] = {}
 
     assert handler.intent_type is not None, "intent_type cannot be None"
 
@@ -44,11 +44,11 @@ def async_register.opp: OpenPeerPowerType, handler: IntentHandler) -> None:
             "Intent %s is being overwritten by %s", handler.intent_type, handler
         )
 
-    intents[handler.intent_type] = op.dler
+    intents[handler.intent_type] = handler
 
 
-@bind_opp
-async def async_op.dle(
+@bind.opp
+async def async_handle(
    .opp: OpenPeerPowerType,
     platform: str,
     intent_type: str,
@@ -57,7 +57,7 @@ async def async_op.dle(
     context: Optional[Context] = None,
 ) -> IntentResponse:
     """Handle an intent."""
-    handler: IntentHandler = opp.data.get(DATA_KEY, {}).get(intent_type)
+    handler: IntentHandler =.opp.data.get(DATA_KEY, {}).get(intent_type)
 
     if handler is None:
         raise UnknownIntent(f"Unknown intent {intent_type}")
@@ -69,7 +69,7 @@ async def async_op.dle(
 
     try:
         _LOGGER.info("Triggering intent handler %s", handler)
-        result = await handler.async_op.dle(intent)
+        result = await handler.async_handle(intent)
         return result
     except vol.Invalid as err:
         _LOGGER.warning("Received invalid slot info for %s: %s", intent_type, err)
@@ -101,13 +101,13 @@ class IntentUnexpectedError(IntentError):
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_match_state(
    .opp: OpenPeerPowerType, name: str, states: Optional[Iterable[State]] = None
 ) -> State:
     """Find a state that matches the name."""
     if states is None:
-        states = opp.states.async_all()
+        states =.opp.states.async_all()
 
     state = _fuzzymatch(name, states, lambda state: state.name)
 
@@ -133,7 +133,7 @@ class IntentHandler:
     platforms: Optional[Iterable[str]] = []
 
     @callback
-    def async_can_op.dle(self, intent_obj: Intent) -> bool:
+    def async_can_handle(self, intent_obj: Intent) -> bool:
         """Test if an intent can be handled."""
         return self.platforms is None or intent_obj.platform in self.platforms
 
@@ -154,7 +154,7 @@ class IntentHandler:
 
         return self._slot_schema(slots)  # type: ignore
 
-    async def async_op.dle(self, intent_obj: Intent) -> IntentResponse:
+    async def async_handle(self, intent_obj: Intent) -> IntentResponse:
         """Handle the intent."""
         raise NotImplementedError()
 
@@ -197,13 +197,13 @@ class ServiceIntentHandler(IntentHandler):
         self.service = service
         self.speech = speech
 
-    async def async_op.dle(self, intent_obj: Intent) -> IntentResponse:
-        """Handle the opp intent."""
-        opp = intent_obj.opp
+    async def async_handle(self, intent_obj: Intent) -> IntentResponse:
+        """Handle the.opp intent."""
+       .opp = intent_obj.opp
         slots = self.async_validate_slots(intent_obj.slots)
         state = async_match_state.opp, slots["name"]["value"])
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             self.domain,
             self.service,
             {ATTR_ENTITY_ID: state.entity_id},
@@ -218,7 +218,7 @@ class ServiceIntentHandler(IntentHandler):
 class Intent:
     """Hold the intent."""
 
-    __slots__ = ["opp", "platform", "intent_type", "slots", "text_input", "context"]
+    __slots__ = [.opp", "platform", "intent_type", "slots", "text_input", "context"]
 
     def __init__(
         self,
@@ -230,7 +230,7 @@ class Intent:
         context: Context,
     ) -> None:
         """Initialize an intent."""
-        self.opp = opp
+        self.opp =.opp
         self.platform = platform
         self.intent_type = intent_type
         self.slots = slots

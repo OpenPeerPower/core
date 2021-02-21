@@ -29,7 +29,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         return
 
     sensors = config[CONF_MONITORED_CONDITIONS]
-    bloomsky = opp.data[DOMAIN]
+    bloomsky =.opp.data[DOMAIN]
 
     for device in bloomsky.devices.values():
         for variable in sensors:

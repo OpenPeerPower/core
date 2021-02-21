@@ -55,8 +55,8 @@ HA_TO_STE_PRESET = {k: i for i, k in STE_TO_HA_PRESET.items()}
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the StiebelEltron platform."""
-    name = opp.data[STE_DOMAIN]["name"]
-    ste_data = opp.data[STE_DOMAIN]["ste_data"]
+    name =.opp.data[STE_DOMAIN]["name"]
+    ste_data =.opp.data[STE_DOMAIN]["ste_data"]
 
     add_entities([StiebelEltron(name, ste_data)], True)
 

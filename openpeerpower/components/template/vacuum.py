@@ -37,12 +37,12 @@ from openpeerpower.const import (
     CONF_VALUE_TEMPLATE,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import TemplateError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import async_generate_entity_id
-from openpeerpowerr.helpers.reload import async_setup_reload_service
-from openpeerpowerr.helpers.script import Script
+from openpeerpower.core import callback
+from openpeerpower.exceptions import TemplateError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import async_generate_entity_id
+from openpeerpower.helpers.reload import async_setup_reload_service
+from openpeerpower.helpers.script import Script
 
 from .const import CONF_AVAILABILITY_TEMPLATE, DOMAIN, PLATFORMS
 from .template_entity import TemplateEntity
@@ -334,7 +334,7 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
                 self._fan_speed_list,
             )
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         if self._template is not None:
             self.add_template_attribute(
@@ -355,7 +355,7 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
                 self._update_battery_level,
                 none_on_template_error=True,
             )
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     @callback
     def _update_state(self, result):

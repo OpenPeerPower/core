@@ -2,7 +2,7 @@
   "domain": "huisbaasje",
   "name": "Huisbaasje",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/huisbaasje",
+  "documentation": "https://www.open-peer-power.io/integrations/huisbaasje",
   "requirements": [
     "huisbaasje-client==0.1.0"
   ],

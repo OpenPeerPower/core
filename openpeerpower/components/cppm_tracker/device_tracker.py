@@ -11,7 +11,7 @@ from openpeerpower.components.device_tracker import (
     DeviceScanner,
 )
 from openpeerpower.const import CONF_API_KEY, CONF_CLIENT_ID, CONF_HOST
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 SCAN_INTERVAL = timedelta(seconds=120)
 

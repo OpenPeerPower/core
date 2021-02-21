@@ -16,7 +16,7 @@ from .models import Blueprint
 from .schemas import is_blueprint_config
 
 COMMUNITY_TOPIC_PATTERN = re.compile(
-    r"^https://community.openpeerpower.io/t/[a-z0-9-]+/(?P<topic>\d+)(?:/(?P<post>\d+)|)$"
+    r"^https://community.open-peer-power.io/t/[a-z0-9-]+/(?P<topic>\d+)(?:/(?P<post>\d+)|)$"
 )
 
 COMMUNITY_CODE_BLOCK = re.compile(

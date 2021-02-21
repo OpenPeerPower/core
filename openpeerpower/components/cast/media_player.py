@@ -65,7 +65,7 @@ from .const import (
     KNOWN_CHROMECAST_INFO_KEY,
     SIGNAL_CAST_DISCOVERED,
     SIGNAL_CAST_REMOVED,
-    SIGNAL_OPP_CAST_SHOW_VIEW,
+    SIGNAL_HASS_CAST_SHOW_VIEW,
 )
 from .discovery import setup_internal_discovery
 from .helpers import CastStatusListener, ChromecastInfo, ChromeCastZeroconf
@@ -74,7 +74,7 @@ _LOGGER = logging.getLogger(__name__)
 
 CONF_IGNORE_CEC = "ignore_cec"
 CONF_UUID = "uuid"
-CAST_SPLASH = "https://www.openpeerpower.io/images/cast/splash.png"
+CAST_SPLASH = "https://www.open-peer-power.io/images/cast/splash.png"
 
 SUPPORT_CAST = (
     SUPPORT_PAUSE
@@ -108,7 +108,7 @@ def _async_create_cast_device.opp: OpenPeerPowerType, info: ChromecastInfo):
         return None
 
     # Found a cast with UUID
-    added_casts = opp.data[ADDED_CAST_DEVICES_KEY]
+    added_casts =.opp.data[ADDED_CAST_DEVICES_KEY]
     if info.uuid in added_casts:
         # Already added this one, the entity will take care of moved hosts
         # itself
@@ -127,7 +127,7 @@ def _async_create_cast_device.opp: OpenPeerPowerType, info: ChromecastInfo):
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Cast from a config entry."""
-    config = opp.data[CAST_DOMAIN].get("media_player") or {}
+    config =.opp.data[CAST_DOMAIN].get("media_player") or {}
     if not isinstance(config, list):
         config = [config]
 
@@ -202,14 +202,14 @@ class CastDevice(MediaPlayerEntity):
         self.mz_mgr = None
         self._available = False
         self._status_listener: Optional[CastStatusListener] = None
-        self._opp_cast_controller: Optional[OpenPeerPowerController] = None
+        self..opp_cast_controller: Optional[OpenPeerPowerController] = None
 
-        self._add_remove_op.dler = None
-        self._cast_view_remove_op.dler = None
+        self._add_remove_handler = None
+        self._cast_view_remove_handler = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Create chromecast object when added to.opp."""
-        self._add_remove_op.dler = async_dispatcher_connect(
+        self._add_remove_handler = async_dispatcher_connect(
             self.opp, SIGNAL_CAST_DISCOVERED, self._async_cast_discovered
         )
         self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._async_stop)
@@ -218,23 +218,23 @@ class CastDevice(MediaPlayerEntity):
             async_create_catching_coro(self.async_connect_to_chromecast())
         )
 
-        self._cast_view_remove_op.dler = async_dispatcher_connect(
-            self.opp, SIGNAL_OPP_CAST_SHOW_VIEW, self._op.dle_signal_show_view
+        self._cast_view_remove_handler = async_dispatcher_connect(
+            self.opp, SIGNAL_HASS_CAST_SHOW_VIEW, self._handle_signal_show_view
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect Chromecast object when removed."""
         await self._async_disconnect()
         if self._cast_info.uuid is not None:
             # Remove the entity from the added casts so that it can dynamically
             # be re-added again.
             self.opp.data[ADDED_CAST_DEVICES_KEY].remove(self._cast_info.uuid)
-        if self._add_remove_op.dler:
-            self._add_remove_op.dler()
-            self._add_remove_op.dler = None
-        if self._cast_view_remove_op.dler:
-            self._cast_view_remove_op.dler()
-            self._cast_view_remove_op.dler = None
+        if self._add_remove_handler:
+            self._add_remove_handler()
+            self._add_remove_handler = None
+        if self._cast_view_remove_handler:
+            self._cast_view_remove_handler()
+            self._cast_view_remove_handler = None
 
     def async_set_cast_info(self, cast_info):
         """Set the cast information."""
@@ -274,7 +274,7 @@ class CastDevice(MediaPlayerEntity):
         self.cast_status = chromecast.status
         self.media_status = chromecast.media_controller.status
         self._chromecast.start()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def _async_disconnect(self):
         """Disconnect Chromecast object if it is set."""
@@ -287,13 +287,13 @@ class CastDevice(MediaPlayerEntity):
             self._cast_info.friendly_name,
         )
         self._available = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
         await self.opp.async_add_executor_job(self._chromecast.disconnect)
 
         self._invalidate()
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _invalidate(self):
         """Invalidate some attributes."""
@@ -304,7 +304,7 @@ class CastDevice(MediaPlayerEntity):
         self.mz_media_status = {}
         self.mz_media_status_received = {}
         self.mz_mgr = None
-        self._opp_cast_controller = None
+        self..opp_cast_controller = None
         if self._status_listener is not None:
             self._status_listener.invalidate()
             self._status_listener = None
@@ -313,7 +313,7 @@ class CastDevice(MediaPlayerEntity):
     def new_cast_status(self, cast_status):
         """Handle updates of the cast status."""
         self.cast_status = cast_status
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def new_media_status(self, media_status):
         """Handle updates of the media status."""
@@ -361,7 +361,7 @@ class CastDevice(MediaPlayerEntity):
 
         self.media_status = media_status
         self.media_status_received = dt_util.utcnow()
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def new_connection_status(self, connection_status):
         """Handle updates of connection status."""
@@ -374,7 +374,7 @@ class CastDevice(MediaPlayerEntity):
         if connection_status.status == CONNECTION_STATUS_DISCONNECTED:
             self._available = False
             self._invalidate()
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
             return
 
         new_available = connection_status.status == CONNECTION_STATUS_CONNECTED
@@ -389,7 +389,7 @@ class CastDevice(MediaPlayerEntity):
                 connection_status.status,
             )
             self._available = new_available
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def multizone_new_media_status(self, group_uuid, media_status):
         """Handle updates of audio group media status."""
@@ -402,7 +402,7 @@ class CastDevice(MediaPlayerEntity):
         )
         self.mz_media_status[group_uuid] = media_status
         self.mz_media_status_received[group_uuid] = dt_util.utcnow()
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     # ========== Service Calls ==========
     def _media_controller(self):
@@ -552,7 +552,7 @@ class CastDevice(MediaPlayerEntity):
             if media is None:
                 return
             controller = PlexController()
-            self._chromecast.register_op.dler(controller)
+            self._chromecast.register_handler(controller)
             controller.play_media(media)
         else:
             self._chromecast.media_controller.play_media(
@@ -798,7 +798,7 @@ class CastDevice(MediaPlayerEntity):
         """Disconnect socket on Open Peer Power stop."""
         await self._async_disconnect()
 
-    def _op.dle_signal_show_view(
+    def _handle_signal_show_view(
         self,
         controller: OpenPeerPowerController,
         entity_id: str,
@@ -809,11 +809,11 @@ class CastDevice(MediaPlayerEntity):
         if entity_id != self.entity_id:
             return
 
-        if self._opp_cast_controller is None:
-            self._opp_cast_controller = controller
-            self._chromecast.register_op.dler(controller)
+        if self..opp_cast_controller is None:
+            self..opp_cast_controller = controller
+            self._chromecast.register_handler(controller)
 
-        self._opp_cast_controller.show_lovelace_view(view_path, url_path)
+        self..opp_cast_controller.show_lovelace_view(view_path, url_path)
 
 
 class DynamicCastGroup:
@@ -822,22 +822,22 @@ class DynamicCastGroup:
     def __init__(self,.opp, cast_info: ChromecastInfo):
         """Initialize the cast device."""
 
-        self.opp = opp
+        self.opp =.opp
         self._cast_info = cast_info
         self.services = cast_info.services
         self._chromecast: Optional[pychromecast.Chromecast] = None
         self.mz_mgr = None
         self._status_listener: Optional[CastStatusListener] = None
 
-        self._add_remove_op.dler = None
-        self._del_remove_op.dler = None
+        self._add_remove_handler = None
+        self._del_remove_handler = None
 
     def async_setup(self):
         """Create chromecast object."""
-        self._add_remove_op.dler = async_dispatcher_connect(
+        self._add_remove_handler = async_dispatcher_connect(
             self.opp, SIGNAL_CAST_DISCOVERED, self._async_cast_discovered
         )
-        self._del_remove_op.dler = async_dispatcher_connect(
+        self._del_remove_handler = async_dispatcher_connect(
             self.opp, SIGNAL_CAST_REMOVED, self._async_cast_removed
         )
         self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._async_stop)
@@ -853,12 +853,12 @@ class DynamicCastGroup:
             # Remove the entity from the added casts so that it can dynamically
             # be re-added again.
             self.opp.data[ADDED_CAST_DEVICES_KEY].remove(self._cast_info.uuid)
-        if self._add_remove_op.dler:
-            self._add_remove_op.dler()
-            self._add_remove_op.dler = None
-        if self._del_remove_op.dler:
-            self._del_remove_op.dler()
-            self._del_remove_op.dler = None
+        if self._add_remove_handler:
+            self._add_remove_handler()
+            self._add_remove_handler = None
+        if self._del_remove_handler:
+            self._del_remove_handler()
+            self._del_remove_handler = None
 
     def async_set_cast_info(self, cast_info):
         """Set the cast information and set up the chromecast object."""

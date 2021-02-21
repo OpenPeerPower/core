@@ -108,17 +108,17 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the BME680 sensor."""
-    SENSOR_TYPES[SENSOR_TEMP][1] = opp.config.units.temperature_unit
+    SENSOR_TYPES[SENSOR_TEMP][1] =.opp.config.units.temperature_unit
     name = config[CONF_NAME]
 
-    sensor_op.dler = await opp..async_add_executor_job(_setup_bme680, config)
-    if sensor_op.dler is None:
+    sensor_handler = await.opp.async_add_executor_job(_setup_bme680, config)
+    if sensor_handler is None:
         return
 
     dev = []
     for variable in config[CONF_MONITORED_CONDITIONS]:
         dev.append(
-            BME680Sensor(sensor_op.dler, variable, SENSOR_TYPES[variable][1], name)
+            BME680Sensor(sensor_handler, variable, SENSOR_TYPES[variable][1], name)
         )
 
     async_add_entities(dev)
@@ -128,7 +128,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 def _setup_bme680(config):
     """Set up and configure the BME680 sensor."""
 
-    sensor_op.dler = None
+    sensor_handler = None
     sensor = None
     try:
         # pylint: disable=no-member
@@ -178,7 +178,7 @@ def _setup_bme680(config):
         _LOGGER.error("BME680 sensor not detected at 0x%02x", i2c_address)
         return None
 
-    sensor_op.dler = BME680Handler(
+    sensor_handler = BME680Handler(
         sensor,
         (
             SENSOR_GAS in config[CONF_MONITORED_CONDITIONS]
@@ -189,11 +189,11 @@ def _setup_bme680(config):
         config[CONF_AQ_HUM_WEIGHTING],
     )
     sleep(0.5)  # Wait for device to stabilize
-    if not sensor_op.dler.sensor_data.temperature:
+    if not sensor_handler.sensor_data.temperature:
         _LOGGER.error("BME680 sensor failed to Initialize")
         return None
 
-    return sensor_op.dler
+    return sensor_handler
 
 
 class BME680Handler:

@@ -66,7 +66,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
         entry.data.get("host") for entry in.opp.config_entries.async_entries(DOMAIN)
     ]
 
-    legacy_hosts = await opp..async_add_executor_job(
+    legacy_hosts = await.opp.async_add_executor_job(
         load_json,.opp.config.path(CONFIG_FILE)
     )
 
@@ -103,7 +103,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Create a gateway."""
     # host, identity, key, allow_tradfri_groups
-    tradfri_data = opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {}
+    tradfri_data =.opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {}
     listeners = tradfri_data[LISTENERS] = []
 
     factory = await APIFactory.init(
@@ -112,11 +112,11 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         psk=entry.data[CONF_KEY],
     )
 
-    async def on_opp_stop(event):
-        """Close connection when opp stops."""
+    async def on.opp_stop(event):
+        """Close connection when.opp stops."""
         await factory.shutdown()
 
-    listeners.append.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_opp_stop))
+    listeners.append.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on.opp_stop))
 
     api = factory.request
     gateway = Gateway()
@@ -136,7 +136,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     tradfri_data[DEVICES] = devices
     tradfri_data[GROUPS] = groups
 
-    dev_reg = await opp..helpers.device_registry.async_get_registry()
+    dev_reg = await.opp.helpers.device_registry.async_get_registry()
     dev_reg.async_get_or_create(
         config_entry_id=entry.entry_id,
         connections=set(),
@@ -180,7 +180,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         )
     )
     if unload_ok:
-        tradfri_data = opp.data[DOMAIN].pop(entry.entry_id)
+        tradfri_data =.opp.data[DOMAIN].pop(entry.entry_id)
         factory = tradfri_data[FACTORY]
         await factory.shutdown()
         # unsubscribe listeners

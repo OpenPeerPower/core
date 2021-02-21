@@ -7,9 +7,9 @@
             "single_instance_allowed": "Gi\u00e0 configurato. \u00c8 possibile una sola configurazione."
         },
         "step": {
-            "oppio_confirm": {
-                "description": "Vuoi configurare Open Peer Power a connettersi ad Almond tramite il componente aggiuntivo Opp.io: {addon} ?",
-                "title": "Almond tramite il componente aggiuntivo di Opp.io"
+            .oppio_confirm": {
+                "description": "Vuoi configurare Open Peer Power a connettersi ad Almond tramite il componente aggiuntivo Hass.io: {addon} ?",
+                "title": "Almond tramite il componente aggiuntivo di Hass.io"
             },
             "pick_implementation": {
                 "title": "Scegli il metodo di autenticazione"

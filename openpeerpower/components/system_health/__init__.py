@@ -13,7 +13,7 @@ from openpeerpower.components import websocket_api
 from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers import aiohttp_client, integration_platform
 from openpeerpower.helpers.typing import ConfigType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -22,7 +22,7 @@ DOMAIN = "system_health"
 INFO_CALLBACK_TIMEOUT = 5
 
 
-@bind_opp
+@bind.opp
 @callback
 def async_register_info(
    .opp: OpenPeerPower,
@@ -92,7 +92,7 @@ async def handle_info(
    .opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: Dict
 ):
     """Handle an info request via a subscription."""
-    registrations: Dict[str, SystemHealthRegistration] = opp.data[DOMAIN]
+    registrations: Dict[str, SystemHealthRegistration] =.opp.data[DOMAIN]
     data = {}
     pending_info = {}
 

@@ -33,7 +33,7 @@ ATTR_LAST_UPDATE_SUCCESSFUL = "feed_last_update_successful"
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the GeoNet NZ Volcano Feed platform."""
-    manager = opp.data[DOMAIN][FEED][entry.entry_id]
+    manager =.opp.data[DOMAIN][FEED][entry.entry_id]
 
     @callback
     def async_add_sensor(feed_manager, external_id, unit_system):
@@ -69,12 +69,12 @@ class GeonetnzVolcanoSensor(Entity):
         self._attribution = None
         self._alert_level = None
         self._activity = None
-        self._op.ards = None
+        self._hazards = None
         self._feed_last_update = None
         self._feed_last_update_successful = None
         self._remove_signal_update = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self._remove_signal_update = async_dispatcher_connect(
             self.opp,
@@ -82,7 +82,7 @@ class GeonetnzVolcanoSensor(Entity):
             self._update_callback,
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Call when entity will be removed from.opp."""
         if self._remove_signal_update:
             self._remove_signal_update()
@@ -90,7 +90,7 @@ class GeonetnzVolcanoSensor(Entity):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     @property
     def should_poll(self):
@@ -122,7 +122,7 @@ class GeonetnzVolcanoSensor(Entity):
         self._attribution = feed_entry.attribution
         self._alert_level = feed_entry.alert_level
         self._activity = feed_entry.activity
-        self._op.ards = feed_entry.hazards
+        self._hazards = feed_entry.hazards
         self._feed_last_update = dt.as_utc(last_update) if last_update else None
         self._feed_last_update_successful = (
             dt.as_utc(last_update_successful) if last_update_successful else None
@@ -156,7 +156,7 @@ class GeonetnzVolcanoSensor(Entity):
             (ATTR_EXTERNAL_ID, self._external_id),
             (ATTR_ATTRIBUTION, self._attribution),
             (ATTR_ACTIVITY, self._activity),
-            (ATTR_HAZARDS, self._op.ards),
+            (ATTR_HAZARDS, self._hazards),
             (ATTR_LONGITUDE, self._longitude),
             (ATTR_LATITUDE, self._latitude),
             (ATTR_DISTANCE, self._distance),

@@ -110,7 +110,7 @@ async def async_configure_sabnzbd(
     uri_scheme = "https" if use_ssl else "http"
     base_url = BASE_URL_FORMAT.format(uri_scheme, host, port)
     if api_key is None:
-        conf = await opp..async_add_executor_job(
+        conf = await.opp.async_add_executor_job(
             load_json,.opp.config.path(CONFIG_FILE)
         )
         api_key = conf.get(base_url, {}).get(CONF_API_KEY, "")
@@ -154,7 +154,7 @@ def async_setup_sabnzbd.opp, sab_api, config, name):
             discovery.async_load_platform.opp, "sensor", DOMAIN, {}, config)
         )
 
-    async def async_service_op.dler(service):
+    async def async_service_handler(service):
         """Handle service calls."""
         if service.service == SERVICE_PAUSE:
             await sab_api_data.async_pause_queue()
@@ -165,15 +165,15 @@ def async_setup_sabnzbd.opp, sab_api, config, name):
             await sab_api_data.async_set_queue_speed(speed)
 
    .opp.services.async_register(
-        DOMAIN, SERVICE_PAUSE, async_service_op.dler, schema=vol.Schema({})
+        DOMAIN, SERVICE_PAUSE, async_service_handler, schema=vol.Schema({})
     )
 
    .opp.services.async_register(
-        DOMAIN, SERVICE_RESUME, async_service_op.dler, schema=vol.Schema({})
+        DOMAIN, SERVICE_RESUME, async_service_handler, schema=vol.Schema({})
     )
 
    .opp.services.async_register(
-        DOMAIN, SERVICE_SET_SPEED, async_service_op.dler, schema=SPEED_LIMIT_SCHEMA
+        DOMAIN, SERVICE_SET_SPEED, async_service_handler, schema=SPEED_LIMIT_SCHEMA
     )
 
     async def async_update_sabnzbd(now):
@@ -192,7 +192,7 @@ def async_setup_sabnzbd.opp, sab_api, config, name):
 def async_request_configuration.opp, config, host, web_root):
     """Request configuration steps from the user."""
 
-    configurator = opp.components.configurator
+    configurator =.opp.components.configurator
     # We got an error if this method is called while we are configuring
     if host in _CONFIGURING:
         configurator.async_notify_errors(

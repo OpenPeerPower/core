@@ -6,17 +6,17 @@ from typing import Any, Callable, List, Optional, Union
 import voluptuous as vol
 
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.core import EVENT_OPENPEERPOWER_START, CoreState, callback
-from openpeerpowerr.exceptions import TemplateError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import (
+from openpeerpower.core import EVENT_OPENPEERPOWER_START, CoreState, callback
+from openpeerpower.exceptions import TemplateError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import (
     Event,
     TrackTemplate,
     TrackTemplateResult,
     async_track_template_result,
 )
-from openpeerpowerr.helpers.template import Template, result_as_boolean
+from openpeerpower.helpers.template import Template, result_as_boolean
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -217,7 +217,7 @@ class TemplateEntity(Entity):
         self._template_attrs[template].append(attribute)
 
     @callback
-    def _op.dle_results(
+    def _handle_results(
         self,
         event: Optional[Event],
         updates: List[TrackTemplateResult],
@@ -248,7 +248,7 @@ class TemplateEntity(Entity):
                     event, update.template, update.last_result, update.result
                 )
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def _async_template_startup(self, *_) -> None:
         template_var_tups = []
@@ -258,13 +258,13 @@ class TemplateEntity(Entity):
                 attribute.async_setup()
 
         result_info = async_track_template_result(
-            self.opp, template_var_tups, self._op.dle_results
+            self.opp, template_var_tups, self._handle_results
         )
         self.async_on_remove(result_info.async_remove)
         self._async_update = result_info.async_refresh
         result_info.async_refresh()
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Run when entity about to be added to.opp."""
         if self._availability_template is not None:
             self.add_template_attribute(

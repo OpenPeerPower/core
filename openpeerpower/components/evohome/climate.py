@@ -16,8 +16,8 @@ from openpeerpower.components.climate.const import (
     SUPPORT_TARGET_TEMPERATURE,
 )
 from openpeerpower.const import PRECISION_TENTHS
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+import openpeerpower.util.dt as dt_util
 
 from . import (
     ATTR_DURATION_DAYS,
@@ -80,7 +80,7 @@ async def async_setup_platform(
     if discovery_info is None:
         return
 
-    broker = opp.data[DOMAIN]["broker"]
+    broker =.opp.data[DOMAIN]["broker"]
 
     _LOGGER.debug(
         "Found the Location/Controller (%s), id=%s, name=%s (location_idx=%s)",

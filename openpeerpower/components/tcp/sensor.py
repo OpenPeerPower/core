@@ -15,9 +15,9 @@ from openpeerpower.const import (
     CONF_UNIT_OF_MEASUREMENT,
     CONF_VALUE_TEMPLATE,
 )
-from openpeerpowerr.exceptions import TemplateError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.exceptions import TemplateError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -58,9 +58,9 @@ class TcpSensor(Entity):
         value_template = config.get(CONF_VALUE_TEMPLATE)
 
         if value_template is not None:
-            value_template.opp = opp
+            value_template.opp =.opp
 
-        self._opp = opp
+        self..opp =.opp
         self._config = {
             CONF_NAME: config.get(CONF_NAME),
             CONF_HOST: config.get(CONF_HOST),

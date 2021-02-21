@@ -9,7 +9,7 @@ import jwt
 from openpeerpower.core import callback
 from openpeerpower.util import dt as dt_util
 
-from .const import KEY_AUTHENTICATED, KEY_OPP_REFRESH_TOKEN_ID, KEY_OPP_USER
+from .const import KEY_AUTHENTICATED, KEY_HASS_REFRESH_TOKEN_ID, KEY_HASS_USER
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 
@@ -23,10 +23,10 @@ SIGN_QUERY_PARAM = "authSig"
 @callback
 def async_sign_path.opp, refresh_token_id, path, expiration):
     """Sign a path for temporary access without auth header."""
-    secret = opp.data.get(DATA_SIGN_SECRET)
+    secret =.opp.data.get(DATA_SIGN_SECRET)
 
     if secret is None:
-        secret = opp.data[DATA_SIGN_SECRET] = secrets.token_hex()
+        secret =.opp.data[DATA_SIGN_SECRET] = secrets.token_hex()
 
     now = dt_util.utcnow()
     encoded = jwt.encode(
@@ -56,18 +56,18 @@ def setup_auth.opp, app):
         if auth_type != "Bearer":
             return False
 
-        refresh_token = await opp..auth.async_validate_access_token(auth_val)
+        refresh_token = await.opp.auth.async_validate_access_token(auth_val)
 
         if refresh_token is None:
             return False
 
-        request[KEY_OPP_USER] = refresh_token.user
-        request[KEY_OPP_REFRESH_TOKEN_ID] = refresh_token.id
+        request[KEY_HASS_USER] = refresh_token.user
+        request[KEY_HASS_REFRESH_TOKEN_ID] = refresh_token.id
         return True
 
     async def async_validate_signed_request(request):
         """Validate a signed request."""
-        secret = opp.data.get(DATA_SIGN_SECRET)
+        secret =.opp.data.get(DATA_SIGN_SECRET)
 
         if secret is None:
             return False
@@ -87,13 +87,13 @@ def setup_auth.opp, app):
         if claims["path"] != request.path:
             return False
 
-        refresh_token = await opp..auth.async_get_refresh_token(claims["iss"])
+        refresh_token = await.opp.auth.async_get_refresh_token(claims["iss"])
 
         if refresh_token is None:
             return False
 
-        request[KEY_OPP_USER] = refresh_token.user
-        request[KEY_OPP_REFRESH_TOKEN_ID] = refresh_token.id
+        request[KEY_HASS_USER] = refresh_token.user
+        request[KEY_HASS_REFRESH_TOKEN_ID] = refresh_token.id
         return True
 
     @middleware

@@ -34,16 +34,16 @@ class KnxEntity(Entity):
 
     async def after_update_callback(self, device: XknxDevice):
         """Call after device was updated."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Store register state change callback."""
         self._device.register_device_updated_cb(self.after_update_callback)
 
         if isinstance(self._device, XknxClimate) and self._device.mode is not None:
             self._device.mode.register_device_updated_cb(self.after_update_callback)
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect device object when removed."""
         self._device.unregister_device_updated_cb(self.after_update_callback)
 

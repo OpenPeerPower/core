@@ -12,15 +12,15 @@ from openpeerpower.const import (
     SERVICE_TURN_ON,
     STATE_ON,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.config_validation import (  # noqa: F401
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.config_validation import (  # noqa: F401
     PLATFORM_SCHEMA,
     PLATFORM_SCHEMA_BASE,
 )
-from openpeerpowerr.helpers.entity import ToggleEntity
-from openpeerpowerr.helpers.entity_component import EntityComponent
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
-from openpeerpowerr.loader import bind_opp
+from openpeerpower.helpers.entity import ToggleEntity
+from openpeerpower.helpers.entity_component import EntityComponent
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.loader import bind.opp
 
 from .const import (
     ATTR_AVAILABLE_MODES,
@@ -48,7 +48,7 @@ DEVICE_CLASSES = [DEVICE_CLASS_HUMIDIFIER, DEVICE_CLASS_DEHUMIDIFIER]
 DEVICE_CLASSES_SCHEMA = vol.All(vol.Lower, vol.In(DEVICE_CLASSES))
 
 
-@bind_opp
+@bind.opp
 def is_on.opp, entity_id):
     """Return if the humidifier is on based on the statemachine.
 
@@ -59,7 +59,7 @@ def is_on.opp, entity_id):
 
 async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up humidifier devices."""
-    component = opp.data[DOMAIN] = EntityComponent(
+    component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
     )
     await component.async_setup(config)
@@ -88,12 +88,12 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
-    return await opp..data[DOMAIN].async_setup_entry(entry)
+    return await.opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    return await opp..data[DOMAIN].async_unload_entry(entry)
+    return await.opp.data[DOMAIN].async_unload_entry(entry)
 
 
 class HumidifierEntity(ToggleEntity):

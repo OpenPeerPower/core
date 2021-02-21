@@ -1,7 +1,7 @@
 {
   "domain": "sony_projector",
   "name": "Sony Projector",
-  "documentation": "https://www.openpeerpower.io/integrations/sony_projector",
+  "documentation": "https://www.open-peer-power.io/integrations/sony_projector",
   "requirements": ["pysdcp==1"],
   "codeowners": []
 }

@@ -15,7 +15,7 @@ PRESENCE_NAME_FORMAT = "{} motion"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Defer binary sensor setup to the shared sensor module."""
-    await opp..data[HUE_DOMAIN][
+    await.opp.data[HUE_DOMAIN][
         config_entry.entry_id
     ].sensor_manager.async_register_component("binary_sensor", async_add_entities)
 

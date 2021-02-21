@@ -6,11 +6,11 @@ from .const import DOMAIN
 
 async def async_setup_entry.opp, config, async_add_entities):
     """Initialize a Spider Power Plug."""
-    api = opp.data[DOMAIN][config.entry_id]
+    api =.opp.data[DOMAIN][config.entry_id]
     async_add_entities(
         [
             SpiderPowerPlug(api, entity)
-            for entity in await opp..async_add_executor_job(api.get_power_plugs)
+            for entity in await.opp.async_add_executor_job(api.get_power_plugs)
         ]
     )
 

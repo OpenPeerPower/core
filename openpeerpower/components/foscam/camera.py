@@ -127,10 +127,10 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         verbose=False,
     )
 
-    async_add_entities([OppFoscamCamera(camera, config_entry)])
+    async_add_entities([HassFoscamCamera(camera, config_entry)])
 
 
-class OppFoscamCamera(Camera):
+class HassFoscamCamera(Camera):
     """An implementation of a Foscam IP camera."""
 
     def __init__(self, camera, config_entry):
@@ -146,7 +146,7 @@ class OppFoscamCamera(Camera):
         self._rtsp_port = config_entry.data[CONF_RTSP_PORT]
         self._motion_status = False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity addition to.opp."""
         # Get motion detection status
         ret, response = await self.opp.async_add_executor_job(

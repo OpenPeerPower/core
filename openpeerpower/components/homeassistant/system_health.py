@@ -20,7 +20,7 @@ async def system_health_info.opp):
         "version": f"core-{info.get('version')}",
         "installation_type": info.get("installation_type"),
         "dev": info.get("dev"),
-        "oppio": info.get("oppio"),
+        .oppio": info.get(.oppio"),
         "docker": info.get("docker"),
         "virtualenv": info.get("virtualenv"),
         "python_version": info.get("python_version"),

@@ -11,8 +11,8 @@ from openpeerpower.const import (
     CONF_MODE,
     CONF_NAME,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
 
 from .const import (
     CONF_LANGUAGE,
@@ -125,4 +125,4 @@ class OpenWeatherMapOptionsFlow(config_entries.OptionsFlow):
 
 async def _is_owm_api_online.opp, api_key, lat, lon):
     owm = OWM(api_key).weather_manager()
-    return await opp..async_add_executor_job(owm.one_call, lat, lon)
+    return await.opp.async_add_executor_job(owm.one_call, lat, lon)

@@ -28,14 +28,14 @@ from openpeerpower.const import (
     STATE_PAUSED,
     STATE_PLAYING,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import config_validation as cv, entity_platform
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.core import callback
+from openpeerpower.helpers import config_validation as cv, entity_platform
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpowerr.util import convert
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.util import convert
+from openpeerpower.util.dt import utcnow
 
 from .const import DOMAIN
 from .media_browser import browse_media
@@ -70,7 +70,7 @@ ATTR_TRANSFER = "transfer_id"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Roon MediaPlayer from Config Entry."""
-    roon_server = opp.data[DOMAIN][config_entry.entry_id]
+    roon_server =.opp.data[DOMAIN][config_entry.entry_id]
     media_players = set()
 
     # Register entity services
@@ -137,7 +137,7 @@ class RoonDevice(MediaPlayerEntity):
         self._volume_level = 0
         self.update_data(player_data)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callback."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -152,7 +152,7 @@ class RoonDevice(MediaPlayerEntity):
     def async_update_callback(self, player_data):
         """Handle device updates."""
         self.update_data(player_data)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def available(self):
@@ -305,7 +305,7 @@ class RoonDevice(MediaPlayerEntity):
     @property
     def media_position_updated_at(self):
         """When was the position of the current playing media valid."""
-        # Returns value from openpeerpowerr.util.dt.utcnow().
+        # Returns value from openpeerpower.util.dt.utcnow().
         return self._last_position_update
 
     @property
@@ -427,7 +427,7 @@ class RoonDevice(MediaPlayerEntity):
         self._server.roonapi.seek(self.output_id, position)
         # Seek doesn't cause an async update - so force one
         self._media_position = position
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def set_volume_level(self, volume):
         """Send new volume_level to device."""

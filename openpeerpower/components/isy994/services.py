@@ -160,20 +160,20 @@ SERVICE_RUN_NETWORK_RESOURCE_SCHEMA = vol.All(
 @callback
 def async_setup_services.opp: OpenPeerPowerType):
     """Create and register services for the ISY integration."""
-    existing_services = opp.services.async_services().get(DOMAIN)
+    existing_services =.opp.services.async_services().get(DOMAIN)
     if existing_services and any(
         service in INTEGRATION_SERVICES for service in existing_services
     ):
         # Integration-level services have already been added. Return.
         return
 
-    async def async_system_query_service_op.dler(service):
+    async def async_system_query_service_handler(service):
         """Handle a system query service call."""
         address = service.data.get(CONF_ADDRESS)
         isy_name = service.data.get(CONF_ISY)
 
         for config_entry_id in.opp.data[DOMAIN]:
-            isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
+            isy =.opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
             # If an address is provided, make sure we query the correct ISY.
@@ -184,21 +184,21 @@ def async_setup_services.opp: OpenPeerPowerType):
                     address,
                     isy.configuration["uuid"],
                 )
-                await opp..async_add_executor_job(isy.query, address)
+                await.opp.async_add_executor_job(isy.query, address)
                 return
             _LOGGER.debug(
                 "Requesting system query of ISY %s", isy.configuration["uuid"]
             )
-            await opp..async_add_executor_job(isy.query)
+            await.opp.async_add_executor_job(isy.query)
 
-    async def async_run_network_resource_service_op.dler(service):
+    async def async_run_network_resource_service_handler(service):
         """Handle a network resource service call."""
         address = service.data.get(CONF_ADDRESS)
         name = service.data.get(CONF_NAME)
         isy_name = service.data.get(CONF_ISY)
 
         for config_entry_id in.opp.data[DOMAIN]:
-            isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
+            isy =.opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
             if not hasattr(isy, "networking") or isy.networking is None:
@@ -209,13 +209,13 @@ def async_setup_services.opp: OpenPeerPowerType):
             if name:
                 command = isy.networking.get_by_name(name)
             if command is not None:
-                await opp..async_add_executor_job(command.run)
+                await.opp.async_add_executor_job(command.run)
                 return
         _LOGGER.error(
             "Could not run network resource command. Not found or enabled on the ISY"
         )
 
-    async def async_send_program_command_service_op.dler(service):
+    async def async_send_program_command_service_handler(service):
         """Handle a send program command service call."""
         address = service.data.get(CONF_ADDRESS)
         name = service.data.get(CONF_NAME)
@@ -223,7 +223,7 @@ def async_setup_services.opp: OpenPeerPowerType):
         isy_name = service.data.get(CONF_ISY)
 
         for config_entry_id in.opp.data[DOMAIN]:
-            isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
+            isy =.opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
             program = None
@@ -232,11 +232,11 @@ def async_setup_services.opp: OpenPeerPowerType):
             if name:
                 program = isy.programs.get_by_name(name)
             if program is not None:
-                await opp..async_add_executor_job(getattr(program, command))
+                await.opp.async_add_executor_job(getattr(program, command))
                 return
         _LOGGER.error("Could not send program command. Not found or enabled on the ISY")
 
-    async def async_set_variable_service_op.dler(service):
+    async def async_set_variable_service_handler(service):
         """Handle a set variable service call."""
         address = service.data.get(CONF_ADDRESS)
         vtype = service.data.get(CONF_TYPE)
@@ -246,7 +246,7 @@ def async_setup_services.opp: OpenPeerPowerType):
         isy_name = service.data.get(CONF_ISY)
 
         for config_entry_id in.opp.data[DOMAIN]:
-            isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
+            isy =.opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
             variable = None
@@ -255,7 +255,7 @@ def async_setup_services.opp: OpenPeerPowerType):
             if address and vtype:
                 variable = isy.variables.vobjs[vtype].get(address)
             if variable is not None:
-                await opp..async_add_executor_job(variable.set_value, value, init)
+                await.opp.async_add_executor_job(variable.set_value, value, init)
                 return
         _LOGGER.error("Could not set variable value. Not found or enabled on the ISY")
 
@@ -276,8 +276,8 @@ def async_setup_services.opp: OpenPeerPowerType):
                 ]
             )
 
-           .opp_isy_data = opp.data[DOMAIN][config_entry_id]
-            uuid = opp_isy_data[ISY994_ISY].configuration["uuid"]
+           .opp_isy_data =.opp.data[DOMAIN][config_entry_id]
+            uuid =.opp_isy_data[ISY994_ISY].configuration["uuid"]
 
             for platform in SUPPORTED_PLATFORMS:
                 for node in.opp_isy_data[ISY994_NODES][platform]:
@@ -319,28 +319,28 @@ def async_setup_services.opp: OpenPeerPowerType):
    .opp.services.async_register(
         domain=DOMAIN,
         service=SERVICE_SYSTEM_QUERY,
-        service_func=async_system_query_service_op.dler,
+        service_func=async_system_query_service_handler,
         schema=SERVICE_SYSTEM_QUERY_SCHEMA,
     )
 
    .opp.services.async_register(
         domain=DOMAIN,
         service=SERVICE_RUN_NETWORK_RESOURCE,
-        service_func=async_run_network_resource_service_op.dler,
+        service_func=async_run_network_resource_service_handler,
         schema=SERVICE_RUN_NETWORK_RESOURCE_SCHEMA,
     )
 
    .opp.services.async_register(
         domain=DOMAIN,
         service=SERVICE_SEND_PROGRAM_COMMAND,
-        service_func=async_send_program_command_service_op.dler,
+        service_func=async_send_program_command_service_handler,
         schema=SERVICE_SEND_PROGRAM_COMMAND_SCHEMA,
     )
 
    .opp.services.async_register(
         domain=DOMAIN,
         service=SERVICE_SET_VARIABLE,
-        service_func=async_set_variable_service_op.dler,
+        service_func=async_set_variable_service_handler,
         schema=SERVICE_SET_VARIABLE_SCHEMA,
     )
 
@@ -355,7 +355,7 @@ def async_setup_services.opp: OpenPeerPowerType):
     )
 
     async def _async_send_raw_node_command(call: ServiceCall):
-        await opp..helpers.service.entity_service_call(
+        await.opp.helpers.service.entity_service_call(
             async_get_platforms.opp, DOMAIN), SERVICE_SEND_RAW_NODE_COMMAND, call
         )
 
@@ -367,7 +367,7 @@ def async_setup_services.opp: OpenPeerPowerType):
     )
 
     async def _async_send_node_command(call: ServiceCall):
-        await opp..helpers.service.entity_service_call(
+        await.opp.helpers.service.entity_service_call(
             async_get_platforms.opp, DOMAIN), SERVICE_SEND_NODE_COMMAND, call
         )
 
@@ -386,7 +386,7 @@ def async_unload_services.opp: OpenPeerPowerType):
         # There is still another config entry for this domain, don't remove services.
         return
 
-    existing_services = opp.services.async_services().get(DOMAIN)
+    existing_services =.opp.services.async_services().get(DOMAIN)
     if not existing_services or not any(
         service in INTEGRATION_SERVICES for service in existing_services
     ):

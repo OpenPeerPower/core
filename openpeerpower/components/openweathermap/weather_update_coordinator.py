@@ -17,9 +17,9 @@ from openpeerpower.components.weather import (
     ATTR_FORECAST_WIND_BEARING,
     ATTR_FORECAST_WIND_SPEED,
 )
-from openpeerpowerr.helpers import sun
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from openpeerpowerr.util import dt
+from openpeerpower.helpers import sun
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from openpeerpower.util import dt
 
 from .const import (
     ATTR_API_CLOUDS,

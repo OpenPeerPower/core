@@ -66,8 +66,8 @@ class MySensorsDevice:
     def _logger(self):
         return logging.getLogger(f"{__name__}.{self.name}")
 
-    async def async_will_remove_from_opp(self):
-        """Remove this entity from Open Peer Power."""
+    async def async_will_remove_from.opp(self):
+        """Remove this entity from open peer power."""
         for platform in PLATFORM_TYPES:
             platform_str = MYSENSORS_PLATFORM_DEVICES.format(platform)
             if platform_str in self.opp.data[DOMAIN]:
@@ -103,12 +103,12 @@ class MySensorsDevice:
 
     @property
     def unique_id(self) -> str:
-        """Return a unique ID for use in Open Peer Power."""
+        """Return a unique ID for use in open peer power."""
         return f"{self.gateway_id}-{self.node_id}-{self.child_id}-{self.value_type}"
 
     @property
     def device_info(self) -> Optional[Dict[str, Any]]:
-        """Return a dict that allows Open Peer Power to puzzle all entities belonging to a node together."""
+        """Return a dict that allows open peer power to puzzle all entities belonging to a node together."""
         return {
             "identifiers": {(DOMAIN, f"{self.gateway_id}-{self.node_id}")},
             "name": self.node_name,
@@ -194,7 +194,7 @@ class MySensorsDevice:
 
 
 def get_mysensors_devices.opp, domain: str) -> Dict[DevId, MySensorsDevice]:
-    """Return MySensors devices for a opp platform name."""
+    """Return MySensors devices for a.opp platform name."""
     if MYSENSORS_PLATFORM_DEVICES.format(domain) not in.opp.data[DOMAIN]:
        .opp.data[DOMAIN][MYSENSORS_PLATFORM_DEVICES.format(domain)] = {}
     return.opp.data[DOMAIN][MYSENSORS_PLATFORM_DEVICES.format(domain)]
@@ -215,9 +215,9 @@ class MySensorsEntity(MySensorsDevice, Entity):
 
     async def _async_update_callback(self):
         """Update the entity."""
-        await self.async_update_op.state(True)
+        await self.async_update_ha_state(True)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register update callback."""
         self.async_on_remove(
             async_dispatcher_connect(

@@ -12,7 +12,7 @@ CONFIG = "config"
 DOMAIN = "withings"
 LOG_NAMESPACE = "openpeerpower.components.withings"
 PROFILE = "profile"
-PUSH_HANDLER = "push_op.dler"
+PUSH_HANDLER = "push_handler"
 CONF_WEBHOOK_URL = "webhook_url"
 
 

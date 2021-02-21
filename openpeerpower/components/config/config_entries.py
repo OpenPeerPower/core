@@ -1,7 +1,6 @@
 """Http views to control the config manager."""
 import aiohttp.web_exceptions
 import voluptuous as vol
-import voluptuous_serialize
 
 from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.auth.permissions.const import CAT_CONFIG_ENTRIES, POLICY_EDIT
@@ -10,7 +9,6 @@ from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.const import HTTP_FORBIDDEN, HTTP_NOT_FOUND
 from openpeerpower.core import callback
 from openpeerpower.exceptions import Unauthorized
-import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.data_entry_flow import (
     FlowManagerIndexView,
     FlowManagerResourceView,
@@ -30,6 +28,7 @@ async def async_setup.opp):
    .opp.http.register_view(OptionManagerFlowIndexView.opp.config_entries.options))
    .opp.http.register_view(OptionManagerFlowResourceView.opp.config_entries.options))
 
+   .opp.components.websocket_api.async_register_command(config_entry_disable)
    .opp.components.websocket_api.async_register_command(config_entry_update)
    .opp.components.websocket_api.async_register_command(config_entries_progress)
    .opp.components.websocket_api.async_register_command(system_options_list)
@@ -37,24 +36,6 @@ async def async_setup.opp):
    .opp.components.websocket_api.async_register_command(ignore_config_flow)
 
     return True
-
-
-def _prepare_json(result):
-    """Convert result for JSON."""
-    if result["type"] != data_entry_flow.RESULT_TYPE_FORM:
-        return result
-
-    data = result.copy()
-
-    schema = data["data_schema"]
-    if schema is None:
-        data["data_schema"] = []
-    else:
-        data["data_schema"] = voluptuous_serialize.convert(
-            schema, custom_serializer=cv.custom_serializer
-        )
-
-    return data
 
 
 class ConfigManagerEntryIndexView(OpenPeerPowerView):
@@ -65,7 +46,7 @@ class ConfigManagerEntryIndexView(OpenPeerPowerView):
 
     async def get(self, request):
         """List available config entries."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         return self.json(
             [entry_json(entry) for entry in.opp.config_entries.async_entries()]
@@ -80,13 +61,13 @@ class ConfigManagerEntryResourceView(OpenPeerPowerView):
 
     async def delete(self, request, entry_id):
         """Delete a config entry."""
-        if not request["opp_user"].is_admin:
+        if not request[.opp_user"].is_admin:
             raise Unauthorized(config_entry_id=entry_id, permission="remove")
 
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         try:
-            result = await opp..config_entries.async_remove(entry_id)
+            result = await.opp.config_entries.async_remove(entry_id)
         except config_entries.UnknownEntry:
             return self.json_message("Invalid entry specified", HTTP_NOT_FOUND)
 
@@ -101,13 +82,13 @@ class ConfigManagerEntryResourceReloadView(OpenPeerPowerView):
 
     async def post(self, request, entry_id):
         """Reload a config entry."""
-        if not request["opp_user"].is_admin:
+        if not request[.opp_user"].is_admin:
             raise Unauthorized(config_entry_id=entry_id, permission="remove")
 
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         try:
-            result = await opp..config_entries.async_reload(entry_id)
+            result = await.opp.config_entries.async_reload(entry_id)
         except config_entries.OperationNotAllowed:
             return self.json_message("Entry cannot be reloaded", HTTP_FORBIDDEN)
         except config_entries.UnknownEntry:
@@ -129,7 +110,7 @@ class ConfigManagerFlowIndexView(FlowManagerIndexView):
     # pylint: disable=arguments-differ
     async def post(self, request):
         """Handle a POST request."""
-        if not request["opp_user"].is_admin:
+        if not request[.opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission="add")
 
         # pylint: disable=no-value-for-parameter
@@ -154,7 +135,7 @@ class ConfigManagerFlowResourceView(FlowManagerResourceView):
 
     async def get(self, request, flow_id):
         """Get the current state of a data_entry_flow."""
-        if not request["opp_user"].is_admin:
+        if not request[.opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission="add")
 
         return await super().get(request, flow_id)
@@ -162,7 +143,7 @@ class ConfigManagerFlowResourceView(FlowManagerResourceView):
     # pylint: disable=arguments-differ
     async def post(self, request, flow_id):
         """Handle a POST request."""
-        if not request["opp_user"].is_admin:
+        if not request[.opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission="add")
 
         # pylint: disable=no-value-for-parameter
@@ -182,12 +163,12 @@ class ConfigManagerFlowResourceView(FlowManagerResourceView):
 class ConfigManagerAvailableFlowView(OpenPeerPowerView):
     """View to query available flows."""
 
-    url = "/api/config/config_entries/flow_op.dlers"
-    name = "api:config:config_entries:flow_op.dlers"
+    url = "/api/config/config_entries/flow_handlers"
+    name = "api:config:config_entries:flow_handlers"
 
     async def get(self, request):
         """List available flow handlers."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
         return self.json(await async_get_config_flows.opp))
 
 
@@ -203,7 +184,7 @@ class OptionManagerFlowIndexView(FlowManagerIndexView):
 
         handler in request is entry_id.
         """
-        if not request["opp_user"].is_admin:
+        if not request[.opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission=POLICY_EDIT)
 
         # pylint: disable=no-value-for-parameter
@@ -218,7 +199,7 @@ class OptionManagerFlowResourceView(FlowManagerResourceView):
 
     async def get(self, request, flow_id):
         """Get the current state of a data_entry_flow."""
-        if not request["opp_user"].is_admin:
+        if not request[.opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission=POLICY_EDIT)
 
         return await super().get(request, flow_id)
@@ -226,7 +207,7 @@ class OptionManagerFlowResourceView(FlowManagerResourceView):
     # pylint: disable=arguments-differ
     async def post(self, request, flow_id):
         """Handle a POST request."""
-        if not request["opp_user"].is_admin:
+        if not request[.opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission=POLICY_EDIT)
 
         # pylint: disable=no-value-for-parameter
@@ -259,10 +240,25 @@ def config_entries_progress.opp, connection, msg):
 async def system_options_list.opp, connection, msg):
     """List all system options for a config entry."""
     entry_id = msg["entry_id"]
-    entry = opp.config_entries.async_get_entry(entry_id)
+    entry =.opp.config_entries.async_get_entry(entry_id)
 
     if entry:
         connection.send_result(msg["id"], entry.system_options.as_dict())
+
+
+def send_entry_not_found(connection, msg_id):
+    """Send Config entry not found error."""
+    connection.send_error(
+        msg_id, websocket_api.const.ERR_NOT_FOUND, "Config entry not found"
+    )
+
+
+def get_entry.opp, connection, entry_id, msg_id):
+    """Get entry, send error message if it doesn't exist."""
+    entry =.opp.config_entries.async_get_entry(entry_id)
+    if entry is None:
+        send_entry_not_found(connection, msg_id)
+    return entry
 
 
 @websocket_api.require_admin
@@ -279,13 +275,10 @@ async def system_options_update.opp, connection, msg):
     changes = dict(msg)
     changes.pop("id")
     changes.pop("type")
-    entry_id = changes.pop("entry_id")
-    entry = opp.config_entries.async_get_entry(entry_id)
+    changes.pop("entry_id")
 
+    entry = get_entry.opp, connection, msg["entry_id"], msg["id"])
     if entry is None:
-        connection.send_error(
-            msg["id"], websocket_api.const.ERR_NOT_FOUND, "Config entry not found"
-        )
         return
 
    .opp.config_entries.async_update_entry(entry, system_options=changes)
@@ -302,18 +295,45 @@ async def config_entry_update.opp, connection, msg):
     changes = dict(msg)
     changes.pop("id")
     changes.pop("type")
-    entry_id = changes.pop("entry_id")
+    changes.pop("entry_id")
 
-    entry = opp.config_entries.async_get_entry(entry_id)
-
+    entry = get_entry.opp, connection, msg["entry_id"], msg["id"])
     if entry is None:
-        connection.send_error(
-            msg["id"], websocket_api.const.ERR_NOT_FOUND, "Config entry not found"
-        )
         return
 
    .opp.config_entries.async_update_entry(entry, **changes)
     connection.send_result(msg["id"], entry_json(entry))
+
+
+@websocket_api.require_admin
+@websocket_api.async_response
+@websocket_api.websocket_command(
+    {
+        "type": "config_entries/disable",
+        "entry_id": str,
+        # We only allow setting disabled_by user via API.
+        "disabled_by": vol.Any("user", None),
+    }
+)
+async def config_entry_disable.opp, connection, msg):
+    """Disable config entry."""
+    disabled_by = msg["disabled_by"]
+
+    result = False
+    try:
+        result = await.opp.config_entries.async_set_disabled_by(
+            msg["entry_id"], disabled_by
+        )
+    except config_entries.OperationNotAllowed:
+        # Failed to unload the config entry
+        pass
+    except config_entries.UnknownEntry:
+        send_entry_not_found(connection, msg["id"])
+        return
+
+    result = {"require_restart": not result}
+
+    connection.send_result(msg["id"], result)
 
 
 @websocket_api.require_admin
@@ -333,9 +353,7 @@ async def ignore_config_flow.opp, connection, msg):
     )
 
     if flow is None:
-        connection.send_error(
-            msg["id"], websocket_api.const.ERR_NOT_FOUND, "Config entry not found"
-        )
+        send_entry_not_found(connection, msg["id"])
         return
 
     if "unique_id" not in flow["context"]:
@@ -344,7 +362,7 @@ async def ignore_config_flow.opp, connection, msg):
         )
         return
 
-    await opp..config_entries.flow.async_init(
+    await.opp.config_entries.flow.async_init(
         flow["handler"],
         context={"source": config_entries.SOURCE_IGNORE},
         data={"unique_id": flow["context"]["unique_id"], "title": msg["title"]},
@@ -357,7 +375,7 @@ def entry_json(entry: config_entries.ConfigEntry) -> dict:
     """Return JSON value of a config entry."""
     handler = config_entries.HANDLERS.get(entry.domain)
     supports_options = (
-        # Guard in case handler is no longer registered (custom compnoent etc)
+        # Guard in case handler is no longer registered (custom component etc)
         handler is not None
         # pylint: disable=comparison-with-callable
         and handler.async_get_options_flow
@@ -372,4 +390,5 @@ def entry_json(entry: config_entries.ConfigEntry) -> dict:
         "connection_class": entry.connection_class,
         "supports_options": supports_options,
         "supports_unload": entry.supports_unload,
+        "disabled_by": entry.disabled_by,
     }

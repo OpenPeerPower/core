@@ -6,8 +6,8 @@ from typing import Any, Dict, Iterable, Optional
 import voluptuous as vol
 
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.core import Context, State
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import Context, State
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import ATTR_VALUE, DOMAIN, SERVICE_SET_VALUE
 
@@ -22,7 +22,7 @@ async def _async_reproduce_state(
     reproduce_options: Optional[Dict[str, Any]] = None,
 ) -> None:
     """Reproduce a single state."""
-    cur_state = opp.states.get(state.entity_id)
+    cur_state =.opp.states.get(state.entity_id)
 
     if cur_state is None:
         _LOGGER.warning("Unable to find entity %s", state.entity_id)
@@ -44,7 +44,7 @@ async def _async_reproduce_state(
     service_data = {ATTR_ENTITY_ID: state.entity_id, ATTR_VALUE: state.state}
 
     try:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN, service, service_data, context=context, blocking=True
         )
     except vol.Invalid as err:

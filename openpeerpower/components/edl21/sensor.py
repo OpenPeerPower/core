@@ -9,16 +9,16 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.entity_registry import async_get_registry
-from openpeerpowerr.helpers.typing import Optional
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_registry import async_get_registry
+from openpeerpower.helpers.typing import Optional
+from openpeerpower.util.dt import utcnow
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -39,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the EDL21 sensor."""
    .opp.data[DOMAIN] = EDL21.opp, config, async_add_entities)
-    await opp..data[DOMAIN].connect()
+    await.opp.data[DOMAIN].connect()
 
 
 class EDL21:
@@ -115,7 +115,7 @@ class EDL21:
     def __init__(self,.opp, config, async_add_entities) -> None:
         """Initialize an EDL21 object."""
         self._registered_obis = set()
-        self._opp = opp
+        self..opp =.opp
         self._async_add_entities = async_add_entities
         self._name = config[CONF_NAME]
         self._proto = SmlProtocol(config[CONF_SERIAL_PORT])
@@ -123,7 +123,7 @@ class EDL21:
 
     async def connect(self):
         """Connect to an EDL21 reader."""
-        await self._proto.connect(self._opp.loop)
+        await self._proto.connect(self..opp.loop)
 
     def event(self, message_body) -> None:
         """Handle events from pysml."""
@@ -147,7 +147,7 @@ class EDL21:
 
             if (electricity_id, obis) in self._registered_obis:
                 async_dispatcher_send(
-                    self._opp, SIGNAL_EDL21_TELEGRAM, electricity_id, telegram
+                    self..opp, SIGNAL_EDL21_TELEGRAM, electricity_id, telegram
                 )
             else:
                 name = self._OBIS_NAMES.get(obis)
@@ -161,17 +161,17 @@ class EDL21:
                 elif obis not in self._OBIS_BLACKLIST:
                     _LOGGER.warning(
                         "Unhandled sensor %s detected. Please report at "
-                        'https://github.com/openpeerpower/core/issues?q=is%%3Aissue+label%%3A"integration%%3A+edl21"+',
+                        'https://github.com/open-peer-power/core/issues?q=is%%3Aissue+label%%3A"integration%%3A+edl21"+',
                         obis,
                     )
                     self._OBIS_BLACKLIST.add(obis)
 
         if new_entities:
-            self._opp.loop.create_task(self.add_entities(new_entities))
+            self..opp.loop.create_task(self.add_entities(new_entities))
 
     async def add_entities(self, new_entities) -> None:
         """Migrate old unique IDs, then add entities to.opp."""
-        registry = await async_get_registry(self._opp)
+        registry = await async_get_registry(self..opp)
 
         for entity in new_entities:
             old_entity_id = registry.async_get_entity_id(
@@ -213,7 +213,7 @@ class EDL21Entity(Entity):
         }
         self._async_remove_dispatcher = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
 
         @callback
@@ -232,13 +232,13 @@ class EDL21Entity(Entity):
 
             self._telegram = telegram
             self._last_update = now
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self._async_remove_dispatcher = async_dispatcher_connect(
             self.opp, SIGNAL_EDL21_TELEGRAM, handle_telegram
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Run when entity will be removed from.opp."""
         if self._async_remove_dispatcher:
             self._async_remove_dispatcher()

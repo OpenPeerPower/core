@@ -16,7 +16,7 @@
                     "name": "Name des Gateways",
                     "token": "API-Token"
                 },
-                "description": "Du ben\u00f6tigst den 32 Zeichen langen API-Token. Anweisungen findest du unter https://www.openpeerpower.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token.",
+                "description": "Du ben\u00f6tigst den 32 Zeichen langen API-Token. Anweisungen findest du unter https://www.open-peer-power.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token.",
                 "title": "Stelle eine Verbindung zu einem Xiaomi Gateway her"
             },
             "user": {

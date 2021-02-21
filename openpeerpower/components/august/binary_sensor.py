@@ -81,7 +81,7 @@ SENSOR_TYPES_DOORBELL = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the August binary sensors."""
-    data = opp.data[DOMAIN][config_entry.entry_id][DATA_AUGUST]
+    data =.opp.data[DOMAIN][config_entry.entry_id][DATA_AUGUST]
     devices = []
 
     for door in data.locks:
@@ -219,7 +219,7 @@ class AugustDoorbellBinarySensor(AugustEntityMixin, BinarySensorEntity):
             return
 
         # self.opp is only available after setup is completed
-        # and we will recheck in async_added_to_opp
+        # and we will recheck in async_added_to.opp
         if not self.opp:
             return
 
@@ -240,10 +240,10 @@ class AugustDoorbellBinarySensor(AugustEntityMixin, BinarySensorEntity):
             self._check_for_off_update_listener()
             self._check_for_off_update_listener = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call the mixin to subscribe and setup an async_track_point_in_utc_time to turn off the sensor if needed."""
         self._schedule_update_to_recheck_turn_off_sensor()
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     @property
     def unique_id(self) -> str:

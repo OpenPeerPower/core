@@ -89,7 +89,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     for template in [start, end]:
         if template is not None:
-            template.opp = opp
+            template.opp =.opp
 
     add_entities(
         [
@@ -122,7 +122,7 @@ class HistoryStatsSensor(Entity):
         self.value = None
         self.count = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Create listeners when the entity is added."""
 
         @callback
@@ -132,7 +132,7 @@ class HistoryStatsSensor(Entity):
             @callback
             def force_refresh(*args):
                 """Force the component to refresh."""
-                self.async_schedule_update_op.state(True)
+                self.async_schedule_update_ha_state(True)
 
             force_refresh()
             self.async_on_remove(

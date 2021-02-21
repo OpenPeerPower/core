@@ -4,7 +4,7 @@ from openpeerpower.const import (  # noqa: F401 pylint: disable=unused-import
     STATE_HOME,
 )
 from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 from .config_entry import (  # noqa: F401 pylint: disable=unused-import
     async_setup_entry,
@@ -41,7 +41,7 @@ from .legacy import (  # noqa: F401 pylint: disable=unused-import
 )
 
 
-@bind_opp
+@bind.opp
 def is_on.opp: OpenPeerPowerType, entity_id: str):
     """Return the state if any or a specified device is home."""
     return.opp.states.is_state(entity_id, STATE_HOME)

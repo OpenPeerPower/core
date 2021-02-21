@@ -19,7 +19,7 @@ class Gateway:
     def __init__(self, worker,.opp):
         """Initialize the sms gateway."""
         self._worker = worker
-        self._opp = opp
+        self..opp =.opp
 
     async def init_async(self):
         """Initialize the sms gateway asynchronously."""
@@ -38,7 +38,7 @@ class Gateway:
         @param callback_type: type of action, one of Call, SMS, CB, USSD
         @type callback_type: string
         @param data: event data
-        @type data: op.h
+        @type data: hash
         """
         _LOGGER.debug(
             "Received incoming event type:%s,data:%s", callback_type, callback_data
@@ -68,7 +68,7 @@ class Gateway:
             _LOGGER.debug("Append event data:%s", event_data)
             data.append(event_data)
 
-        self._opp.add_job(self._notify_incoming_sms, data)
+        self..opp.add_job(self._notify_incoming_sms, data)
 
     # pylint: disable=no-self-use
     def get_and_delete_all_sms(self, state_machine, force=False):
@@ -130,14 +130,14 @@ class Gateway:
 
     @callback
     def _notify_incoming_sms(self, messages):
-        """Notify opp when an incoming SMS message is received."""
+        """Notify.opp when an incoming SMS message is received."""
         for message in messages:
             event_data = {
                 "phone": message["phone"],
                 "date": message["date"],
                 "text": message["message"],
             }
-            self._opp.bus.async_fire(f"{DOMAIN}.incoming_sms", event_data)
+            self..opp.bus.async_fire(f"{DOMAIN}.incoming_sms", event_data)
 
     async def send_sms_async(self, message):
         """Send sms message via the worker."""

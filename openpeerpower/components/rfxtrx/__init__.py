@@ -37,10 +37,10 @@ from openpeerpower.const import (
     UV_INDEX,
     VOLT,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.device_registry import DeviceRegistry
-from openpeerpowerr.helpers.restore_state import RestoreEntity
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.device_registry import DeviceRegistry
+from openpeerpower.helpers.restore_state import RestoreEntity
 
 from .const import (
     ATTR_EVENT,
@@ -227,11 +227,11 @@ async def async_unload_entry.opp, entry: config_entries.ConfigEntry):
     for cleanup_callback in.opp.data[DOMAIN][DATA_CLEANUP_CALLBACKS]:
         cleanup_callback()
 
-    listener = opp.data[DOMAIN][DATA_LISTENER]
+    listener =.opp.data[DOMAIN][DATA_LISTENER]
     listener()
 
-    rfx_object = opp.data[DOMAIN][DATA_RFXOBJECT]
-    await opp..async_add_executor_job(rfx_object.close_connection)
+    rfx_object =.opp.data[DOMAIN][DATA_RFXOBJECT]
+    await.opp.async_add_executor_job(rfx_object.close_connection)
 
    .opp.data.pop(DOMAIN)
 
@@ -273,18 +273,18 @@ async def async_setup_internal.opp, entry: config_entries.ConfigEntry):
 
     # Initialize library
     async with async_timeout.timeout(30):
-        rfx_object = await opp..async_add_executor_job(_create_rfx, config)
+        rfx_object = await.opp.async_add_executor_job(_create_rfx, config)
 
     # Setup some per device config
     devices = _get_device_lookup(config[CONF_DEVICES])
 
     device_registry: DeviceRegistry = (
-        await opp..helpers.device_registry.async_get_registry()
+        await.opp.helpers.device_registry.async_get_registry()
     )
 
     # Declare the Handle event
     @callback
-    def async_op.dle_receive(event):
+    def async_handle_receive(event):
         """Handle received messages from RFXtrx gateway."""
         # Log RFXCOM event
         if not event.device.id_string:
@@ -341,12 +341,12 @@ async def async_setup_internal.opp, entry: config_entries.ConfigEntry):
         """Close connection with RFXtrx."""
         rfx_object.close_connection()
 
-    listener = opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown_rfxtrx)
+    listener =.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown_rfxtrx)
 
    .opp.data[DOMAIN][DATA_LISTENER] = listener
    .opp.data[DOMAIN][DATA_RFXOBJECT] = rfx_object
 
-    rfx_object.event_callback = lambda event:.opp.add_job(async_op.dle_receive, event)
+    rfx_object.event_callback = lambda event:.opp.add_job(async_handle_receive, event)
 
     def send(call):
         event = call.data[ATTR_EVENT]
@@ -476,14 +476,14 @@ class RfxtrxEntity(RestoreEntity):
         self._device_id = device_id
         self._unique_id = "_".join(x for x in self._device_id)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Restore RFXtrx device state (ON/OFF)."""
         if self._event:
             self._apply_event(self._event)
 
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
-                SIGNAL_EVENT, self._op.dle_event
+                SIGNAL_EVENT, self._handle_event
             )
         )
 
@@ -535,7 +535,7 @@ class RfxtrxEntity(RestoreEntity):
         self._event = event
 
     @callback
-    def _op.dle_event(self, event, device_id):
+    def _handle_event(self, event, device_id):
         """Handle a reception of data, overridden by other classes."""
 
 

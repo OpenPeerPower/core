@@ -2,7 +2,7 @@
   "domain": "withings",
   "name": "Withings",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/withings",
+  "documentation": "https://www.open-peer-power.io/integrations/withings",
   "requirements": ["withings-api==2.1.6"],
   "dependencies": ["http", "webhook"],
   "codeowners": ["@vangorra"]

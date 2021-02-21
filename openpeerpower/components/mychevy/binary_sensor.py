@@ -3,8 +3,8 @@ from openpeerpower.components.binary_sensor import (
     DOMAIN as BINARY_SENSOR_DOMAIN,
     BinarySensorEntity,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.util import slugify
+from openpeerpower.core import callback
+from openpeerpower.util import slugify
 
 from . import DOMAIN as MYCHEVY_DOMAIN, UPDATE_TOPIC, EVBinarySensorConfig
 
@@ -17,7 +17,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     sensors = []
-    hub = opp.data[MYCHEVY_DOMAIN]
+    hub =.opp.data[MYCHEVY_DOMAIN]
     for sconfig in SENSORS:
         for car in hub.cars:
             sensors.append(EVBinarySensor(hub, sconfig, car.vid))
@@ -58,7 +58,7 @@ class EVBinarySensor(BinarySensorEntity):
         """Return the car."""
         return self._conn.get_car(self._car_vid)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
@@ -71,7 +71,7 @@ class EVBinarySensor(BinarySensorEntity):
         """Update state."""
         if self._car is not None:
             self._is_on = getattr(self._car, self._attr, None)
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def should_poll(self):

@@ -14,7 +14,7 @@
                     "access_token": "Access Token",
                     "host": "Host"
                 },
-                "description": "Set up the Vilfo Router integration. You need your Vilfo Router hostname/IP and an API access token. For additional information on this integration and how to get those details, visit: https://www.openpeerpower.io/integrations/vilfo",
+                "description": "Set up the Vilfo Router integration. You need your Vilfo Router hostname/IP and an API access token. For additional information on this integration and how to get those details, visit: https://www.open-peer-power.io/integrations/vilfo",
                 "title": "Connect to the Vilfo Router"
             }
         }

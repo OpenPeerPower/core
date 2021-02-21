@@ -9,9 +9,9 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     UV_INDEX,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import callback
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from .const import (
     ATTRIBUTION,
@@ -81,7 +81,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigType, async_add_entities
 ) -> None:
     """Set up the Met Office weather sensor platform."""
-   .opp_data = opp.data[DOMAIN][entry.entry_id]
+   .opp_data =.opp.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
         [
@@ -97,8 +97,8 @@ class MetOfficeCurrentSensor(Entity):
 
     def __init__(self, entry_data,.opp_data, sensor_type):
         """Initialize the sensor."""
-        self._data = opp_data[METOFFICE_DATA]
-        self._coordinator = opp_data[METOFFICE_COORDINATOR]
+        self._data =.opp_data[METOFFICE_DATA]
+        self._coordinator =.opp_data[METOFFICE_COORDINATOR]
 
         self._type = sensor_type
         self._name = f".opp_data[METOFFICE_NAME]} {SENSOR_TYPES[self._type][0]}"
@@ -183,7 +183,7 @@ class MetOfficeCurrentSensor(Entity):
             else None,
         }
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Set up a listener and load data."""
         self.async_on_remove(
             self._coordinator.async_add_listener(self._update_callback)
@@ -200,7 +200,7 @@ class MetOfficeCurrentSensor(Entity):
         self.metoffice_site_id = self._data.site_id
         self.metoffice_site_name = self._data.site_name
         self.metoffice_now = self._data.now
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def should_poll(self) -> bool:

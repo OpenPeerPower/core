@@ -72,7 +72,7 @@ WEBHOOK_SCHEMA = vol.Schema(
 
 async def async_setup.opp,.opp_config):
     """Set up the Geofency component."""
-    config = opp_config.get(DOMAIN, {})
+    config =.opp_config.get(DOMAIN, {})
     mobile_beacons = config.get(CONF_MOBILE_BEACONS, [])
    .opp.data[DOMAIN] = {
         "beacons": [slugify(beacon) for beacon in mobile_beacons],
@@ -146,7 +146,7 @@ async def async_unload_entry.opp, entry):
     """Unload a config entry."""
    .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
    .opp.data[DOMAIN]["unsub_device_tracker"].pop(entry.entry_id)()
-    await opp..config_entries.async_forward_entry_unload(entry, DEVICE_TRACKER)
+    await.opp.config_entries.async_forward_entry_unload(entry, DEVICE_TRACKER)
     return True
 
 

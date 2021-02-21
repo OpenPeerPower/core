@@ -1,8 +1,8 @@
 {
   "domain": "knx",
   "name": "KNX",
-  "documentation": "https://www.openpeerpower.io/integrations/knx",
-  "requirements": ["xknx==0.16.3"],
+  "documentation": "https://www.open-peer-power.io/integrations/knx",
+  "requirements": ["xknx==0.17.0"],
   "codeowners": ["@Julius2342", "@farmio", "@marvin-w"],
   "quality_scale": "silver"
 }

@@ -21,7 +21,7 @@ HANDLERS = Registry()
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_op.dle_message.opp, config, user_id, message, source):
+async def async_handle_message.opp, config, user_id, message, source):
     """Handle incoming API messages."""
     data = RequestData(
         config, user_id, source, message["requestId"], message.get("devices")
@@ -119,7 +119,7 @@ async def async_devices_query.opp, data, payload):
     devices = {}
     for device in payload.get("devices", []):
         devid = device["id"]
-        state = opp.states.get(devid)
+        state =.opp.states.get(devid)
 
        .opp.bus.async_fire(
             EVENT_QUERY_RECEIVED,
@@ -197,7 +197,7 @@ async def handle_devices_execute.opp, data, payload):
                 executions[entity_id].append(execution)
                 continue
 
-            state = opp.states.get(entity_id)
+            state =.opp.states.get(entity_id)
 
             if state is None:
                 results[entity_id] = {
@@ -254,7 +254,7 @@ async def async_devices_disconnect.opp, data: RequestData, payload):
 async def async_devices_identify.opp, data: RequestData, payload):
     """Handle action.devices.IDENTIFY request.
 
-    https://developers.google.com/assistant/smarthome/develop/local#implement_the_identify_op.dler
+    https://developers.google.com/assistant/smarthome/develop/local#implement_the_identify_handler
     """
     return {
         "device": {

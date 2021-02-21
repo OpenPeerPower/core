@@ -35,14 +35,14 @@ def get_configured_platforms(controller_data: ControllerData) -> Set[str]:
 def get_controller_data(
    .opp: OpenPeerPower, config_entry: ConfigEntry
 ) -> ControllerData:
-    """Get controller data from opp data."""
+    """Get controller data from.opp data."""
     return.opp.data[DOMAIN][config_entry.entry_id]
 
 
 def set_controller_data(
    .opp: OpenPeerPower, config_entry: ConfigEntry, data: ControllerData
 ) -> None:
-    """Set controller data in opp data."""
+    """Set controller data in.opp data."""
    .opp.data[DOMAIN][config_entry.entry_id] = data
 
 
@@ -52,7 +52,7 @@ class SubscriptionRegistry(pv.AbstractSubscriptionRegistry):
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize the object."""
         super().__init__()
-        self._opp = opp
+        self..opp =.opp
         self._cancel_poll = None
 
     def start(self) -> None:
@@ -67,7 +67,7 @@ class SubscriptionRegistry(pv.AbstractSubscriptionRegistry):
             self._cancel_poll = None
 
     def _schedule_poll(self, delay: float) -> None:
-        self._cancel_poll = call_later(self._opp, delay, self._run_poll_server)
+        self._cancel_poll = call_later(self..opp, delay, self._run_poll_server)
 
     def _run_poll_server(self, now) -> None:
         delay = 1

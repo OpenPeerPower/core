@@ -3,8 +3,8 @@ from aiohttp import ClientSession
 from xbox.webapi.authentication.manager import AuthenticationManager
 from xbox.webapi.authentication.models import OAuth2TokenResponse
 
-from openpeerpowerr.helpers import config_entry_oauth2_flow
-from openpeerpowerr.util.dt import utc_from_timestamp
+from openpeerpower.helpers import config_entry_oauth2_flow
+from openpeerpower.util.dt import utc_from_timestamp
 
 
 class AsyncConfigEntryAuth(AuthenticationManager):

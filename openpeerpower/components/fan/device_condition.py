@@ -13,10 +13,10 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers import condition, config_validation as cv, entity_registry
-from openpeerpowerr.helpers.config_validation import DEVICE_CONDITION_BASE_SCHEMA
-from openpeerpowerr.helpers.typing import ConfigType, TemplateVarsType
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers import condition, config_validation as cv, entity_registry
+from openpeerpower.helpers.config_validation import DEVICE_CONDITION_BASE_SCHEMA
+from openpeerpower.helpers.typing import ConfigType, TemplateVarsType
 
 from . import DOMAIN
 

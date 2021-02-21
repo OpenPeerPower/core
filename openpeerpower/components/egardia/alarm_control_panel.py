@@ -67,7 +67,7 @@ class EgardiaAlarm(alarm.AlarmControlPanelEntity):
         self._rs_codes = rs_codes
         self._rs_port = rs_port
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Add Egardiaserver callback if enabled."""
         if self._rs_enabled:
             _LOGGER.debug("Registering callback to Egardiaserver")
@@ -101,7 +101,7 @@ class EgardiaAlarm(alarm.AlarmControlPanelEntity):
         if statuscode is not None:
             status = self.lookupstatusfromcode(statuscode)
             self.parsestatus(status)
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def lookupstatusfromcode(self, statuscode):
         """Look at the rs_codes and returns the status from the code."""

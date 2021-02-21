@@ -5,7 +5,7 @@ from aioesphomeapi import SwitchInfo, SwitchState
 
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import EsphomeEntity, esphome_state_property, platform_async_setup_entry
 

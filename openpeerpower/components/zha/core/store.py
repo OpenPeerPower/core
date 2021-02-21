@@ -9,7 +9,7 @@ import attr
 
 from openpeerpower.core import callback
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 from .typing import ZhaDeviceType
 
@@ -35,9 +35,9 @@ class ZhaStorage:
 
     def __init__(self,.opp: OpenPeerPowerType) -> None:
         """Initialize the zha device storage."""
-        self.opp: OpenPeerPowerType = opp
+        self.opp: OpenPeerPowerType =.opp
         self.devices: MutableMapping[str, ZhaDeviceEntry] = {}
-        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
 
     @callback
     def async_create_device(self, device: ZhaDeviceType) -> ZhaDeviceEntry:
@@ -127,10 +127,10 @@ class ZhaStorage:
         return data
 
 
-@bind_opp
+@bind.opp
 async def async_get_registry.opp: OpenPeerPowerType) -> ZhaStorage:
     """Return zha device storage instance."""
-    task = opp.data.get(DATA_REGISTRY)
+    task =.opp.data.get(DATA_REGISTRY)
 
     if task is None:
 
@@ -139,6 +139,6 @@ async def async_get_registry.opp: OpenPeerPowerType) -> ZhaStorage:
             await registry.async_load()
             return registry
 
-        task = opp.data[DATA_REGISTRY] = opp.async_create_task(_load_reg())
+        task =.opp.data[DATA_REGISTRY] =.opp.async_create_task(_load_reg())
 
     return cast(ZhaStorage, await task)

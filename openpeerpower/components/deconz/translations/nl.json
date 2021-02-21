@@ -4,7 +4,7 @@
             "already_configured": "Bridge is al geconfigureerd",
             "already_in_progress": "Configuratiestroom voor bridge wordt al ingesteld.",
             "no_bridges": "Geen deCONZ apparaten ontdekt",
-            "no_op.dware_available": "Geen radiohardware aangesloten op deCONZ",
+            "no_hardware_available": "Geen radiohardware aangesloten op deCONZ",
             "not_deconz_bridge": "Dit is geen deCONZ bridge",
             "updated_instance": "DeCONZ-instantie bijgewerkt met nieuw host-adres"
         },
@@ -13,9 +13,9 @@
         },
         "flow_title": "deCONZ Zigbee gateway ( {host} )",
         "step": {
-            "oppio_confirm": {
+            .oppio_confirm": {
                 "description": "Wilt u de Open Peer Power configureren om verbinding te maken met de deCONZ gateway van de.opp.io add-on {addon}?",
-                "title": "deCONZ Zigbee Gateway via Opp.io add-on"
+                "title": "deCONZ Zigbee Gateway via Hass.io add-on"
             },
             "link": {
                 "description": "Ontgrendel je deCONZ gateway om te registreren met Open Peer Power.\n\n1. Ga naar deCONZ systeeminstellingen (Instellingen -> Gateway -> Geavanceerd)\n2. Druk op de knop \"Gateway ontgrendelen\"",

@@ -117,7 +117,7 @@ def get_mysensors_gateway(
     """Return the Gateway for a given GatewayId."""
     if MYSENSORS_GATEWAYS not in.opp.data[DOMAIN]:
        .opp.data[DOMAIN][MYSENSORS_GATEWAYS] = {}
-    gateways = opp.data[DOMAIN].get(MYSENSORS_GATEWAYS)
+    gateways =.opp.data[DOMAIN].get(MYSENSORS_GATEWAYS)
     return gateways.get(gateway_id)
 
 
@@ -159,14 +159,14 @@ async def _get_gateway(
     """Return gateway after setup of the gateway."""
 
     if persistence_file is not None:
-        # interpret relative paths to be in opp config folder. absolute paths will be left as they are
-        persistence_file = opp.config.path(persistence_file)
+        # interpret relative paths to be in.opp config folder. absolute paths will be left as they are
+        persistence_file =.opp.config.path(persistence_file)
 
     if device == MQTT_COMPONENT:
         # what is the purpose of this?
         # if not await async_setup_component.opp, MQTT_COMPONENT, entry):
         #    return None
-        mqtt = opp.components.mqtt
+        mqtt =.opp.components.mqtt
 
         def pub_callback(topic, payload, qos, retain):
             """Call MQTT publish function."""
@@ -196,7 +196,7 @@ async def _get_gateway(
         )
     else:
         try:
-            await opp..async_add_executor_job(is_serial_port, device)
+            await.opp.async_add_executor_job(is_serial_port, device)
             gateway = mysensors.AsyncSerialGateway(
                 device,
                 baud=baud_rate,
@@ -208,7 +208,7 @@ async def _get_gateway(
             )
         except vol.Invalid:
             try:
-                await opp..async_add_executor_job(is_socket_address, device)
+                await.opp.async_add_executor_job(is_socket_address, device)
                 # valid ip address
                 gateway = mysensors.AsyncTCPGateway(
                     device,
@@ -268,7 +268,7 @@ async def _discover_persistent_devices(
 
 async def gw_stop.opp, entry: ConfigEntry, gateway: BaseAsyncGateway):
     """Stop the gateway."""
-    connect_task = opp.data[DOMAIN].get(
+    connect_task =.opp.data[DOMAIN].get(
         MYSENSORS_GATEWAY_START_TASK.format(entry.entry_id)
     )
     if connect_task is not None and not connect_task.done():
@@ -326,13 +326,13 @@ def _gw_callback_factory(
         _LOGGER.debug("Node update: node %s child %s", msg.node_id, msg.child_id)
 
         msg_type = msg.gateway.const.MessageType(msg.type)
-        msg_op.dler: Callable[
+        msg_handler: Callable[
             [Any, GatewayId, Message], Coroutine[None]
         ] = HANDLERS.get(msg_type.name)
 
-        if msg_op.dler is None:
+        if msg_handler is None:
             return
 
-       .opp.async_create_task(msg_op.dler.opp, gateway_id, msg))
+       .opp.async_create_task(msg_handler.opp, gateway_id, msg))
 
     return mysensors_callback

@@ -23,7 +23,7 @@ from .weather_update_coordinator import WeatherUpdateCoordinator
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up AEMET OpenData weather entity based on a config entry."""
-    domain_data = opp.data[DOMAIN][config_entry.entry_id]
+    domain_data =.opp.data[DOMAIN][config_entry.entry_id]
     weather_coordinator = domain_data[ENTRY_WEATHER_COORDINATOR]
 
     entities = []

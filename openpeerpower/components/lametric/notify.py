@@ -13,7 +13,7 @@ from openpeerpower.components.notify import (
     BaseNotificationService,
 )
 from openpeerpower.const import CONF_ICON
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import DOMAIN as LAMETRIC_DOMAIN
 
@@ -40,7 +40,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def get_service.opp, config, discovery_info=None):
     """Get the LaMetric notification service."""
-    hlmn = opp.data.get(LAMETRIC_DOMAIN)
+    hlmn =.opp.data.get(LAMETRIC_DOMAIN)
     return LaMetricNotificationService(
         hlmn,
         config[CONF_ICON],
@@ -58,7 +58,7 @@ class LaMetricNotificationService(BaseNotificationService):
         self,.opplametricmanager, icon, lifetime, cycles, priority, icon_type
     ):
         """Initialize the service."""
-        self.opplametricmanager = opplametricmanager
+        self.opplametricmanager =.opplametricmanager
         self._icon = icon
         self._lifetime = lifetime
         self._cycles = cycles

@@ -36,8 +36,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up a Logi Circle Camera based on a config entry."""
-    devices = await opp..data[LOGI_CIRCLE_DOMAIN].cameras
-    ffmpeg = opp.data[DATA_FFMPEG]
+    devices = await.opp.data[LOGI_CIRCLE_DOMAIN].cameras
+    ffmpeg =.opp.data[DATA_FFMPEG]
 
     cameras = [LogiCam(device, entry, ffmpeg) for device in devices]
 
@@ -53,11 +53,11 @@ class LogiCam(Camera):
         self._camera = camera
         self._name = self._camera.name
         self._id = self._camera.mac_address
-        self._op._battery = self._camera.supports_feature("battery_level")
+        self._has_battery = self._camera.supports_feature("battery_level")
         self._ffmpeg = ffmpeg
         self._listeners = []
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Connect camera methods to signals."""
 
         def _dispatch_proxy(method):
@@ -93,7 +93,7 @@ class LogiCam(Camera):
             ]
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect dispatcher listeners when removed."""
         for detach in self._listeners:
             detach()
@@ -136,7 +136,7 @@ class LogiCam(Camera):
         }
 
         # Add battery attributes if camera is battery-powered
-        if self._op._battery:
+        if self._has_battery:
             state[ATTR_BATTERY_CHARGING] = self._camera.charging
             state[ATTR_BATTERY_LEVEL] = self._camera.battery_level
 

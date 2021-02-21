@@ -37,8 +37,8 @@ from .const import (
     DEFAULT_UNMUTE_VOLUME,
     DOMAIN,
     FD_NAME,
-    OPP_DATA_REMOVE_LISTENERS_KEY,
-    OPP_DATA_UPDATER_KEY,
+    HASS_DATA_REMOVE_LISTENERS_KEY,
+    HASS_DATA_UPDATER_KEY,
     KNOWN_PIPES,
     PIPE_FUNCTION_MAP,
     SIGNAL_ADD_ZONES,
@@ -94,7 +94,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     if not.opp.data.get(DOMAIN):
        .opp.data[DOMAIN] = {config_entry.entry_id: {}}
    .opp.data[DOMAIN][config_entry.entry_id] = {
-        OPP_DATA_REMOVE_LISTENERS_KEY: [
+        HASS_DATA_REMOVE_LISTENERS_KEY: [
             remove_add_zones_listener,
             remove_entry_listener,
         ]
@@ -105,7 +105,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     )
     await forked_daapd_updater.async_init()
    .opp.data[DOMAIN][config_entry.entry_id][
-        OPP_DATA_UPDATER_KEY
+        HASS_DATA_UPDATER_KEY
     ] = forked_daapd_updater
 
 
@@ -128,7 +128,7 @@ class ForkedDaapdZone(MediaPlayerEntity):
         self._available = True
         self._entry_id = entry_id
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Use lifecycle hooks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -146,7 +146,7 @@ class ForkedDaapdZone(MediaPlayerEntity):
         self._available = bool(new_output)
         if self._available:
             self._output = new_output
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def unique_id(self):
@@ -260,7 +260,7 @@ class ForkedDaapdMaster(MediaPlayerEntity):
         self._source = SOURCE_NAME_DEFAULT
         self._max_playlists = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Use lifecycle hooks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -309,7 +309,7 @@ class ForkedDaapdMaster(MediaPlayerEntity):
     def _update_callback(self, available):
         """Call update method."""
         self._available = available
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def update_options(self, options):
@@ -738,7 +738,7 @@ class ForkedDaapdMaster(MediaPlayerEntity):
             await self._api.add_to_queue(uris=self._sources_uris[source], clear=True)
         elif source == SOURCE_NAME_CLEAR:  # clear playlist
             await self._api.clear_queue()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _use_pipe_control(self):
         """Return which pipe control from KNOWN_PIPES to use."""
@@ -760,9 +760,9 @@ class ForkedDaapdUpdater:
 
     def __init__(self,.opp, api, entry_id):
         """Initialize."""
-        self.opp = opp
+        self.opp =.opp
         self._api = api
-        self.websocket_op.dler = None
+        self.websocket_handler = None
         self._all_output_ids = set()
         self._entry_id = entry_id
 
@@ -771,8 +771,8 @@ class ForkedDaapdUpdater:
         server_config = await self._api.get_request("config")
         websocket_port = server_config.get("websocket_port")
         if websocket_port:
-            self.websocket_op.dler = asyncio.create_task(
-                self._api.start_websocket_op.dler(
+            self.websocket_handler = asyncio.create_task(
+                self._api.start_websocket_handler(
                     server_config["websocket_port"],
                     WS_NOTIFY_EVENT_TYPES,
                     self._update,

@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Perform the setup for Xiaomi devices."""
     entities = []
-    gateway = opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
+    gateway =.opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
     for device in gateway.devices["light"]:
         model = device["model"]
         if model in ["gateway", "gateway.v3"]:
@@ -108,10 +108,10 @@ class XiaomiGatewayLight(XiaomiDevice, LightEntity):
 
         if self._write_to_hub(self._sid, **{self._data_key: rgbhex}):
             self._state = True
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the light off."""
         if self._write_to_hub(self._sid, **{self._data_key: 0}):
             self._state = False
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()

@@ -2,7 +2,7 @@
   "domain": "intent",
   "name": "Intent",
   "config_flow": false,
-  "documentation": "https://www.openpeerpower.io/integrations/intent",
+  "documentation": "https://www.open-peer-power.io/integrations/intent",
   "dependencies": ["http"],
-  "codeowners": ["@openpeerpower/core"]
+  "codeowners": ["@open-peer-power/core"]
 }

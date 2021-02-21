@@ -54,7 +54,7 @@ async def async_setup_entry.opp, config_entry):
 
     data_init_tasks = []
     for api_category in [CATEGORY_CDC_REPORT, CATEGORY_USER_REPORT]:
-        coordinator = opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id][
+        coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id][
             api_category
         ] = DataUpdateCoordinator(
            .opp,

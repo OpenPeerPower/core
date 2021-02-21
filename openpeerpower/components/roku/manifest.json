@@ -1,8 +1,8 @@
 {
   "domain": "roku",
   "name": "Roku",
-  "documentation": "https://www.openpeerpower.io/integrations/roku",
-  "requirements": ["rokuecp==0.6.0"],
+  "documentation": "https://www.open-peer-power.io/integrations/roku",
+  "requirements": ["rokuecp==0.8.0"],
   "homekit": {
     "models": [
       "3810X",

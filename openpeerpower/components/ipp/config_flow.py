@@ -161,7 +161,7 @@ class IPPFlowHandler(ConfigFlow, domain=DOMAIN):
                 },
             )
 
-        await self._async_op.dle_discovery_without_unique_id()
+        await self._async_handle_discovery_without_unique_id()
         return await self.async_step_zeroconf_confirm()
 
     async def async_step_zeroconf_confirm(

@@ -10,15 +10,15 @@ import async_timeout
 import voluptuous as vol
 
 from openpeerpower.const import CONF_DOMAIN, CONF_PASSWORD, CONF_TIMEOUT, CONF_USERNAME
-from openpeerpowerr.helpers.aiohttp_client import SERVER_SOFTWARE
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers.aiohttp_client import SERVER_SOFTWARE
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "no_ip"
 
 # We should set a dedicated address for the user agent.
-EMAIL = "hello@openpeerpower.io"
+EMAIL = "hello@open-peer-power.io"
 
 INTERVAL = timedelta(minutes=5)
 
@@ -60,7 +60,7 @@ async def async_setup.opp, config):
 
     auth_str = base64.b64encode(f"{user}:{password}".encode("utf-8"))
 
-    session = opp.helpers.aiohttp_client.async_get_clientsession()
+    session =.opp.helpers.aiohttp_client.async_get_clientsession()
 
     result = await _update_no_ip.opp, session, domain, auth_str, timeout)
 

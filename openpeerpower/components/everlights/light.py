@@ -17,10 +17,10 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.const import CONF_HOSTS
-from openpeerpowerr.exceptions import PlatformNotReady
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.util.color as color_util
+from openpeerpower.exceptions import PlatformNotReady
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.util.color as color_util
 
 _LOGGER = logging.getLogger(__name__)
 

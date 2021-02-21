@@ -14,7 +14,7 @@ from openpeerpower.const import (
     HTTP_BASIC_AUTHENTICATION,
     HTTP_DIGEST_AUTHENTICATION,
 )
-from openpeerpowerr.helpers import config_validation as cv
+from openpeerpower.helpers import config_validation as cv
 
 CONF_FRAMERATE = "framerate"
 CONF_SECURITY_LEVEL = "security_level"

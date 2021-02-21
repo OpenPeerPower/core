@@ -12,8 +12,8 @@ from openpeerpower.const import (
     PERCENTAGE,
     TEMP_CELSIUS,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 # Default values
 DEFAULT_NAME = "BeeWi SmartClim"

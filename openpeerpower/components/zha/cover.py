@@ -41,7 +41,7 @@ STRICT_MATCH = functools.partial(ZHA_ENTITIES.strict_match, DOMAIN)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation cover from config entry."""
-    entities_to_create = opp.data[DATA_ZHA][DOMAIN]
+    entities_to_create =.opp.data[DATA_ZHA][DOMAIN]
 
     unsub = async_dispatcher_connect(
        .opp,
@@ -63,9 +63,9 @@ class ZhaCover(ZhaEntity, CoverEntity):
         self._cover_channel = self.cluster_channels.get(CHANNEL_COVER)
         self._current_position = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_accept_signal(
             self._cover_channel, SIGNAL_ATTR_UPDATED, self.async_set_position
         )
@@ -111,14 +111,14 @@ class ZhaCover(ZhaEntity, CoverEntity):
             self._state = STATE_CLOSED
         elif self._current_position == 100:
             self._state = STATE_OPEN
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_update_state(self, state):
         """Handle state update from channel."""
         _LOGGER.debug("state=%s", state)
         self._state = state
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_open_cover(self, **kwargs):
         """Open the window cover."""
@@ -146,7 +146,7 @@ class ZhaCover(ZhaEntity, CoverEntity):
         res = await self._cover_channel.stop()
         if isinstance(res, list) and res[1] is Status.SUCCESS:
             self._state = STATE_OPEN if self._current_position > 0 else STATE_CLOSED
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_update(self):
         """Attempt to retrieve the open/close state of the cover."""
@@ -210,9 +210,9 @@ class Shade(ZhaEntity, CoverEntity):
             return None
         return not self._is_open
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_accept_signal(
             self._on_off_channel, SIGNAL_ATTR_UPDATED, self.async_set_open_closed
         )
@@ -231,14 +231,14 @@ class Shade(ZhaEntity, CoverEntity):
     def async_set_open_closed(self, attr_id: int, attr_name: str, value: bool) -> None:
         """Set open/closed state."""
         self._is_open = bool(value)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_set_level(self, value: int) -> None:
         """Set the reported position."""
         value = max(0, min(255, value))
         self._position = int(value * 100 / 255)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_open_cover(self, **kwargs):
         """Open the window cover."""
@@ -248,7 +248,7 @@ class Shade(ZhaEntity, CoverEntity):
             return
 
         self._is_open = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_close_cover(self, **kwargs):
         """Close the window cover."""
@@ -258,7 +258,7 @@ class Shade(ZhaEntity, CoverEntity):
             return
 
         self._is_open = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_cover_position(self, **kwargs):
         """Move the roller shutter to a specific position."""
@@ -272,7 +272,7 @@ class Shade(ZhaEntity, CoverEntity):
             return
 
         self._position = new_pos
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_stop_cover(self, **kwargs) -> None:
         """Stop the cover."""
@@ -307,4 +307,4 @@ class KeenVent(Shade):
 
         self._is_open = True
         self._position = position
-        self.async_write_op.state()
+        self.async_write_ha_state()

@@ -332,7 +332,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up from config entry."""
-    router = opp.data[DOMAIN].routers[config_entry.data[CONF_URL]]
+    router =.opp.data[DOMAIN].routers[config_entry.data[CONF_URL]]
     sensors: List[Entity] = []
     for key in SENSOR_KEYS:
         items = router.data.get(key)
@@ -382,14 +382,14 @@ class HuaweiLteSensor(HuaweiLteBaseEntity):
     _state: StateType = attr.ib(init=False, default=STATE_UNKNOWN)
     _unit: Optional[str] = attr.ib(init=False)
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe to needed data on add."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.router.subscriptions[self.key].add(f"{SENSOR_DOMAIN}/{self.item}")
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Unsubscribe from needed data on remove."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         self.router.subscriptions[self.key].remove(f"{SENSOR_DOMAIN}/{self.item}")
 
     @property

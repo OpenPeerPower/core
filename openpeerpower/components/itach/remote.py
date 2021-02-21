@@ -118,13 +118,13 @@ class ITachIP2IRRemote(remote.RemoteEntity):
         """Turn the device on."""
         self._power = True
         self.itachip2ir.send(self._name, "ON", self._ir_count)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
         self._power = False
         self.itachip2ir.send(self._name, "OFF", self._ir_count)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def send_command(self, command, **kwargs):
         """Send a command to one device."""

@@ -7,7 +7,7 @@ from openpeerpower.components.notify import (
     PLATFORM_SCHEMA,
     BaseNotificationService,
 )
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from .const import DOMAIN, SERVICE_SEND_MESSAGE
 

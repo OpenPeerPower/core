@@ -6,8 +6,8 @@ from pyownet import protocol
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST, CONF_PORT, CONF_TYPE
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import CONF_MOUNT_DIR, CONF_TYPE_OWSERVER, CONF_TYPE_SYSBUS
 
@@ -22,7 +22,7 @@ class OneWireHub:
 
     def __init__(self,.opp: OpenPeerPowerType):
         """Initialize."""
-        self.opp = opp
+        self.opp =.opp
         self.type: str = None
         self.pi1proxy: Pi1Wire = None
         self.owproxy: protocol._Proxy = None

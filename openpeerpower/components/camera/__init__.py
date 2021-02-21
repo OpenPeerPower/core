@@ -24,11 +24,7 @@ from openpeerpower.components.media_player.const import (
     SERVICE_PLAY_MEDIA,
 )
 from openpeerpower.components.stream import Stream, create_stream
-from openpeerpower.components.stream.const import (
-    FORMAT_CONTENT_TYPE,
-    HLS_OUTPUT,
-    OUTPUT_FORMATS,
-)
+from openpeerpower.components.stream.const import FORMAT_CONTENT_TYPE, OUTPUT_FORMATS
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
     CONF_FILENAME,
@@ -47,7 +43,7 @@ from openpeerpower.helpers.config_validation import (  # noqa: F401
 from openpeerpower.helpers.entity import Entity, entity_sources
 from openpeerpower.helpers.entity_component import EntityComponent
 from openpeerpower.helpers.network import get_url
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 from .const import (
     CAMERA_IMAGE_TIMEOUT,
@@ -130,14 +126,14 @@ class Image:
     content: bytes = attr.ib()
 
 
-@bind_opp
+@bind.opp
 async def async_request_stream.opp, entity_id, fmt):
     """Request a stream for a camera entity."""
     camera = _get_camera_from_entity_id.opp, entity_id)
     return await _async_stream_endpoint_url.opp, camera, fmt)
 
 
-@bind_opp
+@bind.opp
 async def async_get_image.opp, entity_id, timeout=10):
     """Fetch an image from a camera entity."""
     camera = _get_camera_from_entity_id.opp, entity_id)
@@ -152,7 +148,7 @@ async def async_get_image.opp, entity_id, timeout=10):
     raise OpenPeerPowerError("Unable to get image")
 
 
-@bind_opp
+@bind.opp
 async def async_get_stream_source.opp, entity_id):
     """Fetch the stream source for a camera entity."""
     camera = _get_camera_from_entity_id.opp, entity_id)
@@ -160,7 +156,7 @@ async def async_get_stream_source.opp, entity_id):
     return await camera.stream_source()
 
 
-@bind_opp
+@bind.opp
 async def async_get_mjpeg_stream.opp, request, entity_id):
     """Fetch an mjpeg stream from a camera entity."""
     camera = _get_camera_from_entity_id.opp, entity_id)
@@ -213,7 +209,7 @@ async def async_get_still_stream(request, image_cb, content_type, interval):
 
 def _get_camera_from_entity_id.opp, entity_id):
     """Get camera component from entity_id."""
-    component = opp.data.get(DOMAIN)
+    component =.opp.data.get(DOMAIN)
 
     if component is None:
         raise OpenPeerPowerError("Camera integration not set up")
@@ -231,7 +227,7 @@ def _get_camera_from_entity_id.opp, entity_id):
 
 async def async_setup.opp, config):
     """Set up the camera component."""
-    component = opp.data[DOMAIN] = EntityComponent(
+    component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
     )
 
@@ -259,7 +255,7 @@ async def async_setup.opp, config):
             if not stream:
                 continue
             stream.keepalive = True
-            stream.hls_output()
+            stream.add_provider("hls")
             stream.start()
 
    .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, preload_stream)
@@ -269,7 +265,7 @@ async def async_setup.opp, config):
         """Update tokens of the entities."""
         for entity in component.entities:
             entity.async_update_token()
-            entity.async_write_op.state()
+            entity.async_write_ha_state()
 
    .opp.helpers.event.async_track_time_interval(update_tokens, TOKEN_CHANGE_INTERVAL)
 
@@ -286,15 +282,15 @@ async def async_setup.opp, config):
         SERVICE_TURN_ON, CAMERA_SERVICE_SCHEMA, "async_turn_on"
     )
     component.async_register_entity_service(
-        SERVICE_SNAPSHOT, CAMERA_SERVICE_SNAPSHOT, async_op.dle_snapshot_service
+        SERVICE_SNAPSHOT, CAMERA_SERVICE_SNAPSHOT, async_handle_snapshot_service
     )
     component.async_register_entity_service(
         SERVICE_PLAY_STREAM,
         CAMERA_SERVICE_PLAY_STREAM,
-        async_op.dle_play_stream_service,
+        async_handle_play_stream_service,
     )
     component.async_register_entity_service(
-        SERVICE_RECORD, CAMERA_SERVICE_RECORD, async_op.dle_record_service
+        SERVICE_RECORD, CAMERA_SERVICE_RECORD, async_handle_record_service
     )
 
     return True
@@ -302,12 +298,12 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await opp..data[DOMAIN].async_setup_entry(entry)
+    return await.opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await opp..data[DOMAIN].async_unload_entry(entry)
+    return await.opp.data[DOMAIN].async_unload_entry(entry)
 
 
 class Camera(Entity):
@@ -602,7 +598,7 @@ async def ws_camera_stream.opp, connection, msg):
 )
 async def websocket_get_prefs.opp, connection, msg):
     """Handle request for account info."""
-    prefs = opp.data[DATA_CAMERA_PREFS].get(msg["entity_id"])
+    prefs =.opp.data[DATA_CAMERA_PREFS].get(msg["entity_id"])
     connection.send_result(msg["id"], prefs.as_dict())
 
 
@@ -616,7 +612,7 @@ async def websocket_get_prefs.opp, connection, msg):
 )
 async def websocket_update_prefs.opp, connection, msg):
     """Handle request for account info."""
-    prefs = opp.data[DATA_CAMERA_PREFS]
+    prefs =.opp.data[DATA_CAMERA_PREFS]
 
     changes = dict(msg)
     changes.pop("id")
@@ -627,11 +623,11 @@ async def websocket_update_prefs.opp, connection, msg):
     connection.send_result(msg["id"], prefs.get(entity_id).as_dict())
 
 
-async def async_op.dle_snapshot_service(camera, service):
+async def async_handle_snapshot_service(camera, service):
     """Handle snapshot services calls."""
-    opp = camera.opp
+   .opp = camera.opp
     filename = service.data[ATTR_FILENAME]
-    filename.opp = opp
+    filename.opp =.opp
 
     snapshot_file = filename.async_render(variables={ATTR_ENTITY_ID: camera})
 
@@ -650,17 +646,17 @@ async def async_op.dle_snapshot_service(camera, service):
             img_file.write(image_data)
 
     try:
-        await opp..async_add_executor_job(_write_image, snapshot_file, image)
+        await.opp.async_add_executor_job(_write_image, snapshot_file, image)
     except OSError as err:
         _LOGGER.error("Can't write image to file: %s", err)
 
 
-async def async_op.dle_play_stream_service(camera, service_call):
+async def async_handle_play_stream_service(camera, service_call):
     """Handle play stream services calls."""
     fmt = service_call.data[ATTR_FORMAT]
     url = await _async_stream_endpoint_url(camera.opp, camera, fmt)
 
-    opp = camera.opp
+   .opp = camera.opp
     data = {
         ATTR_MEDIA_CONTENT_ID: f"{get_url.opp)}{url}",
         ATTR_MEDIA_CONTENT_TYPE: FORMAT_CONTENT_TYPE[fmt],
@@ -676,7 +672,7 @@ async def async_op.dle_play_stream_service(camera, service_call):
     other_entity_ids = list(set(entity_ids) - set(cast_entity_ids))
 
     if cast_entity_ids:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN_MP,
             SERVICE_PLAY_MEDIA,
             {
@@ -694,7 +690,7 @@ async def async_op.dle_play_stream_service(camera, service_call):
         )
 
     if other_entity_ids:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN_MP,
             SERVICE_PLAY_MEDIA,
             {
@@ -707,8 +703,6 @@ async def async_op.dle_play_stream_service(camera, service_call):
 
 
 async def _async_stream_endpoint_url.opp, camera, fmt):
-    if fmt != HLS_OUTPUT:
-        raise ValueError("Only format {HLS_OUTPUT} is supported")
     stream = await camera.create_stream()
     if not stream:
         raise OpenPeerPowerError(
@@ -716,24 +710,24 @@ async def _async_stream_endpoint_url.opp, camera, fmt):
         )
 
     # Update keepalive setting which manages idle shutdown
-    camera_prefs = opp.data[DATA_CAMERA_PREFS].get(camera.entity_id)
+    camera_prefs =.opp.data[DATA_CAMERA_PREFS].get(camera.entity_id)
     stream.keepalive = camera_prefs.preload_stream
 
-    stream.hls_output()
+    stream.add_provider(fmt)
     stream.start()
-    return stream.endpoint_url()
+    return stream.endpoint_url(fmt)
 
 
-async def async_op.dle_record_service(camera, call):
+async def async_handle_record_service(camera, call):
     """Handle stream recording service calls."""
     stream = await camera.create_stream()
 
     if not stream:
         raise OpenPeerPowerError(f"{camera.entity_id} does not support record service")
 
-    opp = camera.opp
+   .opp = camera.opp
     filename = call.data[CONF_FILENAME]
-    filename.opp = opp
+    filename.opp =.opp
     video_path = filename.async_render(variables={ATTR_ENTITY_ID: camera})
 
     await stream.async_record(

@@ -1,7 +1,7 @@
 {
   "domain": "github",
   "name": "GitHub",
-  "documentation": "https://www.openpeerpower.io/integrations/github",
+  "documentation": "https://www.open-peer-power.io/integrations/github",
   "requirements": ["PyGithub==1.43.8"],
   "codeowners": []
 }

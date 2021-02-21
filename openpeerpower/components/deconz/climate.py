@@ -23,8 +23,8 @@ from openpeerpower.components.climate.const import (
     SUPPORT_TARGET_TEMPERATURE,
 )
 from openpeerpower.const import ATTR_TEMPERATURE, TEMP_CELSIUS
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import ATTR_OFFSET, ATTR_VALVE, NEW_SENSOR
 from .deconz_device import DeconzDevice

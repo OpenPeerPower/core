@@ -23,9 +23,9 @@ from .hangups_utils import (
 
 
 @callback
-def configured_op.gouts.opp):
+def configured_hangouts.opp):
     """Return the configures Google Hangouts Account."""
-    entries = opp.config_entries.async_entries(HANGOUTS_DOMAIN)
+    entries =.opp.config_entries.async_entries(HANGOUTS_DOMAIN)
     if entries:
         return entries[0]
     return None
@@ -47,7 +47,7 @@ class HangoutsFlowHandler(config_entries.ConfigFlow):
         """Handle a flow start."""
         errors = {}
 
-        if configured_op.gouts(self.opp) is not None:
+        if configured_hangouts(self.opp) is not None:
             return self.async_abort(reason="already_configured")
 
         if user_input is not None:

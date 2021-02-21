@@ -19,8 +19,8 @@ from openpeerpower.const import (
     CONF_USERNAME,
     EVENT_OPENPEERPOWER_STOP,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.util import slugify
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.util import slugify
 
 DOMAIN = "aprs"
 

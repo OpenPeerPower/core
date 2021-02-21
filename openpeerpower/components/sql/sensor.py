@@ -72,7 +72,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         column_name = query.get(CONF_COLUMN_NAME)
 
         if value_template is not None:
-            value_template.opp = opp
+            value_template.opp =.opp
 
         # MSSQL uses TOP and not LIMIT
         if not ("LIMIT" in query_str or "SELECT TOP" in query_str):

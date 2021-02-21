@@ -2,8 +2,8 @@
 
 
 from openpeerpower.components.group import GroupIntegrationRegistry
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import callback
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 
 @callback

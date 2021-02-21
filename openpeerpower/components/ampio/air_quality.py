@@ -7,9 +7,9 @@ import voluptuous as vol
 
 from openpeerpower.components.air_quality import PLATFORM_SCHEMA, AirQualityEntity
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.util import Throttle
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
 

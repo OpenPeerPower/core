@@ -10,7 +10,7 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import AqualinkEntity, refresh_system
 from .const import DOMAIN as AQUALINK_DOMAIN
@@ -24,11 +24,11 @@ async def async_setup_entry(
     """Set up discovered lights."""
     devs = []
     for dev in.opp.data[AQUALINK_DOMAIN][DOMAIN]:
-        devs.append(OppAqualinkLight(dev))
+        devs.append(HassAqualinkLight(dev))
     async_add_entities(devs, True)
 
 
-class OppAqualinkLight(AqualinkEntity, LightEntity):
+class HassAqualinkLight(AqualinkEntity, LightEntity):
     """Representation of a light."""
 
     @property

@@ -5,10 +5,10 @@ from aiohttp.client_exceptions import ClientConnectorError
 from async_timeout import timeout
 from gios import ApiError, Gios, InvalidSensorsData, NoStationError
 
-from openpeerpowerr.core import Config, OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from openpeerpower.core import Config, OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import CONF_STATION_ID, DOMAIN, SCAN_INTERVAL
 
@@ -45,7 +45,7 @@ async def async_setup_entry.opp, config_entry):
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
    .opp.data[DOMAIN].pop(config_entry.entry_id)
-    await opp..config_entries.async_forward_entry_unload(config_entry, "air_quality")
+    await.opp.config_entries.async_forward_entry_unload(config_entry, "air_quality")
     return True
 
 

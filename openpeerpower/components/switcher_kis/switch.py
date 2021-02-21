@@ -86,7 +86,7 @@ async def async_setup_platform(
                 COMMAND_ON, service_call.data[CONF_TIMER_MINUTES]
             )
 
-    device_data = opp.data[DOMAIN][DATA_DEVICE]
+    device_data =.opp.data[DOMAIN][DATA_DEVICE]
     async_add_entities([SwitcherControl.opp.data[DOMAIN][DATA_DEVICE])])
 
     platform = entity_platform.current_platform.get()
@@ -155,7 +155,7 @@ class SwitcherControl(SwitchEntity):
         """Return True if entity is available."""
         return self._state in [SWITCHER_STATE_ON, SWITCHER_STATE_OFF]
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Run when entity about to be added to.opp."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -171,7 +171,7 @@ class SwitcherControl(SwitchEntity):
             else:
                 self._device_data = device_data
                 self._state = self._device_data.state
-                self.async_write_op.state()
+                self.async_write_ha_state()
 
     async def async_turn_on(self, **kwargs: Dict) -> None:
         """Turn the entity on."""
@@ -198,4 +198,4 @@ class SwitcherControl(SwitchEntity):
         if response and response.successful:
             self._self_initiated = True
             self._state = SWITCHER_STATE_ON if send_on else SWITCHER_STATE_OFF
-            self.async_write_op.state()
+            self.async_write_ha_state()

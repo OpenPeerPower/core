@@ -3,7 +3,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from .const import CONF_LISTEN_PORT, DEFAULT_NAME, DEFAULT_PORT, DOMAIN
 

@@ -1,7 +1,7 @@
 {
   "domain": "ecovacs",
   "name": "Ecovacs",
-  "documentation": "https://www.openpeerpower.io/integrations/ecovacs",
+  "documentation": "https://www.open-peer-power.io/integrations/ecovacs",
   "requirements": ["sucks==0.9.4"],
   "codeowners": ["@OverloadUT"]
 }

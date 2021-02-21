@@ -4,8 +4,8 @@ from hatasmota import const as tasmota_const
 
 from openpeerpower.components import fan
 from openpeerpower.components.fan import FanEntity
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import DATA_REMOVE_DISCOVER_COMPONENT
 from .discovery import TASMOTA_DISCOVERY_ENTITY_NEW
@@ -25,10 +25,10 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Tasmota fan dynamically through discovery."""
 
     @callback
-    def async_discover(tasmota_entity, discovery_op.h):
+    def async_discover(tasmota_entity, discovery_hash):
         """Discover and add a Tasmota fan."""
         async_add_entities(
-            [TasmotaFan(tasmota_entity=tasmota_entity, discovery_op.h=discovery_op.h)]
+            [TasmotaFan(tasmota_entity=tasmota_entity, discovery_hash=discovery_hash)]
         )
 
    .opp.data[
@@ -84,7 +84,7 @@ class TasmotaFan(
     # instead of speeds.
     #
     # Please review
-    # https://developers.openpeerpower.io/docs/core/entity/fan/
+    # https://developers.open-peer-power.io/docs/core/entity/fan/
     #
     async def async_turn_on(
         self, speed=None, percentage=None, preset_mode=None, **kwargs

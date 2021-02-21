@@ -18,7 +18,7 @@ from openpeerpower.const import CONTENT_TYPE_JSON, HTTP_OK, HTTP_SERVICE_UNAVAIL
 from openpeerpower.core import Context, is_callback
 from openpeerpower.helpers.json import JSONEncoder
 
-from .const import KEY_AUTHENTICATED, KEY_OPP
+from .const import KEY_AUTHENTICATED, KEY_HASS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -35,7 +35,7 @@ class OpenPeerPowerView:
     @staticmethod
     def context(request: web.Request) -> Context:
         """Generate a context from a request."""
-        user = request.get("opp_user")
+        user = request.get(.opp_user")
         if user is None:
             return Context()
 
@@ -87,7 +87,7 @@ class OpenPeerPowerView:
             if not handler:
                 continue
 
-            handler = request_op.dler_factory(self, handler)
+            handler = request_handler_factory(self, handler)
 
             for url in urls:
                 routes.append(router.add_route(method, url, handler))
@@ -99,7 +99,7 @@ class OpenPeerPowerView:
             app["allow_cors"](route)
 
 
-def request_op.dler_factory(view: OpenPeerPowerView, handler: Callable) -> Callable:
+def request_handler_factory(view: OpenPeerPowerView, handler: Callable) -> Callable:
     """Wrap the handler classes."""
     assert asyncio.iscoroutinefunction(handler) or is_callback(
         handler
@@ -107,7 +107,7 @@ def request_op.dler_factory(view: OpenPeerPowerView, handler: Callable) -> Calla
 
     async def handle(request: web.Request) -> web.StreamResponse:
         """Handle incoming request."""
-        if request.app[KEY_OPP].is_stopping:
+        if request.app[KEY_HASS].is_stopping:
             return web.Response(status=HTTP_SERVICE_UNAVAILABLE)
 
         authenticated = request.get(KEY_AUTHENTICATED, False)
@@ -123,7 +123,7 @@ def request_op.dler_factory(view: OpenPeerPowerView, handler: Callable) -> Calla
         )
 
         try:
-            result = op.dler(request, **request.match_info)
+            result = handler(request, **request.match_info)
 
             if asyncio.iscoroutine(result):
                 result = await result

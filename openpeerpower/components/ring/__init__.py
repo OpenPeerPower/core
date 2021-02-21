@@ -11,9 +11,9 @@ import requests
 from ring_doorbell import Auth, Ring
 
 from openpeerpower.const import __version__
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers.event import async_track_time_interval
-from openpeerpowerr.util.async_ import run_callback_threadsafe
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.event import async_track_time_interval
+from openpeerpower.util.async_ import run_callback_threadsafe
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -39,7 +39,7 @@ async def async_setup.opp, config):
         if old_cache.is_file():
             old_cache.unlink()
 
-    await opp..async_add_executor_job(legacy_cleanup)
+    await.opp.async_add_executor_job(legacy_cleanup)
 
     return True
 
@@ -62,7 +62,7 @@ async def async_setup_entry.opp, entry):
     ring = Ring(auth)
 
     try:
-        await opp..async_add_executor_job(ring.update_data)
+        await.opp.async_add_executor_job(ring.update_data)
     except AccessDeniedError:
         _LOGGER.error("Access token is no longer valid. Please set up Ring again")
         return False
@@ -112,8 +112,8 @@ async def async_setup_entry.opp, entry):
         for info in.opp.data[DOMAIN].values():
             await info["device_data"].async_refresh_all()
             await info["dings_data"].async_refresh_all()
-            await opp..async_add_executor_job(info["history_data"].refresh_all)
-            await opp..async_add_executor_job(info["health_data"].refresh_all)
+            await.opp.async_add_executor_job(info["history_data"].refresh_all)
+            await.opp.async_add_executor_job(info["health_data"].refresh_all)
 
     # register service
    .opp.services.async_register(DOMAIN, "update", async_refresh_all)
@@ -158,7 +158,7 @@ class GlobalDataUpdater:
         update_interval: timedelta,
     ):
         """Initialize global data updater."""
-        self.opp = opp
+        self.opp =.opp
         self.data_type = data_type
         self.config_entry_id = config_entry_id
         self.ring = ring
@@ -232,7 +232,7 @@ class DeviceDataUpdater:
     ):
         """Initialize device data updater."""
         self.data_type = data_type
-        self.opp = opp
+        self.opp =.opp
         self.config_entry_id = config_entry_id
         self.ring = ring
         self.update_method = update_method

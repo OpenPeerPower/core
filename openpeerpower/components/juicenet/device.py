@@ -1,4 +1,4 @@
-"""Adapter to wrap the pyjuicenet api for Open Peer Power."""
+"""Adapter to wrap the pyjuicenet api for open peer power."""
 
 
 class JuiceNetApi:

@@ -23,7 +23,7 @@ SERVICE_RUN_HEALTH_TEST = "run_health_test"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Flo switches from config entry."""
-    devices: List[FloDeviceDataUpdateCoordinator] = opp.data[FLO_DOMAIN][
+    devices: List[FloDeviceDataUpdateCoordinator] =.opp.data[FLO_DOMAIN][
         config_entry.entry_id
     ]["devices"]
     async_add_entities([FloSwitch(device) for device in devices])
@@ -75,21 +75,21 @@ class FloSwitch(FloEntity, SwitchEntity):
         """Open the valve."""
         await self._device.api_client.device.open_valve(self._device.id)
         self._state = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         """Close the valve."""
         await self._device.api_client.device.close_valve(self._device.id)
         self._state = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_update_state(self) -> None:
         """Retrieve the latest valve state and update the state machine."""
         self._state = self._device.last_known_valve_state == "open"
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """When entity is added to.opp."""
         self.async_on_remove(self._device.async_add_listener(self.async_update_state))
 

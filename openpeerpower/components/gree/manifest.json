@@ -2,7 +2,7 @@
   "domain": "gree",
   "name": "Gree Climate",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/gree",
+  "documentation": "https://www.open-peer-power.io/integrations/gree",
   "requirements": ["greeclimate==0.10.3"],
   "codeowners": ["@cmroche"]
 }

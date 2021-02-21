@@ -15,7 +15,7 @@ OPERATION_LIST = [STATE_OFF, STATE_ECO, STATE_PERFORMANCE]
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Initialize DHW device from config entry."""
-    coordinator = opp.data[DOMAIN][config_entry.entry_id]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id]
     async_add_entities([AtagWaterHeater(coordinator, WATER_HEATER)])
 
 
@@ -51,7 +51,7 @@ class AtagWaterHeater(AtagEntity, WaterHeaterEntity):
     async def async_set_temperature(self, **kwargs):
         """Set new target temperature."""
         if await self.coordinator.atag.dhw.set_temp(kwargs.get(ATTR_TEMPERATURE)):
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def target_temperature(self):

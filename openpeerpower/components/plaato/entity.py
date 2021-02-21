@@ -90,17 +90,17 @@ class PlaatoEntity(entity.Entity):
         """Return the polling state."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """When entity is added to.opp."""
         if self._coordinator is not None:
             self.async_on_remove(
-                self._coordinator.async_add_listener(self.async_write_op.state)
+                self._coordinator.async_add_listener(self.async_write_ha_state)
             )
         else:
             self.async_on_remove(
                 self.opp.helpers.dispatcher.async_dispatcher_connect(
                     SENSOR_SIGNAL % (self._device_id, self._sensor_type),
-                    self.async_write_op.state,
+                    self.async_write_ha_state,
                 )
             )
 

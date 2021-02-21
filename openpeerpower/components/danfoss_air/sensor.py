@@ -19,7 +19,7 @@ _LOGGER = logging.getLogger(__name__)
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the available Danfoss Air sensors etc."""
-    data = opp.data[DANFOSS_AIR_DOMAIN]
+    data =.opp.data[DANFOSS_AIR_DOMAIN]
 
     sensors = [
         [

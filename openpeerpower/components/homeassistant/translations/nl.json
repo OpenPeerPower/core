@@ -4,7 +4,7 @@
             "dev": "Ontwikkeling",
             "docker": "Docker",
             "docker_version": "Docker",
-            "oppio": "Supervisor",
+            .oppio": "Supervisor",
             "host_os": "Open Peer Power OS",
             "installation_type": "Type installatie",
             "os_version": "Versie van het besturingssysteem",

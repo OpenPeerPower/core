@@ -7,8 +7,8 @@ from schluter.authenticator import AuthenticationState, Authenticator
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.helpers import discovery
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers import discovery
+import openpeerpower.helpers.config_validation as cv
 
 from .const import DOMAIN
 

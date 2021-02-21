@@ -16,7 +16,7 @@ from .const import DOMAIN as KONNECTED_DOMAIN
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up binary sensors attached to a Konnected device from a config entry."""
-    data = opp.data[KONNECTED_DOMAIN]
+    data =.opp.data[KONNECTED_DOMAIN]
     device_id = config_entry.data["id"]
     sensors = [
         KonnectedBinarySensor(device_id, pin_num, pin_data)
@@ -72,7 +72,7 @@ class KonnectedBinarySensor(BinarySensorEntity):
             "identifiers": {(KONNECTED_DOMAIN, self._device_id)},
         }
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Store entity_id and register state change callback."""
         self._data[ATTR_ENTITY_ID] = self.entity_id
         self.async_on_remove(
@@ -85,4 +85,4 @@ class KonnectedBinarySensor(BinarySensorEntity):
     def async_set_state(self, state):
         """Update the sensor's state."""
         self._state = state
-        self.async_write_op.state()
+        self.async_write_ha_state()

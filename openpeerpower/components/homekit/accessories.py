@@ -238,7 +238,7 @@ class HomeAccessory(Accessory):
 
         self.category = category
         self.entity_id = entity_id
-        self.opp = opp
+        self.opp =.opp
         self._subscriptions = []
         self._char_battery = None
         self._char_charging = None
@@ -300,17 +300,7 @@ class HomeAccessory(Accessory):
         return state is not None and state.state != STATE_UNAVAILABLE
 
     async def run(self):
-        """Handle accessory driver started event.
-
-        Run inside the HAP-python event loop.
-        """
-        self.opp.add_job(self.run_op.dler)
-
-    async def run_op.dler(self):
-        """Handle accessory driver started event.
-
-        Run inside the Open Peer Power event loop.
-        """
+        """Handle accessory driver started event."""
         state = self.opp.states.get(self.entity_id)
         self.async_update_state_callback(state)
         self._subscriptions.append(
@@ -354,12 +344,12 @@ class HomeAccessory(Accessory):
         if battery_state is not None or battery_charging_state is not None:
             self.async_update_battery(battery_state, battery_charging_state)
 
-    @op.callback
+    @ha_callback
     def async_update_event_state_callback(self, event):
         """Handle state change event listener callback."""
         self.async_update_state_callback(event.data.get("new_state"))
 
-    @op.callback
+    @ha_callback
     def async_update_state_callback(self, new_state):
         """Handle state change listener callback."""
         _LOGGER.debug("New_state: %s", new_state)
@@ -381,7 +371,7 @@ class HomeAccessory(Accessory):
             self.async_update_battery(battery_state, battery_charging_state)
         self.async_update_state(new_state)
 
-    @op.callback
+    @ha_callback
     def async_update_linked_battery_callback(self, event):
         """Handle linked battery sensor state change listener callback."""
         new_state = event.data.get("new_state")
@@ -393,7 +383,7 @@ class HomeAccessory(Accessory):
             battery_charging_state = new_state.attributes.get(ATTR_BATTERY_CHARGING)
         self.async_update_battery(new_state.state, battery_charging_state)
 
-    @op.callback
+    @ha_callback
     def async_update_linked_battery_charging_callback(self, event):
         """Handle linked battery charging sensor state change listener callback."""
         new_state = event.data.get("new_state")
@@ -401,7 +391,7 @@ class HomeAccessory(Accessory):
             return
         self.async_update_battery(None, new_state.state == STATE_ON)
 
-    @op.callback
+    @ha_callback
     def async_update_battery(self, battery_level, battery_charging):
         """Update battery service if available.
 
@@ -433,7 +423,7 @@ class HomeAccessory(Accessory):
                 "%s: Updated battery charging to %d", self.entity_id, hk_charging
             )
 
-    @op.callback
+    @ha_callback
     def async_update_state(self, new_state):
         """Handle state change to update HomeKit value.
 
@@ -441,15 +431,9 @@ class HomeAccessory(Accessory):
         """
         raise NotImplementedError()
 
-    def call_service(self, domain, service, service_data, value=None):
+    @ha_callback
+    def async_call_service(self, domain, service, service_data, value=None):
         """Fire event and call service for changes from HomeKit."""
-        self.opp.add_job(self.async_call_service, domain, service, service_data, value)
-
-    async def async_call_service(self, domain, service, service_data, value=None):
-        """Fire event and call service for changes from HomeKit.
-
-        This method must be run in the event loop.
-        """
         event_data = {
             ATTR_ENTITY_ID: self.entity_id,
             ATTR_DISPLAY_NAME: self.display_name,
@@ -459,11 +443,13 @@ class HomeAccessory(Accessory):
         context = Context()
 
         self.opp.bus.async_fire(EVENT_HOMEKIT_CHANGED, event_data, context=context)
-        await self.opp.services.async_call(
-            domain, service, service_data, context=context
+        self.opp.async_create_task(
+            self.opp.services.async_call(
+                domain, service, service_data, context=context
+            )
         )
 
-    @op.callback
+    @ha_callback
     def async_stop(self):
         """Cancel any subscriptions when the bridge is stopped."""
         while self._subscriptions:
@@ -482,7 +468,7 @@ class HomeBridge(Bridge):
             model=BRIDGE_MODEL,
             serial_number=BRIDGE_SERIAL_NUMBER,
         )
-        self.opp = opp
+        self.opp =.opp
 
     def setup_message(self):
         """Prevent print of pyhap setup message to terminal."""
@@ -506,7 +492,7 @@ class HomeDriver(AccessoryDriver):
     def __init__(self,.opp, entry_id, bridge_name, **kwargs):
         """Initialize a AccessoryDriver object."""
         super().__init__(**kwargs)
-        self.opp = opp
+        self.opp =.opp
         self._entry_id = entry_id
         self._bridge_name = bridge_name
 

@@ -1,6 +1,6 @@
 {
   "domain": "imap_email_content",
   "name": "IMAP Email Content",
-  "documentation": "https://www.openpeerpower.io/integrations/imap_email_content",
+  "documentation": "https://www.open-peer-power.io/integrations/imap_email_content",
   "codeowners": []
 }

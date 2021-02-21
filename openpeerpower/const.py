@@ -202,6 +202,7 @@ CONF_ZONE = "zone"
 # #### EVENTS ####
 EVENT_CALL_SERVICE = "call_service"
 EVENT_COMPONENT_LOADED = "component_loaded"
+EVENT_CONFIG_ENTRY_DISABLED_BY_UPDATED = "config_entry_disabled_by_updated"
 EVENT_CORE_CONFIG_UPDATE = "core_config_updated"
 EVENT_OPENPEERPOWER_CLOSE = "openpeerpower_close"
 EVENT_OPENPEERPOWER_START = "openpeerpower_start"

@@ -2,7 +2,7 @@
   "domain": "griddy",
   "name": "Griddy Power",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/griddy",
+  "documentation": "https://www.open-peer-power.io/integrations/griddy",
   "requirements": ["griddypower==0.1.0"],
   "codeowners": ["@bdraco"]
 }

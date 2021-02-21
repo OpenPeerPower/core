@@ -15,8 +15,8 @@ from openpeerpower.components.light import (
     SUPPORT_TRANSITION,
     LightEntity,
 )
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-import openpeerpowerr.util.color as color_util
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+import openpeerpower.util.color as color_util
 
 from .const import DOMAIN as WEMO_DOMAIN
 from .entity import WemoEntity, WemoSubscriptionEntity
@@ -43,7 +43,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         if device.model_name == "Dimmer":
             async_add_entities([WemoDimmer(device)])
         else:
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                 setup_bridge,.opp, device, async_add_entities
             )
 
@@ -93,7 +93,7 @@ class WemoLight(WemoEntity, LightEntity):
         self._unique_id = self.wemo.uniqueID
         self._model_name = type(self.wemo).__name__
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Wemo light added to Open Peer Power."""
         # Define inside async context so we know our event loop
         self._update_lock = asyncio.Lock()
@@ -156,7 +156,7 @@ class WemoLight(WemoEntity, LightEntity):
             "force_update": False,
         }
 
-        with self._wemo_exception_op.dler("turn on"):
+        with self._wemo_exception_handler("turn on"):
             if xy_color is not None:
                 self.wemo.set_color(xy_color, transition=transition_time)
 
@@ -166,21 +166,21 @@ class WemoLight(WemoEntity, LightEntity):
             if self.wemo.turn_on(**turn_on_kwargs):
                 self._state["onoff"] = WEMO_ON
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the light off."""
         transition_time = int(kwargs.get(ATTR_TRANSITION, 0))
 
-        with self._wemo_exception_op.dler("turn off"):
+        with self._wemo_exception_handler("turn off"):
             if self.wemo.turn_off(transition=transition_time):
                 self._state["onoff"] = WEMO_OFF
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def _update(self, force_update=True):
         """Synchronize state with bridge."""
-        with self._wemo_exception_op.dler("update status") as handler:
+        with self._wemo_exception_handler("update status") as handler:
             self._update_lights(no_throttle=force_update)
             self._state = self.wemo.state
         if handler.success:
@@ -216,7 +216,7 @@ class WemoDimmer(WemoSubscriptionEntity, LightEntity):
 
     def _update(self, force_update=True):
         """Update the device state."""
-        with self._wemo_exception_op.dler("update status"):
+        with self._wemo_exception_handler("update status"):
             self._state = self.wemo.get_state(force_update)
 
             wemobrightness = int(self.wemo.get_brightness(force_update))
@@ -232,18 +232,18 @@ class WemoDimmer(WemoSubscriptionEntity, LightEntity):
         else:
             brightness = 255
 
-        with self._wemo_exception_op.dler("turn on"):
+        with self._wemo_exception_handler("turn on"):
             if self.wemo.on():
                 self._state = WEMO_ON
 
             self.wemo.set_brightness(brightness)
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the dimmer off."""
-        with self._wemo_exception_op.dler("turn off"):
+        with self._wemo_exception_handler("turn off"):
             if self.wemo.off():
                 self._state = WEMO_OFF
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

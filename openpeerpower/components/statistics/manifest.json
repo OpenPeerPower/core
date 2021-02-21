@@ -1,7 +1,7 @@
 {
   "domain": "statistics",
   "name": "Statistics",
-  "documentation": "https://www.openpeerpower.io/integrations/statistics",
+  "documentation": "https://www.open-peer-power.io/integrations/statistics",
   "after_dependencies": ["recorder"],
   "codeowners": ["@fabaff"],
   "quality_scale": "internal"

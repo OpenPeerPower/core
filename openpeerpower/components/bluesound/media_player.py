@@ -171,7 +171,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 host.get(CONF_NAME),
             )
 
-    async def async_service_op.dler(service):
+    async def async_service_handler(service):
         """Map services to method of Bluesound devices."""
         method = SERVICE_TO_METHOD.get(service.service)
         if not method:
@@ -188,7 +188,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 if player.entity_id in entity_ids
             ]
         else:
-            target_players = opp.data[DATA_BLUESOUND]
+            target_players =.opp.data[DATA_BLUESOUND]
 
         for player in target_players:
             await getattr(player, method["method"])(**params)
@@ -196,7 +196,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     for service in SERVICE_TO_METHOD:
         schema = SERVICE_TO_METHOD[service]["schema"]
        .opp.services.async_register(
-            DOMAIN, service, async_service_op.dler, schema=schema
+            DOMAIN, service, async_service_handler, schema=schema
         )
 
 
@@ -206,7 +206,7 @@ class BluesoundPlayer(MediaPlayerEntity):
     def __init__(self,.opp, host, port=None, name=None, init_callback=None):
         """Initialize the media player."""
         self.host = host
-        self._opp = opp
+        self..opp =.opp
         self.port = port
         self._polling_session = async_get_clientsession.opp)
         self._polling_task = None  # The actual polling task.
@@ -265,7 +265,7 @@ class BluesoundPlayer(MediaPlayerEntity):
             master_host = master.get("#text")
             master_device = [
                 device
-                for device in self._opp.data[DATA_BLUESOUND]
+                for device in self..opp.data[DATA_BLUESOUND]
                 if device.host == master_host
             ]
 
@@ -303,7 +303,7 @@ class BluesoundPlayer(MediaPlayerEntity):
 
     def start_polling(self):
         """Start the polling task."""
-        self._polling_task = self._opp.async_create_task(self._start_poll_command())
+        self._polling_task = self..opp.async_create_task(self._start_poll_command())
 
     def stop_polling(self):
         """Stop the polling task."""
@@ -320,7 +320,7 @@ class BluesoundPlayer(MediaPlayerEntity):
         except (asyncio.TimeoutError, ClientError):
             _LOGGER.info("Node %s is offline, retrying later", self.host)
             self._retry_remove = async_track_time_interval(
-                self._opp, self.async_init, NODE_RETRY_INITIATION
+                self..opp, self.async_init, NODE_RETRY_INITIATION
             )
         except Exception:
             _LOGGER.exception("Unexpected when initiating error in %s", self.host)
@@ -351,7 +351,7 @@ class BluesoundPlayer(MediaPlayerEntity):
         response = None
 
         try:
-            websession = async_get_clientsession(self._opp)
+            websession = async_get_clientsession(self..opp)
             with async_timeout.timeout(10):
                 response = await websession.get(url)
 
@@ -427,7 +427,7 @@ class BluesoundPlayer(MediaPlayerEntity):
                     # communication is moved to a separate library
                     await self.force_update_sync_status()
 
-                self.async_write_op.state()
+                self.async_write_ha_state()
             elif response.status == 595:
                 _LOGGER.info("Status 595 returned, treating as timeout")
                 raise BluesoundPlayer._TimeoutException()
@@ -440,7 +440,7 @@ class BluesoundPlayer(MediaPlayerEntity):
             self._is_online = False
             self._last_status_update = None
             self._status = None
-            self.async_write_op.state()
+            self.async_write_ha_state()
             _LOGGER.info("Client connection error, marking %s as offline", self._name)
             raise
 
@@ -448,7 +448,7 @@ class BluesoundPlayer(MediaPlayerEntity):
         """Trigger sync status update on all devices."""
         _LOGGER.debug("Trigger sync status on all devices")
 
-        for player in self._opp.data[DATA_BLUESOUND]:
+        for player in self..opp.data[DATA_BLUESOUND]:
             await player.force_update_sync_status()
 
     @Throttle(SYNC_STATUS_INTERVAL)
@@ -870,7 +870,7 @@ class BluesoundPlayer(MediaPlayerEntity):
         device_group = self._group_name.split("+")
 
         sorted_entities = sorted(
-            self._opp.data[DATA_BLUESOUND],
+            self..opp.data[DATA_BLUESOUND],
             key=lambda entity: entity.is_master,
             reverse=True,
         )

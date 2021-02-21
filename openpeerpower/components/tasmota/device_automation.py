@@ -2,8 +2,8 @@
 
 from hatasmota.const import AUTOMATION_TYPE_TRIGGER
 
-from openpeerpowerr.helpers.device_registry import EVENT_DEVICE_REGISTRY_UPDATED
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.device_registry import EVENT_DEVICE_REGISTRY_UPDATED
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import device_trigger
 from .const import DATA_REMOVE_DISCOVER_COMPONENT, DATA_UNSUB
@@ -24,11 +24,11 @@ async def async_setup_entry.opp, config_entry):
             return
         await async_remove_automations.opp, event.data["device_id"])
 
-    async def async_discover(tasmota_automation, discovery_op.h):
+    async def async_discover(tasmota_automation, discovery_hash):
         """Discover and add a Tasmota device automation."""
         if tasmota_automation.automation_type == AUTOMATION_TYPE_TRIGGER:
             await device_trigger.async_setup_trigger(
-               .opp, tasmota_automation, config_entry, discovery_op.h
+               .opp, tasmota_automation, config_entry, discovery_hash
             )
 
    .opp.data[

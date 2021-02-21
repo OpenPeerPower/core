@@ -11,7 +11,7 @@ from .const import DOMAIN
 from .helpers import ChromeCastZeroconf
 
 
-async def _async_op._devices.opp):
+async def _async_has_devices.opp):
     """
     Return if there are devices that can be discovered.
 
@@ -23,7 +23,7 @@ async def _async_op._devices.opp):
     if zeroconf_instance is None:
         zeroconf_instance = await zeroconf.async_get_instance.opp)
 
-    casts, browser = await opp..async_add_executor_job(
+    casts, browser = await.opp.async_add_executor_job(
         functools.partial(discover_chromecasts, zeroconf_instance=zeroconf_instance)
     )
     stop_discovery(browser)
@@ -31,5 +31,5 @@ async def _async_op._devices.opp):
 
 
 config_entry_flow.register_discovery_flow(
-    DOMAIN, "Google Cast", _async_op._devices, config_entries.CONN_CLASS_LOCAL_PUSH
+    DOMAIN, "Google Cast", _async_has_devices, config_entries.CONN_CLASS_LOCAL_PUSH
 )

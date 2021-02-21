@@ -22,7 +22,7 @@ SENSOR_TYPES = {
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the StarLine sensors."""
-    account: StarlineAccount = opp.data[DOMAIN][entry.entry_id]
+    account: StarlineAccount =.opp.data[DOMAIN][entry.entry_id]
     entities = []
     for device in account.api.devices.values():
         for key, value in SENSOR_TYPES.items():

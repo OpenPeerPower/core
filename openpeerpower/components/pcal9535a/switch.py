@@ -89,10 +89,10 @@ class PCAL9535ASwitch(SwitchEntity):
         """Turn the device on."""
         self._pin.level = True
         self._state = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
         self._pin.level = False
         self._state = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

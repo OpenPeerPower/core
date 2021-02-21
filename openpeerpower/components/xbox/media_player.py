@@ -28,7 +28,7 @@ from openpeerpower.components.media_player.const import (
     SUPPORT_VOLUME_STEP,
 )
 from openpeerpower.const import STATE_OFF, STATE_ON, STATE_PAUSED, STATE_PLAYING
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from . import ConsoleData, XboxUpdateCoordinator
 from .browse_media import build_item_response
@@ -60,9 +60,9 @@ XBOX_STATE_MAP = {
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Xbox media_player from a config entry."""
-    client: XboxLiveClient = opp.data[DOMAIN][entry.entry_id]["client"]
-    consoles: SmartglassConsoleList = opp.data[DOMAIN][entry.entry_id]["consoles"]
-    coordinator: XboxUpdateCoordinator = opp.data[DOMAIN][entry.entry_id][
+    client: XboxLiveClient =.opp.data[DOMAIN][entry.entry_id]["client"]
+    consoles: SmartglassConsoleList =.opp.data[DOMAIN][entry.entry_id]["consoles"]
+    coordinator: XboxUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id][
         "coordinator"
     ]
 

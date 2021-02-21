@@ -44,7 +44,7 @@ def websocket_network_status(
 ) -> None:
     """Get the status of the Z-Wave JS network."""
     entry_id = msg[ENTRY_ID]
-    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
     data = {
         "client": {
             "ws_server_url": client.ws_server_url,
@@ -76,7 +76,7 @@ def websocket_node_status(
 ) -> None:
     """Get the status of a Z-Wave JS node."""
     entry_id = msg[ENTRY_ID]
-    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
     node_id = msg[NODE_ID]
     node = client.driver.controller.nodes[node_id]
     data = {
@@ -106,7 +106,7 @@ async def websocket_add_node(
 ) -> None:
     """Add a node to the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
-    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
     controller = client.driver.controller
     include_non_secure = not msg["secure"]
 
@@ -176,7 +176,7 @@ async def websocket_stop_inclusion(
 ) -> None:
     """Cancel adding a node to the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
-    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
     controller = client.driver.controller
     result = await controller.async_stop_inclusion()
     connection.send_result(
@@ -198,7 +198,7 @@ async def websocket_stop_exclusion(
 ) -> None:
     """Cancel removing a node from the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
-    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
     controller = client.driver.controller
     result = await controller.async_stop_exclusion()
     connection.send_result(
@@ -220,7 +220,7 @@ async def websocket_remove_node(
 ) -> None:
     """Remove a node from the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
-    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
     controller = client.driver.controller
 
     @callback
@@ -271,19 +271,19 @@ class DumpView(OpenPeerPowerView):
 
     async def get(self, request: web.Request, config_entry_id: str) -> web.Response:
         """Dump the state of Z-Wave."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         if config_entry_id not in.opp.data[DOMAIN]:
             raise web_exceptions.HTTPBadRequest
 
-        entry = opp.config_entries.async_get_entry(config_entry_id)
+        entry =.opp.config_entries.async_get_entry(config_entry_id)
 
         msgs = await dump.dump_msgs(entry.data[CONF_URL], async_get_clientsession.opp))
 
         return web.Response(
-            body="\n".join(json.dumps(msg) for msg in msgs) + "\n",
+            body=json.dumps(msgs, indent=2) + "\n",
             headers={
-                hdrs.CONTENT_TYPE: "application/jsonl",
-                hdrs.CONTENT_DISPOSITION: 'attachment; filename="zwave_js_dump.jsonl"',
+                hdrs.CONTENT_TYPE: "application/json",
+                hdrs.CONTENT_DISPOSITION: 'attachment; filename="zwave_js_dump.json"',
             },
         )

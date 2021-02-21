@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.const import CONF_ICON, CONF_URL
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 DOMAIN = "panel_iframe"
 

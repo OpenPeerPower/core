@@ -33,7 +33,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_scanner(_opp, config):
+def get_scanner(.opp, config):
     """Validate the configuration and return a Hitron CODA-4582U scanner."""
     scanner = HitronCODADeviceScanner(config[DOMAIN])
 

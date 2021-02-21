@@ -1,7 +1,7 @@
 {
   "domain": "statsd",
   "name": "StatsD",
-  "documentation": "https://www.openpeerpower.io/integrations/statsd",
+  "documentation": "https://www.open-peer-power.io/integrations/statsd",
   "requirements": ["statsd==3.2.1"],
   "codeowners": []
 }

@@ -6,8 +6,8 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import CONF_SENSORS, DATA_GIGABYTES, PERCENTAGE
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 from . import DOMAIN as DOVADO_DOMAIN
 
@@ -44,7 +44,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Dovado sensor platform."""
-    dovado = opp.data[DOVADO_DOMAIN]
+    dovado =.opp.data[DOVADO_DOMAIN]
 
     entities = []
     for sensor in config[CONF_SENSORS]:

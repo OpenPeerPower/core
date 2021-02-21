@@ -30,7 +30,7 @@ from openpeerpower.helpers import (
     service,
     storage,
 )
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util.location import distance
 
 from .const import ATTR_PASSIVE, ATTR_RADIUS, CONF_PASSIVE, DOMAIN, HOME_ZONE
@@ -89,7 +89,7 @@ STORAGE_KEY = DOMAIN
 STORAGE_VERSION = 1
 
 
-@bind_opp
+@bind.opp
 def async_active_zone(
    .opp: OpenPeerPower, latitude: float, longitude: float, radius: int = 0
 ) -> Optional[State]:
@@ -206,7 +206,7 @@ async def async_setup.opp: OpenPeerPower, config: Dict) -> bool:
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
     ).async_setup.opp)
 
-    async def reload_service_op.dler(service_call: ServiceCall) -> None:
+    async def reload_service_handler(service_call: ServiceCall) -> None:
         """Remove all zones and load new ones from config."""
         conf = await component.async_prepare_reload(skip_reset=True)
         if conf is None:
@@ -217,7 +217,7 @@ async def async_setup.opp: OpenPeerPower, config: Dict) -> bool:
        .opp,
         DOMAIN,
         SERVICE_RELOAD,
-        reload_service_op.dler,
+        reload_service_handler,
         schema=RELOAD_SERVICE_SCHEMA,
     )
 
@@ -330,7 +330,7 @@ class Zone(entity.Entity):
             return
         self._config = config
         self._generate_attrs()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _generate_attrs(self) -> None:

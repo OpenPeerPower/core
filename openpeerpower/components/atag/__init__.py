@@ -9,10 +9,10 @@ from openpeerpower.components.climate import DOMAIN as CLIMATE
 from openpeerpower.components.sensor import DOMAIN as SENSOR
 from openpeerpower.components.water_heater import DOMAIN as WATER_HEATER
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.core import OpenPeerPower, asyncio
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.core import OpenPeerPower, asyncio
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
     UpdateFailed,

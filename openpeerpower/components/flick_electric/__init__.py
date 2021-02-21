@@ -30,7 +30,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Flick Electric from a config entry."""
-    auth = OppFlickAuth.opp, entry)
+    auth = HassFlickAuth.opp, entry)
 
    .opp.data[DOMAIN][entry.entry_id] = FlickAPI(auth)
 
@@ -43,21 +43,21 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    if await opp..config_entries.async_forward_entry_unload(entry, "sensor"):
+    if await.opp.config_entries.async_forward_entry_unload(entry, "sensor"):
        .opp.data[DOMAIN].pop(entry.entry_id)
         return True
 
     return False
 
 
-class OppFlickAuth(AbstractFlickAuth):
+class HassFlickAuth(AbstractFlickAuth):
     """Implementation of AbstractFlickAuth based on a Open Peer Power entity config."""
 
     def __init__(self,.opp: OpenPeerPower, entry: ConfigEntry):
         """Flick authention based on a Open Peer Power entity config."""
         super().__init__(aiohttp_client.async_get_clientsession.opp))
         self._entry = entry
-        self._opp = opp
+        self..opp =.opp
 
     async def _get_entry_token(self):
         # No token saved, generate one
@@ -86,7 +86,7 @@ class OppFlickAuth(AbstractFlickAuth):
         # Reduce expiry by an hour to avoid API being called after expiry
         expiry = dt.now().timestamp() + int(token[CONF_TOKEN_EXPIRES_IN] - 3600)
 
-        self._opp.config_entries.async_update_entry(
+        self..opp.config_entries.async_update_entry(
             self._entry,
             data={
                 **self._entry.data,
@@ -96,7 +96,7 @@ class OppFlickAuth(AbstractFlickAuth):
         )
 
     async def async_get_access_token(self):
-        """Get Access Token from OPP Storage."""
+        """Get Access Token from HASS Storage."""
         token = await self._get_entry_token()
 
         return token[CONF_ID_TOKEN]

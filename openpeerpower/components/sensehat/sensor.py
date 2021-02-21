@@ -3,7 +3,7 @@ from datetime import timedelta
 import logging
 from pathlib import Path
 
-from sense_op. import SenseHat
+from sense_hat import SenseHat
 import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
@@ -13,14 +13,14 @@ from openpeerpower.const import (
     PERCENTAGE,
     TEMP_CELSIUS,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
 
 DEFAULT_NAME = "sensehat"
-CONF_IS_HAT_ATTACHED = "is_op._attached"
+CONF_IS_HAT_ATTACHED = "is_hat_attached"
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=60)
 
@@ -112,12 +112,12 @@ class SenseHatSensor(Entity):
 class SenseHatData:
     """Get the latest data and update."""
 
-    def __init__(self, is_op._attached):
+    def __init__(self, is_hat_attached):
         """Initialize the data object."""
         self.temperature = None
         self.humidity = None
         self.pressure = None
-        self.is_op._attached = is_op._attached
+        self.is_hat_attached = is_hat_attached
 
     @Throttle(MIN_TIME_BETWEEN_UPDATES)
     def update(self):
@@ -128,7 +128,7 @@ class SenseHatData:
         temp_from_p = sense.get_temperature_from_pressure()
         t_total = (temp_from_h + temp_from_p) / 2
 
-        if self.is_op._attached:
+        if self.is_hat_attached:
             t_cpu = get_cpu_temp()
             t_correct = t_total - ((t_cpu - t_total) / 1.5)
             t_correct = get_average(t_correct)

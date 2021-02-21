@@ -40,7 +40,7 @@ async def async_setup.opp, config):
             return True
 
     logging.getLogger("socketIO-client").addFilter(SocketIONoiseFilter())
-    tables = opp.data.setdefault(DATA_SISYPHUS, {})
+    tables =.opp.data.setdefault(DATA_SISYPHUS, {})
     table_configs = config.get(DOMAIN)
     session = async_get_clientsession.opp)
 
@@ -78,7 +78,7 @@ class TableHolder:
 
     def __init__(self,.opp, session, host, name):
         """Initialize the table holder."""
-        self._opp = opp
+        self..opp =.opp
         self._session = session
         self._host = host
         self._name = name
@@ -103,7 +103,7 @@ class TableHolder:
             return self._table
 
         if not self._table_task:
-            self._table_task = self._opp.async_create_task(self._connect_table())
+            self._table_task = self..opp.async_create_task(self._connect_table())
 
         return await self._table_task
 

@@ -69,12 +69,19 @@ RE_ASCII = re.compile(r"\033\[[^m]*m")
 YAML_CONFIG_FILE = "configuration.yaml"
 VERSION_FILE = ".HA_VERSION"
 CONFIG_DIR_NAME = ".openpeerpower"
-DATA_CUSTOMIZE = "opp_customize"
+DATA_CUSTOMIZE = .opp_customize"
 
 GROUP_CONFIG_PATH = "groups.yaml"
 AUTOMATION_CONFIG_PATH = "automations.yaml"
 SCRIPT_CONFIG_PATH = "scripts.yaml"
 SCENE_CONFIG_PATH = "scenes.yaml"
+
+LOAD_EXCEPTIONS = (ImportError, FileNotFoundError)
+INTEGRATION_LOAD_EXCEPTIONS = (
+    IntegrationNotFound,
+    RequirementsNotFound,
+    *LOAD_EXCEPTIONS,
+)
 
 DEFAULT_CONFIG = f"""
 # Configure a default setup of Open Peer Power (frontend, api, etc)
@@ -91,7 +98,7 @@ scene: !include {SCENE_CONFIG_PATH}
 """
 DEFAULT_SECRETS = """
 # Use this file to store secrets like usernames and passwords.
-# Learn more at https://www.openpeerpower.io/docs/configuration/secrets/
+# Learn more at https://www.open-peer-power.io/docs/configuration/secrets/
 some_password: welcome
 """
 TTS_PRE_92 = """
@@ -243,7 +250,7 @@ async def async_ensure_config_exists.opp: OpenPeerPower) -> bool:
     Creating a default one if needed.
     Return boolean if configuration dir is ready to go.
     """
-    config_path = opp.config.path(YAML_CONFIG_FILE)
+    config_path =.opp.config.path(YAML_CONFIG_FILE)
 
     if os.path.isfile(config_path):
         return True
@@ -259,7 +266,7 @@ async def async_create_default_config.opp: OpenPeerPower) -> bool:
 
     Return if creation was successful.
     """
-    return await opp..async_add_executor_job(
+    return await.opp.async_add_executor_job(
         _write_default_config,.opp.config.config_dir
     )
 
@@ -305,14 +312,14 @@ def _write_default_config(config_dir: str) -> bool:
         return False
 
 
-async def async_opp_config_yaml.opp: OpenPeerPower) -> Dict:
+async def async.opp_config_yaml.opp: OpenPeerPower) -> Dict:
     """Load YAML from a Open Peer Power configuration file.
 
     This function allow a component inside the asyncio loop to reload its
     configuration by itself. Include package merge.
     """
     # Not using async_add_executor_job because this is an internal method.
-    config = await opp..loop.run_in_executor(
+    config = await.opp.loop.run_in_executor(
         None, load_yaml_config_file,.opp.config.path(YAML_CONFIG_FILE)
     )
     core_config = config.get(CONF_CORE, {})
@@ -343,12 +350,12 @@ def load_yaml_config_file(config_path: str) -> Dict[Any, Any]:
     return conf_dict
 
 
-def process_op.config_upgrade.opp: OpenPeerPower) -> None:
+def process_ha_config_upgrade.opp: OpenPeerPower) -> None:
     """Upgrade configuration if necessary.
 
     This method needs to run in an executor.
     """
-    version_path = opp.config.path(VERSION_FILE)
+    version_path =.opp.config.path(VERSION_FILE)
 
     try:
         with open(version_path) as inp:
@@ -368,13 +375,13 @@ def process_op.config_upgrade.opp: OpenPeerPower) -> None:
 
     if version_obj < AwesomeVersion("0.50"):
         # 0.50 introduced persistent deps dir.
-        lib_path = opp.config.path("deps")
+        lib_path =.opp.config.path("deps")
         if os.path.isdir(lib_path):
             shutil.rmtree(lib_path)
 
     if version_obj < AwesomeVersion("0.92"):
         # 0.92 moved google/tts.py to google_translate/tts.py
-        config_path = opp.config.path(YAML_CONFIG_FILE)
+        config_path =.opp.config.path(YAML_CONFIG_FILE)
 
         with open(config_path, encoding="utf-8") as config_file:
             config_raw = config_file.read()
@@ -391,7 +398,7 @@ def process_op.config_upgrade.opp: OpenPeerPower) -> None:
     if version_obj < AwesomeVersion("0.94") and is_docker_env():
         # In 0.94 we no longer install packages inside the deps folder when
         # running inside a Docker container.
-        lib_path = opp.config.path("deps")
+        lib_path =.opp.config.path("deps")
         if os.path.isdir(lib_path):
             shutil.rmtree(lib_path)
 
@@ -411,7 +418,7 @@ def async_log_exception(
 
     This method must be run in the event loop.
     """
-    if opp is not None:
+    if.opp is not None:
         async_notify_setup_error.opp, domain, link)
     message, is_friendly = _format_config_error(ex, domain, config, link)
     _LOGGER.error(message, exc_info=not is_friendly and ex)
@@ -456,7 +463,7 @@ def _format_config_error(
     return message, is_friendly
 
 
-async def async_process_op.core_config.opp: OpenPeerPower, config: Dict) -> None:
+async def async_process_ha_core_config.opp: OpenPeerPower, config: Dict) -> None:
     """Process the [openpeerpower] section from the configuration.
 
     This method is a coroutine.
@@ -479,9 +486,9 @@ async def async_process_op.core_config.opp: OpenPeerPower, config: Dict) -> None
            .opp, "auth", await auth.auth_manager_from_config.opp, auth_conf, mfa_conf)
         )
 
-    await opp..config.async_load()
+    await.opp.config.async_load()
 
-    hac = opp.config
+    hac =.opp.config
 
     if any(
         k in config
@@ -689,11 +696,11 @@ async def merge_packages_config(
                    .opp, domain
                 )
                 component = integration.get_component()
-            except (IntegrationNotFound, RequirementsNotFound, ImportError) as ex:
+            except INTEGRATION_LOAD_EXCEPTIONS as ex:
                 _log_pkg_error(pack_name, comp_name, config, str(ex))
                 continue
 
-            merge_list = op.attr(component, "PLATFORM_SCHEMA")
+            merge_list = hasattr(component, "PLATFORM_SCHEMA")
 
             if not merge_list and hasattr(component, "CONFIG_SCHEMA"):
                 merge_list = _identify_config_schema(component) == "list"
@@ -746,7 +753,7 @@ async def async_process_component_config(
     domain = integration.domain
     try:
         component = integration.get_component()
-    except ImportError as ex:
+    except LOAD_EXCEPTIONS as ex:
         _LOGGER.error("Unable to import %s: %s", domain, ex)
         return None
 
@@ -825,7 +832,7 @@ async def async_process_component_config(
 
         try:
             platform = p_integration.get_platform(domain)
-        except ImportError:
+        except LOAD_EXCEPTIONS:
             _LOGGER.exception("Platform error: %s", domain)
             continue
 
@@ -867,7 +874,7 @@ def config_without_domain(config: Dict, domain: str) -> Dict:
     return {key: value for key, value in config.items() if key not in filter_keys}
 
 
-async def async_check_op.config_file.opp: OpenPeerPower) -> Optional[str]:
+async def async_check_ha_config_file.opp: OpenPeerPower) -> Optional[str]:
     """Check if Open Peer Power configuration file is valid.
 
     This method is a coroutine.
@@ -875,7 +882,7 @@ async def async_check_op.config_file.opp: OpenPeerPower) -> Optional[str]:
     # pylint: disable=import-outside-toplevel
     import openpeerpower.helpers.check_config as check_config
 
-    res = await check_config.async_check_op.config_file.opp)
+    res = await check_config.async_check_ha_config_file.opp)
 
     if not res.errors:
         return None
@@ -893,10 +900,10 @@ def async_notify_setup_error(
     # pylint: disable=import-outside-toplevel
     from openpeerpower.components import persistent_notification
 
-    errors = opp.data.get(DATA_PERSISTENT_ERRORS)
+    errors =.opp.data.get(DATA_PERSISTENT_ERRORS)
 
     if errors is None:
-        errors = opp.data[DATA_PERSISTENT_ERRORS] = {}
+        errors =.opp.data[DATA_PERSISTENT_ERRORS] = {}
 
     errors[component] = errors.get(component) or display_link
 

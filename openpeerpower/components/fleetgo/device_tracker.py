@@ -13,8 +13,8 @@ from openpeerpower.const import (
     CONF_PASSWORD,
     CONF_USERNAME,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import track_utc_time_change
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import track_utc_time_change
 
 _LOGGER = logging.getLogger(__name__)
 

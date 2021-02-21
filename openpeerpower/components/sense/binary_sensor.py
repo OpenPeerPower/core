@@ -3,9 +3,9 @@ import logging
 
 from openpeerpower.components.binary_sensor import BinarySensorEntity
 from openpeerpower.const import ATTR_ATTRIBUTION, DEVICE_CLASS_POWER
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.entity_registry import async_get_registry
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity_registry import async_get_registry
 
 from .const import (
     ATTRIBUTION,
@@ -22,11 +22,11 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Sense binary sensor."""
-    data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DATA]
-    sense_devices_data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DEVICES_DATA]
+    data =.opp.data[DOMAIN][config_entry.entry_id][SENSE_DATA]
+    sense_devices_data =.opp.data[DOMAIN][config_entry.entry_id][SENSE_DEVICES_DATA]
     sense_monitor_id = data.sense_monitor_id
 
-    sense_devices = opp.data[DOMAIN][config_entry.entry_id][
+    sense_devices =.opp.data[DOMAIN][config_entry.entry_id][
         SENSE_DISCOVERED_DEVICES_DATA
     ]
     devices = [
@@ -120,7 +120,7 @@ class SenseDevice(BinarySensorEntity):
         """Return the deviceshould not poll for updates."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -138,4 +138,4 @@ class SenseDevice(BinarySensorEntity):
             return
         self._available = True
         self._state = new_state
-        self.async_write_op.state()
+        self.async_write_ha_state()

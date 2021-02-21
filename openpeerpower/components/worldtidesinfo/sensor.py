@@ -14,8 +14,8 @@ from openpeerpower.const import (
     CONF_LONGITUDE,
     CONF_NAME,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 

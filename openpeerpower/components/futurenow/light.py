@@ -54,7 +54,7 @@ def to_futurenow_level(level):
     return round((level * 100) / 255)
 
 
-def to_opp_level(level):
+def to.opp_level(level):
     """Convert the given FutureNow (0-100) light level to Open Peer Power (0-255)."""
     return int((level * 255) / 100)
 
@@ -120,4 +120,4 @@ class FutureNowLight(LightEntity):
         """Fetch new state data for this light."""
         state = int(self._light.is_on())
         self._state = bool(state)
-        self._brightness = to_opp_level(state)
+        self._brightness = to.opp_level(state)

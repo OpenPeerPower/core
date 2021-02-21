@@ -1,7 +1,7 @@
 """Config helpers for Alexa."""
 from abc import ABC, abstractmethod
 
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from .state_report import async_enable_proactive_mode
 
@@ -13,7 +13,7 @@ class AbstractConfig(ABC):
 
     def __init__(self,.opp):
         """Initialize abstract config."""
-        self.opp = opp
+        self.opp =.opp
 
     @property
     def supports_auth(self):

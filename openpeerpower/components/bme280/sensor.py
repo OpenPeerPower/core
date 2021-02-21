@@ -84,12 +84,12 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the BME280 sensor."""
 
-    SENSOR_TYPES[SENSOR_TEMP][1] = opp.config.units.temperature_unit
+    SENSOR_TYPES[SENSOR_TEMP][1] =.opp.config.units.temperature_unit
     name = config[CONF_NAME]
     i2c_address = config[CONF_I2C_ADDRESS]
 
     bus = smbus.SMBus(config[CONF_I2C_BUS])
-    sensor = await opp..async_add_executor_job(
+    sensor = await.opp.async_add_executor_job(
         partial(
             BME280,
             bus,
@@ -108,13 +108,13 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         _LOGGER.error("BME280 sensor not detected at %s", i2c_address)
         return False
 
-    sensor_op.dler = await opp..async_add_executor_job(BME280Handler, sensor)
+    sensor_handler = await.opp.async_add_executor_job(BME280Handler, sensor)
 
     dev = []
     try:
         for variable in config[CONF_MONITORED_CONDITIONS]:
             dev.append(
-                BME280Sensor(sensor_op.dler, variable, SENSOR_TYPES[variable][1], name)
+                BME280Sensor(sensor_handler, variable, SENSOR_TYPES[variable][1], name)
             )
     except KeyError:
         pass

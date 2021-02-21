@@ -3,7 +3,7 @@
 from openpeerpower.components import binary_sensor, device_tracker
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST, CONF_SCAN_INTERVAL
-from openpeerpowerr.core import Config, OpenPeerPower
+from openpeerpower.core import Config, OpenPeerPower
 
 from .const import (
     CONF_CONSIDER_HOME,
@@ -57,9 +57,9 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> b
    .opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     for component in PLATFORMS:
-        await opp..config_entries.async_forward_entry_unload(config_entry, component)
+        await.opp.config_entries.async_forward_entry_unload(config_entry, component)
 
-    router: KeeneticRouter = opp.data[DOMAIN][config_entry.entry_id][ROUTER]
+    router: KeeneticRouter =.opp.data[DOMAIN][config_entry.entry_id][ROUTER]
 
     await router.async_teardown()
 
@@ -70,13 +70,13 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> b
 
 async def update_listener.opp, config_entry):
     """Handle options update."""
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)
 
 
 def async_add_defaults.opp: OpenPeerPower, config_entry: ConfigEntry):
     """Populate default options."""
     host: str = config_entry.data[CONF_HOST]
-    imported_options: dict = opp.data[DOMAIN].get(f"imported_options_{host}", {})
+    imported_options: dict =.opp.data[DOMAIN].get(f"imported_options_{host}", {})
     options = {
         CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL,
         CONF_CONSIDER_HOME: DEFAULT_CONSIDER_HOME,

@@ -4,8 +4,8 @@ import logging
 from typing import Any, Dict, Iterable, Optional
 
 from openpeerpower.const import SERVICE_TURN_OFF, SERVICE_TURN_ON, STATE_OFF, STATE_ON
-from openpeerpowerr.core import Context, State
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import Context, State
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import (
     ATTR_HUMIDITY,
@@ -26,7 +26,7 @@ async def _async_reproduce_states(
     reproduce_options: Optional[Dict[str, Any]] = None,
 ) -> None:
     """Reproduce component states."""
-    cur_state = opp.states.get(state.entity_id)
+    cur_state =.opp.states.get(state.entity_id)
 
     if cur_state is None:
         _LOGGER.warning("Unable to find entity %s", state.entity_id)
@@ -40,7 +40,7 @@ async def _async_reproduce_states(
             if key in state.attributes:
                 data[key] = state.attributes[key]
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN, service, data, blocking=True, context=context
         )
 
@@ -62,7 +62,7 @@ async def _async_reproduce_states(
     if cur_state.state != STATE_ON:
         await call_service(SERVICE_TURN_ON, [])
         # refetch the state as turning on might allow us to see some more values
-        cur_state = opp.states.get(state.entity_id)
+        cur_state =.opp.states.get(state.entity_id)
 
     # Then set the mode before target humidity, because switching modes
     # may invalidate target humidity

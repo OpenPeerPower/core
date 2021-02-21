@@ -29,7 +29,7 @@ EVENT_CAMERA_MOTION = "camera_motion"
 EVENT_CAMERA_PERSON = "camera_person"
 EVENT_CAMERA_SOUND = "camera_sound"
 
-# Mapping of supported device traits to Open Peer Power event types.  Devices
+# Mapping of supported device traits to open peer power event types.  Devices
 # that support these traits will generate Pub/Sub event messages in
 # the EVENT_NAME_MAP
 DEVICE_TRAIT_TRIGGER_MAP = {
@@ -39,7 +39,7 @@ DEVICE_TRAIT_TRIGGER_MAP = {
     CameraSoundTrait.NAME: EVENT_CAMERA_SOUND,
 }
 
-# Mapping of incoming SDM Pub/Sub event message types to the Open Peer Power
+# Mapping of incoming SDM Pub/Sub event message types to the open peer power
 # event type to fire.
 EVENT_NAME_MAP = {
     DoorbellChimeEvent.NAME: EVENT_DOORBELL_CHIME,

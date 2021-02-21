@@ -11,7 +11,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     async def async_discover_switch(device_id):
         """Discover and add a discovered sensor."""
-        client = opp.data[tellduslive.DOMAIN]
+        client =.opp.data[tellduslive.DOMAIN]
         async_add_entities([TelldusLiveSwitch(client, device_id)])
 
     async_dispatcher_connect(

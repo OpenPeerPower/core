@@ -2,8 +2,8 @@
   "domain": "zwave_js",
   "name": "Z-Wave JS",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/zwave_js",
-  "requirements": ["zwave-js-server-python==0.17.2"],
-  "codeowners": ["@openpeerpower/z-wave"],
+  "documentation": "https://www.open-peer-power.io/integrations/zwave_js",
+  "requirements": ["zwave-js-server-python==0.18.0"],
+  "codeowners": ["@open-peer-power/z-wave"],
   "dependencies": ["http", "websocket_api"]
 }

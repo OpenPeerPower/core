@@ -33,7 +33,7 @@ from openpeerpower.helpers.integration_platform import (
 )
 from openpeerpower.helpers.reload import async_reload_integration_platforms
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 # mypy: allow-untyped-calls, allow-untyped-defs, no-check-untyped-defs
 
@@ -112,14 +112,14 @@ class GroupIntegrationRegistry:
         self.on_states_by_domain[current_domain.get()] = set(on_states)
 
 
-@bind_opp
+@bind.opp
 def is_on.opp, entity_id):
     """Test if the group state is in its ON-state."""
     if REG_KEY not in.opp.data:
         # Integration not setup yet, it cannot be on
         return False
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
 
     if state is not None:
         return state.state in.opp.data[REG_KEY].on_off_mapping
@@ -127,7 +127,7 @@ def is_on.opp, entity_id):
     return False
 
 
-@bind_opp
+@bind.opp
 def expand_entity_ids.opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List[str]:
     """Return entity_ids with group entity ids replaced by their members.
 
@@ -145,7 +145,7 @@ def expand_entity_ids.opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List
 
         try:
             # If entity_id points at a group, expand it
-            domain, _ = op.split_entity_id(entity_id)
+            domain, _ = ha.split_entity_id(entity_id)
 
             if domain == DOMAIN:
                 child_entities = get_entity_ids.opp, entity_id)
@@ -169,7 +169,7 @@ def expand_entity_ids.opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List
     return found_ids
 
 
-@bind_opp
+@bind.opp
 def get_entity_ids(
    .opp: OpenPeerPowerType, entity_id: str, domain_filter: Optional[str] = None
 ) -> List[str]:
@@ -177,7 +177,7 @@ def get_entity_ids(
 
     Async friendly.
     """
-    group = opp.states.get(entity_id)
+    group =.opp.states.get(entity_id)
 
     if not group or ATTR_ENTITY_ID not in group.attributes:
         return []
@@ -191,7 +191,7 @@ def get_entity_ids(
     return [ent_id for ent_id in entity_ids if ent_id.startswith(domain_filter)]
 
 
-@bind_opp
+@bind.opp
 def groups_with_entity.opp: OpenPeerPowerType, entity_id: str) -> List[str]:
     """Get all groups that contain this entity.
 
@@ -211,10 +211,10 @@ def groups_with_entity.opp: OpenPeerPowerType, entity_id: str) -> List[str]:
 
 async def async_setup.opp, config):
     """Set up all groups found defined in the configuration."""
-    component = opp.data.get(DOMAIN)
+    component =.opp.data.get(DOMAIN)
 
     if component is None:
-        component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN,.opp)
+        component =.opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN,.opp)
 
    .opp.data[REG_KEY] = GroupIntegrationRegistry()
 
@@ -222,7 +222,7 @@ async def async_setup.opp, config):
 
     await _async_process_config.opp, config, component)
 
-    async def reload_service_op.dler(service):
+    async def reload_service_handler(service):
         """Remove all user-defined groups and load new ones from config."""
         auto = list(filter(lambda e: not e.user_defined, component.entities))
 
@@ -236,17 +236,17 @@ async def async_setup.opp, config):
         await async_reload_integration_platforms.opp, DOMAIN, PLATFORMS)
 
    .opp.services.async_register(
-        DOMAIN, SERVICE_RELOAD, reload_service_op.dler, schema=vol.Schema({})
+        DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
     service_lock = asyncio.Lock()
 
-    async def locked_service_op.dler(service):
+    async def locked_service_handler(service):
         """Handle a service with an async lock."""
         async with service_lock:
-            await groups_service_op.dler(service)
+            await groups_service_handler(service)
 
-    async def groups_service_op.dler(service):
+    async def groups_service_handler(service):
         """Handle dynamic group service functions."""
         object_id = service.data[ATTR_OBJECT_ID]
         entity_id = f"{DOMAIN}.{object_id}"
@@ -307,7 +307,7 @@ async def async_setup.opp, config):
                 need_update = True
 
             if need_update:
-                group.async_write_op.state()
+                group.async_write_ha_state()
 
             return
 
@@ -318,7 +318,7 @@ async def async_setup.opp, config):
    .opp.services.async_register(
         DOMAIN,
         SERVICE_SET,
-        locked_service_op.dler,
+        locked_service_handler,
         schema=vol.All(
             vol.Schema(
                 {
@@ -336,7 +336,7 @@ async def async_setup.opp, config):
    .opp.services.async_register(
         DOMAIN,
         SERVICE_REMOVE,
-        groups_service_op.dler,
+        groups_service_handler,
         schema=vol.Schema({vol.Required(ATTR_OBJECT_ID): cv.slug}),
     )
 
@@ -393,17 +393,17 @@ class GroupEntity(Entity):
         """Disable polling for group."""
         return False
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register listeners."""
         assert self.opp is not None
 
         async def _update_at_start(_):
             await self.async_update()
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _update_at_start)
 
-    async def async_defer_or_update_op.state(self) -> None:
+    async def async_defer_or_update_ha_state(self) -> None:
         """Only update once at start."""
         assert self.opp is not None
 
@@ -411,7 +411,7 @@ class GroupEntity(Entity):
             return
 
         await self.async_update()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @abstractmethod
     async def async_update(self) -> None:
@@ -435,7 +435,7 @@ class Group(Entity):
 
         This Object has factory function for creation.
         """
-        self.opp = opp
+        self.opp =.opp
         self._name = name
         self._state = None
         self._icon = icon
@@ -487,7 +487,7 @@ class Group(Entity):
         """
         if order is None:
            .opp.data.setdefault(GROUP_ORDER, 0)
-            order = opp.data[GROUP_ORDER]
+            order =.opp.data[GROUP_ORDER]
             # Keep track of the group order without iterating
             # every state in the state machine every time
             # we setup a new group
@@ -508,10 +508,10 @@ class Group(Entity):
         )
 
         # If called before the platform async_setup is called (test cases)
-        component = opp.data.get(DOMAIN)
+        component =.opp.data.get(DOMAIN)
 
         if component is None:
-            component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN,.opp)
+            component =.opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN,.opp)
 
         await component.async_add_entities([group])
 
@@ -606,7 +606,7 @@ class Group(Entity):
         """Start tracking members and write state."""
         self._reset_tracked_state()
         self._async_start_tracking()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _async_start_tracking(self):
@@ -636,7 +636,7 @@ class Group(Entity):
         self._state = None
         self._async_update_group_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle addition to Open Peer Power."""
         if self.opp.state != CoreState.running:
             self.opp.bus.async_listen_once(
@@ -648,7 +648,7 @@ class Group(Entity):
             self._reset_tracked_state()
         self._async_start_tracking()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Handle removal from Open Peer Power."""
         self._async_stop()
 
@@ -669,7 +669,7 @@ class Group(Entity):
             self._reset_tracked_state()
 
         self._async_update_group_state(new_state)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _reset_tracked_state(self):
         """Reset tracked state."""

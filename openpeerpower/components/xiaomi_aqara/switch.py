@@ -24,7 +24,7 @@ IN_USE = "inuse"
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Perform the setup for Xiaomi devices."""
     entities = []
-    gateway = opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
+    gateway =.opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
     for device in gateway.devices["switch"]:
         model = device["model"]
         if model == "plug":
@@ -179,13 +179,13 @@ class XiaomiGenericSwitch(XiaomiDevice, SwitchEntity):
         """Turn the switch on."""
         if self._write_to_hub(self._sid, **{self._data_key: "on"}):
             self._state = True
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the switch off."""
         if self._write_to_hub(self._sid, **{self._data_key: "off"}):
             self._state = False
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def parse_data(self, data, raw_data):
         """Parse data sent by gateway."""

@@ -7,8 +7,8 @@ import requests
 import voluptuous as vol
 
 from openpeerpower.const import CONF_WEBHOOK_ID, HTTP_OK
-from openpeerpowerr.helpers import config_entry_flow
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers import config_entry_flow
+import openpeerpower.helpers.config_validation as cv
 
 from .const import DOMAIN
 

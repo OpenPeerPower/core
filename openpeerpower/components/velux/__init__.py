@@ -5,8 +5,8 @@ from pyvlx import PyVLX, PyVLXException
 import voluptuous as vol
 
 from openpeerpower.const import CONF_HOST, CONF_PASSWORD, EVENT_OPENPEERPOWER_STOP
-from openpeerpowerr.helpers import discovery
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers import discovery
+import openpeerpower.helpers.config_validation as cv
 
 DOMAIN = "velux"
 DATA_VELUX = "data_velux"
@@ -28,7 +28,7 @@ async def async_setup.opp, config):
     try:
        .opp.data[DATA_VELUX] = VeluxModule.opp, config[DOMAIN])
        .opp.data[DATA_VELUX].setup()
-        await opp..data[DATA_VELUX].async_start()
+        await.opp.data[DATA_VELUX].async_start()
 
     except PyVLXException as ex:
         _LOGGER.exception("Can't connect to velux interface: %s", ex)
@@ -47,26 +47,26 @@ class VeluxModule:
     def __init__(self,.opp, domain_config):
         """Initialize for velux component."""
         self.pyvlx = None
-        self._opp = opp
+        self..opp =.opp
         self._domain_config = domain_config
 
     def setup(self):
         """Velux component setup."""
 
-        async def on_opp_stop(event):
-            """Close connection when opp stops."""
+        async def on.opp_stop(event):
+            """Close connection when.opp stops."""
             _LOGGER.debug("Velux interface terminated")
             await self.pyvlx.disconnect()
 
         async def async_reboot_gateway(service_call):
             await self.pyvlx.reboot_gateway()
 
-        self._opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_opp_stop)
+        self..opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on.opp_stop)
         host = self._domain_config.get(CONF_HOST)
         password = self._domain_config.get(CONF_PASSWORD)
         self.pyvlx = PyVLX(host=host, password=password)
 
-        self._opp.services.async_register(
+        self..opp.services.async_register(
             DOMAIN, "reboot_gateway", async_reboot_gateway
         )
 

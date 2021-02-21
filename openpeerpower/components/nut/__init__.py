@@ -16,9 +16,9 @@ from openpeerpower.const import (
     CONF_SCAN_INTERVAL,
     CONF_USERNAME,
 )
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import (
     COORDINATOR,
@@ -61,7 +61,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     async def async_update_data():
         """Fetch data from NUT."""
         async with async_timeout.timeout(10):
-            await opp..async_add_executor_job(data.update)
+            await.opp.async_add_executor_job(data.update)
             if not data.status:
                 raise UpdateFailed("Error fetching UPS state")
 
@@ -111,7 +111,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
-    await opp..config_entries.async_reload(entry.entry_id)
+    await.opp.config_entries.async_reload(entry.entry_id)
 
 
 def _manufacturer_from_status(status):

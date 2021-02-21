@@ -3,7 +3,7 @@ import voluptuous as vol
 
 from openpeerpower.components.binary_sensor import PLATFORM_SCHEMA, BinarySensorEntity
 from openpeerpower.const import CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import DOMAIN, KEY_STATUS, VALUE_ONLINE
 
@@ -15,7 +15,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up an APCUPSd Online Status binary sensor."""
-    apcups_data = opp.data[DOMAIN]
+    apcups_data =.opp.data[DOMAIN]
 
     add_entities([OnlineStatus(config, apcups_data)], True)
 

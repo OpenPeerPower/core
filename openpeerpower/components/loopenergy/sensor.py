@@ -113,7 +113,7 @@ class LoopEnergyDevice(Entity):
         return self._unit_of_measurement
 
     def _callback(self):
-        self.schedule_update_op.state(True)
+        self.schedule_update_ha_state(True)
 
 
 class LoopEnergyElec(LoopEnergyDevice):
@@ -124,7 +124,7 @@ class LoopEnergyElec(LoopEnergyDevice):
         super().__init__(controller)
         self._name = "Power Usage"
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates."""
         self._controller.subscribe_elecricity(self._callback)
 
@@ -141,7 +141,7 @@ class LoopEnergyGas(LoopEnergyDevice):
         super().__init__(controller)
         self._name = "Gas Usage"
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates."""
         self._controller.subscribe_gas(self._callback)
 

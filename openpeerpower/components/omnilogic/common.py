@@ -6,8 +6,8 @@ import logging
 from omnilogic import OmniLogicException
 
 from openpeerpower.const import ATTR_NAME
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
     UpdateFailed,

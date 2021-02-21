@@ -20,19 +20,19 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_setup_ingress_view.opp: OpenPeerPowerType, host: str):
+def async_setup_ingress_view.opp.OpenPeerPowerType, host: str):
     """Auth setup."""
-    websession = opp.helpers.aiohttp_client.async_get_clientsession()
+    websession = opp.elpers.aiohttp_client.async_get_clientsession()
 
-    oppio_ingress = OppIOIngress(host, websession)
-   .opp.http.register_view(oppio_ingress)
+    opp._ingress = OppIOIngress(host, websession)
+   .opp.ttp.register_view(opp._ingress)
 
 
 class OppIOIngress(OpenPeerPowerView):
     """Opp.io view to handle base part."""
 
-    name = "api:oppio:ingress"
-    url = "/api/oppio_ingress/{token}/{path:.*}"
+    name = "api:opp.:ingress"
+    url = "/api/opp._ingress/{token}/{path:.*}"
     requires_auth = False
 
     def __init__(self, host: str, websession: aiohttp.ClientSession):
@@ -182,7 +182,7 @@ def _init_header(
     headers[X_OPPIO] = os.environ.get("OPPIO_TOKEN", "")
 
     # Ingress information
-    headers[X_INGRESS_PATH] = f"/api/oppio_ingress/{token}"
+    headers[X_INGRESS_PATH] = f"/api/opp._ingress/{token}"
 
     # Set X-Forwarded-For
     forward_for = request.headers.get(hdrs.X_FORWARDED_FOR)

@@ -23,7 +23,7 @@ CANNOT_CONNECT = "cannot_connect"
 UNSUPPORTED_VERSION = "unsupported_version"
 UNKNOWN = "unknown"
 
-BLEBOX_TO_OPP_DEVICE_CLASSES = {
+BLEBOX_TO_HASS_DEVICE_CLASSES = {
     "shutter": DEVICE_CLASS_SHUTTER,
     "gatebox": DEVICE_CLASS_DOOR,
     "gate": DEVICE_CLASS_GATE,
@@ -31,7 +31,7 @@ BLEBOX_TO_OPP_DEVICE_CLASSES = {
     "temperature": DEVICE_CLASS_TEMPERATURE,
 }
 
-BLEBOX_TO_OPP_COVER_STATES = {
+BLEBOX_TO_HASS_COVER_STATES = {
     None: None,
     0: STATE_CLOSING,  # moving down
     1: STATE_OPENING,  # moving up

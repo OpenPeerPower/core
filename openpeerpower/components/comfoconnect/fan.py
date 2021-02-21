@@ -13,6 +13,7 @@ from pycomfoconnect import (
 from openpeerpower.components.fan import SUPPORT_SET_SPEED, FanEntity
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from openpeerpower.util.percentage import (
+    int_states_in_range,
     percentage_to_ranged_value,
     ranged_value_to_percentage,
 )
@@ -33,7 +34,7 @@ SPEED_RANGE = (1, 3)  # away is not included in speeds and instead mapped to off
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the ComfoConnect fan platform."""
-    ccb = opp.data[DOMAIN]
+    ccb =.opp.data[DOMAIN]
 
     add_entities([ComfoConnectFan(ccb.name, ccb)], True)
 
@@ -46,27 +47,27 @@ class ComfoConnectFan(FanEntity):
         self._ccb = ccb
         self._name = name
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register for sensor updates."""
         _LOGGER.debug("Registering for fan speed")
         self.async_on_remove(
             async_dispatcher_connect(
                 self.opp,
                 SIGNAL_COMFOCONNECT_UPDATE_RECEIVED.format(SENSOR_FAN_SPEED_MODE),
-                self._op.dle_update,
+                self._handle_update,
             )
         )
         await self.opp.async_add_executor_job(
             self._ccb.comfoconnect.register_sensor, SENSOR_FAN_SPEED_MODE
         )
 
-    def _op.dle_update(self, value):
+    def _handle_update(self, value):
         """Handle update callbacks."""
         _LOGGER.debug(
             "Handle update for fan speed (%d): %s", SENSOR_FAN_SPEED_MODE, value
         )
         self._ccb.data[SENSOR_FAN_SPEED_MODE] = value
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def should_poll(self) -> bool:
@@ -101,6 +102,11 @@ class ComfoConnectFan(FanEntity):
             return None
         return ranged_value_to_percentage(SPEED_RANGE, speed)
 
+    @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        return int_states_in_range(SPEED_RANGE)
+
     def turn_on(
         self, speed: str = None, percentage=None, preset_mode=None, **kwargs
     ) -> None:
@@ -126,4 +132,4 @@ class ComfoConnectFan(FanEntity):
         self._ccb.comfoconnect.cmd_rmi_request(cmd)
 
         # Update current mode
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

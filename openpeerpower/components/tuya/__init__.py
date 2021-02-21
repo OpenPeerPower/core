@@ -81,7 +81,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 def _update_discovery_interval.opp, interval):
-    tuya = opp.data[DOMAIN].get(TUYA_DATA)
+    tuya =.opp.data[DOMAIN].get(TUYA_DATA)
     if not tuya:
         return
 
@@ -93,7 +93,7 @@ def _update_discovery_interval.opp, interval):
 
 
 def _update_query_interval.opp, interval):
-    tuya = opp.data[DOMAIN].get(TUYA_DATA)
+    tuya =.opp.data[DOMAIN].get(TUYA_DATA)
     if not tuya:
         return
 
@@ -128,7 +128,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     platform = entry.data[CONF_PLATFORM]
 
     try:
-        await opp..async_add_executor_job(
+        await.opp.async_add_executor_job(
             tuya.init, username, password, country_code, platform
         )
     except (
@@ -206,7 +206,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         """Check if accesstoken is expired and pull device list from server."""
         _LOGGER.debug("Pull devices from Tuya")
         # Add new discover device.
-        device_list = await opp..async_add_executor_job(_get_updated_devices)
+        device_list = await.opp.async_add_executor_job(_get_updated_devices)
         await async_load_devices(device_list)
         # Delete not exist device.
         newlist_ids = []
@@ -271,8 +271,8 @@ async def update_listener.opp: OpenPeerPower, entry: ConfigEntry):
 async def cleanup_device_registry.opp: OpenPeerPower, device_id):
     """Remove device registry entry if there are no remaining entities."""
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     if device_id and not.opp.helpers.entity_registry.async_entries_for_device(
         entity_registry, device_id, include_disabled_entities=True
     ):
@@ -318,7 +318,7 @@ class TuyaDevice(Entity):
             )
         return dev_conf
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[DOMAIN]["entities"][self.object_id] = self.entity_id
         self.async_on_remove(
@@ -333,7 +333,7 @@ class TuyaDevice(Entity):
         )
         self._inc_device_count()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Call when entity is removed from.opp."""
         self._dec_device_count()
 
@@ -397,4 +397,4 @@ class TuyaDevice(Entity):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)

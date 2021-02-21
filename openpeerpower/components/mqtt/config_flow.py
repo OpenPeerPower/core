@@ -38,7 +38,7 @@ class FlowHandler(config_entries.ConfigFlow):
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_PUSH
 
-    _oppio_discovery = None
+    .oppio_discovery = None
 
     @staticmethod
     def async_get_options_flow(config_entry):
@@ -94,21 +94,21 @@ class FlowHandler(config_entries.ConfigFlow):
 
         return self.async_create_entry(title="configuration.yaml", data={})
 
-    async def async_step_oppio(self, discovery_info):
-        """Receive a Opp.io discovery."""
+    async def async_step.oppio(self, discovery_info):
+        """Receive a Hass.io discovery."""
         if self._async_current_entries():
             return self.async_abort(reason="single_instance_allowed")
 
-        self._oppio_discovery = discovery_info
+        self..oppio_discovery = discovery_info
 
-        return await self.async_step_oppio_confirm()
+        return await self.async_step.oppio_confirm()
 
-    async def async_step_oppio_confirm(self, user_input=None):
-        """Confirm a Opp.io discovery."""
+    async def async_step.oppio_confirm(self, user_input=None):
+        """Confirm a Hass.io discovery."""
         errors = {}
 
         if user_input is not None:
-            data = self._oppio_discovery
+            data = self..oppio_discovery
             can_connect = await self.opp.async_add_executor_job(
                 try_connection,
                 data[CONF_HOST],
@@ -134,8 +134,8 @@ class FlowHandler(config_entries.ConfigFlow):
             errors["base"] = "cannot_connect"
 
         return self.async_show_form(
-            step_id="oppio_confirm",
-            description_placeholders={"addon": self._oppio_discovery["addon"]},
+            step_id=.oppio_confirm",
+            description_placeholders={"addon": self..oppio_discovery["addon"]},
             data_schema=vol.Schema(
                 {vol.Optional(CONF_DISCOVERY, default=DEFAULT_DISCOVERY): bool}
             ),

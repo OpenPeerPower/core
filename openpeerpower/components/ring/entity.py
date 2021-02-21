@@ -1,6 +1,6 @@
 """Base class for Ring entity."""
 from openpeerpower.const import ATTR_ATTRIBUTION
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from . import ATTRIBUTION, DOMAIN
 
@@ -14,18 +14,18 @@ class RingEntityMixin:
         self._config_entry_id = config_entry_id
         self._device = device
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.ring_objects["device_data"].async_add_listener(self._update_callback)
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect callbacks."""
         self.ring_objects["device_data"].async_remove_listener(self._update_callback)
 
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def ring_objects(self):

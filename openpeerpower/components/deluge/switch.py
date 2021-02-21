@@ -14,9 +14,9 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.exceptions import PlatformNotReady
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import ToggleEntity
+from openpeerpower.exceptions import PlatformNotReady
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import ToggleEntity
 
 _LOGGER = logging.getLogger(__name__)
 

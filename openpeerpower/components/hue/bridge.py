@@ -50,7 +50,7 @@ class HueBridge:
     def __init__(self,.opp, config_entry):
         """Initialize the system."""
         self.config_entry = config_entry
-        self.opp = opp
+        self.opp =.opp
         self.available = True
         self.authorized = False
         self.api = None
@@ -82,7 +82,7 @@ class HueBridge:
     async def async_setup(self, tries=0):
         """Set up a phue bridge based on host parameter."""
         host = self.host
-        opp = self.opp
+       .opp = self.opp
 
         bridge = aiohue.Bridge(
             host,
@@ -270,7 +270,7 @@ async def authenticate_bridge.opp: core.OpenPeerPower, bridge: aiohue.Bridge):
                 device_name = unicode_slug.slugify(
                    .opp.config.location_name, max_length=19
                 )
-                await bridge.create_user(f"openpeerpower#{device_name}")
+                await bridge.create_user(f"open-peer-power#{device_name}")
 
             # Initialize bridge (and validate our username)
             await bridge.initialize()
@@ -291,4 +291,4 @@ async def authenticate_bridge.opp: core.OpenPeerPower, bridge: aiohue.Bridge):
 
 async def _update_listener.opp, entry):
     """Handle options update."""
-    await opp..config_entries.async_reload(entry.entry_id)
+    await.opp.config_entries.async_reload(entry.entry_id)

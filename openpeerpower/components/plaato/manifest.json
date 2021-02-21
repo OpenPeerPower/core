@@ -2,7 +2,7 @@
   "domain": "plaato",
   "name": "Plaato",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/plaato",
+  "documentation": "https://www.open-peer-power.io/integrations/plaato",
   "dependencies": ["webhook"],
   "after_dependencies": ["cloud"],
   "codeowners": ["@JohNan"],

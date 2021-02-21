@@ -40,7 +40,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup.opp, config):
     """Set up the MQTT eventstream component."""
-    mqtt = opp.components.mqtt
+    mqtt =.opp.components.mqtt
     conf = config.get(DOMAIN, {})
     pub_topic = conf.get(CONF_PUBLISH_TOPIC)
     sub_topic = conf.get(CONF_SUBSCRIBE_TOPIC)
@@ -79,14 +79,14 @@ async def async_setup.opp, config):
     # Process events from a remote server that are received on a queue.
     @callback
     def _event_receiver(msg):
-        """Receive events published by and fire them on this opp instance."""
+        """Receive events published by and fire them on this.opp instance."""
         event = json.loads(msg.payload)
         event_type = event.get("event_type")
         event_data = event.get("event_data")
 
         # Special case handling for event STATE_CHANGED
         # We will try to convert state dicts back to State objects
-        # Copied over from the _op.dle_api_post_events_event method
+        # Copied over from the _handle_api_post_events_event method
         # of the api component.
         if event_type == EVENT_STATE_CHANGED and event_data:
             for key in ("old_state", "new_state"):

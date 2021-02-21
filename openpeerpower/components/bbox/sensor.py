@@ -14,10 +14,10 @@ from openpeerpower.const import (
     DATA_RATE_MEGABITS_PER_SECOND,
     DEVICE_CLASS_TIMESTAMP,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle
-from openpeerpowerr.util.dt import utcnow
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle
+from openpeerpower.util.dt import utcnow
 
 _LOGGER = logging.getLogger(__name__)
 

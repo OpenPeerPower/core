@@ -10,8 +10,8 @@ import voluptuous as vol
 from openpeerpower.components.media_player.const import DOMAIN as MEDIA_PLAYER_DOMAIN
 from openpeerpower.config_entries import SOURCE_IMPORT
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_PORT, STATE_OFF, STATE_ON
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.script import Script
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.script import Script
 
 from .const import (
     ATTR_DEVICE_INFO,
@@ -66,7 +66,7 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp, config_entry):
     """Set up Panasonic Viera from a config entry."""
-    panasonic_viera_data = opp.data.setdefault(DOMAIN, {})
+    panasonic_viera_data =.opp.data.setdefault(DOMAIN, {})
 
     config = config_entry.data
 
@@ -141,7 +141,7 @@ class Remote:
         encryption_key=None,
     ):
         """Initialize the Remote class."""
-        self._opp = opp
+        self..opp =.opp
 
         self._host = host
         self._port = port
@@ -167,7 +167,7 @@ class Remote:
                 params["app_id"] = self._app_id
                 params["encryption_key"] = self._encryption_key
 
-            self._control = await self._opp.async_add_executor_job(
+            self._control = await self..opp.async_add_executor_job(
                 partial(RemoteControl, self._host, self._port, **params)
             )
 
@@ -190,7 +190,7 @@ class Remote:
             await self.async_create_remote_control()
             return
 
-        await self._op.dle_errors(self._update)
+        await self._handle_errors(self._update)
 
     def _update(self):
         """Retrieve the latest data."""
@@ -204,7 +204,7 @@ class Remote:
         except (AttributeError, TypeError):
             key = getattr(key, "value", key)
 
-        await self._op.dle_errors(self._control.send_key, key)
+        await self._handle_errors(self._control.send_key, key)
 
     async def async_turn_on(self, context):
         """Turn on the TV."""
@@ -223,30 +223,30 @@ class Remote:
 
     async def async_set_mute(self, enable):
         """Set mute based on 'enable'."""
-        await self._op.dle_errors(self._control.set_mute, enable)
+        await self._handle_errors(self._control.set_mute, enable)
 
     async def async_set_volume(self, volume):
         """Set volume level, range 0..1."""
         volume = int(volume * 100)
-        await self._op.dle_errors(self._control.set_volume, volume)
+        await self._handle_errors(self._control.set_volume, volume)
 
     async def async_play_media(self, media_type, media_id):
         """Play media."""
         _LOGGER.debug("Play media: %s (%s)", media_id, media_type)
-        await self._op.dle_errors(self._control.open_webpage, media_id)
+        await self._handle_errors(self._control.open_webpage, media_id)
 
     async def async_get_device_info(self):
         """Return device info."""
         if self._control is None:
             return None
-        device_info = await self._op.dle_errors(self._control.get_device_info)
+        device_info = await self._handle_errors(self._control.get_device_info)
         _LOGGER.debug("Fetched device info: %s", str(device_info))
         return device_info
 
-    async def _op.dle_errors(self, func, *args):
+    async def _handle_errors(self, func, *args):
         """Handle errors from func, set available and reconnect if needed."""
         try:
-            result = await self._opp.async_add_executor_job(func, *args)
+            result = await self..opp.async_add_executor_job(func, *args)
             self.state = STATE_ON
             self.available = True
             return result

@@ -127,4 +127,4 @@ class DemoNumber(NumberEntity):
             )
 
         self._state = num_value
-        self.async_write_op.state()
+        self.async_write_ha_state()

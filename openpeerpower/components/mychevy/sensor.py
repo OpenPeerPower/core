@@ -3,10 +3,10 @@ import logging
 
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
 from openpeerpower.const import PERCENTAGE
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.icon import icon_for_battery_level
-from openpeerpowerr.util import slugify
+from openpeerpower.core import callback
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.icon import icon_for_battery_level
+from openpeerpower.util import slugify
 
 from . import (
     DOMAIN as MYCHEVY_DOMAIN,
@@ -37,7 +37,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    hub = opp.data[MYCHEVY_DOMAIN]
+    hub =.opp.data[MYCHEVY_DOMAIN]
     sensors = [MyChevyStatus()]
     for sconfig in SENSORS:
         for car in hub.cars:
@@ -56,7 +56,7 @@ class MyChevyStatus(Entity):
         """Initialize sensor with car connection."""
         self._state = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
@@ -76,7 +76,7 @@ class MyChevyStatus(Entity):
         if self._state != MYCHEVY_SUCCESS:
             _LOGGER.debug("Successfully connected to mychevy website")
             self._state = MYCHEVY_SUCCESS
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def error(self):
@@ -86,7 +86,7 @@ class MyChevyStatus(Entity):
             "This probably means the mychevy to OnStar link is down"
         )
         self._state = MYCHEVY_ERROR
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def icon(self):
@@ -131,7 +131,7 @@ class EVSensor(Entity):
 
         self.entity_id = f"{SENSOR_DOMAIN}.{MYCHEVY_DOMAIN}_{slugify(self._car.name)}_{slugify(self._name)}"
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.opp.helpers.dispatcher.async_dispatcher_connect(
             UPDATE_TOPIC, self.async_update_callback
@@ -162,7 +162,7 @@ class EVSensor(Entity):
             self._state = getattr(self._car, self._attr, None)
             for attr in self._extra_attrs:
                 self._state_attributes[attr] = getattr(self._car, attr)
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def state(self):

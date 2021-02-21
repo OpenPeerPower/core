@@ -4,7 +4,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_EMAIL, CONF_HOST, CONF_PORT
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 from . import DOMAIN  # pylint: disable=unused-import
 

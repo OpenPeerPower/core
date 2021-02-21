@@ -15,11 +15,11 @@ from openpeerpower.const import (
     CONF_SSL,
     CONF_VERIFY_SSL,
 )
-from openpeerpowerr.exceptions import PlatformNotReady
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle
+from openpeerpower.exceptions import PlatformNotReady
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle
 
 CONF_MONITORED_USERS = "monitored_users"
 

@@ -252,7 +252,7 @@ class HomeKitDehumidifier(HomeKitEntity, HumidifierEntity):
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Homekit humidifer."""
     hkid = config_entry.data["AccessoryPairingID"]
-    conn = opp.data[KNOWN_DEVICES][hkid]
+    conn =.opp.data[KNOWN_DEVICES][hkid]
 
     @callback
     def async_add_service(service):

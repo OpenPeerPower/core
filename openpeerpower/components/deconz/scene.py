@@ -2,8 +2,8 @@
 from typing import Any
 
 from openpeerpower.components.scene import Scene
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import NEW_SCENE
 from .gateway import get_gateway_from_config_entry
@@ -38,11 +38,11 @@ class DeconzScene(Scene):
         self._scene = scene
         self.gateway = gateway
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to sensors events."""
         self.gateway.deconz_ids[self.entity_id] = self._scene.deconz_id
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect scene object when removed."""
         del self.gateway.deconz_ids[self.entity_id]
         self._scene = None

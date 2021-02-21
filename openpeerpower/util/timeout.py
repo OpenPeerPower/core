@@ -156,7 +156,7 @@ class _GlobalTaskContext:
         self._task: asyncio.Task[Any] = task
         self._time_left: float = timeout
         self._expiration_time: Optional[float] = None
-        self._timeout_op.dler: Optional[asyncio.Handle] = None
+        self._timeout_handler: Optional[asyncio.Handle] = None
         self._wait_zone: asyncio.Event = asyncio.Event()
         self._state: _State = _State.INIT
         self._cool_down: float = cool_down
@@ -195,21 +195,21 @@ class _GlobalTaskContext:
 
     def _start_timer(self) -> None:
         """Start timeout handler."""
-        if self._timeout_op.dler:
+        if self._timeout_handler:
             return
 
         self._expiration_time = self._loop.time() + self._time_left
-        self._timeout_op.dler = self._loop.call_at(
+        self._timeout_handler = self._loop.call_at(
             self._expiration_time, self._on_timeout
         )
 
     def _stop_timer(self) -> None:
         """Stop zone timer."""
-        if self._timeout_op.dler is None:
+        if self._timeout_handler is None:
             return
 
-        self._timeout_op.dler.cancel()
-        self._timeout_op.dler = None
+        self._timeout_handler.cancel()
+        self._timeout_handler = None
         # Calculate new timeout
         assert self._expiration_time
         self._time_left = self._expiration_time - self._loop.time()
@@ -217,7 +217,7 @@ class _GlobalTaskContext:
     def _on_timeout(self) -> None:
         """Process timeout."""
         self._state = _State.TIMEOUT
-        self._timeout_op.dler = None
+        self._timeout_handler = None
 
         # Reset timer if zones are running
         if not self._manager.zones_done:
@@ -264,7 +264,7 @@ class _ZoneTaskContext:
         self._state: _State = _State.INIT
         self._time_left: float = timeout
         self._expiration_time: Optional[float] = None
-        self._timeout_op.dler: Optional[asyncio.Handle] = None
+        self._timeout_handler: Optional[asyncio.Handle] = None
 
     @property
     def state(self) -> _State:
@@ -299,21 +299,21 @@ class _ZoneTaskContext:
 
     def _start_timer(self) -> None:
         """Start timeout handler."""
-        if self._timeout_op.dler:
+        if self._timeout_handler:
             return
 
         self._expiration_time = self._loop.time() + self._time_left
-        self._timeout_op.dler = self._loop.call_at(
+        self._timeout_handler = self._loop.call_at(
             self._expiration_time, self._on_timeout
         )
 
     def _stop_timer(self) -> None:
         """Stop zone timer."""
-        if self._timeout_op.dler is None:
+        if self._timeout_handler is None:
             return
 
-        self._timeout_op.dler.cancel()
-        self._timeout_op.dler = None
+        self._timeout_handler.cancel()
+        self._timeout_handler = None
         # Calculate new timeout
         assert self._expiration_time
         self._time_left = self._expiration_time - self._loop.time()
@@ -321,7 +321,7 @@ class _ZoneTaskContext:
     def _on_timeout(self) -> None:
         """Process timeout."""
         self._state = _State.TIMEOUT
-        self._timeout_op.dler = None
+        self._timeout_handler = None
 
         # Timeout
         if self._task.done():

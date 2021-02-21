@@ -6,8 +6,8 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import aiohttp_client
+from openpeerpower.core import callback
+from openpeerpower.helpers import aiohttp_client
 
 from .const import CONF_SCAN_INTERVAL, DOMAIN  # pylint:disable=unused-import
 

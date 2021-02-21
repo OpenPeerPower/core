@@ -16,8 +16,8 @@ from openpeerpower.const import (
     CONF_PORT,
     EVENT_OPENPEERPOWER_STOP,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -293,7 +293,7 @@ class AdsEntity(Entity):
                 self._state_dict[state_key] = value / factor
 
             asyncio.run_coroutine_threadsafe(async_event_set(), self.opp.loop)
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
         async def async_event_set():
             """Set event in async context."""

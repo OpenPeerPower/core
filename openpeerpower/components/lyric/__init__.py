@@ -12,15 +12,15 @@ import voluptuous as vol
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import (
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import (
     aiohttp_client,
     config_entry_oauth2_flow,
     config_validation as cv,
     device_registry as dr,
 )
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
     UpdateFailed,
@@ -84,7 +84,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     client = ConfigEntryLyricClient(session, oauth_session)
 
-    client_id = opp.data[DOMAIN][CONF_CLIENT_ID]
+    client_id =.opp.data[DOMAIN][CONF_CLIENT_ID]
     lyric = Lyric(client, client_id)
 
     async def async_update_data() -> Lyric:

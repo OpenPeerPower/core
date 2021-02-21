@@ -1,7 +1,7 @@
 {
   "domain": "nmap_tracker",
   "name": "Nmap Tracker",
-  "documentation": "https://www.openpeerpower.io/integrations/nmap_tracker",
+  "documentation": "https://www.open-peer-power.io/integrations/nmap_tracker",
   "requirements": ["python-nmap==0.6.1", "getmac==0.8.2"],
   "codeowners": []
 }

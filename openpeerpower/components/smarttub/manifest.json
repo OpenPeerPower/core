@@ -2,7 +2,7 @@
   "domain": "smarttub",
   "name": "SmartTub",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/smarttub",
+  "documentation": "https://www.open-peer-power.io/integrations/smarttub",
   "dependencies": [],
   "codeowners": ["@mdz"],
   "requirements": [

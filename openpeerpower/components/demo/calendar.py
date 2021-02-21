@@ -2,7 +2,7 @@
 import copy
 
 from openpeerpower.components.calendar import CalendarEventDevice, get_date
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 
 def setup_platform.opp, config, add_entities, discovery_info=None):

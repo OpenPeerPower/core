@@ -13,11 +13,13 @@ from openpeerpower.components.fan import (
     DOMAIN,
     SUPPORT_SET_SPEED,
     FanEntity,
+    NotValidPresetModeError,
 )
 from openpeerpower.const import STATE_UNAVAILABLE
 from openpeerpower.core import State, callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from openpeerpower.util.percentage import (
+    int_states_in_range,
     percentage_to_ranged_value,
     ranged_value_to_percentage,
 )
@@ -56,7 +58,7 @@ GROUP_MATCH = functools.partial(ZHA_ENTITIES.group_match, DOMAIN)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation fan from config entry."""
-    entities_to_create = opp.data[DATA_ZHA][DOMAIN]
+    entities_to_create =.opp.data[DATA_ZHA][DOMAIN]
 
     unsub = async_dispatcher_connect(
        .opp,
@@ -75,7 +77,7 @@ class BaseFan(FanEntity):
     """Base representation of a ZHA fan."""
 
     @property
-    def preset_modes(self) -> str:
+    def preset_modes(self) -> List[str]:
         """Return the available preset modes."""
         return PRESET_MODES
 
@@ -84,10 +86,17 @@ class BaseFan(FanEntity):
         """Flag supported features."""
         return SUPPORT_SET_SPEED
 
+    @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        return int_states_in_range(SPEED_RANGE)
+
     async def async_turn_on(
         self, speed=None, percentage=None, preset_mode=None, **kwargs
     ) -> None:
         """Turn the entity on."""
+        if percentage is None:
+            percentage = DEFAULT_ON_PERCENTAGE
         await self.async_set_percentage(percentage)
 
     async def async_turn_off(self, **kwargs) -> None:
@@ -96,15 +105,16 @@ class BaseFan(FanEntity):
 
     async def async_set_percentage(self, percentage: Optional[int]) -> None:
         """Set the speed percenage of the fan."""
-        if percentage is None:
-            percentage = DEFAULT_ON_PERCENTAGE
         fan_mode = math.ceil(percentage_to_ranged_value(SPEED_RANGE, percentage))
         await self._async_set_fan_mode(fan_mode)
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:
-        """Set the speed percenage of the fan."""
-        fan_mode = NAME_TO_PRESET_MODE.get(preset_mode)
-        await self._async_set_fan_mode(fan_mode)
+        """Set the preset mode for the fan."""
+        if preset_mode not in self.preset_modes:
+            raise NotValidPresetModeError(
+                f"The preset_mode {preset_mode} is not a valid preset_mode: {self.preset_modes}"
+            )
+        await self._async_set_fan_mode(NAME_TO_PRESET_MODE[preset_mode])
 
     @abstractmethod
     async def _async_set_fan_mode(self, fan_mode: int) -> None:
@@ -124,15 +134,15 @@ class ZhaFan(BaseFan, ZhaEntity):
         super().__init__(unique_id, zha_device, channels, **kwargs)
         self._fan_channel = self.cluster_channels.get(CHANNEL_FAN)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_accept_signal(
             self._fan_channel, SIGNAL_ATTR_UPDATED, self.async_set_state
         )
 
     @property
-    def percentage(self) -> str:
+    def percentage(self) -> Optional[int]:
         """Return the current speed percentage."""
         if (
             self._fan_channel.fan_mode is None
@@ -144,14 +154,14 @@ class ZhaFan(BaseFan, ZhaEntity):
         return ranged_value_to_percentage(SPEED_RANGE, self._fan_channel.fan_mode)
 
     @property
-    def preset_mode(self) -> str:
+    def preset_mode(self) -> Optional[str]:
         """Return the current preset mode."""
         return PRESET_MODES_TO_NAME.get(self._fan_channel.fan_mode)
 
     @callback
     def async_set_state(self, attr_id, attr_name, value):
         """Handle state update from channel."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def _async_set_fan_mode(self, fan_mode: int) -> None:
         """Set the fan mode for the fan."""
@@ -175,26 +185,14 @@ class FanGroup(BaseFan, ZhaGroupEntity):
         self._preset_mode = None
 
     @property
-    def percentage(self) -> str:
+    def percentage(self) -> Optional[int]:
         """Return the current speed percentage."""
         return self._percentage
 
     @property
-    def preset_mode(self) -> str:
+    def preset_mode(self) -> Optional[str]:
         """Return the current preset mode."""
         return self._preset_mode
-
-    async def async_set_percentage(self, percentage: Optional[int]) -> None:
-        """Set the speed percenage of the fan."""
-        if percentage is None:
-            percentage = DEFAULT_ON_PERCENTAGE
-        fan_mode = math.ceil(percentage_to_ranged_value(SPEED_RANGE, percentage))
-        await self._async_set_fan_mode(fan_mode)
-
-    async def async_set_preset_mode(self, preset_mode: str) -> None:
-        """Set the speed percenage of the fan."""
-        fan_mode = NAME_TO_PRESET_MODE.get(preset_mode)
-        await self._async_set_fan_mode(fan_mode)
 
     async def _async_set_fan_mode(self, fan_mode: int) -> None:
         """Set the fan mode for the group."""
@@ -226,7 +224,7 @@ class FanGroup(BaseFan, ZhaGroupEntity):
             self._percentage = None
             self._preset_mode = None
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Run when about to be added to.opp."""
         await self.async_update()
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()

@@ -7,7 +7,9 @@ from openpeerpower.components.cover import (
     DEVICE_CLASS_BLIND,
     DEVICE_CLASSES,
     SUPPORT_CLOSE,
+    SUPPORT_CLOSE_TILT,
     SUPPORT_OPEN,
+    SUPPORT_OPEN_TILT,
     SUPPORT_SET_POSITION,
     SUPPORT_SET_TILT_POSITION,
     SUPPORT_STOP,
@@ -41,7 +43,7 @@ class KNXCover(KnxEntity, CoverEntity):
     @callback
     async def after_update_callback(self, device):
         """Call after device was updated."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
         if self._device.is_traveling():
             self.start_auto_updater()
 
@@ -61,7 +63,9 @@ class KNXCover(KnxEntity, CoverEntity):
         if self._device.supports_stop:
             supported_features |= SUPPORT_STOP
         if self._device.supports_angle:
-            supported_features |= SUPPORT_SET_TILT_POSITION
+            supported_features |= (
+                SUPPORT_SET_TILT_POSITION | SUPPORT_OPEN_TILT | SUPPORT_CLOSE_TILT
+            )
         return supported_features
 
     @property
@@ -127,6 +131,14 @@ class KNXCover(KnxEntity, CoverEntity):
         knx_tilt_position = 100 - kwargs[ATTR_TILT_POSITION]
         await self._device.set_angle(knx_tilt_position)
 
+    async def async_open_cover_tilt(self, **kwargs):
+        """Open the cover tilt."""
+        await self._device.set_short_up()
+
+    async def async_close_cover_tilt(self, **kwargs):
+        """Close the cover tilt."""
+        await self._device.set_short_down()
+
     def start_auto_updater(self):
         """Start the autoupdater to update Open Peer Power while cover is moving."""
         if self._unsubscribe_auto_updater is None:
@@ -143,7 +155,7 @@ class KNXCover(KnxEntity, CoverEntity):
     @callback
     def auto_updater_hook(self, now):
         """Call for the autoupdater."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
         if self._device.position_reached():
             self.stop_auto_updater()
 

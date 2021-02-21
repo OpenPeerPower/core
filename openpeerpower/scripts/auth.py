@@ -44,23 +44,23 @@ def run(args):
     parser_change_pw.add_argument("new_password", type=str)
     parser_change_pw.set_defaults(func=change_password)
 
-    asyncio.set_event_loop_policy(runner.OppEventLoopPolicy(False))
+    asyncio.set_event_loop_policy(runner.HassEventLoopPolicy(False))
     asyncio.run(run_command(parser.parse_args(args)))
 
 
 async def run_command(args):
     """Run the command."""
-    opp = OpenPeerPower()
+   .opp = OpenPeerPower()
    .opp.config.config_dir = os.path.join(os.getcwd(), args.config)
    .opp.auth = await auth_manager_from_config.opp, [{"type": "openpeerpower"}], [])
-    provider = opp.auth.auth_providers[0]
+    provider =.opp.auth.auth_providers[0]
     await provider.async_initialize()
     await args.func.opp, provider, args)
 
     # Triggers save on used storage helpers with delay (core auth)
     logging.getLogger("openpeerpower.core").setLevel(logging.WARNING)
 
-    await opp..async_stop()
+    await.opp.async_stop()
 
 
 async def list_users.opp, provider, args):

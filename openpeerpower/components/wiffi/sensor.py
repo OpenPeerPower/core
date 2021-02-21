@@ -7,8 +7,8 @@ from openpeerpower.components.sensor import (
     DEVICE_CLASS_TEMPERATURE,
 )
 from openpeerpower.const import DEGREE, PRESSURE_MBAR, TEMP_CELSIUS
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import WiffiEntity
 from .const import CREATE_ENTITY_SIGNAL
@@ -97,7 +97,7 @@ class NumberEntity(WiffiEntity):
             metric.unit_of_measurement, metric.unit_of_measurement
         )
         self._value = metric.value
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class StringEntity(WiffiEntity):
@@ -122,4 +122,4 @@ class StringEntity(WiffiEntity):
         """
         self.reset_expiration_date()
         self._value = metric.value
-        self.async_write_op.state()
+        self.async_write_ha_state()

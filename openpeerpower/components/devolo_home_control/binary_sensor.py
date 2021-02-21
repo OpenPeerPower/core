@@ -8,7 +8,7 @@ from openpeerpower.components.binary_sensor import (
     BinarySensorEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DOMAIN
 from .devolo_device import DevoloDeviceEntity
@@ -133,4 +133,4 @@ class DevoloRemoteControl(DevoloDeviceEntity, BinarySensorEntity):
             self._state = False
         else:
             self._generic_message(message)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

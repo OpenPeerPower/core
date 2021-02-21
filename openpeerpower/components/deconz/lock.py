@@ -1,7 +1,7 @@
 """Support for deCONZ locks."""
 from openpeerpower.components.lock import DOMAIN, LockEntity
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import LOCKS, NEW_LIGHT
 from .deconz_device import DeconzDevice

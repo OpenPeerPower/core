@@ -1,7 +1,7 @@
 {
   "domain": "shopping_list",
   "name": "Shopping List",
-  "documentation": "https://www.openpeerpower.io/integrations/shopping_list",
+  "documentation": "https://www.open-peer-power.io/integrations/shopping_list",
   "dependencies": ["http"],
   "codeowners": [],
   "config_flow": true,

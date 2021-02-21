@@ -10,7 +10,7 @@ from .const import DATA_UPDATED, DOMAIN, SENSOR_TYPES
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Glances sensors."""
 
-    client = opp.data[DOMAIN][config_entry.entry_id]
+    client =.opp.data[DOMAIN][config_entry.entry_id]
     name = config_entry.data[CONF_NAME]
     dev = []
 
@@ -117,7 +117,7 @@ class GlancesSensor(Entity):
         """Return the polling requirement for this sensor."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
         self.unsub_update = async_dispatcher_connect(
             self.opp, DATA_UPDATED, self._schedule_immediate_update
@@ -125,9 +125,9 @@ class GlancesSensor(Entity):
 
     @callback
     def _schedule_immediate_update(self):
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
-    async def will_remove_from_opp(self):
+    async def will_remove_from.opp(self):
         """Unsubscribe from update dispatcher."""
         if self.unsub_update:
             self.unsub_update()

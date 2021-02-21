@@ -55,10 +55,10 @@ async def auth_manager_from_config(
     else:
         providers = []
     # So returned auth providers are in same order as config
-    provider_op.h: _ProviderDict = OrderedDict()
+    provider_hash: _ProviderDict = OrderedDict()
     for provider in providers:
         key = (provider.type, provider.id)
-        provider_op.h[key] = provider
+        provider_hash[key] = provider
 
     if module_configs:
         modules = await asyncio.gather(
@@ -67,11 +67,11 @@ async def auth_manager_from_config(
     else:
         modules = []
     # So returned auth modules are in same order as config
-    module_op.h: _MfaModuleDict = OrderedDict()
+    module_hash: _MfaModuleDict = OrderedDict()
     for module in modules:
-        module_op.h[module.id] = module
+        module_hash[module.id] = module
 
-    manager = AuthManager.opp, store, provider_op.h, module_op.h)
+    manager = AuthManager.opp, store, provider_hash, module_hash)
     return manager
 
 
@@ -150,7 +150,7 @@ class AuthManager:
         mfa_modules: _MfaModuleDict,
     ) -> None:
         """Initialize the auth manager."""
-        self.opp = opp
+        self.opp =.opp
         self._store = store
         self._providers = providers
         self._mfa_modules = mfa_modules

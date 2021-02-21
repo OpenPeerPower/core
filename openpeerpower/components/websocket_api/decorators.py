@@ -12,12 +12,12 @@ from .connection import ActiveConnection
 # mypy: allow-untyped-calls, allow-untyped-defs
 
 
-async def _op.dle_async_response(func,.opp, connection, msg):
+async def _handle_async_response(func,.opp, connection, msg):
     """Create a response and handle exception."""
     try:
         await func.opp, connection, msg)
     except Exception as err:  # pylint: disable=broad-except
-        connection.async_op.dle_exception(msg, err)
+        connection.async_handle_exception(msg, err)
 
 
 def async_response(
@@ -27,13 +27,13 @@ def async_response(
 
     @callback
     @wraps(func)
-    def schedule_op.dler.opp, connection, msg):
+    def schedule_handler.opp, connection, msg):
         """Schedule the handler."""
         # As the webserver is now started before the start
         # event we do not want to block for websocket responders
-        asyncio.create_task(_op.dle_async_response(func,.opp, connection, msg))
+        asyncio.create_task(_handle_async_response(func,.opp, connection, msg))
 
-    return schedule_op.dler
+    return schedule_handler
 
 
 def require_admin(func: const.WebSocketCommandHandler) -> const.WebSocketCommandHandler:

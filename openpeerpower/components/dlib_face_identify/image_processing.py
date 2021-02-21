@@ -14,8 +14,8 @@ from openpeerpower.components.image_processing import (
     PLATFORM_SCHEMA,
     ImageProcessingFaceEntity,
 )
-from openpeerpowerr.core import split_entity_id
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import split_entity_id
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 

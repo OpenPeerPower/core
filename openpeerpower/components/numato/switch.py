@@ -21,9 +21,9 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    api = opp.data[DOMAIN][DATA_API]
+    api =.opp.data[DOMAIN][DATA_API]
     switches = []
-    devices = opp.data[DOMAIN][CONF_DEVICES]
+    devices =.opp.data[DOMAIN][CONF_DEVICES]
     for device in [d for d in devices if CONF_SWITCHES in d]:
         device_id = device[CONF_ID]
         platform = device[CONF_SWITCHES]
@@ -88,7 +88,7 @@ class NumatoGpioSwitch(ToggleEntity):
                 self._device_id, self._port, 0 if self._invert_logic else 1
             )
             self._state = True
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
         except NumatoGpioError as err:
             _LOGGER.error(
                 "Failed to turn on Numato device %s port %s: %s",
@@ -104,7 +104,7 @@ class NumatoGpioSwitch(ToggleEntity):
                 self._device_id, self._port, 1 if self._invert_logic else 0
             )
             self._state = False
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
         except NumatoGpioError as err:
             _LOGGER.error(
                 "Failed to turn off Numato device %s port %s: %s",

@@ -8,9 +8,9 @@ import voluptuous as vol
 
 from openpeerpower.components.light import ATTR_TRANSITION
 from openpeerpower.const import CONF_PLATFORM, SERVICE_TURN_ON
-from openpeerpowerr.core import DOMAIN as HA_DOMAIN
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.entity_component import EntityComponent
+from openpeerpower.core import DOMAIN as HA_DOMAIN
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_component import EntityComponent
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 
@@ -19,7 +19,7 @@ STATE = "scening"
 STATES = "states"
 
 
-def _opp_domain_validator(config):
+def .opp_domain_validator(config):
     """Validate platform in config for openpeerpower domain."""
     if CONF_PLATFORM not in config:
         config = {CONF_PLATFORM: HA_DOMAIN, STATES: config}
@@ -49,7 +49,7 @@ def _platform_validator(config):
 
 PLATFORM_SCHEMA = vol.Schema(
     vol.All(
-        _opp_domain_validator,
+        .opp_domain_validator,
         vol.Schema({vol.Required(CONF_PLATFORM): str}, extra=vol.ALLOW_EXTRA),
         _platform_validator,
     ),
@@ -59,7 +59,7 @@ PLATFORM_SCHEMA = vol.Schema(
 
 async def async_setup.opp, config):
     """Set up the scenes."""
-    component = opp.data[DOMAIN] = EntityComponent(
+    component =.opp.data[DOMAIN] = EntityComponent(
         logging.getLogger(__name__), DOMAIN,.opp
     )
 
@@ -77,12 +77,12 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await opp..data[DOMAIN].async_setup_entry(entry)
+    return await.opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await opp..data[DOMAIN].async_unload_entry(entry)
+    return await.opp.data[DOMAIN].async_unload_entry(entry)
 
 
 class Scene(Entity):

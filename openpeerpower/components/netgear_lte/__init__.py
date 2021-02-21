@@ -19,15 +19,15 @@ from openpeerpower.const import (
     CONF_RECIPIENT,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import config_validation as cv, discovery
-from openpeerpowerr.helpers.aiohttp_client import async_create_clientsession
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.core import callback
+from openpeerpower.helpers import config_validation as cv, discovery
+from openpeerpower.helpers.aiohttp_client import async_create_clientsession
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_time_interval
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_time_interval
 
 from . import sensor_types
 
@@ -131,7 +131,7 @@ DISCONNECT_LTE_SCHEMA = vol.Schema({vol.Optional(ATTR_HOST): cv.string})
 class ModemData:
     """Class for modem state."""
 
-    opp = attr.ib()
+   .opp = attr.ib()
     host = attr.ib()
     modem = attr.ib()
 
@@ -179,11 +179,11 @@ async def async_setup.opp, config):
         )
        .opp.data[DATA_KEY] = LTEData(websession)
 
-        async def service_op.dler(service):
+        async def service_handler(service):
             """Apply a service."""
             host = service.data.get(ATTR_HOST)
             conf = {CONF_HOST: host}
-            modem_data = opp.data[DATA_KEY].get_modem_data(conf)
+            modem_data =.opp.data[DATA_KEY].get_modem_data(conf)
 
             if not modem_data:
                 _LOGGER.error("%s: host %s unavailable", service.service, host)
@@ -214,7 +214,7 @@ async def async_setup.opp, config):
 
         for service, schema in service_schemas.items():
            .opp.services.async_register(
-                DOMAIN, service, service_op.dler, schema=schema
+                DOMAIN, service, service_handler, schema=schema
             )
 
     netgear_lte_config = config[DOMAIN]
@@ -268,7 +268,7 @@ async def _setup_lte.opp, lte_config):
     host = lte_config[CONF_HOST]
     password = lte_config[CONF_PASSWORD]
 
-    websession = opp.data[DATA_KEY].websession
+    websession =.opp.data[DATA_KEY].websession
     modem = eternalegypt.Modem(hostname=host, websession=websession)
 
     modem_data = ModemData.opp, host, modem)
@@ -276,7 +276,7 @@ async def _setup_lte.opp, lte_config):
     try:
         await _login.opp, modem_data, password)
     except eternalegypt.Error:
-        retry_task = opp.loop.create_task(_retry_login.opp, modem_data, password))
+        retry_task =.opp.loop.create_task(_retry_login.opp, modem_data, password))
 
         @callback
         def cleanup_retry(event):
@@ -352,11 +352,11 @@ class LTEEntity(Entity):
         """Register unique_id while we know data is valid."""
         return f"{self.sensor_type}_{self.modem_data.data.serial_number}"
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callback."""
         self.async_on_remove(
             async_dispatcher_connect(
-                self.opp, DISPATCHER_NETGEAR_LTE, self.async_write_op.state
+                self.opp, DISPATCHER_NETGEAR_LTE, self.async_write_ha_state
             )
         )
 

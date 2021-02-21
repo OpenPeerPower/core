@@ -19,7 +19,7 @@ async def async_setup.opp):
 
     async def hook(action, config_key):
         """post_write_hook for Config View that reloads automations."""
-        await opp..services.async_call(DOMAIN, SERVICE_RELOAD)
+        await.opp.services.async_call(DOMAIN, SERVICE_RELOAD)
 
         if action != ACTION_DELETE:
             return

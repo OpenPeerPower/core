@@ -18,8 +18,8 @@ from openpeerpower.const import (
     CONF_PROTOCOL,
     CONF_USERNAME,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import config_validation as cv
+from openpeerpower.core import callback
+from openpeerpower.helpers import config_validation as cv
 
 # pylint:disable=unused-import
 from .const import (

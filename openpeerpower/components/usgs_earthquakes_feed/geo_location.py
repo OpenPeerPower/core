@@ -3,7 +3,7 @@ from datetime import timedelta
 import logging
 from typing import Optional
 
-from geojson_client.usgs_earthquake_op.ards_program_feed import (
+from geojson_client.usgs_earthquake_hazards_program_feed import (
     UsgsEarthquakeHazardsProgramFeedManager,
 )
 import voluptuous as vol
@@ -127,7 +127,7 @@ class UsgsEarthquakesFeedEntityManager:
     ):
         """Initialize the Feed Entity Manager."""
 
-        self._opp = opp
+        self..opp =.opp
         self._feed_manager = UsgsEarthquakeHazardsProgramFeedManager(
             self._generate_entity,
             self._update_entity,
@@ -148,7 +148,7 @@ class UsgsEarthquakesFeedEntityManager:
     def _init_regular_updates(self):
         """Schedule regular updates at the specified interval."""
         track_time_interval(
-            self._opp, lambda now: self._feed_manager.update(), self._scan_interval
+            self..opp, lambda now: self._feed_manager.update(), self._scan_interval
         )
 
     def get_entry(self, external_id):
@@ -163,11 +163,11 @@ class UsgsEarthquakesFeedEntityManager:
 
     def _update_entity(self, external_id):
         """Update entity."""
-        dispatcher_send(self._opp, SIGNAL_UPDATE_ENTITY.format(external_id))
+        dispatcher_send(self..opp, SIGNAL_UPDATE_ENTITY.format(external_id))
 
     def _remove_entity(self, external_id):
         """Remove entity."""
-        dispatcher_send(self._opp, SIGNAL_DELETE_ENTITY.format(external_id))
+        dispatcher_send(self..opp, SIGNAL_DELETE_ENTITY.format(external_id))
 
 
 class UsgsEarthquakesEvent(GeolocationEvent):
@@ -192,7 +192,7 @@ class UsgsEarthquakesEvent(GeolocationEvent):
         self._remove_signal_delete = None
         self._remove_signal_update = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self._remove_signal_delete = async_dispatcher_connect(
             self.opp,
@@ -215,7 +215,7 @@ class UsgsEarthquakesEvent(GeolocationEvent):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     @property
     def should_poll(self):

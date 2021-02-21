@@ -16,11 +16,11 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.core import Event, OpenPeerPower
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entityfilter import FILTER_SCHEMA
-from openpeerpowerr.helpers.event import async_call_later
-from openpeerpowerr.helpers.json import JSONEncoder
+from openpeerpower.core import Event, OpenPeerPower
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entityfilter import FILTER_SCHEMA
+from openpeerpower.helpers.event import async_call_later
+from openpeerpower.helpers.json import JSONEncoder
 
 from .const import (
     ADDITIONAL_ARGS,
@@ -76,7 +76,7 @@ async def async_setup.opp, yaml_config):
         }
         conn_str_client = False
 
-    instance = opp.data[DOMAIN] = AzureEventHub(
+    instance =.opp.data[DOMAIN] = AzureEventHub(
        .opp,
         client_args,
         conn_str_client,
@@ -102,7 +102,7 @@ class AzureEventHub:
         max_delay: int,
     ):
         """Initialize the listener."""
-        self.opp = opp
+        self.opp =.opp
         self.queue = asyncio.PriorityQueue()
         self._client_args = client_args
         self._conn_str_client = conn_str_client

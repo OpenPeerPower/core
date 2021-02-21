@@ -56,7 +56,7 @@ def gcm_api_deprecated(value):
             "Configuring html5_push_notifications via the GCM api"
             " has been deprecated and will stop working after April 11,"
             " 2019. Use the VAPID configuration instead. For instructions,"
-            " see https://www.openpeerpower.io/integrations/html5/"
+            " see https://www.open-peer-power.io/integrations/html5/"
         )
     return value
 
@@ -168,7 +168,7 @@ HTML5_SHOWNOTIFICATION_PARAMETERS = (
 
 def get_service.opp, config, discovery_info=None):
     """Get the HTML5 push notification service."""
-    json_path = opp.config.path(REGISTRATIONS_FILE)
+    json_path =.opp.config.path(REGISTRATIONS_FILE)
 
     registrations = _load_config(json_path)
 
@@ -240,9 +240,9 @@ class HTML5PushRegistrationView(OpenPeerPowerView):
         self.registrations[name] = data
 
         try:
-            opp = request.app["opp"]
+           .opp = request.app[.opp"]
 
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                 save_json, self.json_path, self.registrations
             )
             return self.json_message("Push notification subscriber registered.")
@@ -288,9 +288,9 @@ class HTML5PushRegistrationView(OpenPeerPowerView):
         reg = self.registrations.pop(found)
 
         try:
-            opp = request.app["opp"]
+           .opp = request.app[.opp"]
 
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                 save_json, self.json_path, self.registrations
             )
         except OpenPeerPowerError:
@@ -397,7 +397,7 @@ class HTML5PushCallbackView(OpenPeerPowerView):
             )
 
         event_name = f"{NOTIFY_CALLBACK_EVENT}.{event_payload[ATTR_TYPE]}"
-        request.app["opp"].bus.fire(event_name, event_payload)
+        request.app[.opp"].bus.fire(event_name, event_payload)
         return self.json({"status": "ok", "event": event_payload[ATTR_TYPE]})
 
 

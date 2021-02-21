@@ -1,15 +1,15 @@
 """Support for Minut Point."""
 import logging
 
-from openpeerpower.components.alarm_control_panel import DOMAIN, AlarmControlPanelEntity
-from openpeerpower.components.alarm_control_panel.const import SUPPORT_ALARM_ARM_AWAY
-from openpeerpower.const import (
+from  openpeerpower.components.alarm_control_panel import DOMAIN, AlarmControlPanelEntity
+from  openpeerpower.components.alarm_control_panel.const import SUPPORT_ALARM_ARM_AWAY
+from  openpeerpower.const import (
     STATE_ALARM_ARMED_AWAY,
     STATE_ALARM_DISARMED,
     STATE_ALARM_TRIGGERED,
 )
-from openpeerpower.core import callback
-from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from  openpeerpower.core import callback
+from  openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import DOMAIN as POINT_DOMAIN, POINT_DISCOVERY_NEW, SIGNAL_WEBHOOK
 
@@ -28,7 +28,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     async def async_discover_home(home_id):
         """Discover and add a discovered home."""
-        client = opp.data[POINT_DOMAIN][config_entry.entry_id]
+        client =.opp.data[POINT_DOMAIN][config_entry.entry_id]
         async_add_entities([MinutPointAlarmControl(client, home_id)], True)
 
     async_dispatcher_connect(
@@ -46,16 +46,16 @@ class MinutPointAlarmControl(AlarmControlPanelEntity):
         self._async_unsub_hook_dispatcher_connect = None
         self._changed_by = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to Open Peer Power."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self._async_unsub_hook_dispatcher_connect = async_dispatcher_connect(
             self.opp, SIGNAL_WEBHOOK, self._webhook_event
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect dispatcher listener when removed."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         if self._async_unsub_hook_dispatcher_connect:
             self._async_unsub_hook_dispatcher_connect()
 
@@ -72,7 +72,7 @@ class MinutPointAlarmControl(AlarmControlPanelEntity):
         _LOGGER.debug("Received webhook: %s", _type)
         self._home["alarm_status"] = _type
         self._changed_by = _changed_by
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def _home(self):

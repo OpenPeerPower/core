@@ -114,15 +114,15 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class RflinkCover(RflinkCommand, CoverEntity, RestoreEntity):
     """Rflink entity which can switch on/stop/off (eg: cover)."""
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Restore RFLink cover state (OPEN/CLOSE)."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         old_state = await self.async_get_last_state()
         if old_state is not None:
             self._state = old_state.state == STATE_OPEN
 
-    def _op.dle_event(self, event):
+    def _handle_event(self, event):
         """Adjust state if Rflink picks up a remote command for this device."""
         self.cancel_queued_send_commands()
 
@@ -149,15 +149,15 @@ class RflinkCover(RflinkCommand, CoverEntity, RestoreEntity):
 
     async def async_close_cover(self, **kwargs):
         """Turn the device close."""
-        await self._async_op.dle_command("close_cover")
+        await self._async_handle_command("close_cover")
 
     async def async_open_cover(self, **kwargs):
         """Turn the device open."""
-        await self._async_op.dle_command("open_cover")
+        await self._async_handle_command("open_cover")
 
     async def async_stop_cover(self, **kwargs):
         """Turn the device stop."""
-        await self._async_op.dle_command("stop_cover")
+        await self._async_handle_command("stop_cover")
 
 
 class InvertedRflinkCover(RflinkCover):

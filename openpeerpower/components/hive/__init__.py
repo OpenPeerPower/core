@@ -80,7 +80,7 @@ async def async_setup.opp, config):
     async def heating_boost(service):
         """Handle the service call."""
 
-        entity_lookup = opp.data[DOMAIN]["entity_lookup"]
+        entity_lookup =.opp.data[DOMAIN]["entity_lookup"]
         hive_id = entity_lookup.get(service.data[ATTR_ENTITY_ID])
         if not hive_id:
             # log or raise error
@@ -94,7 +94,7 @@ async def async_setup.opp, config):
 
     async def hot_water_boost(service):
         """Handle the service call."""
-        entity_lookup = opp.data[DOMAIN]["entity_lookup"]
+        entity_lookup =.opp.data[DOMAIN]["entity_lookup"]
         hive_id = entity_lookup.get(service.data[ATTR_ENTITY_ID])
         if not hive_id:
             # log or raise error
@@ -169,10 +169,10 @@ class HiveEntity(Entity):
         self.attributes = {}
         self._unique_id = f'{self.device["hiveID"]}-{self.device["hiveType"]}'
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """When entity is added to Open Peer Power."""
         self.async_on_remove(
-            async_dispatcher_connect(self.opp, DOMAIN, self.async_write_op.state)
+            async_dispatcher_connect(self.opp, DOMAIN, self.async_write_ha_state)
         )
         if self.device["hiveType"] in SERVICES:
             entity_lookup = self.opp.data[DOMAIN]["entity_lookup"]

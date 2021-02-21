@@ -26,7 +26,7 @@ from openpeerpower.const import (
     STATE_ALARM_ARMED_NIGHT,
     STATE_ALARM_DISARMED,
 )
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import ATTR_EVENT, DOMAIN, SERVICE_PUSH_ALARM_STATE, SERVICE_TRIGGER
 
@@ -103,13 +103,13 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         """Set the service state as device state attribute."""
         entity_ids = service.data.get(ATTR_ENTITY_ID)
         state = service.data.get(ATTR_STATE)
-        devices = opp.data[DATA_IFTTT_ALARM]
+        devices =.opp.data[DATA_IFTTT_ALARM]
         if entity_ids:
             devices = [d for d in devices if d.entity_id in entity_ids]
 
         for device in devices:
             device.push_alarm_state(state)
-            device.async_schedule_update_op.state()
+            device.async_schedule_update_ha_state()
 
    .opp.services.register(
         DOMAIN,

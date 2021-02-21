@@ -10,8 +10,8 @@ from openpeerpower.components.light import (
     SUPPORT_COLOR_TEMP,
     LightEntity,
 )
-import openpeerpowerr.util.color as color_util
-from openpeerpowerr.util.color import (
+import openpeerpower.util.color as color_util
+from openpeerpower.util.color import (
     color_temperature_kelvin_to_mired as kelvin_to_mired,
     color_temperature_mired_to_kelvin as mired_to_kelvin,
 )

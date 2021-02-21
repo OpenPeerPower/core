@@ -15,10 +15,10 @@ from openpeerpower.const import (
     CONF_SCAN_INTERVAL,
     CONF_SENSOR_TYPE,
 )
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_time_interval
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_time_interval
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -193,7 +193,7 @@ class FroniusAdapter:
 
         # Schedule an update for all included sensors
         for sensor in self._registered_sensors:
-            sensor.async_schedule_update_op.state(True)
+            sensor.async_schedule_update_ha_state(True)
 
     async def _update(self) -> Dict:
         """Return values of interest."""
@@ -292,10 +292,10 @@ class FroniusTemplateSensor(Entity):
         self._state = state.get("value")
         self._unit = state.get("unit")
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register at parent component for updates."""
         await self.parent.register(self)
 
-    def __op.h__(self):
+    def __hash__(self):
         """Hash sensor by hashing its name."""
         return hash(self.name)

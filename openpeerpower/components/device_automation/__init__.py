@@ -123,7 +123,7 @@ async def _async_get_device_automations.opp, automation_type, device_id):
         raise DeviceNotFound
 
     for entry_id in device.config_entries:
-        config_entry = opp.config_entries.async_get_entry(entry_id)
+        config_entry =.opp.config_entries.async_get_entry(entry_id)
         domains.add(config_entry.domain)
 
     entity_entries = async_entries_for_device(entity_registry, device_id)
@@ -182,7 +182,7 @@ def handle_device_errors(func):
     """Handle device automation errors."""
 
     @wraps(func)
-    async def with_error_op.dling.opp, connection, msg):
+    async def with_error_handling.opp, connection, msg):
         try:
             await func.opp, connection, msg)
         except DeviceNotFound:
@@ -190,7 +190,7 @@ def handle_device_errors(func):
                 msg["id"], websocket_api.const.ERR_NOT_FOUND, "Device not found"
             )
 
-    return with_error_op.dling
+    return with_error_handling
 
 
 @websocket_api.websocket_command(
@@ -200,7 +200,7 @@ def handle_device_errors(func):
     }
 )
 @websocket_api.async_response
-@op.dle_device_errors
+@handle_device_errors
 async def websocket_device_automation_list_actions.opp, connection, msg):
     """Handle request for device actions."""
     device_id = msg["device_id"]
@@ -215,7 +215,7 @@ async def websocket_device_automation_list_actions.opp, connection, msg):
     }
 )
 @websocket_api.async_response
-@op.dle_device_errors
+@handle_device_errors
 async def websocket_device_automation_list_conditions.opp, connection, msg):
     """Handle request for device conditions."""
     device_id = msg["device_id"]
@@ -230,7 +230,7 @@ async def websocket_device_automation_list_conditions.opp, connection, msg):
     }
 )
 @websocket_api.async_response
-@op.dle_device_errors
+@handle_device_errors
 async def websocket_device_automation_list_triggers.opp, connection, msg):
     """Handle request for device triggers."""
     device_id = msg["device_id"]
@@ -245,7 +245,7 @@ async def websocket_device_automation_list_triggers.opp, connection, msg):
     }
 )
 @websocket_api.async_response
-@op.dle_device_errors
+@handle_device_errors
 async def websocket_device_automation_get_action_capabilities.opp, connection, msg):
     """Handle request for device action capabilities."""
     action = msg["action"]
@@ -262,7 +262,7 @@ async def websocket_device_automation_get_action_capabilities.opp, connection, m
     }
 )
 @websocket_api.async_response
-@op.dle_device_errors
+@handle_device_errors
 async def websocket_device_automation_get_condition_capabilities.opp, connection, msg):
     """Handle request for device condition capabilities."""
     condition = msg["condition"]
@@ -279,7 +279,7 @@ async def websocket_device_automation_get_condition_capabilities.opp, connection
     }
 )
 @websocket_api.async_response
-@op.dle_device_errors
+@handle_device_errors
 async def websocket_device_automation_get_trigger_capabilities.opp, connection, msg):
     """Handle request for device trigger capabilities."""
     trigger = msg["trigger"]

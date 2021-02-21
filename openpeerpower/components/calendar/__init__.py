@@ -29,7 +29,7 @@ SCAN_INTERVAL = timedelta(seconds=60)
 
 async def async_setup.opp, config):
     """Track states and offer events for calendars."""
-    component = opp.data[DOMAIN] = EntityComponent(
+    component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
     )
 
@@ -37,7 +37,7 @@ async def async_setup.opp, config):
    .opp.http.register_view(CalendarEventView(component))
 
    .opp.components.frontend.async_register_built_in_panel(
-        "calendar", "calendar", "opp:calendar"
+        "calendar", "calendar", .opp:calendar"
     )
 
     await component.async_setup(config)
@@ -46,12 +46,12 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await opp..data[DOMAIN].async_setup_entry(entry)
+    return await.opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await opp..data[DOMAIN].async_unload_entry(entry)
+    return await.opp.data[DOMAIN].async_unload_entry(entry)
 
 
 def get_date(date):
@@ -200,7 +200,7 @@ class CalendarEventView(http.OpenPeerPowerView):
         except (ValueError, AttributeError):
             return web.Response(status=HTTP_BAD_REQUEST)
         event_list = await entity.async_get_events(
-            request.app["opp"], start_date, end_date
+            request.app[.opp"], start_date, end_date
         )
         return self.json(event_list)
 
@@ -217,11 +217,11 @@ class CalendarListView(http.OpenPeerPowerView):
 
     async def get(self, request: web.Request) -> web.Response:
         """Retrieve calendar list."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
         calendar_list: List[Dict[str, str]] = []
 
         for entity in self.component.entities:
-            state = opp.states.get(entity.entity_id)
+            state =.opp.states.get(entity.entity_id)
             calendar_list.append({"name": state.name, "entity_id": entity.entity_id})
 
         return self.json(sorted(calendar_list, key=lambda x: cast(str, x["name"])))

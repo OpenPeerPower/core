@@ -47,7 +47,7 @@ class BroadlinkFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         if device.type not in supported_types:
             _LOGGER.error(
                 "Unsupported device: %s. If it worked before, please open "
-                "an issue at https://github.com/openpeerpower/core/issues",
+                "an issue at https://github.com/open-peer-power/core/issues",
                 hex(device.devtype),
             )
             raise data_entry_flow.AbortFlow("not_supported")

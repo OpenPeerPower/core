@@ -52,6 +52,9 @@ class BondEntity(Entity):
     @property
     def name(self) -> Optional[str]:
         """Get entity name."""
+        if self._sub_device:
+            sub_device_name = self._sub_device.replace("_", " ").title()
+            return f"{self._device.name} {sub_device_name}"
         return self._device.name
 
     @property
@@ -65,7 +68,8 @@ class BondEntity(Entity):
         device_info = {
             ATTR_NAME: self.name,
             "manufacturer": self._hub.make,
-            "identifiers": {(DOMAIN, self._hub.bond_id, self._device_id)},
+            "identifiers": {(DOMAIN, self._hub.bond_id, self._device.device_id)},
+            "suggested_area": self._device.location,
             "via_device": (DOMAIN, self._hub.bond_id),
         }
         if not self._hub.is_bridge:
@@ -111,7 +115,7 @@ class BondEntity(Entity):
 
         async with self._update_lock:
             await self._async_update_from_api()
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def _async_update_from_api(self):
         """Fetch via the API."""
@@ -146,11 +150,11 @@ class BondEntity(Entity):
     def _async_bpup_callback(self, state):
         """Process a state change from BPUP."""
         self._async_state_callback(state)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to BPUP and start polling."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self._update_lock = Lock()
         self._bpup_subs.subscribe(self._device_id, self._async_bpup_callback)
         self.async_on_remove(
@@ -159,7 +163,7 @@ class BondEntity(Entity):
             )
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Unsubscribe from BPUP data on remove."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         self._bpup_subs.unsubscribe(self._device_id, self._async_bpup_callback)

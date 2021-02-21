@@ -113,14 +113,14 @@ class HpIloSensor(Entity):
         unit_of_measurement,
     ):
         """Initialize the HP iLO sensor."""
-        self._opp = opp
+        self..opp =.opp
         self._name = sensor_name
         self._unit_of_measurement = unit_of_measurement
         self._ilo_function = SENSOR_TYPES[sensor_type][1]
         self.hp_ilo_data = hp_ilo_data
 
         if sensor_value_template is not None:
-            sensor_value_template.opp = opp
+            sensor_value_template.opp =.opp
         self._sensor_value_template = sensor_value_template
 
         self._state = None

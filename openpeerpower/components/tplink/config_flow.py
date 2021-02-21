@@ -1,6 +1,6 @@
 """Config flow for TP-Link."""
 from openpeerpower import config_entries
-from openpeerpowerr.helpers import config_entry_flow
+from openpeerpower.helpers import config_entry_flow
 
 from .common import async_get_discoverable_devices
 from .const import DOMAIN

@@ -35,7 +35,7 @@ SOURCE = "geonetnz_quakes"
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the GeoNet NZ Quakes Feed platform."""
-    manager = opp.data[DOMAIN][FEED][entry.entry_id]
+    manager =.opp.data[DOMAIN][FEED][entry.entry_id]
 
     @callback
     def async_add_geolocation(feed_manager, integration_id, external_id):
@@ -77,7 +77,7 @@ class GeonetnzQuakesEvent(GeolocationEvent):
         self._remove_signal_delete = None
         self._remove_signal_update = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self._remove_signal_delete = async_dispatcher_connect(
             self.opp,
@@ -90,7 +90,7 @@ class GeonetnzQuakesEvent(GeolocationEvent):
             self._update_callback,
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Call when entity will be removed from.opp."""
         self._remove_signal_delete()
         self._remove_signal_update()
@@ -107,7 +107,7 @@ class GeonetnzQuakesEvent(GeolocationEvent):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     @property
     def should_poll(self):

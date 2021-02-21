@@ -1,7 +1,7 @@
 {
   "domain": "upc_connect",
   "name": "UPC Connect Box",
-  "documentation": "https://www.openpeerpower.io/integrations/upc_connect",
+  "documentation": "https://www.open-peer-power.io/integrations/upc_connect",
   "requirements": ["connect-box==0.2.8"],
   "codeowners": ["@pvizeli", "@fabaff"]
 }

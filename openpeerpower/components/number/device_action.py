@@ -10,9 +10,9 @@ from openpeerpower.const import (
     CONF_ENTITY_ID,
     CONF_TYPE,
 )
-from openpeerpowerr.core import Context, OpenPeerPower
-from openpeerpowerr.helpers import entity_registry
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import Context, OpenPeerPower
+from openpeerpower.helpers import entity_registry
+import openpeerpower.helpers.config_validation as cv
 
 from . import DOMAIN, const
 
@@ -58,7 +58,7 @@ async def async_call_action_from_config(
     if config[CONF_TYPE] != ATYP_SET_VALUE:
         return
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         const.SERVICE_SET_VALUE,
         {

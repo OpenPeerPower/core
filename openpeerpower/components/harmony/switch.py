@@ -14,7 +14,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up harmony activity switches."""
-    data = opp.data[DOMAIN][entry.entry_id]
+    data =.opp.data[DOMAIN][entry.entry_id]
     activities = data.activities
 
     switches = []
@@ -76,7 +76,7 @@ class HarmonyActivitySwitch(ConnectionStateMixin, SwitchEntity):
         """Stop this activity."""
         await self._data.async_power_off()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
 
         callbacks = {
@@ -90,4 +90,4 @@ class HarmonyActivitySwitch(ConnectionStateMixin, SwitchEntity):
         self.async_on_remove(self._data.async_subscribe(HarmonyCallback(**callbacks)))
 
     def _activity_update(self, activity_info: tuple):
-        self.async_write_op.state()
+        self.async_write_ha_state()

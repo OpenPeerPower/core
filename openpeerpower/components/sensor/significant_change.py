@@ -6,7 +6,7 @@ from openpeerpower.const import (
     ATTR_UNIT_OF_MEASUREMENT,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.core import OpenPeerPower, callback
+from openpeerpower.core import OpenPeerPower, callback
 
 from . import DEVICE_CLASS_BATTERY, DEVICE_CLASS_HUMIDITY, DEVICE_CLASS_TEMPERATURE
 

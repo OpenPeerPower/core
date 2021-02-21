@@ -1,7 +1,7 @@
 {
   "domain": "alpha_vantage",
   "name": "Alpha Vantage",
-  "documentation": "https://www.openpeerpower.io/integrations/alpha_vantage",
+  "documentation": "https://www.open-peer-power.io/integrations/alpha_vantage",
   "requirements": ["alpha_vantage==2.3.1"],
   "codeowners": ["@fabaff"]
 }

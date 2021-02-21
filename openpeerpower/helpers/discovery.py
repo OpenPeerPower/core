@@ -11,7 +11,7 @@ from openpeerpower import core, setup
 from openpeerpower.const import ATTR_DISCOVERED, ATTR_SERVICE, EVENT_PLATFORM_DISCOVERED
 from openpeerpower.core import CALLBACK_TYPE
 from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util.async_ import run_callback_threadsafe
 
 EVENT_LOAD_PLATFORM = "load_platform.{}"
@@ -20,7 +20,7 @@ ATTR_PLATFORM = "platform"
 # mypy: disallow-any-generics
 
 
-@bind_opp
+@bind.opp
 def listen(
    .opp: core.OpenPeerPower,
     service: Union[str, Collection[str]],
@@ -34,7 +34,7 @@ def listen(
 
 
 @core.callback
-@bind_opp
+@bind.opp
 def async_listen(
    .opp: core.OpenPeerPower,
     service: Union[str, Collection[str]],
@@ -49,12 +49,12 @@ def async_listen(
     else:
         service = tuple(service)
 
-    job = core.OppJob(callback)
+    job = core.HassJob(callback)
 
     async def discovery_event_listener(event: core.Event) -> None:
         """Listen for discovery events."""
         if ATTR_SERVICE in event.data and event.data[ATTR_SERVICE] in service:
-            task = opp.async_run_opp_job(
+            task =.opp.async_run.opp_job(
                 job, event.data[ATTR_SERVICE], event.data.get(ATTR_DISCOVERED)
             )
             if task:
@@ -63,7 +63,7 @@ def async_listen(
    .opp.bus.async_listen(EVENT_PLATFORM_DISCOVERED, discovery_event_listener)
 
 
-@bind_opp
+@bind.opp
 def discover(
    .opp: core.OpenPeerPower,
     service: str,
@@ -79,7 +79,7 @@ def discover(
     )
 
 
-@bind_opp
+@bind.opp
 async def async_discover(
    .opp: core.OpenPeerPower,
     service: str,
@@ -99,7 +99,7 @@ async def async_discover(
    .opp.bus.async_fire(EVENT_PLATFORM_DISCOVERED, data)
 
 
-@bind_opp
+@bind.opp
 def listen_platform(
    .opp: core.OpenPeerPower, component: str, callback: CALLBACK_TYPE
 ) -> None:
@@ -109,7 +109,7 @@ def listen_platform(
     ).result()
 
 
-@bind_opp
+@bind.opp
 def async_listen_platform(
    .opp: core.OpenPeerPower,
     component: str,
@@ -120,7 +120,7 @@ def async_listen_platform(
     This method must be run in the event loop.
     """
     service = EVENT_LOAD_PLATFORM.format(component)
-    job = core.OppJob(callback)
+    job = core.HassJob(callback)
 
     async def discovery_platform_listener(event: core.Event) -> None:
         """Listen for platform discovery events."""
@@ -132,14 +132,14 @@ def async_listen_platform(
         if not platform:
             return
 
-        task = opp.async_run_opp_job(job, platform, event.data.get(ATTR_DISCOVERED))
+        task =.opp.async_run.opp_job(job, platform, event.data.get(ATTR_DISCOVERED))
         if task:
             await task
 
    .opp.bus.async_listen(EVENT_PLATFORM_DISCOVERED, discovery_platform_listener)
 
 
-@bind_opp
+@bind.opp
 def load_platform(
    .opp: core.OpenPeerPower,
     component: str,
@@ -164,7 +164,7 @@ def load_platform(
     )
 
 
-@bind_opp
+@bind.opp
 async def async_load_platform(
    .opp: core.OpenPeerPower,
     component: str,
@@ -187,7 +187,7 @@ async def async_load_platform(
 
     This method is a coroutine.
     """
-    assert.opp_config, "You need to pass in the real opp config"
+    assert.opp_config, "You need to pass in the real.opp config"
 
     setup_success = True
 

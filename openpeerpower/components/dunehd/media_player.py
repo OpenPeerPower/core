@@ -58,7 +58,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Add Dune HD entities from a config_entry."""
     unique_id = config_entry.entry_id
 
-    player = opp.data[DOMAIN][config_entry.entry_id]
+    player =.opp.data[DOMAIN][config_entry.entry_id]
 
     async_add_entities([DuneHDPlayerEntity(player, DEFAULT_NAME, unique_id)], True)
 

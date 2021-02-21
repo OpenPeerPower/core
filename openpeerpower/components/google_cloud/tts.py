@@ -8,7 +8,7 @@ from google.cloud import texttospeech
 import voluptuous as vol
 
 from openpeerpower.components.tts import CONF_LANG, PLATFORM_SCHEMA, Provider
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -145,7 +145,7 @@ async def async_get_engine.opp, config, discovery_info=None):
     """Set up Google Cloud TTS component."""
     key_file = config.get(CONF_KEY_FILE)
     if key_file:
-        key_file = opp.config.path(key_file)
+        key_file =.opp.config.path(key_file)
         if not os.path.isfile(key_file):
             _LOGGER.error("File %s doesn't exist", key_file)
             return None
@@ -183,7 +183,7 @@ class GoogleCloudTTSProvider(Provider):
         text_type=DEFAULT_TEXT_TYPE,
     ):
         """Init Google Cloud TTS service."""
-        self.opp = opp
+        self.opp =.opp
         self.name = "Google Cloud TTS"
         self._language = language
         self._gender = gender

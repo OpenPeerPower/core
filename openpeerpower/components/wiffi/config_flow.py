@@ -9,7 +9,7 @@ from wiffi import WiffiTcpServer
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_PORT, CONF_TIMEOUT
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from .const import (  # pylint: disable=unused-import
     DEFAULT_PORT,

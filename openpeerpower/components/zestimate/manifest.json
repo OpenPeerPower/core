@@ -1,7 +1,7 @@
 {
   "domain": "zestimate",
   "name": "Zestimate",
-  "documentation": "https://www.openpeerpower.io/integrations/zestimate",
+  "documentation": "https://www.open-peer-power.io/integrations/zestimate",
   "requirements": ["xmltodict==0.12.0"],
   "codeowners": []
 }

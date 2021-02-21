@@ -1,6 +1,6 @@
 {
   "domain": "google_wifi",
   "name": "Google Wifi",
-  "documentation": "https://www.openpeerpower.io/integrations/google_wifi",
+  "documentation": "https://www.open-peer-power.io/integrations/google_wifi",
   "codeowners": []
 }

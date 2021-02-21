@@ -3,8 +3,8 @@ from openpeerpower.components.binary_sensor import (
     DEVICE_CLASS_SMOKE,
     BinarySensorEntity,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import (
     CONF_OUTPUTS,
@@ -23,7 +23,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     configured_zones = discovery_info[CONF_ZONES]
-    controller = opp.data[DATA_SATEL]
+    controller =.opp.data[DATA_SATEL]
 
     devices = []
 
@@ -62,7 +62,7 @@ class SatelIntegraBinarySensor(BinarySensorEntity):
         self._react_to_signal = react_to_signal
         self._satel = controller
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         if self._react_to_signal == SIGNAL_OUTPUTS_UPDATED:
             if self._device_number in self._satel.violated_outputs:
@@ -111,4 +111,4 @@ class SatelIntegraBinarySensor(BinarySensorEntity):
         """Update the zone's state, if needed."""
         if self._device_number in zones and self._state != zones[self._device_number]:
             self._state = zones[self._device_number]
-            self.async_write_op.state()
+            self.async_write_ha_state()

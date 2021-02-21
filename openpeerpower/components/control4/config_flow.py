@@ -5,7 +5,7 @@ import logging
 from aiohttp.client_exceptions import ClientError
 from pyControl4.account import C4Account
 from pyControl4.director import C4Director
-from pyControl4.error_op.dling import NotFound, Unauthorized
+from pyControl4.error_handling import NotFound, Unauthorized
 import voluptuous as vol
 
 from openpeerpower import config_entries, exceptions
@@ -43,7 +43,7 @@ class Control4Validator:
         self.password = password
         self.controller_unique_id = None
         self.director_bearer_token = None
-        self.opp = opp
+        self.opp =.opp
 
     async def authenticate(self) -> bool:
         """Test if we can authenticate with the Control4 account API."""

@@ -14,13 +14,13 @@ from .handler import OppioAPIError
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_addon_panel.opp: OpenPeerPowerType, oppio):
+async def async_setup_addon_panel.opp.OpenPeerPowerType, opp.):
     """Add-on Ingress Panel setup."""
-    oppio_addon_panel = OppIOAddonPanel.opp, oppio)
-   .opp.http.register_view(oppio_addon_panel)
+    opp._addon_panel = OppIOAddonPanel.opp.opp.)
+   .opp.ttp.register_view(opp._addon_panel)
 
     # If panels are exists
-    panels = await opp.io_addon_panel.get_panels()
+    panels = await opp.o_addon_panel.get_panels()
     if not panels:
         return
 
@@ -29,7 +29,7 @@ async def async_setup_addon_panel.opp: OpenPeerPowerType, oppio):
     for addon, data in panels.items():
         if not data[ATTR_ENABLE]:
             continue
-        jobs.append(_register_panel.opp, addon, data))
+        jobs.append(_register_panel.opp.addon, data))
 
     if jobs:
         await asyncio.wait(jobs)
@@ -38,13 +38,13 @@ async def async_setup_addon_panel.opp: OpenPeerPowerType, oppio):
 class OppIOAddonPanel(OpenPeerPowerView):
     """Opp.io view to handle base part."""
 
-    name = "api:oppio_push:panel"
-    url = "/api/oppio_push/panel/{addon}"
+    name = "api:opp._push:panel"
+    url = "/api/opp._push/panel/{addon}"
 
-    def __init__(self,.opp, oppio):
+    def __init__(self,.opp.opp.):
         """Initialize WebView."""
-        self.opp = opp
-        self.oppio = oppio
+        self opp. opp
+        self opp. = opp.
 
     async def post(self, request, addon):
         """Handle new add-on panel requests."""
@@ -57,32 +57,32 @@ class OppIOAddonPanel(OpenPeerPowerView):
         data = panels[addon]
 
         # Register panel
-        await _register_panel(self.opp, addon, data)
+        await _register_panel(self opp.addon, data)
         return web.Response()
 
     async def delete(self, request, addon):
         """Handle remove add-on panel requests."""
-        self.opp.components.frontend.async_remove_panel(addon)
+        self opp.omponents.frontend.async_remove_panel(addon)
         return web.Response()
 
     async def get_panels(self):
         """Return panels add-on info data."""
         try:
-            data = await self.oppio.get_ingress_panels()
+            data = await self opp..get_ingress_panels()
             return data[ATTR_PANELS]
         except OppioAPIError as err:
             _LOGGER.error("Can't read panel info: %s", err)
         return {}
 
 
-async def _register_panel.opp, addon, data):
+async def _register_panel.opp.addon, data):
     """Init coroutine to register the panel."""
-    await opp..components.panel_custom.async_register_panel(
+    await opp.components.panel_custom.async_register_panel(
         frontend_url_path=addon,
-        webcomponent_name="oppio-main",
+        webcomponent_name="opp.-main",
         sidebar_title=data[ATTR_TITLE],
         sidebar_icon=data[ATTR_ICON],
-        js_url="/api/oppio/app/entrypoint.js",
+        js_url="/api/opp./app/entrypoint.js",
         embed_iframe=True,
         require_admin=data[ATTR_ADMIN],
         config={"ingress": addon},

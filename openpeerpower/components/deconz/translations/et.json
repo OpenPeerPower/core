@@ -4,7 +4,7 @@
             "already_configured": "L\u00fc\u00fcs on juba h\u00e4\u00e4lestatud",
             "already_in_progress": "Seadistamine on juba k\u00e4imas",
             "no_bridges": "DeCONZ l\u00fc\u00fcse ei leitud",
-            "no_op.dware_available": "DeCONZi raadio riistvara puudub",
+            "no_hardware_available": "DeCONZi raadio riistvara puudub",
             "not_deconz_bridge": "See pole deCONZ-i sild",
             "updated_instance": "DeCONZ-i eksemplarile omistati uus hostiaadress"
         },
@@ -13,9 +13,9 @@
         },
         "flow_title": "deCONZ Zigbee l\u00fc\u00fcs ( {host} )",
         "step": {
-            "oppio_confirm": {
-                "description": "Kas soovid seadistada Open Peer Power-i \u00fchenduse deCONZ-l\u00fc\u00fcsiga, mida pakub Opp.io lisandmoodul {addon} ?",
-                "title": "deCONZ Zigbee v\u00e4rav Opp.io pistikprogrammi kaudu"
+            .oppio_confirm": {
+                "description": "Kas soovid seadistada Open Peer Power-i \u00fchenduse deCONZ-l\u00fc\u00fcsiga, mida pakub Hass.io lisandmoodul {addon} ?",
+                "title": "deCONZ Zigbee v\u00e4rav Hass.io pistikprogrammi kaudu"
             },
             "link": {
                 "description": "Open Peer Poweri registreerumiseks ava deCONZ-i l\u00fc\u00fcs.\n\n 1. Mine deCONZ Settings - > Gateway - > Advanced\n 2. Vajuta nuppu \"Authenticate app\"",

@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.const import CONF_FILE_PATH, CONF_NAME
-from openpeerpowerr.helpers import config_validation as cv, discovery
+from openpeerpower.helpers import config_validation as cv, discovery
 
 from .const import (
     CONF_HORIZONTAL_FLIP,

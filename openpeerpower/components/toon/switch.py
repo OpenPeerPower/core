@@ -23,7 +23,7 @@ from .const import (
     SWITCH_ENTITIES,
 )
 from .coordinator import ToonDataUpdateCoordinator
-from .helpers import toon_exception_op.dler
+from .helpers import toon_exception_handler
 from .models import ToonDisplayDeviceEntity, ToonEntity
 
 
@@ -31,7 +31,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up a Toon switches based on a config entry."""
-    coordinator = opp.data[DOMAIN][entry.entry_id]
+    coordinator =.opp.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
         [ToonProgramSwitch(coordinator), ToonHolidayModeSwitch(coordinator)]
@@ -79,14 +79,14 @@ class ToonProgramSwitch(ToonSwitch, ToonDisplayDeviceEntity):
         """Initialize the Toon program switch."""
         super().__init__(coordinator, key="thermostat_program")
 
-    @toon_exception_op.dler
+    @toon_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the Toon program switch."""
         await self.coordinator.toon.set_active_state(
             ACTIVE_STATE_AWAY, PROGRAM_STATE_OFF
         )
 
-    @toon_exception_op.dler
+    @toon_exception_handler
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the Toon program switch."""
         await self.coordinator.toon.set_active_state(
@@ -101,14 +101,14 @@ class ToonHolidayModeSwitch(ToonSwitch, ToonDisplayDeviceEntity):
         """Initialize the Toon holiday switch."""
         super().__init__(coordinator, key="thermostat_holiday_mode")
 
-    @toon_exception_op.dler
+    @toon_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the Toon holiday mode switch."""
         await self.coordinator.toon.set_active_state(
             ACTIVE_STATE_AWAY, PROGRAM_STATE_ON
         )
 
-    @toon_exception_op.dler
+    @toon_exception_handler
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the Toon holiday mode switch."""
         await self.coordinator.toon.set_active_state(

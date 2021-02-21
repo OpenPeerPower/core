@@ -9,9 +9,9 @@ import voluptuous as vol
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_ID
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers import config_validation as cv, entity_platform
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers import config_validation as cv, entity_platform
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from . import RainMachineEntity, async_update_programs_and_zones
 from .const import (
@@ -151,11 +151,11 @@ async def async_setup_entry(
     ]:
         platform.async_register_entity_service(service_name, schema, method)
 
-    controller = opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id]
-    programs_coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+    controller =.opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id]
+    programs_coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
         DATA_PROGRAMS
     ]
-    zones_coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][DATA_ZONES]
+    zones_coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][DATA_ZONES]
 
     entities = []
     for uid, program in programs_coordinator.data.items():

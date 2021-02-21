@@ -1,5 +1,5 @@
 """Base class for UniFi clients."""
-from openpeerpowerr.helpers.device_registry import CONNECTION_NETWORK_MAC
+from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
 
 from .unifi_entity_base import UniFiBase
 

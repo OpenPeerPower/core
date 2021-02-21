@@ -22,7 +22,7 @@
                     "exclude": "Vera enhets ID-er som skal ekskluderes fra Open Peer Power",
                     "lights": "Vera bytter enhets ID-er for \u00e5 behandle som lys i Open Peer Power"
                 },
-                "description": "Se Vera dokumentasjonen for detaljer om valgfrie parametere: https://www.openpeerpower.io/integrations/vera/. Merk: Eventuelle endringer her vil trenge en omstart av Open Peer Power-serveren. For \u00e5 fjerne verdier, gi et rom.",
+                "description": "Se Vera dokumentasjonen for detaljer om valgfrie parametere: https://www.open-peer-power.io/integrations/vera/. Merk: Eventuelle endringer her vil trenge en omstart av Open Peer Power-serveren. For \u00e5 fjerne verdier, gi et rom.",
                 "title": "Alternativer for Vera-kontroller"
             }
         }

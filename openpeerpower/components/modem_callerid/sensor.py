@@ -11,8 +11,8 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STOP,
     STATE_IDLE,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 DEFAULT_NAME = "Modem CallerID"
@@ -107,7 +107,7 @@ class ModemCalleridSensor(Entity):
                 }
                 self.set_attributes(att)
             self._state = STATE_RING
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
         elif newstate == self.modem.STATE_CALLERID:
             att = {
                 "cid_time": self.modem.get_cidtime,
@@ -116,7 +116,7 @@ class ModemCalleridSensor(Entity):
             }
             self.set_attributes(att)
             self._state = STATE_CALLERID
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
         elif newstate == self.modem.STATE_IDLE:
             self._state = STATE_IDLE
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()

@@ -6,8 +6,8 @@ from requests.exceptions import HTTPError, Timeout
 from sunwatcher.solarlog.solarlog import SolarLog
 
 from openpeerpower.const import CONF_HOST
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle
 
 from .const import DOMAIN, SCAN_INTERVAL, SENSOR_TYPES
 
@@ -34,7 +34,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
     host = url.geturl()
 
     try:
-        api = await opp..async_add_executor_job(SolarLog, host)
+        api = await.opp.async_add_executor_job(SolarLog, host)
         _LOGGER.debug("Connected to Solar-Log device, setting up entries")
     except (OSError, HTTPError, Timeout):
         _LOGGER.error(
@@ -43,7 +43,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
         return
 
     # Create solarlog data service which will retrieve and update the data.
-    data = await opp..async_add_executor_job(SolarlogData,.opp, api, host)
+    data = await.opp.async_add_executor_job(SolarlogData,.opp, api, host)
 
     # Create a new sensor for each sensor type.
     entities = []
@@ -117,7 +117,7 @@ class SolarlogData:
     def __init__(self,.opp, api, host):
         """Initialize the data object."""
         self.api = api
-        self.opp = opp
+        self.opp =.opp
         self.host = host
         self.update = Throttle(SCAN_INTERVAL)(self._update)
         self.data = {}

@@ -31,7 +31,7 @@ from .const import (
     SERVICE_SET_PERSONS_HOME,
     SIGNAL_NAME,
 )
-from .data_op.dler import CAMERA_DATA_CLASS_NAME
+from .data_handler import CAMERA_DATA_CLASS_NAME
 from .netatmo_entity_base import NetatmoBase
 
 _LOGGER = logging.getLogger(__name__)
@@ -47,20 +47,20 @@ async def async_setup_entry.opp, entry, async_add_entities):
         )
         return
 
-    data_op.dler = opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
+    data_handler =.opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
 
     async def get_entities():
         """Retrieve Netatmo entities."""
-        await data_op.dler.register_data_class(
+        await data_handler.register_data_class(
             CAMERA_DATA_CLASS_NAME, CAMERA_DATA_CLASS_NAME, None
         )
 
-        data = data_op.dler.data
+        data = data_handler.data
 
         if not data.get(CAMERA_DATA_CLASS_NAME):
             return []
 
-        data_class = data_op.dler.data[CAMERA_DATA_CLASS_NAME]
+        data_class = data_handler.data[CAMERA_DATA_CLASS_NAME]
 
         entities = []
         try:
@@ -73,7 +73,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
                 _LOGGER.debug("Adding camera %s %s", camera["id"], camera["name"])
                 entities.append(
                     NetatmoCamera(
-                        data_op.dler,
+                        data_handler,
                         camera["id"],
                         camera["type"],
                         camera["home_id"],
@@ -81,7 +81,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
                     )
                 )
 
-            for person_id, person_data in data_op.dler.data[
+            for person_id, person_data in data_handler.data[
                 CAMERA_DATA_CLASS_NAME
             ].persons.items():
                .opp.data[DOMAIN][DATA_PERSONS][person_id] = person_data.get(
@@ -96,7 +96,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
 
     platform = entity_platform.current_platform.get()
 
-    if data_op.dler.data[CAMERA_DATA_CLASS_NAME] is not None:
+    if data_handler.data[CAMERA_DATA_CLASS_NAME] is not None:
         platform.async_register_entity_service(
             SERVICE_SET_PERSONS_HOME,
             {vol.Required(ATTR_PERSONS): vol.All(cv.ensure_list, [cv.string])},
@@ -119,7 +119,7 @@ class NetatmoCamera(NetatmoBase, Camera):
 
     def __init__(
         self,
-        data_op.dler,
+        data_handler,
         camera_id,
         camera_type,
         home_id,
@@ -127,7 +127,7 @@ class NetatmoCamera(NetatmoBase, Camera):
     ):
         """Set up for access to the Netatmo camera images."""
         Camera.__init__(self)
-        super().__init__(data_op.dler)
+        super().__init__(data_handler)
 
         self._data_classes.append(
             {"name": CAMERA_DATA_CLASS_NAME, SIGNAL_NAME: CAMERA_DATA_CLASS_NAME}
@@ -148,9 +148,9 @@ class NetatmoCamera(NetatmoBase, Camera):
         self._is_local = None
         self._light_state = None
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Entity created."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         for event_type in (EVENT_TYPE_LIGHT_MODE, EVENT_TYPE_OFF, EVENT_TYPE_ON):
             self._listeners.append(
@@ -181,7 +181,7 @@ class NetatmoCamera(NetatmoBase, Camera):
             elif data["push_type"] == "NOC-light_mode":
                 self._light_state = data["sub_type"]
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
     def camera_image(self):

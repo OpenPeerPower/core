@@ -4,8 +4,8 @@
             "already_configured": "Apparat ass scho konfigur\u00e9iert",
             "credential_error": "Feeler beim ausliesen vun den Umeldungs Informatiounen.",
             "no_devices_found": "Keng Apparater am Netzwierk fonnt.",
-            "port_987_bind_error": "Konnt sech net mam Port 987 verbannen. Liest [Dokumentatioun](https://www.openpeerpower.io/components/ps4/) fir w\u00e9ider Informatiounen.",
-            "port_997_bind_error": "Konnt sech net mam Port 997 verbannen. Liest [Dokumentatioun](https://www.openpeerpower.io/components/ps4/) fir w\u00e9ider Informatiounen."
+            "port_987_bind_error": "Konnt sech net mam Port 987 verbannen. Liest [Dokumentatioun](https://www.open-peer-power.io/components/ps4/) fir w\u00e9ider Informatiounen.",
+            "port_997_bind_error": "Konnt sech net mam Port 997 verbannen. Liest [Dokumentatioun](https://www.open-peer-power.io/components/ps4/) fir w\u00e9ider Informatiounen."
         },
         "error": {
             "cannot_connect": "Feeler beim verbannen",
@@ -15,7 +15,7 @@
         },
         "step": {
             "creds": {
-                "description": "Umeldungsinformatioun sinn n\u00e9ideg. Dr\u00e9ckt op 'Ofsch\u00e9cken' , dann an der PS4 App, 2ten Ecran, erneiert Apparater an wielt den Open -Peer-Power Apparat aus fir weider ze fueren.",
+                "description": "Umeldungsinformatioun sinn n\u00e9ideg. Dr\u00e9ckt op 'Ofsch\u00e9cken' , dann an der PS4 App, 2ten Ecran, erneiert Apparater an wielt den Open-Peer-Power Apparat aus fir weider ze fueren.",
                 "title": "PlayStation 4"
             },
             "link": {
@@ -25,7 +25,7 @@
                     "name": "Numm",
                     "region": "Regioun"
                 },
-                "description": "G\u00ebff deng Playstation 4 Informatiounen an. Fir 'PIN Code', g\u00e9i an d'Astellunge vun der Playstation 4 Konsole. Dann op 'Mobile App Verbindungs Astellungen' a wiel \"Apparat dob\u00e4isetzen' aus. G\u00ebff de PIN  Code an deen ugewise g\u00ebtt. Lies [Dokumentatioun](https://www.openpeerpower.io/components/ps4/) fir w\u00e9ider Informatiounen.",
+                "description": "G\u00ebff deng Playstation 4 Informatiounen an. Fir 'PIN Code', g\u00e9i an d'Astellunge vun der Playstation 4 Konsole. Dann op 'Mobile App Verbindungs Astellungen' a wiel \"Apparat dob\u00e4isetzen' aus. G\u00ebff de PIN  Code an deen ugewise g\u00ebtt. Lies [Dokumentatioun](https://www.open-peer-power.io/components/ps4/) fir w\u00e9ider Informatiounen.",
                 "title": "PlayStation 4"
             },
             "mode": {

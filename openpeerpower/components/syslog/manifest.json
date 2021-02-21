@@ -1,6 +1,6 @@
 {
   "domain": "syslog",
   "name": "Syslog",
-  "documentation": "https://www.openpeerpower.io/integrations/syslog",
+  "documentation": "https://www.open-peer-power.io/integrations/syslog",
   "codeowners": ["@fabaff"]
 }

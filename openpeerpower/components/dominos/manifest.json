@@ -1,7 +1,7 @@
 {
   "domain": "dominos",
   "name": "Dominos Pizza",
-  "documentation": "https://www.openpeerpower.io/integrations/dominos",
+  "documentation": "https://www.open-peer-power.io/integrations/dominos",
   "requirements": ["pizzapi==0.0.3"],
   "dependencies": ["http"],
   "codeowners": []

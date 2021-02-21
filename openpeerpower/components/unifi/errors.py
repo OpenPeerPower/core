@@ -1,5 +1,5 @@
 """Errors for the UniFi component."""
-from openpeerpowerr.exceptions import OpenPeerPowerError
+from openpeerpower.exceptions import OpenPeerPowerError
 
 
 class UnifiException(OpenPeerPowerError):

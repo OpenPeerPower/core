@@ -14,7 +14,7 @@
                     "name": "Name",
                     "station_id": "ID of the measuring station"
                 },
-                "description": "Set up GIO\u015a (Polish Chief Inspectorate Of Environmental Protection) air quality integration. If you need help with the configuration have a look here: https://www.openpeerpower.io/integrations/gios",
+                "description": "Set up GIO\u015a (Polish Chief Inspectorate Of Environmental Protection) air quality integration. If you need help with the configuration have a look here: https://www.open-peer-power.io/integrations/gios",
                 "title": "GIO\u015a (Polish Chief Inspectorate Of Environmental Protection)"
             }
         }

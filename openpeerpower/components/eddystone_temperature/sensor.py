@@ -18,8 +18,8 @@ from openpeerpower.const import (
     STATE_UNKNOWN,
     TEMP_CELSIUS,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -134,7 +134,7 @@ class Monitor:
 
     def __init__(self,.opp, devices, bt_device_id):
         """Construct interface object."""
-        self.opp = opp
+        self.opp =.opp
 
         # List of beacons to monitor
         self.devices = devices
@@ -174,7 +174,7 @@ class Monitor:
             if dev.namespace == namespace and dev.instance == instance:
                 if dev.temperature != temperature:
                     dev.temperature = temperature
-                    dev.schedule_update_op.state()
+                    dev.schedule_update_ha_state()
 
     def stop(self):
         """Signal runner to stop and join thread."""

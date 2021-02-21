@@ -1,7 +1,7 @@
 """Support for AlarmDecoder sensors (Shows Panel Display)."""
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import SIGNAL_PANEL_MESSAGE
 
@@ -26,7 +26,7 @@ class AlarmDecoderSensor(Entity):
         self._icon = "mdi:alarm-check"
         self._name = "Alarm Panel Display"
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
@@ -37,7 +37,7 @@ class AlarmDecoderSensor(Entity):
     def _message_callback(self, message):
         if self._display != message.text:
             self._display = message.text
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     @property
     def icon(self):

@@ -74,7 +74,7 @@ async def async_setup.opp, config):
 
         try:
             # establish connection to PCHK server
-            await opp..async_create_task(connection.async_connect(timeout=15))
+            await.opp.async_create_task(connection.async_connect(timeout=15))
             connections.append(connection)
             _LOGGER.info('LCN connected to "%s"', connection_name)
         except TimeoutError:
@@ -137,7 +137,7 @@ class LcnEntity(Entity):
         """Lcn device entity pushes its state to HA."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
         if not self.device_connection.is_group:
             self.device_connection.register_for_inputs(self.input_received)

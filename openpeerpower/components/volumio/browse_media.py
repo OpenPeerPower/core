@@ -104,9 +104,9 @@ def _raw_item_payload(entity, item, parent_item=None, title=None, info=None):
     if "type" in item:
         thumbnail = item.get("albumart")
         if thumbnail:
-            item_op.h = str(hash(thumbnail))
-            entity.thumbnail_cache.setdefault(item_op.h, thumbnail)
-            thumbnail = entity.get_browse_image_url(MEDIA_TYPE_MUSIC, item_op.h)
+            item_hash = str(hash(thumbnail))
+            entity.thumbnail_cache.setdefault(item_hash, thumbnail)
+            thumbnail = entity.get_browse_image_url(MEDIA_TYPE_MUSIC, item_hash)
     else:
         # don't use the built-in volumio white-on-white icons
         thumbnail = None

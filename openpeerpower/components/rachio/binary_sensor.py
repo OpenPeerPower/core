@@ -7,8 +7,8 @@ from openpeerpower.components.binary_sensor import (
     DEVICE_CLASS_MOISTURE,
     BinarySensorEntity,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import (
     DOMAIN as DOMAIN_RACHIO,
@@ -34,7 +34,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Rachio binary sensors."""
-    entities = await opp..async_add_executor_job(_create_entities,.opp, config_entry)
+    entities = await.opp.async_add_executor_job(_create_entities,.opp, config_entry)
     async_add_entities(entities)
     _LOGGER.info("%d Rachio binary sensor(s) added", len(entities))
 
@@ -61,17 +61,17 @@ class RachioControllerBinarySensor(RachioDevice, BinarySensorEntity):
         return self._state
 
     @callback
-    def _async_op.dle_any_update(self, *args, **kwargs) -> None:
+    def _async_handle_any_update(self, *args, **kwargs) -> None:
         """Determine whether an update event applies to this device."""
         if args[0][KEY_DEVICE_ID] != self._controller.controller_id:
             # For another device
             return
 
         # For this device
-        self._async_op.dle_update(args, kwargs)
+        self._async_handle_update(args, kwargs)
 
     @abstractmethod
-    def _async_op.dle_update(self, *args, **kwargs) -> None:
+    def _async_handle_update(self, *args, **kwargs) -> None:
         """Handle an update to the state of this sensor."""
 
 
@@ -99,7 +99,7 @@ class RachioControllerOnlineBinarySensor(RachioControllerBinarySensor):
         return "mdi:wifi-strength-4" if self.is_on else "mdi:wifi-strength-off-outline"
 
     @callback
-    def _async_op.dle_update(self, *args, **kwargs) -> None:
+    def _async_handle_update(self, *args, **kwargs) -> None:
         """Handle an update to the state of this sensor."""
         if (
             args[0][0][KEY_SUBTYPE] == SUBTYPE_ONLINE
@@ -109,9 +109,9 @@ class RachioControllerOnlineBinarySensor(RachioControllerBinarySensor):
         elif args[0][0][KEY_SUBTYPE] == SUBTYPE_OFFLINE:
             self._state = False
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates."""
         self._state = self._controller.init_data[KEY_STATUS] == STATUS_ONLINE
 
@@ -119,7 +119,7 @@ class RachioControllerOnlineBinarySensor(RachioControllerBinarySensor):
             async_dispatcher_connect(
                 self.opp,
                 SIGNAL_RACHIO_CONTROLLER_UPDATE,
-                self._async_op.dle_any_update,
+                self._async_handle_any_update,
             )
         )
 
@@ -148,16 +148,16 @@ class RachioRainSensor(RachioControllerBinarySensor):
         return "mdi:water" if self.is_on else "mdi:water-off"
 
     @callback
-    def _async_op.dle_update(self, *args, **kwargs) -> None:
+    def _async_handle_update(self, *args, **kwargs) -> None:
         """Handle an update to the state of this sensor."""
         if args[0][0][KEY_SUBTYPE] == SUBTYPE_RAIN_SENSOR_DETECTION_ON:
             self._state = True
         elif args[0][0][KEY_SUBTYPE] == SUBTYPE_RAIN_SENSOR_DETECTION_OFF:
             self._state = False
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates."""
         self._state = self._controller.init_data[KEY_RAIN_SENSOR_TRIPPED]
 
@@ -165,6 +165,6 @@ class RachioRainSensor(RachioControllerBinarySensor):
             async_dispatcher_connect(
                 self.opp,
                 SIGNAL_RACHIO_RAIN_SENSOR_UPDATE,
-                self._async_op.dle_any_update,
+                self._async_handle_any_update,
             )
         )

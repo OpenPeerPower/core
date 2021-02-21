@@ -44,9 +44,9 @@ def _build_entity(coordinator, unit_id, unit, supported_modes, info):
 async def async_setup_entry.opp, config_entry, async_add_devices):
     """Set up the CoolMasterNet climate platform."""
     supported_modes = config_entry.data.get(CONF_SUPPORTED_MODES)
-    info = opp.data[DOMAIN][config_entry.entry_id][DATA_INFO]
+    info =.opp.data[DOMAIN][config_entry.entry_id][DATA_INFO]
 
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
 
     all_devices = [
         _build_entity(coordinator, unit_id, unit, supported_modes, info)
@@ -68,9 +68,9 @@ class CoolmasterClimate(CoordinatorEntity, ClimateEntity):
         self._info = info
 
     @callback
-    def _op.dle_coordinator_update(self):
+    def _handle_coordinator_update(self):
         self._unit = self.coordinator.data[self._unit_id]
-        super()._op.dle_coordinator_update()
+        super()._handle_coordinator_update()
 
     @property
     def device_info(self):
@@ -147,13 +147,13 @@ class CoolmasterClimate(CoordinatorEntity, ClimateEntity):
         if temp is not None:
             _LOGGER.debug("Setting temp of %s to %s", self.unique_id, str(temp))
             self._unit = await self._unit.set_thermostat(temp)
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_set_fan_mode(self, fan_mode):
         """Set new fan mode."""
         _LOGGER.debug("Setting fan mode of %s to %s", self.unique_id, fan_mode)
         self._unit = await self._unit.set_fan_speed(fan_mode)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new operation mode."""
@@ -169,10 +169,10 @@ class CoolmasterClimate(CoordinatorEntity, ClimateEntity):
         """Turn on."""
         _LOGGER.debug("Turning %s on", self.unique_id)
         self._unit = await self._unit.turn_on()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self):
         """Turn off."""
         _LOGGER.debug("Turning %s off", self.unique_id)
         self._unit = await self._unit.turn_off()
-        self.async_write_op.state()
+        self.async_write_ha_state()

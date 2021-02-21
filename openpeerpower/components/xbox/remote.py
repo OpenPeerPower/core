@@ -17,7 +17,7 @@ from openpeerpower.components.remote import (
     DEFAULT_DELAY_SECS,
     RemoteEntity,
 )
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from . import ConsoleData, XboxUpdateCoordinator
 from .const import DOMAIN
@@ -25,9 +25,9 @@ from .const import DOMAIN
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Xbox media_player from a config entry."""
-    client: XboxLiveClient = opp.data[DOMAIN][entry.entry_id]["client"]
-    consoles: SmartglassConsoleList = opp.data[DOMAIN][entry.entry_id]["consoles"]
-    coordinator: XboxUpdateCoordinator = opp.data[DOMAIN][entry.entry_id][
+    client: XboxLiveClient =.opp.data[DOMAIN][entry.entry_id]["client"]
+    consoles: SmartglassConsoleList =.opp.data[DOMAIN][entry.entry_id]["consoles"]
+    coordinator: XboxUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id][
         "coordinator"
     ]
 

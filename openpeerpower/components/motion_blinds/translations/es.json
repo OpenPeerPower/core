@@ -14,7 +14,7 @@
                 "data": {
                     "api_key": "Clave API"
                 },
-                "description": "Necesitar\u00e1 la clave de API de 16 caracteres, consulte https://www.openpeerpower.io/integrations/motion_blinds/#retrieving-the-key para obtener instrucciones",
+                "description": "Necesitar\u00e1 la clave de API de 16 caracteres, consulte https://www.open-peer-power.io/integrations/motion_blinds/#retrieving-the-key para obtener instrucciones",
                 "title": "Estores motorizados"
             },
             "select": {

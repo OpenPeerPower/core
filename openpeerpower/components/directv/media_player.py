@@ -24,8 +24,8 @@ from openpeerpower.components.media_player.const import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import STATE_OFF, STATE_PAUSED, STATE_PLAYING
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.util import dt as dt_util
 
 from . import DIRECTVEntity
 from .const import (
@@ -67,7 +67,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List, bool], None],
 ) -> bool:
     """Set up the DirecTV config entry."""
-    dtv = opp.data[DOMAIN][entry.entry_id]
+    dtv =.opp.data[DOMAIN][entry.entry_id]
     entities = []
 
     for location in dtv.device.locations:

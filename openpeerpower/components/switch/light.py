@@ -42,7 +42,7 @@ async def async_setup_platform(
 ) -> None:
     """Initialize Light Switch platform."""
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     wrapped_switch = registry.async_get(config[CONF_ENTITY_ID])
     unique_id = wrapped_switch.unique_id if wrapped_switch else None
 
@@ -128,20 +128,20 @@ class LightSwitch(LightEntity):
         self._is_on = switch_state.state == STATE_ON
         self._available = switch_state.state != STATE_UNAVAILABLE
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register callbacks."""
 
         @callback
         def async_state_changed_listener(*_: Any) -> None:
             """Handle child updates."""
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         assert self.opp is not None
         self._async_unsub_state_changed = async_track_state_change_event(
             self.opp, [self._switch_entity_id], async_state_changed_listener
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Handle removal from Open Peer Power."""
         if self._async_unsub_state_changed is not None:
             self._async_unsub_state_changed()

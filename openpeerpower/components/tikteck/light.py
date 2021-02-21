@@ -13,8 +13,8 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.const import CONF_DEVICES, CONF_NAME, CONF_PASSWORD
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.util.color as color_util
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.util.color as color_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -121,10 +121,10 @@ class TikteckLight(LightEntity):
         rgb = color_util.color_hs_to_RGB(*self._hs)
 
         self.set_state(rgb[0], rgb[1], rgb[2], self.brightness)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the specified light off."""
         self._state = False
         self.set_state(0, 0, 0, 0)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

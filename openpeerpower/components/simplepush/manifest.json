@@ -1,7 +1,7 @@
 {
   "domain": "simplepush",
   "name": "Simplepush",
-  "documentation": "https://www.openpeerpower.io/integrations/simplepush",
+  "documentation": "https://www.open-peer-power.io/integrations/simplepush",
   "requirements": ["simplepush==1.1.4"],
   "codeowners": []
 }

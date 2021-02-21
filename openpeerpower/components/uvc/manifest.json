@@ -1,7 +1,7 @@
 {
   "domain": "uvc",
   "name": "Ubiquiti UniFi Video",
-  "documentation": "https://www.openpeerpower.io/integrations/uvc",
+  "documentation": "https://www.open-peer-power.io/integrations/uvc",
   "requirements": ["uvcclient==0.11.0"],
   "codeowners": []
 }

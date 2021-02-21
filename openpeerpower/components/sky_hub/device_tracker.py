@@ -10,8 +10,8 @@ from openpeerpower.components.device_tracker import (
     DeviceScanner,
 )
 from openpeerpower.const import CONF_HOST
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -87,9 +87,9 @@ class QSEntity(Entity):
     @callback
     def update_packet(self, packet):
         """Receive update packet from QSUSB. Match dispather_send signature."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Listen for updates from QSUSb via dispatcher."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
@@ -205,7 +205,7 @@ async def async_setup.opp, config):
 
     def callback_qs_listen(qspacket):
         """Typically a button press or update signal."""
-        # If button pressed, fire a opp event
+        # If button pressed, fire a.opp event
         if QS_ID in qspacket:
             if qspacket.get(QS_CMD, "") in cmd_buttons:
                .opp.bus.async_fire(f"qwikswitch.button.{qspacket[QS_ID]}", qspacket)

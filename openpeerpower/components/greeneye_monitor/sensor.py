@@ -111,7 +111,7 @@ class GEMSensor(Entity):
         """Return the name of the channel."""
         return self._name
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Wait for and connect to the sensor."""
         monitors = self.opp.data[DATA_GREENEYE_MONITOR]
 
@@ -123,10 +123,10 @@ class GEMSensor(Entity):
         if self._try_connect_to_monitor(monitors):
             monitors.remove_listener(self._on_new_monitor)
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Remove listener from the sensor."""
         if self._sensor:
-            self._sensor.remove_listener(self.async_write_op.state)
+            self._sensor.remove_listener(self.async_write_ha_state)
         else:
             monitors = self.opp.data[DATA_GREENEYE_MONITOR]
             monitors.remove_listener(self._on_new_monitor)
@@ -137,7 +137,7 @@ class GEMSensor(Entity):
             return False
 
         self._sensor = self._get_sensor(monitor)
-        self._sensor.add_listener(self.async_write_op.state)
+        self._sensor.add_listener(self.async_write_ha_state)
 
         return True
 

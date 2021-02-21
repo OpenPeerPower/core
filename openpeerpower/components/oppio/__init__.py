@@ -55,11 +55,11 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-DATA_CORE_INFO = "oppio_core_info"
-DATA_HOST_INFO = "oppio_host_info"
-DATA_INFO = "oppio_info"
-DATA_OS_INFO = "oppio_os_info"
-DATA_SUPERVISOR_INFO = "oppio_supervisor_info"
+DATA_CORE_INFO = "opp._core_info"
+DATA_HOST_INFO = "opp._host_info"
+DATA_INFO = "opp._info"
+DATA_OS_INFO = "opp._os_info"
+DATA_SUPERVISOR_INFO = "opp._supervisor_info"
 OPPIO_UPDATE_INTERVAL = timedelta(minutes=55)
 
 SERVICE_ADDON_START = "addon_start"
@@ -136,146 +136,146 @@ MAP_SERVICE_API = {
 
 
 @bind_opp
-async def async_get_addon_info.opp: OpenPeerPowerType, slug: str) -> dict:
+async def async_get_addon_info.opp.OpenPeerPowerType, slug: str) -> dict:
     """Return add-on info.
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio = opp.data[DOMAIN]
-    return await opp.io.get_addon_info(slug)
+    opp. = opp.ata[DOMAIN]
+    return await opp.o.get_addon_info(slug)
 
 
 @bind_opp
 @api_data
-async def async_install_addon.opp: OpenPeerPowerType, slug: str) -> dict:
+async def async_install_addon.opp.OpenPeerPowerType, slug: str) -> dict:
     """Install add-on.
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio = opp.data[DOMAIN]
+    opp. = opp.ata[DOMAIN]
     command = f"/addons/{slug}/install"
-    return await opp.io.send_command(command, timeout=None)
+    return await opp.o.send_command(command, timeout=None)
 
 
 @bind_opp
 @api_data
-async def async_uninstall_addon.opp: OpenPeerPowerType, slug: str) -> dict:
+async def async_uninstall_addon.opp.OpenPeerPowerType, slug: str) -> dict:
     """Uninstall add-on.
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio = opp.data[DOMAIN]
+    opp. = opp.ata[DOMAIN]
     command = f"/addons/{slug}/uninstall"
-    return await opp.io.send_command(command, timeout=60)
+    return await opp.o.send_command(command, timeout=60)
 
 
 @bind_opp
 @api_data
-async def async_start_addon.opp: OpenPeerPowerType, slug: str) -> dict:
+async def async_start_addon.opp.OpenPeerPowerType, slug: str) -> dict:
     """Start add-on.
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio = opp.data[DOMAIN]
+    opp. = opp.ata[DOMAIN]
     command = f"/addons/{slug}/start"
-    return await opp.io.send_command(command, timeout=60)
+    return await opp.o.send_command(command, timeout=60)
 
 
 @bind_opp
 @api_data
-async def async_stop_addon.opp: OpenPeerPowerType, slug: str) -> dict:
+async def async_stop_addon.opp.OpenPeerPowerType, slug: str) -> dict:
     """Stop add-on.
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio = opp.data[DOMAIN]
+    opp. = opp.ata[DOMAIN]
     command = f"/addons/{slug}/stop"
-    return await opp.io.send_command(command, timeout=60)
+    return await opp.o.send_command(command, timeout=60)
 
 
 @bind_opp
 @api_data
 async def async_set_addon_options(
-   .opp: OpenPeerPowerType, slug: str, options: dict
+   .opp.OpenPeerPowerType, slug: str, options: dict
 ) -> dict:
     """Set add-on options.
 
     The caller of the function should handle OppioAPIError.
     """
-    oppio = opp.data[DOMAIN]
+    opp. = opp.ata[DOMAIN]
     command = f"/addons/{slug}/options"
-    return await opp.io.send_command(command, payload=options)
+    return await opp.o.send_command(command, payload=options)
 
 
 @bind_opp
 async def async_get_addon_discovery_info(
-   .opp: OpenPeerPowerType, slug: str
+   .opp.OpenPeerPowerType, slug: str
 ) -> Optional[dict]:
     """Return discovery data for an add-on."""
-    oppio = opp.data[DOMAIN]
-    data = await opp.io.retrieve_discovery_messages()
+    opp. = opp.ata[DOMAIN]
+    data = await opp.o.retrieve_discovery_messages()
     discovered_addons = data[ATTR_DISCOVERY]
     return next((addon for addon in discovered_addons if addon["addon"] == slug), None)
 
 
 @callback
 @bind_opp
-def get_info.opp):
+def get_info.opp.
     """Return generic information from Supervisor.
 
     Async friendly.
     """
-    return.opp.data.get(DATA_INFO)
+    return.opp.ata.get(DATA_INFO)
 
 
 @callback
 @bind_opp
-def get_host_info.opp):
+def get_host_info.opp.
     """Return generic host information.
 
     Async friendly.
     """
-    return.opp.data.get(DATA_HOST_INFO)
+    return.opp.ata.get(DATA_HOST_INFO)
 
 
 @callback
 @bind_opp
-def get_supervisor_info.opp):
+def get_supervisor_info.opp.
     """Return Supervisor information.
 
     Async friendly.
     """
-    return.opp.data.get(DATA_SUPERVISOR_INFO)
+    return.opp.ata.get(DATA_SUPERVISOR_INFO)
 
 
 @callback
 @bind_opp
-def get_os_info.opp):
+def get_os_info.opp.
     """Return OS information.
 
     Async friendly.
     """
-    return.opp.data.get(DATA_OS_INFO)
+    return.opp.ata.get(DATA_OS_INFO)
 
 
 @callback
 @bind_opp
-def get_core_info.opp):
+def get_core_info.opp.
     """Return Open Peer Power Core information from Supervisor.
 
     Async friendly.
     """
-    return.opp.data.get(DATA_CORE_INFO)
+    return.opp.ata.get(DATA_CORE_INFO)
 
 
 @callback
 @bind_opp
-def is_oppio.opp):
+def is_opp..opp.
     """Return true if Opp.io is loaded.
 
     Async friendly.
     """
-    return DOMAIN in.opp.config.components
+    return DOMAIN in.opp.onfig.components
 
 
 @callback
@@ -286,7 +286,7 @@ def get_supervisor_ip():
     return os.environ["SUPERVISOR"].partition(":")[0]
 
 
-async def async_setup.opp, config):
+async def async_setup.opp.config):
     """Set up the Opp.io component."""
     # Check local setup
     for env in ("OPPIO", "OPPIO_TOKEN"):
@@ -298,54 +298,54 @@ async def async_setup.opp, config):
     async_load_websocket_api.opp)
 
     host = os.environ["OPPIO"]
-    websession = opp.helpers.aiohttp_client.async_get_clientsession()
-   .opp.data[DOMAIN] = oppio = OppIO.opp.loop, websession, host)
+    websession = opp.elpers.aiohttp_client.async_get_clientsession()
+   .opp.ata[DOMAIN] = opp. = OppIO.opp.oop, websession, host)
 
-    if not await opp.io.is_connected():
+    if not await opp.o.is_connected():
         _LOGGER.warning("Not connected with Opp.io / system too busy!")
 
-    store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+    store = opp.elpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
     data = await store.async_load()
 
     if data is None:
         data = {}
 
     refresh_token = None
-    if "oppio_user" in data:
-        user = await opp..auth.async_get_user(data["oppio_user"])
+    if "opp._user" in data:
+        user = await opp.auth.async_get_user(data["opp._user"])
         if user and user.refresh_tokens:
             refresh_token = list(user.refresh_tokens.values())[0]
 
             # Migrate old Opp.io users to be admin.
             if not user.is_admin:
-                await opp..auth.async_update_user(user, group_ids=[GROUP_ID_ADMIN])
+                await opp.auth.async_update_user(user, group_ids=[GROUP_ID_ADMIN])
 
     if refresh_token is None:
-        user = await opp..auth.async_create_system_user("Opp.io", [GROUP_ID_ADMIN])
-        refresh_token = await opp..auth.async_create_refresh_token(user)
-        data["oppio_user"] = user.id
+        user = await opp.auth.async_create_system_user("Opp.io", [GROUP_ID_ADMIN])
+        refresh_token = await opp.auth.async_create_refresh_token(user)
+        data["opp._user"] = user.id
         await store.async_save(data)
 
     # This overrides the normal API call that would be forwarded
     development_repo = config.get(DOMAIN, {}).get(CONF_FRONTEND_REPO)
     if development_repo is not None:
-       .opp.http.register_static_path(
-            "/api/oppio/app", os.path.join(development_repo, "oppio/build"), False
+       .opp.ttp.register_static_path(
+            "/api/opp./app", os.path.join(development_repo, "opp./build"), False
         )
 
-   .opp.http.register_view(OppIOView(host, websession))
+   .opp.ttp.register_view(OppIOView(host, websession))
 
-    await opp..components.panel_custom.async_register_panel(
-        frontend_url_path="oppio",
-        webcomponent_name="oppio-main",
+    await opp.components.panel_custom.async_register_panel(
+        frontend_url_path="opp.",
+        webcomponent_name="opp.-main",
         sidebar_title="Supervisor",
-        sidebar_icon="opp:openpeerpower",
-        js_url="/api/oppio/app/entrypoint.js",
+        sidebar_icon="opp.penpeerpower",
+        js_url="/api/opp./app/entrypoint.js",
         embed_iframe=True,
         require_admin=True,
     )
 
-    await opp.io.update_opp_api(config.get("http", {}), refresh_token)
+    await opp.o.update_opp.pi(config.get("http", {}), refresh_token)
 
     last_timezone = None
 
@@ -353,15 +353,15 @@ async def async_setup.opp, config):
         """Push core config to Opp.io."""
         nonlocal last_timezone
 
-        new_timezone = str.opp.config.time_zone)
+        new_timezone = str.opp.onfig.time_zone)
 
         if new_timezone == last_timezone:
             return
 
         last_timezone = new_timezone
-        await opp.io.update_opp_timezone(new_timezone)
+        await opp.o.update_opp.imezone(new_timezone)
 
-   .opp.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, push_config)
+   .opp.us.async_listen(EVENT_CORE_CONFIG_UPDATE, push_config)
 
     await push_config(None)
 
@@ -381,7 +381,7 @@ async def async_setup.opp, config):
 
         # Call API
         try:
-            await opp.io.send_command(
+            await opp.o.send_command(
                 api_command.format(addon=addon, snapshot=snapshot),
                 payload=payload,
                 timeout=MAP_SERVICE_API[service.service][2],
@@ -390,22 +390,22 @@ async def async_setup.opp, config):
             _LOGGER.error("Error on Opp.io API: %s", err)
 
     for service, settings in MAP_SERVICE_API.items():
-       .opp.services.async_register(
+       .opp.ervices.async_register(
             DOMAIN, service, async_service_op.dler, schema=settings[1]
         )
 
     async def update_info_data(now):
         """Update last available supervisor information."""
         try:
-           .opp.data[DATA_INFO] = await opp.io.get_info()
-           .opp.data[DATA_HOST_INFO] = await opp.io.get_host_info()
-           .opp.data[DATA_CORE_INFO] = await opp.io.get_core_info()
-           .opp.data[DATA_SUPERVISOR_INFO] = await opp.io.get_supervisor_info()
-           .opp.data[DATA_OS_INFO] = await opp.io.get_os_info()
+           .opp.ata[DATA_INFO] = await opp.o.get_info()
+           .opp.ata[DATA_HOST_INFO] = await opp.o.get_host_info()
+           .opp.ata[DATA_CORE_INFO] = await opp.o.get_core_info()
+           .opp.ata[DATA_SUPERVISOR_INFO] = await opp.o.get_supervisor_info()
+           .opp.ata[DATA_OS_INFO] = await opp.o.get_os_info()
         except OppioAPIError as err:
             _LOGGER.warning("Can't read last version: %s", err)
 
-       .opp.helpers.event.async_track_point_in_utc_time(
+       .opp.elpers.event.async_track_point_in_utc_time(
             update_info_data, utcnow() + OPPIO_UPDATE_INTERVAL
         )
 
@@ -415,7 +415,7 @@ async def async_setup.opp, config):
     async def async_op.dle_core_service(call):
         """Service handler for handling core services."""
         if call.service == SERVICE_OPENPEERPOWER_STOP:
-            await opp.io.stop_openpeerpower()
+            await opp.o.stop_openpeerpower()
             return
 
         try:
@@ -425,7 +425,7 @@ async def async_setup.opp, config):
 
         if errors:
             _LOGGER.error(errors)
-           .opp.components.persistent_notification.async_create(
+           .opp.omponents.persistent_notification.async_create(
                 "Config error. See [the logs](/config/logs) for details.",
                 "Config validating",
                 f"{OPP_DOMAIN}.check_config",
@@ -433,7 +433,7 @@ async def async_setup.opp, config):
             return
 
         if call.service == SERVICE_OPENPEERPOWER_RESTART:
-            await opp.io.restart_openpeerpower()
+            await opp.o.restart_openpeerpower()
 
     # Mock core services
     for service in (
@@ -441,18 +441,18 @@ async def async_setup.opp, config):
         SERVICE_OPENPEERPOWER_RESTART,
         SERVICE_CHECK_CONFIG,
     ):
-       .opp.services.async_register(OPP_DOMAIN, service, async_op.dle_core_service)
+       .opp.ervices.async_register(OPP_DOMAIN, service, async_op.dle_core_service)
 
     # Init discovery Opp.io feature
-    async_setup_discovery_view.opp, oppio)
+    async_setup_discovery_view.opp.opp.)
 
     # Init auth Opp.io feature
-    async_setup_auth_view.opp, user)
+    async_setup_auth_view.opp.user)
 
     # Init ingress Opp.io feature
-    async_setup_ingress_view.opp, host)
+    async_setup_ingress_view.opp.host)
 
     # Init add-on ingress panels
-    await async_setup_addon_panel.opp, oppio)
+    await async_setup_addon_panel.opp.opp.)
 
     return True

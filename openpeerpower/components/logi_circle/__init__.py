@@ -156,14 +156,14 @@ async def async_setup_entry.opp, entry):
         # string, so we'll handle it separately.
         err = f"{_TIMEOUT}s timeout exceeded when connecting to Logi Circle API"
        .opp.components.persistent_notification.create(
-            f"Error: {err}<br />You will need to restart opp after fixing.",
+            f"Error: {err}<br />You will need to restart.opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
         return False
     except ClientResponseError as ex:
        .opp.components.persistent_notification.create(
-            f"Error: {ex}<br />You will need to restart opp after fixing.",
+            f"Error: {ex}<br />You will need to restart.opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
@@ -176,7 +176,7 @@ async def async_setup_entry.opp, entry):
            .opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
-    async def service_op.dler(service):
+    async def service_handler(service):
         """Dispatch service calls to target entities."""
         params = dict(service.data)
 
@@ -190,21 +190,21 @@ async def async_setup_entry.opp, entry):
    .opp.services.async_register(
         DOMAIN,
         SERVICE_SET_CONFIG,
-        service_op.dler,
+        service_handler,
         schema=LOGI_CIRCLE_SERVICE_SET_CONFIG,
     )
 
    .opp.services.async_register(
         DOMAIN,
         SERVICE_LIVESTREAM_SNAPSHOT,
-        service_op.dler,
+        service_handler,
         schema=LOGI_CIRCLE_SERVICE_SNAPSHOT,
     )
 
    .opp.services.async_register(
         DOMAIN,
         SERVICE_LIVESTREAM_RECORD,
-        service_op.dler,
+        service_handler,
         schema=LOGI_CIRCLE_SERVICE_RECORD,
     )
 
@@ -220,9 +220,9 @@ async def async_setup_entry.opp, entry):
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
     for component in "camera", "sensor":
-        await opp..config_entries.async_forward_entry_unload(entry, component)
+        await.opp.config_entries.async_forward_entry_unload(entry, component)
 
-    logi_circle = opp.data.pop(DATA_LOGI)
+    logi_circle =.opp.data.pop(DATA_LOGI)
 
     # Tell API wrapper to close all aiohttp sessions, invalidate WS connections
     # and clear all locally cached tokens

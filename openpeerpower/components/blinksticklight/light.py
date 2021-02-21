@@ -11,8 +11,8 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.const import CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.util.color as color_util
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.util.color as color_util
 
 CONF_SERIAL = "serial"
 

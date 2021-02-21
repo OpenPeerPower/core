@@ -178,7 +178,7 @@ class _Trait:
 
     def __init__(self,.opp, state, config):
         """Initialize a trait for a state."""
-        self.opp = opp
+        self.opp =.opp
         self.state = state
         self.config = config
 

@@ -15,7 +15,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    data = opp.data[LUPUSEC_DOMAIN]
+    data =.opp.data[LUPUSEC_DOMAIN]
 
     device_types = [CONST.TYPE_OPENING]
 

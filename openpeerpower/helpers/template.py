@@ -33,9 +33,9 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import State, callback, split_entity_id, valid_entity_id
 from openpeerpower.exceptions import TemplateError
-from openpeerpower.helpers import location as loc_helper
+from openpeerpower.helpers import entity_registry, location as loc_helper
 from openpeerpower.helpers.typing import OpenPeerPowerType, TemplateVarsType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util import convert, dt as dt_util, location as loc_util
 from openpeerpower.util.async_ import run_callback_threadsafe
 from openpeerpower.util.thread import ThreadWithException
@@ -48,6 +48,7 @@ DATE_STR_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 _RENDER_INFO = "template.render_info"
 _ENVIRONMENT = "template.environment"
+_ENVIRONMENT_LIMITED = "template.environment_limited"
 
 _RE_JINJA_DELIMITERS = re.compile(r"\{%|\{\{|\{#")
 # Match "simple" ints and floats. -1.0, 1, +5, 5.0
@@ -72,9 +73,9 @@ ALL_STATES_RATE_LIMIT = timedelta(minutes=1)
 DOMAIN_STATES_RATE_LIMIT = timedelta(seconds=1)
 
 
-@bind_opp
+@bind.opp
 def attach.opp: OpenPeerPowerType, obj: Any) -> None:
-    """Recursively attach opp to all template instances in list and dict."""
+    """Recursively attach.opp to all template instances in list and dict."""
     if isinstance(obj, list):
         for child in obj:
             attach.opp, child)
@@ -83,7 +84,7 @@ def attach.opp: OpenPeerPowerType, obj: Any) -> None:
             attach.opp, child_key)
             attach.opp, child_value)
     elif isinstance(obj, Template):
-        obj.opp = opp
+        obj.opp =.opp
 
 
 def render_complex(
@@ -279,7 +280,7 @@ class Template:
     __slots__ = (
         "__weakref__",
         "template",
-        "opp",
+        .opp",
         "is_static",
         "_compiled_code",
         "_compiled",
@@ -294,17 +295,18 @@ class Template:
         self.template: str = template.strip()
         self._compiled_code = None
         self._compiled: Optional[Template] = None
-        self.opp = opp
+        self.opp =.opp
         self.is_static = not is_template_string(template)
         self._limited = None
 
     @property
     def _env(self) -> TemplateEnvironment:
-        if self.opp is None or self._limited:
-            return _NO_OPP_ENV
-        ret: Optional[TemplateEnvironment] = self.opp.data.get(_ENVIRONMENT)
+        if self.opp is None:
+            return _NO_HASS_ENV
+        wanted_env = _ENVIRONMENT_LIMITED if self._limited else _ENVIRONMENT
+        ret: Optional[TemplateEnvironment] = self.opp.data.get(wanted_env)
         if ret is None:
-            ret = self.opp.data[_ENVIRONMENT] = TemplateEnvironment(self.opp)  # type: ignore[no-untyped-call]
+            ret = self.opp.data[wanted_env] = TemplateEnvironment(self.opp, self._limited)  # type: ignore[no-untyped-call]
         return ret
 
     def ensure_valid(self) -> None:
@@ -326,7 +328,7 @@ class Template:
     ) -> Any:
         """Render given template.
 
-        If limited is True, the template is not allowed to access any function or filter depending on opp or the state machine.
+        If limited is True, the template is not allowed to access any function or filter depending on.opp or the state machine.
         """
         if self.is_static:
             if self.opp.config.legacy_templates or not parse_result:
@@ -350,7 +352,7 @@ class Template:
 
         This method must be run in the event loop.
 
-        If limited is True, the template is not allowed to access any function or filter depending on opp or the state machine.
+        If limited is True, the template is not allowed to access any function or filter depending on.opp or the state machine.
         """
         if self.is_static:
             if self.opp.config.legacy_templates or not parse_result:
@@ -533,10 +535,10 @@ class Template:
             return value if error_value is _SENTINEL else error_value
 
     def _ensure_compiled(self, limited: bool = False) -> Template:
-        """Bind a template to a specific opp instance."""
+        """Bind a template to a specific.opp instance."""
         self.ensure_valid()
 
-        assert self.opp is not None, "opp variable not set on template"
+        assert self.opp is not None, .opp variable not set on template"
         assert (
             self._limited is None or self._limited == limited
         ), "can't change between limited and non limited template"
@@ -559,7 +561,7 @@ class Template:
             and self.opp == other.opp
         )
 
-    def __op.h__(self) -> int:
+    def __hash__(self) -> int:
         """Hash code for template."""
         return hash(self.template)
 
@@ -573,12 +575,12 @@ class AllStates:
 
     def __init__(self,.opp: OpenPeerPowerType) -> None:
         """Initialize all states."""
-        self._opp = opp
+        self..opp =.opp
 
     def __getattr__(self, name):
         """Return the domain state."""
         if "." in name:
-            return _get_state_if_valid(self._opp, name)
+            return _get_state_if_valid(self..opp, name)
 
         if name in _RESERVED_NAMES:
             return None
@@ -586,35 +588,35 @@ class AllStates:
         if not valid_entity_id(f"{name}.entity"):
             raise TemplateError(f"Invalid domain name '{name}'")
 
-        return DomainStates(self._opp, name)
+        return DomainStates(self..opp, name)
 
     # Jinja will try __getitem__ first and it avoids the need
     # to call is_safe_attribute
     __getitem__ = __getattr__
 
     def _collect_all(self) -> None:
-        render_info = self._opp.data.get(_RENDER_INFO)
+        render_info = self..opp.data.get(_RENDER_INFO)
         if render_info is not None:
             render_info.all_states = True
 
     def _collect_all_lifecycle(self) -> None:
-        render_info = self._opp.data.get(_RENDER_INFO)
+        render_info = self..opp.data.get(_RENDER_INFO)
         if render_info is not None:
             render_info.all_states_lifecycle = True
 
     def __iter__(self):
         """Return all states."""
         self._collect_all()
-        return _state_generator(self._opp, None)
+        return _state_generator(self..opp, None)
 
     def __len__(self) -> int:
         """Return number of states."""
         self._collect_all_lifecycle()
-        return self._opp.states.async_entity_ids_count()
+        return self..opp.states.async_entity_ids_count()
 
     def __call__(self, entity_id):
         """Return the states."""
-        state = _get_state(self._opp, entity_id)
+        state = _get_state(self..opp, entity_id)
         return STATE_UNKNOWN if state is None else state.state
 
     def __repr__(self) -> str:
@@ -627,36 +629,36 @@ class DomainStates:
 
     def __init__(self,.opp: OpenPeerPowerType, domain: str) -> None:
         """Initialize the domain states."""
-        self._opp = opp
+        self..opp =.opp
         self._domain = domain
 
     def __getattr__(self, name):
         """Return the states."""
-        return _get_state_if_valid(self._opp, f"{self._domain}.{name}")
+        return _get_state_if_valid(self..opp, f"{self._domain}.{name}")
 
     # Jinja will try __getitem__ first and it avoids the need
     # to call is_safe_attribute
     __getitem__ = __getattr__
 
     def _collect_domain(self) -> None:
-        entity_collect = self._opp.data.get(_RENDER_INFO)
+        entity_collect = self..opp.data.get(_RENDER_INFO)
         if entity_collect is not None:
             entity_collect.domains.add(self._domain)
 
     def _collect_domain_lifecycle(self) -> None:
-        entity_collect = self._opp.data.get(_RENDER_INFO)
+        entity_collect = self..opp.data.get(_RENDER_INFO)
         if entity_collect is not None:
             entity_collect.domains_lifecycle.add(self._domain)
 
     def __iter__(self):
         """Return the iteration over all the states."""
         self._collect_domain()
-        return _state_generator(self._opp, self._domain)
+        return _state_generator(self..opp, self._domain)
 
     def __len__(self) -> int:
         """Return number of states."""
         self._collect_domain_lifecycle()
-        return self._opp.states.async_entity_ids_count(self._domain)
+        return self..opp.states.async_entity_ids_count(self._domain)
 
     def __repr__(self) -> str:
         """Representation of Domain States."""
@@ -666,7 +668,7 @@ class DomainStates:
 class TemplateState(State):
     """Class to represent a state object in a template."""
 
-    __slots__ = ("_opp", "_state", "_collect")
+    __slots__ = (".opp", "_state", "_collect")
 
     # Inheritance is done so functions that check against State keep working
     # pylint: disable=super-init-not-called
@@ -674,13 +676,13 @@ class TemplateState(State):
         self,.opp: OpenPeerPowerType, state: State, collect: bool = True
     ) -> None:
         """Initialize template state."""
-        self._opp = opp
+        self..opp =.opp
         self._state = state
         self._collect = collect
 
     def _collect_state(self) -> None:
-        if self._collect and _RENDER_INFO in self._opp.data:
-            self._opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
+        if self._collect and _RENDER_INFO in self..opp.data:
+            self..opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
 
     # Jinja will try __getitem__ first and it avoids the need
     # to call is_safe_attribute
@@ -688,8 +690,8 @@ class TemplateState(State):
         """Return a property as an attribute for jinja."""
         if item in _COLLECTABLE_STATE_ATTRIBUTES:
             # _collect_state inlined here for performance
-            if self._collect and _RENDER_INFO in self._opp.data:
-                self._opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
+            if self._collect and _RENDER_INFO in self..opp.data:
+                self..opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
             return getattr(self._state, item)
         if item == "entity_id":
             return self._state.entity_id
@@ -771,7 +773,7 @@ class TemplateState(State):
 
 
 def _collect_state.opp: OpenPeerPowerType, entity_id: str) -> None:
-    entity_collect = opp.data.get(_RENDER_INFO)
+    entity_collect =.opp.data.get(_RENDER_INFO)
     if entity_collect is not None:
         entity_collect.entities.add(entity_id)
 
@@ -785,7 +787,7 @@ def _state_generator.opp: OpenPeerPowerType, domain: Optional[str]) -> Generator
 def _get_state_if_valid(
    .opp: OpenPeerPowerType, entity_id: str
 ) -> Optional[TemplateState]:
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     if state is None and not valid_entity_id(entity_id):
         raise TemplateError(f"Invalid entity ID '{entity_id}'")  # type: ignore
     return _get_template_state_from_state.opp, entity_id, state)
@@ -867,6 +869,13 @@ def expand.opp: OpenPeerPowerType, *args: Any) -> Iterable[State]:
     return sorted(found.values(), key=lambda a: a.entity_id)
 
 
+def device_entities.opp: OpenPeerPowerType, device_id: str) -> Iterable[str]:
+    """Get entity ids for entities tied to a device."""
+    entity_reg = entity_registry.async_get.opp)
+    entries = entity_registry.async_entries_for_device(entity_reg, device_id)
+    return [entry.entity_id for entry in entries]
+
+
 def closest.opp, *args):
     """Find closest entity.
 
@@ -891,8 +900,8 @@ def closest.opp, *args):
 
     """
     if len(args) == 1:
-        latitude = opp.config.latitude
-        longitude = opp.config.longitude
+        latitude =.opp.config.latitude
+        longitude =.opp.config.longitude
         entities = args[0]
 
     elif len(args) == 2:
@@ -1016,7 +1025,7 @@ def state_attr.opp, entity_id, name):
 
 def now.opp):
     """Record fetching now."""
-    render_info = opp.data.get(_RENDER_INFO)
+    render_info =.opp.data.get(_RENDER_INFO)
     if render_info is not None:
         render_info.has_time = True
 
@@ -1025,7 +1034,7 @@ def now.opp):
 
 def utcnow.opp):
     """Record fetching utcnow."""
-    render_info = opp.data.get(_RENDER_INFO)
+    render_info =.opp.data.get(_RENDER_INFO)
     if render_info is not None:
         render_info.has_time = True
 
@@ -1311,10 +1320,10 @@ def urlencode(value):
 class TemplateEnvironment(ImmutableSandboxedEnvironment):
     """The Open Peer Power template environment."""
 
-    def __init__(self,.opp):
+    def __init__(self,.opp, limited=False):
         """Initialise template environment."""
         super().__init__()
-        self.opp = opp
+        self.opp =.opp
         self.template_cache = weakref.WeakValueDictionary()
         self.filters["round"] = forgiving_round
         self.filters["multiply"] = multiply
@@ -1367,8 +1376,28 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
         self.globals["timedelta"] = timedelta
         self.globals["strptime"] = strptime
         self.globals["urlencode"] = urlencode
-        if opp is None:
+        if.opp is None:
+            return
 
+        # We mark these as a context functions to ensure they get
+        # evaluated fresh with every execution, rather than executed
+        # at compile time and the value stored. The context itself
+        # can be discarded, we only need to get at the.opp object.
+        def.oppfunction(func):
+            """Wrap function that depend on.opp."""
+
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                return func.opp, *args[1:], **kwargs)
+
+            return contextfunction(wrapper)
+
+        self.globals["device_entities"] =.oppfunction(device_entities)
+        self.filters["device_entities"] = contextfilter(self.globals["device_entities"])
+
+        if limited:
+            # Only device_entities is available to limited templates, mark other
+            # functions and filters as unsupported.
             def unsupported(name):
                 def warn_unsupported(*args, **kwargs):
                     raise TemplateError(
@@ -1395,30 +1424,17 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
                 self.filters[filt] = unsupported(filt)
             return
 
-        # We mark these as a context functions to ensure they get
-        # evaluated fresh with every execution, rather than executed
-        # at compile time and the value stored. The context itself
-        # can be discarded, we only need to get at the opp object.
-        def.oppfunction(func):
-            """Wrap function that depend on.opp."""
-
-            @wraps(func)
-            def wrapper(*args, **kwargs):
-                return func.opp, *args[1:], **kwargs)
-
-            return contextfunction(wrapper)
-
-        self.globals["expand"] = oppfunction(expand)
+        self.globals["expand"] =.oppfunction(expand)
         self.filters["expand"] = contextfilter(self.globals["expand"])
-        self.globals["closest"] = oppfunction(closest)
+        self.globals["closest"] =.oppfunction(closest)
         self.filters["closest"] = contextfilter.oppfunction(closest_filter))
-        self.globals["distance"] = oppfunction(distance)
-        self.globals["is_state"] = oppfunction(is_state)
-        self.globals["is_state_attr"] = oppfunction(is_state_attr)
-        self.globals["state_attr"] = oppfunction(state_attr)
+        self.globals["distance"] =.oppfunction(distance)
+        self.globals["is_state"] =.oppfunction(is_state)
+        self.globals["is_state_attr"] =.oppfunction(is_state_attr)
+        self.globals["state_attr"] =.oppfunction(state_attr)
         self.globals["states"] = AllStates.opp)
-        self.globals["utcnow"] = oppfunction(utcnow)
-        self.globals["now"] = oppfunction(now)
+        self.globals["utcnow"] =.oppfunction(utcnow)
+        self.globals["now"] =.oppfunction(now)
 
     def is_safe_callable(self, obj):
         """Test if callback is safe."""
@@ -1455,4 +1471,4 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
         return cached
 
 
-_NO_OPP_ENV = TemplateEnvironment(None)  # type: ignore[no-untyped-call]
+_NO_HASS_ENV = TemplateEnvironment(None)  # type: ignore[no-untyped-call]

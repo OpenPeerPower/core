@@ -27,8 +27,8 @@ from openpeerpower.const import (
     CONF_NAME,
     CONF_SHOW_ON_MAP,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.util import Throttle
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -32,7 +32,7 @@ VALUE_TO_STATE = dict(enumerate(STATE_LIST))
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation Door Lock from config entry."""
-    entities_to_create = opp.data[DATA_ZHA][DOMAIN]
+    entities_to_create =.opp.data[DATA_ZHA][DOMAIN]
 
     unsub = async_dispatcher_connect(
        .opp,
@@ -53,9 +53,9 @@ class ZhaDoorLock(ZhaEntity, LockEntity):
         super().__init__(unique_id, zha_device, channels, **kwargs)
         self._doorlock_channel = self.cluster_channels.get(CHANNEL_DOORLOCK)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_accept_signal(
             self._doorlock_channel, SIGNAL_ATTR_UPDATED, self.async_set_state
         )
@@ -83,7 +83,7 @@ class ZhaDoorLock(ZhaEntity, LockEntity):
         if not isinstance(result, list) or result[0] is not Status.SUCCESS:
             self.error("Error with lock_door: %s", result)
             return
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_unlock(self, **kwargs):
         """Unlock the lock."""
@@ -91,7 +91,7 @@ class ZhaDoorLock(ZhaEntity, LockEntity):
         if not isinstance(result, list) or result[0] is not Status.SUCCESS:
             self.error("Error with unlock_door: %s", result)
             return
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_update(self):
         """Attempt to retrieve state from the lock."""
@@ -102,7 +102,7 @@ class ZhaDoorLock(ZhaEntity, LockEntity):
     def async_set_state(self, attr_id, attr_name, value):
         """Handle state update from channel."""
         self._state = VALUE_TO_STATE.get(value, self._state)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_get_state(self, from_cache=True):
         """Attempt to retrieve state from the lock."""

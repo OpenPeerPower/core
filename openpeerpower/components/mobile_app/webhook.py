@@ -150,7 +150,7 @@ async def handle_webhook(
     if webhook_id in.opp.data[DOMAIN][DATA_DELETED_IDS]:
         return Response(status=410)
 
-    config_entry = opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id]
+    config_entry =.opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id]
 
     device_name = config_entry.data[ATTR_DEVICE_NAME]
 
@@ -217,7 +217,7 @@ async def handle_webhook(
 async def webhook_call_service.opp, config_entry, data):
     """Handle a call service webhook."""
     try:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             data[ATTR_DOMAIN],
             data[ATTR_SERVICE],
             data[ATTR_SERVICE_DATA],
@@ -259,7 +259,7 @@ async def webhook_fire_event.opp, config_entry, data):
 @validate_schema({vol.Required(ATTR_CAMERA_ENTITY_ID): cv.string})
 async def webhook_stream_camera.opp, config_entry, data):
     """Handle a request to HLS-stream a camera."""
-    camera = opp.states.get(data[ATTR_CAMERA_ENTITY_ID])
+    camera =.opp.states.get(data[ATTR_CAMERA_ENTITY_ID])
 
     if camera is None:
         return webhook_response(
@@ -272,7 +272,7 @@ async def webhook_stream_camera.opp, config_entry, data):
 
     if camera.attributes[ATTR_SUPPORTED_FEATURES] & CAMERA_SUPPORT_STREAM:
         try:
-            resp["hls_path"] = await opp..components.camera.async_request_stream(
+            resp["hls_path"] = await.opp.components.camera.async_request_stream(
                 camera.entity_id, "hls"
             )
         except OpenPeerPowerError:
@@ -354,7 +354,7 @@ async def webhook_update_registration.opp, config_entry, data):
 
    .opp.config_entries.async_update_entry(config_entry, data=new_registration)
 
-    await opp._notify.async_reload.opp, DOMAIN)
+    await.opp_notify.async_reload.opp, DOMAIN)
 
     return webhook_response(
         safe_registration(new_registration),
@@ -534,7 +534,7 @@ async def webhook_get_zones.opp, config_entry, data):
 @WEBHOOK_COMMANDS.register("get_config")
 async def webhook_get_config.opp, config_entry, data):
     """Handle a get config webhook."""
-   .opp_config = opp.config.as_dict()
+   .opp_config =.opp.config.as_dict()
 
     resp = {
         "latitude":.opp_config["latitude"],
@@ -552,7 +552,7 @@ async def webhook_get_config.opp, config_entry, data):
         resp[CONF_CLOUDHOOK_URL] = config_entry.data[CONF_CLOUDHOOK_URL]
 
     try:
-        resp[CONF_REMOTE_UI_URL] = opp.components.cloud.async_remote_ui_url()
+        resp[CONF_REMOTE_UI_URL] =.opp.components.cloud.async_remote_ui_url()
     except.opp.components.cloud.CloudNotAvailable:
         pass
 

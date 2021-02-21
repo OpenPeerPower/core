@@ -1,7 +1,7 @@
 """Support for Aqualink pool feature switches."""
 from openpeerpower.components.switch import DOMAIN, SwitchEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import AqualinkEntity, refresh_system
 from .const import DOMAIN as AQUALINK_DOMAIN
@@ -15,11 +15,11 @@ async def async_setup_entry(
     """Set up discovered switches."""
     devs = []
     for dev in.opp.data[AQUALINK_DOMAIN][DOMAIN]:
-        devs.append(OppAqualinkSwitch(dev))
+        devs.append(HassAqualinkSwitch(dev))
     async_add_entities(devs, True)
 
 
-class OppAqualinkSwitch(AqualinkEntity, SwitchEntity):
+class HassAqualinkSwitch(AqualinkEntity, SwitchEntity):
     """Representation of a switch."""
 
     @property

@@ -27,7 +27,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up device tracker for iCloud component."""
-    account = opp.data[DOMAIN][entry.unique_id]
+    account =.opp.data[DOMAIN][entry.unique_id]
     tracked = set()
 
     @callback
@@ -122,13 +122,13 @@ class IcloudTrackerEntity(TrackerEntity):
             "model": self._device.device_model,
         }
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register state update callback."""
         self._unsub_dispatcher = async_dispatcher_connect(
-            self.opp, self._account.signal_device_update, self.async_write_op.state
+            self.opp, self._account.signal_device_update, self.async_write_ha_state
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Clean up after entity before removal."""
         self._unsub_dispatcher()
 

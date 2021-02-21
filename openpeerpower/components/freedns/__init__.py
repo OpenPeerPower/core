@@ -8,7 +8,7 @@ import async_timeout
 import voluptuous as vol
 
 from openpeerpower.const import CONF_ACCESS_TOKEN, CONF_SCAN_INTERVAL, CONF_URL
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -42,7 +42,7 @@ async def async_setup.opp, config):
     auth_token = conf.get(CONF_ACCESS_TOKEN)
     update_interval = conf[CONF_SCAN_INTERVAL]
 
-    session = opp.helpers.aiohttp_client.async_get_clientsession()
+    session =.opp.helpers.aiohttp_client.async_get_clientsession()
 
     result = await _update_freedns.opp, session, url, auth_token)
 

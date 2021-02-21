@@ -13,7 +13,7 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONF_VERIFY_SSL,
 )
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 
 @config_entries.HANDLERS.register(DOMAIN)
@@ -23,7 +23,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
 
-    _oppio_discovery = None
+    .oppio_discovery = None
 
     async def _show_setup_form(self, errors=None):
         """Show the setup form to the user."""
@@ -42,11 +42,11 @@ class AdGuardHomeFlowHandler(ConfigFlow):
             errors=errors or {},
         )
 
-    async def _show_oppio_form(self, errors=None):
-        """Show the Opp.io confirmation form to the user."""
+    async def _show.oppio_form(self, errors=None):
+        """Show the Hass.io confirmation form to the user."""
         return self.async_show_form(
-            step_id="oppio_confirm",
-            description_placeholders={"addon": self._oppio_discovery["addon"]},
+            step_id=.oppio_confirm",
+            description_placeholders={"addon": self..oppio_discovery["addon"]},
             data_schema=vol.Schema({}),
             errors=errors or {},
         )
@@ -91,16 +91,16 @@ class AdGuardHomeFlowHandler(ConfigFlow):
             },
         )
 
-    async def async_step_oppio(self, discovery_info):
-        """Prepare configuration for a Opp.io AdGuard Home add-on.
+    async def async_step.oppio(self, discovery_info):
+        """Prepare configuration for a Hass.io AdGuard Home add-on.
 
         This flow is triggered by the discovery component.
         """
         entries = self._async_current_entries()
 
         if not entries:
-            self._oppio_discovery = discovery_info
-            return await self.async_step_oppio_confirm()
+            self..oppio_discovery = discovery_info
+            return await self.async_step.oppio_confirm()
 
         cur_entry = entries[0]
 
@@ -129,18 +129,18 @@ class AdGuardHomeFlowHandler(ConfigFlow):
 
         return self.async_abort(reason="existing_instance_updated")
 
-    async def async_step_oppio_confirm(self, user_input=None):
-        """Confirm Opp.io discovery."""
+    async def async_step.oppio_confirm(self, user_input=None):
+        """Confirm Hass.io discovery."""
         if user_input is None:
-            return await self._show_oppio_form()
+            return await self._show.oppio_form()
 
         errors = {}
 
         session = async_get_clientsession(self.opp, False)
 
         adguard = AdGuardHome(
-            self._oppio_discovery[CONF_HOST],
-            port=self._oppio_discovery[CONF_PORT],
+            self..oppio_discovery[CONF_HOST],
+            port=self..oppio_discovery[CONF_PORT],
             tls=False,
             session=session,
         )
@@ -149,13 +149,13 @@ class AdGuardHomeFlowHandler(ConfigFlow):
             await adguard.version()
         except AdGuardHomeConnectionError:
             errors["base"] = "cannot_connect"
-            return await self._show_oppio_form(errors)
+            return await self._show.oppio_form(errors)
 
         return self.async_create_entry(
-            title=self._oppio_discovery["addon"],
+            title=self..oppio_discovery["addon"],
             data={
-                CONF_HOST: self._oppio_discovery[CONF_HOST],
-                CONF_PORT: self._oppio_discovery[CONF_PORT],
+                CONF_HOST: self..oppio_discovery[CONF_HOST],
+                CONF_PORT: self..oppio_discovery[CONF_PORT],
                 CONF_PASSWORD: None,
                 CONF_SSL: False,
                 CONF_USERNAME: None,

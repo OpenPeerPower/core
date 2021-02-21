@@ -65,7 +65,7 @@ async def async_setup_platform(
 
     entities = []
     for entity in discovery_info[CONF_CLIMATES]:
-        hub: ModbusHub = opp.data[MODBUS_DOMAIN][discovery_info[CONF_NAME]]
+        hub: ModbusHub =.opp.data[MODBUS_DOMAIN][discovery_info[CONF_NAME]]
         count = entity[CONF_DATA_COUNT]
         data_type = entity[CONF_DATA_TYPE]
         name = entity[CONF_NAME]
@@ -134,7 +134,7 @@ class ModbusThermostat(ClimateEntity):
         self._temp_step = config[CONF_STEP]
         self._available = True
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
         async_track_time_interval(
             self.opp, lambda arg: self._update(), self._scan_interval
@@ -230,7 +230,7 @@ class ModbusThermostat(ClimateEntity):
             self._current_temperature_register_type, self._current_temperature_register
         )
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def _read_register(self, register_type, register) -> Optional[float]:
         """Read register using the Modbus hub slave."""

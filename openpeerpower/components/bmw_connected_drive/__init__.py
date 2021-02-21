@@ -33,7 +33,7 @@ from .const import (
     CONF_READ_ONLY,
     CONF_USE_LOCATION,
     DATA_ENTRIES,
-    DATA_OPP_CONFIG,
+    DATA_HASS_CONFIG,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -77,7 +77,7 @@ UNDO_UPDATE_LISTENER = "undo_update_listener"
 async def async_setup.opp: OpenPeerPower, config: dict):
     """Set up the BMW Connected Drive component from configuration.yaml."""
    .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][DATA_OPP_CONFIG] = config
+   .opp.data[DOMAIN][DATA_HASS_CONFIG] = config
 
     if DOMAIN in config:
         for entry_config in config[DOMAIN].values():
@@ -110,7 +110,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     _async_migrate_options_from_data_if_missing.opp, entry)
 
     try:
-        account = await opp..async_add_executor_job(
+        account = await.opp.async_add_executor_job(
             setup_account, entry,.opp, entry.data[CONF_USERNAME]
         )
     except OSError as ex:
@@ -118,7 +118,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     async def _async_update_all(service_call=None):
         """Update all BMW accounts."""
-        await opp..async_add_executor_job(_update_all)
+        await.opp.async_add_executor_job(_update_all)
 
     def _update_all() -> None:
         """Update all BMW accounts."""
@@ -152,7 +152,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             NOTIFY_DOMAIN,
             DOMAIN,
             {CONF_NAME: DOMAIN},
-           .opp.data[DOMAIN][DATA_OPP_CONFIG],
+           .opp.data[DOMAIN][DATA_HASS_CONFIG],
         )
     )
 
@@ -194,7 +194,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def update_listener.opp, config_entry):
     """Handle options update."""
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)
 
 
 def setup_account(entry: ConfigEntry,.opp, name: str) -> BMWConnectedDriveAccount:
@@ -348,9 +348,9 @@ class BMWConnectedDriveBaseEntity(Entity):
 
     def update_callback(self):
         """Schedule a state update."""
-        self.schedule_update_op.state(True)
+        self.schedule_update_ha_state(True)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Add callback after being added to.opp.
 
         Show latest data after startup.

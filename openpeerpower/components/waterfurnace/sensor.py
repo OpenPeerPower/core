@@ -54,7 +54,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         return
 
     sensors = []
-    client = opp.data[WF_DOMAIN]
+    client =.opp.data[WF_DOMAIN]
     for sconfig in SENSORS:
         sensors.append(WaterFurnaceSensor(client, sconfig))
 
@@ -103,7 +103,7 @@ class WaterFurnaceSensor(Entity):
         """Return the polling state."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
@@ -116,4 +116,4 @@ class WaterFurnaceSensor(Entity):
         """Update state."""
         if self.client.data is not None:
             self._state = getattr(self.client.data, self._attr, None)
-            self.async_write_op.state()
+            self.async_write_ha_state()

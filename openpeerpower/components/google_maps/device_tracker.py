@@ -14,10 +14,10 @@ from openpeerpower.const import (
     CONF_SCAN_INTERVAL,
     CONF_USERNAME,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import track_time_interval
-from openpeerpowerr.helpers.typing import ConfigType
-from openpeerpowerr.util import dt as dt_util, slugify
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import track_time_interval
+from openpeerpower.helpers.typing import ConfigType
+from openpeerpower.util import dt as dt_util, slugify
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -84,7 +84,7 @@ async def async_setup.opp, config):
 async def async_setup_entry.opp, config_entry):
     """Set up the GDACS component as config entry."""
    .opp.data.setdefault(DOMAIN, {})
-    feeds = opp.data[DOMAIN].setdefault(FEED, {})
+    feeds =.opp.data[DOMAIN].setdefault(FEED, {})
 
     radius = config_entry.data[CONF_RADIUS]
     if.opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL:
@@ -99,7 +99,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload an GDACS component config entry."""
-    manager = opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
+    manager =.opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
     await manager.async_stop()
     await asyncio.wait(
         [
@@ -115,7 +115,7 @@ class GdacsFeedEntityManager:
 
     def __init__(self,.opp, config_entry, radius_in_km):
         """Initialize the Feed Entity Manager."""
-        self._opp = opp
+        self..opp =.opp
         self._config_entry = config_entry
         coordinates = (
             config_entry.data[CONF_LATITUDE],
@@ -143,8 +143,8 @@ class GdacsFeedEntityManager:
         """Schedule initial and regular updates based on configured time interval."""
 
         for domain in PLATFORMS:
-            self._opp.async_create_task(
-                self._opp.config_entries.async_forward_entry_setup(
+            self..opp.async_create_task(
+                self..opp.config_entries.async_forward_entry_setup(
                     self._config_entry, domain
                 )
             )
@@ -155,7 +155,7 @@ class GdacsFeedEntityManager:
 
         # Trigger updates at regular intervals.
         self._track_time_remove_callback = async_track_time_interval(
-            self._opp, update, self._scan_interval
+            self..opp, update, self._scan_interval
         )
 
         _LOGGER.debug("Feed entity manager initialized")
@@ -190,7 +190,7 @@ class GdacsFeedEntityManager:
     async def _generate_entity(self, external_id):
         """Generate new entity."""
         async_dispatcher_send(
-            self._opp,
+            self..opp,
             self.async_event_new_entity(),
             self,
             self._config_entry.unique_id,
@@ -199,14 +199,14 @@ class GdacsFeedEntityManager:
 
     async def _update_entity(self, external_id):
         """Update entity."""
-        async_dispatcher_send(self._opp, f"gdacs_update_{external_id}")
+        async_dispatcher_send(self..opp, f"gdacs_update_{external_id}")
 
     async def _remove_entity(self, external_id):
         """Remove entity."""
-        async_dispatcher_send(self._opp, f"gdacs_delete_{external_id}")
+        async_dispatcher_send(self..opp, f"gdacs_delete_{external_id}")
 
     async def _status_update(self, status_info):
         """Propagate status update."""
         _LOGGER.debug("Status update received: %s", status_info)
         self._status_info = status_info
-        async_dispatcher_send(self._opp, f"gdacs_status_{self._config_entry_id}")
+        async_dispatcher_send(self..opp, f"gdacs_status_{self._config_entry_id}")

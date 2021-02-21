@@ -108,13 +108,19 @@ async def async_and_from_config(
        .opp: OpenPeerPower, variables: TemplateVarsType = None
     ) -> bool:
         """Test and condition."""
-        try:
-            for check in checks:
+        errors = []
+        for check in checks:
+            try:
                 if not check.opp, variables):
                     return False
-        except Exception as ex:  # pylint: disable=broad-except
-            _LOGGER.warning("Error during and-condition: %s", ex)
-            return False
+            except ConditionError as ex:
+                errors.append(str(ex))
+            except Exception as ex:  # pylint: disable=broad-except
+                errors.append(str(ex))
+
+        # Raise the errors if no check was false
+        if errors:
+            raise ConditionError("Error in 'and' condition: " + ", ".join(errors))
 
         return True
 
@@ -134,13 +140,20 @@ async def async_or_from_config(
     def if_or_condition(
        .opp: OpenPeerPower, variables: TemplateVarsType = None
     ) -> bool:
-        """Test and condition."""
-        try:
-            for check in checks:
+        """Test or condition."""
+        errors = []
+        for check in checks:
+            try:
                 if check.opp, variables):
                     return True
-        except Exception as ex:  # pylint: disable=broad-except
-            _LOGGER.warning("Error during or-condition: %s", ex)
+            except ConditionError as ex:
+                errors.append(str(ex))
+            except Exception as ex:  # pylint: disable=broad-except
+                errors.append(str(ex))
+
+        # Raise the errors if no check was true
+        if errors:
+            raise ConditionError("Error in 'or' condition: " + ", ".join(errors))
 
         return False
 
@@ -161,12 +174,19 @@ async def async_not_from_config(
        .opp: OpenPeerPower, variables: TemplateVarsType = None
     ) -> bool:
         """Test not condition."""
-        try:
-            for check in checks:
+        errors = []
+        for check in checks:
+            try:
                 if check.opp, variables):
                     return False
-        except Exception as ex:  # pylint: disable=broad-except
-            _LOGGER.warning("Error during not-condition: %s", ex)
+            except ConditionError as ex:
+                errors.append(str(ex))
+            except Exception as ex:  # pylint: disable=broad-except
+                errors.append(str(ex))
+
+        # Raise the errors if no check was true
+        if errors:
+            raise ConditionError("Error in 'not' condition: " + ", ".join(errors))
 
         return True
 
@@ -209,7 +229,7 @@ def async_numeric_state(
 
     if isinstance(entity, str):
         entity_id = entity
-        entity = opp.states.get(entity)
+        entity =.opp.states.get(entity)
 
         if entity is None:
             raise ConditionError(f"Unknown entity {entity_id}")
@@ -247,7 +267,7 @@ def async_numeric_state(
 
     if below is not None:
         if isinstance(below, str):
-            below_entity = opp.states.get(below)
+            below_entity =.opp.states.get(below)
             if not below_entity or below_entity.state in (
                 STATE_UNAVAILABLE,
                 STATE_UNKNOWN,
@@ -260,7 +280,7 @@ def async_numeric_state(
 
     if above is not None:
         if isinstance(above, str):
-            above_entity = opp.states.get(above)
+            above_entity =.opp.states.get(above)
             if not above_entity or above_entity.state in (
                 STATE_UNAVAILABLE,
                 STATE_UNKNOWN,
@@ -291,7 +311,7 @@ def async_numeric_state_from_config(
     ) -> bool:
         """Test numeric state condition."""
         if value_template is not None:
-            value_template.opp = opp
+            value_template.opp =.opp
 
         return all(
             async_numeric_state(
@@ -319,7 +339,7 @@ def state(
 
     if isinstance(entity, str):
         entity_id = entity
-        entity = opp.states.get(entity)
+        entity =.opp.states.get(entity)
 
         if entity is None:
             raise ConditionError(f"Unknown entity {entity_id}")
@@ -348,7 +368,7 @@ def state(
             isinstance(req_state_value, str)
             and INPUT_ENTITY_ID.match(req_state_value) is not None
         ):
-            state_entity = opp.states.get(req_state_value)
+            state_entity =.opp.states.get(req_state_value)
             if not state_entity:
                 continue
             state_value = state_entity.state
@@ -490,7 +510,7 @@ def async_template_from_config(
 
     def template_if.opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate template based if-condition."""
-        value_template.opp = opp
+        value_template.opp =.opp
 
         return async_template.opp, value_template, variables)
 
@@ -516,7 +536,7 @@ def time(
     if after is None:
         after = dt_util.dt.time(0)
     elif isinstance(after, str):
-        after_entity = opp.states.get(after)
+        after_entity =.opp.states.get(after)
         if not after_entity:
             raise ConditionError(
                 f"Error in 'time' condition: The 'after' entity {after} is not available"
@@ -530,7 +550,7 @@ def time(
     if before is None:
         before = dt_util.dt.time(23, 59, 59, 999999)
     elif isinstance(before, str):
-        before_entity = opp.states.get(before)
+        before_entity =.opp.states.get(before)
         if not before_entity:
             raise ConditionError(
                 f"Error in 'time' condition: The 'before' entity {before} is not available"
@@ -588,23 +608,36 @@ def zone(
 
     Async friendly.
     """
-    if isinstance(zone_ent, str):
-        zone_ent = opp.states.get(zone_ent)
-
     if zone_ent is None:
-        return False
+        raise ConditionError("No zone specified")
 
-    if isinstance(entity, str):
-        entity = opp.states.get(entity)
+    if isinstance(zone_ent, str):
+        zone_ent_id = zone_ent
+        zone_ent =.opp.states.get(zone_ent)
+
+        if zone_ent is None:
+            raise ConditionError(f"Unknown zone {zone_ent_id}")
 
     if entity is None:
-        return False
+        raise ConditionError("No entity specified")
+
+    if isinstance(entity, str):
+        entity_id = entity
+        entity =.opp.states.get(entity)
+
+        if entity is None:
+            raise ConditionError(f"Unknown entity {entity_id}")
+    else:
+        entity_id = entity.entity_id
 
     latitude = entity.attributes.get(ATTR_LATITUDE)
     longitude = entity.attributes.get(ATTR_LONGITUDE)
 
-    if latitude is None or longitude is None:
-        return False
+    if latitude is None:
+        raise ConditionError(f"Entity {entity_id} has no 'latitude' attribute")
+
+    if longitude is None:
+        raise ConditionError(f"Entity {entity_id} has no 'longitude' attribute")
 
     return zone_cmp.in_zone(
         zone_ent, latitude, longitude, entity.attributes.get(ATTR_GPS_ACCURACY, 0)
@@ -622,13 +655,26 @@ def zone_from_config(
 
     def if_in_zone.opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Test if condition."""
-        return all(
-            any(
-                zone.opp, zone_entity_id, entity_id)
-                for zone_entity_id in zone_entity_ids
-            )
-            for entity_id in entity_ids
-        )
+        errors = []
+
+        all_ok = True
+        for entity_id in entity_ids:
+            entity_ok = False
+            for zone_entity_id in zone_entity_ids:
+                try:
+                    if zone.opp, zone_entity_id, entity_id):
+                        entity_ok = True
+                except ConditionError as ex:
+                    errors.append(str(ex))
+
+            if not entity_ok:
+                all_ok = False
+
+        # Raise the errors only if no definitive result was found
+        if errors and not all_ok:
+            raise ConditionError("Error in 'zone' condition: " + ", ".join(errors))
+
+        return all_ok
 
     return if_in_zone
 

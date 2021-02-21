@@ -58,14 +58,14 @@ class IntentHandleView(http.OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Handle intent with name/data."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         try:
             intent_name = data["name"]
             slots = {
                 key: {"value": value} for key, value in data.get("data", {}).items()
             }
-            intent_result = await intent.async_op.dle(
+            intent_result = await intent.async_handle(
                .opp, DOMAIN, intent_name, slots, "", self.context(request)
             )
         except intent.IntentHandleError as err:

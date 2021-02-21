@@ -6,7 +6,7 @@ from freebox_api.exceptions import InsufficientPermissionsError
 
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DOMAIN
 from .router import FreeboxRouter
@@ -18,7 +18,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the switch."""
-    router = opp.data[DOMAIN][entry.unique_id]
+    router =.opp.data[DOMAIN][entry.unique_id]
     async_add_entities([FreeboxWifiSwitch(router)], True)
 
 

@@ -28,13 +28,13 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_state_change_event
-from openpeerpowerr.helpers.reload import async_setup_reload_service
-from openpeerpowerr.util.decorator import Registry
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_state_change_event
+from openpeerpower.helpers.reload import async_setup_reload_service
+from openpeerpower.util.decorator import Registry
+import openpeerpower.util.dt as dt_util
 
 from . import DOMAIN, PLATFORMS
 
@@ -198,19 +198,19 @@ class SensorFilter(Entity):
         self._update_filter_sensor_state(event.data.get("new_state"))
 
     @callback
-    def _update_filter_sensor_state(self, new_state, update_op.True):
+    def _update_filter_sensor_state(self, new_state, update_ha=True):
         """Process device state changes."""
         if new_state is None:
             _LOGGER.warning(
                 "While updating filter %s, the new_state is None", self._name
             )
             self._state = None
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
         if new_state.state in [STATE_UNKNOWN, STATE_UNAVAILABLE]:
             self._state = new_state.state
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
         temp_state = new_state
@@ -252,10 +252,10 @@ class SensorFilter(Entity):
                 ATTR_UNIT_OF_MEASUREMENT
             )
 
-        if update_op.
-            self.async_write_op.state()
+        if update_ha:
+            self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
 
         if "recorder" in self.opp.config.components:

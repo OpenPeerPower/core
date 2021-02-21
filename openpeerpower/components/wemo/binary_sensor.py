@@ -3,7 +3,7 @@ import asyncio
 import logging
 
 from openpeerpower.components.binary_sensor import BinarySensorEntity
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import DOMAIN as WEMO_DOMAIN
 from .entity import WemoSubscriptionEntity
@@ -33,5 +33,5 @@ class WemoBinarySensor(WemoSubscriptionEntity, BinarySensorEntity):
 
     def _update(self, force_update=True):
         """Update the sensor state."""
-        with self._wemo_exception_op.dler("update status"):
+        with self._wemo_exception_handler("update status"):
             self._state = self.wemo.get_state(force_update)

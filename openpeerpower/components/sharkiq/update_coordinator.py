@@ -13,8 +13,8 @@ from sharkiqpy import (
 )
 
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import _LOGGER, API_TIMEOUT, DOMAIN, UPDATE_INTERVAL
 

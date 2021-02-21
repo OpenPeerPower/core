@@ -99,7 +99,7 @@ class LightColorMode(enum.IntEnum):
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation light from config entry."""
-    entities_to_create = opp.data[DATA_ZHA][light.DOMAIN]
+    entities_to_create =.opp.data[DATA_ZHA][light.DOMAIN]
 
     unsub = async_dispatcher_connect(
        .opp,
@@ -171,7 +171,7 @@ class BaseLight(LogMixin, light.LightEntity):
         """
         value = max(0, min(254, value))
         self._brightness = value
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def hs_color(self):
@@ -304,7 +304,7 @@ class BaseLight(LogMixin, light.LightEntity):
 
         self._off_brightness = None
         self.debug("turned on: %s", t_log)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the entity off."""
@@ -326,7 +326,7 @@ class BaseLight(LogMixin, light.LightEntity):
             # store current brightness so that the next turn_on uses it.
             self._off_brightness = self._brightness
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 @STRICT_MATCH(channel_names=CHANNEL_ON_OFF, aux_channels={CHANNEL_COLOR, CHANNEL_LEVEL})
@@ -346,7 +346,7 @@ class Light(BaseLight, ZhaEntity):
         if self._color_channel:
             self._min_mireds: Optional[int] = self._color_channel.min_mireds
             self._max_mireds: Optional[int] = self._color_channel.max_mireds
-        self._cancel_refresh_op.dle = None
+        self._cancel_refresh_handle = None
         effect_list = []
 
         if self._level_channel:
@@ -389,11 +389,11 @@ class Light(BaseLight, ZhaEntity):
         self._state = bool(value)
         if value:
             self._off_brightness = None
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_accept_signal(
             self._on_off_channel, SIGNAL_ATTR_UPDATED, self.async_set_state
         )
@@ -402,7 +402,7 @@ class Light(BaseLight, ZhaEntity):
                 self._level_channel, SIGNAL_SET_LEVEL, self.set_level
             )
         refresh_interval = random.randint(*[x * 60 for x in self._REFRESH_INTERVAL])
-        self._cancel_refresh_op.dle = async_track_time_interval(
+        self._cancel_refresh_handle = async_track_time_interval(
             self.opp, self._refresh, timedelta(seconds=refresh_interval)
         )
         self.async_accept_signal(
@@ -412,10 +412,10 @@ class Light(BaseLight, ZhaEntity):
             signal_override=True,
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect entity object when removed."""
-        self._cancel_refresh_op.dle()
-        await super().async_will_remove_from_opp()
+        self._cancel_refresh_handle()
+        await super().async_will_remove_from.opp()
 
     @callback
     def async_restore_last_state(self, last_state):
@@ -492,13 +492,13 @@ class Light(BaseLight, ZhaEntity):
     async def _refresh(self, time):
         """Call async_get_state at an interval."""
         await self.async_get_state()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def _maybe_force_refresh(self, signal):
         """Force update the state if the signal contains the entity id for this entity."""
         if self.entity_id in signal["entity_ids"]:
             await self.async_get_state()
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
 
 @STRICT_MATCH(
@@ -528,9 +528,9 @@ class LightGroup(BaseLight, ZhaGroupEntity):
         self._identify_channel = group.endpoint[Identify.cluster_id]
         self._debounced_member_refresh = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if self._debounced_member_refresh is None:
             force_refresh_debouncer = Debouncer(
                 self.opp,

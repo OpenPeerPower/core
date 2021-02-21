@@ -6,11 +6,11 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.helpers import discovery
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
-from openpeerpowerr.helpers.entity_component import EntityComponent
-from openpeerpowerr.helpers.restore_state import RestoreEntity
+from openpeerpower.helpers import discovery
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.entity_component import EntityComponent
+from openpeerpower.helpers.restore_state import RestoreEntity
 
 from .const import (
     ATTR_TARIFF,
@@ -132,9 +132,9 @@ class TariffSelect(RestoreEntity):
         self._tariffs = tariffs
         self._icon = TARIFF_ICON
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if self._current_tariff is not None:
             return
 
@@ -184,11 +184,11 @@ class TariffSelect(RestoreEntity):
             )
             return
         self._current_tariff = tariff
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_next_tariff(self):
         """Offset current index."""
         current_index = self._tariffs.index(self._current_tariff)
         new_index = (current_index + 1) % len(self._tariffs)
         self._current_tariff = self._tariffs[new_index]
-        self.async_write_op.state()
+        self.async_write_ha_state()

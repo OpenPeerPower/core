@@ -26,7 +26,7 @@
                     "code_disarm_required": "PIN-Code zum Entsperren vorgeben"
                 }
             },
-            "risco_to_op.: {
+            "risco_to_ha": {
                 "data": {
                     "A": "Gruppe A",
                     "B": "Gruppe B",

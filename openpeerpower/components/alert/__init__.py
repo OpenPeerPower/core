@@ -112,7 +112,7 @@ async def async_setup.opp, config):
     if not entities:
         return False
 
-    async def async_op.dle_alert_service(service_call):
+    async def async_handle_alert_service(service_call):
         """Handle calls to alert services."""
         alert_ids = await service.async_extract_entity_ids.opp, service_call)
 
@@ -133,18 +133,18 @@ async def async_setup.opp, config):
    .opp.services.async_register(
         DOMAIN,
         SERVICE_TURN_OFF,
-        async_op.dle_alert_service,
+        async_handle_alert_service,
         schema=ALERT_SERVICE_SCHEMA,
     )
    .opp.services.async_register(
-        DOMAIN, SERVICE_TURN_ON, async_op.dle_alert_service, schema=ALERT_SERVICE_SCHEMA
+        DOMAIN, SERVICE_TURN_ON, async_handle_alert_service, schema=ALERT_SERVICE_SCHEMA
     )
    .opp.services.async_register(
-        DOMAIN, SERVICE_TOGGLE, async_op.dle_alert_service, schema=ALERT_SERVICE_SCHEMA
+        DOMAIN, SERVICE_TOGGLE, async_handle_alert_service, schema=ALERT_SERVICE_SCHEMA
     )
 
     for alert in entities:
-        alert.async_write_op.state()
+        alert.async_write_ha_state()
 
     return True
 
@@ -169,7 +169,7 @@ class Alert(ToggleEntity):
         data,
     ):
         """Initialize the alert."""
-        self.opp = opp
+        self.opp =.opp
         self._name = name
         self._alert_state = state
         self._skip_first = skip_first
@@ -177,15 +177,15 @@ class Alert(ToggleEntity):
 
         self._message_template = message_template
         if self._message_template is not None:
-            self._message_template.opp = opp
+            self._message_template.opp =.opp
 
         self._done_message_template = done_message_template
         if self._done_message_template is not None:
-            self._done_message_template.opp = opp
+            self._done_message_template.opp =.opp
 
         self._title_template = title_template
         if self._title_template is not None:
-            self._title_template.opp = opp
+            self._title_template.opp =.opp
 
         self._notifiers = notifiers
         self._can_ack = can_ack
@@ -245,7 +245,7 @@ class Alert(ToggleEntity):
         else:
             await self._schedule_notify()
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def end_alerting(self):
         """End the alert procedures."""
@@ -255,7 +255,7 @@ class Alert(ToggleEntity):
         self._firing = False
         if self._send_done_message:
             await self._notify_done_message()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def _schedule_notify(self):
         """Schedule a notification."""
@@ -316,13 +316,13 @@ class Alert(ToggleEntity):
         """Async Unacknowledge alert."""
         _LOGGER.debug("Reset Alert: %s", self._name)
         self._ack = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Async Acknowledge alert."""
         _LOGGER.debug("Acknowledged Alert: %s", self._name)
         self._ack = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_toggle(self, **kwargs):
         """Async toggle alert."""

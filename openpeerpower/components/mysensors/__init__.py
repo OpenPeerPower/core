@@ -249,7 +249,7 @@ async def on_unload(
 @callback
 def setup_mysensors_platform(
    .opp,
-    domain: str,  # opp platform name
+    domain: str,  #.opp platform name
     discovery_info: Optional[Dict[str, List[DevId]]],
     device_class: Union[Type[MySensorsDevice], Dict[SensorType, Type[MySensorsEntity]]],
     device_args: Optional[

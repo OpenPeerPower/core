@@ -8,9 +8,9 @@
             "cannot_connect": "Ha fallat la connexi\u00f3"
         },
         "step": {
-            "oppio_confirm": {
-                "description": "Vols configurar Open Peer Power perqu\u00e8 es connecti amb l'AdGuard Home proporcionat pel complement de Opp.io: {addon}?",
-                "title": "AdGuard Home (complement de Opp.io)"
+            .oppio_confirm": {
+                "description": "Vols configurar Open Peer Power perqu\u00e8 es connecti amb l'AdGuard Home proporcionat pel complement de Hass.io: {addon}?",
+                "title": "AdGuard Home (complement de Hass.io)"
             },
             "user": {
                 "data": {

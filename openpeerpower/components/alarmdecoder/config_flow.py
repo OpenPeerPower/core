@@ -9,7 +9,7 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.components.binary_sensor import DEVICE_CLASSES
 from openpeerpower.const import CONF_HOST, CONF_PORT, CONF_PROTOCOL
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from .const import (  # pylint: disable=unused-import
     CONF_ALT_NIGHT_MODE,

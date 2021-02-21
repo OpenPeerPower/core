@@ -22,10 +22,10 @@ from openpeerpower.const import (
     SPEED_METERS_PER_SECOND,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
 

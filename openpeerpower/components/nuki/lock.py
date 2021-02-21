@@ -9,7 +9,7 @@ import voluptuous as vol
 
 from openpeerpower.components.lock import PLATFORM_SCHEMA, SUPPORT_OPEN, LockEntity
 from openpeerpower.const import CONF_HOST, CONF_PORT, CONF_TOKEN
-from openpeerpowerr.helpers import config_validation as cv, entity_platform
+from openpeerpower.helpers import config_validation as cv, entity_platform
 
 from .const import DEFAULT_PORT, DEFAULT_TIMEOUT
 
@@ -59,7 +59,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         entities.extend([NukiOpenerEntity(opener) for opener in bridge.openers])
         return entities
 
-    entities = await opp..async_add_executor_job(get_entities)
+    entities = await.opp.async_add_executor_job(get_entities)
 
     async_add_entities(entities)
 

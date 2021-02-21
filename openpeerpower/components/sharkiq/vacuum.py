@@ -23,7 +23,7 @@ from openpeerpower.components.vacuum import (
     SUPPORT_STOP,
     StateVacuumEntity,
 )
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN, SHARK
 from .update_coordinator import SharkIqUpdateCoordinator
@@ -68,7 +68,7 @@ ATTR_RSSI = "rssi"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Shark IQ vacuum cleaner."""
-    coordinator: SharkIqUpdateCoordinator = opp.data[DOMAIN][config_entry.entry_id]
+    coordinator: SharkIqUpdateCoordinator =.opp.data[DOMAIN][config_entry.entry_id]
     devices: Iterable["SharkIqVacuum"] = coordinator.shark_vacs.values()
     device_names = [d.name for d in devices]
     _LOGGER.debug(

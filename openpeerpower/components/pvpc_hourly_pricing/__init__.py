@@ -3,8 +3,8 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.core import OpenPeerPower
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import OpenPeerPower
+import openpeerpower.helpers.config_validation as cv
 
 from .const import ATTR_TARIFF, DEFAULT_NAME, DEFAULT_TARIFF, DOMAIN, PLATFORM, TARIFFS
 
@@ -53,4 +53,4 @@ async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntr
 
 async def async_unload_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntry):
     """Unload a config entry."""
-    return await opp..config_entries.async_forward_entry_unload(entry, PLATFORM)
+    return await.opp.config_entries.async_forward_entry_unload(entry, PLATFORM)

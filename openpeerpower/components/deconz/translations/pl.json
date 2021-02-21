@@ -4,7 +4,7 @@
             "already_configured": "Urz\u0105dzenie jest ju\u017c skonfigurowane",
             "already_in_progress": "Konfiguracja jest ju\u017c w toku",
             "no_bridges": "Nie odkryto mostk\u00f3w deCONZ",
-            "no_op.dware_available": "Nie wykryto komponentu radiowego pod\u0142\u0105czonego do deCONZ",
+            "no_hardware_available": "Nie wykryto komponentu radiowego pod\u0142\u0105czonego do deCONZ",
             "not_deconz_bridge": "To nie jest mostek deCONZ",
             "updated_instance": "Zaktualizowano instancj\u0119 deCONZ o nowy adres hosta"
         },
@@ -13,9 +13,9 @@
         },
         "flow_title": "Bramka deCONZ Zigbee ({host})",
         "step": {
-            "oppio_confirm": {
-                "description": "Czy chcesz skonfigurowa\u0107 Open Peer Powera, aby po\u0142\u0105czy\u0142 si\u0119 z bramk\u0105 deCONZ dostarczon\u0105 przez dodatek Opp.io {addon}?",
-                "title": "Bramka deCONZ Zigbee przez dodatek Opp.io"
+            .oppio_confirm": {
+                "description": "Czy chcesz skonfigurowa\u0107 Open Peer Powera, aby po\u0142\u0105czy\u0142 si\u0119 z bramk\u0105 deCONZ dostarczon\u0105 przez dodatek Hass.io {addon}?",
+                "title": "Bramka deCONZ Zigbee przez dodatek Hass.io"
             },
             "link": {
                 "description": "Odblokuj bramk\u0119 deCONZ, aby zarejestrowa\u0107 j\u0105 w Open Peer Powerem. \n\n 1. Przejd\u017a do ustawienia deCONZ > bramka > Zaawansowane\n 2. Naci\u015bnij przycisk \"Uwierzytelnij aplikacj\u0119\"",

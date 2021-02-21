@@ -7,9 +7,9 @@ import voluptuous as vol
 
 from openpeerpower import config_entries, exceptions
 from openpeerpower.const import CONF_HOST, CONF_ID, CONF_NAME, CONF_PORT
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.typing import DiscoveryInfoType
+from openpeerpower.core import callback
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.typing import DiscoveryInfoType
 
 from .const import DOMAIN  # pylint:disable=unused-import
 

@@ -18,7 +18,7 @@ TARGET_STATE_MAP = {STATE_UNLOCKED: 0, STATE_LOCKED: 1}
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Homekit lock."""
     hkid = config_entry.data["AccessoryPairingID"]
-    conn = opp.data[KNOWN_DEVICES][hkid]
+    conn =.opp.data[KNOWN_DEVICES][hkid]
 
     @callback
     def async_add_service(service):

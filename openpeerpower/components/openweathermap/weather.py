@@ -20,7 +20,7 @@ from .weather_update_coordinator import WeatherUpdateCoordinator
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up OpenWeatherMap weather entity based on a config entry."""
-    domain_data = opp.data[DOMAIN][config_entry.entry_id]
+    domain_data =.opp.data[DOMAIN][config_entry.entry_id]
     name = domain_data[ENTRY_NAME]
     weather_coordinator = domain_data[ENTRY_WEATHER_COORDINATOR]
 
@@ -112,10 +112,10 @@ class OpenWeatherMapWeather(WeatherEntity):
         """Return True if entity is available."""
         return self._weather_coordinator.last_update_success
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Connect to dispatcher listening for entity data notifications."""
         self.async_on_remove(
-            self._weather_coordinator.async_add_listener(self.async_write_op.state)
+            self._weather_coordinator.async_add_listener(self.async_write_ha_state)
         )
 
     async def async_update(self):

@@ -17,7 +17,7 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=90)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Abode camera devices."""
-    data = opp.data[DOMAIN]
+    data =.opp.data[DOMAIN]
 
     entities = []
 
@@ -37,9 +37,9 @@ class AbodeCamera(AbodeDevice, Camera):
         self._event = event
         self._response = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe Abode events."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         self.opp.async_add_executor_job(
             self._data.abode.events.add_timeline_callback,
@@ -94,7 +94,7 @@ class AbodeCamera(AbodeDevice, Camera):
         """Update the image with the device then refresh device."""
         self._device.update_image_location(capture)
         self.get_image()
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def is_on(self):

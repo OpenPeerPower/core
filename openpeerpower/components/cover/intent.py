@@ -4,8 +4,8 @@ from openpeerpower.helpers import intent
 
 from . import DOMAIN, SERVICE_CLOSE_COVER, SERVICE_OPEN_COVER
 
-INTENT_OPEN_COVER = "OppOpenCover"
-INTENT_CLOSE_COVER = "OppCloseCover"
+INTENT_OPEN_COVER = "HassOpenCover"
+INTENT_CLOSE_COVER = "HassCloseCover"
 
 
 async def async_setup_intents.opp: OpenPeerPower) -> None:

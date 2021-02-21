@@ -1,7 +1,7 @@
 {
   "domain": "pushover",
   "name": "Pushover",
-  "documentation": "https://www.openpeerpower.io/integrations/pushover",
+  "documentation": "https://www.open-peer-power.io/integrations/pushover",
   "requirements": ["pushover_complete==1.1.1"],
   "codeowners": []
 }

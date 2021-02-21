@@ -9,7 +9,7 @@
                     "name": "Nome del sensore",
                     "tariff": "Tariffa contrattuale (1, 2 o 3 periodi)"
                 },
-                "description": "Questo sensore utilizza l'API ufficiale per ottenere [prezzi orari dell'elettricit\u00e0 (PVPC)](https://www.esios.ree.es/es/pvpc) in Spagna.\nPer una spiegazione pi\u00f9 precisa, visitare la [documentazione di integrazione](https://www.openpeerpower.io/integrations/pvpc_hourly_pricing/).\n\nSelezionare la tariffa contrattuale in base al numero di periodi di fatturazione al giorno:\n- 1 periodo: normale\n- 2 periodi: discriminazione (tariffa notturna)\n- 3 periodi: auto elettrica (tariffa notturna di 3 periodi)",
+                "description": "Questo sensore utilizza l'API ufficiale per ottenere [prezzi orari dell'elettricit\u00e0 (PVPC)](https://www.esios.ree.es/es/pvpc) in Spagna.\nPer una spiegazione pi\u00f9 precisa, visitare la [documentazione di integrazione](https://www.open-peer-power.io/integrations/pvpc_hourly_pricing/).\n\nSelezionare la tariffa contrattuale in base al numero di periodi di fatturazione al giorno:\n- 1 periodo: normale\n- 2 periodi: discriminazione (tariffa notturna)\n- 3 periodi: auto elettrica (tariffa notturna di 3 periodi)",
                 "title": "Selezione della tariffa"
             }
         }

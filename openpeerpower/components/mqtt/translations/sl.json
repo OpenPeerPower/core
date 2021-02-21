@@ -17,12 +17,12 @@
                 },
                 "description": "Prosimo vnesite informacije o povezavi va\u0161ega MQTT posrednika."
             },
-            "oppio_confirm": {
+            .oppio_confirm": {
                 "data": {
                     "discovery": "Omogo\u010di odkrivanje"
                 },
-                "description": "Ali \u017eelite konfigurirati Open Peer Power za povezavo s posrednikom MQTT, ki ga ponuja dodatek Opp.io {addon} ?",
-                "title": "MQTT Broker prek dodatka Opp.io"
+                "description": "Ali \u017eelite konfigurirati Open Peer Power za povezavo s posrednikom MQTT, ki ga ponuja dodatek Hass.io {addon} ?",
+                "title": "MQTT Broker prek dodatka Hass.io"
             }
         }
     },

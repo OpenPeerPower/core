@@ -81,7 +81,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the HomematicIP Cloud binary sensor from a config entry."""
-    hap = opp.data[HMIPC_DOMAIN][config_entry.unique_id]
+    hap =.opp.data[HMIPC_DOMAIN][config_entry.unique_id]
     entities = [HomematicipCloudConnectionSensor(hap)]
     for device in hap.home.devices:
         if isinstance(device, AsyncAccelerationSensor):
@@ -277,7 +277,7 @@ class HomematicipShutterContact(HomematicipMultiContactInterface, BinarySensorEn
     ) -> None:
         """Initialize the shutter contact."""
         super().__init__(hap, device, is_multi_channel=False)
-        self.has_additional_state = op._additional_state
+        self.has_additional_state = has_additional_state
 
     @property
     def device_class(self) -> str:

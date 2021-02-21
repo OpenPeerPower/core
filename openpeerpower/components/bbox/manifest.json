@@ -1,7 +1,7 @@
 {
   "domain": "bbox",
   "name": "Bbox",
-  "documentation": "https://www.openpeerpower.io/integrations/bbox",
+  "documentation": "https://www.open-peer-power.io/integrations/bbox",
   "requirements": ["pybbox==0.0.5-alpha"],
   "codeowners": []
 }

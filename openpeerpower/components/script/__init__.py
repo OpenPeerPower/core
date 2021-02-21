@@ -35,7 +35,7 @@ from openpeerpower.helpers.script import (
     make_script_schema,
 )
 from openpeerpower.helpers.service import async_set_service_schema
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -82,7 +82,7 @@ SCRIPT_TURN_ONOFF_SCHEMA = make_entity_service_schema(
 RELOAD_SERVICE_SCHEMA = vol.Schema({})
 
 
-@bind_opp
+@bind.opp
 def is_on.opp, entity_id):
     """Return if the script is on based on the statemachine."""
     return.opp.states.is_state(entity_id, STATE_ON)
@@ -94,7 +94,7 @@ def scripts_with_entity.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component = opp.data[DOMAIN]
+    component =.opp.data[DOMAIN]
 
     return [
         script_entity.entity_id
@@ -109,7 +109,7 @@ def entities_in_script.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component = opp.data[DOMAIN]
+    component =.opp.data[DOMAIN]
 
     script_entity = component.get_entity(entity_id)
 
@@ -125,7 +125,7 @@ def scripts_with_device.opp: OpenPeerPower, device_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component = opp.data[DOMAIN]
+    component =.opp.data[DOMAIN]
 
     return [
         script_entity.entity_id
@@ -140,7 +140,7 @@ def devices_in_script.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component = opp.data[DOMAIN]
+    component =.opp.data[DOMAIN]
 
     script_entity = component.get_entity(entity_id)
 
@@ -181,7 +181,10 @@ async def async_setup.opp, config):
             return
 
         await asyncio.wait(
-            [script_entity.async_turn_off() for script_entity in script_entities]
+            [
+                asyncio.create_task(script_entity.async_turn_off())
+                for script_entity in script_entities
+            ]
         )
 
     async def toggle_service(service):
@@ -208,7 +211,7 @@ async def async_setup.opp, config):
 async def _async_process_config.opp, config, component):
     """Process script configuration."""
 
-    async def service_op.dler(service):
+    async def service_handler(service):
         """Execute a service call to script.<script name>."""
         entity_id = ENTITY_ID_FORMAT.format(service.service)
         script_entity = component.get_entity(entity_id)
@@ -233,7 +236,7 @@ async def _async_process_config.opp, config, component):
         cfg = config[DOMAIN][object_id]
 
        .opp.services.async_register(
-            DOMAIN, object_id, service_op.dler, schema=SCRIPT_SERVICE_SCHEMA
+            DOMAIN, object_id, service_handler, schema=SCRIPT_SERVICE_SCHEMA
         )
 
         # Register the service description
@@ -301,7 +304,7 @@ class ScriptEntity(ToggleEntity):
     @callback
     def async_change_listener(self):
         """Update state."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
         self._changed.set()
 
     async def async_turn_on(self, **kwargs):
@@ -331,7 +334,7 @@ class ScriptEntity(ToggleEntity):
         """Turn script off."""
         await self.script.async_stop()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Stop script and remove service when it will be removed from Open Peer Power."""
         await self.script.async_stop()
 

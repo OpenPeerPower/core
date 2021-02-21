@@ -13,8 +13,8 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.const import CONF_HOST, CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.util.color import (
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.util.color import (
     color_temperature_kelvin_to_mired as kelvin_to_mired,
     color_temperature_mired_to_kelvin as mired_to_kelvin,
 )

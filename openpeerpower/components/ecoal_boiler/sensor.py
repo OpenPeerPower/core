@@ -10,7 +10,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
     devices = []
-    ecoal_contr = opp.data[DATA_ECOAL_BOILER]
+    ecoal_contr =.opp.data[DATA_ECOAL_BOILER]
     for sensor_id in discovery_info:
         name = AVAILABLE_SENSORS[sensor_id]
         devices.append(EcoalTempSensor(ecoal_contr, name, sensor_id))

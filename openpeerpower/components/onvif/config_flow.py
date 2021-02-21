@@ -50,7 +50,7 @@ def wsdiscovery() -> List[Service]:
 async def async_discovery.opp) -> bool:
     """Return if there are devices that can be discovered."""
     LOGGER.debug("Starting ONVIF discovery...")
-    services = await opp..async_add_executor_job(wsdiscovery)
+    services = await.opp.async_add_executor_job(wsdiscovery)
 
     devices = []
     for service in services:
@@ -171,8 +171,8 @@ class OnvifFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         # Username and Password are optional and default empty
         # due to some cameras not allowing you to change ONVIF user settings.
-        # See https://github.com/openpeerpower/core/issues/39182
-        # and https://github.com/openpeerpower/core/issues/35904
+        # See https://github.com/open-peer-power/core/issues/39182
+        # and https://github.com/open-peer-power/core/issues/35904
         return self.async_show_form(
             step_id="auth",
             data_schema=vol.Schema(

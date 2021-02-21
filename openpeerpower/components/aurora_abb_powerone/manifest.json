@@ -1,7 +1,7 @@
 {
   "domain": "aurora_abb_powerone",
   "name": "Aurora ABB Solar PV",
-  "documentation": "https://www.openpeerpower.io/integrations/aurora_abb_powerone/",
+  "documentation": "https://www.open-peer-power.io/integrations/aurora_abb_powerone/",
   "codeowners": ["@davet2001"],
   "requirements": ["aurorapy==0.2.6"]
 }

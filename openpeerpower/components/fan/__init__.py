@@ -2,6 +2,7 @@
 from datetime import timedelta
 import functools as ft
 import logging
+import math
 from typing import List, Optional
 
 import voluptuous as vol
@@ -12,17 +13,19 @@ from openpeerpower.const import (
     SERVICE_TURN_ON,
     STATE_ON,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.config_validation import (  # noqa: F401
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.config_validation import (  # noqa: F401
     PLATFORM_SCHEMA,
     PLATFORM_SCHEMA_BASE,
 )
-from openpeerpowerr.helpers.entity import ToggleEntity
-from openpeerpowerr.helpers.entity_component import EntityComponent
-from openpeerpowerr.loader import bind_opp
-from openpeerpowerr.util.percentage import (
+from openpeerpower.helpers.entity import ToggleEntity
+from openpeerpower.helpers.entity_component import EntityComponent
+from openpeerpower.loader import bind.opp
+from openpeerpower.util.percentage import (
     ordered_list_item_to_percentage,
     percentage_to_ordered_list_item,
+    percentage_to_ranged_value,
+    ranged_value_to_percentage,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -39,6 +42,8 @@ SUPPORT_DIRECTION = 4
 SUPPORT_PRESET_MODE = 8
 
 SERVICE_SET_SPEED = "set_speed"
+SERVICE_INCREASE_SPEED = "increase_speed"
+SERVICE_DECREASE_SPEED = "decrease_speed"
 SERVICE_OSCILLATE = "oscillate"
 SERVICE_SET_DIRECTION = "set_direction"
 SERVICE_SET_PERCENTAGE = "set_percentage"
@@ -54,6 +59,7 @@ DIRECTION_REVERSE = "reverse"
 
 ATTR_SPEED = "speed"
 ATTR_PERCENTAGE = "percentage"
+ATTR_PERCENTAGE_STEP = "percentage_step"
 ATTR_SPEED_LIST = "speed_list"
 ATTR_OSCILLATING = "oscillating"
 ATTR_DIRECTION = "direction"
@@ -102,10 +108,10 @@ class NotValidPresetModeError(ValueError):
     """Exception class when the preset_mode in not in the preset_modes list."""
 
 
-@bind_opp
+@bind.opp
 def is_on.opp, entity_id: str) -> bool:
     """Return if the fans are on based on the statemachine."""
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     if ATTR_SPEED in state.attributes:
         return state.attributes[ATTR_SPEED] not in OFF_SPEED_VALUES
     return state.state == STATE_ON
@@ -113,7 +119,7 @@ def is_on.opp, entity_id: str) -> bool:
 
 async def async_setup.opp, config: dict):
     """Expose fan control via statemachine and services."""
-    component = opp.data[DOMAIN] = EntityComponent(
+    component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
     )
 
@@ -140,6 +146,26 @@ async def async_setup.opp, config: dict):
         SERVICE_SET_SPEED,
         {vol.Required(ATTR_SPEED): cv.string},
         "async_set_speed_deprecated",
+        [SUPPORT_SET_SPEED],
+    )
+    component.async_register_entity_service(
+        SERVICE_INCREASE_SPEED,
+        {
+            vol.Optional(ATTR_PERCENTAGE_STEP): vol.All(
+                vol.Coerce(int), vol.Range(min=0, max=100)
+            )
+        },
+        "async_increase_speed",
+        [SUPPORT_SET_SPEED],
+    )
+    component.async_register_entity_service(
+        SERVICE_DECREASE_SPEED,
+        {
+            vol.Optional(ATTR_PERCENTAGE_STEP): vol.All(
+                vol.Coerce(int), vol.Range(min=0, max=100)
+            )
+        },
+        "async_decrease_speed",
         [SUPPORT_SET_SPEED],
     )
     component.async_register_entity_service(
@@ -176,12 +202,12 @@ async def async_setup.opp, config: dict):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await opp..data[DOMAIN].async_setup_entry(entry)
+    return await.opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await opp..data[DOMAIN].async_unload_entry(entry)
+    return await.opp.data[DOMAIN].async_unload_entry(entry)
 
 
 def _fan_native(method):
@@ -245,6 +271,35 @@ class FanEntity(ToggleEntity):
             await self.opp.async_add_executor_job(self.set_percentage, percentage)
         else:
             await self.async_set_speed(self.percentage_to_speed(percentage))
+
+    async def async_increase_speed(self, percentage_step: Optional[int] = None) -> None:
+        """Increase the speed of the fan."""
+        await self._async_adjust_speed(1, percentage_step)
+
+    async def async_decrease_speed(self, percentage_step: Optional[int] = None) -> None:
+        """Decrease the speed of the fan."""
+        await self._async_adjust_speed(-1, percentage_step)
+
+    async def _async_adjust_speed(
+        self, modifier: int, percentage_step: Optional[int]
+    ) -> None:
+        """Increase or decrease the speed of the fan."""
+        current_percentage = self.percentage or 0
+
+        if percentage_step is not None:
+            new_percentage = current_percentage + (percentage_step * modifier)
+        else:
+            speed_range = (1, self.speed_count)
+            speed_index = math.ceil(
+                percentage_to_ranged_value(speed_range, current_percentage)
+            )
+            new_percentage = ranged_value_to_percentage(
+                speed_range, speed_index + modifier
+            )
+
+        new_percentage = max(0, min(100, new_percentage))
+
+        await self.async_set_percentage(new_percentage)
 
     @_fan_native
     def set_preset_mode(self, preset_mode: str) -> None:
@@ -409,6 +464,19 @@ class FanEntity(ToggleEntity):
         return 0
 
     @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        speed_list = speed_list_without_preset_modes(self.speed_list)
+        if speed_list:
+            return len(speed_list)
+        return 100
+
+    @property
+    def percentage_step(self) -> float:
+        """Return the step size for percentage."""
+        return 100 / self.speed_count
+
+    @property
     def speed_list(self) -> list:
         """Get the list of available speeds."""
         speeds = []
@@ -531,6 +599,7 @@ class FanEntity(ToggleEntity):
         if supported_features & SUPPORT_SET_SPEED:
             data[ATTR_SPEED] = self.speed
             data[ATTR_PERCENTAGE] = self.percentage
+            data[ATTR_PERCENTAGE_STEP] = self.percentage_step
 
         if (
             supported_features & SUPPORT_PRESET_MODE

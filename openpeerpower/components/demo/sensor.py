@@ -6,7 +6,7 @@ from openpeerpower.const import (
     PERCENTAGE,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.entity import Entity
 
 from . import DOMAIN
 

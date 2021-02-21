@@ -8,9 +8,9 @@ from openpeerpower import config_entries
 from openpeerpower.components import http, websocket_api
 from openpeerpower.components.http.data_validator import RequestDataValidator
 from openpeerpower.const import HTTP_BAD_REQUEST, HTTP_NOT_FOUND
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.util.json import load_json, save_json
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.util.json import load_json, save_json
 
 from .const import DOMAIN
 
@@ -74,14 +74,14 @@ async def async_setup_entry.opp, config_entry):
 
     async def add_item_service(call):
         """Add an item with `name`."""
-        data = opp.data[DOMAIN]
+        data =.opp.data[DOMAIN]
         name = call.data.get(ATTR_NAME)
         if name is not None:
             await data.async_add(name)
 
     async def complete_item_service(call):
         """Mark the item provided via `name` as completed."""
-        data = opp.data[DOMAIN]
+        data =.opp.data[DOMAIN]
         name = call.data.get(ATTR_NAME)
         if name is None:
             return
@@ -92,7 +92,7 @@ async def async_setup_entry.opp, config_entry):
         else:
             await data.async_update(item["id"], {"name": name, "complete": True})
 
-    data = opp.data[DOMAIN] = ShoppingData.opp)
+    data =.opp.data[DOMAIN] = ShoppingData.opp)
     await data.async_load()
 
    .opp.services.async_register(
@@ -112,23 +112,23 @@ async def async_setup_entry.opp, config_entry):
     )
 
    .opp.components.websocket_api.async_register_command(
-        WS_TYPE_SHOPPING_LIST_ITEMS, websocket_op.dle_items, SCHEMA_WEBSOCKET_ITEMS
+        WS_TYPE_SHOPPING_LIST_ITEMS, websocket_handle_items, SCHEMA_WEBSOCKET_ITEMS
     )
    .opp.components.websocket_api.async_register_command(
-        WS_TYPE_SHOPPING_LIST_ADD_ITEM, websocket_op.dle_add, SCHEMA_WEBSOCKET_ADD_ITEM
+        WS_TYPE_SHOPPING_LIST_ADD_ITEM, websocket_handle_add, SCHEMA_WEBSOCKET_ADD_ITEM
     )
    .opp.components.websocket_api.async_register_command(
         WS_TYPE_SHOPPING_LIST_UPDATE_ITEM,
-        websocket_op.dle_update,
+        websocket_handle_update,
         SCHEMA_WEBSOCKET_UPDATE_ITEM,
     )
    .opp.components.websocket_api.async_register_command(
         WS_TYPE_SHOPPING_LIST_CLEAR_ITEMS,
-        websocket_op.dle_clear,
+        websocket_handle_clear,
         SCHEMA_WEBSOCKET_CLEAR_ITEMS,
     )
 
-    websocket_api.async_register_command.opp, websocket_op.dle_reorder)
+    websocket_api.async_register_command.opp, websocket_handle_reorder)
 
     return True
 
@@ -138,7 +138,7 @@ class ShoppingData:
 
     def __init__(self,.opp):
         """Initialize the shopping list."""
-        self.opp = opp
+        self.opp =.opp
         self.items = []
 
     async def async_add(self, name):
@@ -213,7 +213,7 @@ class ShoppingListView(http.OpenPeerPowerView):
     @callback
     def get(self, request):
         """Retrieve shopping list items."""
-        return self.json(request.app["opp"].data[DOMAIN].items)
+        return self.json(request.app[.opp"].data[DOMAIN].items)
 
 
 class UpdateShoppingListItemView(http.OpenPeerPowerView):
@@ -227,8 +227,8 @@ class UpdateShoppingListItemView(http.OpenPeerPowerView):
         data = await request.json()
 
         try:
-            item = await request.app["opp"].data[DOMAIN].async_update(item_id, data)
-            request.app["opp"].bus.async_fire(EVENT)
+            item = await request.app[.opp"].data[DOMAIN].async_update(item_id, data)
+            request.app[.opp"].bus.async_fire(EVENT)
             return self.json(item)
         except KeyError:
             return self.json_message("Item not found", HTTP_NOT_FOUND)
@@ -245,8 +245,8 @@ class CreateShoppingListItemView(http.OpenPeerPowerView):
     @RequestDataValidator(vol.Schema({vol.Required("name"): str}))
     async def post(self, request, data):
         """Create a new shopping list item."""
-        item = await request.app["opp"].data[DOMAIN].async_add(data["name"])
-        request.app["opp"].bus.async_fire(EVENT)
+        item = await request.app[.opp"].data[DOMAIN].async_add(data["name"])
+        request.app[.opp"].bus.async_fire(EVENT)
         return self.json(item)
 
 
@@ -258,14 +258,14 @@ class ClearCompletedItemsView(http.OpenPeerPowerView):
 
     async def post(self, request):
         """Retrieve if API is running."""
-        opp = request.app["opp"]
-        await opp..data[DOMAIN].async_clear_completed()
+       .opp = request.app[.opp"]
+        await.opp.data[DOMAIN].async_clear_completed()
        .opp.bus.async_fire(EVENT)
         return self.json_message("Cleared completed items.")
 
 
 @callback
-def websocket_op.dle_items.opp, connection, msg):
+def websocket_handle_items.opp, connection, msg):
     """Handle get shopping_list items."""
     connection.send_message(
         websocket_api.result_message(msg["id"],.opp.data[DOMAIN].items)
@@ -273,15 +273,15 @@ def websocket_op.dle_items.opp, connection, msg):
 
 
 @websocket_api.async_response
-async def websocket_op.dle_add.opp, connection, msg):
+async def websocket_handle_add.opp, connection, msg):
     """Handle add item to shopping_list."""
-    item = await opp..data[DOMAIN].async_add(msg["name"])
+    item = await.opp.data[DOMAIN].async_add(msg["name"])
    .opp.bus.async_fire(EVENT, {"action": "add", "item": item})
     connection.send_message(websocket_api.result_message(msg["id"], item))
 
 
 @websocket_api.async_response
-async def websocket_op.dle_update.opp, connection, msg):
+async def websocket_handle_update.opp, connection, msg):
     """Handle update shopping_list item."""
     msg_id = msg.pop("id")
     item_id = msg.pop("item_id")
@@ -289,7 +289,7 @@ async def websocket_op.dle_update.opp, connection, msg):
     data = msg
 
     try:
-        item = await opp..data[DOMAIN].async_update(item_id, data)
+        item = await.opp.data[DOMAIN].async_update(item_id, data)
        .opp.bus.async_fire(EVENT, {"action": "update", "item": item})
         connection.send_message(websocket_api.result_message(msg_id, item))
     except KeyError:
@@ -299,9 +299,9 @@ async def websocket_op.dle_update.opp, connection, msg):
 
 
 @websocket_api.async_response
-async def websocket_op.dle_clear.opp, connection, msg):
+async def websocket_handle_clear.opp, connection, msg):
     """Handle clearing shopping_list items."""
-    await opp..data[DOMAIN].async_clear_completed()
+    await.opp.data[DOMAIN].async_clear_completed()
    .opp.bus.async_fire(EVENT, {"action": "clear"})
     connection.send_message(websocket_api.result_message(msg["id"]))
 
@@ -312,7 +312,7 @@ async def websocket_op.dle_clear.opp, connection, msg):
         vol.Required("item_ids"): [str],
     }
 )
-def websocket_op.dle_reorder.opp, connection, msg):
+def websocket_handle_reorder.opp, connection, msg):
     """Handle reordering shopping_list items."""
     msg_id = msg.pop("id")
     try:

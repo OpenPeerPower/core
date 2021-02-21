@@ -33,8 +33,8 @@ from .discovery import (
     MQTT_DISCOVERY_DONE,
     MQTT_DISCOVERY_NEW,
     MQTT_DISCOVERY_UPDATED,
-    clear_discovery_op.h,
-    set_discovery_op.h,
+    clear_discovery_hash,
+    set_discovery_hash,
 )
 from .models import Message
 from .subscription import async_subscribe_topics, async_unsubscribe_topics
@@ -104,7 +104,7 @@ MQTT_AVAILABILITY_SCHEMA = MQTT_AVAILABILITY_SINGLE_SCHEMA.extend(
 )
 
 
-def validate_device_op._at_least_one_identifier(value: ConfigType) -> ConfigType:
+def validate_device_has_at_least_one_identifier(value: ConfigType) -> ConfigType:
     """Validate that a device info entry has at least one identifying value."""
     if value.get(CONF_IDENTIFIERS) or value.get(CONF_CONNECTIONS):
         return value
@@ -131,7 +131,7 @@ MQTT_ENTITY_DEVICE_INFO_SCHEMA = vol.All(
             vol.Optional(CONF_VIA_DEVICE): cv.string,
         }
     ),
-    validate_device_op._at_least_one_identifier,
+    validate_device_has_at_least_one_identifier,
 )
 
 MQTT_JSON_ATTRS_SCHEMA = vol.Schema(
@@ -152,10 +152,10 @@ async def async_setup_entry_helper.opp, domain, async_setup, schema):
             config = schema(discovery_payload)
             await async_setup(config, discovery_data=discovery_data)
         except Exception:
-            discovery_op.h = discovery_data[ATTR_DISCOVERY_HASH]
-            clear_discovery_op.h.opp, discovery_op.h)
+            discovery_hash = discovery_data[ATTR_DISCOVERY_HASH]
+            clear_discovery_hash.opp, discovery_hash)
             async_dispatcher_send(
-               .opp, MQTT_DISCOVERY_DONE.format(discovery_op.h), None
+               .opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
             )
             raise
 
@@ -173,9 +173,9 @@ class MqttAttributes(Entity):
         self._attributes_sub_state = None
         self._attributes_config = config
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe MQTT events."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         await self._attributes_subscribe_topics()
 
     async def attributes_discovery_update(self, config: dict):
@@ -199,7 +199,7 @@ class MqttAttributes(Entity):
                 json_dict = json.loads(payload)
                 if isinstance(json_dict, dict):
                     self._attributes = json_dict
-                    self.async_write_op.state()
+                    self.async_write_ha_state()
                 else:
                     _LOGGER.warning("JSON result was not a dictionary")
                     self._attributes = None
@@ -219,7 +219,7 @@ class MqttAttributes(Entity):
             },
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""
         self._attributes_sub_state = await async_unsubscribe_topics(
             self.opp, self._attributes_sub_state
@@ -241,9 +241,9 @@ class MqttAvailability(Entity):
         self._available_latest = False
         self._availability_setup_from_config(config)
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe MQTT events."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         await self._availability_subscribe_topics()
         self.async_on_remove(
             async_dispatcher_connect(self.opp, MQTT_CONNECTED, self.async_mqtt_connect)
@@ -292,7 +292,7 @@ class MqttAvailability(Entity):
                 self._available[topic] = False
                 self._available_latest = False
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self._available = {topic: False for topic in self._avail_topics}
         topics = {
@@ -314,9 +314,9 @@ class MqttAvailability(Entity):
     def async_mqtt_connect(self):
         """Update state on connection/disconnection to MQTT broker."""
         if not self.opp.is_stopping:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""
         self._availability_sub_state = await async_unsubscribe_topics(
             self.opp, self._availability_sub_state
@@ -342,15 +342,15 @@ async def cleanup_device_registry.opp, device_id):
     # pylint: disable=import-outside-toplevel
     from . import device_trigger, tag
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     if (
         device_id
         and not.opp.helpers.entity_registry.async_entries_for_device(
             entity_registry, device_id, include_disabled_entities=True
         )
         and not await device_trigger.async_get_triggers.opp, device_id)
-        and not tag.async_op._tags.opp, device_id)
+        and not tag.async_has_tags.opp, device_id)
     ):
         device_registry.async_remove_device(device_id)
 
@@ -363,13 +363,13 @@ class MqttDiscoveryUpdate(Entity):
         self._discovery_data = discovery_data
         self._discovery_update = discovery_update
         self._remove_signal = None
-        self._removed_from_opp = False
+        self._removed_from.opp = False
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe to discovery updates."""
-        await super().async_added_to_opp()
-        self._removed_from_opp = False
-        discovery_op.h = (
+        await super().async_added_to.opp()
+        self._removed_from.opp = False
+        discovery_hash = (
             self._discovery_data[ATTR_DISCOVERY_HASH] if self._discovery_data else None
         )
 
@@ -393,7 +393,7 @@ class MqttDiscoveryUpdate(Entity):
             """Handle discovery update."""
             _LOGGER.info(
                 "Got update for entity with hash: %s '%s'",
-                discovery_op.h,
+                discovery_hash,
                 payload,
             )
             old_payload = self._discovery_data[ATTR_DISCOVERY_PAYLOAD]
@@ -412,27 +412,27 @@ class MqttDiscoveryUpdate(Entity):
                     # Non-empty, unchanged payload: Ignore to avoid changing states
                     _LOGGER.info("Ignoring unchanged update for: %s", self.entity_id)
             async_dispatcher_send(
-                self.opp, MQTT_DISCOVERY_DONE.format(discovery_op.h), None
+                self.opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
             )
 
-        if discovery_op.h:
+        if discovery_hash:
             debug_info.add_entity_discovery_data(
                 self.opp, self._discovery_data, self.entity_id
             )
             # Set in case the entity has been removed and is re-added, for example when changing entity_id
-            set_discovery_op.h(self.opp, discovery_op.h)
+            set_discovery_hash(self.opp, discovery_hash)
             self._remove_signal = async_dispatcher_connect(
                 self.opp,
-                MQTT_DISCOVERY_UPDATED.format(discovery_op.h),
+                MQTT_DISCOVERY_UPDATED.format(discovery_hash),
                 discovery_callback,
             )
             async_dispatcher_send(
-                self.opp, MQTT_DISCOVERY_DONE.format(discovery_op.h), None
+                self.opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
             )
 
     async def async_removed_from_registry(self) -> None:
         """Clear retained discovery topic in broker."""
-        if not self._removed_from_opp:
+        if not self._removed_from.opp:
             discovery_topic = self._discovery_data[ATTR_DISCOVERY_TOPIC]
             publish(self.opp, discovery_topic, "", retain=True)
 
@@ -440,23 +440,23 @@ class MqttDiscoveryUpdate(Entity):
     def add_to_platform_abort(self) -> None:
         """Abort adding an entity to a platform."""
         if self._discovery_data:
-            discovery_op.h = self._discovery_data[ATTR_DISCOVERY_HASH]
-            clear_discovery_op.h(self.opp, discovery_op.h)
+            discovery_hash = self._discovery_data[ATTR_DISCOVERY_HASH]
+            clear_discovery_hash(self.opp, discovery_hash)
             async_dispatcher_send(
-                self.opp, MQTT_DISCOVERY_DONE.format(discovery_op.h), None
+                self.opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
             )
         super().add_to_platform_abort()
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Stop listening to signal and cleanup discovery data.."""
         self._cleanup_discovery_on_remove()
 
     def _cleanup_discovery_on_remove(self) -> None:
         """Stop listening to signal and cleanup discovery data."""
-        if self._discovery_data and not self._removed_from_opp:
+        if self._discovery_data and not self._removed_from.opp:
             debug_info.remove_entity_data(self.opp, self.entity_id)
-            clear_discovery_op.h(self.opp, self._discovery_data[ATTR_DISCOVERY_HASH])
-            self._removed_from_opp = True
+            clear_discovery_hash(self.opp, self._discovery_data[ATTR_DISCOVERY_HASH])
+            self._removed_from.opp = True
 
         if self._remove_signal:
             self._remove_signal()
@@ -526,7 +526,7 @@ class MqttEntity(
 
     def __init__(self,.opp, config, config_entry, discovery_data):
         """Init the MQTT Entity."""
-        self.opp = opp
+        self.opp =.opp
         self._unique_id = config.get(CONF_UNIQUE_ID)
         self._sub_state = None
 
@@ -539,9 +539,9 @@ class MqttEntity(
         MqttDiscoveryUpdate.__init__(self, discovery_data, self.discovery_update)
         MqttEntityDeviceInfo.__init__(self, config.get(CONF_DEVICE), config_entry)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe mqtt events."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         await self._subscribe_topics()
 
     async def discovery_update(self, discovery_payload):
@@ -552,16 +552,16 @@ class MqttEntity(
         await self.availability_discovery_update(config)
         await self.device_info_discovery_update(config)
         await self._subscribe_topics()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""
         self._sub_state = await subscription.async_unsubscribe_topics(
             self.opp, self._sub_state
         )
-        await MqttAttributes.async_will_remove_from_opp(self)
-        await MqttAvailability.async_will_remove_from_opp(self)
-        await MqttDiscoveryUpdate.async_will_remove_from_opp(self)
+        await MqttAttributes.async_will_remove_from.opp(self)
+        await MqttAvailability.async_will_remove_from.opp(self)
+        await MqttDiscoveryUpdate.async_will_remove_from.opp(self)
 
     @staticmethod
     @abstractmethod

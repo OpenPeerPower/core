@@ -12,7 +12,7 @@ from openpeerpower.components.cover import (
     CoverEntity,
 )
 from openpeerpower.const import CONF_DEVICE_CLASS, CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import (
     CONF_ADS_VAR,
@@ -46,7 +46,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the cover platform for ADS."""
-    ads_hub = opp.data[DATA_ADS]
+    ads_hub =.opp.data[DATA_ADS]
 
     ads_var_is_closed = config.get(CONF_ADS_VAR)
     ads_var_position = config.get(CONF_ADS_VAR_POSITION)
@@ -107,7 +107,7 @@ class AdsCover(AdsEntity, CoverEntity):
         self._ads_var_stop = ads_var_stop
         self._device_class = device_class
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register device notification."""
         if self._ads_var is not None:
             await self.async_initialize_device(

@@ -16,7 +16,7 @@ from .const import COORDINATOR, DOMAIN, PUMP_TYPES
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the sensor platform."""
 
-    coordinator = opp.data[DOMAIN][entry.entry_id][COORDINATOR]
+    coordinator =.opp.data[DOMAIN][entry.entry_id][COORDINATOR]
     entities = []
 
     for item_id, item in coordinator.data.items():
@@ -121,8 +121,8 @@ class OmniLogicTemperatureSensor(OmnilogicSensor):
             hayward_state = None
             state = None
 
-        self._attrs["hayward_temperature"] = op.ward_state
-        self._attrs["hayward_unit_of_measure"] = op.ward_unit_of_measure
+        self._attrs["hayward_temperature"] = hayward_state
+        self._attrs["hayward_unit_of_measure"] = hayward_unit_of_measure
 
         self._unit = TEMP_FAHRENHEIT
 

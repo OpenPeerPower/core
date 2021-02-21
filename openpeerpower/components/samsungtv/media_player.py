@@ -29,9 +29,9 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.script import Script
-from openpeerpowerr.util import dt as dt_util
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.script import Script
+from openpeerpower.util import dt as dt_util
 
 from .bridge import SamsungTVBridge
 from .const import (
@@ -69,7 +69,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         and CONF_ON_ACTION in.opp.data[DOMAIN][ip_address]
         and.opp.data[DOMAIN][ip_address][CONF_ON_ACTION]
     ):
-        turn_on_action = opp.data[DOMAIN][ip_address][CONF_ON_ACTION]
+        turn_on_action =.opp.data[DOMAIN][ip_address][CONF_ON_ACTION]
         on_script = Script(
            .opp, turn_on_action, config_entry.data.get(CONF_NAME, DEFAULT_NAME), DOMAIN
         )

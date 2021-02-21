@@ -22,12 +22,12 @@ from openpeerpower.const import (
     LENGTH_FEET,
     LENGTH_METERS,
 )
-from openpeerpowerr.exceptions import PlatformNotReady
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity, async_generate_entity_id
-from openpeerpowerr.helpers.event import async_track_time_interval
-from openpeerpowerr.util import distance, location
+from openpeerpower.exceptions import PlatformNotReady
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity, async_generate_entity_id
+from openpeerpower.helpers.event import async_track_time_interval
+from openpeerpower.util import distance, location
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -160,7 +160,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         radius = distance.convert(radius, LENGTH_FEET, LENGTH_METERS)
 
     # Create a single instance of CityBikesNetworks.
-    networks = opp.data.setdefault(CITYBIKES_NETWORKS, CityBikesNetworks.opp))
+    networks =.opp.data.setdefault(CITYBIKES_NETWORKS, CityBikesNetworks.opp))
 
     if not network_id:
         network_id = await networks.get_closest_network_id(latitude, longitude)
@@ -171,7 +171,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
        .opp.async_create_task(network.async_refresh())
         async_track_time_interval.opp, network.async_refresh, SCAN_INTERVAL)
     else:
-        network = opp.data[PLATFORM][MONITORED_NETWORKS][network_id]
+        network =.opp.data[PLATFORM][MONITORED_NETWORKS][network_id]
 
     await network.ready.wait()
 
@@ -199,7 +199,7 @@ class CityBikesNetworks:
 
     def __init__(self,.opp):
         """Initialize the networks instance."""
-        self.opp = opp
+        self.opp =.opp
         self.networks = None
         self.networks_loading = asyncio.Condition()
 
@@ -236,7 +236,7 @@ class CityBikesNetwork:
 
     def __init__(self,.opp, network_id):
         """Initialize the network object."""
-        self.opp = opp
+        self.opp =.opp
         self.network_id = network_id
         self.stations = []
         self.ready = asyncio.Event()

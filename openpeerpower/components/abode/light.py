@@ -23,7 +23,7 @@ from .const import DOMAIN
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Abode light devices."""
-    data = opp.data[DOMAIN]
+    data =.opp.data[DOMAIN]
 
     entities = []
 

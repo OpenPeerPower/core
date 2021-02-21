@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional
 
 from pyownet import protocol
 
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.entity import Entity
 
 from .const import (
     SENSOR_TYPE_COUNT,

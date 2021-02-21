@@ -23,12 +23,12 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return None
 
-    consumer = opp.data[DOMAIN][KEY_CONSUMER]
+    consumer =.opp.data[DOMAIN][KEY_CONSUMER]
 
     actuator_list = []
 
     for entity_info in discovery_info:
-        peripheral = opp.data[DOMAIN][entity_info[KEY_PARENT_MAC]][
+        peripheral =.opp.data[DOMAIN][entity_info[KEY_PARENT_MAC]][
             entity_info[KEY_IDENTIFIER]
         ]
         parent_name = entity_info[KEY_PARENT_NAME]

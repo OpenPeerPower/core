@@ -167,9 +167,9 @@ class DimmableRflinkLight(SwitchableRflinkDevice, LightEntity):
 
     _brightness = 255
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Restore RFLink light brightness attribute."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         old_state = await self.async_get_last_state()
         if (
@@ -186,7 +186,7 @@ class DimmableRflinkLight(SwitchableRflinkDevice, LightEntity):
             self._brightness = int(kwargs[ATTR_BRIGHTNESS] / 17) * 17
 
         # Turn on light at the requested dim level
-        await self._async_op.dle_command("dim", self._brightness)
+        await self._async_handle_command("dim", self._brightness)
 
     @property
     def brightness(self):
@@ -223,9 +223,9 @@ class HybridRflinkLight(SwitchableRflinkDevice, LightEntity):
 
     _brightness = 255
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Restore RFLink light brightness attribute."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         old_state = await self.async_get_last_state()
         if (
@@ -243,12 +243,12 @@ class HybridRflinkLight(SwitchableRflinkDevice, LightEntity):
 
         # if receiver supports dimming this will turn on the light
         # at the requested dim level
-        await self._async_op.dle_command("dim", self._brightness)
+        await self._async_handle_command("dim", self._brightness)
 
         # if the receiving device does not support dimlevel this
         # will ensure it is turned on when full brightness is set
         if self._brightness == 255:
-            await self._async_op.dle_command("turn_on")
+            await self._async_handle_command("turn_on")
 
     @property
     def brightness(self):
@@ -277,7 +277,7 @@ class ToggleRflinkLight(SwitchableRflinkDevice, LightEntity):
     and if the light is off and 'on' gets sent, the light will turn on.
     """
 
-    def _op.dle_event(self, event):
+    def _handle_event(self, event):
         """Adjust state if Rflink picks up a remote command for this device."""
         self.cancel_queued_send_commands()
 
@@ -289,8 +289,8 @@ class ToggleRflinkLight(SwitchableRflinkDevice, LightEntity):
 
     async def async_turn_on(self, **kwargs):
         """Turn the device on."""
-        await self._async_op.dle_command("toggle")
+        await self._async_handle_command("toggle")
 
     async def async_turn_off(self, **kwargs):
         """Turn the device off."""
-        await self._async_op.dle_command("toggle")
+        await self._async_handle_command("toggle")

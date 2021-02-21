@@ -568,7 +568,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if model is None:
         try:
             miio_device = Device(host, token)
-            device_info = await opp..async_add_executor_job(miio_device.info)
+            device_info = await.opp.async_add_executor_job(miio_device.info)
             model = device_info.model
             unique_id = f"{model}-{device_info.mac_address}"
             _LOGGER.info(
@@ -607,7 +607,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
    .opp.data[DATA_KEY][host] = device
     async_add_entities([device], update_before_add=True)
 
-    async def async_service_op.dler(service):
+    async def async_service_handler(service):
         """Map services to methods on XiaomiAirPurifier."""
         method = SERVICE_TO_METHOD.get(service.service)
         params = {
@@ -621,14 +621,14 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 if device.entity_id in entity_ids
             ]
         else:
-            devices = opp.data[DATA_KEY].values()
+            devices =.opp.data[DATA_KEY].values()
 
         update_tasks = []
         for device in devices:
             if not hasattr(device, method["method"]):
                 continue
             await getattr(device, method["method"])(**params)
-            update_tasks.append(device.async_update_op.state(True))
+            update_tasks.append(device.async_update_ha_state(True))
 
         if update_tasks:
             await asyncio.wait(update_tasks)
@@ -638,7 +638,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             "schema", AIRPURIFIER_SERVICE_SCHEMA
         )
        .opp.services.async_register(
-            DOMAIN, air_purifier_service, async_service_op.dler, schema=schema
+            DOMAIN, air_purifier_service, async_service_handler, schema=schema
         )
 
 
@@ -723,7 +723,7 @@ class XiaomiGenericDevice(FanEntity):
     # instead of speeds.
     #
     # Please review
-    # https://developers.openpeerpower.io/docs/core/entity/fan/
+    # https://developers.open-peer-power.io/docs/core/entity/fan/
     #
     async def async_turn_on(
         self,

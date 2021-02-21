@@ -1,6 +1,6 @@
 {
   "domain": "zamg",
   "name": "Zentralanstalt für Meteorologie und Geodynamik (ZAMG)",
-  "documentation": "https://www.openpeerpower.io/integrations/zamg",
+  "documentation": "https://www.open-peer-power.io/integrations/zamg",
   "codeowners": []
 }

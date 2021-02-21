@@ -96,19 +96,19 @@ class BaseZhaEntity(LogMixin, entity.Entity):
     @callback
     def async_state_changed(self) -> None:
         """Entity state changed."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_update_state_attribute(self, key: str, value: Any) -> None:
         """Update a single device state attribute."""
         self._device_state_attributes.update({key: value})
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_set_state(self, attr_id: int, attr_name: str, value: Any) -> None:
         """Set the entity state."""
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect entity object when removed."""
         for unsub in self._unsubs[:]:
             unsub()
@@ -160,7 +160,7 @@ class ZhaEntity(BaseZhaEntity, RestoreEntity):
         """Return entity availability."""
         return self._zha_device.available
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Run when about to be added to.opp."""
         self.remove_future = asyncio.Future()
         self.async_accept_signal(
@@ -191,9 +191,9 @@ class ZhaEntity(BaseZhaEntity, RestoreEntity):
             self.remove_future,
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect entity object when removed."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         self.zha_device.gateway.remove_entity_reference(self)
         self.remove_future.set_result(True)
 
@@ -226,30 +226,30 @@ class ZhaGroupEntity(BaseZhaEntity):
         self._group_id: int = group_id
         self._entity_ids: List[str] = entity_ids
         self._async_unsub_state_changed: Optional[CALLBACK_TYPE] = None
-        self._op.dled_group_membership = False
+        self._handled_group_membership = False
 
     @property
     def available(self) -> bool:
         """Return entity availability."""
         return self._available
 
-    async def _op.dle_group_membership_changed(self):
+    async def _handle_group_membership_changed(self):
         """Handle group membership changed."""
         # Make sure we don't call remove twice as members are removed
-        if self._op.dled_group_membership:
+        if self._handled_group_membership:
             return
 
-        self._op.dled_group_membership = True
+        self._handled_group_membership = True
         await self.async_remove(force_remove=True)
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register callbacks."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         self.async_accept_signal(
             None,
             f"{SIGNAL_GROUP_MEMBERSHIP_CHANGE}_0x{self._group_id:04x}",
-            self._op.dle_group_membership_changed,
+            self._handle_group_membership_changed,
             signal_override=True,
         )
 
@@ -267,11 +267,11 @@ class ZhaGroupEntity(BaseZhaEntity):
     @callback
     def async_state_changed_listener(self, event: Event):
         """Handle child updates."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Handle removal from Open Peer Power."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         if self._async_unsub_state_changed is not None:
             self._async_unsub_state_changed()
             self._async_unsub_state_changed = None

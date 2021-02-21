@@ -12,9 +12,9 @@ from openpeerpower.const import (
     CONF_ENTITY_ID,
     CONF_TYPE,
 )
-from openpeerpowerr.core import Context, OpenPeerPower
-from openpeerpowerr.helpers import entity_registry
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import Context, OpenPeerPower
+from openpeerpower.helpers import entity_registry
+import openpeerpower.helpers.config_validation as cv
 
 from . import DOMAIN, const
 
@@ -49,7 +49,7 @@ async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
         if entry.domain != DOMAIN:
             continue
 
-        state = opp.states.get(entry.entity_id)
+        state =.opp.states.get(entry.entity_id)
 
         actions.append(
             {
@@ -96,14 +96,14 @@ async def async_call_action_from_config(
            .opp, config, variables, context, DOMAIN
         )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, service, service_data, blocking=True, context=context
     )
 
 
 async def async_get_action_capabilities.opp, config):
     """List action capabilities."""
-    state = opp.states.get(config[CONF_ENTITY_ID])
+    state =.opp.states.get(config[CONF_ENTITY_ID])
     action_type = config[CONF_TYPE]
 
     fields = {}

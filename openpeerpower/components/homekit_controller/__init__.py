@@ -57,18 +57,18 @@ class HomeKitEntity(Entity):
         """Return a Service model that this entity is attached to."""
         return self.accessory.services.iid(self._iid)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Entity added to.opp."""
         self._signals.append(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
-                self._accessory.signal_state_updated, self.async_write_op.state
+                self._accessory.signal_state_updated, self.async_write_ha_state
             )
         )
 
         self._accessory.add_pollable_characteristics(self.pollable_characteristics)
         self._accessory.add_watchable_characteristics(self.watchable_characteristics)
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Prepare to be removed from.opp."""
         self._accessory.remove_pollable_characteristics(self._aid)
         self._accessory.remove_watchable_characteristics(self._aid)
@@ -218,7 +218,7 @@ async def async_setup_entry.opp, entry):
 
 async def async_setup.opp, config):
     """Set up for Homekit devices."""
-    map_storage = opp.data[ENTITY_MAP] = EntityMapStorage.opp)
+    map_storage =.opp.data[ENTITY_MAP] = EntityMapStorage.opp)
     await map_storage.async_initialize()
 
     zeroconf_instance = await zeroconf.async_get_instance.opp)
@@ -234,7 +234,7 @@ async def async_unload_entry.opp, entry):
     hkid = entry.data["AccessoryPairingID"]
 
     if hkid in.opp.data[KNOWN_DEVICES]:
-        connection = opp.data[KNOWN_DEVICES][hkid]
+        connection =.opp.data[KNOWN_DEVICES][hkid]
         await connection.async_unload()
 
     return True

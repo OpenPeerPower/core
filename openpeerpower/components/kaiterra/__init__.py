@@ -9,10 +9,10 @@ from openpeerpower.const import (
     CONF_SCAN_INTERVAL,
     CONF_TYPE,
 )
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.discovery import async_load_platform
-from openpeerpowerr.helpers.event import async_track_time_interval
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.discovery import async_load_platform
+from openpeerpower.helpers.event import async_track_time_interval
 
 from .api_data import KaiterraApiData
 from .const import (
@@ -60,7 +60,7 @@ async def async_setup.opp, config):
     scan_interval = conf[CONF_SCAN_INTERVAL]
     devices = conf[CONF_DEVICES]
     session = async_get_clientsession.opp)
-    api = opp.data[DOMAIN] = KaiterraApiData.opp, conf, session)
+    api =.opp.data[DOMAIN] = KaiterraApiData.opp, conf, session)
 
     await api.async_update()
 

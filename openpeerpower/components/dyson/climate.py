@@ -69,7 +69,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    known_devices = opp.data.setdefault(DYSON_KNOWN_CLIMATE_DEVICES, set())
+    known_devices =.opp.data.setdefault(DYSON_KNOWN_CLIMATE_DEVICES, set())
 
     # Get Dyson Devices from parent component
     new_entities = []
@@ -122,7 +122,7 @@ class DysonClimateEntity(DysonEntity, ClimateEntity):
     def current_humidity(self):
         """Return the current humidity."""
         # Humidity equaling to 0 means invalid value so we don't check for None here
-        # https://github.com/openpeerpower/core/pull/45172#discussion_r559069756
+        # https://github.com/open-peer-power/core/pull/45172#discussion_r559069756
         if (
             self._device.environmental_state
             and self._device.environmental_state.humidity

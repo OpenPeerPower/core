@@ -1,7 +1,7 @@
 {
   "domain": "idteck_prox",
   "name": "IDTECK Proximity Reader",
-  "documentation": "https://www.openpeerpower.io/integrations/idteck_prox",
+  "documentation": "https://www.open-peer-power.io/integrations/idteck_prox",
   "requirements": ["rfk101py==0.0.1"],
   "codeowners": []
 }

@@ -96,5 +96,5 @@ class HomematicipCloudFlowHandler(config_entries.ConfigFlow):
         _LOGGER.info("Imported authentication for %s", hapid)
         return self.async_create_entry(
             title=hapid,
-            data={HMIPC_AUTHTOKEN: authtoken, HMIPC_HAPID: op.id, HMIPC_NAME: name},
+            data={HMIPC_AUTHTOKEN: authtoken, HMIPC_HAPID: hapid, HMIPC_NAME: name},
         )

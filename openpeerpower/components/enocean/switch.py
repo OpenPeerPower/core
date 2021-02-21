@@ -85,7 +85,7 @@ class EnOceanSwitch(EnOceanEntity, ToggleEntity):
                 watts = raw_val / (10 ** divisor)
                 if watts > 1:
                     self._on_state = True
-                    self.schedule_update_op.state()
+                    self.schedule_update_ha_state()
         elif packet.data[0] == 0xD2:
             # actuator status telegram
             packet.parse_eep(0x01, 0x01)
@@ -94,4 +94,4 @@ class EnOceanSwitch(EnOceanEntity, ToggleEntity):
                 output = packet.parsed["OV"]["raw_value"]
                 if channel == self.channel:
                     self._on_state = output > 0
-                    self.schedule_update_op.state()
+                    self.schedule_update_ha_state()

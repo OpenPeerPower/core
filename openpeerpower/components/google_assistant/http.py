@@ -36,7 +36,7 @@ from .const import (
     SOURCE_CLOUD,
 )
 from .helpers import AbstractConfig
-from .smart_home import async_op.dle_message
+from .smart_home import async_handle_message
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -218,10 +218,10 @@ class GoogleAssistantView(OpenPeerPowerView):
     async def post(self, request: Request) -> Response:
         """Handle Google Assistant requests."""
         message: dict = await request.json()
-        result = await async_op.dle_message(
-            request.app["opp"],
+        result = await async_handle_message(
+            request.app[.opp"],
             self.config,
-            request["opp_user"].id,
+            request[.opp_user"].id,
             message,
             SOURCE_CLOUD,
         )

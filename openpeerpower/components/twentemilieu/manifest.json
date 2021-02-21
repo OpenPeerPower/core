@@ -2,7 +2,7 @@
   "domain": "twentemilieu",
   "name": "Twente Milieu",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/twentemilieu",
+  "documentation": "https://www.open-peer-power.io/integrations/twentemilieu",
   "requirements": ["twentemilieu==0.3.0"],
   "codeowners": ["@frenck"]
 }

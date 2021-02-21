@@ -86,7 +86,7 @@ class Vultr:
 
     def halt(self, subscription):
         """Halt a subscription (hard power off)."""
-        self.api.server_op.t(subscription)
+        self.api.server_halt(subscription)
         self._force_update()
 
     def start(self, subscription):

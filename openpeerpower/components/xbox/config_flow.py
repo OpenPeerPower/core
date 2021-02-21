@@ -2,7 +2,7 @@
 import logging
 
 from openpeerpower import config_entries
-from openpeerpowerr.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers import config_entry_oauth2_flow
 
 from .const import DOMAIN
 

@@ -43,7 +43,7 @@ SUPPORT_LANGUAGES = [
 
 async def async_get_engine.opp, config, discovery_info=None):
     """Set up Cloud speech component."""
-    cloud: Cloud = opp.data[DOMAIN]
+    cloud: Cloud =.opp.data[DOMAIN]
 
     return CloudProvider(cloud)
 

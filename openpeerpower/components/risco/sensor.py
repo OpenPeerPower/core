@@ -1,7 +1,7 @@
 """Sensor for Risco Events."""
 from openpeerpower.components.binary_sensor import DOMAIN as BS_DOMAIN
 from openpeerpower.const import DEVICE_CLASS_TIMESTAMP
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN, EVENTS_COORDINATOR
 from .entity import binary_sensor_unique_id
@@ -29,7 +29,7 @@ EVENT_ATTRIBUTES = [
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up sensors for device."""
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][EVENTS_COORDINATOR]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][EVENTS_COORDINATOR]
     sensors = [
         RiscoSensor(coordinator, id, [], name, config_entry.entry_id)
         for id, name in CATEGORIES.items()
@@ -65,7 +65,7 @@ class RiscoSensor(CoordinatorEntity):
         """Return a unique id for this sensor."""
         return f"events_{self._name}_{self.coordinator.risco.site_uuid}"
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """When entity is added to.opp."""
         self._entity_registry = (
             await self.opp.helpers.entity_registry.async_get_registry()
@@ -83,7 +83,7 @@ class RiscoSensor(CoordinatorEntity):
                 continue
 
             self._event = event
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def state(self):

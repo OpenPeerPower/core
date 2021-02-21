@@ -1,7 +1,7 @@
 {
   "domain": "cisco_mobility_express",
   "name": "Cisco Mobility Express",
-  "documentation": "https://www.openpeerpower.io/integrations/cisco_mobility_express",
+  "documentation": "https://www.open-peer-power.io/integrations/cisco_mobility_express",
   "requirements": ["ciscomobilityexpress==0.3.9"],
   "codeowners": ["@fbradyirl"]
 }

@@ -44,7 +44,7 @@ from openpeerpower.helpers.entityfilter import (
 from openpeerpower.helpers.integration_platform import (
     async_process_integration_platforms,
 )
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 import openpeerpower.util.dt as dt_util
 
 ENTITY_ID_JSON_TEMPLATE = '"entity_id": "{}"'
@@ -106,13 +106,13 @@ LOG_MESSAGE_SCHEMA = vol.Schema(
 )
 
 
-@bind_opp
+@bind.opp
 def log_entry.opp, name, message, domain=None, entity_id=None, context=None):
     """Add an entry to the logbook."""
    .opp.add_job(async_log_entry,.opp, name, message, domain, entity_id, context)
 
 
-@bind_opp
+@bind.opp
 def async_log_entry.opp, name, message, domain=None, entity_id=None, context=None):
     """Add an entry to the logbook."""
     data = {ATTR_NAME: name, ATTR_MESSAGE: message}
@@ -142,12 +142,12 @@ async def async_setup.opp, config):
             # away so we use the "logbook" domain
             domain = DOMAIN
 
-        message.opp = opp
+        message.opp =.opp
         message = message.async_render(parse_result=False)
         async_log_entry.opp, name, message, domain, entity_id)
 
    .opp.components.frontend.async_register_built_in_panel(
-        "logbook", "logbook", "opp:format-list-bulleted-type"
+        "logbook", "logbook", .opp:format-list-bulleted-type"
     )
 
     conf = config.get(DOMAIN, {})
@@ -228,7 +228,7 @@ class LogbookView(OpenPeerPowerView):
             if end_day is None:
                 return self.json_message("Invalid end_time", HTTP_BAD_REQUEST)
 
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         entity_matches_only = "entity_matches_only" in request.query
 
@@ -246,7 +246,7 @@ class LogbookView(OpenPeerPowerView):
                 )
             )
 
-        return await opp..async_add_executor_job(json_events)
+        return await.opp.async_add_executor_job(json_events)
 
 
 def humanify.opp, events, entity_attr_cache, context_lookup):
@@ -256,7 +256,7 @@ def humanify.opp, events, entity_attr_cache, context_lookup):
     - if 2+ sensor updates in GROUP_BY_MINUTES, show last
     - if Open Peer Power stop and start happen in same minute call it restarted
     """
-    external_events = opp.data.get(DOMAIN, {})
+    external_events =.opp.data.get(DOMAIN, {})
 
     # Group events in batches of GROUP_BY_MINUTES
     for _, g_events in groupby(
@@ -579,7 +579,7 @@ def _keep_event.opp, event, entities_filter):
     if event.event_type in.opp.data[DOMAIN]:
         # If the entity_id isn't described, use the domain that describes
         # the event for filtering.
-        domain = opp.data[DOMAIN][event.event_type][0]
+        domain =.opp.data[DOMAIN][event.event_type][0]
     else:
         domain = event.data_domain
 
@@ -765,7 +765,7 @@ class EntityAttributeCache:
 
     def __init__(self,.opp):
         """Init the cache."""
-        self._opp = opp
+        self..opp =.opp
         self._cache = {}
 
     def get(self, entity_id, attribute, event):
@@ -776,7 +776,7 @@ class EntityAttributeCache:
         else:
             self._cache[entity_id] = {}
 
-        current_state = self._opp.states.get(entity_id)
+        current_state = self..opp.states.get(entity_id)
         if current_state:
             # Try the current state as its faster than decoding the
             # attributes

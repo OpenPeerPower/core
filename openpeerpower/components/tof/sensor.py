@@ -9,8 +9,8 @@ import voluptuous as vol
 from openpeerpower.components import rpi_gpio
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import CONF_NAME, LENGTH_MILLIMETERS
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 CONF_I2C_ADDRESS = "i2c_address"
 CONF_I2C_BUS = "i2c_bus"
@@ -54,10 +54,10 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     unit = LENGTH_MILLIMETERS
     xshut = config.get(CONF_XSHUT)
 
-    sensor = await opp..async_add_executor_job(partial(VL53L1X, bus_number))
-    await opp..async_add_executor_job(init_tof_0, xshut, sensor)
+    sensor = await.opp.async_add_executor_job(partial(VL53L1X, bus_number))
+    await.opp.async_add_executor_job(init_tof_0, xshut, sensor)
     await asyncio.sleep(0.01)
-    await opp..async_add_executor_job(init_tof_1, xshut)
+    await.opp.async_add_executor_job(init_tof_1, xshut)
     await asyncio.sleep(0.01)
 
     dev = [VL53L1XSensor(sensor, name, unit, i2c_address)]

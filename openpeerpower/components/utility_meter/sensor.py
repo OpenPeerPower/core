@@ -12,15 +12,15 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import entity_platform
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.event import (
+from openpeerpower.core import callback
+from openpeerpower.helpers import entity_platform
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.event import (
     async_track_state_change_event,
     async_track_time_change,
 )
-from openpeerpowerr.helpers.restore_state import RestoreEntity
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.helpers.restore_state import RestoreEntity
+import openpeerpower.util.dt as dt_util
 
 from .const import (
     ATTR_VALUE,
@@ -69,13 +69,13 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     meters = []
     for conf in discovery_info:
         meter = conf[CONF_METER]
-        conf_meter_source = opp.data[DATA_UTILITY][meter][CONF_SOURCE_SENSOR]
-        conf_meter_type = opp.data[DATA_UTILITY][meter].get(CONF_METER_TYPE)
-        conf_meter_offset = opp.data[DATA_UTILITY][meter][CONF_METER_OFFSET]
-        conf_meter_net_consumption = opp.data[DATA_UTILITY][meter][
+        conf_meter_source =.opp.data[DATA_UTILITY][meter][CONF_SOURCE_SENSOR]
+        conf_meter_type =.opp.data[DATA_UTILITY][meter].get(CONF_METER_TYPE)
+        conf_meter_offset =.opp.data[DATA_UTILITY][meter][CONF_METER_OFFSET]
+        conf_meter_net_consumption =.opp.data[DATA_UTILITY][meter][
             CONF_METER_NET_CONSUMPTION
         ]
-        conf_meter_tariff_entity = opp.data[DATA_UTILITY][meter].get(
+        conf_meter_tariff_entity =.opp.data[DATA_UTILITY][meter].get(
             CONF_TARIFF_ENTITY
         )
 
@@ -161,7 +161,7 @@ class UtilityMeterSensor(RestoreEntity):
             _LOGGER.warning(
                 "Invalid state (%s > %s): %s", old_state.state, new_state.state, err
             )
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_tariff_change(self, event):
@@ -189,7 +189,7 @@ class UtilityMeterSensor(RestoreEntity):
             self._sensor_source_id,
         )
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def _async_reset_meter(self, event):
         """Determine cycle - Helper function for larger than daily cycles."""
@@ -228,17 +228,17 @@ class UtilityMeterSensor(RestoreEntity):
         self._last_reset = dt_util.now()
         self._last_period = str(self._state)
         self._state = 0
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_calibrate(self, value):
         """Calibrate the Utility Meter with a given value."""
         _LOGGER.debug("Calibrate %s = %s", self._name, value)
         self._state = value
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         if self._period == QUARTER_HOURLY:
             for quarter in range(4):

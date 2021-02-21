@@ -39,11 +39,11 @@ from openpeerpower.const import (
     CONF_NAME,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import config_validation as cv, entity_registry
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.util import Throttle
-from openpeerpowerr.util.dt import now, parse_datetime
+from openpeerpower.core import callback
+from openpeerpower.helpers import config_validation as cv, entity_registry
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.util import Throttle
+from openpeerpower.util.dt import now, parse_datetime
 
 _LOGGER = logging.getLogger(__name__)
 

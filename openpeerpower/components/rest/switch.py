@@ -22,12 +22,8 @@ from openpeerpower.const import (
 )
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.reload import async_setup_reload_service
-
-from . import DOMAIN, PLATFORMS
 
 _LOGGER = logging.getLogger(__name__)
-
 CONF_BODY_OFF = "body_off"
 CONF_BODY_ON = "body_on"
 CONF_IS_ON_TEMPLATE = "is_on_template"
@@ -65,9 +61,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the RESTful switch."""
-
-    await async_setup_reload_service.opp, DOMAIN, PLATFORMS)
-
     body_off = config.get(CONF_BODY_OFF)
     body_on = config.get(CONF_BODY_ON)
     is_on_template = config.get(CONF_IS_ON_TEMPLATE)
@@ -86,11 +79,11 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         auth = aiohttp.BasicAuth(username, password=password)
 
     if is_on_template is not None:
-        is_on_template.opp = opp
+        is_on_template.opp =.opp
     if body_on is not None:
-        body_on.opp = opp
+        body_on.opp =.opp
     if body_off is not None:
-        body_off.opp = opp
+        body_off.opp =.opp
     timeout = config.get(CONF_TIMEOUT)
 
     try:

@@ -23,8 +23,8 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-import openpeerpowerr.util.color as color_util
+from openpeerpower.helpers.typing import OpenPeerPowerType
+import openpeerpower.util.color as color_util
 
 from . import EsphomeEntity, esphome_state_property, platform_async_setup_entry
 

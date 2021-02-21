@@ -14,7 +14,7 @@ _LOGGING = logging.getLogger(__name__)
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Transmission switch."""
 
-    tm_client = opp.data[DOMAIN][config_entry.entry_id]
+    tm_client =.opp.data[DOMAIN][config_entry.entry_id]
     name = config_entry.data[CONF_NAME]
 
     dev = []
@@ -87,7 +87,7 @@ class TransmissionSwitch(ToggleEntity):
             self._tm_client.api.set_alt_speed_enabled(False)
         self._tm_client.api.update()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
         self.unsub_update = async_dispatcher_connect(
             self.opp,
@@ -97,9 +97,9 @@ class TransmissionSwitch(ToggleEntity):
 
     @callback
     def _schedule_immediate_update(self):
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
-    async def will_remove_from_opp(self):
+    async def will_remove_from.opp(self):
         """Unsubscribe from update dispatcher."""
         if self.unsub_update:
             self.unsub_update()

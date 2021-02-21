@@ -107,7 +107,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     async def handle_api_call(call):
         name = call.data[ATTR_NAME]
         path = call.data[ATTR_PATH]
-        api = opp.data[DOMAIN].get(name)
+        api =.opp.data[DOMAIN].get(name)
         if api is None:
             _LOGGER.error("API_CALL: User '%s' not configured", name)
             return
@@ -125,7 +125,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
             EVENT_API_CALL_SUCCESS, {"name": name, "path": path, "data": data}
         )
 
-    data = opp.data.setdefault(DOMAIN, {})
+    data =.opp.data.setdefault(DOMAIN, {})
     config = config_entry.data
     websession = async_get_clientsession.opp)
     url = config[CONF_URL]
@@ -169,6 +169,6 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if unload_ok:
        .opp.data[DOMAIN].pop(entry.entry_id)
 
-    if len.opp.config_entries.async_entries) == 1:
-       .opp.components.webhook.async_unregister(SERVICE_API_CALL)
+    if len.opp.config_entries.async_entries(DOMAIN)) == 1:
+       .opp.services.async_remove(DOMAIN, SERVICE_API_CALL)
     return unload_ok

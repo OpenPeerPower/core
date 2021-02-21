@@ -14,10 +14,10 @@ from openpeerpower.components.alexa import (
     state_report as alexa_state_report,
 )
 from openpeerpower.const import CLOUD_NEVER_EXPOSED_ENTITIES, HTTP_BAD_REQUEST
-from openpeerpowerr.core import OpenPeerPower, callback, split_entity_id
-from openpeerpowerr.helpers import entity_registry
-from openpeerpowerr.helpers.event import async_call_later
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.core import OpenPeerPower, callback, split_entity_id
+from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers.event import async_call_later
+from openpeerpower.util.dt import utcnow
 
 from .const import CONF_ENTITY_CONFIG, CONF_FILTER, PREF_SHOULD_EXPOSE, RequireRelink
 from .prefs import CloudPreferences
@@ -56,7 +56,7 @@ class AlexaConfig(alexa_config.AbstractConfig):
         prefs.async_listen_updates(self._async_prefs_updated)
        .opp.bus.async_listen(
             entity_registry.EVENT_ENTITY_REGISTRY_UPDATED,
-            self._op.dle_entity_registry_updated,
+            self._handle_entity_registry_updated,
         )
 
     @property
@@ -297,7 +297,7 @@ class AlexaConfig(alexa_config.AbstractConfig):
             _LOGGER.warning("Error trying to sync entities to Alexa: %s", err)
             return False
 
-    async def _op.dle_entity_registry_updated(self, event):
+    async def _handle_entity_registry_updated(self, event):
         """Handle when entity registry updated."""
         if not self.enabled or not self._cloud.is_logged_in:
             return

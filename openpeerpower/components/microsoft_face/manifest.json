@@ -1,7 +1,7 @@
 {
   "domain": "microsoft_face",
   "name": "Microsoft Face",
-  "documentation": "https://www.openpeerpower.io/integrations/microsoft_face",
+  "documentation": "https://www.open-peer-power.io/integrations/microsoft_face",
   "dependencies": ["camera"],
   "codeowners": []
 }

@@ -6,7 +6,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD
-from openpeerpowerr.helpers import aiohttp_client
+from openpeerpower.helpers import aiohttp_client
 
 from .const import DOMAIN  # pylint:disable=unused-import
 

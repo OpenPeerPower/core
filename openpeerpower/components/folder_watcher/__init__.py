@@ -7,7 +7,7 @@ from watchdog.events import PatternMatchingEventHandler
 from watchdog.observers import Observer
 
 from openpeerpower.const import EVENT_OPENPEERPOWER_START, EVENT_OPENPEERPOWER_STOP
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -50,7 +50,7 @@ def setup.opp, config):
     return True
 
 
-def create_event_op.dler(patterns,.opp):
+def create_event_handler(patterns,.opp):
     """Return the Watchdog EventHandler object."""
 
     class EventHandler(PatternMatchingEventHandler):
@@ -59,7 +59,7 @@ def create_event_op.dler(patterns,.opp):
         def __init__(self, patterns,.opp):
             """Initialise the EventHandler."""
             super().__init__(patterns)
-            self.opp = opp
+            self.opp =.opp
 
         def process(self, event):
             """On Watcher event, fire HA event."""
@@ -102,7 +102,7 @@ class Watcher:
         """Initialise the watchdog observer."""
         self._observer = Observer()
         self._observer.schedule(
-            create_event_op.dler(patterns,.opp), path, recursive=True
+            create_event_handler(patterns,.opp), path, recursive=True
         )
        .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, self.startup)
        .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self.shutdown)

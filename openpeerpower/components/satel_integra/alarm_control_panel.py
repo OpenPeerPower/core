@@ -17,8 +17,8 @@ from openpeerpower.const import (
     STATE_ALARM_PENDING,
     STATE_ALARM_TRIGGERED,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import (
     CONF_ARM_HOME_MODE,
@@ -37,7 +37,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     configured_partitions = discovery_info[CONF_DEVICE_PARTITIONS]
-    controller = opp.data[DATA_SATEL]
+    controller =.opp.data[DATA_SATEL]
 
     devices = []
 
@@ -63,7 +63,7 @@ class SatelIntegraAlarmPanel(alarm.AlarmControlPanelEntity):
         self._partition_id = partition_id
         self._satel = controller
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Update alarm status and register callbacks for future updates."""
         _LOGGER.debug("Starts listening for panel messages")
         self._update_alarm_status()
@@ -80,7 +80,7 @@ class SatelIntegraAlarmPanel(alarm.AlarmControlPanelEntity):
         _LOGGER.debug("Got status update, current status: %s", state)
         if state != self._state:
             self._state = state
-            self.async_write_op.state()
+            self.async_write_ha_state()
         else:
             _LOGGER.debug("Ignoring alarm status message, same state")
 
@@ -113,7 +113,7 @@ class SatelIntegraAlarmPanel(alarm.AlarmControlPanelEntity):
                 satel_state in self._satel.partition_states
                 and self._partition_id in self._satel.partition_states[satel_state]
             ):
-               .opp_alarm_status = op.state
+               .opp_alarm_status = ha_state
                 break
 
         return.opp_alarm_status

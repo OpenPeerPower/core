@@ -9,8 +9,8 @@ import voluptuous as vol
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.config_entries import SOURCE_IMPORT
 from openpeerpower.const import CONF_HOST, CONF_PORT, CONF_TYPE
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.typing import StateType
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.typing import StateType
 
 from .const import (
     CONF_MOUNT_DIR,
@@ -241,7 +241,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         config[CONF_TYPE] = CONF_TYPE_SYSBUS
     else:  # pragma: no cover
         # This part of the implementation does not conform to policy regarding 3rd-party libraries, and will not longer be updated.
-        # https://developers.openpeerpower.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
+        # https://developers.open-peer-power.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
         config[CONF_TYPE] = CONF_TYPE_OWFS
 
    .opp.async_create_task(
@@ -253,8 +253,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up 1-Wire platform."""
-    onewirehub = opp.data[DOMAIN][config_entry.unique_id]
-    entities = await opp..async_add_executor_job(
+    onewirehub =.opp.data[DOMAIN][config_entry.unique_id]
+    entities = await.opp.async_add_executor_job(
         get_entities, onewirehub, config_entry.data
     )
     async_add_entities(entities, True)
@@ -362,14 +362,14 @@ def get_entities(onewirehub: OneWireHub, config):
     # We have an owfs mounted
     else:  # pragma: no cover
         # This part of the implementation does not conform to policy regarding 3rd-party libraries, and will not longer be updated.
-        # https://developers.openpeerpower.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
+        # https://developers.open-peer-power.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
         base_dir = config[CONF_MOUNT_DIR]
         _LOGGER.debug("Initializing using OWFS %s", base_dir)
         _LOGGER.warning(
             "The OWFS implementation of 1-Wire sensors is deprecated, "
             "and should be migrated to OWServer (on localhost:4304). "
             "If migration to OWServer is not feasible on your installation, "
-            "please raise an issue at https://github.com/openpeerpower/core/issues/new"
+            "please raise an issue at https://github.com/open-peer-power/core/issues/new"
             "?title=Unable%20to%20migrate%20onewire%20from%20OWFS%20to%20OWServer",
         )
         for family_file_path in glob(os.path.join(base_dir, "*", "family")):
@@ -435,7 +435,7 @@ class OneWireOWFSSensor(OneWireBaseEntity):  # pragma: no cover
     """Implementation of a 1-Wire sensor through owfs.
 
     This part of the implementation does not conform to policy regarding 3rd-party libraries, and will not longer be updated.
-    https://developers.openpeerpower.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
+    https://developers.open-peer-power.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
     """
 
     @property

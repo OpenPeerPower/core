@@ -13,7 +13,7 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     CONF_VALUE_TEMPLATE,
 )
-from openpeerpower.core import CALLBACK_TYPE, OppJob, callback
+from openpeerpower.core import CALLBACK_TYPE, HassJob, callback
 from openpeerpower.helpers import condition, config_validation as cv, template
 from openpeerpower.helpers.event import (
     async_track_same_state,
@@ -73,17 +73,17 @@ async def async_attach_trigger(
     template.attach.opp, time_delta)
     value_template = config.get(CONF_VALUE_TEMPLATE)
     unsub_track_same = {}
-    entities_triggered = set()
+    armed_entities = set()
     period: dict = {}
     attribute = config.get(CONF_ATTRIBUTE)
-    job = OppJob(action)
+    job = HassJob(action)
 
     _variables = {}
     if automation_info:
         _variables = automation_info.get("variables") or {}
 
     if value_template is not None:
-        value_template.opp = opp
+        value_template.opp =.opp
 
     def variables(entity_id):
         """Return a dict with trigger variables."""
@@ -100,20 +100,22 @@ async def async_attach_trigger(
 
     @callback
     def check_numeric_state(entity_id, from_s, to_s):
-        """Return True if criteria are now met."""
+        """Return whether the criteria are met, raise ConditionError if unknown."""
+        return condition.async_numeric_state(
+           .opp, to_s, below, above, value_template, variables(entity_id), attribute
+        )
+
+    # Each entity that starts outside the range is already armed (ready to fire).
+    for entity_id in entity_ids:
         try:
-            return condition.async_numeric_state(
-               .opp,
-                to_s,
-                below,
-                above,
-                value_template,
-                variables(entity_id),
-                attribute,
+            if not check_numeric_state(entity_id, None, entity_id):
+                armed_entities.add(entity_id)
+        except exceptions.ConditionError as ex:
+            _LOGGER.warning(
+                "Error initializing 'numeric_state' trigger for '%s': %s",
+                automation_info["name"],
+                ex,
             )
-        except exceptions.ConditionError as err:
-            _LOGGER.warning("%s", err)
-            return False
 
     @callback
     def state_automation_listener(event):
@@ -125,7 +127,7 @@ async def async_attach_trigger(
         @callback
         def call_action():
             """Call action with right context."""
-           .opp.async_run_opp_job(
+           .opp.async_run.opp_job(
                 job,
                 {
                     "trigger": {
@@ -142,12 +144,27 @@ async def async_attach_trigger(
                 to_s.context,
             )
 
-        matching = check_numeric_state(entity_id, from_s, to_s)
+        @callback
+        def check_numeric_state_no_raise(entity_id, from_s, to_s):
+            """Return True if the criteria are now met, False otherwise."""
+            try:
+                return check_numeric_state(entity_id, from_s, to_s)
+            except exceptions.ConditionError:
+                # This is an internal same-state listener so we just drop the
+                # error. The same error will be reached and logged by the
+                # primary async_track_state_change_event() listener.
+                return False
+
+        try:
+            matching = check_numeric_state(entity_id, from_s, to_s)
+        except exceptions.ConditionError as ex:
+            _LOGGER.warning("Error in '%s' trigger: %s", automation_info["name"], ex)
+            return
 
         if not matching:
-            entities_triggered.discard(entity_id)
-        elif entity_id not in entities_triggered:
-            entities_triggered.add(entity_id)
+            armed_entities.add(entity_id)
+        elif entity_id in armed_entities:
+            armed_entities.discard(entity_id)
 
             if time_delta:
                 try:
@@ -160,7 +177,6 @@ async def async_attach_trigger(
                         automation_info["name"],
                         ex,
                     )
-                    entities_triggered.discard(entity_id)
                     return
 
                 unsub_track_same[entity_id] = async_track_same_state(
@@ -168,7 +184,7 @@ async def async_attach_trigger(
                     period[entity_id],
                     call_action,
                     entity_ids=entity_id,
-                    async_check_same_func=check_numeric_state,
+                    async_check_same_func=check_numeric_state_no_raise,
                 )
             else:
                 call_action()

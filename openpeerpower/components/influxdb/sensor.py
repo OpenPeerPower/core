@@ -178,15 +178,15 @@ class InfluxSensor(Entity):
         value_template = query.get(CONF_VALUE_TEMPLATE)
         if value_template is not None:
             self._value_template = value_template
-            self._value_template.opp = opp
+            self._value_template.opp =.opp
         else:
             self._value_template = None
         self._state = None
-        self._opp = opp
+        self..opp =.opp
 
         if query[CONF_LANGUAGE] == LANGUAGE_FLUX:
             query_clause = query.get(CONF_QUERY)
-            query_clause.opp = opp
+            query_clause.opp =.opp
             self.data = InfluxFluxSensorData(
                 influx,
                 query.get(CONF_BUCKET),
@@ -199,7 +199,7 @@ class InfluxSensor(Entity):
 
         else:
             where_clause = query.get(CONF_WHERE)
-            where_clause.opp = opp
+            where_clause.opp =.opp
             self.data = InfluxQLSensorData(
                 influx,
                 query.get(CONF_DB_NAME),

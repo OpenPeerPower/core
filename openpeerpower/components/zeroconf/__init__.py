@@ -27,10 +27,10 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STOP,
     __version__,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.network import NoURLAvailableError, get_url
-from openpeerpowerr.helpers.singleton import singleton
-from openpeerpowerr.loader import async_get_homekit, async_get_zeroconf
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.network import NoURLAvailableError, get_url
+from openpeerpower.helpers.singleton import singleton
+from openpeerpower.loader import async_get_homekit, async_get_zeroconf
 
 from .usage import install_multiple_zeroconf_catcher
 
@@ -44,11 +44,11 @@ ATTR_HOSTNAME = "hostname"
 ATTR_TYPE = "type"
 ATTR_PROPERTIES = "properties"
 
-ZEROCONF_TYPE = "_openpeerpower._tcp.local."
+ZEROCONF_TYPE = "_open-peer-power._tcp.local."
 HOMEKIT_TYPES = [
-    "_op.._tcp.local.",
+    "_hap._tcp.local.",
     # Thread based devices
-    "_op.._udp.local.",
+    "_hap._udp.local.",
 ]
 
 CONF_DEFAULT_INTERFACE = "default_interface"
@@ -91,7 +91,7 @@ async def async_get_instance.opp):
 async def _async_get_instance.opp, **zcargs):
     logging.getLogger("zeroconf").setLevel(logging.NOTSET)
 
-    zeroconf = await opp..async_add_executor_job(partial(HaZeroconf, **zcargs))
+    zeroconf = await.opp.async_add_executor_job(partial(HaZeroconf, **zcargs))
 
     install_multiple_zeroconf_catcher(zeroconf)
 
@@ -143,32 +143,32 @@ async def async_setup.opp, config):
     if not zc_config.get(CONF_IPV6, DEFAULT_IPV6):
         zc_args["ip_version"] = IPVersion.V4Only
 
-    zeroconf = opp.data[DOMAIN] = await _async_get_instance.opp, **zc_args)
+    zeroconf =.opp.data[DOMAIN] = await _async_get_instance.opp, **zc_args)
 
-    async def _async_zeroconf_opp_start(_event):
+    async def _async_zeroconf.opp_start(_event):
         """Expose Open Peer Power on zeroconf when it starts.
 
         Wait till started or otherwise HTTP is not up and running.
         """
-        uuid = await opp..helpers.instance_id.async_get()
-        await opp..async_add_executor_job(
-            _register_opp_zc_service,.opp, zeroconf, uuid
+        uuid = await.opp.helpers.instance_id.async_get()
+        await.opp.async_add_executor_job(
+            _register.opp_zc_service,.opp, zeroconf, uuid
         )
 
-    async def _async_zeroconf_opp_started(_event):
+    async def _async_zeroconf.opp_started(_event):
         """Start the service browser."""
 
         await _async_start_zeroconf_browser.opp, zeroconf)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _async_zeroconf_opp_start)
+   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _async_zeroconf.opp_start)
    .opp.bus.async_listen_once(
-        EVENT_OPENPEERPOWER_STARTED, _async_zeroconf_opp_started
+        EVENT_OPENPEERPOWER_STARTED, _async_zeroconf.opp_started
     )
 
     return True
 
 
-def _register_opp_zc_service.opp, zeroconf, uuid):
+def _register.opp_zc_service.opp, zeroconf, uuid):
     # Get instance UUID
     valid_location_name = _truncate_location_name_to_valid.opp.config.location_name)
 
@@ -267,7 +267,7 @@ async def _async_start_zeroconf_browser.opp, zeroconf):
 
         # If we can handle it as a HomeKit discovery, we do that here.
         if service_type in HOMEKIT_TYPES:
-            discovery_was_forwarded = op.dle_homekit.opp, homekit_models, info)
+            discovery_was_forwarded = handle_homekit.opp, homekit_models, info)
             # Continue on here as homekit_controller
             # still needs to get updates on devices
             # so it can see when the 'c#' field is updated.

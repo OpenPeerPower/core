@@ -1,8 +1,8 @@
 """Base class for deCONZ devices."""
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.device_registry import CONNECTION_ZIGBEE
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.core import callback
+from openpeerpower.helpers.device_registry import CONNECTION_ZIGBEE
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity import Entity
 
 from .const import DOMAIN as DECONZ_DOMAIN
 
@@ -68,7 +68,7 @@ class DeconzDevice(DeconzBase, Entity):
 
         return True
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to device events."""
         self._device.register_callback(self.async_update_callback)
         self.gateway.deconz_ids[self.entity_id] = self._device.deconz_id
@@ -78,7 +78,7 @@ class DeconzDevice(DeconzBase, Entity):
             )
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect device object when removed."""
         self._device.remove_callback(self.async_update_callback)
         del self.gateway.deconz_ids[self.entity_id]
@@ -90,7 +90,7 @@ class DeconzDevice(DeconzBase, Entity):
         if not force_update and self.gateway.ignore_state_updates:
             return
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def available(self):

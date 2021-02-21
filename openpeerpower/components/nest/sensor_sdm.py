@@ -37,7 +37,7 @@ async def async_setup_sdm_entry(
 ) -> None:
     """Set up the sensors."""
 
-    subscriber = opp.data[DOMAIN][DATA_SUBSCRIBER]
+    subscriber =.opp.data[DOMAIN][DATA_SUBSCRIBER]
     try:
         device_manager = await subscriber.async_get_device_manager()
     except GoogleNestException as err:
@@ -77,10 +77,10 @@ class SensorBase(Entity):
         """Return device specific attributes."""
         return self._device_info.device_info
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity is added to register update signal handler."""
         self.async_on_remove(
-            self._device.add_update_listener(self.async_write_op.state)
+            self._device.add_update_listener(self.async_write_ha_state)
         )
 
 

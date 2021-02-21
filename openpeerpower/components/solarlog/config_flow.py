@@ -8,8 +8,8 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_HOST, CONF_NAME
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.util import slugify
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.util import slugify
 
 from .const import DEFAULT_HOST, DEFAULT_NAME, DOMAIN
 

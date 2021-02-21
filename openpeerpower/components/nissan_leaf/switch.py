@@ -1,7 +1,7 @@
 """Charge and Climate Control Support for the Nissan Leaf."""
 import logging
 
-from openpeerpowerr.helpers.entity import ToggleEntity
+from openpeerpower.helpers.entity import ToggleEntity
 
 from . import DATA_CLIMATE, DATA_LEAF, LeafEntity
 

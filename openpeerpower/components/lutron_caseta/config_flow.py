@@ -12,7 +12,7 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.components.zeroconf import ATTR_HOSTNAME
 from openpeerpower.const import CONF_HOST, CONF_NAME
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from .const import (
     ABORT_REASON_ALREADY_CONFIGURED,
@@ -141,8 +141,8 @@ class LutronCasetaFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     def _write_tls_assets(self, assets):
         """Write the tls assets to disk."""
         for asset_key, conf_key in FILE_MAPPING.items():
-            with open(self.opp.config.path(self.data[conf_key]), "w") as file_op.dle:
-                file_op.dle.write(assets[asset_key])
+            with open(self.opp.config.path(self.data[conf_key]), "w") as file_handle:
+                file_handle.write(assets[asset_key])
 
     def _tls_assets_exist(self):
         """Check to see if tls assets are already on disk."""

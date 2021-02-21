@@ -106,7 +106,7 @@ class LutronDevice(Entity):
         self._controller = controller
         self._area_name = area_name
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.opp.async_add_executor_job(
             self._lutron_device.subscribe, self._update_callback, None
@@ -114,7 +114,7 @@ class LutronDevice(Entity):
 
     def _update_callback(self, _device, _context, _event, _params):
         """Run when invoked by pylutron when the device state changes."""
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def name(self):
@@ -138,8 +138,8 @@ class LutronButton:
     def __init__(self,.opp, area_name, keypad, button):
         """Register callback for activity on the button."""
         name = f"{keypad.name}: {button.name}"
-        self._opp = opp
-        self._op._release_event = (
+        self..opp =.opp
+        self._has_release_event = (
             button.button_type is not None and "RaiseLower" in button.button_type
         )
         self._id = slugify(name)
@@ -158,7 +158,7 @@ class LutronButton:
         #   RaiseLower -> pressed/released
         #   SingleAction -> single
         action = None
-        if self._op._release_event:
+        if self._has_release_event:
             if event == Button.Event.PRESSED:
                 action = "pressed"
             else:
@@ -168,4 +168,4 @@ class LutronButton:
 
         if action:
             data = {ATTR_ID: self._id, ATTR_ACTION: action, ATTR_FULL_ID: self._full_id}
-            self._opp.bus.fire(self._event, data)
+            self..opp.bus.fire(self._event, data)

@@ -30,7 +30,7 @@ from openpeerpower.helpers.entity_platform import EntityPlatform
 from openpeerpower.helpers.entity_registry import RegistryEntry
 from openpeerpower.helpers.event import Event, async_track_entity_registry_updated_event
 from openpeerpower.helpers.typing import StateType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util import dt as dt_util, ensure_unique_string, slugify
 
 _LOGGER = logging.getLogger(__name__)
@@ -41,7 +41,7 @@ SOURCE_PLATFORM_CONFIG = "platform_config"
 
 
 @callback
-@bind_opp
+@bind.opp
 def entity_sources.opp: OpenPeerPower) -> Dict[str, Dict[str, str]]:
     """Get the entity sources."""
     return.opp.data.get(DATA_ENTITY_SOURCE, {})
@@ -71,7 +71,7 @@ def async_generate_entity_id(
     if current_ids is not None:
         return ensure_unique_string(preferred_string, current_ids)
 
-    if opp is None:
+    if.opp is None:
         raise ValueError("Missing required parameter current_ids or.opp")
 
     test_string = preferred_string
@@ -91,7 +91,7 @@ class Entity(ABC):
     # this class. These may be used to customize the behavior of the entity.
     entity_id = None  # type: str
 
-    # Owning opp instance. Will be set by EntityPlatform
+    # Owning.opp instance. Will be set by EntityPlatform
    .opp: Optional[OpenPeerPower] = None
 
     # Owning platform instance. Will be set by EntityPlatform
@@ -256,7 +256,7 @@ class Entity(ABC):
         self._context = context
         self._context_set = dt_util.utcnow()
 
-    async def async_update_op.state(self, force_refresh: bool = False) -> None:
+    async def async_update_ha_state(self, force_refresh: bool = False) -> None:
         """Update Open Peer Power with current state of entity.
 
         If force_refresh == True will update entity before setting state.
@@ -264,7 +264,7 @@ class Entity(ABC):
         This method must be run in the event loop.
         """
         if self.opp is None:
-            raise RuntimeError(f"Attribute opp is None for {self}")
+            raise RuntimeError(f"Attribute.opp is None for {self}")
 
         if self.entity_id is None:
             raise NoEntitySpecifiedError(
@@ -279,23 +279,23 @@ class Entity(ABC):
                 _LOGGER.exception("Update for %s fails", self.entity_id)
                 return
 
-        self._async_write_op.state()
+        self._async_write_ha_state()
 
     @callback
-    def async_write_op.state(self) -> None:
+    def async_write_ha_state(self) -> None:
         """Write the state to the state machine."""
         if self.opp is None:
-            raise RuntimeError(f"Attribute opp is None for {self}")
+            raise RuntimeError(f"Attribute.opp is None for {self}")
 
         if self.entity_id is None:
             raise NoEntitySpecifiedError(
                 f"No entity id specified for entity {self.name}"
             )
 
-        self._async_write_op.state()
+        self._async_write_ha_state()
 
     @callback
-    def _async_write_op.state(self) -> None:
+    def _async_write_ha_state(self) -> None:
         """Write the state to the state machine."""
         if self.registry_entry and self.registry_entry.disabled_by:
             if not self._disabled_reported:
@@ -361,7 +361,7 @@ class Entity(ABC):
             else:
                 extra = (
                     "Please create a bug report at "
-                    "https://github.com/openpeerpower/core/issues?q=is%3Aopen+is%3Aissue"
+                    "https://github.com/open-peer-power/core/issues?q=is%3Aopen+is%3Aissue"
                 )
                 if self.platform:
                     extra += (
@@ -408,7 +408,7 @@ class Entity(ABC):
             self.entity_id, state, attr, self.force_update, self._context
         )
 
-    def schedule_update_op.state(self, force_refresh: bool = False) -> None:
+    def schedule_update_ha_state(self, force_refresh: bool = False) -> None:
         """Schedule an update ha state change task.
 
         Scheduling the update avoids executor deadlocks.
@@ -419,10 +419,10 @@ class Entity(ABC):
         been executed, the intermediate state transitions will be missed.
         """
         assert self.opp is not None
-        self.opp.add_job(self.async_update_op.state(force_refresh))  # type: ignore
+        self.opp.add_job(self.async_update_ha_state(force_refresh))  # type: ignore
 
     @callback
-    def async_schedule_update_op.state(self, force_refresh: bool = False) -> None:
+    def async_schedule_update_ha_state(self, force_refresh: bool = False) -> None:
         """Schedule an update ha state change task.
 
         This method must be run in the event loop.
@@ -435,9 +435,9 @@ class Entity(ABC):
         """
         if force_refresh:
             assert self.opp is not None
-            self.opp.async_create_task(self.async_update_op.state(force_refresh))
+            self.opp.async_create_task(self.async_update_ha_state(force_refresh))
         else:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_device_update(self, warning: bool = True) -> None:
         """Process 'update' or 'async_update' from entity.
@@ -510,7 +510,7 @@ class Entity(ABC):
                 f"Entity {self.entity_id} cannot be added a second time to an entity platform"
             )
 
-        self.opp = opp
+        self.opp =.opp
         self.platform = platform
         self.parallel_updates = parallel_updates
         self._added = True
@@ -525,9 +525,9 @@ class Entity(ABC):
 
     async def add_to_platform_finish(self) -> None:
         """Finish adding an entity to a platform."""
-        await self.async_internal_added_to_opp()
-        await self.async_added_to_opp()
-        self.async_write_op.state()
+        await self.async_internal_added_to.opp()
+        await self.async_added_to.opp()
+        self.async_write_ha_state()
 
     async def async_remove(self, *, force_remove: bool = False) -> None:
         """Remove entity from Open Peer Power.
@@ -552,8 +552,8 @@ class Entity(ABC):
             while self._on_remove:
                 self._on_remove.pop()()
 
-        await self.async_internal_will_remove_from_opp()
-        await self.async_will_remove_from_opp()
+        await self.async_internal_will_remove_from.opp()
+        await self.async_will_remove_from.opp()
 
         # Check if entry still exists in entity registry (e.g. unloading config entry)
         if (
@@ -566,19 +566,19 @@ class Entity(ABC):
         else:
             self.opp.states.async_remove(self.entity_id, context=self._context)
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Run when entity about to be added to.opp.
 
         To be extended by integrations.
         """
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Run when entity will be removed from.opp.
 
         To be extended by integrations.
         """
 
-    async def async_internal_added_to_opp(self) -> None:
+    async def async_internal_added_to.opp(self) -> None:
         """Run when entity about to be added to.opp.
 
         Not to be extended by integrations.
@@ -608,7 +608,7 @@ class Entity(ABC):
                 )
             )
 
-    async def async_internal_will_remove_from_opp(self) -> None:
+    async def async_internal_will_remove_from.opp(self) -> None:
         """Run when entity will be removed from.opp.
 
         Not to be extended by integrations.
@@ -640,7 +640,7 @@ class Entity(ABC):
 
         assert old is not None
         if self.registry_entry.entity_id == old.entity_id:
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
         await self.async_remove(force_remove=True)

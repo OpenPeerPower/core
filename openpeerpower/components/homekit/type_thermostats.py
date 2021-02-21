@@ -82,7 +82,7 @@ DEFAULT_HVAC_MODES = [
 ]
 
 HC_HOMEKIT_VALID_MODES_WATER_HEATER = {"Heat": 1}
-UNIT_OPP_TO_HOMEKIT = {TEMP_CELSIUS: 0, TEMP_FAHRENHEIT: 1}
+UNIT_HASS_TO_HOMEKIT = {TEMP_CELSIUS: 0, TEMP_FAHRENHEIT: 1}
 
 HC_HEAT_COOL_OFF = 0
 HC_HEAT_COOL_HEAT = 1
@@ -106,8 +106,8 @@ HC_HEAT_COOL_PREFER_COOL = [
 HC_MIN_TEMP = 10
 HC_MAX_TEMP = 38
 
-UNIT_HOMEKIT_TO_OPP = {c: s for s, c in UNIT_OPP_TO_HOMEKIT.items()}
-HC_OPP_TO_HOMEKIT = {
+UNIT_HOMEKIT_TO_HASS = {c: s for s, c in UNIT_HASS_TO_HOMEKIT.items()}
+HC_HASS_TO_HOMEKIT = {
     HVAC_MODE_OFF: HC_HEAT_COOL_OFF,
     HVAC_MODE_HEAT: HC_HEAT_COOL_HEAT,
     HVAC_MODE_COOL: HC_HEAT_COOL_COOL,
@@ -116,9 +116,9 @@ HC_OPP_TO_HOMEKIT = {
     HVAC_MODE_DRY: HC_HEAT_COOL_COOL,
     HVAC_MODE_FAN_ONLY: HC_HEAT_COOL_COOL,
 }
-HC_HOMEKIT_TO_OPP = {c: s for s, c in HC_OPP_TO_HOMEKIT.items()}
+HC_HOMEKIT_TO_HASS = {c: s for s, c in HC_HASS_TO_HOMEKIT.items()}
 
-HC_OPP_TO_HOMEKIT_ACTION = {
+HC_HASS_TO_HOMEKIT_ACTION = {
     CURRENT_HVAC_OFF: HC_HEAT_COOL_OFF,
     CURRENT_HVAC_IDLE: HC_HEAT_COOL_OFF,
     CURRENT_HVAC_HEAT: HC_HEAT_COOL_HEAT,
@@ -138,8 +138,8 @@ class Thermostat(HomeAccessory):
         """Initialize a Thermostat accessory object."""
         super().__init__(*args, category=CATEGORY_THERMOSTAT)
         self._unit = self.opp.config.units.temperature_unit
-        self.hc_homekit_to_opp = None
-        self.hc_opp_to_homekit = None
+        self.hc_homekit_to.opp = None
+        self.hc.opp_to_homekit = None
         hc_min_temp, hc_max_temp = self.get_temperature_range()
 
         # Add additional characteristics if auto mode is supported
@@ -169,10 +169,10 @@ class Thermostat(HomeAccessory):
         # the value and if 0 is not a valid
         # value this will throw
         self.char_target_heat_cool = serv_thermostat.configure_char(
-            CHAR_TARGET_HEATING_COOLING, value=list(self.hc_homekit_to_opp)[0]
+            CHAR_TARGET_HEATING_COOLING, value=list(self.hc_homekit_to.opp)[0]
         )
         self.char_target_heat_cool.override_properties(
-            valid_values=self.hc_opp_to_homekit
+            valid_values=self.hc.opp_to_homekit
         )
         # Current and target temperature characteristics
 
@@ -251,14 +251,14 @@ class Thermostat(HomeAccessory):
         features = state.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
 
         hvac_mode = state.state
-        homekit_hvac_mode = HC_OPP_TO_HOMEKIT[hvac_mode]
+        homekit_hvac_mode = HC_HASS_TO_HOMEKIT[hvac_mode]
 
         if CHAR_TARGET_HEATING_COOLING in char_values:
             # Homekit will reset the mode when VIEWING the temp
             # Ignore it if its the same mode
             if char_values[CHAR_TARGET_HEATING_COOLING] != homekit_hvac_mode:
                 target_hc = char_values[CHAR_TARGET_HEATING_COOLING]
-                if target_hc not in self.hc_homekit_to_opp:
+                if target_hc not in self.hc_homekit_to.opp:
                     # If the target heating cooling state we want does not
                     # exist on the device, we have to sort it out
                     # based on the the current and target temperature since
@@ -274,7 +274,7 @@ class Thermostat(HomeAccessory):
                     ):
                         hc_fallback_order = HC_HEAT_COOL_PREFER_COOL
                     for hc_fallback in hc_fallback_order:
-                        if hc_fallback in self.hc_homekit_to_opp:
+                        if hc_fallback in self.hc_homekit_to.opp:
                             _LOGGER.debug(
                                 "Siri requested target mode: %s and the device does not support, falling back to %s",
                                 target_hc,
@@ -284,7 +284,7 @@ class Thermostat(HomeAccessory):
                             break
 
                 service = SERVICE_SET_HVAC_MODE_THERMOSTAT
-               .opp_value = self.hc_homekit_to_opp[target_hc]
+               .opp_value = self.hc_homekit_to.opp[target_hc]
                 params = {ATTR_HVAC_MODE:.opp_value}
                 events.append(
                     f"{CHAR_TARGET_HEATING_COOLING} to {char_values[CHAR_TARGET_HEATING_COOLING]}"
@@ -356,7 +356,7 @@ class Thermostat(HomeAccessory):
 
         if service:
             params[ATTR_ENTITY_ID] = self.entity_id
-            self.call_service(
+            self.async_call_service(
                 DOMAIN_CLIMATE,
                 service,
                 params,
@@ -378,9 +378,9 @@ class Thermostat(HomeAccessory):
         # the Open Peer Power spec
         #
         # HVAC_MODE_HEAT_COOL: The device supports heating/cooling to a range
-        self.hc_homekit_to_opp = {
+        self.hc_homekit_to.opp = {
             c: s
-            for s, c in HC_OPP_TO_HOMEKIT.items()
+            for s, c in HC_HASS_TO_HOMEKIT.items()
             if (
                 s in hc_modes
                 and not (
@@ -392,7 +392,7 @@ class Thermostat(HomeAccessory):
                 )
             )
         }
-        self.hc_opp_to_homekit = {k: v for v, k in self.hc_homekit_to_opp.items()}
+        self.hc.opp_to_homekit = {k: v for v, k in self.hc_homekit_to.opp.items()}
 
     def get_temperature_range(self):
         """Return min and max temperature range."""
@@ -407,7 +407,7 @@ class Thermostat(HomeAccessory):
         """Set target humidity to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set target humidity to %d", self.entity_id, value)
         params = {ATTR_ENTITY_ID: self.entity_id, ATTR_HUMIDITY: value}
-        self.call_service(
+        self.async_call_service(
             DOMAIN_CLIMATE, SERVICE_SET_HUMIDITY, params, f"{value}{PERCENTAGE}"
         )
 
@@ -416,20 +416,20 @@ class Thermostat(HomeAccessory):
         """Update thermostat state after state changed."""
         # We always recheck valid hvac modes as the entity
         # may not have been fully setup when we saw it last
-        original_hc_opp_to_homekit = self.hc_opp_to_homekit
+        original_hc.opp_to_homekit = self.hc.opp_to_homekit
         self._configure_hvac_modes(new_state)
 
-        if self.hc_opp_to_homekit != original_hc_opp_to_homekit:
-            if self.char_target_heat_cool.value not in self.hc_homekit_to_opp:
+        if self.hc.opp_to_homekit != original_hc.opp_to_homekit:
+            if self.char_target_heat_cool.value not in self.hc_homekit_to.opp:
                 # We must make sure the char value is
                 # in the new valid values before
                 # setting the new valid values or
                 # changing them with throw
                 self.char_target_heat_cool.set_value(
-                    list(self.hc_homekit_to_opp)[0], should_notify=False
+                    list(self.hc_homekit_to.opp)[0], should_notify=False
                 )
             self.char_target_heat_cool.override_properties(
-                valid_values=self.hc_opp_to_homekit
+                valid_values=self.hc.opp_to_homekit
             )
 
         self._async_update_state(new_state)
@@ -441,22 +441,22 @@ class Thermostat(HomeAccessory):
 
         # Update target operation mode FIRST
         hvac_mode = new_state.state
-        if hvac_mode and hvac_mode in HC_OPP_TO_HOMEKIT:
-            homekit_hvac_mode = HC_OPP_TO_HOMEKIT[hvac_mode]
-            if homekit_hvac_mode in self.hc_homekit_to_opp:
+        if hvac_mode and hvac_mode in HC_HASS_TO_HOMEKIT:
+            homekit_hvac_mode = HC_HASS_TO_HOMEKIT[hvac_mode]
+            if homekit_hvac_mode in self.hc_homekit_to.opp:
                 if self.char_target_heat_cool.value != homekit_hvac_mode:
                     self.char_target_heat_cool.set_value(homekit_hvac_mode)
             else:
                 _LOGGER.error(
                     "Cannot map hvac target mode: %s to homekit as only %s modes are supported",
                     hvac_mode,
-                    self.hc_homekit_to_opp,
+                    self.hc_homekit_to.opp,
                 )
 
         # Set current operation mode for supported thermostats
         hvac_action = new_state.attributes.get(ATTR_HVAC_ACTION)
         if hvac_action:
-            homekit_hvac_action = HC_OPP_TO_HOMEKIT_ACTION[hvac_action]
+            homekit_hvac_action = HC_HASS_TO_HOMEKIT_ACTION[hvac_action]
             if self.char_current_heat_cool.value != homekit_hvac_action:
                 self.char_current_heat_cool.set_value(homekit_hvac_action)
 
@@ -514,8 +514,8 @@ class Thermostat(HomeAccessory):
             self.char_target_temp.set_value(target_temp)
 
         # Update display units
-        if self._unit and self._unit in UNIT_OPP_TO_HOMEKIT:
-            unit = UNIT_OPP_TO_HOMEKIT[self._unit]
+        if self._unit and self._unit in UNIT_HASS_TO_HOMEKIT:
+            unit = UNIT_HASS_TO_HOMEKIT[self._unit]
             if self.char_display_units.value != unit:
                 self.char_display_units.set_value(unit)
 
@@ -574,7 +574,7 @@ class WaterHeater(HomeAccessory):
     def set_heat_cool(self, value):
         """Change operation mode to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set heat-cool to %d", self.entity_id, value)
-       .opp_value = HC_HOMEKIT_TO_OPP[value]
+       .opp_value = HC_HOMEKIT_TO_HASS[value]
         if.opp_value != HVAC_MODE_HEAT:
             if self.char_target_heat_cool.value != 1:
                 self.char_target_heat_cool.set_value(1)  # Heat
@@ -584,7 +584,7 @@ class WaterHeater(HomeAccessory):
         _LOGGER.debug("%s: Set target temperature to %.1f°C", self.entity_id, value)
         temperature = temperature_to_states(value, self._unit)
         params = {ATTR_ENTITY_ID: self.entity_id, ATTR_TEMPERATURE: temperature}
-        self.call_service(
+        self.async_call_service(
             DOMAIN_WATER_HEATER,
             SERVICE_SET_TEMPERATURE_WATER_HEATER,
             params,
@@ -606,8 +606,8 @@ class WaterHeater(HomeAccessory):
                 self.char_current_temp.set_value(current_temperature)
 
         # Update display units
-        if self._unit and self._unit in UNIT_OPP_TO_HOMEKIT:
-            unit = UNIT_OPP_TO_HOMEKIT[self._unit]
+        if self._unit and self._unit in UNIT_HASS_TO_HOMEKIT:
+            unit = UNIT_HASS_TO_HOMEKIT[self._unit]
             if self.char_display_units.value != unit:
                 self.char_display_units.set_value(unit)
 

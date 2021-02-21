@@ -292,7 +292,7 @@ def setup.opp: OpenPeerPower, base_config):
         if addr in device_aliases:
             addr = device_aliases[addr]
         else:
-            entity = opp.states.get(addr)
+            entity =.opp.states.get(addr)
             _LOGGER.debug("Selecting entity %s", entity)
             if entity is not None:
                 addr = entity.attributes["physical_address"]
@@ -384,13 +384,13 @@ class CecEntity(Entity):
         else:
             _LOGGER.warning("Unknown state: %d", device.power_status)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register HDMI callbacks after initialization."""
         self._device.set_update_callback(self._update)
 
     def _update(self, device=None):
         """Device status changed, schedule an update."""
-        self.schedule_update_op.state(True)
+        self.schedule_update_ha_state(True)
 
     @property
     def should_poll(self):

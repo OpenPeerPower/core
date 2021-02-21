@@ -114,7 +114,7 @@ class BaseDemoFan(FanEntity):
         speed_list: Optional[List[str]],
     ) -> None:
         """Initialize the entity."""
-        self.opp = opp
+        self.opp =.opp
         self._unique_id = unique_id
         self._supported_features = supported_features
         self._speed = SPEED_OFF
@@ -194,17 +194,17 @@ class DemoFan(BaseDemoFan, FanEntity):
     def set_speed(self, speed: str) -> None:
         """Set the speed of the fan."""
         self._speed = speed
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def set_direction(self, direction: str) -> None:
         """Set the direction of the fan."""
         self._direction = direction
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def oscillate(self, oscillating: bool) -> None:
         """Set oscillation."""
         self._oscillating = oscillating
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
 
 class DemoPercentageFan(BaseDemoFan, FanEntity):
@@ -215,11 +215,16 @@ class DemoPercentageFan(BaseDemoFan, FanEntity):
         """Return the current speed."""
         return self._percentage
 
+    @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        return 3
+
     def set_percentage(self, percentage: int) -> None:
         """Set the speed of the fan, as a percentage."""
         self._percentage = percentage
         self._preset_mode = None
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def preset_mode(self) -> Optional[str]:
@@ -236,7 +241,7 @@ class DemoPercentageFan(BaseDemoFan, FanEntity):
         if preset_mode in self.preset_modes:
             self._preset_mode = preset_mode
             self._percentage = None
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
         else:
             raise ValueError(f"Invalid preset mode: {preset_mode}")
 
@@ -270,11 +275,16 @@ class AsyncDemoPercentageFan(BaseDemoFan, FanEntity):
         """Return the current speed."""
         return self._percentage
 
+    @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        return 3
+
     async def async_set_percentage(self, percentage: int) -> None:
         """Set the speed of the fan, as a percentage."""
         self._percentage = percentage
         self._preset_mode = None
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def preset_mode(self) -> Optional[str]:
@@ -294,7 +304,7 @@ class AsyncDemoPercentageFan(BaseDemoFan, FanEntity):
             )
         self._preset_mode = preset_mode
         self._percentage = None
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_on(
         self,
@@ -321,9 +331,9 @@ class AsyncDemoPercentageFan(BaseDemoFan, FanEntity):
     async def async_set_direction(self, direction: str) -> None:
         """Set the direction of the fan."""
         self._direction = direction
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_oscillate(self, oscillating: bool) -> None:
         """Set oscillation."""
         self._oscillating = oscillating
-        self.async_write_op.state()
+        self.async_write_ha_state()

@@ -2,8 +2,8 @@
   "domain": "bond",
   "name": "Bond",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/bond",
-  "requirements": ["bond-api==0.1.9"],
+  "documentation": "https://www.open-peer-power.io/integrations/bond",
+  "requirements": ["bond-api==0.1.10"],
   "zeroconf": ["_bond._tcp.local."],
   "codeowners": ["@prystupa"],
   "quality_scale": "platinum"

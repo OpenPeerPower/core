@@ -6,8 +6,8 @@ import voluptuous as vol
 from openpeerpower.components.automation import AutomationActionType
 from openpeerpower.components.device_automation import toggle_entity
 from openpeerpower.const import CONF_DOMAIN
-from openpeerpowerr.core import CALLBACK_TYPE, OpenPeerPower
-from openpeerpowerr.helpers.typing import ConfigType
+from openpeerpower.core import CALLBACK_TYPE, OpenPeerPower
+from openpeerpower.helpers.typing import ConfigType
 
 from . import DOMAIN
 

@@ -25,7 +25,7 @@ class WinkScene(WinkDevice, Scene):
         super().__init__(wink,.opp)
        .opp.data[DOMAIN]["entities"]["scene"].append(self)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[DOMAIN]["entities"]["scene"].append(self)
 

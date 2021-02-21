@@ -20,11 +20,11 @@ from openpeerpower.components.climate.const import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_TEMPERATURE
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers import entity_platform
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers import entity_platform
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from . import LyricDeviceEntity
 from .const import (
@@ -76,7 +76,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the Honeywell Lyric climate platform based on a config entry."""
-    coordinator: DataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id]
+    coordinator: DataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id]
 
     entities = []
 

@@ -24,7 +24,7 @@ SENSOR_TYPES = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up sensors attached to a Konnected device from a config entry."""
-    data = opp.data[KONNECTED_DOMAIN]
+    data =.opp.data[KONNECTED_DOMAIN]
     device_id = config_entry.data["id"]
     sensors = []
 
@@ -118,7 +118,7 @@ class KonnectedSensor(Entity):
         """Return the device info."""
         return {"identifiers": {(KONNECTED_DOMAIN, self._device_id)}}
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Store entity_id and register state change callback."""
         entity_id_key = self._addr or self._type
         self._data[entity_id_key] = self.entity_id
@@ -133,4 +133,4 @@ class KonnectedSensor(Entity):
             self._state = int(float(state))
         else:
             self._state = round(float(state), 1)
-        self.async_write_op.state()
+        self.async_write_ha_state()

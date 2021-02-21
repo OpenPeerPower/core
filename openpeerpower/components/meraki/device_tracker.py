@@ -7,8 +7,8 @@ import voluptuous as vol
 from openpeerpower.components.device_tracker import PLATFORM_SCHEMA, SOURCE_TYPE_ROUTER
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.const import HTTP_BAD_REQUEST, HTTP_UNPROCESSABLE_ENTITY
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
 
 CONF_VALIDATOR = "validator"
 CONF_SECRET = "secret"
@@ -72,10 +72,10 @@ class MerakiView(OpenPeerPowerView):
         if not data["data"]["observations"]:
             _LOGGER.debug("No observations found")
             return
-        self._op.dle(request.app["opp"], data)
+        self._handle(request.app[.opp"], data)
 
     @callback
-    def _op.dle(self,.opp, data):
+    def _handle(self,.opp, data):
         for i in data["data"]["observations"]:
             data["data"]["secret"] = "hidden"
 

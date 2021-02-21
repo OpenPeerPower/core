@@ -11,7 +11,7 @@ from aioesphomeapi import (
     DeviceInfo,
     EntityInfo,
     EntityState,
-    HomeassistantServiceCall,
+     OpenPeerPowerServiceCall,
     UserService,
     UserServiceArgType,
 )
@@ -26,18 +26,18 @@ from openpeerpower.const import (
     CONF_PORT,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpowerr.core import Event, State, callback
-from openpeerpowerr.exceptions import TemplateError
-from openpeerpowerr.helpers import template
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.helpers.device_registry as dr
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_state_change_event
-from openpeerpowerr.helpers.json import JSONEncoder
-from openpeerpowerr.helpers.storage import Store
-from openpeerpowerr.helpers.template import Template
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import Event, State, callback
+from openpeerpower.exceptions import TemplateError
+from openpeerpower.helpers import template
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.helpers.device_registry as dr
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_state_change_event
+from openpeerpower.helpers.json import JSONEncoder
+from openpeerpower.helpers.storage import Store
+from openpeerpower.helpers.template import Template
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 # Import config flow so that it's added to the registry
 from .entry_data import RuntimeEntryData
@@ -83,7 +83,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     store = Store(
        .opp, STORAGE_VERSION, f"esphome.{entry.entry_id}", encoder=JSONEncoder
     )
-    entry_data = opp.data[DOMAIN][entry.entry_id] = RuntimeEntryData(
+    entry_data =.opp.data[DOMAIN][entry.entry_id] = RuntimeEntryData(
         client=cli, entry_id=entry.entry_id, store=store
     )
 
@@ -104,7 +104,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         entry_data.async_update_state.opp, state)
 
     @callback
-    def async_on_service_call(service: HomeassistantServiceCall) -> None:
+    def async_on_service_call(service:  OpenPeerPowerServiceCall) -> None:
         """Call service when user automation in ESPHome config is triggered."""
         domain, service_name = service.service.split(".", 1)
         service_data = service.data
@@ -147,32 +147,32 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
                 )
             )
 
-    async def send_home_assistant_state_event(event: Event) -> None:
+    async def send_open_peer_power_state_event(event: Event) -> None:
         """Forward Open Peer Power states updates to ESPHome."""
         new_state = event.data.get("new_state")
         if new_state is None:
             return
         entity_id = event.data.get("entity_id")
-        await cli.send_home_assistant_state(entity_id, new_state.state)
+        await cli.send_open_peer_power_state(entity_id, new_state.state)
 
-    async def _send_home_assistant_state(
+    async def _send_open_peer_power_state(
         entity_id: str, new_state: Optional[State]
     ) -> None:
         """Forward Open Peer Power states to ESPHome."""
-        await cli.send_home_assistant_state(entity_id, new_state.state)
+        await cli.send_open_peer_power_state(entity_id, new_state.state)
 
     @callback
     def async_on_state_subscription(entity_id: str) -> None:
         """Subscribe and forward states for requested entities."""
         unsub = async_track_state_change_event(
-           .opp, [entity_id], send_home_assistant_state_event
+           .opp, [entity_id], send_open_peer_power_state_event
         )
         entry_data.disconnect_callbacks.append(unsub)
-        new_state = opp.states.get(entity_id)
+        new_state =.opp.states.get(entity_id)
         if new_state is None:
             return
         # Send initial state
-       .opp.async_create_task(_send_home_assistant_state(entity_id, new_state))
+       .opp.async_create_task(_send_open_peer_power_state(entity_id, new_state))
 
     async def on_login() -> None:
         """Subscribe to states and list entities on successful API login."""
@@ -190,7 +190,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             await _setup_services.opp, entry_data, services)
             await cli.subscribe_states(async_on_state)
             await cli.subscribe_service_calls(async_on_service_call)
-            await cli.subscribe_home_assistant_states(async_on_state_subscription)
+            await cli.subscribe_open_peer_power_states(async_on_state_subscription)
 
            .opp.async_create_task(entry_data.async_save_to_store())
         except APIConnectionError as err:
@@ -225,7 +225,7 @@ async def _setup_auto_reconnect_logic(
             # When removing/disconnecting manually
             return
 
-        device_registry = await opp..helpers.device_registry.async_get_registry()
+        device_registry = await.opp.helpers.device_registry.async_get_registry()
         devices = dr.async_entries_for_config_entry(device_registry, entry.entry_id)
         for device in devices:
             # There is only one device in ESPHome
@@ -233,7 +233,7 @@ async def _setup_auto_reconnect_logic(
                 # Don't attempt to connect if it's disabled
                 return
 
-        data: RuntimeEntryData = opp.data[DOMAIN][entry.entry_id]
+        data: RuntimeEntryData =.opp.data[DOMAIN][entry.entry_id]
         for disconnect_cb in data.disconnect_callbacks:
             disconnect_cb()
         data.disconnect_callbacks = []
@@ -273,7 +273,7 @@ async def _setup_auto_reconnect_logic(
             )
             # Schedule re-connect in event loop in order not to delay HA
             # startup. First connect is scheduled in tracked tasks.
-            data.reconnect_task = opp.loop.create_task(
+            data.reconnect_task =.opp.loop.create_task(
                 try_connect(tries + 1, is_disconnect=False)
             )
         else:
@@ -362,7 +362,7 @@ async def _cleanup_instance(
    .opp: OpenPeerPowerType, entry: ConfigEntry
 ) -> RuntimeEntryData:
     """Cleanup the esphome client if it exists."""
-    data: RuntimeEntryData = opp.data[DOMAIN].pop(entry.entry_id)
+    data: RuntimeEntryData =.opp.data[DOMAIN].pop(entry.entry_id)
     if data.reconnect_task is not None:
         data.reconnect_task.cancel()
     for disconnect_cb in data.disconnect_callbacks:
@@ -399,7 +399,7 @@ async def platform_async_setup_entry(
     This method is in charge of receiving, distributing and storing
     info and state updates.
     """
-    entry_data: RuntimeEntryData = opp.data[DOMAIN][entry.entry_id]
+    entry_data: RuntimeEntryData =.opp.data[DOMAIN][entry.entry_id]
     entry_data.info[component_key] = {}
     entry_data.old_info[component_key] = {}
     entry_data.state[component_key] = {}
@@ -477,24 +477,24 @@ def esphome_state_property(func):
 
 
 class EsphomeEnumMapper:
-    """Helper class to convert between opp and esphome enum values."""
+    """Helper class to convert between.opp and esphome enum values."""
 
     def __init__(self, func: Callable[[], Dict[int, str]]):
         """Construct a EsphomeEnumMapper."""
         self._func = func
 
     def from_esphome(self, value: int) -> str:
-        """Convert from an esphome int representation to a opp string."""
+        """Convert from an esphome int representation to a.opp string."""
         return self._func()[value]
 
-    def from_opp(self, value: str) -> int:
-        """Convert from a opp string to a esphome int representation."""
+    def from.opp(self, value: str) -> int:
+        """Convert from a.opp string to a esphome int representation."""
         inverse = {v: k for k, v in self._func().items()}
         return inverse[value]
 
 
 def esphome_map_enum(func: Callable[[], Dict[int, str]]):
-    """Map esphome int enum values to opp string constants.
+    """Map esphome int enum values to.opp string constants.
 
     This class has to be used as a decorator. This ensures the aioesphomeapi
     import is only happening at runtime.
@@ -511,7 +511,7 @@ class EsphomeBaseEntity(Entity):
         self._component_key = component_key
         self._key = key
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -540,7 +540,7 @@ class EsphomeBaseEntity(Entity):
             # Only update the HA state when the full state arrives
             # through the next entity state packet.
             return
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def _entry_data(self) -> RuntimeEntryData:
@@ -611,10 +611,10 @@ class EsphomeBaseEntity(Entity):
 class EsphomeEntity(EsphomeBaseEntity):
     """Define a generic esphome entity."""
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register callbacks."""
 
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         self.async_on_remove(
             async_dispatcher_connect(
@@ -623,6 +623,6 @@ class EsphomeEntity(EsphomeBaseEntity):
                     f"esphome_{self._entry_id}"
                     f"_update_{self._component_key}_{self._key}"
                 ),
-                self.async_write_op.state,
+                self.async_write_ha_state,
             )
         )

@@ -54,7 +54,7 @@ EXTENDED_SENSOR_TYPE_MAPPING = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Flu Near You sensors based on a config entry."""
-    coordinators = opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id]
+    coordinators =.opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id]
 
     sensors = []
 
@@ -133,14 +133,14 @@ class FluNearYouSensor(CoordinatorEntity):
         return self._unit
 
     @callback
-    def _op.dle_coordinator_update(self) -> None:
+    def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
         self.update_from_latest_data()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.update_from_latest_data()
 
     @callback

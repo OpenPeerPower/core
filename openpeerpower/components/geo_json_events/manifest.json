@@ -1,7 +1,7 @@
 {
   "domain": "geo_json_events",
   "name": "GeoJSON",
-  "documentation": "https://www.openpeerpower.io/integrations/geo_json_events",
+  "documentation": "https://www.open-peer-power.io/integrations/geo_json_events",
   "requirements": ["geojson_client==0.4"],
   "codeowners": []
 }

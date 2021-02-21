@@ -5,8 +5,8 @@ from typing import cast
 from aiohttp import BasicAuth, ClientSession
 from aiolyric.client import LyricClient
 
-from openpeerpowerr.helpers import config_entry_oauth2_flow
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 _LOGGER = logging.getLogger(__name__)
 

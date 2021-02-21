@@ -1,5 +1,5 @@
 """A risco entity base class."""
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 
 def binary_sensor_unique_id(risco, zone_id):
@@ -15,9 +15,9 @@ class RiscoEntity(CoordinatorEntity):
 
     def _refresh_from_coordinator(self):
         self._get_data_from_coordinator()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """When entity is added to.opp."""
         self.async_on_remove(
             self.coordinator.async_add_listener(self._refresh_from_coordinator)

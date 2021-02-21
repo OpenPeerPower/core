@@ -31,9 +31,9 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_PORT, CONF_TYPE, STATE_ON
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.restore_state import RestoreEntity
-from openpeerpowerr.util.color import color_hs_to_RGB, color_temperature_mired_to_kelvin
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.restore_state import RestoreEntity
+from openpeerpower.util.color import color_hs_to_RGB, color_temperature_mired_to_kelvin
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -193,7 +193,7 @@ def state(new_state):
             # Update state.
             self._is_on = new_state
             self.group.enqueue(pipeline)
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
         return wrapper
 
@@ -227,9 +227,9 @@ class LimitlessLEDGroup(LightEntity, RestoreEntity):
         self._color = None
         self._effect = None
 
-    async def async_added_to_opp(self):
-        """Handle entity about to be added to opp event."""
-        await super().async_added_to_opp()
+    async def async_added_to.opp(self):
+        """Handle entity about to be added to.opp event."""
+        await super().async_added_to.opp()
         last_state = await self.async_get_last_state()
         if last_state:
             self._is_on = last_state.state == STATE_ON

@@ -6,9 +6,9 @@ import voluptuous as vol
 from openpeerpower.components.automation import AutomationActionType
 from openpeerpower.components.device_automation import TRIGGER_BASE_SCHEMA
 from openpeerpower.const import CONF_DEVICE_ID, CONF_DOMAIN, CONF_PLATFORM, CONF_TYPE
-from openpeerpowerr.core import CALLBACK_TYPE, OpenPeerPower
-from openpeerpowerr.helpers.device_registry import DeviceRegistry, async_get_registry
-from openpeerpowerr.helpers.typing import ConfigType
+from openpeerpower.core import CALLBACK_TYPE, OpenPeerPower
+from openpeerpower.helpers.device_registry import DeviceRegistry, async_get_registry
+from openpeerpower.helpers.typing import ConfigType
 
 from . import PhilipsTVDataUpdateCoordinator
 from .const import DOMAIN
@@ -58,7 +58,7 @@ async def async_attach_trigger(
 
         device = registry.async_get(config[CONF_DEVICE_ID])
         for config_entry_id in device.config_entries:
-            coordinator: PhilipsTVDataUpdateCoordinator = opp.data[DOMAIN].get(
+            coordinator: PhilipsTVDataUpdateCoordinator =.opp.data[DOMAIN].get(
                 config_entry_id
             )
             if coordinator:

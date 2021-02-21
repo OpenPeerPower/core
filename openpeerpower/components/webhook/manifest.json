@@ -1,7 +1,7 @@
 {
   "domain": "webhook",
   "name": "Webhook",
-  "documentation": "https://www.openpeerpower.io/integrations/webhook",
+  "documentation": "https://www.open-peer-power.io/integrations/webhook",
   "dependencies": ["http"],
   "codeowners": []
 }

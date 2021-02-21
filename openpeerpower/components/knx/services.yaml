@@ -8,8 +8,14 @@ send:
       description: "Payload to send to the bus. Integers are treated as DPT 1/2/3 payloads. For DPTs > 6 bits send a list. Each value represents 1 octet (0-255). Pad with 0 to DPT byte length."
       example: "[0, 4]"
     type:
-      description: "Optional. If set, the payload will not be sent as raw bytes, but encoded as given DPT. Knx sensor types are valid values (see https://www.openpeerpower.io/integrations/sensor.knx)."
+      description: "Optional. If set, the payload will not be sent as raw bytes, but encoded as given DPT. Knx sensor types are valid values (see https://www.open-peer-power.io/integrations/sensor.knx)."
       example: "temperature"
+read:
+  description: "Send GroupValueRead requests to the KNX bus. Response can be used from `knx_event` and will be processed in KNX entities."
+  fields:
+    address:
+      description: "Group address(es) to send read request to. Lists will read multiple group addresses."
+      example: "1/1/0"
 event_register:
   description: "Add or remove single group address to knx_event filter for triggering `knx_event`s. Only addresses added with this service can be removed."
   fields:

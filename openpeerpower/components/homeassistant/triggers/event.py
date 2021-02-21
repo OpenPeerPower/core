@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.const import CONF_EVENT_DATA, CONF_PLATFORM
-from openpeerpower.core import OppJob, callback
+from openpeerpower.core import HassJob, callback
 from openpeerpower.helpers import config_validation as cv, template
 
 # mypy: allow-untyped-defs
@@ -72,7 +72,7 @@ async def async_attach_trigger(
             extra=vol.ALLOW_EXTRA,
         )
 
-    job = OppJob(action)
+    job = HassJob(action)
 
     @callback
     def handle_event(event):
@@ -88,7 +88,7 @@ async def async_attach_trigger(
             # If event doesn't match, skip event
             return
 
-       .opp.async_run_opp_job(
+       .opp.async_run.opp_job(
             job,
             {
                 "trigger": {

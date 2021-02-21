@@ -35,7 +35,7 @@ async def async_setup_sdm_entry(
 ) -> None:
     """Set up the cameras."""
 
-    subscriber = opp.data[DOMAIN][DATA_SUBSCRIBER]
+    subscriber =.opp.data[DOMAIN][DATA_SUBSCRIBER]
     try:
         device_manager = await subscriber.async_get_device_manager()
     except GoogleNestException as err:
@@ -130,11 +130,11 @@ class NestCamera(Camera):
 
         self._stream_refresh_unsub = async_track_point_in_utc_time(
             self.opp,
-            self._op.dle_stream_refresh,
+            self._handle_stream_refresh,
             refresh_time,
         )
 
-    async def _op.dle_stream_refresh(self, now):
+    async def _handle_stream_refresh(self, now):
         """Alarm that fires to check if the stream should be refreshed."""
         if not self._stream:
             return
@@ -151,7 +151,7 @@ class NestCamera(Camera):
             self.stream.update_source(self._stream.rtsp_stream_url)
         self._schedule_stream_refresh()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Invalidates the RTSP token when unloaded."""
         if self._stream:
             _LOGGER.debug("Invalidating stream")
@@ -163,10 +163,10 @@ class NestCamera(Camera):
         if self._event_image_cleanup_unsub is not None:
             self._event_image_cleanup_unsub()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity is added to register update signal handler."""
         self.async_on_remove(
-            self._device.add_update_listener(self.async_write_op.state)
+            self._device.add_update_listener(self.async_write_ha_state)
         )
 
     async def async_camera_image(self):
@@ -222,11 +222,11 @@ class NestCamera(Camera):
             self._event_image_cleanup_unsub()
         self._event_image_cleanup_unsub = async_track_point_in_utc_time(
             self.opp,
-            self._op.dle_event_image_cleanup,
+            self._handle_event_image_cleanup,
             point_in_time,
         )
 
-    def _op.dle_event_image_cleanup(self, now):
+    def _handle_event_image_cleanup(self, now):
         """Clear images cached from events and scheduled callback."""
         self._event_id = None
         self._event_image_bytes = None

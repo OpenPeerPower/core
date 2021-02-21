@@ -2,11 +2,11 @@
   "domain": "coronavirus",
   "name": "Coronavirus (COVID-19)",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/coronavirus",
+  "documentation": "https://www.open-peer-power.io/integrations/coronavirus",
   "requirements": [
     "coronavirus==1.1.1"
   ],
   "codeowners": [
-    "@home_assistant/core"
+    "@open_peer_power/core"
   ]
 }

@@ -11,9 +11,9 @@ from openpeerpower.const import (
     DEVICE_CLASS_BATTERY,
     PERCENTAGE,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity import Entity
 
 from . import SurePetcareAPI
 from .const import (
@@ -34,7 +34,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     entities = []
 
-    spc = opp.data[DATA_SURE_PETCARE][SPC]
+    spc =.opp.data[DATA_SURE_PETCARE][SPC]
 
     for entity in spc.ids:
         sure_type = entity[CONF_TYPE]
@@ -98,19 +98,19 @@ class SurePetcareSensor(Entity):
         self._state = self._spc_data.get("status")
         _LOGGER.debug("%s -> self._state: %s", self._name, self._state)
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register callbacks."""
 
         @callback
         def update() -> None:
             """Update the state."""
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         self._async_unsub_dispatcher_connect = async_dispatcher_connect(
             self.opp, TOPIC_UPDATE, update
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect dispatcher listener when removed."""
         if self._async_unsub_dispatcher_connect:
             self._async_unsub_dispatcher_connect()

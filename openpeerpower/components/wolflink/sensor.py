@@ -16,7 +16,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TIME_HOURS,
 )
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from .const import COORDINATOR, DEVICE_ID, DOMAIN, PARAMETERS, STATES
 
@@ -24,9 +24,9 @@ from .const import COORDINATOR, DEVICE_ID, DOMAIN, PARAMETERS, STATES
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up all entries for Wolf Platform."""
 
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
-    parameters = opp.data[DOMAIN][config_entry.entry_id][PARAMETERS]
-    device_id = opp.data[DOMAIN][config_entry.entry_id][DEVICE_ID]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
+    parameters =.opp.data[DOMAIN][config_entry.entry_id][PARAMETERS]
+    device_id =.opp.data[DOMAIN][config_entry.entry_id][DEVICE_ID]
 
     entities = []
     for parameter in parameters:

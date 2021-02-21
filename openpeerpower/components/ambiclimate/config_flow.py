@@ -6,9 +6,9 @@ import ambiclimate
 from openpeerpower import config_entries
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.network import get_url
+from openpeerpower.core import callback
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.network import get_url
 
 from .const import (
     AUTH_CALLBACK_NAME,
@@ -149,7 +149,7 @@ class AmbiclimateAuthCallbackView(OpenPeerPowerView):
         code = request.query.get("code")
         if code is None:
             return "No code"
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
        .opp.async_create_task(
            .opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": "code"}, data=code

@@ -66,7 +66,7 @@ DEPRECATED_GROUP = [
 
 DEPRECATION_WARNING = (
     "The use of other attributes than device state attributes is deprecated and will be removed in a future release. "
-    "Invalid attributes are %s. Read the logs for further details: https://www.openpeerpower.io/integrations/scene/"
+    "Invalid attributes are %s. Read the logs for further details: https://www.open-peer-power.io/integrations/scene/"
 )
 
 
@@ -78,7 +78,7 @@ async def _async_reproduce_state(
     reproduce_options: Optional[Dict[str, Any]] = None,
 ) -> None:
     """Reproduce a single state."""
-    cur_state = opp.states.get(state.entity_id)
+    cur_state =.opp.states.get(state.entity_id)
 
     if cur_state is None:
         _LOGGER.warning("Unable to find entity %s", state.entity_id)
@@ -123,7 +123,7 @@ async def _async_reproduce_state(
     elif state.state == STATE_OFF:
         service = SERVICE_TURN_OFF
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, service, service_data, context=context, blocking=True
     )
 

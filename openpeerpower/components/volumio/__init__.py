@@ -5,9 +5,9 @@ from pyvolumio import CannotConnectError, Volumio
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST, CONF_PORT
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DATA_INFO, DATA_VOLUMIO, DOMAIN
 

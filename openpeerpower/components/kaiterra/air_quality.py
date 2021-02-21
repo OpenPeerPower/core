@@ -1,7 +1,7 @@
 """Support for Kaiterra Air Quality Sensors."""
 from openpeerpower.components.air_quality import AirQualityEntity
 from openpeerpower.const import CONF_DEVICE_ID, CONF_NAME
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import (
     ATTR_AQI_LEVEL,
@@ -17,7 +17,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    api = opp.data[DOMAIN]
+    api =.opp.data[DOMAIN]
     name = discovery_info[CONF_NAME]
     device_id = discovery_info[CONF_DEVICE_ID]
 
@@ -111,10 +111,10 @@ class KaiterraAirQuality(AirQualityEntity):
 
         return data
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callback."""
         self.async_on_remove(
             async_dispatcher_connect(
-                self.opp, DISPATCHER_KAITERRA, self.async_write_op.state
+                self.opp, DISPATCHER_KAITERRA, self.async_write_ha_state
             )
         )

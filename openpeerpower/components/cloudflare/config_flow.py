@@ -13,10 +13,10 @@ import voluptuous as vol
 from openpeerpower.components import persistent_notification
 from openpeerpower.config_entries import CONN_CLASS_CLOUD_PUSH, ConfigFlow
 from openpeerpower.const import CONF_API_TOKEN, CONF_ZONE
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 from .const import CONF_RECORDS
 from .const import DOMAIN  # pylint:disable=unused-import

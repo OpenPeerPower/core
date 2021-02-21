@@ -2,7 +2,7 @@
 from aioshelly import Block
 
 from openpeerpower.components.switch import SwitchEntity
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from . import ShellyDeviceWrapper
 from .const import COAP, DATA_CONFIG_ENTRY, DOMAIN
@@ -12,7 +12,7 @@ from .utils import async_remove_shelly_entity
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up switches for device."""
-    wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][COAP]
+    wrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][COAP]
 
     # In roller mode the relay blocks exist but do not contain required info
     if (
@@ -63,12 +63,12 @@ class RelaySwitch(ShellyBlockEntity, SwitchEntity):
     async def async_turn_on(self, **kwargs):
         """Turn on relay."""
         self.control_result = await self.block.set_state(turn="on")
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn off relay."""
         self.control_result = await self.block.set_state(turn="off")
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _update_callback(self):

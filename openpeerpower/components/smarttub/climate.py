@@ -9,7 +9,7 @@ from openpeerpower.components.climate.const import (
     SUPPORT_TARGET_TEMPERATURE,
 )
 from openpeerpower.const import ATTR_TEMPERATURE, TEMP_CELSIUS
-from openpeerpowerr.util.temperature import convert as convert_temperature
+from openpeerpower.util.temperature import convert as convert_temperature
 
 from .const import DEFAULT_MAX_TEMP, DEFAULT_MIN_TEMP, DOMAIN, SMARTTUB_CONTROLLER
 from .entity import SmartTubEntity
@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up climate entity for the thermostat in the tub."""
 
-    controller = opp.data[DOMAIN][entry.entry_id][SMARTTUB_CONTROLLER]
+    controller =.opp.data[DOMAIN][entry.entry_id][SMARTTUB_CONTROLLER]
 
     entities = [
         SmartTubThermostat(controller.coordinator, spa) for spa in controller.spas
@@ -35,11 +35,6 @@ class SmartTubThermostat(SmartTubEntity, ClimateEntity):
     def __init__(self, coordinator, spa):
         """Initialize the entity."""
         super().__init__(coordinator, spa, "thermostat")
-
-    @property
-    def unique_id(self) -> str:
-        """Return a unique id for the entity."""
-        return f"{self.spa.id}-{self._entity_type}"
 
     @property
     def temperature_unit(self):

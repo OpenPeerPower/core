@@ -8,9 +8,9 @@
             "cannot_connect": "\u00c9chec de connexion"
         },
         "step": {
-            "oppio_confirm": {
-                "description": "Voulez-vous configurer Open Peer Power pour qu'il se connecte \u00e0 AdGuard Home fourni par le module compl\u00e9mentaire Opp.io: {addon} ?",
-                "title": "AdGuard Home via le module compl\u00e9mentaire Opp.io"
+            .oppio_confirm": {
+                "description": "Voulez-vous configurer Open Peer Power pour qu'il se connecte \u00e0 AdGuard Home fourni par le module compl\u00e9mentaire Hass.io: {addon} ?",
+                "title": "AdGuard Home via le module compl\u00e9mentaire Hass.io"
             },
             "user": {
                 "data": {

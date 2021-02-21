@@ -28,13 +28,13 @@ from openpeerpower.const import (
     HTTP_BAD_REQUEST,
     HTTP_NOT_FOUND,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers import config_per_platform, discovery
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.network import get_url
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.setup import async_prepare_setup_platform
+from openpeerpower.core import callback
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers import config_per_platform, discovery
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.network import get_url
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.setup import async_prepare_setup_platform
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 
@@ -142,7 +142,7 @@ async def async_setup.opp, config):
                    .opp, p_config, discovery_info
                 )
             else:
-                provider = await opp..async_add_executor_job(
+                provider = await.opp.async_add_executor_job(
                     platform.get_engine,.opp, p_config, discovery_info
                 )
 
@@ -155,7 +155,7 @@ async def async_setup.opp, config):
             _LOGGER.exception("Error setting up platform: %s", p_type)
             return
 
-        async def async_say_op.dle(service):
+        async def async_say_handle(service):
             """Service handle for say."""
             entity_ids = service.data[ATTR_ENTITY_ID]
             message = service.data.get(ATTR_MESSAGE)
@@ -180,7 +180,7 @@ async def async_setup.opp, config):
                 ATTR_ENTITY_ID: entity_ids,
             }
 
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 DOMAIN_MP,
                 SERVICE_PLAY_MEDIA,
                 data,
@@ -190,7 +190,7 @@ async def async_setup.opp, config):
 
         service_name = p_config.get(CONF_SERVICE_NAME, f"{p_type}_{SERVICE_SAY}")
        .opp.services.async_register(
-            DOMAIN, service_name, async_say_op.dle, schema=SCHEMA_SERVICE_SAY
+            DOMAIN, service_name, async_say_handle, schema=SCHEMA_SERVICE_SAY
         )
 
     setup_tasks = [
@@ -207,28 +207,28 @@ async def async_setup.opp, config):
 
     discovery.async_listen_platform.opp, DOMAIN, async_platform_discovered)
 
-    async def async_clear_cache_op.dle(service):
+    async def async_clear_cache_handle(service):
         """Handle clear cache service call."""
         await tts.async_clear_cache()
 
    .opp.services.async_register(
         DOMAIN,
         SERVICE_CLEAR_CACHE,
-        async_clear_cache_op.dle,
+        async_clear_cache_handle,
         schema=SCHEMA_SERVICE_CLEAR_CACHE,
     )
 
     return True
 
 
-def _op.h_options(options: Dict) -> str:
+def _hash_options(options: Dict) -> str:
     """Hashes an options dictionary."""
-    opts_op.h = op.hlib.blake2s(digest_size=5)
+    opts_hash = hashlib.blake2s(digest_size=5)
     for key, value in sorted(options.items()):
-        opts_op.h.update(str(key).encode())
-        opts_op.h.update(str(value).encode())
+        opts_hash.update(str(key).encode())
+        opts_hash.update(str(value).encode())
 
-    return opts_op.h.hexdigest()
+    return opts_hash.hexdigest()
 
 
 class SpeechManager:
@@ -236,7 +236,7 @@ class SpeechManager:
 
     def __init__(self,.opp):
         """Initialize a speech store."""
-        self.opp = opp
+        self.opp =.opp
         self.providers = {}
 
         self.use_cache = DEFAULT_CACHE
@@ -300,7 +300,7 @@ class SpeechManager:
         This method is a coroutine.
         """
         provider = self.providers[engine]
-        msg_op.h = op.hlib.sha1(bytes(message, "utf-8")).hexdigest()
+        msg_hash = hashlib.sha1(bytes(message, "utf-8")).hexdigest()
         use_cache = cache if cache is not None else self.use_cache
 
         # Languages
@@ -323,12 +323,12 @@ class SpeechManager:
             ]
             if invalid_opts:
                 raise OpenPeerPowerError(f"Invalid options found: {invalid_opts}")
-            options_key = _op.h_options(options)
+            options_key = _hash_options(options)
         else:
             options_key = "-"
 
         key = KEY_PATTERN.format(
-            msg_op.h, language.replace("_", "-"), options_key, engine
+            msg_hash, language.replace("_", "-"), options_key, engine
         ).lower()
 
         # Is speech already in memory
@@ -530,7 +530,7 @@ class Provider:
 def _init_tts_cache_dir.opp, cache_dir):
     """Init cache folder."""
     if not os.path.isabs(cache_dir):
-        cache_dir = opp.config.path(cache_dir)
+        cache_dir =.opp.config.path(cache_dir)
     if not os.path.isdir(cache_dir):
         _LOGGER.info("Create cache dir %s", cache_dir)
         os.mkdir(cache_dir)

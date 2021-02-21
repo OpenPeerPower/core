@@ -7,7 +7,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.components import persistent_notification
-from openpeerpowerr.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers import config_entry_oauth2_flow
 
 from .const import DOMAIN, SPOTIFY_SCOPES
 

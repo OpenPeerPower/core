@@ -1,8 +1,8 @@
 """Sensor platform for local_ip."""
 
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import get_local_ip
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import get_local_ip
 
 from .const import DOMAIN, SENSOR
 

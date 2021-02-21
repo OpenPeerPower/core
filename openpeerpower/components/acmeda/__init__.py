@@ -40,7 +40,7 @@ async def async_unload_entry(
    .opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
-    hub = opp.data[DOMAIN][config_entry.entry_id]
+    hub =.opp.data[DOMAIN][config_entry.entry_id]
 
     unload_ok = all(
         await asyncio.gather(

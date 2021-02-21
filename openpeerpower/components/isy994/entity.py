@@ -25,19 +25,19 @@ class ISYEntity(Entity):
         """Initialize the insteon device."""
         self._node = node
         self._attrs = {}
-        self._change_op.dler = None
-        self._control_op.dler = None
+        self._change_handler = None
+        self._control_handler = None
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe to the node change events."""
-        self._change_op.dler = self._node.status_events.subscribe(self.on_update)
+        self._change_handler = self._node.status_events.subscribe(self.on_update)
 
         if hasattr(self._node, "control_events"):
-            self._control_op.dler = self._node.control_events.subscribe(self.on_control)
+            self._control_handler = self._node.control_events.subscribe(self.on_control)
 
     def on_update(self, event: object) -> None:
         """Handle the update event from the ISY994 Node."""
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def on_control(self, event: NodeProperty) -> None:
         """Handle a control event from the ISY994 Node."""
@@ -52,7 +52,7 @@ class ISYEntity(Entity):
 
         if event.control not in EVENT_PROPS_IGNORED:
             # New state attributes may be available, update the state.
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
         self.opp.bus.fire("isy994_control", event_data)
 

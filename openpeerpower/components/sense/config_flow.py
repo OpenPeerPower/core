@@ -6,7 +6,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries, core
 from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD, CONF_TIMEOUT
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 from .const import ACTIVE_UPDATE_RATE, DEFAULT_TIMEOUT, SENSE_TIMEOUT_EXCEPTIONS
 from .const import DOMAIN  # pylint:disable=unused-import; pylint:disable=unused-import

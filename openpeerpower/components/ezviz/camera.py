@@ -10,7 +10,7 @@ import voluptuous as vol
 
 from openpeerpower.components.camera import PLATFORM_SCHEMA, SUPPORT_STREAM, Camera
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.helpers import config_validation as cv
+from openpeerpower.helpers import config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -54,10 +54,10 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _LOGGER.error(exp)
         return
 
-    # now, let's build the OPP devices
+    # now, let's build the HASS devices
     camera_entities = []
 
-    # Add the cameras as devices in OPP
+    # Add the cameras as devices in HASS
     for camera in cameras:
 
         camera_username = DEFAULT_CAMERA_USERNAME
@@ -90,12 +90,12 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
         camera["ezviz_camera"] = EzvizCamera(ezviz_client, camera_serial)
 
-        camera_entities.append(OppEzvizCamera(**camera))
+        camera_entities.append(HassEzvizCamera(**camera))
 
     add_entities(camera_entities)
 
 
-class OppEzvizCamera(Camera):
+class HassEzvizCamera(Camera):
     """An implementation of a Foscam IP camera."""
 
     def __init__(self, **data):
@@ -145,7 +145,7 @@ class OppEzvizCamera(Camera):
         self._device_sub_category = data["device_sub_category"]
         self._local_rtsp_port = data["local_rtsp_port"]
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to ffmpeg and add camera to list."""
         self._ffmpeg = self.opp.data[DATA_FFMPEG]
 

@@ -1,7 +1,7 @@
 {
   "domain": "elv",
   "name": "ELV PCA",
-  "documentation": "https://www.openpeerpower.io/integrations/pca",
+  "documentation": "https://www.open-peer-power.io/integrations/pca",
   "codeowners": ["@majuss"],
   "requirements": ["pypca==0.0.7"]
 }

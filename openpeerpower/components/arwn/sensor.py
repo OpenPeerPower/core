@@ -83,9 +83,9 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         if not sensors:
             return
 
-        store = opp.data.get(DATA_ARWN)
+        store =.opp.data.get(DATA_ARWN)
         if store is None:
-            store = opp.data[DATA_ARWN] = {}
+            store =.opp.data[DATA_ARWN] = {}
 
         if isinstance(sensors, ArwnSensor):
             sensors = (sensors,)
@@ -95,7 +95,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
         for sensor in sensors:
             if sensor.name not in store:
-                sensor.opp = opp
+                sensor.opp =.opp
                 sensor.set_event(event)
                 store[sensor.name] = sensor
                 _LOGGER.debug(
@@ -133,7 +133,7 @@ class ArwnSensor(Entity):
         """Update the sensor with the most recent event."""
         self.event = {}
         self.event.update(event)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def state(self):

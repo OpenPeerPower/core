@@ -1,4 +1,4 @@
-"""Websocekt API handlers for the oppio integration."""
+"""Websocekt API handlers for the opp. integration."""
 import logging
 
 import voluptuous as vol
@@ -32,10 +32,10 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 @callback
-def async_load_websocket_api.opp: OpenPeerPower):
+def async_load_websocket_api.opp.OpenPeerPower):
     """Set up the websocket API."""
-    websocket_api.async_register_command.opp, websocket_supervisor_event)
-    websocket_api.async_register_command.opp, websocket_supervisor_api)
+    websocket_api.async_register_command.opp.websocket_supervisor_event)
+    websocket_api.async_register_command.opp.websocket_supervisor_api)
 
 
 @websocket_api.async_response
@@ -46,10 +46,10 @@ def async_load_websocket_api.opp: OpenPeerPower):
     }
 )
 async def websocket_supervisor_event(
-   .opp: OpenPeerPower, connection: ActiveConnection, msg: dict
+   .opp.OpenPeerPower, connection: ActiveConnection, msg: dict
 ):
     """Publish events from the Supervisor."""
-   .opp.bus.async_fire(EVENT_SUPERVISOR_EVENT, msg[ATTR_DATA])
+   .opp.us.async_fire(EVENT_SUPERVISOR_EVENT, msg[ATTR_DATA])
     connection.send_result(msg[WS_ID])
 
 
@@ -65,10 +65,10 @@ async def websocket_supervisor_event(
     }
 )
 async def websocket_supervisor_api(
-   .opp: OpenPeerPower, connection: ActiveConnection, msg: dict
+   .opp.OpenPeerPower, connection: ActiveConnection, msg: dict
 ):
     """Websocket handler to call Supervisor API."""
-    supervisor: OppIO = opp.data[DOMAIN]
+    supervisor: OppIO = opp.ata[DOMAIN]
     result = False
     try:
         result = await supervisor.send_command(
@@ -77,7 +77,7 @@ async def websocket_supervisor_api(
             timeout=msg.get(ATTR_TIMEOUT, 10),
             payload=msg.get(ATTR_DATA, {}),
         )
-    except.opp.components.oppio.OppioAPIError as err:
+    except.opp.omponents.opp..OppioAPIError as err:
         _LOGGER.error("Failed to to call %s - %s", msg[ATTR_ENDPOINT], err)
         connection.send_error(
             msg[WS_ID], code=websocket_api.ERR_UNKNOWN_ERROR, message=str(err)

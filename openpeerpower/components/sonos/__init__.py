@@ -4,7 +4,7 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.components.media_player import DOMAIN as MP_DOMAIN
 from openpeerpower.const import CONF_HOSTS
-from openpeerpowerr.helpers import config_validation as cv
+from openpeerpower.helpers import config_validation as cv
 
 from .const import DOMAIN
 

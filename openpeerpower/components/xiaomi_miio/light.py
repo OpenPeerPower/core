@@ -130,7 +130,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     entities = []
 
     if config_entry.data[CONF_FLOW_TYPE] == CONF_GATEWAY:
-        gateway = opp.data[DOMAIN][config_entry.entry_id][CONF_GATEWAY]
+        gateway =.opp.data[DOMAIN][config_entry.entry_id][CONF_GATEWAY]
         # Gateway light
         if gateway.model not in [
             GATEWAY_MODEL_AC_V1,
@@ -162,7 +162,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if model is None:
         try:
             miio_device = Device(host, token)
-            device_info = await opp..async_add_executor_job(miio_device.info)
+            device_info = await.opp.async_add_executor_job(miio_device.info)
             model = device_info.model
             unique_id = f"{model}-{device_info.mac_address}"
             _LOGGER.info(
@@ -222,7 +222,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     async_add_entities(devices, update_before_add=True)
 
-    async def async_service_op.dler(service):
+    async def async_service_handler(service):
         """Map services to methods on Xiaomi Philips Lights."""
         method = SERVICE_TO_METHOD.get(service.service)
         params = {
@@ -236,14 +236,14 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 if dev.entity_id in entity_ids
             ]
         else:
-            target_devices = opp.data[DATA_KEY].values()
+            target_devices =.opp.data[DATA_KEY].values()
 
         update_tasks = []
         for target_device in target_devices:
             if not hasattr(target_device, method["method"]):
                 continue
             await getattr(target_device, method["method"])(**params)
-            update_tasks.append(target_device.async_update_op.state(True))
+            update_tasks.append(target_device.async_update_ha_state(True))
 
         if update_tasks:
             await asyncio.wait(update_tasks)
@@ -253,7 +253,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             "schema", XIAOMI_MIIO_SERVICE_SCHEMA
         )
        .opp.services.async_register(
-            DOMAIN, xiaomi_miio_service, async_service_op.dler, schema=schema
+            DOMAIN, xiaomi_miio_service, async_service_handler, schema=schema
         )
 
 
@@ -1043,12 +1043,12 @@ class XiaomiGatewayLight(LightEntity):
 
         self._gateway.light.set_rgb(brightness_pct, rgb)
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the light off."""
         self._gateway.light.set_rgb(0, self._rgb)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     async def async_update(self):
         """Fetch state from the device."""

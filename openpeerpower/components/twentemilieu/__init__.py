@@ -32,7 +32,7 @@ async def _update_twentemilieu(
 ) -> None:
     """Update Twente Milieu."""
     if unique_id is not None:
-        twentemilieu = opp.data[DOMAIN].get(unique_id)
+        twentemilieu =.opp.data[DOMAIN].get(unique_id)
         if twentemilieu is not None:
             await twentemilieu.update()
             async_dispatcher_send.opp, DATA_UPDATE, unique_id)
@@ -87,7 +87,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload Twente Milieu config entry."""
-    await opp..config_entries.async_forward_entry_unload(entry, "sensor")
+    await.opp.config_entries.async_forward_entry_unload(entry, "sensor")
 
     del.opp.data[DOMAIN][entry.data[CONF_ID]]
 

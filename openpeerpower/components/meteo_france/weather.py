@@ -14,12 +14,12 @@ from openpeerpower.components.weather import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_MODE, TEMP_CELSIUS
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
 )
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.util import dt as dt_util
 
 from .const import (
     ATTRIBUTION,
@@ -47,7 +47,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the Meteo-France weather platform."""
-    coordinator = opp.data[DOMAIN][entry.entry_id][COORDINATOR_FORECAST]
+    coordinator =.opp.data[DOMAIN][entry.entry_id][COORDINATOR_FORECAST]
 
     async_add_entities(
         [

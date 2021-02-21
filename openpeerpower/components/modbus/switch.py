@@ -86,11 +86,11 @@ async def async_setup_platform(
     switches = []
     if CONF_COILS in config:
         for coil in config[CONF_COILS]:
-            hub: ModbusHub = opp.data[MODBUS_DOMAIN][coil[CONF_HUB]]
+            hub: ModbusHub =.opp.data[MODBUS_DOMAIN][coil[CONF_HUB]]
             switches.append(ModbusCoilSwitch(hub, coil))
     if CONF_REGISTERS in config:
         for register in config[CONF_REGISTERS]:
-            hub: ModbusHub = opp.data[MODBUS_DOMAIN][register[CONF_HUB]]
+            hub: ModbusHub =.opp.data[MODBUS_DOMAIN][register[CONF_HUB]]
             switches.append(ModbusRegisterSwitch(hub, register))
 
     async_add_entities(switches)
@@ -107,7 +107,7 @@ class ModbusBaseSwitch(ToggleEntity, RestoreEntity, ABC):
         self._is_on = None
         self._available = True
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
         state = await self.async_get_last_state()
         if not state:

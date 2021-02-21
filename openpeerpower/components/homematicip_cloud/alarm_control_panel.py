@@ -31,7 +31,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the HomematicIP alrm control panel from a config entry."""
-    hap = opp.data[HMIPC_DOMAIN][config_entry.unique_id]
+    hap =.opp.data[HMIPC_DOMAIN][config_entry.unique_id]
     async_add_entities([HomematicipAlarmControlPanelEntity(hap)])
 
 
@@ -40,7 +40,7 @@ class HomematicipAlarmControlPanelEntity(AlarmControlPanelEntity):
 
     def __init__(self, hap: HomematicipHAP) -> None:
         """Initialize the alarm control panel."""
-        self._home = op..home
+        self._home = hap.home
         _LOGGER.info("Setting up %s", self.name)
 
     @property
@@ -92,7 +92,7 @@ class HomematicipAlarmControlPanelEntity(AlarmControlPanelEntity):
         """Send arm away command."""
         await self._home.set_security_zones_activation(True, True)
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register callbacks."""
         self._home.on_update(self._async_device_changed)
 
@@ -102,7 +102,7 @@ class HomematicipAlarmControlPanelEntity(AlarmControlPanelEntity):
         # Don't update disabled entities
         if self.enabled:
             _LOGGER.debug("Event %s (%s)", self.name, CONST_ALARM_CONTROL_PANEL_NAME)
-            self.async_write_op.state()
+            self.async_write_ha_state()
         else:
             _LOGGER.debug(
                 "Device Changed Event for %s (Alarm Control Panel) not fired. Entity is disabled",

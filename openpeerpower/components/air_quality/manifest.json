@@ -1,6 +1,6 @@
 {
   "domain": "air_quality",
   "name": "Air Quality",
-  "documentation": "https://www.openpeerpower.io/integrations/air_quality",
+  "documentation": "https://www.open-peer-power.io/integrations/air_quality",
   "codeowners": []
 }

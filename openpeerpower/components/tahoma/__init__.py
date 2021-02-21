@@ -7,8 +7,8 @@ from tahoma_api import Action, TahomaApi
 import voluptuous as vol
 
 from openpeerpower.const import CONF_EXCLUDE, CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.helpers import config_validation as cv, discovery
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers import config_validation as cv, discovery
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 

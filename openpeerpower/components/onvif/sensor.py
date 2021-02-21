@@ -9,7 +9,7 @@ from .const import DOMAIN
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up a ONVIF binary sensor."""
-    device = opp.data[DOMAIN][config_entry.unique_id]
+    device =.opp.data[DOMAIN][config_entry.unique_id]
 
     entities = {
         event.uid: ONVIFSensor(event.uid, device)
@@ -80,8 +80,8 @@ class ONVIFSensor(ONVIFBaseEntity):
         """
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Connect to dispatcher listening for entity data notifications."""
         self.async_on_remove(
-            self.device.events.async_add_listener(self.async_write_op.state)
+            self.device.events.async_add_listener(self.async_write_ha_state)
         )

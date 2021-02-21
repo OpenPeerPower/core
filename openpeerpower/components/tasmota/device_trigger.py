@@ -8,17 +8,17 @@ import voluptuous as vol
 
 from openpeerpower.components.automation import AutomationActionType
 from openpeerpower.components.device_automation import TRIGGER_BASE_SCHEMA
-from openpeerpower.components.openpeerpowerr.triggers import event as event_trigger
+from openpeerpower.components.openpeerpower.triggers import event as event_trigger
 from openpeerpower.const import CONF_DEVICE_ID, CONF_DOMAIN, CONF_PLATFORM, CONF_TYPE
-from openpeerpowerr.core import CALLBACK_TYPE, OpenPeerPower, callback
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.device_registry import CONNECTION_NETWORK_MAC
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import CALLBACK_TYPE, OpenPeerPower, callback
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from .const import DOMAIN, TASMOTA_EVENT
-from .discovery import TASMOTA_DISCOVERY_ENTITY_UPDATED, clear_discovery_op.h
+from .discovery import TASMOTA_DISCOVERY_ENTITY_UPDATED, clear_discovery_hash
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -79,7 +79,7 @@ class Trigger:
     """Device trigger settings."""
 
     device_id: str = attr.ib()
-    discovery_op.h: dict = attr.ib()
+    discovery_hash: dict = attr.ib()
    .opp: OpenPeerPowerType = attr.ib()
     remove_update_signal: Callable[[], None] = attr.ib()
     subtype: str = attr.ib()
@@ -152,7 +152,7 @@ class Trigger:
         self.subtype = tasmota_trigger_cfg.subtype
 
 
-async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_op.h):
+async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_hash):
     """Set up a discovered Tasmota device trigger."""
     discovery_id = tasmota_trigger.cfg.trigger_id
     remove_update_signal = None
@@ -163,27 +163,27 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_op.h
     async def discovery_update(trigger_config):
         """Handle discovery update."""
         _LOGGER.debug(
-            "Got update for trigger with hash: %s '%s'", discovery_op.h, trigger_config
+            "Got update for trigger with hash: %s '%s'", discovery_hash, trigger_config
         )
         if not trigger_config.is_active:
             # Empty trigger_config: Remove trigger
-            _LOGGER.debug("Removing trigger: %s", discovery_op.h)
+            _LOGGER.debug("Removing trigger: %s", discovery_hash)
             if discovery_id in.opp.data[DEVICE_TRIGGERS]:
-                device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
+                device_trigger =.opp.data[DEVICE_TRIGGERS][discovery_id]
                 await device_trigger.tasmota_trigger.unsubscribe_topics()
                 device_trigger.detach_trigger()
-                clear_discovery_op.h.opp, discovery_op.h)
+                clear_discovery_hash.opp, discovery_hash)
                 remove_update_signal()
             return
 
-        device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
+        device_trigger =.opp.data[DEVICE_TRIGGERS][discovery_id]
         if device_trigger.tasmota_trigger.config_same(trigger_config):
             # Unchanged payload: Ignore to avoid unnecessary unsubscribe / subscribe
-            _LOGGER.debug("Ignoring unchanged update for: %s", discovery_op.h)
+            _LOGGER.debug("Ignoring unchanged update for: %s", discovery_hash)
             return
 
         # Non-empty, changed trigger_config: Update trigger
-        _LOGGER.debug("Updating trigger: %s", discovery_op.h)
+        _LOGGER.debug("Updating trigger: %s", discovery_hash)
         device_trigger.tasmota_trigger.config_update(trigger_config)
         await device_trigger.update_tasmota_trigger(
             trigger_config, remove_update_signal
@@ -192,10 +192,10 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_op.h
         return
 
     remove_update_signal = async_dispatcher_connect(
-       .opp, TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_op.h), discovery_update
+       .opp, TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_hash), discovery_update
     )
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get_device(
         set(),
         {(CONNECTION_NETWORK_MAC, tasmota_trigger.cfg.mac)},
@@ -210,7 +210,7 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_op.h
         device_trigger = Trigger(
            .opp.opp,
             device_id=device.id,
-            discovery_op.h=discovery_op.h,
+            discovery_hash=discovery_hash,
             subtype=tasmota_trigger.cfg.subtype,
             tasmota_trigger=tasmota_trigger,
             type=tasmota_trigger.cfg.type,
@@ -219,7 +219,7 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_op.h
        .opp.data[DEVICE_TRIGGERS][discovery_id] = device_trigger
     else:
         # This Tasmota trigger is wanted by device trigger(s), set them up
-        device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
+        device_trigger =.opp.data[DEVICE_TRIGGERS][discovery_id]
         await device_trigger.set_tasmota_trigger(tasmota_trigger, remove_update_signal)
     await device_trigger.arm_tasmota_trigger()
 
@@ -228,13 +228,13 @@ async def async_remove_triggers.opp: OpenPeerPower, device_id: str):
     """Cleanup any device triggers for a Tasmota device."""
     triggers = await async_get_triggers.opp, device_id)
     for trig in triggers:
-        device_trigger = opp.data[DEVICE_TRIGGERS].pop(trig[CONF_DISCOVERY_ID])
+        device_trigger =.opp.data[DEVICE_TRIGGERS].pop(trig[CONF_DISCOVERY_ID])
         if device_trigger:
-            discovery_op.h = device_trigger.discovery_op.h
+            discovery_hash = device_trigger.discovery_hash
 
             await device_trigger.tasmota_trigger.unsubscribe_topics()
             device_trigger.detach_trigger()
-            clear_discovery_op.h.opp, discovery_op.h)
+            clear_discovery_hash.opp, discovery_hash)
             device_trigger.remove_update_signal()
 
 
@@ -280,12 +280,12 @@ async def async_attach_trigger(
        .opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
            .opp.opp,
             device_id=device_id,
-            discovery_op.h=None,
+            discovery_hash=None,
             remove_update_signal=None,
             type=config[CONF_TYPE],
             subtype=config[CONF_SUBTYPE],
             tasmota_trigger=None,
         )
-    return await opp..data[DEVICE_TRIGGERS][discovery_id].add_trigger(
+    return await.opp.data[DEVICE_TRIGGERS][discovery_id].add_trigger(
         action, automation_info
     )

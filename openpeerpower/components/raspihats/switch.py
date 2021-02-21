@@ -50,15 +50,15 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the raspihats switch devices."""
-    I2CHatSwitch.I2C_HATS_MANAGER = opp.data[I2C_HATS_MANAGER]
+    I2CHatSwitch.I2C_HATS_MANAGER =.opp.data[I2C_HATS_MANAGER]
     switches = []
-    i2c_op._configs = config.get(CONF_I2C_HATS)
-    for i2c_op._config in i2c_op._configs:
-        board = i2c_op._config[CONF_BOARD]
-        address = i2c_op._config[CONF_ADDRESS]
+    i2c_hat_configs = config.get(CONF_I2C_HATS)
+    for i2c_hat_config in i2c_hat_configs:
+        board = i2c_hat_config[CONF_BOARD]
+        address = i2c_hat_config[CONF_ADDRESS]
         try:
             I2CHatSwitch.I2C_HATS_MANAGER.register_board(board, address)
-            for channel_config in i2c_op._config[CONF_CHANNELS]:
+            for channel_config in i2c_hat_config[CONF_CHANNELS]:
                 switches.append(
                     I2CHatSwitch(
                         board,
@@ -97,7 +97,7 @@ class I2CHatSwitch(ToggleEntity):
 
         def online_callback():
             """Call fired when board is online."""
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
         self.I2C_HATS_MANAGER.register_online_callback(
             self._address, self._channel, online_callback
@@ -135,7 +135,7 @@ class I2CHatSwitch(ToggleEntity):
         try:
             state = self._invert_logic is False
             self.I2C_HATS_MANAGER.write_dq(self._address, self._channel, state)
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
         except I2CHatsException as ex:
             _LOGGER.error(self._log_message(f"Turn ON failed, {ex!s}"))
 
@@ -144,6 +144,6 @@ class I2CHatSwitch(ToggleEntity):
         try:
             state = self._invert_logic is not False
             self.I2C_HATS_MANAGER.write_dq(self._address, self._channel, state)
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
         except I2CHatsException as ex:
             _LOGGER.error(self._log_message(f"Turn OFF failed, {ex!s}"))

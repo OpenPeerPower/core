@@ -4,7 +4,7 @@ import logging
 import voluptuous as vol
 
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -65,7 +65,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-@bind_opp
+@bind.opp
 async def async_register_panel(
    .opp,
     # The url to serve the panel

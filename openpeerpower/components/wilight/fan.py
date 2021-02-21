@@ -35,7 +35,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up WiLight lights from a config entry."""
-    parent = opp.data[DOMAIN][entry.entry_id]
+    parent =.opp.data[DOMAIN][entry.entry_id]
 
     # Handle a discovered WiLight device.
     entities = []
@@ -86,6 +86,11 @@ class WiLightFan(WiLightDevice, FanEntity):
         if wl_speed is None:
             return None
         return ordered_list_item_to_percentage(ORDERED_NAMED_FAN_SPEEDS, wl_speed)
+
+    @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        return len(ORDERED_NAMED_FAN_SPEEDS)
 
     @property
     def current_direction(self) -> str:

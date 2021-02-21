@@ -2,7 +2,7 @@
   "domain": "ambiclimate",
   "name": "Ambiclimate",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/ambiclimate",
+  "documentation": "https://www.open-peer-power.io/integrations/ambiclimate",
   "requirements": ["ambiclimate==0.2.1"],
   "dependencies": ["http"],
   "codeowners": ["@danielhiversen"]

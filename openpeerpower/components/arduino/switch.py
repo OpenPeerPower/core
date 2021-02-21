@@ -27,7 +27,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Arduino platform."""
-    board = opp.data[DOMAIN]
+    board =.opp.data[DOMAIN]
 
     pins = config[CONF_PINS]
 
@@ -50,14 +50,14 @@ class ArduinoSwitch(SwitchEntity):
         self._state = options[CONF_INITIAL]
 
         if options[CONF_NEGATE]:
-            self.turn_on_op.dler = board.set_digital_out_low
-            self.turn_off_op.dler = board.set_digital_out_high
+            self.turn_on_handler = board.set_digital_out_low
+            self.turn_off_handler = board.set_digital_out_high
         else:
-            self.turn_on_op.dler = board.set_digital_out_high
-            self.turn_off_op.dler = board.set_digital_out_low
+            self.turn_on_handler = board.set_digital_out_high
+            self.turn_off_handler = board.set_digital_out_low
 
         board.set_mode(self._pin, self.direction, self.pin_type)
-        (self.turn_on_op.dler if self._state else self.turn_off_op.dler)(pin)
+        (self.turn_on_handler if self._state else self.turn_off_handler)(pin)
 
     @property
     def name(self):
@@ -72,9 +72,9 @@ class ArduinoSwitch(SwitchEntity):
     def turn_on(self, **kwargs):
         """Turn the pin to high/on."""
         self._state = True
-        self.turn_on_op.dler(self._pin)
+        self.turn_on_handler(self._pin)
 
     def turn_off(self, **kwargs):
         """Turn the pin to low/off."""
         self._state = False
-        self.turn_off_op.dler(self._pin)
+        self.turn_off_handler(self._pin)

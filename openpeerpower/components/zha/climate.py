@@ -2,7 +2,7 @@
 Climate on Zigbee Home Automation networks.
 
 For more details on this platform, please refer to the documentation
-at https://openpeerpower.io/components/zha.climate/
+at https://open-peer-power.io/components/zha.climate/
 """
 from datetime import datetime, timedelta
 import enum
@@ -147,7 +147,7 @@ ZCL_TEMP = 100
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation sensor from config entry."""
-    entities_to_create = opp.data[DATA_ZHA][DOMAIN]
+    entities_to_create =.opp.data[DATA_ZHA][DOMAIN]
     unsub = async_dispatcher_connect(
        .opp,
         SIGNAL_ADD_ENTITIES,
@@ -387,9 +387,9 @@ class Thermostat(ZhaEntity, ClimateEntity):
             return self.DEFAULT_MIN_TEMP
         return round(min(temps) / ZCL_TEMP, 1)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_accept_signal(
             self._thrm, SIGNAL_ATTR_UPDATED, self.async_attribute_updated
         )
@@ -408,7 +408,7 @@ class Thermostat(ZhaEntity, ClimateEntity):
                 self._preset = PRESET_NONE
 
         self.debug("Attribute '%s' = %s update", record.attr_name, record.value)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_fan_mode(self, fan_mode: str) -> None:
         """Set fan mode."""
@@ -434,7 +434,7 @@ class Thermostat(ZhaEntity, ClimateEntity):
             return
 
         if await self._thrm.async_set_operation_mode(HVAC_MODE_2_SYSTEM[hvac_mode]):
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set new preset mode."""
@@ -443,16 +443,16 @@ class Thermostat(ZhaEntity, ClimateEntity):
             return
 
         if self.preset_mode not in (preset_mode, PRESET_NONE):
-            if not await self.async_preset_op.dler(self.preset_mode, enable=False):
+            if not await self.async_preset_handler(self.preset_mode, enable=False):
                 self.debug("Couldn't turn off '%s' preset", self.preset_mode)
                 return
 
         if preset_mode != PRESET_NONE:
-            if not await self.async_preset_op.dler(preset_mode, enable=True):
+            if not await self.async_preset_handler(preset_mode, enable=True):
                 self.debug("Couldn't turn on '%s' preset", preset_mode)
                 return
         self._preset = preset_mode
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_temperature(self, **kwargs):
         """Set new target temperature."""
@@ -497,12 +497,12 @@ class Thermostat(ZhaEntity, ClimateEntity):
             return
 
         if success:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
-    async def async_preset_op.dler(self, preset: str, enable: bool = False) -> bool:
+    async def async_preset_handler(self, preset: str, enable: bool = False) -> bool:
         """Set the preset mode via handler."""
 
-        handler = getattr(self, f"async_preset_op.dler_{preset}")
+        handler = getattr(self, f"async_preset_handler_{preset}")
         return await handler(enable)
 
 
@@ -538,15 +538,15 @@ class SinopeTechnologiesThermostat(Thermostat):
             )
         )
 
-    async def async_added_to_opp(self):
-        """Run when about to be added to Opp."""
-        await super().async_added_to_opp()
+    async def async_added_to.opp(self):
+        """Run when about to be added to Hass."""
+        await super().async_added_to.opp()
         async_track_time_interval(
             self.opp, self._async_update_time, self.update_time_interval
         )
         self._async_update_time()
 
-    async def async_preset_op.dler_away(self, is_away: bool = False) -> bool:
+    async def async_preset_handler_away(self, is_away: bool = False) -> bool:
         """Set occupancy."""
         mfg_code = self._zha_device.manufacturer_code
         res = await self._thrm.write_attributes(

@@ -7,7 +7,7 @@ import yarl
 from openpeerpower.components import http
 from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import OpenPeerPowerError
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util.network import is_ip_address, is_loopback, normalize_url
 
 TYPE_URL_INTERNAL = "internal_url"
@@ -18,7 +18,7 @@ class NoURLAvailableError(OpenPeerPowerError):
     """An URL to the Open Peer Power instance is not available."""
 
 
-@bind_opp
+@bind.opp
 def is_internal_request.opp: OpenPeerPower) -> bool:
     """Test if the current request is internal."""
     try:
@@ -28,7 +28,7 @@ def is_internal_request.opp: OpenPeerPower) -> bool:
         return False
 
 
-@bind_opp
+@bind.opp
 def get_url(
    .opp: OpenPeerPower,
     *,
@@ -93,8 +93,8 @@ def get_url(
         )
 
         known_hostnames = ["localhost"]
-        if.opp.components.oppio.is_oppio():
-            host_info = opp.components.oppio.get_host_info()
+        if.opp.components.oppio.is.oppio():
+            host_info =.opp.components.oppio.get_host_info()
             known_hostnames.extend(
                 [host_info["hostname"], f"{host_info['hostname']}.local"]
             )
@@ -125,7 +125,7 @@ def _get_request_host() -> Optional[str]:
     return yarl.URL(request.url).host
 
 
-@bind_opp
+@bind.opp
 def _get_internal_url(
    .opp: OpenPeerPower,
     *,
@@ -162,7 +162,7 @@ def _get_internal_url(
     raise NoURLAvailableError
 
 
-@bind_opp
+@bind.opp
 def _get_external_url(
    .opp: OpenPeerPower,
     *,
@@ -207,7 +207,7 @@ def _get_external_url(
     raise NoURLAvailableError
 
 
-@bind_opp
+@bind.opp
 def _get_cloud_url.opp: OpenPeerPower, require_current_request: bool = False) -> str:
     """Get external Open Peer Power Cloud URL of this instance."""
     if "cloud" in.opp.config.components:

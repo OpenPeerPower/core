@@ -15,7 +15,7 @@ CACHE_HEADERS = {hdrs.CACHE_CONTROL: f"public, max-age={CACHE_TIME}"}
 class CachingStaticResource(StaticResource):
     """Static Resource handler that will add cache headers."""
 
-    async def _op.dle(self, request):
+    async def _handle(self, request):
         rel_url = request.match_info["filename"]
         try:
             filename = Path(rel_url)
@@ -37,7 +37,7 @@ class CachingStaticResource(StaticResource):
 
         # on opening a dir, load its contents if allowed
         if filepath.is_dir():
-            return await super()._op.dle(request)
+            return await super()._handle(request)
         if filepath.is_file():
             return FileResponse(
                 filepath,

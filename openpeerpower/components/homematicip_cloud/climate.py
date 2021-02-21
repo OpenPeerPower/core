@@ -44,7 +44,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the HomematicIP climate from a config entry."""
-    hap = opp.data[HMIPC_DOMAIN][config_entry.unique_id]
+    hap =.opp.data[HMIPC_DOMAIN][config_entry.unique_id]
     entities = []
     for device in hap.home.groups:
         if isinstance(device, AsyncHeatingGroup):
@@ -111,7 +111,7 @@ class HomematicipHeatingGroup(HomematicipGenericEntity, ClimateEntity):
     @property
     def hvac_mode(self) -> str:
         """Return hvac operation ie."""
-        if self._disabled_by_cooling_mode and not self._op._switch:
+        if self._disabled_by_cooling_mode and not self._has_switch:
             return HVAC_MODE_OFF
         if self._device.boostMode:
             return HVAC_MODE_HEAT
@@ -123,7 +123,7 @@ class HomematicipHeatingGroup(HomematicipGenericEntity, ClimateEntity):
     @property
     def hvac_modes(self) -> List[str]:
         """Return the list of available hvac operation modes."""
-        if self._disabled_by_cooling_mode and not self._op._switch:
+        if self._disabled_by_cooling_mode and not self._has_switch:
             return [HVAC_MODE_OFF]
 
         return (
@@ -141,7 +141,7 @@ class HomematicipHeatingGroup(HomematicipGenericEntity, ClimateEntity):
         """
         if (
             self._device.floorHeatingMode == "RADIATOR"
-            and self._op._radiator_thermostat
+            and self._has_radiator_thermostat
             and self._heat_mode_enabled
         ):
             return (
@@ -182,8 +182,8 @@ class HomematicipHeatingGroup(HomematicipGenericEntity, ClimateEntity):
 
         presets = []
         if (
-            self._heat_mode_enabled and self._op._radiator_thermostat
-        ) or self._op._switch:
+            self._heat_mode_enabled and self._has_radiator_thermostat
+        ) or self._has_switch:
             if not profile_names:
                 presets.append(PRESET_NONE)
             presets.append(PRESET_BOOST)
@@ -306,7 +306,7 @@ class HomematicipHeatingGroup(HomematicipGenericEntity, ClimateEntity):
         return HEATING_PROFILES if self._heat_mode_enabled else COOLING_PROFILES
 
     @property
-    def _op._switch(self) -> bool:
+    def _has_switch(self) -> bool:
         """Return, if a switch is in the hmip heating group."""
         for device in self._device.devices:
             if isinstance(device, Switch):
@@ -315,7 +315,7 @@ class HomematicipHeatingGroup(HomematicipGenericEntity, ClimateEntity):
         return False
 
     @property
-    def _op._radiator_thermostat(self) -> bool:
+    def _has_radiator_thermostat(self) -> bool:
         """Return, if a radiator thermostat is in the hmip heating group."""
         return bool(self._first_radiator_thermostat)
 

@@ -7,7 +7,7 @@ import async_timeout
 from kaiterra_async_client import AQIStandard, KaiterraAPIClient, Units
 
 from openpeerpower.const import CONF_API_KEY, CONF_DEVICE_ID, CONF_DEVICES, CONF_TYPE
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .const import (
     AQI_LEVEL,
@@ -33,7 +33,7 @@ class KaiterraApiData:
         devices = config[CONF_DEVICES]
         units = config[CONF_PREFERRED_UNITS]
 
-        self._opp = opp
+        self..opp =.opp
         self._api = KaiterraAPIClient(
             session,
             api_key=api_key,
@@ -58,7 +58,7 @@ class KaiterraApiData:
         except (ClientResponseError, asyncio.TimeoutError):
             _LOGGER.debug("Couldn't fetch data from Kaiterra API")
             self.data = {}
-            async_dispatcher_send(self._opp, DISPATCHER_KAITERRA)
+            async_dispatcher_send(self..opp, DISPATCHER_KAITERRA)
             return
 
         _LOGGER.debug("New data retrieved: %s", data)
@@ -102,4 +102,4 @@ class KaiterraApiData:
         except IndexError as err:
             _LOGGER.error("Parsing error %s", err)
 
-        async_dispatcher_send(self._opp, DISPATCHER_KAITERRA)
+        async_dispatcher_send(self..opp, DISPATCHER_KAITERRA)

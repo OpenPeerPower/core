@@ -2,7 +2,7 @@
   "domain": "songpal",
   "name": "Sony Songpal",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/songpal",
+  "documentation": "https://www.open-peer-power.io/integrations/songpal",
   "requirements": ["python-songpal==0.12"],
   "codeowners": ["@rytilahti", "@shenxn"],
   "ssdp": [

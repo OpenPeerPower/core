@@ -1,7 +1,7 @@
 {
   "domain": "mychevy",
   "name": "myChevrolet",
-  "documentation": "https://www.openpeerpower.io/integrations/mychevy",
+  "documentation": "https://www.open-peer-power.io/integrations/mychevy",
   "requirements": ["mychevy==2.1.1"],
   "codeowners": []
 }

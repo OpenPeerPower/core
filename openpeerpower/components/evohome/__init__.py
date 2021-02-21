@@ -21,18 +21,18 @@ from openpeerpower.const import (
     HTTP_TOO_MANY_REQUESTS,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.discovery import async_load_platform
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.core import callback
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.discovery import async_load_platform
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.service import verify_domain_control
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.service import verify_domain_control
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+import openpeerpower.util.dt as dt_util
 
 from .const import DOMAIN, GWS, STORAGE_KEY, STORAGE_VER, TCS, UTC_OFFSET
 
@@ -132,7 +132,7 @@ def convert_dict(dictionary: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def _op.dle_exception(err) -> bool:
+def _handle_exception(err) -> bool:
     """Return False if the exception can't be ignored."""
     try:
         raise err
@@ -194,7 +194,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
         user_data = tokens.pop(USER_DATA, None)
         return (tokens, user_data)
 
-    store = opp.helpers.storage.Store(STORAGE_VER, STORAGE_KEY)
+    store =.opp.helpers.storage.Store(STORAGE_VER, STORAGE_KEY)
     tokens, user_data = await load_auth_tokens(store)
 
     client_v2 = evohomeasync2.EvohomeClient(
@@ -207,7 +207,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
     try:
         await client_v2.login()
     except (aiohttp.ClientError, evohomeasync2.AuthenticationError) as err:
-        _op.dle_exception(err)
+        _handle_exception(err)
         return False
     finally:
         config[DOMAIN][CONF_PASSWORD] = "REDACTED"
@@ -292,7 +292,7 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
         """Set the zone override (setpoint)."""
         entity_id = call.data[ATTR_ENTITY_ID]
 
-        registry = await opp..helpers.entity_registry.async_get_registry()
+        registry = await.opp.helpers.entity_registry.async_get_registry()
         registry_entry = registry.async_get(entity_id)
 
         if registry_entry is None or registry_entry.platform != DOMAIN:
@@ -385,7 +385,7 @@ class EvoBroker:
 
     def __init__(self,.opp, client, client_v1, store, params) -> None:
         """Initialize the evohome client and its data structure."""
-        self.opp = opp
+        self.opp =.opp
         self.client = client
         self.client_v1 = client_v1
         self._store = store
@@ -424,7 +424,7 @@ class EvoBroker:
         try:
             result = await api_function
         except (aiohttp.ClientError, evohomeasync2.AuthenticationError) as err:
-            _op.dle_exception(err)
+            _handle_exception(err)
             return
 
         if update_state:  # wait a moment for system to quiesce before updating state
@@ -481,7 +481,7 @@ class EvoBroker:
         try:
             status = await self.client.locations[loc_idx].status()
         except (aiohttp.ClientError, evohomeasync2.AuthenticationError) as err:
-            _op.dle_exception(err)
+            _handle_exception(err)
         else:
             async_dispatcher_send(self.opp, DOMAIN)
 
@@ -523,7 +523,7 @@ class EvoDevice(Entity):
     async def async_refresh(self, payload: Optional[dict] = None) -> None:
         """Process any signals."""
         if payload is None:
-            self.async_schedule_update_op.state(force_refresh=True)
+            self.async_schedule_update_ha_state(force_refresh=True)
             return
         if payload["unique_id"] != self._unique_id:
             return
@@ -578,7 +578,7 @@ class EvoDevice(Entity):
         """Get the flag of supported features of the device."""
         return self._supported_features
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Run when entity about to be added to.opp."""
         async_dispatcher_connect(self.opp, DOMAIN, self.async_refresh)
 

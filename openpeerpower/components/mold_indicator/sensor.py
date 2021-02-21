@@ -15,10 +15,10 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_state_change_event
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_state_change_event
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -102,7 +102,7 @@ class MoldIndicator(Entity):
         self._indoor_hum = None
         self._crit_temp = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
 
         @callback
@@ -119,7 +119,7 @@ class MoldIndicator(Entity):
             )
 
             if self._update_sensor(entity, old_state, new_state):
-                self.async_schedule_update_op.state(True)
+                self.async_schedule_update_ha_state(True)
 
         @callback
         def mold_indicator_startup(event):
@@ -156,7 +156,7 @@ class MoldIndicator(Entity):
             )
 
             if schedule_update:
-                self.async_schedule_update_op.state(True)
+                self.async_schedule_update_ha_state(True)
 
         self.opp.bus.async_listen_once(
             EVENT_OPENPEERPOWER_START, mold_indicator_startup

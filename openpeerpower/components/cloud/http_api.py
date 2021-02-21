@@ -27,7 +27,7 @@ from openpeerpower.const import (
     HTTP_OK,
     HTTP_UNAUTHORIZED,
 )
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from .const import (
     DOMAIN,
@@ -94,7 +94,7 @@ _CLOUD_ERRORS = {
 
 async def async_setup.opp):
     """Initialize the HTTP API."""
-    async_register_command = opp.components.websocket_api.async_register_command
+    async_register_command =.opp.components.websocket_api.async_register_command
     async_register_command(WS_TYPE_STATUS, websocket_cloud_status, SCHEMA_WS_STATUS)
     async_register_command(
         WS_TYPE_SUBSCRIPTION, websocket_subscription, SCHEMA_WS_SUBSCRIPTION
@@ -143,11 +143,11 @@ async def async_setup.opp):
     )
 
 
-def _op.dle_cloud_errors(handler):
+def _handle_cloud_errors(handler):
     """Webview decorator to handle auth errors."""
 
     @wraps(handler)
-    async def error_op.dler(view, request, *args, **kwargs):
+    async def error_handler(view, request, *args, **kwargs):
         """Handle exceptions that raise from the wrapped request handler."""
         try:
             result = await handler(view, request, *args, **kwargs)
@@ -159,14 +159,14 @@ def _op.dle_cloud_errors(handler):
                 msg, status_code=status, message_code=err.__class__.__name__.lower()
             )
 
-    return error_op.dler
+    return error_handler
 
 
-def _ws_op.dle_cloud_errors(handler):
+def _ws_handle_cloud_errors(handler):
     """Websocket decorator to handle auth errors."""
 
     @wraps(handler)
-    async def error_op.dler.opp, connection, msg):
+    async def error_handler.opp, connection, msg):
         """Handle exceptions that raise from the wrapped handler."""
         try:
             return await handler.opp, connection, msg)
@@ -175,7 +175,7 @@ def _ws_op.dle_cloud_errors(handler):
             err_status, err_msg = _process_cloud_exception(err, msg["type"])
             connection.send_error(msg["id"], err_status, err_msg)
 
-    return error_op.dler
+    return error_handler
 
 
 def _process_cloud_exception(exc, where):
@@ -200,11 +200,11 @@ class GoogleActionsSyncView(OpenPeerPowerView):
     url = "/api/cloud/google_actions/sync"
     name = "api:cloud:google_actions/sync"
 
-    @_op.dle_cloud_errors
+    @_handle_cloud_errors
     async def post(self, request):
         """Trigger a Google Actions sync."""
-        opp = request.app["opp"]
-        cloud: Cloud = opp.data[DOMAIN]
+       .opp = request.app[.opp"]
+        cloud: Cloud =.opp.data[DOMAIN]
         gconf = await cloud.client.get_google_config()
         status = await gconf.async_sync_entities(gconf.agent_user_id)
         return self.json({}, status_code=status)
@@ -216,14 +216,14 @@ class CloudLoginView(OpenPeerPowerView):
     url = "/api/cloud/login"
     name = "api:cloud:login"
 
-    @_op.dle_cloud_errors
+    @_handle_cloud_errors
     @RequestDataValidator(
         vol.Schema({vol.Required("email"): str, vol.Required("password"): str})
     )
     async def post(self, request, data):
         """Handle login request."""
-        opp = request.app["opp"]
-        cloud = opp.data[DOMAIN]
+       .opp = request.app[.opp"]
+        cloud =.opp.data[DOMAIN]
         await cloud.login(data["email"], data["password"])
         return self.json({"success": True})
 
@@ -234,11 +234,11 @@ class CloudLogoutView(OpenPeerPowerView):
     url = "/api/cloud/logout"
     name = "api:cloud:logout"
 
-    @_op.dle_cloud_errors
+    @_handle_cloud_errors
     async def post(self, request):
         """Handle logout request."""
-        opp = request.app["opp"]
-        cloud = opp.data[DOMAIN]
+       .opp = request.app[.opp"]
+        cloud =.opp.data[DOMAIN]
 
         with async_timeout.timeout(REQUEST_TIMEOUT):
             await cloud.logout()
@@ -252,7 +252,7 @@ class CloudRegisterView(OpenPeerPowerView):
     url = "/api/cloud/register"
     name = "api:cloud:register"
 
-    @_op.dle_cloud_errors
+    @_handle_cloud_errors
     @RequestDataValidator(
         vol.Schema(
             {
@@ -263,8 +263,8 @@ class CloudRegisterView(OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Handle registration request."""
-        opp = request.app["opp"]
-        cloud = opp.data[DOMAIN]
+       .opp = request.app[.opp"]
+        cloud =.opp.data[DOMAIN]
 
         with async_timeout.timeout(REQUEST_TIMEOUT):
             await cloud.auth.async_register(data["email"], data["password"])
@@ -278,12 +278,12 @@ class CloudResendConfirmView(OpenPeerPowerView):
     url = "/api/cloud/resend_confirm"
     name = "api:cloud:resend_confirm"
 
-    @_op.dle_cloud_errors
+    @_handle_cloud_errors
     @RequestDataValidator(vol.Schema({vol.Required("email"): str}))
     async def post(self, request, data):
         """Handle resending confirm email code request."""
-        opp = request.app["opp"]
-        cloud = opp.data[DOMAIN]
+       .opp = request.app[.opp"]
+        cloud =.opp.data[DOMAIN]
 
         with async_timeout.timeout(REQUEST_TIMEOUT):
             await cloud.auth.async_resend_email_confirm(data["email"])
@@ -297,12 +297,12 @@ class CloudForgotPasswordView(OpenPeerPowerView):
     url = "/api/cloud/forgot_password"
     name = "api:cloud:forgot_password"
 
-    @_op.dle_cloud_errors
+    @_handle_cloud_errors
     @RequestDataValidator(vol.Schema({vol.Required("email"): str}))
     async def post(self, request, data):
         """Handle forgot password request."""
-        opp = request.app["opp"]
-        cloud = opp.data[DOMAIN]
+       .opp = request.app[.opp"]
+        cloud =.opp.data[DOMAIN]
 
         with async_timeout.timeout(REQUEST_TIMEOUT):
             await cloud.auth.async_forgot_password(data["email"])
@@ -316,7 +316,7 @@ def websocket_cloud_status.opp, connection, msg):
 
     Async friendly.
     """
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
     connection.send_message(
         websocket_api.result_message(msg["id"], _account_data(cloud))
     )
@@ -328,7 +328,7 @@ def _require_cloud_login(handler):
     @wraps(handler)
     def with_cloud_auth.opp, connection, msg):
         """Require to be logged into the cloud."""
-        cloud = opp.data[DOMAIN]
+        cloud =.opp.data[DOMAIN]
         if not cloud.is_logged_in:
             connection.send_message(
                 websocket_api.error_message(
@@ -347,7 +347,7 @@ def _require_cloud_login(handler):
 async def websocket_subscription.opp, connection, msg):
     """Handle request for account info."""
 
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
 
     with async_timeout.timeout(REQUEST_TIMEOUT):
         response = await cloud.fetch_subscription_info()
@@ -395,7 +395,7 @@ async def websocket_subscription.opp, connection, msg):
 )
 async def websocket_update_prefs.opp, connection, msg):
     """Handle request for account info."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
 
     changes = dict(msg)
     changes.pop("id")
@@ -428,20 +428,20 @@ async def websocket_update_prefs.opp, connection, msg):
 
 @_require_cloud_login
 @websocket_api.async_response
-@_ws_op.dle_cloud_errors
+@_ws_handle_cloud_errors
 async def websocket_hook_create.opp, connection, msg):
     """Handle request for account info."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
     hook = await cloud.cloudhooks.async_create(msg["webhook_id"], False)
     connection.send_message(websocket_api.result_message(msg["id"], hook))
 
 
 @_require_cloud_login
 @websocket_api.async_response
-@_ws_op.dle_cloud_errors
+@_ws_handle_cloud_errors
 async def websocket_hook_delete.opp, connection, msg):
     """Handle request for account info."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
     await cloud.cloudhooks.async_delete(msg["webhook_id"])
     connection.send_message(websocket_api.result_message(msg["id"]))
 
@@ -478,11 +478,11 @@ def _account_data(cloud):
 @websocket_api.require_admin
 @_require_cloud_login
 @websocket_api.async_response
-@_ws_op.dle_cloud_errors
+@_ws_handle_cloud_errors
 @websocket_api.websocket_command({"type": "cloud/remote/connect"})
 async def websocket_remote_connect.opp, connection, msg):
     """Handle request for connect remote."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
     await cloud.client.prefs.async_update(remote_enabled=True)
     await cloud.remote.connect()
     connection.send_result(msg["id"], _account_data(cloud))
@@ -491,11 +491,11 @@ async def websocket_remote_connect.opp, connection, msg):
 @websocket_api.require_admin
 @_require_cloud_login
 @websocket_api.async_response
-@_ws_op.dle_cloud_errors
+@_ws_handle_cloud_errors
 @websocket_api.websocket_command({"type": "cloud/remote/disconnect"})
 async def websocket_remote_disconnect.opp, connection, msg):
     """Handle request for disconnect remote."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
     await cloud.client.prefs.async_update(remote_enabled=False)
     await cloud.remote.disconnect()
     connection.send_result(msg["id"], _account_data(cloud))
@@ -504,11 +504,11 @@ async def websocket_remote_disconnect.opp, connection, msg):
 @websocket_api.require_admin
 @_require_cloud_login
 @websocket_api.async_response
-@_ws_op.dle_cloud_errors
+@_ws_handle_cloud_errors
 @websocket_api.websocket_command({"type": "cloud/google_assistant/entities"})
 async def google_assistant_list.opp, connection, msg):
     """List all google assistant entities."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
     gconf = await cloud.client.get_google_config()
     entities = google_helpers.async_get_entities.opp, gconf)
 
@@ -529,7 +529,7 @@ async def google_assistant_list.opp, connection, msg):
 @websocket_api.require_admin
 @_require_cloud_login
 @websocket_api.async_response
-@_ws_op.dle_cloud_errors
+@_ws_handle_cloud_errors
 @websocket_api.websocket_command(
     {
         "type": "cloud/google_assistant/entities/update",
@@ -542,7 +542,7 @@ async def google_assistant_list.opp, connection, msg):
 )
 async def google_assistant_update.opp, connection, msg):
     """Update google assistant config."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
     changes = dict(msg)
     changes.pop("type")
     changes.pop("id")
@@ -557,11 +557,11 @@ async def google_assistant_update.opp, connection, msg):
 @websocket_api.require_admin
 @_require_cloud_login
 @websocket_api.async_response
-@_ws_op.dle_cloud_errors
+@_ws_handle_cloud_errors
 @websocket_api.websocket_command({"type": "cloud/alexa/entities"})
 async def alexa_list.opp, connection, msg):
     """List all alexa entities."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
     alexa_config = await cloud.client.get_alexa_config()
     entities = alexa_entities.async_get_entities.opp, alexa_config)
 
@@ -582,7 +582,7 @@ async def alexa_list.opp, connection, msg):
 @websocket_api.require_admin
 @_require_cloud_login
 @websocket_api.async_response
-@_ws_op.dle_cloud_errors
+@_ws_handle_cloud_errors
 @websocket_api.websocket_command(
     {
         "type": "cloud/alexa/entities/update",
@@ -592,7 +592,7 @@ async def alexa_list.opp, connection, msg):
 )
 async def alexa_update.opp, connection, msg):
     """Update alexa entity config."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
     changes = dict(msg)
     changes.pop("type")
     changes.pop("id")
@@ -610,7 +610,7 @@ async def alexa_update.opp, connection, msg):
 @websocket_api.websocket_command({"type": "cloud/alexa/sync"})
 async def alexa_sync.opp, connection, msg):
     """Sync with Alexa."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
     alexa_config = await cloud.client.get_alexa_config()
 
     with async_timeout.timeout(10):
@@ -634,7 +634,7 @@ async def alexa_sync.opp, connection, msg):
 @websocket_api.websocket_command({"type": "cloud/thingtalk/convert", "query": str})
 async def thingtalk_convert.opp, connection, msg):
     """Convert a query."""
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
 
     with async_timeout.timeout(10):
         try:

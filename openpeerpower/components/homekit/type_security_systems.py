@@ -36,7 +36,7 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
-OPP_TO_HOMEKIT = {
+HASS_TO_HOMEKIT = {
     STATE_ALARM_ARMED_HOME: 0,
     STATE_ALARM_ARMED_AWAY: 1,
     STATE_ALARM_ARMED_NIGHT: 2,
@@ -44,14 +44,14 @@ OPP_TO_HOMEKIT = {
     STATE_ALARM_TRIGGERED: 4,
 }
 
-OPP_TO_HOMEKIT_SERVICES = {
+HASS_TO_HOMEKIT_SERVICES = {
     SERVICE_ALARM_ARM_HOME: 0,
     SERVICE_ALARM_ARM_AWAY: 1,
     SERVICE_ALARM_ARM_NIGHT: 2,
     SERVICE_ALARM_DISARM: 3,
 }
 
-HOMEKIT_TO_OPP = {c: s for s, c in OPP_TO_HOMEKIT.items()}
+HOMEKIT_TO_HASS = {c: s for s, c in HASS_TO_HOMEKIT.items()}
 
 STATE_TO_SERVICE = {
     STATE_ALARM_ARMED_AWAY: SERVICE_ALARM_ARM_AWAY,
@@ -90,27 +90,27 @@ class SecuritySystem(HomeAccessory):
         ).properties.get("ValidValues")
 
         current_supported_states = [
-            OPP_TO_HOMEKIT[STATE_ALARM_DISARMED],
-            OPP_TO_HOMEKIT[STATE_ALARM_TRIGGERED],
+            HASS_TO_HOMEKIT[STATE_ALARM_DISARMED],
+            HASS_TO_HOMEKIT[STATE_ALARM_TRIGGERED],
         ]
-        target_supported_services = [OPP_TO_HOMEKIT_SERVICES[SERVICE_ALARM_DISARM]]
+        target_supported_services = [HASS_TO_HOMEKIT_SERVICES[SERVICE_ALARM_DISARM]]
 
         if supported_states & SUPPORT_ALARM_ARM_HOME:
-            current_supported_states.append(OPP_TO_HOMEKIT[STATE_ALARM_ARMED_HOME])
+            current_supported_states.append(HASS_TO_HOMEKIT[STATE_ALARM_ARMED_HOME])
             target_supported_services.append(
-                OPP_TO_HOMEKIT_SERVICES[SERVICE_ALARM_ARM_HOME]
+                HASS_TO_HOMEKIT_SERVICES[SERVICE_ALARM_ARM_HOME]
             )
 
         if supported_states & SUPPORT_ALARM_ARM_AWAY:
-            current_supported_states.append(OPP_TO_HOMEKIT[STATE_ALARM_ARMED_AWAY])
+            current_supported_states.append(HASS_TO_HOMEKIT[STATE_ALARM_ARMED_AWAY])
             target_supported_services.append(
-                OPP_TO_HOMEKIT_SERVICES[SERVICE_ALARM_ARM_AWAY]
+                HASS_TO_HOMEKIT_SERVICES[SERVICE_ALARM_ARM_AWAY]
             )
 
         if supported_states & SUPPORT_ALARM_ARM_NIGHT:
-            current_supported_states.append(OPP_TO_HOMEKIT[STATE_ALARM_ARMED_NIGHT])
+            current_supported_states.append(HASS_TO_HOMEKIT[STATE_ALARM_ARMED_NIGHT])
             target_supported_services.append(
-                OPP_TO_HOMEKIT_SERVICES[SERVICE_ALARM_ARM_NIGHT]
+                HASS_TO_HOMEKIT_SERVICES[SERVICE_ALARM_ARM_NIGHT]
             )
 
         new_current_states = {
@@ -127,12 +127,12 @@ class SecuritySystem(HomeAccessory):
         serv_alarm = self.add_preload_service(SERV_SECURITY_SYSTEM)
         self.char_current_state = serv_alarm.configure_char(
             CHAR_CURRENT_SECURITY_STATE,
-            value=OPP_TO_HOMEKIT[STATE_ALARM_DISARMED],
+            value=HASS_TO_HOMEKIT[STATE_ALARM_DISARMED],
             valid_values=new_current_states,
         )
         self.char_target_state = serv_alarm.configure_char(
             CHAR_TARGET_SECURITY_STATE,
-            value=OPP_TO_HOMEKIT_SERVICES[SERVICE_ALARM_DISARM],
+            value=HASS_TO_HOMEKIT_SERVICES[SERVICE_ALARM_DISARM],
             valid_values=new_target_services,
             setter_callback=self.set_security_state,
         )
@@ -144,20 +144,20 @@ class SecuritySystem(HomeAccessory):
     def set_security_state(self, value):
         """Move security state to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set security state to %d", self.entity_id, value)
-       .opp_value = HOMEKIT_TO_OPP[value]
+       .opp_value = HOMEKIT_TO_HASS[value]
         service = STATE_TO_SERVICE.opp_value]
 
         params = {ATTR_ENTITY_ID: self.entity_id}
         if self._alarm_code:
             params[ATTR_CODE] = self._alarm_code
-        self.call_service(DOMAIN, service, params)
+        self.async_call_service(DOMAIN, service, params)
 
     @callback
     def async_update_state(self, new_state):
         """Update security state after state changed."""
        .opp_state = new_state.state
-        if.opp_state in OPP_TO_HOMEKIT:
-            current_security_state = OPP_TO_HOMEKIT.opp_state]
+        if.opp_state in HASS_TO_HOMEKIT:
+            current_security_state = HASS_TO_HOMEKIT.opp_state]
             if self.char_current_state.value != current_security_state:
                 self.char_current_state.set_value(current_security_state)
                 _LOGGER.debug(

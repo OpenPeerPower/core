@@ -19,7 +19,7 @@ from openpeerpower.const import (
     CONF_SSL,
     CONF_USERNAME,
 )
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
 {
   "domain": "pvoutput",
   "name": "PVOutput",
-  "documentation": "https://www.openpeerpower.io/integrations/pvoutput",
+  "documentation": "https://www.open-peer-power.io/integrations/pvoutput",
   "after_dependencies": ["rest"],
   "codeowners": ["@fabaff"]
 }

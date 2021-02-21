@@ -5,8 +5,8 @@ import logging
 from asterisk_mbox import ServerError
 
 from openpeerpower.components.mailbox import CONTENT_TYPE_MPEG, Mailbox, StreamError
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import DOMAIN as ASTERISK_DOMAIN
 
@@ -16,7 +16,7 @@ SIGNAL_MESSAGE_REQUEST = "asterisk_mbox.message_request"
 SIGNAL_MESSAGE_UPDATE = "asterisk_mbox.message_updated"
 
 
-async def async_get_op.dler.opp, config, discovery_info=None):
+async def async_get_handler.opp, config, discovery_info=None):
     """Set up the Asterix VM platform."""
     return AsteriskMailbox.opp, ASTERISK_DOMAIN)
 

@@ -8,12 +8,12 @@ from meteofrance_api.helpers import (
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_ATTRIBUTION
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
 )
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.util import dt as dt_util
 
 from .const import (
     ATTR_NEXT_RAIN_1_HOUR_FORECAST,
@@ -41,9 +41,9 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the Meteo-France sensor platform."""
-    coordinator_forecast = opp.data[DOMAIN][entry.entry_id][COORDINATOR_FORECAST]
-    coordinator_rain = opp.data[DOMAIN][entry.entry_id][COORDINATOR_RAIN]
-    coordinator_alert = opp.data[DOMAIN][entry.entry_id][COORDINATOR_ALERT]
+    coordinator_forecast =.opp.data[DOMAIN][entry.entry_id][COORDINATOR_FORECAST]
+    coordinator_rain =.opp.data[DOMAIN][entry.entry_id][COORDINATOR_RAIN]
+    coordinator_alert =.opp.data[DOMAIN][entry.entry_id][COORDINATOR_ALERT]
 
     entities = []
     for sensor_type in SENSOR_TYPES:

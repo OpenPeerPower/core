@@ -1,7 +1,7 @@
 {
   "domain": "sabnzbd",
   "name": "SABnzbd",
-  "documentation": "https://www.openpeerpower.io/integrations/sabnzbd",
+  "documentation": "https://www.open-peer-power.io/integrations/sabnzbd",
   "requirements": ["pysabnzbd==1.1.0"],
   "dependencies": ["configurator"],
   "after_dependencies": ["discovery"],

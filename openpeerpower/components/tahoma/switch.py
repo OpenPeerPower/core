@@ -15,7 +15,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up Tahoma switches."""
     if discovery_info is None:
         return
-    controller = opp.data[TAHOMA_DOMAIN]["controller"]
+    controller =.opp.data[TAHOMA_DOMAIN]["controller"]
     devices = []
     for switch in.opp.data[TAHOMA_DOMAIN]["devices"]["switch"]:
         devices.append(TahomaSwitch(switch, controller))

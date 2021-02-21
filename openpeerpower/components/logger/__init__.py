@@ -71,7 +71,7 @@ async def async_setup.opp, config):
         set_log_levels(config[DOMAIN][LOGGER_LOGS])
 
     @callback
-    def async_service_op.dler(service):
+    def async_service_handler(service):
         """Handle logger services."""
         if service.service == SERVICE_SET_DEFAULT_LEVEL:
             set_default_log_level(service.data.get(ATTR_LEVEL))
@@ -81,14 +81,14 @@ async def async_setup.opp, config):
    .opp.services.async_register(
         DOMAIN,
         SERVICE_SET_DEFAULT_LEVEL,
-        async_service_op.dler,
+        async_service_handler,
         schema=SERVICE_SET_DEFAULT_LEVEL_SCHEMA,
     )
 
    .opp.services.async_register(
         DOMAIN,
         SERVICE_SET_LEVEL,
-        async_service_op.dler,
+        async_service_handler,
         schema=SERVICE_SET_LEVEL_SCHEMA,
     )
 
@@ -110,7 +110,7 @@ def _get_logger_class.opp_overrides):
     so we cannot use partial to inject.opp_overrides.
     """
 
-    class OppLogger(logging.Logger):
+    class HassLogger(logging.Logger):
         """Open Peer Power aware logger class."""
 
         def setLevel(self, level) -> None:
@@ -125,4 +125,4 @@ def _get_logger_class.opp_overrides):
             """Set the log level."""
             super().setLevel(level)
 
-    return OppLogger
+    return HassLogger

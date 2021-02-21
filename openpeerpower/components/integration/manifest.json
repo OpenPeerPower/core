@@ -1,7 +1,7 @@
 {
   "domain": "integration",
   "name": "Integration - Riemann sum integral",
-  "documentation": "https://www.openpeerpower.io/integrations/integration",
+  "documentation": "https://www.open-peer-power.io/integrations/integration",
   "codeowners": ["@dgomes"],
   "quality_scale": "internal"
 }

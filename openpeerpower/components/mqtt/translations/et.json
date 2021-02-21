@@ -17,12 +17,12 @@
                 },
                 "description": "Sisesta oma MQTT vahendaja andmed."
             },
-            "oppio_confirm": {
+            .oppio_confirm": {
                 "data": {
                     "discovery": "Luba automaatne avastamine"
                 },
-                "description": "Kas soovite seadistada Open Peer Poweri \u00fchenduse loomiseks Opp.io lisandmooduli {addon} pakutava MQTT vahendajaga?",
-                "title": "MQTT vahendaja Opp.io pistikprogrammi kaudu"
+                "description": "Kas soovite seadistada Open Peer Poweri \u00fchenduse loomiseks Hass.io lisandmooduli {addon} pakutava MQTT vahendajaga?",
+                "title": "MQTT vahendaja Hass.io pistikprogrammi kaudu"
             }
         }
     },

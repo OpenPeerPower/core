@@ -95,13 +95,13 @@ class LightGroup(GroupEntity, light.LightEntity):
         self._effect: Optional[str] = None
         self._supported_features: int = 0
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register callbacks."""
 
         async def async_state_changed_listener(event):
             """Handle child updates."""
             self.async_set_context(event.context)
-            await self.async_defer_or_update_op.state()
+            await self.async_defer_or_update_ha_state()
 
         assert self.opp
         self.async_on_remove(
@@ -114,7 +114,7 @@ class LightGroup(GroupEntity, light.LightEntity):
             await self.async_update()
             return
 
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     @property
     def name(self) -> str:

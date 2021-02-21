@@ -5,8 +5,8 @@ import logging
 import requests
 
 from openpeerpower.components.switch import SwitchEntity
-from openpeerpowerr.core import callback
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+import openpeerpower.util.dt as dt_util
 
 from . import DOMAIN
 from .entity import RingEntityMixin
@@ -26,7 +26,7 @@ SKIP_UPDATES_DELAY = timedelta(seconds=5)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Create the switches for the Ring devices."""
-    devices = opp.data[DOMAIN][config_entry.entry_id]["devices"]
+    devices =.opp.data[DOMAIN][config_entry.entry_id]["devices"]
     switches = []
 
     for device in devices["stickup_cams"]:
@@ -72,7 +72,7 @@ class SirenSwitch(BaseRingSwitch):
             return
 
         self._siren_on = self._device.siren > 0
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _set_switch(self, new_state):
         """Update switch state, and causes Open Peer Power to correctly update."""
@@ -84,7 +84,7 @@ class SirenSwitch(BaseRingSwitch):
 
         self._siren_on = new_state > 0
         self._no_updates_until = dt_util.utcnow() + SKIP_UPDATES_DELAY
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def is_on(self):

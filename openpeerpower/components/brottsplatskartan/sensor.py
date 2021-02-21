@@ -69,7 +69,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     # Every Open Peer Power instance should have their own unique
     # app parameter: https://brottsplatskartan.se/sida/api
-    app = f"op-{uuid.getnode()}"
+    app = f"ha-{uuid.getnode()}"
 
     bpk = brottsplatskartan.BrottsplatsKartan(
         app=app, area=area, latitude=latitude, longitude=longitude

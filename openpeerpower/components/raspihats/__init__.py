@@ -9,7 +9,7 @@ _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "raspihats"
 
-CONF_I2C_HATS = "i2c_op.s"
+CONF_I2C_HATS = "i2c_hats"
 CONF_BOARD = "board"
 CONF_CHANNELS = "channels"
 CONF_INDEX = "index"
@@ -33,16 +33,16 @@ def setup.opp, config):
     """Set up the raspihats component."""
    .opp.data[I2C_HATS_MANAGER] = I2CHatsManager()
 
-    def start_i2c_op.s_keep_alive(event):
+    def start_i2c_hats_keep_alive(event):
         """Start I2C-HATs keep alive."""
        .opp.data[I2C_HATS_MANAGER].start_keep_alive()
 
-    def stop_i2c_op.s_keep_alive(event):
+    def stop_i2c_hats_keep_alive(event):
         """Stop I2C-HATs keep alive."""
        .opp.data[I2C_HATS_MANAGER].stop_keep_alive()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_i2c_op.s_keep_alive)
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_i2c_op.s_keep_alive)
+   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_i2c_hats_keep_alive)
+   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_i2c_hats_keep_alive)
     return True
 
 
@@ -65,28 +65,28 @@ class I2CHatsDIScanner:
     _OLD_VALUE = "old_value"
     _CALLBACKS = "callbacks"
 
-    def setup(self, i2c_op.):
+    def setup(self, i2c_hat):
         """Set up the I2C-HAT instance for digital inputs scanner."""
-        if hasattr(i2c_op., self._DIGITAL_INPUTS):
-            digital_inputs = getattr(i2c_op., self._DIGITAL_INPUTS)
+        if hasattr(i2c_hat, self._DIGITAL_INPUTS):
+            digital_inputs = getattr(i2c_hat, self._DIGITAL_INPUTS)
             old_value = None
             # Add old value attribute
             setattr(digital_inputs, self._OLD_VALUE, old_value)
             # Add callbacks dict attribute {channel: callback}
             setattr(digital_inputs, self._CALLBACKS, {})
 
-    def register_callback(self, i2c_op., channel, callback):
+    def register_callback(self, i2c_hat, channel, callback):
         """Register edge callback."""
-        if hasattr(i2c_op., self._DIGITAL_INPUTS):
-            digital_inputs = getattr(i2c_op., self._DIGITAL_INPUTS)
+        if hasattr(i2c_hat, self._DIGITAL_INPUTS):
+            digital_inputs = getattr(i2c_hat, self._DIGITAL_INPUTS)
             callbacks = getattr(digital_inputs, self._CALLBACKS)
             callbacks[channel] = callback
             setattr(digital_inputs, self._CALLBACKS, callbacks)
 
-    def scan(self, i2c_op.):
+    def scan(self, i2c_hat):
         """Scan I2C-HATs digital inputs and fire callbacks."""
-        if hasattr(i2c_op., self._DIGITAL_INPUTS):
-            digital_inputs = getattr(i2c_op., self._DIGITAL_INPUTS)
+        if hasattr(i2c_hat, self._DIGITAL_INPUTS):
+            digital_inputs = getattr(i2c_hat, self._DIGITAL_INPUTS)
             callbacks = getattr(digital_inputs, self._CALLBACKS)
             old_value = getattr(digital_inputs, self._OLD_VALUE)
             value = digital_inputs.value  # i2c data transfer
@@ -111,71 +111,71 @@ class I2CHatsManager(threading.Thread):
         """Init I2C-HATs Manager."""
         threading.Thread.__init__(self)
         self._lock = threading.Lock()
-        self._i2c_op.s = {}
+        self._i2c_hats = {}
         self._run = False
         self._di_scanner = I2CHatsDIScanner()
 
     def register_board(self, board, address):
         """Register I2C-HAT."""
         with self._lock:
-            i2c_op. = self._i2c_op.s.get(address)
-            if i2c_op. is None:
+            i2c_hat = self._i2c_hats.get(address)
+            if i2c_hat is None:
                 # This is a Pi module and can't be installed in CI without
                 # breaking the build.
                 # pylint: disable=import-outside-toplevel,import-error
-                import raspihats.i2c_op.s as module
+                import raspihats.i2c_hats as module
 
                 constructor = getattr(module, board)
-                i2c_op. = constructor(address)
-                setattr(i2c_op., self._CALLBACKS, {})
+                i2c_hat = constructor(address)
+                setattr(i2c_hat, self._CALLBACKS, {})
 
                 # Setting exception attribute will trigger online callbacks
                 # when keep alive thread starts.
-                setattr(i2c_op., self._EXCEPTION, None)
+                setattr(i2c_hat, self._EXCEPTION, None)
 
-                self._di_scanner.setup(i2c_op.)
-                self._i2c_op.s[address] = i2c_op.
-                status_word = i2c_op..status  # read status_word to reset bits
-                _LOGGER.info(log_message(self, i2c_op., "registered", status_word))
+                self._di_scanner.setup(i2c_hat)
+                self._i2c_hats[address] = i2c_hat
+                status_word = i2c_hat.status  # read status_word to reset bits
+                _LOGGER.info(log_message(self, i2c_hat, "registered", status_word))
 
     def run(self):
         """Keep alive for I2C-HATs."""
         # This is a Pi module and can't be installed in CI without
         # breaking the build.
         # pylint: disable=import-outside-toplevel,import-error
-        from raspihats.i2c_op.s import ResponseException
+        from raspihats.i2c_hats import ResponseException
 
         _LOGGER.info(log_message(self, "starting"))
 
         while self._run:
             with self._lock:
-                for i2c_op. in list(self._i2c_op.s.values()):
+                for i2c_hat in list(self._i2c_hats.values()):
                     try:
-                        self._di_scanner.scan(i2c_op.)
-                        self._read_status(i2c_op.)
+                        self._di_scanner.scan(i2c_hat)
+                        self._read_status(i2c_hat)
 
-                        if hasattr(i2c_op., self._EXCEPTION):
-                            if getattr(i2c_op., self._EXCEPTION) is not None:
+                        if hasattr(i2c_hat, self._EXCEPTION):
+                            if getattr(i2c_hat, self._EXCEPTION) is not None:
                                 _LOGGER.warning(
-                                    log_message(self, i2c_op., "online again")
+                                    log_message(self, i2c_hat, "online again")
                                 )
-                            delattr(i2c_op., self._EXCEPTION)
+                            delattr(i2c_hat, self._EXCEPTION)
                             # trigger online callbacks
-                            callbacks = getattr(i2c_op., self._CALLBACKS)
+                            callbacks = getattr(i2c_hat, self._CALLBACKS)
                             for callback in list(callbacks.values()):
                                 callback()
                     except ResponseException as ex:
-                        if not hasattr(i2c_op., self._EXCEPTION):
-                            _LOGGER.error(log_message(self, i2c_op., ex))
-                        setattr(i2c_op., self._EXCEPTION, ex)
+                        if not hasattr(i2c_hat, self._EXCEPTION):
+                            _LOGGER.error(log_message(self, i2c_hat, ex))
+                        setattr(i2c_hat, self._EXCEPTION, ex)
             time.sleep(0.05)
         _LOGGER.info(log_message(self, "exiting"))
 
-    def _read_status(self, i2c_op.):
+    def _read_status(self, i2c_hat):
         """Read I2C-HATs status."""
-        status_word = i2c_op..status
+        status_word = i2c_hat.status
         if status_word.value != 0x00:
-            _LOGGER.error(log_message(self, i2c_op., status_word))
+            _LOGGER.error(log_message(self, i2c_hat, status_word))
 
     def start_keep_alive(self):
         """Start keep alive mechanism."""
@@ -190,28 +190,28 @@ class I2CHatsManager(threading.Thread):
     def register_di_callback(self, address, channel, callback):
         """Register I2C-HAT digital input edge callback."""
         with self._lock:
-            i2c_op. = self._i2c_op.s[address]
-            self._di_scanner.register_callback(i2c_op., channel, callback)
+            i2c_hat = self._i2c_hats[address]
+            self._di_scanner.register_callback(i2c_hat, channel, callback)
 
     def register_online_callback(self, address, channel, callback):
         """Register I2C-HAT online callback."""
         with self._lock:
-            i2c_op. = self._i2c_op.s[address]
-            callbacks = getattr(i2c_op., self._CALLBACKS)
+            i2c_hat = self._i2c_hats[address]
+            callbacks = getattr(i2c_hat, self._CALLBACKS)
             callbacks[channel] = callback
-            setattr(i2c_op., self._CALLBACKS, callbacks)
+            setattr(i2c_hat, self._CALLBACKS, callbacks)
 
     def read_di(self, address, channel):
         """Read a value from a I2C-HAT digital input."""
         # This is a Pi module and can't be installed in CI without
         # breaking the build.
         # pylint: disable=import-outside-toplevel,import-error
-        from raspihats.i2c_op.s import ResponseException
+        from raspihats.i2c_hats import ResponseException
 
         with self._lock:
-            i2c_op. = self._i2c_op.s[address]
+            i2c_hat = self._i2c_hats[address]
             try:
-                value = i2c_op..di.value
+                value = i2c_hat.di.value
                 return (value >> channel) & 0x01
             except ResponseException as ex:
                 raise I2CHatsException(str(ex)) from ex
@@ -221,12 +221,12 @@ class I2CHatsManager(threading.Thread):
         # This is a Pi module and can't be installed in CI without
         # breaking the build.
         # pylint: disable=import-outside-toplevel,import-error
-        from raspihats.i2c_op.s import ResponseException
+        from raspihats.i2c_hats import ResponseException
 
         with self._lock:
-            i2c_op. = self._i2c_op.s[address]
+            i2c_hat = self._i2c_hats[address]
             try:
-                i2c_op..dq.channels[channel] = value
+                i2c_hat.dq.channels[channel] = value
             except ResponseException as ex:
                 raise I2CHatsException(str(ex)) from ex
 
@@ -235,11 +235,11 @@ class I2CHatsManager(threading.Thread):
         # This is a Pi module and can't be installed in CI without
         # breaking the build.
         # pylint: disable=import-outside-toplevel,import-error
-        from raspihats.i2c_op.s import ResponseException
+        from raspihats.i2c_hats import ResponseException
 
         with self._lock:
-            i2c_op. = self._i2c_op.s[address]
+            i2c_hat = self._i2c_hats[address]
             try:
-                return i2c_op..dq.channels[channel]
+                return i2c_hat.dq.channels[channel]
             except ResponseException as ex:
                 raise I2CHatsException(str(ex)) from ex

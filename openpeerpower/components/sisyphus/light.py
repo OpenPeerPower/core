@@ -18,7 +18,7 @@ async def async_setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up a single Sisyphus table."""
     host = discovery_info[CONF_HOST]
     try:
-        table_holder = opp.data[DATA_SISYPHUS][host]
+        table_holder =.opp.data[DATA_SISYPHUS][host]
         table = await table_holder.get_table()
     except aiohttp.ClientError as err:
         raise PlatformNotReady() from err
@@ -34,9 +34,9 @@ class SisyphusLight(LightEntity):
         self._name = name
         self._table = table
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Add listeners after this object has been initialized."""
-        self._table.add_listener(self.async_write_op.state)
+        self._table.add_listener(self.async_write_ha_state)
 
     async def async_update(self):
         """Force update the table state."""

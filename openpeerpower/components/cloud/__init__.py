@@ -10,11 +10,11 @@ from openpeerpower.const import (
     CONF_REGION,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers import config_validation as cv, entityfilter
-from openpeerpowerr.loader import bind_opp
-from openpeerpowerr.util.aiohttp import MockRequest
+from openpeerpower.core import callback
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers import config_validation as cv, entityfilter
+from openpeerpower.loader import bind.opp
+from openpeerpower.util.aiohttp import MockRequest
 
 from . import account_link, http_api
 from .client import CloudClient
@@ -108,40 +108,40 @@ class CloudNotAvailable(OpenPeerPowerError):
     """Raised when an action requires the cloud but it's not available."""
 
 
-@bind_opp
+@bind.opp
 @callback
 def async_is_logged_in.opp) -> bool:
     """Test if user is logged in."""
     return DOMAIN in.opp.data and.opp.data[DOMAIN].is_logged_in
 
 
-@bind_opp
+@bind.opp
 @callback
 def async_active_subscription.opp) -> bool:
     """Test if user has an active subscription."""
     return async_is_logged_in.opp) and not.opp.data[DOMAIN].subscription_expired
 
 
-@bind_opp
+@bind.opp
 async def async_create_cloudhook.opp, webhook_id: str) -> str:
     """Create a cloudhook."""
     if not async_is_logged_in.opp):
         raise CloudNotAvailable
 
-    hook = await opp..data[DOMAIN].cloudhooks.async_create(webhook_id, True)
+    hook = await.opp.data[DOMAIN].cloudhooks.async_create(webhook_id, True)
     return hook["cloudhook_url"]
 
 
-@bind_opp
+@bind.opp
 async def async_delete_cloudhook.opp, webhook_id: str) -> None:
     """Delete a cloudhook."""
     if DOMAIN not in.opp.data:
         raise CloudNotAvailable
 
-    await opp..data[DOMAIN].cloudhooks.async_delete(webhook_id)
+    await.opp.data[DOMAIN].cloudhooks.async_delete(webhook_id)
 
 
-@bind_opp
+@bind.opp
 @callback
 def async_remote_ui_url.opp) -> str:
     """Get the remote UI URL."""
@@ -182,9 +182,9 @@ async def async_setup.opp, config):
     await prefs.async_initialize()
 
     # Initialize Cloud
-    websession = opp.helpers.aiohttp_client.async_get_clientsession()
+    websession =.opp.helpers.aiohttp_client.async_get_clientsession()
     client = CloudClient.opp, prefs, websession, alexa_conf, google_conf)
-    cloud = opp.data[DOMAIN] = Cloud(client, **kwargs)
+    cloud =.opp.data[DOMAIN] = Cloud(client, **kwargs)
 
     async def _shutdown(event):
         """Shutdown event."""
@@ -192,7 +192,7 @@ async def async_setup.opp, config):
 
    .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
 
-    async def _service_op.dler(service):
+    async def _service_handler(service):
         """Handle service for cloud."""
         if service.service == SERVICE_REMOTE_CONNECT:
             await cloud.remote.connect()
@@ -202,10 +202,10 @@ async def async_setup.opp, config):
             await prefs.async_update(remote_enabled=False)
 
    .opp.helpers.service.async_register_admin_service(
-        DOMAIN, SERVICE_REMOTE_CONNECT, _service_op.dler
+        DOMAIN, SERVICE_REMOTE_CONNECT, _service_handler
     )
    .opp.helpers.service.async_register_admin_service(
-        DOMAIN, SERVICE_REMOTE_DISCONNECT, _service_op.dler
+        DOMAIN, SERVICE_REMOTE_DISCONNECT, _service_handler
     )
 
     loaded = False
@@ -219,11 +219,11 @@ async def async_setup.opp, config):
             return
         loaded = True
 
-        await opp..helpers.discovery.async_load_platform(
+        await.opp.helpers.discovery.async_load_platform(
             "binary_sensor", DOMAIN, {}, config
         )
-        await opp..helpers.discovery.async_load_platform("stt", DOMAIN, {}, config)
-        await opp..helpers.discovery.async_load_platform("tts", DOMAIN, {}, config)
+        await.opp.helpers.discovery.async_load_platform("stt", DOMAIN, {}, config)
+        await.opp.helpers.discovery.async_load_platform("tts", DOMAIN, {}, config)
 
     cloud.iot.register_on_connect(_on_connect)
 

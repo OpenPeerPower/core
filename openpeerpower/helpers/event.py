@@ -34,7 +34,7 @@ from openpeerpower.const import (
 from openpeerpower.core import (
     CALLBACK_TYPE,
     Event,
-    OppJob,
+    HassJob,
     OpenPeerPower,
     State,
     callback,
@@ -46,7 +46,7 @@ from openpeerpower.helpers.ratelimit import KeyedRateLimit
 from openpeerpower.helpers.sun import get_astral_event_next
 from openpeerpower.helpers.template import RenderInfo, Template, result_as_boolean
 from openpeerpower.helpers.typing import TemplateVarsType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util import dt as dt_util
 from openpeerpower.util.async_ import run_callback_threadsafe
 
@@ -124,10 +124,10 @@ def threaded_listener_factory(
     @ft.wraps(async_factory)
     def factory(*args: Any, **kwargs: Any) -> CALLBACK_TYPE:
         """Call async event helper safely."""
-        opp = args[0]
+       .opp = args[0]
 
         if not isinstance.opp, OpenPeerPower):
-            raise TypeError("First parameter needs to be a opp instance")
+            raise TypeError("First parameter needs to be a.opp instance")
 
         async_remove = run_callback_threadsafe(
            .opp.loop, ft.partial(async_factory, *args, **kwargs)
@@ -143,7 +143,7 @@ def threaded_listener_factory(
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_state_change(
    .opp: OpenPeerPower,
     entity_ids: Union[str, Iterable[str]],
@@ -177,7 +177,7 @@ def async_track_state_change(
     else:
         entity_ids = tuple(entity_id.lower() for entity_id in entity_ids)
 
-    job = OppJob(action)
+    job = HassJob(action)
 
     @callback
     def state_change_filter(event: Event) -> bool:
@@ -203,7 +203,7 @@ def async_track_state_change(
     @callback
     def state_change_dispatcher(event: Event) -> None:
         """Handle specific state changes."""
-       .opp.async_run_opp_job(
+       .opp.async_run.opp_job(
             job,
             event.data.get("entity_id"),
             event.data.get("old_state"),
@@ -237,7 +237,7 @@ def async_track_state_change(
 track_state_change = threaded_listener_factory(async_track_state_change)
 
 
-@bind_opp
+@bind.opp
 def async_track_state_change_event(
    .opp: OpenPeerPower,
     entity_ids: Union[str, Iterable[str]],
@@ -258,7 +258,7 @@ def async_track_state_change_event(
     if not entity_ids:
         return _remove_empty_listener
 
-    entity_callbacks = opp.data.setdefault(TRACK_STATE_CHANGE_CALLBACKS, {})
+    entity_callbacks =.opp.data.setdefault(TRACK_STATE_CHANGE_CALLBACKS, {})
 
     if TRACK_STATE_CHANGE_LISTENER not in.opp.data:
 
@@ -277,19 +277,19 @@ def async_track_state_change_event(
 
             for job in entity_callbacks[entity_id][:]:
                 try:
-                   .opp.async_run_opp_job(job, event)
+                   .opp.async_run.opp_job(job, event)
                 except Exception:  # pylint: disable=broad-except
                     _LOGGER.exception(
                         "Error while processing state change for %s", entity_id
                     )
 
-       .opp.data[TRACK_STATE_CHANGE_LISTENER] = opp.bus.async_listen(
+       .opp.data[TRACK_STATE_CHANGE_LISTENER] =.opp.bus.async_listen(
             EVENT_STATE_CHANGED,
             _async_state_change_dispatcher,
             event_filter=_async_state_change_filter,
         )
 
-    job = OppJob(action)
+    job = HassJob(action)
 
     for entity_id in entity_ids:
         entity_callbacks.setdefault(entity_id, []).append(job)
@@ -319,10 +319,10 @@ def _async_remove_indexed_listeners(
     data_key: str,
     listener_key: str,
     storage_keys: Iterable[str],
-    job: OppJob,
+    job: HassJob,
 ) -> None:
     """Remove a listener."""
-    callbacks = opp.data[data_key]
+    callbacks =.opp.data[data_key]
 
     for storage_key in storage_keys:
         callbacks[storage_key].remove(job)
@@ -334,7 +334,7 @@ def _async_remove_indexed_listeners(
         del.opp.data[listener_key]
 
 
-@bind_opp
+@bind.opp
 def async_track_entity_registry_updated_event(
    .opp: OpenPeerPower,
     entity_ids: Union[str, Iterable[str]],
@@ -348,7 +348,7 @@ def async_track_entity_registry_updated_event(
     if not entity_ids:
         return _remove_empty_listener
 
-    entity_callbacks = opp.data.setdefault(TRACK_ENTITY_REGISTRY_UPDATED_CALLBACKS, {})
+    entity_callbacks =.opp.data.setdefault(TRACK_ENTITY_REGISTRY_UPDATED_CALLBACKS, {})
 
     if TRACK_ENTITY_REGISTRY_UPDATED_LISTENER not in.opp.data:
 
@@ -368,20 +368,20 @@ def async_track_entity_registry_updated_event(
 
             for job in entity_callbacks[entity_id][:]:
                 try:
-                   .opp.async_run_opp_job(job, event)
+                   .opp.async_run.opp_job(job, event)
                 except Exception:  # pylint: disable=broad-except
                     _LOGGER.exception(
                         "Error while processing entity registry update for %s",
                         entity_id,
                     )
 
-       .opp.data[TRACK_ENTITY_REGISTRY_UPDATED_LISTENER] = opp.bus.async_listen(
+       .opp.data[TRACK_ENTITY_REGISTRY_UPDATED_LISTENER] =.opp.bus.async_listen(
             EVENT_ENTITY_REGISTRY_UPDATED,
             _async_entity_registry_updated_dispatcher,
             event_filter=_async_entity_registry_updated_filter,
         )
 
-    job = OppJob(action)
+    job = HassJob(action)
 
     for entity_id in entity_ids:
         entity_callbacks.setdefault(entity_id, []).append(job)
@@ -413,14 +413,14 @@ def _async_dispatch_domain_event(
 
     for job in listeners:
         try:
-           .opp.async_run_opp_job(job, event)
+           .opp.async_run.opp_job(job, event)
         except Exception:  # pylint: disable=broad-except
             _LOGGER.exception(
                 "Error while processing event %s for domain %s", event, domain
             )
 
 
-@bind_opp
+@bind.opp
 def async_track_state_added_domain(
    .opp: OpenPeerPower,
     domains: Union[str, Iterable[str]],
@@ -431,7 +431,7 @@ def async_track_state_added_domain(
     if not domains:
         return _remove_empty_listener
 
-    domain_callbacks = opp.data.setdefault(TRACK_STATE_ADDED_DOMAIN_CALLBACKS, {})
+    domain_callbacks =.opp.data.setdefault(TRACK_STATE_ADDED_DOMAIN_CALLBACKS, {})
 
     if TRACK_STATE_ADDED_DOMAIN_LISTENER not in.opp.data:
 
@@ -448,13 +448,13 @@ def async_track_state_added_domain(
 
             _async_dispatch_domain_event.opp, event, domain_callbacks)
 
-       .opp.data[TRACK_STATE_ADDED_DOMAIN_LISTENER] = opp.bus.async_listen(
+       .opp.data[TRACK_STATE_ADDED_DOMAIN_LISTENER] =.opp.bus.async_listen(
             EVENT_STATE_CHANGED,
             _async_state_change_dispatcher,
             event_filter=_async_state_change_filter,
         )
 
-    job = OppJob(action)
+    job = HassJob(action)
 
     for domain in domains:
         domain_callbacks.setdefault(domain, []).append(job)
@@ -473,7 +473,7 @@ def async_track_state_added_domain(
     return remove_listener
 
 
-@bind_opp
+@bind.opp
 def async_track_state_removed_domain(
    .opp: OpenPeerPower,
     domains: Union[str, Iterable[str]],
@@ -484,7 +484,7 @@ def async_track_state_removed_domain(
     if not domains:
         return _remove_empty_listener
 
-    domain_callbacks = opp.data.setdefault(TRACK_STATE_REMOVED_DOMAIN_CALLBACKS, {})
+    domain_callbacks =.opp.data.setdefault(TRACK_STATE_REMOVED_DOMAIN_CALLBACKS, {})
 
     if TRACK_STATE_REMOVED_DOMAIN_LISTENER not in.opp.data:
 
@@ -501,13 +501,13 @@ def async_track_state_removed_domain(
 
             _async_dispatch_domain_event.opp, event, domain_callbacks)
 
-       .opp.data[TRACK_STATE_REMOVED_DOMAIN_LISTENER] = opp.bus.async_listen(
+       .opp.data[TRACK_STATE_REMOVED_DOMAIN_LISTENER] =.opp.bus.async_listen(
             EVENT_STATE_CHANGED,
             _async_state_change_dispatcher,
             event_filter=_async_state_change_filter,
         )
 
-    job = OppJob(action)
+    job = HassJob(action)
 
     for domain in domains:
         domain_callbacks.setdefault(domain, []).append(job)
@@ -544,7 +544,7 @@ class _TrackStateChangeFiltered:
         action: Callable[[Event], Any],
     ):
         """Handle removal / refresh of tracker init."""
-        self.opp = opp
+        self.opp =.opp
         self._action = action
         self._listeners: Dict[str, Callable] = {}
         self._last_track_states: TrackStates = track_states
@@ -658,7 +658,7 @@ class _TrackStateChangeFiltered:
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_state_change_filtered(
    .opp: OpenPeerPower,
     track_states: TrackStates,
@@ -687,7 +687,7 @@ def async_track_state_change_filtered(
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_template(
    .opp: OpenPeerPower,
     template: Template,
@@ -730,7 +730,7 @@ def async_track_template(
     Callable to unregister the listener.
 
     """
-    job = OppJob(action)
+    job = HassJob(action)
 
     @callback
     def _template_changed_listener(
@@ -758,7 +758,7 @@ def async_track_template(
         ):
             return
 
-       .opp.async_run_opp_job(
+       .opp.async_run.opp_job(
             job,
             event and event.data.get("entity_id"),
             event and event.data.get("old_state"),
@@ -785,11 +785,11 @@ class _TrackTemplateResultInfo:
         action: Callable,
     ):
         """Handle removal / refresh of tracker init."""
-        self.opp = opp
-        self._job = OppJob(action)
+        self.opp =.opp
+        self._job = HassJob(action)
 
         for track_template_ in track_templates:
-            track_template_.template.opp = opp
+            track_template_.template.opp =.opp
         self._track_templates = track_templates
 
         self._last_result: Dict[Template, Union[str, TemplateError]] = {}
@@ -902,7 +902,7 @@ class _TrackTemplateResultInfo:
             if not _event_triggers_rerender(event, info):
                 return False
 
-            had_timer = self._rate_limit.async_op._timer(template)
+            had_timer = self._rate_limit.async_has_timer(template)
 
             if self._rate_limit.async_schedule_action(
                 template,
@@ -984,7 +984,7 @@ class _TrackTemplateResultInfo:
                 _render_infos_to_track_states(
                     [
                         _suppress_domain_all_in_render_info(self._info[template])
-                        if self._rate_limit.async_op._timer(template)
+                        if self._rate_limit.async_has_timer(template)
                         else self._info[template]
                         for template in self._info
                     ]
@@ -1002,7 +1002,7 @@ class _TrackTemplateResultInfo:
         for track_result in updates:
             self._last_result[track_result.template] = track_result.result
 
-        self.opp.async_run_opp_job(self._job, event, updates)
+        self.opp.async_run.opp_job(self._job, event, updates)
 
 
 TrackTemplateResultListener = Callable[
@@ -1025,7 +1025,7 @@ TrackTemplateResultListener = Callable[
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_template_result(
    .opp: OpenPeerPower,
     track_templates: Iterable[TrackTemplate],
@@ -1071,7 +1071,7 @@ def async_track_template_result(
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_same_state(
    .opp: OpenPeerPower,
     period: timedelta,
@@ -1087,7 +1087,7 @@ def async_track_same_state(
     async_remove_state_for_cancel: Optional[CALLBACK_TYPE] = None
     async_remove_state_for_listener: Optional[CALLBACK_TYPE] = None
 
-    job = OppJob(action)
+    job = HassJob(action)
 
     @callback
     def clear_listener() -> None:
@@ -1107,7 +1107,7 @@ def async_track_same_state(
         nonlocal async_remove_state_for_listener
         async_remove_state_for_listener = None
         clear_listener()
-       .opp.async_run_opp_job(job)
+       .opp.async_run.opp_job(job)
 
     @callback
     def state_for_cancel_listener(event: Event) -> None:
@@ -1124,7 +1124,7 @@ def async_track_same_state(
     )
 
     if entity_ids == MATCH_ALL:
-        async_remove_state_for_cancel = opp.bus.async_listen(
+        async_remove_state_for_cancel =.opp.bus.async_listen(
             EVENT_STATE_CHANGED, state_for_cancel_listener
         )
     else:
@@ -1141,19 +1141,19 @@ track_same_state = threaded_listener_factory(async_track_same_state)
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_point_in_time(
    .opp: OpenPeerPower,
-    action: Union[OppJob, Callable[..., None]],
+    action: Union[HassJob, Callable[..., None]],
     point_in_time: datetime,
 ) -> CALLBACK_TYPE:
     """Add a listener that fires once after a specific point in time."""
-    job = action if isinstance(action, OppJob) else OppJob(action)
+    job = action if isinstance(action, HassJob) else HassJob(action)
 
     @callback
     def utc_converter(utc_now: datetime) -> None:
         """Convert passed in UTC now to local now."""
-       .opp.async_run_opp_job(job, dt_util.as_local(utc_now))
+       .opp.async_run.opp_job(job, dt_util.as_local(utc_now))
 
     return async_track_point_in_utc_time.opp, utc_converter, point_in_time)
 
@@ -1162,19 +1162,19 @@ track_point_in_time = threaded_listener_factory(async_track_point_in_time)
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_point_in_utc_time(
    .opp: OpenPeerPower,
-    action: Union[OppJob, Callable[..., None]],
+    action: Union[HassJob, Callable[..., None]],
     point_in_time: datetime,
 ) -> CALLBACK_TYPE:
     """Add a listener that fires once after a specific point in UTC time."""
     # Ensure point_in_time is UTC
     utc_point_in_time = dt_util.as_utc(point_in_time)
 
-    # Since this is called once, we accept a OppJob so we can avoid
+    # Since this is called once, we accept a HassJob so we can avoid
     # having to figure out how to call the action every time its called.
-    job = action if isinstance(action, OppJob) else OppJob(action)
+    job = action if isinstance(action, HassJob) else HassJob(action)
 
     cancel_callback: Optional[asyncio.TimerHandle] = None
 
@@ -1194,13 +1194,13 @@ def async_track_point_in_utc_time(
         if delta > 0:
             _LOGGER.debug("Called %f seconds too early, rearming", delta)
 
-            cancel_callback = opp.loop.call_later(delta, run_action)
+            cancel_callback =.opp.loop.call_later(delta, run_action)
             return
 
-       .opp.async_run_opp_job(job, utc_point_in_time)
+       .opp.async_run.opp_job(job, utc_point_in_time)
 
     delta = utc_point_in_time.timestamp() - time.time()
-    cancel_callback = opp.loop.call_later(delta, run_action)
+    cancel_callback =.opp.loop.call_later(delta, run_action)
 
     @callback
     def unsub_point_in_time_listener() -> None:
@@ -1215,9 +1215,9 @@ track_point_in_utc_time = threaded_listener_factory(async_track_point_in_utc_tim
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_call_later(
-   .opp: OpenPeerPower, delay: float, action: Union[OppJob, Callable[..., None]]
+   .opp: OpenPeerPower, delay: float, action: Union[HassJob, Callable[..., None]]
 ) -> CALLBACK_TYPE:
     """Add a listener that is called in <delay>."""
     return async_track_point_in_utc_time(
@@ -1229,7 +1229,7 @@ call_later = threaded_listener_factory(async_call_later)
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_time_interval(
    .opp: OpenPeerPower,
     action: Callable[..., Union[None, Awaitable]],
@@ -1239,7 +1239,7 @@ def async_track_time_interval(
     remove = None
     interval_listener_job = None
 
-    job = OppJob(action)
+    job = HassJob(action)
 
     def next_interval() -> datetime:
         """Return the next interval."""
@@ -1254,9 +1254,9 @@ def async_track_time_interval(
         remove = async_track_point_in_utc_time(
            .opp, interval_listener_job, next_interval()  # type: ignore
         )
-       .opp.async_run_opp_job(job, now)
+       .opp.async_run.opp_job(job, now)
 
-    interval_listener_job = OppJob(interval_listener)
+    interval_listener_job = HassJob(interval_listener)
     remove = async_track_point_in_utc_time.opp, interval_listener_job, next_interval())
 
     def remove_listener() -> None:
@@ -1274,7 +1274,7 @@ class SunListener:
     """Helper class to help listen to sun events."""
 
    .opp: OpenPeerPower = attr.ib()
-    job: OppJob = attr.ib()
+    job: HassJob = attr.ib()
     event: str = attr.ib()
     offset: Optional[timedelta] = attr.ib()
     _unsub_sun: Optional[CALLBACK_TYPE] = attr.ib(default=None)
@@ -1286,7 +1286,7 @@ class SunListener:
         assert self._unsub_config is None
 
         self._unsub_config = self.opp.bus.async_listen(
-            EVENT_CORE_CONFIG_UPDATE, self._op.dle_config_event
+            EVENT_CORE_CONFIG_UPDATE, self._handle_config_event
         )
 
         self._listen_next_sun_event()
@@ -1309,19 +1309,19 @@ class SunListener:
 
         self._unsub_sun = async_track_point_in_utc_time(
             self.opp,
-            self._op.dle_sun_event,
+            self._handle_sun_event,
             get_astral_event_next(self.opp, self.event, offset=self.offset),
         )
 
     @callback
-    def _op.dle_sun_event(self, _now: Any) -> None:
+    def _handle_sun_event(self, _now: Any) -> None:
         """Handle solar event."""
         self._unsub_sun = None
         self._listen_next_sun_event()
-        self.opp.async_run_opp_job(self.job)
+        self.opp.async_run.opp_job(self.job)
 
     @callback
-    def _op.dle_config_event(self, _event: Any) -> None:
+    def _handle_config_event(self, _event: Any) -> None:
         """Handle core config update."""
         assert self._unsub_sun is not None
         self._unsub_sun()
@@ -1330,12 +1330,12 @@ class SunListener:
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_sunrise(
    .opp: OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
 ) -> CALLBACK_TYPE:
     """Add a listener that will fire a specified offset from sunrise daily."""
-    listener = SunListener.opp, OppJob(action), SUN_EVENT_SUNRISE, offset)
+    listener = SunListener.opp, HassJob(action), SUN_EVENT_SUNRISE, offset)
     listener.async_attach()
     return listener.async_detach
 
@@ -1344,12 +1344,12 @@ track_sunrise = threaded_listener_factory(async_track_sunrise)
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_sunset(
    .opp: OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
 ) -> CALLBACK_TYPE:
     """Add a listener that will fire a specified offset from sunset daily."""
-    listener = SunListener.opp, OppJob(action), SUN_EVENT_SUNSET, offset)
+    listener = SunListener.opp, HassJob(action), SUN_EVENT_SUNSET, offset)
     listener.async_attach()
     return listener.async_detach
 
@@ -1361,7 +1361,7 @@ time_tracker_utcnow = dt_util.utcnow
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_utc_time_change(
    .opp: OpenPeerPower,
     action: Callable[..., None],
@@ -1371,7 +1371,7 @@ def async_track_utc_time_change(
     local: bool = False,
 ) -> CALLBACK_TYPE:
     """Add a listener that will fire if time matches a pattern."""
-    job = OppJob(action)
+    job = HassJob(action)
     # We do not have to wrap the function with time pattern matching logic
     # if no pattern given
     if all(val is None for val in (hour, minute, second)):
@@ -1379,7 +1379,7 @@ def async_track_utc_time_change(
         @callback
         def time_change_listener(event: Event) -> None:
             """Fire every time event that comes in."""
-           .opp.async_run_opp_job(job, event.data[ATTR_NOW])
+           .opp.async_run.opp_job(job, event.data[ATTR_NOW])
 
         return.opp.bus.async_listen(EVENT_TIME_CHANGED, time_change_listener)
 
@@ -1402,7 +1402,7 @@ def async_track_utc_time_change(
         nonlocal time_listener
 
         now = time_tracker_utcnow()
-       .opp.async_run_opp_job(job, dt_util.as_local(now) if local else now)
+       .opp.async_run.opp_job(job, dt_util.as_local(now) if local else now)
 
         time_listener = async_track_point_in_utc_time(
            .opp,
@@ -1427,7 +1427,7 @@ track_utc_time_change = threaded_listener_factory(async_track_utc_time_change)
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_time_change(
    .opp: OpenPeerPower,
     action: Callable[..., None],

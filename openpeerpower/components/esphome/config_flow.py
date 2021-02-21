@@ -8,8 +8,8 @@ import voluptuous as vol
 from openpeerpower.components import zeroconf
 from openpeerpower.config_entries import CONN_CLASS_LOCAL_PUSH, ConfigFlow
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_PASSWORD, CONF_PORT
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.typing import ConfigType, DiscoveryInfoType
+from openpeerpower.core import callback
+from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType
 
 from . import DOMAIN
 from .entry_data import RuntimeEntryData

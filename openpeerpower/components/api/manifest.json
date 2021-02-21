@@ -1,8 +1,8 @@
 {
   "domain": "api",
   "name": "Open Peer Power API",
-  "documentation": "https://www.openpeerpower.io/integrations/api",
+  "documentation": "https://www.open-peer-power.io/integrations/api",
   "dependencies": ["http"],
-  "codeowners": ["@openpeerpower/core"],
+  "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"
 }

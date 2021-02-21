@@ -47,7 +47,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ):
     """Set up Notion sensors based on a config entry."""
-    coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]
+    coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]
 
     sensor_list = []
     for task_id, task in coordinator.data["tasks"].items():

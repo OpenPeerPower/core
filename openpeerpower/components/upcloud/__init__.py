@@ -92,7 +92,7 @@ class UpCloudDataUpdateCoordinator(
            .opp, _LOGGER, name=f"{username}@UpCloud", update_interval=update_interval
         )
         self.cloud_manager = cloud_manager
-        self.unsub_op.dlers: List[CALLBACK_TYPE] = []
+        self.unsub_handlers: List[CALLBACK_TYPE] = []
 
     async def async_update_config(self, config_entry: ConfigEntry) -> None:
         """Handle config update."""
@@ -110,7 +110,7 @@ class UpCloudDataUpdateCoordinator(
 
 
 @dataclasses.dataclass
-class UpCloudOppData:
+class UpCloudHassData:
     """Open Peer Power UpCloud runtime data."""
 
     coordinators: Dict[str, UpCloudDataUpdateCoordinator] = dataclasses.field(
@@ -141,7 +141,7 @@ async def async_setup.opp: OpenPeerPowerType, config) -> bool:
     )
 
     if domain_config[CONF_SCAN_INTERVAL]:
-       .opp.data[DATA_UPCLOUD] = UpCloudOppData()
+       .opp.data[DATA_UPCLOUD] = UpCloudHassData()
        .opp.data[DATA_UPCLOUD].scan_interval_migrations[
             domain_config[CONF_USERNAME]
         ] = domain_config[CONF_SCAN_INTERVAL]
@@ -171,7 +171,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
     )
 
     try:
-        await opp..async_add_executor_job(manager.authenticate)
+        await.opp.async_add_executor_job(manager.authenticate)
     except upcloud_api.UpCloudAPIError:
         _LOGGER.error("Authentication failed", exc_info=True)
         return False
@@ -179,7 +179,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         _LOGGER.error("Failed to connect", exc_info=True)
         raise ConfigEntryNotReady from err
 
-    upcloud_data = opp.data.setdefault(DATA_UPCLOUD, UpCloudOppData())
+    upcloud_data =.opp.data.setdefault(DATA_UPCLOUD, UpCloudHassData())
 
     # Handle pre config entry (0.117) scan interval migration to options
     migrated_scan_interval = upcloud_data.scan_interval_migrations.pop(
@@ -212,10 +212,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         raise ConfigEntryNotReady
 
     # Listen to config entry updates
-    coordinator.unsub_op.dlers.append(
+    coordinator.unsub_handlers.append(
         config_entry.add_update_listener(_async_signal_options_update)
     )
-    coordinator.unsub_op.dlers.append(
+    coordinator.unsub_handlers.append(
         async_dispatcher_connect(
            .opp,
             _config_entry_update_signal_name(config_entry),
@@ -237,13 +237,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 async def async_unload_entry.opp, config_entry):
     """Unload the config entry."""
     for domain in CONFIG_ENTRY_DOMAINS:
-        await opp..config_entries.async_forward_entry_unload(config_entry, domain)
+        await.opp.config_entries.async_forward_entry_unload(config_entry, domain)
 
-    coordinator: UpCloudDataUpdateCoordinator = opp.data[
+    coordinator: UpCloudDataUpdateCoordinator =.opp.data[
         DATA_UPCLOUD
     ].coordinators.pop(config_entry.data[CONF_USERNAME])
-    while coordinator.unsub_op.dlers:
-        coordinator.unsub_op.dlers.pop()()
+    while coordinator.unsub_handlers:
+        coordinator.unsub_handlers.pop()()
 
     return True
 

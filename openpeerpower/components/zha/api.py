@@ -193,7 +193,7 @@ ClusterBinding = collections.namedtuple("ClusterBinding", "id endpoint_id type n
 )
 async def websocket_permit_devices.opp, connection, msg):
     """Permit ZHA zigbee devices."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     duration = msg.get(ATTR_DURATION)
     ieee = msg.get(ATTR_IEEE)
 
@@ -236,7 +236,7 @@ async def websocket_permit_devices.opp, connection, msg):
 @websocket_api.websocket_command({vol.Required(TYPE): "zha/devices"})
 async def websocket_get_devices.opp, connection, msg):
     """Get ZHA devices."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
 
     devices = [device.zha_device_info for device in zha_gateway.devices.values()]
 
@@ -248,7 +248,7 @@ async def websocket_get_devices.opp, connection, msg):
 @websocket_api.websocket_command({vol.Required(TYPE): "zha/devices/groupable"})
 async def websocket_get_groupable_devices.opp, connection, msg):
     """Get ZHA devices that can be grouped."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
 
     devices = [device for device in zha_gateway.devices.values() if device.is_groupable]
     groupable_devices = []
@@ -286,7 +286,7 @@ async def websocket_get_groupable_devices.opp, connection, msg):
 @websocket_api.websocket_command({vol.Required(TYPE): "zha/groups"})
 async def websocket_get_groups.opp, connection, msg):
     """Get ZHA groups."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     groups = [group.group_info for group in zha_gateway.groups.values()]
     connection.send_result(msg[ID], groups)
 
@@ -298,7 +298,7 @@ async def websocket_get_groups.opp, connection, msg):
 )
 async def websocket_get_device.opp, connection, msg):
     """Get ZHA devices."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     ieee = msg[ATTR_IEEE]
     device = None
     if ieee in zha_gateway.devices:
@@ -320,7 +320,7 @@ async def websocket_get_device.opp, connection, msg):
 )
 async def websocket_get_group.opp, connection, msg):
     """Get ZHA group."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     group_id = msg[GROUP_ID]
     group = None
 
@@ -361,7 +361,7 @@ def cv_group_member(value: Any) -> GroupMember:
 )
 async def websocket_add_group.opp, connection, msg):
     """Add a new ZHA group."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     group_name = msg[GROUP_NAME]
     members = msg.get(ATTR_MEMBERS)
     group = await zha_gateway.async_create_zigpy_group(group_name, members)
@@ -378,7 +378,7 @@ async def websocket_add_group.opp, connection, msg):
 )
 async def websocket_remove_groups.opp, connection, msg):
     """Remove the specified ZHA groups."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     group_ids = msg[GROUP_IDS]
 
     if len(group_ids) > 1:
@@ -403,7 +403,7 @@ async def websocket_remove_groups.opp, connection, msg):
 )
 async def websocket_add_group_members.opp, connection, msg):
     """Add members to a ZHA group."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     group_id = msg[GROUP_ID]
     members = msg[ATTR_MEMBERS]
     zha_group = None
@@ -433,7 +433,7 @@ async def websocket_add_group_members.opp, connection, msg):
 )
 async def websocket_remove_group_members.opp, connection, msg):
     """Remove members from a ZHA group."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     group_id = msg[GROUP_ID]
     members = msg[ATTR_MEMBERS]
     zha_group = None
@@ -462,7 +462,7 @@ async def websocket_remove_group_members.opp, connection, msg):
 )
 async def websocket_reconfigure_node.opp, connection, msg):
     """Reconfigure a ZHA nodes entities by its ieee address."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     ieee = msg[ATTR_IEEE]
     device = zha_gateway.get_device(ieee)
     _LOGGER.debug("Reconfiguring node with ieee_address: %s", ieee)
@@ -478,7 +478,7 @@ async def websocket_reconfigure_node.opp, connection, msg):
 )
 async def websocket_update_topology.opp, connection, msg):
     """Update the ZHA network topology."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
    .opp.async_create_task(zha_gateway.application_controller.topology.scan())
 
 
@@ -489,7 +489,7 @@ async def websocket_update_topology.opp, connection, msg):
 )
 async def websocket_device_clusters.opp, connection, msg):
     """Return a list of device clusters."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     ieee = msg[ATTR_IEEE]
     zha_device = zha_gateway.get_device(ieee)
     response_clusters = []
@@ -531,7 +531,7 @@ async def websocket_device_clusters.opp, connection, msg):
 )
 async def websocket_device_cluster_attributes.opp, connection, msg):
     """Return a list of cluster attributes."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     ieee = msg[ATTR_IEEE]
     endpoint_id = msg[ATTR_ENDPOINT_ID]
     cluster_id = msg[ATTR_CLUSTER_ID]
@@ -576,7 +576,7 @@ async def websocket_device_cluster_attributes.opp, connection, msg):
 )
 async def websocket_device_cluster_commands.opp, connection, msg):
     """Return a list of cluster commands."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     cluster_id = msg[ATTR_CLUSTER_ID]
     cluster_type = msg[ATTR_CLUSTER_TYPE]
     ieee = msg[ATTR_IEEE]
@@ -636,7 +636,7 @@ async def websocket_device_cluster_commands.opp, connection, msg):
 )
 async def websocket_read_zigbee_cluster_attributes.opp, connection, msg):
     """Read zigbee attribute for cluster on zha entity."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     ieee = msg[ATTR_IEEE]
     endpoint_id = msg[ATTR_ENDPOINT_ID]
     cluster_id = msg[ATTR_CLUSTER_ID]
@@ -681,7 +681,7 @@ async def websocket_read_zigbee_cluster_attributes.opp, connection, msg):
 )
 async def websocket_get_bindable_devices.opp, connection, msg):
     """Directly bind devices."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     source_ieee = msg[ATTR_IEEE]
     source_device = zha_gateway.get_device(source_ieee)
 
@@ -713,7 +713,7 @@ async def websocket_get_bindable_devices.opp, connection, msg):
 )
 async def websocket_bind_devices.opp, connection, msg):
     """Directly bind devices."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     source_ieee = msg[ATTR_SOURCE_IEEE]
     target_ieee = msg[ATTR_TARGET_IEEE]
     await async_binding_operation(
@@ -739,7 +739,7 @@ async def websocket_bind_devices.opp, connection, msg):
 )
 async def websocket_unbind_devices.opp, connection, msg):
     """Remove a direct binding between devices."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     source_ieee = msg[ATTR_SOURCE_IEEE]
     target_ieee = msg[ATTR_TARGET_IEEE]
     await async_binding_operation(
@@ -783,7 +783,7 @@ def is_cluster_binding(value: Any) -> ClusterBinding:
 )
 async def websocket_bind_group.opp, connection, msg):
     """Directly bind a device to a group."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     source_ieee = msg[ATTR_SOURCE_IEEE]
     group_id = msg[GROUP_ID]
     bindings = msg[BINDINGS]
@@ -804,7 +804,7 @@ async def websocket_bind_group.opp, connection, msg):
 )
 async def websocket_unbind_group.opp, connection, msg):
     """Unbind a device from a group."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     source_ieee = msg[ATTR_SOURCE_IEEE]
     group_id = msg[GROUP_ID]
     bindings = msg[BINDINGS]
@@ -856,7 +856,7 @@ async def async_binding_operation(zha_gateway, source_ieee, target_ieee, operati
 @callback
 def async_load_api.opp):
     """Set up the web socket API."""
-    zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+    zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
     application_controller = zha_gateway.application_controller
 
     async def permit(service):
@@ -893,7 +893,7 @@ def async_load_api.opp):
     async def remove(service):
         """Remove a node from the network."""
         ieee = service.data[ATTR_IEEE]
-        zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
+        zha_gateway =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
         zha_device = zha_gateway.get_device(ieee)
         if zha_device is not None and zha_device.is_coordinator:
             _LOGGER.info("Removing the coordinator (%s) is not allowed", ieee)

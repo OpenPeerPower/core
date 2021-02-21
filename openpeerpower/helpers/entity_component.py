@@ -21,7 +21,7 @@ from openpeerpower.helpers import (
     service,
 )
 from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType
-from openpeerpower.loader import async_get_integration, bind_opp
+from openpeerpower.loader import async_get_integration, bind.opp
 from openpeerpower.setup import async_prepare_setup_platform
 
 from .entity_platform import EntityPlatform
@@ -30,11 +30,11 @@ DEFAULT_SCAN_INTERVAL = timedelta(seconds=15)
 DATA_INSTANCES = "entity_components"
 
 
-@bind_opp
+@bind.opp
 async def async_update_entity.opp: OpenPeerPower, entity_id: str) -> None:
     """Trigger an update for an entity."""
     domain = entity_id.split(".", 1)[0]
-    entity_comp = opp.data.get(DATA_INSTANCES, {}).get(domain)
+    entity_comp =.opp.data.get(DATA_INSTANCES, {}).get(domain)
 
     if entity_comp is None:
         logging.getLogger(__name__).warning(
@@ -50,7 +50,7 @@ async def async_update_entity.opp: OpenPeerPower, entity_id: str) -> None:
         )
         return
 
-    await entity_obj.async_update_op.state(True)
+    await entity_obj.async_update_ha_state(True)
 
 
 class EntityComponent:
@@ -72,7 +72,7 @@ class EntityComponent:
     ):
         """Initialize an entity component."""
         self.logger = logger
-        self.opp = opp
+        self.opp =.opp
         self.domain = domain
         self.scan_interval = scan_interval
 
@@ -280,7 +280,7 @@ class EntityComponent:
         This method must be run in the event loop.
         """
         try:
-            conf = await conf_util.async_opp_config_yaml(self.opp)
+            conf = await conf_util.async.opp_config_yaml(self.opp)
         except OpenPeerPowerError as err:
             self.logger.error(err)
             return None

@@ -60,14 +60,14 @@ async def async_initialize_triggers(
     domain: str,
     name: str,
     log_cb: Callable,
-    home_assistant_start: bool = False,
+    open_peer_power_start: bool = False,
     variables: Optional[Union[Dict[str, Any], MappingProxyType]] = None,
 ) -> Optional[CALLBACK_TYPE]:
     """Initialize triggers."""
     info = {
         "domain": domain,
         "name": name,
-        "home_assistant_start": home_assistant_start,
+        "open_peer_power_start": open_peer_power_start,
         "variables": variables,
     }
 

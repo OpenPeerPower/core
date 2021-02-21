@@ -1,7 +1,7 @@
 {
   "domain": "input_boolean",
   "name": "Input Boolean",
-  "documentation": "https://www.openpeerpower.io/integrations/input_boolean",
-  "codeowners": ["@openpeerpower/core"],
+  "documentation": "https://www.open-peer-power.io/integrations/input_boolean",
+  "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"
 }

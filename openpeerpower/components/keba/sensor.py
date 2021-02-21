@@ -14,7 +14,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    keba = opp.data[DOMAIN]
+    keba =.opp.data[DOMAIN]
 
     sensors = [
         KebaSensor(
@@ -131,12 +131,12 @@ class KebaSensor(Entity):
             self._attributes["current_i2"] = str(self._keba.get_value("I2"))
             self._attributes["current_i3"] = str(self._keba.get_value("I3"))
         elif self._key == "Curr user":
-            self._attributes["max_current_op.dware"] = self._keba.get_value("Curr HW")
+            self._attributes["max_current_hardware"] = self._keba.get_value("Curr HW")
 
     def update_callback(self):
         """Schedule a state update."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Add update callback after being added to.opp."""
         self._keba.add_update_listener(self.update_callback)

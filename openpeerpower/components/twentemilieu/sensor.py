@@ -26,7 +26,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up Twente Milieu sensor based on a config entry."""
-    twentemilieu = opp.data[DOMAIN][entry.data[CONF_ID]]
+    twentemilieu =.opp.data[DOMAIN][entry.data[CONF_ID]]
 
     try:
         await twentemilieu.update()
@@ -114,13 +114,13 @@ class TwenteMilieuSensor(Entity):
         """Return the polling requirement of the entity."""
         return False
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Connect to dispatcher listening for entity data notifications."""
         self._unsub_dispatcher = async_dispatcher_connect(
             self.opp, DATA_UPDATE, self._schedule_immediate_update
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect from update signal."""
         self._unsub_dispatcher()
 
@@ -128,7 +128,7 @@ class TwenteMilieuSensor(Entity):
     def _schedule_immediate_update(self, unique_id: str) -> None:
         """Schedule an immediate update of the entity."""
         if unique_id == self._unique_id:
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
     @property
     def state(self):

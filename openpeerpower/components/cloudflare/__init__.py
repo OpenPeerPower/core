@@ -14,11 +14,11 @@ import voluptuous as vol
 from openpeerpower.components import persistent_notification
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_API_KEY, CONF_API_TOKEN, CONF_EMAIL, CONF_ZONE
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import async_track_time_interval
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import async_track_time_interval
 
 from .const import (
     CONF_RECORDS,

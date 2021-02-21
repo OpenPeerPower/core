@@ -19,7 +19,7 @@ from openpeerpower.components.climate.const import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_TEMPERATURE, TEMP_CELSIUS, TEMP_FAHRENHEIT
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import AqualinkEntity, refresh_system
 from .const import CLIMATE_SUPPORTED_MODES, DOMAIN as AQUALINK_DOMAIN
@@ -35,11 +35,11 @@ async def async_setup_entry(
     """Set up discovered switches."""
     devs = []
     for dev in.opp.data[AQUALINK_DOMAIN][DOMAIN]:
-        devs.append(OppAqualinkThermostat(dev))
+        devs.append(HassAqualinkThermostat(dev))
     async_add_entities(devs, True)
 
 
-class OppAqualinkThermostat(AqualinkEntity, ClimateEntity):
+class HassAqualinkThermostat(AqualinkEntity, ClimateEntity):
     """Representation of a thermostat."""
 
     @property

@@ -14,10 +14,10 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.helpers import state as state_helper
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import track_point_in_time
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.helpers import state as state_helper
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import track_point_in_time
+from openpeerpower.util import dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -72,7 +72,7 @@ def setup.opp, config):
         payload_dict = {}
 
         for entity_id in whitelist:
-            state = opp.states.get(entity_id)
+            state =.opp.states.get(entity_id)
 
             if state is None or state.state in (STATE_UNKNOWN, "", STATE_UNAVAILABLE):
                 continue

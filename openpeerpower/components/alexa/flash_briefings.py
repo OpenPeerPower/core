@@ -6,9 +6,9 @@ import uuid
 
 from openpeerpower.components import http
 from openpeerpower.const import CONF_PASSWORD, HTTP_NOT_FOUND, HTTP_UNAUTHORIZED
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import template
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+from openpeerpower.helpers import template
+import openpeerpower.util.dt as dt_util
 
 from .const import (
     API_PASSWORD,

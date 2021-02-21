@@ -1,8 +1,8 @@
 """Binary sensor platform support for wiffi devices."""
 
 from openpeerpower.components.binary_sensor import BinarySensorEntity
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import WiffiEntity
 from .const import CREATE_ENTITY_SIGNAL
@@ -50,4 +50,4 @@ class BoolEntity(WiffiEntity, BinarySensorEntity):
         """
         self.reset_expiration_date()
         self._value = metric.value
-        self.async_write_op.state()
+        self.async_write_ha_state()

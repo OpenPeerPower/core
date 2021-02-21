@@ -5,8 +5,8 @@ import voluptuous as vol
 
 from openpeerpower.components.switch import DEVICE_CLASS_OUTLET, SwitchEntity
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.helpers import config_validation as cv, entity_platform
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers import config_validation as cv, entity_platform
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from . import ATTR_DURATION, DOMAIN, GeniusZone
 
@@ -32,7 +32,7 @@ async def async_setup_platform(
     if discovery_info is None:
         return
 
-    broker = opp.data[DOMAIN]["broker"]
+    broker =.opp.data[DOMAIN]["broker"]
 
     async_add_entities(
         [

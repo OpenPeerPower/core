@@ -6,10 +6,10 @@ from fastdotcom import fast_com
 import voluptuous as vol
 
 from openpeerpower.const import CONF_SCAN_INTERVAL
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.discovery import async_load_platform
-from openpeerpowerr.helpers.dispatcher import dispatcher_send
-from openpeerpowerr.helpers.event import async_track_time_interval
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.discovery import async_load_platform
+from openpeerpower.helpers.dispatcher import dispatcher_send
+from openpeerpower.helpers.event import async_track_time_interval
 
 DOMAIN = "fastdotcom"
 DATA_UPDATED = f"{DOMAIN}_data_updated"
@@ -38,7 +38,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup.opp, config):
     """Set up the Fast.com component."""
     conf = config[DOMAIN]
-    data = opp.data[DOMAIN] = SpeedtestData.opp)
+    data =.opp.data[DOMAIN] = SpeedtestData.opp)
 
     if not conf[CONF_MANUAL]:
         async_track_time_interval.opp, data.update, conf[CONF_SCAN_INTERVAL])
@@ -60,11 +60,11 @@ class SpeedtestData:
     def __init__(self,.opp):
         """Initialize the data object."""
         self.data = None
-        self._opp = opp
+        self..opp =.opp
 
     def update(self, now=None):
         """Get the latest data from fast.com."""
 
         _LOGGER.debug("Executing fast.com speedtest")
         self.data = {"download": fast_com()}
-        dispatcher_send(self._opp, DATA_UPDATED)
+        dispatcher_send(self..opp, DATA_UPDATED)

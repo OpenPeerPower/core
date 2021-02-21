@@ -4,8 +4,8 @@ from hatasmota import const as tasmota_const
 
 from openpeerpower.components import cover
 from openpeerpower.components.cover import CoverEntity
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import DATA_REMOVE_DISCOVER_COMPONENT
 from .discovery import TASMOTA_DISCOVERY_ENTITY_NEW
@@ -16,10 +16,10 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Tasmota cover dynamically through discovery."""
 
     @callback
-    def async_discover(tasmota_entity, discovery_op.h):
+    def async_discover(tasmota_entity, discovery_hash):
         """Discover and add a Tasmota cover."""
         async_add_entities(
-            [TasmotaCover(tasmota_entity=tasmota_entity, discovery_op.h=discovery_op.h)]
+            [TasmotaCover(tasmota_entity=tasmota_entity, discovery_hash=discovery_hash)]
         )
 
    .opp.data[
@@ -52,7 +52,7 @@ class TasmotaCover(
         """Handle state updates."""
         self._direction = kwargs["direction"]
         self._position = kwargs["position"]
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def current_cover_position(self):

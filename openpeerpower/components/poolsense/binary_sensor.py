@@ -26,7 +26,7 @@ BINARY_SENSORS = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Defer sensor setup to the shared sensor module."""
-    coordinator = opp.data[DOMAIN][config_entry.entry_id]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id]
 
     binary_sensors_list = []
     for binary_sensor in BINARY_SENSORS:

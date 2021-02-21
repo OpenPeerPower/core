@@ -14,7 +14,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     host = discovery_info[CONF_HOST]
     name = discovery_info[CONF_NAME]
-    ipcam = opp.data[DATA_IP_WEBCAM][host]
+    ipcam =.opp.data[DATA_IP_WEBCAM][host]
 
     async_add_entities([IPWebcamBinarySensor(name, host, ipcam, "motion_active")], True)
 

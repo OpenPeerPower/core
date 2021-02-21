@@ -215,7 +215,7 @@ class ValveControllerSwitch(ValveControllerEntity, SwitchEntity):
             return
 
         self._is_on = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_on(self, **kwargs) -> None:
         """Turn the valve on (open)."""
@@ -227,4 +227,4 @@ class ValveControllerSwitch(ValveControllerEntity, SwitchEntity):
             return
 
         self._is_on = True
-        self.async_write_op.state()
+        self.async_write_ha_state()

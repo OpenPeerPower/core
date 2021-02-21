@@ -218,17 +218,17 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         registry = await async_get_registry.opp)
         running_instances: Set[int] = set()
         stopped_instances: Set[int] = set()
-        existing_instances = opp.data[DOMAIN][config_entry.entry_id][
+        existing_instances =.opp.data[DOMAIN][config_entry.entry_id][
             CONF_INSTANCE_CLIENTS
         ]
         server_id = cast(str, config_entry.unique_id)
 
         # In practice, an instance can be in 3 states as seen by this function:
         #
-        #    * Exists, and is running: Should be present in OPP/registry.
+        #    * Exists, and is running: Should be present in HASS/registry.
         #    * Exists, but is not running: Cannot add it yet, but entity may have be
         #      registered from a previous time it was running.
-        #    * No longer exists at all: Should not be present in OPP/registry.
+        #    * No longer exists at all: Should not be present in HASS/registry.
 
         # Add instances that are missing.
         for instance in instances:
@@ -299,7 +299,7 @@ async def _async_entry_updated(
    .opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> None:
     """Handle entry updates."""
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry(
@@ -315,7 +315,7 @@ async def async_unload_entry(
         )
     )
     if unload_ok and config_entry.entry_id in.opp.data[DOMAIN]:
-        config_data = opp.data[DOMAIN].pop(config_entry.entry_id)
+        config_data =.opp.data[DOMAIN].pop(config_entry.entry_id)
         for func in config_data[CONF_ON_UNLOAD]:
             func()
 

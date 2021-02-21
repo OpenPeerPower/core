@@ -4,7 +4,7 @@ from typing import Optional
 from openpeerpower.components.sensor import DOMAIN
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import DEVICE_CLASS_TEMPERATURE, TEMP_CELSIUS, TEMP_FAHRENHEIT
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import AqualinkEntity
 from .const import DOMAIN as AQUALINK_DOMAIN
@@ -18,11 +18,11 @@ async def async_setup_entry(
     """Set up discovered sensors."""
     devs = []
     for dev in.opp.data[AQUALINK_DOMAIN][DOMAIN]:
-        devs.append(OppAqualinkSensor(dev))
+        devs.append(HassAqualinkSensor(dev))
     async_add_entities(devs, True)
 
 
-class OppAqualinkSensor(AqualinkEntity):
+class HassAqualinkSensor(AqualinkEntity):
     """Representation of a sensor."""
 
     @property

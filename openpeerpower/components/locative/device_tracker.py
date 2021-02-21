@@ -62,13 +62,13 @@ class LocativeEntity(TrackerEntity):
         """Return the source type, eg gps or router, of the device."""
         return SOURCE_TYPE_GPS
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register state update callback."""
         self._unsub_dispatcher = async_dispatcher_connect(
             self.opp, TRACKER_UPDATE, self._async_receive_data
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Clean up after entity before removal."""
         self._unsub_dispatcher()
 
@@ -79,4 +79,4 @@ class LocativeEntity(TrackerEntity):
             return
         self._location_name = location_name
         self._location = location
-        self.async_write_op.state()
+        self.async_write_ha_state()

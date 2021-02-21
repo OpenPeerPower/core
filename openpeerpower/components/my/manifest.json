@@ -1,7 +1,7 @@
 {
   "domain": "my",
   "name": "My Open Peer Power",
-  "documentation": "https://www.openpeerpower.io/integrations/my",
+  "documentation": "https://www.open-peer-power.io/integrations/my",
   "dependencies": ["frontend"],
-  "codeowners": ["@openpeerpower/core"]
+  "codeowners": ["@open-peer-power/core"]
 }

@@ -167,7 +167,7 @@ class WebDavCalendarData:
     async def async_get_events(self,.opp, start_date, end_date):
         """Get all events in a specific time frame."""
         # Get event list from the current calendar
-        vevent_list = await opp..async_add_executor_job(
+        vevent_list = await.opp.async_add_executor_job(
             self.calendar.date_search, start_date, end_date
         )
         event_list = []
@@ -181,8 +181,8 @@ class WebDavCalendarData:
             data = {
                 "uid": uid,
                 "summary": vevent.summary.value,
-                "start": self.get_opp_date(vevent.dtstart.value),
-                "end": self.get_opp_date(self.get_end_date(vevent)),
+                "start": self.get.opp_date(vevent.dtstart.value),
+                "end": self.get.opp_date(self.get_end_date(vevent)),
                 "location": self.get_attr_value(vevent, "location"),
                 "description": self.get_attr_value(vevent, "description"),
             }
@@ -259,8 +259,8 @@ class WebDavCalendarData:
         # Populate the entity attributes with the event values
         self.event = {
             "summary": vevent.summary.value,
-            "start": self.get_opp_date(vevent.dtstart.value),
-            "end": self.get_opp_date(self.get_end_date(vevent)),
+            "start": self.get.opp_date(vevent.dtstart.value),
+            "end": self.get.opp_date(self.get_end_date(vevent)),
             "location": self.get_attr_value(vevent, "location"),
             "description": self.get_attr_value(vevent, "description"),
         }
@@ -294,7 +294,7 @@ class WebDavCalendarData:
         )
 
     @staticmethod
-    def get_opp_date(obj):
+    def get.opp_date(obj):
         """Return if the event matches."""
         if isinstance(obj, datetime):
             return {"dateTime": obj.isoformat()}

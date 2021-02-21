@@ -139,10 +139,10 @@ class EnOceanSensor(EnOceanEntity, RestoreEntity):
         """Return the unit of measurement."""
         return self._unit_of_measurement
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity about to be added to.opp."""
         # If not None, we got an initial value.
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if self._state is not None:
             return
 
@@ -175,7 +175,7 @@ class EnOceanPowerSensor(EnOceanSensor):
             raw_val = packet.parsed["MR"]["raw_value"]
             divisor = packet.parsed["DIV"]["raw_value"]
             self._state = raw_val / (10 ** divisor)
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
 
 class EnOceanTemperatureSensor(EnOceanSensor):
@@ -214,7 +214,7 @@ class EnOceanTemperatureSensor(EnOceanSensor):
         temperature = temp_scale / temp_range * (raw_val - self.range_from)
         temperature += self._scale_min
         self._state = round(temperature, 1)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
 
 class EnOceanHumiditySensor(EnOceanSensor):
@@ -236,7 +236,7 @@ class EnOceanHumiditySensor(EnOceanSensor):
             return
         humidity = packet.data[2] * 100 / 250
         self._state = round(humidity, 1)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
 
 class EnOceanWindowHandle(EnOceanSensor):
@@ -262,4 +262,4 @@ class EnOceanWindowHandle(EnOceanSensor):
         if action == 0x05:
             self._state = "tilt"
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

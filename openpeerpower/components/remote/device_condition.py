@@ -5,9 +5,9 @@ import voluptuous as vol
 
 from openpeerpower.components.device_automation import toggle_entity
 from openpeerpower.const import CONF_DOMAIN
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers.condition import ConditionCheckerType
-from openpeerpowerr.helpers.typing import ConfigType
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.condition import ConditionCheckerType
+from openpeerpower.helpers.typing import ConfigType
 
 from . import DOMAIN
 

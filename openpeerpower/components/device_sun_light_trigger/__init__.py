@@ -19,14 +19,14 @@ from openpeerpower.const import (
     SUN_EVENT_SUNRISE,
     SUN_EVENT_SUNSET,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import (
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import (
     async_track_point_in_utc_time,
     async_track_state_change,
 )
-from openpeerpowerr.helpers.sun import get_astral_event_next, is_up
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.helpers.sun import get_astral_event_next, is_up
+import openpeerpower.util.dt as dt_util
 
 DOMAIN = "device_sun_light_trigger"
 CONF_DEVICE_GROUP = "device_group"
@@ -85,13 +85,13 @@ async def activate_automation(
 ):
     """Activate the automation."""
     logger = logging.getLogger(__name__)
-    device_tracker = opp.components.device_tracker
-    group = opp.components.group
-    light = opp.components.light
-    person = opp.components.person
+    device_tracker =.opp.components.device_tracker
+    group =.opp.components.group
+    light =.opp.components.light
+    person =.opp.components.person
 
     if device_group is None:
-        device_entity_ids = opp.states.async_entity_ids(device_tracker.DOMAIN)
+        device_entity_ids =.opp.states.async_entity_ids(device_tracker.DOMAIN)
     else:
         device_entity_ids = group.get_entity_ids(device_group, device_tracker.DOMAIN)
         device_entity_ids.extend(group.get_entity_ids(device_group, person.DOMAIN))
@@ -102,7 +102,7 @@ async def activate_automation(
 
     # Get the light IDs from the specified group
     if light_group is None:
-        light_ids = opp.states.async_entity_ids(light.DOMAIN)
+        light_ids =.opp.states.async_entity_ids(light.DOMAIN)
     else:
         light_ids = group.get_entity_ids(light_group, light.DOMAIN)
 
@@ -136,7 +136,7 @@ async def activate_automation(
         """Turn on lights."""
         if not anyone_home() or light.is_on(light_id):
             return
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN_LIGHT,
             SERVICE_TURN_ON,
             {

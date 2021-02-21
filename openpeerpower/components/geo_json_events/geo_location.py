@@ -70,7 +70,7 @@ class GeoJsonFeedEntityManager:
     ):
         """Initialize the GeoJSON Feed Manager."""
 
-        self._opp = opp
+        self..opp =.opp
         self._feed_manager = GenericFeedManager(
             self._generate_entity,
             self._update_entity,
@@ -90,7 +90,7 @@ class GeoJsonFeedEntityManager:
     def _init_regular_updates(self):
         """Schedule regular updates at the specified interval."""
         track_time_interval(
-            self._opp, lambda now: self._feed_manager.update(), self._scan_interval
+            self..opp, lambda now: self._feed_manager.update(), self._scan_interval
         )
 
     def get_entry(self, external_id):
@@ -105,11 +105,11 @@ class GeoJsonFeedEntityManager:
 
     def _update_entity(self, external_id):
         """Update entity."""
-        dispatcher_send(self._opp, f"geo_json_events_update_{external_id}")
+        dispatcher_send(self..opp, f"geo_json_events_update_{external_id}")
 
     def _remove_entity(self, external_id):
         """Remove entity."""
-        dispatcher_send(self._opp, f"geo_json_events_delete_{external_id}")
+        dispatcher_send(self..opp, f"geo_json_events_delete_{external_id}")
 
 
 class GeoJsonLocationEvent(GeolocationEvent):
@@ -126,7 +126,7 @@ class GeoJsonLocationEvent(GeolocationEvent):
         self._remove_signal_delete = None
         self._remove_signal_update = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self._remove_signal_delete = async_dispatcher_connect(
             self.opp,
@@ -149,7 +149,7 @@ class GeoJsonLocationEvent(GeolocationEvent):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     @property
     def should_poll(self):

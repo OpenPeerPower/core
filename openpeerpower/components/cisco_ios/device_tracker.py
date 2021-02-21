@@ -137,7 +137,7 @@ class CiscoDeviceScanner(DeviceScanner):
         return None
 
 
-def _parse_cisco_mac_address(cisco_op.dware_addr):
+def _parse_cisco_mac_address(cisco_hardware_addr):
     """
     Parse a Cisco formatted HW address to normal MAC.
 
@@ -150,9 +150,9 @@ def _parse_cisco_mac_address(cisco_op.dware_addr):
     Takes in cisco_hwaddr: HWAddr String from Cisco ARP table
     Returns a regular standard MAC address
     """
-    cisco_op.dware_addr = cisco_op.dware_addr.replace(".", "")
+    cisco_hardware_addr = cisco_hardware_addr.replace(".", "")
     blocks = [
-        cisco_op.dware_addr[x : x + 2] for x in range(0, len(cisco_op.dware_addr), 2)
+        cisco_hardware_addr[x : x + 2] for x in range(0, len(cisco_hardware_addr), 2)
     ]
 
     return ":".join(blocks).upper()

@@ -17,8 +17,8 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     entities = []
     config_entry_id = config_entry.entry_id
 
-    doorstation = opp.data[DOMAIN][config_entry_id][DOOR_STATION]
-    doorstation_info = opp.data[DOMAIN][config_entry_id][DOOR_STATION_INFO]
+    doorstation =.opp.data[DOMAIN][config_entry_id][DOOR_STATION]
+    doorstation_info =.opp.data[DOMAIN][config_entry_id][DOOR_STATION_INFO]
 
     relays = doorstation_info["RELAYS"]
     relays.append(IR_RELAY)
@@ -84,7 +84,7 @@ class DoorBirdSwitch(DoorBirdEntity, SwitchEntity):
             self.opp, self._async_turn_off, dt_util.utcnow() + self._time
         )
         await self.opp.async_add_executor_job(self._turn_on)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _turn_on(self):
         """Power the relay."""
@@ -102,4 +102,4 @@ class DoorBirdSwitch(DoorBirdEntity, SwitchEntity):
         """Wait for the correct amount of assumed time to pass."""
         self._state = False
         self._reset_sub = None
-        self.async_write_op.state()
+        self.async_write_ha_state()

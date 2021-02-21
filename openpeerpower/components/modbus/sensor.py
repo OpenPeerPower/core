@@ -131,7 +131,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             continue
 
         hub_name = register[CONF_HUB]
-        hub = opp.data[MODBUS_DOMAIN][hub_name]
+        hub =.opp.data[MODBUS_DOMAIN][hub_name]
         sensors.append(
             ModbusRegisterSensor(
                 hub,
@@ -194,7 +194,7 @@ class ModbusRegisterSensor(RestoreEntity):
         self._value = None
         self._available = True
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
         state = await self.async_get_last_state()
         if not state:
@@ -255,7 +255,7 @@ class ModbusRegisterSensor(RestoreEntity):
         else:
             val = struct.unpack(self._structure, byte_string)
 
-            # Issue: https://github.com/openpeerpower/core/issues/41944
+            # Issue: https://github.com/open-peer-power/core/issues/41944
             # If unpack() returns a tuple greater than 1, don't try to process the value.
             # Instead, return the values of unpack(...) separated by commas.
             if len(val) > 1:

@@ -15,9 +15,9 @@ from openpeerpower.components.notify import (
 )
 from openpeerpower.config import load_yaml_config_file
 from openpeerpower.const import ATTR_NAME, CONF_NAME, CONF_PLATFORM
-from openpeerpowerr.helpers import template as template_helper
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import track_state_change
+from openpeerpower.helpers import template as template_helper
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import track_state_change
 
 from .const import DOMAIN
 
@@ -146,11 +146,11 @@ class ApnsNotificationService(BaseNotificationService):
 
     def __init__(self,.opp, app_name, topic, sandbox, cert_file):
         """Initialize APNS application."""
-        self.opp = opp
+        self.opp =.opp
         self.app_name = app_name
         self.sandbox = sandbox
         self.certificate = cert_file
-        self.yaml_path = opp.config.path(f"{app_name}_{APNS_DEVICES}")
+        self.yaml_path =.opp.config.path(f"{app_name}_{APNS_DEVICES}")
         self.devices = {}
         self.device_states = {}
         self.topic = topic

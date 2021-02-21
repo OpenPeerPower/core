@@ -2,7 +2,7 @@
   "domain": "smappee",
   "name": "Smappee",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/smappee",
+  "documentation": "https://www.open-peer-power.io/integrations/smappee",
   "dependencies": ["http"],
   "requirements": [
     "pysmappee==0.2.17"

@@ -57,13 +57,13 @@ async def async_setup.opp, config):
         _LOGGER.info("Setting up %s.%s", DOMAIN, p_type)
         mailbox = None
         try:
-            if hasattr(platform, "async_get_op.dler"):
-                mailbox = await platform.async_get_op.dler(
+            if hasattr(platform, "async_get_handler"):
+                mailbox = await platform.async_get_handler(
                    .opp, p_config, discovery_info
                 )
-            elif hasattr(platform, "get_op.dler"):
-                mailbox = await opp..async_add_executor_job(
-                    platform.get_op.dler,.opp, p_config, discovery_info
+            elif hasattr(platform, "get_handler"):
+                mailbox = await.opp.async_add_executor_job(
+                    platform.get_handler,.opp, p_config, discovery_info
                 )
             else:
                 raise OpenPeerPowerError("Invalid mailbox platform.")
@@ -108,15 +108,15 @@ class MailboxEntity(Entity):
         self.mailbox = mailbox
         self.message_count = 0
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Complete entity initialization."""
 
         @callback
         def _mailbox_updated(event):
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         self.opp.bus.async_listen(EVENT, _mailbox_updated)
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     @property
     def state(self):
@@ -139,7 +139,7 @@ class Mailbox:
 
     def __init__(self,.opp, name):
         """Initialize mailbox object."""
-        self.opp = opp
+        self.opp =.opp
         self.name = name
 
     @callback

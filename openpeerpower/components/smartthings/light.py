@@ -23,7 +23,7 @@ from .const import DATA_BROKERS, DOMAIN
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Add lights for a config entry."""
-    broker = opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
+    broker =.opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
     async_add_entities(
         [
             SmartThingsLight(device)
@@ -110,7 +110,7 @@ class SmartThingsLight(SmartThingsEntity, LightEntity):
 
         # State is set optimistically in the commands above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn the light off."""
@@ -122,7 +122,7 @@ class SmartThingsLight(SmartThingsEntity, LightEntity):
 
         # State is set optimistically in the commands above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     async def async_update(self):
         """Update entity attributes when the device status has changed."""

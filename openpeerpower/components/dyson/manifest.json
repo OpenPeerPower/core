@@ -1,7 +1,7 @@
 {
   "domain": "dyson",
   "name": "Dyson",
-  "documentation": "https://www.openpeerpower.io/integrations/dyson",
+  "documentation": "https://www.open-peer-power.io/integrations/dyson",
   "requirements": ["libpurecool==0.6.4"],
   "after_dependencies": ["zeroconf"],
   "codeowners": []

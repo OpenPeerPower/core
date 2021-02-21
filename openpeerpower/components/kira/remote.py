@@ -17,7 +17,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         name = discovery_info.get(CONF_NAME)
         device = discovery_info.get(CONF_DEVICE)
 
-        kira = opp.data[DOMAIN][CONF_REMOTE][name]
+        kira =.opp.data[DOMAIN][CONF_REMOTE][name]
         add_entities([KiraRemote(device, kira)])
     return True
 

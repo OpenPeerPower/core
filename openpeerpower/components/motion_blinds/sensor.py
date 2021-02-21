@@ -20,8 +20,8 @@ TYPE_GATEWAY = "gateway"
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Perform the setup for Motion Blinds."""
     entities = []
-    motion_gateway = opp.data[DOMAIN][config_entry.entry_id][KEY_GATEWAY]
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][KEY_COORDINATOR]
+    motion_gateway =.opp.data[DOMAIN][config_entry.entry_id][KEY_GATEWAY]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][KEY_COORDINATOR]
 
     for blind in motion_gateway.device_list.values():
         entities.append(MotionSignalStrengthSensor(coordinator, blind, TYPE_BLIND))
@@ -92,15 +92,15 @@ class MotionBatterySensor(CoordinatorEntity, Entity):
         """Return device specific state attributes."""
         return {ATTR_BATTERY_VOLTAGE: self._blind.battery_voltage}
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to multicast pushes."""
-        self._blind.Register_callback(self.unique_id, self.schedule_update_op.state)
-        await super().async_added_to_opp()
+        self._blind.Register_callback(self.unique_id, self.schedule_update_ha_state)
+        await super().async_added_to.opp()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""
         self._blind.Remove_callback(self.unique_id)
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
 
 
 class MotionTDBUBatterySensor(MotionBatterySensor):
@@ -196,12 +196,12 @@ class MotionSignalStrengthSensor(CoordinatorEntity, Entity):
         """Return the state of the sensor."""
         return self._device.RSSI
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to multicast pushes."""
-        self._device.Register_callback(self.unique_id, self.schedule_update_op.state)
-        await super().async_added_to_opp()
+        self._device.Register_callback(self.unique_id, self.schedule_update_ha_state)
+        await super().async_added_to.opp()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""
         self._device.Remove_callback(self.unique_id)
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()

@@ -77,25 +77,25 @@ class MqttScene(
         MqttAvailability.__init__(self, config)
         MqttDiscoveryUpdate.__init__(self, discovery_data, self.discovery_update)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to MQTT events."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     async def discovery_update(self, discovery_payload):
         """Handle updated discovery message."""
         config = PLATFORM_SCHEMA(discovery_payload)
         self._setup_from_config(config)
         await self.availability_discovery_update(config)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _setup_from_config(self, config):
         """(Re)Setup the entity."""
         self._config = config
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""
-        await MqttAvailability.async_will_remove_from_opp(self)
-        await MqttDiscoveryUpdate.async_will_remove_from_opp(self)
+        await MqttAvailability.async_will_remove_from.opp(self)
+        await MqttDiscoveryUpdate.async_will_remove_from.opp(self)
 
     @property
     def name(self):

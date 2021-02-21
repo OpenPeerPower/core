@@ -8,8 +8,8 @@ import mychevy.mychevy as mc
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.helpers import config_validation as cv, discovery
-from openpeerpowerr.util import Throttle
+from openpeerpower.helpers import config_validation as cv, discovery
+from openpeerpower.util import Throttle
 
 DOMAIN = "mychevy"
 UPDATE_TOPIC = DOMAIN
@@ -92,7 +92,7 @@ class MyChevyHub(threading.Thread):
     prevent blocking of other parts of Open Peer Power the architecture
     launches a polling loop in a thread.
 
-    When new data is received, sensors are updated, and opp is
+    When new data is received, sensors are updated, and.opp is
     signaled that there are updates. Sensors are not created until the
     first update, which will be 60 - 120 seconds after the platform
     starts.
@@ -102,8 +102,8 @@ class MyChevyHub(threading.Thread):
         """Initialize MyChevy Hub."""
         super().__init__()
         self._client = client
-        self.opp = opp
-        self.opp_config = opp_config
+        self.opp =.opp
+        self.opp_config =.opp_config
         self.cars = []
         self.status = None
         self.ready = False

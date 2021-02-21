@@ -41,7 +41,7 @@ def import_device.opp, host):
     }
 
     if host not in configured_hosts:
-        task = opp.config_entries.flow.async_init(
+        task =.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_HOST: host},

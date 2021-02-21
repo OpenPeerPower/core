@@ -33,7 +33,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up a sensor for a raincloud device."""
-    raincloud = opp.data[DATA_RAINCLOUD].data
+    raincloud =.opp.data[DATA_RAINCLOUD].data
     default_watering_timer = config.get(CONF_WATERING_TIME)
 
     sensors = []

@@ -8,9 +8,9 @@
             "cannot_connect": "Verbindung fehlgeschlagen"
         },
         "step": {
-            "oppio_confirm": {
-                "description": "M\u00f6chtest du Open Peer Power so konfigurieren, dass eine Verbindung mit AdGuard Home als Opp.io-Add-On hergestellt wird: {addon}?",
-                "title": "AdGuard Home \u00fcber das Opp.io Add-on"
+            .oppio_confirm": {
+                "description": "M\u00f6chtest du Open Peer Power so konfigurieren, dass eine Verbindung mit AdGuard Home als Hass.io-Add-On hergestellt wird: {addon}?",
+                "title": "AdGuard Home \u00fcber das Hass.io Add-on"
             },
             "user": {
                 "data": {

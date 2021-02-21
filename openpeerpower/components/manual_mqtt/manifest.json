@@ -1,7 +1,7 @@
 {
   "domain": "manual_mqtt",
   "name": "Manual MQTT",
-  "documentation": "https://www.openpeerpower.io/integrations/manual_mqtt",
+  "documentation": "https://www.open-peer-power.io/integrations/manual_mqtt",
   "dependencies": ["mqtt"],
   "codeowners": []
 }

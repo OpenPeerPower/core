@@ -12,7 +12,7 @@ from openpeerpower.components.notify import (
     BaseNotificationService,
 )
 from openpeerpower.const import ATTR_LOCATION
-from openpeerpowerr.helpers.reload import setup_reload_service
+from openpeerpower.helpers.reload import setup_reload_service
 
 from . import DOMAIN as TELEGRAM_DOMAIN, PLATFORMS
 
@@ -45,7 +45,7 @@ class TelegramNotificationService(BaseNotificationService):
     def __init__(self,.opp, chat_id):
         """Initialize the service."""
         self._chat_id = chat_id
-        self.opp = opp
+        self.opp =.opp
 
     def send_message(self, message="", **kwargs):
         """Send a message to a user."""

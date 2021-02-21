@@ -26,7 +26,7 @@ TEMPERATURE_NAME_FORMAT = "{} temperature"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Defer sensor setup to the shared sensor module."""
-    await opp..data[HUE_DOMAIN][
+    await.opp.data[HUE_DOMAIN][
         config_entry.entry_id
     ].sensor_manager.async_register_component("sensor", async_add_entities)
 
@@ -34,8 +34,8 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 class GenericHueGaugeSensorEntity(GenericZLLSensor, Entity):
     """Parent class for all 'gauge' Hue device sensors."""
 
-    async def _async_update_op.state(self, *args, **kwargs):
-        await self.async_update_op.state(self, *args, **kwargs)
+    async def _async_update_ha_state(self, *args, **kwargs):
+        await self.async_update_ha_state(self, *args, **kwargs)
 
 
 class HueLightLevel(GenericHueGaugeSensorEntity):

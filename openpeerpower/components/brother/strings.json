@@ -3,7 +3,7 @@
     "flow_title": "Brother Printer: {model} {serial_number}",
     "step": {
       "user": {
-        "description": "Set up Brother printer integration. If you have problems with configuration go to: https://www.openpeerpower.io/integrations/brother",
+        "description": "Set up Brother printer integration. If you have problems with configuration go to: https://www.open-peer-power.io/integrations/brother",
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
           "type": "Type of the printer"

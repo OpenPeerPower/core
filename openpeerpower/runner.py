@@ -42,7 +42,7 @@ class RuntimeConfig:
     open_ui: bool = False
 
 
-class OppEventLoopPolicy(asyncio.DefaultEventLoopPolicy):  # type: ignore[valid-type,misc]
+class HassEventLoopPolicy(asyncio.DefaultEventLoopPolicy):  # type: ignore[valid-type,misc]
     """Event loop policy for Open Peer Power."""
 
     def __init__(self, debug: bool) -> None:
@@ -58,7 +58,7 @@ class OppEventLoopPolicy(asyncio.DefaultEventLoopPolicy):  # type: ignore[valid-
     def new_event_loop(self) -> asyncio.AbstractEventLoop:
         """Get the event loop."""
         loop: asyncio.AbstractEventLoop = super().new_event_loop()
-        loop.set_exception_op.dler(_async_loop_exception_op.dler)
+        loop.set_exception_handler(_async_loop_exception_handler)
         if self.debug:
             loop.set_debug(True)
 
@@ -83,7 +83,7 @@ class OppEventLoopPolicy(asyncio.DefaultEventLoopPolicy):  # type: ignore[valid-
 
 
 @callback
-def _async_loop_exception_op.dler(_: Any, context: Dict[str, Any]) -> None:
+def _async_loop_exception_handler(_: Any, context: Dict[str, Any]) -> None:
     """Handle all exception inside the core loop."""
     kwargs = {}
     exception = context.get("exception")
@@ -95,17 +95,17 @@ def _async_loop_exception_op.dler(_: Any, context: Dict[str, Any]) -> None:
     )
 
 
-async def setup_and_run_opp(runtime_config: RuntimeConfig) -> int:
+async def setup_and_run.opp(runtime_config: RuntimeConfig) -> int:
     """Set up Open Peer Power and run."""
-    opp = await bootstrap.async_setup_opp(runtime_config)
+   .opp = await bootstrap.async_setup.opp(runtime_config)
 
-    if opp is None:
+    if.opp is None:
         return 1
 
-    return await opp..async_run()
+    return await.opp.async_run()
 
 
 def run(runtime_config: RuntimeConfig) -> int:
     """Run Open Peer Power."""
-    asyncio.set_event_loop_policy(OppEventLoopPolicy(runtime_config.debug))
-    return asyncio.run(setup_and_run_opp(runtime_config))
+    asyncio.set_event_loop_policy(HassEventLoopPolicy(runtime_config.debug))
+    return asyncio.run(setup_and_run.opp(runtime_config))

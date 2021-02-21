@@ -7,8 +7,8 @@ from openpeerpower.const import (
     CONF_PORT,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.entity_registry import async_migrate_entries
+from openpeerpower.core import callback
+from openpeerpower.helpers.entity_registry import async_migrate_entries
 
 from .config_flow import get_master_gateway
 from .const import CONF_GROUP_ID_BASE, CONF_MASTER_GATEWAY, DOMAIN
@@ -57,7 +57,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload deCONZ config entry."""
-    gateway = opp.data[DOMAIN].pop(config_entry.unique_id)
+    gateway =.opp.data[DOMAIN].pop(config_entry.unique_id)
 
     if not.opp.data[DOMAIN]:
         await async_unload_services.opp)

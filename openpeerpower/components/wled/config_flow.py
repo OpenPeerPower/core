@@ -26,7 +26,7 @@ class WLEDFlowHandler(ConfigFlow, domain=DOMAIN):
         self, user_input: Optional[ConfigType] = None
     ) -> Dict[str, Any]:
         """Handle a flow initiated by the user."""
-        return await self._op.dle_config_flow(user_input)
+        return await self._handle_config_flow(user_input)
 
     async def async_step_zeroconf(
         self, user_input: Optional[ConfigType] = None
@@ -49,15 +49,15 @@ class WLEDFlowHandler(ConfigFlow, domain=DOMAIN):
         )
 
         # Prepare configuration flow
-        return await self._op.dle_config_flow(user_input, True)
+        return await self._handle_config_flow(user_input, True)
 
     async def async_step_zeroconf_confirm(
         self, user_input: ConfigType = None
     ) -> Dict[str, Any]:
         """Handle a flow initiated by zeroconf."""
-        return await self._op.dle_config_flow(user_input)
+        return await self._handle_config_flow(user_input)
 
-    async def _op.dle_config_flow(
+    async def _handle_config_flow(
         self, user_input: Optional[ConfigType] = None, prepare: bool = False
     ) -> Dict[str, Any]:
         """Config flow handler for WLED."""

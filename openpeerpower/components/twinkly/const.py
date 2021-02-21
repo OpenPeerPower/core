@@ -18,6 +18,6 @@ DEV_MODEL = "product_code"
 
 HIDDEN_DEV_VALUES = (
     "code",  # This is the internal status code of the API response
-    "copyright",  # We should not display a copyright "LEDWORKS 2018" in the Open -Peer-Power UI
+    "copyright",  # We should not display a copyright "LEDWORKS 2018" in the Open-Peer-Power UI
     "mac",  # Does not report the actual device mac address
 )

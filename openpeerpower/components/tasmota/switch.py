@@ -2,8 +2,8 @@
 
 from openpeerpower.components import switch
 from openpeerpower.components.switch import SwitchEntity
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import DATA_REMOVE_DISCOVER_COMPONENT
 from .discovery import TASMOTA_DISCOVERY_ENTITY_NEW
@@ -14,12 +14,12 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Tasmota switch dynamically through discovery."""
 
     @callback
-    def async_discover(tasmota_entity, discovery_op.h):
+    def async_discover(tasmota_entity, discovery_hash):
         """Discover and add a Tasmota switch."""
         async_add_entities(
             [
                 TasmotaSwitch(
-                    tasmota_entity=tasmota_entity, discovery_op.h=discovery_op.h
+                    tasmota_entity=tasmota_entity, discovery_hash=discovery_hash
                 )
             ]
         )

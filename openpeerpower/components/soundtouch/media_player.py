@@ -122,7 +122,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
        .opp.data[DATA_SOUNDTOUCH].append(bose_soundtouch_entity)
         add_entities([bose_soundtouch_entity], True)
 
-    def service_op.dle(service):
+    def service_handle(service):
         """Handle the applying of a service."""
         master_device_id = service.data.get("master")
         slaves_ids = service.data.get("slaves")
@@ -164,25 +164,25 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
    .opp.services.register(
         DOMAIN,
         SERVICE_PLAY_EVERYWHERE,
-        service_op.dle,
+        service_handle,
         schema=SOUNDTOUCH_PLAY_EVERYWHERE,
     )
    .opp.services.register(
         DOMAIN,
         SERVICE_CREATE_ZONE,
-        service_op.dle,
+        service_handle,
         schema=SOUNDTOUCH_CREATE_ZONE_SCHEMA,
     )
    .opp.services.register(
         DOMAIN,
         SERVICE_REMOVE_ZONE_SLAVE,
-        service_op.dle,
+        service_handle,
         schema=SOUNDTOUCH_REMOVE_ZONE_SCHEMA,
     )
    .opp.services.register(
         DOMAIN,
         SERVICE_ADD_ZONE_SLAVE,
-        service_op.dle,
+        service_handle,
         schema=SOUNDTOUCH_ADD_ZONE_SCHEMA,
     )
 
@@ -339,13 +339,13 @@ class SoundTouchDevice(MediaPlayerEntity):
         """Album name of current playing media."""
         return self._status.album
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Populate zone info which requires entity_id."""
 
         @callback
         def async_update_on_start(event):
             """Schedule an update when all platform entities have been added."""
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         self.opp.bus.async_listen_once(
             EVENT_OPENPEERPOWER_START, async_update_on_start

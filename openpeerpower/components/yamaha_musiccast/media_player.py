@@ -28,8 +28,8 @@ from openpeerpower.const import (
     STATE_PLAYING,
     STATE_UNKNOWN,
 )
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.util.dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -64,9 +64,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Yamaha MusicCast platform."""
 
-    known_hosts = opp.data.get(KNOWN_HOSTS_KEY)
+    known_hosts =.opp.data.get(KNOWN_HOSTS_KEY)
     if known_hosts is None:
-        known_hosts = opp.data[KNOWN_HOSTS_KEY] = []
+        known_hosts =.opp.data[KNOWN_HOSTS_KEY] = []
     _LOGGER.debug("known_hosts: %s", known_hosts)
 
     host = config.get(CONF_HOST)
@@ -216,7 +216,7 @@ class YamahaDevice(MediaPlayerEntity):
     def media_position_updated_at(self):
         """When was the position of the current playing media valid.
 
-        Returns value from openpeerpowerr.util.dt.utcnow().
+        Returns value from openpeerpower.util.dt.utcnow().
         """
         return self.media_status_received if self.media_status else None
 
@@ -226,11 +226,11 @@ class YamahaDevice(MediaPlayerEntity):
         self._recv.update_status()
         self._zone.update_status()
 
-    def update_opp(self):
+    def update.opp(self):
         """Push updates to Open Peer Power."""
         if self.entity_id:
-            _LOGGER.debug("update_opp: pushing updates")
-            self.schedule_update_op.state()
+            _LOGGER.debug("update.opp: pushing updates")
+            self.schedule_update_ha_state()
             return True
 
     def turn_on(self):

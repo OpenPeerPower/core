@@ -5,15 +5,15 @@ from openpeerpower.components.mqtt import (
     async_subscribe_connection_status,
     is_connected as mqtt_connected,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.device_registry import CONNECTION_NETWORK_MAC
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.core import callback
+from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity import Entity
 
 from .discovery import (
     TASMOTA_DISCOVERY_ENTITY_UPDATED,
-    clear_discovery_op.h,
-    set_discovery_op.h,
+    clear_discovery_hash,
+    set_discovery_hash,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -28,22 +28,22 @@ class TasmotaEntity(Entity):
         self._tasmota_entity = tasmota_entity
         self._unique_id = tasmota_entity.unique_id
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to MQTT events."""
         self._tasmota_entity.set_on_state_callback(self.state_updated)
         await self._subscribe_topics()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""
         await self._tasmota_entity.unsubscribe_topics()
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
 
     async def discovery_update(self, update, write_state=True):
         """Handle updated discovery message."""
         self._tasmota_entity.config_update(update)
         await self._subscribe_topics()
         if write_state:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def _subscribe_topics(self):
         """(Re)Subscribe to topics."""
@@ -53,7 +53,7 @@ class TasmotaEntity(Entity):
     def state_updated(self, state, **kwargs):
         """Handle state updates."""
         self._state = state
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def device_info(self):
@@ -84,20 +84,20 @@ class TasmotaAvailability(TasmotaEntity):
         self._available = False
         super().__init__(**kwds)
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe to MQTT events."""
         self._tasmota_entity.set_on_availability_callback(self.availability_updated)
         self.async_on_remove(
             async_subscribe_connection_status(self.opp, self.async_mqtt_connected)
         )
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     @callback
     def availability_updated(self, available: bool) -> None:
         """Handle updated availability."""
         self._tasmota_entity.poll_status()
         self._available = available
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_mqtt_connected(self, _):
@@ -105,7 +105,7 @@ class TasmotaAvailability(TasmotaEntity):
         if not self.opp.is_stopping:
             if not mqtt_connected(self.opp):
                 self._available = False
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def available(self) -> bool:
@@ -116,22 +116,22 @@ class TasmotaAvailability(TasmotaEntity):
 class TasmotaDiscoveryUpdate(TasmotaEntity):
     """Mixin used to handle updated discovery message."""
 
-    def __init__(self, discovery_op.h, **kwds) -> None:
+    def __init__(self, discovery_hash, **kwds) -> None:
         """Initialize the discovery update mixin."""
-        self._discovery_op.h = discovery_op.h
-        self._removed_from_opp = False
+        self._discovery_hash = discovery_hash
+        self._removed_from.opp = False
         super().__init__(**kwds)
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe to discovery updates."""
-        self._removed_from_opp = False
-        await super().async_added_to_opp()
+        self._removed_from.opp = False
+        await super().async_added_to.opp()
 
         async def discovery_callback(config):
             """Handle discovery update."""
             _LOGGER.debug(
                 "Got update for entity with hash: %s '%s'",
-                self._discovery_op.h,
+                self._discovery_hash,
                 config,
             )
             if not self._tasmota_entity.config_same(config):
@@ -143,11 +143,11 @@ class TasmotaDiscoveryUpdate(TasmotaEntity):
                 _LOGGER.debug("Ignoring unchanged update for: %s", self.entity_id)
 
         # Set in case the entity has been removed and is re-added, for example when changing entity_id
-        set_discovery_op.h(self.opp, self._discovery_op.h)
+        set_discovery_hash(self.opp, self._discovery_hash)
         self.async_on_remove(
             async_dispatcher_connect(
                 self.opp,
-                TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*self._discovery_op.h),
+                TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*self._discovery_hash),
                 discovery_callback,
             )
         )
@@ -155,12 +155,12 @@ class TasmotaDiscoveryUpdate(TasmotaEntity):
     @callback
     def add_to_platform_abort(self) -> None:
         """Abort adding an entity to a platform."""
-        clear_discovery_op.h(self.opp, self._discovery_op.h)
+        clear_discovery_hash(self.opp, self._discovery_hash)
         super().add_to_platform_abort()
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Stop listening to signal and cleanup discovery data.."""
-        if not self._removed_from_opp:
-            clear_discovery_op.h(self.opp, self._discovery_op.h)
-            self._removed_from_opp = True
-        await super().async_will_remove_from_opp()
+        if not self._removed_from.opp:
+            clear_discovery_hash(self.opp, self._discovery_hash)
+            self._removed_from.opp = True
+        await super().async_will_remove_from.opp()

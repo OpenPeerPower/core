@@ -6,10 +6,10 @@ from satel_integra.satel_integra import AsyncSatel
 import voluptuous as vol
 
 from openpeerpower.const import CONF_HOST, CONF_PORT, EVENT_OPENPEERPOWER_STOP
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.discovery import async_load_platform
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.core import callback
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.discovery import async_load_platform
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 DEFAULT_ALARM_NAME = "satel_integra"
 DEFAULT_PORT = 7094

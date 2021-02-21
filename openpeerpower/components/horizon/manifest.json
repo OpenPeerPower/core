@@ -1,7 +1,7 @@
 {
   "domain": "horizon",
   "name": "Unitymedia Horizon HD Recorder",
-  "documentation": "https://www.openpeerpower.io/integrations/horizon",
+  "documentation": "https://www.open-peer-power.io/integrations/horizon",
   "requirements": ["horimote==0.4.1"],
   "codeowners": []
 }

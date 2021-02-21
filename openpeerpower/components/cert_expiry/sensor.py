@@ -50,7 +50,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Add cert-expiry entry."""
-    coordinator = opp.data[DOMAIN][entry.entry_id]
+    coordinator =.opp.data[DOMAIN][entry.entry_id]
 
     sensors = [
         SSLCertificateTimestamp(coordinator),

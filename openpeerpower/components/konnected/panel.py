@@ -62,7 +62,7 @@ class AlarmPanel:
 
     def __init__(self,.opp, config_entry):
         """Initialize the Konnected device."""
-        self.opp = opp
+        self.opp =.opp
         self.config_entry = config_entry
         self.config = config_entry.data
         self.options = config_entry.options or config_entry.data.get(

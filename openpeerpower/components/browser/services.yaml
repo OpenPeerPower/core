@@ -6,6 +6,6 @@ browse_url:
       name: URL
       description: The URL to open.
       required: true
-      example: "https://www.openpeerpower.io"
+      example: "https://www.open-peer-power.io"
       selector:
         text:

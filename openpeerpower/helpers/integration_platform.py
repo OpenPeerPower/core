@@ -4,13 +4,13 @@ import logging
 from typing import Any, Awaitable, Callable
 
 from openpeerpower.core import Event, OpenPeerPower
-from openpeerpower.loader import async_get_integration, bind_opp
+from openpeerpower.loader import async_get_integration, bind.opp
 from openpeerpower.setup import ATTR_COMPONENT, EVENT_COMPONENT_LOADED
 
 _LOGGER = logging.getLogger(__name__)
 
 
-@bind_opp
+@bind.opp
 async def async_process_integration_platforms(
    .opp: OpenPeerPower,
     platform_name: str,

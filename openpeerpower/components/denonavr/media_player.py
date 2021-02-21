@@ -67,7 +67,7 @@ SUPPORT_MEDIA_MODES = (
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the DenonAVR receiver from a config entry."""
     entities = []
-    receiver = opp.data[DOMAIN][config_entry.entry_id][CONF_RECEIVER]
+    receiver =.opp.data[DOMAIN][config_entry.entry_id][CONF_RECEIVER]
     for receiver_zone in receiver.zones.values():
         if config_entry.data[CONF_SERIAL_NUMBER] is not None:
             unique_id = f"{config_entry.unique_id}-{receiver_zone.zone}"
@@ -118,13 +118,13 @@ class DenonDevice(MediaPlayerEntity):
             self._sound_mode_support and SUPPORT_SELECT_SOUND_MODE
         )
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register signal handler."""
         self.async_on_remove(
-            async_dispatcher_connect(self.opp, DOMAIN, self.signal_op.dler)
+            async_dispatcher_connect(self.opp, DOMAIN, self.signal_handler)
         )
 
-    def signal_op.dler(self, data):
+    def signal_handler(self, data):
         """Handle domain-specific signal by calling appropriate method."""
         entity_ids = data[ATTR_ENTITY_ID]
 

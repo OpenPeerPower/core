@@ -1,7 +1,7 @@
 {
   "domain": "tplink_lte",
   "name": "TP-Link LTE",
-  "documentation": "https://www.openpeerpower.io/integrations/tplink_lte",
+  "documentation": "https://www.open-peer-power.io/integrations/tplink_lte",
   "requirements": ["tp-connected==0.0.4"],
   "codeowners": []
 }

@@ -1,7 +1,7 @@
 {
   "domain": "qbittorrent",
   "name": "qBittorrent",
-  "documentation": "https://www.openpeerpower.io/integrations/qbittorrent",
+  "documentation": "https://www.open-peer-power.io/integrations/qbittorrent",
   "requirements": ["python-qbittorrent==0.4.2"],
   "codeowners": ["@geoffreylagaisse"]
 }

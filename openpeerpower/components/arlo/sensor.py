@@ -46,7 +46,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up an Arlo IP sensor."""
-    arlo = opp.data.get(DATA_ARLO)
+    arlo =.opp.data.get(DATA_ARLO)
     if not arlo:
         return
 
@@ -90,7 +90,7 @@ class ArloSensor(Entity):
         """Return the name of this camera."""
         return self._name
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -101,7 +101,7 @@ class ArloSensor(Entity):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     @property
     def state(self):

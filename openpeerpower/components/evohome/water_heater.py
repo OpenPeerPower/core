@@ -8,8 +8,8 @@ from openpeerpower.components.water_heater import (
     WaterHeaterEntity,
 )
 from openpeerpower.const import PRECISION_TENTHS, PRECISION_WHOLE, STATE_OFF, STATE_ON
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+import openpeerpower.util.dt as dt_util
 
 from . import EvoChild
 from .const import DOMAIN, EVO_FOLLOW, EVO_PERMOVER
@@ -31,7 +31,7 @@ async def async_setup_platform(
     if discovery_info is None:
         return
 
-    broker = opp.data[DOMAIN]["broker"]
+    broker =.opp.data[DOMAIN]["broker"]
 
     _LOGGER.debug(
         "Adding: DhwController (%s), id=%s",

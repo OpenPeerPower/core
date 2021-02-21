@@ -3,7 +3,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries, util
 from openpeerpower.const import CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from .binding import EmulatedRoku
 from .config_flow import configured_servers
@@ -94,5 +94,5 @@ async def async_setup_entry.opp, config_entry):
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
     name = entry.data[CONF_NAME]
-    server = opp.data[DOMAIN].pop(name)
+    server =.opp.data[DOMAIN].pop(name)
     return await server.unload()

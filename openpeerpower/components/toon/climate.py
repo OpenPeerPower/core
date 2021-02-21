@@ -25,7 +25,7 @@ from openpeerpower.const import ATTR_TEMPERATURE, TEMP_CELSIUS
 from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DEFAULT_MAX_TEMP, DEFAULT_MIN_TEMP, DOMAIN
-from .helpers import toon_exception_op.dler
+from .helpers import toon_exception_handler
 from .models import ToonDisplayDeviceEntity
 
 
@@ -33,7 +33,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up a Toon binary sensors based on a config entry."""
-    coordinator = opp.data[DOMAIN][entry.entry_id]
+    coordinator =.opp.data[DOMAIN][entry.entry_id]
     async_add_entities(
         [ToonThermostatDevice(coordinator, name="Thermostat", icon="mdi:thermostat")]
     )
@@ -118,13 +118,13 @@ class ToonThermostatDevice(ToonDisplayDeviceEntity, ClimateEntity):
         """Return the current state of the burner."""
         return {"heating_type": self.coordinator.data.agreement.heating_type}
 
-    @toon_exception_op.dler
+    @toon_exception_handler
     async def async_set_temperature(self, **kwargs) -> None:
         """Change the setpoint of the thermostat."""
         temperature = kwargs.get(ATTR_TEMPERATURE)
         await self.coordinator.toon.set_current_setpoint(temperature)
 
-    @toon_exception_op.dler
+    @toon_exception_handler
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set new preset mode."""
         mapping = {

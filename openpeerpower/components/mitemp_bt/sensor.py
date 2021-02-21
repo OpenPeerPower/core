@@ -18,8 +18,8 @@ from openpeerpower.const import (
     PERCENTAGE,
     TEMP_CELSIUS,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 try:
     import bluepy.btle  # noqa: F401 pylint: disable=unused-import

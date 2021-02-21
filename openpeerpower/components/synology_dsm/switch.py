@@ -19,12 +19,12 @@ async def async_setup_entry(
 ) -> None:
     """Set up the Synology NAS switch."""
 
-    api = opp.data[DOMAIN][entry.unique_id][SYNO_API]
+    api =.opp.data[DOMAIN][entry.unique_id][SYNO_API]
 
     entities = []
 
     if SynoSurveillanceStation.INFO_API_KEY in api.dsm.apis:
-        info = await opp..async_add_executor_job(api.dsm.surveillance_station.get_info)
+        info = await.opp.async_add_executor_job(api.dsm.surveillance_station.get_info)
         version = info["data"]["CMSMinVersion"]
         entities += [
             SynoDSMSurveillanceHomeModeToggle(

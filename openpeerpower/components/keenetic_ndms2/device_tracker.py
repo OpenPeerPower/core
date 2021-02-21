@@ -20,12 +20,12 @@ from openpeerpower.const import (
     CONF_SCAN_INTERVAL,
     CONF_USERNAME,
 )
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers import entity_registry
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.device_registry import CONNECTION_NETWORK_MAC
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers import entity_registry
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+import openpeerpower.util.dt as dt_util
 
 from .const import (
     CONF_CONSIDER_HOME,
@@ -97,7 +97,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ):
     """Set up device tracker for Keenetic NDMS2 component."""
-    router: KeeneticRouter = opp.data[DOMAIN][config_entry.entry_id][ROUTER]
+    router: KeeneticRouter =.opp.data[DOMAIN][config_entry.entry_id][ROUTER]
 
     tracked = set()
 
@@ -228,7 +228,7 @@ class KeeneticTracker(ScannerEntity):
 
         return info
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Client entity created."""
         _LOGGER.debug("New network device tracker %s (%s)", self.name, self.unique_id)
 
@@ -244,7 +244,7 @@ class KeeneticTracker(ScannerEntity):
                 self._device = new_device
                 self._last_seen = dt_util.utcnow()
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self.async_on_remove(
             async_dispatcher_connect(

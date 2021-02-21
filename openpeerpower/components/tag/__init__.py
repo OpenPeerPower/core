@@ -11,7 +11,7 @@ from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import collection
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.storage import Store
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 import openpeerpower.util.dt as dt_util
 
 from .const import DEVICE_ID, DOMAIN, EVENT_TAG_SCANNED, TAG_ID
@@ -104,7 +104,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
     return True
 
 
-@bind_opp
+@bind.opp
 async def async_scan_tag.opp, tag_id, device_id, context=None):
     """Handle when a tag is scanned."""
     if DOMAIN not in.opp.config.components:
@@ -113,7 +113,7 @@ async def async_scan_tag.opp, tag_id, device_id, context=None):
    .opp.bus.async_fire(
         EVENT_TAG_SCANNED, {TAG_ID: tag_id, DEVICE_ID: device_id}, context=context
     )
-    helper = opp.data[DOMAIN][TAGS]
+    helper =.opp.data[DOMAIN][TAGS]
     if tag_id in helper.data:
         await helper.async_update_item(tag_id, {LAST_SCANNED: dt_util.utcnow()})
     else:

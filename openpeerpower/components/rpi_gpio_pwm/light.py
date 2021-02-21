@@ -114,9 +114,9 @@ class PwmSimpleLed(LightEntity, RestoreEntity):
         self._is_on = False
         self._brightness = DEFAULT_BRIGHTNESS
 
-    async def async_added_to_opp(self):
-        """Handle entity about to be added to opp event."""
-        await super().async_added_to_opp()
+    async def async_added_to.opp(self):
+        """Handle entity about to be added to.opp event."""
+        await super().async_added_to.opp()
         last_state = await self.async_get_last_state()
         if last_state:
             self._is_on = last_state.state == STATE_ON
@@ -159,15 +159,15 @@ class PwmSimpleLed(LightEntity, RestoreEntity):
             self._led.transition(
                 transition_time,
                 is_on=True,
-                brightness=_from_opp_brightness(self._brightness),
+                brightness=_from.opp_brightness(self._brightness),
             )
         else:
             self._led.set(
-                is_on=True, brightness=_from_opp_brightness(self._brightness)
+                is_on=True, brightness=_from.opp_brightness(self._brightness)
             )
 
         self._is_on = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn off a LED."""
@@ -179,7 +179,7 @@ class PwmSimpleLed(LightEntity, RestoreEntity):
                 self._led.off()
 
         self._is_on = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
 
 class PwmRgbLed(PwmSimpleLed):
@@ -190,9 +190,9 @@ class PwmRgbLed(PwmSimpleLed):
         super().__init__(led, name)
         self._color = DEFAULT_COLOR
 
-    async def async_added_to_opp(self):
-        """Handle entity about to be added to opp event."""
-        await super().async_added_to_opp()
+    async def async_added_to.opp(self):
+        """Handle entity about to be added to.opp event."""
+        await super().async_added_to.opp()
         last_state = await self.async_get_last_state()
         if last_state:
             self._color = last_state.attributes.get("hs_color", DEFAULT_COLOR)
@@ -219,26 +219,26 @@ class PwmRgbLed(PwmSimpleLed):
             self._led.transition(
                 transition_time,
                 is_on=True,
-                brightness=_from_opp_brightness(self._brightness),
-                color=_from_opp_color(self._color),
+                brightness=_from.opp_brightness(self._brightness),
+                color=_from.opp_color(self._color),
             )
         else:
             self._led.set(
                 is_on=True,
-                brightness=_from_opp_brightness(self._brightness),
-                color=_from_opp_color(self._color),
+                brightness=_from.opp_brightness(self._brightness),
+                color=_from.opp_color(self._color),
             )
 
         self._is_on = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
 
-def _from_opp_brightness(brightness):
+def _from.opp_brightness(brightness):
     """Convert Open Peer Power brightness units to percentage."""
     return brightness / 255
 
 
-def _from_opp_color(color):
+def _from.opp_color(color):
     """Convert Open Peer Power RGB list to Color tuple."""
 
     rgb = color_util.color_hs_to_RGB(*color)

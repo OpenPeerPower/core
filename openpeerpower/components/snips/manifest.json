@@ -1,7 +1,7 @@
 {
   "domain": "snips",
   "name": "Snips",
-  "documentation": "https://www.openpeerpower.io/integrations/snips",
+  "documentation": "https://www.open-peer-power.io/integrations/snips",
   "dependencies": ["mqtt"],
   "codeowners": []
 }

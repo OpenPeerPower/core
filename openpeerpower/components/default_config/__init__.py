@@ -4,7 +4,7 @@ try:
 except ImportError:
     av = None
 
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 DOMAIN = "default_config"
 

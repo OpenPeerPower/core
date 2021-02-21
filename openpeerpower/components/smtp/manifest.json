@@ -1,6 +1,6 @@
 {
   "domain": "smtp",
   "name": "SMTP",
-  "documentation": "https://www.openpeerpower.io/integrations/smtp",
+  "documentation": "https://www.open-peer-power.io/integrations/smtp",
   "codeowners": ["@fabaff"]
 }

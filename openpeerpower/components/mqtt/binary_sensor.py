@@ -126,7 +126,7 @@ class MqttBinarySensor(MqttEntity, BinarySensorEntity):
             """Switch device off after a delay."""
             self._delay_listener = None
             self._state = False
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         @callback
         @log_messages(self.opp, self.entity_id)
@@ -196,7 +196,7 @@ class MqttBinarySensor(MqttEntity, BinarySensorEntity):
                     self.opp, off_delay, off_delay_listener
                 )
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self._sub_state = await subscription.async_subscribe_topics(
             self.opp,
@@ -216,7 +216,7 @@ class MqttBinarySensor(MqttEntity, BinarySensorEntity):
         self._expiration_trigger = None
         self._expired = True
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def name(self):

@@ -4,7 +4,7 @@ import voluptuous as vol
 
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.const import ATTR_ENTITY_ID, CONF_FRIENDLY_NAME, CONF_TRIGGER_TIME
-from openpeerpowerr.helpers import config_validation as cv
+from openpeerpower.helpers import config_validation as cv
 
 from . import CONF_ZONES, DATA_RAINBIRD, DOMAIN, RAINBIRD_CONTROLLER
 
@@ -26,7 +26,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    controller: RainbirdController = opp.data[DATA_RAINBIRD][
+    controller: RainbirdController =.opp.data[DATA_RAINBIRD][
         discovery_info[RAINBIRD_CONTROLLER]
     ]
     available_stations: AvailableStations = controller.get_available_stations()

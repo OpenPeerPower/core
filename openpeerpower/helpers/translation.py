@@ -10,7 +10,7 @@ from openpeerpower.loader import (
     Integration,
     async_get_config_flows,
     async_get_integration,
-    bind_opp,
+    bind.opp,
 )
 from openpeerpower.util.async_ import gather_with_concurrency
 from openpeerpower.util.json import load_json
@@ -180,7 +180,7 @@ async def async_get_component_strings(
         return translations
 
     # Load files
-    load_translations_job = opp.async_add_executor_job(
+    load_translations_job =.opp.async_add_executor_job(
         load_translations_files, files_to_load
     )
     assert load_translations_job is not None
@@ -204,7 +204,7 @@ class _TranslationCache:
 
     def __init__(self,.opp: OpenPeerPowerType) -> None:
         """Initialize the cache."""
-        self.opp = opp
+        self.opp =.opp
         self.loaded: Dict[str, Set[str]] = {}
         self.cache: Dict[str, Dict[str, Dict[str, Any]]] = {}
 
@@ -278,7 +278,7 @@ class _TranslationCache:
                     category_cache[f"component.{component}.{category}"] = resource
 
 
-@bind_opp
+@bind.opp
 async def async_get_translations(
    .opp: OpenPeerPowerType,
     language: str,
@@ -292,7 +292,7 @@ async def async_get_translations(
     Otherwise default to loaded intgrations combined with config flow
     integrations if config_flow is true.
     """
-    lock = opp.data.setdefault(TRANSLATION_LOAD_LOCK, asyncio.Lock())
+    lock =.opp.data.setdefault(TRANSLATION_LOAD_LOCK, asyncio.Lock())
 
     if integration is not None:
         components = {integration}
@@ -307,7 +307,7 @@ async def async_get_translations(
         }
 
     async with lock:
-        cache = opp.data.setdefault(TRANSLATION_FLATTEN_CACHE, _TranslationCache.opp))
+        cache =.opp.data.setdefault(TRANSLATION_FLATTEN_CACHE, _TranslationCache.opp))
         cached = await cache.async_fetch(language, category, components)
 
     return dict(ChainMap(*cached))

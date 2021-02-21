@@ -26,13 +26,13 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import TemplateError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.config_validation import PLATFORM_SCHEMA
-from openpeerpowerr.helpers.entity import async_generate_entity_id
-from openpeerpowerr.helpers.reload import async_setup_reload_service
-from openpeerpowerr.helpers.script import Script
+from openpeerpower.core import callback
+from openpeerpower.exceptions import TemplateError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.config_validation import PLATFORM_SCHEMA
+from openpeerpower.helpers.entity import async_generate_entity_id
+from openpeerpower.helpers.reload import async_setup_reload_service
+from openpeerpower.helpers.script import Script
 
 from .const import CONF_AVAILABILITY_TEMPLATE, DOMAIN, PLATFORMS
 from .template_entity import TemplateEntity
@@ -256,7 +256,7 @@ class LightTemplate(TemplateEntity, LightEntity):
         """Return true if device is on."""
         return self._state
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         if self._template:
             self.add_template_attribute(
@@ -294,7 +294,7 @@ class LightTemplate(TemplateEntity, LightEntity):
                 self._update_white_value,
                 none_on_template_error=True,
             )
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     async def async_turn_on(self, **kwargs):
         """Turn the light on."""
@@ -348,14 +348,14 @@ class LightTemplate(TemplateEntity, LightEntity):
             await self._on_script.async_run(context=self._context)
 
         if optimistic_set:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the light off."""
         await self._off_script.async_run(context=self._context)
         if self._template is None:
             self._state = False
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @callback
     def _update_brightness(self, brightness):

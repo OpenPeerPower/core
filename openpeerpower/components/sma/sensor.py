@@ -16,11 +16,11 @@ from openpeerpower.const import (
     CONF_VERIFY_SSL,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_time_interval
+from openpeerpower.core import callback
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_time_interval
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -221,7 +221,7 @@ class SMAsensor(Entity):
             self._state = self._sensor.value
 
         if update:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def unique_id(self):

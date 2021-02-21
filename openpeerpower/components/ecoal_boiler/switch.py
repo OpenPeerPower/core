@@ -10,7 +10,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up switches based on ecoal interface."""
     if discovery_info is None:
         return
-    ecoal_contr = opp.data[DATA_ECOAL_BOILER]
+    ecoal_contr =.opp.data[DATA_ECOAL_BOILER]
     switches = []
     for pump_id in discovery_info:
         name = AVAILABLE_PUMPS[pump_id]

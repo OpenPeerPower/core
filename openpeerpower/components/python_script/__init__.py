@@ -20,12 +20,12 @@ from RestrictedPython.Guards import (
 import voluptuous as vol
 
 from openpeerpower.const import SERVICE_RELOAD
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers.service import async_set_service_schema
-from openpeerpowerr.loader import bind_opp
-from openpeerpowerr.util import raise_if_invalid_filename
-import openpeerpowerr.util.dt as dt_util
-from openpeerpowerr.util.yaml.loader import load_yaml
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers.service import async_set_service_schema
+from openpeerpower.loader import bind.opp
+from openpeerpower.util import raise_if_invalid_filename
+import openpeerpower.util.dt as dt_util
+from openpeerpower.util.yaml.loader import load_yaml
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -35,7 +35,7 @@ FOLDER = "python_scripts"
 
 CONFIG_SCHEMA = vol.Schema({DOMAIN: vol.Schema(dict)}, extra=vol.ALLOW_EXTRA)
 
-ALLOWED_OPP = {"bus", "services", "states"}
+ALLOWED_HASS = {"bus", "services", "states"}
 ALLOWED_EVENTBUS = {"fire"}
 ALLOWED_STATEMACHINE = {
     "entity_ids",
@@ -78,7 +78,7 @@ class ScriptError(OpenPeerPowerError):
 
 def setup.opp, config):
     """Initialize the Python script component."""
-    path = opp.config.path(FOLDER)
+    path =.opp.config.path(FOLDER)
 
     if not os.path.isdir(path):
         _LOGGER.warning("Folder %s not found in configuration folder", FOLDER)
@@ -86,28 +86,28 @@ def setup.opp, config):
 
     discover_scripts.opp)
 
-    def reload_scripts_op.dler(call):
+    def reload_scripts_handler(call):
         """Handle reload service calls."""
         discover_scripts.opp)
 
-   .opp.services.register(DOMAIN, SERVICE_RELOAD, reload_scripts_op.dler)
+   .opp.services.register(DOMAIN, SERVICE_RELOAD, reload_scripts_handler)
 
     return True
 
 
 def discover_scripts.opp):
     """Discover python scripts in folder."""
-    path = opp.config.path(FOLDER)
+    path =.opp.config.path(FOLDER)
 
     if not os.path.isdir(path):
         _LOGGER.warning("Folder %s not found in configuration folder", FOLDER)
         return False
 
-    def python_script_service_op.dler(call):
+    def python_script_service_handler(call):
         """Handle python script service calls."""
         execute_script.opp, call.service, call.data)
 
-    existing = opp.services.services.get(DOMAIN, {}).keys()
+    existing =.opp.services.services.get(DOMAIN, {}).keys()
     for existing_service in existing:
         if existing_service == SERVICE_RELOAD:
             continue
@@ -122,7 +122,7 @@ def discover_scripts.opp):
 
     for fil in glob.iglob(os.path.join(path, "*.py")):
         name = os.path.splitext(os.path.basename(fil))[0]
-       .opp.services.register(DOMAIN, name, python_script_service_op.dler)
+       .opp.services.register(DOMAIN, name, python_script_service_handler)
 
         service_desc = {
             "description": services_dict.get(name, {}).get("description", ""),
@@ -131,7 +131,7 @@ def discover_scripts.opp):
         async_set_service_schema.opp, DOMAIN, name, service_desc)
 
 
-@bind_opp
+@bind.opp
 def execute_script.opp, name, data=None):
     """Execute a script."""
     filename = f"{name}.py"
@@ -141,7 +141,7 @@ def execute_script.opp, name, data=None):
     execute.opp, filename, source, data)
 
 
-@bind_opp
+@bind.opp
 def execute.opp, filename, source, data=None):
     """Execute Python source."""
 
@@ -164,7 +164,7 @@ def execute.opp, filename, source, data=None):
             raise ScriptError("Not allowed to access async methods")
         if (
             obj is.opp
-            and name not in ALLOWED_OPP
+            and name not in ALLOWED_HASS
             or obj is.opp.bus
             and name not in ALLOWED_EVENTBUS
             or obj is.opp.states
@@ -207,7 +207,7 @@ def execute.opp, filename, source, data=None):
         "_getitem_": default_guarded_getitem,
         "_iter_unpack_sequence_": guarded_iter_unpack_sequence,
         "_unpack_sequence_": guarded_unpack_sequence,
-        "opp":.opp,
+        .opp":.opp,
         "data": data or {},
         "logger": logger,
     }

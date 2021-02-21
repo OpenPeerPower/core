@@ -268,7 +268,7 @@ class EsphomeClimateEntity(EsphomeEntity, ClimateEntity):
         """Set new target temperature (and operation mode if set)."""
         data = {"key": self._static_info.key}
         if ATTR_HVAC_MODE in kwargs:
-            data["mode"] = _climate_modes.from_opp(kwargs[ATTR_HVAC_MODE])
+            data["mode"] = _climate_modes.from.opp(kwargs[ATTR_HVAC_MODE])
         if ATTR_TEMPERATURE in kwargs:
             data["target_temperature"] = kwargs[ATTR_TEMPERATURE]
         if ATTR_TARGET_TEMP_LOW in kwargs:
@@ -280,7 +280,7 @@ class EsphomeClimateEntity(EsphomeEntity, ClimateEntity):
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target operation mode."""
         await self._client.climate_command(
-            key=self._static_info.key, mode=_climate_modes.from_opp(hvac_mode)
+            key=self._static_info.key, mode=_climate_modes.from.opp(hvac_mode)
         )
 
     async def async_set_preset_mode(self, preset_mode):
@@ -291,11 +291,11 @@ class EsphomeClimateEntity(EsphomeEntity, ClimateEntity):
     async def async_set_fan_mode(self, fan_mode: str) -> None:
         """Set new fan mode."""
         await self._client.climate_command(
-            key=self._static_info.key, fan_mode=_fan_modes.from_opp(fan_mode)
+            key=self._static_info.key, fan_mode=_fan_modes.from.opp(fan_mode)
         )
 
     async def async_set_swing_mode(self, swing_mode: str) -> None:
         """Set new swing mode."""
         await self._client.climate_command(
-            key=self._static_info.key, swing_mode=_swing_modes.from_opp(swing_mode)
+            key=self._static_info.key, swing_mode=_swing_modes.from.opp(swing_mode)
         )

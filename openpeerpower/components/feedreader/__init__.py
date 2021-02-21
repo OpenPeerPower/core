@@ -45,7 +45,7 @@ def setup.opp, config):
     urls = config.get(DOMAIN)[CONF_URLS]
     scan_interval = config.get(DOMAIN).get(CONF_SCAN_INTERVAL)
     max_entries = config.get(DOMAIN).get(CONF_MAX_ENTRIES)
-    data_file = opp.config.path(f"{DOMAIN}.pickle")
+    data_file =.opp.config.path(f"{DOMAIN}.pickle")
     storage = StoredData(data_file)
     feeds = [
         FeedManager(url, scan_interval, max_entries,.opp, storage) for url in urls
@@ -62,12 +62,12 @@ class FeedManager:
         self._scan_interval = scan_interval
         self._max_entries = max_entries
         self._feed = None
-        self._opp = opp
+        self..opp =.opp
         self._firstrun = True
         self._storage = storage
         self._last_entry_timestamp = None
         self._last_update_successful = False
-        self._op._published_parsed = False
+        self._has_published_parsed = False
         self._event_type = EVENT_FEEDREADER
         self._feed_id = url
        .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, lambda _: self._update())
@@ -120,7 +120,7 @@ class FeedManager:
                 )
                 self._filter_entries()
                 self._publish_new_entries()
-                if self._op._published_parsed:
+                if self._has_published_parsed:
                     self._storage.put_timestamp(
                         self._feed_id, self._last_entry_timestamp
                     )
@@ -145,15 +145,15 @@ class FeedManager:
         if "published_parsed" in entry and entry.published_parsed:
             # We are lucky, `published_parsed` data available, let's make use of
             # it to publish only new available entries since the last run
-            self._op._published_parsed = True
+            self._has_published_parsed = True
             self._last_entry_timestamp = max(
                 entry.published_parsed, self._last_entry_timestamp
             )
         else:
-            self._op._published_parsed = False
+            self._has_published_parsed = False
             _LOGGER.debug("No published_parsed info available for entry %s", entry)
         entry.update({"feed_url": self._url})
-        self._opp.bus.fire(self._event_type, entry)
+        self..opp.bus.fire(self._event_type, entry)
 
     def _publish_new_entries(self):
         """Publish new entries to the event bus."""

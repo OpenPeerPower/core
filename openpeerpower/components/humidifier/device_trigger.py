@@ -8,7 +8,7 @@ from openpeerpower.components.device_automation import (
     TRIGGER_BASE_SCHEMA,
     toggle_entity,
 )
-from openpeerpower.components.openpeerpowerr.triggers import (
+from openpeerpower.components.openpeerpower.triggers import (
     numeric_state as numeric_state_trigger,
 )
 from openpeerpower.const import (
@@ -22,9 +22,9 @@ from openpeerpower.const import (
     CONF_TYPE,
     PERCENTAGE,
 )
-from openpeerpowerr.core import CALLBACK_TYPE, OpenPeerPower
-from openpeerpowerr.helpers import config_validation as cv, entity_registry
-from openpeerpowerr.helpers.typing import ConfigType
+from openpeerpower.core import CALLBACK_TYPE, OpenPeerPower
+from openpeerpower.helpers import config_validation as cv, entity_registry
+from openpeerpower.helpers.typing import ConfigType
 
 from . import DOMAIN
 

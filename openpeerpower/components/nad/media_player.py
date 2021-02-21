@@ -12,7 +12,7 @@ from openpeerpower.components.media_player.const import (
     SUPPORT_VOLUME_STEP,
 )
 from openpeerpower.const import CONF_HOST, CONF_NAME, STATE_OFF, STATE_ON
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 DEFAULT_TYPE = "RS232"
 DEFAULT_SERIAL_PORT = "/dev/ttyUSB0"

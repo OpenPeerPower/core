@@ -14,7 +14,7 @@ class AxisEntityBase(Entity):
         """Initialize the Axis event."""
         self.device = device
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe device events."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -35,7 +35,7 @@ class AxisEntityBase(Entity):
     @callback
     def update_callback(self, no_delay=None):
         """Update the entities state."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class AxisEventBase(AxisEntityBase):
@@ -46,12 +46,12 @@ class AxisEventBase(AxisEntityBase):
         super().__init__(device)
         self.event = event
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe sensors events."""
         self.event.register_callback(self.update_callback)
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect device object when removed."""
         self.event.remove_callback(self.update_callback)
 

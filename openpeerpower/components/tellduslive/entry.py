@@ -26,14 +26,14 @@ class TelldusLiveEntity(Entity):
         self._name = self.device.name
         self._async_unsub_dispatcher_connect = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         _LOGGER.debug("Created device %s", self)
         self._async_unsub_dispatcher_connect = async_dispatcher_connect(
             self.opp, SIGNAL_UPDATE_ENTITY, self._update_callback
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect dispatcher listener when removed."""
         if self._async_unsub_dispatcher_connect:
             self._async_unsub_dispatcher_connect()
@@ -43,7 +43,7 @@ class TelldusLiveEntity(Entity):
         """Return the property of the device might have changed."""
         if self.device.name:
             self._name = self.device.name
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def device_id(self):

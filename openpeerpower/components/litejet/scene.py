@@ -9,7 +9,7 @@ ATTR_NUMBER = "number"
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up scenes for the LiteJet platform."""
-    litejet_ = opp.data["litejet_system"]
+    litejet_ =.opp.data["litejet_system"]
 
     devices = []
     for i in litejet_.scenes():

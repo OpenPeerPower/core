@@ -3,8 +3,8 @@ import voluptuous as vol
 
 from openpeerpower.components.switch import PLATFORM_SCHEMA
 from openpeerpower.const import DEVICE_DEFAULT_NAME
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import ToggleEntity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import ToggleEntity
 
 from . import CONF_PORTS, DATA_GC100
 
@@ -60,4 +60,4 @@ class GC100Switch(ToggleEntity):
     def set_state(self, state):
         """Set the current state."""
         self._state = state == 1
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

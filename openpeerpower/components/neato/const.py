@@ -57,7 +57,7 @@ ERRORS = {
     "ui_error_dust_bin_missing": "Dust bin missing",
     "ui_error_dust_bin_full": "Dust bin full",
     "ui_error_dust_bin_emptied": "Dust bin emptied",
-    "ui_error_op.dware_failure": "Hardware failure",
+    "ui_error_hardware_failure": "Hardware failure",
     "ui_error_ldrop_stuck": "Clear my path",
     "ui_error_lds_jammed": "Clear my path",
     "ui_error_lds_bad_packets": "Check Neato app",

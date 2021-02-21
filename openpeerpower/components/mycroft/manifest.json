@@ -1,7 +1,7 @@
 {
   "domain": "mycroft",
   "name": "Mycroft",
-  "documentation": "https://www.openpeerpower.io/integrations/mycroft",
+  "documentation": "https://www.open-peer-power.io/integrations/mycroft",
   "requirements": ["mycroftapi==2.0"],
   "codeowners": []
 }

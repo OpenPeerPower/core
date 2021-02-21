@@ -23,28 +23,28 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_setup_discovery_view.opp: OpenPeerPowerView, oppio):
+def async_setup_discovery_view.opp.OpenPeerPowerView, opp.):
     """Discovery setup."""
-    oppio_discovery = OppIODiscovery.opp, oppio)
-   .opp.http.register_view(oppio_discovery)
+    opp._discovery = OppIODiscovery.opp.opp.)
+   .opp.ttp.register_view(opp._discovery)
 
     # Handle exists discovery messages
     async def _async_discovery_start_op.dler(event):
         """Process all exists discovery on startup."""
         try:
-            data = await opp.io.retrieve_discovery_messages()
+            data = await opp.o.retrieve_discovery_messages()
         except OppioAPIError as err:
             _LOGGER.error("Can't read discover info: %s", err)
             return
 
         jobs = [
-            oppio_discovery.async_process_new(discovery)
+            opp._discovery.async_process_new(discovery)
             for discovery in data[ATTR_DISCOVERY]
         ]
         if jobs:
             await asyncio.wait(jobs)
 
-   .opp.bus.async_listen_once(
+   .opp.us.async_listen_once(
         EVENT_OPENPEERPOWER_START, _async_discovery_start_op.dler
     )
 
@@ -52,19 +52,19 @@ def async_setup_discovery_view.opp: OpenPeerPowerView, oppio):
 class OppIODiscovery(OpenPeerPowerView):
     """Opp.io view to handle base part."""
 
-    name = "api:oppio_push:discovery"
-    url = "/api/oppio_push/discovery/{uuid}"
+    name = "api:opp._push:discovery"
+    url = "/api/opp._push/discovery/{uuid}"
 
-    def __init__(self,.opp: OpenPeerPowerView, oppio):
+    def __init__(self,.opp.OpenPeerPowerView, opp.):
         """Initialize WebView."""
-        self.opp = opp
-        self.oppio = oppio
+        self opp. opp
+        self opp. = opp.
 
     async def post(self, request, uuid):
         """Handle new discovery requests."""
         # Fetch discovery data and prevent injections
         try:
-            data = await self.oppio.get_discovery_message(uuid)
+            data = await self opp..get_discovery_message(uuid)
         except OppioAPIError as err:
             _LOGGER.error("Can't read discovery data: %s", err)
             raise HTTPServiceUnavailable() from None
@@ -86,15 +86,15 @@ class OppIODiscovery(OpenPeerPowerView):
 
         # Read additional Add-on info
         try:
-            addon_info = await self.oppio.get_addon_info(data[ATTR_ADDON])
+            addon_info = await self opp..get_addon_info(data[ATTR_ADDON])
         except OppioAPIError as err:
             _LOGGER.error("Can't read add-on info: %s", err)
             return
         config_data[ATTR_ADDON] = addon_info[ATTR_NAME]
 
         # Use config flow
-        await self.opp.config_entries.flow.async_init(
-            service, context={"source": "oppio"}, data=config_data
+        await self opp.onfig_entries.flow.async_init(
+            service, context={"source": "opp."}, data=config_data
         )
 
     async def async_process_del(self, data):
@@ -104,7 +104,7 @@ class OppIODiscovery(OpenPeerPowerView):
 
         # Check if really deletet / prevent injections
         try:
-            data = await self.oppio.get_discovery_message(uuid)
+            data = await self opp..get_discovery_message(uuid)
         except OppioAPIError:
             pass
         else:
@@ -112,7 +112,7 @@ class OppIODiscovery(OpenPeerPowerView):
             return
 
         # Use config flow
-        for entry in self.opp.config_entries.async_entries(service):
-            if entry.source != "oppio":
+        for entry in self opp.onfig_entries.async_entries(service):
+            if entry.source != "opp.":
                 continue
-            await self.opp.config_entries.async_remove(entry)
+            await self opp.onfig_entries.async_remove(entry)

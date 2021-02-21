@@ -118,11 +118,11 @@ class SongpalEntity(MediaPlayerEntity):
         """Return True if the device should be polled."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity is added to.opp."""
         await self.async_activate_websocket()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Run when entity will be removed from.opp."""
         await self._dev.stop_listen_notifications()
 
@@ -134,21 +134,21 @@ class SongpalEntity(MediaPlayerEntity):
             _LOGGER.debug("Volume changed: %s", volume)
             self._volume = volume.volume
             self._is_muted = volume.mute
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         async def _source_changed(content: ContentChange):
             _LOGGER.debug("Source changed: %s", content)
             if content.is_input:
                 self._active_source = self._sources[content.uri]
                 _LOGGER.debug("New active source: %s", self._active_source)
-                self.async_write_op.state()
+                self.async_write_ha_state()
             else:
                 _LOGGER.debug("Got non-handled content change: %s", content)
 
         async def _power_changed(power: PowerChange):
             _LOGGER.debug("Power changed: %s", power)
             self._state = power.status
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         async def _try_reconnect(connect: ConnectChange):
             _LOGGER.warning(
@@ -158,7 +158,7 @@ class SongpalEntity(MediaPlayerEntity):
             )
             _LOGGER.debug("Disconnected: %s", connect.exception)
             self._available = False
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
             # Try to reconnect forever, a successful reconnect will initialize
             # the websocket connection again.
@@ -175,7 +175,7 @@ class SongpalEntity(MediaPlayerEntity):
                 else:
                     # We need to inform HA about the state in case we are coming
                     # back from a disconnected state.
-                    await self.async_update_op.state(force_refresh=True)
+                    await self.async_update_ha_state(force_refresh=True)
 
             self.opp.loop.create_task(self._dev.listen_notifications())
             _LOGGER.warning(

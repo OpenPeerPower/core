@@ -17,8 +17,8 @@ from openpeerpower.components.azure_devops.const import (
     DOMAIN,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.exceptions import PlatformNotReady
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.exceptions import PlatformNotReady
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,7 +33,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up Azure DevOps sensor based on a config entry."""
     instance_key = f"{DOMAIN}_{entry.data[CONF_ORG]}_{entry.data[CONF_PROJECT]}"
-    client = opp.data[instance_key][DATA_AZURE_DEVOPS_CLIENT]
+    client =.opp.data[instance_key][DATA_AZURE_DEVOPS_CLIENT]
     organization = entry.data[DATA_ORG]
     project = entry.data[DATA_PROJECT]
     sensors = []

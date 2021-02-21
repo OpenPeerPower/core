@@ -79,8 +79,8 @@ class HomematicipGenericEntity(Entity):
         is_multi_channel: Optional[bool] = False,
     ) -> None:
         """Initialize the generic entity."""
-        self._op. = op.
-        self._home = op..home
+        self._hap = hap
+        self._home = hap.home
         self._device = device
         self._post = post
         self._channel = channel
@@ -108,9 +108,9 @@ class HomematicipGenericEntity(Entity):
             }
         return None
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register callbacks."""
-        self._op..hmip_device_by_entity_id[self.entity_id] = self._device
+        self._hap.hmip_device_by_entity_id[self.entity_id] = self._device
         self._device.on_update(self._async_device_changed)
         self._device.on_remove(self._async_device_removed)
 
@@ -120,7 +120,7 @@ class HomematicipGenericEntity(Entity):
         # Don't update disabled entities
         if self.enabled:
             _LOGGER.debug("Event %s (%s)", self.name, self._device.modelType)
-            self.async_write_op.state()
+            self.async_write_ha_state()
         else:
             _LOGGER.debug(
                 "Device Changed Event for %s (%s) not fired. Entity is disabled",
@@ -128,7 +128,7 @@ class HomematicipGenericEntity(Entity):
                 self._device.modelType,
             )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Run when hmip device will be removed from.opp."""
 
         # Only go further if the device/entity should be removed from registries
@@ -136,7 +136,7 @@ class HomematicipGenericEntity(Entity):
 
         if self.hmip_device_removed:
             try:
-                del self._op..hmip_device_by_entity_id[self.entity_id]
+                del self._hap.hmip_device_by_entity_id[self.entity_id]
                 await self.async_remove_from_registries()
             except KeyError as err:
                 _LOGGER.debug("Error removing HMIP device from registry: %s", err)

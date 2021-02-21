@@ -1,7 +1,7 @@
 """Platform for switch integration."""
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DOMAIN
 from .devolo_device import DevoloDeviceEntity
@@ -82,4 +82,4 @@ class DevoloSwitch(DevoloDeviceEntity, SwitchEntity):
             ].current
         else:
             self._generic_message(message)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

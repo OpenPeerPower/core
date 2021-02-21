@@ -1,7 +1,7 @@
 {
   "domain": "saj",
   "name": "SAJ Solar Inverter",
-  "documentation": "https://www.openpeerpower.io/integrations/saj",
+  "documentation": "https://www.open-peer-power.io/integrations/saj",
   "requirements": ["pysaj==0.0.16"],
   "codeowners": ["@fredericvl"]
 }

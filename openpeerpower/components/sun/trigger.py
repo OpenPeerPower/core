@@ -9,9 +9,9 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     SUN_EVENT_SUNRISE,
 )
-from openpeerpowerr.core import OppJob, callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import async_track_sunrise, async_track_sunset
+from openpeerpower.core import HassJob, callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import async_track_sunrise, async_track_sunset
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 
@@ -31,12 +31,12 @@ async def async_attach_trigger.opp, config, action, automation_info):
     description = event
     if offset:
         description = f"{description} with offset"
-    job = OppJob(action)
+    job = HassJob(action)
 
     @callback
     def call_action():
         """Call action with right context."""
-       .opp.async_run_opp_job(
+       .opp.async_run.opp_job(
             job,
             {
                 "trigger": {

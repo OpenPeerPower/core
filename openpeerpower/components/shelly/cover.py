@@ -9,7 +9,7 @@ from openpeerpower.components.cover import (
     SUPPORT_STOP,
     CoverEntity,
 )
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from . import ShellyDeviceWrapper
 from .const import COAP, DATA_CONFIG_ENTRY, DOMAIN
@@ -18,7 +18,7 @@ from .entity import ShellyBlockEntity
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up cover for device."""
-    wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][COAP]
+    wrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][COAP]
     blocks = [block for block in wrapper.device.blocks if block.type == "roller"]
 
     if not blocks:
@@ -78,24 +78,24 @@ class ShellyCover(ShellyBlockEntity, CoverEntity):
     async def async_close_cover(self, **kwargs):
         """Close cover."""
         self.control_result = await self.block.set_state(go="close")
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_open_cover(self, **kwargs):
         """Open cover."""
         self.control_result = await self.block.set_state(go="open")
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_cover_position(self, **kwargs):
         """Move the cover to a specific position."""
         self.control_result = await self.block.set_state(
             go="to_pos", roller_pos=kwargs[ATTR_POSITION]
         )
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_stop_cover(self, **_kwargs):
         """Stop the cover."""
         self.control_result = await self.block.set_state(go="stop")
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _update_callback(self):

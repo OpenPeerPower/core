@@ -20,7 +20,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     sensors = []
 
-    ombi = opp.data[DOMAIN]["instance"]
+    ombi =.opp.data[DOMAIN]["instance"]
 
     for sensor in SENSOR_TYPES:
         sensor_label = sensor

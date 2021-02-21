@@ -1,7 +1,7 @@
 {
   "domain": "nanoleaf",
   "name": "Nanoleaf",
-  "documentation": "https://www.openpeerpower.io/integrations/nanoleaf",
+  "documentation": "https://www.open-peer-power.io/integrations/nanoleaf",
   "requirements": ["pynanoleaf==0.0.5"],
   "codeowners": []
 }

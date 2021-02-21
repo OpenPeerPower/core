@@ -1,7 +1,7 @@
 {
   "domain": "proxy",
   "name": "Camera Proxy",
-  "documentation": "https://www.openpeerpower.io/integrations/proxy",
+  "documentation": "https://www.open-peer-power.io/integrations/proxy",
   "requirements": ["pillow==8.1.0"],
   "codeowners": []
 }

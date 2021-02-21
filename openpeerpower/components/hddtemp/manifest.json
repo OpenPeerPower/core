@@ -1,6 +1,6 @@
 {
   "domain": "hddtemp",
   "name": "hddtemp",
-  "documentation": "https://www.openpeerpower.io/integrations/hddtemp",
+  "documentation": "https://www.open-peer-power.io/integrations/hddtemp",
   "codeowners": []
 }

@@ -68,7 +68,7 @@ SUPPORT_APPLE_TV = (
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Load Apple TV media player based on a config entry."""
     name = config_entry.data[CONF_NAME]
-    manager = opp.data[DOMAIN][config_entry.unique_id]
+    manager =.opp.data[DOMAIN][config_entry.unique_id]
     async_add_entities([AppleTvMediaPlayer(name, config_entry.unique_id, manager)])
 
 
@@ -114,14 +114,14 @@ class AppleTvMediaPlayer(AppleTVEntity, MediaPlayerEntity):
     def playstatus_update(self, _, playing):
         """Print what is currently playing when it changes."""
         self._playing = playing
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def playstatus_error(self, _, exception):
         """Inform about an error and restart push updates."""
         _LOGGER.warning("A %s error occurred: %s", exception.__class__, exception)
         self._playing = None
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def app_id(self):
@@ -174,7 +174,7 @@ class AppleTvMediaPlayer(AppleTVEntity, MediaPlayerEntity):
         await self.atv.stream.play_url(media_id)
 
     @property
-    def media_image_op.h(self):
+    def media_image_hash(self):
         """Hash value for media image."""
         state = self.state
         if self._playing and state not in [None, STATE_OFF, STATE_IDLE]:

@@ -7,13 +7,13 @@ from openpeerpower.components.asterisk_mbox import (
     SIGNAL_CDR_UPDATE,
 )
 from openpeerpower.components.mailbox import Mailbox
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 MAILBOX_NAME = "asterisk_cdr"
 
 
-async def async_get_op.dler.opp, config, discovery_info=None):
+async def async_get_handler.opp, config, discovery_info=None):
     """Set up the Asterix CDR platform."""
     return AsteriskCDR.opp, MAILBOX_NAME)
 
@@ -45,7 +45,7 @@ class AsteriskCDR(Mailbox):
                 "callerid": entry["callerid"],
                 "duration": entry["duration"],
             }
-            sha = op.hlib.sha256(str(entry).encode("utf-8")).hexdigest()
+            sha = hashlib.sha256(str(entry).encode("utf-8")).hexdigest()
             msg = (
                 f"Destination: {entry['dest']}\n"
                 f"Application: {entry['application']}\n "

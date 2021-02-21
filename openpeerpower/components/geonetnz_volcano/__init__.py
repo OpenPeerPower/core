@@ -95,7 +95,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload an GeoNet NZ Volcano component config entry."""
-    manager = opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
+    manager =.opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
     await manager.async_stop()
     await asyncio.wait(
         .opp.config_entries.async_forward_entry_unload(config_entry, "sensor")]
@@ -108,7 +108,7 @@ class GeonetnzVolcanoFeedEntityManager:
 
     def __init__(self,.opp, config_entry, radius_in_km, unit_system):
         """Initialize the Feed Entity Manager."""
-        self._opp = opp
+        self..opp =.opp
         self._config_entry = config_entry
         coordinates = (
             config_entry.data[CONF_LATITUDE],
@@ -132,8 +132,8 @@ class GeonetnzVolcanoFeedEntityManager:
     async def async_init(self):
         """Schedule initial and regular updates based on configured time interval."""
 
-        self._opp.async_create_task(
-            self._opp.config_entries.async_forward_entry_setup(
+        self..opp.async_create_task(
+            self..opp.config_entries.async_forward_entry_setup(
                 self._config_entry, "sensor"
             )
         )
@@ -144,7 +144,7 @@ class GeonetnzVolcanoFeedEntityManager:
 
         # Trigger updates at regular intervals.
         self._track_time_remove_callback = async_track_time_interval(
-            self._opp, update, self._scan_interval
+            self..opp, update, self._scan_interval
         )
 
         _LOGGER.debug("Feed entity manager initialized")
@@ -183,7 +183,7 @@ class GeonetnzVolcanoFeedEntityManager:
     async def _generate_entity(self, external_id):
         """Generate new entity."""
         async_dispatcher_send(
-            self._opp,
+            self..opp,
             self.async_event_new_entity(),
             self,
             external_id,
@@ -192,7 +192,7 @@ class GeonetnzVolcanoFeedEntityManager:
 
     async def _update_entity(self, external_id):
         """Update entity."""
-        async_dispatcher_send(self._opp, f"geonetnz_volcano_update_{external_id}")
+        async_dispatcher_send(self..opp, f"geonetnz_volcano_update_{external_id}")
 
     async def _remove_entity(self, external_id):
         """Ignore removing entity."""

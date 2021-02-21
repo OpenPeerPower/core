@@ -140,13 +140,13 @@ def do_authentication.opp,.opp_config, config):
         client_id=config[CONF_CLIENT_ID],
         client_secret=config[CONF_CLIENT_SECRET],
         scope="https://www.googleapis.com/auth/calendar",
-        redirect_uri="Open -Peer-Power.io",
+        redirect_uri="Open-Peer-Power.io",
     )
     try:
         dev_flow = oauth.step1_get_device_and_user_codes()
     except OAuth2DeviceCodeError as err:
        .opp.components.persistent_notification.create(
-            f"Error: {err}<br />You will need to restart opp after fixing." "",
+            f"Error: {err}<br />You will need to restart.opp after fixing." "",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
@@ -154,7 +154,7 @@ def do_authentication.opp,.opp_config, config):
 
    .opp.components.persistent_notification.create(
         (
-            f"In order to authorize Open -Peer-Power to view your calendars "
+            f"In order to authorize Open-Peer-Power to view your calendars "
             f'you must visit: <a href="{dev_flow.verification_url}" target="_blank">{dev_flow.verification_url}</a> and enter '
             f"code: {dev_flow.user_code}"
         ),
@@ -167,7 +167,7 @@ def do_authentication.opp,.opp_config, config):
         if now >= dt.as_local(dev_flow.user_code_expiry):
            .opp.components.persistent_notification.create(
                 "Authentication code expired, please restart "
-                "Open -Peer-Power and try again",
+                "Open-Peer-Power and try again",
                 title=NOTIFICATION_TITLE,
                 notification_id=NOTIFICATION_ID,
             )
@@ -209,7 +209,7 @@ def setup.opp, config):
         # component is set up by tts platform
         return True
 
-    token_file = opp.config.path(TOKEN_FILE)
+    token_file =.opp.config.path(TOKEN_FILE)
     if not os.path.isfile(token_file):
         do_authentication.opp, config, conf)
     else:

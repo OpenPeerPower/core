@@ -80,7 +80,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     interval = config.get(CONF_SCAN_INTERVAL)
 
     if value_template is not None:
-        value_template.opp = opp
+        value_template.opp =.opp
 
     data = EmonCmsData.opp, url, apikey, interval)
 
@@ -145,7 +145,7 @@ class EmonCmsSensor(Entity):
         self._identifier = get_id(
             sensorid, elem["tag"], elem["name"], elem["id"], elem["userid"]
         )
-        self._opp = opp
+        self..opp =.opp
         self._data = data
         self._value_template = value_template
         self._unit_of_measurement = unit_of_measurement
@@ -231,7 +231,7 @@ class EmonCmsData:
         self._apikey = apikey
         self._url = f"{url}/feed/list.json"
         self._interval = interval
-        self._opp = opp
+        self..opp =.opp
         self.data = None
 
     @Throttle(MIN_TIME_BETWEEN_UPDATES)

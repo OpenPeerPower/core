@@ -37,9 +37,9 @@ SENSOR_TYPES = {
             "Upcoming Shabbat Candle Lighting",
             "mdi:candle",
         ],
-        "upcoming_shabbat_op.dalah": ["Upcoming Shabbat Havdalah", "mdi:weather-night"],
+        "upcoming_shabbat_havdalah": ["Upcoming Shabbat Havdalah", "mdi:weather-night"],
         "upcoming_candle_lighting": ["Upcoming Candle Lighting", "mdi:candle"],
-        "upcoming_op.dalah": ["Upcoming Havdalah", "mdi:weather-night"],
+        "upcoming_havdalah": ["Upcoming Havdalah", "mdi:weather-night"],
     },
 }
 
@@ -123,7 +123,7 @@ async def async_setup.opp, config):
         "name": name,
         "language": language,
         "candle_lighting_offset": candle_lighting_offset,
-        "havdalah_offset": op.dalah_offset,
+        "havdalah_offset": havdalah_offset,
         "diaspora": diaspora,
         "prefix": prefix,
     }

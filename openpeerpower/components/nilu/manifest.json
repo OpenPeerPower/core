@@ -1,7 +1,7 @@
 {
   "domain": "nilu",
   "name": "Norwegian Institute for Air Research (NILU)",
-  "documentation": "https://www.openpeerpower.io/integrations/nilu",
+  "documentation": "https://www.open-peer-power.io/integrations/nilu",
   "requirements": ["niluclient==0.1.2"],
   "codeowners": ["@hfurubotten"]
 }

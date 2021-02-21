@@ -29,7 +29,7 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 
 async def async_get_nest_device_id.opp: OpenPeerPower, device_id: str) -> str:
     """Get the nest API device_id from the OpenPeerPower device_id."""
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(device_id)
     for (domain, unique_id) in device.identifiers:
         if domain == DOMAIN:
@@ -43,7 +43,7 @@ async def async_get_device_trigger_types(
     """List event triggers supported for a Nest device."""
     # All devices should have already been loaded so any failures here are
     # "shouldn't happen" cases
-    subscriber = opp.data[DOMAIN][DATA_SUBSCRIBER]
+    subscriber =.opp.data[DOMAIN][DATA_SUBSCRIBER]
     device_manager = await subscriber.async_get_device_manager()
     nest_device = device_manager.devices.get(nest_device_id)
     if not nest_device:

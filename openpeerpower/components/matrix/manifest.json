@@ -1,7 +1,7 @@
 {
   "domain": "matrix",
   "name": "Matrix",
-  "documentation": "https://www.openpeerpower.io/integrations/matrix",
+  "documentation": "https://www.open-peer-power.io/integrations/matrix",
   "requirements": ["matrix-client==0.3.2"],
   "codeowners": ["@tinloaf"]
 }

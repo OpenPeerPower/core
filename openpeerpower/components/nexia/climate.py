@@ -40,9 +40,9 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.helpers import entity_platform
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.dispatcher import dispatcher_send
+from openpeerpower.helpers import entity_platform
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.dispatcher import dispatcher_send
 
 from .const import (
     ATTR_AIRCLEANER_MODE,
@@ -104,7 +104,7 @@ NEXIA_TO_HA_HVAC_MODE_MAP = {
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up climate for a Nexia device."""
 
-    nexia_data = opp.data[DOMAIN][config_entry.entry_id]
+    nexia_data =.opp.data[DOMAIN][config_entry.entry_id]
     nexia_home = nexia_data[NEXIA_DEVICE]
     coordinator = nexia_data[UPDATE_COORDINATOR]
 
@@ -141,10 +141,10 @@ class NexiaZone(NexiaThermostatZoneEntity, ClimateEntity):
         self._undo_aircleaner_dispatcher = None
         # The has_* calls are stable for the life of the device
         # and do not do I/O
-        self._op._relative_humidity = self._thermostat.has_relative_humidity()
-        self._op._emergency_heat = self._thermostat.has_emergency_heat()
-        self._op._humidify_support = self._thermostat.has_humidify_support()
-        self._op._dehumidify_support = self._thermostat.has_dehumidify_support()
+        self._has_relative_humidity = self._thermostat.has_relative_humidity()
+        self._has_emergency_heat = self._thermostat.has_emergency_heat()
+        self._has_humidify_support = self._thermostat.has_humidify_support()
+        self._has_dehumidify_support = self._thermostat.has_dehumidify_support()
 
     @property
     def supported_features(self):
@@ -156,10 +156,10 @@ class NexiaZone(NexiaThermostatZoneEntity, ClimateEntity):
             | SUPPORT_PRESET_MODE
         )
 
-        if self._op._humidify_support or self._op._dehumidify_support:
+        if self._has_humidify_support or self._has_dehumidify_support:
             supported |= SUPPORT_TARGET_HUMIDITY
 
-        if self._op._emergency_heat:
+        if self._has_emergency_heat:
             supported |= SUPPORT_AUX_HEAT
 
         return supported
@@ -222,16 +222,16 @@ class NexiaZone(NexiaThermostatZoneEntity, ClimateEntity):
     @property
     def target_humidity(self):
         """Humidity indoors setpoint."""
-        if self._op._dehumidify_support:
+        if self._has_dehumidify_support:
             return percent_conv(self._thermostat.get_dehumidify_setpoint())
-        if self._op._humidify_support:
+        if self._has_humidify_support:
             return percent_conv(self._thermostat.get_humidify_setpoint())
         return None
 
     @property
     def current_humidity(self):
         """Humidity indoors."""
-        if self._op._relative_humidity:
+        if self._has_relative_humidity:
             return percent_conv(self._thermostat.get_relative_humidity())
         return None
 
@@ -360,7 +360,7 @@ class NexiaZone(NexiaThermostatZoneEntity, ClimateEntity):
 
         data[ATTR_ZONE_STATUS] = self._zone.get_status()
 
-        if not self._op._relative_humidity:
+        if not self._has_relative_humidity:
             return data
 
         min_humidity = percent_conv(self._thermostat.get_humidity_setpoint_limits()[0])
@@ -369,18 +369,18 @@ class NexiaZone(NexiaThermostatZoneEntity, ClimateEntity):
             {
                 ATTR_MIN_HUMIDITY: min_humidity,
                 ATTR_MAX_HUMIDITY: max_humidity,
-                ATTR_DEHUMIDIFY_SUPPORTED: self._op._dehumidify_support,
-                ATTR_HUMIDIFY_SUPPORTED: self._op._humidify_support,
+                ATTR_DEHUMIDIFY_SUPPORTED: self._has_dehumidify_support,
+                ATTR_HUMIDIFY_SUPPORTED: self._has_humidify_support,
             }
         )
 
-        if self._op._dehumidify_support:
+        if self._has_dehumidify_support:
             dehumdify_setpoint = percent_conv(
                 self._thermostat.get_dehumidify_setpoint()
             )
             data[ATTR_DEHUMIDIFY_SETPOINT] = dehumdify_setpoint
 
-        if self._op._humidify_support:
+        if self._has_humidify_support:
             humdify_setpoint = percent_conv(self._thermostat.get_humidify_setpoint())
             data[ATTR_HUMIDIFY_SETPOINT] = humdify_setpoint
 
@@ -420,7 +420,7 @@ class NexiaZone(NexiaThermostatZoneEntity, ClimateEntity):
             self._zone.call_permanent_hold()
             self._zone.set_mode(mode=HA_TO_NEXIA_HVAC_MODE_MAP[hvac_mode])
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def set_aircleaner_mode(self, aircleaner_mode):
         """Set the aircleaner mode."""

@@ -12,8 +12,8 @@ from openpeerpower.components.adguard.const import (
 )
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.exceptions import PlatformNotReady
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.exceptions import PlatformNotReady
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up AdGuard Home switch based on a config entry."""
-    adguard = opp.data[DOMAIN][DATA_ADGUARD_CLIENT]
+    adguard =.opp.data[DOMAIN][DATA_ADGUARD_CLIENT]
 
     try:
         version = await adguard.version()

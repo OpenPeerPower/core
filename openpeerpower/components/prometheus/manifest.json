@@ -1,7 +1,7 @@
 {
   "domain": "prometheus",
   "name": "Prometheus",
-  "documentation": "https://www.openpeerpower.io/integrations/prometheus",
+  "documentation": "https://www.open-peer-power.io/integrations/prometheus",
   "requirements": ["prometheus_client==0.7.1"],
   "dependencies": ["http"],
   "codeowners": ["@knyar"]

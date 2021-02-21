@@ -26,7 +26,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up the SPC binary sensor."""
     if discovery_info is None:
         return
-    api = opp.data[DATA_API]
+    api =.opp.data[DATA_API]
     async_add_entities(
         [
             SpcBinarySensor(zone)
@@ -43,7 +43,7 @@ class SpcBinarySensor(BinarySensorEntity):
         """Initialize the sensor device."""
         self._zone = zone
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call for adding new entities."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -56,7 +56,7 @@ class SpcBinarySensor(BinarySensorEntity):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     @property
     def name(self):

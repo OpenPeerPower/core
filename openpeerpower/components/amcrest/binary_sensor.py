@@ -79,7 +79,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     name = discovery_info[CONF_NAME]
-    device = opp.data[DATA_AMCREST][DEVICES][name]
+    device =.opp.data[DATA_AMCREST][DEVICES][name]
     async_add_entities(
         [
             AmcrestBinarySensor(name, device, sensor_type)
@@ -156,7 +156,7 @@ class AmcrestBinarySensor(BinarySensorEntity):
         _LOGGER.debug(_UPDATE_MSG, self._name)
 
         try:
-            self._state = "channels" in self._api.event_channels_op.pened(
+            self._state = "channels" in self._api.event_channels_happened(
                 self._event_code
             )
         except AmcrestError as error:
@@ -167,18 +167,18 @@ class AmcrestBinarySensor(BinarySensorEntity):
         if self._sensor_type == BINARY_SENSOR_ONLINE:
             _LOGGER.debug(_UPDATE_MSG, self._name)
             self._state = self._api.available
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     @callback
     def async_event_received(self, start):
         """Update state from received event."""
         _LOGGER.debug(_UPDATE_MSG, self._name)
         self._state = start
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to signals."""
         self._unsub_dispatcher.append(
             async_dispatcher_connect(
@@ -196,7 +196,7 @@ class AmcrestBinarySensor(BinarySensorEntity):
                 )
             )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect from update signal."""
         for unsub_dispatcher in self._unsub_dispatcher:
             unsub_dispatcher()

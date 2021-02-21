@@ -115,7 +115,7 @@ class SnapcastGroupDevice(MediaPlayerEntity):
 
     def __init__(self, group, uid_part):
         """Initialize the Snapcast group device."""
-        group.set_callback(self.schedule_update_op.state)
+        group.set_callback(self.schedule_update_ha_state)
         self._group = group
         self._uid = f"{GROUP_PREFIX}{uid_part}_{self._group.identifier}"
 
@@ -179,17 +179,17 @@ class SnapcastGroupDevice(MediaPlayerEntity):
         streams = self._group.streams_by_name()
         if source in streams:
             await self._group.set_stream(streams[source].identifier)
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_mute_volume(self, mute):
         """Send the mute command."""
         await self._group.set_muted(mute)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_volume_level(self, volume):
         """Set the volume level."""
         await self._group.set_volume(round(volume * 100))
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def snapshot(self):
         """Snapshot the group state."""
@@ -205,7 +205,7 @@ class SnapcastClientDevice(MediaPlayerEntity):
 
     def __init__(self, client, uid_part):
         """Initialize the Snapcast client device."""
-        client.set_callback(self.schedule_update_op.state)
+        client.set_callback(self.schedule_update_ha_state)
         self._client = client
         self._uid = f"{CLIENT_PREFIX}{uid_part}_{self._client.identifier}"
 
@@ -285,17 +285,17 @@ class SnapcastClientDevice(MediaPlayerEntity):
         streams = self._client.group.streams_by_name()
         if source in streams:
             await self._client.group.set_stream(streams[source].identifier)
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_mute_volume(self, mute):
         """Send the mute command."""
         await self._client.set_muted(mute)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_volume_level(self, volume):
         """Set the volume level."""
         await self._client.set_volume(round(volume * 100))
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_join(self, master):
         """Join the group of the master player."""
@@ -312,12 +312,12 @@ class SnapcastClientDevice(MediaPlayerEntity):
             if master_entity.identifier in group.clients
         )
         await master_group.add_client(self._client.identifier)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_unjoin(self):
         """Unjoin the group the player is currently in."""
         await self._client.group.remove_client(self._client.identifier)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def snapshot(self):
         """Snapshot the client state."""
@@ -330,4 +330,4 @@ class SnapcastClientDevice(MediaPlayerEntity):
     async def async_set_latency(self, latency):
         """Set the latency of the client."""
         await self._client.set_latency(latency)
-        self.async_write_op.state()
+        self.async_write_ha_state()

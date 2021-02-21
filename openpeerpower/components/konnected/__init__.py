@@ -295,7 +295,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_entry_updated.opp: OpenPeerPower, entry: ConfigEntry):
     """Reload the config entry when options change."""
-    await opp..config_entries.async_reload(entry.entry_id)
+    await.opp.config_entries.async_reload(entry.entry_id)
 
 
 class KonnectedView(OpenPeerPowerView):
@@ -317,8 +317,8 @@ class KonnectedView(OpenPeerPowerView):
 
     async def update_sensor(self, request: Request, device_id) -> Response:
         """Process a put or post."""
-        opp = request.app["opp"]
-        data = opp.data[DOMAIN]
+       .opp = request.app[.opp"]
+        data =.opp.data[DOMAIN]
 
         auth = request.headers.get(AUTHORIZATION)
         tokens = []
@@ -383,8 +383,8 @@ class KonnectedView(OpenPeerPowerView):
 
     async def get(self, request: Request, device_id) -> Response:
         """Return the current binary state of a switch."""
-        opp = request.app["opp"]
-        data = opp.data[DOMAIN]
+       .opp = request.app[.opp"]
+        data =.opp.data[DOMAIN]
 
         device = data[CONF_DEVICES].get(device_id)
         if not device:

@@ -119,7 +119,7 @@ async def async_setup_entry(
         _LOGGER.warning("Failed to connect to %s", host)
         raise PlatformNotReady
 
-    apps_coordinator = opp.data[DOMAIN].get(CONF_APPS)
+    apps_coordinator =.opp.data[DOMAIN].get(CONF_APPS)
 
     entity = VizioDevice(config_entry, device, name, device_class, apps_coordinator)
 
@@ -291,7 +291,7 @@ class VizioDevice(MediaPlayerEntity):
     ) -> None:
         """Send update event when Vizio config entry is updated."""
         # Move this method to component level if another entity ever gets added for a single config entry.
-        # See here: https://github.com/openpeerpower/core/pull/30653#discussion_r366426121
+        # See here: https://github.com/open-peer-power/core/pull/30653#discussion_r366426121
         async_dispatcher_send.opp, config_entry.entry_id, config_entry)
 
     async def _async_update_options(self, config_entry: ConfigEntry) -> None:
@@ -311,7 +311,7 @@ class VizioDevice(MediaPlayerEntity):
             log_api_exception=False,
         )
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register callbacks when entity is added."""
         # Register callback for when config entry is updated.
         self.async_on_remove(
@@ -332,7 +332,7 @@ class VizioDevice(MediaPlayerEntity):
         def apps_list_update():
             """Update list of all apps."""
             self._all_apps = self._apps_coordinator.data
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         if self._device_class == DEVICE_CLASS_TV:
             self.async_on_remove(

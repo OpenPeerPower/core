@@ -33,11 +33,11 @@ CONFIG_SCHEMA = vol.All(AUTH_PROVIDER_SCHEMA, _disallow_id)
 
 
 @callback
-def async_get_provider.opp: OpenPeerPower) -> OppAuthProvider:
+def async_get_provider.opp: OpenPeerPower) -> HassAuthProvider:
     """Get the provider."""
     for prv in.opp.auth.auth_providers:
         if prv.type == "openpeerpower":
-            return cast(OppAuthProvider, prv)
+            return cast(HassAuthProvider, prv)
 
     raise RuntimeError("Provider not found")
 
@@ -58,8 +58,8 @@ class Data:
 
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize the user data store."""
-        self.opp = opp
-        self._store = opp.helpers.storage.Store(
+        self.opp =.opp
+        self._store =.opp.helpers.storage.Store(
             STORAGE_VERSION, STORAGE_KEY, private=True
         )
         self._data: Optional[Dict[str, Any]] = None
@@ -144,10 +144,10 @@ class Data:
             bcrypt.checkpw(b"foo", dummy)
             raise InvalidAuth
 
-        user_op.h = base64.b64decode(found["password"])
+        user_hash = base64.b64decode(found["password"])
 
         # bcrypt.checkpw is timing-safe
-        if not bcrypt.checkpw(password.encode(), user_op.h):
+        if not bcrypt.checkpw(password.encode(), user_hash):
             raise InvalidAuth
 
     def hash_password(  # pylint: disable=no-self-use
@@ -212,7 +212,7 @@ class Data:
 
 
 @AUTH_PROVIDERS.register("openpeerpower")
-class OppAuthProvider(AuthProvider):
+class HassAuthProvider(AuthProvider):
     """Auth provider based on a local storage of users in Open Peer Power config dir."""
 
     DEFAULT_TITLE = "Open Peer Power Local"
@@ -235,7 +235,7 @@ class OppAuthProvider(AuthProvider):
 
     async def async_login_flow(self, context: Optional[Dict]) -> LoginFlow:
         """Return a flow to login."""
-        return OppLoginFlow(self)
+        return HassLoginFlow(self)
 
     async def async_validate_login(self, username: str, password: str) -> None:
         """Validate a username and password."""
@@ -314,7 +314,7 @@ class OppAuthProvider(AuthProvider):
             pass
 
 
-class OppLoginFlow(LoginFlow):
+class HassLoginFlow(LoginFlow):
     """Handler for the login flow."""
 
     async def async_step_init(
@@ -325,7 +325,7 @@ class OppLoginFlow(LoginFlow):
 
         if user_input is not None:
             try:
-                await cast(OppAuthProvider, self._auth_provider).async_validate_login(
+                await cast(HassAuthProvider, self._auth_provider).async_validate_login(
                     user_input["username"], user_input["password"]
                 )
             except InvalidAuth:

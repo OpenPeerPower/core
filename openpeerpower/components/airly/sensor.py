@@ -12,7 +12,7 @@ from openpeerpower.const import (
     PRESSURE_HPA,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
     ATTR_API_HUMIDITY,
@@ -61,7 +61,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Airly sensor entities based on a config entry."""
     name = config_entry.data[CONF_NAME]
 
-    coordinator = opp.data[DOMAIN][config_entry.entry_id]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id]
 
     sensors = []
     for sensor in SENSOR_TYPES:

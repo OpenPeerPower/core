@@ -1,7 +1,7 @@
 {
   "domain": "totalconnect",
   "name": "Honeywell Total Connect Alarm",
-  "documentation": "https://www.openpeerpower.io/integrations/totalconnect",
+  "documentation": "https://www.open-peer-power.io/integrations/totalconnect",
   "requirements": ["total_connect_client==0.55"],
   "codeowners": ["@austinmroczek"],
   "config_flow": true

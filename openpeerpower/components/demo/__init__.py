@@ -3,7 +3,7 @@ import asyncio
 
 from openpeerpower import bootstrap, config_entries
 from openpeerpower.const import ATTR_ENTITY_ID, EVENT_OPENPEERPOWER_START
-import openpeerpowerr.core as ha
+import openpeerpower.core as ha
 
 DOMAIN = "demo"
 
@@ -55,7 +55,7 @@ async def async_setup.opp, config):
            .opp.helpers.discovery.async_load_platform(component, DOMAIN, {}, config)
         )
 
-    config.setdefault(op.DOMAIN, {})
+    config.setdefault(ha.DOMAIN, {})
     config.setdefault(DOMAIN, {})
 
     # Set up sun

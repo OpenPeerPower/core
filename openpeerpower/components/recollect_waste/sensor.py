@@ -71,7 +71,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up ReCollect Waste sensors based on a config entry."""
-    coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]
+    coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]
     async_add_entities([ReCollectWasteSensor(coordinator, entry)])
 
 
@@ -111,14 +111,14 @@ class ReCollectWasteSensor(CoordinatorEntity):
         return f"{self._entry.data[CONF_PLACE_ID]}{self._entry.data[CONF_SERVICE_ID]}"
 
     @callback
-    def _op.dle_coordinator_update(self) -> None:
+    def _handle_coordinator_update(self) -> None:
         """Respond to a DataUpdateCoordinator update."""
         self.update_from_latest_data()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Handle entity which will be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.update_from_latest_data()
 
     @callback

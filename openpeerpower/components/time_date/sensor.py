@@ -55,7 +55,7 @@ class TimeDateSensor(Entity):
         self._name = OPTION_TYPES[option_type]
         self.type = option_type
         self._state = None
-        self.opp = opp
+        self.opp =.opp
         self.unsub = None
 
         self._update_internal_state(dt_util.utcnow())
@@ -79,13 +79,13 @@ class TimeDateSensor(Entity):
             return "mdi:calendar"
         return "mdi:clock"
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Set up first update."""
         self.unsub = async_track_point_in_utc_time(
             self.opp, self.point_in_time_listener, self.get_next_interval()
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Cancel next update."""
         if self.unsub:
             self.unsub()
@@ -153,7 +153,7 @@ class TimeDateSensor(Entity):
     def point_in_time_listener(self, time_date):
         """Get the latest data and update state."""
         self._update_internal_state(time_date)
-        self.async_write_op.state()
+        self.async_write_ha_state()
         self.unsub = async_track_point_in_utc_time(
             self.opp, self.point_in_time_listener, self.get_next_interval()
         )

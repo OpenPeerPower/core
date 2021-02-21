@@ -1,7 +1,7 @@
 {
   "domain": "rflink",
   "name": "RFLink",
-  "documentation": "https://www.openpeerpower.io/integrations/rflink",
+  "documentation": "https://www.open-peer-power.io/integrations/rflink",
   "requirements": ["rflink==0.0.58"],
   "codeowners": [
     "@javicalle"

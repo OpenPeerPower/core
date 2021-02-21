@@ -10,9 +10,9 @@ from openpeerpower.const import (
     PERCENTAGE,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity import Entity
 
 from . import DOMAIN, METRIC_KEY_MODE, SIGNAL_VALLOX_STATE_UPDATE
 
@@ -24,8 +24,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    name = opp.data[DOMAIN]["name"]
-    state_proxy = opp.data[DOMAIN]["state_proxy"]
+    name =.opp.data[DOMAIN]["name"]
+    state_proxy =.opp.data[DOMAIN]["state_proxy"]
 
     sensors = [
         ValloxProfileSensor(
@@ -147,7 +147,7 @@ class ValloxSensor(Entity):
         """Return the state."""
         return self._state
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call to update."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -158,7 +158,7 @@ class ValloxSensor(Entity):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     async def async_update(self):
         """Fetch state from the ventilation unit."""

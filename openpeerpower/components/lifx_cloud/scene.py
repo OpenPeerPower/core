@@ -16,8 +16,8 @@ from openpeerpower.const import (
     HTTP_OK,
     HTTP_UNAUTHORIZED,
 )
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -69,7 +69,7 @@ class LifxCloudScene(Scene):
 
     def __init__(self,.opp, headers, timeout, scene_data):
         """Initialize the scene."""
-        self.opp = opp
+        self.opp =.opp
         self._headers = headers
         self._timeout = timeout
         self._name = scene_data["name"]

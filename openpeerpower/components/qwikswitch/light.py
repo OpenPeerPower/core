@@ -9,7 +9,7 @@ async def async_setup_platform.opp, _, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    qsusb = opp.data[QWIKSWITCH]
+    qsusb =.opp.data[QWIKSWITCH]
     devs = [QSLight(qsid, qsusb) for qsid in discovery_info[QWIKSWITCH]]
     add_entities(devs)
 

@@ -51,7 +51,7 @@ async def async_setup.opp, config):
 async def async_setup_entry.opp, entry):
     """Set up Spider via config entry."""
     try:
-        api = await opp..async_add_executor_job(
+        api = await.opp.async_add_executor_job(
             SpiderApi,
             entry.data[CONF_USERNAME],
             entry.data[CONF_PASSWORD],

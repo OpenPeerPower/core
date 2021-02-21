@@ -8,10 +8,10 @@ import solaredge
 from stringcase import snakecase
 
 from openpeerpower.const import CONF_API_KEY, DEVICE_CLASS_BATTERY, DEVICE_CLASS_POWER
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.core import callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
     UpdateFailed,
@@ -37,7 +37,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
 
     # Check if api can be reached and site is active
     try:
-        response = await opp..async_add_executor_job(
+        response = await.opp.async_add_executor_job(
             api.get_details, entry.data[CONF_SITE_ID]
         )
         if response["details"]["status"].lower() != "active":
@@ -281,7 +281,7 @@ class SolarEdgeDataService:
         self.data = {}
         self.attributes = {}
 
-        self.opp = opp
+        self.opp =.opp
         self.coordinator = None
 
     @callback

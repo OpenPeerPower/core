@@ -13,6 +13,7 @@ from openpeerpower.util import get_local_ip
 
 from .const import (
     CONF_LOCAL_IP,
+    CONFIG_ENTRY_HOSTNAME,
     CONFIG_ENTRY_ST,
     CONFIG_ENTRY_UDN,
     DISCOVERY_LOCATION,
@@ -31,7 +32,13 @@ NOTIFICATION_ID = "upnp_notification"
 NOTIFICATION_TITLE = "UPnP/IGD Setup"
 
 CONFIG_SCHEMA = vol.Schema(
-    {DOMAIN: vol.Schema({vol.Optional(CONF_LOCAL_IP): vol.All(ip_address, cv.string)})},
+    {
+        DOMAIN: vol.Schema(
+            {
+                vol.Optional(CONF_LOCAL_IP): vol.All(ip_address, cv.string),
+            },
+        )
+    },
     extra=vol.ALLOW_EXTRA,
 )
 
@@ -65,7 +72,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
     _LOGGER.debug("async_setup, config: %s", config)
     conf_default = CONFIG_SCHEMA({DOMAIN: {}})[DOMAIN]
     conf = config.get(DOMAIN, conf_default)
-    local_ip = await opp..async_add_executor_job(get_local_ip)
+    local_ip = await.opp.async_add_executor_job(get_local_ip)
    .opp.data[DOMAIN] = {
         DOMAIN_CONFIG: conf,
         DOMAIN_COORDINATORS: {},
@@ -115,6 +122,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
             unique_id=device.unique_id,
         )
 
+    # Ensure entry has a hostname, for older entries.
+    if CONFIG_ENTRY_HOSTNAME not in config_entry.data:
+       .opp.config_entries.async_update_entry(
+            entry=config_entry,
+            data={CONFIG_ENTRY_HOSTNAME: device.hostname, **config_entry.data},
+        )
+
     # Create device registry entry.
     device_registry = await dr.async_get_registry.opp)
     device_registry.async_get_or_create(
@@ -148,4 +162,4 @@ async def async_unload_entry(
         del.opp.data[DOMAIN][DOMAIN_COORDINATORS][udn]
 
     _LOGGER.debug("Deleting sensors")
-    return await opp..config_entries.async_forward_entry_unload(config_entry, "sensor")
+    return await.opp.config_entries.async_forward_entry_unload(config_entry, "sensor")

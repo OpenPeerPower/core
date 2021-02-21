@@ -12,7 +12,7 @@ from .const import DOMAIN as AXIS_DOMAIN
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up a Axis switch."""
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     @callback
     def async_add_switch(event_id):

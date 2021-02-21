@@ -9,10 +9,10 @@ from haphilipsjs import ConnectionFailure, PhilipsTV
 from openpeerpower.components.automation import AutomationActionType
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_API_VERSION, CONF_HOST
-from openpeerpowerr.core import Context, OppJob, OpenPeerPower, callback
-from openpeerpowerr.helpers.debounce import Debouncer
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator
+from openpeerpower.core import Context, HassJob, OpenPeerPower, callback
+from openpeerpower.helpers.debounce import Debouncer
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import DOMAIN
 
@@ -82,7 +82,7 @@ class PluggableAction:
             del self._actions[_remove]
             self._update()
 
-        job = OppJob(action)
+        job = HassJob(action)
 
         self._actions[_remove] = (job, variables)
         self._update()
@@ -94,7 +94,7 @@ class PluggableAction:
     ):
         """Run all turn on triggers."""
         for job, variables in self._actions.values():
-           .opp.async_run_opp_job(job, variables, context)
+           .opp.async_run.opp_job(job, variables, context)
 
 
 class PhilipsTVDataUpdateCoordinator(DataUpdateCoordinator[None]):

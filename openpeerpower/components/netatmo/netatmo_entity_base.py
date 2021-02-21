@@ -6,7 +6,7 @@ from openpeerpower.core import CALLBACK_TYPE, callback
 from openpeerpower.helpers.entity import Entity
 
 from .const import DOMAIN, MANUFACTURER, MODELS, SIGNAL_NAME
-from .data_op.dler import NetatmoDataHandler
+from .data_handler import NetatmoDataHandler
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -14,9 +14,9 @@ _LOGGER = logging.getLogger(__name__)
 class NetatmoBase(Entity):
     """Netatmo entity base class."""
 
-    def __init__(self, data_op.dler: NetatmoDataHandler) -> None:
+    def __init__(self, data_handler: NetatmoDataHandler) -> None:
         """Set up Netatmo entity base."""
-        self.data_op.dler = data_op.dler
+        self.data_handler = data_handler
         self._data_classes: List[Dict] = []
         self._listeners: List[CALLBACK_TYPE] = []
 
@@ -26,14 +26,14 @@ class NetatmoBase(Entity):
         self._name = None
         self._unique_id = None
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Entity created."""
         _LOGGER.debug("New client %s", self.entity_id)
         for data_class in self._data_classes:
             signal_name = data_class[SIGNAL_NAME]
 
             if "home_id" in data_class:
-                await self.data_op.dler.register_data_class(
+                await self.data_handler.register_data_class(
                     data_class["name"],
                     signal_name,
                     self.async_update_callback,
@@ -41,7 +41,7 @@ class NetatmoBase(Entity):
                 )
 
             elif data_class["name"] == "PublicData":
-                await self.data_op.dler.register_data_class(
+                await self.data_handler.register_data_class(
                     data_class["name"],
                     signal_name,
                     self.async_update_callback,
@@ -52,23 +52,23 @@ class NetatmoBase(Entity):
                 )
 
             else:
-                await self.data_op.dler.register_data_class(
+                await self.data_handler.register_data_class(
                     data_class["name"], signal_name, self.async_update_callback
                 )
 
-            await self.data_op.dler.unregister_data_class(signal_name, None)
+            await self.data_handler.unregister_data_class(signal_name, None)
 
         self.async_update_callback()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Run when entity will be removed from.opp."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
 
         for listener in self._listeners:
             listener()
 
         for data_class in self._data_classes:
-            await self.data_op.dler.unregister_data_class(
+            await self.data_handler.unregister_data_class(
                 data_class[SIGNAL_NAME], self.async_update_callback
             )
 
@@ -80,7 +80,7 @@ class NetatmoBase(Entity):
     @property
     def _data(self):
         """Return data for this entity."""
-        return self.data_op.dler.data[self._data_classes[0]["name"]]
+        return self.data_handler.data[self._data_classes[0]["name"]]
 
     @property
     def unique_id(self):

@@ -58,7 +58,7 @@ class FlowManager(abc.ABC):
        .opp: OpenPeerPower,
     ) -> None:
         """Initialize the flow manager."""
-        self.opp = opp
+        self.opp =.opp
         self._initializing: Dict[str, List[asyncio.Future]] = {}
         self._progress: Dict[str, Any] = {}
 
@@ -124,13 +124,13 @@ class FlowManager(abc.ABC):
             self._initializing[handler].remove(init_done)
             raise UnknownFlow("Flow was not created")
         flow.opp = self.opp
-        flow.handler = op.dler
+        flow.handler = handler
         flow.flow_id = uuid.uuid4().hex
         flow.context = context
         self._progress[flow.flow_id] = flow
 
         try:
-            result = await self._async_op.dle_step(
+            result = await self._async_handle_step(
                 flow, flow.init_step, data, init_done
             )
         finally:
@@ -155,7 +155,7 @@ class FlowManager(abc.ABC):
         if cur_step.get("data_schema") is not None and user_input is not None:
             user_input = cur_step["data_schema"](user_input)
 
-        result = await self._async_op.dle_step(flow, cur_step["step_id"], user_input)
+        result = await self._async_handle_step(flow, cur_step["step_id"], user_input)
 
         if cur_step["type"] in (RESULT_TYPE_EXTERNAL_STEP, RESULT_TYPE_SHOW_PROGRESS):
             if cur_step["type"] == RESULT_TYPE_EXTERNAL_STEP and result["type"] not in (
@@ -194,7 +194,7 @@ class FlowManager(abc.ABC):
         if self._progress.pop(flow_id, None) is None:
             raise UnknownFlow
 
-    async def _async_op.dle_step(
+    async def _async_handle_step(
         self,
         flow: Any,
         step_id: str,
@@ -410,7 +410,7 @@ def _create_abort_data(
     return {
         "type": RESULT_TYPE_ABORT,
         "flow_id": flow_id,
-        "handler": op.dler,
+        "handler": handler,
         "reason": reason,
         "description_placeholders": description_placeholders,
     }

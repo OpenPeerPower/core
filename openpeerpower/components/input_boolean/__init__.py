@@ -26,7 +26,7 @@ from openpeerpower.helpers.restore_state import RestoreEntity
 import openpeerpower.helpers.service
 from openpeerpower.helpers.storage import Store
 from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType, ServiceCallType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 DOMAIN = "input_boolean"
 
@@ -77,7 +77,7 @@ class InputBooleanStorageCollection(collection.StorageCollection):
         return {**data, **update_data}
 
 
-@bind_opp
+@bind.opp
 def is_on.opp, entity_id):
     """Test if input_boolean is True."""
     return.opp.states.is_state(entity_id, STATE_ON)
@@ -113,7 +113,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
     ).async_setup.opp)
 
-    async def reload_service_op.dler(service_call: ServiceCallType) -> None:
+    async def reload_service_handler(service_call: ServiceCallType) -> None:
         """Remove all input booleans and load new ones from config."""
         conf = await component.async_prepare_reload(skip_reset=True)
         if conf is None:
@@ -129,7 +129,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
        .opp,
         DOMAIN,
         SERVICE_RELOAD,
-        reload_service_op.dler,
+        reload_service_handler,
         schema=RELOAD_SERVICE_SCHEMA,
     )
 
@@ -189,10 +189,10 @@ class InputBoolean(ToggleEntity, RestoreEntity):
         """Return a unique ID for the person."""
         return self._config[CONF_ID]
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity about to be added to.opp."""
         # If not None, we got an initial value.
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if self._state is not None:
             return
 
@@ -202,14 +202,14 @@ class InputBoolean(ToggleEntity, RestoreEntity):
     async def async_turn_on(self, **kwargs):
         """Turn the entity on."""
         self._state = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the entity off."""
         self._state = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_update_config(self, config: typing.Dict) -> None:
         """Handle when the config is updated."""
         self._config = config
-        self.async_write_op.state()
+        self.async_write_ha_state()

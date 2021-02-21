@@ -56,7 +56,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
-    await opp..config_entries.async_forward_entry_unload(config_entry, "weather")
+    await.opp.config_entries.async_forward_entry_unload(config_entry, "weather")
    .opp.data[DOMAIN][config_entry.entry_id].untrack_home()
    .opp.data[DOMAIN].pop(config_entry.entry_id)
 
@@ -111,7 +111,7 @@ class MetWeatherData:
 
     def __init__(self,.opp, config, is_metric):
         """Initialise the weather entity data."""
-        self.opp = opp
+        self.opp =.opp
         self._config = config
         self._is_metric = is_metric
         self._weather_data = None

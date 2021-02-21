@@ -1,7 +1,7 @@
 """Support to help onboard new users."""
 from openpeerpower.core import callback
 from openpeerpower.helpers.storage import Store
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 from . import views
 from .const import DOMAIN, STEP_CORE_CONFIG, STEP_INTEGRATION, STEP_USER, STEPS
@@ -23,15 +23,15 @@ class OnboadingStorage(Store):
         return old_data
 
 
-@bind_opp
+@bind.opp
 @callback
 def async_is_onboarded.opp):
     """Return if Open Peer Power has been onboarded."""
-    data = opp.data.get(DOMAIN)
+    data =.opp.data.get(DOMAIN)
     return data is None or data is True
 
 
-@bind_opp
+@bind.opp
 @callback
 def async_is_user_onboarded.opp):
     """Return if a user has been created as part of onboarding."""
@@ -51,7 +51,7 @@ async def async_setup.opp, config):
         # If so, mark the user step as done.
         has_owner = False
 
-        for user in await opp..auth.async_get_users():
+        for user in await.opp.auth.async_get_users():
             if user.is_owner:
                 has_owner = True
                 break

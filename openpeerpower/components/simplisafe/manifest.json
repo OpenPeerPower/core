@@ -2,7 +2,7 @@
   "domain": "simplisafe",
   "name": "SimpliSafe",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/simplisafe",
+  "documentation": "https://www.open-peer-power.io/integrations/simplisafe",
   "requirements": ["simplisafe-python==9.6.4"],
   "codeowners": ["@bachya"]
 }

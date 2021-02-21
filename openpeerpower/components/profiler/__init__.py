@@ -53,7 +53,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Profiler from a config entry."""
 
     lock = asyncio.Lock()
-    domain_data = opp.data[DOMAIN] = {}
+    domain_data =.opp.data[DOMAIN] = {}
 
     async def _async_run_profile(call: ServiceCall):
         async with lock:
@@ -72,7 +72,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             title="Object growth logging started",
             notification_id="profile_object_logging",
         )
-        await opp..async_add_executor_job(_log_objects)
+        await.opp.async_add_executor_job(_log_objects)
         domain_data[LOG_INTERVAL_SUB] = async_track_time_interval(
            .opp, _log_objects, call.data[CONF_SCAN_INTERVAL]
         )
@@ -174,9 +174,9 @@ async def _async_generate_profile.opp: OpenPeerPower, call: ServiceCall):
     await asyncio.sleep(float(call.data[CONF_SECONDS]))
     profiler.disable()
 
-    cprofile_path = opp.config.path(f"profile.{start_time}.cprof")
-    callgrind_path = opp.config.path(f"callgrind.out.{start_time}")
-    await opp..async_add_executor_job(
+    cprofile_path =.opp.config.path(f"profile.{start_time}.cprof")
+    callgrind_path =.opp.config.path(f"callgrind.out.{start_time}")
+    await.opp.async_add_executor_job(
         _write_profile, profiler, cprofile_path, callgrind_path
     )
    .opp.components.persistent_notification.async_create(
@@ -198,8 +198,8 @@ async def _async_generate_memory_profile.opp: OpenPeerPower, call: ServiceCall):
     await asyncio.sleep(float(call.data[CONF_SECONDS]))
     heap = heap_profiler.heap()
 
-    heap_path = opp.config.path(f"heap_profile.{start_time}.hpy")
-    await opp..async_add_executor_job(_write_memory_profile, heap, heap_path)
+    heap_path =.opp.config.path(f"heap_profile.{start_time}.hpy")
+    await.opp.async_add_executor_job(_write_memory_profile, heap, heap_path)
    .opp.components.persistent_notification.async_create(
         f"Wrote heapy memory profile to {heap_path}",
         title="Profile Complete",

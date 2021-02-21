@@ -23,7 +23,7 @@
                 "data": {
                     "environment": "Nombre opcional del entorno.",
                     "event_custom_components": "Env\u00eda eventos desde componentes personalizados",
-                    "event_op.dled": "Enviar eventos controlados",
+                    "event_handled": "Enviar eventos controlados",
                     "event_third_party_packages": "Env\u00eda eventos desde paquetes de terceros",
                     "logging_event_level": "El nivel de registro Sentry registrar\u00e1 un evento para",
                     "logging_level": "El nivel de registro Sentry registrar\u00e1 registros como migas de pan para",

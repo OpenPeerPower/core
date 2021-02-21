@@ -32,7 +32,7 @@ HVAC_MODES = [HVAC_MODE_AUTO, HVAC_MODE_HEAT]
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Load a config entry."""
-    coordinator = opp.data[DOMAIN][entry.entry_id]
+    coordinator =.opp.data[DOMAIN][entry.entry_id]
     async_add_entities([AtagThermostat(coordinator, CLIMATE)])
 
 
@@ -91,14 +91,14 @@ class AtagThermostat(AtagEntity, ClimateEntity):
     async def async_set_temperature(self, **kwargs) -> None:
         """Set new target temperature."""
         await self.coordinator.atag.climate.set_temp(kwargs.get(ATTR_TEMPERATURE))
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
         await self.coordinator.atag.climate.set_hvac_mode(hvac_mode)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set new preset mode."""
         await self.coordinator.atag.climate.set_preset_mode(preset_mode)
-        self.async_write_op.state()
+        self.async_write_ha_state()

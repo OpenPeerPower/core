@@ -1,7 +1,7 @@
 """StarLine base entity."""
 from typing import Callable, Optional
 
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.entity import Entity
 
 from .account import StarlineAccount, StarlineDevice
 
@@ -46,16 +46,16 @@ class StarlineEntity(Entity):
 
     def update(self):
         """Read new state data."""
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity about to be added to Open Peer Power."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self._unsubscribe_api = self._account.api.add_update_listener(self.update)
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Call when entity is being removed from Open Peer Power."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         if self._unsubscribe_api is not None:
             self._unsubscribe_api()
             self._unsubscribe_api = None

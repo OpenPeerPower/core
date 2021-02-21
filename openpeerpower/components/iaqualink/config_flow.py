@@ -6,7 +6,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.helpers.typing import ConfigType
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import DOMAIN
 

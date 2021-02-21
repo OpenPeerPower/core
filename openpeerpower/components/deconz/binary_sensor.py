@@ -12,8 +12,8 @@ from openpeerpower.components.binary_sensor import (
     BinarySensorEntity,
 )
 from openpeerpower.const import ATTR_TEMPERATURE
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import ATTR_DARK, ATTR_ON, NEW_SENSOR
 from .deconz_device import DeconzDevice

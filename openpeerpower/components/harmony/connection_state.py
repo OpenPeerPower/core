@@ -1,7 +1,7 @@
 """Mixin class for handling connection state changes."""
 import logging
 
-from openpeerpowerr.helpers.event import async_call_later
+from openpeerpower.helpers.event import async_call_later
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -19,7 +19,7 @@ class ConnectionStateMixin:
     async def got_connected(self, _=None):
         """Notification that we're connected to the HUB."""
         _LOGGER.debug("%s: connected to the HUB", self._name)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
         self._clear_disconnection_delay()
 
@@ -41,4 +41,4 @@ class ConnectionStateMixin:
         self._unsub_mark_disconnected = None
         if not self.available:
             # Still disconnected. Let the state engine know.
-            self.async_write_op.state()
+            self.async_write_ha_state()

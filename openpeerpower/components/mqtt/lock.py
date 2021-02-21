@@ -135,7 +135,7 @@ class MqttLock(MqttEntity, LockEntity):
             elif payload == self._config[CONF_STATE_UNLOCKED]:
                 self._state = False
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         if self._config.get(CONF_STATE_TOPIC) is None:
             # Force into optimistic mode.
@@ -183,7 +183,7 @@ class MqttLock(MqttEntity, LockEntity):
         if self._optimistic:
             # Optimistically assume that the lock has changed state.
             self._state = True
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_unlock(self, **kwargs):
         """Unlock the device.
@@ -200,4 +200,4 @@ class MqttLock(MqttEntity, LockEntity):
         if self._optimistic:
             # Optimistically assume that the lock has changed state.
             self._state = False
-            self.async_write_op.state()
+            self.async_write_ha_state()

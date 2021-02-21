@@ -6,8 +6,8 @@ from regenmaschine.controller import Controller
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import TEMP_CELSIUS, VOLUME_CUBIC_METERS
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from . import RainMachineEntity
 from .const import (
@@ -72,8 +72,8 @@ async def async_setup_entry(
    .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up RainMachine sensors based on a config entry."""
-    controller = opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id]
-    coordinators = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]
+    controller =.opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id]
+    coordinators =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]
 
     @callback
     def async_get_sensor(api_category: str) -> partial:

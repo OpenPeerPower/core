@@ -2,7 +2,7 @@
 
 import voluptuous as vol
 
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 DOMAIN = "upb"
 

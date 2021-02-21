@@ -27,11 +27,11 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONF_VERIFY_SSL,
 )
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -124,7 +124,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigType) -> bool:
    .opp.services.async_remove(DOMAIN, SERVICE_REFRESH)
 
     for component in "sensor", "switch":
-        await opp..config_entries.async_forward_entry_unload(entry, component)
+        await.opp.config_entries.async_forward_entry_unload(entry, component)
 
     del.opp.data[DOMAIN]
 

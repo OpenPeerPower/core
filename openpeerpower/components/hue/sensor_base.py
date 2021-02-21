@@ -165,7 +165,7 @@ class GenericHueSensor(GenericHueDevice, entity.Entity):
 
     should_poll = False
 
-    async def _async_update_op.state(self, *args, **kwargs):
+    async def _async_update_ha_state(self, *args, **kwargs):
         raise NotImplementedError
 
     @property
@@ -177,11 +177,11 @@ class GenericHueSensor(GenericHueDevice, entity.Entity):
             or self.sensor.config.get("reachable", True)
         )
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """When entity is added to.opp."""
         self.async_on_remove(
             self.bridge.sensor_manager.coordinator.async_add_listener(
-                self.async_write_op.state
+                self.async_write_ha_state
             )
         )
 

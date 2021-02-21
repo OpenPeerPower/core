@@ -6,9 +6,9 @@ from typing import Any, Dict, Generator, Optional
 
 import async_timeout
 from pywemo import WeMoDevice
-from pywemo.ouimeaux_device.api.service import ActionException
+from pywemo.exceptions import ActionException
 
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.entity import Entity
 
 from .const import DOMAIN as WEMO_DOMAIN
 
@@ -16,9 +16,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class ExceptionHandlerStatus:
-    """Exit status from the _wemo_exception_op.dler context manager."""
+    """Exit status from the _wemo_exception_handler context manager."""
 
-    # An exception if one was raised in the _wemo_exception_op.dler.
+    # An exception if one was raised in the _wemo_exception_handler.
     exception: Optional[Exception] = None
 
     @property
@@ -39,6 +39,7 @@ class WemoEntity(Entity):
         self._state = None
         self._available = True
         self._update_lock = None
+        self._has_polled = False
 
     @property
     def name(self) -> str:
@@ -51,7 +52,7 @@ class WemoEntity(Entity):
         return self._available
 
     @contextlib.contextmanager
-    def _wemo_exception_op.dler(
+    def _wemo_exception_handler(
         self, message: str
     ) -> Generator[ExceptionHandlerStatus, None, None]:
         """Wrap device calls to set `_available` when wemo exceptions happen."""
@@ -71,7 +72,7 @@ class WemoEntity(Entity):
         """Update the device state."""
         raise NotImplementedError()
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Wemo device added to Open Peer Power."""
         # Define inside async context so we know our event loop
         self._update_lock = asyncio.Lock()
@@ -103,6 +104,7 @@ class WemoEntity(Entity):
         """Try updating within an async lock."""
         async with self._update_lock:
             await self.opp.async_add_executor_job(self._update, force_update)
+            self._has_polled = True
             # When the timeout expires OpenPeerPower is no longer waiting for an
             # update from the device. Instead, the state needs to be updated
             # asynchronously. This also handles the case where an update came
@@ -110,7 +112,7 @@ class WemoEntity(Entity):
             # update was involved and the state also needs to be updated
             # asynchronously.
             if not timeout or timeout.expired:
-                self.async_write_op.state()
+                self.async_write_ha_state()
 
 
 class WemoSubscriptionEntity(WemoEntity):
@@ -136,15 +138,33 @@ class WemoSubscriptionEntity(WemoEntity):
         """Return true if the state is on. Standby is on."""
         return self._state
 
-    async def async_added_to_opp(self) -> None:
+    @property
+    def should_poll(self) -> bool:
+        """Return True if the the device requires local polling, False otherwise.
+
+        Polling can be disabled if three conditions are met:
+        1. The device has polled to get the initial state (self._has_polled).
+        2. The polling was successful and the device is in a healthy state
+           (self.available).
+        3. The pywemo subscription registry reports that there is an active
+           subscription and the subscription has been confirmed by receiving an
+           initial event. This confirms that device push notifications are
+           working correctly (registry.is_subscribed - this method is async safe).
+        """
+        registry = self.opp.data[WEMO_DOMAIN]["registry"]
+        return not (
+            self.available and self._has_polled and registry.is_subscribed(self.wemo)
+        )
+
+    async def async_added_to.opp(self) -> None:
         """Wemo device added to Open Peer Power."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         registry = self.opp.data[WEMO_DOMAIN]["registry"]
         await self.opp.async_add_executor_job(registry.register, self.wemo)
         registry.on(self.wemo, None, self._subscription_callback)
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Wemo device removed from.opp."""
         registry = self.opp.data[WEMO_DOMAIN]["registry"]
         await self.opp.async_add_executor_job(registry.unregister, self.wemo)

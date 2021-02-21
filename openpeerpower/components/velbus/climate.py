@@ -18,8 +18,8 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Velbus binary sensor based on config_entry."""
-    cntrl = opp.data[DOMAIN][entry.entry_id]["cntrl"]
-    modules_data = opp.data[DOMAIN][entry.entry_id]["climate"]
+    cntrl =.opp.data[DOMAIN][entry.entry_id]["cntrl"]
+    modules_data =.opp.data[DOMAIN][entry.entry_id]["climate"]
     entities = []
     for address, channel in modules_data:
         module = cntrl.get_module(address)
@@ -78,7 +78,7 @@ class VelbusClimate(VelbusEntity, ClimateEntity):
         except VelbusException as err:
             _LOGGER.error("A Velbus error occurred: %s", err)
             return
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""

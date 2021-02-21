@@ -100,7 +100,7 @@ class TodSensor(BinarySensorEntity):
 
     @property
     def current_datetime(self):
-        """Return local current datetime according to opp configuration."""
+        """Return local current datetime according to.opp configuration."""
         return dt_util.utcnow()
 
     @property
@@ -145,7 +145,7 @@ class TodSensor(BinarySensorEntity):
             # Convert local time provided to UTC today
             # datetime.combine(date, time, tzinfo) is not supported
             # in python 3.5. The self._after is provided
-            # with opp configured TZ not system wide
+            # with.opp configured TZ not system wide
             after_event_date = self._naive_time_to_utc_datetime(self._after)
 
         self._time_after = after_event_date
@@ -211,7 +211,7 @@ class TodSensor(BinarySensorEntity):
             # Offset is already there
             self._time_before += timedelta(days=1)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity about to be added to Open Peer Power."""
         self._calculate_initial_boudary_time()
         self._calculate_next_update()
@@ -233,7 +233,7 @@ class TodSensor(BinarySensorEntity):
     def _point_in_time_listener(self, now):
         """Run when the state of the sensor should be updated."""
         self._calculate_next_update()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
         event.async_track_point_in_utc_time(
             self.opp, self._point_in_time_listener, self.next_update

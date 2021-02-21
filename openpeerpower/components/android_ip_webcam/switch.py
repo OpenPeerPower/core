@@ -20,7 +20,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     host = discovery_info[CONF_HOST]
     name = discovery_info[CONF_NAME]
     switches = discovery_info[CONF_SWITCHES]
-    ipcam = opp.data[DATA_IP_WEBCAM][host]
+    ipcam =.opp.data[DATA_IP_WEBCAM][host]
 
     all_switches = []
 
@@ -67,7 +67,7 @@ class IPWebcamSettingsSwitch(AndroidIPCamEntity, SwitchEntity):
         else:
             await self._ipcam.change_setting(self._setting, True)
         self._state = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn device off."""
@@ -80,7 +80,7 @@ class IPWebcamSettingsSwitch(AndroidIPCamEntity, SwitchEntity):
         else:
             await self._ipcam.change_setting(self._setting, False)
         self._state = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def icon(self):

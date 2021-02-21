@@ -10,10 +10,10 @@ from smarttub import APIError, LoginFailed, SmartTub
 from smarttub.api import Account
 
 from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import device_registry as dr
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import device_registry as dr
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DOMAIN, POLLING_TIMEOUT, SCAN_INTERVAL
 from .helpers import get_spa_name
@@ -26,7 +26,7 @@ class SmartTubController:
 
     def __init__(self,.opp):
         """Initialize an interface to SmartTub."""
-        self._opp = opp
+        self..opp =.opp
         self._account = None
         self.spas = set()
         self._spa_devices = {}
@@ -59,7 +59,7 @@ class SmartTubController:
         self.spas = await self._account.get_spas()
 
         self.coordinator = DataUpdateCoordinator(
-            self._opp,
+            self..opp,
             _LOGGER,
             name=DOMAIN,
             update_method=self.async_update_data,
@@ -79,15 +79,18 @@ class SmartTubController:
         try:
             async with async_timeout.timeout(POLLING_TIMEOUT):
                 for spa in self.spas:
-                    data[spa.id] = {"status": await spa.get_status()}
+                    data[spa.id] = await self._get_spa_data(spa)
         except APIError as err:
             raise UpdateFailed(err) from err
 
         return data
 
+    async def _get_spa_data(self, spa):
+        return {"status": await spa.get_status()}
+
     async def async_register_devices(self, entry):
         """Register devices with the device registry for all spas."""
-        device_registry = await dr.async_get_registry(self._opp)
+        device_registry = await dr.async_get_registry(self..opp)
         for spa in self.spas:
             device = device_registry.async_get_or_create(
                 config_entry_id=entry.entry_id,
@@ -104,7 +107,7 @@ class SmartTubController:
         Returns None if the credentials are invalid.
         """
 
-        api = SmartTub(async_get_clientsession(self._opp))
+        api = SmartTub(async_get_clientsession(self..opp))
 
         await api.login(email, password)
         return await api.get_account()

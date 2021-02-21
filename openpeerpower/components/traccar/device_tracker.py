@@ -204,7 +204,7 @@ class TraccarScanner:
         self._async_see = async_see
         self._api = api
         self.connected = False
-        self._opp = opp
+        self..opp =.opp
         self._max_accuracy = max_accuracy
         self._skip_accuracy_on = skip_accuracy_on
 
@@ -216,7 +216,7 @@ class TraccarScanner:
             return False
 
         await self._async_update()
-        async_track_time_interval(self._opp, self._async_update, self._scan_interval)
+        async_track_time_interval(self..opp, self._async_update, self._scan_interval)
         return True
 
     async def _async_update(self, now=None):
@@ -231,9 +231,9 @@ class TraccarScanner:
                 return
         _LOGGER.debug("Updating device data")
         await self._api.get_device_info(self._custom_attributes)
-        self._opp.async_create_task(self.import_device_data())
+        self..opp.async_create_task(self.import_device_data())
         if self._event_types:
-            self._opp.async_create_task(self.import_events())
+            self..opp.async_create_task(self.import_events())
         self.connected = self._api.connected
 
     async def import_device_data(self):
@@ -313,7 +313,7 @@ class TraccarScanner:
                     ),
                     None,
                 )
-                self._opp.bus.async_fire(
+                self..opp.bus.async_fire(
                     f"traccar_{self._event_types.get(event['type'])}",
                     {
                         "device_traccar_id": event["deviceId"],
@@ -384,9 +384,9 @@ class TraccarEntity(TrackerEntity, RestoreEntity):
         """Return the source type, eg gps or router, of the device."""
         return SOURCE_TYPE_GPS
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register state update callback."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self._unsub_dispatcher = async_dispatcher_connect(
             self.opp, TRACKER_UPDATE, self._async_receive_data
         )
@@ -419,9 +419,9 @@ class TraccarEntity(TrackerEntity, RestoreEntity):
         }
         self._battery = attr.get(ATTR_BATTERY)
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Clean up after entity before removal."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         self._unsub_dispatcher()
 
     @callback
@@ -437,4 +437,4 @@ class TraccarEntity(TrackerEntity, RestoreEntity):
         self._battery = battery
         self._accuracy = accuracy
         self._attributes.update(attributes)
-        self.async_write_op.state()
+        self.async_write_ha_state()

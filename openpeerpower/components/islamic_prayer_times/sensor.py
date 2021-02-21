@@ -11,7 +11,7 @@ from .const import DATA_UPDATED, DOMAIN, PRAYER_TIMES_ICON, SENSOR_TYPES
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Islamic prayer times sensor platform."""
 
-    client = opp.data[DOMAIN]
+    client =.opp.data[DOMAIN]
 
     entities = []
     for sensor_type in SENSOR_TYPES:
@@ -62,8 +62,8 @@ class IslamicPrayerTimeSensor(Entity):
         """Return the device class."""
         return DEVICE_CLASS_TIMESTAMP
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
         self.async_on_remove(
-            async_dispatcher_connect(self.opp, DATA_UPDATED, self.async_write_op.state)
+            async_dispatcher_connect(self.opp, DATA_UPDATED, self.async_write_ha_state)
         )

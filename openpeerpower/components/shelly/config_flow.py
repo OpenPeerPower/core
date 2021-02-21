@@ -14,7 +14,7 @@ from openpeerpower.const import (
     CONF_USERNAME,
     HTTP_UNAUTHORIZED,
 )
-from openpeerpowerr.helpers import aiohttp_client
+from openpeerpower.helpers import aiohttp_client
 
 from .const import AIOSHELLY_DEVICE_TIMEOUT_SEC
 from .const import DOMAIN  # pylint:disable=unused-import

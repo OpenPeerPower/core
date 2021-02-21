@@ -41,7 +41,7 @@ class JewishCalendarSensor(Entity):
         self._icon = sensor_info[1]
         self._hebrew = data["language"] == "hebrew"
         self._candle_lighting_offset = data["candle_lighting_offset"]
-        self._op.dalah_offset = data["havdalah_offset"]
+        self._havdalah_offset = data["havdalah_offset"]
         self._diaspora = data["diaspora"]
         self._state = None
         self._prefix = data["prefix"]
@@ -106,7 +106,7 @@ class JewishCalendarSensor(Entity):
             date=date,
             location=self._location,
             candle_lighting_offset=self._candle_lighting_offset,
-            havdalah_offset=self._op.dalah_offset,
+            havdalah_offset=self._havdalah_offset,
             hebrew=self._hebrew,
         )
 
@@ -174,10 +174,10 @@ class JewishCalendarTimeSensor(JewishCalendarSensor):
                 after_tzais_date.upcoming_shabbat_or_yom_tov.first_day.previous_day.gdate
             )
             return times.candle_lighting
-        if self._type == "upcoming_shabbat_op.dalah":
+        if self._type == "upcoming_shabbat_havdalah":
             times = self.make_zmanim(after_tzais_date.upcoming_shabbat.gdate)
             return times.havdalah
-        if self._type == "upcoming_op.dalah":
+        if self._type == "upcoming_havdalah":
             times = self.make_zmanim(
                 after_tzais_date.upcoming_shabbat_or_yom_tov.last_day.gdate
             )

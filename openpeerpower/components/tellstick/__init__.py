@@ -143,14 +143,14 @@ def setup.opp, config):
     )
 
     @callback
-    def async_op.dle_callback(tellcore_id, tellcore_command, tellcore_data, cid):
+    def async_handle_callback(tellcore_id, tellcore_command, tellcore_data, cid):
         """Handle the actual callback from Tellcore."""
        .opp.helpers.dispatcher.async_dispatcher_send(
             SIGNAL_TELLCORE_CALLBACK, tellcore_id, tellcore_command, tellcore_data
         )
 
     # Register callback
-    callback_id = tellcore_lib.register_device_event(async_op.dle_callback)
+    callback_id = tellcore_lib.register_device_event(async_handle_callback)
 
     def clean_up_callback(event):
         """Unregister the callback bindings."""
@@ -180,7 +180,7 @@ class TellstickDevice(Entity):
         self._tellcore_device = tellcore_device
         self._name = tellcore_device.name
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
@@ -208,7 +208,7 @@ class TellstickDevice(Entity):
         """Return true if the device is on."""
         return self._state
 
-    def _parse_op.data(self, kwargs):
+    def _parse_ha_data(self, kwargs):
         """Turn the value from HA into something useful."""
         raise NotImplementedError
 
@@ -253,11 +253,11 @@ class TellstickDevice(Entity):
             # Sooner or later this will propagate to the model from the
             # callback, but for a fluid UI experience update it directly.
             self._update_model(new_state, data)
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def turn_on(self, **kwargs):
         """Turn the switch on."""
-        self._change_device_state(True, self._parse_op.data(kwargs))
+        self._change_device_state(True, self._parse_ha_data(kwargs))
 
     def turn_off(self, **kwargs):
         """Turn the switch off."""
@@ -281,7 +281,7 @@ class TellstickDevice(Entity):
             return
 
         self._update_model_from_command(tellcore_command, tellcore_data)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
         # This is a benign race on _repeats_left -- it's checked with the lock
         # in _send_repeated_command.

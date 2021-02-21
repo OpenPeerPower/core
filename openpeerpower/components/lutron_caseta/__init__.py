@@ -12,11 +12,11 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_HOST
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import device_registry as dr
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.core import callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import device_registry as dr
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 from .const import (
     ACTION_PRESS,
@@ -94,9 +94,9 @@ async def async_setup_entry.opp, config_entry):
     """Set up a bridge from a config entry."""
 
     host = config_entry.data[CONF_HOST]
-    keyfile = opp.config.path(config_entry.data[CONF_KEYFILE])
-    certfile = opp.config.path(config_entry.data[CONF_CERTFILE])
-    ca_certs = opp.config.path(config_entry.data[CONF_CA_CERTS])
+    keyfile =.opp.config.path(config_entry.data[CONF_KEYFILE])
+    certfile =.opp.config.path(config_entry.data[CONF_CERTFILE])
+    ca_certs =.opp.config.path(config_entry.data[CONF_CA_CERTS])
     bridge = None
 
     try:
@@ -151,7 +151,7 @@ async def async_setup_lip.opp, config_entry, lip_devices):
     """Connect to the bridge via Lutron Integration Protocol to watch for pico remotes."""
     host = config_entry.data[CONF_HOST]
     config_entry_id = config_entry.entry_id
-    data = opp.data[DOMAIN][config_entry_id]
+    data =.opp.data[DOMAIN][config_entry_id]
     bridge_device = data[BRIDGE_DEVICE]
     bridge = data[BRIDGE_LEAP]
     lip = LIP()
@@ -229,6 +229,7 @@ async def _async_register_button_devices(
 
         dr_device = device_registry.async_get_or_create(
             name=device["leap_name"],
+            suggested_area=device["leap_name"].split("_")[0],
             manufacturer=MANUFACTURER,
             config_entry_id=config_entry_id,
             identifiers={(DOMAIN, device["serial"])},
@@ -280,7 +281,7 @@ def _async_subscribe_pico_remote_events.opp, lip, button_devices_by_id):
 async def async_unload_entry.opp, config_entry):
     """Unload the bridge bridge from a config entry."""
 
-    data = opp.data[DOMAIN][config_entry.entry_id]
+    data =.opp.data[DOMAIN][config_entry.entry_id]
     data[BRIDGE_LEAP].close()
     if data[BRIDGE_LIP]:
         await data[BRIDGE_LIP].async_stop()
@@ -314,9 +315,9 @@ class LutronCasetaDevice(Entity):
         self._smartbridge = bridge
         self._bridge_device = bridge_device
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
-        self._smartbridge.add_subscriber(self.device_id, self.async_write_op.state)
+        self._smartbridge.add_subscriber(self.device_id, self.async_write_ha_state)
 
     @property
     def device_id(self):
@@ -344,6 +345,7 @@ class LutronCasetaDevice(Entity):
         return {
             "identifiers": {(DOMAIN, self.serial)},
             "name": self.name,
+            "suggested_area": self._device["name"].split("_")[0],
             "manufacturer": MANUFACTURER,
             "model": f"{self._device['model']} ({self._device['type']})",
             "via_device": (DOMAIN, self._bridge_device["serial"]),

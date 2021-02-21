@@ -21,7 +21,7 @@ ST_LOCK_ATTR_MAP = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Add locks for a config entry."""
-    broker = opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
+    broker =.opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
     async_add_entities(
         [
             SmartThingsLock(device)
@@ -44,12 +44,12 @@ class SmartThingsLock(SmartThingsEntity, LockEntity):
     async def async_lock(self, **kwargs):
         """Lock the device."""
         await self._device.lock(set_status=True)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_unlock(self, **kwargs):
         """Unlock the device."""
         await self._device.unlock(set_status=True)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_locked(self):

@@ -2,7 +2,7 @@
   "domain": "control4",
   "name": "Control4",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/control4",
+  "documentation": "https://www.open-peer-power.io/integrations/control4",
   "requirements": ["pyControl4==0.0.6"],
   "ssdp": [
     {

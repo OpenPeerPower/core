@@ -19,10 +19,10 @@ from openpeerpower.const import (
     CONF_TYPE,
     CONF_USERNAME,
 )
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
-from openpeerpowerr.helpers.event import async_track_time_interval
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.event import async_track_time_interval
 
 from .const import (
     ATTR_FLAP_ID,
@@ -75,7 +75,7 @@ async def async_setup.opp, config) -> bool:
     scan_interval = conf[CONF_SCAN_INTERVAL]
 
     # shared data
-   .opp.data[DOMAIN] = opp.data[DATA_SURE_PETCARE] = {}
+   .opp.data[DOMAIN] =.opp.data[DATA_SURE_PETCARE] = {}
 
     # sure petcare api connection
     try:
@@ -132,7 +132,7 @@ async def async_setup.opp, config) -> bool:
 
     _LOGGER.debug("Devices and Pets to setup: %s", things)
 
-    spc = opp.data[DATA_SURE_PETCARE][SPC] = SurePetcareAPI.opp, surepy, things)
+    spc =.opp.data[DATA_SURE_PETCARE][SPC] = SurePetcareAPI.opp, surepy, things)
 
     # initial update
     await spc.async_update()
@@ -187,7 +187,7 @@ class SurePetcareAPI:
 
     def __init__(self,.opp, surepy: SurePetcare, ids: List[Dict[str, Any]]) -> None:
         """Initialize the Sure Petcare object."""
-        self.opp = opp
+        self.opp =.opp
         self.surepy = surepy
         self.ids = ids
         self.states: Dict[str, Any] = {}

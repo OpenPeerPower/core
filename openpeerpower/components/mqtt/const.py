@@ -1,7 +1,7 @@
 """Constants used by multiple MQTT modules."""
 from openpeerpower.const import CONF_PAYLOAD
 
-ATTR_DISCOVERY_HASH = "discovery_op.h"
+ATTR_DISCOVERY_HASH = "discovery_hash"
 ATTR_DISCOVERY_PAYLOAD = "discovery_payload"
 ATTR_DISCOVERY_TOPIC = "discovery_topic"
 ATTR_PAYLOAD = "payload"

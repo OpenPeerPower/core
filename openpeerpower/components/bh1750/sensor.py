@@ -8,8 +8,8 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import CONF_NAME, DEVICE_CLASS_ILLUMINANCE, LIGHT_LUX
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -69,7 +69,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     bus = smbus.SMBus(bus_number)
 
-    sensor = await opp..async_add_executor_job(
+    sensor = await.opp.async_add_executor_job(
         partial(
             BH1750,
             bus,

@@ -26,7 +26,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up a Luftdaten sensor based on a config entry."""
-    luftdaten = opp.data[DOMAIN][DATA_LUFTDATEN_CLIENT][entry.entry_id]
+    luftdaten =.opp.data[DOMAIN][DATA_LUFTDATEN_CLIENT][entry.entry_id]
 
     sensors = []
     for sensor_type in luftdaten.sensor_conditions:
@@ -114,19 +114,19 @@ class LuftdatenSensor(Entity):
             except KeyError:
                 return
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
 
         @callback
         def update():
             """Update the state."""
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         self._async_unsub_dispatcher_connect = async_dispatcher_connect(
             self.opp, TOPIC_UPDATE, update
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect dispatcher listener when removed."""
         if self._async_unsub_dispatcher_connect:
             self._async_unsub_dispatcher_connect()

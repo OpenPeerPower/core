@@ -49,10 +49,10 @@ from openpeerpower.const import (
     STATE_PAUSED,
     STATE_PLAYING,
 )
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers.config_entry_oauth2_flow import OAuth2Session
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util.dt import utc_from_timestamp
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.config_entry_oauth2_flow import OAuth2Session
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util.dt import utc_from_timestamp
 
 from .const import (
     DATA_SPOTIFY_CLIENT,
@@ -198,7 +198,7 @@ async def async_setup_entry(
     async_add_entities([spotify], True)
 
 
-def spotify_exception_op.dler(func):
+def spotify_exception_handler(func):
     """Decorate Spotify calls to handle Spotify exception.
 
     A decorator that wraps the passed in function, catches Spotify errors,
@@ -403,37 +403,37 @@ class SpotifyMediaPlayer(MediaPlayerEntity):
             return 0
         return SUPPORT_SPOTIFY
 
-    @spotify_exception_op.dler
+    @spotify_exception_handler
     def set_volume_level(self, volume: int) -> None:
         """Set the volume level."""
         self._spotify.volume(int(volume * 100))
 
-    @spotify_exception_op.dler
+    @spotify_exception_handler
     def media_play(self) -> None:
         """Start or resume playback."""
         self._spotify.start_playback()
 
-    @spotify_exception_op.dler
+    @spotify_exception_handler
     def media_pause(self) -> None:
         """Pause playback."""
         self._spotify.pause_playback()
 
-    @spotify_exception_op.dler
+    @spotify_exception_handler
     def media_previous_track(self) -> None:
         """Skip to previous track."""
         self._spotify.previous_track()
 
-    @spotify_exception_op.dler
+    @spotify_exception_handler
     def media_next_track(self) -> None:
         """Skip to next track."""
         self._spotify.next_track()
 
-    @spotify_exception_op.dler
+    @spotify_exception_handler
     def media_seek(self, position):
         """Send seek command."""
         self._spotify.seek_track(int(position * 1000))
 
-    @spotify_exception_op.dler
+    @spotify_exception_handler
     def play_media(self, media_type: str, media_id: str, **kwargs) -> None:
         """Play media."""
         kwargs = {}
@@ -455,7 +455,7 @@ class SpotifyMediaPlayer(MediaPlayerEntity):
 
         self._spotify.start_playback(**kwargs)
 
-    @spotify_exception_op.dler
+    @spotify_exception_handler
     def select_source(self, source: str) -> None:
         """Select playback device."""
         for device in self._devices:
@@ -465,19 +465,19 @@ class SpotifyMediaPlayer(MediaPlayerEntity):
                 )
                 return
 
-    @spotify_exception_op.dler
+    @spotify_exception_handler
     def set_shuffle(self, shuffle: bool) -> None:
         """Enable/Disable shuffle mode."""
         self._spotify.shuffle(shuffle)
 
-    @spotify_exception_op.dler
+    @spotify_exception_handler
     def set_repeat(self, repeat: str) -> None:
         """Set repeat mode."""
         if repeat not in REPEAT_MODE_MAPPING_TO_SPOTIFY:
             raise ValueError(f"Unsupported repeat mode: {repeat}")
         self._spotify.repeat(REPEAT_MODE_MAPPING_TO_SPOTIFY[repeat])
 
-    @spotify_exception_op.dler
+    @spotify_exception_handler
     def update(self) -> None:
         """Update state and attributes."""
         if not self.enabled:

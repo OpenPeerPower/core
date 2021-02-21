@@ -59,7 +59,7 @@ SERVICE_ALARM_CLEAR_BYPASS = "alarm_clear_bypass"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the ElkM1 alarm platform."""
-    elk_data = opp.data[DOMAIN][config_entry.entry_id]
+    elk_data =.opp.data[DOMAIN][config_entry.entry_id]
     elk = elk_data["elk"]
     entities = []
     create_elk_entities(elk_data, elk.areas, "area", ElkArea, entities)
@@ -112,9 +112,9 @@ class ElkArea(ElkAttachedEntity, AlarmControlPanelEntity, RestoreEntity):
         self._changed_by = None
         self._state = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callback for ElkM1 changes."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if len(self._elk.areas.elements) == 1:
             for keypad in self._elk.keypads:
                 keypad.add_callback(self._watch_keypad)
@@ -142,7 +142,7 @@ class ElkArea(ElkAttachedEntity, AlarmControlPanelEntity, RestoreEntity):
             self._changed_by_time = keypad.last_user_time.isoformat()
             self._changed_by_id = keypad.last_user + 1
             self._changed_by = username(self._elk, keypad.last_user)
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     def _watch_area(self, area, changeset):
         last_log = changeset.get("last_log")
@@ -155,7 +155,7 @@ class ElkArea(ElkAttachedEntity, AlarmControlPanelEntity, RestoreEntity):
         self._changed_by_id = last_log["user_number"]
         self._changed_by = username(self._elk, self._changed_by_id - 1)
         self._changed_by_time = last_log["timestamp"]
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def code_format(self):
@@ -197,7 +197,7 @@ class ElkArea(ElkAttachedEntity, AlarmControlPanelEntity, RestoreEntity):
         return self._changed_by
 
     def _element_changed(self, element, changeset):
-        elk_state_to_opp_state = {
+        elk_state_to.opp_state = {
             ArmedStatus.DISARMED.value: STATE_ALARM_DISARMED,
             ArmedStatus.ARMED_AWAY.value: STATE_ALARM_ARMED_AWAY,
             ArmedStatus.ARMED_STAY.value: STATE_ALARM_ARMED_HOME,
@@ -216,7 +216,7 @@ class ElkArea(ElkAttachedEntity, AlarmControlPanelEntity, RestoreEntity):
                 STATE_ALARM_ARMING if self._element.is_exit else STATE_ALARM_PENDING
             )
         else:
-            self._state = elk_state_to_opp_state[self._element.armed_status]
+            self._state = elk_state_to.opp_state[self._element.armed_status]
 
     def _entry_exit_timer_is_running(self):
         return self._element.timer1 > 0 or self._element.timer2 > 0

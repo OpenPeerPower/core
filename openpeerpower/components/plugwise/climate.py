@@ -38,8 +38,8 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Smile Thermostats from a config entry."""
-    api = opp.data[DOMAIN][config_entry.entry_id]["api"]
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
+    api =.opp.data[DOMAIN][config_entry.entry_id]["api"]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
 
     entities = []
     thermostat_classes = [
@@ -191,7 +191,7 @@ class PwThermostat(SmileGateway, ClimateEntity):
             try:
                 await self._api.set_temperature(self._loc_id, temperature)
                 self._setpoint = temperature
-                self.async_write_op.state()
+                self.async_write_ha_state()
             except PlugwiseException:
                 _LOGGER.error("Error while communicating to device")
         else:
@@ -212,7 +212,7 @@ class PwThermostat(SmileGateway, ClimateEntity):
                 self._loc_id, self._last_active_schema, state
             )
             self._hvac_mode = hvac_mode
-            self.async_write_op.state()
+            self.async_write_ha_state()
         except PlugwiseException:
             _LOGGER.error("Error while communicating to device")
 
@@ -222,7 +222,7 @@ class PwThermostat(SmileGateway, ClimateEntity):
             await self._api.set_preset(self._loc_id, preset_mode)
             self._preset_mode = preset_mode
             self._setpoint = self._presets.get(self._preset_mode, "none")[0]
-            self.async_write_op.state()
+            self.async_write_ha_state()
         except PlugwiseException:
             _LOGGER.error("Error while communicating to device")
 
@@ -268,4 +268,4 @@ class PwThermostat(SmileGateway, ClimateEntity):
         if self._schema_status:
             self._hvac_mode = HVAC_MODE_AUTO
 
-        self.async_write_op.state()
+        self.async_write_ha_state()

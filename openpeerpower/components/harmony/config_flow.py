@@ -12,13 +12,13 @@ from openpeerpower.components.remote import (
     DEFAULT_DELAY_SECS,
 )
 from openpeerpower.const import CONF_HOST, CONF_NAME
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from .const import DOMAIN, PREVIOUS_ACTIVE_ACTIVITY, UNIQUE_ID
 from .util import (
     find_best_name_for_remote,
     find_unique_id_for_remote,
-    get_op.mony_client_if_available,
+    get_harmony_client_if_available,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ async def validate_input(data):
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
-    harmony = await get_op.mony_client_if_available(data[CONF_HOST])
+    harmony = await get_harmony_client_if_available(data[CONF_HOST])
     if not harmony:
         raise CannotConnect
 
@@ -96,7 +96,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             CONF_NAME: friendly_name,
         }
 
-        harmony = await get_op.mony_client_if_available(parsed_url.hostname)
+        harmony = await get_harmony_client_if_available(parsed_url.hostname)
 
         if harmony:
             unique_id = find_unique_id_for_remote(harmony)

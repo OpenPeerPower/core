@@ -12,7 +12,7 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
 )
-from openpeerpower.core import OppJob, callback
+from openpeerpower.core import HassJob, callback
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.event import (
     async_track_point_in_time,
@@ -41,12 +41,12 @@ async def async_attach_trigger.opp, config, action, automation_info):
     """Listen for state changes based on configuration."""
     entities = {}
     removes = []
-    job = OppJob(action)
+    job = HassJob(action)
 
     @callback
     def time_automation_listener(description, now, *, entity_id=None):
         """Listen for time changes and calls action."""
-       .opp.async_run_opp_job(
+       .opp.async_run.opp_job(
             job,
             {
                 "trigger": {

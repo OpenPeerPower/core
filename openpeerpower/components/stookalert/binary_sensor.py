@@ -10,7 +10,7 @@ from openpeerpower.components.binary_sensor import (
     BinarySensorEntity,
 )
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_NAME
-from openpeerpowerr.helpers import config_validation as cv
+from openpeerpower.helpers import config_validation as cv
 
 SCAN_INTERVAL = timedelta(minutes=60)
 CONF_PROVINCE = "province"
@@ -44,25 +44,25 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Stookalert binary sensor platform."""
     province = config[CONF_PROVINCE]
     name = config[CONF_NAME]
-    api_op.dler = stookalert.stookalert(province)
-    add_entities([StookalertBinarySensor(name, api_op.dler)], update_before_add=True)
+    api_handler = stookalert.stookalert(province)
+    add_entities([StookalertBinarySensor(name, api_handler)], update_before_add=True)
 
 
 class StookalertBinarySensor(BinarySensorEntity):
     """An implementation of RIVM Stookalert."""
 
-    def __init__(self, name, api_op.dler):
+    def __init__(self, name, api_handler):
         """Initialize a Stookalert device."""
         self._name = name
-        self._api_op.dler = api_op.dler
+        self._api_handler = api_handler
 
     @property
     def device_state_attributes(self):
         """Return the attribute(s) of the sensor."""
         state_attr = {ATTR_ATTRIBUTION: ATTRIBUTION}
 
-        if self._api_op.dler.last_updated is not None:
-            state_attr["last_updated"] = self._api_op.dler.last_updated.isoformat()
+        if self._api_handler.last_updated is not None:
+            state_attr["last_updated"] = self._api_handler.last_updated.isoformat()
 
         return state_attr
 
@@ -74,7 +74,7 @@ class StookalertBinarySensor(BinarySensorEntity):
     @property
     def is_on(self):
         """Return True if the Alert is active."""
-        return self._api_op.dler.state == 1
+        return self._api_handler.state == 1
 
     @property
     def device_class(self):
@@ -83,4 +83,4 @@ class StookalertBinarySensor(BinarySensorEntity):
 
     def update(self):
         """Update the data from the Stookalert handler."""
-        self._api_op.dler.get_alerts()
+        self._api_handler.get_alerts()

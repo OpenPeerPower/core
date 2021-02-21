@@ -50,7 +50,7 @@ async def async_setup.opp: OpenPeerPower, config: dict) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Elexa Guardian from a config entry."""
-    client = opp.data[DOMAIN][DATA_CLIENT][entry.entry_id] = Client(
+    client =.opp.data[DOMAIN][DATA_CLIENT][entry.entry_id] = Client(
         entry.data[CONF_IP_ADDRESS], port=entry.data[CONF_PORT]
     )
    .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {
@@ -71,7 +71,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         (API_VALVE_STATUS, client.valve.status),
         (API_WIFI_STATUS, client.wifi.status),
     ]:
-        coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+        coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             api
         ] = GuardianDataUpdateCoordinator(
            .opp,
@@ -87,7 +87,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     # Set up an object to evaluate each batch of paired sensor UIDs and add/remove
     # devices as appropriate:
-    paired_sensor_manager = opp.data[DOMAIN][DATA_PAIRED_SENSOR_MANAGER][
+    paired_sensor_manager =.opp.data[DOMAIN][DATA_PAIRED_SENSOR_MANAGER][
         entry.entry_id
     ] = PairedSensorManager.opp, entry, client, api_lock)
     await paired_sensor_manager.async_process_latest_paired_sensor_uids()
@@ -147,7 +147,7 @@ class PairedSensorManager:
         self._api_lock = api_lock
         self._client = client
         self._entry = entry
-        self._opp = opp
+        self..opp =.opp
         self._listeners = []
         self._paired_uids = set()
 
@@ -157,10 +157,10 @@ class PairedSensorManager:
 
         self._paired_uids.add(uid)
 
-        coordinator = self._opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
+        coordinator = self..opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
             API_SENSOR_PAIRED_SENSOR_STATUS
         ][uid] = GuardianDataUpdateCoordinator(
-            self._opp,
+            self..opp,
             client=self._client,
             api_name=f"{API_SENSOR_PAIRED_SENSOR_STATUS}_{uid}",
             api_coro=lambda: self._client.sensor.paired_sensor_status(uid),
@@ -170,7 +170,7 @@ class PairedSensorManager:
         await coordinator.async_request_refresh()
 
         async_dispatcher_send(
-            self._opp,
+            self..opp,
             SIGNAL_PAIRED_SENSOR_COORDINATOR_ADDED.format(self._entry.data[CONF_UID]),
             uid,
         )
@@ -179,7 +179,7 @@ class PairedSensorManager:
         """Process a list of new UIDs."""
         try:
             uids = set(
-                self._opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
+                self..opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
                     API_SENSOR_PAIR_DUMP
                 ].data["paired_uids"]
             )
@@ -206,13 +206,13 @@ class PairedSensorManager:
 
         # Clear out objects related to this paired sensor:
         self._paired_uids.remove(uid)
-        self._opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
+        self..opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
             API_SENSOR_PAIRED_SENSOR_STATUS
         ].pop(uid)
 
         # Remove the paired sensor device from the device registry (which will
         # clean up entities and the entity registry):
-        dev_reg = await self._opp.helpers.device_registry.async_get_registry()
+        dev_reg = await self..opp.helpers.device_registry.async_get_registry()
         device = dev_reg.async_get_or_create(
             config_entry_id=self._entry.entry_id, identifiers={(DOMAIN, uid)}
         )
@@ -267,7 +267,7 @@ class GuardianEntity(CoordinatorEntity):
     def _async_update_state_callback(self):
         """Update the entity's state."""
         self._async_update_from_latest_data()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class PairedSensorEntity(GuardianEntity):
@@ -303,7 +303,7 @@ class PairedSensorEntity(GuardianEntity):
         """Return the unique ID of the entity."""
         return f"{self._paired_sensor_uid}_{self._kind}"
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Perform tasks when the entity is added."""
         self._async_update_from_latest_data()
 
@@ -362,7 +362,7 @@ class ValveControllerEntity(GuardianEntity):
             self.coordinators[api].async_add_listener(self._async_update_state_callback)
         )
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Perform tasks when the entity is added."""
         await self._async_continue_entity_setup()
         self.async_add_coordinator_update_listener(API_SYSTEM_DIAGNOSTICS)

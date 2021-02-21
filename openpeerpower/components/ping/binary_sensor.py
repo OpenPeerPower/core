@@ -125,7 +125,7 @@ class PingData:
 
     def __init__(self,.opp, host, count) -> None:
         """Initialize the data object."""
-        self.opp = opp
+        self.opp =.opp
         self._ip_address = host
         self._count = count
         self.data = {}

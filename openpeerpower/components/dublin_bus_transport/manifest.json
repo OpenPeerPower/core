@@ -1,6 +1,6 @@
 {
   "domain": "dublin_bus_transport",
   "name": "Dublin Bus",
-  "documentation": "https://www.openpeerpower.io/integrations/dublin_bus_transport",
+  "documentation": "https://www.open-peer-power.io/integrations/dublin_bus_transport",
   "codeowners": []
 }

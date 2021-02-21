@@ -34,17 +34,17 @@ class OPiGPIOBinarySensor(BinarySensorEntity):
         self._invert_logic = invert_logic
         self._state = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
 
         def gpio_edge_listener(port):
             """Update GPIO when edge change is detected."""
-            self.schedule_update_op.state(True)
+            self.schedule_update_ha_state(True)
 
         def setup_entity():
             setup_input(self._port)
             edge_detect(self._port, gpio_edge_listener)
-            self.schedule_update_op.state(True)
+            self.schedule_update_ha_state(True)
 
         await self.opp.async_add_executor_job(setup_entity)
 

@@ -16,7 +16,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up FireServiceRota sensor based on a config entry."""
-    client = opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
+    client =.opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
 
     async_add_entities([IncidentsSensor(client)])
 
@@ -99,9 +99,9 @@ class IncidentsSensor(RestoreEntity):
 
         return attr
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         state = await self.async_get_last_state()
         if state:
@@ -130,4 +130,4 @@ class IncidentsSensor(RestoreEntity):
         self._state_attributes = data
         if "id" in self._state_attributes:
             self._client.incident_id = self._state_attributes["id"]
-        self.async_write_op.state()
+        self.async_write_ha_state()

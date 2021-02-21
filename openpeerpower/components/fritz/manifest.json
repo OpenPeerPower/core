@@ -1,7 +1,7 @@
 {
   "domain": "fritz",
   "name": "AVM FRITZ!Box",
-  "documentation": "https://www.openpeerpower.io/integrations/fritz",
+  "documentation": "https://www.open-peer-power.io/integrations/fritz",
   "requirements": ["fritzconnection==1.4.0"],
   "codeowners": []
 }

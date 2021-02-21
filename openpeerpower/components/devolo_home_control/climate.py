@@ -10,7 +10,7 @@ from openpeerpower.components.climate import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import PRECISION_HALVES, PRECISION_TENTHS
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DOMAIN
 from .devolo_multi_level_switch import DevoloMultiLevelSwitchDeviceEntity

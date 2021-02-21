@@ -4,7 +4,7 @@ import voluptuous as vol
 
 from openpeerpower.components.tts import CONF_LANG, PLATFORM_SCHEMA, Provider
 from openpeerpower.const import CONF_EFFECT, CONF_HOST, CONF_PORT
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 CONF_VOICE = "voice"
 CONF_CODEC = "codec"
@@ -47,7 +47,7 @@ class MaryTTSProvider(Provider):
 
     def __init__(self,.opp, conf):
         """Init MaryTTS TTS service."""
-        self.opp = opp
+        self.opp =.opp
         self._mary = MaryTTS(
             conf.get(CONF_HOST),
             conf.get(CONF_PORT),

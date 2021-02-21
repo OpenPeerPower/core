@@ -17,7 +17,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     lights = []
-    lwlink = opp.data[LIGHTWAVE_LINK]
+    lwlink =.opp.data[LIGHTWAVE_LINK]
 
     for device_id, device_config in discovery_info.items():
         name = device_config[CONF_NAME]
@@ -76,10 +76,10 @@ class LWRFLight(LightEntity):
         else:
             self._lwlink.turn_on_light(self._device_id, self._name)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the LightWave light off."""
         self._state = False
         self._lwlink.turn_off(self._device_id, self._name)
-        self.async_write_op.state()
+        self.async_write_ha_state()

@@ -144,7 +144,7 @@ class Router:
         factory=lambda: defaultdict(set, ((x, {"initial_scan"}) for x in ALL_KEYS)),
     )
     inflight_gets: Set[str] = attr.ib(init=False, factory=set)
-    unload_op.dlers: List[CALLBACK_TYPE] = attr.ib(init=False, factory=list)
+    unload_handlers: List[CALLBACK_TYPE] = attr.ib(init=False, factory=list)
     client: Client
     suspended = attr.ib(init=False, default=False)
     notify_last_attempt: float = attr.ib(init=False, default=-1)
@@ -291,9 +291,9 @@ class Router:
 
         self.subscriptions.clear()
 
-        for handler in self.unload_op.dlers:
+        for handler in self.unload_handlers:
             handler()
-        self.unload_op.dlers.clear()
+        self.unload_handlers.clear()
 
         self.logout()
 
@@ -314,7 +314,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
     # Override settings from YAML config, but only if they're changed in it
     # Old values are stored as *_from_yaml in the config entry
-    yaml_config = opp.data[DOMAIN].config.get(url)
+    yaml_config =.opp.data[DOMAIN].config.get(url)
     if yaml_config:
         # Config values
         new_data = {}
@@ -359,7 +359,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
             mode = "ip"
     except ValueError:
         mode = "hostname"
-    mac = await opp..async_add_executor_job(partial(get_mac_address, **{mode: host}))
+    mac = await.opp.async_add_executor_job(partial(get_mac_address, **{mode: host}))
 
     def get_connection() -> Connection:
         """
@@ -382,7 +382,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         dispatcher_send.opp, UPDATE_SIGNAL, url)
 
     try:
-        connection = await opp..async_add_executor_job(get_connection)
+        connection = await.opp.async_add_executor_job(get_connection)
     except Timeout as ex:
         raise ConfigEntryNotReady from ex
 
@@ -391,7 +391,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
    .opp.data[DOMAIN].routers[url] = router
 
     # Do initial data update
-    await opp..async_add_executor_job(router.update)
+    await.opp.async_add_executor_job(router.update)
 
     # Clear all subscriptions, enabled entities will push back theirs
     router.subscriptions.clear()
@@ -437,7 +437,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
     )
 
     # Add config entry options update listener
-    router.unload_op.dlers.append(
+    router.unload_handlers.append(
         config_entry.add_update_listener(async_signal_options_update)
     )
 
@@ -450,7 +450,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         router.update()
 
     # Set up periodic update
-    router.unload_op.dlers.append(
+    router.unload_handlers.append(
         async_track_time_interval.opp, _update_router, SCAN_INTERVAL)
     )
 
@@ -467,11 +467,11 @@ async def async_unload_entry(
 
     # Forward config entry unload to platforms
     for domain in CONFIG_ENTRY_PLATFORMS:
-        await opp..config_entries.async_forward_entry_unload(config_entry, domain)
+        await.opp.config_entries.async_forward_entry_unload(config_entry, domain)
 
     # Forget about the router and invoke its cleanup
-    router = opp.data[DOMAIN].routers.pop(config_entry.data[CONF_URL])
-    await opp..async_add_executor_job(router.cleanup)
+    router =.opp.data[DOMAIN].routers.pop(config_entry.data[CONF_URL])
+    await.opp.async_add_executor_job(router.cleanup)
 
     return True
 
@@ -490,10 +490,10 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
     for router_config in config.get(DOMAIN, []):
         domain_config[url_normalize(router_config.pop(CONF_URL))] = router_config
 
-    def service_op.dler(service: ServiceCall) -> None:
+    def service_handler(service: ServiceCall) -> None:
         """Apply a service."""
         url = service.data.get(CONF_URL)
-        routers = opp.data[DOMAIN].routers
+        routers =.opp.data[DOMAIN].routers
         if url:
             router = routers.get(url)
         elif not routers:
@@ -539,7 +539,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
        .opp.helpers.service.async_register_admin_service(
             DOMAIN,
             service,
-            service_op.dler,
+            service_handler,
             schema=SERVICE_SCHEMA,
         )
 
@@ -588,7 +588,7 @@ class HuaweiLteBaseEntity(Entity):
     router: Router = attr.ib()
 
     _available: bool = attr.ib(init=False, default=True)
-    _unsub_op.dlers: List[Callable] = attr.ib(init=False, factory=list)
+    _unsub_handlers: List[Callable] = attr.ib(init=False, factory=list)
 
     @property
     def _entity_name(self) -> str:
@@ -634,13 +634,13 @@ class HuaweiLteBaseEntity(Entity):
     async def async_update_options(self, config_entry: ConfigEntry) -> None:
         """Update config entry options."""
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Connect to update signals."""
         assert self.opp is not None
-        self._unsub_op.dlers.append(
+        self._unsub_handlers.append(
             async_dispatcher_connect(self.opp, UPDATE_SIGNAL, self._async_maybe_update)
         )
-        self._unsub_op.dlers.append(
+        self._unsub_handlers.append(
             async_dispatcher_connect(
                 self.opp, UPDATE_OPTIONS_SIGNAL, self._async_maybe_update_options
             )
@@ -649,15 +649,15 @@ class HuaweiLteBaseEntity(Entity):
     async def _async_maybe_update(self, url: str) -> None:
         """Update state if the update signal comes from our router."""
         if url == self.router.url:
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
     async def _async_maybe_update_options(self, config_entry: ConfigEntry) -> None:
         """Update options if the update signal comes from our router."""
         if config_entry.data[CONF_URL] == self.router.url:
             await self.async_update_options(config_entry)
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Invoke unsubscription handlers."""
-        for unsub in self._unsub_op.dlers:
+        for unsub in self._unsub_handlers:
             unsub()
-        self._unsub_op.dlers.clear()
+        self._unsub_handlers.clear()

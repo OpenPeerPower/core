@@ -29,7 +29,7 @@ from openpeerpower.helpers.entity_registry import (
 from openpeerpower.helpers.typing import OpenPeerPowerType
 import openpeerpower.util.color as color_util
 
-from . import WLEDDataUpdateCoordinator, WLEDDeviceEntity, wled_exception_op.dler
+from . import WLEDDataUpdateCoordinator, WLEDDeviceEntity, wled_exception_handler
 from .const import (
     ATTR_COLOR_PRIMARY,
     ATTR_INTENSITY,
@@ -54,7 +54,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up WLED light based on a config entry."""
-    coordinator: WLEDDataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id]
+    coordinator: WLEDDataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id]
 
     platform = entity_platform.current_platform.get()
 
@@ -124,7 +124,7 @@ class WLEDMasterLight(LightEntity, WLEDDeviceEntity):
         """Return the state of the light."""
         return bool(self.coordinator.data.state.on)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the light."""
         data = {ATTR_ON: False}
@@ -135,7 +135,7 @@ class WLEDMasterLight(LightEntity, WLEDDeviceEntity):
 
         await self.coordinator.wled.master(**data)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the light."""
         data = {ATTR_ON: True}
@@ -271,7 +271,7 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
 
         return bool(state.segments[self._segment].on)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the light."""
         data = {ATTR_ON: False}
@@ -288,7 +288,7 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
         data[ATTR_SEGMENT_ID] = self._segment
         await self.coordinator.wled.segment(**data)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the light."""
         data = {ATTR_ON: True, ATTR_SEGMENT_ID: self._segment}
@@ -354,7 +354,7 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
 
         await self.coordinator.wled.segment(**data)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_effect(
         self,
         effect: Optional[Union[int, str]] = None,
@@ -383,7 +383,7 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
 
         await self.coordinator.wled.segment(**data)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_preset(
         self,
         preset: int,

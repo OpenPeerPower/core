@@ -49,7 +49,7 @@ class TwinklyLight(LightEntity):
     ):
         """Initialize a TwinklyLight entity."""
         self._id = conf.data[CONF_ENTRY_ID]
-        self._opp = opp
+        self..opp =.opp
         self._conf = conf
 
         # Those are saved in the config entry in order to have meaningful values even
@@ -58,7 +58,7 @@ class TwinklyLight(LightEntity):
         self.__name = conf.data[CONF_ENTRY_NAME]
         self.__model = conf.data[CONF_ENTRY_MODEL]
 
-        self._client = opp.data.get(DOMAIN, {}).get(self._id)
+        self._client =.opp.data.get(DOMAIN, {}).get(self._id)
         if self._client is None:
             raise ValueError(f"Client for {self._id} has not been configured.")
 
@@ -186,8 +186,8 @@ class TwinklyLight(LightEntity):
 
                 if self._conf is not None:
                     # If the name has changed, persist it in conf entry,
-                    # so we will be able to restore this new name if opp is started while the LED string is offline.
-                    self._opp.config_entries.async_update_entry(
+                    # so we will be able to restore this new name if.opp is started while the LED string is offline.
+                    self..opp.config_entries.async_update_entry(
                         self._conf,
                         data={
                             CONF_ENTRY_HOST: self._client.host,  # this cannot change

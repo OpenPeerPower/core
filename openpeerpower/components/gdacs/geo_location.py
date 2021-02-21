@@ -47,7 +47,7 @@ SOURCE = "gdacs"
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the GDACS Feed platform."""
-    manager = opp.data[DOMAIN][FEED][entry.entry_id]
+    manager =.opp.data[DOMAIN][FEED][entry.entry_id]
 
     @callback
     def async_add_geolocation(feed_manager, integration_id, external_id):
@@ -95,7 +95,7 @@ class GdacsEvent(GeolocationEvent):
         self._remove_signal_delete = None
         self._remove_signal_update = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self._remove_signal_delete = async_dispatcher_connect(
             self.opp, f"gdacs_delete_{self._external_id}", self._delete_callback
@@ -104,7 +104,7 @@ class GdacsEvent(GeolocationEvent):
             self.opp, f"gdacs_update_{self._external_id}", self._update_callback
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Call when entity will be removed from.opp."""
         self._remove_signal_delete()
         self._remove_signal_update()
@@ -121,7 +121,7 @@ class GdacsEvent(GeolocationEvent):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     @property
     def should_poll(self):

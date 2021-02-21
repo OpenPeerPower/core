@@ -14,8 +14,8 @@ from openpeerpower.const import (
     CONF_NAME,
     CONF_PORT,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -70,7 +70,7 @@ class GpsdSensor(Entity):
 
     def __init__(self,.opp, name, host, port):
         """Initialize the GPSD sensor."""
-        self.opp = opp
+        self.opp =.opp
         self._name = name
         self._host = host
         self._port = port

@@ -1,7 +1,7 @@
 {
   "domain": "netatmo",
   "name": "Netatmo",
-  "documentation": "https://www.openpeerpower.io/integrations/netatmo",
+  "documentation": "https://www.open-peer-power.io/integrations/netatmo",
   "requirements": [
     "pyatmo==4.2.2"
   ],

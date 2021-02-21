@@ -20,7 +20,7 @@ async def async_setup_entry(
     """Set up the Firmata switches."""
     new_entities = []
 
-    board = opp.data[DOMAIN][config_entry.entry_id]
+    board =.opp.data[DOMAIN][config_entry.entry_id]
     for switch in board.switches:
         pin = switch[CONF_PIN]
         pin_mode = switch[CONF_PIN_MODE]
@@ -46,7 +46,7 @@ async def async_setup_entry(
 class FirmataSwitch(FirmataPinEntity, SwitchEntity):
     """Representation of a switch on a Firmata board."""
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Set up a switch."""
         await self._api.start_pin()
 
@@ -58,9 +58,9 @@ class FirmataSwitch(FirmataPinEntity, SwitchEntity):
     async def async_turn_on(self, **kwargs) -> None:
         """Turn on switch."""
         await self._api.turn_on()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn off switch."""
         await self._api.turn_off()
-        self.async_write_op.state()
+        self.async_write_ha_state()

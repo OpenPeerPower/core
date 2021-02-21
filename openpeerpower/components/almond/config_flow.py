@@ -35,7 +35,7 @@ class AlmondFlowHandler(config_entry_oauth2_flow.AbstractOAuth2FlowHandler):
     DOMAIN = ALMOND_DOMAIN
 
     host = None
-    oppio_discovery = None
+   .oppio_discovery = None
 
     @property
     def logger(self) -> logging.Logger:
@@ -94,31 +94,31 @@ class AlmondFlowHandler(config_entry_oauth2_flow.AbstractOAuth2FlowHandler):
             data={"type": TYPE_LOCAL, "host": user_input["host"]},
         )
 
-    async def async_step_oppio(self, discovery_info):
-        """Receive a Opp.io discovery."""
+    async def async_step.oppio(self, discovery_info):
+        """Receive a Hass.io discovery."""
         if self._async_current_entries():
             return self.async_abort(reason="single_instance_allowed")
 
         self.oppio_discovery = discovery_info
 
-        return await self.async_step_oppio_confirm()
+        return await self.async_step.oppio_confirm()
 
-    async def async_step_oppio_confirm(self, user_input=None):
-        """Confirm a Opp.io discovery."""
+    async def async_step.oppio_confirm(self, user_input=None):
+        """Confirm a Hass.io discovery."""
         data = self.oppio_discovery
 
         if user_input is not None:
             return self.async_create_entry(
                 title=data["addon"],
                 data={
-                    "is_oppio": True,
+                    "is.oppio": True,
                     "type": TYPE_LOCAL,
                     "host": f"http://{data['host']}:{data['port']}",
                 },
             )
 
         return self.async_show_form(
-            step_id="oppio_confirm",
+            step_id=.oppio_confirm",
             description_placeholders={"addon": data["addon"]},
             data_schema=vol.Schema({}),
         )

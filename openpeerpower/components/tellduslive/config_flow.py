@@ -116,7 +116,7 @@ class FlowHandler(config_entries.ConfigFlow):
 
     async def async_step_discovery(self, discovery_info):
         """Run when a Tellstick is discovered."""
-        await self._async_op.dle_discovery_without_unique_id()
+        await self._async_handle_discovery_without_unique_id()
 
         _LOGGER.info("Discovered tellstick device: %s", discovery_info)
         if supports_local_api(discovery_info[1]):

@@ -2,8 +2,8 @@
 import asyncio
 
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DOMAIN, SUPPORTED_PLATFORMS
 from .onewirehub import CannotConnect, OneWireHub

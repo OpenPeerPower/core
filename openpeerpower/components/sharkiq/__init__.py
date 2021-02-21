@@ -90,7 +90,7 @@ async def async_disconnect_or_timeout(coordinator: SharkIqUpdateCoordinator):
 
 async def async_update_options.opp, config_entry):
     """Update options."""
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry.opp, config_entry):
@@ -104,7 +104,7 @@ async def async_unload_entry.opp, config_entry):
         )
     )
     if unload_ok:
-        domain_data = opp.data[DOMAIN][config_entry.entry_id]
+        domain_data =.opp.data[DOMAIN][config_entry.entry_id]
         try:
             await async_disconnect_or_timeout(coordinator=domain_data)
         except SharkIqAuthError:

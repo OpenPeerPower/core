@@ -2,7 +2,7 @@
   "domain": "recollect_waste",
   "name": "ReCollect Waste",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/recollect_waste",
+  "documentation": "https://www.open-peer-power.io/integrations/recollect_waste",
   "requirements": [
     "aiorecollect==1.0.1"
   ],

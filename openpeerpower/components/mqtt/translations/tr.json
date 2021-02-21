@@ -13,7 +13,7 @@
                     "port": "Port"
                 }
             },
-            "oppio_confirm": {
+            .oppio_confirm": {
                 "data": {
                     "discovery": "Ke\u015ffetmeyi etkinle\u015ftir"
                 }

@@ -1,7 +1,7 @@
 {
   "domain": "alexa",
   "name": "Amazon Alexa",
-  "documentation": "https://www.openpeerpower.io/integrations/alexa",
+  "documentation": "https://www.open-peer-power.io/integrations/alexa",
   "dependencies": [
     "http"
   ],
@@ -9,7 +9,7 @@
     "camera"
   ],
   "codeowners": [
-    "@openpeerpower/cloud",
+    "@open-peer-power/cloud",
     "@ochlocracy"
   ]
 }

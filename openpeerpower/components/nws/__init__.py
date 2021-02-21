@@ -91,7 +91,7 @@ class NwsDataUpdateCoordinator(DataUpdateCoordinator):
             update_interval = self.failed_update_interval
         self._unsub_refresh = async_track_point_in_utc_time(
             self.opp,
-            self._op.dle_refresh_interval,
+            self._handle_refresh_interval,
             utcnow().replace(microsecond=0) + update_interval,
         )
 
@@ -144,8 +144,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
            .opp, _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
         ),
     )
-    nws_opp_data = opp.data.setdefault(DOMAIN, {})
-    nws_opp_data[entry.entry_id] = {
+    nws.opp_data =.opp.data.setdefault(DOMAIN, {})
+    nws.opp_data[entry.entry_id] = {
         NWS_DATA: nws_data,
         COORDINATOR_OBSERVATION: coordinator_observation,
         COORDINATOR_FORECAST: coordinator_forecast,

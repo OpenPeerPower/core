@@ -1237,7 +1237,7 @@ class WUndergroundData:
 
     def __init__(self,.opp, api_key, pws_id, lang, latitude, longitude):
         """Initialize the data object."""
-        self._opp = opp
+        self..opp =.opp
         self._api_key = api_key
         self._pws_id = pws_id
         self._lang = f"lang:{lang}"
@@ -1245,7 +1245,7 @@ class WUndergroundData:
         self._longitude = longitude
         self._features = set()
         self.data = None
-        self._session = async_get_clientsession(self._opp)
+        self._session = async_get_clientsession(self..opp)
 
     def request_feature(self, feature):
         """Register feature to be fetched from WU API."""

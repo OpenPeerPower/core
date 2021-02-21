@@ -1,6 +1,6 @@
 """Support for Genius Hub binary_sensor devices."""
 from openpeerpower.components.binary_sensor import BinarySensorEntity
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from . import DOMAIN, GeniusDevice
 
@@ -14,7 +14,7 @@ async def async_setup_platform(
     if discovery_info is None:
         return
 
-    broker = opp.data[DOMAIN]["broker"]
+    broker =.opp.data[DOMAIN]["broker"]
 
     switches = [
         GeniusBinarySensor(broker, d, GH_STATE_ATTR)

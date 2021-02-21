@@ -117,7 +117,7 @@ class SensorTrend(BinarySensorEntity):
         sample_duration,
     ):
         """Initialize the sensor."""
-        self._opp = opp
+        self..opp =.opp
         self.entity_id = generate_entity_id(ENTITY_ID_FORMAT, device_id,.opp.opp)
         self._name = friendly_name
         self._entity_id = entity_id
@@ -163,7 +163,7 @@ class SensorTrend(BinarySensorEntity):
         """No polling needed."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Complete device setup after being added to.opp."""
 
         @callback
@@ -180,7 +180,7 @@ class SensorTrend(BinarySensorEntity):
                 if state not in (STATE_UNKNOWN, STATE_UNAVAILABLE):
                     sample = (new_state.last_updated.timestamp(), float(state))
                     self.samples.append(sample)
-                    self.async_schedule_update_op.state(True)
+                    self.async_schedule_update_ha_state(True)
             except (ValueError, TypeError) as ex:
                 _LOGGER.error(ex)
 

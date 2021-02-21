@@ -18,14 +18,14 @@ from openpeerpower.const import (
 from openpeerpower.core import Event, OpenPeerPower
 from openpeerpower.helpers import storage
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.setup import ATTR_COMPONENT, EVENT_COMPONENT_LOADED
 import openpeerpower.util as.opp_util
 from openpeerpower.util import ssl as ssl_util
 
 from .auth import setup_auth
 from .ban import setup_bans
-from .const import KEY_AUTHENTICATED, KEY_OPP, KEY_OPP_USER  # noqa: F401
+from .const import KEY_AUTHENTICATED, KEY_HASS, KEY_HASS_USER  # noqa: F401
 from .cors import setup_cors
 from .forwarded import async_setup_forwarded
 from .request_context import setup_request_context
@@ -59,7 +59,7 @@ _LOGGER = logging.getLogger(__name__)
 DEFAULT_DEVELOPMENT = "0"
 # Cast to be able to load custom cards.
 # My to be able to check url and version info.
-DEFAULT_CORS = ["https://cast.openpeerpower.io", "https://my.openpeerpower.io"]
+DEFAULT_CORS = ["https://cast.open-peer-power.io", "https://my.open-peer-power.io"]
 NO_LOGIN_ATTEMPT_THRESHOLD = -1
 
 MAX_CLIENT_SIZE: int = 1024 ** 2 * 16
@@ -101,7 +101,7 @@ HTTP_SCHEMA = vol.All(
 CONFIG_SCHEMA = vol.Schema({DOMAIN: HTTP_SCHEMA}, extra=vol.ALLOW_EXTRA)
 
 
-@bind_opp
+@bind.opp
 async def async_get_last_config.opp: OpenPeerPower) -> Optional[dict]:
     """Return the last known working config."""
     store = storage.Store.opp, STORAGE_VERSION, STORAGE_KEY)
@@ -192,7 +192,7 @@ async def async_setup.opp, config):
 
    .opp.http = server
 
-    local_ip = await opp..async_add_executor_job.opp_util.get_local_ip)
+    local_ip = await.opp.async_add_executor_job.opp_util.get_local_ip)
 
     host = local_ip
     if server_host is not None:
@@ -228,7 +228,7 @@ class OpenPeerPowerHTTP:
         app = self.app = web.Application(
             middlewares=[], client_max_size=MAX_CLIENT_SIZE
         )
-        app[KEY_OPP] = opp
+        app[KEY_HASS] =.opp
 
         # Order matters, security filters middle ware needs to go first,
         # forwarded middleware needs to go second.
@@ -248,7 +248,7 @@ class OpenPeerPowerHTTP:
 
         setup_cors(app, cors_origins)
 
-        self.opp = opp
+        self.opp =.opp
         self.ssl_certificate = ssl_certificate
         self.ssl_peer_certificate = ssl_peer_certificate
         self.ssl_key = ssl_key
@@ -257,7 +257,7 @@ class OpenPeerPowerHTTP:
         self.trusted_proxies = trusted_proxies
         self.is_ban_enabled = is_ban_enabled
         self.ssl_profile = ssl_profile
-        self._op.dler = None
+        self._handler = None
         self.runner = None
         self.site = None
 

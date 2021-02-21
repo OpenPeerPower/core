@@ -26,7 +26,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up the Glucose Sensor."""
-    api = opp.data[DOMAIN][entry.entry_id]
+    api =.opp.data[DOMAIN][entry.entry_id]
     async_add_entities([NightscoutSensor(api, "Blood Sugar", entry.unique_id)], True)
 
 

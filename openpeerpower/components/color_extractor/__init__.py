@@ -21,8 +21,8 @@ from openpeerpower.components.light import (
     LIGHT_TURN_ON_SCHEMA,
     SERVICE_TURN_ON as LIGHT_SERVICE_TURN_ON,
 )
-from openpeerpowerr.helpers import aiohttp_client
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers import aiohttp_client
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,9 +47,9 @@ def _get_file(file_path):
     return file_path
 
 
-def _get_color(file_op.dler) -> tuple:
+def _get_color(file_handler) -> tuple:
     """Given an image file, extract the predominant color from it."""
-    color_thief = ColorThief(file_op.dler)
+    color_thief = ColorThief(file_handler)
 
     # get_color returns a SINGLE RGB value for the given image
     color = color_thief.get_color(quality=1)
@@ -62,7 +62,7 @@ def _get_color(file_op.dler) -> tuple:
 async def async_setup.opp,.opp_config):
     """Set up services for color_extractor integration."""
 
-    async def async_op.dle_service(service_call):
+    async def async_handle_service(service_call):
         """Decide which color_extractor method to call based on service."""
         service_data = dict(service_call.data)
 
@@ -75,7 +75,7 @@ async def async_setup.opp,.opp_config):
             elif ATTR_PATH in service_data:
                 image_type = "file path"
                 image_reference = service_data.pop(ATTR_PATH)
-                color = await opp..async_add_executor_job(
+                color = await.opp.async_add_executor_job(
                     extract_color_from_path, image_reference
                 )
 
@@ -91,14 +91,14 @@ async def async_setup.opp,.opp_config):
         if color:
             service_data[ATTR_RGB_COLOR] = color
 
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 LIGHT_DOMAIN, LIGHT_SERVICE_TURN_ON, service_data, blocking=True
             )
 
    .opp.services.async_register(
         DOMAIN,
         SERVICE_TURN_ON,
-        async_op.dle_service,
+        async_handle_service,
         schema=SERVICE_SCHEMA,
     )
 

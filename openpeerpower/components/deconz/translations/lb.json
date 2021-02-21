@@ -4,7 +4,7 @@
             "already_configured": "Bridge ass schon konfigur\u00e9iert",
             "already_in_progress": "Konfiguratioun's Oflaf ass schonn am gaang.",
             "no_bridges": "Keng dECONZ bridges fonnt",
-            "no_op.dware_available": "Keng Radio Hardware verbonne mat deCONZ",
+            "no_hardware_available": "Keng Radio Hardware verbonne mat deCONZ",
             "not_deconz_bridge": "Keng deCONZ Bridge",
             "updated_instance": "deCONZ Instanz gouf mat der neier Adress vum Apparat ge\u00e4nnert"
         },
@@ -13,9 +13,9 @@
         },
         "flow_title": "deCONZ Zigbee gateway ({host})",
         "step": {
-            "oppio_confirm": {
+            .oppio_confirm": {
                 "description": "W\u00ebllt dir Open Peer Power konfigur\u00e9iere fir sech mat der deCONZ gateway ze verbannen d\u00e9i vum.opp.io add-on {addon} bereet gestallt g\u00ebtt?",
-                "title": "deCONZ Zigbee gateway via Opp.io add-on"
+                "title": "deCONZ Zigbee gateway via Hass.io add-on"
             },
             "link": {
                 "description": "Entsperrt \u00e4r deCONZ gateway fir se mat Open Peer Power ze registr\u00e9ieren.\n\n1. Gidd op deCONZ System Astellungen\n2. Dr\u00e9ckt \"Unlock\" Gateway Kn\u00e4ppchen",

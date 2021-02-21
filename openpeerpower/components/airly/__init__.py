@@ -10,10 +10,10 @@ from airly.exceptions import AirlyError
 import async_timeout
 
 from openpeerpower.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE
-from openpeerpowerr.core import Config, OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from openpeerpower.core import Config, OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import (
     ATTR_API_ADVICE,

@@ -17,7 +17,7 @@
                     "name": "Nom del dispositiu",
                     "token": "Token d'API"
                 },
-                "description": "Necessitar\u00e0s el Token d'API de 32 car\u00e0cters, consulta les instruccions a https://www.openpeerpower.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token. Tingues en compte que aquest Token d'API \u00e9s diferent a la clau utilitzada per la integraci\u00f3 Xiaomi Aqara.",
+                "description": "Necessitar\u00e0s el Token d'API de 32 car\u00e0cters, consulta les instruccions a https://www.open-peer-power.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token. Tingues en compte que aquest Token d'API \u00e9s diferent a la clau utilitzada per la integraci\u00f3 Xiaomi Aqara.",
                 "title": "Connexi\u00f3 amb un dispositiu Xiaomi Miio o una passarel\u00b7la de Xiaomi"
             },
             "gateway": {
@@ -26,7 +26,7 @@
                     "name": "Nom de la passarel\u00b7la",
                     "token": "Token d'API"
                 },
-                "description": "Necessitar\u00e0s el Token d'API de 32 car\u00e0cters, consulta les instruccions a https://www.openpeerpower.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token. Tingues en compte que aquest Token d'API \u00e9s diferent a la clau utilitzada per la integraci\u00f3 Xiaomi Aqara.",
+                "description": "Necessitar\u00e0s el Token d'API de 32 car\u00e0cters, consulta les instruccions a https://www.open-peer-power.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token. Tingues en compte que aquest Token d'API \u00e9s diferent a la clau utilitzada per la integraci\u00f3 Xiaomi Aqara.",
                 "title": "Connexi\u00f3 amb la passarel\u00b7la de Xiaomi"
             },
             "user": {

@@ -34,7 +34,7 @@ class AcmedaBase(entity.Entity):
 
         await self.async_remove(force_remove=True)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Entity has been added to.opp."""
         self.roller.callback_subscribe(self.notify_update)
 
@@ -46,7 +46,7 @@ class AcmedaBase(entity.Entity):
             )
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Entity being removed from.opp."""
         self.roller.callback_unsubscribe(self.notify_update)
 
@@ -54,7 +54,7 @@ class AcmedaBase(entity.Entity):
     def notify_update(self):
         """Write updated device state information."""
         LOGGER.debug("Device update notification received: %s", self.name)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def should_poll(self):

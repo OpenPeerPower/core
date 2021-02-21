@@ -191,7 +191,7 @@ class IntesisAC(ClimateEntity):
             self._hvac_mode_list.extend(mode_list)
         self._hvac_mode_list.append(HVAC_MODE_OFF)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to event updates."""
         _LOGGER.debug("Added climate device with state: %s", repr(self._ih_device))
         await self._controller.add_update_callback(self.async_update_callback)
@@ -262,7 +262,7 @@ class IntesisAC(ClimateEntity):
             self._target_temp = temperature
 
         # Write updated temperature to HA state to avoid flapping (API confirmation is slow)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set operation mode."""
@@ -271,7 +271,7 @@ class IntesisAC(ClimateEntity):
             self._power = False
             await self._controller.set_power_off(self._device_id)
             # Write changes to HA, API can be slow to push changes
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
         # First check device is turned on
@@ -288,7 +288,7 @@ class IntesisAC(ClimateEntity):
 
         # Updates can take longer than 2 seconds, so update locally
         self._hvac_mode = hvac_mode
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_fan_mode(self, fan_mode):
         """Set fan mode (from quiet, low, medium, high, auto)."""
@@ -296,7 +296,7 @@ class IntesisAC(ClimateEntity):
 
         # Updates can take longer than 2 seconds, so update locally
         self._fan_speed = fan_mode
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_preset_mode(self, preset_mode):
         """Set preset mode."""
@@ -349,7 +349,7 @@ class IntesisAC(ClimateEntity):
             self._device_id
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Shutdown the controller when the device is being removed."""
         await self._controller.stop()
 
@@ -392,7 +392,7 @@ class IntesisAC(ClimateEntity):
                 self._device_type,
                 device_id,
             )
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
     @property
     def min_temp(self):

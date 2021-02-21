@@ -44,11 +44,11 @@ class NessZoneBinarySensor(BinarySensorEntity):
         self._type = zone_type
         self._state = 0
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
-                self.opp, SIGNAL_ZONE_CHANGED, self._op.dle_zone_change
+                self.opp, SIGNAL_ZONE_CHANGED, self._handle_zone_change
             )
         )
 
@@ -73,8 +73,8 @@ class NessZoneBinarySensor(BinarySensorEntity):
         return self._type
 
     @callback
-    def _op.dle_zone_change(self, data: ZoneChangedData):
+    def _handle_zone_change(self, data: ZoneChangedData):
         """Handle zone state update."""
         if self._zone_id == data.zone_id:
             self._state = data.state
-            self.async_write_op.state()
+            self.async_write_ha_state()

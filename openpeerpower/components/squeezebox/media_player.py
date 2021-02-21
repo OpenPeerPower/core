@@ -139,7 +139,7 @@ async def start_server_discovery.opp):
    .opp.data.setdefault(DOMAIN, {})
     if DISCOVERY_TASK not in.opp.data[DOMAIN]:
         _LOGGER.debug("Adding server discovery task for squeezebox")
-       .opp.data[DOMAIN][DISCOVERY_TASK] = opp.async_create_task(
+       .opp.data[DOMAIN][DISCOVERY_TASK] =.opp.async_create_task(
             async_discover(_discovered_server)
         )
 
@@ -148,7 +148,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up squeezebox platform from platform entry in configuration.yaml (deprecated)."""
 
     if config:
-        await opp..config_entries.flow.async_init(
+        await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=config
         )
 
@@ -166,7 +166,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
    .opp.data.setdefault(DOMAIN, {})
    .opp.data[DOMAIN].setdefault(config_entry.entry_id, {})
 
-    known_players = opp.data[DOMAIN].setdefault(KNOWN_PLAYERS, [])
+    known_players =.opp.data[DOMAIN].setdefault(KNOWN_PLAYERS, [])
 
     session = async_get_clientsession.opp)
     _LOGGER.debug("Creating LMS object for %s", host)
@@ -204,7 +204,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
        .opp.data[DOMAIN][config_entry.entry_id][
             PLAYER_DISCOVERY_UNSUB
-        ] = opp.helpers.event.async_call_later(DISCOVERY_INTERVAL, _discovery)
+        ] =.opp.helpers.event.async_call_later(DISCOVERY_INTERVAL, _discovery)
 
     _LOGGER.debug("Adding player discovery job for LMS server: %s", host)
     asyncio.create_task(_discovery())
@@ -324,7 +324,7 @@ class SqueezeBoxEntity(MediaPlayerEntity):
                     self.opp, SIGNAL_PLAYER_REDISCOVERED, self.rediscovered
                 )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Remove from list of known players when removed from.opp."""
         self.opp.data[DOMAIN][KNOWN_PLAYERS].remove(self)
 

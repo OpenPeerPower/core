@@ -15,8 +15,8 @@ from openpeerpower.components.media_player.const import (
     SUPPORT_VOLUME_SET,
 )
 from openpeerpower.const import CONF_NAME, STATE_IDLE, STATE_PAUSED, STATE_PLAYING
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.util.dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 

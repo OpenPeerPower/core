@@ -39,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Vultr subscription (server) binary sensor."""
-    vultr = opp.data[DATA_VULTR]
+    vultr =.opp.data[DATA_VULTR]
 
     subscription = config.get(CONF_SUBSCRIPTION)
     name = config.get(CONF_NAME)

@@ -1,7 +1,7 @@
 """Integration to UniFi controllers and its various features."""
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.device_registry import CONNECTION_NETWORK_MAC
+from openpeerpower.core import callback
+from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
 
 from .const import (
     ATTR_MANUFACTURER,
@@ -51,7 +51,7 @@ async def async_setup_entry.opp, config_entry):
     if controller.mac is None:
         return True
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(CONNECTION_NETWORK_MAC, controller.mac)},
@@ -65,7 +65,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
-    controller = opp.data[UNIFI_DOMAIN].pop(config_entry.entry_id)
+    controller =.opp.data[UNIFI_DOMAIN].pop(config_entry.entry_id)
     return await controller.async_reset()
 
 
@@ -88,9 +88,9 @@ class UnifiWirelessClients:
 
     def __init__(self,.opp):
         """Set up client storage."""
-        self.opp = opp
+        self.opp =.opp
         self.data = {}
-        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
 
     async def async_load(self):
         """Load data from file."""

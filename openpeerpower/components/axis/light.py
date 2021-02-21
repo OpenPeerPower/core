@@ -16,7 +16,7 @@ from .const import DOMAIN as AXIS_DOMAIN
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up a Axis light."""
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     if (
         device.api.vapix.light_control is None
@@ -51,9 +51,9 @@ class AxisLight(AxisEventBase, LightEntity):
 
         self._features = SUPPORT_BRIGHTNESS
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe lights events."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         current_intensity = (
             await self.device.api.vapix.light_control.get_current_intensity(

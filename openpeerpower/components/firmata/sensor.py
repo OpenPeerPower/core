@@ -20,7 +20,7 @@ async def async_setup_entry(
     """Set up the Firmata sensors."""
     new_entities = []
 
-    board = opp.data[DOMAIN][config_entry.entry_id]
+    board =.opp.data[DOMAIN][config_entry.entry_id]
     for sensor in board.sensors:
         pin = sensor[CONF_PIN]
         pin_mode = sensor[CONF_PIN_MODE]
@@ -45,11 +45,11 @@ async def async_setup_entry(
 class FirmataSensor(FirmataPinEntity, Entity):
     """Representation of a sensor on a Firmata board."""
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Set up a sensor."""
-        await self._api.start_pin(self.async_write_op.state)
+        await self._api.start_pin(self.async_write_ha_state)
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Stop reporting a sensor."""
         await self._api.stop_pin()
 

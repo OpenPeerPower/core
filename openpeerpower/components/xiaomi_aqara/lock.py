@@ -20,7 +20,7 @@ UNLOCK_MAINTAIN_TIME = 5
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Perform the setup for Xiaomi devices."""
     entities = []
-    gateway = opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
+    gateway =.opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
     for device in gateway.devices["lock"]:
         model = device["model"]
         if model == "lock.aq1":
@@ -59,7 +59,7 @@ class XiaomiAqaraLock(LockEntity, XiaomiDevice):
     def clear_unlock_state(self, _):
         """Clear unlock state automatically."""
         self._state = STATE_LOCKED
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def parse_data(self, data, raw_data):
         """Parse data sent by gateway."""

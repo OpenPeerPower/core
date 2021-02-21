@@ -23,7 +23,7 @@ FILTER_ATTRS = ("ip_address", "mac_address")
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up device tracker for Mikrotik component."""
-    hub = opp.data[DOMAIN][config_entry.entry_id]
+    hub =.opp.data[DOMAIN][config_entry.entry_id]
 
     tracked = {}
 
@@ -141,11 +141,11 @@ class MikrotikHubTracker(ScannerEntity):
         }
         return info
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Client entity created."""
         _LOGGER.debug("New network device tracker %s (%s)", self.name, self.unique_id)
         self.unsub_dispatcher = async_dispatcher_connect(
-            self.opp, self.hub.signal_update, self.async_write_op.state
+            self.opp, self.hub.signal_update, self.async_write_ha_state
         )
 
     async def async_update(self):
@@ -155,7 +155,7 @@ class MikrotikHubTracker(ScannerEntity):
         )
         await self.hub.request_update()
 
-    async def will_remove_from_opp(self):
+    async def will_remove_from.opp(self):
         """Disconnect from dispatcher."""
         if self.unsub_dispatcher:
             self.unsub_dispatcher()

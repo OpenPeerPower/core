@@ -6,7 +6,7 @@ from openpeerpower.components.binary_sensor import (
     DEVICE_CLASS_OCCUPANCY,
     BinarySensorEntity,
 )
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from . import DOMAIN
 from .entity import RingEntityMixin
@@ -24,8 +24,8 @@ SENSOR_TYPES = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Ring binary sensors from a config entry."""
-    ring = opp.data[DOMAIN][config_entry.entry_id]["api"]
-    devices = opp.data[DOMAIN][config_entry.entry_id]["devices"]
+    ring =.opp.data[DOMAIN][config_entry.entry_id]["api"]
+    devices =.opp.data[DOMAIN][config_entry.entry_id]["devices"]
 
     sensors = []
 
@@ -58,15 +58,15 @@ class RingBinarySensor(RingEntityMixin, BinarySensorEntity):
         self._unique_id = f"{device.id}-{sensor_type}"
         self._update_alert()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.ring_objects["dings_data"].async_add_listener(self._dings_update_callback)
         self._dings_update_callback()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect callbacks."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         self.ring_objects["dings_data"].async_remove_listener(
             self._dings_update_callback
         )
@@ -75,7 +75,7 @@ class RingBinarySensor(RingEntityMixin, BinarySensorEntity):
     def _dings_update_callback(self):
         """Call update method."""
         self._update_alert()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _update_alert(self):

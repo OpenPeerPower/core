@@ -3,8 +3,8 @@ import voluptuous as vol
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_SCAN_INTERVAL
-from openpeerpowerr.core import Config, OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
+from openpeerpower.core import Config, OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
 
 from .account import StarlineAccount
 from .const import (
@@ -36,7 +36,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
        .opp.data[DOMAIN] = {}
    .opp.data[DOMAIN][config_entry.entry_id] = account
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     for device in account.api.devices.values():
         device_registry.async_get_or_create(
             config_entry_id=config_entry.entry_id, **account.device_info(device)
@@ -99,16 +99,16 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
 async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     for domain in PLATFORMS:
-        await opp..config_entries.async_forward_entry_unload(config_entry, domain)
+        await.opp.config_entries.async_forward_entry_unload(config_entry, domain)
 
-    account: StarlineAccount = opp.data[DOMAIN][config_entry.entry_id]
+    account: StarlineAccount =.opp.data[DOMAIN][config_entry.entry_id]
     account.unload()
     return True
 
 
 async def async_options_updated.opp: OpenPeerPower, config_entry: ConfigEntry) -> None:
     """Triggered by config entry options updates."""
-    account: StarlineAccount = opp.data[DOMAIN][config_entry.entry_id]
+    account: StarlineAccount =.opp.data[DOMAIN][config_entry.entry_id]
     scan_interval = config_entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
     scan_obd_interval = config_entry.options.get(
         CONF_SCAN_OBD_INTERVAL, DEFAULT_SCAN_OBD_INTERVAL

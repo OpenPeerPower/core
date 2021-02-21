@@ -28,7 +28,7 @@ _TIMEOUT = 15  # seconds
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the DoorBird camera platform."""
     config_entry_id = config_entry.entry_id
-    config_data = opp.data[DOMAIN][config_entry_id]
+    config_data =.opp.data[DOMAIN][config_entry_id]
     doorstation = config_data[DOOR_STATION]
     doorstation_info = config_data[DOOR_STATION_INFO]
     device = doorstation.device
@@ -136,7 +136,7 @@ class DoorBirdCamera(DoorBirdEntity, Camera):
             )
             return self._last_image
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Add callback after being added to.opp.
 
         Registers entity_id map for the logbook
@@ -147,7 +147,7 @@ class DoorBirdCamera(DoorBirdEntity, Camera):
         for event in self._doorstation_events:
             event_to_entity_id[event] = self.entity_id
 
-    async def will_remove_from_opp(self):
+    async def will_remove_from.opp(self):
         """Unregister entity_id map for the logbook."""
         event_to_entity_id = self.opp.data[DOMAIN][DOOR_STATION_EVENT_ENTITY_IDS]
         for event in self._doorstation_events:

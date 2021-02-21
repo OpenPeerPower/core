@@ -45,14 +45,14 @@ class AuthPhase:
 
     def __init__(self, logger,.opp, send_message, request):
         """Initialize the authentiated connection."""
-        self._opp = opp
+        self..opp =.opp
         self._send_message = send_message
         self._logger = logger
         self._request = request
         self._authenticated = False
         self._connection = None
 
-    async def async_op.dle(self, msg):
+    async def async_handle(self, msg):
         """Handle authentication."""
         try:
             msg = AUTH_MESSAGE_SCHEMA(msg)
@@ -66,7 +66,7 @@ class AuthPhase:
 
         if "access_token" in msg:
             self._logger.debug("Received access_token")
-            refresh_token = await self._opp.auth.async_validate_access_token(
+            refresh_token = await self..opp.auth.async_validate_access_token(
                 msg["access_token"]
             )
             if refresh_token is not None:
@@ -84,5 +84,5 @@ class AuthPhase:
         await process_success_login(self._request)
         self._send_message(auth_ok_message())
         return ActiveConnection(
-            self._logger, self._opp, self._send_message, user, refresh_token
+            self._logger, self..opp, self._send_message, user, refresh_token
         )

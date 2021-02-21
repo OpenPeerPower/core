@@ -18,19 +18,19 @@ from openpeerpower.const import ATTR_TEMPERATURE, TEMP_CELSIUS, TEMP_FAHRENHEIT
 
 from . import ATTR_AVAILABLE, DATA_HIVE, DOMAIN, HiveEntity, refresh_system
 
-HIVE_TO_OPP_STATE = {
+HIVE_TO_HASS_STATE = {
     "SCHEDULE": HVAC_MODE_AUTO,
     "MANUAL": HVAC_MODE_HEAT,
     "OFF": HVAC_MODE_OFF,
 }
 
-OPP_TO_HIVE_STATE = {
+HASS_TO_HIVE_STATE = {
     HVAC_MODE_AUTO: "SCHEDULE",
     HVAC_MODE_HEAT: "MANUAL",
     HVAC_MODE_OFF: "OFF",
 }
 
-HIVE_TO_OPP_HVAC_ACTION = {
+HIVE_TO_HASS_HVAC_ACTION = {
     "UNKNOWN": CURRENT_HVAC_OFF,
     False: CURRENT_HVAC_IDLE,
     True: CURRENT_HVAC_HEAT,
@@ -50,7 +50,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    hive = opp.data[DOMAIN].get(DATA_HIVE)
+    hive =.opp.data[DOMAIN].get(DATA_HIVE)
     devices = hive.devices.get("climate")
     entities = []
     if devices:
@@ -112,12 +112,12 @@ class HiveClimateEntity(HiveEntity, ClimateEntity):
 
         Need to be one of HVAC_MODE_*.
         """
-        return HIVE_TO_OPP_STATE[self.device["status"]["mode"]]
+        return HIVE_TO_HASS_STATE[self.device["status"]["mode"]]
 
     @property
     def hvac_action(self):
         """Return current HVAC action."""
-        return HIVE_TO_OPP_HVAC_ACTION[self.device["status"]["action"]]
+        return HIVE_TO_HASS_HVAC_ACTION[self.device["status"]["action"]]
 
     @property
     def temperature_unit(self):
@@ -159,7 +159,7 @@ class HiveClimateEntity(HiveEntity, ClimateEntity):
     @refresh_system
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
-        new_mode = OPP_TO_HIVE_STATE[hvac_mode]
+        new_mode = HASS_TO_HIVE_STATE[hvac_mode]
         await self.hive.heating.set_mode(self.device, new_mode)
 
     @refresh_system

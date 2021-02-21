@@ -9,8 +9,8 @@ from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.components.media_player.const import MEDIA_CLASS_DIRECTORY
 from openpeerpower.components.media_player.errors import BrowseError
 from openpeerpower.components.media_source.error import Unresolvable
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.util import raise_if_invalid_path
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.util import raise_if_invalid_path
 
 from .const import DOMAIN, MEDIA_CLASS_MAP, MEDIA_MIME_TYPES
 from .models import BrowseMediaSource, MediaSource, MediaSourceItem, PlayMedia
@@ -32,7 +32,7 @@ class LocalSource(MediaSource):
     def __init__(self,.opp: OpenPeerPower):
         """Initialize local source."""
         super().__init__(DOMAIN)
-        self.opp = opp
+        self.opp =.opp
 
     @callback
     def async_full_path(self, source_dir_id, location) -> Path:
@@ -184,7 +184,7 @@ class LocalMediaView(OpenPeerPowerView):
 
     def __init__(self,.opp: OpenPeerPower, source: LocalSource):
         """Initialize the media view."""
-        self.opp = opp
+        self.opp =.opp
         self.source = source
 
     async def get(

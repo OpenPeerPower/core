@@ -15,8 +15,8 @@ from openpeerpower.components.ffmpeg import (
     FFmpegBase,
 )
 from openpeerpower.const import CONF_NAME, CONF_REPEAT
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
 
 CONF_RESET = "reset"
 CONF_CHANGES = "changes"
@@ -49,7 +49,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the FFmpeg binary motion sensor."""
-    manager = opp.data[DATA_FFMPEG]
+    manager =.opp.data[DATA_FFMPEG]
     entity = FFmpegMotion.opp, manager, config)
     async_add_entities([entity])
 
@@ -67,9 +67,9 @@ class FFmpegBinarySensor(FFmpegBase, BinarySensorEntity):
 
     @callback
     def _async_callback(self, state):
-        """OP-FFmpeg callback for noise detection."""
+        """HA-FFmpeg callback for noise detection."""
         self._state = state
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_on(self):

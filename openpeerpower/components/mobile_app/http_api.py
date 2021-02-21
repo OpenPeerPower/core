@@ -61,21 +61,21 @@ class RegistrationsView(OpenPeerPowerView):
     )
     async def post(self, request: Request, data: Dict) -> Response:
         """Handle the POST request for registration."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         webhook_id = secrets.token_hex()
 
         if.opp.components.cloud.async_active_subscription():
             data[
                 CONF_CLOUDHOOK_URL
-            ] = await opp..components.cloud.async_create_cloudhook(webhook_id)
+            ] = await.opp.components.cloud.async_create_cloudhook(webhook_id)
 
         data[CONF_WEBHOOK_ID] = webhook_id
 
         if data[ATTR_SUPPORTS_ENCRYPTION] and supports_encryption():
             data[CONF_SECRET] = secrets.token_hex(SecretBox.KEY_SIZE)
 
-        data[CONF_USER_ID] = request["opp_user"].id
+        data[CONF_USER_ID] = request[.opp_user"].id
 
         if slugify(data[ATTR_DEVICE_NAME], separator=""):
             # if slug is not empty and would not only be underscores
@@ -91,7 +91,7 @@ class RegistrationsView(OpenPeerPowerView):
             # Fallback to DEVICE_ID
             data[ATTR_DEVICE_NAME] = data[ATTR_DEVICE_ID]
 
-        await opp..async_create_task(
+        await.opp.async_create_task(
            .opp.config_entries.flow.async_init(
                 DOMAIN, data=data, context={"source": "registration"}
             )
@@ -99,7 +99,7 @@ class RegistrationsView(OpenPeerPowerView):
 
         remote_ui_url = None
         try:
-            remote_ui_url = opp.components.cloud.async_remote_ui_url()
+            remote_ui_url =.opp.components.cloud.async_remote_ui_url()
         except.opp.components.cloud.CloudNotAvailable:
             pass
 

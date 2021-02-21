@@ -46,7 +46,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up WiLight lights from a config entry."""
-    parent = opp.data[DOMAIN][entry.entry_id]
+    parent =.opp.data[DOMAIN][entry.entry_id]
 
     # Handle a discovered WiLight device.
     entities = entities_from_discovered_wilight.opp, parent.api)
@@ -108,23 +108,23 @@ class WiLightLightDimmer(WiLightDevice, LightEntity):
         await self._client.turn_off(self._index)
 
 
-def wilight_to_opp_hue(value):
-    """Convert wilight hue 1..255 to opp 0..360 scale."""
+def wilight_to.opp_hue(value):
+    """Convert wilight hue 1..255 to.opp 0..360 scale."""
     return min(360, round((value * 360) / 255, 3))
 
 
 def.opp_to_wilight_hue(value):
-    """Convert opp hue 0..360 to wilight 1..255 scale."""
+    """Convert.opp hue 0..360 to wilight 1..255 scale."""
     return min(255, round((value * 255) / 360))
 
 
-def wilight_to_opp_saturation(value):
-    """Convert wilight saturation 1..255 to opp 0..100 scale."""
+def wilight_to.opp_saturation(value):
+    """Convert wilight saturation 1..255 to.opp 0..100 scale."""
     return min(100, round((value * 100) / 255, 3))
 
 
 def.opp_to_wilight_saturation(value):
-    """Convert opp saturation 0..100 to wilight 1..255 scale."""
+    """Convert.opp saturation 0..100 to wilight 1..255 scale."""
     return min(255, round((value * 255) / 100))
 
 
@@ -145,8 +145,8 @@ class WiLightLightColor(WiLightDevice, LightEntity):
     def hs_color(self):
         """Return the hue and saturation color value [float, float]."""
         return [
-            wilight_to_opp_hue(int(self._status.get("hue", 0))),
-            wilight_to_opp_saturation(int(self._status.get("saturation", 0))),
+            wilight_to.opp_hue(int(self._status.get("hue", 0))),
+            wilight_to.opp_saturation(int(self._status.get("saturation", 0))),
         ]
 
     @property
@@ -161,15 +161,15 @@ class WiLightLightColor(WiLightDevice, LightEntity):
         # Saturation use a range of [0, 100] to control
         if ATTR_BRIGHTNESS in kwargs and ATTR_HS_COLOR in kwargs:
             brightness = kwargs[ATTR_BRIGHTNESS]
-            hue = opp_to_wilight_hue(kwargs[ATTR_HS_COLOR][0])
-            saturation = opp_to_wilight_saturation(kwargs[ATTR_HS_COLOR][1])
+            hue =.opp_to_wilight_hue(kwargs[ATTR_HS_COLOR][0])
+            saturation =.opp_to_wilight_saturation(kwargs[ATTR_HS_COLOR][1])
             await self._client.set_hsb_color(self._index, hue, saturation, brightness)
         elif ATTR_BRIGHTNESS in kwargs and ATTR_HS_COLOR not in kwargs:
             brightness = kwargs[ATTR_BRIGHTNESS]
             await self._client.set_brightness(self._index, brightness)
         elif ATTR_BRIGHTNESS not in kwargs and ATTR_HS_COLOR in kwargs:
-            hue = opp_to_wilight_hue(kwargs[ATTR_HS_COLOR][0])
-            saturation = opp_to_wilight_saturation(kwargs[ATTR_HS_COLOR][1])
+            hue =.opp_to_wilight_hue(kwargs[ATTR_HS_COLOR][0])
+            saturation =.opp_to_wilight_saturation(kwargs[ATTR_HS_COLOR][1])
             await self._client.set_hs_color(self._index, hue, saturation)
         else:
             await self._client.turn_on(self._index)

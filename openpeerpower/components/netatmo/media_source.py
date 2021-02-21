@@ -43,7 +43,7 @@ class NetatmoSource(MediaSource):
     def __init__(self,.opp: OpenPeerPower):
         """Initialize Netatmo source."""
         super().__init__(DOMAIN)
-        self.opp = opp
+        self.opp =.opp
         self.events = self.opp.data[DOMAIN][DATA_EVENTS]
 
     async def async_resolve_media(self, item: MediaSourceItem) -> PlayMedia:

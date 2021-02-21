@@ -2,7 +2,7 @@
   "domain": "solarlog",
   "name": "Solar-Log",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/solarlog",
+  "documentation": "https://www.open-peer-power.io/integrations/solarlog",
   "codeowners": ["@Ernst79"],
   "requirements": ["sunwatcher==0.2.1"]
 }

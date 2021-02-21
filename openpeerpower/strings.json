@@ -20,7 +20,7 @@
       "title": {
         "oauth2_pick_implementation": "Pick Authentication Method",
         "reauth": "Reauthenticate Integration",
-        "via_oppio_addon": "{name} via Open Peer Power add-on"
+        "via.oppio_addon": "{name} via Open Peer Power add-on"
       },
       "description": {
         "confirm_setup": "Do you want to start set up?"

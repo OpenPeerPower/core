@@ -4,9 +4,9 @@ import logging
 import time
 
 from openpeerpower.const import DEVICE_CLASS_TIMESTAMP
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity import Entity
 
 from . import REPETIER_API, SENSOR_TYPES, UPDATE_SIGNAL
 
@@ -31,7 +31,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     entities = []
     for info in discovery_info:
         printer_name = info["printer_name"]
-        api = opp.data[REPETIER_API][printer_name]
+        api =.opp.data[REPETIER_API][printer_name]
         printer_id = info["printer_id"]
         sensor_type = info["sensor_type"]
         temp_id = info["temp_id"]
@@ -98,9 +98,9 @@ class RepetierSensor(Entity):
     @callback
     def update_callback(self):
         """Get new data and update state."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Connect update callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(self.opp, UPDATE_SIGNAL, self.update_callback)

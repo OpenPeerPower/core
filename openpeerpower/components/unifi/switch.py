@@ -16,9 +16,9 @@ from aiounifi.events import (
 )
 
 from openpeerpower.components.switch import DOMAIN, SwitchEntity
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.restore_state import RestoreEntity
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.restore_state import RestoreEntity
 
 from .const import ATTR_MANUFACTURER, DOMAIN as UNIFI_DOMAIN
 from .unifi_client import UniFiClient
@@ -39,7 +39,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     Switches are controlling network access and switch ports with POE.
     """
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     controller.entities[DOMAIN] = {
         BLOCK_SWITCH: set(),
         POE_SWITCH: set(),
@@ -51,7 +51,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     # Store previously known POE control entities in case their POE are turned off.
     previously_known_poe_clients = []
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     for entity in entity_registry.entities.values():
 
         if (
@@ -192,9 +192,9 @@ class UniFiPOEClientSwitch(UniFiClient, SwitchEntity, RestoreEntity):
         if client.sw_port and self.port.poe_mode != "off":
             self.poe_mode = self.port.poe_mode
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity about to be added to Open Peer Power."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         state = await self.async_get_last_state()
         if state is None:

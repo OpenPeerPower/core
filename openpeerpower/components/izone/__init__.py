@@ -3,8 +3,8 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_EXCLUDE
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from .const import DATA_CONFIG, IZONE
 from .discovery import async_start_discovery_service, async_stop_discovery_service
@@ -54,5 +54,5 @@ async def async_setup_entry.opp, entry):
 async def async_unload_entry.opp, entry):
     """Unload the config entry and stop discovery process."""
     await async_stop_discovery_service.opp)
-    await opp..config_entries.async_forward_entry_unload(entry, "climate")
+    await.opp.config_entries.async_forward_entry_unload(entry, "climate")
     return True

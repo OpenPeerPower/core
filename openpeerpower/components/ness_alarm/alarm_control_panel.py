@@ -43,11 +43,11 @@ class NessAlarmPanel(alarm.AlarmControlPanelEntity):
         self._name = name
         self._state = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
-                self.opp, SIGNAL_ARMING_STATE_CHANGED, self._op.dle_arming_state_change
+                self.opp, SIGNAL_ARMING_STATE_CHANGED, self._handle_arming_state_change
             )
         )
 
@@ -93,7 +93,7 @@ class NessAlarmPanel(alarm.AlarmControlPanelEntity):
         await self._client.panic(code)
 
     @callback
-    def _op.dle_arming_state_change(self, arming_state):
+    def _handle_arming_state_change(self, arming_state):
         """Handle arming state update."""
 
         if arming_state == ArmingState.UNKNOWN:
@@ -113,4 +113,4 @@ class NessAlarmPanel(alarm.AlarmControlPanelEntity):
         else:
             _LOGGER.warning("Unhandled arming state: %s", arming_state)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()

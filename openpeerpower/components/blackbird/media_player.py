@@ -21,7 +21,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from .const import DOMAIN, SERVICE_SETALLZONES
 
@@ -105,7 +105,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     add_entities(devices, True)
 
-    def service_op.dle(service):
+    def service_handle(service):
         """Handle for services."""
         entity_ids = service.data.get(ATTR_ENTITY_ID)
         source = service.data.get(ATTR_SOURCE)
@@ -117,14 +117,14 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             ]
 
         else:
-            devices = opp.data[DATA_BLACKBIRD].values()
+            devices =.opp.data[DATA_BLACKBIRD].values()
 
         for device in devices:
             if service.service == SERVICE_SETALLZONES:
                 device.set_all_zones(source)
 
    .opp.services.register(
-        DOMAIN, SERVICE_SETALLZONES, service_op.dle, schema=BLACKBIRD_SETALLZONES_SCHEMA
+        DOMAIN, SERVICE_SETALLZONES, service_handle, schema=BLACKBIRD_SETALLZONES_SCHEMA
     )
 
 

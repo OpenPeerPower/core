@@ -86,7 +86,7 @@ async def async_unload_entry.opp, config_entry):
 
 async def update_listener.opp, config_entry):
     """Update listener."""
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)
 
 
 class AccuWeatherDataUpdateCoordinator(DataUpdateCoordinator):
@@ -96,7 +96,7 @@ class AccuWeatherDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize."""
         self.location_key = location_key
         self.forecast = forecast
-        self.is_metric = opp.config.units.is_metric
+        self.is_metric =.opp.config.units.is_metric
         self.accuweather = AccuWeather(api_key, session, location_key=self.location_key)
 
         # Enabling the forecast download increases the number of requests per data

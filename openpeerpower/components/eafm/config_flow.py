@@ -3,7 +3,7 @@ from aioeafm import get_stations
 import voluptuous as vol
 
 from openpeerpower import config_entries
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 # pylint: disable=unused-import
 from .const import DOMAIN

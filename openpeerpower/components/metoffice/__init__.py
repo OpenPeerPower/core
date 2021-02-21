@@ -5,9 +5,9 @@ import logging
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import (
     DEFAULT_SCAN_INTERVAL,
@@ -49,8 +49,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         update_interval=DEFAULT_SCAN_INTERVAL,
     )
 
-    metoffice_opp_data = opp.data.setdefault(DOMAIN, {})
-    metoffice_opp_data[entry.entry_id] = {
+    metoffice.opp_data =.opp.data.setdefault(DOMAIN, {})
+    metoffice.opp_data[entry.entry_id] = {
         METOFFICE_DATA: metoffice_data,
         METOFFICE_COORDINATOR: metoffice_coordinator,
         METOFFICE_NAME: site_name,

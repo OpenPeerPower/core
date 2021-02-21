@@ -109,11 +109,11 @@ class RflinkSensor(RflinkDevice):
         self._unit_of_measurement = unit_of_measurement
         super().__init__(device_id, initial_event=initial_event, **kwargs)
 
-    def _op.dle_event(self, event):
+    def _handle_event(self, event):
         """Domain specific event handler."""
         self._state = event["value"]
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register update callback."""
         # Remove temporary bogus entity_id if added
         tmp_entity = TMP_ENTITY.format(self._device_id)

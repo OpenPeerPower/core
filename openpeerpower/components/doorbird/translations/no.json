@@ -29,7 +29,7 @@
                 "data": {
                     "events": "Kommaseparert liste over hendelser."
                 },
-                "description": "Legg til et kommaseparert hendelsesnavn for hvert arrangement du \u00f8nsker \u00e5 spore. Etter \u00e5 ha skrevet dem inn her, bruker du DoorBird-appen til \u00e5 tilordne dem til en bestemt hendelse. Se dokumentasjonen p\u00e5 https://www.openpeerpower.io/integrations/doorbird/#events. Eksempel: noen_trykket_knappen, bevegelse"
+                "description": "Legg til et kommaseparert hendelsesnavn for hvert arrangement du \u00f8nsker \u00e5 spore. Etter \u00e5 ha skrevet dem inn her, bruker du DoorBird-appen til \u00e5 tilordne dem til en bestemt hendelse. Se dokumentasjonen p\u00e5 https://www.open-peer-power.io/integrations/doorbird/#events. Eksempel: noen_trykket_knappen, bevegelse"
             }
         }
     }

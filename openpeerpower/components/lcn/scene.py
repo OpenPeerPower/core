@@ -31,7 +31,7 @@ async def async_setup_platform(
     for config in discovery_info:
         address, connection_id = config[CONF_ADDRESS]
         addr = pypck.lcn_addr.LcnAddr(*address)
-        connections = opp.data[DATA_LCN][CONF_CONNECTIONS]
+        connections =.opp.data[DATA_LCN][CONF_CONNECTIONS]
         connection = get_connection(connections, connection_id)
         address_connection = connection.get_address_conn(addr)
 
@@ -63,7 +63,7 @@ class LcnScene(LcnEntity, Scene):
         else:
             self.transition = pypck.lcn_defs.time_to_ramp_value(config[CONF_TRANSITION])
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
 
     async def async_activate(self, **kwargs: Any) -> None:

@@ -80,7 +80,7 @@ class ImapSensor(Entity):
         self._does_push = None
         self._idle_loop_task = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle when an entity is about to be added to Open Peer Power."""
         if not self.should_poll:
             self._idle_loop_task = self.opp.loop.create_task(self.idle_loop())
@@ -130,7 +130,7 @@ class ImapSensor(Entity):
             try:
                 if await self.connection():
                     await self.refresh_email_count()
-                    self.async_write_op.state()
+                    self.async_write_ha_state()
 
                     idle = await self._connection.idle_start()
                     await self._connection.wait_server_push()
@@ -138,7 +138,7 @@ class ImapSensor(Entity):
                     with async_timeout.timeout(10):
                         await idle
                 else:
-                    self.async_write_op.state()
+                    self.async_write_ha_state()
             except (AioImapException, asyncio.TimeoutError):
                 self.disconnected()
 

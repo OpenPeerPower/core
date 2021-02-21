@@ -12,8 +12,8 @@ from openpeerpower.components.fan import (
     FanEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.util.percentage import (
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.util.percentage import (
     ordered_list_item_to_percentage,
     percentage_to_ordered_list_item,
 )
@@ -99,7 +99,7 @@ class EsphomeFan(EsphomeEntity, FanEntity):
     async def async_set_direction(self, direction: str):
         """Set direction of the fan."""
         await self._client.fan_command(
-            key=self._static_info.key, direction=_fan_directions.from_opp(direction)
+            key=self._static_info.key, direction=_fan_directions.from.opp(direction)
         )
 
     # https://github.com/PyCQA/pylint/issues/3150 for all @esphome_state_property
@@ -118,6 +118,11 @@ class EsphomeFan(EsphomeEntity, FanEntity):
         return ordered_list_item_to_percentage(
             ORDERED_NAMED_FAN_SPEEDS, self._state.speed
         )
+
+    @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        return len(ORDERED_NAMED_FAN_SPEEDS)
 
     @esphome_state_property
     def oscillating(self) -> None:

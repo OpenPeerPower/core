@@ -9,8 +9,8 @@ import voluptuous as vol
 from openpeerpower.components.ssdp import ATTR_SSDP_LOCATION, ATTR_UPNP_SERIAL
 from openpeerpower.config_entries import CONN_CLASS_LOCAL_POLL, ConfigFlow
 from openpeerpower.const import CONF_HOST, CONF_NAME
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.typing import (
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.typing import (
     ConfigType,
     DiscoveryInfoType,
     OpenPeerPowerType,

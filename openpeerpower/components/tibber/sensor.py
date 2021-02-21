@@ -25,7 +25,7 @@ PARALLEL_UPDATES = 0
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the Tibber sensor."""
 
-    tibber_connection = opp.data.get(TIBBER_DOMAIN)
+    tibber_connection =.opp.data.get(TIBBER_DOMAIN)
 
     dev = []
     for home in tibber_connection.get_homes(only_active=False):
@@ -177,7 +177,7 @@ class TibberSensorElPrice(TibberSensor):
 class TibberSensorRT(TibberSensor):
     """Representation of a Tibber sensor for real time consumption."""
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Start listen for real time data."""
         await self._tibber_home.rt_subscribe(self.opp.loop, self._async_callback)
 
@@ -199,7 +199,7 @@ class TibberSensorRT(TibberSensor):
                 continue
             self._device_state_attributes[key] = value
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def available(self):

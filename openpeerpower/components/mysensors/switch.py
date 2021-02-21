@@ -115,7 +115,7 @@ class MySensorsSwitch(mysensors.device.MySensorsEntity, SwitchEntity):
         if self.assumed_state:
             # Optimistically assume that switch has changed state
             self._values[self.value_type] = STATE_ON
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the switch off."""
@@ -125,7 +125,7 @@ class MySensorsSwitch(mysensors.device.MySensorsEntity, SwitchEntity):
         if self.assumed_state:
             # Optimistically assume that switch has changed state
             self._values[self.value_type] = STATE_OFF
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
 
 class MySensorsIRSwitch(MySensorsSwitch):
@@ -157,7 +157,7 @@ class MySensorsIRSwitch(MySensorsSwitch):
             # Optimistically assume that switch has changed state
             self._values[self.value_type] = self._ir_code
             self._values[set_req.V_LIGHT] = STATE_ON
-            self.async_write_op.state()
+            self.async_write_ha_state()
             # Turn off switch after switch was turned on
             await self.async_turn_off()
 
@@ -170,7 +170,7 @@ class MySensorsIRSwitch(MySensorsSwitch):
         if self.assumed_state:
             # Optimistically assume that switch has changed state
             self._values[set_req.V_LIGHT] = STATE_OFF
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_update(self):
         """Update the controller with the latest value from a sensor."""

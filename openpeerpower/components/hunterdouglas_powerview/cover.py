@@ -51,7 +51,7 @@ PARALLEL_UPDATES = 1
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the hunter douglas shades."""
 
-    pv_data = opp.data[DOMAIN][entry.entry_id]
+    pv_data =.opp.data[DOMAIN][entry.entry_id]
     room_data = pv_data[PV_ROOM_DATA]
     shade_data = pv_data[PV_SHADE_DATA]
     pv_request = pv_data[PV_API]
@@ -77,38 +77,37 @@ async def async_setup_entry.opp, entry, async_add_entities):
                 name_before_refresh,
             )
             continue
+        room_id = shade.raw_data.get(ROOM_ID_IN_SHADE)
+        room_name = room_data.get(room_id, {}).get(ROOM_NAME_UNICODE, "")
         entities.append(
             PowerViewShade(
-                shade, name_before_refresh, room_data, coordinator, device_info
+                coordinator, device_info, room_name, shade, name_before_refresh
             )
         )
     async_add_entities(entities)
 
 
-def hd_position_to_opp(hd_position):
-    """Convert hunter douglas position to opp position."""
+def hd_position_to.opp(hd_position):
+    """Convert hunter douglas position to.opp position."""
     return round((hd_position / MAX_POSITION) * 100)
 
 
 def.opp_position_to_hd.opp_positon):
-    """Convert opp position to hunter douglas position."""
+    """Convert.opp position to hunter douglas position."""
     return int.opp_positon / 100 * MAX_POSITION)
 
 
 class PowerViewShade(ShadeEntity, CoverEntity):
     """Representation of a powerview shade."""
 
-    def __init__(self, shade, name, room_data, coordinator, device_info):
+    def __init__(self, coordinator, device_info, room_name, shade, name):
         """Initialize the shade."""
-        room_id = shade.raw_data.get(ROOM_ID_IN_SHADE)
-        super().__init__(coordinator, device_info, shade, name)
+        super().__init__(coordinator, device_info, room_name, shade, name)
         self._shade = shade
-        self._device_info = device_info
         self._is_opening = False
         self._is_closing = False
         self._last_action_timestamp = 0
         self._scheduled_transition_update = None
-        self._room_name = room_data.get(room_id, {}).get(ROOM_NAME_UNICODE, "")
         self._current_cover_position = MIN_POSITION
 
     @property
@@ -142,7 +141,7 @@ class PowerViewShade(ShadeEntity, CoverEntity):
     @property
     def current_cover_position(self):
         """Return the current position of cover."""
-        return hd_position_to_opp(self._current_cover_position)
+        return hd_position_to.opp(self._current_cover_position)
 
     @property
     def device_class(self):
@@ -175,28 +174,28 @@ class PowerViewShade(ShadeEntity, CoverEntity):
             return
         await self._async_move(kwargs[ATTR_POSITION])
 
-    async def _async_move(self, target_opp_position):
+    async def _async_move(self, target.opp_position):
         """Move the shade to a position."""
-        current_opp_position = hd_position_to_opp(self._current_cover_position)
-        steps_to_move = abs(current_opp_position - target_opp_position)
+        current.opp_position = hd_position_to.opp(self._current_cover_position)
+        steps_to_move = abs(current.opp_position - target.opp_position)
         if not steps_to_move:
             return
         self._async_schedule_update_for_transition(steps_to_move)
         self._async_update_from_command(
             await self._shade.move(
                 {
-                    ATTR_POSITION1:.opp_position_to_hd(target_opp_position),
+                    ATTR_POSITION1:.opp_position_to_hd(target.opp_position),
                     ATTR_POSKIND1: 1,
                 }
             )
         )
         self._is_opening = False
         self._is_closing = False
-        if target_opp_position > current_opp_position:
+        if target.opp_position > current.opp_position:
             self._is_opening = True
-        elif target_opp_position < current_opp_position:
+        elif target.opp_position < current.opp_position:
             self._is_closing = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _async_update_from_command(self, raw_data):
@@ -231,7 +230,7 @@ class PowerViewShade(ShadeEntity, CoverEntity):
 
     @callback
     def _async_schedule_update_for_transition(self, steps):
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
         # Cancel any previous updates
         self._async_cancel_scheduled_transition_update()
@@ -265,9 +264,9 @@ class PowerViewShade(ShadeEntity, CoverEntity):
         """Refresh the cover state and force the device cache to be bypassed."""
         await self._shade.refresh()
         self._async_update_current_cover_position()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """When entity is added to.opp."""
         self._async_update_current_cover_position()
         self.async_on_remove(
@@ -282,4 +281,4 @@ class PowerViewShade(ShadeEntity, CoverEntity):
             # the data will be wrong
             return
         self._async_process_new_shade_data(self.coordinator.data[self._shade.id])
-        self.async_write_op.state()
+        self.async_write_ha_state()

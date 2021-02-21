@@ -74,7 +74,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the fritzbox_callmonitor sensor from config_entry."""
-    fritzbox_phonebook = opp.data[DOMAIN][config_entry.entry_id][FRITZBOX_PHONEBOOK]
+    fritzbox_phonebook =.opp.data[DOMAIN][config_entry.entry_id][FRITZBOX_PHONEBOOK]
 
     phonebook_name = config_entry.title
     phonebook_id = config_entry.data[CONF_PHONEBOOK]
@@ -96,7 +96,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     )
 
    .opp.bus.async_listen_once(
-        EVENT_OPENPEERPOWER_STOP, sensor.async_will_remove_from_opp()
+        EVENT_OPENPEERPOWER_STOP, sensor.async_will_remove_from.opp()
     )
 
     async_add_entities([sensor])
@@ -117,7 +117,7 @@ class FritzBoxCallSensor(Entity):
         self._port = port
         self._monitor = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Connect to FRITZ!Box to monitor its call state."""
         _LOGGER.debug("Starting monitor for: %s", self.entity_id)
         self._monitor = FritzBoxCallMonitor(
@@ -127,7 +127,7 @@ class FritzBoxCallSensor(Entity):
         )
         self._monitor.connect()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect from FRITZ!Box by stopping monitor."""
         if (
             self._monitor
@@ -284,4 +284,4 @@ class FritzBoxCallMonitor:
             self._sensor.set_state(STATE_IDLE)
             att = {"duration": line[3], "closed": isotime}
             self._sensor.set_attributes(att)
-        self._sensor.schedule_update_op.state()
+        self._sensor.schedule_update_ha_state()

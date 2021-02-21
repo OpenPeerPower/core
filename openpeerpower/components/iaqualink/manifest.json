@@ -2,7 +2,7 @@
   "domain": "iaqualink",
   "name": "Jandy iAqualink",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/iaqualink/",
+  "documentation": "https://www.open-peer-power.io/integrations/iaqualink/",
   "codeowners": ["@flz"],
   "requirements": ["iaqualink==0.3.4"]
 }

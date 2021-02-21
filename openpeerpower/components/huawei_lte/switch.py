@@ -27,7 +27,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up from config entry."""
-    router = opp.data[DOMAIN].routers[config_entry.data[CONF_URL]]
+    router =.opp.data[DOMAIN].routers[config_entry.data[CONF_URL]]
     switches: List[Entity] = []
 
     if router.data.get(KEY_DIALUP_MOBILE_DATASWITCH):
@@ -60,14 +60,14 @@ class HuaweiLteBaseSwitch(HuaweiLteBaseEntity, SwitchEntity):
         """Return device class."""
         return DEVICE_CLASS_SWITCH
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe to needed data on add."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.router.subscriptions[self.key].add(f"{SWITCH_DOMAIN}/{self.item}")
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Unsubscribe from needed data on remove."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         self.router.subscriptions[self.key].remove(f"{SWITCH_DOMAIN}/{self.item}")
 
     async def async_update(self) -> None:
@@ -108,7 +108,7 @@ class HuaweiLteMobileDataSwitch(HuaweiLteBaseSwitch):
         value = 1 if state else 0
         self.router.client.dial_up.set_mobile_dataswitch(dataswitch=value)
         self._raw_state = str(value)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def icon(self) -> str:

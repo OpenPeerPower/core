@@ -18,7 +18,7 @@ class ActiveConnection:
     def __init__(self, logger,.opp, send_message, user, refresh_token):
         """Initialize an active connection."""
         self.logger = logger
-        self.opp = opp
+        self.opp =.opp
         self.send_message = send_message
         self.user = user
         if refresh_token:
@@ -54,7 +54,7 @@ class ActiveConnection:
         self.send_message(messages.error_message(msg_id, code, message))
 
     @callback
-    def async_op.dle(self, msg):
+    def async_handle(self, msg):
         """Handle a single incoming message."""
         handlers = self.opp.data[const.DOMAIN]
 
@@ -89,12 +89,12 @@ class ActiveConnection:
             )
             return
 
-        handler, schema = op.dlers[msg["type"]]
+        handler, schema = handlers[msg["type"]]
 
         try:
             handler(self.opp, self, schema(msg))
         except Exception as err:  # pylint: disable=broad-except
-            self.async_op.dle_exception(msg, err)
+            self.async_handle_exception(msg, err)
 
         self.last_id = cur_id
 
@@ -105,9 +105,9 @@ class ActiveConnection:
             unsub()
 
     @callback
-    def async_op.dle_exception(self, msg, err):
+    def async_handle_exception(self, msg, err):
         """Handle an exception while processing a handler."""
-        log_op.dler = self.logger.error
+        log_handler = self.logger.error
 
         if isinstance(err, Unauthorized):
             code = const.ERR_UNAUTHORIZED
@@ -124,8 +124,8 @@ class ActiveConnection:
         else:
             code = const.ERR_UNKNOWN_ERROR
             err_message = "Unknown error"
-            log_op.dler = self.logger.exception
+            log_handler = self.logger.exception
 
-        log_op.dler("Error handling message: %s", err_message)
+        log_handler("Error handling message: %s", err_message)
 
         self.send_message(messages.error_message(msg["id"], code, err_message))

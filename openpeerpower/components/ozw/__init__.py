@@ -20,7 +20,7 @@ from openzwavemqtt.models.value import OZWValue
 from openzwavemqtt.util.mqtt_client import MQTTClient
 
 from openpeerpower.components import mqtt
-from openpeerpower.components.oppio.handler import OppioAPIError
+from openpeerpower.components.oppio.handler import HassioAPIError
 from openpeerpower.config_entries import ENTRY_STATE_LOADED, ConfigEntry
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
 from openpeerpower.core import OpenPeerPower, callback
@@ -63,7 +63,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up ozw from a config entry."""
-    ozw_data = opp.data[DOMAIN][entry.entry_id] = {}
+    ozw_data =.opp.data[DOMAIN][entry.entry_id] = {}
     ozw_data[DATA_UNSUBSCRIBE] = []
 
     data_nodes = {}
@@ -77,7 +77,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if entry.data.get(CONF_USE_ADDON):
         # Do not use MQTT integration. Use own MQTT client.
         # Retrieve discovery info from the OpenZWave add-on.
-        discovery_info = await opp..components.oppio.async_get_addon_discovery_info(
+        discovery_info = await.opp.components.oppio.async_get_addon_discovery_info(
             "core_zwave"
         )
 
@@ -95,7 +95,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         manager_options["send_message"] = mqtt_client.send_message
 
     else:
-        mqtt_entries = opp.config_entries.async_entries("mqtt")
+        mqtt_entries =.opp.config_entries.async_entries("mqtt")
         if not mqtt_entries or mqtt_entries[0].state != ENTRY_STATE_LOADED:
             _LOGGER.error("MQTT integration is not set up")
             return False
@@ -131,7 +131,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         data_nodes[node.id] = node
         # notify devices about the node change
         if node.id not in removed_nodes:
-           .opp.async_create_task(async_op.dle_node_update.opp, node))
+           .opp.async_create_task(async_handle_node_update.opp, node))
 
     @callback
     def async_node_removed(node):
@@ -141,7 +141,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         # cleanup device/entity registry if we know this node is permanently deleted
         # entities itself are removed by the values logic
         if node.id in removed_nodes:
-           .opp.async_create_task(async_op.dle_remove_node.opp, node))
+           .opp.async_create_task(async_handle_remove_node.opp, node))
             removed_nodes.remove(node.id)
 
     @callback
@@ -219,7 +219,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             CommandClass.SCENE_ACTIVATION,
             CommandClass.CENTRAL_SCENE,
         ]:
-            async_op.dle_scene_activated.opp, value)
+            async_handle_scene_activated.opp, value)
             return
 
     @callback
@@ -323,7 +323,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
         unsubscribe_listener()
 
     if entry.data.get(CONF_USE_ADDON):
-        async_stop_mqtt_client = opp.data[DOMAIN][entry.entry_id][
+        async_stop_mqtt_client =.opp.data[DOMAIN][entry.entry_id][
             DATA_STOP_MQTT_CLIENT
         ]
         await async_stop_mqtt_client()
@@ -339,17 +339,17 @@ async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry) -> None:
         return
 
     try:
-        await opp..components.oppio.async_stop_addon("core_zwave")
-    except OppioAPIError as err:
+        await.opp.components.oppio.async_stop_addon("core_zwave")
+    except HassioAPIError as err:
         _LOGGER.error("Failed to stop the OpenZWave add-on: %s", err)
         return
     try:
-        await opp..components.oppio.async_uninstall_addon("core_zwave")
-    except OppioAPIError as err:
+        await.opp.components.oppio.async_uninstall_addon("core_zwave")
+    except HassioAPIError as err:
         _LOGGER.error("Failed to uninstall the OpenZWave add-on: %s", err)
 
 
-async def async_op.dle_remove_node.opp: OpenPeerPower, node: OZWNode):
+async def async_handle_remove_node.opp: OpenPeerPower, node: OZWNode):
     """Handle the removal of a Z-Wave node, removing all traces in device/entity registry."""
     dev_registry = await get_dev_reg.opp)
     # grab device in device registry attached to this node
@@ -368,7 +368,7 @@ async def async_op.dle_remove_node.opp: OpenPeerPower, node: OZWNode):
         dev_registry.async_remove_device(dev_id)
 
 
-async def async_op.dle_node_update.opp: OpenPeerPower, node: OZWNode):
+async def async_handle_node_update.opp: OpenPeerPower, node: OZWNode):
     """
     Handle a node updated event from OZW.
 
@@ -395,7 +395,7 @@ async def async_op.dle_node_update.opp: OpenPeerPower, node: OZWNode):
 
 
 @callback
-def async_op.dle_scene_activated.opp: OpenPeerPower, scene_value: OZWValue):
+def async_handle_scene_activated.opp: OpenPeerPower, scene_value: OZWValue):
     """Handle a (central) scene activation message."""
     node_id = scene_value.node.id
     ozw_instance_id = scene_value.ozw_instance.id
@@ -419,7 +419,7 @@ def async_op.dle_scene_activated.opp: OpenPeerPower, scene_value: OZWValue):
         scene_id,
         scene_value_id,
     )
-    # Simply forward it to the opp event bus
+    # Simply forward it to the.opp event bus
    .opp.bus.async_fire(
         const.EVENT_SCENE_ACTIVATED,
         {

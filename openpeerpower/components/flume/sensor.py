@@ -64,7 +64,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Flume sensor."""
-    flume_domain_data = opp.data[DOMAIN][config_entry.entry_id]
+    flume_domain_data =.opp.data[DOMAIN][config_entry.entry_id]
 
     flume_auth = flume_domain_data[FLUME_AUTH]
     http_session = flume_domain_data[FLUME_HTTP_SESSION]
@@ -155,9 +155,9 @@ class FlumeSensor(CoordinatorEntity):
         """Flume query and Device unique ID."""
         return f"{self._flume_query_sensor[0]}_{self._device_id}"
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Request an update when added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         # We do not ask for an update with async_add_entities()
         # because it will update disabled entities
         await self.coordinator.async_request_refresh()
@@ -174,7 +174,7 @@ def _create_flume_device_coordinator.opp, flume_device):
         """Get the latest data from the Flume."""
         _LOGGER.debug("Updating Flume data")
         try:
-            await opp..async_add_executor_job(flume_device.update_force)
+            await.opp.async_add_executor_job(flume_device.update_force)
         except Exception as ex:  # pylint: disable=broad-except
             raise UpdateFailed(f"Error communicating with flume API: {ex}") from ex
         _LOGGER.debug(

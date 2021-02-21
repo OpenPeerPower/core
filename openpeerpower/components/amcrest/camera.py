@@ -122,7 +122,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     name = discovery_info[CONF_NAME]
-    device = opp.data[DATA_AMCREST][DEVICES][name]
+    device =.opp.data[DATA_AMCREST][DEVICES][name]
     async_add_entities([AmcrestCam(name, device,.opp.data[DATA_FFMPEG])], True)
 
 
@@ -324,9 +324,9 @@ class AmcrestCam(Camera):
 
     async def async_on_demand_update(self):
         """Update state."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to signals and add camera to list."""
         for service, params in CAMERA_SERVICES.items():
             self._unsub_dispatcher.append(
@@ -345,7 +345,7 @@ class AmcrestCam(Camera):
         )
         self.opp.data[DATA_AMCREST][CAMERAS].append(self.entity_id)
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Remove camera from list and disconnect from signals."""
         self.opp.data[DATA_AMCREST][CAMERAS].remove(self.entity_id)
         for unsub_dispatcher in self._unsub_dispatcher:
@@ -489,7 +489,7 @@ class AmcrestCam(Camera):
             else:
                 if attr:
                     setattr(self, attr, new_value)
-                    self.schedule_update_op.state()
+                    self.schedule_update_ha_state()
                 return
             tries -= 1
 

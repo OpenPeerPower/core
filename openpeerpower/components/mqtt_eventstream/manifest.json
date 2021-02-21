@@ -1,7 +1,7 @@
 {
   "domain": "mqtt_eventstream",
   "name": "MQTT Eventstream",
-  "documentation": "https://www.openpeerpower.io/integrations/mqtt_eventstream",
+  "documentation": "https://www.open-peer-power.io/integrations/mqtt_eventstream",
   "dependencies": ["mqtt"],
   "codeowners": []
 }

@@ -30,7 +30,7 @@ async def async_reload_integration_platforms(
     Examples are template, stats, derivative, utility meter.
     """
     try:
-        unprocessed_conf = await conf_util.async_opp_config_yaml.opp)
+        unprocessed_conf = await conf_util.async.opp_config_yaml.opp)
     except OpenPeerPowerError as err:
         _LOGGER.error(err)
         return
@@ -110,7 +110,7 @@ async def _async_setup_platform(
         )
         return
 
-    entity_component = opp.data[integration_platform]
+    entity_component =.opp.data[integration_platform]
     tasks = [
         entity_component.async_setup_platform(integration_name, p_config)
         for p_config in platform_configs
@@ -134,7 +134,7 @@ async def async_integration_yaml_config(
     integration = await async_get_integration.opp, integration_name)
 
     return await conf_util.async_process_component_config(
-       .opp, await conf_util.async_opp_config_yaml.opp), integration
+       .opp, await conf_util.async.opp_config_yaml.opp), integration
     )
 
 

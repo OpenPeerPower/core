@@ -9,8 +9,8 @@ from scsgate.tasks import GetStatusTask
 import voluptuous as vol
 
 from openpeerpower.const import CONF_DEVICE, CONF_NAME
-from openpeerpowerr.core import EVENT_OPENPEERPOWER_STOP
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import EVENT_OPENPEERPOWER_STOP
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 

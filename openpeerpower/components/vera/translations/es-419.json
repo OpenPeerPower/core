@@ -22,7 +22,7 @@
                     "exclude": "Identificadores de dispositivo de Vera para excluir de Open Peer Power.",
                     "lights": "Vera cambia los identificadores del dispositivo para tratarlos como luces en Open Peer Power."
                 },
-                "description": "Consulte la documentaci\u00f3n de vera para obtener detalles sobre los par\u00e1metros opcionales: https://www.openpeerpower.io/integrations/vera/. Nota: Cualquier cambio aqu\u00ed necesitar\u00e1 reiniciar el servidor del asistente de inicio. Para borrar valores, proporcione un espacio.",
+                "description": "Consulte la documentaci\u00f3n de vera para obtener detalles sobre los par\u00e1metros opcionales: https://www.open-peer-power.io/integrations/vera/. Nota: Cualquier cambio aqu\u00ed necesitar\u00e1 reiniciar el servidor del asistente de inicio. Para borrar valores, proporcione un espacio.",
                 "title": "Opciones de controlador Vera"
             }
         }

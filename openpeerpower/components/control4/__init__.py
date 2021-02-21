@@ -6,7 +6,7 @@ import logging
 from aiohttp import client_exceptions
 from pyControl4.account import C4Account
 from pyControl4.director import C4Director
-from pyControl4.error_op.dling import BadCredentials
+from pyControl4.error_handling import BadCredentials
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
@@ -53,7 +53,7 @@ async def async_setup.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Control4 from a config entry."""
-    entry_data = opp.data[DOMAIN].setdefault(entry.entry_id, {})
+    entry_data =.opp.data[DOMAIN].setdefault(entry.entry_id, {})
     account_session = aiohttp_client.async_get_clientsession.opp)
 
     config = entry.data
@@ -126,7 +126,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def update_listener.opp, config_entry):
     """Update when config_entry options update."""
     _LOGGER.debug("Config entry was updated, rerunning setup")
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
@@ -149,7 +149,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def get_items_of_category.opp: OpenPeerPower, entry: ConfigEntry, category: str):
     """Return a list of all Control4 items with the specified category."""
-    director_all_items = opp.data[DOMAIN][entry.entry_id][CONF_DIRECTOR_ALL_ITEMS]
+    director_all_items =.opp.data[DOMAIN][entry.entry_id][CONF_DIRECTOR_ALL_ITEMS]
     return_list = []
     for item in director_all_items:
         if "categories" in item and category in item["categories"]:

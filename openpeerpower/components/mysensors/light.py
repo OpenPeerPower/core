@@ -166,7 +166,7 @@ class MySensorsLight(mysensors.device.MySensorsEntity, LightEntity):
             # optimistically assume that light has changed state
             self._state = False
             self._values[value_type] = STATE_OFF
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @callback
     def _async_update_light(self):
@@ -206,7 +206,7 @@ class MySensorsLightDimmer(MySensorsLight):
         self._turn_on_light()
         self._turn_on_dimmer(**kwargs)
         if self.assumed_state:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_update(self):
         """Update the controller with the latest value from a sensor."""
@@ -232,7 +232,7 @@ class MySensorsLightRGB(MySensorsLight):
         self._turn_on_dimmer(**kwargs)
         self._turn_on_rgb_and_w("%02x%02x%02x", **kwargs)
         if self.assumed_state:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_update(self):
         """Update the controller with the latest value from a sensor."""
@@ -259,4 +259,4 @@ class MySensorsLightRGBW(MySensorsLightRGB):
         self._turn_on_dimmer(**kwargs)
         self._turn_on_rgb_and_w("%02x%02x%02x%02x", **kwargs)
         if self.assumed_state:
-            self.async_write_op.state()
+            self.async_write_ha_state()

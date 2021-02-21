@@ -2,7 +2,7 @@
   "domain": "atag",
   "name": "Atag",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/atag/",
+  "documentation": "https://www.open-peer-power.io/integrations/atag/",
   "requirements": ["pyatag==0.3.4.4"],
   "codeowners": ["@MatsNL"]
 }

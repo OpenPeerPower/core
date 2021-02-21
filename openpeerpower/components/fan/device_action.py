@@ -12,9 +12,9 @@ from openpeerpower.const import (
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
 )
-from openpeerpowerr.core import Context, OpenPeerPower
-from openpeerpowerr.helpers import entity_registry
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import Context, OpenPeerPower
+from openpeerpower.helpers import entity_registry
+import openpeerpower.helpers.config_validation as cv
 
 from . import DOMAIN
 
@@ -71,6 +71,6 @@ async def async_call_action_from_config(
     elif config[CONF_TYPE] == "turn_off":
         service = SERVICE_TURN_OFF
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, service, service_data, blocking=True, context=context
     )

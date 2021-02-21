@@ -15,7 +15,7 @@ from xknx.io import (
     ConnectionType,
 )
 from xknx.telegram import AddressFilter, GroupAddress, Telegram
-from xknx.telegram.apci import GroupValueResponse, GroupValueWrite
+from xknx.telegram.apci import GroupValueRead, GroupValueResponse, GroupValueWrite
 
 from openpeerpower.const import (
     CONF_ENTITY_ID,
@@ -75,6 +75,7 @@ SERVICE_KNX_ATTR_PAYLOAD = "payload"
 SERVICE_KNX_ATTR_TYPE = "type"
 SERVICE_KNX_ATTR_REMOVE = "remove"
 SERVICE_KNX_EVENT_REGISTER = "event_register"
+SERVICE_KNX_READ = "read"
 
 CONFIG_SCHEMA = vol.Schema(
     {
@@ -166,6 +167,15 @@ SERVICE_KNX_SEND_SCHEMA = vol.Any(
     ),
 )
 
+SERVICE_KNX_READ_SCHEMA = vol.Schema(
+    {
+        vol.Required(SERVICE_KNX_ATTR_ADDRESS): vol.All(
+            cv.ensure_list,
+            [cv.string],
+        )
+    }
+)
+
 SERVICE_KNX_EVENT_REGISTER_SCHEMA = vol.Schema(
     {
         vol.Required(SERVICE_KNX_ATTR_ADDRESS): cv.string,
@@ -179,7 +189,7 @@ async def async_setup.opp, config):
     try:
        .opp.data[DOMAIN] = KNXModule.opp, config)
        .opp.data[DOMAIN].async_create_exposures()
-        await opp..data[DOMAIN].start()
+        await.opp.data[DOMAIN].start()
     except XKNXException as ex:
         _LOGGER.warning("Could not connect to KNX interface: %s", ex)
        .opp.components.persistent_notification.async_create(
@@ -200,7 +210,7 @@ async def async_setup.opp, config):
     if not.opp.data[DOMAIN].xknx.devices:
         _LOGGER.warning(
             "No KNX devices are configured. Please read "
-            "https://www.openpeerpower.io/blog/2020/09/17/release-115/#breaking-changes"
+            "https://www.open-peer-power.io/blog/2020/09/17/release-115/#breaking-changes"
         )
 
    .opp.services.async_register(
@@ -208,6 +218,13 @@ async def async_setup.opp, config):
         SERVICE_KNX_SEND,
        .opp.data[DOMAIN].service_send_to_knx_bus,
         schema=SERVICE_KNX_SEND_SCHEMA,
+    )
+
+   .opp.services.async_register(
+        DOMAIN,
+        SERVICE_KNX_READ,
+       .opp.data[DOMAIN].service_read_to_knx_bus,
+        schema=SERVICE_KNX_READ_SCHEMA,
     )
 
     async_register_admin_service(
@@ -218,7 +235,7 @@ async def async_setup.opp, config):
         schema=SERVICE_KNX_EVENT_REGISTER_SCHEMA,
     )
 
-    async def reload_service_op.dler(service_call: ServiceCallType) -> None:
+    async def reload_service_handler(service_call: ServiceCallType) -> None:
         """Remove all KNX components and load new ones from config."""
 
         # First check for config file. If for some reason it is no longer there
@@ -228,7 +245,7 @@ async def async_setup.opp, config):
         if not config or DOMAIN not in config:
             return
 
-        await opp..data[DOMAIN].xknx.stop()
+        await.opp.data[DOMAIN].xknx.stop()
 
         await asyncio.gather(
             *[platform.async_reset() for platform in async_get_platforms.opp, DOMAIN)]
@@ -237,7 +254,7 @@ async def async_setup.opp, config):
         await async_setup.opp, config)
 
     async_register_admin_service(
-       .opp, DOMAIN, SERVICE_RELOAD, reload_service_op.dler, schema=vol.Schema({})
+       .opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
     return True
@@ -248,7 +265,7 @@ class KNXModule:
 
     def __init__(self,.opp, config):
         """Initialize of KNX module."""
-        self.opp = opp
+        self.opp =.opp
         self.config = config
         self.connected = False
         self.exposures = []
@@ -298,9 +315,12 @@ class KNXModule:
 
     def connection_config_routing(self):
         """Return the connection_config if routing is configured."""
-        local_ip = self.config[DOMAIN][CONF_KNX_ROUTING].get(
-            ConnectionSchema.CONF_KNX_LOCAL_IP
-        )
+        local_ip = None
+        # all configuration values are optional
+        if self.config[DOMAIN][CONF_KNX_ROUTING] is not None:
+            local_ip = self.config[DOMAIN][CONF_KNX_ROUTING].get(
+                ConnectionSchema.CONF_KNX_LOCAL_IP
+            )
         return ConnectionConfig(
             connection_type=ConnectionType.ROUTING, local_ip=local_ip
         )
@@ -376,6 +396,7 @@ class KNXModule:
             self.telegram_received_cb,
             address_filters=address_filters,
             group_addresses=[],
+            match_for_outgoing=True,
         )
 
     async def service_event_register_modify(self, call):
@@ -419,6 +440,15 @@ class KNXModule:
         )
         await self.xknx.telegrams.put(telegram)
 
+    async def service_read_to_knx_bus(self, call):
+        """Service for sending a GroupValueRead telegram to the KNX bus."""
+        for address in call.data.get(SERVICE_KNX_ATTR_ADDRESS):
+            telegram = Telegram(
+                destination_address=GroupAddress(address),
+                payload=GroupValueRead(),
+            )
+            await self.xknx.telegrams.put(telegram)
+
 
 class KNXExposeTime:
     """Object to Expose Time/Date object to KNX bus."""
@@ -447,7 +477,7 @@ class KNXExposeSensor:
 
     def __init__(self,.opp, xknx, expose_type, entity_id, attribute, default, address):
         """Initialize of Expose class."""
-        self.opp = opp
+        self.opp =.opp
         self.xknx = xknx
         self.type = expose_type
         self.entity_id = entity_id

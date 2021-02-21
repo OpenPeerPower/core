@@ -5,8 +5,8 @@ import logging
 import requests
 
 from openpeerpower.components.light import LightEntity
-from openpeerpowerr.core import callback
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+import openpeerpower.util.dt as dt_util
 
 from . import DOMAIN
 from .entity import RingEntityMixin
@@ -27,7 +27,7 @@ OFF_STATE = "off"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Create the lights for the Ring devices."""
-    devices = opp.data[DOMAIN][config_entry.entry_id]["devices"]
+    devices =.opp.data[DOMAIN][config_entry.entry_id]["devices"]
 
     lights = []
 
@@ -55,7 +55,7 @@ class RingLight(RingEntityMixin, LightEntity):
             return
 
         self._light_on = self._device.lights == ON_STATE
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def name(self):
@@ -82,7 +82,7 @@ class RingLight(RingEntityMixin, LightEntity):
 
         self._light_on = new_state == ON_STATE
         self._no_updates_until = dt_util.utcnow() + SKIP_UPDATES_DELAY
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def turn_on(self, **kwargs):
         """Turn the light on for 30 seconds."""

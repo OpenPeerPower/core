@@ -8,7 +8,7 @@ from openpeerpower.const import EVENT_OPENPEERPOWER_CLOSE, __version__
 from openpeerpower.core import Event, callback
 from openpeerpower.helpers.frame import warn_use
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 DATA_ASYNC_CLIENT = "httpx_async_client"
 DATA_ASYNC_CLIENT_NOVERIFY = "httpx_async_client_noverify"
@@ -19,7 +19,7 @@ USER_AGENT = "User-Agent"
 
 
 @callback
-@bind_opp
+@bind.opp
 def get_async_client(
    .opp: OpenPeerPowerType, verify_ssl: bool = True
 ) -> httpx.AsyncClient:
@@ -29,10 +29,10 @@ def get_async_client(
     """
     key = DATA_ASYNC_CLIENT if verify_ssl else DATA_ASYNC_CLIENT_NOVERIFY
 
-    client: Optional[httpx.AsyncClient] = opp.data.get(key)
+    client: Optional[httpx.AsyncClient] =.opp.data.get(key)
 
     if client is None:
-        client = opp.data[key] = create_async_httpx_client.opp, verify_ssl)
+        client =.opp.data[key] = create_async_httpx_client.opp, verify_ssl)
 
     return client
 

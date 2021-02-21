@@ -5,7 +5,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_API_KEY
-from openpeerpowerr.helpers import aiohttp_client
+from openpeerpower.helpers import aiohttp_client
 
 from .const import CONF_APP_KEY, DOMAIN  # pylint: disable=unused-import
 

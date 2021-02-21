@@ -1,7 +1,7 @@
 """Abstraction form OWM sensors."""
 from openpeerpower.const import ATTR_ATTRIBUTION
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import ATTRIBUTION, SENSOR_DEVICE_CLASS, SENSOR_NAME, SENSOR_UNIT
 
@@ -66,10 +66,10 @@ class AbstractOpenWeatherMapSensor(Entity):
         """Return True if entity is available."""
         return self._coordinator.last_update_success
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Connect to dispatcher listening for entity data notifications."""
         self.async_on_remove(
-            self._coordinator.async_add_listener(self.async_write_op.state)
+            self._coordinator.async_add_listener(self.async_write_ha_state)
         )
 
     async def async_update(self):

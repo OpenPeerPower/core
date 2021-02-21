@@ -4,7 +4,7 @@
             "already_configured": "La pasarela ya est\u00e1 configurada",
             "already_in_progress": "El flujo de configuraci\u00f3n para la pasarela ya est\u00e1 en marcha.",
             "no_bridges": "No se han descubierto pasarelas deCONZ",
-            "no_op.dware_available": "No hay hardware de radio conectado a deCONZ",
+            "no_hardware_available": "No hay hardware de radio conectado a deCONZ",
             "not_deconz_bridge": "No es una pasarela deCONZ",
             "updated_instance": "Instancia deCONZ actualizada con nueva direcci\u00f3n de host"
         },
@@ -13,9 +13,9 @@
         },
         "flow_title": "pasarela deCONZ Zigbee ({host})",
         "step": {
-            "oppio_confirm": {
+            .oppio_confirm": {
                 "description": "\u00bfQuieres configurar Open Peer Power para que se conecte al gateway de deCONZ proporcionado por el add-on {addon} de.opp.io?",
-                "title": "Add-on deCONZ Zigbee v\u00eda Opp.io"
+                "title": "Add-on deCONZ Zigbee v\u00eda Hass.io"
             },
             "link": {
                 "description": "Desbloquea tu gateway de deCONZ para registrarte con Open Peer Power.\n\n1. Dir\u00edgete a deCONZ Settings -> Gateway -> Advanced\n2. Pulsa el bot\u00f3n \"Authenticate app\"",

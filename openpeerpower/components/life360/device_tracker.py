@@ -88,8 +88,8 @@ def _dump_filter(filter_dict, desc, func=lambda x: x):
 
 def setup_scanner.opp, config, see, discovery_info=None):
     """Set up device scanner."""
-    config = opp.data[DOMAIN]["config"]
-    apis = opp.data[DOMAIN]["apis"]
+    config =.opp.data[DOMAIN]["config"]
+    apis =.opp.data[DOMAIN]["apis"]
     Life360Scanner.opp, config, see, apis)
     return True
 
@@ -120,7 +120,7 @@ class Life360Scanner:
 
     def __init__(self,.opp, config, see, apis):
         """Initialize Life360Scanner."""
-        self._opp = opp
+        self..opp =.opp
         self._see = see
         self._max_gps_accuracy = config.get(CONF_MAX_GPS_ACCURACY)
         self._max_update_wait = config.get(CONF_MAX_UPDATE_WAIT)
@@ -144,7 +144,7 @@ class Life360Scanner:
         self._started = dt_util.utcnow()
         self._update_life360()
         track_time_interval(
-            self._opp, self._update_life360, config[CONF_SCAN_INTERVAL]
+            self..opp, self._update_life360, config[CONF_SCAN_INTERVAL]
         )
 
     def _dev_id(self, name):
@@ -178,13 +178,13 @@ class Life360Scanner:
             most_recent_update = last_seen or prev_seen or self._started
             overdue = now - most_recent_update > self._max_update_wait
             if overdue and not reported and now - self._started > EVENT_DELAY:
-                self._opp.bus.fire(
+                self..opp.bus.fire(
                     EVENT_UPDATE_OVERDUE,
                     {ATTR_ENTITY_ID: f"{DEVICE_TRACKER_DOMAIN}.{dev_id}"},
                 )
                 reported = True
             elif not overdue and reported:
-                self._opp.bus.fire(
+                self..opp.bus.fire(
                     EVENT_UPDATE_RESTORED,
                     {
                         ATTR_ENTITY_ID: f"{DEVICE_TRACKER_DOMAIN}.{dev_id}",
@@ -285,7 +285,7 @@ class Life360Scanner:
         # Try to convert raw speed into real speed.
         try:
             speed = float(raw_speed) * SPEED_FACTOR_MPH
-            if self._opp.config.units.is_metric:
+            if self..opp.config.units.is_metric:
                 speed = convert(speed, LENGTH_MILES, LENGTH_KILOMETERS)
             speed = max(0, round(speed))
         except (TypeError, ValueError):
@@ -317,7 +317,7 @@ class Life360Scanner:
         # location is not in a HA zone, then set location name accordingly.
         loc_name = None
         active_zone = run_callback_threadsafe(
-            self._opp.loop, async_active_zone, self._opp, lat, lon, gps_accuracy
+            self..opp.loop, async_active_zone, self..opp, lat, lon, gps_accuracy
         ).result()
         if not active_zone:
             if SHOW_DRIVING in self._show_as_state and driving is True:

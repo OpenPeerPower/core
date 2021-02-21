@@ -13,7 +13,7 @@ from openpeerpower.components.climate.const import (
     SUPPORT_PRESET_MODE,
     SUPPORT_TARGET_TEMPERATURE,
 )
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from . import DOMAIN, GeniusHeatingZone
 
@@ -34,7 +34,7 @@ async def async_setup_platform(
     if discovery_info is None:
         return
 
-    broker = opp.data[DOMAIN]["broker"]
+    broker =.opp.data[DOMAIN]["broker"]
 
     async_add_entities(
         [

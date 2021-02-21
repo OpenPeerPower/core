@@ -17,7 +17,7 @@ from openpeerpower.const import (
     DEVICE_CLASS_PRESSURE,
     DEVICE_CLASS_VOLTAGE,
 )
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from . import (
     CONF_DATA_BITS,
@@ -143,9 +143,9 @@ class RfxtrxSensor(RfxtrxEntity):
         self._device_class = DEVICE_CLASSES.get(data_type)
         self._convert_fun = CONVERT_FUNCTIONS.get(data_type, lambda x: x)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Restore device state."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         if self._event is None:
             old_state = await self.async_get_last_state()
@@ -183,7 +183,7 @@ class RfxtrxSensor(RfxtrxEntity):
         return self._device_class
 
     @callback
-    def _op.dle_event(self, event, device_id):
+    def _handle_event(self, event, device_id):
         """Check if event applies to me and update."""
         if device_id != self._device_id:
             return
@@ -200,4 +200,4 @@ class RfxtrxSensor(RfxtrxEntity):
 
         self._apply_event(event)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()

@@ -20,7 +20,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Daikin climate based on config_entry."""
-    daikin_api = opp.data[DAIKIN_DOMAIN][entry.entry_id]
+    daikin_api =.opp.data[DAIKIN_DOMAIN][entry.entry_id]
     switches = []
     zones = daikin_api.device.zones
     if zones:

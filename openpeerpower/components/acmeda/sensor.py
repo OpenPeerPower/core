@@ -10,7 +10,7 @@ from .helpers import async_add_acmeda_entities
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Acmeda Rollers from a config entry."""
-    hub = opp.data[DOMAIN][config_entry.entry_id]
+    hub =.opp.data[DOMAIN][config_entry.entry_id]
 
     current = set()
 

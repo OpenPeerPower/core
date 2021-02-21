@@ -169,7 +169,7 @@ async def async_setup.opp, config):
         )
     )
 
-    async def async_service_op.dler(service):
+    async def async_service_handler(service):
         """Handle eight sleep service calls."""
         params = service.data.copy()
 
@@ -187,7 +187,7 @@ async def async_setup.opp, config):
 
     # Register services
    .opp.services.async_register(
-        DOMAIN, SERVICE_HEAT_SET, async_service_op.dler, schema=SERVICE_EIGHT_SCHEMA
+        DOMAIN, SERVICE_HEAT_SET, async_service_handler, schema=SERVICE_EIGHT_SCHEMA
     )
 
     async def stop_eight(event):
@@ -206,13 +206,13 @@ class EightSleepUserEntity(Entity):
         """Initialize the data object."""
         self._eight = eight
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register update dispatcher."""
 
         @callback
         def async_eight_user_update():
             """Update callback."""
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         self.async_on_remove(
             async_dispatcher_connect(
@@ -233,13 +233,13 @@ class EightSleepHeatEntity(Entity):
         """Initialize the data object."""
         self._eight = eight
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register update dispatcher."""
 
         @callback
         def async_eight_heat_update():
             """Update callback."""
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         self.async_on_remove(
             async_dispatcher_connect(

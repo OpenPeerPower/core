@@ -65,7 +65,7 @@ async def async_setup.opp, config):
         method = command_config[CONF_METHOD]
 
         template_url = command_config[CONF_URL]
-        template_url.opp = opp
+        template_url.opp =.opp
 
         auth = None
         if CONF_USERNAME in command_config:
@@ -76,19 +76,19 @@ async def async_setup.opp, config):
         template_payload = None
         if CONF_PAYLOAD in command_config:
             template_payload = command_config[CONF_PAYLOAD]
-            template_payload.opp = opp
+            template_payload.opp =.opp
 
         template_headers = None
         if CONF_HEADERS in command_config:
             template_headers = command_config[CONF_HEADERS]
             for template_header in template_headers.values():
-                template_header.opp = opp
+                template_header.opp =.opp
 
         content_type = None
         if CONF_CONTENT_TYPE in command_config:
             content_type = command_config[CONF_CONTENT_TYPE]
 
-        async def async_service_op.dler(service):
+        async def async_service_handler(service):
             """Execute a shell command service."""
             payload = None
             if template_payload:
@@ -147,7 +147,7 @@ async def async_setup.opp, config):
                 _LOGGER.error("Client error %s", request_url)
 
         # register services
-       .opp.services.async_register(DOMAIN, name, async_service_op.dler)
+       .opp.services.async_register(DOMAIN, name, async_service_handler)
 
     for command, command_config in config[DOMAIN].items():
         async_register_rest_command(command, command_config)

@@ -36,12 +36,12 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONF_VERIFY_SSL,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import aiohttp_client
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
-from openpeerpowerr.helpers.event import async_track_time_interval
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import aiohttp_client
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.event import async_track_time_interval
+import openpeerpower.util.dt as dt_util
 
 from .const import (
     CONF_ALLOW_BANDWIDTH_SENSORS,
@@ -92,7 +92,7 @@ class UniFiController:
 
     def __init__(self,.opp, config_entry):
         """Initialize the system."""
-        self.opp = opp
+        self.opp =.opp
         self.config_entry = config_entry
         self.available = True
         self.api = None
@@ -417,7 +417,7 @@ class UniFiController:
         """
         if config_entry.entry_id not in.opp.data[UNIFI_DOMAIN]:
             return
-        controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+        controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
         controller.load_config_entry_options()
         async_dispatcher_send.opp, controller.signal_options_update)
 

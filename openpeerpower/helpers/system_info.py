@@ -4,20 +4,20 @@ import platform
 from typing import Any, Dict
 
 from openpeerpower.const import __version__ as current_version
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util.package import is_virtual_env
 
 from .typing import OpenPeerPowerType
 
 
-@bind_opp
+@bind.opp
 async def async_get_system_info.opp: OpenPeerPowerType) -> Dict[str, Any]:
     """Return info about the system."""
     info_object = {
         "installation_type": "Unknown",
         "version": current_version,
         "dev": "dev" in current_version,
-        "oppio":.opp.components.oppio.is_oppio(),
+        .oppio":.opp.components.oppio.is.oppio(),
         "virtualenv": is_virtual_env(),
         "python_version": platform.python_version(),
         "docker": False,
@@ -41,16 +41,16 @@ async def async_get_system_info.opp: OpenPeerPowerType) -> Dict[str, Any]:
         info_object["installation_type"] = "Open Peer Power Core"
 
     # Enrich with Supervisor information
-    if.opp.components.oppio.is_oppio():
-        info = opp.components.oppio.get_info()
-        host = opp.components.oppio.get_host_info()
+    if.opp.components.oppio.is.oppio():
+        info =.opp.components.oppio.get_info()
+        host =.opp.components.oppio.get_host_info()
 
         info_object["supervisor"] = info.get("supervisor")
         info_object["host_os"] = host.get("operating_system")
         info_object["docker_version"] = info.get("docker")
         info_object[".oppis"] = host.get(".oppis")
 
-        if info.get("oppos") is not None:
+        if info.get(.oppos") is not None:
             info_object["installation_type"] = "Open Peer Power OS"
         else:
             info_object["installation_type"] = "Open Peer Power Supervised"

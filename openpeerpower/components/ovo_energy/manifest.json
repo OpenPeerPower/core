@@ -2,7 +2,7 @@
   "domain": "ovo_energy",
   "name": "OVO Energy",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/ovo_energy",
+  "documentation": "https://www.open-peer-power.io/integrations/ovo_energy",
   "requirements": ["ovoenergy==1.1.11"],
   "codeowners": ["@timmo001"]
 }

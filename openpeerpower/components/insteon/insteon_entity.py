@@ -33,7 +33,7 @@ class InsteonEntity(Entity):
         self._insteon_device_group = device.groups[group]
         self._insteon_device = device
 
-    def __op.h__(self):
+    def __hash__(self):
         """Return the hash of the Insteon Entity."""
         return hash(self._insteon_device)
 
@@ -100,9 +100,9 @@ class InsteonEntity(Entity):
             group,
             value,
         )
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register INSTEON update events."""
         _LOGGER.debug(
             "Tracking updates for device %s group %d name %s",
@@ -130,7 +130,7 @@ class InsteonEntity(Entity):
             )
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe to INSTEON update events."""
         _LOGGER.debug(
             "Remove tracking updates for device %s group %d name %s",

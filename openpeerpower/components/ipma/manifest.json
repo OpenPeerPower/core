@@ -2,7 +2,7 @@
   "domain": "ipma",
   "name": "Instituto Português do Mar e Atmosfera (IPMA)",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/ipma",
+  "documentation": "https://www.open-peer-power.io/integrations/ipma",
   "requirements": ["pyipma==2.0.5"],
   "codeowners": ["@dgomes", "@abmantis"]
 }

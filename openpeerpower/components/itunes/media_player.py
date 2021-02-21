@@ -229,19 +229,19 @@ class ItunesDevice(MediaPlayerEntity):
 
         self.update()
 
-    def update_state(self, state_op.h):
+    def update_state(self, state_hash):
         """Update all the state properties with the passed in dictionary."""
-        self.player_state = state_op.h.get("player_state", None)
+        self.player_state = state_hash.get("player_state", None)
 
-        self.current_volume = state_op.h.get("volume", 0)
-        self.muted = state_op.h.get("muted", None)
-        self.current_title = state_op.h.get("name", None)
-        self.current_album = state_op.h.get("album", None)
-        self.current_artist = state_op.h.get("artist", None)
-        self.current_playlist = state_op.h.get("playlist", None)
-        self.content_id = state_op.h.get("id", None)
+        self.current_volume = state_hash.get("volume", 0)
+        self.muted = state_hash.get("muted", None)
+        self.current_title = state_hash.get("name", None)
+        self.current_album = state_hash.get("album", None)
+        self.current_artist = state_hash.get("artist", None)
+        self.current_playlist = state_hash.get("playlist", None)
+        self.content_id = state_hash.get("id", None)
 
-        _shuffle = state_op.h.get("shuffle", None)
+        _shuffle = state_hash.get("shuffle", None)
         self.shuffled = _shuffle == "songs"
 
     @property
@@ -420,32 +420,32 @@ class AirPlayDevice(MediaPlayerEntity):
         self.supports_video = False
         self.player_state = None
 
-    def update_state(self, state_op.h):
+    def update_state(self, state_hash):
         """Update all the state properties with the passed in dictionary."""
-        if "player_state" in state_op.h:
-            self.player_state = state_op.h.get("player_state", None)
+        if "player_state" in state_hash:
+            self.player_state = state_hash.get("player_state", None)
 
-        if "name" in state_op.h:
-            name = state_op.h.get("name", "")
+        if "name" in state_hash:
+            name = state_hash.get("name", "")
             self.device_name = f"{name} AirTunes Speaker".strip()
 
-        if "kind" in state_op.h:
-            self.kind = state_op.h.get("kind", None)
+        if "kind" in state_hash:
+            self.kind = state_hash.get("kind", None)
 
-        if "active" in state_op.h:
-            self.active = state_op.h.get("active", None)
+        if "active" in state_hash:
+            self.active = state_hash.get("active", None)
 
-        if "selected" in state_op.h:
-            self.selected = state_op.h.get("selected", None)
+        if "selected" in state_hash:
+            self.selected = state_hash.get("selected", None)
 
-        if "sound_volume" in state_op.h:
-            self.volume = state_op.h.get("sound_volume", 0)
+        if "sound_volume" in state_hash:
+            self.volume = state_hash.get("sound_volume", 0)
 
-        if "supports_audio" in state_op.h:
-            self.supports_audio = state_op.h.get("supports_audio", None)
+        if "supports_audio" in state_hash:
+            self.supports_audio = state_hash.get("supports_audio", None)
 
-        if "supports_video" in state_op.h:
-            self.supports_video = state_op.h.get("supports_video", None)
+        if "supports_video" in state_hash:
+            self.supports_video = state_hash.get("supports_video", None)
 
     @property
     def name(self):
@@ -495,13 +495,13 @@ class AirPlayDevice(MediaPlayerEntity):
     def turn_on(self):
         """Select AirPlay."""
         self.update_state({"selected": True})
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
         response = self.client.toggle_airplay_device(self._id, True)
         self.update_state(response)
 
     def turn_off(self):
         """Deselect AirPlay."""
         self.update_state({"selected": False})
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
         response = self.client.toggle_airplay_device(self._id, False)
         self.update_state(response)

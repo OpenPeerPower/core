@@ -1,6 +1,6 @@
 """Support for Netgear LTE binary sensors."""
 from openpeerpower.components.binary_sensor import DOMAIN, BinarySensorEntity
-from openpeerpowerr.exceptions import PlatformNotReady
+from openpeerpower.exceptions import PlatformNotReady
 
 from . import CONF_MONITORED_CONDITIONS, DATA_KEY, LTEEntity
 from .sensor_types import BINARY_SENSOR_CLASSES
@@ -11,7 +11,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info):
     if discovery_info is None:
         return
 
-    modem_data = opp.data[DATA_KEY].get_modem_data(discovery_info)
+    modem_data =.opp.data[DATA_KEY].get_modem_data(discovery_info)
 
     if not modem_data or not modem_data.data:
         raise PlatformNotReady

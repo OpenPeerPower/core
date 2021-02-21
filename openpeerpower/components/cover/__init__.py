@@ -28,7 +28,7 @@ from openpeerpower.helpers.config_validation import (  # noqa: F401
 )
 from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.entity_component import EntityComponent
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 # mypy: allow-untyped-calls, allow-untyped-defs, no-check-untyped-defs
 
@@ -80,7 +80,7 @@ ATTR_POSITION = "position"
 ATTR_TILT_POSITION = "tilt_position"
 
 
-@bind_opp
+@bind.opp
 def is_closed.opp, entity_id):
     """Return if the cover is closed based on the statemachine."""
     return.opp.states.is_state(entity_id, STATE_CLOSED)
@@ -88,7 +88,7 @@ def is_closed.opp, entity_id):
 
 async def async_setup.opp, config):
     """Track states and offer events for covers."""
-    component = opp.data[DOMAIN] = EntityComponent(
+    component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
     )
 
@@ -156,12 +156,12 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await opp..data[DOMAIN].async_setup_entry(entry)
+    return await.opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await opp..data[DOMAIN].async_unload_entry(entry)
+    return await.opp.data[DOMAIN].async_unload_entry(entry)
 
 
 class CoverEntity(Entity):

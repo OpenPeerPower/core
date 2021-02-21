@@ -231,7 +231,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         SERVICE_CALL_METHOD, KODI_CALL_METHOD_SCHEMA, "async_call_method"
     )
 
-    data = opp.data[DOMAIN][config_entry.entry_id]
+    data =.opp.data[DOMAIN][config_entry.entry_id]
     connection = data[DATA_CONNECTION]
     kodi = data[DATA_KODI]
     name = config_entry.data[CONF_NAME]
@@ -308,7 +308,7 @@ class KodiEntity(MediaPlayerEntity):
             # If a new item is playing, force a complete refresh
             force_refresh = data["item"]["id"] != self._item.get("id")
 
-        self.async_schedule_update_op.state(force_refresh)
+        self.async_schedule_update_ha_state(force_refresh)
 
     @callback
     def async_on_stop(self, sender, data):
@@ -318,14 +318,14 @@ class KodiEntity(MediaPlayerEntity):
             return
 
         self._reset_state([])
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_on_volume_changed(self, sender, data):
         """Handle the volume changes."""
         self._app_properties["volume"] = data["volume"]
         self._app_properties["muted"] = data["muted"]
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_on_quit(self, sender, data):
         """Reset the player state on quit action."""
@@ -333,7 +333,7 @@ class KodiEntity(MediaPlayerEntity):
 
     async def _clear_connection(self, close=True):
         self._reset_state()
-        self.async_write_op.state()
+        self.async_write_ha_state()
         if close:
             await self._connection.close()
 
@@ -365,7 +365,7 @@ class KodiEntity(MediaPlayerEntity):
 
         return STATE_PLAYING
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Connect the websocket if needed."""
         if not self._connection.can_subscribe:
             return
@@ -401,7 +401,7 @@ class KodiEntity(MediaPlayerEntity):
         device = dev_reg.async_get_device({(DOMAIN, self.unique_id)})
         dev_reg.async_update_device(device.id, sw_version=sw_version)
 
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     async def _async_ws_connect(self):
         """Connect to Kodi via websocket protocol."""

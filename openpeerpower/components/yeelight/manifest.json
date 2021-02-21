@@ -1,7 +1,7 @@
 {
   "domain": "yeelight",
   "name": "Yeelight",
-  "documentation": "https://www.openpeerpower.io/integrations/yeelight",
+  "documentation": "https://www.open-peer-power.io/integrations/yeelight",
   "requirements": [
     "yeelight==0.5.4"
   ],

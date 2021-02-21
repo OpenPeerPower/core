@@ -6,8 +6,8 @@ from openpeerpower.components.binary_sensor import (
     BinarySensorEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import KeeneticRouter
 from .const import DOMAIN, ROUTER
@@ -19,7 +19,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ):
     """Set up device tracker for Keenetic NDMS2 component."""
-    router: KeeneticRouter = opp.data[DOMAIN][config_entry.entry_id][ROUTER]
+    router: KeeneticRouter =.opp.data[DOMAIN][config_entry.entry_id][ROUTER]
 
     async_add_entities([RouterOnlineBinarySensor(router)])
 
@@ -61,12 +61,12 @@ class RouterOnlineBinarySensor(BinarySensorEntity):
         """Return a client description for device registry."""
         return self._router.device_info
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Client entity created."""
         self.async_on_remove(
             async_dispatcher_connect(
                 self.opp,
                 self._router.signal_update,
-                self.async_write_op.state,
+                self.async_write_ha_state,
             )
         )

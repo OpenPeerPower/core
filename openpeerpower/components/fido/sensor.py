@@ -74,7 +74,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     username = config.get(CONF_USERNAME)
     password = config.get(CONF_PASSWORD)
 
-    httpsession = opp.helpers.aiohttp_client.async_get_clientsession()
+    httpsession =.opp.helpers.aiohttp_client.async_get_clientsession()
     fido_data = FidoData(username, password, httpsession)
     ret = await fido_data.async_update()
     if ret is False:

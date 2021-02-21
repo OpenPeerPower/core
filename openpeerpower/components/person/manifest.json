@@ -1,7 +1,7 @@
 {
   "domain": "person",
   "name": "Person",
-  "documentation": "https://www.openpeerpower.io/integrations/person",
+  "documentation": "https://www.open-peer-power.io/integrations/person",
   "dependencies": ["image"],
   "after_dependencies": ["device_tracker"],
   "codeowners": [],

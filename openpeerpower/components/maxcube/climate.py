@@ -47,14 +47,14 @@ MAX_TEMPERATURE = 30.0
 
 SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE
 
-OPP_PRESET_TO_MAX_MODE = {
+HASS_PRESET_TO_MAX_MODE = {
     PRESET_AWAY: MAX_DEVICE_MODE_VACATION,
     PRESET_BOOST: MAX_DEVICE_MODE_BOOST,
     PRESET_NONE: MAX_DEVICE_MODE_AUTOMATIC,
     PRESET_ON: MAX_DEVICE_MODE_MANUAL,
 }
 
-MAX_MODE_TO_OPP_PRESET = {
+MAX_MODE_TO_HASS_PRESET = {
     MAX_DEVICE_MODE_AUTOMATIC: PRESET_NONE,
     MAX_DEVICE_MODE_BOOST: PRESET_BOOST,
     MAX_DEVICE_MODE_MANUAL: PRESET_NONE,
@@ -66,7 +66,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Iterate through all MAX! Devices and add thermostats."""
     devices = []
     for handler in.opp.data[DATA_KEY].values():
-        cube = op.dler.cube
+        cube = handler.cube
         for device in cube.devices:
             name = f"{cube.room_by_id(device.room_id).name} {device.name}"
 
@@ -84,7 +84,7 @@ class MaxCubeClimate(ClimateEntity):
         """Initialize MAX! Cube ClimateEntity."""
         self._name = name
         self._rf_address = rf_address
-        self._cubehandle = op.dler
+        self._cubehandle = handler
 
     @property
     def supported_features(self):
@@ -243,7 +243,7 @@ class MaxCubeClimate(ClimateEntity):
                 return PRESET_ON
             return PRESET_NONE
 
-        return MAX_MODE_TO_OPP_PRESET[device.mode]
+        return MAX_MODE_TO_HASS_PRESET[device.mode]
 
     @property
     def preset_modes(self):
@@ -272,7 +272,7 @@ class MaxCubeClimate(ClimateEntity):
             else:
                 temp = ON_TEMPERATURE
         else:
-            mode = OPP_PRESET_TO_MAX_MODE[preset_mode] or MAX_DEVICE_MODE_AUTOMATIC
+            mode = HASS_PRESET_TO_MAX_MODE[preset_mode] or MAX_DEVICE_MODE_AUTOMATIC
 
         with self._cubehandle.mutex:
             try:

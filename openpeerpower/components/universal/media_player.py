@@ -150,7 +150,7 @@ class UniversalMediaPlayer(MediaPlayerEntity):
         state_template=None,
     ):
         """Initialize the Universal media device."""
-        self.opp = opp
+        self.opp =.opp
         self._name = name
         self._children = children
         self._cmds = commands
@@ -165,14 +165,14 @@ class UniversalMediaPlayer(MediaPlayerEntity):
         self._state_template = state_template
         self._device_class = device_class
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to children and template state changes."""
 
         @callback
         def _async_on_dependency_update(event):
             """Update ha state when dependencies update."""
             self.async_set_context(event.context)
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         @callback
         def _async_on_template_update(event, updates):
@@ -187,7 +187,7 @@ class UniversalMediaPlayer(MediaPlayerEntity):
             if event:
                 self.async_set_context(event.context)
 
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         if self._state_template is not None:
             result = async_track_template_result(

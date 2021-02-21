@@ -29,10 +29,10 @@ from openpeerpower.const import (
     PRECISION_TENTHS,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.temperature import display_temp as show_temp
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.temperature import display_temp as show_temp
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from .const import (
     DATA_CONFIG,
@@ -59,12 +59,12 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, config: ConfigType, async_add_entities
 ):
     """Initialize an IZone Controller."""
-    disco = opp.data[DATA_DISCOVERY_SERVICE]
+    disco =.opp.data[DATA_DISCOVERY_SERVICE]
 
     @callback
     def init_controller(ctrl: Controller):
         """Register the controller device and the containing zones."""
-        conf = opp.data.get(DATA_CONFIG)  # type: ConfigType
+        conf =.opp.data.get(DATA_CONFIG)  # type: ConfigType
 
         # Filter out any entities excluded in the config file
         if conf and ctrl.device_uid in conf[CONF_EXCLUDE]:
@@ -144,7 +144,7 @@ class ControllerDevice(ClimateEntity):
         for zone in controller.zones:
             self.zones[zone] = ZoneDevice(self, zone)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call on adding to.opp."""
         # Register for connect/disconnect/update events
         @callback
@@ -178,9 +178,9 @@ class ControllerDevice(ClimateEntity):
             """Handle controller data updates."""
             if ctrl is not self._controller:
                 return
-            self.async_write_op.state()
+            self.async_write_ha_state()
             for zone in self.zones.values():
-                zone.async_schedule_update_op.state()
+                zone.async_schedule_update_ha_state()
 
         self.async_on_remove(
             async_dispatcher_connect(
@@ -213,9 +213,9 @@ class ControllerDevice(ClimateEntity):
             )
 
         self._available = available
-        self.async_write_op.state()
+        self.async_write_ha_state()
         for zone in self.zones.values():
-            zone.async_schedule_update_op.state()
+            zone.async_schedule_update_ha_state()
 
     @property
     def device_info(self):
@@ -400,7 +400,7 @@ class ControllerDevice(ClimateEntity):
     async def async_set_temperature(self, **kwargs) -> None:
         """Set new target temperature."""
         if not self.supported_features & SUPPORT_TARGET_TEMPERATURE:
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
             return
         temp = kwargs.get(ATTR_TEMPERATURE)
         if temp is not None:
@@ -465,7 +465,7 @@ class ZoneDevice(ClimateEntity):
             "model": zone.type.name.title(),
         }
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call on adding to.opp."""
 
         @callback
@@ -474,7 +474,7 @@ class ZoneDevice(ClimateEntity):
             if zone is not self._zone:
                 return
             self._name = zone.name.title()
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self.async_on_remove(
             async_dispatcher_connect(self.opp, DISPATCH_ZONE_UPDATE, zone_update)
@@ -584,7 +584,7 @@ class ZoneDevice(ClimateEntity):
         """Set new target operation mode."""
         mode = self._state_to_pizone[hvac_mode]
         await self._controller.wrap_and_catch(self._zone.set_mode(mode))
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_on(self):
@@ -597,12 +597,12 @@ class ZoneDevice(ClimateEntity):
             await self._controller.wrap_and_catch(self._zone.set_mode(Zone.Mode.AUTO))
         else:
             await self._controller.wrap_and_catch(self._zone.set_mode(Zone.Mode.OPEN))
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self):
         """Turn device off (close zone)."""
         await self._controller.wrap_and_catch(self._zone.set_mode(Zone.Mode.CLOSE))
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def zone_index(self):

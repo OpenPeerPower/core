@@ -26,7 +26,7 @@ from openpeerpower.const import (
     STATE_PAUSED,
     STATE_PLAYING,
 )
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 

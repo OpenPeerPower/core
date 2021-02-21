@@ -34,7 +34,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class WinkCameraDevice(WinkDevice, alarm.AlarmControlPanelEntity):
     """Representation a Wink camera alarm."""
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[DOMAIN]["entities"]["alarm_control_panel"].append(self)
 

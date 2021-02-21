@@ -116,7 +116,7 @@ class ZHAGroup(LogMixin):
         zigpy_group: ZigpyGroupType,
     ):
         """Initialize the group."""
-        self.opp: OpenPeerPowerType = opp
+        self.opp: OpenPeerPowerType =.opp
         self._zigpy_group: ZigpyGroupType = zigpy_group
         self._zha_gateway: ZhaGatewayType = zha_gateway
 

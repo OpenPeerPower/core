@@ -121,11 +121,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntr
     api = WebAlmondAPI(auth)
     agent = AlmondAgent.opp, api, entry)
 
-    # Opp.io does its own configuration.
-    if not entry.data.get("is_oppio"):
+    # Hass.io does its own configuration.
+    if not entry.data.get("is.oppio"):
         # If we're not starting or local, set up Almond right away
         if.opp.state != CoreState.not_running or entry.data["type"] == TYPE_LOCAL:
-            await _configure_almond_for_op.opp, entry, api)
+            await _configure_almond_for_ha.opp, entry, api)
 
         else:
             # OAuth2 implementations can potentially rely on the HA Cloud url.
@@ -133,22 +133,22 @@ async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntr
 
             async def configure_almond(_now):
                 try:
-                    await _configure_almond_for_op.opp, entry, api)
+                    await _configure_almond_for_ha.opp, entry, api)
                 except ConfigEntryNotReady:
                     _LOGGER.warning(
                         "Unable to configure Almond to connect to Open Peer Power"
                     )
 
-            async def almond_opp_start(_event):
+            async def almond.opp_start(_event):
                 event.async_call_later.opp, ALMOND_SETUP_DELAY, configure_almond)
 
-           .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, almond_opp_start)
+           .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, almond.opp_start)
 
     conversation.async_set_agent.opp, agent)
     return True
 
 
-async def _configure_almond_for_op.
+async def _configure_almond_for_ha(
    .opp: OpenPeerPower, entry: config_entries.ConfigEntry, api: WebAlmondAPI
 ):
     """Configure Almond to connect to HA."""
@@ -172,29 +172,29 @@ async def _configure_almond_for_op.
 
     user = None
     if "almond_user" in data:
-        user = await opp..auth.async_get_user(data["almond_user"])
+        user = await.opp.auth.async_get_user(data["almond_user"])
 
     if user is None:
-        user = await opp..auth.async_create_system_user("Almond", [GROUP_ID_ADMIN])
+        user = await.opp.auth.async_create_system_user("Almond", [GROUP_ID_ADMIN])
         data["almond_user"] = user.id
         await store.async_save(data)
 
-    refresh_token = await opp..auth.async_create_refresh_token(
+    refresh_token = await.opp.auth.async_create_refresh_token(
         user,
         # Almond will be fine as long as we restart once every 5 years
         access_token_expiration=timedelta(days=365 * 5),
     )
 
     # Create long lived access token
-    access_token = opp.auth.async_create_access_token(refresh_token)
+    access_token =.opp.auth.async_create_access_token(refresh_token)
 
     # Store token in Almond
     try:
         with async_timeout.timeout(30):
             await api.async_create_device(
                 {
-                    "kind": "io.openpeerpower",
-                    "oppUrl":.opp_url,
+                    "kind": "io.open-peer-power",
+                    .oppUrl":.opp_url,
                     "accessToken": access_token,
                     "refreshToken": "",
                     # 5 years from now in ms.
@@ -207,13 +207,13 @@ async def _configure_almond_for_op.
         else:
             msg = err
         _LOGGER.warning("Unable to configure Almond: %s", msg)
-        await opp..auth.async_remove_refresh_token(refresh_token)
+        await.opp.auth.async_remove_refresh_token(refresh_token)
         raise ConfigEntryNotReady from err
 
     # Clear all other refresh tokens
     for token in list(user.refresh_tokens.values()):
         if token.id != refresh_token.id:
-            await opp..auth.async_remove_refresh_token(token)
+            await.opp.auth.async_remove_refresh_token(token)
 
 
 async def async_unload_entry.opp, entry):
@@ -250,7 +250,7 @@ class AlmondAgent(conversation.AbstractConversationAgent):
         self,.opp: OpenPeerPower, api: WebAlmondAPI, entry: config_entries.ConfigEntry
     ):
         """Initialize the agent."""
-        self.opp = opp
+        self.opp =.opp
         self.api = api
         self.entry = entry
 
@@ -265,7 +265,7 @@ class AlmondAgent(conversation.AbstractConversationAgent):
             return None
 
         host = self.entry.data["host"]
-        if self.entry.data.get("is_oppio"):
+        if self.entry.data.get("is.oppio"):
             host = "/core_almond"
         return {
             "text": "Would you like to opt-in to share your anonymized commands with Stanford to improve Almond's responses?",

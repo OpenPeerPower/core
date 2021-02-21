@@ -239,7 +239,7 @@ class VizioConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     CONF_DEVICE_CLASS
                 ] == DEVICE_CLASS_SPEAKER or user_input.get(CONF_ACCESS_TOKEN):
                     # Ensure config is valid for a device
-                    if not await VizioAsync.validate_op.config(
+                    if not await VizioAsync.validate_ha_config(
                         user_input[CONF_HOST],
                         user_input.get(CONF_ACCESS_TOKEN),
                         user_input[CONF_DEVICE_CLASS],

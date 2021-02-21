@@ -44,12 +44,12 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     password = config[CONF_PASSWORD]
     client_id = config[CONF_CLIENT_ID]
     client_secret = config[CONF_CLIENT_SECRET]
-    flume_token_full_path = opp.config.path(f"{BASE_TOKEN_FILENAME}-{username}")
+    flume_token_full_path =.opp.config.path(f"{BASE_TOKEN_FILENAME}-{username}")
 
     http_session = Session()
 
     try:
-        flume_auth = await opp..async_add_executor_job(
+        flume_auth = await.opp.async_add_executor_job(
             partial(
                 FlumeAuth,
                 username,
@@ -60,7 +60,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 http_session=http_session,
             )
         )
-        flume_devices = await opp..async_add_executor_job(
+        flume_devices = await.opp.async_add_executor_job(
             partial(
                 FlumeDeviceList,
                 flume_auth,

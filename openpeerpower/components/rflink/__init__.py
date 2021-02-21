@@ -66,7 +66,7 @@ DOMAIN = "rflink"
 SERVICE_SEND_COMMAND = "send_command"
 
 SIGNAL_AVAILABILITY = "rflink_device_available"
-SIGNAL_HANDLE_EVENT = "rflink_op.dle_event_{}"
+SIGNAL_HANDLE_EVENT = "rflink_handle_event_{}"
 
 TMP_ENTITY = "tmp.{}"
 
@@ -169,11 +169,11 @@ async def async_setup.opp, config):
             and event[EVENT_KEY_COMMAND] in RFLINK_GROUP_COMMANDS
         )
         if is_group_event:
-            entity_ids = opp.data[DATA_ENTITY_GROUP_LOOKUP][event_type].get(
+            entity_ids =.opp.data[DATA_ENTITY_GROUP_LOOKUP][event_type].get(
                 event_id, []
             )
         else:
-            entity_ids = opp.data[DATA_ENTITY_LOOKUP][event_type][event_id]
+            entity_ids =.opp.data[DATA_ENTITY_LOOKUP][event_type][event_id]
 
         _LOGGER.debug("entity_ids: %s", entity_ids)
         if entity_ids:
@@ -335,10 +335,10 @@ class RflinkDevice(Entity):
     def handle_event_callback(self, event):
         """Handle incoming event for device type."""
         # Call platform specific event handler
-        self._op.dle_event(event)
+        self._handle_event(event)
 
         # Propagate changes through ha
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
         # Put command onto bus for user to subscribe to
         if self._should_fire_event and identify_event_type(event) == EVENT_KEY_COMMAND:
@@ -350,7 +350,7 @@ class RflinkDevice(Entity):
                 "Fired bus event for %s: %s", self.entity_id, event[EVENT_KEY_COMMAND]
             )
 
-    def _op.dle_event(self, event):
+    def _handle_event(self, event):
         """Platform specific event handler."""
         raise NotImplementedError()
 
@@ -385,11 +385,11 @@ class RflinkDevice(Entity):
     def _availability_callback(self, availability):
         """Update availability state."""
         self._available = availability
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register update callback."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         # Remove temporary bogus entity_id if added
         tmp_entity = TMP_ENTITY.format(self._device_id)
         if (
@@ -481,7 +481,7 @@ class RflinkCommand(RflinkDevice):
         """Send device command to Rflink and wait for acknowledgement."""
         return await cls._protocol.send_command_ack(device_id, action)
 
-    async def _async_op.dle_command(self, command, *args):
+    async def _async_handle_command(self, command, *args):
         """Do bookkeeping for command, send it to rflink and update state."""
         self.cancel_queued_send_commands()
 
@@ -523,7 +523,7 @@ class RflinkCommand(RflinkDevice):
         await self._async_send_command(cmd, self._signal_repetitions)
 
         # Update state of entity
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def cancel_queued_send_commands(self):
         """Cancel queued signal repetition commands.
@@ -563,15 +563,15 @@ class RflinkCommand(RflinkDevice):
 class SwitchableRflinkDevice(RflinkCommand, RestoreEntity):
     """Rflink entity which can switch on/off (eg: light, switch)."""
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Restore RFLink device state (ON/OFF)."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         old_state = await self.async_get_last_state()
         if old_state is not None:
             self._state = old_state.state == STATE_ON
 
-    def _op.dle_event(self, event):
+    def _handle_event(self, event):
         """Adjust state if Rflink picks up a remote command for this device."""
         self.cancel_queued_send_commands()
 
@@ -583,8 +583,8 @@ class SwitchableRflinkDevice(RflinkCommand, RestoreEntity):
 
     async def async_turn_on(self, **kwargs):
         """Turn the device on."""
-        await self._async_op.dle_command("turn_on")
+        await self._async_handle_command("turn_on")
 
     async def async_turn_off(self, **kwargs):
         """Turn the device off."""
-        await self._async_op.dle_command("turn_off")
+        await self._async_handle_command("turn_off")

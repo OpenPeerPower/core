@@ -34,12 +34,12 @@ from openpeerpower.const import (
     STATE_OPEN,
     STATE_OPENING,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import TemplateError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import async_generate_entity_id
-from openpeerpowerr.helpers.reload import async_setup_reload_service
-from openpeerpowerr.helpers.script import Script
+from openpeerpower.core import callback
+from openpeerpower.exceptions import TemplateError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import async_generate_entity_id
+from openpeerpower.helpers.reload import async_setup_reload_service
+from openpeerpower.helpers.script import Script
 
 from .const import CONF_AVAILABILITY_TEMPLATE, DOMAIN, PLATFORMS
 from .template_entity import TemplateEntity
@@ -224,7 +224,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
         self._tilt_value = None
         self._unique_id = unique_id
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         if self._template:
             self.add_template_attribute(
@@ -246,7 +246,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
                 self._update_tilt,
                 none_on_template_error=True,
             )
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     @callback
     def _update_state(self, result):
@@ -370,7 +370,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             )
         if self._optimistic:
             self._position = 100
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_close_cover(self, **kwargs):
         """Move the cover down."""
@@ -382,7 +382,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             )
         if self._optimistic:
             self._position = 0
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_stop_cover(self, **kwargs):
         """Fire the stop action."""
@@ -396,7 +396,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             {"position": self._position}, context=self._context
         )
         if self._optimistic:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_open_cover_tilt(self, **kwargs):
         """Tilt the cover open."""
@@ -405,7 +405,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             {"tilt": self._tilt_value}, context=self._context
         )
         if self._tilt_optimistic:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_close_cover_tilt(self, **kwargs):
         """Tilt the cover closed."""
@@ -414,7 +414,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             {"tilt": self._tilt_value}, context=self._context
         )
         if self._tilt_optimistic:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_set_cover_tilt_position(self, **kwargs):
         """Move the cover tilt to a specific position."""
@@ -423,4 +423,4 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             {"tilt": self._tilt_value}, context=self._context
         )
         if self._tilt_optimistic:
-            self.async_write_op.state()
+            self.async_write_ha_state()

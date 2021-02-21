@@ -7,7 +7,7 @@ from openpeerpower.components.water_heater import (
     WaterHeaterEntity,
 )
 from openpeerpower.const import STATE_OFF
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from . import DOMAIN, GeniusHeatingZone
 
@@ -38,7 +38,7 @@ async def async_setup_platform(
     if discovery_info is None:
         return
 
-    broker = opp.data[DOMAIN]["broker"]
+    broker =.opp.data[DOMAIN]["broker"]
 
     async_add_entities(
         [

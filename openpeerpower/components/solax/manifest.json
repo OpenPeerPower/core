@@ -1,7 +1,7 @@
 {
   "domain": "solax",
   "name": "SolaX Power",
-  "documentation": "https://www.openpeerpower.io/integrations/solax",
+  "documentation": "https://www.open-peer-power.io/integrations/solax",
   "requirements": ["solax==0.2.5"],
   "codeowners": ["@squishykid"]
 }

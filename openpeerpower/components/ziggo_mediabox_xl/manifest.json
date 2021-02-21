@@ -1,7 +1,7 @@
 {
   "domain": "ziggo_mediabox_xl",
   "name": "Ziggo Mediabox XL",
-  "documentation": "https://www.openpeerpower.io/integrations/ziggo_mediabox_xl",
+  "documentation": "https://www.open-peer-power.io/integrations/ziggo_mediabox_xl",
   "requirements": ["ziggo-mediabox-xl==1.1.0"],
   "codeowners": []
 }

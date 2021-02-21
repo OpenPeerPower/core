@@ -12,7 +12,7 @@ from openpeerpower.components.ffmpeg import (
 )
 from openpeerpower.components.ffmpeg_motion.binary_sensor import FFmpegBinarySensor
 from openpeerpower.const import CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 CONF_PEAK = "peak"
 CONF_DURATION = "duration"
@@ -41,7 +41,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the FFmpeg noise binary sensor."""
-    manager = opp.data[DATA_FFMPEG]
+    manager =.opp.data[DATA_FFMPEG]
     entity = FFmpegNoise.opp, manager, config)
     async_add_entities([entity])
 

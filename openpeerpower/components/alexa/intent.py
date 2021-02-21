@@ -3,10 +3,10 @@ import enum
 import logging
 
 from openpeerpower.components import http
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers import intent
-from openpeerpowerr.util.decorator import Registry
+from openpeerpower.core import callback
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers import intent
+from openpeerpower.util.decorator import Registry
 
 from .const import DOMAIN, SYN_RESOLUTION_MATCH
 
@@ -62,13 +62,13 @@ class AlexaIntentsView(http.OpenPeerPowerView):
 
     async def post(self, request):
         """Handle Alexa."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
         message = await request.json()
 
         _LOGGER.debug("Received Alexa request: %s", message)
 
         try:
-            response = await async_op.dle_message.opp, message)
+            response = await async_handle_message.opp, message)
             return b"" if response is None else self.json(response)
         except UnknownRequest as err:
             _LOGGER.warning(str(err))
@@ -107,7 +107,7 @@ def intent_error_response.opp, message, error):
     return alexa_response.as_dict()
 
 
-async def async_op.dle_message.opp, message):
+async def async_handle_message.opp, message):
     """Handle an Alexa intent.
 
     Raises:
@@ -129,14 +129,14 @@ async def async_op.dle_message.opp, message):
 
 
 @HANDLERS.register("SessionEndedRequest")
-async def async_op.dle_session_end.opp, message):
+async def async_handle_session_end.opp, message):
     """Handle a session end request."""
     return None
 
 
 @HANDLERS.register("IntentRequest")
 @HANDLERS.register("LaunchRequest")
-async def async_op.dle_intent.opp, message):
+async def async_handle_intent.opp, message):
     """Handle an intent request.
 
     Raises:
@@ -156,7 +156,7 @@ async def async_op.dle_intent.opp, message):
     else:
         intent_name = alexa_intent_info["name"]
 
-    intent_response = await intent.async_op.dle(
+    intent_response = await intent.async_handle(
        .opp,
         DOMAIN,
         intent_name,
@@ -222,7 +222,7 @@ class AlexaResponse:
 
     def __init__(self,.opp, intent_info):
         """Initialize the response."""
-        self.opp = opp
+        self.opp =.opp
         self.speech = None
         self.card = None
         self.reprompt = None

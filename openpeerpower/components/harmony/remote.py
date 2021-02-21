@@ -15,11 +15,11 @@ from openpeerpower.components.remote import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers import entity_platform
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.restore_state import RestoreEntity
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_platform
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.restore_state import RestoreEntity
 
 from .connection_state import ConnectionStateMixin
 from .const import (
@@ -59,14 +59,14 @@ async def async_setup_entry(
 ):
     """Set up the Harmony config entry."""
 
-    data = opp.data[DOMAIN][entry.entry_id]
+    data =.opp.data[DOMAIN][entry.entry_id]
 
     _LOGGER.debug("HarmonyData : %s", data)
 
     default_activity = entry.options.get(ATTR_ACTIVITY)
     delay_secs = entry.options.get(ATTR_DELAY_SECS, DEFAULT_DELAY_SECS)
 
-    harmony_conf_file = opp.config.path(f"harmony_{entry.unique_id}.conf")
+    harmony_conf_file =.opp.config.path(f"harmony_{entry.unique_id}.conf")
     device = HarmonyRemote(data, default_activity, delay_secs, harmony_conf_file)
     async_add_entities([device])
 
@@ -122,11 +122,11 @@ class HarmonyRemote(ConnectionStateMixin, remote.RemoteEntity, RestoreEntity):
     def _new_activity_finished(self, activity_info: tuple) -> None:
         """Call for finished updated current activity."""
         self._activity_starting = None
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Complete the initialization."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         _LOGGER.debug("%s: Harmony Hub added", self._name)
 
@@ -214,7 +214,7 @@ class HarmonyRemote(ConnectionStateMixin, remote.RemoteEntity, RestoreEntity):
             # when turning on
             self._last_activity = activity_name
         self._state = bool(activity_id != -1)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def new_config(self, _=None):
         """Call for updating the current activity."""

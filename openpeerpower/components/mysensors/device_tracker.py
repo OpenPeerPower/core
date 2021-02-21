@@ -17,7 +17,7 @@ async def async_setup_scanner(
         DOMAIN,
         discovery_info,
         MySensorsDeviceScanner,
-        device_args= opp, async_see),
+        device_args=.opp, async_see),
     )
     if not new_devices:
         return False
@@ -54,7 +54,7 @@ class MySensorsDeviceScanner(mysensors.device.MySensorsDevice):
         """Set up instance."""
         super().__init__(*args)
         self.async_see = async_see
-        self.opp = opp
+        self.opp =.opp
 
     async def _async_update_callback(self):
         """Update the device."""

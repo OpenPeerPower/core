@@ -26,7 +26,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Axis camera video stream."""
     filter_urllib3_logging()
 
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     if not device.api.vapix.params.image_format:
         return
@@ -51,7 +51,7 @@ class AxisCamera(AxisEntityBase, MjpegCamera):
         }
         MjpegCamera.__init__(self, config)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe camera events."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -59,7 +59,7 @@ class AxisCamera(AxisEntityBase, MjpegCamera):
             )
         )
 
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     @property
     def supported_features(self) -> int:

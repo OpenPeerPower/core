@@ -7,9 +7,9 @@ import voluptuous as vol
 
 from openpeerpower.components.calendar import PLATFORM_SCHEMA, CalendarEventDevice
 from openpeerpower.const import CONF_ID, CONF_NAME, CONF_TOKEN
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.template import DATE_STR_FORMAT
-from openpeerpowerr.util import dt
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.template import DATE_STR_FORMAT
+from openpeerpower.util import dt
 
 from .const import (
     ALL_DAY,
@@ -520,7 +520,7 @@ class TodoistProjectData:
                 or task[PROJECT_ID] in self._project_id_whitelist
             ]
         else:
-            project_data = await opp..async_add_executor_job(
+            project_data = await.opp.async_add_executor_job(
                 self._api.projects.get_data, self._id
             )
             project_task_data = project_data[TASKS]

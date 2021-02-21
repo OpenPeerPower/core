@@ -116,7 +116,7 @@ STATUS_STOPPED = 2
 STATUS_WAIT = 3
 
 
-def _op._all_unique_names_and_ports(bridges):
+def _has_all_unique_names_and_ports(bridges):
     """Validate that each homekit bridge configured has a unique name."""
     names = [bridge[CONF_NAME] for bridge in bridges]
     ports = [bridge[CONF_PORT] for bridge in bridges]
@@ -150,7 +150,7 @@ BRIDGE_SCHEMA = vol.All(
 )
 
 CONFIG_SCHEMA = vol.Schema(
-    {DOMAIN: vol.All(cv.ensure_list, [BRIDGE_SCHEMA], _op._all_unique_names_and_ports)},
+    {DOMAIN: vol.All(cv.ensure_list, [BRIDGE_SCHEMA], _has_all_unique_names_and_ports)},
     extra=vol.ALLOW_EXTRA,
 )
 
@@ -177,7 +177,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
     if DOMAIN not in config:
         return True
 
-    current_entries = opp.config_entries.async_entries(DOMAIN)
+    current_entries =.opp.config_entries.async_entries(DOMAIN)
     entries_by_name = _async_get_entries_by_name(current_entries)
 
     for index, conf in enumerate(config[DOMAIN]):
@@ -264,7 +264,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     # If the previous instance hasn't cleaned up yet
     # we need to wait a bit
     try:
-        await opp..async_add_executor_job(homekit.setup, zeroconf_instance)
+        await.opp.async_add_executor_job(homekit.setup, zeroconf_instance)
     except (OSError, AttributeError) as ex:
         _LOGGER.warning(
             "%s could not be setup because the local port %s is in use", name, port
@@ -291,7 +291,7 @@ async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     if entry.source == SOURCE_IMPORT:
         return
-    await opp..config_entries.async_reload(entry.entry_id)
+    await.opp.config_entries.async_reload(entry.entry_id)
 
 
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
@@ -300,13 +300,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
    .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
-    homekit = opp.data[DOMAIN][entry.entry_id][HOMEKIT]
+    homekit =.opp.data[DOMAIN][entry.entry_id][HOMEKIT]
 
     if homekit.status == STATUS_RUNNING:
         await homekit.async_stop()
 
     for _ in range(0, SHUTDOWN_TIMEOUT):
-        if not await opp..async_add_executor_job(
+        if not await.opp.async_add_executor_job(
             port_is_available, entry.data[CONF_PORT]
         ):
             _LOGGER.info("Waiting for the HomeKit server to shutdown")
@@ -319,7 +319,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Remove a config entry."""
-    return await opp..async_add_executor_job(
+    return await.opp.async_add_executor_job(
         remove_state_files_for_entry_id,.opp, entry.entry_id
     )
 
@@ -349,7 +349,7 @@ def _async_register_events_and_services.opp: OpenPeerPower):
         for entry_id in.opp.data[DOMAIN]:
             if HOMEKIT not in.opp.data[DOMAIN][entry_id]:
                 continue
-            homekit = opp.data[DOMAIN][entry_id][HOMEKIT]
+            homekit =.opp.data[DOMAIN][entry_id][HOMEKIT]
             if homekit.status != STATUS_RUNNING:
                 _LOGGER.warning(
                     "HomeKit is not running. Either it is waiting to be "
@@ -367,13 +367,13 @@ def _async_register_events_and_services.opp: OpenPeerPower):
         schema=RESET_ACCESSORY_SERVICE_SCHEMA,
     )
 
-    async def async_op.dle_homekit_service_start(service):
+    async def async_handle_homekit_service_start(service):
         """Handle start HomeKit service call."""
         tasks = []
         for entry_id in.opp.data[DOMAIN]:
             if HOMEKIT not in.opp.data[DOMAIN][entry_id]:
                 continue
-            homekit = opp.data[DOMAIN][entry_id][HOMEKIT]
+            homekit =.opp.data[DOMAIN][entry_id][HOMEKIT]
             if homekit.status == STATUS_RUNNING:
                 _LOGGER.debug("HomeKit is already running")
                 continue
@@ -387,17 +387,17 @@ def _async_register_events_and_services.opp: OpenPeerPower):
         await asyncio.gather(*tasks)
 
    .opp.services.async_register(
-        DOMAIN, SERVICE_HOMEKIT_START, async_op.dle_homekit_service_start
+        DOMAIN, SERVICE_HOMEKIT_START, async_handle_homekit_service_start
     )
 
-    async def _op.dle_homekit_reload(service):
+    async def _handle_homekit_reload(service):
         """Handle start HomeKit service call."""
         config = await async_integration_yaml_config.opp, DOMAIN)
 
         if not config or DOMAIN not in config:
             return
 
-        current_entries = opp.config_entries.async_entries(DOMAIN)
+        current_entries =.opp.config_entries.async_entries(DOMAIN)
         entries_by_name = _async_get_entries_by_name(current_entries)
 
         for conf in config[DOMAIN]:
@@ -413,7 +413,7 @@ def _async_register_events_and_services.opp: OpenPeerPower):
    .opp.helpers.service.async_register_admin_service(
         DOMAIN,
         SERVICE_RELOAD,
-        _op.dle_homekit_reload,
+        _handle_homekit_reload,
     )
 
 
@@ -433,7 +433,7 @@ class HomeKit:
         entry_id=None,
     ):
         """Initialize a HomeKit object."""
-        self.opp = opp
+        self.opp =.opp
         self._name = name
         self._port = port
         self._ip_address = ip_address
@@ -776,12 +776,12 @@ class HomeKitPairingQRView(OpenPeerPowerView):
         entry_id, secret = request.query_string.split("-")
 
         if (
-            entry_id not in request.app["opp"].data[DOMAIN]
+            entry_id not in request.app[.opp"].data[DOMAIN]
             or secret
-            != request.app["opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR_SECRET]
+            != request.app[.opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR_SECRET]
         ):
             raise Unauthorized()
         return web.Response(
-            body=request.app["opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR],
+            body=request.app[.opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR],
             content_type="image/svg+xml",
         )

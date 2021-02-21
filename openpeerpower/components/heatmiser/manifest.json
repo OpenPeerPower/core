@@ -1,7 +1,7 @@
 {
   "domain": "heatmiser",
   "name": "Heatmiser",
-  "documentation": "https://www.openpeerpower.io/integrations/heatmiser",
+  "documentation": "https://www.open-peer-power.io/integrations/heatmiser",
   "requirements": ["heatmiserV3==1.1.18"],
   "codeowners": ["@andylockran"]
 }

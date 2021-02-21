@@ -6,11 +6,11 @@ from pydeconz import DeconzSession, errors
 
 from openpeerpower.config_entries import SOURCE_REAUTH
 from openpeerpower.const import CONF_API_KEY, CONF_HOST, CONF_PORT
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import aiohttp_client
-from openpeerpowerr.helpers.device_registry import CONNECTION_NETWORK_MAC
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.core import callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import aiohttp_client
+from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .const import (
     CONF_ALLOW_CLIP_SENSOR,
@@ -43,7 +43,7 @@ class DeconzGateway:
 
     def __init__(self,.opp, config_entry) -> None:
         """Initialize the system."""
-        self.opp = opp
+        self.opp =.opp
         self.config_entry = config_entry
 
         self.api = None

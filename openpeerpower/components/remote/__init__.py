@@ -13,16 +13,16 @@ from openpeerpower.const import (
     SERVICE_TURN_ON,
     STATE_ON,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.config_validation import (  # noqa: F401
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.config_validation import (  # noqa: F401
     PLATFORM_SCHEMA,
     PLATFORM_SCHEMA_BASE,
     make_entity_service_schema,
 )
-from openpeerpowerr.helpers.entity import ToggleEntity
-from openpeerpowerr.helpers.entity_component import EntityComponent
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
-from openpeerpowerr.loader import bind_opp
+from openpeerpower.helpers.entity import ToggleEntity
+from openpeerpower.helpers.entity_component import EntityComponent
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.loader import bind.opp
 
 # mypy: allow-untyped-calls, allow-untyped-defs, no-check-untyped-defs
 
@@ -62,7 +62,7 @@ REMOTE_SERVICE_ACTIVITY_SCHEMA = make_entity_service_schema(
 )
 
 
-@bind_opp
+@bind.opp
 def is_on.opp: OpenPeerPowerType, entity_id: str) -> bool:
     """Return if the remote is on based on the statemachine."""
     return.opp.states.is_state(entity_id, STATE_ON)
@@ -70,7 +70,7 @@ def is_on.opp: OpenPeerPowerType, entity_id: str) -> bool:
 
 async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Track states and offer events for remotes."""
-    component = opp.data[DOMAIN] = EntityComponent(
+    component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
     )
     await component.async_setup(config)

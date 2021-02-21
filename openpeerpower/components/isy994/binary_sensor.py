@@ -67,7 +67,7 @@ async def async_setup_entry(
     devices_by_address = {}
     child_nodes = []
 
-   .opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
+   .opp_isy_data =.opp.data[ISY994_DOMAIN][entry.entry_id]
     for node in.opp_isy_data[ISY994_NODES][BINARY_SENSOR]:
         device_class, device_type = _detect_device_type_and_class(node)
         if node.protocol == PROTO_INSTEON:
@@ -248,15 +248,15 @@ class ISYInsteonBinarySensorEntity(ISYBinarySensorEntity):
             self._computed_state = bool(self._node.status)
             self._status_was_unknown = False
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe to the node and subnode event emitters."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
-        self._node.control_events.subscribe(self._positive_node_control_op.dler)
+        self._node.control_events.subscribe(self._positive_node_control_handler)
 
         if self._negative_node is not None:
             self._negative_node.control_events.subscribe(
-                self._negative_node_control_op.dler
+                self._negative_node_control_handler
             )
 
     def add_heartbeat_device(self, device) -> None:
@@ -291,7 +291,7 @@ class ISYInsteonBinarySensorEntity(ISYBinarySensorEntity):
                 # of the sensor until we receive our first ON event.
                 self._computed_state = None
 
-    def _negative_node_control_op.dler(self, event: object) -> None:
+    def _negative_node_control_handler(self, event: object) -> None:
         """Handle an "On" control event from the "negative" node."""
         if event.control == CMD_ON:
             _LOGGER.debug(
@@ -299,10 +299,10 @@ class ISYInsteonBinarySensorEntity(ISYBinarySensorEntity):
                 self.name,
             )
             self._computed_state = False
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
             self._heartbeat()
 
-    def _positive_node_control_op.dler(self, event: object) -> None:
+    def _positive_node_control_handler(self, event: object) -> None:
         """Handle On and Off control event coming from the primary node.
 
         Depending on device configuration, sometimes only On events
@@ -315,7 +315,7 @@ class ISYInsteonBinarySensorEntity(ISYBinarySensorEntity):
                 self.name,
             )
             self._computed_state = True
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
             self._heartbeat()
         if event.control == CMD_OFF:
             _LOGGER.debug(
@@ -323,7 +323,7 @@ class ISYInsteonBinarySensorEntity(ISYBinarySensorEntity):
                 self.name,
             )
             self._computed_state = False
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
             self._heartbeat()
 
     def on_update(self, event: object) -> None:
@@ -339,7 +339,7 @@ class ISYInsteonBinarySensorEntity(ISYBinarySensorEntity):
         if self._status_was_unknown and self._computed_state is None:
             self._computed_state = bool(self._node.status)
             self._status_was_unknown = False
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
             self._heartbeat()
 
     @property
@@ -379,16 +379,16 @@ class ISYBinarySensorHeartbeat(ISYNodeEntity, BinarySensorEntity):
         if self.state is None:
             self._computed_state = False
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Subscribe to the node and subnode event emitters."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
-        self._node.control_events.subscribe(self._heartbeat_node_control_op.dler)
+        self._node.control_events.subscribe(self._heartbeat_node_control_handler)
 
         # Start the timer on bootup, so we can change from UNKNOWN to OFF
         self._restart_timer()
 
-    def _heartbeat_node_control_op.dler(self, event: object) -> None:
+    def _heartbeat_node_control_handler(self, event: object) -> None:
         """Update the heartbeat timestamp when any ON/OFF event is sent.
 
         The ISY uses both DON and DOF commands (alternating) for a heartbeat.
@@ -406,7 +406,7 @@ class ISYBinarySensorHeartbeat(ISYNodeEntity, BinarySensorEntity):
         """
         self._computed_state = False
         self._restart_timer()
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def _restart_timer(self):
         """Restart the 25 hour timer."""
@@ -422,7 +422,7 @@ class ISYBinarySensorHeartbeat(ISYNodeEntity, BinarySensorEntity):
             """Heartbeat missed; set state to ON to indicate dead battery."""
             self._computed_state = True
             self._heartbeat_timer = None
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
         point_in_time = dt_util.utcnow() + timedelta(hours=25)
         _LOGGER.debug(

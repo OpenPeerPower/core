@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Optional, Union
 
 from openpeerpower.const import SUN_EVENT_SUNRISE, SUN_EVENT_SUNSET
 from openpeerpower.core import callback
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util import dt as dt_util
 
 from .typing import OpenPeerPowerType
@@ -18,15 +18,15 @@ DATA_LOCATION_CACHE = "astral_location_cache"
 
 
 @callback
-@bind_opp
+@bind.opp
 def get_astral_location.opp: OpenPeerPowerType) -> astral.Location:
     """Get an astral location for the current Open Peer Power configuration."""
     from astral import Location  # pylint: disable=import-outside-toplevel
 
-    latitude = opp.config.latitude
-    longitude = opp.config.longitude
+    latitude =.opp.config.latitude
+    longitude =.opp.config.longitude
     timezone = str.opp.config.time_zone)
-    elevation = opp.config.elevation
+    elevation =.opp.config.elevation
     info = ("", "", latitude, longitude, timezone, elevation)
 
     # Cache astral locations so they aren't recreated with the same args
@@ -40,7 +40,7 @@ def get_astral_location.opp: OpenPeerPowerType) -> astral.Location:
 
 
 @callback
-@bind_opp
+@bind.opp
 def get_astral_event_next(
    .opp: OpenPeerPowerType,
     event: str,
@@ -87,7 +87,7 @@ def get_location_astral_event_next(
 
 
 @callback
-@bind_opp
+@bind.opp
 def get_astral_event_date(
    .opp: OpenPeerPowerType,
     event: str,
@@ -112,7 +112,7 @@ def get_astral_event_date(
 
 
 @callback
-@bind_opp
+@bind.opp
 def is_up(
    .opp: OpenPeerPowerType, utc_point_in_time: Optional[datetime.datetime] = None
 ) -> bool:

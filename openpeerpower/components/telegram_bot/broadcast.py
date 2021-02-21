@@ -10,7 +10,7 @@ async def async_setup_platform.opp, config):
     """Set up the Telegram broadcast platform."""
     bot = initialize_bot(config)
 
-    bot_config = await opp..async_add_executor_job(bot.getMe)
+    bot_config = await.opp.async_add_executor_job(bot.getMe)
     _LOGGER.debug(
         "Telegram broadcast platform setup with bot %s", bot_config["username"]
     )

@@ -61,7 +61,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     @callback
     def on_stop(event):
-        """Shutdown cleanly when opp stops."""
+        """Shutdown cleanly when.opp stops."""
        .opp.loop.create_task(russ.close())
 
    .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_stop)
@@ -99,19 +99,19 @@ class RussoundZoneDevice(MediaPlayerEntity):
             return value
         return None
 
-    def _zone_callback_op.dler(self, zone_id, *args):
+    def _zone_callback_handler(self, zone_id, *args):
         if zone_id == self._zone_id:
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
-    def _source_callback_op.dler(self, source_id, *args):
+    def _source_callback_handler(self, source_id, *args):
         current = int(self._zone_var("currentsource", 0))
         if source_id == current:
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callback handlers."""
-        self._russ.add_zone_callback(self._zone_callback_op.dler)
-        self._russ.add_source_callback(self._source_callback_op.dler)
+        self._russ.add_zone_callback(self._zone_callback_handler)
+        self._russ.add_source_callback(self._source_callback_handler)
 
     @property
     def should_poll(self):

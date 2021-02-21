@@ -19,7 +19,7 @@ def async_setup_entry_base(
 ) -> None:
     """Record the async_add_entities function to add them later when received from Dynalite."""
     LOGGER.debug("Setting up %s entry = %s", platform, config_entry.data)
-    bridge = opp.data[DOMAIN][config_entry.entry_id]
+    bridge =.opp.data[DOMAIN][config_entry.entry_id]
 
     @callback
     def async_add_entities_platform(devices):
@@ -66,14 +66,14 @@ class DynaliteBase(Entity):
             "manufacturer": "Dynalite",
         }
 
-    async def async_added_to_opp(self) -> None:
-        """Added to opp so need to register to dispatch."""
+    async def async_added_to.opp(self) -> None:
+        """Added to.opp so need to register to dispatch."""
         # register for device specific update
         self._unsub_dispatchers.append(
             async_dispatcher_connect(
                 self.opp,
                 self._bridge.update_signal(self._device),
-                self.async_schedule_update_op.state,
+                self.async_schedule_update_ha_state,
             )
         )
         # register for wide update
@@ -81,11 +81,11 @@ class DynaliteBase(Entity):
             async_dispatcher_connect(
                 self.opp,
                 self._bridge.update_signal(),
-                self.async_schedule_update_op.state,
+                self.async_schedule_update_ha_state,
             )
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Unregister signal dispatch listeners when being removed."""
         for unsub in self._unsub_dispatchers:
             unsub()

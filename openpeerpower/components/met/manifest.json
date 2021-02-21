@@ -2,7 +2,7 @@
   "domain": "met",
   "name": "Meteorologisk institutt (Met.no)",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/met",
+  "documentation": "https://www.open-peer-power.io/integrations/met",
   "requirements": ["pyMetno==0.8.1"],
   "codeowners": ["@danielhiversen", "@thimic"]
 }

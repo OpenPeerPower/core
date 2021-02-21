@@ -8,8 +8,8 @@ import requests
 import voluptuous as vol
 
 from openpeerpower.const import CONF_DOMAIN, CONF_TTL, CONF_ZONE, HTTP_OK
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import track_time_interval
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import track_time_interval
 
 _LOGGER = logging.getLogger(__name__)
 

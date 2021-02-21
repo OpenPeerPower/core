@@ -10,7 +10,7 @@ import voluptuous as vol
 
 from openpeerpower.components.cover import PLATFORM_SCHEMA, CoverEntity
 from openpeerpower.const import CONF_DEVICES, CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import CONF_SCS_ID, DOMAIN, SCSGATE_SCHEMA
 
@@ -24,7 +24,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     devices = config.get(CONF_DEVICES)
     covers = []
     logger = logging.getLogger(__name__)
-    scsgate = opp.data[DOMAIN]
+    scsgate =.opp.data[DOMAIN]
 
     if devices:
         for entity_info in devices.values():

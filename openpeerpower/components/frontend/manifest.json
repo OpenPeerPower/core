@@ -1,9 +1,9 @@
 {
   "domain": "frontend",
   "name": "Open Peer Power Frontend",
-  "documentation": "https://www.openpeerpower.io/integrations/frontend",
+  "documentation": "https://www.open-peer-power.io/integrations/frontend",
   "requirements": [
-    "openpeerpower-frontend==20210208.0"
+    "open-peer-power-frontend==20210208.0"
   ],
   "dependencies": [
     "api",
@@ -18,7 +18,7 @@
     "websocket_api"
   ],
   "codeowners": [
-    "@openpeerpower/frontend"
+    "@open-peer-power/frontend"
   ],
   "quality_scale": "internal"
 }

@@ -2,7 +2,7 @@
   "domain": "ruckus_unleashed",
   "name": "Ruckus Unleashed",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/ruckus_unleashed",
+  "documentation": "https://www.open-peer-power.io/integrations/ruckus_unleashed",
   "requirements": [
     "pyruckus==0.12"
   ],

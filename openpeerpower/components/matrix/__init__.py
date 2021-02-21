@@ -15,9 +15,9 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_START,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpowerr.exceptions import OpenPeerPowerError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.util.json import load_json, save_json
+from openpeerpower.exceptions import OpenPeerPowerError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.util.json import load_json, save_json
 
 from .const import DOMAIN, SERVICE_SEND_MESSAGE
 
@@ -117,7 +117,7 @@ class MatrixBot:
         commands,
     ):
         """Set up the client."""
-        self.opp = opp
+        self.opp =.opp
 
         self._session_filepath = config_file
         self._auth_tokens = self._get_auth_tokens()
@@ -164,7 +164,7 @@ class MatrixBot:
             """Handle exceptions raised inside the Matrix SDK."""
             _LOGGER.error("Matrix exception:\n %s", str(exception))
 
-        self._client.start_listener_thread(exception_op.dler=handle_matrix_exception)
+        self._client.start_listener_thread(exception_handler=handle_matrix_exception)
 
         def stop_client(_):
             """Run once when Open Peer Power stops."""
@@ -179,7 +179,7 @@ class MatrixBot:
 
         self.opp.bus.listen_once(EVENT_OPENPEERPOWER_START, handle_startup)
 
-    def _op.dle_room_message(self, room_id, room, event):
+    def _handle_room_message(self, room_id, room, event):
         """Handle a message sent to a Matrix room."""
         if event["content"]["msgtype"] != "m.text":
             return
@@ -249,7 +249,7 @@ class MatrixBot:
             try:
                 room = self._join_or_get_room(room_id)
                 room.add_listener(
-                    partial(self._op.dle_room_message, room_id), "m.room.message"
+                    partial(self._handle_room_message, room_id), "m.room.message"
                 )
 
             except MatrixRequestError as ex:

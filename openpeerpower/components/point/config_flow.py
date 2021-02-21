@@ -181,7 +181,7 @@ class MinutAuthCallbackView(OpenPeerPowerView):
     @staticmethod
     async def get(request):
         """Receive authorization code."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
         if "code" in request.query:
            .opp.async_create_task(
                .opp.config_entries.flow.async_init(

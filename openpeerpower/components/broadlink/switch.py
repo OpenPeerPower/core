@@ -91,7 +91,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         )
 
     if switches:
-        platform_data = opp.data[DOMAIN].platforms.setdefault(SWITCH_DOMAIN, {})
+        platform_data =.opp.data[DOMAIN].platforms.setdefault(SWITCH_DOMAIN, {})
         platform_data.setdefault(mac_addr, []).extend(switches)
 
     else:
@@ -107,10 +107,10 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Broadlink switch."""
-    device = opp.data[DOMAIN].devices[config_entry.entry_id]
+    device =.opp.data[DOMAIN].devices[config_entry.entry_id]
 
     if device.api.type in {"RM2", "RM4"}:
-        platform_data = opp.data[DOMAIN].platforms.get(SWITCH_DOMAIN, {})
+        platform_data =.opp.data[DOMAIN].platforms.get(SWITCH_DOMAIN, {})
         user_defined_switches = platform_data.get(device.api.mac, {})
         switches = [
             BroadlinkRMSwitch(device, config) for config in user_defined_switches
@@ -190,9 +190,9 @@ class BroadlinkSwitch(SwitchEntity, RestoreEntity, ABC):
     @callback
     def update_data(self):
         """Update data."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when the switch is added to.opp."""
         if self._state is None:
             state = await self.async_get_last_state()
@@ -207,13 +207,13 @@ class BroadlinkSwitch(SwitchEntity, RestoreEntity, ABC):
         """Turn on the switch."""
         if await self._async_send_packet(self._command_on):
             self._state = True
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn off the switch."""
         if await self._async_send_packet(self._command_off):
             self._state = False
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @abstractmethod
     async def _async_send_packet(self, packet):
@@ -298,7 +298,7 @@ class BroadlinkSP2Switch(BroadlinkSP1Switch):
         if self._coordinator.last_update_success:
             self._state = self._coordinator.data["state"]
             self._load_power = self._coordinator.data["load_power"]
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class BroadlinkSP4Switch(BroadlinkSP1Switch):
@@ -319,7 +319,7 @@ class BroadlinkSP4Switch(BroadlinkSP1Switch):
         """Update data."""
         if self._coordinator.last_update_success:
             self._state = self._coordinator.data["pwr"]
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class BroadlinkMP1Slot(BroadlinkSwitch):
@@ -352,7 +352,7 @@ class BroadlinkMP1Slot(BroadlinkSwitch):
         """Update data."""
         if self._coordinator.last_update_success:
             self._state = self._coordinator.data[f"s{self._slot}"]
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def _async_send_packet(self, packet):
         """Send a packet to the device."""
@@ -396,7 +396,7 @@ class BroadlinkBG1Slot(BroadlinkSwitch):
         """Update data."""
         if self._coordinator.last_update_success:
             self._state = self._coordinator.data[f"pwr{self._slot}"]
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def _async_send_packet(self, packet):
         """Send a packet to the device."""

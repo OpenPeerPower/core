@@ -73,10 +73,10 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
             add_entities([WinkLockDevice(lock,.opp)])
 
-    def service_op.dle(service):
+    def service_handle(service):
         """Handle for services."""
         entity_ids = service.data.get("entity_id")
-        all_locks = opp.data[DOMAIN]["entities"]["lock"]
+        all_locks =.opp.data[DOMAIN]["entities"]["lock"]
         locks_to_set = []
         if entity_ids is None:
             locks_to_set = all_locks
@@ -102,37 +102,37 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
                 lock.add_new_key(code, name)
 
    .opp.services.register(
-        DOMAIN, SERVICE_SET_VACATION_MODE, service_op.dle, schema=SET_ENABLED_SCHEMA
+        DOMAIN, SERVICE_SET_VACATION_MODE, service_handle, schema=SET_ENABLED_SCHEMA
     )
 
    .opp.services.register(
-        DOMAIN, SERVICE_SET_ALARM_STATE, service_op.dle, schema=SET_ENABLED_SCHEMA
+        DOMAIN, SERVICE_SET_ALARM_STATE, service_handle, schema=SET_ENABLED_SCHEMA
     )
 
    .opp.services.register(
-        DOMAIN, SERVICE_SET_BEEPER_STATE, service_op.dle, schema=SET_ENABLED_SCHEMA
+        DOMAIN, SERVICE_SET_BEEPER_STATE, service_handle, schema=SET_ENABLED_SCHEMA
     )
 
    .opp.services.register(
-        DOMAIN, SERVICE_SET_ALARM_MODE, service_op.dle, schema=SET_ALARM_MODES_SCHEMA
+        DOMAIN, SERVICE_SET_ALARM_MODE, service_handle, schema=SET_ALARM_MODES_SCHEMA
     )
 
    .opp.services.register(
         DOMAIN,
         SERVICE_SET_ALARM_SENSITIVITY,
-        service_op.dle,
+        service_handle,
         schema=SET_SENSITIVITY_SCHEMA,
     )
 
    .opp.services.register(
-        DOMAIN, SERVICE_ADD_KEY, service_op.dle, schema=ADD_KEY_SCHEMA
+        DOMAIN, SERVICE_ADD_KEY, service_handle, schema=ADD_KEY_SCHEMA
     )
 
 
 class WinkLockDevice(WinkDevice, LockEntity):
     """Representation of a Wink lock."""
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[DOMAIN]["entities"]["lock"].append(self)
 

@@ -106,19 +106,19 @@ class DemoHumidifier(HumidifierEntity):
     async def async_turn_on(self, **kwargs):
         """Turn the device on."""
         self._state = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the device off."""
         self._state = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_humidity(self, humidity):
         """Set new humidity level."""
         self._target_humidity = humidity
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_mode(self, mode):
         """Update mode."""
         self._mode = mode
-        self.async_write_op.state()
+        self.async_write_ha_state()

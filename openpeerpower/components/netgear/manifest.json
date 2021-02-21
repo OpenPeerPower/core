@@ -1,7 +1,7 @@
 {
   "domain": "netgear",
   "name": "NETGEAR",
-  "documentation": "https://www.openpeerpower.io/integrations/netgear",
+  "documentation": "https://www.open-peer-power.io/integrations/netgear",
   "requirements": ["pynetgear==0.6.1"],
   "codeowners": []
 }

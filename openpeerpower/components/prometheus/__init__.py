@@ -84,7 +84,7 @@ def setup.opp, config):
     conf = config[DOMAIN]
     entity_filter = conf[CONF_FILTER]
     namespace = conf.get(CONF_PROM_NAMESPACE)
-    climate_units = opp.config.units.temperature_unit
+    climate_units =.opp.config.units.temperature_unit
     override_metric = conf.get(CONF_OVERRIDE_METRIC)
     default_metric = conf.get(CONF_DEFAULT_METRIC)
     component_config = EntityValues(
@@ -126,7 +126,7 @@ class PrometheusMetrics:
         self._override_metric = override_metric
         self._default_metric = default_metric
         self._filter = entity_filter
-        self._sensor_metric_op.dlers = [
+        self._sensor_metric_handlers = [
             self._sensor_override_component_metric,
             self._sensor_override_metric,
             self._sensor_attribute_metric,
@@ -149,12 +149,12 @@ class PrometheusMetrics:
 
         entity_id = state.entity_id
         _LOGGER.debug("Handling state update for %s", entity_id)
-        domain, _ = op.ore.split_entity_id(entity_id)
+        domain, _ = hacore.split_entity_id(entity_id)
 
         if not self._filter(state.entity_id):
             return
 
-        handler = f"_op.dle_{domain}"
+        handler = f"_handle_{domain}"
 
         if hasattr(self, handler) and state.state != STATE_UNAVAILABLE:
             getattr(self, handler)(state)
@@ -179,7 +179,7 @@ class PrometheusMetrics:
         )
         last_updated_time_seconds.labels(**labels).set(state.last_updated.timestamp())
 
-    def _op.dle_attributes(self, state):
+    def _handle_attributes(self, state):
         for key, value in state.attributes.items():
             metric = self._metric(
                 f"{state.domain}_attr_{key.lower()}",
@@ -252,7 +252,7 @@ class PrometheusMetrics:
             except ValueError:
                 pass
 
-    def _op.dle_binary_sensor(self, state):
+    def _handle_binary_sensor(self, state):
         metric = self._metric(
             "binary_sensor_state",
             self.prometheus_cli.Gauge,
@@ -261,7 +261,7 @@ class PrometheusMetrics:
         value = self.state_as_number(state)
         metric.labels(**self._labels(state)).set(value)
 
-    def _op.dle_input_boolean(self, state):
+    def _handle_input_boolean(self, state):
         metric = self._metric(
             "input_boolean_state",
             self.prometheus_cli.Gauge,
@@ -270,7 +270,7 @@ class PrometheusMetrics:
         value = self.state_as_number(state)
         metric.labels(**self._labels(state)).set(value)
 
-    def _op.dle_device_tracker(self, state):
+    def _handle_device_tracker(self, state):
         metric = self._metric(
             "device_tracker_state",
             self.prometheus_cli.Gauge,
@@ -279,14 +279,14 @@ class PrometheusMetrics:
         value = self.state_as_number(state)
         metric.labels(**self._labels(state)).set(value)
 
-    def _op.dle_person(self, state):
+    def _handle_person(self, state):
         metric = self._metric(
             "person_state", self.prometheus_cli.Gauge, "State of the person (0/1)"
         )
         value = self.state_as_number(state)
         metric.labels(**self._labels(state)).set(value)
 
-    def _op.dle_light(self, state):
+    def _handle_light(self, state):
         metric = self._metric(
             "light_state", self.prometheus_cli.Gauge, "Load level of a light (0..1)"
         )
@@ -301,14 +301,14 @@ class PrometheusMetrics:
         except ValueError:
             pass
 
-    def _op.dle_lock(self, state):
+    def _handle_lock(self, state):
         metric = self._metric(
             "lock_state", self.prometheus_cli.Gauge, "State of the lock (0/1)"
         )
         value = self.state_as_number(state)
         metric.labels(**self._labels(state)).set(value)
 
-    def _op.dle_climate(self, state):
+    def _handle_climate(self, state):
         temp = state.attributes.get(ATTR_TEMPERATURE)
         if temp:
             if self._climate_units == TEMP_FAHRENHEIT:
@@ -344,7 +344,7 @@ class PrometheusMetrics:
                     float(action == current_action)
                 )
 
-    def _op.dle_humidifier(self, state):
+    def _handle_humidifier(self, state):
         humidifier_target_humidity_percent = state.attributes.get(ATTR_HUMIDITY)
         if humidifier_target_humidity_percent:
             metric = self._metric(
@@ -379,11 +379,11 @@ class PrometheusMetrics:
                     float(mode == current_mode)
                 )
 
-    def _op.dle_sensor(self, state):
+    def _handle_sensor(self, state):
         unit = self._unit_string(state.attributes.get(ATTR_UNIT_OF_MEASUREMENT))
 
-        for metric_op.dler in self._sensor_metric_op.dlers:
-            metric = metric_op.dler(state, unit)
+        for metric_handler in self._sensor_metric_handlers:
+            metric = metric_handler(state, unit)
             if metric is not None:
                 break
 
@@ -447,7 +447,7 @@ class PrometheusMetrics:
         default = default.lower()
         return units.get(unit, default)
 
-    def _op.dle_switch(self, state):
+    def _handle_switch(self, state):
         metric = self._metric(
             "switch_state", self.prometheus_cli.Gauge, "State of the switch (0/1)"
         )
@@ -458,12 +458,12 @@ class PrometheusMetrics:
         except ValueError:
             pass
 
-        self._op.dle_attributes(state)
+        self._handle_attributes(state)
 
-    def _op.dle_zwave(self, state):
+    def _handle_zwave(self, state):
         self._battery(state)
 
-    def _op.dle_automation(self, state):
+    def _handle_automation(self, state):
         metric = self._metric(
             "automation_triggered_count",
             self.prometheus_cli.Counter,

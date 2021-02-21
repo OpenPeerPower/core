@@ -29,12 +29,12 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STARTED,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpower.core import CoreState, Event, OppJob, ServiceCall, callback
+from openpeerpower.core import CoreState, Event, HassJob, ServiceCall, callback
 from openpeerpower.exceptions import OpenPeerPowerError, Unauthorized
 from openpeerpower.helpers import config_validation as cv, event, template
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect, dispatcher_send
 from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType, ServiceDataType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util import dt as dt_util
 from openpeerpower.util.async_ import run_callback_threadsafe
 from openpeerpower.util.logging import catch_log_exception
@@ -142,7 +142,7 @@ def embedded_broker_deprecated(value):
     _LOGGER.warning(
         "The embedded MQTT broker has been deprecated and will stop working"
         "after June 5th, 2019. Use an external broker instead. For"
-        "instructions, see https://www.openpeerpower.io/docs/mqtt/broker"
+        "instructions, see https://www.open-peer-power.io/docs/mqtt/broker"
     )
     return value
 
@@ -242,14 +242,14 @@ def _build_publish_data(topic: Any, qos: int, retain: bool) -> ServiceDataType:
     return data
 
 
-@bind_opp
+@bind.opp
 def publish.opp: OpenPeerPowerType, topic, payload, qos=None, retain=None) -> None:
     """Publish message to an MQTT topic."""
    .opp.add_job(async_publish,.opp, topic, payload, qos, retain)
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_publish(
    .opp: OpenPeerPowerType, topic: Any, payload, qos=None, retain=None
 ) -> None:
@@ -259,7 +259,7 @@ def async_publish(
    .opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_PUBLISH, data))
 
 
-@bind_opp
+@bind.opp
 def publish_template(
    .opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
 ) -> None:
@@ -267,7 +267,7 @@ def publish_template(
    .opp.add_job(async_publish_template,.opp, topic, payload_template, qos, retain)
 
 
-@bind_opp
+@bind.opp
 def async_publish_template(
    .opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
 ) -> None:
@@ -304,7 +304,7 @@ def wrap_msg_callback(msg_callback: MessageCallbackType) -> MessageCallbackType:
     return wrapper_func
 
 
-@bind_opp
+@bind.opp
 async def async_subscribe(
    .opp: OpenPeerPowerType,
     topic: str,
@@ -334,7 +334,7 @@ async def async_subscribe(
         )
         wrapped_msg_callback = wrap_msg_callback(msg_callback)
 
-    async_remove = await opp..data[DATA_MQTT].async_subscribe(
+    async_remove = await.opp.data[DATA_MQTT].async_subscribe(
         topic,
         catch_log_exception(
             wrapped_msg_callback,
@@ -349,7 +349,7 @@ async def async_subscribe(
     return async_remove
 
 
-@bind_opp
+@bind.opp
 def subscribe(
    .opp: OpenPeerPowerType,
     topic: str,
@@ -418,7 +418,7 @@ def _merge_config(entry, conf):
 
 async def async_setup_entry.opp, entry):
     """Load a config entry."""
-    conf = opp.data.get(DATA_MQTT_CONFIG)
+    conf =.opp.data.get(DATA_MQTT_CONFIG)
 
     # Config entry was created because user had configuration.yaml entry
     # They removed that, so remove entry.
@@ -448,11 +448,11 @@ async def async_setup_entry.opp, entry):
         conf,
     )
 
-    await opp..data[DATA_MQTT].async_connect()
+    await.opp.data[DATA_MQTT].async_connect()
 
     async def async_stop_mqtt(_event: Event):
         """Stop MQTT component."""
-        await opp..data[DATA_MQTT].async_disconnect()
+        await.opp.data[DATA_MQTT].async_disconnect()
 
    .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_mqtt)
 
@@ -478,7 +478,7 @@ async def async_setup_entry.opp, entry):
                 )
                 return
 
-        await opp..data[DATA_MQTT].async_publish(msg_topic, payload, qos, retain)
+        await.opp.data[DATA_MQTT].async_publish(msg_topic, payload, qos, retain)
 
    .opp.services.async_register(
         DOMAIN, SERVICE_PUBLISH, async_publish_service, schema=MQTT_PUBLISH_SCHEMA
@@ -502,7 +502,7 @@ async def async_setup_entry.opp, entry):
         async def finish_dump(_):
             """Write dump to file."""
             unsub()
-            await opp..async_add_executor_job(write_dump)
+            await.opp.async_add_executor_job(write_dump)
 
         event.async_call_later.opp, call.data["duration"], finish_dump)
 
@@ -530,7 +530,7 @@ class Subscription:
 
     topic: str = attr.ib()
     matcher: Any = attr.ib()
-    job: OppJob = attr.ib()
+    job: HassJob = attr.ib()
     qos: int = attr.ib(default=0)
     encoding: str = attr.ib(default="utf-8")
 
@@ -549,12 +549,12 @@ class MQTT:
         # should be able to optionally rely on MQTT.
         import paho.mqtt.client as mqtt  # pylint: disable=import-outside-toplevel
 
-        self.opp = opp
+        self.opp =.opp
         self.config_entry = config_entry
         self.conf = conf
         self.subscriptions: List[Subscription] = []
         self.connected = False
-        self._op.started = asyncio.Event()
+        self._ha_started = asyncio.Event()
         self._last_subscribe = time.time()
         self._mqttc: mqtt.Client = None
         self._paho_lock = asyncio.Lock()
@@ -562,12 +562,12 @@ class MQTT:
         self._pending_operations = {}
 
         if self.opp.state == CoreState.running:
-            self._op.started.set()
+            self._ha_started.set()
         else:
 
             @callback
             def ha_started(_):
-                self._op.started.set()
+                self._ha_started.set()
 
             self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, ha_started)
 
@@ -581,9 +581,9 @@ class MQTT:
         This is a static method because a class method (bound method), can not be used with weak references.
         Causes for this is config entry options changing.
         """
-        self = opp.data[DATA_MQTT]
+        self =.opp.data[DATA_MQTT]
 
-        conf = opp.data.get(DATA_MQTT_CONFIG)
+        conf =.opp.data.get(DATA_MQTT_CONFIG)
         if conf is None:
             conf = CONFIG_SCHEMA({DOMAIN: dict(entry.data)})[DOMAIN]
 
@@ -740,7 +740,7 @@ class MQTT:
             raise OpenPeerPowerError("Topic needs to be a string!")
 
         subscription = Subscription(
-            topic, _matcher_for_topic(topic), OppJob(msg_callback), qos, encoding
+            topic, _matcher_for_topic(topic), HassJob(msg_callback), qos, encoding
         )
         self.subscriptions.append(subscription)
         self._matching_subscriptions.cache_clear()
@@ -831,7 +831,7 @@ class MQTT:
         ):
 
             async def publish_birth_message(birth_message):
-                await self._op.started.wait()  # Wait for Open Peer Power to start
+                await self._ha_started.wait()  # Wait for Open Peer Power to start
                 await self._discovery_cooldown()  # Wait for MQTT discovery to cool down
                 await self.async_publish(  # pylint: disable=no-value-for-parameter
                     topic=birth_message.topic,
@@ -847,7 +847,7 @@ class MQTT:
 
     def _mqtt_on_message(self, _mqttc, _userdata, msg) -> None:
         """Message received callback."""
-        self.opp.add_job(self._mqtt_op.dle_message, msg)
+        self.opp.add_job(self._mqtt_handle_message, msg)
 
     @lru_cache(2048)
     def _matching_subscriptions(self, topic):
@@ -858,7 +858,7 @@ class MQTT:
         return subscriptions
 
     @callback
-    def _mqtt_op.dle_message(self, msg) -> None:
+    def _mqtt_handle_message(self, msg) -> None:
         _LOGGER.debug(
             "Received message on %s%s: %s",
             msg.topic,
@@ -885,7 +885,7 @@ class MQTT:
                     )
                     continue
 
-            self.opp.async_run_opp_job(
+            self.opp.async_run.opp_job(
                 subscription.job,
                 Message(
                     msg.topic,
@@ -899,11 +899,11 @@ class MQTT:
 
     def _mqtt_on_callback(self, _mqttc, _userdata, mid, _granted_qos=None) -> None:
         """Publish / Subscribe / Unsubscribe callback."""
-        self.opp.add_job(self._mqtt_op.dle_mid, mid)
+        self.opp.add_job(self._mqtt_handle_mid, mid)
 
     @callback
-    def _mqtt_op.dle_mid(self, mid) -> None:
-        # Create the mid event if not created, either _mqtt_op.dle_mid or _wait_for_mid
+    def _mqtt_handle_mid(self, mid) -> None:
+        # Create the mid event if not created, either _mqtt_handle_mid or _wait_for_mid
         # may be executed first.
         if mid not in self._pending_operations:
             self._pending_operations[mid] = asyncio.Event()
@@ -922,7 +922,7 @@ class MQTT:
 
     async def _wait_for_mid(self, mid):
         """Wait for ACK from broker."""
-        # Create the mid event if not created, either _mqtt_op.dle_mid or _wait_for_mid
+        # Create the mid event if not created, either _mqtt_handle_mid or _wait_for_mid
         # may be executed first.
         if mid not in self._pending_operations:
             self._pending_operations[mid] = asyncio.Event()
@@ -996,7 +996,7 @@ async def websocket_mqtt_info.opp, connection, msg):
 async def websocket_remove_device.opp, connection, msg):
     """Delete device."""
     device_id = msg["device_id"]
-    dev_registry = await opp..helpers.device_registry.async_get_registry()
+    dev_registry = await.opp.helpers.device_registry.async_get_registry()
 
     device = dev_registry.async_get(device_id)
     if not device:
@@ -1006,7 +1006,7 @@ async def websocket_remove_device.opp, connection, msg):
         return
 
     for config_entry in device.config_entries:
-        config_entry = opp.config_entries.async_get_entry(config_entry)
+        config_entry =.opp.config_entries.async_get_entry(config_entry)
         # Only delete the device if it belongs to an MQTT device entry
         if config_entry.domain == DOMAIN:
             dev_registry.async_remove_device(device_id)
@@ -1054,15 +1054,15 @@ async def websocket_subscribe.opp, connection, msg):
 @callback
 def async_subscribe_connection_status.opp, connection_status_callback):
     """Subscribe to MQTT connection changes."""
-    connection_status_callback_job = OppJob(connection_status_callback)
+    connection_status_callback_job = HassJob(connection_status_callback)
 
     async def connected():
-        task = opp.async_run_opp_job(connection_status_callback_job, True)
+        task =.opp.async_run.opp_job(connection_status_callback_job, True)
         if task:
             await task
 
     async def disconnected():
-        task = opp.async_run_opp_job(connection_status_callback_job, False)
+        task =.opp.async_run.opp_job(connection_status_callback_job, False)
         if task:
             await task
 

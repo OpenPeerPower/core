@@ -8,14 +8,14 @@ from openpeerpower.components.media_player import DOMAIN as MEDIA_PLAYER_DOMAIN
 from openpeerpower.components.spotify import config_flow
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_CREDENTIALS, CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import config_entry_oauth2_flow, config_validation as cv
-from openpeerpowerr.helpers.config_entry_oauth2_flow import (
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import config_entry_oauth2_flow, config_validation as cv
+from openpeerpower.helpers.config_entry_oauth2_flow import (
     OAuth2Session,
     async_get_config_entry_implementation,
 )
-from openpeerpowerr.helpers.typing import ConfigType
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     DATA_SPOTIFY_CLIENT,
@@ -72,7 +72,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     spotify = Spotify(auth=session.token["access_token"])
 
     try:
-        current_user = await opp..async_add_executor_job(spotify.me)
+        current_user = await.opp.async_add_executor_job(spotify.me)
     except SpotifyException as err:
         raise ConfigEntryNotReady from err
 
@@ -101,7 +101,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload Spotify config entry."""
     # Unload entities for this entry/device.
-    await opp..config_entries.async_forward_entry_unload(entry, MEDIA_PLAYER_DOMAIN)
+    await.opp.config_entries.async_forward_entry_unload(entry, MEDIA_PLAYER_DOMAIN)
 
     # Cleanup
     del.opp.data[DOMAIN][entry.entry_id]

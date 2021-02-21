@@ -122,7 +122,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         update_tasks = []
         for climate in target_climate:
             await climate.async_assume_state(service.data.get(ATTR_STATE))
-            update_tasks.append(climate.async_update_op.state(True))
+            update_tasks.append(climate.async_update_ha_state(True))
 
         if update_tasks:
             await asyncio.wait(update_tasks)

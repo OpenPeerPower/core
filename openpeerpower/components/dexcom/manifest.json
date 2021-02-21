@@ -2,7 +2,7 @@
   "domain": "dexcom",
   "name": "Dexcom",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/dexcom",
+  "documentation": "https://www.open-peer-power.io/integrations/dexcom",
   "requirements": ["pydexcom==0.2.0"],
   "codeowners": [
     "@gagebenne"

@@ -10,10 +10,10 @@ from vallox_websocket_api.exceptions import ValloxApiException
 import voluptuous as vol
 
 from openpeerpower.const import CONF_HOST, CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.discovery import async_load_platform
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
-from openpeerpowerr.helpers.event import async_track_time_interval
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.discovery import async_load_platform
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.event import async_track_time_interval
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -108,14 +108,14 @@ async def async_setup.opp, config):
 
     client = Vallox(host)
     state_proxy = ValloxStateProxy.opp, client)
-    service_op.dler = ValloxServiceHandler(client, state_proxy)
+    service_handler = ValloxServiceHandler(client, state_proxy)
 
    .opp.data[DOMAIN] = {"client": client, "state_proxy": state_proxy, "name": name}
 
     for vallox_service in SERVICE_TO_METHOD:
         schema = SERVICE_TO_METHOD[vallox_service]["schema"]
        .opp.services.async_register(
-            DOMAIN, vallox_service, service_op.dler.async_op.dle, schema=schema
+            DOMAIN, vallox_service, service_handler.async_handle, schema=schema
         )
 
     # The vallox hardware expects quite strict timings for websocket
@@ -138,7 +138,7 @@ class ValloxStateProxy:
 
     def __init__(self,.opp, client):
         """Initialize the proxy."""
-        self._opp = opp
+        self..opp =.opp
         self._client = client
         self._metric_cache = {}
         self._profile = None
@@ -178,7 +178,7 @@ class ValloxStateProxy:
             _LOGGER.error("Error during state cache update: %s", err)
             self._valid = False
 
-        async_dispatcher_send(self._opp, SIGNAL_VALLOX_STATE_UPDATE)
+        async_dispatcher_send(self..opp, SIGNAL_VALLOX_STATE_UPDATE)
 
 
 class ValloxServiceHandler:
@@ -249,7 +249,7 @@ class ValloxServiceHandler:
             _LOGGER.error("Error setting fan speed for Boost profile: %s", err)
             return False
 
-    async def async_op.dle(self, service):
+    async def async_handle(self, service):
         """Dispatch a service call."""
         method = SERVICE_TO_METHOD.get(service.service)
         params = service.data.copy()

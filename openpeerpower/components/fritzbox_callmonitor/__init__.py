@@ -37,7 +37,7 @@ async def async_setup_entry.opp, config_entry):
     )
 
     try:
-        await opp..async_add_executor_job(fritzbox_phonebook.init_phonebook)
+        await.opp.async_add_executor_job(fritzbox_phonebook.init_phonebook)
     except FritzSecurityError as ex:
         _LOGGER.error(
             "User has insufficient permissions to access AVM FRITZ!Box settings and its phonebooks: %s",
@@ -89,4 +89,4 @@ async def async_unload_entry.opp, config_entry):
 
 async def update_listener.opp, config_entry):
     """Update listener to reload after option has changed."""
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)

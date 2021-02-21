@@ -14,8 +14,8 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.const import CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.util.color as color_util
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.util.color as color_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -102,11 +102,11 @@ class PiglowLight(LightEntity):
         piglow.blue(rgb[2])
         piglow.show()
         self._is_on = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Instruct the light to turn off."""
         piglow.clear()
         piglow.show()
         self._is_on = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

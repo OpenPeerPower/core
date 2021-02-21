@@ -123,7 +123,7 @@ class UPNPResponderProtocol:
 
         _LOGGER.debug("UPNP Responder M-SEARCH method received: %s", data)
         # SSDP M-SEARCH method received, respond to it with our info
-        response = self._op.dle_request(decoded_data)
+        response = self._handle_request(decoded_data)
         _LOGGER.debug("UPNP Responder responding with: %s", response)
         self.transport.sendto(response, addr)
 
@@ -140,7 +140,7 @@ class UPNPResponderProtocol:
         self._loop.remove_reader(self._sock.fileno())
         self._sock.close()
 
-    def _op.dle_request(self, decoded_data):
+    def _handle_request(self, decoded_data):
         if "upnp:rootdevice" in decoded_data:
             return self._upnp_root_response
 

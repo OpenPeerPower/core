@@ -58,7 +58,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> bool:
     """Set up a Hyperion platform from config entry."""
-    entry_data = opp.data[DOMAIN][config_entry.entry_id]
+    entry_data =.opp.data[DOMAIN][config_entry.entry_id]
     server_id = config_entry.unique_id
 
     def component_to_switch_type(component: str) -> str:
@@ -191,9 +191,9 @@ class HyperionComponentSwitch(SwitchEntity):
     @callback
     def _update_components(self, _: Optional[Dict[str, Any]] = None) -> None:
         """Update Hyperion components."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register callbacks when entity added to.opp."""
         assert self.opp
         self.async_on_remove(
@@ -206,6 +206,6 @@ class HyperionComponentSwitch(SwitchEntity):
 
         self._client.add_callbacks(self._client_callbacks)
 
-    async def async_will_remove_from_opp(self) -> None:
-        """Cleanup prior to opp removal."""
+    async def async_will_remove_from.opp(self) -> None:
+        """Cleanup prior to.opp removal."""
         self._client.remove_callbacks(self._client_callbacks)

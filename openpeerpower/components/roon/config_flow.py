@@ -28,7 +28,7 @@ class RoonHub:
 
     def __init__(self,.opp):
         """Initialise the RoonHub."""
-        self._opp = opp
+        self..opp =.opp
 
     async def discover(self):
         """Try and discover roon servers."""
@@ -39,7 +39,7 @@ class RoonHub:
             return servers
 
         discovery = RoonDiscovery(None)
-        servers = await self._opp.async_add_executor_job(
+        servers = await self..opp.async_add_executor_job(
             get_discovered_servers, discovery
         )
         _LOGGER.debug("Servers = %s", servers)
@@ -76,13 +76,13 @@ class RoonHub:
 
             await asyncio.sleep(AUTHENTICATE_TIMEOUT)
 
-        await self._opp.async_add_executor_job(stop_apis, apis)
+        await self..opp.async_add_executor_job(stop_apis, apis)
 
         return (token, core_id)
 
 
 async def discover.opp):
-    """Connect and authenticate Open Peer Power."""
+    """Connect and authenticate open peer power."""
 
     hub = RoonHub.opp)
     servers = await hub.discover()
@@ -91,7 +91,7 @@ async def discover.opp):
 
 
 async def authenticate.opp: core.OpenPeerPower, host, servers):
-    """Connect and authenticate Open Peer Power."""
+    """Connect and authenticate open peer power."""
 
     hub = RoonHub.opp)
     (token, core_id) = await hub.authenticate(host, servers)

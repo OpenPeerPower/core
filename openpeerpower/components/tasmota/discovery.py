@@ -8,13 +8,13 @@ from hatasmota.discovery import (
     get_entity as tasmota_get_entity,
     get_trigger as tasmota_get_trigger,
     get_triggers as tasmota_get_triggers,
-    unique_id_from_op.h,
+    unique_id_from_hash,
 )
 
 import openpeerpower.components.sensor as sensor
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
-from openpeerpowerr.helpers.entity_registry import async_entries_for_device
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.entity_registry import async_entries_for_device
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DOMAIN, PLATFORMS
 
@@ -26,17 +26,17 @@ TASMOTA_DISCOVERY_ENTITY_UPDATED = "tasmota_discovery_entity_updated_{}_{}_{}_{}
 TASMOTA_DISCOVERY_INSTANCE = "tasmota_discovery_instance"
 
 
-def clear_discovery_op.h.opp, discovery_op.h):
+def clear_discovery_hash.opp, discovery_hash):
     """Clear entry in ALREADY_DISCOVERED list."""
     if ALREADY_DISCOVERED not in.opp.data:
         # Discovery is shutting down
         return
-    del.opp.data[ALREADY_DISCOVERED][discovery_op.h]
+    del.opp.data[ALREADY_DISCOVERED][discovery_hash]
 
 
-def set_discovery_op.h.opp, discovery_op.h):
+def set_discovery_hash.opp, discovery_hash):
     """Set entry in ALREADY_DISCOVERED list."""
-   .opp.data[ALREADY_DISCOVERED][discovery_op.h] = {}
+   .opp.data[ALREADY_DISCOVERED][discovery_hash] = {}
 
 
 async def async_start(
@@ -44,27 +44,27 @@ async def async_start(
 ) -> bool:
     """Start Tasmota device discovery."""
 
-    async def _discover_entity(tasmota_entity_config, discovery_op.h, platform):
+    async def _discover_entity(tasmota_entity_config, discovery_hash, platform):
         """Handle adding or updating a discovered entity."""
         if not tasmota_entity_config:
             # Entity disabled, clean up entity registry
-            entity_registry = await opp..helpers.entity_registry.async_get_registry()
-            unique_id = unique_id_from_op.h(discovery_op.h)
+            entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+            unique_id = unique_id_from_hash(discovery_hash)
             entity_id = entity_registry.async_get_entity_id(platform, DOMAIN, unique_id)
             if entity_id:
-                _LOGGER.debug("Removing entity: %s %s", platform, discovery_op.h)
+                _LOGGER.debug("Removing entity: %s %s", platform, discovery_hash)
                 entity_registry.async_remove(entity_id)
             return
 
-        if discovery_op.h in.opp.data[ALREADY_DISCOVERED]:
+        if discovery_hash in.opp.data[ALREADY_DISCOVERED]:
             _LOGGER.debug(
                 "Entity already added, sending update: %s %s",
                 platform,
-                discovery_op.h,
+                discovery_hash,
             )
             async_dispatcher_send(
                .opp,
-                TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_op.h),
+                TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_hash),
                 tasmota_entity_config,
             )
         else:
@@ -72,17 +72,17 @@ async def async_start(
             _LOGGER.debug(
                 "Adding new entity: %s %s %s",
                 platform,
-                discovery_op.h,
+                discovery_hash,
                 tasmota_entity.unique_id,
             )
 
-           .opp.data[ALREADY_DISCOVERED][discovery_op.h] = None
+           .opp.data[ALREADY_DISCOVERED][discovery_hash] = None
 
             async_dispatcher_send(
                .opp,
                 TASMOTA_DISCOVERY_ENTITY_NEW.format(platform),
                 tasmota_entity,
-                discovery_op.h,
+                discovery_hash,
             )
 
     async def async_device_discovered(payload, mac):
@@ -101,20 +101,20 @@ async def async_start(
 
         tasmota_triggers = tasmota_get_triggers(payload)
         for trigger_config in tasmota_triggers:
-            discovery_op.h = (mac, "automation", "trigger", trigger_config.trigger_id)
-            if discovery_op.h in.opp.data[ALREADY_DISCOVERED]:
+            discovery_hash = (mac, "automation", "trigger", trigger_config.trigger_id)
+            if discovery_hash in.opp.data[ALREADY_DISCOVERED]:
                 _LOGGER.debug(
                     "Trigger already added, sending update: %s",
-                    discovery_op.h,
+                    discovery_hash,
                 )
                 async_dispatcher_send(
                    .opp,
-                    TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_op.h),
+                    TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_hash),
                     trigger_config,
                 )
             elif trigger_config.is_active:
-                _LOGGER.debug("Adding new trigger: %s", discovery_op.h)
-               .opp.data[ALREADY_DISCOVERED][discovery_op.h] = None
+                _LOGGER.debug("Adding new trigger: %s", discovery_hash)
+               .opp.data[ALREADY_DISCOVERED][discovery_hash] = None
 
                 tasmota_trigger = tasmota_get_trigger(trigger_config, tasmota_mqtt)
 
@@ -122,20 +122,20 @@ async def async_start(
                    .opp,
                     TASMOTA_DISCOVERY_ENTITY_NEW.format("device_automation"),
                     tasmota_trigger,
-                    discovery_op.h,
+                    discovery_hash,
                 )
 
         for platform in PLATFORMS:
             tasmota_entities = tasmota_get_entities_for_platform(payload, platform)
-            for (tasmota_entity_config, discovery_op.h) in tasmota_entities:
-                await _discover_entity(tasmota_entity_config, discovery_op.h, platform)
+            for (tasmota_entity_config, discovery_hash) in tasmota_entities:
+                await _discover_entity(tasmota_entity_config, discovery_hash, platform)
 
     async def async_sensors_discovered(sensors, mac):
         """Handle discovery of (additional) sensors."""
         platform = sensor.DOMAIN
 
-        device_registry = await opp..helpers.device_registry.async_get_registry()
-        entity_registry = await opp..helpers.entity_registry.async_get_registry()
+        device_registry = await.opp.helpers.device_registry.async_get_registry()
+        entity_registry = await.opp.helpers.entity_registry.async_get_registry()
         device = device_registry.async_get_device(set(), {("mac", mac)})
 
         if device is None:
@@ -149,10 +149,10 @@ async def async_start(
             )
             if entry.domain == sensor.DOMAIN and entry.platform == DOMAIN
         }
-        for (tasmota_sensor_config, discovery_op.h) in sensors:
+        for (tasmota_sensor_config, discovery_hash) in sensors:
             if tasmota_sensor_config:
                 orphaned_entities.discard(tasmota_sensor_config.unique_id)
-            await _discover_entity(tasmota_sensor_config, discovery_op.h, platform)
+            await _discover_entity(tasmota_sensor_config, discovery_hash, platform)
         for unique_id in orphaned_entities:
             entity_id = entity_registry.async_get_entity_id(platform, DOMAIN, unique_id)
             if entity_id:
@@ -171,5 +171,5 @@ async def async_start(
 async def async_stop.opp: OpenPeerPowerType) -> bool:
     """Stop Tasmota device discovery."""
    .opp.data.pop(ALREADY_DISCOVERED)
-    tasmota_discovery = opp.data.pop(TASMOTA_DISCOVERY_INSTANCE)
+    tasmota_discovery =.opp.data.pop(TASMOTA_DISCOVERY_INSTANCE)
     await tasmota_discovery.stop_discovery()

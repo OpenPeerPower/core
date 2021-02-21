@@ -3,7 +3,7 @@ from datetime import timedelta
 import logging
 
 from openpeerpower.const import ATTR_BATTERY_LEVEL, LIGHT_LUX, PERCENTAGE, TEMP_CELSIUS
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.entity import Entity
 
 from . import DOMAIN as TAHOMA_DOMAIN, TahomaDevice
 
@@ -18,7 +18,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up Tahoma controller devices."""
     if discovery_info is None:
         return
-    controller = opp.data[TAHOMA_DOMAIN]["controller"]
+    controller =.opp.data[TAHOMA_DOMAIN]["controller"]
     devices = []
     for device in.opp.data[TAHOMA_DOMAIN]["devices"]["sensor"]:
         devices.append(TahomaSensor(device, controller))

@@ -20,7 +20,7 @@ BATTERY = "Battery"
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the Neato sensor using config entry."""
     dev = []
-    neato = opp.data.get(NEATO_LOGIN)
+    neato =.opp.data.get(NEATO_LOGIN)
     for robot in.opp.data[NEATO_ROBOTS]:
         dev.append(NeatoSensor(neato, robot))
 

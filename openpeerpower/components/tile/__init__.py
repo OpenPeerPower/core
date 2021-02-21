@@ -61,7 +61,7 @@ async def async_setup_entry.opp, entry):
 
     coordinator_init_tasks = []
     for tile_uuid, tile in.opp.data[DOMAIN][DATA_TILE][entry.entry_id].items():
-        coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+        coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             tile_uuid
         ] = DataUpdateCoordinator(
            .opp,

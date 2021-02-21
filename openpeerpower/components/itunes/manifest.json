@@ -1,6 +1,6 @@
 {
   "domain": "itunes",
   "name": "Apple iTunes",
-  "documentation": "https://www.openpeerpower.io/integrations/itunes",
+  "documentation": "https://www.open-peer-power.io/integrations/itunes",
   "codeowners": []
 }

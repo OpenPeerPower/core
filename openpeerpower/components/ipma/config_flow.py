@@ -3,7 +3,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_MODE, CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from .const import DOMAIN, HOME_LOCATION_NAME
 from .weather import FORECAST_MODE
@@ -34,7 +34,7 @@ class IpmaFlowHandler(config_entries.ConfigFlow):
 
             self._errors[CONF_NAME] = "name_exists"
 
-        # default location is set opp configuration
+        # default location is set.opp configuration
         return await self._show_config_form(
             name=HOME_LOCATION_NAME,
             latitude=self.opp.config.latitude,

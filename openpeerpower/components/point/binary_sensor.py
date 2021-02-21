@@ -1,13 +1,13 @@
 """Support for Minut Point binary sensors."""
 import logging
 
-from openpeerpower.components.binary_sensor import (
+from  openpeerpower.components.binary_sensor import (
     DEVICE_CLASS_CONNECTIVITY,
     DOMAIN,
     BinarySensorEntity,
 )
-from openpeerpower.core import callback
-from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from  openpeerpower.core import callback
+from  openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import MinutPointEntity
 from .const import DOMAIN as POINT_DOMAIN, POINT_DISCOVERY_NEW, SIGNAL_WEBHOOK
@@ -53,7 +53,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     async def async_discover_sensor(device_id):
         """Discover and add a discovered sensor."""
-        client = opp.data[POINT_DOMAIN][config_entry.entry_id]
+        client =.opp.data[POINT_DOMAIN][config_entry.entry_id]
         async_add_entities(
             (
                 MinutPointBinarySensor(client, device_id, device_class)
@@ -78,16 +78,16 @@ class MinutPointBinarySensor(MinutPointEntity, BinarySensorEntity):
         self._events = EVENTS[device_class]
         self._is_on = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to Open Peer Power."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self._async_unsub_hook_dispatcher_connect = async_dispatcher_connect(
             self.opp, SIGNAL_WEBHOOK, self._webhook_event
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect dispatcher listener when removed."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         if self._async_unsub_hook_dispatcher_connect:
             self._async_unsub_hook_dispatcher_connect()
 
@@ -99,7 +99,7 @@ class MinutPointBinarySensor(MinutPointEntity, BinarySensorEntity):
             self._is_on = True
         else:
             self._is_on = None
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _webhook_event(self, data, webhook):
@@ -115,7 +115,7 @@ class MinutPointBinarySensor(MinutPointEntity, BinarySensorEntity):
             self._is_on = True
         if _type == self._events[1]:
             self._is_on = None
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_on(self):

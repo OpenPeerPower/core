@@ -144,7 +144,7 @@ class MelCloudDevice:
 
 async def mel_devices_setup.opp, token) -> List[MelCloudDevice]:
     """Query connected devices from MELCloud."""
-    session = opp.helpers.aiohttp_client.async_get_clientsession()
+    session =.opp.helpers.aiohttp_client.async_get_clientsession()
     try:
         with timeout(10):
             all_devices = await get_devices(

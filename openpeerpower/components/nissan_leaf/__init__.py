@@ -8,16 +8,16 @@ from pycarwings2 import CarwingsError, Session
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PASSWORD, CONF_REGION, CONF_USERNAME, HTTP_OK
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.discovery import load_platform
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.discovery import load_platform
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_point_in_utc_time
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_point_in_utc_time
+from openpeerpower.util.dt import utcnow
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -96,32 +96,32 @@ START_CHARGE_LEAF_SCHEMA = vol.Schema({vol.Required(ATTR_VIN): cv.string})
 def setup.opp, config):
     """Set up the Nissan Leaf component."""
 
-    async def async_op.dle_update(service):
+    async def async_handle_update(service):
         """Handle service to update leaf data from Nissan servers."""
         # It would be better if this was changed to use nickname, or
         # an entity name rather than a vin.
         vin = service.data[ATTR_VIN]
 
         if vin in.opp.data[DATA_LEAF]:
-            data_store = opp.data[DATA_LEAF][vin]
+            data_store =.opp.data[DATA_LEAF][vin]
             await data_store.async_update_data(utcnow())
         else:
             _LOGGER.debug("Vin %s not recognised for update", vin)
 
-    async def async_op.dle_start_charge(service):
+    async def async_handle_start_charge(service):
         """Handle service to start charging."""
         # It would be better if this was changed to use nickname, or
         # an entity name rather than a vin.
         vin = service.data[ATTR_VIN]
 
         if vin in.opp.data[DATA_LEAF]:
-            data_store = opp.data[DATA_LEAF][vin]
+            data_store =.opp.data[DATA_LEAF][vin]
 
             # Send the command to request charging is started to Nissan
             # servers. If that completes OK then trigger a fresh update to
             # pull the charging status from the car after waiting a minute
             # for the charging request to reach the car.
-            result = await opp..async_add_executor_job(data_store.leaf.start_charging)
+            result = await.opp.async_add_executor_job(data_store.leaf.start_charging)
             if result:
                 _LOGGER.debug("Start charging sent, request updated data in 1 minute")
                 check_charge_at = utcnow() + timedelta(minutes=1)
@@ -182,12 +182,12 @@ def setup.opp, config):
         setup_leaf(car)
 
    .opp.services.register(
-        DOMAIN, SERVICE_UPDATE_LEAF, async_op.dle_update, schema=UPDATE_LEAF_SCHEMA
+        DOMAIN, SERVICE_UPDATE_LEAF, async_handle_update, schema=UPDATE_LEAF_SCHEMA
     )
    .opp.services.register(
         DOMAIN,
         SERVICE_START_CHARGE_LEAF,
-        async_op.dle_start_charge,
+        async_handle_start_charge,
         schema=START_CHARGE_LEAF_SCHEMA,
     )
 
@@ -199,7 +199,7 @@ class LeafDataStore:
 
     def __init__(self,.opp, leaf, car_config):
         """Initialise the data store."""
-        self.opp = opp
+        self.opp =.opp
         self.leaf = leaf
         self.car_config = car_config
         self.force_miles = car_config[CONF_FORCE_MILES]
@@ -460,7 +460,7 @@ class LeafEntity(Entity):
             "vin": self.car.leaf.vin,
         }
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.log_registration()
         self.async_on_remove(
@@ -472,4 +472,4 @@ class LeafEntity(Entity):
     @callback
     def _update_callback(self):
         """Update the state."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)

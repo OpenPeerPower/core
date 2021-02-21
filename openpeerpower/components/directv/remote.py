@@ -7,7 +7,7 @@ from directv import DIRECTV, DIRECTVError
 
 from openpeerpower.components.remote import ATTR_NUM_REPEATS, RemoteEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import DIRECTVEntity
 from .const import DOMAIN
@@ -23,7 +23,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List, bool], None],
 ) -> bool:
     """Load DirecTV remote based on a config entry."""
-    dtv = opp.data[DOMAIN][entry.entry_id]
+    dtv =.opp.data[DOMAIN][entry.entry_id]
     entities = []
 
     for location in dtv.device.locations:

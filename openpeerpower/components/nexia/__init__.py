@@ -9,10 +9,10 @@ from requests.exceptions import ConnectTimeout, HTTPError
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import DOMAIN, NEXIA_DEVICE, PLATFORMS, UPDATE_COORDINATOR
 from .util import is_invalid_auth_code
@@ -39,10 +39,10 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     username = conf[CONF_USERNAME]
     password = conf[CONF_PASSWORD]
 
-    state_file = opp.config.path(f"nexia_config_{username}.conf")
+    state_file =.opp.config.path(f"nexia_config_{username}.conf")
 
     try:
-        nexia_home = await opp..async_add_executor_job(
+        nexia_home = await.opp.async_add_executor_job(
             partial(
                 NexiaHome,
                 username=username,
@@ -65,7 +65,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     async def _async_update_data():
         """Fetch data from API endpoint."""
-        return await opp..async_add_executor_job(nexia_home.update)
+        return await.opp.async_add_executor_job(nexia_home.update)
 
     coordinator = DataUpdateCoordinator(
        .opp,

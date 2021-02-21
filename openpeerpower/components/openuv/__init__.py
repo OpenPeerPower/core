@@ -196,14 +196,14 @@ class OpenUvEntity(Entity):
         """Return the name of the entity."""
         return self._name
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
 
         @callback
         def update():
             """Update the state."""
             self.update_from_latest_data()
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self.async_on_remove(async_dispatcher_connect(self.opp, TOPIC_UPDATE, update))
 

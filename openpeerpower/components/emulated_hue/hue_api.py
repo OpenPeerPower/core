@@ -289,7 +289,7 @@ class HueOneLightStateView(OpenPeerPowerView):
         if not is_local(ip_address(request.remote)):
             return self.json_message("Only local IPs allowed", HTTP_UNAUTHORIZED)
 
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
        .opp_entity_id = self.config.number_to_entity_id(entity_id)
 
         if.opp_entity_id is None:
@@ -299,7 +299,7 @@ class HueOneLightStateView(OpenPeerPowerView):
             )
             return self.json_message("Entity not found", HTTP_NOT_FOUND)
 
-        entity = opp.states.get.opp_entity_id)
+        entity =.opp.states.get.opp_entity_id)
 
         if entity is None:
             _LOGGER.error("Entity not found: %s",.opp_entity_id)
@@ -331,14 +331,14 @@ class HueOneLightChangeView(OpenPeerPowerView):
             return self.json_message("Only local IPs allowed", HTTP_UNAUTHORIZED)
 
         config = self.config
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
         entity_id = config.number_to_entity_id(entity_number)
 
         if entity_id is None:
             _LOGGER.error("Unknown entity number: %s", entity_number)
             return self.json_message("Entity not found", HTTP_NOT_FOUND)
 
-        entity = opp.states.get(entity_id)
+        entity =.opp.states.get(entity_id)
 
         if entity is None:
             _LOGGER.error("Entity not found: %s", entity_id)
@@ -443,7 +443,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
             if parsed[STATE_ON]:
                 if entity_features & SUPPORT_BRIGHTNESS:
                     if parsed[STATE_BRIGHTNESS] is not None:
-                        data[ATTR_BRIGHTNESS] = hue_brightness_to_opp(
+                        data[ATTR_BRIGHTNESS] = hue_brightness_to.opp(
                             parsed[STATE_BRIGHTNESS]
                         )
 
@@ -459,7 +459,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
                         else:
                             sat = 0
 
-                        # Convert hs values to opp hs values
+                        # Convert hs values to.opp hs values
                         hue = int((hue / HUE_API_STATE_HUE_MAX) * 360)
                         sat = int((sat / HUE_API_STATE_SAT_MAX) * 100)
 
@@ -639,14 +639,14 @@ def get_entity_state(config, entity):
         data[STATE_ON] = entity.state != STATE_OFF
 
         if data[STATE_ON]:
-            data[STATE_BRIGHTNESS] = opp_to_hue_brightness(
+            data[STATE_BRIGHTNESS] =.opp_to_hue_brightness(
                 entity.attributes.get(ATTR_BRIGHTNESS, 0)
             )
             hue_sat = entity.attributes.get(ATTR_HS_COLOR)
             if hue_sat is not None:
                 hue = hue_sat[0]
                 sat = hue_sat[1]
-                # Convert opp hs values back to hue hs values
+                # Convert.opp hs values back to hue hs values
                 data[STATE_HUE] = int((hue / 360.0) * HUE_API_STATE_HUE_MAX)
                 data[STATE_SATURATION] = int((sat / 100.0) * HUE_API_STATE_SAT_MAX)
             else:
@@ -725,7 +725,7 @@ def get_entity_state(config, entity):
 def entity_to_json(config, entity):
     """Convert an entity to its Hue bridge JSON representation."""
     entity_features = entity.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
-    unique_id = op.hlib.md5(entity.entity_id.encode()).hexdigest()
+    unique_id = hashlib.md5(entity.entity_id.encode()).hexdigest()
     unique_id = f"00:{unique_id[0:2]}:{unique_id[2:4]}:{unique_id[4:6]}:{unique_id[6:8]}:{unique_id[8:10]}:{unique_id[10:12]}:{unique_id[12:14]}-{unique_id[14:16]}"
 
     state = get_entity_state(config, entity)
@@ -750,7 +750,7 @@ def entity_to_json(config, entity):
         # Extended Color light (Zigbee Device ID: 0x0210)
         # Same as Color light, but which supports additional setting of color temperature
         retval["type"] = "Extended color light"
-        retval["modelid"] = "OPP231"
+        retval["modelid"] = "HASS231"
         retval["state"].update(
             {
                 HUE_API_STATE_BRI: state[STATE_BRIGHTNESS],
@@ -768,7 +768,7 @@ def entity_to_json(config, entity):
         # Color light (Zigbee Device ID: 0x0200)
         # Supports on/off, dimming and color control (hue/saturation, enhanced hue, color loop and XY)
         retval["type"] = "Color light"
-        retval["modelid"] = "OPP213"
+        retval["modelid"] = "HASS213"
         retval["state"].update(
             {
                 HUE_API_STATE_BRI: state[STATE_BRIGHTNESS],
@@ -784,7 +784,7 @@ def entity_to_json(config, entity):
         # Color temperature light (Zigbee Device ID: 0x0220)
         # Supports groups, scenes, on/off, dimming, and setting of a color temperature
         retval["type"] = "Color temperature light"
-        retval["modelid"] = "OPP312"
+        retval["modelid"] = "HASS312"
         retval["state"].update(
             {
                 HUE_API_STATE_COLORMODE: "ct",
@@ -802,20 +802,20 @@ def entity_to_json(config, entity):
         # Dimmable light (Zigbee Device ID: 0x0100)
         # Supports groups, scenes, on/off and dimming
         retval["type"] = "Dimmable light"
-        retval["modelid"] = "OPP123"
+        retval["modelid"] = "HASS123"
         retval["state"].update({HUE_API_STATE_BRI: state[STATE_BRIGHTNESS]})
     elif not config.lights_all_dimmable:
         # On/Off light (ZigBee Device ID: 0x0000)
         # Supports groups, scenes and on/off control
         retval["type"] = "On/Off light"
         retval["productname"] = "On/Off light"
-        retval["modelid"] = "OPP321"
+        retval["modelid"] = "HASS321"
     else:
         # Dimmable light (Zigbee Device ID: 0x0100)
         # Supports groups, scenes, on/off and dimming
         # Reports fixed brightness for compatibility with Alexa.
         retval["type"] = "Dimmable light"
-        retval["modelid"] = "OPP123"
+        retval["modelid"] = "HASS123"
         retval["state"].update({HUE_API_STATE_BRI: HUE_API_STATE_BRI_MAX})
 
     return retval
@@ -833,7 +833,7 @@ def create_config_model(config, request):
         "mac": "00:00:00:00:00:00",
         "swversion": "01003542",
         "apiversion": "1.17.0",
-        "whitelist": {HUE_API_USERNAME: {"name": "OPP BRIDGE"}},
+        "whitelist": {HUE_API_USERNAME: {"name": "HASS BRIDGE"}},
         "ipaddress": f"{config.advertise_ip}:{config.advertise_port}",
         "linkbutton": True,
     }
@@ -841,7 +841,7 @@ def create_config_model(config, request):
 
 def create_list_of_entities(config, request):
     """Create a list of all entities."""
-    opp = request.app["opp"]
+   .opp = request.app[.opp"]
     json_response = {}
 
     for entity in config.filter_exposed_entities.opp.states.async_all()):
@@ -851,13 +851,13 @@ def create_list_of_entities(config, request):
     return json_response
 
 
-def hue_brightness_to_opp(value):
-    """Convert hue brightness 1..254 to opp format 0..255."""
+def hue_brightness_to.opp(value):
+    """Convert hue brightness 1..254 to.opp format 0..255."""
     return min(255, round((value / HUE_API_STATE_BRI_MAX) * 255))
 
 
 def.opp_to_hue_brightness(value):
-    """Convert opp brightness 0..255 to hue 1..254 scale."""
+    """Convert.opp brightness 0..255 to hue 1..254 scale."""
     return max(1, round((value / 255) * HUE_API_STATE_BRI_MAX))
 
 

@@ -22,7 +22,7 @@ class CameraEntityPreferences:
 
     @property
     def preload_stream(self):
-        """Return if stream is loaded on opp start."""
+        """Return if stream is loaded on.opp start."""
         return self._prefs.get(PREF_PRELOAD_STREAM, False)
 
 
@@ -31,8 +31,8 @@ class CameraPreferences:
 
     def __init__(self,.opp):
         """Initialize camera prefs."""
-        self._opp = opp
-        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        self..opp =.opp
+        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
         self._prefs = None
 
     async def async_initialize(self):

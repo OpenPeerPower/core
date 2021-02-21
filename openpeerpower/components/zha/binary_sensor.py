@@ -46,7 +46,7 @@ STRICT_MATCH = functools.partial(ZHA_ENTITIES.strict_match, DOMAIN)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation binary sensor from config entry."""
-    entities_to_create = opp.data[DATA_ZHA][DOMAIN]
+    entities_to_create =.opp.data[DATA_ZHA][DOMAIN]
 
     unsub = async_dispatcher_connect(
        .opp,
@@ -70,9 +70,9 @@ class BinarySensor(ZhaEntity, BinarySensorEntity):
         self._channel = channels[0]
         self._device_class = self.DEVICE_CLASS
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_accept_signal(
             self._channel, SIGNAL_ATTR_UPDATED, self.async_set_state
         )
@@ -101,7 +101,7 @@ class BinarySensor(ZhaEntity, BinarySensorEntity):
         if self.SENSOR_ATTR is None or self.SENSOR_ATTR != attr_name:
             return
         self._state = bool(value)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_update(self):
         """Attempt to retrieve on off state from the binary sensor."""

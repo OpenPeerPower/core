@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Plex sensor from a config entry."""
     server_id = config_entry.data[CONF_SERVER_IDENTIFIER]
-    plexserver = opp.data[PLEX_DOMAIN][SERVERS][server_id]
+    plexserver =.opp.data[PLEX_DOMAIN][SERVERS][server_id]
     sensor = PlexSensor.opp, plexserver)
     async_add_entities([sensor])
 
@@ -42,7 +42,7 @@ class PlexSensor(Entity):
             function=self._async_refresh_sensor,
         ).async_call
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
         server_id = self._server.machine_identifier
         unsub = async_dispatcher_connect(
@@ -56,7 +56,7 @@ class PlexSensor(Entity):
         """Set instance object and trigger an entity state update."""
         _LOGGER.debug("Refreshing sensor [%s]", self.unique_id)
         self._state = len(self._server.sensor_attributes)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def name(self):

@@ -26,9 +26,9 @@ from buienradar.constants import (
 from buienradar.urls import JSON_FEED_URL, json_precipitation_forecast_url
 
 from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE, HTTP_OK
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.event import async_track_point_in_utc_time
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.event import async_track_point_in_utc_time
+from openpeerpower.util import dt as dt_util
 
 from .const import SCHEDULE_NOK, SCHEDULE_OK
 
@@ -61,7 +61,7 @@ class BrData:
         """Initialize the data object."""
         self.devices = devices
         self.data = {}
-        self.opp = opp
+        self.opp =.opp
         self.coordinates = coordinates
         self.timeframe = timeframe
 

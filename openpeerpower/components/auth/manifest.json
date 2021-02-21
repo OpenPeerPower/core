@@ -1,8 +1,8 @@
 {
   "domain": "auth",
   "name": "Auth",
-  "documentation": "https://www.openpeerpower.io/integrations/auth",
+  "documentation": "https://www.open-peer-power.io/integrations/auth",
   "dependencies": ["http"],
-  "codeowners": ["@openpeerpower/core"],
+  "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"
 }

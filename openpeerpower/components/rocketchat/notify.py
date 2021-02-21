@@ -20,7 +20,7 @@ from openpeerpower.const import (
     CONF_USERNAME,
     HTTP_OK,
 )
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 

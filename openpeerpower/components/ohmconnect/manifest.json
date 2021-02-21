@@ -1,7 +1,7 @@
 {
   "domain": "ohmconnect",
   "name": "OhmConnect",
-  "documentation": "https://www.openpeerpower.io/integrations/ohmconnect",
+  "documentation": "https://www.open-peer-power.io/integrations/ohmconnect",
   "requirements": ["defusedxml==0.6.0"],
   "codeowners": ["@robbiet480"]
 }

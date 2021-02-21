@@ -16,7 +16,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    client = opp.data[DOMAIN]["client"]
+    client =.opp.data[DOMAIN]["client"]
 
     entities = []
 

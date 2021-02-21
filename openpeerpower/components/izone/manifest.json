@@ -1,7 +1,7 @@
 {
   "domain": "izone",
   "name": "iZone",
-  "documentation": "https://www.openpeerpower.io/integrations/izone",
+  "documentation": "https://www.open-peer-power.io/integrations/izone",
   "requirements": ["python-izone==1.1.3"],
   "codeowners": ["@Swamp-Ig"],
   "config_flow": true,

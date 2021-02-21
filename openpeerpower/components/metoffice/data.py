@@ -13,13 +13,13 @@ class MetOfficeData:
     """Get current and forecast data from Datapoint.
 
     Please note that the 'datapoint' library is not asyncio-friendly, so some
-    calls have had to be wrapped with the standard oppio helper
+    calls have had to be wrapped with the standard.oppio helper
     async_add_executor_job.
     """
 
     def __init__(self,.opp, api_key, latitude, longitude):
         """Initialize the data object."""
-        self._opp = opp
+        self..opp =.opp
         self._datapoint = datapoint.connection(api_key=api_key)
         self._site = None
 
@@ -34,7 +34,7 @@ class MetOfficeData:
 
     async def async_update_site(self):
         """Async wrapper for getting the DataPoint site."""
-        return await self._opp.async_add_executor_job(self._update_site)
+        return await self..opp.async_add_executor_job(self._update_site)
 
     def _update_site(self):
         """Return the nearest DataPoint Site to the held latitude/longitude."""
@@ -60,7 +60,7 @@ class MetOfficeData:
 
     async def async_update(self):
         """Async wrapper for update method."""
-        return await self._opp.async_add_executor_job(self._update)
+        return await self..opp.async_add_executor_job(self._update)
 
     def _update(self):
         """Get the latest data from DataPoint."""

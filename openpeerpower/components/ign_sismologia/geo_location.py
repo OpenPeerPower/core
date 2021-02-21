@@ -16,10 +16,10 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_START,
     LENGTH_KILOMETERS,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect, dispatcher_send
-from openpeerpowerr.helpers.event import track_time_interval
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect, dispatcher_send
+from openpeerpower.helpers.event import track_time_interval
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -86,7 +86,7 @@ class IgnSismologiaFeedEntityManager:
     ):
         """Initialize the Feed Entity Manager."""
 
-        self._opp = opp
+        self..opp =.opp
         self._feed_manager = IgnSismologiaFeedManager(
             self._generate_entity,
             self._update_entity,
@@ -106,7 +106,7 @@ class IgnSismologiaFeedEntityManager:
     def _init_regular_updates(self):
         """Schedule regular updates at the specified interval."""
         track_time_interval(
-            self._opp, lambda now: self._feed_manager.update(), self._scan_interval
+            self..opp, lambda now: self._feed_manager.update(), self._scan_interval
         )
 
     def get_entry(self, external_id):
@@ -121,11 +121,11 @@ class IgnSismologiaFeedEntityManager:
 
     def _update_entity(self, external_id):
         """Update entity."""
-        dispatcher_send(self._opp, f"ign_sismologia_update_{external_id}")
+        dispatcher_send(self..opp, f"ign_sismologia_update_{external_id}")
 
     def _remove_entity(self, external_id):
         """Remove entity."""
-        dispatcher_send(self._opp, f"ign_sismologia_delete_{external_id}")
+        dispatcher_send(self..opp, f"ign_sismologia_delete_{external_id}")
 
 
 class IgnSismologiaLocationEvent(GeolocationEvent):
@@ -147,7 +147,7 @@ class IgnSismologiaLocationEvent(GeolocationEvent):
         self._remove_signal_delete = None
         self._remove_signal_update = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self._remove_signal_delete = async_dispatcher_connect(
             self.opp,
@@ -170,7 +170,7 @@ class IgnSismologiaLocationEvent(GeolocationEvent):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     @property
     def should_poll(self):

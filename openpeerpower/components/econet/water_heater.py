@@ -19,7 +19,7 @@ from openpeerpower.components.water_heater import (
     WaterHeaterEntity,
 )
 from openpeerpower.const import TEMP_FAHRENHEIT
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from . import EcoNetEntity
 from .const import DOMAIN, EQUIPMENT
@@ -42,7 +42,7 @@ SUPPORT_FLAGS_HEATER = SUPPORT_TARGET_TEMPERATURE | SUPPORT_OPERATION_MODE
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up EcoNet water heater based on a config entry."""
-    equipment = opp.data[DOMAIN][EQUIPMENT][entry.entry_id]
+    equipment =.opp.data[DOMAIN][EQUIPMENT][entry.entry_id]
     async_add_entities(
         [
             EcoNetWaterHeater(water_heater)
@@ -60,7 +60,7 @@ class EcoNetWaterHeater(EcoNetEntity, WaterHeaterEntity):
         self._running = water_heater.running
         self._poll = True
         self.water_heater = water_heater
-        self.econet_state_to_op.= {}
+        self.econet_state_to_ha = {}
         self.ha_state_to_econet = {}
 
     @callback
@@ -70,7 +70,7 @@ class EcoNetWaterHeater(EcoNetEntity, WaterHeaterEntity):
             # Water heater running state has changed so check usage on next update
             self._poll = True
             self._running = self.water_heater.running
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_away_mode_on(self):

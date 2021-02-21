@@ -7,12 +7,12 @@ import voluptuous as vol
 
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers import config_validation as cv, entity_platform
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.event import async_track_point_in_utc_time
-from openpeerpowerr.util.dt import as_timestamp, now, parse_datetime, utc_from_timestamp
+from openpeerpower.core import callback
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers import config_validation as cv, entity_platform
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.event import async_track_point_in_utc_time
+from openpeerpower.util.dt import as_timestamp, now, parse_datetime, utc_from_timestamp
 
 from .const import (
     CONF_MANUAL_RUN_MINS,
@@ -92,7 +92,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Rachio switches."""
     zone_entities = []
     has_flex_sched = False
-    entities = await opp..async_add_executor_job(_create_entities,.opp, config_entry)
+    entities = await.opp.async_add_executor_job(_create_entities,.opp, config_entry)
     for entity in entities:
         if isinstance(entity, RachioZone):
             zone_entities.append(entity)
@@ -105,7 +105,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     def start_multiple(service):
         """Service to start multiple zones in sequence."""
         zones_list = []
-        person = opp.data[DOMAIN_RACHIO][config_entry.entry_id]
+        person =.opp.data[DOMAIN_RACHIO][config_entry.entry_id]
         entity_id = service.data[ATTR_ENTITY_ID]
         duration = iter(service.data[ATTR_DURATION])
         default_time = service.data[ATTR_DURATION][0]
@@ -150,7 +150,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 def _create_entities.opp, config_entry):
     entities = []
-    person = opp.data[DOMAIN_RACHIO][config_entry.entry_id]
+    person =.opp.data[DOMAIN_RACHIO][config_entry.entry_id]
     # Fetch the schedule once at startup
     # in order to avoid every zone doing it
     for controller in person.controllers:
@@ -187,17 +187,17 @@ class RachioSwitch(RachioDevice, SwitchEntity):
         return self._state
 
     @callback
-    def _async_op.dle_any_update(self, *args, **kwargs) -> None:
+    def _async_handle_any_update(self, *args, **kwargs) -> None:
         """Determine whether an update event applies to this device."""
         if args[0][KEY_DEVICE_ID] != self._controller.controller_id:
             # For another device
             return
 
         # For this device
-        self._async_op.dle_update(args, kwargs)
+        self._async_handle_update(args, kwargs)
 
     @abstractmethod
-    def _async_op.dle_update(self, *args, **kwargs) -> None:
+    def _async_handle_update(self, *args, **kwargs) -> None:
         """Handle incoming webhook data."""
 
 
@@ -220,14 +220,14 @@ class RachioStandbySwitch(RachioSwitch):
         return "mdi:power"
 
     @callback
-    def _async_op.dle_update(self, *args, **kwargs) -> None:
+    def _async_handle_update(self, *args, **kwargs) -> None:
         """Update the state using webhook data."""
         if args[0][0][KEY_SUBTYPE] == SUBTYPE_SLEEP_MODE_ON:
             self._state = True
         elif args[0][0][KEY_SUBTYPE] == SUBTYPE_SLEEP_MODE_OFF:
             self._state = False
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def turn_on(self, **kwargs) -> None:
         """Put the controller in standby mode."""
@@ -237,7 +237,7 @@ class RachioStandbySwitch(RachioSwitch):
         """Resume controller functionality."""
         self._controller.rachio.device.turn_on(self._controller.controller_id)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates."""
         if KEY_ON in self._controller.init_data:
             self._state = not self._controller.init_data[KEY_ON]
@@ -246,7 +246,7 @@ class RachioStandbySwitch(RachioSwitch):
             async_dispatcher_connect(
                 self.opp,
                 SIGNAL_RACHIO_CONTROLLER_UPDATE,
-                self._async_op.dle_any_update,
+                self._async_handle_any_update,
             )
         )
 
@@ -275,7 +275,7 @@ class RachioRainDelay(RachioSwitch):
         return "mdi:camera-timer"
 
     @callback
-    def _async_op.dle_update(self, *args, **kwargs) -> None:
+    def _async_handle_update(self, *args, **kwargs) -> None:
         """Update the state using webhook data."""
         if self._cancel_update:
             self._cancel_update()
@@ -291,14 +291,14 @@ class RachioRainDelay(RachioSwitch):
         elif args[0][0][KEY_SUBTYPE] == SUBTYPE_RAIN_DELAY_OFF:
             self._state = False
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _delay_expiration(self, *args) -> None:
         """Trigger when a rain delay expires."""
         self._state = False
         self._cancel_update = None
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def turn_on(self, **kwargs) -> None:
         """Activate a 24 hour rain delay on the controller."""
@@ -310,7 +310,7 @@ class RachioRainDelay(RachioSwitch):
         self._controller.rachio.device.rain_delay(self._controller.controller_id, 0)
         _LOGGER.debug("Canceling rain delay")
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates."""
         if KEY_RAIN_DELAY in self._controller.init_data:
             self._state = self._controller.init_data[
@@ -331,7 +331,7 @@ class RachioRainDelay(RachioSwitch):
             async_dispatcher_connect(
                 self.opp,
                 SIGNAL_RACHIO_RAIN_DELAY_UPDATE,
-                self._async_op.dle_any_update,
+                self._async_handle_any_update,
             )
         )
 
@@ -436,7 +436,7 @@ class RachioZone(RachioSwitch):
         self._controller.rachio.zone.set_moisture_percent(self.id, percent / 100)
 
     @callback
-    def _async_op.dle_update(self, *args, **kwargs) -> None:
+    def _async_handle_update(self, *args, **kwargs) -> None:
         """Handle incoming webhook zone data."""
         if args[0][KEY_ZONE_ID] != self.zone_id:
             return
@@ -452,15 +452,15 @@ class RachioZone(RachioSwitch):
         ]:
             self._state = False
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates."""
         self._state = self.zone_id == self._current_schedule.get(KEY_ZONE_ID)
 
         self.async_on_remove(
             async_dispatcher_connect(
-                self.opp, SIGNAL_RACHIO_ZONE_UPDATE, self._async_op.dle_update
+                self.opp, SIGNAL_RACHIO_ZONE_UPDATE, self._async_handle_update
             )
         )
 
@@ -523,7 +523,7 @@ class RachioSchedule(RachioSwitch):
         self._controller.stop_watering()
 
     @callback
-    def _async_op.dle_update(self, *args, **kwargs) -> None:
+    def _async_handle_update(self, *args, **kwargs) -> None:
         """Handle incoming webhook schedule data."""
         # Schedule ID not passed when running individual zones, so we catch that error
         try:
@@ -538,14 +538,14 @@ class RachioSchedule(RachioSwitch):
         except KeyError:
             pass
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates."""
         self._state = self._schedule_id == self._current_schedule.get(KEY_SCHEDULE_ID)
 
         self.async_on_remove(
             async_dispatcher_connect(
-                self.opp, SIGNAL_RACHIO_SCHEDULE_UPDATE, self._async_op.dle_update
+                self.opp, SIGNAL_RACHIO_SCHEDULE_UPDATE, self._async_handle_update
             )
         )

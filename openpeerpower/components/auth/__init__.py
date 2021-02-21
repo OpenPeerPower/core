@@ -134,7 +134,7 @@ from openpeerpower.components.http.data_validator import RequestDataValidator
 from openpeerpower.components.http.view import OpenPeerPowerView
 from openpeerpower.const import HTTP_BAD_REQUEST, HTTP_FORBIDDEN, HTTP_OK
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util import dt as dt_util
 
 from . import indieauth, login_flow, mfa_setup_flow
@@ -181,7 +181,7 @@ RESULT_TYPE_CREDENTIALS = "credentials"
 RESULT_TYPE_USER = "user"
 
 
-@bind_opp
+@bind.opp
 def create_auth_code(
    .opp, client_id: str, credential_or_user: Union[Credentials, User]
 ) -> str:
@@ -239,7 +239,7 @@ class TokenView(OpenPeerPowerView):
     @log_invalid_auth
     async def post(self, request):
         """Grant a token."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
         data = await request.post()
 
         grant_type = data.get("grant_type")
@@ -249,19 +249,19 @@ class TokenView(OpenPeerPowerView):
         # The revocation request includes an additional parameter,
         # action=revoke.
         if data.get("action") == "revoke":
-            return await self._async_op.dle_revoke_token.opp, data)
+            return await self._async_handle_revoke_token.opp, data)
 
         if grant_type == "authorization_code":
-            return await self._async_op.dle_auth_code.opp, data, request.remote)
+            return await self._async_handle_auth_code.opp, data, request.remote)
 
         if grant_type == "refresh_token":
-            return await self._async_op.dle_refresh_token.opp, data, request.remote)
+            return await self._async_handle_refresh_token.opp, data, request.remote)
 
         return self.json(
             {"error": "unsupported_grant_type"}, status_code=HTTP_BAD_REQUEST
         )
 
-    async def _async_op.dle_revoke_token(self,.opp, data):
+    async def _async_handle_revoke_token(self,.opp, data):
         """Handle revoke token request."""
         # OAuth 2.0 Token Revocation [RFC7009]
         # 2.2 The authorization server responds with HTTP status code 200
@@ -272,15 +272,15 @@ class TokenView(OpenPeerPowerView):
         if token is None:
             return web.Response(status=HTTP_OK)
 
-        refresh_token = await opp..auth.async_get_refresh_token_by_token(token)
+        refresh_token = await.opp.auth.async_get_refresh_token_by_token(token)
 
         if refresh_token is None:
             return web.Response(status=HTTP_OK)
 
-        await opp..auth.async_remove_refresh_token(refresh_token)
+        await.opp.auth.async_remove_refresh_token(refresh_token)
         return web.Response(status=HTTP_OK)
 
-    async def _async_op.dle_auth_code(self,.opp, data, remote_addr):
+    async def _async_handle_auth_code(self,.opp, data, remote_addr):
         """Handle authorization code request."""
         client_id = data.get("client_id")
         if client_id is None or not indieauth.verify_client_id(client_id):
@@ -305,7 +305,7 @@ class TokenView(OpenPeerPowerView):
                 status_code=HTTP_BAD_REQUEST,
             )
 
-        user = await opp..auth.async_get_or_create_user(credential)
+        user = await.opp.auth.async_get_or_create_user(credential)
 
         if not user.is_active:
             return self.json(
@@ -313,11 +313,11 @@ class TokenView(OpenPeerPowerView):
                 status_code=HTTP_FORBIDDEN,
             )
 
-        refresh_token = await opp..auth.async_create_refresh_token(
+        refresh_token = await.opp.auth.async_create_refresh_token(
             user, client_id, credential=credential
         )
         try:
-            access_token = opp.auth.async_create_access_token(
+            access_token =.opp.auth.async_create_access_token(
                 refresh_token, remote_addr
             )
         except InvalidAuthError as exc:
@@ -337,7 +337,7 @@ class TokenView(OpenPeerPowerView):
             }
         )
 
-    async def _async_op.dle_refresh_token(self,.opp, data, remote_addr):
+    async def _async_handle_refresh_token(self,.opp, data, remote_addr):
         """Handle authorization code request."""
         client_id = data.get("client_id")
         if client_id is not None and not indieauth.verify_client_id(client_id):
@@ -351,7 +351,7 @@ class TokenView(OpenPeerPowerView):
         if token is None:
             return self.json({"error": "invalid_request"}, status_code=HTTP_BAD_REQUEST)
 
-        refresh_token = await opp..auth.async_get_refresh_token_by_token(token)
+        refresh_token = await.opp.auth.async_get_refresh_token_by_token(token)
 
         if refresh_token is None:
             return self.json({"error": "invalid_grant"}, status_code=HTTP_BAD_REQUEST)
@@ -360,7 +360,7 @@ class TokenView(OpenPeerPowerView):
             return self.json({"error": "invalid_request"}, status_code=HTTP_BAD_REQUEST)
 
         try:
-            access_token = opp.auth.async_create_access_token(
+            access_token =.opp.auth.async_create_access_token(
                 refresh_token, remote_addr
             )
         except InvalidAuthError as exc:
@@ -393,8 +393,8 @@ class LinkUserView(OpenPeerPowerView):
     @RequestDataValidator(vol.Schema({"code": str, "client_id": str}))
     async def post(self, request, data):
         """Link a user."""
-        opp = request.app["opp"]
-        user = request["opp_user"]
+       .opp = request.app[.opp"]
+        user = request[.opp_user"]
 
         credentials = self._retrieve_credentials(
             data["client_id"], RESULT_TYPE_CREDENTIALS, data["code"]
@@ -403,7 +403,7 @@ class LinkUserView(OpenPeerPowerView):
         if credentials is None:
             return self.json_message("Invalid code", status_code=HTTP_BAD_REQUEST)
 
-        await opp..auth.async_link_user(user, credentials)
+        await.opp.auth.async_link_user(user, credentials)
         return self.json_message("User linked")
 
 
@@ -459,7 +459,7 @@ async def websocket_current_user(
 ):
     """Return the current user."""
     user = connection.user
-    enabled_modules = await opp..auth.async_get_enabled_mfa(user)
+    enabled_modules = await.opp.auth.async_get_enabled_mfa(user)
 
     connection.send_message(
         websocket_api.result_message(
@@ -495,7 +495,7 @@ async def websocket_create_long_lived_access_token(
    .opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """Create or a long-lived access token."""
-    refresh_token = await opp..auth.async_create_refresh_token(
+    refresh_token = await.opp.auth.async_create_refresh_token(
         connection.user,
         client_name=msg["client_name"],
         client_icon=msg.get("client_icon"),
@@ -504,7 +504,7 @@ async def websocket_create_long_lived_access_token(
     )
 
     try:
-        access_token = opp.auth.async_create_access_token(refresh_token)
+        access_token =.opp.auth.async_create_access_token(refresh_token)
     except InvalidAuthError as exc:
         return websocket_api.error_message(
             msg["id"], websocket_api.const.ERR_UNAUTHORIZED, str(exc)
@@ -554,7 +554,7 @@ async def websocket_delete_refresh_token(
             msg["id"], "invalid_token_id", "Received invalid token"
         )
 
-    await opp..auth.async_remove_refresh_token(refresh_token)
+    await.opp.auth.async_remove_refresh_token(refresh_token)
 
     connection.send_message(websocket_api.result_message(msg["id"], {}))
 

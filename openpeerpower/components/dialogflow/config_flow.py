@@ -8,6 +8,6 @@ config_entry_flow.register_webhook_flow(
     "Dialogflow Webhook",
     {
         "dialogflow_url": "https://dialogflow.com/docs/fulfillment#webhook",
-        "docs_url": "https://www.openpeerpower.io/integrations/dialogflow/",
+        "docs_url": "https://www.open-peer-power.io/integrations/dialogflow/",
     },
 )

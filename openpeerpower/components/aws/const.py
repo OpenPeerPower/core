@@ -2,7 +2,7 @@
 DOMAIN = "aws"
 
 DATA_CONFIG = "aws_config"
-DATA_OPP_CONFIG = "aws_opp_config"
+DATA_HASS_CONFIG = "aws.opp_config"
 DATA_SESSIONS = "aws_sessions"
 
 CONF_ACCESS_KEY_ID = "aws_access_key_id"

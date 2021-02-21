@@ -1,7 +1,7 @@
 """Support for deCONZ switches."""
 from openpeerpower.components.switch import DOMAIN, SwitchEntity
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import NEW_LIGHT, POWER_PLUGS, SIRENS
 from .deconz_device import DeconzDevice

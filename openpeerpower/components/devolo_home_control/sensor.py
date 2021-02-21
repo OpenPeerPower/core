@@ -8,7 +8,7 @@ from openpeerpower.components.sensor import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import PERCENTAGE
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DOMAIN
 from .devolo_device import DevoloDeviceEntity
@@ -172,4 +172,4 @@ class DevoloConsumptionEntity(DevoloMultiLevelDeviceEntity):
             )
         else:
             self._generic_message(message)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

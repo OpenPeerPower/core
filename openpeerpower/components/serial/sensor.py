@@ -84,7 +84,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     value_template = config.get(CONF_VALUE_TEMPLATE)
     if value_template is not None:
-        value_template.opp = opp
+        value_template.opp =.opp
 
     sensor = SerialSensor(
         name,
@@ -134,7 +134,7 @@ class SerialSensor(Entity):
         self._template = value_template
         self._attributes = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle when an entity is about to be added to Open Peer Power."""
         self._serial_loop_task = self.opp.loop.create_task(
             self.serial_read(
@@ -185,7 +185,7 @@ class SerialSensor(Entity):
                         exc,
                     )
                     logged_error = True
-                await self._op.dle_error()
+                await self._handle_error()
             else:
                 _LOGGER.info("Serial device %s connected", device)
                 while True:
@@ -195,7 +195,7 @@ class SerialSensor(Entity):
                         _LOGGER.exception(
                             "Error while reading serial device %s: %s", device, exc
                         )
-                        await self._op.dle_error()
+                        await self._handle_error()
                         break
                     else:
                         line = line.decode("utf-8").strip()
@@ -215,13 +215,13 @@ class SerialSensor(Entity):
 
                         _LOGGER.debug("Received: %s", line)
                         self._state = line
-                        self.async_write_op.state()
+                        self.async_write_ha_state()
 
-    async def _op.dle_error(self):
+    async def _handle_error(self):
         """Handle error for serial connection."""
         self._state = None
         self._attributes = None
-        self.async_write_op.state()
+        self.async_write_ha_state()
         await asyncio.sleep(5)
 
     @callback

@@ -41,7 +41,7 @@ _LOGGER = logging.getLogger(__name__)
 
 API_URL = f"/api/{DOMAIN}"
 
-CONF_CUSTOM_URL = "opp_url_override"
+CONF_CUSTOM_URL = .opp_url_override"
 
 RESET_DEVICE_FAVORITES = "doorbird_reset_favorites"
 
@@ -88,7 +88,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
                 )
             )
 
-    def _reset_device_favorites_op.dler(event):
+    def _reset_device_favorites_handler(event):
         """Handle clearing favorites on device."""
         token = event.data.get("token")
 
@@ -108,7 +108,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
             for favorite_id in favorites[favorite_type]:
                 doorstation.device.delete_favorite(favorite_type, favorite_id)
 
-   .opp.bus.async_listen(RESET_DEVICE_FAVORITES, _reset_device_favorites_op.dler)
+   .opp.bus.async_listen(RESET_DEVICE_FAVORITES, _reset_device_favorites_handler)
 
     return True
 
@@ -128,8 +128,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     device = DoorBird(device_ip, username, password)
     try:
-        status = await opp..async_add_executor_job(device.ready)
-        info = await opp..async_add_executor_job(device.info)
+        status = await.opp.async_add_executor_job(device.ready)
+        info = await.opp.async_add_executor_job(device.info)
     except urllib.error.HTTPError as err:
         if err.code == HTTP_UNAUTHORIZED:
             _LOGGER.error(
@@ -193,7 +193,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def _async_register_events.opp, doorstation):
     try:
-        await opp..async_add_executor_job(doorstation.register_events,.opp)
+        await.opp.async_add_executor_job(doorstation.register_events,.opp)
     except HTTPError:
        .opp.components.persistent_notification.create(
             "Doorbird configuration failed.  Please verify that API "
@@ -211,7 +211,7 @@ async def _async_register_events.opp, doorstation):
 async def _update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     config_entry_id = entry.entry_id
-    doorstation = opp.data[DOMAIN][config_entry_id][DOOR_STATION]
+    doorstation =.opp.data[DOMAIN][config_entry_id][DOOR_STATION]
 
     doorstation.events = entry.options[CONF_EVENTS]
     # Subscribe to doorbell or motion events
@@ -354,7 +354,7 @@ class DoorBirdRequestView(OpenPeerPowerView):
 
     async def get(self, request, event):
         """Respond to requests from the device."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         token = request.query.get("token")
 
@@ -376,7 +376,7 @@ class DoorBirdRequestView(OpenPeerPowerView):
             message = f"HTTP Favorites cleared for {device.slug}"
             return web.Response(status=HTTP_OK, text=message)
 
-        event_data[ATTR_ENTITY_ID] = opp.data[DOMAIN][
+        event_data[ATTR_ENTITY_ID] =.opp.data[DOMAIN][
             DOOR_STATION_EVENT_ENTITY_IDS
         ].get(event)
 

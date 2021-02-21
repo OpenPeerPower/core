@@ -69,7 +69,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         "async_perform_ptz",
     )
 
-    device = opp.data[DOMAIN][config_entry.unique_id]
+    device =.opp.data[DOMAIN][config_entry.unique_id]
     async_add_entities(
         [ONVIFCameraEntity(device, profile) for profile in device.profiles]
     )
@@ -172,7 +172,7 @@ class ONVIFCameraEntity(ONVIFBaseEntity, Camera):
         finally:
             await stream.close()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
         uri_no_auth = await self.device.async_get_stream_uri(self.profile)
         self._stream_uri = uri_no_auth.replace(

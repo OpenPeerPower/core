@@ -15,9 +15,9 @@ from openpeerpower.const import (
     STATE_OPEN,
     STATE_OPENING,
 )
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.discovery import async_load_platform
-from openpeerpowerr.helpers.event import async_call_later, async_track_time_interval
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.discovery import async_load_platform
+from openpeerpower.helpers.event import async_call_later, async_track_time_interval
 
 from .const import (
     API,
@@ -55,7 +55,7 @@ async def async_setup.opp, config):
 
     async def update_slides(now=None):
         """Update slide information."""
-        result = await opp..data[DOMAIN][API].slides_overview()
+        result = await.opp.data[DOMAIN][API].slides_overview()
 
         if result is None:
             _LOGGER.error("Slide API does not work or returned an error")
@@ -74,7 +74,7 @@ async def async_setup.opp, config):
                 continue
 
             uid = slide["device_id"].replace("slide_", "")
-            slidenew = opp.data[DOMAIN][SLIDES].setdefault(uid, {})
+            slidenew =.opp.data[DOMAIN][SLIDES].setdefault(uid, {})
             slidenew["mac"] = uid
             slidenew["id"] = slide["id"]
             slidenew["name"] = slide["device_name"]
@@ -148,7 +148,7 @@ async def async_setup.opp, config):
    .opp.data[DOMAIN][API] = GoSlideCloud(username, password)
 
     try:
-        result = await opp..data[DOMAIN][API].login()
+        result = await.opp.data[DOMAIN][API].login()
     except (goslideapi.ClientConnectionError, goslideapi.ClientTimeoutError) as err:
         _LOGGER.error(
             "Error connecting to Slide Cloud: %s, going to retry in %s second(s)",

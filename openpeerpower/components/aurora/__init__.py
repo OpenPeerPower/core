@@ -9,10 +9,10 @@ from auroranoaa import AuroraForecast
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_NAME, CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import aiohttp_client
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import aiohttp_client
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
     UpdateFailed,

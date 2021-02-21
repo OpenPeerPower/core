@@ -49,7 +49,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up the sensor platform."""
     sensors = []
 
-    processor = opp.data[DOMAIN]
+    processor =.opp.data[DOMAIN]
     for sensor_type in config[CONF_MONITORED_CONDITIONS]:
         sensors.append(AquaLogicSensor(processor, sensor_type))
 
@@ -95,7 +95,7 @@ class AquaLogicSensor(Entity):
         """Icon to use in the frontend, if any."""
         return SENSOR_TYPES[self._type][2]
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
@@ -109,4 +109,4 @@ class AquaLogicSensor(Entity):
         panel = self._processor.panel
         if panel is not None:
             self._state = getattr(panel, self._type)
-            self.async_write_op.state()
+            self.async_write_ha_state()

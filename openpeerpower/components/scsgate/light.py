@@ -6,7 +6,7 @@ import voluptuous as vol
 
 from openpeerpower.components.light import PLATFORM_SCHEMA, LightEntity
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_STATE, CONF_DEVICES, CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import CONF_SCS_ID, DOMAIN, SCSGATE_SCHEMA
 
@@ -20,7 +20,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     devices = config.get(CONF_DEVICES)
     lights = []
     logger = logging.getLogger(__name__)
-    scsgate = opp.data[DOMAIN]
+    scsgate =.opp.data[DOMAIN]
 
     if devices:
         for entity_info in devices.values():
@@ -78,7 +78,7 @@ class SCSGateLight(LightEntity):
         self._scsgate.append_task(ToggleStatusTask(target=self._scs_id, toggled=True))
 
         self._toggled = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
@@ -86,7 +86,7 @@ class SCSGateLight(LightEntity):
         self._scsgate.append_task(ToggleStatusTask(target=self._scs_id, toggled=False))
 
         self._toggled = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def process_event(self, message):
         """Handle a SCSGate message related with this light."""
@@ -100,7 +100,7 @@ class SCSGateLight(LightEntity):
             return
 
         self._toggled = message.toggled
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
         command = "off"
         if self._toggled:

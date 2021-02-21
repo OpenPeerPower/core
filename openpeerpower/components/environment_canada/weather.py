@@ -211,7 +211,7 @@ def get_forecast(ec_data, forecast_type):
             )
 
         forecast_array.append(today)
-        half_days = op.f_days[2:]
+        half_days = half_days[2:]
 
         for day, high, low in zip(range(1, 6), range(0, 9, 2), range(1, 10, 2)):
             forecast_array.append(

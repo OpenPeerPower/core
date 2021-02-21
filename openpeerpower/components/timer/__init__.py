@@ -14,16 +14,16 @@ from openpeerpower.const import (
     CONF_NAME,
     SERVICE_RELOAD,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import collection
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity_component import EntityComponent
-from openpeerpowerr.helpers.event import async_track_point_in_utc_time
-from openpeerpowerr.helpers.restore_state import RestoreEntity
-import openpeerpowerr.helpers.service
-from openpeerpowerr.helpers.storage import Store
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType, ServiceCallType
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+from openpeerpower.helpers import collection
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity_component import EntityComponent
+from openpeerpower.helpers.event import async_track_point_in_utc_time
+from openpeerpower.helpers.restore_state import RestoreEntity
+import openpeerpower.helpers.service
+from openpeerpower.helpers.storage import Store
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType, ServiceCallType
+import openpeerpower.util.dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -131,7 +131,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
     ).async_setup.opp)
 
-    async def reload_service_op.dler(service_call: ServiceCallType) -> None:
+    async def reload_service_handler(service_call: ServiceCallType) -> None:
         """Reload yaml entities."""
         conf = await component.async_prepare_reload(skip_reset=True)
         if conf is None:
@@ -140,11 +140,11 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
             [{CONF_ID: id_, **cfg} for id_, cfg in conf.get(DOMAIN, {}).items()]
         )
 
-    openpeerpowerr.helpers.service.async_register_admin_service(
+    openpeerpower.helpers.service.async_register_admin_service(
        .opp,
         DOMAIN,
         SERVICE_RELOAD,
-        reload_service_op.dler,
+        reload_service_handler,
         schema=RELOAD_SERVICE_SCHEMA,
     )
     component.async_register_entity_service(
@@ -251,7 +251,7 @@ class Timer(RestoreEntity):
         """Return unique id for the entity."""
         return self._config[CONF_ID]
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is about to be added to Open Peer Power."""
         # If not None, we got an initial value.
         if self._state is not None:
@@ -294,7 +294,7 @@ class Timer(RestoreEntity):
         self._listener = async_track_point_in_utc_time(
             self.opp, self._async_finished, self._end
         )
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_pause(self):
@@ -308,7 +308,7 @@ class Timer(RestoreEntity):
         self._state = STATUS_PAUSED
         self._end = None
         self.opp.bus.async_fire(EVENT_TIMER_PAUSED, {"entity_id": self.entity_id})
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_cancel(self):
@@ -320,7 +320,7 @@ class Timer(RestoreEntity):
         self._end = None
         self._remaining = None
         self.opp.bus.async_fire(EVENT_TIMER_CANCELLED, {"entity_id": self.entity_id})
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_finish(self):
@@ -333,7 +333,7 @@ class Timer(RestoreEntity):
         self._end = None
         self._remaining = None
         self.opp.bus.async_fire(EVENT_TIMER_FINISHED, {"entity_id": self.entity_id})
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _async_finished(self, time):
@@ -346,10 +346,10 @@ class Timer(RestoreEntity):
         self._end = None
         self._remaining = None
         self.opp.bus.async_fire(EVENT_TIMER_FINISHED, {"entity_id": self.entity_id})
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_update_config(self, config: Dict) -> None:
         """Handle when the config is updated."""
         self._config = config
         self._duration = cv.time_period_str(config[CONF_DURATION])
-        self.async_write_op.state()
+        self.async_write_ha_state()

@@ -4,7 +4,7 @@ import logging
 from pylutron_caseta import FAN_HIGH, FAN_LOW, FAN_MEDIUM, FAN_MEDIUM_HIGH, FAN_OFF
 
 from openpeerpower.components.fan import DOMAIN, SUPPORT_SET_SPEED, FanEntity
-from openpeerpowerr.util.percentage import (
+from openpeerpower.util.percentage import (
     ordered_list_item_to_percentage,
     percentage_to_ordered_list_item,
 )
@@ -26,7 +26,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """
 
     entities = []
-    data = opp.data[CASETA_DOMAIN][config_entry.entry_id]
+    data =.opp.data[CASETA_DOMAIN][config_entry.entry_id]
     bridge = data[BRIDGE_LEAP]
     bridge_device = data[BRIDGE_DEVICE]
     fan_devices = bridge.get_devices_by_domain(DOMAIN)
@@ -47,6 +47,11 @@ class LutronCasetaFan(LutronCasetaDevice, FanEntity):
         return ordered_list_item_to_percentage(
             ORDERED_NAMED_FAN_SPEEDS, self._device["fan_speed"]
         )
+
+    @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        return len(ORDERED_NAMED_FAN_SPEEDS)
 
     @property
     def supported_features(self) -> int:

@@ -22,7 +22,7 @@ async def async_setup_platform(
     for config in discovery_info:
         address, connection_id = config[CONF_ADDRESS]
         addr = pypck.lcn_addr.LcnAddr(*address)
-        connections = opp.data[DATA_LCN][CONF_CONNECTIONS]
+        connections =.opp.data[DATA_LCN][CONF_CONNECTIONS]
         connection = get_connection(connections, connection_id)
         address_connection = connection.get_address_conn(addr)
 
@@ -47,11 +47,11 @@ class LcnOutputSwitch(LcnEntity, SwitchEntity):
 
         self._is_on = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if not self.device_connection.is_group:
-            await self.device_connection.activate_status_request_op.dler(self.output)
+            await self.device_connection.activate_status_request_handler(self.output)
 
     @property
     def is_on(self):
@@ -63,14 +63,14 @@ class LcnOutputSwitch(LcnEntity, SwitchEntity):
         if not await self.device_connection.dim_output(self.output.value, 100, 0):
             return
         self._is_on = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the entity off."""
         if not await self.device_connection.dim_output(self.output.value, 0, 0):
             return
         self._is_on = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def input_received(self, input_obj):
         """Set switch state when LCN input object (command) is received."""
@@ -81,7 +81,7 @@ class LcnOutputSwitch(LcnEntity, SwitchEntity):
             return
 
         self._is_on = input_obj.get_percent() > 0
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class LcnRelaySwitch(LcnEntity, SwitchEntity):
@@ -95,11 +95,11 @@ class LcnRelaySwitch(LcnEntity, SwitchEntity):
 
         self._is_on = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if not self.device_connection.is_group:
-            await self.device_connection.activate_status_request_op.dler(self.output)
+            await self.device_connection.activate_status_request_handler(self.output)
 
     @property
     def is_on(self):
@@ -113,7 +113,7 @@ class LcnRelaySwitch(LcnEntity, SwitchEntity):
         if not await self.device_connection.control_relays(states):
             return
         self._is_on = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the entity off."""
@@ -122,7 +122,7 @@ class LcnRelaySwitch(LcnEntity, SwitchEntity):
         if not await self.device_connection.control_relays(states):
             return
         self._is_on = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def input_received(self, input_obj):
         """Set switch state when LCN input object (command) is received."""
@@ -130,4 +130,4 @@ class LcnRelaySwitch(LcnEntity, SwitchEntity):
             return
 
         self._is_on = input_obj.get_state(self.output.value)
-        self.async_write_op.state()
+        self.async_write_ha_state()

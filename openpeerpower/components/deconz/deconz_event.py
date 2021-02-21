@@ -2,9 +2,9 @@
 from pydeconz.sensor import Switch
 
 from openpeerpower.const import CONF_DEVICE_ID, CONF_EVENT, CONF_ID, CONF_UNIQUE_ID
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.util import slugify
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.util import slugify
 
 from .const import CONF_ANGLE, CONF_GESTURE, CONF_XY, LOGGER, NEW_SENSOR
 from .deconz_device import DeconzBase
@@ -45,7 +45,7 @@ async def async_setup_events(gateway) -> None:
 def async_unload_events(gateway) -> None:
     """Unload all deCONZ events."""
     for event in gateway.events:
-        event.async_will_remove_from_opp()
+        event.async_will_remove_from.opp()
 
     gateway.events.clear()
 
@@ -73,7 +73,7 @@ class DeconzEvent(DeconzBase):
         return self._device
 
     @callback
-    def async_will_remove_from_opp(self) -> None:
+    def async_will_remove_from.opp(self) -> None:
         """Disconnect event object when removed."""
         self._device.remove_callback(self.async_update_callback)
 

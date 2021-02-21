@@ -64,7 +64,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
         raise InvalidHost
 
     # Connect to ISY controller.
-    isy_conf = await opp..async_add_executor_job(
+    isy_conf = await.opp.async_add_executor_job(
         _fetch_isy_configuration,
         host.hostname,
         port,

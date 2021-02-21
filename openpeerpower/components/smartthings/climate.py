@@ -91,7 +91,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         Capability.thermostat_cooling_setpoint,
     ]
 
-    broker = opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
+    broker =.opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
     entities = []
     for device in broker.devices.values():
         if not broker.any_assigned(device.device_id, CLIMATE_DOMAIN):
@@ -169,7 +169,7 @@ class SmartThingsThermostat(SmartThingsEntity, ClimateEntity):
 
         # State is set optimistically in the command above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new target operation mode."""
@@ -178,7 +178,7 @@ class SmartThingsThermostat(SmartThingsEntity, ClimateEntity):
 
         # State is set optimistically in the command above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     async def async_set_temperature(self, **kwargs):
         """Set new operation mode and target temperatures."""
@@ -216,7 +216,7 @@ class SmartThingsThermostat(SmartThingsEntity, ClimateEntity):
 
         # State is set optimistically in the commands above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     async def async_update(self):
         """Update the attributes of the climate device."""
@@ -337,7 +337,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
         await self._device.set_fan_mode(fan_mode, set_status=True)
         # State is set optimistically in the command above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new target operation mode."""
@@ -356,7 +356,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
         await asyncio.gather(*tasks)
         # State is set optimistically in the command above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_temperature(self, **kwargs):
         """Set new target temperature."""
@@ -377,21 +377,21 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
         await asyncio.gather(*tasks)
         # State is set optimistically in the command above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_on(self):
         """Turn device on."""
         await self._device.switch_on(set_status=True)
         # State is set optimistically in the command above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self):
         """Turn device off."""
         await self._device.switch_off(set_status=True)
         # State is set optimistically in the command above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_update(self):
         """Update the calculated fields of the AC."""

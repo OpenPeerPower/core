@@ -46,7 +46,7 @@ class HMDevice(Entity):
         if self._state:
             self._state = self._state.upper()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Load data init callbacks."""
         self._subscribe_homematic_events()
 
@@ -125,7 +125,7 @@ class HMDevice(Entity):
 
         # If it has changed data point, update Open Peer Power
         if has_changed:
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def _subscribe_homematic_events(self):
         """Subscribe all required events to handle job."""
@@ -199,7 +199,7 @@ class HMHub(Entity):
 
     def __init__(self,.opp, homematic, name):
         """Initialize HomeMatic hub."""
-        self.opp = opp
+        self.opp =.opp
         self.entity_id = f"{DOMAIN}.{name.lower()}"
         self._homematic = homematic
         self._variables = {}
@@ -248,7 +248,7 @@ class HMHub(Entity):
         # state have change?
         if self._state != state:
             self._state = state
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def _update_variables(self, now):
         """Retrieve all variable data and update hmvariable states."""
@@ -265,7 +265,7 @@ class HMHub(Entity):
             self._variables.update({key: value})
 
         if state_change:
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def hm_set_variable(self, name, value):
         """Set variable value on CCU/Homegear."""
@@ -280,4 +280,4 @@ class HMHub(Entity):
         self._homematic.setSystemVariable(self.name, name, value)
 
         self._variables.update({name: value})
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PLATFORM
-from openpeerpower.core import OppJob, callback
+from openpeerpower.core import HassJob, callback
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.event import track_point_in_utc_time
 import openpeerpower.util.dt as dt_util
@@ -34,12 +34,12 @@ async def async_attach_trigger.opp, config, action, automation_info):
     held_less_than = config.get(CONF_HELD_LESS_THAN)
     pressed_time = None
     cancel_pressed_more_than = None
-    job = OppJob(action)
+    job = HassJob(action)
 
     @callback
     def call_action():
         """Call action with right context."""
-       .opp.async_run_opp_job(
+       .opp.async_run.opp_job(
             job,
             {
                 "trigger": {

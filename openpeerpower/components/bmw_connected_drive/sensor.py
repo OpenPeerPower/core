@@ -54,7 +54,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     else:
         attribute_info = ATTR_TO_HA_METRIC
 
-    account = opp.data[BMW_DOMAIN][DATA_ENTRIES][config_entry.entry_id][CONF_ACCOUNT]
+    account =.opp.data[BMW_DOMAIN][DATA_ENTRIES][config_entry.entry_id][CONF_ACCOUNT]
     entities = []
 
     for vehicle in account.account.vehicles:

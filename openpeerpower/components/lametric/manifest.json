@@ -1,7 +1,7 @@
 {
   "domain": "lametric",
   "name": "LaMetric",
-  "documentation": "https://www.openpeerpower.io/integrations/lametric",
+  "documentation": "https://www.open-peer-power.io/integrations/lametric",
   "requirements": ["lmnotify==0.0.4"],
   "codeowners": ["@robbiet480"]
 }

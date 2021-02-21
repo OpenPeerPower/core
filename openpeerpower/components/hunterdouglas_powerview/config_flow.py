@@ -16,7 +16,7 @@ from .const import DOMAIN  # pylint:disable=unused-import
 _LOGGER = logging.getLogger(__name__)
 
 DATA_SCHEMA = vol.Schema({vol.Required(CONF_HOST): str})
-HAP_SUFFIX = "._op.._tcp.local."
+HAP_SUFFIX = "._hap._tcp.local."
 
 
 async def validate_input.opp: core.OpenPeerPower, data):

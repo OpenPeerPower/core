@@ -1,7 +1,7 @@
 {
   "domain": "solaredge",
   "name": "SolarEdge",
-  "documentation": "https://www.openpeerpower.io/integrations/solaredge",
+  "documentation": "https://www.open-peer-power.io/integrations/solaredge",
   "requirements": ["solaredge==0.0.2", "stringcase==1.2.0"],
   "config_flow": true,
   "codeowners": [],

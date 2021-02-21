@@ -47,7 +47,7 @@ CONF_FUNCTION = "function"
 CONF_QUERY = "query"
 CONF_IMPORTS = "imports"
 
-DEFAULT_DATABASE = "home_assistant"
+DEFAULT_DATABASE = "open_peer_power"
 DEFAULT_HOST_V2 = "us-west-2-1.aws.cloud2.influxdata.com"
 DEFAULT_SSL_V2 = True
 DEFAULT_BUCKET = "Open Peer Power"

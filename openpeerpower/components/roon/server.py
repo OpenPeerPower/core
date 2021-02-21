@@ -5,8 +5,8 @@ import logging
 from roonapi import RoonApi
 
 from openpeerpower.const import CONF_API_KEY, CONF_HOST
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.util.dt import utcnow
 
 from .const import CONF_ROON_ID, ROON_APPINFO
 
@@ -20,7 +20,7 @@ class RoonServer:
     def __init__(self,.opp, config_entry):
         """Initialize the system."""
         self.config_entry = config_entry
-        self.opp = opp
+        self.opp =.opp
         self.roonapi = None
         self.roon_id = None
         self.all_player_ids = set()
@@ -31,7 +31,7 @@ class RoonServer:
 
     async def async_setup(self, tries=0):
         """Set up a roon server based on config parameters."""
-        opp = self.opp
+       .opp = self.opp
         # Host will be None for configs using discovery
         host = self.config_entry.data[CONF_HOST]
         token = self.config_entry.data[CONF_API_KEY]

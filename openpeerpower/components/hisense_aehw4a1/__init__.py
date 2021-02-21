@@ -9,7 +9,7 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.components.climate import DOMAIN as CLIMATE_DOMAIN
 from openpeerpower.const import CONF_IP_ADDRESS
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from .const import DOMAIN
 
@@ -79,4 +79,4 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await opp..config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN)
+    return await.opp.config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN)

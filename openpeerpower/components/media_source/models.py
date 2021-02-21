@@ -12,7 +12,7 @@ from openpeerpower.components.media_player.const import (
     MEDIA_TYPE_CHANNEL,
     MEDIA_TYPE_CHANNELS,
 )
-from openpeerpowerr.core import OpenPeerPower, callback
+from openpeerpower.core import OpenPeerPower, callback
 
 from .const import DOMAIN, URI_SCHEME, URI_SCHEME_REGEX
 

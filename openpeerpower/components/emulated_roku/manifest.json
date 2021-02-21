@@ -2,7 +2,7 @@
   "domain": "emulated_roku",
   "name": "Emulated Roku",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/emulated_roku",
+  "documentation": "https://www.open-peer-power.io/integrations/emulated_roku",
   "requirements": ["emulated_roku==0.2.1"],
   "codeowners": []
 }

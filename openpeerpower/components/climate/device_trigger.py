@@ -68,7 +68,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
         if entry.domain != DOMAIN:
             continue
 
-        state = opp.states.get(entry.entity_id)
+        state =.opp.states.get(entry.entity_id)
 
         # Add triggers for each entity that belongs to this integration
         triggers.append(
@@ -176,7 +176,7 @@ async def async_get_trigger_capabilities.opp: OpenPeerPower, config):
         }
 
     if trigger_type == "current_temperature_changed":
-        unit_of_measurement = opp.config.units.temperature_unit
+        unit_of_measurement =.opp.config.units.temperature_unit
     else:
         unit_of_measurement = PERCENTAGE
 

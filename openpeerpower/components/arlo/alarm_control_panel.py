@@ -48,7 +48,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Arlo Alarm Control Panels."""
-    arlo = opp.data[DATA_ARLO]
+    arlo =.opp.data[DATA_ARLO]
 
     if not arlo.base_stations:
         return
@@ -82,7 +82,7 @@ class ArloBaseStation(AlarmControlPanelEntity):
         """Return icon."""
         return ICON
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -93,7 +93,7 @@ class ArloBaseStation(AlarmControlPanelEntity):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     @property
     def state(self):

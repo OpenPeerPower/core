@@ -1,8 +1,8 @@
 {
   "domain": "demo",
   "name": "Demo",
-  "documentation": "https://www.openpeerpower.io/integrations/demo",
+  "documentation": "https://www.open-peer-power.io/integrations/demo",
   "dependencies": ["conversation", "zone", "group"],
-  "codeowners": ["@openpeerpower/core"],
+  "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"
 }

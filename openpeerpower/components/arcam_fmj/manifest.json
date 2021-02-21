@@ -2,7 +2,7 @@
   "domain": "arcam_fmj",
   "name": "Arcam FMJ Receivers",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/arcam_fmj",
+  "documentation": "https://www.open-peer-power.io/integrations/arcam_fmj",
   "requirements": ["arcam-fmj==0.5.3"],
   "ssdp": [
     {

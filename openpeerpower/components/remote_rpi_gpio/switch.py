@@ -3,7 +3,7 @@ import voluptuous as vol
 
 from openpeerpower.components.switch import PLATFORM_SCHEMA, SwitchEntity
 from openpeerpower.const import CONF_HOST, DEVICE_DEFAULT_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import CONF_INVERT_LOGIC, DEFAULT_INVERT_LOGIC
 from .. import remote_rpi_gpio
@@ -72,10 +72,10 @@ class RemoteRPiGPIOSwitch(SwitchEntity):
         """Turn the device on."""
         remote_rpi_gpio.write_output(self._switch, 1)
         self._state = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
         remote_rpi_gpio.write_output(self._switch, 0)
         self._state = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

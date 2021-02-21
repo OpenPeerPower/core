@@ -105,7 +105,7 @@ class AuthProvidersView(OpenPeerPowerView):
 
     async def get(self, request):
         """Get available auth providers."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
         if not.opp.components.onboarding.async_is_user_onboarded():
             return self.json_message(
                 message="Onboarding not finished",
@@ -173,7 +173,7 @@ class LoginFlowIndexView(OpenPeerPowerView):
     async def post(self, request, data):
         """Create a new login flow."""
         if not await indieauth.verify_redirect_uri(
-            request.app["opp"], data["client_id"], data["redirect_uri"]
+            request.app[.opp"], data["client_id"], data["redirect_uri"]
         ):
             return self.json_message(
                 "invalid client id or redirect uri", HTTP_BAD_REQUEST

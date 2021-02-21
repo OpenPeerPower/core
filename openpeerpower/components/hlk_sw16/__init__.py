@@ -124,9 +124,9 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    client = opp.data[DOMAIN][entry.entry_id].pop(DATA_DEVICE_REGISTER)
+    client =.opp.data[DOMAIN][entry.entry_id].pop(DATA_DEVICE_REGISTER)
     client.stop()
-    unload_ok = await opp..config_entries.async_forward_entry_unload(entry, "switch")
+    unload_ok = await.opp.config_entries.async_forward_entry_unload(entry, "switch")
 
     if unload_ok:
         if.opp.data[DOMAIN][entry.entry_id]:
@@ -161,7 +161,7 @@ class SW16Device(Entity):
         """Propagate changes through ha."""
         _LOGGER.debug("Relay %s new state callback: %r", self.unique_id, event)
         self._is_on = event
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def should_poll(self):
@@ -181,9 +181,9 @@ class SW16Device(Entity):
     @callback
     def _availability_callback(self, availability):
         """Update availability state."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register update callback."""
         self._client.register_status_callback(
             self.handle_event_callback, self._device_port

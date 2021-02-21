@@ -7,7 +7,7 @@ from openpeerpower.const import (
     TIME_SECONDS,
     VOLT,
 )
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.entity import Entity
 
 from .const import DOMAIN, JUICENET_API, JUICENET_COORDINATOR
 from .entity import JuiceNetDevice
@@ -26,7 +26,7 @@ SENSOR_TYPES = {
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the JuiceNet Sensors."""
     entities = []
-    juicenet_data = opp.data[DOMAIN][config_entry.entry_id]
+    juicenet_data =.opp.data[DOMAIN][config_entry.entry_id]
     api = juicenet_data[JUICENET_API]
     coordinator = juicenet_data[JUICENET_COORDINATOR]
 

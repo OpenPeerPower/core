@@ -1,7 +1,7 @@
 {
   "domain": "oem",
   "name": "OpenEnergyMonitor WiFi Thermostat",
-  "documentation": "https://www.openpeerpower.io/integrations/oem",
+  "documentation": "https://www.open-peer-power.io/integrations/oem",
   "requirements": ["oemthermostat==1.1.1"],
   "codeowners": []
 }

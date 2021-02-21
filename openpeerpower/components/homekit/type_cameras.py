@@ -141,7 +141,7 @@ class Camera(HomeAccessory, PyhapCamera):
 
     def __init__(self,.opp, driver, name, entity_id, aid, config):
         """Initialize a Camera accessory object."""
-        self._ffmpeg = opp.data[DATA_FFMPEG]
+        self._ffmpeg =.opp.data[DATA_FFMPEG]
         for config_key in CONFIG_DEFAULTS:
             if config_key not in config:
                 config[config_key] = CONFIG_DEFAULTS[config_key]
@@ -240,7 +240,7 @@ class Camera(HomeAccessory, PyhapCamera):
 
                 self._async_update_doorbell_state(state)
 
-    async def run_op.dler(self):
+    async def run(self):
         """Handle accessory driver started event.
 
         Run inside the Open Peer Power event loop.
@@ -259,7 +259,7 @@ class Camera(HomeAccessory, PyhapCamera):
                 self._async_update_doorbell_state_event,
             )
 
-        await super().run_op.dler()
+        await super().run()
 
     @callback
     def _async_update_motion_state_event(self, event):

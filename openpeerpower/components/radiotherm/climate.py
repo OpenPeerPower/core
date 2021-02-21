@@ -156,7 +156,7 @@ class RadioThermostat(ClimateEntity):
         """Return the list of supported features."""
         return SUPPORT_FLAGS
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         # Set the time on the device.  This shouldn't be in the
         # constructor because it's a network call.  We can't put it in

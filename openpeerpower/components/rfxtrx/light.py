@@ -9,7 +9,7 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.const import CONF_DEVICES, STATE_ON
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from . import (
     CONF_DATA_BITS,
@@ -102,9 +102,9 @@ class RfxtrxLight(RfxtrxCommandEntity, LightEntity):
 
     _brightness = 0
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Restore RFXtrx device state (ON/OFF)."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         if self._event is None:
             old_state = await self.async_get_last_state()
@@ -138,14 +138,14 @@ class RfxtrxLight(RfxtrxCommandEntity, LightEntity):
             await self._async_send(self._device.send_dim, brightness * 100 // 255)
             self._brightness = brightness
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the device off."""
         await self._async_send(self._device.send_off)
         self._state = False
         self._brightness = 0
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _apply_event(self, event):
         """Apply command from rfxtrx."""
@@ -159,11 +159,11 @@ class RfxtrxLight(RfxtrxCommandEntity, LightEntity):
             self._state = self._brightness > 0
 
     @callback
-    def _op.dle_event(self, event, device_id):
+    def _handle_event(self, event, device_id):
         """Check if event applies to me and update."""
         if device_id != self._device_id:
             return
 
         self._apply_event(event)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()

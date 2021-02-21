@@ -44,14 +44,14 @@ class TOTPSensor(Entity):
         self._state = None
         self._next_expiration = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle when an entity is about to be added to Open Peer Power."""
         self._call_loop()
 
     @callback
     def _call_loop(self):
         self._state = self._otp.now()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
         # Update must occur at even TIME_STEP, e.g. 12:00:00, 12:00:30,
         # 12:01:00, etc. in order to have synced time (see RFC6238)

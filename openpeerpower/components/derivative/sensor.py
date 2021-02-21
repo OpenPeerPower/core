@@ -119,9 +119,9 @@ class DerivativeSensor(RestoreEntity):
         self._unit_time = UNIT_TIME[unit_time]
         self._time_window = time_window.total_seconds()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         state = await self.async_get_last_state()
         if state is not None:
             try:
@@ -184,7 +184,7 @@ class DerivativeSensor(RestoreEntity):
                 _LOGGER.error("Could not calculate derivative: %s", err)
             else:
                 self._state = derivative
-                self.async_write_op.state()
+                self.async_write_ha_state()
 
         async_track_state_change_event(
             self.opp, [self._sensor_source_id], calc_derivative

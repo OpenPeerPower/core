@@ -108,11 +108,11 @@ class BlinktLight(LightEntity):
         self._blinkt.show()
 
         self._is_on = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Instruct the light to turn off."""
         self._blinkt.set_pixel(self._index, 0, 0, 0, 0)
         self._blinkt.show()
         self._is_on = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

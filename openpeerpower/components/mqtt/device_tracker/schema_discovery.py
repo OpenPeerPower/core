@@ -111,7 +111,7 @@ class MqttDeviceTracker(MqttEntity, TrackerEntity):
             else:
                 self._location_name = msg.payload
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self._sub_state = await subscription.async_subscribe_topics(
             self.opp,

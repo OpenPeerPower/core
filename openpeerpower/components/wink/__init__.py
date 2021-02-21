@@ -54,7 +54,7 @@ ATTR_HUB_NAME = "hub_name"
 WINK_AUTH_CALLBACK_PATH = "/auth/wink/callback"
 WINK_AUTH_START = "/auth/wink"
 WINK_CONFIG_FILE = ".wink.conf"
-USER_AGENT = f"Manufacturer/openpeerpower{__version__} python/3 Wink/3"
+USER_AGENT = f"Manufacturer/Open-Peer-Power{__version__} python/3 Wink/3"
 
 DEFAULT_CONFIG = {
     CONF_CLIENT_ID: "CLIENT_ID_HERE",
@@ -211,11 +211,11 @@ WINK_HUBS = []
 def _request_app_setup.opp, config):
     """Assist user with configuring the Wink dev application."""
    .opp.data[DOMAIN]["configurator"] = True
-    configurator = opp.components.configurator
+    configurator =.opp.components.configurator
 
     def wink_configuration_callback(callback_data):
         """Handle configuration updates."""
-        _config_path = opp.config.path(WINK_CONFIG_FILE)
+        _config_path =.opp.config.path(WINK_CONFIG_FILE)
         if not os.path.isfile(_config_path):
             setup.opp, config)
             return
@@ -230,7 +230,7 @@ def _request_app_setup.opp, config):
             setup.opp, config)
             return
         error_msg = "Your input was invalid. Please try again."
-        _configurator = opp.data[DOMAIN]["configuring"][DOMAIN]
+        _configurator =.opp.data[DOMAIN]["configuring"][DOMAIN]
         configurator.notify_errors(_configurator, error_msg)
 
     start_url = f"{get_url.opp)}{WINK_AUTH_CALLBACK_PATH}"
@@ -259,7 +259,7 @@ def _request_app_setup.opp, config):
 def _request_oauth_completion.opp, config):
     """Request user complete Wink OAuth2 flow."""
    .opp.data[DOMAIN]["configurator"] = True
-    configurator = opp.components.configurator
+    configurator =.opp.components.configurator
     if DOMAIN in.opp.data[DOMAIN]["configuring"]:
         configurator.notify_errors(
            .opp.data[DOMAIN]["configuring"][DOMAIN],
@@ -319,7 +319,7 @@ def setup.opp, config):
         _LOGGER.info("Using OAuth authentication")
         if not local_control:
             pywink.disable_local_control()
-        config_path = opp.config.path(WINK_CONFIG_FILE)
+        config_path =.opp.config.path(WINK_CONFIG_FILE)
         if os.path.isfile(config_path):
             config_file = load_json(config_path)
             if config_file == DEFAULT_CONFIG:
@@ -332,14 +332,14 @@ def setup.opp, config):
             return True
 
         if DOMAIN in.opp.data[DOMAIN]["configuring"]:
-            _configurator = opp.data[DOMAIN]["configuring"]
+            _configurator =.opp.data[DOMAIN]["configuring"]
            .opp.components.configurator.request_done(_configurator.pop(DOMAIN))
 
         # Using oauth
         access_token = config_file.get(ATTR_ACCESS_TOKEN)
         refresh_token = config_file.get(ATTR_REFRESH_TOKEN)
 
-        # This will be called after authorizing Open -Peer-Power
+        # This will be called after authorizing Open-Peer-Power
         if None not in (access_token, refresh_token):
             pywink.set_wink_credentials(
                 config_file.get(CONF_CLIENT_ID),
@@ -411,7 +411,7 @@ def setup.opp, config):
     def save_credentials(event):
         """Save currently set OAuth credentials."""
         if.opp.data[DOMAIN]["oauth"].get("email") is None:
-            config_path = opp.config.path(WINK_CONFIG_FILE)
+            config_path =.opp.config.path(WINK_CONFIG_FILE)
             _config = pywink.get_current_oauth_credentials()
             save_json(config_path, _config)
 
@@ -428,7 +428,7 @@ def setup.opp, config):
             # Throttle the calls to Wink API
             for entity in entity_list:
                 time.sleep(1)
-                entity.schedule_update_op.state(True)
+                entity.schedule_update_ha_state(True)
 
    .opp.services.register(DOMAIN, SERVICE_REFRESH_STATES, force_update)
 
@@ -499,7 +499,7 @@ def setup.opp, config):
             schema=SET_PAIRING_MODE_SCHEMA,
         )
 
-    def nimbus_service_op.dle(service):
+    def nimbus_service_handle(service):
         """Handle nimbus services."""
         entity_id = service.data.get("entity_id")[0]
         _all_dials = []
@@ -515,7 +515,7 @@ def setup.opp, config):
                         service.data.get("value"), service.data.get("labels")
                     )
 
-    def siren_service_op.dle(service):
+    def siren_service_handle(service):
         """Handle siren services."""
         entity_ids = service.data.get("entity_id")
         all_sirens = []
@@ -579,14 +579,14 @@ def setup.opp, config):
        .opp.services.register(
             DOMAIN,
             SERVICE_SET_AUTO_SHUTOFF,
-            siren_service_op.dle,
+            siren_service_handle,
             schema=SET_AUTO_SHUTOFF_SCHEMA,
         )
 
        .opp.services.register(
             DOMAIN,
             SERVICE_ENABLE_SIREN,
-            siren_service_op.dle,
+            siren_service_handle,
             schema=ENABLED_SIREN_SCHEMA,
         )
 
@@ -595,42 +595,42 @@ def setup.opp, config):
        .opp.services.register(
             DOMAIN,
             SERVICE_SET_SIREN_TONE,
-            siren_service_op.dle,
+            siren_service_handle,
             schema=SET_SIREN_TONE_SCHEMA,
         )
 
        .opp.services.register(
             DOMAIN,
             SERVICE_ENABLE_CHIME,
-            siren_service_op.dle,
+            siren_service_handle,
             schema=SET_CHIME_MODE_SCHEMA,
         )
 
        .opp.services.register(
             DOMAIN,
             SERVICE_SET_SIREN_VOLUME,
-            siren_service_op.dle,
+            siren_service_handle,
             schema=SET_VOLUME_SCHEMA,
         )
 
        .opp.services.register(
             DOMAIN,
             SERVICE_SET_CHIME_VOLUME,
-            siren_service_op.dle,
+            siren_service_handle,
             schema=SET_VOLUME_SCHEMA,
         )
 
        .opp.services.register(
             DOMAIN,
             SERVICE_SIREN_STROBE_ENABLED,
-            siren_service_op.dle,
+            siren_service_handle,
             schema=SET_STROBE_ENABLED_SCHEMA,
         )
 
        .opp.services.register(
             DOMAIN,
             SERVICE_CHIME_STROBE_ENABLED,
-            siren_service_op.dle,
+            siren_service_handle,
             schema=SET_STROBE_ENABLED_SCHEMA,
         )
 
@@ -656,14 +656,14 @@ def setup.opp, config):
        .opp.services.register(
             DOMAIN,
             SERVICE_SET_DIAL_CONFIG,
-            nimbus_service_op.dle,
+            nimbus_service_handle,
             schema=DIAL_CONFIG_SCHEMA,
         )
 
        .opp.services.register(
             DOMAIN,
             SERVICE_SET_DIAL_STATE,
-            nimbus_service_op.dle,
+            nimbus_service_handle,
             schema=DIAL_STATE_SCHEMA,
         )
 
@@ -688,7 +688,7 @@ class WinkAuthCallbackView(OpenPeerPowerView):
     @callback
     def get(self, request):
         """Finish OAuth callback request."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
         data = request.query
 
         response_message = """Wink has been successfully authorized!
@@ -726,7 +726,7 @@ class WinkDevice(Entity):
 
     def __init__(self, wink,.opp):
         """Initialize the Wink device."""
-        self.opp = opp
+        self.opp =.opp
         self.wink = wink
        .opp.data[DOMAIN]["pubnub"].add_subscription(
             self.wink.pubnub_channel, self._pubnub_update
@@ -741,15 +741,15 @@ class WinkDevice(Entity):
                     "Error on pubnub update for %s polling API for current state",
                     self.name,
                 )
-                self.schedule_update_op.state(True)
+                self.schedule_update_ha_state(True)
             else:
                 self.wink.pubnub_update(message)
-                self.schedule_update_op.state()
+                self.schedule_update_ha_state()
         except (ValueError, KeyError, AttributeError):
             _LOGGER.error(
                 "Error in pubnub JSON for %s polling API for current state", self.name
             )
-            self.schedule_update_op.state(True)
+            self.schedule_update_ha_state(True)
 
     @property
     def name(self):
@@ -838,7 +838,7 @@ class WinkDevice(Entity):
 class WinkSirenDevice(WinkDevice):
     """Representation of a Wink siren device."""
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[DOMAIN]["entities"]["switch"].append(self)
 
@@ -898,7 +898,7 @@ class WinkNimbusDialDevice(WinkDevice):
         super().__init__(dial,.opp)
         self.parent = nimbus
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[DOMAIN]["entities"]["sensor"].append(self)
 

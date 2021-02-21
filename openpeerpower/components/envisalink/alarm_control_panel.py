@@ -74,7 +74,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     async_add_entities(devices)
 
     @callback
-    def alarm_keypress_op.dler(service):
+    def alarm_keypress_handler(service):
         """Map services to methods on Alarm."""
         entity_ids = service.data.get(ATTR_ENTITY_ID)
         keypress = service.data.get(ATTR_KEYPRESS)
@@ -89,7 +89,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
    .opp.services.async_register(
         DOMAIN,
         SERVICE_ALARM_KEYPRESS,
-        alarm_keypress_op.dler,
+        alarm_keypress_handler,
         schema=ALARM_KEYPRESS_SCHEMA,
     )
 
@@ -110,7 +110,7 @@ class EnvisalinkAlarm(EnvisalinkDevice, AlarmControlPanelEntity):
         _LOGGER.debug("Setting up alarm: %s", alarm_name)
         super().__init__(alarm_name, info, controller)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -127,7 +127,7 @@ class EnvisalinkAlarm(EnvisalinkDevice, AlarmControlPanelEntity):
     def _update_callback(self, partition):
         """Update Open Peer Power state, if needed."""
         if partition is None or int(partition) == self._partition_number:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def code_format(self):

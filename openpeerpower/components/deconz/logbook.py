@@ -3,8 +3,8 @@
 from typing import Callable, Optional
 
 from openpeerpower.const import ATTR_DEVICE_ID, CONF_EVENT
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers.event import Event
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.event import Event
 
 from .const import CONF_GESTURE, DOMAIN as DECONZ_DOMAIN
 from .deconz_event import CONF_DECONZ_EVENT, DeconzEvent

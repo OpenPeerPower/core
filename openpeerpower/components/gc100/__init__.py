@@ -3,7 +3,7 @@ import gc100
 import voluptuous as vol
 
 from openpeerpower.const import CONF_HOST, CONF_PORT, EVENT_OPENPEERPOWER_STOP
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 CONF_PORTS = "ports"
 
@@ -50,7 +50,7 @@ class GC100Device:
 
     def __init__(self,.opp, gc_device):
         """Init a gc100 device."""
-        self.opp = opp
+        self.opp =.opp
         self.gc_device = gc_device
 
     def read_sensor(self, port_addr, callback):

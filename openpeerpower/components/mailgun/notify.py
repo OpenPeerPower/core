@@ -35,7 +35,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def get_service.opp, config, discovery_info=None):
     """Get the Mailgun notification service."""
-    data = opp.data[MAILGUN_DOMAIN]
+    data =.opp.data[MAILGUN_DOMAIN]
     mailgun_service = MailgunNotificationService(
         data.get(CONF_DOMAIN),
         data.get(CONF_SANDBOX),
@@ -68,7 +68,7 @@ class MailgunNotificationService(BaseNotificationService):
         _LOGGER.debug("Mailgun domain: %s", self._client.domain)
         self._domain = self._client.domain
         if not self._sender:
-            self._sender = f"opp@{self._domain}"
+            self._sender = f.opp@{self._domain}"
 
     def connection_is_valid(self):
         """Check whether the provided credentials are valid."""

@@ -85,7 +85,7 @@ class KNXClimate(KnxEntity, ClimateEntity):
         if temperature is None:
             return
         await self._device.set_target_temperature(temperature)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def hvac_mode(self) -> Optional[str]:
@@ -128,7 +128,7 @@ class KNXClimate(KnxEntity, ClimateEntity):
                     CONTROLLER_MODES_INV.get(hvac_mode)
                 )
                 await self._device.mode.set_controller_mode(knx_controller_mode)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def preset_mode(self) -> Optional[str]:
@@ -158,4 +158,4 @@ class KNXClimate(KnxEntity, ClimateEntity):
         if self._device.mode.supports_operation_mode:
             knx_operation_mode = HVACOperationMode(PRESET_MODES_INV.get(preset_mode))
             await self._device.mode.set_operation_mode(knx_operation_mode)
-            self.async_write_op.state()
+            self.async_write_ha_state()

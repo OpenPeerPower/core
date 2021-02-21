@@ -2,7 +2,7 @@
   "domain": "cast",
   "name": "Google Cast",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/cast",
+  "documentation": "https://www.open-peer-power.io/integrations/cast",
   "requirements": ["pychromecast==8.1.0"],
   "after_dependencies": ["cloud", "http", "media_source", "plex", "tts", "zeroconf"],
   "zeroconf": ["_googlecast._tcp.local."],

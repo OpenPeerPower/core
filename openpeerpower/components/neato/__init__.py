@@ -96,7 +96,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     hub = NeatoHub.opp, Account(neato_session))
 
     try:
-        await opp..async_add_executor_job(hub.update_robots)
+        await.opp.async_add_executor_job(hub.update_robots)
     except NeatoException as ex:
         _LOGGER.debug("Failed to connect to Neato API")
         raise ConfigEntryNotReady from ex
@@ -130,16 +130,16 @@ class NeatoHub:
 
     def __init__(self,.opp: OpenPeerPowerType, neato: Account):
         """Initialize the Neato hub."""
-        self._opp: OpenPeerPowerType = opp
+        self..opp: OpenPeerPowerType =.opp
         self.my_neato: Account = neato
 
     @Throttle(timedelta(minutes=1))
     def update_robots(self):
         """Update the robot states."""
-        _LOGGER.debug("Running HUB.update_robots %s", self._opp.data.get(NEATO_ROBOTS))
-        self._opp.data[NEATO_ROBOTS] = self.my_neato.robots
-        self._opp.data[NEATO_PERSISTENT_MAPS] = self.my_neato.persistent_maps
-        self._opp.data[NEATO_MAP_DATA] = self.my_neato.maps
+        _LOGGER.debug("Running HUB.update_robots %s", self..opp.data.get(NEATO_ROBOTS))
+        self..opp.data[NEATO_ROBOTS] = self.my_neato.robots
+        self..opp.data[NEATO_PERSISTENT_MAPS] = self.my_neato.persistent_maps
+        self..opp.data[NEATO_MAP_DATA] = self.my_neato.maps
 
     def download_map(self, url):
         """Download a new map image."""

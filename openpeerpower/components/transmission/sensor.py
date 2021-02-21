@@ -21,7 +21,7 @@ from .const import (
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Transmission sensors."""
 
-    tm_client = opp.data[DOMAIN][config_entry.entry_id]
+    tm_client =.opp.data[DOMAIN][config_entry.entry_id]
     name = config_entry.data[CONF_NAME]
 
     dev = [
@@ -74,13 +74,13 @@ class TransmissionSensor(Entity):
         """Could the device be accessed during the last update call."""
         return self._tm_client.api.available
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
 
         @callback
         def update():
             """Update the state."""
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         self.async_on_remove(
             async_dispatcher_connect(

@@ -4,14 +4,14 @@ import logging
 import os
 
 from openpeerpower.components.mailbox import CONTENT_TYPE_MPEG, Mailbox, StreamError
-from openpeerpowerr.util import dt
+from openpeerpower.util import dt
 
 _LOGGER = logging.getLogger(__name__)
 
 MAILBOX_NAME = "DemoMailbox"
 
 
-async def async_get_op.dler.opp, config, discovery_info=None):
+async def async_get_handler.opp, config, discovery_info=None):
     """Set up the Demo mailbox."""
     return DemoMailbox.opp, MAILBOX_NAME)
 

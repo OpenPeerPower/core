@@ -1,7 +1,7 @@
 """StarLine device tracker."""
 from openpeerpower.components.device_tracker.config_entry import TrackerEntity
 from openpeerpower.components.device_tracker.const import SOURCE_TYPE_GPS
-from openpeerpowerr.helpers.restore_state import RestoreEntity
+from openpeerpower.helpers.restore_state import RestoreEntity
 
 from .account import StarlineAccount, StarlineDevice
 from .const import DOMAIN
@@ -10,7 +10,7 @@ from .entity import StarlineEntity
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up StarLine entry."""
-    account: StarlineAccount = opp.data[DOMAIN][entry.entry_id]
+    account: StarlineAccount =.opp.data[DOMAIN][entry.entry_id]
     entities = []
     for device in account.api.devices.values():
         if device.support_position:

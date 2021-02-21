@@ -1,8 +1,8 @@
 """The nexia integration base entity."""
 
 from openpeerpower.const import ATTR_ATTRIBUTION
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
     ATTRIBUTION,
@@ -59,14 +59,14 @@ class NexiaThermostatEntity(NexiaEntity):
             "manufacturer": MANUFACTURER,
         }
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Listen for signals for services."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_on_remove(
             async_dispatcher_connect(
                 self.opp,
                 f"{SIGNAL_THERMOSTAT_UPDATE}-{self._thermostat.thermostat_id}",
-                self.async_write_op.state,
+                self.async_write_ha_state,
             )
         )
 
@@ -83,22 +83,24 @@ class NexiaThermostatZoneEntity(NexiaThermostatEntity):
     def device_info(self):
         """Return the device_info of the device."""
         data = super().device_info
+        zone_name = self._zone.get_name()
         data.update(
             {
                 "identifiers": {(DOMAIN, self._zone.zone_id)},
-                "name": self._zone.get_name(),
+                "name": zone_name,
+                "suggested_area": zone_name,
                 "via_device": (DOMAIN, self._zone.thermostat.thermostat_id),
             }
         )
         return data
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Listen for signals for services."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_on_remove(
             async_dispatcher_connect(
                 self.opp,
                 f"{SIGNAL_ZONE_UPDATE}-{self._zone.zone_id}",
-                self.async_write_op.state,
+                self.async_write_ha_state,
             )
         )

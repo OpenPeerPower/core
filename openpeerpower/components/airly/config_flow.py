@@ -13,8 +13,8 @@ from openpeerpower.const import (
     HTTP_NOT_FOUND,
     HTTP_UNAUTHORIZED,
 )
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
 
 from .const import (  # pylint:disable=unused-import
     CONF_USE_NEAREST,

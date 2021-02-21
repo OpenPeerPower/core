@@ -149,7 +149,7 @@ class Channels:
 
     @callback
     def async_send_signal(self, signal: str, *args: Any) -> None:
-        """Send a signal through opp dispatcher."""
+        """Send a signal through.opp dispatcher."""
         async_dispatcher_send(self.zha_device.opp, signal, *args)
 
     @callback
@@ -349,7 +349,7 @@ class ChannelPool:
 
     @callback
     def async_send_signal(self, signal: str, *args: Any) -> None:
-        """Send a signal through opp dispatcher."""
+        """Send a signal through.opp dispatcher."""
         self._channels.async_send_signal(signal, *args)
 
     @callback

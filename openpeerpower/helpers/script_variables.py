@@ -12,7 +12,7 @@ class ScriptVariables:
     def __init__(self, variables: Dict[str, Any]):
         """Initialize script variables."""
         self.variables = variables
-        self._op._template: Optional[bool] = None
+        self._has_template: Optional[bool] = None
 
     @callback
     def async_render(
@@ -30,11 +30,11 @@ class ScriptVariables:
         If `render_as_defaults` is True, the run variables will not be overridden.
 
         """
-        if self._op._template is None:
-            self._op._template = template.is_complex(self.variables)
+        if self._has_template is None:
+            self._has_template = template.is_complex(self.variables)
             template.attach.opp, self.variables)
 
-        if not self._op._template:
+        if not self._has_template:
             if render_as_defaults:
                 rendered_variables = dict(self.variables)
 

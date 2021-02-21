@@ -8,8 +8,8 @@ import requests
 import voluptuous as vol
 
 from openpeerpower.const import HTTP_OK
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.util import raise_if_invalid_filename, raise_if_invalid_path
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.util import raise_if_invalid_filename, raise_if_invalid_path
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,7 +47,7 @@ def setup.opp, config):
 
     # If path is relative, we assume relative to Open Peer Power config dir
     if not os.path.isabs(download_path):
-        download_path = opp.config.path(download_path)
+        download_path =.opp.config.path(download_path)
 
     if not os.path.isdir(download_path):
         _LOGGER.error(

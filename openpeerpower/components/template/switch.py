@@ -18,13 +18,13 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import TemplateError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import async_generate_entity_id
-from openpeerpowerr.helpers.reload import async_setup_reload_service
-from openpeerpowerr.helpers.restore_state import RestoreEntity
-from openpeerpowerr.helpers.script import Script
+from openpeerpower.core import callback
+from openpeerpower.exceptions import TemplateError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import async_generate_entity_id
+from openpeerpower.helpers.reload import async_setup_reload_service
+from openpeerpower.helpers.restore_state import RestoreEntity
+from openpeerpower.helpers.script import Script
 
 from .const import CONF_AVAILABILITY_TEMPLATE, DOMAIN, PLATFORMS
 from .template_entity import TemplateEntity
@@ -144,12 +144,12 @@ class SwitchTemplate(TemplateEntity, SwitchEntity, RestoreEntity):
 
         self._state = False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         if self._template is None:
 
             # restore state after startup
-            await super().async_added_to_opp()
+            await super().async_added_to.opp()
             state = await self.async_get_last_state()
             if state:
                 self._state = state.state == STATE_ON
@@ -160,7 +160,7 @@ class SwitchTemplate(TemplateEntity, SwitchEntity, RestoreEntity):
                 "_state", self._template, None, self._update_state
             )
 
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     @property
     def name(self):
@@ -187,14 +187,14 @@ class SwitchTemplate(TemplateEntity, SwitchEntity, RestoreEntity):
         await self._on_script.async_run(context=self._context)
         if self._template is None:
             self._state = True
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Fire the off action."""
         await self._off_script.async_run(context=self._context)
         if self._template is None:
             self._state = False
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def assumed_state(self):

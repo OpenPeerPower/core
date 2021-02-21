@@ -2,8 +2,8 @@
 import voluptuous as vol
 
 from openpeerpower import config_entries
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
 
 # pylint: disable=unused-import
 from . import DOMAIN

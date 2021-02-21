@@ -11,7 +11,7 @@ from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.exceptions import TemplateError
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.entity import async_generate_entity_id
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util import slugify
 import openpeerpower.util.dt as dt_util
 
@@ -53,20 +53,20 @@ STATUS_UNREAD = "unread"
 STATUS_READ = "read"
 
 
-@bind_opp
+@bind.opp
 def create.opp, message, title=None, notification_id=None):
     """Generate a notification."""
    .opp.add_job(async_create,.opp, message, title, notification_id)
 
 
-@bind_opp
+@bind.opp
 def dismiss.opp, notification_id):
     """Remove a notification."""
    .opp.add_job(async_dismiss,.opp, notification_id)
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_create(
    .opp: OpenPeerPower,
     message: str,
@@ -88,7 +88,7 @@ def async_create(
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_dismiss.opp: OpenPeerPower, notification_id: str) -> None:
     """Remove a notification."""
     data = {ATTR_NOTIFICATION_ID: notification_id}
@@ -119,7 +119,7 @@ async def async_setup.opp: OpenPeerPower, config: dict) -> bool:
         attr = {}
         if title is not None:
             try:
-                title.opp = opp
+                title.opp =.opp
                 title = title.async_render(parse_result=False)
             except TemplateError as ex:
                 _LOGGER.error("Error rendering title %s: %s", title, ex)
@@ -129,7 +129,7 @@ async def async_setup.opp: OpenPeerPower, config: dict) -> bool:
             attr[ATTR_FRIENDLY_NAME] = title
 
         try:
-            message.opp = opp
+            message.opp =.opp
             message = message.async_render(parse_result=False)
         except TemplateError as ex:
             _LOGGER.error("Error rendering message %s: %s", message, ex)

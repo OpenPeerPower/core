@@ -6,8 +6,8 @@ from aioeafm import get_station
 import async_timeout
 
 from openpeerpower.const import ATTR_ATTRIBUTION, LENGTH_METERS
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
 )

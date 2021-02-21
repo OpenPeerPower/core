@@ -1,8 +1,8 @@
 {
   "domain": "google_assistant",
   "name": "Google Assistant",
-  "documentation": "https://www.openpeerpower.io/integrations/google_assistant",
+  "documentation": "https://www.open-peer-power.io/integrations/google_assistant",
   "dependencies": ["http"],
   "after_dependencies": ["camera"],
-  "codeowners": ["@openpeerpower/cloud"]
+  "codeowners": ["@open-peer-power/cloud"]
 }

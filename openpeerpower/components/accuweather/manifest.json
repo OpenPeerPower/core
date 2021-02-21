@@ -1,7 +1,7 @@
 {
   "domain": "accuweather",
   "name": "AccuWeather",
-  "documentation": "https://www.openpeerpower.io/integrations/accuweather/",
+  "documentation": "https://www.open-peer-power.io/integrations/accuweather/",
   "requirements": ["accuweather==0.0.11"],
   "codeowners": ["@bieniu"],
   "config_flow": true,

@@ -125,7 +125,7 @@ class FibaroController:
         self._device_map = None  # Mapping deviceId to device object
         self.fibaro_devices = None  # List of devices by type
         self._callbacks = {}  # Update value callbacks by deviceId
-        self._state_op.dler = None  # Fiblary's StateHandler object
+        self._state_handler = None  # Fiblary's StateHandler object
         self._excluded_devices = config[CONF_EXCLUDE]
         self.hub_serial = None  # Unique serial number of the hub
 
@@ -149,14 +149,14 @@ class FibaroController:
         self._read_scenes()
         return True
 
-    def enable_state_op.dler(self):
+    def enable_state_handler(self):
         """Start StateHandler thread for monitoring updates."""
-        self._state_op.dler = StateHandler(self._client, self._on_state_change)
+        self._state_handler = StateHandler(self._client, self._on_state_change)
 
-    def disable_state_op.dler(self):
+    def disable_state_handler(self):
         """Stop StateHandler thread used for monitoring updates."""
-        self._state_op.dler.stop()
-        self._state_op.dler = None
+        self._state_handler.stop()
+        self._state_handler = None
 
     def _on_state_change(self, state):
         """Handle change report received from the HomeCenter."""
@@ -362,7 +362,7 @@ def setup.opp, base_config):
         """Stop Fibaro Thread."""
         _LOGGER.info("Shutting down Fibaro connection")
         for controller in.opp.data[FIBARO_CONTROLLERS].values():
-            controller.disable_state_op.dler()
+            controller.disable_state_handler()
 
    .opp.data[FIBARO_DEVICES] = {}
     for component in FIBARO_COMPONENTS:
@@ -381,7 +381,7 @@ def setup.opp, base_config):
         for component in FIBARO_COMPONENTS:
             discovery.load_platform.opp, component, DOMAIN, {}, base_config)
         for controller in.opp.data[FIBARO_CONTROLLERS].values():
-            controller.enable_state_op.dler()
+            controller.enable_state_handler()
        .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_fibaro)
         return True
 
@@ -398,13 +398,13 @@ class FibaroDevice(Entity):
         self._name = fibaro_device.friendly_name
         self.ha_id = fibaro_device.ha_id
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self.controller.register(self.fibaro_device.id, self._update_callback)
 
     def _update_callback(self):
         """Update the state."""
-        self.schedule_update_op.state(True)
+        self.schedule_update_ha_state(True)
 
     @property
     def level(self):

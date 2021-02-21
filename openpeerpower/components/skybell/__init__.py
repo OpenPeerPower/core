@@ -47,7 +47,7 @@ def setup.opp, config):
     password = conf.get(CONF_PASSWORD)
 
     try:
-        cache = opp.config.path(DEFAULT_CACHEDB)
+        cache =.opp.config.path(DEFAULT_CACHEDB)
         skybell = Skybell(
             username=username,
             password=password,
@@ -61,7 +61,7 @@ def setup.opp, config):
         _LOGGER.error("Unable to connect to Skybell service: %s", str(ex))
        .opp.components.persistent_notification.create(
             "Error: {}<br />"
-            "You will need to restart opp after fixing."
+            "You will need to restart.opp after fixing."
             "".format(ex),
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,

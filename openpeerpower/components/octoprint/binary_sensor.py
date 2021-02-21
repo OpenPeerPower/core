@@ -18,7 +18,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     name = discovery_info["name"]
     base_url = discovery_info["base_url"]
     monitored_conditions = discovery_info["sensors"]
-    octoprint_api = opp.data[COMPONENT_DOMAIN][base_url]
+    octoprint_api =.opp.data[COMPONENT_DOMAIN][base_url]
 
     devices = []
     for octo_type in monitored_conditions:

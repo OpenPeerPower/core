@@ -33,9 +33,9 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         """Send signal to entity to have it update state."""
         dispatcher_send.opp, NUMATO_SIGNAL.format(device_id, port), level)
 
-    api = opp.data[DOMAIN][DATA_API]
+    api =.opp.data[DOMAIN][DATA_API]
     binary_sensors = []
-    devices = opp.data[DOMAIN][CONF_DEVICES]
+    devices =.opp.data[DOMAIN][CONF_DEVICES]
     for device in [d for d in devices if CONF_BINARY_SENSORS in d]:
         device_id = device[CONF_ID]
         platform = device[CONF_BINARY_SENSORS]
@@ -81,7 +81,7 @@ class NumatoGpioBinarySensor(BinarySensorEntity):
         self._state = None
         self._api = api
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Connect state update callback."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -95,7 +95,7 @@ class NumatoGpioBinarySensor(BinarySensorEntity):
     def _async_update_state(self, level):
         """Update entity state."""
         self._state = level
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def should_poll(self):

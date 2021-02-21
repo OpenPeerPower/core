@@ -26,7 +26,7 @@ class APICount(Entity):
         """Initialize the API count."""
         self.count = 0
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Added to.opp."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
@@ -57,4 +57,4 @@ class APICount(Entity):
     @callback
     def _update_count(self):
         self.count = self.opp.data.get(DATA_CONNECTIONS, 0)
-        self.async_write_op.state()
+        self.async_write_ha_state()

@@ -37,10 +37,10 @@ from openpeerpower.const import (
     SPEED_KILOMETERS_PER_HOUR,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import dt as dt_util
 
 from .const import DEFAULT_TIMEFRAME
 from .util import BrData
@@ -269,7 +269,7 @@ class BrSensor(Entity):
     def data_updated(self, data):
         """Update data."""
         if self._load_data(data) and self.opp:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @callback
     def _load_data(self, data):
@@ -332,7 +332,7 @@ class BrSensor(Entity):
                 return False
 
             if self.type.startswith(WINDSPEED):
-                # opp wants windspeeds in km/h not m/s, so convert:
+                #.opp wants windspeeds in km/h not m/s, so convert:
                 try:
                     self._state = data.get(FORECAST)[fcday].get(self.type[:-3])
                     if self._state is not None:
@@ -382,14 +382,14 @@ class BrSensor(Entity):
             return True
 
         if self.type == WINDSPEED or self.type == WINDGUST:
-            # opp wants windspeeds in km/h not m/s, so convert:
+            #.opp wants windspeeds in km/h not m/s, so convert:
             self._state = data.get(self.type)
             if self._state is not None:
                 self._state = round(data.get(self.type) * 3.6, 1)
             return True
 
         if self.type == VISIBILITY:
-            # opp wants visibility in km (not m), so convert:
+            #.opp wants visibility in km (not m), so convert:
             self._state = data.get(self.type)
             if self._state is not None:
                 self._state = round(self._state / 1000, 1)

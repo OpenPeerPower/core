@@ -4,7 +4,7 @@
             "already_configured": "L'enlla\u00e7 ja est\u00e0 configurat",
             "already_in_progress": "El flux de configuraci\u00f3 ja est\u00e0 en curs",
             "no_bridges": "No s'han descobert enlla\u00e7os amb deCONZ",
-            "no_op.dware_available": "No hi ha cap maquinari r\u00e0dio connectat a deCONZ",
+            "no_hardware_available": "No hi ha cap maquinari r\u00e0dio connectat a deCONZ",
             "not_deconz_bridge": "No \u00e9s un enlla\u00e7 deCONZ",
             "updated_instance": "S'ha actualitzat la inst\u00e0ncia de deCONZ amb una nova adre\u00e7a"
         },
@@ -13,9 +13,9 @@
         },
         "flow_title": "Passarel\u00b7la d'enlla\u00e7 deCONZ Zigbee ({host})",
         "step": {
-            "oppio_confirm": {
-                "description": "Vols configurar Open Peer Power perqu\u00e8 es connecti amb la passarel\u00b7la deCONZ proporcionada pel complement de Opp.io: {addon}?",
-                "title": "Passarel\u00b7la d'enlla\u00e7 deCONZ Zigbee (complement de Opp.io)"
+            .oppio_confirm": {
+                "description": "Vols configurar Open Peer Power perqu\u00e8 es connecti amb la passarel\u00b7la deCONZ proporcionada pel complement de Hass.io: {addon}?",
+                "title": "Passarel\u00b7la d'enlla\u00e7 deCONZ Zigbee (complement de Hass.io)"
             },
             "link": {
                 "description": "Desbloqueja la teva passarel\u00b7la d'enlla\u00e7 deCONZ per a registrar-te amb Open Peer Power.\n\n1. V\u00e9s a la configuraci\u00f3 del sistema deCONZ -> Passarel\u00b7la -> Avan\u00e7at\n2. Prem el bot\u00f3 \"Autenticar applicaci\u00f3\"",

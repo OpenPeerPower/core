@@ -10,7 +10,7 @@ from .const import API, COORDINATOR, DOMAIN
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Somfy switch platform."""
-    domain_data = opp.data[DOMAIN]
+    domain_data =.opp.data[DOMAIN]
     coordinator = domain_data[COORDINATOR]
     api = domain_data[API]
 

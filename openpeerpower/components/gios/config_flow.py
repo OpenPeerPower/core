@@ -8,7 +8,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 from .const import CONF_STATION_ID, DEFAULT_NAME, DOMAIN  # pylint:disable=unused-import
 

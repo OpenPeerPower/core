@@ -38,9 +38,9 @@ CONF_SERVER = "server"
 SHORT_MAX = 65535
 
 TEMP_MAX = 9000
-TEMP_MAX_OPP = 500
+TEMP_MAX_HASS = 500
 TEMP_MIN = 2500
-TEMP_MIN_OPP = 154
+TEMP_MIN_HASS = 154
 
 SUPPORT_LIFX = (
     SUPPORT_BRIGHTNESS | SUPPORT_COLOR_TEMP | SUPPORT_COLOR | SUPPORT_TRANSITION
@@ -110,7 +110,7 @@ class LIFX:
             )
             bulb.set_power(power)
             bulb.set_color(hue, sat, bri, kel)
-            bulb.schedule_update_op.state()
+            bulb.schedule_update_ha_state()
 
     def on_color(self, ipaddr, hue, sat, bri, kel):
         """Initialize the light."""
@@ -118,7 +118,7 @@ class LIFX:
 
         if bulb is not None:
             bulb.set_color(hue, sat, bri, kel)
-            bulb.schedule_update_op.state()
+            bulb.schedule_update_ha_state()
 
     def on_power(self, ipaddr, power):
         """Initialize the light."""
@@ -126,7 +126,7 @@ class LIFX:
 
         if bulb is not None:
             bulb.set_power(power)
-            bulb.schedule_update_op.state()
+            bulb.schedule_update_ha_state()
 
     def poll(self, now):
         """Set up polling for the light."""

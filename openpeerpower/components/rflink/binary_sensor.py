@@ -71,7 +71,7 @@ class RflinkBinarySensor(RflinkDevice, BinarySensorEntity):
         self._delay_listener = None
         super().__init__(device_id, **kwargs)
 
-    def _op.dle_event(self, event):
+    def _handle_event(self, event):
         """Domain specific event handler."""
         command = event["command"]
         if command in ["on", "allon"]:
@@ -85,7 +85,7 @@ class RflinkBinarySensor(RflinkDevice, BinarySensorEntity):
                 """Switch device off after a delay."""
                 self._delay_listener = None
                 self._state = False
-                self.async_write_op.state()
+                self.async_write_ha_state()
 
             if self._delay_listener is not None:
                 self._delay_listener()

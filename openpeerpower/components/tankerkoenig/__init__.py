@@ -15,9 +15,9 @@ from openpeerpower.const import (
     CONF_SCAN_INTERVAL,
     CONF_SHOW_ON_MAP,
 )
-from openpeerpowerr.exceptions import OpenPeerPowerError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.discovery import async_load_platform
+from openpeerpower.exceptions import OpenPeerPowerError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.discovery import async_load_platform
 
 from .const import CONF_FUEL_TYPES, CONF_STATIONS, DOMAIN, FUEL_TYPES
 
@@ -77,7 +77,7 @@ async def async_setup.opp, config):
     radius = conf[CONF_RADIUS]
     additional_stations = conf[CONF_STATIONS]
 
-    setup_ok = await opp..async_add_executor_job(
+    setup_ok = await.opp.async_add_executor_job(
         tankerkoenig.setup, latitude, longitude, radius, additional_stations
     )
     if not setup_ok:
@@ -109,7 +109,7 @@ class TankerkoenigData:
         self.fuel_types = conf[CONF_FUEL_TYPES]
         self.update_interval = conf[CONF_SCAN_INTERVAL]
         self.show_on_map = conf[CONF_SHOW_ON_MAP]
-        self._opp = opp
+        self..opp =.opp
 
     def setup(self, latitude, longitude, radius, additional_stations):
         """Set up the tankerkoenig API.
@@ -186,7 +186,7 @@ class TankerkoenigData:
         # The API seems to only return at most 10 results, so split the list in chunks of 10
         # and merge it together.
         for index in range(ceil(len(station_ids) / 10)):
-            data = await self._opp.async_add_executor_job(
+            data = await self..opp.async_add_executor_job(
                 pytankerkoenig.getPriceList,
                 self._api_key,
                 station_ids[index * 10 : (index + 1) * 10],

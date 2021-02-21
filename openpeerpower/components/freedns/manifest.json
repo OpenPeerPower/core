@@ -1,6 +1,6 @@
 {
   "domain": "freedns",
   "name": "FreeDNS",
-  "documentation": "https://www.openpeerpower.io/integrations/freedns",
+  "documentation": "https://www.open-peer-power.io/integrations/freedns",
   "codeowners": []
 }

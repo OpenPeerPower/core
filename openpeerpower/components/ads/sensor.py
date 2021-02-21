@@ -4,7 +4,7 @@ import voluptuous as vol
 from openpeerpower.components import ads
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import CONF_NAME, CONF_UNIT_OF_MEASUREMENT
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import CONF_ADS_FACTOR, CONF_ADS_TYPE, CONF_ADS_VAR, STATE_KEY_STATE, AdsEntity
 
@@ -30,7 +30,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up an ADS sensor device."""
-    ads_hub = opp.data.get(ads.DATA_ADS)
+    ads_hub =.opp.data.get(ads.DATA_ADS)
 
     ads_var = config[CONF_ADS_VAR]
     ads_type = config[CONF_ADS_TYPE]
@@ -53,7 +53,7 @@ class AdsSensor(AdsEntity):
         self._ads_type = ads_type
         self._factor = factor
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register device notification."""
         await self.async_initialize_device(
             self._ads_var,

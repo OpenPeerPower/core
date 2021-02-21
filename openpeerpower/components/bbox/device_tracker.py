@@ -13,9 +13,9 @@ from openpeerpower.components.device_tracker import (
     DeviceScanner,
 )
 from openpeerpower.const import CONF_HOST
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.util import Throttle
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.util import Throttle
+import openpeerpower.util.dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 

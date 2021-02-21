@@ -14,7 +14,7 @@
                 "data": {
                     "api_key": "Clau API"
                 },
-                "description": "Necessitar\u00e0s la clau API de 16 car\u00e0cters, consulta les instruccions a https://www.openpeerpower.io/integrations/motion_blinds/#retrieving-the-key.",
+                "description": "Necessitar\u00e0s la clau API de 16 car\u00e0cters, consulta les instruccions a https://www.open-peer-power.io/integrations/motion_blinds/#retrieving-the-key.",
                 "title": "Motion Blinds"
             },
             "select": {

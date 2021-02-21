@@ -38,7 +38,7 @@ async def async_setup_entry(
     # Grab hosts list once to examine whether the initial fetch has got some data for
     # us, i.e. if wlan host list is supported. Only set up a subscription and proceed
     # with adding and tracking entities if it is.
-    router = opp.data[DOMAIN].routers[config_entry.data[CONF_URL]]
+    router =.opp.data[DOMAIN].routers[config_entry.data[CONF_URL]]
     try:
         _ = router.data[KEY_WLAN_HOST_LIST]["Hosts"]["Host"]
     except KeyError:
@@ -72,7 +72,7 @@ async def async_setup_entry(
     disconnect_dispatcher = async_dispatcher_connect(
        .opp, UPDATE_SIGNAL, _async_maybe_add_new_entities
     )
-    router.unload_op.dlers.append(disconnect_dispatcher)
+    router.unload_handlers.append(disconnect_dispatcher)
 
     # Add new entities from initial scan
     async_add_new_entities.opp, router.url, async_add_entities, tracked)
@@ -86,7 +86,7 @@ def async_add_new_entities(
     tracked: Set[str],
 ) -> None:
     """Add new entities that are not already being tracked."""
-    router = opp.data[DOMAIN].routers[router_url]
+    router =.opp.data[DOMAIN].routers[router_url]
     try:
         hosts = router.data[KEY_WLAN_HOST_LIST]["Hosts"]["Host"]
     except KeyError:

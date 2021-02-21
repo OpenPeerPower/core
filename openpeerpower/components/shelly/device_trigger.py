@@ -8,7 +8,7 @@ from openpeerpower.components.device_automation import TRIGGER_BASE_SCHEMA
 from openpeerpower.components.device_automation.exceptions import (
     InvalidDeviceAutomationConfig,
 )
-from openpeerpower.components.openpeerpowerr.triggers import event as event_trigger
+from openpeerpower.components.openpeerpower.triggers import event as event_trigger
 from openpeerpower.const import (
     ATTR_DEVICE_ID,
     CONF_DEVICE_ID,
@@ -17,8 +17,8 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     CONF_TYPE,
 )
-from openpeerpowerr.core import CALLBACK_TYPE, OpenPeerPower
-from openpeerpowerr.helpers.typing import ConfigType
+from openpeerpower.core import CALLBACK_TYPE, OpenPeerPower
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     ATTR_CHANNEL,

@@ -36,12 +36,12 @@ from openpeerpower.components.light import (
     preprocess_turn_on_alternatives,
 )
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_MODE, EVENT_OPENPEERPOWER_STOP
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import entity_platform
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.helpers.device_registry as dr
-from openpeerpowerr.helpers.event import async_track_point_in_utc_time
-import openpeerpowerr.util.color as color_util
+from openpeerpower.core import callback
+from openpeerpower.helpers import entity_platform
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.helpers.device_registry as dr
+from openpeerpower.helpers.event import async_track_point_in_utc_time
+import openpeerpower.util.color as color_util
 
 from . import (
     CONF_BROADCAST,
@@ -173,7 +173,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         )
 
     # Priority 1: manual config
-    interfaces = opp.data[LIFX_DOMAIN].get(DOMAIN)
+    interfaces =.opp.data[LIFX_DOMAIN].get(DOMAIN)
     if not interfaces:
         # Priority 2: scanned interfaces
         lifx_ip_addresses = await aiolifx().LifxScan.opp.loop).scan()
@@ -237,7 +237,7 @@ class LIFXManager:
     def __init__(self,.opp, platform, async_add_entities):
         """Initialize the light."""
         self.entities = {}
-        self.opp = opp
+        self.opp =.opp
         self.platform = platform
         self.async_add_entities = async_add_entities
         self.effects_conductor = aiolifx_effects().Conductor.opp.loop)
@@ -291,9 +291,9 @@ class LIFXManager:
         )
 
     def register_effects(self):
-        """Register the LIFX effects as opp service calls."""
+        """Register the LIFX effects as.opp service calls."""
 
-        async def service_op.dler(service):
+        async def service_handler(service):
             """Apply a service, i.e. start an effect."""
             entities = await self.platform.async_extract_from_service(service)
             if entities:
@@ -302,21 +302,21 @@ class LIFXManager:
         self.opp.services.async_register(
             LIFX_DOMAIN,
             SERVICE_EFFECT_PULSE,
-            service_op.dler,
+            service_handler,
             schema=LIFX_EFFECT_PULSE_SCHEMA,
         )
 
         self.opp.services.async_register(
             LIFX_DOMAIN,
             SERVICE_EFFECT_COLORLOOP,
-            service_op.dler,
+            service_handler,
             schema=LIFX_EFFECT_COLORLOOP_SCHEMA,
         )
 
         self.opp.services.async_register(
             LIFX_DOMAIN,
             SERVICE_EFFECT_STOP,
-            service_op.dler,
+            service_handler,
             schema=LIFX_EFFECT_STOP_SCHEMA,
         )
 
@@ -363,7 +363,7 @@ class LIFXManager:
             entity = self.entities[bulb.mac_addr]
             entity.registered = True
             _LOGGER.debug("%s register AGAIN", entity.who)
-            await entity.update_opp()
+            await entity.update.opp()
         else:
             _LOGGER.debug("%s register NEW", bulb.ip_addr)
 
@@ -405,7 +405,7 @@ class LIFXManager:
             entity = self.entities[bulb.mac_addr]
             _LOGGER.debug("%s unregister", entity.who)
             entity.registered = False
-            entity.async_write_op.state()
+            entity.async_write_ha_state()
 
 
 class AwaitAioLIFX:
@@ -545,11 +545,11 @@ class LIFXLight(LightEntity):
             return f"lifx_effect_{effect.name}"
         return None
 
-    async def update_opp(self, now=None):
+    async def update.opp(self, now=None):
         """Request new status and push it to.opp."""
         self.postponed_update = None
         await self.async_update()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def update_during_transition(self, when):
         """Update state at the start and end of a transition."""
@@ -557,13 +557,13 @@ class LIFXLight(LightEntity):
             self.postponed_update()
 
         # Transition has started
-        await self.update_opp()
+        await self.update.opp()
 
         # Transition has ended
         if when > 0:
             self.postponed_update = async_track_point_in_utc_time(
                 self.opp,
-                self.update_opp,
+                self.update.opp,
                 util.dt.utcnow() + timedelta(milliseconds=when),
             )
 

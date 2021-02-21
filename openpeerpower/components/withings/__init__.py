@@ -129,7 +129,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         const.DOMAIN,
         "Withings notify",
         data_manager.webhook_config.id,
-        async_webhook_op.dler,
+        async_webhook_handler,
     )
 
     # Perform first webhook subscription check.
@@ -173,7 +173,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_webhook_op.dler(
+async def async_webhook_handler(
    .opp: OpenPeerPower, webhook_id: str, request: Request
 ) -> Optional[Response]:
     """Handle webhooks calls."""

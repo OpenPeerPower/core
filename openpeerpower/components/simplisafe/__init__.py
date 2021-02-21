@@ -79,7 +79,7 @@ SUPPORTED_PLATFORMS = (
 )
 
 WEBSOCKET_EVENTS_REQUIRING_SERIAL = [EVENT_LOCK_LOCKED, EVENT_LOCK_UNLOCKED]
-WEBSOCKET_EVENTS_TO_TRIGGER_OPP_EVENT = [
+WEBSOCKET_EVENTS_TO_TRIGGER_HASS_EVENT = [
     EVENT_CAMERA_MOTION_DETECTED,
     EVENT_DOORBELL_DETECTED,
     EVENT_ENTRY_DELAY,
@@ -150,11 +150,11 @@ def _async_save_refresh_token.opp, config_entry, token):
 
 
 async def async_get_client_id.opp):
-    """Get a client ID (based on the OPP unique ID) for the SimpliSafe API.
+    """Get a client ID (based on the HASS unique ID) for the SimpliSafe API.
 
     Note that SimpliSafe requires full, "dashed" versions of UUIDs.
     """
-   .opp_id = await opp..helpers.instance_id.async_get()
+   .opp_id = await.opp.helpers.instance_id.async_get()
     return str(UUID.opp_id))
 
 
@@ -214,7 +214,7 @@ async def async_setup_entry.opp, config_entry):
 
     _async_save_refresh_token.opp, config_entry, api.refresh_token)
 
-    simplisafe = opp.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = SimpliSafe(
+    simplisafe =.opp.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = SimpliSafe(
        .opp, api, config_entry
     )
     await simplisafe.async_init()
@@ -342,7 +342,7 @@ async def async_unload_entry.opp, entry):
 
 async def async_reload_entry.opp, config_entry):
     """Handle an options update."""
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)
 
 
 class SimpliSafeWebsocket:
@@ -350,7 +350,7 @@ class SimpliSafeWebsocket:
 
     def __init__(self,.opp, websocket):
         """Initialize."""
-        self._opp = opp
+        self..opp =.opp
         self._websocket = websocket
 
     @staticmethod
@@ -367,10 +367,10 @@ class SimpliSafeWebsocket:
         """Define a handler to fire when a new SimpliSafe event arrives."""
         LOGGER.debug("New websocket event: %s", event)
         async_dispatcher_send(
-            self._opp, TOPIC_UPDATE_WEBSOCKET.format(event.system_id), event
+            self..opp, TOPIC_UPDATE_WEBSOCKET.format(event.system_id), event
         )
 
-        if event.event_type not in WEBSOCKET_EVENTS_TO_TRIGGER_OPP_EVENT:
+        if event.event_type not in WEBSOCKET_EVENTS_TO_TRIGGER_HASS_EVENT:
             return
 
         if event.sensor_type:
@@ -378,7 +378,7 @@ class SimpliSafeWebsocket:
         else:
             sensor_type = None
 
-        self._opp.bus.async_fire(
+        self..opp.bus.async_fire(
             EVENT_SIMPLISAFE_EVENT,
             event_data={
                 ATTR_LAST_EVENT_CHANGED_BY: event.changed_by,
@@ -412,7 +412,7 @@ class SimpliSafe:
         """Initialize."""
         self._api = api
         self._emergency_refresh_token_used = False
-        self._opp = opp
+        self..opp =.opp
         self._system_notifications = {}
         self.config_entry = config_entry
         self.coordinator = None
@@ -423,8 +423,8 @@ class SimpliSafe:
     @callback
     def _async_process_new_notifications(self, system):
         """Act on any new system notifications."""
-        if self._opp.state != CoreState.running:
-            # If OPP isn't fully running yet, it may cause the SIMPLISAFE_NOTIFICATION
+        if self..opp.state != CoreState.running:
+            # If HASS isn't fully running yet, it may cause the SIMPLISAFE_NOTIFICATION
             # event to fire before dependent components (like automation) are fully
             # ready. If that's the case, skip:
             return
@@ -447,7 +447,7 @@ class SimpliSafe:
             if notification.link:
                 text = f"{text} For more information: {notification.link}"
 
-            self._opp.bus.async_fire(
+            self..opp.bus.async_fire(
                 EVENT_SIMPLISAFE_NOTIFICATION,
                 event_data={
                     ATTR_CATEGORY: notification.category,
@@ -465,8 +465,8 @@ class SimpliSafe:
             """Define an event handler to disconnect from the websocket."""
             await self.websocket.async_disconnect()
 
-        self._opp.data[DOMAIN][DATA_LISTENER][self.config_entry.entry_id].append(
-            self._opp.bus.async_listen_once(
+        self..opp.data[DOMAIN][DATA_LISTENER][self.config_entry.entry_id].append(
+            self..opp.bus.async_listen_once(
                 EVENT_OPENPEERPOWER_STOP, async_websocket_disconnect
             )
         )
@@ -475,9 +475,9 @@ class SimpliSafe:
         for system in self.systems.values():
             self._system_notifications[system.system_id] = set()
 
-            self._opp.async_create_task(
+            self..opp.async_create_task(
                 async_register_base_station(
-                    self._opp, system, self.config_entry.entry_id
+                    self..opp, system, self.config_entry.entry_id
                 )
             )
 
@@ -493,7 +493,7 @@ class SimpliSafe:
                 self.initial_event_to_use[system.system_id] = {}
 
         self.coordinator = DataUpdateCoordinator(
-            self._opp,
+            self..opp,
             LOGGER,
             name=self.config_entry.data[CONF_USERNAME],
             update_interval=DEFAULT_SCAN_INTERVAL,
@@ -516,15 +516,15 @@ class SimpliSafe:
                 if self._emergency_refresh_token_used:
                     matching_flows = [
                         flow
-                        for flow in self._opp.config_entries.flow.async_progress()
+                        for flow in self..opp.config_entries.flow.async_progress()
                         if flow["context"].get("source") == SOURCE_REAUTH
                         and flow["context"].get("unique_id")
                         == self.config_entry.unique_id
                     ]
 
                     if not matching_flows:
-                        self._opp.async_create_task(
-                            self._opp.config_entries.flow.async_init(
+                        self..opp.async_create_task(
+                            self..opp.config_entries.flow.async_init(
                                 DOMAIN,
                                 context={
                                     "source": SOURCE_REAUTH,
@@ -560,7 +560,7 @@ class SimpliSafe:
 
         if self._api.refresh_token != self.config_entry.data[CONF_TOKEN]:
             _async_save_refresh_token(
-                self._opp, self.config_entry, self._api.refresh_token
+                self..opp, self.config_entry, self._api.refresh_token
             )
 
         # If we've reached this point using an emergency refresh token, we're in the
@@ -679,13 +679,13 @@ class SimpliSafeEntity(CoordinatorEntity):
         self.async_update_from_websocket_event(event)
 
     @callback
-    def _op.dle_coordinator_update(self):
+    def _handle_coordinator_update(self):
         """Update the entity with new REST API data."""
         self.async_update_from_rest_api()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
-    def _op.dle_websocket_update(self, event):
+    def _handle_websocket_update(self, event):
         """Update the entity with new websocket data."""
         # Ignore this event if it belongs to a system other than this one:
         if event.system_id != self._system.system_id:
@@ -704,17 +704,17 @@ class SimpliSafeEntity(CoordinatorEntity):
             return
 
         self._async_internal_update_from_websocket_event(event)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         self.async_on_remove(
             async_dispatcher_connect(
                 self.opp,
                 TOPIC_UPDATE_WEBSOCKET.format(self._system.system_id),
-                self._op.dle_websocket_update,
+                self._handle_websocket_update,
             )
         )
 

@@ -17,13 +17,13 @@ from openpeerpower.const import (
     CONF_UNIQUE_ID,
     CONF_VALUE_TEMPLATE,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import TemplateError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import async_generate_entity_id
-from openpeerpowerr.helpers.event import async_call_later
-from openpeerpowerr.helpers.reload import async_setup_reload_service
-from openpeerpowerr.helpers.template import result_as_boolean
+from openpeerpower.core import callback
+from openpeerpower.exceptions import TemplateError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import async_generate_entity_id
+from openpeerpower.helpers.event import async_call_later
+from openpeerpower.helpers.reload import async_setup_reload_service
+from openpeerpower.helpers.template import result_as_boolean
 
 from .const import CONF_AVAILABILITY_TEMPLATE, DOMAIN, PLATFORMS
 from .template_entity import TemplateEntity
@@ -138,7 +138,7 @@ class BinarySensorTemplate(TemplateEntity, BinarySensorEntity):
         self._delay_off_raw = delay_off_raw
         self._unique_id = unique_id
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.add_template_attribute("_state", self._template, None, self._update_state)
 
@@ -158,7 +158,7 @@ class BinarySensorTemplate(TemplateEntity, BinarySensorEntity):
                     "_delay_off", self._delay_off_raw, cv.positive_time_period
                 )
 
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     @callback
     def _update_state(self, result):
@@ -186,7 +186,7 @@ class BinarySensorTemplate(TemplateEntity, BinarySensorEntity):
         def _set_state(_):
             """Set state of template binary sensor."""
             self._state = state
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         delay = (self._delay_on if state else self._delay_off).seconds
         # state with delay. Cancelled if template result changes.

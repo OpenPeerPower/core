@@ -90,7 +90,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return unload_ok
 
 
-def wled_exception_op.dler(func):
+def wled_exception_handler(func):
     """Decorate WLED calls to handle WLED exceptions.
 
     A decorator that wraps the passed in function, catches WLED errors,

@@ -47,7 +47,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the Ondilo ICO sensors."""
 
-    api = opp.data[DOMAIN][entry.entry_id]
+    api =.opp.data[DOMAIN][entry.entry_id]
 
     async def async_update_data():
         """Fetch data from API endpoint.
@@ -56,7 +56,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
         so entities can quickly look up their data.
         """
         try:
-            return await opp..async_add_executor_job(api.get_all_pools_data)
+            return await.opp.async_add_executor_job(api.get_all_pools_data)
 
         except OndiloError as err:
             raise UpdateFailed(f"Error communicating with API: {err}") from err

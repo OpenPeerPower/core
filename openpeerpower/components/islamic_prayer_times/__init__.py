@@ -63,7 +63,7 @@ async def async_unload_entry.opp, config_entry):
     if.opp.data[DOMAIN].event_unsub:
        .opp.data[DOMAIN].event_unsub()
    .opp.data.pop(DOMAIN)
-    await opp..config_entries.async_forward_entry_unload(config_entry, "sensor")
+    await.opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
 
     return True
 
@@ -73,7 +73,7 @@ class IslamicPrayerClient:
 
     def __init__(self,.opp, config_entry):
         """Initialize the Islamic Prayer client."""
-        self.opp = opp
+        self.opp =.opp
         self.config_entry = config_entry
         self.prayer_times_info = {}
         self.available = True
@@ -203,4 +203,4 @@ class IslamicPrayerClient:
         """Triggered by config entry options updates."""
         if.opp.data[DOMAIN].event_unsub:
            .opp.data[DOMAIN].event_unsub()
-        await opp..data[DOMAIN].async_update()
+        await.opp.data[DOMAIN].async_update()

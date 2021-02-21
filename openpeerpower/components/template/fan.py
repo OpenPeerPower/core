@@ -32,12 +32,12 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import TemplateError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import async_generate_entity_id
-from openpeerpowerr.helpers.reload import async_setup_reload_service
-from openpeerpowerr.helpers.script import Script
+from openpeerpower.core import callback
+from openpeerpower.exceptions import TemplateError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import async_generate_entity_id
+from openpeerpower.helpers.reload import async_setup_reload_service
+from openpeerpower.helpers.script import Script
 
 from .const import CONF_AVAILABILITY_TEMPLATE, DOMAIN, PLATFORMS
 from .template_entity import TemplateEntity
@@ -46,6 +46,7 @@ _LOGGER = logging.getLogger(__name__)
 
 CONF_FANS = "fans"
 CONF_SPEED_LIST = "speeds"
+CONF_SPEED_COUNT = "speed_count"
 CONF_PRESET_MODES = "preset_modes"
 CONF_SPEED_TEMPLATE = "speed_template"
 CONF_PERCENTAGE_TEMPLATE = "percentage_template"
@@ -86,6 +87,7 @@ FAN_SCHEMA = vol.All(
             vol.Optional(CONF_SET_PRESET_MODE_ACTION): cv.SCRIPT_SCHEMA,
             vol.Optional(CONF_SET_OSCILLATING_ACTION): cv.SCRIPT_SCHEMA,
             vol.Optional(CONF_SET_DIRECTION_ACTION): cv.SCRIPT_SCHEMA,
+            vol.Optional(CONF_SPEED_COUNT): vol.Coerce(int),
             vol.Optional(
                 CONF_SPEED_LIST,
                 default=[SPEED_OFF, SPEED_LOW, SPEED_MEDIUM, SPEED_HIGH],
@@ -126,6 +128,7 @@ async def _async_create_entities.opp, config):
         set_direction_action = device_config.get(CONF_SET_DIRECTION_ACTION)
 
         speed_list = device_config[CONF_SPEED_LIST]
+        speed_count = device_config.get(CONF_SPEED_COUNT)
         preset_modes = device_config.get(CONF_PRESET_MODES)
         unique_id = device_config.get(CONF_UNIQUE_ID)
 
@@ -148,6 +151,7 @@ async def _async_create_entities.opp, config):
                 set_preset_mode_action,
                 set_oscillating_action,
                 set_direction_action,
+                speed_count,
                 speed_list,
                 preset_modes,
                 unique_id,
@@ -185,13 +189,14 @@ class TemplateFan(TemplateEntity, FanEntity):
         set_preset_mode_action,
         set_oscillating_action,
         set_direction_action,
+        speed_count,
         speed_list,
         preset_modes,
         unique_id,
     ):
         """Initialize the fan."""
         super().__init__(availability_template=availability_template)
-        self.opp = opp
+        self.opp =.opp
         self.entity_id = async_generate_entity_id(
             ENTITY_ID_FORMAT, device_id,.opp.opp
         )
@@ -260,6 +265,9 @@ class TemplateFan(TemplateEntity, FanEntity):
 
         self._unique_id = unique_id
 
+        # Number of valid speeds
+        self._speed_count = speed_count
+
         # List of valid speeds
         self._speed_list = speed_list
 
@@ -280,6 +288,11 @@ class TemplateFan(TemplateEntity, FanEntity):
     def supported_features(self) -> int:
         """Flag supported features."""
         return self._supported_features
+
+    @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        return self._speed_count or super().speed_count
 
     @property
     def speed_list(self) -> list:
@@ -459,7 +472,7 @@ class TemplateFan(TemplateEntity, FanEntity):
             )
             self._state = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.add_template_attribute("_state", self._template, None, self._update_state)
         if self._preset_mode_template is not None:
@@ -502,7 +515,7 @@ class TemplateFan(TemplateEntity, FanEntity):
                 self._update_direction,
                 none_on_template_error=True,
             )
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     @callback
     def _update_speed(self, speed):

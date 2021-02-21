@@ -28,7 +28,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the platform for a Skybell device."""
-    skybell = opp.data.get(SKYBELL_DOMAIN)
+    skybell =.opp.data.get(SKYBELL_DOMAIN)
 
     sensors = []
     for sensor_type in config.get(CONF_MONITORED_CONDITIONS):

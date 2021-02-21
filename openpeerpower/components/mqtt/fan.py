@@ -223,7 +223,7 @@ class MqttFan(MqttEntity, FanEntity):
                 self._state = True
             elif payload == self._payload["STATE_OFF"]:
                 self._state = False
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         if self._topic[CONF_STATE_TOPIC] is not None:
             topics[CONF_STATE_TOPIC] = {
@@ -245,7 +245,7 @@ class MqttFan(MqttEntity, FanEntity):
                 self._speed = SPEED_HIGH
             elif payload == self._payload["SPEED_OFF"]:
                 self._speed = SPEED_OFF
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         if self._topic[CONF_SPEED_STATE_TOPIC] is not None:
             topics[CONF_SPEED_STATE_TOPIC] = {
@@ -264,7 +264,7 @@ class MqttFan(MqttEntity, FanEntity):
                 self._oscillation = True
             elif payload == self._payload["OSCILLATE_OFF_PAYLOAD"]:
                 self._oscillation = False
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         if self._topic[CONF_OSCILLATION_STATE_TOPIC] is not None:
             topics[CONF_OSCILLATION_STATE_TOPIC] = {
@@ -318,7 +318,7 @@ class MqttFan(MqttEntity, FanEntity):
     # instead of speeds.
     #
     # Please review
-    # https://developers.openpeerpower.io/docs/core/entity/fan/
+    # https://developers.open-peer-power.io/docs/core/entity/fan/
     #
     async def async_turn_on(
         self,
@@ -342,7 +342,7 @@ class MqttFan(MqttEntity, FanEntity):
             await self.async_set_speed(speed)
         if self._optimistic:
             self._state = True
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn off the entity.
@@ -358,7 +358,7 @@ class MqttFan(MqttEntity, FanEntity):
         )
         if self._optimistic:
             self._state = False
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_set_speed(self, speed: str) -> None:
         """Set the speed of the fan.
@@ -386,7 +386,7 @@ class MqttFan(MqttEntity, FanEntity):
 
         if self._optimistic_speed:
             self._speed = speed
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_oscillate(self, oscillating: bool) -> None:
         """Set oscillation.
@@ -408,4 +408,4 @@ class MqttFan(MqttEntity, FanEntity):
 
         if self._optimistic_oscillation:
             self._oscillation = oscillating
-            self.async_write_op.state()
+            self.async_write_ha_state()

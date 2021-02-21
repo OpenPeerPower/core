@@ -5,7 +5,7 @@ from openpeerpower.components.binary_sensor import (
     DEVICE_CLASS_CONNECTIVITY,
     BinarySensorEntity,
 )
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import DISPATCHER_REMOTE_UPDATE, DOMAIN
 
@@ -16,7 +16,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up the cloud binary sensors."""
     if discovery_info is None:
         return
-    cloud = opp.data[DOMAIN]
+    cloud =.opp.data[DOMAIN]
 
     async_add_entities([CloudRemoteBinary(cloud)])
 
@@ -59,19 +59,19 @@ class CloudRemoteBinary(BinarySensorEntity):
         """Return True if entity has to be polled for state."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register update dispatcher."""
 
         async def async_state_update(data):
             """Update callback."""
             await asyncio.sleep(WAIT_UNTIL_CHANGE)
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self._unsub_dispatcher = async_dispatcher_connect(
             self.opp, DISPATCHER_REMOTE_UPDATE, async_state_update
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Register update dispatcher."""
         if self._unsub_dispatcher is not None:
             self._unsub_dispatcher()

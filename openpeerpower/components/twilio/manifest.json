@@ -2,7 +2,7 @@
   "domain": "twilio",
   "name": "Twilio",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/twilio",
+  "documentation": "https://www.open-peer-power.io/integrations/twilio",
   "requirements": ["twilio==6.32.0"],
   "dependencies": ["webhook"],
   "codeowners": []

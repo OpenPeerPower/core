@@ -13,8 +13,8 @@ from openpeerpower.const import (
     CONF_PASSWORD,
     CONF_USERNAME,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Reddit sensor platform."""
     subreddits = config[CONF_SUBREDDITS]
-    user_agent = "{}_home_assistant_sensor".format(config[CONF_USERNAME])
+    user_agent = "{}_open_peer_power_sensor".format(config[CONF_USERNAME])
     limit = config[CONF_MAXIMUM]
     sort_by = config[CONF_SORT_BY]
 

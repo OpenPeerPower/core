@@ -6,7 +6,7 @@ import voluptuous as vol
 from openpeerpower.auth.permissions.const import CAT_ENTITIES, POLICY_READ
 from openpeerpower.components.websocket_api.const import ERR_NOT_FOUND
 from openpeerpower.const import EVENT_STATE_CHANGED, EVENT_TIME_CHANGED, MATCH_ALL
-from openpeerpower.core import DOMAIN as OPP_DOMAIN, callback
+from openpeerpower.core import DOMAIN as HASS_DOMAIN, callback
 from openpeerpower.exceptions import (
     OpenPeerPowerError,
     ServiceNotFound,
@@ -87,7 +87,7 @@ def handle_subscribe_events.opp, connection, msg):
 
             connection.send_message(messages.cached_event_message(msg["id"], event))
 
-    connection.subscriptions[msg["id"]] = opp.bus.async_listen(
+    connection.subscriptions[msg["id"]] =.opp.bus.async_listen(
         event_type, forward_events
     )
 
@@ -129,12 +129,12 @@ def handle_unsubscribe_events.opp, connection, msg):
 async def handle_call_service.opp, connection, msg):
     """Handle call service command."""
     blocking = True
-    if msg["domain"] == OPP_DOMAIN and msg["service"] in ["restart", "stop"]:
+    if msg["domain"] == HASS_DOMAIN and msg["service"] in ["restart", "stop"]:
         blocking = False
 
     try:
         context = connection.context(msg)
-        await opp..services.async_call(
+        await.opp.services.async_call(
             msg["domain"],
             msg["service"],
             msg.get("service_data"),
@@ -155,7 +155,7 @@ async def handle_call_service.opp, connection, msg):
         else:
             connection.send_message(
                 messages.error_message(
-                    msg["id"], const.ERR_HOME_ASSISTANT_ERROR, str(err)
+                    msg["id"], const.ERR_OPEN_PEER_POWER_ERROR, str(err)
                 )
             )
     except vol.Invalid as err:
@@ -165,7 +165,7 @@ async def handle_call_service.opp, connection, msg):
     except OpenPeerPowerError as err:
         connection.logger.exception(err)
         connection.send_message(
-            messages.error_message(msg["id"], const.ERR_HOME_ASSISTANT_ERROR, str(err))
+            messages.error_message(msg["id"], const.ERR_OPEN_PEER_POWER_ERROR, str(err))
         )
     except Exception as err:  # pylint: disable=broad-except
         connection.logger.exception(err)
@@ -179,7 +179,7 @@ async def handle_call_service.opp, connection, msg):
 def handle_get_states.opp, connection, msg):
     """Handle get states command."""
     if connection.user.permissions.access_all_entities("read"):
-        states = opp.states.async_all()
+        states =.opp.states.async_all()
     else:
         entity_perm = connection.user.permissions.check_entity
         states = [

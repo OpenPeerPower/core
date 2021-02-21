@@ -32,7 +32,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class TellstickSwitch(TellstickDevice, ToggleEntity):
     """Representation of a Tellstick switch."""
 
-    def _parse_op.data(self, kwargs):
+    def _parse_ha_data(self, kwargs):
         """Turn the value from HA into something useful."""
 
     def _parse_tellcore_data(self, tellcore_data):

@@ -112,7 +112,7 @@ async def async_setup_entry.opp, config):
         return False
 
     dispatcher.async_dispatcher_connect(
-       .opp, EVENT_HANGOUTS_CONNECTED, bot.async_op.dle_update_users_and_conversations
+       .opp, EVENT_HANGOUTS_CONNECTED, bot.async_handle_update_users_and_conversations
     )
 
     dispatcher.async_dispatcher_connect(
@@ -125,25 +125,25 @@ async def async_setup_entry.opp, config):
         bot.async_update_conversation_commands,
     )
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, bot.async_op.dle_opp_stop)
+   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, bot.async_handle.opp_stop)
 
     await bot.async_connect()
 
    .opp.services.async_register(
         DOMAIN,
         SERVICE_SEND_MESSAGE,
-        bot.async_op.dle_send_message,
+        bot.async_handle_send_message,
         schema=MESSAGE_SCHEMA,
     )
    .opp.services.async_register(
         DOMAIN,
         SERVICE_UPDATE,
-        bot.async_op.dle_update_users_and_conversations,
+        bot.async_handle_update_users_and_conversations,
         schema=vol.Schema({}),
     )
 
    .opp.services.async_register(
-        DOMAIN, SERVICE_RECONNECT, bot.async_op.dle_reconnect, schema=vol.Schema({})
+        DOMAIN, SERVICE_RECONNECT, bot.async_handle_reconnect, schema=vol.Schema({})
     )
 
     intent.async_register.opp, HelpIntent.opp))
@@ -153,6 +153,6 @@ async def async_setup_entry.opp, config):
 
 async def async_unload_entry.opp, _):
     """Unload a config entry."""
-    bot = opp.data[DOMAIN].pop(CONF_BOT)
+    bot =.opp.data[DOMAIN].pop(CONF_BOT)
     await bot.async_disconnect()
     return True

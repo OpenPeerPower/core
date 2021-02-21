@@ -22,7 +22,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     if config_entry.data[CONF_USE_WEBHOOK]:
         return
 
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
     async_add_entities(
         PlaatoBinarySensor(
            .opp.data[DOMAIN][config_entry.entry_id],

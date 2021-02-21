@@ -52,7 +52,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload BSBLan config entry."""
 
-    await opp..config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN)
+    await.opp.config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN)
 
     # Cleanup
     del.opp.data[DOMAIN][entry.entry_id]

@@ -2,9 +2,9 @@
 import logging
 
 from openpeerpower.const import DEVICE_CLASS_BATTERY, PERCENTAGE
-from openpeerpowerr.helpers.icon import icon_for_battery_level
-from openpeerpowerr.util.distance import LENGTH_KILOMETERS, LENGTH_MILES
-from openpeerpowerr.util.unit_system import IMPERIAL_SYSTEM, METRIC_SYSTEM
+from openpeerpower.helpers.icon import icon_for_battery_level
+from openpeerpower.util.distance import LENGTH_KILOMETERS, LENGTH_MILES
+from openpeerpower.util.unit_system import IMPERIAL_SYSTEM, METRIC_SYSTEM
 
 from . import (
     DATA_BATTERY,

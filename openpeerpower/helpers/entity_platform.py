@@ -54,7 +54,7 @@ class EntityPlatform:
         entity_namespace: Optional[str],
     ):
         """Initialize the entity platform."""
-        self.opp = opp
+        self.opp =.opp
         self.logger = logger
         self.domain = domain
         self.platform_name = platform_name
@@ -88,7 +88,7 @@ class EntityPlatform:
 
     @callback
     def _get_parallel_updates_semaphore(
-        self, entity_op._async_update: bool
+        self, entity_has_async_update: bool
     ) -> Optional[asyncio.Semaphore]:
         """Get or create a semaphore for parallel updates.
 
@@ -106,7 +106,7 @@ class EntityPlatform:
 
         parallel_updates = getattr(self.platform, "PARALLEL_UPDATES", None)
 
-        if parallel_updates is None and not entity_op._async_update:
+        if parallel_updates is None and not entity_has_async_update:
             parallel_updates = 1
 
         if parallel_updates == 0:
@@ -120,7 +120,7 @@ class EntityPlatform:
     async def async_setup(self, platform_config, discovery_info=None):  # type: ignore[no-untyped-def]
         """Set up the platform from a config file."""
         platform = self.platform
-        opp = self.opp
+       .opp = self.opp
 
         if not hasattr(platform, "async_setup_platform") and not hasattr(
             platform, "setup_platform"
@@ -180,11 +180,11 @@ class EntityPlatform:
         """
         current_platform.set(self)
         logger = self.logger
-        opp = self.opp
+       .opp = self.opp
         full_name = f"{self.domain}.{self.platform_name}"
 
         logger.info("Setting up %s", full_name)
-        warn_task = opp.loop.call_later(
+        warn_task =.opp.loop.call_later(
             SLOW_SETUP_WARNING,
             logger.warning,
             "Setup of %s platform %s is taking over %s seconds.",
@@ -296,10 +296,10 @@ class EntityPlatform:
         if not new_entities:
             return
 
-        opp = self.opp
+       .opp = self.opp
 
-        device_registry = await opp..helpers.device_registry.async_get_registry()
-        entity_registry = await opp..helpers.entity_registry.async_get_registry()
+        device_registry = await.opp.helpers.device_registry.async_get_registry()
+        entity_registry = await.opp.helpers.entity_registry.async_get_registry()
         tasks = [
             self._async_add_entity(  # type: ignore
                 entity, update_before_add, entity_registry, device_registry
@@ -399,6 +399,7 @@ class EntityPlatform:
                     "sw_version",
                     "entry_type",
                     "via_device",
+                    "suggested_area",
                 ):
                     if key in device_info:
                         processed_dev_info[key] = device_info[key]
@@ -614,7 +615,7 @@ class EntityPlatform:
             for entity in self.entities.values():
                 if not entity.should_poll:
                     continue
-                tasks.append(entity.async_update_op.state(True))
+                tasks.append(entity.async_update_ha_state(True))
 
             if tasks:
                 await asyncio.gather(*tasks)
@@ -636,6 +637,6 @@ def async_get_platforms(
     ):
         return []
 
-    platforms: List[EntityPlatform] = opp.data[DATA_ENTITY_PLATFORM][integration_name]
+    platforms: List[EntityPlatform] =.opp.data[DATA_ENTITY_PLATFORM][integration_name]
 
     return platforms

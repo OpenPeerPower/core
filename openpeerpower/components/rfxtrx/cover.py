@@ -11,7 +11,7 @@ from openpeerpower.components.cover import (
     CoverEntity,
 )
 from openpeerpower.const import CONF_DEVICES, STATE_OPEN
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from . import (
     CONF_DATA_BITS,
@@ -115,9 +115,9 @@ class RfxtrxCover(RfxtrxCommandEntity, CoverEntity):
         super().__init__(device, device_id, signal_repetitions, event)
         self._venetian_blind_mode = venetian_blind_mode
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Restore device state."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         if self._event is None:
             old_state = await self.async_get_last_state()
@@ -153,7 +153,7 @@ class RfxtrxCover(RfxtrxCommandEntity, CoverEntity):
         else:
             await self._async_send(self._device.send_open)
         self._state = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_close_cover(self, **kwargs):
         """Move the cover down."""
@@ -164,13 +164,13 @@ class RfxtrxCover(RfxtrxCommandEntity, CoverEntity):
         else:
             await self._async_send(self._device.send_close)
         self._state = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_stop_cover(self, **kwargs):
         """Stop the cover."""
         await self._async_send(self._device.send_stop)
         self._state = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_open_cover_tilt(self, **kwargs):
         """Tilt the cover up."""
@@ -190,7 +190,7 @@ class RfxtrxCover(RfxtrxCommandEntity, CoverEntity):
         """Stop the cover tilt."""
         await self._async_send(self._device.send_stop)
         self._state = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _apply_event(self, event):
         """Apply command from rfxtrx."""
@@ -201,11 +201,11 @@ class RfxtrxCover(RfxtrxCommandEntity, CoverEntity):
             self._state = False
 
     @callback
-    def _op.dle_event(self, event, device_id):
+    def _handle_event(self, event, device_id):
         """Check if event applies to me and update."""
         if device_id != self._device_id:
             return
 
         self._apply_event(event)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()

@@ -15,11 +15,11 @@ from openpeerpower.components.light import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_time_interval
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-import openpeerpowerr.util.color as color_util
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_time_interval
+from openpeerpower.helpers.typing import OpenPeerPowerType
+import openpeerpower.util.color as color_util
 
 from .const import DOMAIN
 
@@ -106,15 +106,15 @@ class ZerprocLight(LightEntity):
         self._brightness = None
         self._available = True
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Run when entity about to be added to.opp."""
         self.async_on_remove(
             self.opp.bus.async_listen_once(
-                EVENT_OPENPEERPOWER_STOP, self.async_will_remove_from_opp
+                EVENT_OPENPEERPOWER_STOP, self.async_will_remove_from.opp
             )
         )
 
-    async def async_will_remove_from_opp(self, *args) -> None:
+    async def async_will_remove_from.opp(self, *args) -> None:
         """Run when entity will be removed from.opp."""
         try:
             await self._light.disconnect()

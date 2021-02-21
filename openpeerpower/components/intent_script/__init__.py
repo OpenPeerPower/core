@@ -67,7 +67,7 @@ class ScriptIntentHandler(intent.IntentHandler):
         self.intent_type = intent_type
         self.config = config
 
-    async def async_op.dle(self, intent_obj):
+    async def async_handle(self, intent_obj):
         """Handle the intent."""
         speech = self.config.get(CONF_SPEECH)
         card = self.config.get(CONF_CARD)

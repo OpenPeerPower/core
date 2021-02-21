@@ -7,9 +7,9 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import CONF_HOST, CONF_PORT, PERCENTAGE
-from openpeerpowerr.exceptions import PlatformNotReady
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.exceptions import PlatformNotReady
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 

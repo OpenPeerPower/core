@@ -2,7 +2,7 @@
   "domain": "risco",
   "name": "Risco",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/risco",
+  "documentation": "https://www.open-peer-power.io/integrations/risco",
   "requirements": [
     "pyrisco==0.3.1"
   ],

@@ -12,9 +12,9 @@ from openpeerpower.const import (
     DATA_RATE_KILOBYTES_PER_SECOND,
     STATE_IDLE,
 )
-from openpeerpowerr.exceptions import PlatformNotReady
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.exceptions import PlatformNotReady
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 

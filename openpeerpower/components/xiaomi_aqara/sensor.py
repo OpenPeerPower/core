@@ -35,7 +35,7 @@ SENSOR_TYPES = {
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Perform the setup for Xiaomi devices."""
     entities = []
-    gateway = opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
+    gateway =.opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
     for device in gateway.devices["sensor"]:
         if device["model"] == "sensor_ht":
             entities.append(

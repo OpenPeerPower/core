@@ -27,7 +27,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Discover and configure Somfy covers."""
     reversed_target_ids = config_entry.options.get(CONF_REVERSED_TARGET_IDS, {})
 
-    data = opp.data[DOMAIN][config_entry.entry_id]
+    data =.opp.data[DOMAIN][config_entry.entry_id]
     mylink_status = data[MYLINK_STATUS]
     somfy_mylink = data[DATA_SOMFY_MYLINK]
     cover_list = []
@@ -126,7 +126,7 @@ class SomfyShade(RestoreEntity, CoverEntity):
     async def async_close_cover(self, **kwargs):
         """Close the cover."""
         self._is_closing = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
         try:
             # Blocks until the close command is sent
             if not self._reverse:
@@ -136,12 +136,12 @@ class SomfyShade(RestoreEntity, CoverEntity):
             self._closed = True
         finally:
             self._is_closing = None
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_open_cover(self, **kwargs):
         """Open the cover."""
         self._is_opening = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
         try:
             # Blocks until the open command is sent
             if not self._reverse:
@@ -151,15 +151,15 @@ class SomfyShade(RestoreEntity, CoverEntity):
             self._closed = False
         finally:
             self._is_opening = None
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_stop_cover(self, **kwargs):
         """Stop the cover."""
         await self.somfy_mylink.move_stop(self._target_id)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Complete the initialization."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         # Restore the last state
         last_state = await self.async_get_last_state()
 

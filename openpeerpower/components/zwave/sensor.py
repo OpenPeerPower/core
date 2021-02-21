@@ -1,8 +1,8 @@
 """Support for Z-Wave sensors."""
 from openpeerpower.components.sensor import DEVICE_CLASS_BATTERY, DOMAIN
 from openpeerpower.const import TEMP_CELSIUS, TEMP_FAHRENHEIT
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import ZWaveDeviceEntity, const
 

@@ -25,7 +25,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the OpenTherm Gateway binary sensors."""
     sensors = []
     deprecated_sensors = []
-    gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]]
+    gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]]
     ent_reg = await async_get_registry.opp)
     for var, info in BINARY_SENSOR_INFO.items():
         device_class = info[0]
@@ -94,14 +94,14 @@ class OpenThermBinarySensor(BinarySensorEntity):
         self._friendly_name = friendly_name_format.format(gw_dev.name)
         self._unsub_updates = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates from the component."""
         _LOGGER.debug("Added OpenTherm Gateway binary sensor %s", self._friendly_name)
         self._unsub_updates = async_dispatcher_connect(
             self.opp, self._gateway.update_signal, self.receive_report
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe from updates from the component."""
         _LOGGER.debug(
             "Removing OpenTherm Gateway binary sensor %s", self._friendly_name
@@ -123,7 +123,7 @@ class OpenThermBinarySensor(BinarySensorEntity):
         """Handle status updates from the component."""
         state = status[self._source].get(self._var)
         self._state = None if state is None else bool(state)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def name(self):

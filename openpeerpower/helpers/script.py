@@ -18,7 +18,7 @@ from typing import (
     cast,
 )
 
-from async_timeout import timeout
+import async_timeout
 import voluptuous as vol
 
 from openpeerpower import exceptions
@@ -58,7 +58,7 @@ from openpeerpower.const import (
 from openpeerpower.core import (
     SERVICE_CALL_LIMIT,
     Context,
-    OppJob,
+    HassJob,
     OpenPeerPower,
     callback,
 )
@@ -210,7 +210,7 @@ class _ScriptRun:
         context: Optional[Context],
         log_exceptions: bool,
     ) -> None:
-        self._opp = opp
+        self..opp =.opp
         self._script = script
         self._variables = variables
         self._context = context
@@ -234,6 +234,13 @@ class _ScriptRun:
         self._script._log(  # pylint: disable=protected-access
             msg, *args, level=level, **kwargs
         )
+
+    def _step_log(self, default_message, timeout=None):
+        self._script.last_action = self._action.get(CONF_ALIAS, default_message)
+        _timeout = (
+            "" if timeout is None else f" (timeout: {timedelta(seconds=timeout)})"
+        )
+        self._log("Executing step %s%s", self._script.last_action, _timeout)
 
     async def async_run(self) -> None:
         """Run script."""
@@ -327,13 +334,12 @@ class _ScriptRun:
         """Handle delay."""
         delay = self._get_pos_time_period_template(CONF_DELAY)
 
-        self._script.last_action = self._action.get(CONF_ALIAS, f"delay {delay}")
-        self._log("Executing step %s", self._script.last_action)
+        self._step_log(f"delay {delay}")
 
         delay = delay.total_seconds()
         self._changed()
         try:
-            async with timeout(delay):
+            async with async_timeout.timeout(delay):
                 await self._stop.wait()
         except asyncio.TimeoutError:
             pass
@@ -341,24 +347,19 @@ class _ScriptRun:
     async def _async_wait_template_step(self):
         """Handle a wait template."""
         if CONF_TIMEOUT in self._action:
-            delay = self._get_pos_time_period_template(CONF_TIMEOUT).total_seconds()
+            timeout = self._get_pos_time_period_template(CONF_TIMEOUT).total_seconds()
         else:
-            delay = None
+            timeout = None
 
-        self._script.last_action = self._action.get(CONF_ALIAS, "wait template")
-        self._log(
-            "Executing step %s%s",
-            self._script.last_action,
-            "" if delay is None else f" (timeout: {timedelta(seconds=delay)})",
-        )
+        self._step_log("wait template", timeout)
 
-        self._variables["wait"] = {"remaining": delay, "completed": False}
+        self._variables["wait"] = {"remaining": timeout, "completed": False}
 
         wait_template = self._action[CONF_WAIT_TEMPLATE]
-        wait_template.opp = self._opp
+        wait_template.opp = self..opp
 
         # check if condition already okay
-        if condition.async_template(self._opp, wait_template, self._variables):
+        if condition.async_template(self..opp, wait_template, self._variables):
             self._variables["wait"]["completed"] = True
             return
 
@@ -366,23 +367,23 @@ class _ScriptRun:
         def async_script_wait(entity_id, from_s, to_s):
             """Handle script after template condition is true."""
             self._variables["wait"] = {
-                "remaining": to_context.remaining if to_context else delay,
+                "remaining": to_context.remaining if to_context else timeout,
                 "completed": True,
             }
             done.set()
 
         to_context = None
         unsub = async_track_template(
-            self._opp, wait_template, async_script_wait, self._variables
+            self..opp, wait_template, async_script_wait, self._variables
         )
 
         self._changed()
         done = asyncio.Event()
         tasks = [
-            self._opp.async_create_task(flag.wait()) for flag in (self._stop, done)
+            self..opp.async_create_task(flag.wait()) for flag in (self._stop, done)
         ]
         try:
-            async with timeout(delay) as to_context:
+            async with async_timeout.timeout(timeout) as to_context:
                 await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
         except asyncio.TimeoutError as ex:
             if not self._action.get(CONF_CONTINUE_ON_TIMEOUT, True):
@@ -406,7 +407,7 @@ class _ScriptRun:
                 pass
 
         # Wait for long task while monitoring for a stop request.
-        stop_task = self._opp.async_create_task(self._stop.wait())
+        stop_task = self..opp.async_create_task(self._stop.wait())
         try:
             await asyncio.wait(
                 {long_task, stop_task}, return_when=asyncio.FIRST_COMPLETED
@@ -431,11 +432,10 @@ class _ScriptRun:
 
     async def _async_call_service_step(self):
         """Call the service specified in the action."""
-        self._script.last_action = self._action.get(CONF_ALIAS, "call service")
-        self._log("Executing step %s", self._script.last_action)
+        self._step_log("call service")
 
         params = service.async_prepare_call_from_config(
-            self._opp, self._action, self._variables
+            self..opp, self._action, self._variables
         )
 
         running_script = (
@@ -450,8 +450,8 @@ class _ScriptRun:
         else:
             limit = SERVICE_CALL_LIMIT
 
-        service_task = self._opp.async_create_task(
-            self._opp.services.async_call(
+        service_task = self..opp.async_create_task(
+            self..opp.services.async_call(
                 **params,
                 blocking=True,
                 context=self._context,
@@ -467,20 +467,18 @@ class _ScriptRun:
 
     async def _async_device_step(self):
         """Perform the device automation specified in the action."""
-        self._script.last_action = self._action.get(CONF_ALIAS, "device automation")
-        self._log("Executing step %s", self._script.last_action)
+        self._step_log("device automation")
         platform = await device_automation.async_get_device_automation_platform(
-            self._opp, self._action[CONF_DOMAIN], "action"
+            self..opp, self._action[CONF_DOMAIN], "action"
         )
         await platform.async_call_action_from_config(
-            self._opp, self._action, self._variables, self._context
+            self..opp, self._action, self._variables, self._context
         )
 
     async def _async_scene_step(self):
         """Activate the scene specified in the action."""
-        self._script.last_action = self._action.get(CONF_ALIAS, "activate scene")
-        self._log("Executing step %s", self._script.last_action)
-        await self._opp.services.async_call(
+        self._step_log("activate scene")
+        await self..opp.services.async_call(
             scene.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: self._action[CONF_SCENE]},
@@ -490,10 +488,7 @@ class _ScriptRun:
 
     async def _async_event_step(self):
         """Fire an event."""
-        self._script.last_action = self._action.get(
-            CONF_ALIAS, self._action[CONF_EVENT]
-        )
-        self._log("Executing step %s", self._script.last_action)
+        self._step_log(self._action.get(CONF_ALIAS, self._action[CONF_EVENT]))
         event_data = {}
         for conf in [CONF_EVENT_DATA, CONF_EVENT_DATA_TEMPLATE]:
             if conf not in self._action:
@@ -508,7 +503,7 @@ class _ScriptRun:
                     "Error rendering event data template: %s", ex, level=logging.ERROR
                 )
 
-        self._opp.bus.async_fire(
+        self..opp.bus.async_fire(
             self._action[CONF_EVENT], event_data, context=self._context
         )
 
@@ -519,7 +514,7 @@ class _ScriptRun:
         )
         cond = await self._async_get_condition(self._action)
         try:
-            check = cond(self._opp, self._variables)
+            check = cond(self..opp, self._variables)
         except exceptions.ConditionError as ex:
             _LOGGER.warning("Error in 'condition' evaluation: %s", ex)
             check = False
@@ -576,7 +571,7 @@ class _ScriptRun:
                 set_repeat_var(iteration)
                 try:
                     if self._stop.is_set() or not all(
-                        cond(self._opp, self._variables) for cond in conditions
+                        cond(self..opp, self._variables) for cond in conditions
                     ):
                         break
                 except exceptions.ConditionError as ex:
@@ -594,7 +589,7 @@ class _ScriptRun:
                 await async_run_sequence(iteration)
                 try:
                     if self._stop.is_set() or all(
-                        cond(self._opp, self._variables) for cond in conditions
+                        cond(self..opp, self._variables) for cond in conditions
                     ):
                         break
                 except exceptions.ConditionError as ex:
@@ -614,7 +609,7 @@ class _ScriptRun:
         for conditions, script in choose_data["choices"]:
             try:
                 if all(
-                    condition(self._opp, self._variables) for condition in conditions
+                    condition(self..opp, self._variables) for condition in conditions
                 ):
                     await self._async_run_script(script)
                     return
@@ -627,25 +622,20 @@ class _ScriptRun:
     async def _async_wait_for_trigger_step(self):
         """Wait for a trigger event."""
         if CONF_TIMEOUT in self._action:
-            delay = self._get_pos_time_period_template(CONF_TIMEOUT).total_seconds()
+            timeout = self._get_pos_time_period_template(CONF_TIMEOUT).total_seconds()
         else:
-            delay = None
+            timeout = None
 
-        self._script.last_action = self._action.get(CONF_ALIAS, "wait for trigger")
-        self._log(
-            "Executing step %s%s",
-            self._script.last_action,
-            "" if delay is None else f" (timeout: {timedelta(seconds=delay)})",
-        )
+        self._step_log("wait for trigger", timeout)
 
         variables = {**self._variables}
-        self._variables["wait"] = {"remaining": delay, "trigger": None}
+        self._variables["wait"] = {"remaining": timeout, "trigger": None}
 
         done = asyncio.Event()
 
         async def async_done(variables, context=None):
             self._variables["wait"] = {
-                "remaining": to_context.remaining if to_context else delay,
+                "remaining": to_context.remaining if to_context else timeout,
                 "trigger": variables["trigger"],
             }
             done.set()
@@ -655,7 +645,7 @@ class _ScriptRun:
 
         to_context = None
         remove_triggers = await async_initialize_triggers(
-            self._opp,
+            self..opp,
             self._action[CONF_WAIT_FOR_TRIGGER],
             async_done,
             self._script.domain,
@@ -668,10 +658,10 @@ class _ScriptRun:
 
         self._changed()
         tasks = [
-            self._opp.async_create_task(flag.wait()) for flag in (self._stop, done)
+            self..opp.async_create_task(flag.wait()) for flag in (self._stop, done)
         ]
         try:
-            async with timeout(delay) as to_context:
+            async with async_timeout.timeout(timeout) as to_context:
                 await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
         except asyncio.TimeoutError as ex:
             if not self._action.get(CONF_CONTINUE_ON_TIMEOUT, True):
@@ -685,16 +675,15 @@ class _ScriptRun:
 
     async def _async_variables_step(self):
         """Set a variable value."""
-        self._script.last_action = self._action.get(CONF_ALIAS, "setting variables")
-        self._log("Executing step %s", self._script.last_action)
+        self._step_log("setting variables")
         self._variables = self._action[CONF_VARIABLES].async_render(
-            self._opp, self._variables, render_as_defaults=False
+            self..opp, self._variables, render_as_defaults=False
         )
 
     async def _async_run_script(self, script):
         """Execute a script."""
         await self._async_run_long_action(
-            self._opp.async_create_task(
+            self..opp.async_create_task(
                 script.async_run(self._variables, self._context)
             )
         )
@@ -709,10 +698,10 @@ class _QueuedScriptRun(_ScriptRun):
         """Run script."""
         # Wait for previous run, if any, to finish by attempting to acquire the script's
         # shared lock. At the same time monitor if we've been told to stop.
-        lock_task = self._opp.async_create_task(
+        lock_task = self..opp.async_create_task(
             self._script._queue_lck.acquire()  # pylint: disable=protected-access
         )
-        stop_task = self._opp.async_create_task(self._stop.wait())
+        stop_task = self..opp.async_create_task(self._stop.wait())
         try:
             await asyncio.wait(
                 {lock_task, stop_task}, return_when=asyncio.FIRST_COMPLETED
@@ -817,9 +806,9 @@ class Script:
         variables: Optional[ScriptVariables] = None,
     ) -> None:
         """Initialize the script."""
-        all_scripts = opp.data.get(DATA_SCRIPTS)
+        all_scripts =.opp.data.get(DATA_SCRIPTS)
         if not all_scripts:
-            all_scripts = opp.data[DATA_SCRIPTS] = []
+            all_scripts =.opp.data[DATA_SCRIPTS] = []
            .opp.bus.async_listen_once(
                 EVENT_OPENPEERPOWER_STOP, partial(_async_stop_scripts_at_shutdown,.opp)
             )
@@ -829,7 +818,7 @@ class Script:
                 {"instance": self, "started_before_shutdown": not.opp.is_stopping}
             )
 
-        self._opp = opp
+        self..opp =.opp
         self.sequence = sequence
         template.attach.opp, self.sequence)
         self.name = name
@@ -837,7 +826,7 @@ class Script:
         self.running_description = running_description or f"{domain} script"
         self._change_listener = change_listener
         self._change_listener_job = (
-            None if change_listener is None else OppJob(change_listener)
+            None if change_listener is None else HassJob(change_listener)
         )
 
         self.script_mode = script_mode
@@ -875,7 +864,7 @@ class Script:
             self._change_listener_job is None
             or change_listener != self._change_listener_job.target
         ):
-            self._change_listener_job = OppJob(change_listener)
+            self._change_listener_job = HassJob(change_listener)
 
     def _set_logger(self, logger: Optional[logging.Logger] = None) -> None:
         if logger:
@@ -896,7 +885,7 @@ class Script:
 
     def _changed(self) -> None:
         if self._change_listener_job:
-            self._opp.async_run_opp_job(self._change_listener_job)
+            self..opp.async_run.opp_job(self._change_listener_job)
 
     def _chain_change_listener(self, sub_script):
         if sub_script.is_running:
@@ -981,7 +970,7 @@ class Script:
     ) -> None:
         """Run script."""
         asyncio.run_coroutine_threadsafe(
-            self.async_run(variables, context), self._opp.loop
+            self.async_run(variables, context), self..opp.loop
         ).result()
 
     async def async_run(
@@ -1020,7 +1009,7 @@ class Script:
             if self.variables:
                 try:
                     variables = self.variables.async_render(
-                        self._opp,
+                        self..opp,
                         run_variables,
                     )
                 except template.TemplateError as err:
@@ -1040,11 +1029,11 @@ class Script:
         else:
             cls = _QueuedScriptRun
         run = cls(
-            self._opp, self, cast(dict, variables), context, self._log_exceptions
+            self..opp, self, cast(dict, variables), context, self._log_exceptions
         )
         self._runs.append(run)
         if started_action:
-            self._opp.async_run_job(started_action)
+            self..opp.async_run_job(started_action)
         self.last_triggered = utcnow()
         self._changed()
 
@@ -1074,7 +1063,7 @@ class Script:
             config_cache_key = frozenset((k, str(v)) for k, v in config.items())
         cond = self._config_cache.get(config_cache_key)
         if not cond:
-            cond = await condition.async_from_config(self._opp, config, False)
+            cond = await condition.async_from_config(self..opp, config, False)
             self._config_cache[config_cache_key] = cond
         return cond
 
@@ -1082,7 +1071,7 @@ class Script:
         action = self.sequence[step]
         step_name = action.get(CONF_ALIAS, f"Repeat at step {step+1}")
         sub_script = Script(
-            self._opp,
+            self..opp,
             action[CONF_REPEAT][CONF_SEQUENCE],
             f"{self.name}: {step_name}",
             self.domain,
@@ -1111,10 +1100,11 @@ class Script:
                 await self._async_get_condition(config)
                 for config in choice.get(CONF_CONDITIONS, [])
             ]
+            choice_name = choice.get(CONF_ALIAS, f"choice {idx}")
             sub_script = Script(
-                self._opp,
+                self..opp,
                 choice[CONF_SEQUENCE],
-                f"{self.name}: {step_name}: choice {idx}",
+                f"{self.name}: {step_name}: {choice_name}",
                 self.domain,
                 running_description=self.running_description,
                 script_mode=SCRIPT_MODE_PARALLEL,
@@ -1129,7 +1119,7 @@ class Script:
 
         if CONF_DEFAULT in action:
             default_script = Script(
-                self._opp,
+                self..opp,
                 action[CONF_DEFAULT],
                 f"{self.name}: {step_name}: default",
                 self.domain,

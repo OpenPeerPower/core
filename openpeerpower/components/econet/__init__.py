@@ -14,11 +14,11 @@ from pyeconet.errors import (
 )
 
 from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.dispatcher import dispatcher_send
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_time_interval
+from openpeerpower.core import callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.dispatcher import dispatcher_send
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_time_interval
 
 from .const import API_CLIENT, DOMAIN, EQUIPMENT
 
@@ -76,7 +76,7 @@ async def async_setup_entry.opp, config_entry):
 
     async def resubscribe(now):
         """Resubscribe to the MQTT updates."""
-        await opp..async_add_executor_job(api.unsubscribe)
+        await.opp.async_add_executor_job(api.unsubscribe)
         api.subscribe()
 
     async def fetch_update(now):
@@ -111,9 +111,9 @@ class EcoNetEntity(Entity):
         """Initialize."""
         self._econet = econet
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to device events."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
                 PUSH_UPDATE, self.on_update_received
@@ -123,7 +123,7 @@ class EcoNetEntity(Entity):
     @callback
     def on_update_received(self):
         """Update was pushed from the ecoent API."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def available(self):

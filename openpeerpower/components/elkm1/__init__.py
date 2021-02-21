@@ -103,7 +103,7 @@ def _elk_range_validator(rng):
     return (start, end)
 
 
-def _op._all_unique_prefixes(value):
+def _has_all_unique_prefixes(value):
     """Validate that each m1 configured has a unique prefix.
 
     Uniqueness is determined case-independently.
@@ -147,7 +147,7 @@ DEVICE_SCHEMA = vol.Schema(
 )
 
 CONFIG_SCHEMA = vol.Schema(
-    {DOMAIN: vol.All(cv.ensure_list, [DEVICE_SCHEMA], _op._all_unique_prefixes)},
+    {DOMAIN: vol.All(cv.ensure_list, [DEVICE_SCHEMA], _has_all_unique_prefixes)},
     extra=vol.ALLOW_EXTRA,
 )
 
@@ -323,8 +323,8 @@ async def async_wait_for_elk_to_sync(elk, timeout, conf_host):
 
     success = True
     event = asyncio.Event()
-    elk.add_op.dler("login", login_status)
-    elk.add_op.dler("sync_complete", sync_complete)
+    elk.add_handler("login", login_status)
+    elk.add_handler("sync_complete", sync_complete)
     try:
         with async_timeout.timeout(timeout):
             await event.wait()
@@ -451,9 +451,9 @@ class ElkEntity(Entity):
     def _element_callback(self, element, changeset):
         """Handle callback from an Elk element that has changed."""
         self._element_changed(element, changeset)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callback for ElkM1 changes and update entity state."""
         self._element.add_callback(self._element_callback)
         self._element_callback(self._element, {})

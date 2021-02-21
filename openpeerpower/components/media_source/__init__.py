@@ -8,11 +8,11 @@ from openpeerpower.components import websocket_api
 from openpeerpower.components.http.auth import async_sign_path
 from openpeerpower.components.media_player.const import ATTR_MEDIA_CONTENT_ID
 from openpeerpower.components.media_player.errors import BrowseError
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers.integration_platform import (
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.integration_platform import (
     async_process_integration_platforms,
 )
-from openpeerpowerr.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 from . import local_source, models
 from .const import DOMAIN, URI_SCHEME, URI_SCHEME_REGEX
@@ -38,7 +38,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
    .opp.components.websocket_api.async_register_command(websocket_browse_media)
    .opp.components.websocket_api.async_register_command(websocket_resolve_media)
    .opp.components.frontend.async_register_built_in_panel(
-        "media-browser", "media_browser", "opp:play-box-multiple"
+        "media-browser", "media_browser", .opp:play-box-multiple"
     )
     local_source.async_setup.opp)
     await async_process_integration_platforms(
@@ -65,7 +65,7 @@ def _get_media_item(
     return models.MediaSourceItem.opp, domain, "")
 
 
-@bind_opp
+@bind.opp
 async def async_browse_media(
    .opp: OpenPeerPower, media_content_id: str
 ) -> models.BrowseMediaSource:
@@ -73,7 +73,7 @@ async def async_browse_media(
     return await _get_media_item.opp, media_content_id).async_browse()
 
 
-@bind_opp
+@bind.opp
 async def async_resolve_media(
    .opp: OpenPeerPower, media_content_id: str
 ) -> models.PlayMedia:

@@ -7,7 +7,7 @@ import voluptuous as vol
 
 from openpeerpower.components.switch import PLATFORM_SCHEMA, SwitchEntity
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_STATE, CONF_DEVICES, CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import CONF_SCS_ID, DOMAIN, SCSGATE_SCHEMA
 
@@ -24,7 +24,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the SCSGate switches."""
     logger = logging.getLogger(__name__)
-    scsgate = opp.data[DOMAIN]
+    scsgate =.opp.data[DOMAIN]
 
     _setup_traditional_switches(
         logger=logger,
@@ -117,7 +117,7 @@ class SCSGateSwitch(SwitchEntity):
         self._scsgate.append_task(ToggleStatusTask(target=self._scs_id, toggled=True))
 
         self._toggled = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
@@ -125,7 +125,7 @@ class SCSGateSwitch(SwitchEntity):
         self._scsgate.append_task(ToggleStatusTask(target=self._scs_id, toggled=False))
 
         self._toggled = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def process_event(self, message):
         """Handle a SCSGate message related with this switch."""
@@ -139,7 +139,7 @@ class SCSGateSwitch(SwitchEntity):
             return
 
         self._toggled = message.toggled
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
         command = "off"
         if self._toggled:
@@ -162,7 +162,7 @@ class SCSGateScenarioSwitch:
         self._name = name
         self._scs_id = scs_id
         self._logger = logger
-        self._opp = opp
+        self..opp =.opp
 
     @property
     def scs_id(self):
@@ -185,7 +185,7 @@ class SCSGateScenarioSwitch:
             self._logger.warn("Scenario switch: received unknown message %s", message)
             return
 
-        self._opp.bus.fire(
+        self..opp.bus.fire(
             "scenario_switch_triggered",
             {ATTR_ENTITY_ID: int(self._scs_id), ATTR_SCENARIO_ID: int(scenario_id, 16)},
         )

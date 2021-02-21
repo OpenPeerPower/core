@@ -2,7 +2,7 @@
   "domain": "keenetic_ndms2",
   "name": "Keenetic NDMS2 Router",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/keenetic_ndms2",
+  "documentation": "https://www.open-peer-power.io/integrations/keenetic_ndms2",
   "requirements": ["ndms2_client==0.1.1"],
   "codeowners": ["@foxel"]
 }

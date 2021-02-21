@@ -128,7 +128,7 @@ class EphEmberThermostat(ClimateEntity):
     def hvac_mode(self):
         """Return current operation ie. heat, cool, idle."""
         mode = zone_mode(self._zone)
-        return self.map_mode_eph_opp(mode)
+        return self.map_mode_eph.opp(mode)
 
     @property
     def hvac_modes(self):
@@ -137,7 +137,7 @@ class EphEmberThermostat(ClimateEntity):
 
     def set_hvac_mode(self, hvac_mode):
         """Set the operation mode."""
-        mode = self.map_mode_opp_eph(hvac_mode)
+        mode = self.map_mode.opp_eph(hvac_mode)
         if mode is not None:
             self._ember.set_mode_by_name(self._zone_name, mode)
         else:
@@ -198,11 +198,11 @@ class EphEmberThermostat(ClimateEntity):
         self._zone = self._ember.get_zone(self._zone_name)
 
     @staticmethod
-    def map_mode_opp_eph(operation_mode):
+    def map_mode.opp_eph(operation_mode):
         """Map from Open Peer Power mode to eph mode."""
         return getattr(ZoneMode, HA_STATE_TO_EPH.get(operation_mode), None)
 
     @staticmethod
-    def map_mode_eph_opp(operation_mode):
+    def map_mode_eph.opp(operation_mode):
         """Map from eph mode to Open Peer Power mode."""
         return EPH_TO_HA_STATE.get(operation_mode.name, HVAC_MODE_HEAT_COOL)

@@ -98,7 +98,7 @@ class PS4Device(MediaPlayerEntity):
     def status_callback(self):
         """Handle status callback. Parse status."""
         self._parse_status()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def subscribe_to_protocol(self):
@@ -124,7 +124,7 @@ class PS4Device(MediaPlayerEntity):
                 self._region,
             )
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe PS4 events."""
         self.opp.data[PS4_DATA].devices.append(self)
         self.check_region()
@@ -281,7 +281,7 @@ class PS4Device(MediaPlayerEntity):
             self._media_type = media_type
 
             await self.opp.async_add_executor_job(self.update_list)
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     def update_list(self):
         """Update Game List, Correct data if different."""
@@ -364,7 +364,7 @@ class PS4Device(MediaPlayerEntity):
 
             self._unique_id = format_unique_id(self._creds, status["host-id"])
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Remove Entity from Open Peer Power."""
         # Close TCP Transport.
         if self._ps4.connected:
@@ -386,11 +386,11 @@ class PS4Device(MediaPlayerEntity):
     def entity_picture(self):
         """Return picture."""
         if self._state == STATE_PLAYING and self._media_content_id is not None:
-            image_op.h = self.media_image_op.h
-            if image_op.h is not None:
+            image_hash = self.media_image_hash
+            if image_hash is not None:
                 return (
                     f"/api/media_player_proxy/{self.entity_id}?"
-                    f"token={self.access_token}&cache={image_op.h}"
+                    f"token={self.access_token}&cache={image_hash}"
                 )
         return MEDIA_IMAGE_DEFAULT
 

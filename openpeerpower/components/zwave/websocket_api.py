@@ -4,7 +4,7 @@ import voluptuous as vol
 from openpeerpower.components import websocket_api
 from openpeerpower.components.ozw.const import DOMAIN as OZW_DOMAIN
 from openpeerpower.config_entries import SOURCE_IMPORT
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from .const import (
     CONF_AUTOHEAL,
@@ -24,7 +24,7 @@ ID = "id"
 @websocket_api.websocket_command({vol.Required(TYPE): "zwave/network_status"})
 def websocket_network_status.opp, connection, msg):
     """Get Z-Wave network status."""
-    network = opp.data[DATA_NETWORK]
+    network =.opp.data[DATA_NETWORK]
     connection.send_result(msg[ID], {"state": network.state})
 
 
@@ -32,7 +32,7 @@ def websocket_network_status.opp, connection, msg):
 @websocket_api.websocket_command({vol.Required(TYPE): "zwave/get_config"})
 def websocket_get_config.opp, connection, msg):
     """Get Z-Wave configuration."""
-    config = opp.data[DATA_ZWAVE_CONFIG]
+    config =.opp.data[DATA_ZWAVE_CONFIG]
     connection.send_result(
         msg[ID],
         {
@@ -48,7 +48,7 @@ def websocket_get_config.opp, connection, msg):
 @websocket_api.websocket_command({vol.Required(TYPE): "zwave/get_migration_config"})
 def websocket_get_migration_config.opp, connection, msg):
     """Get Z-Wave configuration for migration."""
-    config = opp.data[DATA_ZWAVE_CONFIG]
+    config =.opp.data[DATA_ZWAVE_CONFIG]
     connection.send_result(
         msg[ID],
         {
@@ -66,12 +66,12 @@ async def websocket_start_ozw_config_flow.opp, connection, msg):
 
     Return data with the flow id of the started ozw config flow.
     """
-    config = opp.data[DATA_ZWAVE_CONFIG]
+    config =.opp.data[DATA_ZWAVE_CONFIG]
     data = {
         "usb_path": config[CONF_USB_STICK_PATH],
         "network_key": config[CONF_NETWORK_KEY],
     }
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         OZW_DOMAIN, context={"source": SOURCE_IMPORT}, data=data
     )
     connection.send_result(

@@ -46,7 +46,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
 
         if user_input is not None:
-            unique_id = op.h_from_url(user_input[CONF_URL])
+            unique_id = hash_from_url(user_input[CONF_URL])
             await self.async_set_unique_id(unique_id)
             self._abort_if_unique_id_configured()
             try:

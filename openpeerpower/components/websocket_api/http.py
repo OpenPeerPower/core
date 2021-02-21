@@ -39,7 +39,7 @@ class WebsocketAPIView(OpenPeerPowerView):
 
     async def get(self, request: web.Request) -> web.WebSocketResponse:
         """Handle an incoming websocket connection."""
-        return await WebSocketHandler(request.app["opp"], request).async_op.dle()
+        return await WebSocketHandler(request.app[.opp"], request).async_handle()
 
 
 class WebSocketAdapter(logging.LoggerAdapter):
@@ -55,11 +55,11 @@ class WebSocketHandler:
 
     def __init__(self,.opp, request):
         """Initialize an active connection."""
-        self.opp = opp
+        self.opp =.opp
         self.request = request
         self.wsock: Optional[web.WebSocketResponse] = None
         self._to_write: asyncio.Queue = asyncio.Queue(maxsize=MAX_PENDING_MSG)
-        self._op.dle_task = None
+        self._handle_task = None
         self._writer_task = None
         self._logger = WebSocketAdapter(_WS_LOGGER, {"connid": id(self)})
         self._peak_checker_unsub = None
@@ -131,24 +131,24 @@ class WebSocketHandler:
     @callback
     def _cancel(self):
         """Cancel the connection."""
-        self._op.dle_task.cancel()
+        self._handle_task.cancel()
         self._writer_task.cancel()
 
-    async def async_op.dle(self) -> web.WebSocketResponse:
+    async def async_handle(self) -> web.WebSocketResponse:
         """Handle a websocket response."""
         request = self.request
         wsock = self.wsock = web.WebSocketResponse(heartbeat=55)
         await wsock.prepare(request)
         self._logger.debug("Connected from %s", request.remote)
-        self._op.dle_task = asyncio.current_task()
+        self._handle_task = asyncio.current_task()
 
         @callback
-        def handle_opp_stop(event):
+        def handle.opp_stop(event):
             """Cancel this connection."""
             self._cancel()
 
         unsub_stop = self.opp.bus.async_listen(
-            EVENT_OPENPEERPOWER_STOP, handle_opp_stop
+            EVENT_OPENPEERPOWER_STOP, handle.opp_stop
         )
 
         # As the webserver is now started before the start
@@ -184,7 +184,7 @@ class WebSocketHandler:
                 raise Disconnect from err
 
             self._logger.debug("Received %s", msg_data)
-            connection = await auth.async_op.dle(msg_data)
+            connection = await auth.async_handle(msg_data)
             self.opp.data[DATA_CONNECTIONS] = (
                 self.opp.data.get(DATA_CONNECTIONS, 0) + 1
             )
@@ -210,7 +210,7 @@ class WebSocketHandler:
                     break
 
                 self._logger.debug("Received %s", msg_data)
-                connection.async_op.dle(msg_data)
+                connection.async_handle(msg_data)
 
         except asyncio.CancelledError:
             self._logger.info("Connection closed by client")

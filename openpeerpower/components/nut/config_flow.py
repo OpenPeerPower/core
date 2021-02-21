@@ -13,8 +13,8 @@ from openpeerpower.const import (
     CONF_SCAN_INTERVAL,
     CONF_USERNAME,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
 
 from . import PyNUTData, find_resources_in_config_entry
 from .const import (
@@ -93,7 +93,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     password = data.get(CONF_PASSWORD)
 
     data = PyNUTData(host, port, alias, username, password)
-    await opp..async_add_executor_job(data.update)
+    await.opp.async_add_executor_job(data.update)
     status = data.status
     if not status:
         raise CannotConnect
@@ -128,7 +128,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_zeroconf(self, discovery_info):
         """Prepare configuration for a discovered nut device."""
         self.discovery_info = discovery_info
-        await self._async_op.dle_discovery_without_unique_id()
+        await self._async_handle_discovery_without_unique_id()
         self.context["title_placeholders"] = {
             CONF_PORT: discovery_info.get(CONF_PORT, DEFAULT_PORT),
             CONF_HOST: discovery_info[CONF_HOST],

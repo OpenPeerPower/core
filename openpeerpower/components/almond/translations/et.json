@@ -7,9 +7,9 @@
             "single_instance_allowed": "Juba seadistatud. V\u00f5imalik on ainult \u00fcks seadistamine."
         },
         "step": {
-            "oppio_confirm": {
-                "description": "Kas soovid seadistada Open Peer Power-i \u00fchendust Almondiga mida pakub Opp.io lisandmoodul: {addon} ?",
-                "title": "Almond Opp.io lisandmooduli kaudu"
+            .oppio_confirm": {
+                "description": "Kas soovid seadistada Open Peer Power-i \u00fchendust Almondiga mida pakub Hass.io lisandmoodul: {addon} ?",
+                "title": "Almond Hass.io lisandmooduli kaudu"
             },
             "pick_implementation": {
                 "title": "Vali tuvastusmeetod"

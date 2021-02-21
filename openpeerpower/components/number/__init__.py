@@ -7,13 +7,13 @@ from typing import Any, Dict
 import voluptuous as vol
 
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.config_validation import (  # noqa: F401
+from openpeerpower.helpers.config_validation import (  # noqa: F401
     PLATFORM_SCHEMA,
     PLATFORM_SCHEMA_BASE,
 )
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.entity_component import EntityComponent
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_component import EntityComponent
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from .const import (
     ATTR_MAX,
@@ -38,7 +38,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up Number entities."""
-    component = opp.data[DOMAIN] = EntityComponent(
+    component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
     )
     await component.async_setup(config)
@@ -54,12 +54,12 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
-    return await opp..data[DOMAIN].async_setup_entry(entry)  # type: ignore
+    return await.opp.data[DOMAIN].async_setup_entry(entry)  # type: ignore
 
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    return await opp..data[DOMAIN].async_unload_entry(entry)  # type: ignore
+    return await.opp.data[DOMAIN].async_unload_entry(entry)  # type: ignore
 
 
 class NumberEntity(Entity):

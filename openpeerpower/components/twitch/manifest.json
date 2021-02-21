@@ -1,7 +1,7 @@
 {
   "domain": "twitch",
   "name": "Twitch",
-  "documentation": "https://www.openpeerpower.io/integrations/twitch",
+  "documentation": "https://www.open-peer-power.io/integrations/twitch",
   "requirements": ["python-twitch-client==0.6.0"],
   "codeowners": []
 }

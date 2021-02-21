@@ -40,7 +40,7 @@ class HangoutsBot:
         self,.opp, refresh_token, intents, default_convs, error_suppressed_convs
     ):
         """Set up the client."""
-        self.opp = opp
+        self.opp =.opp
         self._connected = False
 
         self._refresh_token = refresh_token
@@ -59,7 +59,7 @@ class HangoutsBot:
         dispatcher.async_dispatcher_connect(
             self.opp,
             EVENT_HANGOUTS_MESSAGE_RECEIVED,
-            self._async_op.dle_conversation_message,
+            self._async_handle_conversation_message,
         )
 
     def _resolve_conversation_id(self, obj):
@@ -105,12 +105,12 @@ class HangoutsBot:
 
         try:
             self._conversation_list.on_event.remove_observer(
-                self._async_op.dle_conversation_event
+                self._async_handle_conversation_event
             )
         except ValueError:
             pass
         self._conversation_list.on_event.add_observer(
-            self._async_op.dle_conversation_event
+            self._async_handle_conversation_event
         )
 
     @callback
@@ -132,7 +132,7 @@ class HangoutsBot:
             self.opp, EVENT_HANGOUTS_CONVERSATIONS_RESOLVED
         )
 
-    async def _async_op.dle_conversation_event(self, event):
+    async def _async_handle_conversation_event(self, event):
         if isinstance(event, ChatMessageEvent):
             dispatcher.async_dispatcher_send(
                 self.opp,
@@ -142,7 +142,7 @@ class HangoutsBot:
                 event,
             )
 
-    async def _async_op.dle_conversation_message(self, conv_id, user_id, event):
+    async def _async_handle_conversation_message(self, conv_id, user_id, event):
         """Handle a message sent to a conversation."""
         user = self._user_list.get_user(user_id)
         if user.is_self:
@@ -188,11 +188,11 @@ class HangoutsBot:
                 if not match:
                     continue
                 if intent_type == INTENT_HELP:
-                    return await self.opp.helpers.intent.async_op.dle(
+                    return await self.opp.helpers.intent.async_handle(
                         DOMAIN, intent_type, {"conv_id": {"value": conv_id}}, text
                     )
 
-                return await self.opp.helpers.intent.async_op.dle(
+                return await self.opp.helpers.intent.async_handle(
                     DOMAIN,
                     intent_type,
                     {key: {"value": value} for key, value in match.groupdict().items()},
@@ -232,7 +232,7 @@ class HangoutsBot:
             self._connected = False
             await self._client.disconnect()
 
-    async def async_op.dle_opp_stop(self, _):
+    async def async_handle.opp_stop(self, _):
         """Run once when Open Peer Power stops."""
         await self.async_disconnect()
 
@@ -328,7 +328,7 @@ class HangoutsBot:
             self.opp, EVENT_HANGOUTS_CONVERSATIONS_CHANGED, conversations
         )
 
-    async def async_op.dle_send_message(self, service):
+    async def async_handle_send_message(self, service):
         """Handle the send_message service."""
         await self._async_send_message(
             service.data[ATTR_MESSAGE],
@@ -336,11 +336,11 @@ class HangoutsBot:
             service.data.get(ATTR_DATA, {}),
         )
 
-    async def async_op.dle_update_users_and_conversations(self, _=None):
+    async def async_handle_update_users_and_conversations(self, _=None):
         """Handle the update_users_and_conversations service."""
         await self._async_list_conversations()
 
-    async def async_op.dle_reconnect(self, _=None):
+    async def async_handle_reconnect(self, _=None):
         """Handle the reconnect service."""
         await self.async_disconnect()
         await self.async_connect()

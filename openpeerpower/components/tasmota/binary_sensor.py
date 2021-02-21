@@ -2,9 +2,9 @@
 
 from openpeerpower.components import binary_sensor
 from openpeerpower.components.binary_sensor import BinarySensorEntity
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-import openpeerpowerr.helpers.event as evt
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+import openpeerpower.helpers.event as evt
 
 from .const import DATA_REMOVE_DISCOVER_COMPONENT
 from .discovery import TASMOTA_DISCOVERY_ENTITY_NEW
@@ -15,12 +15,12 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Tasmota binary sensor dynamically through discovery."""
 
     @callback
-    def async_discover(tasmota_entity, discovery_op.h):
+    def async_discover(tasmota_entity, discovery_hash):
         """Discover and add a Tasmota binary sensor."""
         async_add_entities(
             [
                 TasmotaBinarySensor(
-                    tasmota_entity=tasmota_entity, discovery_op.h=discovery_op.h
+                    tasmota_entity=tasmota_entity, discovery_hash=discovery_hash
                 )
             ]
         )
@@ -55,7 +55,7 @@ class TasmotaBinarySensor(
         """Switch device off after a delay."""
         self._delay_listener = None
         self._state = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def state_updated(self, state, **kwargs):
@@ -72,7 +72,7 @@ class TasmotaBinarySensor(
                 self.opp, off_delay, self.off_delay_listener
             )
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def force_update(self):

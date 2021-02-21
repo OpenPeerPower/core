@@ -87,12 +87,12 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         )
     )
 
-    data = opp.data[DOMAIN]
+    data =.opp.data[DOMAIN]
     data[API] = api.ConfigEntrySomfyApi.opp, entry, implementation)
 
     async def _update_all_devices():
         """Update all the devices."""
-        devices = await opp..async_add_executor_job(data[API].get_devices)
+        devices = await.opp.async_add_executor_job(data[API].get_devices)
         previous_devices = data[COORDINATOR].data
         # Sometimes Somfy returns an empty list.
         if not devices and previous_devices:
@@ -209,10 +209,10 @@ class SomfyEntity(CoordinatorEntity, Entity):
         return not bool(self.device.states)
 
     @callback
-    def _op.dle_coordinator_update(self):
+    def _handle_coordinator_update(self):
         """Process an update from the coordinator."""
         self._create_device()
-        super()._op.dle_coordinator_update()
+        super()._handle_coordinator_update()
 
     @abstractmethod
     def _create_device(self):

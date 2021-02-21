@@ -1,6 +1,6 @@
 """Roon (www.roonlabs.com) component."""
 from openpeerpower.const import CONF_HOST
-from openpeerpowerr.helpers import device_registry as dr
+from openpeerpower.helpers import device_registry as dr
 
 from .const import DOMAIN
 from .server import RoonServer
@@ -33,5 +33,5 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    roonserver = opp.data[DOMAIN].pop(entry.entry_id)
+    roonserver =.opp.data[DOMAIN].pop(entry.entry_id)
     return await roonserver.async_reset()

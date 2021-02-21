@@ -48,7 +48,7 @@ class EnvisalinkSensor(EnvisalinkDevice, Entity):
         _LOGGER.debug("Setting up sensor for partition: %s", partition_name)
         super().__init__(f"{partition_name} Keypad", info, controller)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         async_dispatcher_connect(self.opp, SIGNAL_KEYPAD_UPDATE, self._update_callback)
         async_dispatcher_connect(
@@ -74,4 +74,4 @@ class EnvisalinkSensor(EnvisalinkDevice, Entity):
     def _update_callback(self, partition):
         """Update the partition state in HA, if needed."""
         if partition is None or int(partition) == self._partition_number:
-            self.async_write_op.state()
+            self.async_write_ha_state()

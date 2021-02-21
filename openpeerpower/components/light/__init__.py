@@ -26,7 +26,7 @@ from openpeerpower.helpers.config_validation import (  # noqa: F401
 from openpeerpower.helpers.entity import ToggleEntity
 from openpeerpower.helpers.entity_component import EntityComponent
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 import openpeerpower.util.color as color_util
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
@@ -131,7 +131,7 @@ LIGHT_TURN_ON_SCHEMA = {
 _LOGGER = logging.getLogger(__name__)
 
 
-@bind_opp
+@bind.opp
 def is_on.opp, entity_id):
     """Return if the lights are on based on the statemachine."""
     return.opp.states.is_state(entity_id, STATE_ON)
@@ -182,12 +182,12 @@ def filter_turn_off_params(params):
 
 async def async_setup.opp, config):
     """Expose light control via state machine and services."""
-    component = opp.data[DOMAIN] = EntityComponent(
+    component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
     )
     await component.async_setup(config)
 
-    profiles = opp.data[DATA_PROFILES] = Profiles.opp)
+    profiles =.opp.data[DATA_PROFILES] = Profiles.opp)
     await profiles.async_initialize()
 
     def preprocess_data(data):
@@ -202,7 +202,7 @@ async def async_setup.opp, config):
         base["params"] = data
         return base
 
-    async def async_op.dle_light_on_service(light, call):
+    async def async_handle_light_on_service(light, call):
         """Handle turning a light on.
 
         If brightness is set to 0, this service will turn the light off.
@@ -234,20 +234,20 @@ async def async_setup.opp, config):
         else:
             await light.async_turn_on(**params)
 
-    async def async_op.dle_toggle_service(light, call):
+    async def async_handle_toggle_service(light, call):
         """Handle toggling a light."""
         if light.is_on:
             off_params = filter_turn_off_params(call.data["params"])
             await light.async_turn_off(**off_params)
         else:
-            await async_op.dle_light_on_service(light, call)
+            await async_handle_light_on_service(light, call)
 
     # Listen for light on and light off service calls.
 
     component.async_register_entity_service(
         SERVICE_TURN_ON,
         vol.All(cv.make_entity_service_schema(LIGHT_TURN_ON_SCHEMA), preprocess_data),
-        async_op.dle_light_on_service,
+        async_handle_light_on_service,
     )
 
     component.async_register_entity_service(
@@ -259,7 +259,7 @@ async def async_setup.opp, config):
     component.async_register_entity_service(
         SERVICE_TOGGLE,
         vol.All(cv.make_entity_service_schema(LIGHT_TURN_ON_SCHEMA), preprocess_data),
-        async_op.dle_toggle_service,
+        async_handle_toggle_service,
     )
 
     return True
@@ -267,12 +267,12 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await opp..data[DOMAIN].async_setup_entry(entry)
+    return await.opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await opp..data[DOMAIN].async_unload_entry(entry)
+    return await.opp.data[DOMAIN].async_unload_entry(entry)
 
 
 def _coerce_none(value: str) -> None:
@@ -339,7 +339,7 @@ class Profiles:
 
     def __init__(self,.opp: OpenPeerPowerType):
         """Initialize profiles."""
-        self.opp = opp
+        self.opp =.opp
         self.data: Dict[str, Profile] = {}
 
     def _load_profile_data(self) -> Dict[str, Profile]:

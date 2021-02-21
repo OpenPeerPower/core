@@ -7,7 +7,7 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.config_entries import SOURCE_IMPORT
 from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_MODE
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from .const import CONF_CITY, FORECAST_MODE, FORECAST_MODE_DAILY
 from .const import DOMAIN  # pylint: disable=unused-import

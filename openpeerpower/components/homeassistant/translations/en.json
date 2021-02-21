@@ -6,7 +6,7 @@
             "dev": "Development",
             "docker": "Docker",
             "docker_version": "Docker",
-            "oppio": "Supervisor",
+            .oppio": "Supervisor",
             "host_os": "Open Peer Power OS",
             "installation_type": "Installation Type",
             "os_name": "Operating System Family",

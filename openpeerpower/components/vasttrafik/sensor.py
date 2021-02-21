@@ -7,10 +7,10 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_DELAY, CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle
-from openpeerpowerr.util.dt import now
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle
+from openpeerpower.util.dt import now
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -110,7 +110,7 @@ async def async_setup_entry.opp, config_entry):
     username = config_entry.data.get(CONF_USERNAME)
     password = config_entry.data.get(CONF_PASSWORD)
     polling = config_entry.data.get(CONF_POLLING)
-    cache = opp.config.path(DEFAULT_CACHEDB)
+    cache =.opp.config.path(DEFAULT_CACHEDB)
 
     # For previous config entries where unique_id is None
     if config_entry.unique_id is None:
@@ -119,13 +119,13 @@ async def async_setup_entry.opp, config_entry):
         )
 
     try:
-        abode = await opp..async_add_executor_job(
+        abode = await.opp.async_add_executor_job(
             Abode, username, password, True, True, True, cache
         )
 
     except AbodeAuthenticationException as ex:
         LOGGER.error("Invalid credentials: %s", ex)
-        await opp..config_entries.flow.async_init(
+        await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_REAUTH},
             data=config_entry.data,
@@ -143,9 +143,9 @@ async def async_setup_entry.opp, config_entry):
            .opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
-    await setup_opp_events.opp)
-    await opp..async_add_executor_job(setup_opp_services,.opp)
-    await opp..async_add_executor_job(setup_abode_events,.opp)
+    await setup.opp_events.opp)
+    await.opp.async_add_executor_job(setup.opp_services,.opp)
+    await.opp.async_add_executor_job(setup_abode_events,.opp)
 
     return True
 
@@ -165,8 +165,8 @@ async def async_unload_entry.opp, config_entry):
 
     await gather(*tasks)
 
-    await opp..async_add_executor_job.opp.data[DOMAIN].abode.events.stop)
-    await opp..async_add_executor_job.opp.data[DOMAIN].abode.logout)
+    await.opp.async_add_executor_job.opp.data[DOMAIN].abode.events.stop)
+    await.opp.async_add_executor_job.opp.data[DOMAIN].abode.logout)
 
    .opp.data[DOMAIN].logout_listener()
    .opp.data.pop(DOMAIN)
@@ -174,7 +174,7 @@ async def async_unload_entry.opp, config_entry):
     return True
 
 
-def setup_opp_services.opp):
+def setup.opp_services.opp):
     """Open Peer Power services."""
 
     def change_setting(call):
@@ -228,7 +228,7 @@ def setup_opp_services.opp):
     )
 
 
-async def setup_opp_events.opp):
+async def setup.opp_events.opp):
     """Open Peer Power start and stop callbacks."""
 
     def logout(event):
@@ -240,9 +240,9 @@ async def setup_opp_events.opp):
         LOGGER.info("Logged out of Abode")
 
     if not.opp.data[DOMAIN].polling:
-        await opp..async_add_executor_job.opp.data[DOMAIN].abode.events.start)
+        await.opp.async_add_executor_job.opp.data[DOMAIN].abode.events.start)
 
-   .opp.data[DOMAIN].logout_listener = opp.bus.async_listen_once(
+   .opp.data[DOMAIN].logout_listener =.opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, logout
     )
 
@@ -307,7 +307,7 @@ class AbodeEntity(Entity):
         """Return the polling state."""
         return self._data.polling
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to Abode connection status updates."""
         await self.opp.async_add_executor_job(
             self._data.abode.events.add_connection_status_callback,
@@ -317,7 +317,7 @@ class AbodeEntity(Entity):
 
         self.opp.data[DOMAIN].entity_ids.add(self.entity_id)
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe from Abode connection status updates."""
         await self.opp.async_add_executor_job(
             self._data.abode.events.remove_connection_status_callback, self.unique_id
@@ -326,7 +326,7 @@ class AbodeEntity(Entity):
     def _update_connection_status(self):
         """Update the entity available property."""
         self._available = self._data.abode.events.connected
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
 
 class AbodeDevice(AbodeEntity):
@@ -337,18 +337,18 @@ class AbodeDevice(AbodeEntity):
         super().__init__(data)
         self._device = device
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to device events."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         await self.opp.async_add_executor_job(
             self._data.abode.events.add_device_callback,
             self._device.device_id,
             self._update_callback,
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe from device events."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
         await self.opp.async_add_executor_job(
             self._data.abode.events.remove_all_device_callbacks, self._device.device_id
         )
@@ -390,7 +390,7 @@ class AbodeDevice(AbodeEntity):
 
     def _update_callback(self, device):
         """Update the device state."""
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
 
 class AbodeAutomation(AbodeEntity):

@@ -3,7 +3,7 @@ from openpeerpower.components.binary_sensor import (
     DEVICE_CLASS_MOTION,
     BinarySensorEntity,
 )
-from openpeerpowerr.helpers import entity_platform
+from openpeerpower.helpers import entity_platform
 
 from .const import DATA_COORDINATOR, DOMAIN
 from .entity import RiscoEntity, binary_sensor_unique_id
@@ -20,7 +20,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         SERVICE_UNBYPASS_ZONE, {}, "async_unbypass_zone"
     )
 
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
     entities = [
         RiscoBinarySensor(coordinator, zone_id, zone)
         for zone_id, zone in coordinator.data.zones.items()
@@ -77,7 +77,7 @@ class RiscoBinarySensor(BinarySensorEntity, RiscoEntity):
     async def _bypass(self, bypass):
         alarm = await self._risco.bypass_zone(self._zone_id, bypass)
         self._zone = alarm.zones[self._zone_id]
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_bypass_zone(self):
         """Bypass this zone."""

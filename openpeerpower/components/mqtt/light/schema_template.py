@@ -241,7 +241,7 @@ class MqttLightTemplate(MqttEntity, LightEntity, RestoreEntity):
                 else:
                     _LOGGER.warning("Unsupported effect value received")
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         if self._topics[CONF_STATE_TOPIC] is not None:
             self._sub_state = await subscription.async_subscribe_topics(
@@ -396,7 +396,7 @@ class MqttLightTemplate(MqttEntity, LightEntity, RestoreEntity):
         )
 
         if self._optimistic:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the entity off.
@@ -421,7 +421,7 @@ class MqttLightTemplate(MqttEntity, LightEntity, RestoreEntity):
         )
 
         if self._optimistic:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def supported_features(self):

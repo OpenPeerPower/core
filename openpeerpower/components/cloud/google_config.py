@@ -11,8 +11,8 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STARTED,
     HTTP_OK,
 )
-from openpeerpowerr.core import CoreState, split_entity_id
-from openpeerpowerr.helpers import entity_registry
+from openpeerpower.core import CoreState, split_entity_id
+from openpeerpower.helpers import entity_registry
 
 from .const import (
     CONF_ENTITY_CONFIG,
@@ -94,7 +94,7 @@ class CloudGoogleConfig(AbstractConfig):
 
         self.opp.bus.async_listen(
             entity_registry.EVENT_ENTITY_REGISTRY_UPDATED,
-            self._op.dle_entity_registry_updated,
+            self._handle_entity_registry_updated,
         )
 
     def should_expose(self, state):
@@ -182,7 +182,7 @@ class CloudGoogleConfig(AbstractConfig):
         self._cur_entity_prefs = prefs.google_entity_configs
         self._cur_default_expose = prefs.google_default_expose
 
-    async def _op.dle_entity_registry_updated(self, event):
+    async def _handle_entity_registry_updated(self, event):
         """Handle when entity registry updated."""
         if not self.enabled or not self._cloud.is_logged_in:
             return

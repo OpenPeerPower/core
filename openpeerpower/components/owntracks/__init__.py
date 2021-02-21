@@ -15,13 +15,13 @@ from openpeerpower.const import (
     ATTR_LONGITUDE,
     CONF_WEBHOOK_ID,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.setup import async_when_setup
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.setup import async_when_setup
 
 from .config_flow import CONF_SECRET
 from .const import DOMAIN
-from .messages import async_op.dle_message, encrypt_message
+from .messages import async_handle_message, encrypt_message
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -71,7 +71,7 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up OwnTracks entry."""
-    config = opp.data[DOMAIN]["config"]
+    config =.opp.data[DOMAIN]["config"]
     max_gps_accuracy = config.get(CONF_MAX_GPS_ACCURACY)
     waypoint_import = config.get(CONF_WAYPOINT_IMPORT)
     waypoint_whitelist = config.get(CONF_WAYPOINT_WHITELIST)
@@ -105,8 +105,8 @@ async def async_setup_entry.opp, entry):
        .opp.config_entries.async_forward_entry_setup(entry, "device_tracker")
     )
 
-   .opp.data[DOMAIN]["unsub"] = opp.helpers.dispatcher.async_dispatcher_connect(
-        DOMAIN, async_op.dle_message
+   .opp.data[DOMAIN]["unsub"] =.opp.helpers.dispatcher.async_dispatcher_connect(
+        DOMAIN, async_handle_message
     )
 
     return True
@@ -115,7 +115,7 @@ async def async_setup_entry.opp, entry):
 async def async_unload_entry.opp, entry):
     """Unload an OwnTracks config entry."""
    .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
-    await opp..config_entries.async_forward_entry_unload(entry, "device_tracker")
+    await.opp.config_entries.async_forward_entry_unload(entry, "device_tracker")
    .opp.data[DOMAIN]["unsub"]()
 
     return True
@@ -126,14 +126,14 @@ async def async_remove_entry.opp, entry):
     if not entry.data.get("cloudhook"):
         return
 
-    await opp..components.cloud.async_delete_cloudhook(entry.data[CONF_WEBHOOK_ID])
+    await.opp.components.cloud.async_delete_cloudhook(entry.data[CONF_WEBHOOK_ID])
 
 
 async def async_connect_mqtt.opp, component):
     """Subscribe to MQTT topic."""
-    context = opp.data[DOMAIN]["context"]
+    context =.opp.data[DOMAIN]["context"]
 
-    async def async_op.dle_mqtt_message(msg):
+    async def async_handle_mqtt_message(msg):
         """Handle incoming OwnTracks message."""
         try:
             message = json.loads(msg.payload)
@@ -145,8 +145,8 @@ async def async_connect_mqtt.opp, component):
         message["topic"] = msg.topic
        .opp.helpers.dispatcher.async_dispatcher_send(DOMAIN,.opp, context, message)
 
-    await opp..components.mqtt.async_subscribe(
-        context.mqtt_topic, async_op.dle_mqtt_message, 1
+    await.opp.components.mqtt.async_subscribe(
+        context.mqtt_topic, async_handle_mqtt_message, 1
     )
 
     return True
@@ -158,7 +158,7 @@ async def handle_webhook.opp, webhook_id, request):
     iOS sets the "topic" as part of the payload.
     Android does not set a topic but adds headers to the request.
     """
-    context = opp.data[DOMAIN]["context"]
+    context =.opp.data[DOMAIN]["context"]
     topic_base = re.sub("/#$", "", context.mqtt_topic)
 
     try:
@@ -228,7 +228,7 @@ class OwnTracksContext:
         mqtt_topic,
     ):
         """Initialize an OwnTracks context."""
-        self.opp = opp
+        self.opp =.opp
         self.secret = secret
         self.max_gps_accuracy = max_gps_accuracy
         self.mobile_beacons_active = defaultdict(set)
@@ -294,7 +294,7 @@ class OwnTracksContext:
         # Mobile beacons should always be set to the location of the
         # tracking device. I get the device state and make the necessary
         # changes to kwargs.
-        device_tracker_state = opp.states.get(f"device_tracker.{dev_id}")
+        device_tracker_state =.opp.states.get(f"device_tracker.{dev_id}")
 
         if device_tracker_state is not None:
             acc = device_tracker_state.attributes.get(ATTR_GPS_ACCURACY)

@@ -16,11 +16,11 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.components import zeroconf
 from openpeerpower.const import EVENT_OPENPEERPOWER_STARTED
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.discovery import async_discover, async_load_platform
-from openpeerpowerr.helpers.event import async_track_point_in_utc_time
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.discovery import async_discover, async_load_platform
+from openpeerpower.helpers.event import async_track_point_in_utc_time
+import openpeerpower.util.dt as dt_util
 
 DOMAIN = "discovery"
 
@@ -30,11 +30,11 @@ SERVICE_DAIKIN = "daikin"
 SERVICE_DLNA_DMR = "dlna_dmr"
 SERVICE_ENIGMA2 = "enigma2"
 SERVICE_FREEBOX = "freebox"
-SERVICE_OPP_IOS_APP = "opp_ios"
-SERVICE_OPPIO = "oppio"
+SERVICE_HASS_IOS_APP = .opp_ios"
+SERVICE_HASSIO = .oppio"
 SERVICE_HEOS = "heos"
 SERVICE_KONNECTED = "konnected"
-SERVICE_MOBILE_APP = "opp_mobile_app"
+SERVICE_MOBILE_APP = .opp_mobile_app"
 SERVICE_NETGEAR = "netgear_router"
 SERVICE_OCTOPRINT = "octoprint"
 SERVICE_SABNZBD = "sabnzbd"
@@ -53,9 +53,9 @@ CONFIG_ENTRY_HANDLERS = {
 
 SERVICE_HANDLERS = {
     SERVICE_MOBILE_APP: ("mobile_app", None),
-    SERVICE_OPP_IOS_APP: ("ios", None),
+    SERVICE_HASS_IOS_APP: ("ios", None),
     SERVICE_NETGEAR: ("device_tracker", None),
-    SERVICE_OPPIO: ("oppio", None),
+    SERVICE_HASSIO: (.oppio", None),
     SERVICE_APPLE_TV: ("apple_tv", None),
     SERVICE_ENIGMA2: ("media_player", "enigma2"),
     SERVICE_WINK: ("wink", None),
@@ -156,15 +156,15 @@ async def async_setup.opp, config):
             logger.info("Ignoring service: %s %s", service, info)
             return
 
-        discovery_op.h = json.dumps([service, info], sort_keys=True)
-        if discovery_op.h in already_discovered:
+        discovery_hash = json.dumps([service, info], sort_keys=True)
+        if discovery_hash in already_discovered:
             logger.debug("Already discovered service %s %s.", service, info)
             return
 
-        already_discovered.add(discovery_op.h)
+        already_discovered.add(discovery_hash)
 
         if service in CONFIG_ENTRY_HANDLERS:
-            await opp..config_entries.flow.async_init(
+            await.opp.config_entries.flow.async_init(
                 CONFIG_ENTRY_HANDLERS[service],
                 context={"source": config_entries.SOURCE_DISCOVERY},
                 data=info,
@@ -193,7 +193,7 @@ async def async_setup.opp, config):
     async def scan_devices(now):
         """Scan for devices."""
         try:
-            results = await opp..async_add_executor_job(
+            results = await.opp.async_add_executor_job(
                 _discover, netdisco, zeroconf_instance
             )
 

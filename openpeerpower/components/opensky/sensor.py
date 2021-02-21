@@ -98,7 +98,7 @@ class OpenSkySensor(Entity):
         self._radius = util_distance.convert(radius, LENGTH_KILOMETERS, LENGTH_METERS)
         self._altitude = altitude
         self._state = 0
-        self._opp = opp
+        self..opp =.opp
         self._name = name
         self._previously_tracked = None
 
@@ -112,7 +112,7 @@ class OpenSkySensor(Entity):
         """Return the state of the sensor."""
         return self._state
 
-    def _op.dle_boundary(self, flights, event, metadata):
+    def _handle_boundary(self, flights, event, metadata):
         """Handle flights crossing region boundary."""
         for flight in flights:
             if flight in metadata:
@@ -132,7 +132,7 @@ class OpenSkySensor(Entity):
                 ATTR_LONGITUDE: longitude,
                 ATTR_LATITUDE: latitude,
             }
-            self._opp.bus.fire(event, data)
+            self..opp.bus.fire(event, data)
 
     def update(self):
         """Update device state."""
@@ -168,8 +168,8 @@ class OpenSkySensor(Entity):
         if self._previously_tracked is not None:
             entries = currently_tracked - self._previously_tracked
             exits = self._previously_tracked - currently_tracked
-            self._op.dle_boundary(entries, EVENT_OPENSKY_ENTRY, flight_metadata)
-            self._op.dle_boundary(exits, EVENT_OPENSKY_EXIT, flight_metadata)
+            self._handle_boundary(entries, EVENT_OPENSKY_ENTRY, flight_metadata)
+            self._handle_boundary(exits, EVENT_OPENSKY_EXIT, flight_metadata)
         self._state = len(currently_tracked)
         self._previously_tracked = currently_tracked
 

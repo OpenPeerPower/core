@@ -10,7 +10,7 @@ from zwave_js_server.model.node import Node as ZwaveNode
 from zwave_js_server.model.notification import Notification
 from zwave_js_server.model.value import ValueNotification
 
-from openpeerpower.components.oppio.handler import OppioAPIError
+from openpeerpower.components.oppio.handler import HassioAPIError
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_URL, EVENT_OPENPEERPOWER_STOP
 from openpeerpower.core import Event, OpenPeerPower, callback
@@ -206,7 +206,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
         driver_ready = asyncio.Event()
 
-        async def handle_op.shutdown(event: Event) -> None:
+        async def handle_ha_shutdown(event: Event) -> None:
             """Handle HA shutdown."""
             await disconnect_client.opp, entry, client, listen_task, platform_task)
 
@@ -215,7 +215,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         )
        .opp.data[DOMAIN][entry.entry_id][DATA_CLIENT_LISTEN_TASK] = listen_task
         unsubscribe_callbacks.append(
-           .opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, handle_op.shutdown)
+           .opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, handle_ha_shutdown)
         )
 
         await driver_ready.wait()
@@ -250,7 +250,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             "node removed", lambda event: async_on_node_removed(event["node"])
         )
 
-    platform_task = opp.async_create_task(start_platforms())
+    platform_task =.opp.async_create_task(start_platforms())
    .opp.data[DOMAIN][entry.entry_id][DATA_START_PLATFORM_TASK] = platform_task
 
     return True
@@ -310,7 +310,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     if not unload_ok:
         return False
 
-    info = opp.data[DOMAIN].pop(entry.entry_id)
+    info =.opp.data[DOMAIN].pop(entry.entry_id)
 
     for unsub in info[DATA_UNSUBSCRIBE]:
         unsub()
@@ -333,11 +333,11 @@ async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry) -> None:
         return
 
     try:
-        await opp..components.oppio.async_stop_addon("core_zwave_js")
-    except OppioAPIError as err:
+        await.opp.components.oppio.async_stop_addon("core_zwave_js")
+    except HassioAPIError as err:
         LOGGER.error("Failed to stop the Z-Wave JS add-on: %s", err)
         return
     try:
-        await opp..components.oppio.async_uninstall_addon("core_zwave_js")
-    except OppioAPIError as err:
+        await.opp.components.oppio.async_uninstall_addon("core_zwave_js")
+    except HassioAPIError as err:
         LOGGER.error("Failed to uninstall the Z-Wave JS add-on: %s", err)

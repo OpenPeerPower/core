@@ -1,7 +1,7 @@
 {
   "domain": "blinkt",
   "name": "Blinkt!",
-  "documentation": "https://www.openpeerpower.io/integrations/blinkt",
+  "documentation": "https://www.open-peer-power.io/integrations/blinkt",
   "requirements": ["blinkt==0.1.0"],
   "codeowners": []
 }

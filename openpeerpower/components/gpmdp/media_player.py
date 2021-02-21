@@ -25,8 +25,8 @@ from openpeerpower.const import (
     STATE_PAUSED,
     STATE_PLAYING,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.util.json import load_json, save_json
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.util.json import load_json, save_json
 
 _CONFIGURING = {}
 _LOGGER = logging.getLogger(__name__)
@@ -59,7 +59,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def request_configuration.opp, config, url, add_entities_callback):
     """Request configuration steps from the user."""
-    configurator = opp.components.configurator
+    configurator =.opp.components.configurator
     if "gpmdp" in _CONFIGURING:
         configurator.notify_errors(
             _CONFIGURING["gpmdp"], "Failed to register, please try again."
@@ -147,7 +147,7 @@ def setup_gpmdp.opp, config, code, add_entities):
         return
 
     if "gpmdp" in _CONFIGURING:
-        configurator = opp.components.configurator
+        configurator =.opp.components.configurator
         configurator.request_done(_CONFIGURING.pop("gpmdp"))
 
     add_entities([GPMDP(name, url, code)], True)
@@ -331,13 +331,13 @@ class GPMDP(MediaPlayerEntity):
         """Send media_play command to media player."""
         self.send_gpmdp_msg("playback", "playPause", False)
         self._status = STATE_PLAYING
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def media_pause(self):
         """Send media_pause command to media player."""
         self.send_gpmdp_msg("playback", "playPause", False)
         self._status = STATE_PAUSED
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def media_seek(self, position):
         """Send media_seek command to media player."""
@@ -353,7 +353,7 @@ class GPMDP(MediaPlayerEntity):
                 }
             )
         )
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def volume_up(self):
         """Send volume_up command to media player."""
@@ -361,7 +361,7 @@ class GPMDP(MediaPlayerEntity):
         if websocket is None:
             return
         websocket.send('{"namespace": "volume", "method": "increaseVolume"}')
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def volume_down(self):
         """Send volume_down command to media player."""
@@ -369,7 +369,7 @@ class GPMDP(MediaPlayerEntity):
         if websocket is None:
             return
         websocket.send('{"namespace": "volume", "method": "decreaseVolume"}')
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def set_volume_level(self, volume):
         """Set volume on media player, range(0..1)."""
@@ -385,4 +385,4 @@ class GPMDP(MediaPlayerEntity):
                 }
             )
         )
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

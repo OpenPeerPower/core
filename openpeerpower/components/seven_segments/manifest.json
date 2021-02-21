@@ -1,7 +1,7 @@
 {
   "domain": "seven_segments",
   "name": "Seven Segments OCR",
-  "documentation": "https://www.openpeerpower.io/integrations/seven_segments",
+  "documentation": "https://www.open-peer-power.io/integrations/seven_segments",
   "requirements": ["pillow==8.1.0"],
   "codeowners": ["@fabaff"]
 }

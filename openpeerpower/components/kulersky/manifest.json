@@ -2,7 +2,7 @@
   "domain": "kulersky",
   "name": "Kuler Sky",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/kulersky",
+  "documentation": "https://www.open-peer-power.io/integrations/kulersky",
   "requirements": [
     "pykulersky==0.4.0"
   ],

@@ -58,7 +58,7 @@ class PilightBaseDevice(RestoreEntity):
 
     def __init__(self,.opp, name, config):
         """Initialize a device."""
-        self._opp = opp
+        self..opp =.opp
         self._name = config.get(CONF_NAME, name)
         self._is_on = False
         self._code_on = config.get(CONF_ON_CODE)
@@ -79,13 +79,13 @@ class PilightBaseDevice(RestoreEntity):
                 code_list.append(_ReceiveHandle(code, echo))
 
         if any(self._code_on_receive) or any(self._code_off_receive):
-           .opp.bus.listen(EVENT, self._op.dle_code)
+           .opp.bus.listen(EVENT, self._handle_code)
 
         self._brightness = 255
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         state = await self.async_get_last_state()
         if state:
             self._is_on = state.state == STATE_ON
@@ -111,7 +111,7 @@ class PilightBaseDevice(RestoreEntity):
         """Return true if switch is on."""
         return self._is_on
 
-    def _op.dle_code(self, call):
+    def _handle_code(self, call):
         """Check if received code by the pilight-daemon.
 
         If the code matches the receive on/off codes of this switch the switch
@@ -145,14 +145,14 @@ class PilightBaseDevice(RestoreEntity):
                 if dimlevel is not None:
                     code.update({"dimlevel": dimlevel})
 
-                self._opp.services.call(DOMAIN, SERVICE_NAME, code, blocking=True)
+                self..opp.services.call(DOMAIN, SERVICE_NAME, code, blocking=True)
             else:
-                self._opp.services.call(
+                self..opp.services.call(
                     DOMAIN, SERVICE_NAME, self._code_off, blocking=True
                 )
 
         self._is_on = turn_on
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_on(self, **kwargs):
         """Turn the switch on by calling pilight.send service with on code."""

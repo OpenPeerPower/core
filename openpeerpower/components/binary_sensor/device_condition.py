@@ -217,7 +217,7 @@ async def async_get_conditions(
 
     for entry in entries:
         device_class = DEVICE_CLASS_NONE
-        state = opp.states.get(entry.entity_id)
+        state =.opp.states.get(entry.entity_id)
         if state and ATTR_DEVICE_CLASS in state.attributes:
             device_class = state.attributes[ATTR_DEVICE_CLASS]
 

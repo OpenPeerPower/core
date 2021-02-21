@@ -7,10 +7,10 @@ from .controller import SmartTubController
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS = ["climate"]
+PLATFORMS = ["climate", "sensor"]
 
 
-async def async_setup.opp, _config):
+async def async_setup.opp, config):
     """Set up smarttub component."""
 
    .opp.data.setdefault(DOMAIN, {})

@@ -5,8 +5,8 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_HOST
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from .common import (
     ATTR_CONFIG,
@@ -70,11 +70,11 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigType):
     """Set up TPLink from a config entry."""
-    config_data = opp.data[DOMAIN].get(ATTR_CONFIG)
+    config_data =.opp.data[DOMAIN].get(ATTR_CONFIG)
 
     # These will contain the initialized devices
-    lights = opp.data[DOMAIN][CONF_LIGHT] = []
-    switches = opp.data[DOMAIN][CONF_SWITCH] = []
+    lights =.opp.data[DOMAIN][CONF_LIGHT] = []
+    switches =.opp.data[DOMAIN][CONF_SWITCH] = []
 
     # Add static devices
     static_devices = SmartDevices()
@@ -91,7 +91,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigType):
         lights.extend(discovered_devices.lights)
         switches.extend(discovered_devices.switches)
 
-    forward_setup = opp.config_entries.async_forward_entry_setup
+    forward_setup =.opp.config_entries.async_forward_entry_setup
     if lights:
         _LOGGER.debug(
             "Got %s lights: %s", len(lights), ", ".join([d.host for d in lights])
@@ -108,7 +108,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigType):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    forward_unload = opp.config_entries.async_forward_entry_unload
+    forward_unload =.opp.config_entries.async_forward_entry_unload
     remove_lights = remove_switches = False
     if.opp.data[DOMAIN][CONF_LIGHT]:
         remove_lights = await forward_unload(entry, "light")

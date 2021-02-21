@@ -3,7 +3,7 @@ import voluptuous as vol
 
 from openpeerpower.components.switch import PLATFORM_SCHEMA, SwitchEntity
 from openpeerpower.const import CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import CONF_ADS_VAR, DATA_ADS, STATE_KEY_STATE, AdsEntity
 
@@ -19,7 +19,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up switch platform for ADS."""
-    ads_hub = opp.data.get(DATA_ADS)
+    ads_hub =.opp.data.get(DATA_ADS)
 
     name = config[CONF_NAME]
     ads_var = config[CONF_ADS_VAR]
@@ -30,7 +30,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class AdsSwitch(AdsEntity, SwitchEntity):
     """Representation of an ADS switch device."""
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register device notification."""
         await self.async_initialize_device(self._ads_var, self._ads_hub.PLCTYPE_BOOL)
 

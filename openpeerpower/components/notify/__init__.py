@@ -8,14 +8,14 @@ import voluptuous as vol
 
 import openpeerpower.components.persistent_notification as pn
 from openpeerpower.const import CONF_NAME, CONF_PLATFORM
-from openpeerpowerr.core import ServiceCall
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers import config_per_platform, discovery
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.loader import bind_opp
-from openpeerpowerr.setup import async_prepare_setup_platform
-from openpeerpowerr.util import slugify
+from openpeerpower.core import ServiceCall
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers import config_per_platform, discovery
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.loader import bind.opp
+from openpeerpower.setup import async_prepare_setup_platform
+from openpeerpower.util import slugify
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 
@@ -63,10 +63,10 @@ PERSISTENT_NOTIFICATION_SERVICE_SCHEMA = vol.Schema(
 )
 
 
-@bind_opp
+@bind.opp
 async def async_reload.opp: OpenPeerPowerType, integration_name: str) -> None:
     """Register notify services for an integration."""
-    if not _async_integration_op._notify_services.opp, integration_name):
+    if not _async_integration_has_notify_services.opp, integration_name):
         return
 
     tasks = [
@@ -77,10 +77,10 @@ async def async_reload.opp: OpenPeerPowerType, integration_name: str) -> None:
     await asyncio.gather(*tasks)
 
 
-@bind_opp
+@bind.opp
 async def async_reset_platform.opp: OpenPeerPowerType, integration_name: str) -> None:
     """Unregister notify services for an integration."""
-    if not _async_integration_op._notify_services.opp, integration_name):
+    if not _async_integration_has_notify_services.opp, integration_name):
         return
 
     tasks = [
@@ -93,7 +93,7 @@ async def async_reset_platform.opp: OpenPeerPowerType, integration_name: str) ->
     del.opp.data[NOTIFY_SERVICES][integration_name]
 
 
-def _async_integration_op._notify_services(
+def _async_integration_has_notify_services(
    .opp: OpenPeerPowerType, integration_name: str
 ) -> bool:
     """Determine if an integration has notify services registered."""
@@ -156,7 +156,7 @@ class BaseNotificationService:
     ) -> None:
         """Store the data for the notify service."""
         # pylint: disable=attribute-defined-outside-init
-        self.opp = opp
+        self.opp =.opp
         self._service_name = service_name
         self._target_service_name_prefix = target_service_name_prefix
         self.registered_targets = {}
@@ -233,15 +233,15 @@ async def async_setup.opp, config):
         """Send notification via the built-in persistsent_notify integration."""
         payload = {}
         message = service.data[ATTR_MESSAGE]
-        message.opp = opp
+        message.opp =.opp
         payload[ATTR_MESSAGE] = message.async_render(parse_result=False)
 
         title = service.data.get(ATTR_TITLE)
         if title:
-            title.opp = opp
+            title.opp =.opp
             payload[ATTR_TITLE] = title.async_render(parse_result=False)
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             pn.DOMAIN, pn.SERVICE_CREATE, payload, blocking=True
         )
 
@@ -268,7 +268,7 @@ async def async_setup.opp, config):
                    .opp, p_config, discovery_info
                 )
             elif hasattr(platform, "get_service"):
-                notify_service = await opp..async_add_executor_job(
+                notify_service = await.opp.async_add_executor_job(
                     platform.get_service,.opp, p_config, discovery_info
                 )
             else:

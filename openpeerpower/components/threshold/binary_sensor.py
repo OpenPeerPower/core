@@ -15,9 +15,9 @@ from openpeerpower.const import (
     CONF_NAME,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import async_track_state_change_event
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import async_track_state_change_event
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -79,7 +79,7 @@ class ThresholdSensor(BinarySensorEntity):
 
     def __init__(self,.opp, entity_id, name, lower, upper, hysteresis, device_class):
         """Initialize the Threshold sensor."""
-        self._opp = opp
+        self..opp =.opp
         self._entity_id = entity_id
         self._name = name
         self._threshold_lower = lower
@@ -107,7 +107,7 @@ class ThresholdSensor(BinarySensorEntity):
                 _LOGGER.warning("State is not numerical")
 
             self._update_state()
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         async_track_state_change_event(
            .opp, [entity_id], async_threshold_sensor_state_listener

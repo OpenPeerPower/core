@@ -41,7 +41,7 @@ DEVICE_CLASS = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up a Axis binary sensor."""
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     @callback
     def async_add_sensor(event_id):
@@ -77,14 +77,14 @@ class AxisBinarySensor(AxisEventBase, BinarySensorEntity):
         def scheduled_update(now):
             """Timer callback for sensor update."""
             self.cancel_scheduled_update = None
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         if self.cancel_scheduled_update is not None:
             self.cancel_scheduled_update()
             self.cancel_scheduled_update = None
 
         if self.is_on or self.device.option_trigger_time == 0 or no_delay:
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
         self.cancel_scheduled_update = async_track_point_in_utc_time(

@@ -34,7 +34,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up the switch platform."""
     switches = []
 
-    processor = opp.data[DOMAIN]
+    processor =.opp.data[DOMAIN]
     for switch_type in config[CONF_MONITORED_CONDITIONS]:
         switches.append(AquaLogicSwitch(processor, switch_type))
 
@@ -94,10 +94,10 @@ class AquaLogicSwitch(SwitchEntity):
             return
         panel.set_state(self._state_name, False)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
-                UPDATE_TOPIC, self.async_write_op.state
+                UPDATE_TOPIC, self.async_write_ha_state
             )
         )

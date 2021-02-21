@@ -256,7 +256,7 @@ class MpdDevice(MediaPlayerEntity):
         return self._currentsong.get("album")
 
     @property
-    def media_image_op.h(self):
+    def media_image_hash(self):
         """Hash value for media image."""
         file = self._currentsong.get("file")
         if file:

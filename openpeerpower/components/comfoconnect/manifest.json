@@ -1,7 +1,7 @@
 {
   "domain": "comfoconnect",
   "name": "Zehnder ComfoAir Q",
-  "documentation": "https://www.openpeerpower.io/integrations/comfoconnect",
+  "documentation": "https://www.open-peer-power.io/integrations/comfoconnect",
   "requirements": ["pycomfoconnect==0.4"],
   "codeowners": ["@michaelarnauts"]
 }

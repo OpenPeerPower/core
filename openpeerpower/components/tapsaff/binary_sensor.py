@@ -7,7 +7,7 @@ import voluptuous as vol
 
 from openpeerpower.components.binary_sensor import PLATFORM_SCHEMA, BinarySensorEntity
 from openpeerpower.const import CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 

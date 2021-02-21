@@ -3,8 +3,8 @@
 import logging
 
 from openpeerpower.components.fan import FanEntity
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import (
     DOMAIN,
@@ -37,7 +37,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    client = opp.data[DOMAIN]["client"]
+    client =.opp.data[DOMAIN]["client"]
 
     client.set_settable_address(METRIC_KEY_MODE, int)
 
@@ -91,7 +91,7 @@ class ValloxFan(FanEntity):
             ATTR_PROFILE_FAN_SPEED_BOOST["description"]: self._fan_speed_boost,
         }
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call to update."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -102,7 +102,7 @@ class ValloxFan(FanEntity):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     async def async_update(self):
         """Fetch state from the device."""
@@ -142,7 +142,7 @@ class ValloxFan(FanEntity):
     # instead of speeds.
     #
     # Please review
-    # https://developers.openpeerpower.io/docs/core/entity/fan/
+    # https://developers.open-peer-power.io/docs/core/entity/fan/
     #
     async def async_turn_on(
         self,

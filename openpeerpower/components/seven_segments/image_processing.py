@@ -64,7 +64,7 @@ class ImageProcessingSsocr(ImageProcessingEntity):
 
     def __init__(self,.opp, camera_entity, config, name):
         """Initialize seven segments processing."""
-        self.opp = opp
+        self.opp =.opp
         self._camera_entity = camera_entity
         if name:
             self._name = name

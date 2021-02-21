@@ -39,7 +39,7 @@ def async_register.opp, intent_type, utterances):
     Registrations don't require conversations to be loaded. They will become
     active once the conversation component is loaded.
     """
-    intents = opp.data.setdefault(DOMAIN, {})
+    intents =.opp.data.setdefault(DOMAIN, {})
     conf = intents.setdefault(intent_type, [])
 
     for utterance in utterances:
@@ -54,7 +54,7 @@ class DefaultAgent(AbstractConversationAgent):
 
     def __init__(self,.opp: core.OpenPeerPower):
         """Initialize the default agent."""
-        self.opp = opp
+        self.opp =.opp
 
     async def async_initialize(self, config):
         """Initialize the default agent."""
@@ -124,7 +124,7 @@ class DefaultAgent(AbstractConversationAgent):
                 if not match:
                     continue
 
-                return await intent.async_op.dle(
+                return await intent.async_handle(
                     self.opp,
                     DOMAIN,
                     intent_type,

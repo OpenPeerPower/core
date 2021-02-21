@@ -103,7 +103,7 @@ def get_arguments() -> argparse.Namespace:
         "--log-file",
         type=str,
         default=None,
-        help="Log file to write to.  If not set, CONFIG/openpeerpower.log is used",
+        help="Log file to write to.  If not set, CONFIG/open-peer-power.log is used",
     )
     parser.add_argument(
         "--log-no-color", action="store_true", help="Disable color logs"
@@ -207,7 +207,7 @@ def closefds_osx(min_fd: int, max_fd: int) -> None:
 
 
 def cmdline() -> List[str]:
-    """Collect path and arguments to re-execute the current opp instance."""
+    """Collect path and arguments to re-execute the current.opp instance."""
     if os.path.basename(sys.argv[0]) == "__main__.py":
         modulepath = os.path.dirname(sys.argv[0])
         os.environ["PYTHONPATH"] = os.path.dirname(modulepath)

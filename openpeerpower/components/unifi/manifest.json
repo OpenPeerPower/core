@@ -2,7 +2,7 @@
   "domain": "unifi",
   "name": "Ubiquiti UniFi",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/unifi",
+  "documentation": "https://www.open-peer-power.io/integrations/unifi",
   "requirements": ["aiounifi==26"],
   "codeowners": ["@Kane610"],
   "quality_scale": "platinum",

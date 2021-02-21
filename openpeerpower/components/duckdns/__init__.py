@@ -6,12 +6,12 @@ import logging
 import voluptuous as vol
 
 from openpeerpower.const import CONF_ACCESS_TOKEN, CONF_DOMAIN
-from openpeerpowerr.core import CALLBACK_TYPE, callback
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import async_call_later
-from openpeerpowerr.loader import bind_opp
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.core import CALLBACK_TYPE, callback
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import async_call_later
+from openpeerpower.loader import bind.opp
+from openpeerpower.util import dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -99,7 +99,7 @@ async def _update_duckdns(session, domain, token, *, txt=_SENTINEL, clear=False)
 
 
 @callback
-@bind_opp
+@bind.opp
 def async_track_time_interval_backoff.opp, action, intervals) -> CALLBACK_TYPE:
     """Add a listener that fires repetitively at every timedelta interval."""
     if not iscoroutinefunction:

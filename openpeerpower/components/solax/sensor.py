@@ -8,10 +8,10 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import CONF_IP_ADDRESS, CONF_PORT, TEMP_CELSIUS
-from openpeerpowerr.exceptions import PlatformNotReady
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_time_interval
+from openpeerpower.exceptions import PlatformNotReady
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_time_interval
 
 DEFAULT_PORT = 80
 
@@ -48,7 +48,7 @@ class RealTimeDataEndpoint:
 
     def __init__(self,.opp, api):
         """Initialize the sensor."""
-        self.opp = opp
+        self.opp =.opp
         self.api = api
         self.ready = asyncio.Event()
         self.sensors = []
@@ -70,7 +70,7 @@ class RealTimeDataEndpoint:
         for sensor in self.sensors:
             if sensor.key in data:
                 sensor.value = data[sensor.key]
-                sensor.async_schedule_update_op.state()
+                sensor.async_schedule_update_ha_state()
 
 
 class Inverter(Entity):

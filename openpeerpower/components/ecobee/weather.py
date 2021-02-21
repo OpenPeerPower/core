@@ -19,14 +19,14 @@ from .const import (
     _LOGGER,
     DOMAIN,
     ECOBEE_MODEL_TO_NAME,
-    ECOBEE_WEATHER_SYMBOL_TO_OPP,
+    ECOBEE_WEATHER_SYMBOL_TO_HASS,
     MANUFACTURER,
 )
 
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the ecobee weather platform."""
-    data = opp.data[DOMAIN]
+    data =.opp.data[DOMAIN]
     dev = []
     for index in range(len(data.ecobee.thermostats)):
         thermostat = data.ecobee.get_thermostat(index)
@@ -74,7 +74,7 @@ class EcobeeWeather(WeatherEntity):
             _LOGGER.error(
                 "Model number for ecobee thermostat %s not recognized. "
                 "Please visit this link and provide the following information: "
-                "https://github.com/openpeerpower/core/issues/27172 "
+                "https://github.com/open-peer-power/core/issues/27172 "
                 "Unrecognized model number: %s",
                 thermostat["name"],
                 thermostat["modelNumber"],
@@ -92,7 +92,7 @@ class EcobeeWeather(WeatherEntity):
     def condition(self):
         """Return the current condition."""
         try:
-            return ECOBEE_WEATHER_SYMBOL_TO_OPP[self.get_forecast(0, "weatherSymbol")]
+            return ECOBEE_WEATHER_SYMBOL_TO_HASS[self.get_forecast(0, "weatherSymbol")]
         except ValueError:
             return None
 
@@ -190,7 +190,7 @@ def _process_forecast(json):
     """Process a single ecobee API forecast to return expected values."""
     forecast = {}
     try:
-        forecast[ATTR_FORECAST_CONDITION] = ECOBEE_WEATHER_SYMBOL_TO_OPP[
+        forecast[ATTR_FORECAST_CONDITION] = ECOBEE_WEATHER_SYMBOL_TO_HASS[
             json["weatherSymbol"]
         ]
         if json["tempHigh"] != ECOBEE_STATE_UNKNOWN:

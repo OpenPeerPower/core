@@ -13,7 +13,7 @@ from openpeerpower.components.device_tracker import (
     DeviceScanner,
 )
 from openpeerpower.const import CONF_HOST, CONF_PASSWORD, CONF_USERNAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -139,7 +139,7 @@ async def async_setup_entry(
    .opp.data[DOMAIN].setdefault(GATEWAYS_KEY, {})
 
     # Connect to Xiaomi Aqara Gateway
-    xiaomi_gateway = await opp..async_add_executor_job(
+    xiaomi_gateway = await.opp.async_add_executor_job(
         XiaomiGateway,
         entry.data[CONF_HOST],
         entry.data[CONF_SID],
@@ -151,14 +151,14 @@ async def async_setup_entry(
     )
    .opp.data[DOMAIN][GATEWAYS_KEY][entry.entry_id] = xiaomi_gateway
 
-    gateway_discovery = opp.data[DOMAIN].setdefault(
+    gateway_discovery =.opp.data[DOMAIN].setdefault(
         LISTENER_KEY,
         XiaomiGatewayDiscovery.opp.add_job, [], entry.data[CONF_INTERFACE]),
     )
 
     if len.opp.data[DOMAIN][GATEWAYS_KEY]) == 1:
         # start listining for local pushes (only once)
-        await opp..async_add_executor_job(gateway_discovery.listen)
+        await.opp.async_add_executor_job(gateway_discovery.listen)
 
         # register stop callback to shutdown listining for local pushes
         def stop_xiaomi(event):
@@ -220,8 +220,8 @@ async def async_unload_entry(
         # No gateways left, stop Xiaomi socket
        .opp.data[DOMAIN].pop(GATEWAYS_KEY)
         _LOGGER.debug("Shutting down Xiaomi Gateway Listener")
-        gateway_discovery = opp.data[DOMAIN].pop(LISTENER_KEY)
-        await opp..async_add_executor_job(gateway_discovery.stop_listen)
+        gateway_discovery =.opp.data[DOMAIN].pop(LISTENER_KEY)
+        await.opp.async_add_executor_job(gateway_discovery.stop_listen)
 
     return unload_ok
 
@@ -267,7 +267,7 @@ class XiaomiDevice(Entity):
     def _add_push_data_job(self, *args):
         self.opp.add_job(self.push_data, *args)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Start unavailability tracking."""
         self._xiaomi_hub.callbacks[self._sid].append(self._add_push_data_job)
         self._async_track_unavailable()
@@ -328,7 +328,7 @@ class XiaomiDevice(Entity):
         """Set state to UNAVAILABLE."""
         self._remove_unavailability_tracker = None
         self._is_available = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _async_track_unavailable(self):
@@ -350,7 +350,7 @@ class XiaomiDevice(Entity):
         is_data = self.parse_data(data, raw_data)
         is_voltage = self.parse_voltage(data)
         if is_data or is_voltage or was_unavailable:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     def parse_voltage(self, data):
         """Parse battery level data sent by gateway."""
@@ -390,7 +390,7 @@ def _add_gateway_to_schema.opp, schema):
         raise vol.Invalid(f"Unknown gateway sid {sid}")
 
     kwargs = {}
-    xiaomi_data = opp.data.get(DOMAIN)
+    xiaomi_data =.opp.data.get(DOMAIN)
     if xiaomi_data is not None:
         gateways = list(xiaomi_data[GATEWAYS_KEY].values())
 

@@ -15,7 +15,7 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import Event, callback as async_callback
 from openpeerpower.helpers.entity import async_generate_entity_id
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util.async_ import run_callback_threadsafe
 
 _KEY_INSTANCE = "configurator"
@@ -40,7 +40,7 @@ STATE_CONFIGURE = "configure"
 STATE_CONFIGURED = "configured"
 
 
-@bind_opp
+@bind.opp
 @async_callback
 def async_request_config(
    .opp,
@@ -64,10 +64,10 @@ def async_request_config(
     if description_image is not None:
         description += f"\n\n![Description image]({description_image})"
 
-    instance = opp.data.get(_KEY_INSTANCE)
+    instance =.opp.data.get(_KEY_INSTANCE)
 
     if instance is None:
-        instance = opp.data[_KEY_INSTANCE] = Configurator.opp)
+        instance =.opp.data[_KEY_INSTANCE] = Configurator.opp)
 
     request_id = instance.async_request_config(
         name, callback, description, submit_caption, fields, entity_picture
@@ -81,7 +81,7 @@ def async_request_config(
     return request_id
 
 
-@bind_opp
+@bind.opp
 def request_config.opp, *args, **kwargs):
     """Create a new request for configuration.
 
@@ -92,7 +92,7 @@ def request_config.opp, *args, **kwargs):
     ).result()
 
 
-@bind_opp
+@bind.opp
 @async_callback
 def async_notify_errors.opp, request_id, error):
     """Add errors to a config request."""
@@ -103,7 +103,7 @@ def async_notify_errors.opp, request_id, error):
         pass
 
 
-@bind_opp
+@bind.opp
 def notify_errors.opp, request_id, error):
     """Add errors to a config request."""
     return run_callback_threadsafe(
@@ -111,7 +111,7 @@ def notify_errors.opp, request_id, error):
     ).result()
 
 
-@bind_opp
+@bind.opp
 @async_callback
 def async_request_done.opp, request_id):
     """Mark a configuration request as done."""
@@ -122,7 +122,7 @@ def async_request_done.opp, request_id):
         pass
 
 
-@bind_opp
+@bind.opp
 def request_done.opp, request_id):
     """Mark a configuration request as done."""
     return run_callback_threadsafe(
@@ -140,11 +140,11 @@ class Configurator:
 
     def __init__(self,.opp):
         """Initialize the configurator."""
-        self.opp = opp
+        self.opp =.opp
         self._cur_id = 0
         self._requests = {}
        .opp.services.async_register(
-            DOMAIN, SERVICE_CONFIGURE, self.async_op.dle_service_call
+            DOMAIN, SERVICE_CONFIGURE, self.async_handle_service_call
         )
 
     @async_callback
@@ -218,7 +218,7 @@ class Configurator:
 
         self.opp.bus.async_listen_once(EVENT_TIME_CHANGED, deferred_remove)
 
-    async def async_op.dle_service_call(self, call):
+    async def async_handle_service_call(self, call):
         """Handle a configure service call."""
         request_id = call.data.get(ATTR_CONFIGURE_ID)
 

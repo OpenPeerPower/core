@@ -177,7 +177,7 @@ class SqueezeboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             # attempt to connect to server and determine uuid. will fail if password required
             error = await self._validate_input(discovery_info)
             if error:
-                await self._async_op.dle_discovery_without_unique_id()
+                await self._async_handle_discovery_without_unique_id()
 
         # update schema with suggested values from discovery
         self.data_schema = _base_schema(discovery_info)

@@ -17,8 +17,8 @@ from openpeerpower.const import (
     STATE_ON,
     TEMP_CELSIUS,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -80,7 +80,7 @@ class MfiSensor(Entity):
     def __init__(self, port,.opp):
         """Initialize the sensor."""
         self._port = port
-        self._opp = opp
+        self..opp =.opp
 
     @property
     def name(self):

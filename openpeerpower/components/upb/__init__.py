@@ -4,9 +4,9 @@ import asyncio
 import upb_lib
 
 from openpeerpower.const import CONF_FILE_PATH, CONF_HOST
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.typing import ConfigType
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     ATTR_ADDRESS,
@@ -78,7 +78,7 @@ async def async_unload_entry.opp, config_entry):
     )
 
     if unload_ok:
-        upb = opp.data[DOMAIN][config_entry.entry_id]["upb"]
+        upb =.opp.data[DOMAIN][config_entry.entry_id]["upb"]
         upb.disconnect()
        .opp.data[DOMAIN].pop(config_entry.entry_id)
 
@@ -127,9 +127,9 @@ class UpbEntity(Entity):
     def _element_callback(self, element, changeset):
         """Handle callback from an UPB element that has changed."""
         self._element_changed(element, changeset)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callback for UPB changes and update entity state."""
         self._element.add_callback(self._element_callback)
         self._element_callback(self._element, {})

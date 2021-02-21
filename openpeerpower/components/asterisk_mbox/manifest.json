@@ -1,7 +1,7 @@
 {
   "domain": "asterisk_mbox",
   "name": "Asterisk Voicemail",
-  "documentation": "https://www.openpeerpower.io/integrations/asterisk_mbox",
+  "documentation": "https://www.open-peer-power.io/integrations/asterisk_mbox",
   "requirements": ["asterisk_mbox==0.5.0"],
   "codeowners": []
 }

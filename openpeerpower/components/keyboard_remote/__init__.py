@@ -73,10 +73,10 @@ class KeyboardRemote:
 
     def __init__(self,.opp, config):
         """Create handlers and setup dictionaries to keep track of them."""
-        self.opp = opp
+        self.opp =.opp
         self.handlers_by_name = {}
         self.handlers_by_descriptor = {}
-        self.active_op.dlers_by_descriptor = {}
+        self.active_handlers_by_descriptor = {}
         self.watcher = None
         self.monitor_task = None
 
@@ -84,10 +84,10 @@ class KeyboardRemote:
             handler = self.DeviceHandler.opp, dev_block)
             descriptor = dev_block.get(DEVICE_DESCRIPTOR)
             if descriptor is not None:
-                self.handlers_by_descriptor[descriptor] = op.dler
+                self.handlers_by_descriptor[descriptor] = handler
             else:
                 name = dev_block.get(DEVICE_NAME)
-                self.handlers_by_name[name] = op.dler
+                self.handlers_by_name[name] = handler
 
     def setup(self):
         """Listen for Open Peer Power start and stop events."""
@@ -123,13 +123,13 @@ class KeyboardRemote:
         descriptors = await self.opp.async_add_executor_job(list_devices, DEVINPUT)
         for descriptor in descriptors:
             dev, handler = await self.opp.async_add_executor_job(
-                self.get_device_op.dler, descriptor
+                self.get_device_handler, descriptor
             )
 
             if handler is None:
                 continue
 
-            self.active_op.dlers_by_descriptor[descriptor] = op.dler
+            self.active_handlers_by_descriptor[descriptor] = handler
             initial_start_monitoring.add(handler.async_start_monitoring(dev))
 
         if initial_start_monitoring:
@@ -148,13 +148,13 @@ class KeyboardRemote:
             await self.monitor_task
 
         handler_stop_monitoring = set()
-        for handler in self.active_op.dlers_by_descriptor.values():
+        for handler in self.active_handlers_by_descriptor.values():
             handler_stop_monitoring.add(handler.async_stop_monitoring())
 
         if handler_stop_monitoring:
             await asyncio.wait(handler_stop_monitoring)
 
-    def get_device_op.dler(self, descriptor):
+    def get_device_handler(self, descriptor):
         """Find the correct device handler given a descriptor (path)."""
 
         # devices are often added and then correct permissions set after
@@ -170,13 +170,13 @@ class KeyboardRemote:
             handler = self.handlers_by_name[dev.name]
         else:
             # check for symlinked paths matching descriptor
-            for test_descriptor, test_op.dler in self.handlers_by_descriptor.items():
-                if test_op.dler.dev is not None:
-                    fullpath = test_op.dler.dev.path
+            for test_descriptor, test_handler in self.handlers_by_descriptor.items():
+                if test_handler.dev is not None:
+                    fullpath = test_handler.dev.path
                 else:
                     fullpath = os.path.realpath(test_descriptor)
                 if fullpath == descriptor:
-                    handler = test_op.dler
+                    handler = test_handler
 
         return (dev, handler)
 
@@ -188,22 +188,22 @@ class KeyboardRemote:
                 event = await self.watcher.get_event()
                 descriptor = f"{DEVINPUT}/{event.name}"
 
-                descriptor_active = descriptor in self.active_op.dlers_by_descriptor
+                descriptor_active = descriptor in self.active_handlers_by_descriptor
 
                 if (event.flags & aionotify.Flags.DELETE) and descriptor_active:
-                    handler = self.active_op.dlers_by_descriptor[descriptor]
-                    del self.active_op.dlers_by_descriptor[descriptor]
+                    handler = self.active_handlers_by_descriptor[descriptor]
+                    del self.active_handlers_by_descriptor[descriptor]
                     await handler.async_stop_monitoring()
                 elif (
                     (event.flags & aionotify.Flags.CREATE)
                     or (event.flags & aionotify.Flags.ATTRIB)
                 ) and not descriptor_active:
                     dev, handler = await self.opp.async_add_executor_job(
-                        self.get_device_op.dler, descriptor
+                        self.get_device_handler, descriptor
                     )
                     if handler is None:
                         continue
-                    self.active_op.dlers_by_descriptor[descriptor] = op.dler
+                    self.active_handlers_by_descriptor[descriptor] = handler
                     await handler.async_start_monitoring(dev)
         except asyncio.CancelledError:
             return
@@ -214,7 +214,7 @@ class KeyboardRemote:
         def __init__(self,.opp, dev_block):
             """Fill configuration data."""
 
-            self.opp = opp
+            self.opp =.opp
 
             key_types = dev_block.get(TYPE)
 

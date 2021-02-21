@@ -87,7 +87,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
         return data
 
-    coordinator = opp.data[DOMAIN][DATA_COORDINATOR][
+    coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][
         entry.entry_id
     ] = DataUpdateCoordinator(
        .opp,
@@ -247,15 +247,15 @@ class NotionEntity(CoordinatorEntity):
         raise NotImplementedError
 
     @callback
-    def _op.dle_coordinator_update(self):
+    def _handle_coordinator_update(self):
         """Respond to a DataUpdateCoordinator update."""
         if self.task_id in self.coordinator.data["tasks"]:
             self.opp.async_create_task(self._async_update_bridge_id())
             self._async_update_from_latest_data()
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self._async_update_from_latest_data()

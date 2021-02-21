@@ -6,14 +6,14 @@ from typing import Any, Callable, Optional, Union
 import aioshelly
 
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import (
+from openpeerpower.core import callback
+from openpeerpower.helpers import (
     device_registry,
     entity,
     entity_registry,
     update_coordinator,
 )
-from openpeerpowerr.helpers.restore_state import RestoreEntity
+from openpeerpower.helpers.restore_state import RestoreEntity
 
 from . import ShellyDeviceRestWrapper, ShellyDeviceWrapper
 from .const import COAP, DATA_CONFIG_ENTRY, DOMAIN, REST
@@ -26,7 +26,7 @@ async def async_setup_entry_attribute_entities(
    .opp, config_entry, async_add_entities, sensors, sensor_class
 ):
     """Set up entities for attributes."""
-    wrapper: ShellyDeviceWrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][
+    wrapper: ShellyDeviceWrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][
         config_entry.entry_id
     ][COAP]
 
@@ -114,7 +114,7 @@ async def async_setup_entry_rest(
    .opp, config_entry, async_add_entities, sensors, sensor_class
 ):
     """Set up entities for REST sensors."""
-    wrapper: ShellyDeviceRestWrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][
+    wrapper: ShellyDeviceRestWrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][
         config_entry.entry_id
     ][REST]
 
@@ -204,8 +204,8 @@ class ShellyBlockEntity(entity.Entity):
         """Return unique ID of entity."""
         return f"{self.wrapper.mac}-{self.block.description}"
 
-    async def async_added_to_opp(self):
-        """When entity is added to OPP."""
+    async def async_added_to.opp(self):
+        """When entity is added to HASS."""
         self.async_on_remove(self.wrapper.async_add_listener(self._update_callback))
 
     async def async_update(self):
@@ -215,7 +215,7 @@ class ShellyBlockEntity(entity.Entity):
     @callback
     def _update_callback(self):
         """Handle device update."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class ShellyBlockAttributeEntity(ShellyBlockEntity, entity.Entity):
@@ -409,9 +409,9 @@ class ShellySleepingBlockAttributeEntity(ShellyBlockAttributeEntity, RestoreEnti
             self._unique_id = entry.unique_id
             self._name = entry.original_name
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         last_state = await self.async_get_last_state()
 

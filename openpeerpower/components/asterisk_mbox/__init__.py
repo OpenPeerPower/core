@@ -10,10 +10,10 @@ from asterisk_mbox.commands import (
 import voluptuous as vol
 
 from openpeerpower.const import CONF_HOST, CONF_PASSWORD, CONF_PORT
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import discovery
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send, dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers import discovery
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.dispatcher import async_dispatcher_send, dispatcher_connect
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -58,7 +58,7 @@ class AsteriskData:
     def __init__(self,.opp, host, port, password, config):
         """Init the Asterisk data object."""
 
-        self.opp = opp
+        self.opp =.opp
         self.config = config
         self.messages = None
         self.cdr = None

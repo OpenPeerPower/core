@@ -16,7 +16,7 @@ ATTR_PIN_PAD_LOW_BATTERY = "pin_pad_low_battery"
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up SimpliSafe locks based on a config entry."""
-    simplisafe = opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
+    simplisafe =.opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
     locks = []
 
     for system in simplisafe.systems.values():

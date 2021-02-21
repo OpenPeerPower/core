@@ -14,9 +14,9 @@ from openpeerpower.const import (
     STATE_LOCKED,
     STATE_UNLOCKED,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import async_call_later
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import async_call_later
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -94,7 +94,7 @@ class KiwiLock(LockEntity):
     def clear_unlock_state(self, _):
         """Clear unlock state automatically."""
         self._state = STATE_LOCKED
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def unlock(self, **kwargs):
         """Unlock the device."""

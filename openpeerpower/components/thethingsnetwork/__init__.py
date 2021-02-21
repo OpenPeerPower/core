@@ -2,7 +2,7 @@
 
 import voluptuous as vol
 
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 CONF_ACCESS_KEY = "access_key"
 CONF_APP_ID = "app_id"

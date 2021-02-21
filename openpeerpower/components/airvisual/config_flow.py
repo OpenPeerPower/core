@@ -20,8 +20,8 @@ from openpeerpower.const import (
     CONF_SHOW_ON_MAP,
     CONF_STATE,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import aiohttp_client, config_validation as cv
+from openpeerpower.core import callback
+from openpeerpower.helpers import aiohttp_client, config_validation as cv
 
 from . import async_get_geography_id
 from .const import (  # pylint: disable=unused-import

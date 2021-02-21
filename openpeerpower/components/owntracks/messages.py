@@ -11,7 +11,7 @@ from openpeerpower.components.device_tracker import (
     SOURCE_TYPE_GPS,
 )
 from openpeerpower.const import ATTR_LATITUDE, ATTR_LONGITUDE, STATE_HOME
-from openpeerpowerr.util import decorator, slugify
+from openpeerpower.util import decorator, slugify
 
 from .helper import supports_encryption
 
@@ -179,7 +179,7 @@ def encrypt_message(secret, topic, message):
 
 
 @HANDLERS.register("location")
-async def async_op.dle_location_message.opp, context, message):
+async def async_handle_location_message.opp, context, message):
     """Handle a location message."""
     if not context.async_valid_accuracy(message):
         return
@@ -202,7 +202,7 @@ async def async_op.dle_location_message.opp, context, message):
 
 async def _async_transition_message_enter.opp, context, message, location):
     """Execute enter event."""
-    zone = opp.states.get(f"zone.{slugify(location)}")
+    zone =.opp.states.get(f"zone.{slugify(location)}")
     dev_id, kwargs = _parse_see_args(message, context.mqtt_topic)
 
     if zone is None and message.get("t") == "b":
@@ -243,7 +243,7 @@ async def _async_transition_message_leave.opp, context, message, location):
         new_region = regions[-1] if regions else None
         if new_region:
             # Exit to previous region
-            zone = opp.states.get(f"zone.{slugify(new_region)}")
+            zone =.opp.states.get(f"zone.{slugify(new_region)}")
             _set_gps_from_zone(kwargs, new_region, zone)
             _LOGGER.info("Exit to %s", new_region)
             context.async_see(**kwargs)
@@ -259,7 +259,7 @@ async def _async_transition_message_leave.opp, context, message, location):
 
 
 @HANDLERS.register("transition")
-async def async_op.dle_transition_message.opp, context, message):
+async def async_handle_transition_message.opp, context, message):
     """Handle a transition message."""
     if message.get("desc") is None:
         _LOGGER.error(
@@ -289,7 +289,7 @@ async def async_op.dle_transition_message.opp, context, message):
         )
 
 
-async def async_op.dle_waypoint.opp, name_base, waypoint):
+async def async_handle_waypoint.opp, name_base, waypoint):
     """Handle a waypoint."""
     name = waypoint["desc"]
     pretty_name = f"{name_base} - {name}"
@@ -314,14 +314,14 @@ async def async_op.dle_waypoint.opp, name_base, waypoint):
             zone_comp.CONF_PASSIVE: False,
         },
     )
-    zone.opp = opp
+    zone.opp =.opp
     zone.entity_id = entity_id
-    zone.async_write_op.state()
+    zone.async_write_ha_state()
 
 
 @HANDLERS.register("waypoint")
 @HANDLERS.register("waypoints")
-async def async_op.dle_waypoints_message.opp, context, message):
+async def async_handle_waypoints_message.opp, context, message):
     """Handle a waypoints message."""
     if not context.import_waypoints:
         return
@@ -342,11 +342,11 @@ async def async_op.dle_waypoints_message.opp, context, message):
     name_base = " ".join(_parse_topic(message["topic"], context.mqtt_topic))
 
     for wayp in wayps:
-        await async_op.dle_waypoint.opp, name_base, wayp)
+        await async_handle_waypoint.opp, name_base, wayp)
 
 
 @HANDLERS.register("encrypted")
-async def async_op.dle_encrypted_message.opp, context, message):
+async def async_handle_encrypted_message.opp, context, message):
     """Handle an encrypted message."""
     if "topic" not in message and isinstance(context.secret, dict):
         _LOGGER.error("You cannot set per topic secrets when using HTTP")
@@ -363,7 +363,7 @@ async def async_op.dle_encrypted_message.opp, context, message):
     if "topic" in message and "topic" not in decrypted:
         decrypted["topic"] = message["topic"]
 
-    await async_op.dle_message.opp, context, decrypted)
+    await async_handle_message.opp, context, decrypted)
 
 
 @HANDLERS.register("lwt")
@@ -372,22 +372,22 @@ async def async_op.dle_encrypted_message.opp, context, message):
 @HANDLERS.register("cmd")
 @HANDLERS.register("steps")
 @HANDLERS.register("card")
-async def async_op.dle_not_impl_msg.opp, context, message):
+async def async_handle_not_impl_msg.opp, context, message):
     """Handle valid but not implemented message types."""
     _LOGGER.debug("Not handling %s message: %s", message.get("_type"), message)
 
 
-async def async_op.dle_unsupported_msg.opp, context, message):
+async def async_handle_unsupported_msg.opp, context, message):
     """Handle an unsupported or invalid message type."""
     _LOGGER.warning("Received unsupported message type: %s", message.get("_type"))
 
 
-async def async_op.dle_message.opp, context, message):
+async def async_handle_message.opp, context, message):
     """Handle an OwnTracks message."""
     msgtype = message.get("_type")
 
     _LOGGER.debug("Received %s", message)
 
-    handler = HANDLERS.get(msgtype, async_op.dle_unsupported_msg)
+    handler = HANDLERS.get(msgtype, async_handle_unsupported_msg)
 
     await handler.opp, context, message)

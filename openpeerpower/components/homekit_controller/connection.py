@@ -66,14 +66,14 @@ class HKDevice:
     def __init__(self,.opp, config_entry, pairing_data):
         """Initialise a generic HomeKit device."""
 
-        self.opp = opp
+        self.opp =.opp
         self.config_entry = config_entry
 
         # We copy pairing_data because homekit_python may mutate it, but we
         # don't want to mutate a dict owned by a config entry.
         self.pairing_data = pairing_data.copy()
 
-        self.pairing = opp.data[CONTROLLER].load_pairing(
+        self.pairing =.opp.data[CONTROLLER].load_pairing(
             self.pairing_data["AccessoryPairingID"], self.pairing_data
         )
 

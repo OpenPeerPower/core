@@ -79,7 +79,7 @@ async def handle_webhook.opp, webhook_id, request):
         return web.Response(text=f"Setting location to {location_name}", status=HTTP_OK)
 
     if direction == "exit":
-        current_state = opp.states.get(f"{DEVICE_TRACKER}.{device}")
+        current_state =.opp.states.get(f"{DEVICE_TRACKER}.{device}")
 
         if current_state is None or current_state.state == location_name:
             location_name = STATE_NOT_HOME
@@ -125,7 +125,7 @@ async def async_unload_entry.opp, entry):
     """Unload a config entry."""
    .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
    .opp.data[DOMAIN]["unsub_device_tracker"].pop(entry.entry_id)()
-    return await opp..config_entries.async_forward_entry_unload(entry, DEVICE_TRACKER)
+    return await.opp.config_entries.async_forward_entry_unload(entry, DEVICE_TRACKER)
 
 
 async_remove_entry = config_entry_flow.webhook_async_remove_entry

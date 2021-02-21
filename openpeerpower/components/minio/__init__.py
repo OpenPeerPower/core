@@ -90,8 +90,8 @@ def setup.opp, config):
     queue_listener = QueueListener.opp)
     queue = queue_listener.queue
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, queue_listener.start_op.dler)
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, queue_listener.stop_op.dler)
+   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, queue_listener.start_handler)
+   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, queue_listener.stop_handler)
 
     def _setup_listener(listener_conf):
         bucket = listener_conf[CONF_LISTEN_BUCKET]
@@ -111,8 +111,8 @@ def setup.opp, config):
             events,
         )
 
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, minio_listener.start_op.dler)
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, minio_listener.stop_op.dler)
+       .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, minio_listener.start_handler)
+       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, minio_listener.stop_handler)
 
     for listen_conf in conf[CONF_LISTEN]:
         _setup_listener(listen_conf)
@@ -123,7 +123,7 @@ def setup.opp, config):
 
     def _render_service_value(service, key):
         value = service.data[key]
-        value.opp = opp
+        value.opp =.opp
         return value.async_render(parse_result=False)
 
     def put_file(service):
@@ -175,7 +175,7 @@ class QueueListener(threading.Thread):
     def __init__(self,.opp):
         """Create queue."""
         super().__init__()
-        self._opp = opp
+        self..opp =.opp
         self._queue = Queue()
 
     def run(self):
@@ -194,7 +194,7 @@ class QueueListener(threading.Thread):
                 event[ATTR_BUCKET],
                 event[ATTR_KEY],
             )
-            self._opp.bus.fire(DOMAIN, {"file_name": file_name, **event})
+            self..opp.bus.fire(DOMAIN, {"file_name": file_name, **event})
 
     @property
     def queue(self):
@@ -208,11 +208,11 @@ class QueueListener(threading.Thread):
         self.join()
         _LOGGER.info("Stopped QueueListener")
 
-    def start_op.dler(self, _):
+    def start_handler(self, _):
         """Start handler helper method."""
         self.start()
 
-    def stop_op.dler(self, _):
+    def stop_handler(self, _):
         """Stop handler helper method."""
         self.stop()
 
@@ -244,7 +244,7 @@ class MinioListener:
         self._events = events
         self._minio_event_thread = None
 
-    def start_op.dler(self, _):
+    def start_handler(self, _):
         """Create and start the event thread."""
         self._minio_event_thread = MinioEventThread(
             self._queue,
@@ -259,7 +259,7 @@ class MinioListener:
         )
         self._minio_event_thread.start()
 
-    def stop_op.dler(self, _):
+    def stop_handler(self, _):
         """Issue stop and wait for thread to join."""
         if self._minio_event_thread is not None:
             self._minio_event_thread.stop()

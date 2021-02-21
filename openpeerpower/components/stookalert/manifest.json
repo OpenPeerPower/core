@@ -1,7 +1,7 @@
 {
   "domain": "stookalert",
   "name": "RIVM Stookalert",
-  "documentation": "https://www.openpeerpower.io/integrations/stookalert",
+  "documentation": "https://www.open-peer-power.io/integrations/stookalert",
   "codeowners": ["@fwestenberg"],
   "requirements": ["stookalert==0.1.4"]
 }

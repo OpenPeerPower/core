@@ -135,7 +135,7 @@ class ZigbeeChannel(LogMixin):
 
     @callback
     def async_send_signal(self, signal: str, *args: Any) -> None:
-        """Send a signal through opp dispatcher."""
+        """Send a signal through.opp dispatcher."""
         self._ch_pool.async_send_signal(signal, *args)
 
     async def bind(self):

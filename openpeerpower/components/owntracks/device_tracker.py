@@ -11,9 +11,9 @@ from openpeerpower.const import (
     ATTR_LATITUDE,
     ATTR_LONGITUDE,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.helpers.restore_state import RestoreEntity
+from openpeerpower.core import callback
+from openpeerpower.helpers import device_registry
+from openpeerpower.helpers.restore_state import RestoreEntity
 
 from . import DOMAIN as OT_DOMAIN
 
@@ -31,19 +31,19 @@ async def async_setup_entry.opp, entry, async_add_entities):
 
     entities = []
     for dev_id in dev_ids:
-        entity = opp.data[OT_DOMAIN]["devices"][dev_id] = OwnTracksEntity(dev_id)
+        entity =.opp.data[OT_DOMAIN]["devices"][dev_id] = OwnTracksEntity(dev_id)
         entities.append(entity)
 
     @callback
     def _receive_data(dev_id, **data):
         """Receive set location."""
-        entity = opp.data[OT_DOMAIN]["devices"].get(dev_id)
+        entity =.opp.data[OT_DOMAIN]["devices"].get(dev_id)
 
         if entity is not None:
             entity.update_data(data)
             return
 
-        entity = opp.data[OT_DOMAIN]["devices"][dev_id] = OwnTracksEntity(dev_id, data)
+        entity =.opp.data[OT_DOMAIN]["devices"][dev_id] = OwnTracksEntity(dev_id, data)
         async_add_entities([entity])
 
    .opp.data[OT_DOMAIN]["context"].set_async_see(_receive_data)
@@ -121,9 +121,9 @@ class OwnTracksEntity(TrackerEntity, RestoreEntity):
         """Return the device info."""
         return {"name": self.name, "identifiers": {(OT_DOMAIN, self._dev_id)}}
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity about to be added to Open Peer Power."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         # Don't restore if we got set up with data.
         if self._data:
@@ -148,4 +148,4 @@ class OwnTracksEntity(TrackerEntity, RestoreEntity):
         """Mark the device as seen."""
         self._data = data
         if self.opp:
-            self.async_write_op.state()
+            self.async_write_ha_state()

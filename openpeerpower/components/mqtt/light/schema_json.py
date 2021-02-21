@@ -270,7 +270,7 @@ class MqttLightJson(MqttEntity, LightEntity, RestoreEntity):
                 except ValueError:
                     _LOGGER.warning("Invalid white value received")
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         if self._topic[CONF_STATE_TOPIC] is not None:
             self._sub_state = await subscription.async_subscribe_topics(
@@ -457,7 +457,7 @@ class MqttLightJson(MqttEntity, LightEntity, RestoreEntity):
             should_update = True
 
         if should_update:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the device off.
@@ -480,4 +480,4 @@ class MqttLightJson(MqttEntity, LightEntity, RestoreEntity):
         if self._optimistic:
             # Optimistically assume that the light has changed state.
             self._state = False
-            self.async_write_op.state()
+            self.async_write_ha_state()

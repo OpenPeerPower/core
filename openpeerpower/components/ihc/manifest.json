@@ -1,7 +1,7 @@
 {
   "domain": "ihc",
   "name": "IHC Controller",
-  "documentation": "https://www.openpeerpower.io/integrations/ihc",
+  "documentation": "https://www.open-peer-power.io/integrations/ihc",
   "requirements": ["defusedxml==0.6.0", "ihcsdk==2.7.0"],
   "codeowners": []
 }

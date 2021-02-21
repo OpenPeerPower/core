@@ -25,7 +25,7 @@ from openpeerpower.components.weather import (
     WeatherEntity,
 )
 from openpeerpower.const import TEMP_CELSIUS, TEMP_FAHRENHEIT
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 CONDITION_CLASSES = {
     ATTR_CONDITION_CLOUDY: [],

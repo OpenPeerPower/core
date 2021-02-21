@@ -187,7 +187,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                 model,
             )
 
-        async def async_service_op.dler(service):
+        async def async_service_handler(service):
             """Map services to methods on XiaomiPlugGenericSwitch."""
             method = SERVICE_TO_METHOD.get(service.service)
             params = {
@@ -203,14 +203,14 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                     if device.entity_id in entity_ids
                 ]
             else:
-                devices = opp.data[DATA_KEY].values()
+                devices =.opp.data[DATA_KEY].values()
 
             update_tasks = []
             for device in devices:
                 if not hasattr(device, method["method"]):
                     continue
                 await getattr(device, method["method"])(**params)
-                update_tasks.append(device.async_update_op.state(True))
+                update_tasks.append(device.async_update_ha_state(True))
 
             if update_tasks:
                 await asyncio.wait(update_tasks)
@@ -218,7 +218,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         for plug_service in SERVICE_TO_METHOD:
             schema = SERVICE_TO_METHOD[plug_service].get("schema", SERVICE_SCHEMA)
            .opp.services.async_register(
-                DOMAIN, plug_service, async_service_op.dler, schema=schema
+                DOMAIN, plug_service, async_service_handler, schema=schema
             )
 
     async_add_entities(entities, update_before_add=True)

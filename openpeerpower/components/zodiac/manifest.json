@@ -1,7 +1,7 @@
 {
   "domain": "zodiac",
   "name": "Zodiac",
-  "documentation": "https://www.openpeerpower.io/integrations/zodiac",
+  "documentation": "https://www.open-peer-power.io/integrations/zodiac",
   "codeowners": ["@JulienTant"],
   "quality_scale": "silver"
 }

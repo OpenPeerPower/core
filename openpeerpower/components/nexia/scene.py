@@ -3,7 +3,7 @@
 from typing import Any
 
 from openpeerpower.components.scene import Scene
-from openpeerpowerr.helpers.event import async_call_later
+from openpeerpower.helpers.event import async_call_later
 
 from .const import ATTR_DESCRIPTION, DOMAIN, NEXIA_DEVICE, UPDATE_COORDINATOR
 from .entity import NexiaEntity
@@ -14,7 +14,7 @@ SCENE_ACTIVATION_TIME = 5
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up automations for a Nexia device."""
 
-    nexia_data = opp.data[DOMAIN][config_entry.entry_id]
+    nexia_data =.opp.data[DOMAIN][config_entry.entry_id]
     nexia_home = nexia_data[NEXIA_DEVICE]
     coordinator = nexia_data[UPDATE_COORDINATOR]
     entities = []

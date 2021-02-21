@@ -6,6 +6,7 @@ from pysmartthings import Capability
 
 from openpeerpower.components.fan import SUPPORT_SET_SPEED, FanEntity
 from openpeerpower.util.percentage import (
+    int_states_in_range,
     percentage_to_ranged_value,
     ranged_value_to_percentage,
 )
@@ -18,7 +19,7 @@ SPEED_RANGE = (1, 3)  # off is not included
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Add fans for a config entry."""
-    broker = opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
+    broker =.opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
     async_add_entities(
         [
             SmartThingsFan(device)
@@ -50,7 +51,7 @@ class SmartThingsFan(SmartThingsEntity, FanEntity):
             await self._device.set_fan_speed(value, set_status=True)
         # State is set optimistically in the command above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_on(
         self,
@@ -67,7 +68,7 @@ class SmartThingsFan(SmartThingsEntity, FanEntity):
         await self._device.switch_off(set_status=True)
         # State is set optimistically in the command above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_on(self) -> bool:
@@ -78,6 +79,11 @@ class SmartThingsFan(SmartThingsEntity, FanEntity):
     def percentage(self) -> str:
         """Return the current speed percentage."""
         return ranged_value_to_percentage(SPEED_RANGE, self._device.status.fan_speed)
+
+    @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        return int_states_in_range(SPEED_RANGE)
 
     @property
     def supported_features(self) -> int:

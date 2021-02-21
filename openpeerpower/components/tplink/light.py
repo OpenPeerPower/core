@@ -16,14 +16,14 @@ from openpeerpower.components.light import (
     SUPPORT_COLOR_TEMP,
     LightEntity,
 )
-from openpeerpowerr.exceptions import OpenPeerPowerError, PlatformNotReady
-import openpeerpowerr.helpers.device_registry as dr
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.util.color import (
+from openpeerpower.exceptions import OpenPeerPowerError, PlatformNotReady
+import openpeerpower.helpers.device_registry as dr
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.util.color import (
     color_temperature_kelvin_to_mired as kelvin_to_mired,
     color_temperature_mired_to_kelvin as mired_to_kelvin,
 )
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 from . import CONF_LIGHT, DOMAIN as TPLINK_DOMAIN
 from .common import add_available_devices
@@ -61,7 +61,7 @@ SLEEP_TIME = 2
 
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry, async_add_entities):
     """Set up lights."""
-    entities = await opp..async_add_executor_job(
+    entities = await.opp.async_add_executor_job(
         add_available_devices,.opp, CONF_LIGHT, TPLinkSmartBulb
     )
 

@@ -27,7 +27,7 @@ async def async_setup_platform(
     for config in discovery_info:
         address, connection_id = config[CONF_ADDRESS]
         addr = pypck.lcn_addr.LcnAddr(*address)
-        connections = opp.data[DATA_LCN][CONF_CONNECTIONS]
+        connections =.opp.data[DATA_LCN][CONF_CONNECTIONS]
         connection = get_connection(connections, connection_id)
         device_connection = connection.get_address_conn(addr)
 
@@ -53,11 +53,11 @@ class LcnVariableSensor(LcnEntity):
 
         self._value = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if not self.device_connection.is_group:
-            await self.device_connection.activate_status_request_op.dler(self.variable)
+            await self.device_connection.activate_status_request_handler(self.variable)
 
     @property
     def state(self):
@@ -78,7 +78,7 @@ class LcnVariableSensor(LcnEntity):
             return
 
         self._value = input_obj.get_value().to_var_unit(self.unit)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class LcnLedLogicSensor(LcnEntity):
@@ -95,11 +95,11 @@ class LcnLedLogicSensor(LcnEntity):
 
         self._value = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if not self.device_connection.is_group:
-            await self.device_connection.activate_status_request_op.dler(self.source)
+            await self.device_connection.activate_status_request_handler(self.source)
 
     @property
     def state(self):
@@ -116,4 +116,4 @@ class LcnLedLogicSensor(LcnEntity):
         elif self.source in pypck.lcn_defs.LogicOpPort:
             self._value = input_obj.get_logic_op_state(self.source.value).name.lower()
 
-        self.async_write_op.state()
+        self.async_write_ha_state()

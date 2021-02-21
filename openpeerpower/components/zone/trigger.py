@@ -8,7 +8,7 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     CONF_ZONE,
 )
-from openpeerpower.core import CALLBACK_TYPE, OppJob, callback
+from openpeerpower.core import CALLBACK_TYPE, HassJob, callback
 from openpeerpower.helpers import condition, config_validation as cv, location
 from openpeerpower.helpers.event import async_track_state_change_event
 
@@ -40,7 +40,7 @@ async def async_attach_trigger(
     entity_id = config.get(CONF_ENTITY_ID)
     zone_entity_id = config.get(CONF_ZONE)
     event = config.get(CONF_EVENT)
-    job = OppJob(action)
+    job = HassJob(action)
 
     @callback
     def zone_automation_listener(zone_event):
@@ -56,9 +56,9 @@ async def async_attach_trigger(
         ):
             return
 
-        zone_state = opp.states.get(zone_entity_id)
+        zone_state =.opp.states.get(zone_entity_id)
         from_match = condition.zone.opp, zone_state, from_s) if from_s else False
-        to_match = condition.zone.opp, zone_state, to_s)
+        to_match = condition.zone.opp, zone_state, to_s) if to_s else False
 
         if (
             event == EVENT_ENTER
@@ -69,7 +69,7 @@ async def async_attach_trigger(
             and not to_match
         ):
             description = f"{entity} {_EVENT_DESCRIPTION[event]} {zone_state.attributes[ATTR_FRIENDLY_NAME]}"
-           .opp.async_run_opp_job(
+           .opp.async_run.opp_job(
                 job,
                 {
                     "trigger": {

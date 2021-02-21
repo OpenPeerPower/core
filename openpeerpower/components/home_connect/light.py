@@ -36,14 +36,14 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     def get_entities():
         """Get a list of entities."""
         entities = []
-        hc_api = opp.data[DOMAIN][config_entry.entry_id]
+        hc_api =.opp.data[DOMAIN][config_entry.entry_id]
         for device_dict in hc_api.devices:
             entity_dicts = device_dict.get(CONF_ENTITIES, {}).get("light", [])
             entity_list = [HomeConnectLight(**d) for d in entity_dicts]
             entities += entity_list
         return entities
 
-    async_add_entities(await opp..async_add_executor_job(get_entities), True)
+    async_add_entities(await.opp.async_add_executor_job(get_entities), True)
 
 
 class HomeConnectLight(HomeConnectEntity, LightEntity):

@@ -13,8 +13,8 @@ from openpeerpower.const import (
     CONF_MODE,
     CONF_NAME,
 )
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
 
 from .const import (
     COMPONENTS,
@@ -78,7 +78,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
 
 async def async_migrate_entry.opp, entry):
     """Migrate old entry."""
-    config_entries = opp.config_entries
+    config_entries =.opp.config_entries
     data = entry.data
     version = entry.version
 
@@ -100,7 +100,7 @@ async def async_migrate_entry.opp, entry):
 
 async def async_update_options.opp: OpenPeerPower, config_entry: ConfigEntry):
     """Update options."""
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
@@ -114,7 +114,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
         )
     )
     if unload_ok:
-        update_listener = opp.data[DOMAIN][config_entry.entry_id][UPDATE_LISTENER]
+        update_listener =.opp.data[DOMAIN][config_entry.entry_id][UPDATE_LISTENER]
         update_listener()
        .opp.data[DOMAIN].pop(config_entry.entry_id)
 

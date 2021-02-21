@@ -14,7 +14,7 @@ ICON = "mdi:robot"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Abode switch devices."""
-    data = opp.data[DOMAIN]
+    data =.opp.data[DOMAIN]
 
     entities = []
 
@@ -48,9 +48,9 @@ class AbodeSwitch(AbodeDevice, SwitchEntity):
 class AbodeAutomationSwitch(AbodeAutomation, SwitchEntity):
     """A switch implementation for Abode automations."""
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Set up trigger automation service."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         signal = f"abode_trigger_automation_{self.entity_id}"
         self.async_on_remove(async_dispatcher_connect(self.opp, signal, self.trigger))
@@ -58,12 +58,12 @@ class AbodeAutomationSwitch(AbodeAutomation, SwitchEntity):
     def turn_on(self, **kwargs):
         """Enable the automation."""
         if self._automation.enable(True):
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Disable the automation."""
         if self._automation.enable(False):
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def trigger(self):
         """Trigger the automation."""

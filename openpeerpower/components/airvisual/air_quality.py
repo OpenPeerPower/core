@@ -1,7 +1,7 @@
 """Support for AirVisual Node/Pro units."""
 from openpeerpower.components.air_quality import AirQualityEntity
 from openpeerpower.const import CONCENTRATION_MICROGRAMS_PER_CUBIC_METER
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from . import AirVisualEntity
 from .const import (
@@ -22,7 +22,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     if config_entry.data[CONF_INTEGRATION_TYPE] != INTEGRATION_TYPE_NODE_PRO:
         return
 
-    coordinator = opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id]
+    coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id]
 
     async_add_entities([AirVisualNodeProSensor(coordinator)], True)
 

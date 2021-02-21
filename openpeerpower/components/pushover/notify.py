@@ -47,7 +47,7 @@ class PushoverNotificationService(BaseNotificationService):
 
     def __init__(self,.opp, user_key, api_token):
         """Initialize the service."""
-        self._opp = opp
+        self..opp =.opp
         self._user_key = user_key
         self._api_token = api_token
         self.pushover = PushoverAPI(self._api_token)
@@ -72,12 +72,12 @@ class PushoverNotificationService(BaseNotificationService):
         # Check for attachment
         if image is not None:
             # Only allow attachments from whitelisted paths, check valid path
-            if self._opp.config.is_allowed_path(data[ATTR_ATTACHMENT]):
+            if self..opp.config.is_allowed_path(data[ATTR_ATTACHMENT]):
                 # try to open it as a normal file.
                 try:
-                    file_op.dle = open(data[ATTR_ATTACHMENT], "rb")
+                    file_handle = open(data[ATTR_ATTACHMENT], "rb")
                     # Replace the attachment identifier with file object.
-                    image = file_op.dle
+                    image = file_handle
                 except OSError as ex_val:
                     _LOGGER.error(ex_val)
                     # Remove attachment key to send without attachment.

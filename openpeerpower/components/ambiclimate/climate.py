@@ -18,8 +18,8 @@ from openpeerpower.const import (
     CONF_CLIENT_SECRET,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 from .const import (
     ATTR_VALUE,
@@ -54,7 +54,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the Ambicliamte device from config entry."""
     config = entry.data
     websession = async_get_clientsession.opp)
-    store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+    store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
     token_info = await store.async_load()
 
     oauth = ambiclimate.AmbiclimateOAuth(

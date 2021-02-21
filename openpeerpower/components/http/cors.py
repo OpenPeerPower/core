@@ -49,7 +49,7 @@ def setup_cors(app, origins):
 
         path = path.canonical
 
-        if path.startswith("/api/oppio_ingress/"):
+        if path.startswith("/api.oppio_ingress/"):
             return
 
         if path in cors_added:

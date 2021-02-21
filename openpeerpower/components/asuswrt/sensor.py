@@ -8,8 +8,8 @@ from aioasuswrt.asuswrt import AsusWrt
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_NAME, DATA_GIGABYTES, DATA_RATE_MEGABITS_PER_SECOND
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
 )
@@ -90,26 +90,26 @@ async def async_setup_entry(
 ) -> None:
     """Set up the asuswrt sensors."""
 
-    router = opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
+    router =.opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
     api: AsusWrt = router.api
     device_name = entry.data.get(CONF_NAME, "AsusWRT")
 
     # Let's discover the valid sensor types.
     sensors = [_SensorInfo(_SensorTypes(x)) for x in SENSOR_TYPES]
 
-    data_op.dler = AsuswrtDataHandler(sensors, api)
+    data_handler = AsuswrtDataHandler(sensors, api)
     coordinator = DataUpdateCoordinator(
        .opp,
         _LOGGER,
         name="sensor",
-        update_method=data_op.dler.update_data,
+        update_method=data_handler.update_data,
         # Polling interval. Will only be polled if there are subscribers.
         update_interval=timedelta(seconds=30),
     )
 
     await coordinator.async_refresh()
     async_add_entities(
-        [AsuswrtSensor(coordinator, data_op.dler, device_name, x.type) for x in sensors]
+        [AsuswrtSensor(coordinator, data_handler, device_name, x.type) for x in sensors]
     )
 
 
@@ -176,13 +176,13 @@ class AsuswrtSensor(CoordinatorEntity):
     def __init__(
         self,
         coordinator: DataUpdateCoordinator,
-        data_op.dler: AsuswrtDataHandler,
+        data_handler: AsuswrtDataHandler,
         device_name: str,
         sensor_type: _SensorTypes,
     ):
         """Initialize the sensor class."""
         super().__init__(coordinator)
-        self._op.dler = data_op.dler
+        self._handler = data_handler
         self._device_name = device_name
         self._type = sensor_type
 
@@ -226,11 +226,11 @@ class AsuswrtSensor(CoordinatorEntity):
         """Return if the entity should be enabled when first added to the entity registry."""
         return False
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """When entity is added to.opp."""
-        self._op.dler.enable_sensor(self._type)
-        await super().async_added_to_opp()
+        self._handler.enable_sensor(self._type)
+        await super().async_added_to.opp()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Call when entity is removed from.opp."""
-        self._op.dler.disable_sensor(self._type)
+        self._handler.disable_sensor(self._type)

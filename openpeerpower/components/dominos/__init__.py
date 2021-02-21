@@ -7,11 +7,11 @@ from pizzapi.address import StoreException
 import voluptuous as vol
 
 from openpeerpower.components import http
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.entity_component import EntityComponent
-from openpeerpowerr.util import Throttle
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_component import EntityComponent
+from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -94,7 +94,7 @@ class Dominos:
         """Set up main service."""
         conf = config[DOMAIN]
 
-        self.opp = opp
+        self.opp =.opp
         self.customer = Customer(
             conf.get(ATTR_FIRST_NAME),
             conf.get(ATTR_LAST_NAME),

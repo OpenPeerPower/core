@@ -35,7 +35,7 @@ SUPPORTED_CATEGORIES = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Somfy cover platform."""
-    domain_data = opp.data[DOMAIN]
+    domain_data =.opp.data[DOMAIN]
     coordinator = domain_data[COORDINATOR]
     api = domain_data[API]
 
@@ -91,26 +91,26 @@ class SomfyCover(SomfyEntity, RestoreEntity, CoverEntity):
     async def async_close_cover(self, **kwargs):
         """Close the cover."""
         self._is_closing = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
         try:
             # Blocks until the close command is sent
             await self.opp.async_add_executor_job(self._cover.close)
             self._closed = True
         finally:
             self._is_closing = None
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_open_cover(self, **kwargs):
         """Open the cover."""
         self._is_opening = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
         try:
             # Blocks until the open command is sent
             await self.opp.async_add_executor_job(self._cover.open)
             self._closed = False
         finally:
             self._is_opening = None
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     def stop_cover(self, **kwargs):
         """Stop the cover."""
@@ -186,9 +186,9 @@ class SomfyCover(SomfyEntity, RestoreEntity, CoverEntity):
         """Stop the cover."""
         self._cover.stop()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Complete the initialization."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if not self.optimistic:
             return
         # Restore the last state if we use optimistic

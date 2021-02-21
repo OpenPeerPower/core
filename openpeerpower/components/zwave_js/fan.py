@@ -13,6 +13,7 @@ from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from openpeerpower.util.percentage import (
+    int_states_in_range,
     percentage_to_ranged_value,
     ranged_value_to_percentage,
 )
@@ -30,7 +31,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up Z-Wave Fan from Config Entry."""
-    client: ZwaveClient = opp.data[DOMAIN][config_entry.entry_id][DATA_CLIENT]
+    client: ZwaveClient =.opp.data[DOMAIN][config_entry.entry_id][DATA_CLIENT]
 
     @callback
     def async_add_fan(info: ZwaveDiscoveryInfo) -> None:
@@ -95,6 +96,11 @@ class ZwaveFan(ZWaveBaseEntity, FanEntity):
             # guard missing value
             return None
         return ranged_value_to_percentage(SPEED_RANGE, self.info.primary_value.value)
+
+    @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        return int_states_in_range(SPEED_RANGE)
 
     @property
     def supported_features(self) -> int:

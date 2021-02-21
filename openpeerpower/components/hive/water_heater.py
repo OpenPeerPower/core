@@ -17,13 +17,13 @@ SUPPORT_FLAGS_HEATER = SUPPORT_OPERATION_MODE
 HOTWATER_NAME = "Hot Water"
 PARALLEL_UPDATES = 0
 SCAN_INTERVAL = timedelta(seconds=15)
-HIVE_TO_OPP_STATE = {
+HIVE_TO_HASS_STATE = {
     "SCHEDULE": STATE_ECO,
     "ON": STATE_ON,
     "OFF": STATE_OFF,
 }
 
-OPP_TO_HIVE_STATE = {
+HASS_TO_HIVE_STATE = {
     STATE_ECO: "SCHEDULE",
     STATE_ON: "MANUAL",
     STATE_OFF: "OFF",
@@ -37,7 +37,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    hive = opp.data[DOMAIN].get(DATA_HIVE)
+    hive =.opp.data[DOMAIN].get(DATA_HIVE)
     devices = hive.devices.get("water_heater")
     entities = []
     if devices:
@@ -82,7 +82,7 @@ class HiveWaterHeater(HiveEntity, WaterHeaterEntity):
     @property
     def current_operation(self):
         """Return current operation."""
-        return HIVE_TO_OPP_STATE[self.device["status"]["current_operation"]]
+        return HIVE_TO_HASS_STATE[self.device["status"]["current_operation"]]
 
     @property
     def operation_list(self):
@@ -102,7 +102,7 @@ class HiveWaterHeater(HiveEntity, WaterHeaterEntity):
     @refresh_system
     async def async_set_operation_mode(self, operation_mode):
         """Set operation mode."""
-        new_mode = OPP_TO_HIVE_STATE[operation_mode]
+        new_mode = HASS_TO_HIVE_STATE[operation_mode]
         await self.hive.hotwater.set_mode(self.device, new_mode)
 
     async def async_update(self):

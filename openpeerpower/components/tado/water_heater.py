@@ -65,8 +65,8 @@ async def async_setup_entry(
 ):
     """Set up the Tado water heater platform."""
 
-    tado = opp.data[DOMAIN][entry.entry_id][DATA]
-    entities = await opp..async_add_executor_job(_generate_entities, tado)
+    tado =.opp.data[DOMAIN][entry.entry_id][DATA]
+    entities = await.opp.async_add_executor_job(_generate_entities, tado)
 
     platform = entity_platform.current_platform.get()
 
@@ -154,7 +154,7 @@ class TadoWaterHeater(TadoZoneEntity, WaterHeaterEntity):
         self._overlay_mode = CONST_MODE_SMART_SCHEDULE
         self._tado_zone_data = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register for sensor updates."""
 
         self.async_on_remove(
@@ -260,7 +260,7 @@ class TadoWaterHeater(TadoZoneEntity, WaterHeaterEntity):
     def _async_update_callback(self):
         """Load tado data and update state."""
         self._async_update_data()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _async_update_data(self):

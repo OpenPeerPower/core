@@ -28,7 +28,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     # Check board validation again to load new values to API.
-    await opp..data[DOMAIN][entry.entry_id].check_board()
+    await.opp.data[DOMAIN][entry.entry_id].check_board()
 
     for component in PLATFORMS:
        .opp.async_create_task(

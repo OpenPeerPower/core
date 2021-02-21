@@ -1,4 +1,4 @@
-"""API for Netatmo bound to OPP OAuth."""
+"""API for Netatmo bound to HASS OAuth."""
 from asyncio import run_coroutine_threadsafe
 
 import pyatmo
@@ -17,7 +17,7 @@ class ConfigEntryNetatmoAuth(pyatmo.auth.NetatmoOAuth2):
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
     ):
         """Initialize Netatmo Auth."""
-        self.opp = opp
+        self.opp =.opp
         self.session = config_entry_oauth2_flow.OAuth2Session(
            .opp, config_entry, implementation
         )

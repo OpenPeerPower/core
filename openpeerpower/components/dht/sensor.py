@@ -57,7 +57,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the DHT sensor."""
 
-    SENSOR_TYPES[SENSOR_TEMPERATURE][1] = opp.config.units.temperature_unit
+    SENSOR_TYPES[SENSOR_TEMPERATURE][1] =.opp.config.units.temperature_unit
     available_sensors = {
         "AM2302": Adafruit_DHT.AM2302,
         "DHT11": Adafruit_DHT.DHT11,

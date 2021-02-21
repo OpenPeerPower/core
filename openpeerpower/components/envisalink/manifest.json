@@ -1,7 +1,7 @@
 {
   "domain": "envisalink",
   "name": "Envisalink",
-  "documentation": "https://www.openpeerpower.io/integrations/envisalink",
+  "documentation": "https://www.open-peer-power.io/integrations/envisalink",
   "requirements": ["pyenvisalink==4.0"],
   "codeowners": []
 }

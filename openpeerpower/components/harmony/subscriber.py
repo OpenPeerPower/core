@@ -3,7 +3,7 @@
 import logging
 from typing import Any, Callable, NamedTuple, Optional
 
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ class HarmonySubscriberMixin:
     def __init__(self,.opp):
         """Initialize an subscriber."""
         super().__init__()
-        self._opp = opp
+        self..opp =.opp
         self._subscriptions = []
 
     @callback
@@ -72,6 +72,6 @@ class HarmonySubscriberMixin:
             current_callback = getattr(subscription, callback_func_name)
             if current_callback:
                 if argument:
-                    self._opp.async_run_job(current_callback, argument)
+                    self..opp.async_run_job(current_callback, argument)
                 else:
-                    self._opp.async_run_job(current_callback)
+                    self..opp.async_run_job(current_callback)

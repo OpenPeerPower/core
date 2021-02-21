@@ -153,7 +153,7 @@ def setup.opp, config):
            .opp.data[DOMAIN][DATA_API].ports_registered.clear()
 
     def prepare_gpio(event):
-        """Stuff to do when Open Peer Power starts."""
+        """Stuff to do when open peer power starts."""
         _LOGGER.debug("Setup cleanup at stop for Numato GPIO")
        .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_gpio)
 
@@ -167,7 +167,7 @@ def setup.opp, config):
 
 # pylint: disable=no-self-use
 class NumatoAPI:
-    """Open -Peer-Power specific API for numato device access."""
+    """Open-Peer-Power specific API for numato device access."""
 
     def __init__(self):
         """Initialize API state."""

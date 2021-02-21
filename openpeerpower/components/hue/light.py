@@ -91,7 +91,7 @@ def create_light(item_class, coordinator, bridge, is_group, api, item_id):
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Hue lights from a config entry."""
-    bridge = opp.data[HUE_DOMAIN][config_entry.entry_id]
+    bridge =.opp.data[HUE_DOMAIN][config_entry.entry_id]
 
     light_coordinator = DataUpdateCoordinator(
        .opp,
@@ -188,13 +188,13 @@ def async_update_items(bridge, api, current, async_add_entities, create_item):
         async_add_entities(new_items)
 
 
-def hue_brightness_to_opp(value):
-    """Convert hue brightness 1..254 to opp format 0..255."""
+def hue_brightness_to.opp(value):
+    """Convert hue brightness 1..254 to.opp format 0..255."""
     return min(255, round((value / 254) * 255))
 
 
 def.opp_to_hue_brightness(value):
-    """Convert opp brightness 0..255 to hue 1..254 scale."""
+    """Convert.opp brightness 0..255 to hue 1..254 scale."""
     return max(1, round((value / 255) * 254))
 
 
@@ -261,7 +261,7 @@ class HueLight(CoordinatorEntity, LightEntity):
         if bri is None:
             return bri
 
-        return hue_brightness_to_opp(bri)
+        return hue_brightness_to.opp(bri)
 
     @property
     def _color_mode(self):
@@ -392,7 +392,7 @@ class HueLight(CoordinatorEntity, LightEntity):
             command["ct"] = max(self.min_mireds, min(temp, self.max_mireds))
 
         if ATTR_BRIGHTNESS in kwargs:
-            command["bri"] = opp_to_hue_brightness(kwargs[ATTR_BRIGHTNESS])
+            command["bri"] =.opp_to_hue_brightness(kwargs[ATTR_BRIGHTNESS])
 
         flash = kwargs.get(ATTR_FLASH)
 

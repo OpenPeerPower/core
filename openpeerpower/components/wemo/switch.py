@@ -5,8 +5,8 @@ import logging
 
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.const import STATE_OFF, STATE_ON, STATE_STANDBY, STATE_UNKNOWN
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.util import convert
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.util import convert
 
 from .const import DOMAIN as WEMO_DOMAIN
 from .entity import WemoSubscriptionEntity
@@ -64,7 +64,7 @@ class WemoSwitch(WemoSubscriptionEntity, SwitchEntity):
         attr = {}
         if self.maker_params:
             # Is the maker sensor on or off.
-            if self.maker_params["oppensor"]:
+            if self.maker_params[.oppensor"]:
                 # Note a state of 1 matches the WeMo app 'not triggered'!
                 if self.maker_params["sensorstate"]:
                     attr[ATTR_SENSOR_STATE] = STATE_OFF
@@ -138,23 +138,23 @@ class WemoSwitch(WemoSubscriptionEntity, SwitchEntity):
 
     def turn_on(self, **kwargs):
         """Turn the switch on."""
-        with self._wemo_exception_op.dler("turn on"):
+        with self._wemo_exception_handler("turn on"):
             if self.wemo.on():
                 self._state = WEMO_ON
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the switch off."""
-        with self._wemo_exception_op.dler("turn off"):
+        with self._wemo_exception_handler("turn off"):
             if self.wemo.off():
                 self._state = WEMO_OFF
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def _update(self, force_update=True):
         """Update the device state."""
-        with self._wemo_exception_op.dler("update status"):
+        with self._wemo_exception_handler("update status"):
             self._state = self.wemo.get_state(force_update)
 
             if self.wemo.model_name == "Insight":

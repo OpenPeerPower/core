@@ -2,7 +2,7 @@
   "domain": "ecobee",
   "name": "ecobee",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/ecobee",
+  "documentation": "https://www.open-peer-power.io/integrations/ecobee",
   "requirements": ["python-ecobee-api==0.2.10"],
   "codeowners": ["@marthoc"]
 }

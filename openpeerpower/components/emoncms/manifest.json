@@ -1,6 +1,6 @@
 {
   "domain": "emoncms",
   "name": "Emoncms",
-  "documentation": "https://www.openpeerpower.io/integrations/emoncms",
+  "documentation": "https://www.open-peer-power.io/integrations/emoncms",
   "codeowners": ["@borpin"]
 }

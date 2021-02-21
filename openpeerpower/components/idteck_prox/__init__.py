@@ -10,7 +10,7 @@ from openpeerpower.const import (
     CONF_PORT,
     EVENT_OPENPEERPOWER_STOP,
 )
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -61,7 +61,7 @@ class IdteckReader:
 
     def __init__(self,.opp, host, port, name):
         """Initialize the reader."""
-        self.opp = opp
+        self.opp =.opp
         self._host = host
         self._port = port
         self._name = name

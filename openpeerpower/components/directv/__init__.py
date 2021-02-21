@@ -7,11 +7,11 @@ from directv import DIRECTV, DIRECTVError
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_NAME, CONF_HOST
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.entity import Entity
 
 from .const import (
     ATTR_IDENTIFIERS,

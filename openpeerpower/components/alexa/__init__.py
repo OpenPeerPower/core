@@ -7,7 +7,7 @@ from openpeerpower.const import (
     CONF_NAME,
     CONF_PASSWORD,
 )
-from openpeerpowerr.helpers import config_validation as cv, entityfilter
+from openpeerpower.helpers import config_validation as cv, entityfilter
 
 from . import flash_briefings, intent, smart_home_http
 from .const import (

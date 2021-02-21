@@ -31,13 +31,14 @@ from openpeerpower.const import (
     ATTR_RESTORED,
     ATTR_SUPPORTED_FEATURES,
     ATTR_UNIT_OF_MEASUREMENT,
+    EVENT_CONFIG_ENTRY_DISABLED_BY_UPDATED,
     EVENT_OPENPEERPOWER_START,
     STATE_UNAVAILABLE,
 )
 from openpeerpower.core import Event, callback, split_entity_id, valid_entity_id
 from openpeerpower.helpers import device_registry as dr
 from openpeerpower.helpers.device_registry import EVENT_DEVICE_REGISTRY_UPDATED
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util import slugify
 from openpeerpower.util.yaml import load_yaml
 
@@ -53,7 +54,7 @@ SAVE_DELAY = 10
 _LOGGER = logging.getLogger(__name__)
 DISABLED_CONFIG_ENTRY = "config_entry"
 DISABLED_DEVICE = "device"
-DISABLED_OPP = "opp"
+DISABLED_HASS = .opp"
 DISABLED_INTEGRATION = "integration"
 DISABLED_USER = "user"
 
@@ -91,7 +92,7 @@ class RegistryEntry:
             (
                 DISABLED_CONFIG_ENTRY,
                 DISABLED_DEVICE,
-                DISABLED_OPP,
+                DISABLED_HASS,
                 DISABLED_INTEGRATION,
                 DISABLED_USER,
                 None,
@@ -150,12 +151,16 @@ class EntityRegistry:
 
     def __init__(self,.opp: OpenPeerPowerType):
         """Initialize the registry."""
-        self.opp = opp
+        self.opp =.opp
         self.entities: Dict[str, RegistryEntry]
         self._index: Dict[Tuple[str, str, str], str] = {}
-        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
         self.opp.bus.async_listen(
             EVENT_DEVICE_REGISTRY_UPDATED, self.async_device_modified
+        )
+        self.opp.bus.async_listen(
+            EVENT_CONFIG_ENTRY_DISABLED_BY_UPDATED,
+            self.async_config_entry_disabled_by_changed,
         )
 
     @callback
@@ -349,9 +354,48 @@ class EntityRegistry:
                 self.async_update_entity(entity.entity_id, disabled_by=None)
             return
 
+        if device.disabled_by == dr.DISABLED_CONFIG_ENTRY:
+            # Handled by async_config_entry_disabled
+            return
+
+        # Fetch entities which are not already disabled
         entities = async_entries_for_device(self, event.data["device_id"])
         for entity in entities:
             self.async_update_entity(entity.entity_id, disabled_by=DISABLED_DEVICE)
+
+    @callback
+    def async_config_entry_disabled_by_changed(self, event: Event) -> None:
+        """Handle a config entry being disabled or enabled.
+
+        Disable entities in the registry that are associated to a config entry when
+        the config entry is disabled.
+        """
+        config_entry = self.opp.config_entries.async_get_entry(
+            event.data["config_entry_id"]
+        )
+
+        # The config entry may be deleted already if the event handling is late
+        if not config_entry:
+            return
+
+        if not config_entry.disabled_by:
+            entities = async_entries_for_config_entry(
+                self, event.data["config_entry_id"]
+            )
+            for entity in entities:
+                if entity.disabled_by != DISABLED_CONFIG_ENTRY:
+                    continue
+                self.async_update_entity(entity.entity_id, disabled_by=None)
+            return
+
+        entities = async_entries_for_config_entry(self, event.data["config_entry_id"])
+        for entity in entities:
+            if entity.disabled:
+                # Entity already disabled, do not overwrite
+                continue
+            self.async_update_entity(
+                entity.entity_id, disabled_by=DISABLED_CONFIG_ENTRY
+            )
 
     @callback
     def async_update_entity(
@@ -581,10 +625,10 @@ async def async_load.opp: OpenPeerPowerType) -> None:
     """Load entity registry."""
     assert DATA_REGISTRY not in.opp.data
    .opp.data[DATA_REGISTRY] = EntityRegistry.opp)
-    await opp..data[DATA_REGISTRY].async_load()
+    await.opp.data[DATA_REGISTRY].async_load()
 
 
-@bind_opp
+@bind.opp
 async def async_get_registry.opp: OpenPeerPowerType) -> EntityRegistry:
     """Get entity registry.
 
@@ -649,7 +693,7 @@ def async_setup_entity_restore(
     @callback
     def cleanup_restored_states(event: Event) -> None:
         """Clean up restored states."""
-        state = opp.states.get(event.data["entity_id"])
+        state =.opp.states.get(event.data["entity_id"])
 
         if state is None or not state.attributes.get(ATTR_RESTORED):
             return

@@ -13,9 +13,9 @@ from openpeerpower.const import (
     CONF_TOKEN,
     CONF_URL,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
 

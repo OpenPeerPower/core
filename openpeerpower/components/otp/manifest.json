@@ -1,7 +1,7 @@
 {
   "domain": "otp",
   "name": "One-Time Password (OTP)",
-  "documentation": "https://www.openpeerpower.io/integrations/otp",
+  "documentation": "https://www.open-peer-power.io/integrations/otp",
   "requirements": ["pyotp==2.3.0"],
   "codeowners": [],
   "quality_scale": "internal"

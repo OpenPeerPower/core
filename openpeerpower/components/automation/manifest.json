@@ -1,14 +1,14 @@
 {
   "domain": "automation",
   "name": "Automation",
-  "documentation": "https://www.openpeerpower.io/integrations/automation",
+  "documentation": "https://www.open-peer-power.io/integrations/automation",
   "dependencies": ["blueprint"],
   "after_dependencies": [
     "device_automation",
     "webhook"
   ],
   "codeowners": [
-    "@openpeerpower/core"
+    "@open-peer-power/core"
   ],
   "quality_scale": "internal"
 }

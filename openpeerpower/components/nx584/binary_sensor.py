@@ -14,7 +14,7 @@ from openpeerpower.components.binary_sensor import (
     BinarySensorEntity,
 )
 from openpeerpower.const import CONF_HOST, CONF_PORT
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -127,7 +127,7 @@ class NX584Watcher(threading.Thread):
         if not zone_sensor:
             return
         zone_sensor._zone["state"] = event["zone_state"]
-        zone_sensor.schedule_update_op.state()
+        zone_sensor.schedule_update_ha_state()
 
     def _process_events(self, events):
         for event in events:

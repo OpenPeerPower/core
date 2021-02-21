@@ -2,7 +2,7 @@
   "domain": "goalzero",
   "name": "Goal Zero Yeti",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/goalzero",
+  "documentation": "https://www.open-peer-power.io/integrations/goalzero",
   "requirements": ["goalzero==0.1.4"],
   "codeowners": ["@tkdrob"]
 }

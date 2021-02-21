@@ -2,10 +2,10 @@
 import logging
 from typing import Any
 
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.entity_registry import async_entries_for_device
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_registry import async_entries_for_device
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ class UniFiBase(Entity):
         """Return item key."""
         return self._item.mac
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Entity created."""
         _LOGGER.debug(
             "New %s entity %s (%s)",
@@ -46,7 +46,7 @@ class UniFiBase(Entity):
             self.async_on_remove(async_dispatcher_connect(self.opp, signal, method))
         self._item.register_callback(self.async_update_callback)
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect object when removed."""
         _LOGGER.debug(
             "Removing %s entity %s (%s)",
@@ -71,7 +71,7 @@ class UniFiBase(Entity):
             self.entity_id,
             self.key,
         )
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def options_updated(self) -> None:
         """Config entry options are updated, remove entity if option is disabled."""

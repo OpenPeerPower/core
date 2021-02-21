@@ -12,14 +12,14 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_START,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 DOMAIN = "ffmpeg"
 
@@ -62,7 +62,7 @@ async def async_setup.opp, config):
     await manager.async_get_version()
 
     # Register service
-    async def async_service_op.dle(service):
+    async def async_service_handle(service):
         """Handle service ffmpeg process."""
         entity_ids = service.data.get(ATTR_ENTITY_ID)
 
@@ -74,15 +74,15 @@ async def async_setup.opp, config):
             async_dispatcher_send.opp, SIGNAL_FFMPEG_RESTART, entity_ids)
 
    .opp.services.async_register(
-        DOMAIN, SERVICE_START, async_service_op.dle, schema=SERVICE_FFMPEG_SCHEMA
+        DOMAIN, SERVICE_START, async_service_handle, schema=SERVICE_FFMPEG_SCHEMA
     )
 
    .opp.services.async_register(
-        DOMAIN, SERVICE_STOP, async_service_op.dle, schema=SERVICE_FFMPEG_SCHEMA
+        DOMAIN, SERVICE_STOP, async_service_handle, schema=SERVICE_FFMPEG_SCHEMA
     )
 
    .opp.services.async_register(
-        DOMAIN, SERVICE_RESTART, async_service_op.dle, schema=SERVICE_FFMPEG_SCHEMA
+        DOMAIN, SERVICE_RESTART, async_service_handle, schema=SERVICE_FFMPEG_SCHEMA
     )
 
    .opp.data[DATA_FFMPEG] = manager
@@ -96,7 +96,7 @@ async def async_get_image(
     extra_cmd: Optional[str] = None,
 ):
     """Get an image from a frame of an RTSP stream."""
-    manager = opp.data[DATA_FFMPEG]
+    manager =.opp.data[DATA_FFMPEG]
     ffmpeg = ImageFrame(manager.binary)
     image = await asyncio.shield(
         ffmpeg.get_image(input_source, output_format=output_format, extra_cmd=extra_cmd)
@@ -105,11 +105,11 @@ async def async_get_image(
 
 
 class FFmpegManager:
-    """Helper for op-ffmpeg."""
+    """Helper for ha-ffmpeg."""
 
     def __init__(self,.opp, ffmpeg_bin):
         """Initialize helper."""
-        self.opp = opp
+        self.opp =.opp
         self._cache = {}
         self._bin = ffmpeg_bin
         self._version = None
@@ -151,7 +151,7 @@ class FFmpegBase(Entity):
         self.ffmpeg = None
         self.initial_state = initial_state
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register dispatcher & events.
 
         This method is a coroutine.
@@ -213,19 +213,19 @@ class FFmpegBase(Entity):
     def _async_register_events(self):
         """Register a FFmpeg process/device."""
 
-        async def async_shutdown_op.dle(event):
+        async def async_shutdown_handle(event):
             """Stop FFmpeg process."""
             await self._async_stop_ffmpeg(None)
 
-        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_shutdown_op.dle)
+        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_shutdown_handle)
 
         # start on startup
         if not self.initial_state:
             return
 
-        async def async_start_op.dle(event):
+        async def async_start_handle(event):
             """Start FFmpeg process."""
             await self._async_start_ffmpeg(None)
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
-        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, async_start_op.dle)
+        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, async_start_handle)

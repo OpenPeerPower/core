@@ -151,7 +151,7 @@ async def async_setup_platform(
     api_key = config[CONF_API_KEY]
     here_client = herepy.RoutingApi(api_key)
 
-    if not await opp..async_add_executor_job(
+    if not await.opp.async_add_executor_job(
         _are_valid_client_credentials, here_client
     ):
         _LOGGER.error(
@@ -242,13 +242,13 @@ class HERETravelTimeSensor(Entity):
         if self._destination_entity_id is None:
             self._here_data.destination = destination
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Delay the sensor update to avoid entity not found warnings."""
 
         @callback
         def delayed_sensor_update(event):
             """Update sensor after Open Peer Power started."""
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         self.opp.bus.async_listen_once(
             EVENT_OPENPEERPOWER_START, delayed_sensor_update
@@ -460,7 +460,7 @@ class HERETravelTimeData:
             # pylint: disable=no-member
             source_attribution = response.response.get("sourceAttribution")
             if source_attribution is not None:
-                self.attribution = self._build_opp_attribution(source_attribution)
+                self.attribution = self._build.opp_attribution(source_attribution)
             # pylint: disable=no-member
             route = response.response["route"]
             summary = route[0]["summary"]
@@ -483,8 +483,8 @@ class HERETravelTimeData:
             self.destination_name = waypoint[1]["mappedRoadName"]
 
     @staticmethod
-    def _build_opp_attribution(source_attribution: Dict) -> Optional[str]:
-        """Build a opp frontend ready string out of the sourceAttribution."""
+    def _build.opp_attribution(source_attribution: Dict) -> Optional[str]:
+        """Build a.opp frontend ready string out of the sourceAttribution."""
         suppliers = source_attribution.get("supplier")
         if suppliers is not None:
             supplier_titles = []

@@ -67,7 +67,7 @@ async def _get_area.opp, entity_entry, device_entry) -> Optional[AreaEntry]:
     else:
         return None
 
-    area_reg = await opp..helpers.area_registry.async_get_registry()
+    area_reg = await.opp.helpers.area_registry.async_get_registry()
     return area_reg.areas.get(area_id)
 
 
@@ -93,7 +93,7 @@ class AbstractConfig(ABC):
 
     def __init__(self,.opp):
         """Initialize abstract config."""
-        self.opp = opp
+        self.opp =.opp
         self._store = None
         self._google_sync_unsub = {}
         self._local_sdk_active = False
@@ -259,7 +259,7 @@ class AbstractConfig(ABC):
             DOMAIN,
             "Local Support",
             webhook_id,
-            self._op.dle_local_webhook,
+            self._handle_local_webhook,
         )
 
         self._local_sdk_active = True
@@ -273,7 +273,7 @@ class AbstractConfig(ABC):
         webhook.async_unregister(self.opp, self.local_sdk_webhook_id)
         self._local_sdk_active = False
 
-    async def _op.dle_local_webhook(self,.opp, webhook_id, request):
+    async def _handle_local_webhook(self,.opp, webhook_id, request):
         """Handle an incoming local SDK message."""
         # Circular dep
         # pylint: disable=import-outside-toplevel
@@ -287,7 +287,7 @@ class AbstractConfig(ABC):
         if not self.enabled:
             return json_response(smart_home.turned_off_response(payload))
 
-        result = await smart_home.async_op.dle_message(
+        result = await smart_home.async_handle_message(
             self.opp, self, self.local_sdk_user_id, payload, SOURCE_LOCAL
         )
 
@@ -305,7 +305,7 @@ class GoogleConfigStore:
 
     def __init__(self,.opp):
         """Initialize a configuration store."""
-        self._opp = opp
+        self..opp =.opp
         self._store = Store.opp, self._STORAGE_VERSION, self._STORAGE_KEY)
         self._data = {STORE_AGENT_USER_IDS: {}}
 
@@ -371,7 +371,7 @@ class GoogleEntity:
 
     def __init__(self,.opp: OpenPeerPower, config: AbstractConfig, state: State):
         """Initialize a Google entity."""
-        self.opp = opp
+        self.opp =.opp
         self.config = config
         self.state = state
         self._traits = None

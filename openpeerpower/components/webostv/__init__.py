@@ -82,7 +82,7 @@ async def async_setup.opp, config):
     """Set up the LG WebOS TV platform."""
    .opp.data[DOMAIN] = {}
 
-    async def async_service_op.dler(service):
+    async def async_service_handler(service):
         method = SERVICE_TO_METHOD.get(service.service)
         data = service.data.copy()
         data["method"] = method["method"]
@@ -91,7 +91,7 @@ async def async_setup.opp, config):
     for service in SERVICE_TO_METHOD:
         schema = SERVICE_TO_METHOD[service]["schema"]
        .opp.services.async_register(
-            DOMAIN, service, async_service_op.dler, schema=schema
+            DOMAIN, service, async_service_handler, schema=schema
         )
 
     tasks = [async_setup_tv.opp, config, conf) for conf in config[DOMAIN]]
@@ -105,7 +105,7 @@ async def async_setup_tv.opp, config, conf):
     """Set up a LG WebOS TV based on host parameter."""
 
     host = conf[CONF_HOST]
-    config_file = opp.config.path(WEBOSTV_CONFIG_FILE)
+    config_file =.opp.config.path(WEBOSTV_CONFIG_FILE)
 
     client = WebOsClient(host, config_file)
    .opp.data[DOMAIN][host] = {"client": client}
@@ -156,7 +156,7 @@ async def async_request_configuration.opp, config, conf, client):
     """Request configuration steps from the user."""
     host = conf.get(CONF_HOST)
     name = conf.get(CONF_NAME)
-    configurator = opp.components.configurator
+    configurator =.opp.components.configurator
 
     async def lgtv_configuration_callback(data):
         """Handle actions when configuration callback is called."""

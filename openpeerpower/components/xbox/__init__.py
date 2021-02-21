@@ -21,14 +21,14 @@ from xbox.webapi.api.provider.smartglass.models import (
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers import (
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import (
     aiohttp_client,
     config_entry_oauth2_flow,
     config_validation as cv,
 )
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from . import api, config_flow
 from .const import DOMAIN, OAUTH2_AUTHORIZE, OAUTH2_TOKEN

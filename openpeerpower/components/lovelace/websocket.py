@@ -11,13 +11,13 @@ from openpeerpower.helpers import config_validation as cv
 from .const import CONF_URL_PATH, DOMAIN, ConfigNotFound
 
 
-def _op.dle_errors(func):
+def _handle_errors(func):
     """Handle error with WebSocket calls."""
 
     @wraps(func)
-    async def send_with_error_op.dling.opp, connection, msg):
+    async def send_with_error_handling.opp, connection, msg):
         url_path = msg.get(CONF_URL_PATH)
-        config = opp.data[DOMAIN]["dashboards"].get(url_path)
+        config =.opp.data[DOMAIN]["dashboards"].get(url_path)
 
         if config is None:
             connection.send_error(
@@ -42,14 +42,14 @@ def _op.dle_errors(func):
         else:
             connection.send_result(msg["id"], result)
 
-    return send_with_error_op.dling
+    return send_with_error_handling
 
 
 @websocket_api.async_response
 @websocket_api.websocket_command({"type": "lovelace/resources"})
 async def websocket_lovelace_resources.opp, connection, msg):
     """Send Lovelace UI resources over WebSocket configuration."""
-    resources = opp.data[DOMAIN]["resources"]
+    resources =.opp.data[DOMAIN]["resources"]
 
     if not resources.loaded:
         await resources.async_load()
@@ -66,7 +66,7 @@ async def websocket_lovelace_resources.opp, connection, msg):
         vol.Optional(CONF_URL_PATH): vol.Any(None, cv.string),
     }
 )
-@_op.dle_errors
+@_handle_errors
 async def websocket_lovelace_config.opp, connection, msg, config):
     """Send Lovelace UI config over WebSocket configuration."""
     return await config.async_load(msg["force"])
@@ -81,7 +81,7 @@ async def websocket_lovelace_config.opp, connection, msg, config):
         vol.Optional(CONF_URL_PATH): vol.Any(None, cv.string),
     }
 )
-@_op.dle_errors
+@_handle_errors
 async def websocket_lovelace_save_config.opp, connection, msg, config):
     """Save Lovelace UI configuration."""
     await config.async_save(msg["config"])
@@ -95,7 +95,7 @@ async def websocket_lovelace_save_config.opp, connection, msg, config):
         vol.Optional(CONF_URL_PATH): vol.Any(None, cv.string),
     }
 )
-@_op.dle_errors
+@_handle_errors
 async def websocket_lovelace_delete_config.opp, connection, msg, config):
     """Delete Lovelace UI configuration."""
     await config.async_delete()

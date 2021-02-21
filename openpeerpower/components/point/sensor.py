@@ -33,7 +33,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     async def async_discover_sensor(device_id):
         """Discover and add a discovered sensor."""
-        client = opp.data[POINT_DOMAIN][config_entry.entry_id]
+        client =.opp.data[POINT_DOMAIN][config_entry.entry_id]
         async_add_entities(
             (
                 MinutPointSensor(client, device_id, sensor_type)
@@ -61,7 +61,7 @@ class MinutPointSensor(MinutPointEntity):
         if self.is_updated:
             self._value = await self.device.sensor(self.device_class)
             self._updated = parse_datetime(self.device.last_update)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def icon(self):

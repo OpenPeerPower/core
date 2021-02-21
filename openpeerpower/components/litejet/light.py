@@ -15,7 +15,7 @@ ATTR_NUMBER = "number"
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up lights for the LiteJet platform."""
-    litejet_ = opp.data["litejet_system"]
+    litejet_ =.opp.data["litejet_system"]
 
     devices = []
     for i in litejet_.loads():
@@ -30,7 +30,7 @@ class LiteJetLight(LightEntity):
 
     def __init__(self,.opp, lj, i, name):
         """Initialize a LiteJet light."""
-        self._opp = opp
+        self..opp =.opp
         self._lj = lj
         self._index = i
         self._brightness = 0
@@ -42,7 +42,7 @@ class LiteJetLight(LightEntity):
     def _on_load_changed(self):
         """Handle state changes."""
         _LOGGER.debug("Updating due to notification for %s", self._name)
-        self.schedule_update_op.state(True)
+        self.schedule_update_ha_state(True)
 
     @property
     def supported_features(self):

@@ -27,5 +27,5 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    device = opp.data[DOMAIN].devices.pop(entry.entry_id)
+    device =.opp.data[DOMAIN].devices.pop(entry.entry_id)
     return await device.async_unload()

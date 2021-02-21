@@ -183,13 +183,13 @@ class FibaroThermostat(FibaroDevice, ClimateEntity):
             for mode in op_modes:
                 mode = int(mode)
                 if mode in OPMODES_HVAC:
-                    mode_op.= OPMODES_HVAC[mode]
-                    if mode_op.not in self._hvac_support:
-                        self._hvac_support.append(mode_op.
+                    mode_ha = OPMODES_HVAC[mode]
+                    if mode_ha not in self._hvac_support:
+                        self._hvac_support.append(mode_ha)
                 if mode in OPMODES_PRESET:
                     self._preset_support.append(OPMODES_PRESET[mode])
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         _LOGGER.debug(
             "Climate %s\n"
@@ -203,7 +203,7 @@ class FibaroThermostat(FibaroDevice, ClimateEntity):
             self._op_mode_device.ha_id if self._op_mode_device else "None",
             self._fan_mode_device.ha_id if self._fan_mode_device else "None",
         )
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         # Register update callback for child devices
         siblings = self.fibaro_device.fibaro_controller.get_siblings(self.fibaro_device)

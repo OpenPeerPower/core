@@ -71,7 +71,7 @@ async def async_request_validation.opp, config_entry, august_gateway):
     # instead of using the legacy configurator
     #
     _LOGGER.error("Access token is no longer valid")
-    configurator = opp.components.configurator
+    configurator =.opp.components.configurator
     entry_id = config_entry.entry_id
 
     async def async_august_configuration_validation_callback(data):
@@ -135,7 +135,7 @@ async def async_setup_august.opp, config_entry, august_gateway):
 
    .opp.data[DOMAIN][entry_id][DATA_AUGUST] = AugustData.opp, august_gateway)
 
-    await opp..data[DOMAIN][entry_id][DATA_AUGUST].async_setup()
+    await.opp.data[DOMAIN][entry_id][DATA_AUGUST].async_setup()
 
     for component in AUGUST_COMPONENTS:
        .opp.async_create_task(
@@ -227,7 +227,7 @@ class AugustData(AugustSubscriberMixin):
     def __init__(self,.opp, august_gateway):
         """Init August data object."""
         super().__init__.opp, MIN_TIME_BETWEEN_DETAIL_UPDATES)
-        self._opp = opp
+        self..opp =.opp
         self._august_gateway = august_gateway
         self.activity_stream = None
         self._api = august_gateway.api
@@ -264,7 +264,7 @@ class AugustData(AugustSubscriberMixin):
         self._remove_inoperative_doorbells()
 
         self.activity_stream = ActivityStream(
-            self._opp, self._api, self._august_gateway, self._house_ids
+            self..opp, self._api, self._august_gateway, self._house_ids
         )
         await self.activity_stream.async_setup()
 

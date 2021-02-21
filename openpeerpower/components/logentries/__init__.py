@@ -6,8 +6,8 @@ import requests
 import voluptuous as vol
 
 from openpeerpower.const import CONF_TOKEN, EVENT_STATE_CHANGED
-from openpeerpowerr.helpers import state as state_helper
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers import state as state_helper
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 

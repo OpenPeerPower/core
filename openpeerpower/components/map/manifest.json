@@ -1,7 +1,7 @@
 {
   "domain": "map",
   "name": "Map",
-  "documentation": "https://www.openpeerpower.io/integrations/map",
+  "documentation": "https://www.open-peer-power.io/integrations/map",
   "dependencies": ["frontend"],
   "codeowners": [],
   "quality_scale": "internal"

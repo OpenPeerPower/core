@@ -75,14 +75,14 @@ class PilightBinarySensor(BinarySensorEntity):
     def __init__(self,.opp, name, variable, payload, on_value, off_value):
         """Initialize the sensor."""
         self._state = False
-        self._opp = opp
+        self..opp =.opp
         self._name = name
         self._variable = variable
         self._payload = payload
         self._on_value = on_value
         self._off_value = off_value
 
-       .opp.bus.listen(pilight.EVENT, self._op.dle_code)
+       .opp.bus.listen(pilight.EVENT, self._handle_code)
 
     @property
     def name(self):
@@ -94,7 +94,7 @@ class PilightBinarySensor(BinarySensorEntity):
         """Return True if the binary sensor is on."""
         return self._state
 
-    def _op.dle_code(self, call):
+    def _handle_code(self, call):
         """Handle received code by the pilight-daemon.
 
         If the code matches the defined payload
@@ -115,7 +115,7 @@ class PilightBinarySensor(BinarySensorEntity):
                 return
             value = call.data[self._variable]
             self._state = value == self._on_value
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
 
 class PilightTriggerSensor(BinarySensorEntity):
@@ -126,7 +126,7 @@ class PilightTriggerSensor(BinarySensorEntity):
     ):
         """Initialize the sensor."""
         self._state = False
-        self._opp = opp
+        self..opp =.opp
         self._name = name
         self._variable = variable
         self._payload = payload
@@ -134,9 +134,9 @@ class PilightTriggerSensor(BinarySensorEntity):
         self._off_value = off_value
         self._reset_delay_sec = rst_dly_sec
         self._delay_after = None
-        self._opp = opp
+        self..opp =.opp
 
-       .opp.bus.listen(pilight.EVENT, self._op.dle_code)
+       .opp.bus.listen(pilight.EVENT, self._handle_code)
 
     @property
     def name(self):
@@ -151,9 +151,9 @@ class PilightTriggerSensor(BinarySensorEntity):
     def _reset_state(self, call):
         self._state = False
         self._delay_after = None
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
-    def _op.dle_code(self, call):
+    def _handle_code(self, call):
         """Handle received code by the pilight-daemon.
 
         If the code matches the defined payload
@@ -178,5 +178,5 @@ class PilightTriggerSensor(BinarySensorEntity):
                 self._delay_after = dt_util.utcnow() + datetime.timedelta(
                     seconds=self._reset_delay_sec
                 )
-                track_point_in_time(self._opp, self._reset_state, self._delay_after)
-            self.schedule_update_op.state()
+                track_point_in_time(self..opp, self._reset_state, self._delay_after)
+            self.schedule_update_ha_state()

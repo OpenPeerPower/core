@@ -84,7 +84,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         """Handle Memo Text service call."""
         module_address = service.data[CONF_ADDRESS]
         memo_text = service.data[CONF_MEMO_TEXT]
-        memo_text.opp = opp
+        memo_text.opp =.opp
         try:
             controller.get_module(module_address).set_memo_text(
                 memo_text.async_render()
@@ -152,12 +152,12 @@ class VelbusEntity(Entity):
         """Disable polling."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Add listener for state changes."""
         self._module.on_status_update(self._channel, self._on_update)
 
     def _on_update(self, state):
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def device_info(self):

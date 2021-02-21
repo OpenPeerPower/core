@@ -1,8 +1,8 @@
 {
   "domain": "search",
   "name": "Search",
-  "documentation": "https://www.openpeerpower.io/integrations/search",
+  "documentation": "https://www.open-peer-power.io/integrations/search",
   "dependencies": ["websocket_api"],
   "after_dependencies": ["scene", "group", "automation", "script"],
-  "codeowners": ["@openpeerpower/core"]
+  "codeowners": ["@open-peer-power/core"]
 }

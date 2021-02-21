@@ -58,7 +58,7 @@ async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
             }
         )
 
-        state = opp.states.get(entry.entity_id)
+        state =.opp.states.get(entry.entity_id)
         if state:
             features = state.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
             if features & (SUPPORT_OPEN):
@@ -89,6 +89,6 @@ async def async_call_action_from_config(
     elif config[CONF_TYPE] == "open":
         service = SERVICE_OPEN
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, service, service_data, blocking=True, context=context
     )

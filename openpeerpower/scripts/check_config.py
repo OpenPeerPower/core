@@ -12,7 +12,7 @@ from unittest.mock import patch
 from openpeerpower import bootstrap, core
 from openpeerpower.config import get_default_config_dir
 from openpeerpower.exceptions import OpenPeerPowerError
-from openpeerpower.helpers.check_config import async_check_op.config_file
+from openpeerpower.helpers.check_config import async_check_ha_config_file
 import openpeerpower.util.yaml.loader as yaml_loader
 
 # mypy: allow-untyped-calls, allow-untyped-defs
@@ -152,7 +152,7 @@ def run(script_args: List) -> int:
 
 
 def check(config_dir, secrets=False):
-    """Perform a check by mocking opp load functions."""
+    """Perform a check by mocking.opp load functions."""
     logging.getLogger("openpeerpower.loader").setLevel(logging.CRITICAL)
     res: Dict[str, Any] = {
         "yaml_files": OrderedDict(),  # yaml_files loaded
@@ -227,10 +227,10 @@ def check(config_dir, secrets=False):
 
 async def async_check_config(config_dir):
     """Check the HA config."""
-    opp = core.OpenPeerPower()
+   .opp = core.OpenPeerPower()
    .opp.config.config_dir = config_dir
-    components = await async_check_op.config_file.opp)
-    await opp..async_stop(force=True)
+    components = await async_check_ha_config_file.opp)
+    await.opp.async_stop(force=True)
     return components
 
 

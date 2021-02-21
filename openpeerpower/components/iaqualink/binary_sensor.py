@@ -5,7 +5,7 @@ from openpeerpower.components.binary_sensor import (
     BinarySensorEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import AqualinkEntity
 from .const import DOMAIN as AQUALINK_DOMAIN
@@ -19,11 +19,11 @@ async def async_setup_entry(
     """Set up discovered binary sensors."""
     devs = []
     for dev in.opp.data[AQUALINK_DOMAIN][DOMAIN]:
-        devs.append(OppAqualinkBinarySensor(dev))
+        devs.append(HassAqualinkBinarySensor(dev))
     async_add_entities(devs, True)
 
 
-class OppAqualinkBinarySensor(AqualinkEntity, BinarySensorEntity):
+class HassAqualinkBinarySensor(AqualinkEntity, BinarySensorEntity):
     """Representation of a binary sensor."""
 
     @property

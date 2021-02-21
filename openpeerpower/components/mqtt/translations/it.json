@@ -17,12 +17,12 @@
                 },
                 "description": "Inserisci le informazioni di connessione del tuo broker MQTT."
             },
-            "oppio_confirm": {
+            .oppio_confirm": {
                 "data": {
                     "discovery": "Attiva l'individuazione"
                 },
-                "description": "Vuoi configurare Open Peer Power per connettersi al broker MQTT fornito dal componente aggiuntivo di Opp.io: {addon}?",
-                "title": "Broker MQTT tramite il componente aggiuntivo di Opp.io"
+                "description": "Vuoi configurare Open Peer Power per connettersi al broker MQTT fornito dal componente aggiuntivo di Hass.io: {addon}?",
+                "title": "Broker MQTT tramite il componente aggiuntivo di Hass.io"
             }
         }
     },

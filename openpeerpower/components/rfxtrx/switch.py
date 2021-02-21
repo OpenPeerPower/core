@@ -5,7 +5,7 @@ import RFXtrx as rfxtrxmod
 
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.const import CONF_DEVICES, STATE_ON
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from . import (
     CONF_DATA_BITS,
@@ -97,9 +97,9 @@ async def async_setup_entry(
 class RfxtrxSwitch(RfxtrxCommandEntity, SwitchEntity):
     """Representation of a RFXtrx switch."""
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Restore device state."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         if self._event is None:
             old_state = await self.async_get_last_state()
@@ -115,14 +115,14 @@ class RfxtrxSwitch(RfxtrxCommandEntity, SwitchEntity):
             self._state = False
 
     @callback
-    def _op.dle_event(self, event, device_id):
+    def _handle_event(self, event, device_id):
         """Check if event applies to me and update."""
         if device_id != self._device_id:
             return
 
         self._apply_event(event)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_on(self):
@@ -133,10 +133,10 @@ class RfxtrxSwitch(RfxtrxCommandEntity, SwitchEntity):
         """Turn the device on."""
         await self._async_send(self._device.send_on)
         self._state = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the device off."""
         await self._async_send(self._device.send_off)
         self._state = False
-        self.async_write_op.state()
+        self.async_write_ha_state()

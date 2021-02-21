@@ -41,7 +41,7 @@ TRIGGERED_SENSOR_TYPES = {
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up SimpliSafe binary sensors based on a config entry."""
-    simplisafe = opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
+    simplisafe =.opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
     sensors = []
 
     for system in simplisafe.systems.values():

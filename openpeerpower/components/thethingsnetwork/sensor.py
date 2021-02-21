@@ -16,9 +16,9 @@ from openpeerpower.const import (
     HTTP_NOT_FOUND,
     HTTP_UNAUTHORIZED,
 )
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 from . import DATA_TTN, TTN_ACCESS_KEY, TTN_APP_ID, TTN_DATA_STORAGE_URL
 
@@ -39,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up The Things Network Data storage sensors."""
-    ttn = opp.data.get(DATA_TTN)
+    ttn =.opp.data.get(DATA_TTN)
     device_id = config.get(CONF_DEVICE_ID)
     values = config.get(CONF_VALUES)
     app_id = ttn.get(TTN_APP_ID)
@@ -113,7 +113,7 @@ class TtnDataStorage:
     def __init__(self,.opp, app_id, device_id, access_key, values):
         """Initialize the data object."""
         self.data = None
-        self._opp = opp
+        self..opp =.opp
         self._app_id = app_id
         self._device_id = device_id
         self._values = values
@@ -125,7 +125,7 @@ class TtnDataStorage:
     async def async_update(self):
         """Get the current state from The Things Network Data Storage."""
         try:
-            session = async_get_clientsession(self._opp)
+            session = async_get_clientsession(self..opp)
             with async_timeout.timeout(DEFAULT_TIMEOUT):
                 response = await session.get(self._url, headers=self._headers)
 

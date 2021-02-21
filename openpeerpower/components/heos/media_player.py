@@ -28,8 +28,8 @@ from openpeerpower.components.media_player.const import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import STATE_IDLE, STATE_PAUSED, STATE_PLAYING
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.util.dt import utcnow
 
 from .const import DATA_SOURCE_MANAGER, DOMAIN as HEOS_DOMAIN, SIGNAL_HEOS_UPDATED
 
@@ -64,7 +64,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ):
     """Add media players for a config entry."""
-    players = opp.data[HEOS_DOMAIN][DOMAIN]
+    players =.opp.data[HEOS_DOMAIN][DOMAIN]
     devices = [HeosMediaPlayer(player) for player in players.values()]
     async_add_entities(devices, True)
 
@@ -102,13 +102,13 @@ class HeosMediaPlayer(MediaPlayerEntity):
             return
         if event == heos_const.EVENT_PLAYER_NOW_PLAYING_PROGRESS:
             self._media_position_updated_at = utcnow()
-        await self.async_update_op.state(True)
+        await self.async_update_ha_state(True)
 
     async def _heos_updated(self):
         """Handle sources changed."""
-        await self.async_update_op.state(True)
+        await self.async_update_ha_state(True)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Device added to.opp."""
         # Update state when attributes of the player change
         self._signals.append(
@@ -239,7 +239,7 @@ class HeosMediaPlayer(MediaPlayerEntity):
         if self._source_manager is None:
             self._source_manager = self.opp.data[HEOS_DOMAIN][DATA_SOURCE_MANAGER]
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect the device when removed."""
         for signal_remove in self._signals:
             signal_remove()

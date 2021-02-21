@@ -1,7 +1,7 @@
 {
   "domain": "season",
   "name": "Season",
-  "documentation": "https://www.openpeerpower.io/integrations/season",
+  "documentation": "https://www.open-peer-power.io/integrations/season",
   "requirements": ["ephem==3.7.7.0"],
   "codeowners": [],
   "quality_scale": "internal"

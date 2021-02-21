@@ -16,7 +16,7 @@ async def async_setup_platform.opp, _, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    qsusb = opp.data[QWIKSWITCH]
+    qsusb =.opp.data[QWIKSWITCH]
     _LOGGER.debug("Setup qwikswitch.binary_sensor %s, %s", qsusb, discovery_info)
     devs = [QSBinarySensor(sensor) for sensor in discovery_info[QWIKSWITCH]]
     add_entities(devs)
@@ -52,7 +52,7 @@ class QSBinarySensor(QSEntity, BinarySensorEntity):
         )
         if val is not None:
             self._val = bool(val)
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def is_on(self):

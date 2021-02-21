@@ -17,12 +17,12 @@
                 },
                 "description": "Introduce\u021bi informa\u021biile de conectare ale brokerului dvs. MQTT."
             },
-            "oppio_confirm": {
+            .oppio_confirm": {
                 "data": {
                     "discovery": "Activa\u021bi descoperirea"
                 },
                 "description": "Dori\u021bi s\u0103 configura\u021bi Open Peer Power pentru a se conecta la brokerul MQTT furnizat de addon-ul {addon} ?",
-                "title": "MQTT Broker, prin intermediul Opp.io add-on"
+                "title": "MQTT Broker, prin intermediul Hass.io add-on"
             }
         }
     }

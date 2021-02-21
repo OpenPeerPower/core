@@ -1,7 +1,7 @@
 {
   "domain": "fitbit",
   "name": "Fitbit",
-  "documentation": "https://www.openpeerpower.io/integrations/fitbit",
+  "documentation": "https://www.open-peer-power.io/integrations/fitbit",
   "requirements": ["fitbit==0.3.1"],
   "dependencies": ["configurator", "http"],
   "codeowners": []

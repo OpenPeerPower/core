@@ -10,7 +10,7 @@ import aiohttp
 import requests
 
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
-from openpeerpower.core import CALLBACK_TYPE, Event, OppJob, OpenPeerPower, callback
+from openpeerpower.core import CALLBACK_TYPE, Event, HassJob, OpenPeerPower, callback
 from openpeerpower.helpers import entity, event
 from openpeerpower.util.dt import utcnow
 
@@ -42,7 +42,7 @@ class DataUpdateCoordinator(Generic[T]):
         request_refresh_debouncer: Optional[Debouncer] = None,
     ):
         """Initialize global data updater."""
-        self.opp = opp
+        self.opp =.opp
         self.logger = logger
         self.name = name
         self.update_method = update_method
@@ -51,7 +51,7 @@ class DataUpdateCoordinator(Generic[T]):
         self.data: Optional[T] = None
 
         self._listeners: List[CALLBACK_TYPE] = []
-        self._job = OppJob(self._op.dle_refresh_interval)
+        self._job = HassJob(self._handle_refresh_interval)
         self._unsub_refresh: Optional[CALLBACK_TYPE] = None
         self._request_refresh_task: Optional[asyncio.TimerHandle] = None
         self.last_update_success = True
@@ -120,7 +120,7 @@ class DataUpdateCoordinator(Generic[T]):
             utcnow().replace(microsecond=0) + self.update_interval,
         )
 
-    async def _op.dle_refresh_interval(self, _now: datetime) -> None:
+    async def _handle_refresh_interval(self, _now: datetime) -> None:
         """Handle a refresh interval occurrence."""
         self._unsub_refresh = None
         await self.async_refresh()
@@ -247,17 +247,17 @@ class CoordinatorEntity(entity.Entity):
         """Return if entity is available."""
         return self.coordinator.last_update_success
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """When entity is added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_on_remove(
-            self.coordinator.async_add_listener(self._op.dle_coordinator_update)
+            self.coordinator.async_add_listener(self._handle_coordinator_update)
         )
 
     @callback
-    def _op.dle_coordinator_update(self) -> None:
+    def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_update(self) -> None:
         """Update the entity.

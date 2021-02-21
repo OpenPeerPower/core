@@ -29,8 +29,8 @@ from openpeerpower.const import (
     PRESSURE_HPA,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
@@ -73,7 +73,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     gateway = get_gateway_from_config_entry.opp, config_entry)
     gateway.entities[DOMAIN] = set()
 
-    battery_op.dler = DeconzBatteryHandler(gateway)
+    battery_handler = DeconzBatteryHandler(gateway)
 
     @callback
     def async_add_sensor(sensors=gateway.api.sensors.values()):
@@ -90,7 +90,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                 continue
 
             if sensor.battery is not None:
-                battery_op.dler.remove_tracker(sensor)
+                battery_handler.remove_tracker(sensor)
 
                 known_batteries = set(gateway.entities[DOMAIN])
                 new_battery = DeconzBattery(sensor, gateway)
@@ -98,7 +98,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                     entities.append(new_battery)
 
             else:
-                battery_op.dler.create_tracker(sensor)
+                battery_handler.create_tracker(sensor)
 
             if (
                 not sensor.BINARY

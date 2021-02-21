@@ -19,8 +19,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         # Find controller that corresponds with device id
         ctrl_id = device["ctrl_id"]
         ihc_key = f"ihc{ctrl_id}"
-        info = opp.data[ihc_key][IHC_INFO]
-        ihc_controller = opp.data[ihc_key][IHC_CONTROLLER]
+        info =.opp.data[ihc_key][IHC_INFO]
+        ihc_controller =.opp.data[ihc_key][IHC_CONTROLLER]
 
         sensor = IHCBinarySensor(
             ihc_controller,
@@ -74,4 +74,4 @@ class IHCBinarySensor(IHCDevice, BinarySensorEntity):
             self._state = not value
         else:
             self._state = value
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

@@ -27,7 +27,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
     cache = {}
 
-    async def async_service_op.dler(service: ServiceCall) -> None:
+    async def async_service_handler(service: ServiceCall) -> None:
         """Execute a shell command service."""
         cmd = conf[service.service]
 
@@ -115,5 +115,5 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
             )
 
     for name in conf:
-       .opp.services.async_register(DOMAIN, name, async_service_op.dler)
+       .opp.services.async_register(DOMAIN, name, async_service_handler)
     return True

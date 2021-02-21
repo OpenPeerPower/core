@@ -1,7 +1,7 @@
 {
   "domain": "geniushub",
   "name": "Genius Hub",
-  "documentation": "https://www.openpeerpower.io/integrations/geniushub",
+  "documentation": "https://www.open-peer-power.io/integrations/geniushub",
   "requirements": ["geniushub-client==0.6.30"],
   "codeowners": ["@zxdavb"]
 }

@@ -169,7 +169,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     host = config.get(CONF_HOST)
     hosts = []
 
-    def service_op.dle(service):
+    def service_handle(service):
         """Handle for services."""
         entity_ids = service.data.get(ATTR_ENTITY_ID)
         devices = [d for d in hosts if d.entity_id in entity_ids]
@@ -181,7 +181,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
    .opp.services.register(
         DOMAIN,
         SERVICE_SELECT_HDMI_OUTPUT,
-        service_op.dle,
+        service_handle,
         schema=ONKYO_SELECT_OUTPUT_SCHEMA,
     )
 

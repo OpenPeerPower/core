@@ -1,6 +1,6 @@
 {
   "domain": "openexchangerates",
   "name": "Open Exchange Rates",
-  "documentation": "https://www.openpeerpower.io/integrations/openexchangerates",
+  "documentation": "https://www.open-peer-power.io/integrations/openexchangerates",
   "codeowners": []
 }

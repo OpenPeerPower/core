@@ -1,8 +1,8 @@
 """This component provides HA sensor support for Ring Door Bell/Chimes."""
 from openpeerpower.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS_MILLIWATT
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.icon import icon_for_battery_level
+from openpeerpower.core import callback
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.icon import icon_for_battery_level
 
 from . import DOMAIN
 from .entity import RingEntityMixin
@@ -10,7 +10,7 @@ from .entity import RingEntityMixin
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up a sensor for a Ring device."""
-    devices = opp.data[DOMAIN][config_entry.entry_id]["devices"]
+    devices =.opp.data[DOMAIN][config_entry.entry_id]["devices"]
 
     sensors = []
 
@@ -92,17 +92,17 @@ class RingSensor(RingEntityMixin, Entity):
 class HealthDataRingSensor(RingSensor):
     """Ring sensor that relies on health data."""
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         await self.ring_objects["health_data"].async_track_device(
             self._device, self._health_update_callback
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect callbacks."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
 
         self.ring_objects["health_data"].async_untrack_device(
             self._device, self._health_update_callback
@@ -111,7 +111,7 @@ class HealthDataRingSensor(RingSensor):
     @callback
     def _health_update_callback(self, _health_data):
         """Call update method."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def entity_registry_enabled_default(self) -> bool:
@@ -134,17 +134,17 @@ class HistoryRingSensor(RingSensor):
 
     _latest_event = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         await self.ring_objects["history_data"].async_track_device(
             self._device, self._history_update_callback
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect callbacks."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
 
         self.ring_objects["history_data"].async_untrack_device(
             self._device, self._history_update_callback
@@ -169,7 +169,7 @@ class HistoryRingSensor(RingSensor):
             return
 
         self._latest_event = found
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def state(self):

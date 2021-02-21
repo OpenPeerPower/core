@@ -15,10 +15,10 @@ from openpeerpower.const import (
     CONF_PORT,
     CONF_SSL,
 )
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import aiohttp_client, config_validation as cv
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import aiohttp_client, config_validation as cv
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
     UpdateFailed,
@@ -111,7 +111,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     # regenmaschine can load multiple controllers at once, but we only grab the one
     # we loaded above:
-    controller = opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id] = next(
+    controller =.opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id] = next(
         iter(client.controllers.values())
     )
 
@@ -142,7 +142,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         DATA_RESTRICTIONS_UNIVERSAL,
         DATA_ZONES,
     ]:
-        coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+        coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             api_category
         ] = DataUpdateCoordinator(
            .opp,
@@ -177,7 +177,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     )
     if unload_ok:
        .opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
-        cancel_listener = opp.data[DOMAIN][DATA_LISTENER].pop(entry.entry_id)
+        cancel_listener =.opp.data[DOMAIN][DATA_LISTENER].pop(entry.entry_id)
         cancel_listener()
 
     return unload_ok
@@ -185,7 +185,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 async def async_reload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Handle an options update."""
-    await opp..config_entries.async_reload(entry.entry_id)
+    await.opp.config_entries.async_reload(entry.entry_id)
 
 
 class RainMachineEntity(CoordinatorEntity):
@@ -235,14 +235,14 @@ class RainMachineEntity(CoordinatorEntity):
         return self._name
 
     @callback
-    def _op.dle_coordinator_update(self):
+    def _handle_coordinator_update(self):
         """Respond to a DataUpdateCoordinator update."""
         self.update_from_latest_data()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.update_from_latest_data()
 
     @callback

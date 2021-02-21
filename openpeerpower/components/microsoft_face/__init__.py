@@ -9,11 +9,11 @@ import async_timeout
 import voluptuous as vol
 
 from openpeerpower.const import ATTR_NAME, CONF_API_KEY, CONF_TIMEOUT, CONTENT_TYPE_JSON
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import slugify
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import slugify
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -96,7 +96,7 @@ async def async_setup.opp, config):
             face.store[g_id] = {}
 
             entities[g_id] = MicrosoftFaceGroupEntity.opp, face, g_id, name)
-            entities[g_id].async_write_op.state()
+            entities[g_id].async_write_ha_state()
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't create group '%s' with error: %s", g_id, err)
 
@@ -145,7 +145,7 @@ async def async_setup.opp, config):
             )
 
             face.store[g_id][name] = user_data["personId"]
-            entities[g_id].async_write_op.state()
+            entities[g_id].async_write_ha_state()
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't create person '%s' with error: %s", name, err)
 
@@ -163,7 +163,7 @@ async def async_setup.opp, config):
             await face.call_api("delete", f"persongroups/{g_id}/persons/{p_id}")
 
             face.store[g_id].pop(name)
-            entities[g_id].async_write_op.state()
+            entities[g_id].async_write_ha_state()
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't delete person '%s' with error: %s", p_id, err)
 
@@ -177,7 +177,7 @@ async def async_setup.opp, config):
         p_id = face.store[g_id].get(service.data[ATTR_PERSON])
 
         camera_entity = service.data[ATTR_CAMERA_ENTITY]
-        camera = opp.components.camera
+        camera =.opp.components.camera
 
         try:
             image = await camera.async_get_image.opp, camera_entity)
@@ -205,7 +205,7 @@ class MicrosoftFaceGroupEntity(Entity):
 
     def __init__(self,.opp, api, g_id, name):
         """Initialize person/group entity."""
-        self.opp = opp
+        self.opp =.opp
         self._api = api
         self._id = g_id
         self._name = name
@@ -245,7 +245,7 @@ class MicrosoftFace:
 
     def __init__(self,.opp, server_loc, api_key, timeout, entities):
         """Initialize Microsoft Face api."""
-        self.opp = opp
+        self.opp =.opp
         self.websession = async_get_clientsession.opp)
         self.timeout = timeout
         self._api_key = api_key
@@ -276,7 +276,7 @@ class MicrosoftFace:
                 self._store[g_id][person["name"]] = person["personId"]
 
             tasks.append(
-                asyncio.create_task(self._entities[g_id].async_update_op.state())
+                asyncio.create_task(self._entities[g_id].async_update_ha_state())
             )
 
         if tasks:

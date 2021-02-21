@@ -34,7 +34,7 @@ PLATFORMS = "sensor", "binary_sensor", "device_tracker"
 
 async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
     """Set up the mobile app component."""
-    store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+    store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
     app_config = await store.async_load()
     if app_config is None:
         app_config = {
@@ -95,7 +95,7 @@ async def async_setup_entry.opp, entry):
            .opp.config_entries.async_forward_entry_setup(entry, domain)
         )
 
-    await opp._notify.async_reload.opp, DOMAIN)
+    await.opp_notify.async_reload.opp, DOMAIN)
 
     return True
 
@@ -118,7 +118,7 @@ async def async_unload_entry.opp, entry):
     webhook_unregister.opp, webhook_id)
     del.opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id]
     del.opp.data[DOMAIN][DATA_DEVICES][webhook_id]
-    await opp._notify.async_reload.opp, DOMAIN)
+    await.opp_notify.async_reload.opp, DOMAIN)
 
     return True
 
@@ -126,7 +126,7 @@ async def async_unload_entry.opp, entry):
 async def async_remove_entry.opp, entry):
     """Cleanup when entry is removed."""
    .opp.data[DOMAIN][DATA_DELETED_IDS].append(entry.data[CONF_WEBHOOK_ID])
-    store = opp.data[DOMAIN][DATA_STORE]
+    store =.opp.data[DOMAIN][DATA_STORE]
     await store.async_save(savable_state.opp))
 
     if CONF_CLOUDHOOK_URL in entry.data:

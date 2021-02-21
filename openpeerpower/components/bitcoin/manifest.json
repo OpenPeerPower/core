@@ -1,7 +1,7 @@
 {
   "domain": "bitcoin",
   "name": "Bitcoin",
-  "documentation": "https://www.openpeerpower.io/integrations/bitcoin",
+  "documentation": "https://www.open-peer-power.io/integrations/bitcoin",
   "requirements": ["blockchain==1.4.4"],
   "codeowners": ["@fabaff"]
 }

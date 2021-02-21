@@ -17,19 +17,19 @@ from openpeerpower.const import (
     CONF_USERNAME,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-from openpeerpowerr.helpers.discovery import async_load_platform
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.core import callback
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.discovery import async_load_platform
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_time_interval
-from openpeerpowerr.helpers.service import verify_domain_control
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_time_interval
+from openpeerpower.helpers.service import verify_domain_control
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+import openpeerpower.util.dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -107,7 +107,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
     client = GeniusHub(*args, **kwargs, session=async_get_clientsession.opp))
 
-    broker = opp.data[DOMAIN]["broker"] = GeniusBroker.opp, client, hub_uid)
+    broker =.opp.data[DOMAIN]["broker"] = GeniusBroker.opp, client, hub_uid)
 
     try:
         await client.update()
@@ -135,7 +135,7 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
         """Set the system mode."""
         entity_id = call.data[ATTR_ENTITY_ID]
 
-        registry = await opp..helpers.entity_registry.async_get_registry()
+        registry = await.opp.helpers.entity_registry.async_get_registry()
         registry_entry = registry.async_get(entity_id)
 
         if registry_entry is None or registry_entry.platform != DOMAIN:
@@ -165,7 +165,7 @@ class GeniusBroker:
 
     def __init__(self,.opp, client, hub_uid) -> None:
         """Initialize the geniushub client."""
-        self.opp = opp
+        self.opp =.opp
         self.client = client
         self._hub_uid = hub_uid
         self._connect_error = False
@@ -215,13 +215,13 @@ class GeniusEntity(Entity):
         """Initialize the entity."""
         self._unique_id = self._name = None
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Set up a listener when this entity is added to HA."""
         self.async_on_remove(async_dispatcher_connect(self.opp, DOMAIN, self._refresh))
 
     async def _refresh(self, payload: Optional[dict] = None) -> None:
         """Process any signals."""
-        self.async_schedule_update_op.state(force_refresh=True)
+        self.async_schedule_update_ha_state(force_refresh=True)
 
     @property
     def unique_id(self) -> Optional[str]:
@@ -289,7 +289,7 @@ class GeniusZone(GeniusEntity):
     async def _refresh(self, payload: Optional[dict] = None) -> None:
         """Process any signals."""
         if payload is None:
-            self.async_schedule_update_op.state(force_refresh=True)
+            self.async_schedule_update_ha_state(force_refresh=True)
             return
 
         if payload["unique_id"] != self._unique_id:
@@ -305,7 +305,7 @@ class GeniusZone(GeniusEntity):
         mode = payload["data"][ATTR_ZONE_MODE]
 
         # pylint: disable=protected-access
-        if mode == "footprint" and not self._zone._op._pir:
+        if mode == "footprint" and not self._zone._has_pir:
             raise TypeError(
                 f"'{self.entity_id}' can not support footprint mode (it has no PIR)"
             )

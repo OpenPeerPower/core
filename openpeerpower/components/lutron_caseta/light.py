@@ -22,7 +22,7 @@ def to_lutron_level(level):
     return int(round((level * 100) / 255))
 
 
-def to_opp_level(level):
+def to.opp_level(level):
     """Convert the given Lutron (0-100) light level to Open Peer Power (0-255)."""
     return int((level * 255) // 100)
 
@@ -35,7 +35,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """
 
     entities = []
-    data = opp.data[CASETA_DOMAIN][config_entry.entry_id]
+    data =.opp.data[CASETA_DOMAIN][config_entry.entry_id]
     bridge = data[BRIDGE_LEAP]
     bridge_device = data[BRIDGE_DEVICE]
     light_devices = bridge.get_devices_by_domain(DOMAIN)
@@ -58,7 +58,7 @@ class LutronCasetaLight(LutronCasetaDevice, LightEntity):
     @property
     def brightness(self):
         """Return the brightness of the light."""
-        return to_opp_level(self._device["current_state"])
+        return to.opp_level(self._device["current_state"])
 
     async def _set_brightness(self, brightness, **kwargs):
         args = {}

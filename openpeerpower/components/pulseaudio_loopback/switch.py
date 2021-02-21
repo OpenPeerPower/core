@@ -6,7 +6,7 @@ import voluptuous as vol
 
 from openpeerpower.components.switch import PLATFORM_SCHEMA, SwitchEntity
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_PORT
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 DOMAIN = "pulseaudio_loopback"
 
@@ -49,7 +49,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         connect_to_server = None
 
     if server_id in.opp.data[DOMAIN]:
-        server = opp.data[DOMAIN][server_id]
+        server =.opp.data[DOMAIN][server_id]
     else:
         server = Pulse(server=connect_to_server, connect=False, threading_lock=True)
        .opp.data[DOMAIN][server_id] = server

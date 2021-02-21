@@ -27,7 +27,7 @@ from openpeerpower.components.climate.const import (
     SWING_VERTICAL,
 )
 from openpeerpower.const import ATTR_TEMPERATURE, CONF_HOST, TEMP_FAHRENHEIT
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 SCAN_INTERVAL = timedelta(seconds=60)
 

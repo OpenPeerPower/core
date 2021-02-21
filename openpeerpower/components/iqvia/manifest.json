@@ -2,7 +2,7 @@
   "domain": "iqvia",
   "name": "IQVIA",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/iqvia",
+  "documentation": "https://www.open-peer-power.io/integrations/iqvia",
   "requirements": ["numpy==1.19.2", "pyiqvia==0.3.1"],
   "codeowners": ["@bachya"]
 }

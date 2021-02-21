@@ -85,7 +85,7 @@ def log_rate_limits.opp, device_name, resp, level=logging.INFO):
 async def async_get_service.opp, config, discovery_info=None):
     """Get the mobile_app notification service."""
     session = async_get_clientsession.opp)
-    service = opp.data[DOMAIN][DATA_NOTIFY] = MobileAppNotificationService(session)
+    service =.opp.data[DOMAIN][DATA_NOTIFY] = MobileAppNotificationService(session)
     return service
 
 

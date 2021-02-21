@@ -13,20 +13,20 @@ from yarl import URL
 
 from openpeerpower.components import websocket_api
 from openpeerpower.components.http.view import OpenPeerPowerView
-from openpeerpower.config import async_opp_config_yaml
+from openpeerpower.config import async.opp_config_yaml
 from openpeerpower.const import CONF_MODE, CONF_NAME, EVENT_THEMES_UPDATED
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import service
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.translation import async_get_translations
-from openpeerpowerr.loader import async_get_integration, bind_opp
+from openpeerpower.core import callback
+from openpeerpower.helpers import service
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.translation import async_get_translations
+from openpeerpower.loader import async_get_integration, bind.opp
 
 from .storage import async_setup_frontend_storage
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 
 # Fix mimetypes for borked Windows machines
-# https://github.com/openpeerpower/frontend/issues/3336
+# https://github.com/open-peer-power/frontend/issues/3336
 mimetypes.add_type("text/css", ".css")
 mimetypes.add_type("application/javascript", ".js")
 
@@ -64,7 +64,7 @@ MANIFEST_JSON = {
     "theme_color": DEFAULT_THEME_COLOR,
     "prefer_related_applications": True,
     "related_applications": [
-        {"platform": "play", "id": "io.openpeerpowerr.companion.android"}
+        {"platform": "play", "id": "io.openpeerpower.companion.android"}
     ],
 }
 
@@ -166,7 +166,7 @@ class Panel:
         }
 
 
-@bind_opp
+@bind.opp
 @callback
 def async_register_built_in_panel(
    .opp,
@@ -189,7 +189,7 @@ def async_register_built_in_panel(
         require_admin,
     )
 
-    panels = opp.data.setdefault(DATA_PANELS, {})
+    panels =.opp.data.setdefault(DATA_PANELS, {})
 
     if not update and panel.frontend_url_path in panels:
         raise ValueError(f"Overwriting panel {panel.frontend_url_path}")
@@ -199,11 +199,11 @@ def async_register_built_in_panel(
    .opp.bus.async_fire(EVENT_PANELS_UPDATED)
 
 
-@bind_opp
+@bind.opp
 @callback
 def async_remove_panel.opp, frontend_url_path):
     """Remove a built-in panel."""
-    panel = opp.data.get(DATA_PANELS, {}).pop(frontend_url_path, None)
+    panel =.opp.data.get(DATA_PANELS, {}).pop(frontend_url_path, None)
 
     if panel is None:
         _LOGGER.warning("Removing unknown panel %s", frontend_url_path)
@@ -214,9 +214,9 @@ def async_remove_panel.opp, frontend_url_path):
 def add_extra_js_url.opp, url, es5=False):
     """Register extra js or module url to load."""
     key = DATA_EXTRA_JS_URL_ES5 if es5 else DATA_EXTRA_MODULE_URL
-    url_set = opp.data.get(key)
+    url_set =.opp.data.get(key)
     if url_set is None:
-        url_set = opp.data[key] = set()
+        url_set =.opp.data[key] = set()
     url_set.add(url)
 
 
@@ -228,7 +228,7 @@ def add_manifest_json_key(key, val):
 def _frontend_root(dev_repo_path):
     """Return root path to the frontend files."""
     if dev_repo_path is not None:
-        return pathlib.Path(dev_repo_path) / "opp_frontend"
+        return pathlib.Path(dev_repo_path) / .opp_frontend"
     # Keep import here so that we can import frontend without installing reqs
     # pylint: disable=import-outside-toplevel
     import.opp_frontend
@@ -276,7 +276,7 @@ async def async_setup.opp, config):
         "/.well-known/change-password", "/profile", redirect_exc=web.HTTPFound
     )
 
-    local = opp.config.path("www")
+    local =.opp.config.path("www")
     if os.path.isdir(local):
        .opp.http.register_static_path("/local", local, not is_dev)
 
@@ -299,7 +299,7 @@ async def async_setup.opp, config):
         "developer-tools",
         require_admin=True,
         sidebar_title="developer_tools",
-        sidebar_icon="opp:hammer",
+        sidebar_icon=.opp:hammer",
     )
 
     if DATA_EXTRA_MODULE_URL not in.opp.data:
@@ -323,7 +323,7 @@ async def _async_setup_themes.opp, themes):
     """Set up themes data and services."""
    .opp.data[DATA_THEMES] = themes or {}
 
-    store = opp.data[DATA_THEMES_STORE] = opp.helpers.storage.Store(
+    store =.opp.data[DATA_THEMES_STORE] =.opp.helpers.storage.Store(
         THEMES_STORAGE_VERSION, THEMES_STORAGE_KEY
     )
 
@@ -342,8 +342,8 @@ async def _async_setup_themes.opp, themes):
     @callback
     def update_theme_and_fire_event():
         """Update theme_color in manifest."""
-        name = opp.data[DATA_DEFAULT_THEME]
-        themes = opp.data[DATA_THEMES]
+        name =.opp.data[DATA_DEFAULT_THEME]
+        themes =.opp.data[DATA_THEMES]
         MANIFEST_JSON["theme_color"] = DEFAULT_THEME_COLOR
         if name != DEFAULT_THEME:
             MANIFEST_JSON["theme_color"] = themes[name].get(
@@ -387,7 +387,7 @@ async def _async_setup_themes.opp, themes):
 
     async def reload_themes(_):
         """Reload themes."""
-        config = await async_opp_config_yaml.opp)
+        config = await async.opp_config_yaml.opp)
         new_themes = config[DOMAIN].get(CONF_THEMES, {})
        .opp.data[DATA_THEMES] = new_themes
         if.opp.data[DATA_DEFAULT_THEME] not in new_themes:
@@ -424,7 +424,7 @@ class IndexView(web_urldispatcher.AbstractResource):
         """Initialize the frontend view."""
         super().__init__(name="frontend:index")
         self.repo_path = repo_path
-        self.opp = opp
+        self.opp =.opp
         self._template_cache = None
 
     @property
@@ -490,7 +490,7 @@ class IndexView(web_urldispatcher.AbstractResource):
 
     async def get(self, request: web.Request) -> web.Response:
         """Serve the index page for panel pages."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         if not.opp.components.onboarding.async_is_onboarded():
             return web.Response(status=302, headers={"location": "/onboarding.html"})
@@ -498,7 +498,7 @@ class IndexView(web_urldispatcher.AbstractResource):
         template = self._template_cache
 
         if template is None:
-            template = await opp..async_add_executor_job(self.get_template)
+            template = await.opp.async_add_executor_job(self.get_template)
 
         return web.Response(
             text=template.render(
@@ -612,7 +612,7 @@ async def websocket_get_version.opp, connection, msg):
     frontend = None
 
     for req in integration.requirements:
-        if req.startswith("openpeerpower-frontend=="):
+        if req.startswith("open-peer-power-frontend=="):
             frontend = req.split("==", 1)[1]
 
     if frontend is None:

@@ -2,7 +2,7 @@
   "domain": "vilfo",
   "name": "Vilfo Router",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/vilfo",
+  "documentation": "https://www.open-peer-power.io/integrations/vilfo",
   "requirements": ["vilfo-api-client==0.3.2"],
   "codeowners": ["@ManneW"]
 }

@@ -228,7 +228,7 @@ class DeviceTrackerPlatform:
                    .opp, {DOMAIN: self.config}
                 )
             elif hasattr(self.platform, "get_scanner"):
-                scanner = await opp..async_add_executor_job(
+                scanner = await.opp.async_add_executor_job(
                     self.platform.get_scanner,.opp, {DOMAIN: self.config}
                 )
             elif hasattr(self.platform, "async_setup_scanner"):
@@ -236,7 +236,7 @@ class DeviceTrackerPlatform:
                    .opp, self.config, tracker.async_see, discovery_info
                 )
             elif hasattr(self.platform, "setup_scanner"):
-                setup = await opp..async_add_executor_job(
+                setup = await.opp.async_add_executor_job(
                     self.platform.setup_scanner,
                    .opp,
                     self.config,
@@ -309,7 +309,7 @@ def async_setup_scanner_platform(
     """
     interval = config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
     update_lock = asyncio.Lock()
-    scanner.opp = opp
+    scanner.opp =.opp
 
     # Initial scan of each mac we also tell about host name for config
     seen: Any = set()
@@ -350,7 +350,7 @@ def async_setup_scanner_platform(
                 },
             }
 
-            zone_home = opp.states.get.opp.components.zone.ENTITY_ID_HOME)
+            zone_home =.opp.states.get.opp.components.zone.ENTITY_ID_HOME)
             if zone_home:
                 kwargs["gps"] = [
                     zone_home.attributes[ATTR_LATITUDE],
@@ -366,7 +366,7 @@ def async_setup_scanner_platform(
 
 async def get_tracker.opp, config):
     """Create a tracker."""
-    yaml_path = opp.config.path(YAML_DEVICES)
+    yaml_path =.opp.config.path(YAML_DEVICES)
 
     conf = config.get(DOMAIN, [])
     conf = conf[0] if conf else {}
@@ -394,7 +394,7 @@ class DeviceTracker:
         devices: Sequence,
     ) -> None:
         """Initialize a device tracker."""
-        self.opp = opp
+        self.opp =.opp
         self.devices = {dev.dev_id: dev for dev in devices}
         self.mac_to_dev = {dev.mac: dev for dev in devices if dev.mac}
         self.consider_home = consider_home
@@ -488,7 +488,7 @@ class DeviceTracker:
                 consider_home,
             )
             if device.track:
-                device.async_write_op.state()
+                device.async_write_ha_state()
             return
 
         # Guard from calling see on entity registry entities.
@@ -525,7 +525,7 @@ class DeviceTracker:
         )
 
         if device.track:
-            device.async_write_op.state()
+            device.async_write_ha_state()
 
         self.opp.bus.async_fire(
             EVENT_NEW_DEVICE,
@@ -561,7 +561,7 @@ class DeviceTracker:
         """
         for device in self.devices.values():
             if (device.track and device.last_update_home) and device.stale(now):
-                self.opp.async_create_task(device.async_update_op.state(True))
+                self.opp.async_create_task(device.async_update_ha_state(True))
 
     async def async_setup_tracked_device(self):
         """Set up all not exists tracked devices.
@@ -571,8 +571,8 @@ class DeviceTracker:
 
         async def async_init_single_device(dev):
             """Init a single device_tracker entity."""
-            await dev.async_added_to_opp()
-            dev.async_write_op.state()
+            await dev.async_added_to.opp()
+            dev.async_write_ha_state()
 
         tasks = []
         for device in self.devices.values():
@@ -615,7 +615,7 @@ class Device(RestoreEntity):
         icon: str = None,
     ) -> None:
         """Initialize a device."""
-        self.opp = opp
+        self.opp =.opp
         self.entity_id = f"{DOMAIN}.{dev_id}"
 
         # Timedelta object how long we consider a device home if it is not
@@ -756,9 +756,9 @@ class Device(RestoreEntity):
             self._state = STATE_HOME
             self.last_update_home = True
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Add an entity."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         state = await self.async_get_last_state()
         if not state:
             return
@@ -835,7 +835,7 @@ async def async_load_config(
     )
     result = []
     try:
-        devices = await opp..async_add_executor_job(load_yaml_config_file, path)
+        devices = await.opp.async_add_executor_job(load_yaml_config_file, path)
     except OpenPeerPowerError as err:
         LOGGER.error("Unable to load %s: %s", path, str(err))
         return []

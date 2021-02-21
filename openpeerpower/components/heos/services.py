@@ -5,8 +5,8 @@ import logging
 from pyheos import CommandFailedError, Heos, HeosError, const
 import voluptuous as vol
 
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import (
     ATTR_PASSWORD,
@@ -30,13 +30,13 @@ def register.opp: OpenPeerPowerType, controller: Heos):
    .opp.services.async_register(
         DOMAIN,
         SERVICE_SIGN_IN,
-        functools.partial(_sign_in_op.dler, controller),
+        functools.partial(_sign_in_handler, controller),
         schema=HEOS_SIGN_IN_SCHEMA,
     )
    .opp.services.async_register(
         DOMAIN,
         SERVICE_SIGN_OUT,
-        functools.partial(_sign_out_op.dler, controller),
+        functools.partial(_sign_out_handler, controller),
         schema=HEOS_SIGN_OUT_SCHEMA,
     )
 
@@ -47,7 +47,7 @@ def remove.opp: OpenPeerPowerType):
    .opp.services.async_remove(DOMAIN, SERVICE_SIGN_OUT)
 
 
-async def _sign_in_op.dler(controller, service):
+async def _sign_in_handler(controller, service):
     """Sign in to the HEOS account."""
     if controller.connection_state != const.STATE_CONNECTED:
         _LOGGER.error("Unable to sign in because HEOS is not connected")
@@ -62,7 +62,7 @@ async def _sign_in_op.dler(controller, service):
         _LOGGER.error("Unable to sign in: %s", err)
 
 
-async def _sign_out_op.dler(controller, service):
+async def _sign_out_handler(controller, service):
     """Sign out of the HEOS account."""
     if controller.connection_state != const.STATE_CONNECTED:
         _LOGGER.error("Unable to sign out because HEOS is not connected")

@@ -17,11 +17,11 @@ from openpeerpower.const import (
     PERCENTAGE,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity, async_generate_entity_id
-from openpeerpowerr.helpers.event import async_track_point_in_utc_time
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity, async_generate_entity_id
+from openpeerpower.helpers.event import async_track_point_in_utc_time
+from openpeerpower.util import dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -118,7 +118,7 @@ class LaCrosseSensor(Entity):
 
     def __init__(self,.opp, lacrosse, device_id, name, expire_after, config):
         """Initialize the sensor."""
-        self.opp = opp
+        self.opp =.opp
         self.entity_id = async_generate_entity_id(
             ENTITY_ID_FORMAT, device_id,.opp.opp
         )
@@ -171,7 +171,7 @@ class LaCrosseSensor(Entity):
         """Triggered when value is expired."""
         self._expiration_trigger = None
         self._value = None
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class LaCrosseTemperature(LaCrosseSensor):

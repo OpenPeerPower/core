@@ -18,9 +18,9 @@ from openpeerpower.const import (
     CONF_USERNAME,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 from .const import (
     ATTR_AWAY_TEMP,

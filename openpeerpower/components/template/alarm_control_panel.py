@@ -28,12 +28,12 @@ from openpeerpower.const import (
     STATE_ALARM_TRIGGERED,
     STATE_UNAVAILABLE,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import TemplateError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import async_generate_entity_id
-from openpeerpowerr.helpers.reload import async_setup_reload_service
-from openpeerpowerr.helpers.script import Script
+from openpeerpower.core import callback
+from openpeerpower.exceptions import TemplateError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import async_generate_entity_id
+from openpeerpower.helpers.reload import async_setup_reload_service
+from openpeerpower.helpers.script import Script
 
 from .const import DOMAIN, PLATFORMS
 from .template_entity import TemplateEntity
@@ -217,13 +217,13 @@ class AlarmControlPanelTemplate(TemplateEntity, AlarmControlPanelEntity):
         )
         self._state = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         if self._template:
             self.add_template_attribute(
                 "_state", self._template, None, self._update_state
             )
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     async def _async_alarm_arm(self, state, script=None, code=None):
         """Arm the panel to specified state with supplied script."""
@@ -239,7 +239,7 @@ class AlarmControlPanelTemplate(TemplateEntity, AlarmControlPanelEntity):
             _LOGGER.error("No script action defined for %s", state)
 
         if optimistic_set:
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     async def async_alarm_arm_away(self, code=None):
         """Arm the panel to Away."""

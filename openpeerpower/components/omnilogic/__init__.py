@@ -6,9 +6,9 @@ from omnilogic import LoginException, OmniLogic, OmniLogicException
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import aiohttp_client
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import aiohttp_client
 
 from .common import OmniLogicUpdateCoordinator
 from .const import CONF_SCAN_INTERVAL, COORDINATOR, DOMAIN, OMNI_API

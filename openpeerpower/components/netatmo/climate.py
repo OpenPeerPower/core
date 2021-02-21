@@ -43,7 +43,7 @@ from .const import (
     SERVICE_SET_SCHEDULE,
     SIGNAL_NAME,
 )
-from .data_op.dler import HOMEDATA_DATA_CLASS_NAME, HOMESTATUS_DATA_CLASS_NAME
+from .data_handler import HOMEDATA_DATA_CLASS_NAME, HOMESTATUS_DATA_CLASS_NAME
 from .netatmo_entity_base import NetatmoBase
 
 _LOGGER = logging.getLogger(__name__)
@@ -102,12 +102,12 @@ NA_VALVE = "NRV"
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the Netatmo energy platform."""
-    data_op.dler = opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
+    data_handler =.opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
 
-    await data_op.dler.register_data_class(
+    await data_handler.register_data_class(
         HOMEDATA_DATA_CLASS_NAME, HOMEDATA_DATA_CLASS_NAME, None
     )
-    home_data = data_op.dler.data.get(HOMEDATA_DATA_CLASS_NAME)
+    home_data = data_handler.data.get(HOMEDATA_DATA_CLASS_NAME)
 
     if not home_data:
         return
@@ -122,17 +122,17 @@ async def async_setup_entry.opp, entry, async_add_entities):
                 room_name = home_data.rooms[home_id][room_id]["name"]
                 _LOGGER.debug("Setting up room %s (%s) ...", room_name, room_id)
                 signal_name = f"{HOMESTATUS_DATA_CLASS_NAME}-{home_id}"
-                await data_op.dler.register_data_class(
+                await data_handler.register_data_class(
                     HOMESTATUS_DATA_CLASS_NAME, signal_name, None, home_id=home_id
                 )
-                home_status = data_op.dler.data.get(signal_name)
+                home_status = data_handler.data.get(signal_name)
                 if home_status and room_id in home_status.rooms:
-                    entities.append(NetatmoThermostat(data_op.dler, home_id, room_id))
+                    entities.append(NetatmoThermostat(data_handler, home_id, room_id))
 
            .opp.data[DOMAIN][DATA_SCHEDULES][home_id] = {
                 schedule_id: schedule_data.get("name")
                 for schedule_id, schedule_data in (
-                    data_op.dler.data[HOMEDATA_DATA_CLASS_NAME]
+                    data_handler.data[HOMEDATA_DATA_CLASS_NAME]
                     .schedules[home_id]
                     .items()
                 )
@@ -141,7 +141,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
        .opp.data[DOMAIN][DATA_HOMES] = {
             home_id: home_data.get("name")
             for home_id, home_data in (
-                data_op.dler.data[HOMEDATA_DATA_CLASS_NAME].homes.items()
+                data_handler.data[HOMEDATA_DATA_CLASS_NAME].homes.items()
             )
         }
 
@@ -162,10 +162,10 @@ async def async_setup_entry.opp, entry, async_add_entities):
 class NetatmoThermostat(NetatmoBase, ClimateEntity):
     """Representation a Netatmo thermostat."""
 
-    def __init__(self, data_op.dler, home_id, room_id):
+    def __init__(self, data_handler, home_id, room_id):
         """Initialize the sensor."""
         ClimateEntity.__init__(self)
-        super().__init__(data_op.dler)
+        super().__init__(data_handler)
 
         self._id = room_id
         self._home_id = home_id
@@ -186,7 +186,7 @@ class NetatmoThermostat(NetatmoBase, ClimateEntity):
             ]
         )
 
-        self._home_status = self.data_op.dler.data[self._home_status_class]
+        self._home_status = self.data_handler.data[self._home_status_class]
         self._room_status = self._home_status.rooms[room_id]
         self._room_data = self._data.rooms[home_id][room_id]
 
@@ -220,9 +220,9 @@ class NetatmoThermostat(NetatmoBase, ClimateEntity):
 
         self._unique_id = f"{self._id}-{self._model}"
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Entity created."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         for event_type in (
             EVENT_TYPE_SET_POINT,
@@ -258,7 +258,7 @@ class NetatmoThermostat(NetatmoBase, ClimateEntity):
                 self._target_temperature = self._away_temperature
             elif self._preset == PRESET_SCHEDULE:
                 self.async_update_callback()
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
         if not home.get("rooms"):
@@ -279,13 +279,13 @@ class NetatmoThermostat(NetatmoBase, ClimateEntity):
                         self._target_temperature = room["therm_setpoint_temperature"]
                         if self._target_temperature == DEFAULT_MAX_TEMP:
                             self._hvac_mode = HVAC_MODE_HEAT
-                    self.async_write_op.state()
+                    self.async_write_ha_state()
                     break
 
             elif data["event_type"] == EVENT_TYPE_CANCEL_SET_POINT:
                 if self._id == room["id"]:
                     self.async_update_callback()
-                    self.async_write_op.state()
+                    self.async_write_ha_state()
                     break
 
     @property
@@ -383,7 +383,7 @@ class NetatmoThermostat(NetatmoBase, ClimateEntity):
         else:
             _LOGGER.error("Preset mode '%s' not available", preset_mode)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def preset_mode(self) -> Optional[str]:
@@ -402,7 +402,7 @@ class NetatmoThermostat(NetatmoBase, ClimateEntity):
             return
         self._home_status.set_room_thermpoint(self._id, STATE_NETATMO_MANUAL, temp)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def device_state_attributes(self):
@@ -432,12 +432,12 @@ class NetatmoThermostat(NetatmoBase, ClimateEntity):
             )
         elif self.hvac_mode != HVAC_MODE_OFF:
             self._home_status.set_room_thermpoint(self._id, STATE_NETATMO_OFF)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def turn_on(self):
         """Turn the entity on."""
         self._home_status.set_room_thermpoint(self._id, STATE_NETATMO_HOME)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def available(self) -> bool:
@@ -447,7 +447,7 @@ class NetatmoThermostat(NetatmoBase, ClimateEntity):
     @callback
     def async_update_callback(self):
         """Update the entity's state."""
-        self._home_status = self.data_op.dler.data[self._home_status_class]
+        self._home_status = self.data_handler.data[self._home_status_class]
         self._room_status = self._home_status.rooms.get(self._id)
         self._room_data = self._data.rooms.get(self._home_id, {}).get(self._id)
 
@@ -566,6 +566,11 @@ class NetatmoThermostat(NetatmoBase, ClimateEntity):
             kwargs.get(ATTR_SCHEDULE_NAME),
             schedule_id,
         )
+
+    @property
+    def device_info(self):
+        """Return the device info for the thermostat."""
+        return {**super().device_info, "suggested_area": self._room_data["name"]}
 
 
 def interpolate(batterylevel, module_type):

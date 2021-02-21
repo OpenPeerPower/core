@@ -7,7 +7,7 @@ import voluptuous as vol
 from openpeerpower.components.lock import DOMAIN as LOCK_DOMAIN
 from openpeerpower.config_entries import SOURCE_IMPORT
 from openpeerpower.const import CONF_HOST, CONF_PORT, CONF_TOKEN
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from .const import DEFAULT_PORT, DOMAIN
 

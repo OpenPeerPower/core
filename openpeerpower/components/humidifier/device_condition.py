@@ -13,10 +13,10 @@ from openpeerpower.const import (
     CONF_ENTITY_ID,
     CONF_TYPE,
 )
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers import condition, config_validation as cv, entity_registry
-from openpeerpowerr.helpers.config_validation import DEVICE_CONDITION_BASE_SCHEMA
-from openpeerpowerr.helpers.typing import ConfigType, TemplateVarsType
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers import condition, config_validation as cv, entity_registry
+from openpeerpower.helpers.config_validation import DEVICE_CONDITION_BASE_SCHEMA
+from openpeerpower.helpers.typing import ConfigType, TemplateVarsType
 
 from . import DOMAIN, const
 
@@ -47,7 +47,7 @@ async def async_get_conditions(
         if entry.domain != DOMAIN:
             continue
 
-        state = opp.states.get(entry.entity_id)
+        state =.opp.states.get(entry.entity_id)
 
         if state and state.attributes[ATTR_SUPPORTED_FEATURES] & const.SUPPORT_MODES:
             conditions.append(
@@ -78,7 +78,7 @@ def async_condition_from_config(
 
     def test_is_state.opp: OpenPeerPower, variables: TemplateVarsType) -> bool:
         """Test if an entity is a certain state."""
-        state = opp.states.get(config[ATTR_ENTITY_ID])
+        state =.opp.states.get(config[ATTR_ENTITY_ID])
         return state and state.attributes.get(attribute) == config[attribute]
 
     return test_is_state
@@ -86,7 +86,7 @@ def async_condition_from_config(
 
 async def async_get_condition_capabilities.opp, config):
     """List condition capabilities."""
-    state = opp.states.get(config[CONF_ENTITY_ID])
+    state =.opp.states.get(config[CONF_ENTITY_ID])
     condition_type = config[CONF_TYPE]
 
     fields = {}

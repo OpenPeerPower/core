@@ -187,7 +187,7 @@ async def websocket_migrate_zwave.opp, connection, msg):
         )
         return
 
-    zwave = opp.components.zwave
+    zwave =.opp.components.zwave
     zwave_data = await zwave.async_get_ozw_migration_data.opp)
     _LOGGER.debug("Migration zwave data: %s", zwave_data)
 
@@ -228,7 +228,7 @@ async def websocket_migrate_zwave.opp, connection, msg):
 @websocket_api.websocket_command({vol.Required(TYPE): "ozw/get_instances"})
 def websocket_get_instances.opp, connection, msg):
     """Get a list of OZW instances."""
-    manager = opp.data[DOMAIN][MANAGER]
+    manager =.opp.data[DOMAIN][MANAGER]
     instances = []
 
     for instance in manager.collections["instance"]:
@@ -248,7 +248,7 @@ def websocket_get_instances.opp, connection, msg):
 )
 def websocket_get_nodes.opp, connection, msg):
     """Get a list of nodes for an OZW instance."""
-    manager = opp.data[DOMAIN][MANAGER]
+    manager =.opp.data[DOMAIN][MANAGER]
     nodes = []
 
     for node in manager.get_instance(msg[OZW_INSTANCE]).collections["node"]:
@@ -377,7 +377,7 @@ def websocket_set_config_parameter.opp, connection, msg):
 def websocket_network_status.opp, connection, msg):
     """Get Z-Wave network status."""
 
-    manager = opp.data[DOMAIN][MANAGER]
+    manager =.opp.data[DOMAIN][MANAGER]
     status = manager.get_instance(msg[OZW_INSTANCE]).get_status().data
     connection.send_result(
         msg[ID],
@@ -394,7 +394,7 @@ def websocket_network_status.opp, connection, msg):
 def websocket_network_statistics.opp, connection, msg):
     """Get Z-Wave network statistics."""
 
-    manager = opp.data[DOMAIN][MANAGER]
+    manager =.opp.data[DOMAIN][MANAGER]
     statistics = manager.get_instance(msg[OZW_INSTANCE]).get_statistics().data
     node_count = len(
         manager.get_instance(msg[OZW_INSTANCE]).collections["node"].collection
@@ -490,7 +490,7 @@ def websocket_node_metadata.opp, connection, msg):
 )
 def websocket_node_statistics.opp, connection, msg):
     """Get the statistics for a Z-Wave node."""
-    manager = opp.data[DOMAIN][MANAGER]
+    manager =.opp.data[DOMAIN][MANAGER]
     stats = (
         manager.get_instance(msg[OZW_INSTANCE]).get_node(msg[NODE_ID]).get_statistics()
     )
@@ -524,7 +524,7 @@ def websocket_node_statistics.opp, connection, msg):
 def websocket_refresh_node_info.opp, connection, msg):
     """Tell OpenZWave to re-interview a node."""
 
-    manager = opp.data[DOMAIN][MANAGER]
+    manager =.opp.data[DOMAIN][MANAGER]
     options = manager.options
 
     @callback

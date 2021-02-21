@@ -89,7 +89,7 @@ class YandexSpeechKitProvider(Provider):
 
     def __init__(self,.opp, conf):
         """Init VoiceRSS TTS service."""
-        self.opp = opp
+        self.opp =.opp
         self._codec = conf.get(CONF_CODEC)
         self._key = conf.get(CONF_API_KEY)
         self._speaker = conf.get(CONF_VOICE)

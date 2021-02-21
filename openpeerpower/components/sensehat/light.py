@@ -1,5 +1,5 @@
 """Support for Sense Hat LEDs."""
-from sense_op. import SenseHat
+from sense_hat import SenseHat
 import voluptuous as vol
 
 from openpeerpower.components.light import (
@@ -11,8 +11,8 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.const import CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.util.color as color_util
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.util.color as color_util
 
 SUPPORT_SENSEHAT = SUPPORT_BRIGHTNESS | SUPPORT_COLOR
 
@@ -96,10 +96,10 @@ class SenseHatLight(LightEntity):
         self._sensehat.clear(*rgb)
 
         self._is_on = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Instruct the light to turn off."""
         self._sensehat.clear()
         self._is_on = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

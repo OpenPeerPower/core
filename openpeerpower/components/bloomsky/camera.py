@@ -13,7 +13,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is not None:
         return
 
-    bloomsky = opp.data[DOMAIN]
+    bloomsky =.opp.data[DOMAIN]
 
     for device in bloomsky.devices.values():
         add_entities([BloomSkyCamera(bloomsky, device)])
@@ -31,7 +31,7 @@ class BloomSkyCamera(Camera):
         self._url = ""
         self._last_url = ""
         # last_image will store images as they are downloaded so that the
-        # frequent updates in openpeerpower don't keep poking the server
+        # frequent updates in open-peer-power don't keep poking the server
         # to download the same image over and over.
         self._last_image = ""
         self._logger = logging.getLogger(__name__)

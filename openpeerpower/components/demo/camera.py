@@ -55,19 +55,19 @@ class DemoCamera(Camera):
     async def async_enable_motion_detection(self):
         """Enable the Motion detection in base station (Arm)."""
         self._motion_status = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_disable_motion_detection(self):
         """Disable the motion detection in base station (Disarm)."""
         self._motion_status = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self):
         """Turn off camera."""
         self.is_streaming = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_on(self):
         """Turn on camera."""
         self.is_streaming = True
-        self.async_write_op.state()
+        self.async_write_ha_state()

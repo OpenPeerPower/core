@@ -5,8 +5,8 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_IP_ADDRESS, CONF_PASSWORD, CONF_PORT, CONF_SSL
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import aiohttp_client, config_validation as cv
+from openpeerpower.core import callback
+from openpeerpower.helpers import aiohttp_client, config_validation as cv
 
 from .const import (  # pylint: disable=unused-import
     CONF_ZONE_RUN_TIME,

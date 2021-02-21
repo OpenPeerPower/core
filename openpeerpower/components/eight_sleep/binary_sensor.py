@@ -15,7 +15,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     name = "Eight"
     sensors = discovery_info[CONF_BINARY_SENSORS]
-    eight = opp.data[DATA_EIGHT]
+    eight =.opp.data[DATA_EIGHT]
 
     all_sensors = []
 

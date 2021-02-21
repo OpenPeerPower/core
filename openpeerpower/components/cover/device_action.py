@@ -68,7 +68,7 @@ async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
         if entry.domain != DOMAIN:
             continue
 
-        state = opp.states.get(entry.entity_id)
+        state =.opp.states.get(entry.entity_id)
         if not state or ATTR_SUPPORTED_FEATURES not in state.attributes:
             continue
 
@@ -186,6 +186,6 @@ async def async_call_action_from_config(
         service = SERVICE_SET_COVER_TILT_POSITION
         service_data[ATTR_TILT_POSITION] = config["position"]
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, service, service_data, blocking=True, context=context
     )

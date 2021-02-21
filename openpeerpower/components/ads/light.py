@@ -8,7 +8,7 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.const import CONF_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import (
     CONF_ADS_VAR,
@@ -31,7 +31,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the light platform for ADS."""
-    ads_hub = opp.data.get(DATA_ADS)
+    ads_hub =.opp.data.get(DATA_ADS)
 
     ads_var_enable = config[CONF_ADS_VAR]
     ads_var_brightness = config.get(CONF_ADS_VAR_BRIGHTNESS)
@@ -49,7 +49,7 @@ class AdsLight(AdsEntity, LightEntity):
         self._state_dict[STATE_KEY_BRIGHTNESS] = None
         self._ads_var_brightness = ads_var_brightness
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register device notification."""
         await self.async_initialize_device(self._ads_var, self._ads_hub.PLCTYPE_BOOL)
 

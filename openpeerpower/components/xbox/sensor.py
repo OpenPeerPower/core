@@ -2,11 +2,11 @@
 from functools import partial
 from typing import Dict, List
 
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.entity_registry import (
+from openpeerpower.core import callback
+from openpeerpower.helpers.entity_registry import (
     async_get_registry as async_get_entity_registry,
 )
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import XboxUpdateCoordinator
 from .base_sensor import XboxBaseSensorEntity
@@ -17,7 +17,7 @@ SENSOR_ATTRIBUTES = ["status", "gamer_score", "account_tier", "gold_tenure"]
 
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry, async_add_entities):
     """Set up Xbox Live friends."""
-    coordinator: XboxUpdateCoordinator = opp.data[DOMAIN][config_entry.entry_id][
+    coordinator: XboxUpdateCoordinator =.opp.data[DOMAIN][config_entry.entry_id][
         "coordinator"
     ]
 

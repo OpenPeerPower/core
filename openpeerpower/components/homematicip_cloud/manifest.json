@@ -2,7 +2,7 @@
   "domain": "homematicip_cloud",
   "name": "HomematicIP Cloud",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/homematicip_cloud",
+  "documentation": "https://www.open-peer-power.io/integrations/homematicip_cloud",
   "requirements": ["homematicip==0.13.1"],
   "codeowners": ["@SukramJ"],
   "quality_scale": "platinum"

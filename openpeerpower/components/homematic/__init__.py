@@ -240,7 +240,7 @@ def setup.opp, config):
         }
 
     # Create server thread
-    bound_system_callback = partial(_system_callback_op.dler,.opp, config)
+    bound_system_callback = partial(_system_callback_handler,.opp, config)
    .opp.data[DATA_HOMEMATIC] = homematic = HMConnection(
         local=config[DOMAIN].get(CONF_LOCAL_IP),
         localport=config[DOMAIN].get(CONF_LOCAL_PORT, DEFAULT_LOCAL_PORT),
@@ -292,7 +292,7 @@ def setup.opp, config):
         schema=SCHEMA_SERVICE_VIRTUALKEY,
     )
 
-    def _service_op.dle_value(service):
+    def _service_handle_value(service):
         """Service to call setValue method for HomeMatic system variable."""
         entity_ids = service.data.get(ATTR_ENTITY_ID)
         name = service.data[ATTR_NAME]
@@ -315,22 +315,22 @@ def setup.opp, config):
    .opp.services.register(
         DOMAIN,
         SERVICE_SET_VARIABLE_VALUE,
-        _service_op.dle_value,
+        _service_handle_value,
         schema=SCHEMA_SERVICE_SET_VARIABLE_VALUE,
     )
 
-    def _service_op.dle_reconnect(service):
+    def _service_handle_reconnect(service):
         """Service to reconnect all HomeMatic hubs."""
         homematic.reconnect()
 
    .opp.services.register(
         DOMAIN,
         SERVICE_RECONNECT,
-        _service_op.dle_reconnect,
+        _service_handle_reconnect,
         schema=SCHEMA_SERVICE_RECONNECT,
     )
 
-    def _service_op.dle_device(service):
+    def _service_handle_device(service):
         """Service to call setValue method for HomeMatic devices."""
         address = service.data.get(ATTR_ADDRESS)
         channel = service.data.get(ATTR_CHANNEL)
@@ -364,11 +364,11 @@ def setup.opp, config):
    .opp.services.register(
         DOMAIN,
         SERVICE_SET_DEVICE_VALUE,
-        _service_op.dle_device,
+        _service_handle_device,
         schema=SCHEMA_SERVICE_SET_DEVICE_VALUE,
     )
 
-    def _service_op.dle_install_mode(service):
+    def _service_handle_install_mode(service):
         """Service to set interface into install mode."""
         interface = service.data.get(ATTR_INTERFACE)
         mode = service.data.get(ATTR_MODE)
@@ -380,7 +380,7 @@ def setup.opp, config):
    .opp.services.register(
         DOMAIN,
         SERVICE_SET_INSTALL_MODE,
-        _service_op.dle_install_mode,
+        _service_handle_install_mode,
         schema=SCHEMA_SERVICE_SET_INSTALL_MODE,
     )
 
@@ -415,7 +415,7 @@ def setup.opp, config):
     return True
 
 
-def _system_callback_op.dler.opp, config, src, *args):
+def _system_callback_handler.opp, config, src, *args):
     """System callback handler."""
     # New devices available at hub
     if src == "newDevices":
@@ -435,9 +435,9 @@ def _system_callback_op.dler.opp, config, src, *args):
 
         # Register EVENTS
         # Search all devices with an EVENTNODE that includes data
-        bound_event_callback = partial(_hm_event_op.dler,.opp, interface)
+        bound_event_callback = partial(_hm_event_handler,.opp, interface)
         for dev in addresses:
-            hmdevice = opp.data[DATA_HOMEMATIC].devices[interface].get(dev)
+            hmdevice =.opp.data[DATA_HOMEMATIC].devices[interface].get(dev)
 
             if hmdevice.EVENTNODE:
                 hmdevice.setEventCallback(callback=bound_event_callback, bequeath=True)
@@ -483,7 +483,7 @@ def _get_devices.opp, discovery_type, keys, interface):
     device_arr = []
 
     for key in keys:
-        device = opp.data[DATA_HOMEMATIC].devices[interface][key]
+        device =.opp.data[DATA_HOMEMATIC].devices[interface][key]
         class_name = device.__class__.__name__
         metadata = {}
 
@@ -527,10 +527,10 @@ def _get_devices.opp, discovery_type, keys, interface):
                 "%s: Handling %s: %s: %s", discovery_type, key, param, channels
             )
             for channel in channels:
-                name = _create_op.id(
+                name = _create_ha_id(
                     name=device.NAME, channel=channel, param=param, count=len(channels)
                 )
-                unique_id = _create_op.id(
+                unique_id = _create_ha_id(
                     name=key, channel=channel, param=param, count=len(channels)
                 )
                 device_dict = {
@@ -554,7 +554,7 @@ def _get_devices.opp, discovery_type, keys, interface):
     return device_arr
 
 
-def _create_op.id(name, channel, param, count):
+def _create_ha_id(name, channel, param, count):
     """Generate a unique entity id."""
     # HMDevice is a simple device
     if count == 1 and param is None:
@@ -573,12 +573,12 @@ def _create_op.id(name, channel, param, count):
         return f"{name} {channel} {param}"
 
 
-def _hm_event_op.dler.opp, interface, device, caller, attribute, value):
+def _hm_event_handler.opp, interface, device, caller, attribute, value):
     """Handle all pyhomematic device events."""
     try:
         channel = int(device.split(":")[1])
         address = device.split(":")[0]
-        hmdevice = opp.data[DATA_HOMEMATIC].devices[interface].get(address)
+        hmdevice =.opp.data[DATA_HOMEMATIC].devices[interface].get(address)
     except (TypeError, ValueError):
         _LOGGER.error("Event handling channel convert error!")
         return

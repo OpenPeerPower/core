@@ -75,9 +75,9 @@ ATTR_ZONE = "zone"
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Neato vacuum with config entry."""
     dev = []
-    neato = opp.data.get(NEATO_LOGIN)
-    mapdata = opp.data.get(NEATO_MAP_DATA)
-    persistent_maps = opp.data.get(NEATO_PERSISTENT_MAPS)
+    neato =.opp.data.get(NEATO_LOGIN)
+    mapdata =.opp.data.get(NEATO_MAP_DATA)
+    persistent_maps =.opp.data.get(NEATO_PERSISTENT_MAPS)
     for robot in.opp.data[NEATO_ROBOTS]:
         dev.append(NeatoConnectedVacuum(neato, robot, mapdata, persistent_maps))
 
@@ -111,7 +111,7 @@ class NeatoConnectedVacuum(StateVacuumEntity):
         self._available = neato is not None
         self._mapdata = mapdata
         self._name = f"{self.robot.name}"
-        self._robot_op._map = self.robot.has_persistent_maps
+        self._robot_has_map = self.robot.has_persistent_maps
         self._robot_maps = persistent_maps
         self._robot_serial = self.robot.serial
         self._status_state = None
@@ -214,7 +214,7 @@ class NeatoConnectedVacuum(StateVacuumEntity):
         self._launched_from = mapdata["launched_from"]
 
         if (
-            self._robot_op._map
+            self._robot_has_map
             and self._state["availableServices"]["maps"] != "basic-1"
             and self._robot_maps[self._robot_serial]
         ):

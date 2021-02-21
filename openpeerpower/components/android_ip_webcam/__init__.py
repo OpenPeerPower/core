@@ -186,7 +186,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup.opp, config):
     """Set up the IP Webcam component."""
 
-    webcams = opp.data[DATA_IP_WEBCAM] = {}
+    webcams =.opp.data[DATA_IP_WEBCAM] = {}
     websession = async_get_clientsession.opp)
 
     async def async_setup_ipcamera(cam_config):
@@ -296,7 +296,7 @@ class AndroidIPCamEntity(Entity):
         self._host = host
         self._ipcam = ipcam
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register update dispatcher."""
 
         @callback
@@ -304,7 +304,7 @@ class AndroidIPCamEntity(Entity):
             """Update callback."""
             if self._host != host:
                 return
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         self.async_on_remove(
             async_dispatcher_connect(self.opp, SIGNAL_UPDATE_DATA, async_ipcam_update)

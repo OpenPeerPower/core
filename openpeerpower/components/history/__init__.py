@@ -113,7 +113,7 @@ def _get_significant_states(
     """
     timer_start = time.perf_counter()
 
-    baked_query = opp.data[HISTORY_BAKERY](
+    baked_query =.opp.data[HISTORY_BAKERY](
         lambda session: session.query(*QUERY_STATES)
     )
 
@@ -167,7 +167,7 @@ def _get_significant_states(
 def state_changes_during_period.opp, start_time, end_time=None, entity_id=None):
     """Return states changes during UTC period start_time - end_time."""
     with session_scope.opp.opp) as session:
-        baked_query = opp.data[HISTORY_BAKERY](
+        baked_query =.opp.data[HISTORY_BAKERY](
             lambda session: session.query(*QUERY_STATES)
         )
 
@@ -203,7 +203,7 @@ def get_last_state_changes.opp, number_of_states, entity_id):
     start_time = dt_util.utcnow()
 
     with session_scope.opp.opp) as session:
-        baked_query = opp.data[HISTORY_BAKERY](
+        baked_query =.opp.data[HISTORY_BAKERY](
             lambda session: session.query(*QUERY_STATES)
         )
         baked_query += lambda q: q.filter(States.last_changed == States.last_updated)
@@ -318,7 +318,7 @@ def _get_states_with_session(
 def _get_single_entity_states_with_session.opp, session, utc_point_in_time, entity_id):
     # Use an entirely different (and extremely fast) query if we only
     # have a single entity id
-    baked_query = opp.data[HISTORY_BAKERY](
+    baked_query =.opp.data[HISTORY_BAKERY](
         lambda session: session.query(*QUERY_STATES)
     )
     baked_query += lambda q: q.filter(
@@ -442,7 +442,7 @@ async def async_setup.opp, config):
 
    .opp.http.register_view(HistoryPeriodView(filters, use_include_order))
    .opp.components.frontend.async_register_built_in_panel(
-        "history", "history", "opp:poll-box"
+        "history", "history", .opp:poll-box"
     )
 
     return True
@@ -502,18 +502,18 @@ class HistoryPeriodView(OpenPeerPowerView):
 
         minimal_response = "minimal_response" in request.query
 
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         if (
             not include_start_time_state
             and entity_ids
-            and not _entities_may_op.e_state_changes_after.opp, entity_ids, start_time)
+            and not _entities_may_have_state_changes_after.opp, entity_ids, start_time)
         ):
             return self.json([])
 
         return cast(
             web.Response,
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                 self._sorted_significant_states_json,
                .opp,
                 start_time,
@@ -669,12 +669,12 @@ def _glob_to_like(glob_str):
     return States.entity_id.like(glob_str.translate(GLOB_TO_SQL_CHARS))
 
 
-def _entities_may_op.e_state_changes_after(
+def _entities_may_have_state_changes_after(
    .opp: OpenPeerPowerType, entity_ids: Iterable, start_time: dt
 ) -> bool:
     """Check the state machine to see if entities have changed since start time."""
     for entity_id in entity_ids:
-        state = opp.states.get(entity_id)
+        state =.opp.states.get(entity_id)
 
         if state is None or state.last_changed > start_time:
             return True

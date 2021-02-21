@@ -2,7 +2,7 @@
   "domain": "plex",
   "name": "Plex Media Server",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/plex",
+  "documentation": "https://www.open-peer-power.io/integrations/plex",
   "requirements": [
       "plexapi==4.3.1",
       "plexauth==0.0.6",

@@ -3,10 +3,10 @@
 from itertools import count
 
 from openpeerpower.const import ATTR_BATTERY_LEVEL, ATTR_ENTITY_ID, ATTR_WAKEUP
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.device_registry import async_get_registry as get_dev_reg
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.entity_registry import async_get_registry
+from openpeerpower.core import callback
+from openpeerpower.helpers.device_registry import async_get_registry as get_dev_reg
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_registry import async_get_registry
 
 from .const import (
     ATTR_BASIC_LEVEL,
@@ -85,7 +85,7 @@ class ZWaveBaseEntity(Entity):
         @callback
         def do_update():
             """Really update."""
-            self.async_write_op.state()
+            self.async_write_ha_state()
             self._update_scheduled = False
 
         self._update_scheduled = True
@@ -269,7 +269,7 @@ class ZWaveNodeEntity(ZWaveBaseEntity):
                 ent_reg.async_update_entity(self.entity_id, new_entity_id=new_entity_id)
                 return
         # else for the above two ifs, update if not using update_entity
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def network_node_event(self, node, value):
         """Handle a node activated event on the network."""

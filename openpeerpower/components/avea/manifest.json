@@ -1,7 +1,7 @@
 {
   "domain": "avea",
   "name": "Elgato Avea",
-  "documentation": "https://www.openpeerpower.io/integrations/avea",
+  "documentation": "https://www.open-peer-power.io/integrations/avea",
   "codeowners": ["@pattyland"],
   "requirements": ["avea==1.5.1"]
 }

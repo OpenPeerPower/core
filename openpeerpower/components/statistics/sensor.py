@@ -16,15 +16,15 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import (
+from openpeerpower.core import callback
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import (
     async_track_point_in_utc_time,
     async_track_state_change_event,
 )
-from openpeerpowerr.helpers.reload import async_setup_reload_service
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.helpers.reload import async_setup_reload_service
+from openpeerpower.util import dt as dt_util
 
 from . import DOMAIN, PLATFORMS
 
@@ -107,7 +107,7 @@ class StatisticsSensor(Entity):
         self.change = self.average_change = self.change_rate = None
         self._update_listener = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
 
         @callback
@@ -123,7 +123,7 @@ class StatisticsSensor(Entity):
 
             self._add_state_to_queue(new_state)
 
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         @callback
         def async_stats_sensor_startup(_):
@@ -305,7 +305,7 @@ class StatisticsSensor(Entity):
             def _scheduled_update(now):
                 """Timer callback for sensor update."""
                 _LOGGER.debug("%s: executing scheduled update", self.entity_id)
-                self.async_schedule_update_op.state(True)
+                self.async_schedule_update_ha_state(True)
                 self._update_listener = None
 
             self._update_listener = async_track_point_in_utc_time(
@@ -349,6 +349,6 @@ class StatisticsSensor(Entity):
         for state in reversed(states):
             self._add_state_to_queue(state)
 
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
         _LOGGER.debug("%s: initializing from database completed", self.entity_id)

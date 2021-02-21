@@ -10,8 +10,8 @@ import voluptuous as vol
 from openpeerpower import __path__ as OPENPEERPOWER_PATH
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.const import EVENT_OPENPEERPOWER_CLOSE, EVENT_OPENPEERPOWER_STOP
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
 
 CONF_MAX_ENTRIES = "max_entries"
 CONF_FIRE_EVENT = "fire_event"
@@ -174,7 +174,7 @@ class LogErrorHandler(logging.Handler):
     def __init__(self,.opp, maxlen, fire_event):
         """Initialize a new LogErrorHandler."""
         super().__init__()
-        self.opp = opp
+        self.opp =.opp
         self.records = DedupStore(maxlen=maxlen)
         self.fire_event = fire_event
 
@@ -202,32 +202,32 @@ async def async_setup.opp, config):
         conf = CONFIG_SCHEMA({DOMAIN: {}})[DOMAIN]
 
     simple_queue = queue.SimpleQueue()
-    queue_op.dler = LogErrorQueueHandler(simple_queue)
-    queue_op.dler.setLevel(logging.WARN)
-    logging.root.addHandler(queue_op.dler)
+    queue_handler = LogErrorQueueHandler(simple_queue)
+    queue_handler.setLevel(logging.WARN)
+    logging.root.addHandler(queue_handler)
 
     handler = LogErrorHandler.opp, conf[CONF_MAX_ENTRIES], conf[CONF_FIRE_EVENT])
 
-   .opp.data[DOMAIN] = op.dler
+   .opp.data[DOMAIN] = handler
 
     listener = logging.handlers.QueueListener(
-        simple_queue, handler, respect_op.dler_level=True
+        simple_queue, handler, respect_handler_level=True
     )
 
     listener.start()
 
     @callback
-    def _async_stop_queue_op.dler(_) -> None:
+    def _async_stop_queue_handler(_) -> None:
         """Cleanup handler."""
-        logging.root.removeHandler(queue_op.dler)
+        logging.root.removeHandler(queue_handler)
         listener.stop()
         del.opp.data[DOMAIN]
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, _async_stop_queue_op.dler)
+   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, _async_stop_queue_handler)
 
    .opp.http.register_view(AllErrorsView(handler))
 
-    async def async_service_op.dler(service):
+    async def async_service_handler(service):
         """Handle logger services."""
         if service.service == "clear":
             handler.records.clear()
@@ -239,18 +239,18 @@ async def async_setup.opp, config):
             level = service.data[CONF_LEVEL]
             getattr(logger, level)(service.data[CONF_MESSAGE])
 
-    async def async_shutdown_op.dler(event):
+    async def async_shutdown_handler(event):
         """Remove logging handler when Open Peer Power is shutdown."""
         # This is needed as older logger instances will remain
         logging.getLogger().removeHandler(handler)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_shutdown_op.dler)
+   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_shutdown_handler)
 
    .opp.services.async_register(
-        DOMAIN, SERVICE_CLEAR, async_service_op.dler, schema=SERVICE_CLEAR_SCHEMA
+        DOMAIN, SERVICE_CLEAR, async_service_handler, schema=SERVICE_CLEAR_SCHEMA
     )
    .opp.services.async_register(
-        DOMAIN, SERVICE_WRITE, async_service_op.dler, schema=SERVICE_WRITE_SCHEMA
+        DOMAIN, SERVICE_WRITE, async_service_handler, schema=SERVICE_WRITE_SCHEMA
     )
 
     return True
@@ -264,7 +264,7 @@ class AllErrorsView(OpenPeerPowerView):
 
     def __init__(self, handler):
         """Initialize a new AllErrorsView."""
-        self.handler = op.dler
+        self.handler = handler
 
     async def get(self, request):
         """Get all errors and warnings."""

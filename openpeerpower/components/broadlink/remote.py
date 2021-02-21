@@ -102,7 +102,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up a Broadlink remote."""
-    device = opp.data[DOMAIN].devices[config_entry.entry_id]
+    device =.opp.data[DOMAIN].devices[config_entry.entry_id]
     remote = BroadlinkRemote(
         device,
         Store.opp, CODE_STORAGE_VERSION, f"broadlink_remote_{device.unique_id}_codes"),
@@ -219,13 +219,13 @@ class BroadlinkRemote(RemoteEntity, RestoreEntity):
         """
         return self._flags
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when the remote is added to.opp."""
         state = await self.async_get_last_state()
         self._state = state is None or state.state != STATE_OFF
 
         self.async_on_remove(
-            self._coordinator.async_add_listener(self.async_write_op.state)
+            self._coordinator.async_add_listener(self.async_write_ha_state)
         )
 
     async def async_update(self):
@@ -235,12 +235,12 @@ class BroadlinkRemote(RemoteEntity, RestoreEntity):
     async def async_turn_on(self, **kwargs):
         """Turn on the remote."""
         self._state = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn off the remote."""
         self._state = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_load_storage_files(self):
         """Load codes and toggle flags from storage files."""

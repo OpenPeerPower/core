@@ -1,7 +1,7 @@
 {
   "domain": "swiss_public_transport",
   "name": "Swiss public transport",
-  "documentation": "https://www.openpeerpower.io/integrations/swiss_public_transport",
+  "documentation": "https://www.open-peer-power.io/integrations/swiss_public_transport",
   "requirements": ["python_opendata_transport==0.2.1"],
   "codeowners": ["@fabaff"]
 }

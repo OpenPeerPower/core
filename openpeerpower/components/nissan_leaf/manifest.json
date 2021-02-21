@@ -1,7 +1,7 @@
 {
   "domain": "nissan_leaf",
   "name": "Nissan Leaf",
-  "documentation": "https://www.openpeerpower.io/integrations/nissan_leaf",
+  "documentation": "https://www.open-peer-power.io/integrations/nissan_leaf",
   "requirements": ["pycarwings2==2.10"],
   "codeowners": ["@filcole"]
 }

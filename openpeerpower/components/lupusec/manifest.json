@@ -1,7 +1,7 @@
 {
   "domain": "lupusec",
   "name": "Lupus Electronics LUPUSEC",
-  "documentation": "https://www.openpeerpower.io/integrations/lupusec",
+  "documentation": "https://www.open-peer-power.io/integrations/lupusec",
   "requirements": ["lupupy==0.0.18"],
   "codeowners": ["@majuss"]
 }

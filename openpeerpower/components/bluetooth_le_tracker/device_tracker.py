@@ -56,7 +56,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
         """Try to shut down the bluetooth child process nicely."""
         # These should never be unset at the point this runs, but just for
         # safety's sake, use `get`.
-        adapter = opp.data.get(DATA_BLE, {}).get(DATA_BLE_ADAPTER)
+        adapter =.opp.data.get(DATA_BLE, {}).get(DATA_BLE_ADAPTER)
         if adapter is not None:
             adapter.kill()
 
@@ -115,7 +115,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
             return {}
         return devices
 
-    yaml_path = opp.config.path(YAML_DEVICES)
+    yaml_path =.opp.config.path(YAML_DEVICES)
     devs_to_track = []
     devs_donot_track = []
     devs_track_battery = {}
@@ -154,7 +154,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
         """Lookup Bluetooth LE devices and update status."""
         devs = discover_ble_devices()
         if devs_track_battery:
-            adapter = opp.data[DATA_BLE][DATA_BLE_ADAPTER]
+            adapter =.opp.data[DATA_BLE][DATA_BLE_ADAPTER]
         for mac in devs_to_track:
             if mac not in devs:
                 continue
@@ -173,7 +173,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
                     _LOGGER.debug("Reading battery for Bluetooth LE device %s", mac)
                     bt_device = adapter.connect(mac)
                     # Try to get the handle; it will raise a BLEError exception if not available
-                    handle = bt_device.get_op.dle(BATTERY_CHARACTERISTIC_UUID)
+                    handle = bt_device.get_handle(BATTERY_CHARACTERISTIC_UUID)
                     battery = ord(bt_device.char_read(BATTERY_CHARACTERISTIC_UUID))
                     devs_track_battery[mac] = now
                 except pygatt.exceptions.NotificationTimeout:

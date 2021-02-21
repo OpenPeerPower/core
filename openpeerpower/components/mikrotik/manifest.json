@@ -2,7 +2,7 @@
   "domain": "mikrotik",
   "name": "Mikrotik",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/mikrotik",
+  "documentation": "https://www.open-peer-power.io/integrations/mikrotik",
   "requirements": ["librouteros==3.0.0"],
   "codeowners": ["@engrbm87"]
 }

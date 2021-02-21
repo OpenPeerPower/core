@@ -2,7 +2,7 @@
   "domain": "smartthings",
   "name": "SmartThings",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/smartthings",
+  "documentation": "https://www.open-peer-power.io/integrations/smartthings",
   "requirements": ["pysmartapp==0.3.3", "pysmartthings==0.7.6"],
   "dependencies": ["webhook"],
   "after_dependencies": ["cloud"],

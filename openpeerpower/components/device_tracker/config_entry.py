@@ -18,17 +18,17 @@ from .const import ATTR_HOST_NAME, ATTR_IP, ATTR_MAC, ATTR_SOURCE_TYPE, DOMAIN, 
 
 async def async_setup_entry.opp, entry):
     """Set up an entry."""
-    component: Optional[EntityComponent] = opp.data.get(DOMAIN)
+    component: Optional[EntityComponent] =.opp.data.get(DOMAIN)
 
     if component is None:
-        component = opp.data[DOMAIN] = EntityComponent(LOGGER, DOMAIN,.opp)
+        component =.opp.data[DOMAIN] = EntityComponent(LOGGER, DOMAIN,.opp)
 
     return await component.async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload an entry."""
-    return await opp..data[DOMAIN].async_unload_entry(entry)
+    return await.opp.data[DOMAIN].async_unload_entry(entry)
 
 
 class BaseTrackerEntity(Entity):

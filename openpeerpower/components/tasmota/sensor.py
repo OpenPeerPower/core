@@ -35,9 +35,9 @@ from openpeerpower.const import (
     TEMP_KELVIN,
     VOLT,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity import Entity
 
 from .const import DATA_REMOVE_DISCOVER_COMPONENT
 from .discovery import TASMOTA_DISCOVERY_ENTITY_NEW
@@ -125,12 +125,12 @@ SENSOR_UNIT_MAP = {
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Tasmota sensor dynamically through discovery."""
 
-    async def async_discover_sensor(tasmota_entity, discovery_op.h):
+    async def async_discover_sensor(tasmota_entity, discovery_hash):
         """Discover and add a Tasmota sensor."""
         async_add_entities(
             [
                 TasmotaSensor(
-                    tasmota_entity=tasmota_entity, discovery_op.h=discovery_op.h
+                    tasmota_entity=tasmota_entity, discovery_hash=discovery_hash
                 )
             ]
         )
@@ -159,7 +159,7 @@ class TasmotaSensor(TasmotaAvailability, TasmotaDiscoveryUpdate, Entity):
     def state_updated(self, state, **kwargs):
         """Handle state updates."""
         self._state = state
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def device_class(self) -> Optional[str]:

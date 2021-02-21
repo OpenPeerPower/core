@@ -8,7 +8,7 @@ from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
 from .auth import Auth
 from .config import AbstractConfig
 from .const import CONF_ENDPOINT, CONF_ENTITY_CONFIG, CONF_FILTER, CONF_LOCALE
-from .smart_home import async_op.dle_message
+from .smart_home import async_handle_message
 from .state_report import async_enable_proactive_mode
 
 _LOGGER = logging.getLogger(__name__)
@@ -83,7 +83,7 @@ async def async_setup.opp, config):
     alexa configuration.
 
     Even if that's disabled, the functionality in this module may still be used
-    by the cloud component which will call async_op.dle_message directly.
+    by the cloud component which will call async_handle_message directly.
     """
     smart_home_config = AlexaConfig.opp, config)
    .opp.http.register_view(SmartHomeView(smart_home_config))
@@ -109,13 +109,13 @@ class SmartHomeView(OpenPeerPowerView):
         Lambda, which will need to forward the requests to here and pass back
         the response.
         """
-        opp = request.app["opp"]
-        user = request["opp_user"]
+       .opp = request.app[.opp"]
+        user = request[.opp_user"]
         message = await request.json()
 
         _LOGGER.debug("Received Alexa Smart Home request: %s", message)
 
-        response = await async_op.dle_message(
+        response = await async_handle_message(
            .opp, self.smart_home_config, message, context=core.Context(user_id=user.id)
         )
         _LOGGER.debug("Sending Alexa Smart Home response: %s", response)

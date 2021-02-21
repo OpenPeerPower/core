@@ -16,14 +16,14 @@ from openpeerpower.const import (
     CONF_UNIT_OF_MEASUREMENT,
     SERVICE_RELOAD,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import collection
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity_component import EntityComponent
-from openpeerpowerr.helpers.restore_state import RestoreEntity
-import openpeerpowerr.helpers.service
-from openpeerpowerr.helpers.storage import Store
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType, ServiceCallType
+from openpeerpower.core import callback
+from openpeerpower.helpers import collection
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity_component import EntityComponent
+from openpeerpower.helpers.restore_state import RestoreEntity
+import openpeerpower.helpers.service
+from openpeerpower.helpers.storage import Store
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType, ServiceCallType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -143,7 +143,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
     ).async_setup.opp)
 
-    async def reload_service_op.dler(service_call: ServiceCallType) -> None:
+    async def reload_service_handler(service_call: ServiceCallType) -> None:
         """Reload yaml entities."""
         conf = await component.async_prepare_reload(skip_reset=True)
         if conf is None:
@@ -152,11 +152,11 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
             [{CONF_ID: id_, **conf} for id_, conf in conf.get(DOMAIN, {}).items()]
         )
 
-    openpeerpowerr.helpers.service.async_register_admin_service(
+    openpeerpower.helpers.service.async_register_admin_service(
        .opp,
         DOMAIN,
         SERVICE_RELOAD,
-        reload_service_op.dler,
+        reload_service_handler,
         schema=RELOAD_SERVICE_SCHEMA,
     )
 
@@ -268,9 +268,9 @@ class InputNumber(RestoreEntity):
             ATTR_MODE: self._config[CONF_MODE],
         }
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if self._current_value is not None:
             return
 
@@ -293,7 +293,7 @@ class InputNumber(RestoreEntity):
             )
 
         self._current_value = num_value
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_increment(self):
         """Increment value."""
@@ -309,4 +309,4 @@ class InputNumber(RestoreEntity):
         # just in case min/max values changed
         self._current_value = min(self._current_value, self._maximum)
         self._current_value = max(self._current_value, self._minimum)
-        self.async_write_op.state()
+        self.async_write_ha_state()

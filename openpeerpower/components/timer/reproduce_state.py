@@ -4,8 +4,8 @@ import logging
 from typing import Any, Dict, Iterable, Optional
 
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.core import Context, State
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import Context, State
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import (
     ATTR_DURATION,
@@ -31,7 +31,7 @@ async def _async_reproduce_state(
     reproduce_options: Optional[Dict[str, Any]] = None,
 ) -> None:
     """Reproduce a single state."""
-    cur_state = opp.states.get(state.entity_id)
+    cur_state =.opp.states.get(state.entity_id)
 
     if cur_state is None:
         _LOGGER.warning("Unable to find entity %s", state.entity_id)
@@ -60,7 +60,7 @@ async def _async_reproduce_state(
     elif state.state == STATUS_IDLE:
         service = SERVICE_CANCEL
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, service, service_data, context=context, blocking=True
     )
 

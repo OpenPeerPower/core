@@ -67,8 +67,8 @@ SET_ABSOLUTE_POSITION_SCHEMA = {
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Motion Blind from a config entry."""
     entities = []
-    motion_gateway = opp.data[DOMAIN][config_entry.entry_id][KEY_GATEWAY]
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][KEY_COORDINATOR]
+    motion_gateway =.opp.data[DOMAIN][config_entry.entry_id][KEY_GATEWAY]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][KEY_COORDINATOR]
 
     for blind in motion_gateway.device_list.values():
         if blind.type in POSITION_DEVICE_MAP:
@@ -183,15 +183,15 @@ class MotionPositionDevice(CoordinatorEntity, CoverEntity):
         """Return if the cover is closed or not."""
         return self._blind.position == 100
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to multicast pushes and register signal handler."""
-        self._blind.Register_callback(self.unique_id, self.schedule_update_op.state)
-        await super().async_added_to_opp()
+        self._blind.Register_callback(self.unique_id, self.schedule_update_ha_state)
+        await super().async_added_to.opp()
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""
         self._blind.Remove_callback(self.unique_id)
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
 
     def open_cover(self, **kwargs):
         """Open the cover."""

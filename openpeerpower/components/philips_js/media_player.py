@@ -35,10 +35,10 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from . import LOGGER as _LOGGER
 from .const import CONF_SYSTEM, DOMAIN
@@ -102,7 +102,7 @@ async def async_setup_entry(
     async_add_entities,
 ):
     """Set up the configuration entry."""
-    coordinator = opp.data[DOMAIN][config_entry.entry_id]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id]
     async_add_entities(
         [
             PhilipsTVMediaPlayer(
@@ -346,7 +346,7 @@ class PhilipsTVMediaPlayer(CoordinatorEntity, MediaPlayerEntity):
         }
 
     @callback
-    def _op.dle_coordinator_update(self) -> None:
+    def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
         self._update_from_coordinator()
-        super()._op.dle_coordinator_update()
+        super()._handle_coordinator_update()

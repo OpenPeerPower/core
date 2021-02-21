@@ -2,7 +2,7 @@
   "domain": "tesla",
   "name": "Tesla",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/tesla",
+  "documentation": "https://www.open-peer-power.io/integrations/tesla",
   "requirements": ["teslajsonpy==0.11.5"],
   "codeowners": ["@zabuldon", "@alandtse"],
   "dhcp": [

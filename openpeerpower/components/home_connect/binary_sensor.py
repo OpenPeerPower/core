@@ -24,13 +24,13 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     def get_entities():
         entities = []
-        hc_api = opp.data[DOMAIN][config_entry.entry_id]
+        hc_api =.opp.data[DOMAIN][config_entry.entry_id]
         for device_dict in hc_api.devices:
             entity_dicts = device_dict.get(CONF_ENTITIES, {}).get("binary_sensor", [])
             entities += [HomeConnectBinarySensor(**d) for d in entity_dicts]
         return entities
 
-    async_add_entities(await opp..async_add_executor_job(get_entities), True)
+    async_add_entities(await.opp.async_add_executor_job(get_entities), True)
 
 
 class HomeConnectBinarySensor(HomeConnectEntity, BinarySensorEntity):

@@ -5,7 +5,7 @@ import voluptuous as vol
 
 from openpeerpower.auth.const import GROUP_ID_ADMIN
 from openpeerpower.components.auth import indieauth
-from openpeerpower.components.http.const import KEY_OPP_REFRESH_TOKEN_ID
+from openpeerpower.components.http.const import KEY_HASS_REFRESH_TOKEN_ID
 from openpeerpower.components.http.data_validator import RequestDataValidator
 from openpeerpower.components.http.view import OpenPeerPowerView
 from openpeerpower.const import HTTP_BAD_REQUEST, HTTP_FORBIDDEN
@@ -94,35 +94,35 @@ class UserOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle user creation, area creation."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         async with self._lock:
             if self._async_is_done():
                 return self.json_message("User step already done", HTTP_FORBIDDEN)
 
-            provider = _async_get_opp_provider.opp)
+            provider = _async_get.opp_provider.opp)
             await provider.async_initialize()
 
-            user = await opp..auth.async_create_user(data["name"], [GROUP_ID_ADMIN])
-            await opp..async_add_executor_job(
+            user = await.opp.auth.async_create_user(data["name"], [GROUP_ID_ADMIN])
+            await.opp.async_add_executor_job(
                 provider.data.add_auth, data["username"], data["password"]
             )
             credentials = await provider.async_get_or_create_credentials(
                 {"username": data["username"]}
             )
             await provider.data.async_save()
-            await opp..auth.async_link_user(user, credentials)
+            await.opp.auth.async_link_user(user, credentials)
             if "person" in.opp.config.components:
-                await opp..components.person.async_create_person(
+                await.opp.components.person.async_create_person(
                     data["name"], user_id=user.id
                 )
 
             # Create default areas using the users supplied language.
-            translations = await opp..helpers.translation.async_get_translations(
+            translations = await.opp.helpers.translation.async_get_translations(
                 data["language"], "area", DOMAIN
             )
 
-            area_registry = await opp..helpers.area_registry.async_get_registry()
+            area_registry = await.opp.helpers.area_registry.async_get_registry()
 
             for area in DEFAULT_AREAS:
                 area_registry.async_create(
@@ -133,7 +133,7 @@ class UserOnboardingView(_BaseOnboardingView):
 
             # Return authorization code for fetching tokens and connect
             # during onboarding.
-            auth_code = opp.components.auth.create_auth_code(
+            auth_code =.opp.components.auth.create_auth_code(
                 data["client_id"], credentials
             )
             return self.json({"auth_code": auth_code})
@@ -148,7 +148,7 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
 
     async def post(self, request):
         """Handle finishing core config step."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
 
         async with self._lock:
             if self._async_is_done():
@@ -158,15 +158,15 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
 
             await self._async_mark_done.opp)
 
-            await opp..config_entries.flow.async_init(
+            await.opp.config_entries.flow.async_init(
                 "met", context={"source": "onboarding"}
             )
 
             if (
-               .opp.components.oppio.is_oppio()
+               .opp.components.oppio.is.oppio()
                 and "raspberrypi" in.opp.components.oppio.get_core_info()["machine"]
             ):
-                await opp..config_entries.flow.async_init(
+                await.opp.config_entries.flow.async_init(
                     "rpi_power", context={"source": "onboarding"}
                 )
 
@@ -185,8 +185,8 @@ class IntegrationOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle token creation."""
-        opp = request.app["opp"]
-        refresh_token_id = request[KEY_OPP_REFRESH_TOKEN_ID]
+       .opp = request.app[.opp"]
+        refresh_token_id = request[KEY_HASS_REFRESH_TOKEN_ID]
 
         async with self._lock:
             if self._async_is_done():
@@ -198,27 +198,27 @@ class IntegrationOnboardingView(_BaseOnboardingView):
 
             # Validate client ID and redirect uri
             if not await indieauth.verify_redirect_uri(
-                request.app["opp"], data["client_id"], data["redirect_uri"]
+                request.app[.opp"], data["client_id"], data["redirect_uri"]
             ):
                 return self.json_message(
                     "invalid client id or redirect uri", HTTP_BAD_REQUEST
                 )
 
-            refresh_token = await opp..auth.async_get_refresh_token(refresh_token_id)
+            refresh_token = await.opp.auth.async_get_refresh_token(refresh_token_id)
             if refresh_token is None or refresh_token.credential is None:
                 return self.json_message(
                     "Credentials for user not available", HTTP_FORBIDDEN
                 )
 
             # Return authorization code so we can redirect user and log them in
-            auth_code = opp.components.auth.create_auth_code(
+            auth_code =.opp.components.auth.create_auth_code(
                 data["client_id"], refresh_token.credential
             )
             return self.json({"auth_code": auth_code})
 
 
 @callback
-def _async_get_opp_provider.opp):
+def _async_get.opp_provider.opp):
     """Get the Open Peer Power auth provider."""
     for prv in.opp.auth.auth_providers:
         if prv.type == "openpeerpower":

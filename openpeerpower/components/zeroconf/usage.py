@@ -4,7 +4,7 @@ import logging
 
 import zeroconf
 
-from openpeerpowerr.helpers.frame import (
+from openpeerpower.helpers.frame import (
     MissingIntegrationFrame,
     get_integration_frame,
     report_integration,

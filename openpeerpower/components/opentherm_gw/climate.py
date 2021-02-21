@@ -80,9 +80,9 @@ class OpenThermClimate(ClimateEntity):
         """Update climate entity options."""
         self.floor_temp = entry.options[CONF_FLOOR_TEMP]
         self.temp_precision = entry.options[CONF_PRECISION]
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Connect to the OpenTherm Gateway device."""
         _LOGGER.debug("Added OpenTherm Gateway climate device %s", self.friendly_name)
         self._unsub_updates = async_dispatcher_connect(
@@ -92,7 +92,7 @@ class OpenThermClimate(ClimateEntity):
             self.opp, self._gateway.options_update_signal, self.update_options
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe from updates from the component."""
         _LOGGER.debug("Removing OpenTherm Gateway climate %s", self.friendly_name)
         self._unsub_options()
@@ -147,7 +147,7 @@ class OpenThermClimate(ClimateEntity):
             self._away_state_b = (
                 status[gw_vars.OTGW].get(gw_vars.OTGW_GPIO_B_STATE) == self._away_mode_b
             )
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def available(self):
@@ -261,7 +261,7 @@ class OpenThermClimate(ClimateEntity):
             self._new_target_temperature = await self._gateway.gateway.set_target_temp(
                 temp
             )
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def supported_features(self):

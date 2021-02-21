@@ -1,7 +1,7 @@
 {
   "domain": "eufy",
   "name": "eufy",
-  "documentation": "https://www.openpeerpower.io/integrations/eufy",
+  "documentation": "https://www.open-peer-power.io/integrations/eufy",
   "requirements": ["lakeside==0.12"],
   "codeowners": []
 }

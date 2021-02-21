@@ -27,7 +27,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         """Discover and add a discovered tuya sensor."""
         if not dev_ids:
             return
-        entities = await opp..async_add_executor_job(
+        entities = await.opp.async_add_executor_job(
             _setup_entities,
            .opp,
             dev_ids,
@@ -39,13 +39,13 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
        .opp, TUYA_DISCOVERY_NEW.format(SENSOR_DOMAIN), async_discover_sensor
     )
 
-    devices_ids = opp.data[DOMAIN]["pending"].pop(SENSOR_DOMAIN)
+    devices_ids =.opp.data[DOMAIN]["pending"].pop(SENSOR_DOMAIN)
     await async_discover_sensor(devices_ids)
 
 
 def _setup_entities.opp, dev_ids, platform):
     """Set up Tuya Cover device."""
-    tuya = opp.data[DOMAIN][TUYA_DATA]
+    tuya =.opp.data[DOMAIN][TUYA_DATA]
     entities = []
     for dev_id in dev_ids:
         device = tuya.get_device_by_id(dev_id)

@@ -13,9 +13,9 @@ from openpeerpower.components.azure_devops.const import (
     DOMAIN,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -64,7 +64,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigType) -> bool:
     """Unload Azure DevOps config entry."""
     del.opp.data[f"{DOMAIN}_{entry.data[CONF_ORG]}_{entry.data[CONF_PROJECT]}"]
 
-    return await opp..config_entries.async_forward_entry_unload(entry, "sensor")
+    return await.opp.config_entries.async_forward_entry_unload(entry, "sensor")
 
 
 class AzureDevOpsEntity(Entity):

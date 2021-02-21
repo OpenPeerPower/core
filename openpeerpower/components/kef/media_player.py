@@ -122,7 +122,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
     mode = get_ip_mode(host)
-    mac = await opp..async_add_executor_job(partial(get_mac_address, **{mode: host}))
+    mac = await.opp.async_add_executor_job(partial(get_mac_address, **{mode: host}))
     unique_id = f"kef-{mac}" if mac is not None else None
 
     media_player = KefMediaPlayer(
@@ -383,13 +383,13 @@ class KefMediaPlayer(MediaPlayerEntity):
             **mode._asdict(),
         )
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to DSP updates."""
         self._update_dsp_task_remover = async_track_time_interval(
             self.opp, self.update_dsp, DSP_SCAN_INTERVAL
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe to DSP updates."""
         self._update_dsp_task_remover()
         self._update_dsp_task_remover = None

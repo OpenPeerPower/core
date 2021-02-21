@@ -27,7 +27,7 @@ XIAOMI_STATE_ARMING_VALUE = "oning"
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Xiaomi Gateway Alarm from a config entry."""
     entities = []
-    gateway = opp.data[DOMAIN][config_entry.entry_id][CONF_GATEWAY]
+    gateway =.opp.data[DOMAIN][config_entry.entry_id][CONF_GATEWAY]
     entity = XiaomiGatewayAlarm(
         gateway,
         f"{config_entry.title} Alarm",

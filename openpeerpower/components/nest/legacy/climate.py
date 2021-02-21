@@ -47,16 +47,16 @@ NEST_MODE_HEAT = "heat"
 NEST_MODE_COOL = "cool"
 NEST_MODE_OFF = "off"
 
-MODE_OPP_TO_NEST = {
+MODE_HASS_TO_NEST = {
     HVAC_MODE_AUTO: NEST_MODE_HEAT_COOL,
     HVAC_MODE_HEAT: NEST_MODE_HEAT,
     HVAC_MODE_COOL: NEST_MODE_COOL,
     HVAC_MODE_OFF: NEST_MODE_OFF,
 }
 
-MODE_NEST_TO_OPP = {v: k for k, v in MODE_OPP_TO_NEST.items()}
+MODE_NEST_TO_HASS = {v: k for k, v in MODE_HASS_TO_NEST.items()}
 
-ACTION_NEST_TO_OPP = {
+ACTION_NEST_TO_HASS = {
     "off": CURRENT_HVAC_IDLE,
     "heating": CURRENT_HVAC_HEAT,
     "cooling": CURRENT_HVAC_COOL,
@@ -76,9 +76,9 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
 async def async_setup_legacy_entry.opp, entry, async_add_entities):
     """Set up the Nest climate device based on a config entry."""
-    temp_unit = opp.config.units.temperature_unit
+    temp_unit =.opp.config.units.temperature_unit
 
-    thermostats = await opp..async_add_executor_job.opp.data[DATA_NEST].thermostats)
+    thermostats = await.opp.async_add_executor_job.opp.data[DATA_NEST].thermostats)
 
     all_devices = [
         NestThermostat(structure, device, temp_unit)
@@ -118,8 +118,8 @@ class NestThermostat(ClimateEntity):
         self._operation_list.append(HVAC_MODE_OFF)
 
         # feature of device
-        self._op._fan = self.device.has_fan
-        if self._op._fan:
+        self._has_fan = self.device.has_fan
+        if self._has_fan:
             self._support_flags |= SUPPORT_FAN_MODE
 
         # data attributes
@@ -144,12 +144,12 @@ class NestThermostat(ClimateEntity):
         """Do not need poll thanks using Nest streaming API."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register update signal handler."""
 
         async def async_update_state():
             """Update device state."""
-            await self.async_update_op.state(True)
+            await self.async_update_ha_state(True)
 
         self.async_on_remove(
             async_dispatcher_connect(self.opp, SIGNAL_NEST_UPDATE, async_update_state)
@@ -195,18 +195,18 @@ class NestThermostat(ClimateEntity):
     def hvac_mode(self):
         """Return current operation ie. heat, cool, idle."""
         if self._mode == NEST_MODE_ECO:
-            if self.device.previous_mode in MODE_NEST_TO_OPP:
-                return MODE_NEST_TO_OPP[self.device.previous_mode]
+            if self.device.previous_mode in MODE_NEST_TO_HASS:
+                return MODE_NEST_TO_HASS[self.device.previous_mode]
 
             # previous_mode not supported so return the first compatible mode
             return self._operation_list[0]
 
-        return MODE_NEST_TO_OPP[self._mode]
+        return MODE_NEST_TO_HASS[self._mode]
 
     @property
     def hvac_action(self):
         """Return the current hvac action."""
-        return ACTION_NEST_TO_OPP[self._action]
+        return ACTION_NEST_TO_HASS[self._action]
 
     @property
     def target_temperature(self):
@@ -252,11 +252,11 @@ class NestThermostat(ClimateEntity):
         except APIError as api_error:
             _LOGGER.error("An error occurred while setting temperature: %s", api_error)
             # restore target temperature
-            self.schedule_update_op.state(True)
+            self.schedule_update_ha_state(True)
 
     def set_hvac_mode(self, hvac_mode):
         """Set operation mode."""
-        self.device.mode = MODE_OPP_TO_NEST[hvac_mode]
+        self.device.mode = MODE_HASS_TO_NEST[hvac_mode]
 
     @property
     def hvac_modes(self):
@@ -304,7 +304,7 @@ class NestThermostat(ClimateEntity):
     @property
     def fan_mode(self):
         """Return whether the fan is on."""
-        if self._op._fan:
+        if self._has_fan:
             # Return whether the fan is on
             return FAN_ON if self._fan else FAN_AUTO
         # No Fan available so disable slider
@@ -313,13 +313,13 @@ class NestThermostat(ClimateEntity):
     @property
     def fan_modes(self):
         """List of available fan modes."""
-        if self._op._fan:
+        if self._has_fan:
             return self._fan_modes
         return None
 
     def set_fan_mode(self, fan_mode):
         """Turn fan on/off."""
-        if self._op._fan:
+        if self._has_fan:
             self.device.fan = fan_mode.lower()
 
     @property

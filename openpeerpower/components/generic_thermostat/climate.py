@@ -34,15 +34,15 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.core import DOMAIN as HA_DOMAIN, CoreState, callback
-from openpeerpowerr.helpers import condition
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import (
+from openpeerpower.core import DOMAIN as HA_DOMAIN, CoreState, callback
+from openpeerpower.helpers import condition
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import (
     async_track_state_change_event,
     async_track_time_interval,
 )
-from openpeerpowerr.helpers.reload import async_setup_reload_service
-from openpeerpowerr.helpers.restore_state import RestoreEntity
+from openpeerpower.helpers.reload import async_setup_reload_service
+from openpeerpower.helpers.restore_state import RestoreEntity
 
 from . import DOMAIN, PLATFORMS
 
@@ -110,7 +110,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     initial_hvac_mode = config.get(CONF_INITIAL_HVAC_MODE)
     away_temp = config.get(CONF_AWAY_TEMP)
     precision = config.get(CONF_PRECISION)
-    unit = opp.config.units.temperature_unit
+    unit =.opp.config.units.temperature_unit
     unique_id = config.get(CONF_UNIQUE_ID)
 
     async_add_entities(
@@ -189,9 +189,9 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
         self._away_temp = away_temp
         self._is_away = False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         # Add listener
         self.async_on_remove(
@@ -221,7 +221,7 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
                 STATE_UNKNOWN,
             ):
                 self._async_update_temp(sensor_state)
-                self.async_write_op.state()
+                self.async_write_ha_state()
 
         if self.opp.state == CoreState.running:
             _async_startup()
@@ -359,7 +359,7 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
             _LOGGER.error("Unrecognized hvac mode: %s", hvac_mode)
             return
         # Ensure we update the current operation after changing the mode
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_temperature(self, **kwargs):
         """Set new target temperature."""
@@ -368,7 +368,7 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
             return
         self._target_temp = temperature
         await self._async_control_heating(force=True)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def min_temp(self):
@@ -396,7 +396,7 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
 
         self._async_update_temp(new_state)
         await self._async_control_heating()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _async_switch_changed(self, event):
@@ -404,7 +404,7 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
         new_state = event.data.get("new_state")
         if new_state is None:
             return
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _async_update_temp(self, state):
@@ -508,4 +508,4 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
             self._target_temp = self._saved_target_temp
             await self._async_control_heating(force=True)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()

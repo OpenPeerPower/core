@@ -1,7 +1,7 @@
-"""Adapter to wrap the rachiopy api for Open Peer Power."""
+"""Adapter to wrap the rachiopy api for open peer power."""
 
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers import device_registry
+from openpeerpower.helpers.entity import Entity
 
 from .const import DEFAULT_NAME, DOMAIN
 

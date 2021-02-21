@@ -146,12 +146,12 @@ class BayesianBinarySensor(BinarySensorEntity):
         self.observations_by_entity = self._build_observations_by_entity()
         self.observations_by_template = self._build_observations_by_template()
 
-        self.observation_op.dlers = {
+        self.observation_handlers = {
             "numeric_state": self._process_numeric_state,
             "state": self._process_state,
         }
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """
         Call when entity about to be added.
 
@@ -244,7 +244,7 @@ class BayesianBinarySensor(BinarySensorEntity):
     def _recalculate_and_write_state(self):
         self.probability = self._calculate_new_probability()
         self._deviation = bool(self.probability >= self._probability_threshold)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _initialize_current_observations(self):
         local_observations = OrderedDict({})
@@ -258,7 +258,7 @@ class BayesianBinarySensor(BinarySensorEntity):
         for entity_obs in self.observations_by_entity[entity]:
             platform = entity_obs["platform"]
 
-            should_trigger = self.observation_op.dlers[platform](entity_obs)
+            should_trigger = self.observation_handlers[platform](entity_obs)
 
             if should_trigger:
                 obs_entry = {"entity_id": entity, **entity_obs}

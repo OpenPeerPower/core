@@ -85,7 +85,7 @@ class IcloudAccount:
         config_entry: ConfigEntry,
     ):
         """Initialize an iCloud account."""
-        self.opp = opp
+        self.opp =.opp
         self._username = username
         self._password = password
         self._with_family = with_family

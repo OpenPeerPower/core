@@ -87,7 +87,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     entities = []
 
     if config_entry.data[CONF_FLOW_TYPE] == CONF_GATEWAY:
-        gateway = opp.data[DOMAIN][config_entry.entry_id][CONF_GATEWAY]
+        gateway =.opp.data[DOMAIN][config_entry.entry_id][CONF_GATEWAY]
         # Gateway illuminance sensor
         if gateway.model not in [
             GATEWAY_MODEL_AC_V1,
@@ -102,7 +102,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             )
         # Gateway sub devices
         sub_devices = gateway.devices
-        coordinator = opp.data[DOMAIN][config_entry.entry_id][KEY_COORDINATOR]
+        coordinator =.opp.data[DOMAIN][config_entry.entry_id][KEY_COORDINATOR]
         for sub_device in sub_devices.values():
             sensor_variables = set(sub_device.status) & set(GATEWAY_SENSOR_TYPES)
             if sensor_variables:
@@ -131,7 +131,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     try:
         air_quality_monitor = AirQualityMonitor(host, token)
-        device_info = await opp..async_add_executor_job(air_quality_monitor.info)
+        device_info = await.opp.async_add_executor_job(air_quality_monitor.info)
         model = device_info.model
         unique_id = f"{model}-{device_info.mac_address}"
         _LOGGER.info(

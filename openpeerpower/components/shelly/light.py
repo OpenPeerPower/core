@@ -14,8 +14,8 @@ from openpeerpower.components.light import (
     SUPPORT_WHITE_VALUE,
     LightEntity,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.util.color import (
+from openpeerpower.core import callback
+from openpeerpower.util.color import (
     color_hs_to_RGB,
     color_RGB_to_hs,
     color_temperature_kelvin_to_mired,
@@ -44,7 +44,7 @@ def min_kelvin(model: str):
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up lights for device."""
-    wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][COAP]
+    wrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][COAP]
 
     blocks = []
     for block in wrapper.device.blocks:
@@ -189,7 +189,7 @@ class ShellyLight(ShellyBlockEntity, LightEntity):
         """Turn on light."""
         if self.block.type == "relay":
             self.control_result = await self.block.set_state(turn="on")
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
         params = {"turn": "on"}
@@ -223,12 +223,12 @@ class ShellyLight(ShellyBlockEntity, LightEntity):
                 self.mode_result = await self.wrapper.device.switch_light_mode("color")
             params["white"] = int(kwargs[ATTR_WHITE_VALUE])
         self.control_result = await self.block.set_state(**params)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn off light."""
         self.control_result = await self.block.set_state(turn="off")
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _update_callback(self):

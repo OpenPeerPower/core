@@ -7,9 +7,9 @@ from requests import HTTPError
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PASSWORD, CONF_SCAN_INTERVAL, CONF_USERNAME
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.discovery import load_platform
-from openpeerpowerr.util import Throttle
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.discovery import load_platform
+from openpeerpower.util import Throttle
 
 from .const import DATA, DOMAIN
 

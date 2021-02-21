@@ -1,11 +1,11 @@
-"""Adapter to wrap the rachiopy api for Open Peer Power."""
+"""Adapter to wrap the rachiopy api for open peer power."""
 import logging
 from typing import Optional
 
 import voluptuous as vol
 
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP, HTTP_OK
-from openpeerpowerr.helpers import config_validation as cv
+from openpeerpower.helpers import config_validation as cv
 
 from .const import (
     DOMAIN,
@@ -153,7 +153,7 @@ class RachioIro:
 
     def __init__(self,.opp, rachio, data, webhooks):
         """Initialize a Rachio device."""
-        self.opp = opp
+        self.opp =.opp
         self.rachio = rachio
         self._id = data[KEY_ID]
         self.name = data[KEY_NAME]

@@ -8,9 +8,9 @@ from wolf_smartset.wolf_client import FetchFailed, WolfClient
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import (
     COORDINATOR,
@@ -92,7 +92,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = await opp..config_entries.async_forward_entry_unload(entry, "sensor")
+    unload_ok = await.opp.config_entries.async_forward_entry_unload(entry, "sensor")
     if unload_ok:
        .opp.data[DOMAIN].pop(entry.entry_id)
 

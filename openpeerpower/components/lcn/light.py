@@ -35,7 +35,7 @@ async def async_setup_platform(
     for config in discovery_info:
         address, connection_id = config[CONF_ADDRESS]
         addr = pypck.lcn_addr.LcnAddr(*address)
-        connections = opp.data[DATA_LCN][CONF_CONNECTIONS]
+        connections =.opp.data[DATA_LCN][CONF_CONNECTIONS]
         connection = get_connection(connections, connection_id)
         address_connection = connection.get_address_conn(addr)
 
@@ -65,11 +65,11 @@ class LcnOutputLight(LcnEntity, LightEntity):
         self._is_on = None
         self._is_dimming_to_zero = False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if not self.device_connection.is_group:
-            await self.device_connection.activate_status_request_op.dler(self.output)
+            await self.device_connection.activate_status_request_handler(self.output)
 
     @property
     def supported_features(self):
@@ -107,7 +107,7 @@ class LcnOutputLight(LcnEntity, LightEntity):
             return
         self._is_on = True
         self._is_dimming_to_zero = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the entity off."""
@@ -124,7 +124,7 @@ class LcnOutputLight(LcnEntity, LightEntity):
             return
         self._is_dimming_to_zero = bool(transition)
         self._is_on = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def input_received(self, input_obj):
         """Set light state when LCN input object (command) is received."""
@@ -139,7 +139,7 @@ class LcnOutputLight(LcnEntity, LightEntity):
             self._is_dimming_to_zero = False
         if not self._is_dimming_to_zero:
             self._is_on = self.brightness > 0
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class LcnRelayLight(LcnEntity, LightEntity):
@@ -153,11 +153,11 @@ class LcnRelayLight(LcnEntity, LightEntity):
 
         self._is_on = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if not self.device_connection.is_group:
-            await self.device_connection.activate_status_request_op.dler(self.output)
+            await self.device_connection.activate_status_request_handler(self.output)
 
     @property
     def is_on(self):
@@ -171,7 +171,7 @@ class LcnRelayLight(LcnEntity, LightEntity):
         if not await self.device_connection.control_relays(states):
             return
         self._is_on = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the entity off."""
@@ -180,7 +180,7 @@ class LcnRelayLight(LcnEntity, LightEntity):
         if not await self.device_connection.control_relays(states):
             return
         self._is_on = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def input_received(self, input_obj):
         """Set light state when LCN input object (command) is received."""
@@ -188,4 +188,4 @@ class LcnRelayLight(LcnEntity, LightEntity):
             return
 
         self._is_on = input_obj.get_state(self.output.value)
-        self.async_write_op.state()
+        self.async_write_ha_state()

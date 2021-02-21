@@ -99,9 +99,9 @@ class DemoSwitch(SwitchEntity):
     def turn_on(self, **kwargs):
         """Turn the switch on."""
         self._state = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
         self._state = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

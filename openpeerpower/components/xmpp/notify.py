@@ -48,14 +48,14 @@ CONF_TLS = "tls"
 CONF_VERIFY = "verify"
 
 DEFAULT_CONTENT_TYPE = "application/octet-stream"
-DEFAULT_RESOURCE = "openpeerpower"
+DEFAULT_RESOURCE = "open-peer-power"
 XEP_0363_TIMEOUT = 10
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_SENDER): cv.string,
         vol.Required(CONF_PASSWORD): cv.string,
-        vol.Required(CONF_RECIPIENT): cv.string,
+        vol.Required(CONF_RECIPIENT): vol.All(cv.ensure_list, [cv.string]),
         vol.Optional(CONF_RESOURCE, default=DEFAULT_RESOURCE): cv.string,
         vol.Optional(CONF_ROOM, default=""): cv.string,
         vol.Optional(CONF_TLS, default=True): cv.boolean,
@@ -83,11 +83,11 @@ class XmppNotificationService(BaseNotificationService):
 
     def __init__(self, sender, resource, password, recipient, tls, verify, room,.opp):
         """Initialize the service."""
-        self._opp = opp
+        self..opp =.opp
         self._sender = sender
         self._resource = resource
         self._password = password
-        self._recipient = recipient
+        self._recipients = recipient
         self._tls = tls
         self._verify = verify
         self._room = room
@@ -102,11 +102,11 @@ class XmppNotificationService(BaseNotificationService):
         await async_send_message(
             f"{self._sender}/{self._resource}",
             self._password,
-            self._recipient,
+            self._recipients,
             self._tls,
             self._verify,
             self._room,
-            self._opp,
+            self..opp,
             text,
             timeout,
             data,
@@ -116,7 +116,7 @@ class XmppNotificationService(BaseNotificationService):
 async def async_send_message(
     sender,
     password,
-    recipient,
+    recipients,
     use_tls,
     verify_certificate,
     room,
@@ -134,17 +134,17 @@ async def async_send_message(
             """Initialize the Jabber Bot."""
             super().__init__(sender, password)
 
-            self.loop = opp.loop
+            self.loop =.opp.loop
 
             self.force_starttls = use_tls
             self.use_ipv6 = False
-            self.add_event_op.dler("failed_auth", self.disconnect_on_login_fail)
-            self.add_event_op.dler("session_start", self.start)
+            self.add_event_handler("failed_auth", self.disconnect_on_login_fail)
+            self.add_event_handler("session_start", self.start)
 
             if room:
                 self.register_plugin("xep_0045")  # MUC
             if not verify_certificate:
-                self.add_event_op.dler(
+                self.add_event_handler(
                     "ssl_invalid_cert", self.discard_ssl_invalid_cert
                 )
             if data:
@@ -182,19 +182,21 @@ async def async_send_message(
                 url = await self.upload_file(timeout=timeout)
 
                 _LOGGER.info("Upload success")
-                if room:
-                    _LOGGER.info("Sending file to %s", room)
-                    message = self.Message(sto=room, stype="groupchat")
-                else:
-                    _LOGGER.info("Sending file to %s", recipient)
-                    message = self.Message(sto=recipient, stype="chat")
-
-                message["body"] = url
-                message["oob"]["url"] = url
-                try:
-                    message.send()
-                except (IqError, IqTimeout, XMPPError) as ex:
-                    _LOGGER.error("Could not send image message %s", ex)
+                for recipient in recipients:
+                    if room:
+                        _LOGGER.info("Sending file to %s", room)
+                        message = self.Message(sto=room, stype="groupchat")
+                    else:
+                        _LOGGER.info("Sending file to %s", recipient)
+                        message = self.Message(sto=recipient, stype="chat")
+                    message["body"] = url
+                    message["oob"]["url"] = url
+                    try:
+                        message.send()
+                    except (IqError, IqTimeout, XMPPError) as ex:
+                        _LOGGER.error("Could not send image message %s", ex)
+                    if room:
+                        break
             except (IqError, IqTimeout, XMPPError) as ex:
                 _LOGGER.error("Upload error, could not send message %s", ex)
             except NotConnectedError as ex:
@@ -261,7 +263,7 @@ async def async_send_message(
                     url, verify=data.get(ATTR_VERIFY, True), timeout=timeout
                 )
 
-            result = await opp..async_add_executor_job(get_url, url)
+            result = await.opp.async_add_executor_job(get_url, url)
 
             if result.status_code >= HTTP_BAD_REQUEST:
                 _LOGGER.error("Could not load file from %s", url)
@@ -336,8 +338,9 @@ async def async_send_message(
                     self.plugin["xep_0045"].join_muc(room, sender, wait=True)
                     self.send_message(mto=room, mbody=message, mtype="groupchat")
                 else:
-                    _LOGGER.debug("Sending message to %s", recipient)
-                    self.send_message(mto=recipient, mbody=message, mtype="chat")
+                    for recipient in recipients:
+                        _LOGGER.debug("Sending message to %s", recipient)
+                        self.send_message(mto=recipient, mbody=message, mtype="chat")
             except (IqError, IqTimeout, XMPPError) as ex:
                 _LOGGER.error("Could not send text message %s", ex)
             except NotConnectedError as ex:

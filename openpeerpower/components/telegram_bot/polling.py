@@ -43,7 +43,7 @@ def process_error(update: Update, context: CallbackContext):
         _LOGGER.error('Update "%s" caused error: "%s"', update, context.error)
 
 
-def message_op.dler(handler):
+def message_handler(handler):
     """Create messages handler."""
 
     class MessageHandler(Handler):
@@ -83,8 +83,8 @@ class TelegramPoll(BaseTelegramBotEntity):
         self.updater = Updater(bot=bot, workers=4)
         self.dispatcher = self.updater.dispatcher
 
-        self.dispatcher.add_op.dler(message_op.dler(self.process_update))
-        self.dispatcher.add_error_op.dler(process_error)
+        self.dispatcher.add_handler(message_handler(self.process_update))
+        self.dispatcher.add_error_handler(process_error)
 
     def start_polling(self):
         """Start the polling task."""

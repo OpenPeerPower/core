@@ -62,7 +62,7 @@ class WirelessTagPlatform:
 
     def __init__(self,.opp, api):
         """Designated initializer for wirelesstags platform."""
-        self.opp = opp
+        self.opp =.opp
         self.api = api
         self.tags = {}
         self._local_base_url = None
@@ -129,7 +129,7 @@ class WirelessTagPlatform:
 
     @property
     def local_base_url(self):
-        """Define base url of opp in local network."""
+        """Define base url of.opp in local network."""
         if self._local_base_url is None:
             self._local_base_url = f"http://{util.get_local_ip()}"
 
@@ -199,7 +199,7 @@ def setup.opp, config):
     except (ConnectTimeout, HTTPError, WirelessTagsException) as ex:
         _LOGGER.error("Unable to connect to wirelesstag.net service: %s", str(ex))
        .opp.components.persistent_notification.create(
-            f"Error: {ex}<br />Please restart opp after fixing this.",
+            f"Error: {ex}<br />Please restart.opp after fixing this.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )

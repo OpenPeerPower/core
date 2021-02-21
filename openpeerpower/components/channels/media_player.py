@@ -113,30 +113,30 @@ class ChannelsPlayer(MediaPlayerEntity):
         """Update the favorite channels from the client."""
         self.favorite_channels = self.client.favorite_channels()
 
-    def update_state(self, state_op.h):
+    def update_state(self, state_hash):
         """Update all the state properties with the passed in dictionary."""
-        self.status = state_op.h.get("status", "stopped")
-        self.muted = state_op.h.get("muted", False)
+        self.status = state_hash.get("status", "stopped")
+        self.muted = state_hash.get("muted", False)
 
-        channel_op.h = state_op.h.get("channel")
-        np_op.h = state_op.h.get("now_playing")
+        channel_hash = state_hash.get("channel")
+        np_hash = state_hash.get("now_playing")
 
-        if channel_op.h:
-            self.channel_number = channel_op.h.get("channel_number")
-            self.channel_name = channel_op.h.get("channel_name")
-            self.channel_image_url = channel_op.h.get("channel_image_url")
+        if channel_hash:
+            self.channel_number = channel_hash.get("channel_number")
+            self.channel_name = channel_hash.get("channel_name")
+            self.channel_image_url = channel_hash.get("channel_image_url")
         else:
             self.channel_number = None
             self.channel_name = None
             self.channel_image_url = None
 
-        if np_op.h:
-            self.now_playing_title = np_op.h.get("title")
-            self.now_playing_episode_title = np_op.h.get("episode_title")
-            self.now_playing_season_number = np_op.h.get("season_number")
-            self.now_playing_episode_number = np_op.h.get("episode_number")
-            self.now_playing_summary = np_op.h.get("summary")
-            self.now_playing_image_url = np_op.h.get("image_url")
+        if np_hash:
+            self.now_playing_title = np_hash.get("title")
+            self.now_playing_episode_title = np_hash.get("episode_title")
+            self.now_playing_season_number = np_hash.get("season_number")
+            self.now_playing_episode_number = np_hash.get("episode_number")
+            self.now_playing_summary = np_hash.get("summary")
+            self.now_playing_image_url = np_hash.get("image_url")
         else:
             self.now_playing_title = None
             self.now_playing_episode_title = None

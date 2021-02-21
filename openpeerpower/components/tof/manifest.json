@@ -1,7 +1,7 @@
 {
   "domain": "tof",
   "name": "Time of Flight",
-  "documentation": "https://www.openpeerpower.io/integrations/tof",
+  "documentation": "https://www.open-peer-power.io/integrations/tof",
   "requirements": ["VL53L1X2==0.1.5"],
   "dependencies": ["rpi_gpio"],
   "codeowners": []

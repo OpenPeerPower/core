@@ -34,7 +34,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup.opp,.opp_config):
     """Create an Intergas InComfort/Intouch system."""
-    incomfort_data = opp.data[DOMAIN] = {}
+    incomfort_data =.opp.data[DOMAIN] = {}
 
     credentials = dict.opp_config[DOMAIN])
     hostname = credentials.pop(CONF_HOST)
@@ -81,13 +81,13 @@ class IncomfortEntity(Entity):
 class IncomfortChild(IncomfortEntity):
     """Base class for all InComfort entities (excluding the boiler)."""
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Set up a listener when this entity is added to HA."""
         self.async_on_remove(async_dispatcher_connect(self.opp, DOMAIN, self._refresh))
 
     @callback
     def _refresh(self) -> None:
-        self.async_schedule_update_op.state(force_refresh=True)
+        self.async_schedule_update_ha_state(force_refresh=True)
 
     @property
     def should_poll(self) -> bool:

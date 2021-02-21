@@ -37,10 +37,10 @@ class MobileAppEntity(RestoreEntity):
         self.unsub_dispatcher = None
         self._name = config[CONF_NAME]
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.unsub_dispatcher = async_dispatcher_connect(
-            self.opp, SIGNAL_SENSOR_UPDATE, self._op.dle_update
+            self.opp, SIGNAL_SENSOR_UPDATE, self._handle_update
         )
         state = await self.async_get_last_state()
 
@@ -49,7 +49,7 @@ class MobileAppEntity(RestoreEntity):
 
         self.async_restore_last_state(state)
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect dispatcher listener when removed."""
         if self.unsub_dispatcher is not None:
             self.unsub_dispatcher()
@@ -101,11 +101,11 @@ class MobileAppEntity(RestoreEntity):
         return device_info(self._registration)
 
     @callback
-    def _op.dle_update(self, data):
+    def _handle_update(self, data):
         """Handle async event updates."""
         incoming_id = unique_id(data[CONF_WEBHOOK_ID], data[ATTR_SENSOR_UNIQUE_ID])
         if incoming_id != self._unique_id:
             return
 
         self._config = {**self._config, **data}
-        self.async_write_op.state()
+        self.async_write_ha_state()

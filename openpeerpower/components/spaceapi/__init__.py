@@ -15,9 +15,9 @@ from openpeerpower.const import (
     CONF_STATE,
     CONF_URL,
 )
-import openpeerpowerr.core as ha
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.core as ha
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.util.dt as dt_util
 
 ATTR_ADDRESS = "address"
 ATTR_SPACEFED = "spacefed"
@@ -247,7 +247,7 @@ class APISpaceApiView(OpenPeerPowerView):
     @staticmethod
     def get_sensor_data.opp, spaceapi, sensor):
         """Get data from a sensor."""
-        sensor_state = opp.states.get(sensor)
+        sensor_state =.opp.states.get(sensor)
         if not sensor_state:
             return None
         sensor_data = {ATTR_NAME: sensor_state.name, ATTR_VALUE: sensor_state.state}
@@ -260,10 +260,10 @@ class APISpaceApiView(OpenPeerPowerView):
             sensor_data[ATTR_UNIT] = sensor_state.attributes[ATTR_UNIT_OF_MEASUREMENT]
         return sensor_data
 
-    @op.callback
+    @ha.callback
     def get(self, request):
         """Get SpaceAPI data."""
-        opp = request.app["opp"]
+       .opp = request.app[.opp"]
         spaceapi = dict.opp.data[DATA_SPACEAPI])
         is_sensors = spaceapi.get("sensors")
 
@@ -277,7 +277,7 @@ class APISpaceApiView(OpenPeerPowerView):
             pass
 
         state_entity = spaceapi["state"][ATTR_ENTITY_ID]
-        space_state = opp.states.get(state_entity)
+        space_state =.opp.states.get(state_entity)
 
         if space_state is not None:
             state = {

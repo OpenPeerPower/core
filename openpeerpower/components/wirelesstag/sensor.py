@@ -31,7 +31,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the sensor platform."""
-    platform = opp.data.get(WIRELESSTAG_DOMAIN)
+    platform =.opp.data.get(WIRELESSTAG_DOMAIN)
     sensors = []
     tags = platform.tags
     for tag in tags.values():
@@ -62,7 +62,7 @@ class WirelessTagSensor(WirelessTagBaseSensor):
             f"sensor.{WIRELESSTAG_DOMAIN}_{self.underscored_name}_{self._sensor_type}"
         )
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -113,4 +113,4 @@ class WirelessTagSensor(WirelessTagBaseSensor):
         _LOGGER.debug("Entity to update state: %s event data: %s", self, event.data)
         new_value = self._sensor.value_from_update_event(event.data)
         self._state = self.decorate_value(new_value)
-        self.async_write_op.state()
+        self.async_write_ha_state()

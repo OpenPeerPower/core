@@ -1,7 +1,7 @@
 {
   "domain": "thinkingcleaner",
   "name": "Thinking Cleaner",
-  "documentation": "https://www.openpeerpower.io/integrations/thinkingcleaner",
+  "documentation": "https://www.open-peer-power.io/integrations/thinkingcleaner",
   "requirements": ["pythinkingcleaner==0.0.3"],
   "codeowners": []
 }

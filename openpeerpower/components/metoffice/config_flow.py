@@ -5,7 +5,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries, core, exceptions
 from openpeerpower.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
-from openpeerpowerr.helpers import config_validation as cv
+from openpeerpower.helpers import config_validation as cv
 
 from .const import DOMAIN  # pylint: disable=unused-import
 from .data import MetOfficeData

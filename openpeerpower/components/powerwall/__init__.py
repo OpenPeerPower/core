@@ -78,7 +78,7 @@ async def _migrate_old_unique_ids.opp, entry_id, powerwall_data):
     await entity_registry.async_migrate_entries.opp, entry_id, _async_migrator)
 
 
-async def _async_op.dle_api_changed_error(
+async def _async_handle_api_changed_error(
    .opp: OpenPeerPower, error: MissingAttributeError
 ):
     # The error might include some important information about what exactly changed.
@@ -102,7 +102,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     password = entry.data.get(CONF_PASSWORD)
     power_wall = Powerwall(entry.data[CONF_IP_ADDRESS], http_session=http_session)
     try:
-        powerwall_data = await opp..async_add_executor_job(
+        powerwall_data = await.opp.async_add_executor_job(
             _login_and_fetch_base_info, power_wall, password
         )
     except PowerwallUnreachableError as err:
@@ -110,7 +110,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         raise ConfigEntryNotReady from err
     except MissingAttributeError as err:
         http_session.close()
-        await _async_op.dle_api_changed_error.opp, err)
+        await _async_handle_api_changed_error.opp, err)
         return False
     except AccessDeniedError as err:
         _LOGGER.debug("Authentication failed", exc_info=err)
@@ -135,7 +135,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 raise
 
             # If the session expired, relogin, and try again
-            await opp..async_add_executor_job(power_wall.login, "", password)
+            await.opp.async_add_executor_job(power_wall.login, "", password)
             return await _async_update_powerwall_data.opp, entry, power_wall)
 
     coordinator = DataUpdateCoordinator(
@@ -171,11 +171,11 @@ async def _async_update_powerwall_data(
 ):
     """Fetch updated powerwall data."""
     try:
-        return await opp..async_add_executor_job(_fetch_powerwall_data, power_wall)
+        return await.opp.async_add_executor_job(_fetch_powerwall_data, power_wall)
     except PowerwallUnreachableError as err:
         raise UpdateFailed("Unable to fetch data from powerwall") from err
     except MissingAttributeError as err:
-        await _async_op.dle_api_changed_error.opp, err)
+        await _async_handle_api_changed_error.opp, err)
        .opp.data[DOMAIN][entry.entry_id][POWERWALL_API_CHANGED] = True
         # Returns the cached data. This data can also be None
         return.opp.data[DOMAIN][entry.entry_id][POWERWALL_COORDINATOR].data

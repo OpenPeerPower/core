@@ -114,7 +114,7 @@ class PandoraMediaPlayer(MediaPlayerEntity):
             _LOGGER.warning(
                 "The pianobar client is not configured to log in. "
                 "Please create a configuration file for it as described at "
-                "https://www.openpeerpower.io/integrations/pandora/"
+                "https://www.open-peer-power.io/integrations/pandora/"
             )
             # pass through the email/password prompts to quit cleanly
             self._pianobar.sendcontrol("m")
@@ -126,7 +126,7 @@ class PandoraMediaPlayer(MediaPlayerEntity):
         self.update_playing_status()
 
         self._player_state = STATE_IDLE
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self):
         """Turn the media player off."""
@@ -143,24 +143,24 @@ class PandoraMediaPlayer(MediaPlayerEntity):
             _LOGGER.debug("Killed Pianobar subprocess")
         self._pianobar = None
         self._player_state = STATE_OFF
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def media_play(self):
         """Send play command."""
         self._send_pianobar_command(SERVICE_MEDIA_PLAY_PAUSE)
         self._player_state = STATE_PLAYING
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def media_pause(self):
         """Send pause command."""
         self._send_pianobar_command(SERVICE_MEDIA_PLAY_PAUSE)
         self._player_state = STATE_PAUSED
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def media_next_track(self):
         """Go to next track."""
         self._send_pianobar_command(SERVICE_MEDIA_NEXT_TRACK)
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def supported_features(self):
@@ -378,6 +378,6 @@ def _pianobar_exists():
     _LOGGER.warning(
         "The Pandora integration depends on the Pianobar client, which "
         "cannot be found. Please install using instructions at "
-        "https://www.openpeerpower.io/integrations/media_player.pandora/"
+        "https://www.open-peer-power.io/integrations/media_player.pandora/"
     )
     return False

@@ -1,6 +1,6 @@
 {
   "domain": "tomato",
   "name": "Tomato",
-  "documentation": "https://www.openpeerpower.io/integrations/tomato",
+  "documentation": "https://www.open-peer-power.io/integrations/tomato",
   "codeowners": []
 }

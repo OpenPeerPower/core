@@ -1,7 +1,7 @@
 {
   "domain": "vizio",
   "name": "VIZIO SmartCast",
-  "documentation": "https://www.openpeerpower.io/integrations/vizio",
+  "documentation": "https://www.open-peer-power.io/integrations/vizio",
   "requirements": ["pyvizio==0.1.57"],
   "codeowners": ["@raman325"],
   "config_flow": true,

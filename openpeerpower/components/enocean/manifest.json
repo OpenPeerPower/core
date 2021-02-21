@@ -1,7 +1,7 @@
 {
   "domain": "enocean",
   "name": "EnOcean",
-  "documentation": "https://www.openpeerpower.io/integrations/enocean",
+  "documentation": "https://www.open-peer-power.io/integrations/enocean",
   "requirements": [
     "enocean==0.50"
   ],

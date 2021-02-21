@@ -27,7 +27,7 @@ GROUP_MATCH = functools.partial(ZHA_ENTITIES.group_match, DOMAIN)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation switch from config entry."""
-    entities_to_create = opp.data[DATA_ZHA][DOMAIN]
+    entities_to_create =.opp.data[DATA_ZHA][DOMAIN]
 
     unsub = async_dispatcher_connect(
        .opp,
@@ -61,7 +61,7 @@ class BaseSwitch(SwitchEntity):
         if not isinstance(result, list) or result[1] is not Status.SUCCESS:
             return
         self._state = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn the entity off."""
@@ -69,7 +69,7 @@ class BaseSwitch(SwitchEntity):
         if not isinstance(result, list) or result[1] is not Status.SUCCESS:
             return
         self._state = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 @STRICT_MATCH(channel_names=CHANNEL_ON_OFF)
@@ -85,11 +85,11 @@ class Switch(BaseSwitch, ZhaEntity):
     def async_set_state(self, attr_id: int, attr_name: str, value: Any):
         """Handle state update from channel."""
         self._state = bool(value)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_accept_signal(
             self._on_off_channel, SIGNAL_ATTR_UPDATED, self.async_set_state
         )

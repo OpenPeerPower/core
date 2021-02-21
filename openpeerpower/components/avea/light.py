@@ -8,8 +8,8 @@ from openpeerpower.components.light import (
     SUPPORT_COLOR,
     LightEntity,
 )
-from openpeerpowerr.exceptions import PlatformNotReady
-import openpeerpowerr.util.color as color_util
+from openpeerpower.exceptions import PlatformNotReady
+import openpeerpower.util.color as color_util
 
 SUPPORT_AVEA = SUPPORT_BRIGHTNESS | SUPPORT_COLOR
 

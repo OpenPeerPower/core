@@ -17,12 +17,12 @@
                 },
                 "description": "Vennligst fyll ut tilkoblingsinformasjonen for din MQTT megler."
             },
-            "oppio_confirm": {
+            .oppio_confirm": {
                 "data": {
                     "discovery": "Aktiver oppdagelse"
                 },
-                "description": "Vil du konfigurere Open Peer Power til \u00e5 koble til en MQTT megler som er levert av Opp.io-tillegg {addon}?",
-                "title": "MQTT megler via Opp.io-tillegg"
+                "description": "Vil du konfigurere Open Peer Power til \u00e5 koble til en MQTT megler som er levert av Hass.io-tillegg {addon}?",
+                "title": "MQTT megler via Hass.io-tillegg"
             }
         }
     },

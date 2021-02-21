@@ -34,7 +34,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up the Synology NAS Sensor."""
 
-    api = opp.data[DOMAIN][entry.unique_id][SYNO_API]
+    api =.opp.data[DOMAIN][entry.unique_id][SYNO_API]
 
     entities = [
         SynoDSMUtilSensor(api, sensor_type, UTILISATION_SENSORS[sensor_type])

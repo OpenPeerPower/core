@@ -18,7 +18,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """
 
     entities = []
-    data = opp.data[CASETA_DOMAIN][config_entry.entry_id]
+    data =.opp.data[CASETA_DOMAIN][config_entry.entry_id]
     bridge = data[BRIDGE_LEAP]
     bridge_device = data[BRIDGE_DEVICE]
     occupancy_groups = bridge.occupancy_groups
@@ -43,10 +43,10 @@ class LutronOccupancySensor(LutronCasetaDevice, BinarySensorEntity):
         """Return the brightness of the light."""
         return self._device["status"] == OCCUPANCY_GROUP_OCCUPIED
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self._smartbridge.add_occupancy_subscriber(
-            self.device_id, self.async_write_op.state
+            self.device_id, self.async_write_ha_state
         )
 
     @property

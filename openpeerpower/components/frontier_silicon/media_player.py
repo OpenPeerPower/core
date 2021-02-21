@@ -33,7 +33,7 @@ from openpeerpower.const import (
     STATE_PLAYING,
     STATE_UNKNOWN,
 )
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 

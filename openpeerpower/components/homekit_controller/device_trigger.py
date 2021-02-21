@@ -51,7 +51,7 @@ class TriggerSource:
 
     def __init__(self, connection, aid, triggers):
         """Initialize a set of triggers for a device."""
-        self._opp = connection.opp
+        self..opp = connection.opp
         self._connection = connection
         self._aid = aid
         self._triggers = {}
@@ -61,8 +61,8 @@ class TriggerSource:
 
     def fire(self, iid, value):
         """Process events that have been received from a HomeKit accessory."""
-        for event_op.dler in self._callbacks.get(iid, []):
-            event_op.dler(value)
+        for event_handler in self._callbacks.get(iid, []):
+            event_handler(value)
 
     def async_get_triggers(self):
         """List device triggers for homekit devices."""
@@ -76,22 +76,22 @@ class TriggerSource:
     ) -> CALLBACK_TYPE:
         """Attach a trigger."""
 
-        def event_op.dler(char):
+        def event_handler(char):
             if config[CONF_SUBTYPE] != HK_TO_HA_INPUT_EVENT_VALUES[char["value"]]:
                 return
-            self._opp.async_create_task(action({"trigger": config}))
+            self..opp.async_create_task(action({"trigger": config}))
 
         trigger = self._triggers[config[CONF_TYPE], config[CONF_SUBTYPE]]
         iid = trigger["characteristic"]
 
         self._connection.add_watchable_characteristics([(self._aid, iid)])
-        self._callbacks.setdefault(iid, []).append(event_op.dler)
+        self._callbacks.setdefault(iid, []).append(event_handler)
 
-        def async_remove_op.dler():
+        def async_remove_handler():
             if iid in self._callbacks:
-                self._callbacks[iid].remove(event_op.dler)
+                self._callbacks[iid].remove(event_handler)
 
-        return async_remove_op.dler
+        return async_remove_handler
 
 
 def enumerate_stateless_switch(service):
@@ -183,7 +183,7 @@ TRIGGER_FINDERS = {
 async def async_setup_triggers_for_entry.opp: OpenPeerPower, config_entry):
     """Triggers aren't entities as they have no state, but we still need to set them up for a config entry."""
     hkid = config_entry.data["AccessoryPairingID"]
-    conn = opp.data[KNOWN_DEVICES][hkid]
+    conn =.opp.data[KNOWN_DEVICES][hkid]
 
     @callback
     def async_add_service(service):
@@ -232,7 +232,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
     if device_id not in.opp.data.get(TRIGGERS, {}):
         return []
 
-    device = opp.data[TRIGGERS][device_id]
+    device =.opp.data[TRIGGERS][device_id]
 
     triggers = []
 
@@ -260,5 +260,5 @@ async def async_attach_trigger(
     config = TRIGGER_SCHEMA(config)
 
     device_id = config[CONF_DEVICE_ID]
-    device = opp.data[TRIGGERS][device_id]
+    device =.opp.data[TRIGGERS][device_id]
     return await device.async_attach_trigger(config, action, automation_info)

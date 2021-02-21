@@ -13,8 +13,8 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.const import CONF_HOST
-import openpeerpowerr.helpers.config_validation as cv
-import openpeerpowerr.util.color as color_util
+import openpeerpower.helpers.config_validation as cv
+import openpeerpower.util.color as color_util
 
 _LOGGER = logging.getLogger(__name__)
 

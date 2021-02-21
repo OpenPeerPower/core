@@ -12,7 +12,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     batteries = []
 
-    lwlink = opp.data[LIGHTWAVE_LINK]
+    lwlink =.opp.data[LIGHTWAVE_LINK]
 
     for device_config in discovery_info.values():
         name = device_config[CONF_NAME]

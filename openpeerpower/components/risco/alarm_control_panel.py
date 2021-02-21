@@ -48,7 +48,7 @@ STATES_TO_SUPPORTED_FEATURES = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Risco alarm control panel."""
-    coordinator = opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
     options = {**DEFAULT_OPTIONS, **config_entry.options}
     entities = [
         RiscoAlarm(coordinator, partition_id, config_entry.data[CONF_PIN], options)
@@ -69,10 +69,10 @@ class RiscoAlarm(AlarmControlPanelEntity, RiscoEntity):
         self._code = code
         self._code_arm_required = options[CONF_CODE_ARM_REQUIRED]
         self._code_disarm_required = options[CONF_CODE_DISARM_REQUIRED]
-        self._risco_to_op.= options[CONF_RISCO_STATES_TO_HA]
-        self._op.to_risco = options[CONF_HA_STATES_TO_RISCO]
+        self._risco_to_ha = options[CONF_RISCO_STATES_TO_HA]
+        self._ha_to_risco = options[CONF_HA_STATES_TO_RISCO]
         self._supported_states = 0
-        for state in self._op.to_risco:
+        for state in self._ha_to_risco:
             self._supported_states |= STATES_TO_SUPPORTED_FEATURES[state]
 
     def _get_data_from_coordinator(self):
@@ -107,13 +107,13 @@ class RiscoAlarm(AlarmControlPanelEntity, RiscoEntity):
         if self._partition.disarmed:
             return STATE_ALARM_DISARMED
         if self._partition.armed:
-            return self._risco_to_op.RISCO_ARM]
+            return self._risco_to_ha[RISCO_ARM]
         if self._partition.partially_armed:
             for group, armed in self._partition.groups.items():
                 if armed:
-                    return self._risco_to_op.group]
+                    return self._risco_to_ha[group]
 
-            return self._risco_to_op.RISCO_PARTIAL_ARM]
+            return self._risco_to_ha[RISCO_PARTIAL_ARM]
 
         return None
 
@@ -164,7 +164,7 @@ class RiscoAlarm(AlarmControlPanelEntity, RiscoEntity):
             _LOGGER.warning("Wrong code entered for %s", mode)
             return
 
-        risco_state = self._op.to_risco[mode]
+        risco_state = self._ha_to_risco[mode]
         if not risco_state:
             _LOGGER.warning("No mapping for mode %s", mode)
             return
@@ -177,4 +177,4 @@ class RiscoAlarm(AlarmControlPanelEntity, RiscoEntity):
     async def _call_alarm_method(self, method, *args):
         alarm = await getattr(self._risco, method)(self._partition_id, *args)
         self._partition = alarm.partitions[self._partition_id]
-        self.async_write_op.state()
+        self.async_write_ha_state()

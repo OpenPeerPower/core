@@ -54,7 +54,7 @@ from openpeerpower.loader import (
     MAX_LOAD_CONCURRENTLY,
     Integration,
     async_get_integration,
-    bind_opp,
+    bind.opp,
 )
 from openpeerpower.util.async_ import gather_with_concurrency
 from openpeerpower.util.yaml import load_yaml
@@ -114,7 +114,7 @@ class SelectedEntities:
         _LOGGER.warning("Unable to find referenced %s", ", ".join(parts))
 
 
-@bind_opp
+@bind.opp
 def call_from_config(
    .opp: OpenPeerPowerType,
     config: ConfigType,
@@ -129,14 +129,14 @@ def call_from_config(
     ).result()
 
 
-@bind_opp
+@bind.opp
 async def async_call_from_config(
    .opp: OpenPeerPowerType,
     config: ConfigType,
     blocking: bool = False,
     variables: TemplateVarsType = None,
     validate_config: bool = True,
-    context: Optional[op.Context] = None,
+    context: Optional[ha.Context] = None,
 ) -> None:
     """Call a service based on a config hash."""
     try:
@@ -148,11 +148,11 @@ async def async_call_from_config(
             raise
         _LOGGER.error(ex)
     else:
-        await opp..services.async_call(**params, blocking=blocking, context=context)
+        await.opp.services.async_call(**params, blocking=blocking, context=context)
 
 
-@op.callback
-@bind_opp
+@ha.callback
+@bind.opp
 def async_prepare_call_from_config(
    .opp: OpenPeerPowerType,
     config: ConfigType,
@@ -175,7 +175,7 @@ def async_prepare_call_from_config(
 
     if isinstance(domain_service, template.Template):
         try:
-            domain_service.opp = opp
+            domain_service.opp =.opp
             domain_service = domain_service.async_render(variables)
             domain_service = cv.service(domain_service)
         except TemplateError as ex:
@@ -216,9 +216,9 @@ def async_prepare_call_from_config(
     }
 
 
-@bind_opp
+@bind.opp
 def extract_entity_ids(
-   .opp: OpenPeerPowerType, service_call: op.ServiceCall, expand_group: bool = True
+   .opp: OpenPeerPowerType, service_call: ha.ServiceCall, expand_group: bool = True
 ) -> Set[str]:
     """Extract a list of entity ids from a service call.
 
@@ -229,11 +229,11 @@ def extract_entity_ids(
     ).result()
 
 
-@bind_opp
+@bind.opp
 async def async_extract_entities(
    .opp: OpenPeerPowerType,
     entities: Iterable[Entity],
-    service_call: op.ServiceCall,
+    service_call: ha.ServiceCall,
     expand_group: bool = True,
 ) -> List[Entity]:
     """Extract a list of entity objects from a service call.
@@ -268,9 +268,9 @@ async def async_extract_entities(
     return found
 
 
-@bind_opp
+@bind.opp
 async def async_extract_entity_ids(
-   .opp: OpenPeerPowerType, service_call: op.ServiceCall, expand_group: bool = True
+   .opp: OpenPeerPowerType, service_call: ha.ServiceCall, expand_group: bool = True
 ) -> Set[str]:
     """Extract a set of entity ids from a service call.
 
@@ -282,9 +282,9 @@ async def async_extract_entity_ids(
     return referenced.referenced | referenced.indirectly_referenced
 
 
-@bind_opp
+@bind.opp
 async def async_extract_referenced_entity_ids(
-   .opp: OpenPeerPowerType, service_call: op.ServiceCall, expand_group: bool = True
+   .opp: OpenPeerPowerType, service_call: ha.ServiceCall, expand_group: bool = True
 ) -> SelectedEntities:
     """Extract referenced entity IDs from a service call."""
     entity_ids = service_call.data.get(ATTR_ENTITY_ID)
@@ -308,7 +308,7 @@ async def async_extract_referenced_entity_ids(
             entity_ids = [entity_ids]
 
         if expand_group:
-            entity_ids = opp.components.group.expand_entity_ids(entity_ids)
+            entity_ids =.opp.components.group.expand_entity_ids(entity_ids)
 
         selected.referenced.update(entity_ids)
 
@@ -397,14 +397,14 @@ def _load_services_files(
     return [_load_services_file.opp, integration) for integration in integrations]
 
 
-@bind_opp
+@bind.opp
 async def async_get_all_descriptions(
    .opp: OpenPeerPowerType,
 ) -> Dict[str, Dict[str, Any]]:
     """Return descriptions (i.e. user documentation) for all service calls."""
-    descriptions_cache = opp.data.setdefault(SERVICE_DESCRIPTION_CACHE, {})
+    descriptions_cache =.opp.data.setdefault(SERVICE_DESCRIPTION_CACHE, {})
     format_cache_key = "{}.{}".format
-    services = opp.services.async_services()
+    services =.opp.services.async_services()
 
     # See if there are new services not seen before.
     # Any service that we saw before already has an entry in description_cache.
@@ -424,7 +424,7 @@ async def async_get_all_descriptions(
             *(async_get_integration.opp, domain) for domain in missing),
         )
 
-        contents = await opp..async_add_executor_job(
+        contents = await.opp.async_add_executor_job(
             _load_services_files,.opp, integrations
         )
 
@@ -463,8 +463,8 @@ async def async_get_all_descriptions(
     return descriptions
 
 
-@op.callback
-@bind_opp
+@ha.callback
+@bind.opp
 def async_set_service_schema(
    .opp: OpenPeerPowerType, domain: str, service: str, schema: Dict[str, Any]
 ) -> None:
@@ -479,12 +479,12 @@ def async_set_service_schema(
    .opp.data[SERVICE_DESCRIPTION_CACHE][f"{domain}.{service}"] = description
 
 
-@bind_opp
+@bind.opp
 async def entity_service_call(
    .opp: OpenPeerPowerType,
     platforms: Iterable["EntityPlatform"],
     func: Union[str, Callable[..., Any]],
-    call: op.ServiceCall,
+    call: ha.ServiceCall,
     required_features: Optional[Iterable[int]] = None,
 ) -> None:
     """Handle an entity service call.
@@ -492,7 +492,7 @@ async def entity_service_call(
     Calls all platforms simultaneously.
     """
     if call.context.user_id:
-        user = await opp..auth.async_get_user(call.context.user_id)
+        user = await.opp.auth.async_get_user(call.context.user_id)
         if user is None:
             raise UnknownUser(context=call.context)
         entity_perms: Optional[
@@ -513,7 +513,7 @@ async def entity_service_call(
 
     # If the service function is a string, we'll pass it the service call data
     if isinstance(func, str):
-        data: Union[Dict, op.ServiceCall] = {
+        data: Union[Dict, ha.ServiceCall] = {
             key: val
             for key, val in call.data.items()
             if key not in cv.ENTITY_SERVICE_FIELDS
@@ -610,7 +610,7 @@ async def entity_service_call(
         [
             asyncio.create_task(
                 entity.async_request_call(
-                    _op.dle_entity_call.opp, entity, func, data, call.context)
+                    _handle_entity_call.opp, entity, func, data, call.context)
                 )
             )
             for entity in entities
@@ -629,7 +629,7 @@ async def entity_service_call(
         # Context expires if the turn on commands took a long time.
         # Set context again so it's there when we update
         entity.async_set_context(call.context)
-        tasks.append(entity.async_update_op.state(True))
+        tasks.append(asyncio.create_task(entity.async_update_ha_state(True)))
 
     if tasks:
         done, pending = await asyncio.wait(tasks)
@@ -638,20 +638,20 @@ async def entity_service_call(
             future.result()  # pop exception if have
 
 
-async def _op.dle_entity_call(
+async def _handle_entity_call(
    .opp: OpenPeerPowerType,
     entity: Entity,
     func: Union[str, Callable[..., Any]],
-    data: Union[Dict, op.ServiceCall],
-    context: op.Context,
+    data: Union[Dict, ha.ServiceCall],
+    context: ha.Context,
 ) -> None:
     """Handle calling service method."""
     entity.async_set_context(context)
 
     if isinstance(func, str):
-        result = opp.async_run_job(partial(getattr(entity, func), **data))  # type: ignore
+        result =.opp.async_run_job(partial(getattr(entity, func), **data))  # type: ignore
     else:
-        result = opp.async_run_job(func, entity, data)
+        result =.opp.async_run_job(func, entity, data)
 
     # Guard because callback functions do not return a task when passed to async_run_job.
     if result is not None:
@@ -666,53 +666,53 @@ async def _op.dle_entity_call(
         await result  # type: ignore
 
 
-@bind_opp
-@op.callback
+@bind.opp
+@ha.callback
 def async_register_admin_service(
    .opp: OpenPeerPowerType,
     domain: str,
     service: str,
-    service_func: Callable[[op.ServiceCall], Optional[Awaitable]],
+    service_func: Callable[[ha.ServiceCall], Optional[Awaitable]],
     schema: vol.Schema = vol.Schema({}, extra=vol.PREVENT_EXTRA),
 ) -> None:
     """Register a service that requires admin access."""
 
     @wraps(service_func)
-    async def admin_op.dler(call: op.ServiceCall) -> None:
+    async def admin_handler(call: ha.ServiceCall) -> None:
         if call.context.user_id:
-            user = await opp..auth.async_get_user(call.context.user_id)
+            user = await.opp.auth.async_get_user(call.context.user_id)
             if user is None:
                 raise UnknownUser(context=call.context)
             if not user.is_admin:
                 raise Unauthorized(context=call.context)
 
-        result = opp.async_run_job(service_func, call)
+        result =.opp.async_run_job(service_func, call)
         if result is not None:
             await result
 
-   .opp.services.async_register(domain, service, admin_op.dler, schema)
+   .opp.services.async_register(domain, service, admin_handler, schema)
 
 
-@bind_opp
-@op.callback
+@bind.opp
+@ha.callback
 def verify_domain_control(
    .opp: OpenPeerPowerType, domain: str
-) -> Callable[[Callable[[op.ServiceCall], Any]], Callable[[op.ServiceCall], Any]]:
+) -> Callable[[Callable[[ha.ServiceCall], Any]], Callable[[ha.ServiceCall], Any]]:
     """Ensure permission to access any entity under domain in service call."""
 
     def decorator(
-        service_op.dler: Callable[[op.ServiceCall], Any]
-    ) -> Callable[[op.ServiceCall], Any]:
+        service_handler: Callable[[ha.ServiceCall], Any]
+    ) -> Callable[[ha.ServiceCall], Any]:
         """Decorate."""
-        if not asyncio.iscoroutinefunction(service_op.dler):
+        if not asyncio.iscoroutinefunction(service_handler):
             raise OpenPeerPowerError("Can only decorate async functions.")
 
-        async def check_permissions(call: op.ServiceCall) -> Any:
+        async def check_permissions(call: ha.ServiceCall) -> Any:
             """Check user permission and raise before call if unauthorized."""
             if not call.context.user_id:
-                return await service_op.dler(call)
+                return await service_handler(call)
 
-            user = await opp..auth.async_get_user(call.context.user_id)
+            user = await.opp.auth.async_get_user(call.context.user_id)
 
             if user is None:
                 raise UnknownUser(
@@ -721,7 +721,7 @@ def verify_domain_control(
                     user_id=call.context.user_id,
                 )
 
-            reg = await opp..helpers.entity_registry.async_get_registry()
+            reg = await.opp.helpers.entity_registry.async_get_registry()
 
             authorized = False
 
@@ -741,7 +741,7 @@ def verify_domain_control(
                     perm_category=CAT_ENTITIES,
                 )
 
-            return await service_op.dler(call)
+            return await service_handler(call)
 
         return check_permissions
 

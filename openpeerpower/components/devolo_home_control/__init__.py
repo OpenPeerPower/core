@@ -9,8 +9,8 @@ from devolo_home_control_api.mydevolo import Mydevolo
 from openpeerpower.components import zeroconf
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME, EVENT_OPENPEERPOWER_STOP
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import CONF_MYDEVOLO, DOMAIN, GATEWAY_SERIAL_PATTERN, PLATFORMS
 
@@ -26,18 +26,18 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     mydevolo = _mydevolo(entry.data)
 
-    credentials_valid = await opp..async_add_executor_job(mydevolo.credentials_valid)
+    credentials_valid = await.opp.async_add_executor_job(mydevolo.credentials_valid)
 
     if not credentials_valid:
         return False
 
-    if await opp..async_add_executor_job(mydevolo.maintenance):
+    if await.opp.async_add_executor_job(mydevolo.maintenance):
         raise ConfigEntryNotReady
 
-    gateway_ids = await opp..async_add_executor_job(mydevolo.get_gateway_ids)
+    gateway_ids = await.opp.async_add_executor_job(mydevolo.get_gateway_ids)
 
     if GATEWAY_SERIAL_PATTERN.match(entry.unique_id):
-        uuid = await opp..async_add_executor_job(mydevolo.uuid)
+        uuid = await.opp.async_add_executor_job(mydevolo.uuid)
        .opp.config_entries.async_update_entry(entry, unique_id=uuid)
 
     try:
@@ -45,7 +45,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
        .opp.data[DOMAIN][entry.entry_id] = {"gateways": [], "listener": None}
         for gateway_id in gateway_ids:
            .opp.data[DOMAIN][entry.entry_id]["gateways"].append(
-                await opp..async_add_executor_job(
+                await.opp.async_add_executor_job(
                     partial(
                         HomeControl,
                         gateway_id=gateway_id,
@@ -69,7 +69,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             )
 
     # Listen when EVENT_OPENPEERPOWER_STOP is fired
-   .opp.data[DOMAIN][entry.entry_id]["listener"] = opp.bus.async_listen_once(
+   .opp.data[DOMAIN][entry.entry_id]["listener"] =.opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, shutdown
     )
 

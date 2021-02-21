@@ -25,7 +25,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the OpenTherm Gateway sensors."""
     sensors = []
     deprecated_sensors = []
-    gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]]
+    gw_dev =.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]]
     ent_reg = await async_get_registry.opp)
     for var, info in SENSOR_INFO.items():
         device_class = info[0]
@@ -98,14 +98,14 @@ class OpenThermSensor(Entity):
         self._friendly_name = friendly_name_format.format(gw_dev.name)
         self._unsub_updates = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to updates from the component."""
         _LOGGER.debug("Added OpenTherm Gateway sensor %s", self._friendly_name)
         self._unsub_updates = async_dispatcher_connect(
             self.opp, self._gateway.update_signal, self.receive_report
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Unsubscribe from updates from the component."""
         _LOGGER.debug("Removing OpenTherm Gateway sensor %s", self._friendly_name)
         self._unsub_updates()
@@ -127,7 +127,7 @@ class OpenThermSensor(Entity):
         if isinstance(value, float):
             value = f"{value:2.1f}"
         self._value = value
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def name(self):

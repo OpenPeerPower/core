@@ -102,7 +102,7 @@ class RestoreStateData:
 
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize the restore state data class."""
-        self.opp: OpenPeerPower = opp
+        self.opp: OpenPeerPower =.opp
         self.store: Store = Store(
            .opp, STORAGE_VERSION, STORAGE_KEY, encoder=JSONEncoder
         )
@@ -184,7 +184,7 @@ class RestoreStateData:
 
     @callback
     def async_restore_entity_added(self, entity_id: str) -> None:
-        """Store this entity's state when opp is shutdown."""
+        """Store this entity's state when.opp is shutdown."""
         self.entity_ids.add(entity_id)
 
     @callback
@@ -192,7 +192,7 @@ class RestoreStateData:
         """Unregister this entity from saving state."""
         # When an entity is being removed from.opp, store its last state. This
         # allows us to support state restoration if the entity is removed, then
-        # re-added while opp is still running.
+        # re-added while.opp is still running.
         state = self.opp.states.get(entity_id)
         # To fully mimic all the attribute data types when loaded from storage,
         # we're going to serialize it to JSON and then re-load it.
@@ -233,20 +233,20 @@ def _encode_complex(value: Any) -> Any:
 class RestoreEntity(Entity):
     """Mixin class for restoring previous entity state."""
 
-    async def async_internal_added_to_opp(self) -> None:
+    async def async_internal_added_to.opp(self) -> None:
         """Register this entity as a restorable entity."""
         assert self.opp is not None
         _, data = await asyncio.gather(
-            super().async_internal_added_to_opp(),
+            super().async_internal_added_to.opp(),
             RestoreStateData.async_get_instance(self.opp),
         )
         data.async_restore_entity_added(self.entity_id)
 
-    async def async_internal_will_remove_from_opp(self) -> None:
+    async def async_internal_will_remove_from.opp(self) -> None:
         """Run when entity will be removed from.opp."""
         assert self.opp is not None
         _, data = await asyncio.gather(
-            super().async_internal_will_remove_from_opp(),
+            super().async_internal_will_remove_from.opp(),
             RestoreStateData.async_get_instance(self.opp),
         )
         data.async_restore_entity_removed(self.entity_id)
@@ -254,7 +254,7 @@ class RestoreEntity(Entity):
     async def async_get_last_state(self) -> Optional[State]:
         """Get the entity state from the previous run."""
         if self.opp is None or self.entity_id is None:
-            # Return None if this entity isn't added to opp yet
+            # Return None if this entity isn't added to.opp yet
             _LOGGER.warning("Cannot get last state. Entity not added to.opp")
             return None
         data = await RestoreStateData.async_get_instance(self.opp)

@@ -1,7 +1,7 @@
 {
   "domain": "mastodon",
   "name": "Mastodon",
-  "documentation": "https://www.openpeerpower.io/integrations/mastodon",
+  "documentation": "https://www.open-peer-power.io/integrations/mastodon",
   "requirements": ["Mastodon.py==1.5.1"],
   "codeowners": ["@fabaff"]
 }

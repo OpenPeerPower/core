@@ -1,7 +1,7 @@
 {
   "domain": "todoist",
   "name": "Todoist",
-  "documentation": "https://www.openpeerpower.io/integrations/todoist",
+  "documentation": "https://www.open-peer-power.io/integrations/todoist",
   "requirements": ["todoist-python==8.0.0"],
   "codeowners": ["@boralyl"]
 }

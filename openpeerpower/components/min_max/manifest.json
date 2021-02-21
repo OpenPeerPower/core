@@ -1,7 +1,7 @@
 {
   "domain": "min_max",
   "name": "Min/Max",
-  "documentation": "https://www.openpeerpower.io/integrations/min_max",
+  "documentation": "https://www.open-peer-power.io/integrations/min_max",
   "codeowners": ["@fabaff"],
   "quality_scale": "internal"
 }

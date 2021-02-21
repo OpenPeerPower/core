@@ -43,7 +43,7 @@ SENSOR_TYPES_ELEC.update(SENSOR_TYPES)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the BMW ConnectedDrive binary sensors from config entry."""
-    account = opp.data[BMW_DOMAIN][DATA_ENTRIES][config_entry.entry_id][CONF_ACCOUNT]
+    account =.opp.data[BMW_DOMAIN][DATA_ENTRIES][config_entry.entry_id][CONF_ACCOUNT]
     entities = []
 
     for vehicle in account.account.vehicles:

@@ -2,7 +2,7 @@
 import asyncio
 
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from .const import DOMAIN
 

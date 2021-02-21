@@ -1,9 +1,9 @@
 {
   "domain": "script",
   "name": "Scripts",
-  "documentation": "https://www.openpeerpower.io/integrations/script",
+  "documentation": "https://www.open-peer-power.io/integrations/script",
   "codeowners": [
-    "@openpeerpower/core"
+    "@open-peer-power/core"
   ],
   "quality_scale": "internal"
 }

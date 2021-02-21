@@ -25,7 +25,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up Z-Wave sensor from config entry."""
-    client: ZwaveClient = opp.data[DOMAIN][config_entry.entry_id][DATA_CLIENT]
+    client: ZwaveClient =.opp.data[DOMAIN][config_entry.entry_id][DATA_CLIENT]
 
     @callback
     def async_add_switch(info: ZwaveDiscoveryInfo) -> None:
@@ -111,7 +111,7 @@ class ZWaveBarrierEventSignalingSwitch(ZWaveBaseEntity, SwitchEntity):
         )
         # this value is not refreshed, so assume success
         self._state = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
@@ -120,7 +120,7 @@ class ZWaveBarrierEventSignalingSwitch(ZWaveBaseEntity, SwitchEntity):
         )
         # this value is not refreshed, so assume success
         self._state = False
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _update_state(self) -> None:

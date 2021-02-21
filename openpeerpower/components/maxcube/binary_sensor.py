@@ -11,7 +11,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Iterate through all MAX! Devices and add window shutters."""
     devices = []
     for handler in.opp.data[DATA_KEY].values():
-        cube = op.dler.cube
+        cube = handler.cube
         for device in cube.devices:
             name = f"{cube.room_by_id(device.room_id).name} {device.name}"
 
@@ -31,7 +31,7 @@ class MaxCubeShutter(BinarySensorEntity):
         self._name = name
         self._sensor_type = DEVICE_CLASS_WINDOW
         self._rf_address = rf_address
-        self._cubehandle = op.dler
+        self._cubehandle = handler
         self._state = None
 
     @property

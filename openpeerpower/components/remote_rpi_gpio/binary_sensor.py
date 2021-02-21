@@ -4,7 +4,7 @@ import voluptuous as vol
 
 from openpeerpower.components.binary_sensor import PLATFORM_SCHEMA, BinarySensorEntity
 from openpeerpower.const import CONF_HOST
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import (
     CONF_BOUNCETIME,
@@ -63,13 +63,13 @@ class RemoteRPiGPIOBinarySensor(BinarySensorEntity):
         self._state = False
         self._button = button
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
 
         def read_gpio():
             """Read state from GPIO."""
             self._state = remote_rpi_gpio.read_input(self._button)
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
         self._button.when_released = read_gpio
         self._button.when_pressed = read_gpio

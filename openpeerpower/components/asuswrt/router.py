@@ -19,12 +19,12 @@ from openpeerpower.const import (
     CONF_PROTOCOL,
     CONF_USERNAME,
 )
-from openpeerpowerr.core import CALLBACK_TYPE, callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
-from openpeerpowerr.helpers.event import async_track_time_interval
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.core import CALLBACK_TYPE, callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.event import async_track_time_interval
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.util import dt as dt_util
 
 from .const import (
     CONF_DNSMASQ,
@@ -103,7 +103,7 @@ class AsusWrtRouter:
 
     def __init__(self,.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
         """Initialize a AsusWrt router."""
-        self.opp = opp
+        self.opp =.opp
         self._entry = entry
 
         self._api: AsusWrt = None

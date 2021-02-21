@@ -1,6 +1,6 @@
 {
   "domain": "water_heater",
   "name": "Water Heater",
-  "documentation": "https://www.openpeerpower.io/integrations/water_heater",
+  "documentation": "https://www.open-peer-power.io/integrations/water_heater",
   "codeowners": []
 }

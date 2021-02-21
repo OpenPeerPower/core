@@ -50,7 +50,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
     try:
-        await opp..async_add_executor_job(dev.initialize)
+        await.opp.async_add_executor_job(dev.initialize)
         mac = await dev.deviceMAC()
         outlets = dev.outlets()
     except AtenPEError as exc:

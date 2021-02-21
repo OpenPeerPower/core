@@ -16,7 +16,7 @@ from openpeerpower.components.cover import (
     CoverEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import EsphomeEntity, esphome_state_property, platform_async_setup_entry
 

@@ -124,10 +124,10 @@ class TileDeviceTracker(CoordinatorEntity, TrackerEntity):
         return SOURCE_TYPE_GPS
 
     @callback
-    def _op.dle_coordinator_update(self):
+    def _handle_coordinator_update(self):
         """Respond to a DataUpdateCoordinator update."""
         self._update_from_latest_data()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _update_from_latest_data(self):
@@ -142,7 +142,7 @@ class TileDeviceTracker(CoordinatorEntity, TrackerEntity):
             }
         )
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self._update_from_latest_data()

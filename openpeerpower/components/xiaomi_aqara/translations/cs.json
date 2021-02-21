@@ -7,7 +7,7 @@
         },
         "error": {
             "discovery_error": "Nepoda\u0159ilo se naj\u00edt br\u00e1nu Xiaomi Aqara, zkuste jako rozhran\u00ed pou\u017e\u00edt IP adresu za\u0159\u00edzen\u00ed, na kter\u00e9m je spu\u0161t\u011bn OpenPeerPower.",
-            "invalid_host": "Neplatn\u00fd hostitel nebo IP adresa , viz https://www.openpeerpower.io/integrations/xiaomi_aqara/#connection-problem",
+            "invalid_host": "Neplatn\u00fd hostitel nebo IP adresa , viz https://www.open-peer-power.io/integrations/xiaomi_aqara/#connection-problem",
             "invalid_interface": "Neplatn\u00e9 s\u00ed\u0165ov\u00e9 rozhran\u00ed",
             "invalid_key": "Neplatn\u00fd kl\u00ed\u010d br\u00e1ny",
             "invalid_mac": "Neplatn\u00e1 MAC adresa"

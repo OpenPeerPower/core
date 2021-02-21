@@ -1,6 +1,6 @@
 {
   "domain": "vacuum",
   "name": "Vacuum",
-  "documentation": "https://www.openpeerpower.io/integrations/vacuum",
+  "documentation": "https://www.open-peer-power.io/integrations/vacuum",
   "codeowners": []
 }

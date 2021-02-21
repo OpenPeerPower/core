@@ -8,16 +8,16 @@ from wiffi import WiffiTcpServer
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_PORT, CONF_TIMEOUT
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import device_registry
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_time_interval
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_time_interval
+from openpeerpower.util.dt import utcnow
 
 from .const import (
     CHECK_ENTITIES_SIGNAL,
@@ -69,12 +69,12 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
 
 async def async_update_options.opp: OpenPeerPower, config_entry: ConfigEntry):
     """Update options."""
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     """Unload a config entry."""
-    api: "WiffiIntegrationApi" = opp.data[DOMAIN][config_entry.entry_id]
+    api: "WiffiIntegrationApi" =.opp.data[DOMAIN][config_entry.entry_id]
     await api.server.close_server()
 
     unload_ok = all(
@@ -86,7 +86,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
         )
     )
     if unload_ok:
-        api = opp.data[DOMAIN].pop(config_entry.entry_id)
+        api =.opp.data[DOMAIN].pop(config_entry.entry_id)
         api.shutdown()
 
     return unload_ok
@@ -102,7 +102,7 @@ class WiffiIntegrationApi:
 
     def __init__(self,.opp):
         """Initialize the instance."""
-        self._opp = opp
+        self..opp =.opp
         self._server = None
         self._known_devices = {}
         self._periodic_callback = None
@@ -111,7 +111,7 @@ class WiffiIntegrationApi:
         """Set up api instance."""
         self._server = WiffiTcpServer(config_entry.data[CONF_PORT], self)
         self._periodic_callback = async_track_time_interval(
-            self._opp, self._periodic_tick, timedelta(seconds=10)
+            self..opp, self._periodic_tick, timedelta(seconds=10)
         )
 
     def shutdown(self):
@@ -132,10 +132,10 @@ class WiffiIntegrationApi:
         for metric in metrics:
             if metric.id not in self._known_devices[device.mac_address]:
                 self._known_devices[device.mac_address].add(metric.id)
-                async_dispatcher_send(self._opp, CREATE_ENTITY_SIGNAL, device, metric)
+                async_dispatcher_send(self..opp, CREATE_ENTITY_SIGNAL, device, metric)
             else:
                 async_dispatcher_send(
-                    self._opp,
+                    self..opp,
                     f"{UPDATE_ENTITY_SIGNAL}-{generate_unique_id(device, metric)}",
                     device,
                     metric,
@@ -149,7 +149,7 @@ class WiffiIntegrationApi:
     @callback
     def _periodic_tick(self, now=None):
         """Check if any entity has timed out because it has not been updated."""
-        async_dispatcher_send(self._opp, CHECK_ENTITIES_SIGNAL)
+        async_dispatcher_send(self..opp, CHECK_ENTITIES_SIGNAL)
 
 
 class WiffiEntity(Entity):
@@ -173,7 +173,7 @@ class WiffiEntity(Entity):
         self._value = None
         self._timeout = options.get(CONF_TIMEOUT, DEFAULT_TIMEOUT)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Entity has been added to.opp."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -237,4 +237,4 @@ class WiffiEntity(Entity):
             and utcnow() > self._expiration_date
         ):
             self._value = None
-            self.async_write_op.state()
+            self.async_write_ha_state()

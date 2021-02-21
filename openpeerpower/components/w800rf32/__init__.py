@@ -45,7 +45,7 @@ def setup.opp, config):
     w800_object = w800.Connect(device, None)
 
     def _start_w800rf32(event):
-        w800_object.event_callback = op.dle_receive
+        w800_object.event_callback = handle_receive
 
    .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, _start_w800rf32)
 

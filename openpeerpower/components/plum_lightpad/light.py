@@ -27,7 +27,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up Plum Lightpad dimmer lights and glow rings."""
 
-    plum: Plum = opp.data[DOMAIN][entry.entry_id]
+    plum: Plum =.opp.data[DOMAIN][entry.entry_id]
 
     def setup_entities(device) -> None:
         entities = []
@@ -68,14 +68,14 @@ class PlumLight(LightEntity):
         self._load = load
         self._brightness = load.level
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to dimmerchange events."""
         self._load.add_event_listener("dimmerchange", self.dimmerchange)
 
     def dimmerchange(self, event):
         """Change event handler updating the brightness."""
         self._brightness = event["level"]
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def should_poll(self):
@@ -146,7 +146,7 @@ class GlowRing(LightEntity):
         self._green = lightpad.glow_color["green"]
         self._blue = lightpad.glow_color["blue"]
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to configchange events."""
         self._lightpad.add_event_listener("configchange", self.configchange_event)
 
@@ -161,7 +161,7 @@ class GlowRing(LightEntity):
         self._green = config["glowColor"]["green"]
         self._blue = config["glowColor"]["blue"]
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def hs_color(self):

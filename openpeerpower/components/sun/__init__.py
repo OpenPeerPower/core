@@ -8,14 +8,14 @@ from openpeerpower.const import (
     SUN_EVENT_SUNRISE,
     SUN_EVENT_SUNSET,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import event
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.sun import (
+from openpeerpower.core import callback
+from openpeerpower.helpers import event
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.sun import (
     get_astral_location,
     get_location_astral_event_next,
 )
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.util import dt as dt_util
 
 # mypy: allow-untyped-calls, allow-untyped-defs, no-check-untyped-defs
 
@@ -41,7 +41,7 @@ STATE_ATTR_NEXT_SETTING = "next_setting"
 # The algorithm used here is somewhat complicated. It aims to cut down
 # the number of sensor updates over the day. It's documented best in
 # the PR for the change, see the Discussion section of:
-# https://github.com/openpeerpower/core/pull/23832
+# https://github.com/open-peer-power/core/pull/23832
 
 
 # As documented in wikipedia: https://en.wikipedia.org/wiki/Twilight
@@ -77,7 +77,7 @@ async def async_setup.opp, config):
     if config.get(CONF_ELEVATION) is not None:
         _LOGGER.warning(
             "Elevation is now configured in Open Peer Power core. "
-            "See https://www.openpeerpower.io/docs/configuration/basic/"
+            "See https://www.open-peer-power.io/docs/configuration/basic/"
         )
     Sun.opp)
     return True
@@ -90,7 +90,7 @@ class Sun(Entity):
 
     def __init__(self,.opp):
         """Initialize the sun."""
-        self.opp = opp
+        self.opp =.opp
         self.location = None
         self._state = self.next_rising = self.next_setting = None
         self.next_dawn = self.next_dusk = None
@@ -233,7 +233,7 @@ class Sun(Entity):
             self.solar_elevation,
             self.solar_azimuth,
         )
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
         # Next update as per the current phase
         delta = _PHASE_UPDATES[self.phase]

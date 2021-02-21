@@ -2,7 +2,7 @@
   "domain": "wiffi",
   "name": "Wiffi",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/wiffi",
+  "documentation": "https://www.open-peer-power.io/integrations/wiffi",
   "requirements": ["wiffi==1.0.1"],
   "codeowners": [
     "@mampfes"

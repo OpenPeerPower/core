@@ -19,9 +19,9 @@ from openpeerpower.const import (
     CONF_NAME,
     CONF_RADIUS,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import slugify
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import slugify
 
 CONF_DAYS = "days"
 DEFAULT_DAYS = 1

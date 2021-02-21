@@ -19,9 +19,9 @@ from openpeerpower.const import (
     STATE_ALARM_DISARMED,
     STATE_ALARM_TRIGGERED,
 )
-from openpeerpowerr.helpers import entity_platform
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers import entity_platform
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import (
     CONF_ALT_NIGHT_MODE,
@@ -46,7 +46,7 @@ async def async_setup_entry(
     """Set up for AlarmDecoder alarm panels."""
     options = entry.options
     arm_options = options.get(OPTIONS_ARM, DEFAULT_ARM_OPTIONS)
-    client = opp.data[DOMAIN][entry.entry_id][DATA_AD]
+    client =.opp.data[DOMAIN][entry.entry_id][DATA_AD]
 
     entity = AlarmDecoderAlarmPanel(
         client=client,
@@ -98,7 +98,7 @@ class AlarmDecoderAlarmPanel(AlarmControlPanelEntity):
         self._code_arm_required = code_arm_required
         self._alt_night_mode = alt_night_mode
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
@@ -130,7 +130,7 @@ class AlarmDecoderAlarmPanel(AlarmControlPanelEntity):
         self._ready = message.ready
         self._zone_bypassed = message.zone_bypassed
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def name(self):

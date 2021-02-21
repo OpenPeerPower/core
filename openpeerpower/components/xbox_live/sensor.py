@@ -124,13 +124,13 @@ class XboxSensor(Entity):
         """Return the icon to use in the frontend."""
         return ICON
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Start custom polling."""
 
         @callback
         def async_update(event_time=None):
             """Update the entity."""
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         async_track_time_interval(self.opp, async_update, self._interval)
 

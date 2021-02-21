@@ -13,10 +13,10 @@ from openpeerpower.const import (
     HTTP_BAD_REQUEST,
     HTTP_INTERNAL_SERVER_ERROR,
 )
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.update_coordinator import DataUpdateCoordinator
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import CONF_SERIAL_NUMBER, DOMAIN, PLATFORMS
 
@@ -49,7 +49,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     api = nuheat.NuHeat(username, password)
 
     try:
-        thermostat = await opp..async_add_executor_job(
+        thermostat = await.opp.async_add_executor_job(
             _get_thermostat, api, serial_number
         )
     except requests.exceptions.Timeout as ex:
@@ -68,7 +68,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     async def _async_update_data():
         """Fetch data from API endpoint."""
-        await opp..async_add_executor_job(thermostat.get_data)
+        await.opp.async_add_executor_job(thermostat.get_data)
 
     coordinator = DataUpdateCoordinator(
        .opp,

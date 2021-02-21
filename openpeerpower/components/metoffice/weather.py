@@ -1,8 +1,8 @@
 """Support for UK Met Office weather service."""
 from openpeerpower.components.weather import WeatherEntity
 from openpeerpower.const import LENGTH_KILOMETERS, TEMP_CELSIUS
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import callback
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from .const import (
     ATTRIBUTION,
@@ -21,7 +21,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigType, async_add_entities
 ) -> None:
     """Set up the Met Office weather sensor platform."""
-   .opp_data = opp.data[DOMAIN][entry.entry_id]
+   .opp_data =.opp.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
         [
@@ -39,8 +39,8 @@ class MetOfficeWeather(WeatherEntity):
 
     def __init__(self, entry_data,.opp_data):
         """Initialise the platform with a data instance."""
-        self._data = opp_data[METOFFICE_DATA]
-        self._coordinator = opp_data[METOFFICE_COORDINATOR]
+        self._data =.opp_data[METOFFICE_DATA]
+        self._coordinator =.opp_data[METOFFICE_COORDINATOR]
 
         self._name = f"{DEFAULT_NAME} .opp_data[METOFFICE_NAME]}"
         self._unique_id = f"{self._data.latitude}_{self._data.longitude}"
@@ -138,7 +138,7 @@ class MetOfficeWeather(WeatherEntity):
         """Return the attribution."""
         return ATTRIBUTION
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Set up a listener and load data."""
         self.async_on_remove(
             self._coordinator.async_add_listener(self._update_callback)
@@ -149,7 +149,7 @@ class MetOfficeWeather(WeatherEntity):
     def _update_callback(self) -> None:
         """Load data from integration."""
         self.metoffice_now = self._data.now
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def should_poll(self) -> bool:

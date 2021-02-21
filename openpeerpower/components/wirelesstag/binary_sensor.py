@@ -70,7 +70,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the platform for a WirelessTags."""
-    platform = opp.data.get(WIRELESSTAG_DOMAIN)
+    platform =.opp.data.get(WIRELESSTAG_DOMAIN)
 
     sensors = []
     tags = platform.tags
@@ -93,7 +93,7 @@ class WirelessTagBinarySensor(WirelessTagBaseSensor, BinarySensorEntity):
         self._sensor_type = sensor_type
         self._name = f"{self._tag.name} {self.event.human_readable_name}"
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         tag_id = self.tag_id
         event_type = self.device_class
@@ -138,4 +138,4 @@ class WirelessTagBinarySensor(WirelessTagBaseSensor, BinarySensorEntity):
         """Update state from arrived push notification."""
         # state should be 'on' or 'off'
         self._state = event.data.get("state")
-        self.async_write_op.state()
+        self.async_write_ha_state()

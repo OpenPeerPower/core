@@ -46,17 +46,17 @@ class DemoLock(LockEntity):
     def lock(self, **kwargs):
         """Lock the device."""
         self._state = STATE_LOCKED
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def unlock(self, **kwargs):
         """Unlock the device."""
         self._state = STATE_UNLOCKED
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def open(self, **kwargs):
         """Open the door latch."""
         self._state = STATE_UNLOCKED
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def supported_features(self):

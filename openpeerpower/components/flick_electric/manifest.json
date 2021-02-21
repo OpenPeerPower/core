@@ -2,7 +2,7 @@
   "domain": "flick_electric",
   "name": "Flick Electric",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/flick_electric/",
+  "documentation": "https://www.open-peer-power.io/integrations/flick_electric/",
   "requirements": [
     "PyFlick==0.0.2"
   ],

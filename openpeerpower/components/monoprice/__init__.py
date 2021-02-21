@@ -7,8 +7,8 @@ from serial import SerialException
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_PORT
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.exceptions import ConfigEntryNotReady
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
 
 from .const import (
     CONF_NOT_FIRST_RUN,
@@ -33,7 +33,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     port = entry.data[CONF_PORT]
 
     try:
-        monoprice = await opp..async_add_executor_job(get_monoprice, port)
+        monoprice = await.opp.async_add_executor_job(get_monoprice, port)
     except SerialException as err:
         _LOGGER.error("Error connecting to Monoprice controller at %s", port)
         raise ConfigEntryNotReady from err
@@ -82,4 +82,4 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def _update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
-    await opp..config_entries.async_reload(entry.entry_id)
+    await.opp.config_entries.async_reload(entry.entry_id)

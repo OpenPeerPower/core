@@ -122,12 +122,12 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     # Keep track of configured receivers so that we don't end up
     # discovering a receiver dynamically that we have static config
     # for. Map each device from its zone_id .
-    known_zones = opp.data.setdefault(DATA_YAMAHA, set())
+    known_zones =.opp.data.setdefault(DATA_YAMAHA, set())
 
     # Get the Infos for configuration from config (YAML) or Discovery
     config_info = YamahaConfigInfo(config=config, discovery_info=discovery_info)
     # Async check if the Receivers are there in the network
-    receivers = await opp..async_add_executor_job(_discovery, config_info)
+    receivers = await.opp.async_add_executor_job(_discovery, config_info)
 
     entities = []
     for receiver in receivers:

@@ -6,9 +6,9 @@ from openpeerpower.const import (
     POWER_WATT,
     VOLT,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity import Entity
 
 from .const import (
     ACTIVE_NAME,
@@ -60,9 +60,9 @@ def sense_to_mdi(sense_icon):
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Sense sensor."""
-    data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DATA]
-    sense_devices_data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DEVICES_DATA]
-    trends_coordinator = opp.data[DOMAIN][config_entry.entry_id][
+    data =.opp.data[DOMAIN][config_entry.entry_id][SENSE_DATA]
+    sense_devices_data =.opp.data[DOMAIN][config_entry.entry_id][SENSE_DEVICES_DATA]
+    trends_coordinator =.opp.data[DOMAIN][config_entry.entry_id][
         SENSE_TRENDS_COORDINATOR
     ]
 
@@ -71,7 +71,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     await trends_coordinator.async_request_refresh()
 
     sense_monitor_id = data.sense_monitor_id
-    sense_devices = opp.data[DOMAIN][config_entry.entry_id][
+    sense_devices =.opp.data[DOMAIN][config_entry.entry_id][
         SENSE_DISCOVERED_DEVICES_DATA
     ]
 
@@ -182,7 +182,7 @@ class SenseActiveSensor(Entity):
         """Return the device should not poll for updates."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -204,7 +204,7 @@ class SenseActiveSensor(Entity):
             return
         self._state = new_state
         self._available = True
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class SenseVoltageSensor(Entity):
@@ -266,7 +266,7 @@ class SenseVoltageSensor(Entity):
         """Return the device should not poll for updates."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -284,7 +284,7 @@ class SenseVoltageSensor(Entity):
             return
         self._available = True
         self._state = new_state
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class SenseTrendsSensor(Entity):
@@ -310,7 +310,7 @@ class SenseTrendsSensor(Entity):
         self._is_production = is_production
         self._state = None
         self._unit_of_measurement = ENERGY_KILO_WATT_HOUR
-        self._op._any_update = False
+        self._had_any_update = False
 
     @property
     def name(self):
@@ -325,7 +325,7 @@ class SenseTrendsSensor(Entity):
     @property
     def available(self):
         """Return if entity is available."""
-        return self._op._any_update and self._coordinator.last_update_success
+        return self._had_any_update and self._coordinator.last_update_success
 
     @property
     def unit_of_measurement(self):
@@ -355,8 +355,8 @@ class SenseTrendsSensor(Entity):
     @callback
     def _async_update(self):
         """Track if we had an update so we do not report zero data."""
-        self._op._any_update = True
-        self.async_write_op.state()
+        self._had_any_update = True
+        self.async_write_ha_state()
 
     async def async_update(self):
         """Update the entity.
@@ -365,7 +365,7 @@ class SenseTrendsSensor(Entity):
         """
         await self._coordinator.async_request_refresh()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """When entity is added to.opp."""
         self.async_on_remove(self._coordinator.async_add_listener(self._async_update))
 
@@ -429,7 +429,7 @@ class SenseEnergyDevice(Entity):
         """Return the device should not poll for updates."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -451,4 +451,4 @@ class SenseEnergyDevice(Entity):
             return
         self._state = new_state
         self._available = True
-        self.async_write_op.state()
+        self.async_write_ha_state()

@@ -42,7 +42,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up Elgato Key Light based on a config entry."""
-    elgato: Elgato = opp.data[DOMAIN][entry.entry_id][DATA_ELGATO_CLIENT]
+    elgato: Elgato =.opp.data[DOMAIN][entry.entry_id][DATA_ELGATO_CLIENT]
     info = await elgato.info()
     async_add_entities([ElgatoLight(elgato, info)], True)
 

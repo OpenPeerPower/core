@@ -22,7 +22,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up WiLight covers from a config entry."""
-    parent = opp.data[DOMAIN][entry.entry_id]
+    parent =.opp.data[DOMAIN][entry.entry_id]
 
     # Handle a discovered WiLight device.
     entities = []
@@ -39,13 +39,13 @@ async def async_setup_entry(
     async_add_entities(entities)
 
 
-def wilight_to_opp_position(value):
-    """Convert wilight position 1..255 to opp format 0..100."""
+def wilight_to.opp_position(value):
+    """Convert wilight position 1..255 to.opp format 0..100."""
     return min(100, round((value * 100) / 255))
 
 
 def.opp_to_wilight_position(value):
-    """Convert opp position 0..100 to wilight 1..255 scale."""
+    """Convert.opp position 0..100 to wilight 1..255 scale."""
     return min(255, round((value * 255) / 100))
 
 
@@ -59,7 +59,7 @@ class WiLightCover(WiLightDevice, CoverEntity):
         None is unknown, 0 is closed, 100 is fully open.
         """
         if "position_current" in self._status:
-            return wilight_to_opp_position(self._status["position_current"])
+            return wilight_to.opp_position(self._status["position_current"])
         return None
 
     @property
@@ -83,7 +83,7 @@ class WiLightCover(WiLightDevice, CoverEntity):
             return None
         return (
             self._status["motor_state"] == WL_STOPPED
-            and wilight_to_opp_position(self._status["position_current"]) == 0
+            and wilight_to.opp_position(self._status["position_current"]) == 0
         )
 
     async def async_open_cover(self, **kwargs):
@@ -96,7 +96,7 @@ class WiLightCover(WiLightDevice, CoverEntity):
 
     async def async_set_cover_position(self, **kwargs):
         """Move the cover to a specific position."""
-        position = opp_to_wilight_position(kwargs[ATTR_POSITION])
+        position =.opp_to_wilight_position(kwargs[ATTR_POSITION])
         await self._client.set_cover_position(self._index, position)
 
     async def async_stop_cover(self, **kwargs):

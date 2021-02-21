@@ -1,11 +1,11 @@
 """Intents for the Shopping List integration."""
-from openpeerpowerr.helpers import intent
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers import intent
+import openpeerpower.helpers.config_validation as cv
 
 from . import DOMAIN, EVENT
 
-INTENT_ADD_ITEM = "OppShoppingListAddItem"
-INTENT_LAST_ITEMS = "OppShoppingListLastItems"
+INTENT_ADD_ITEM = "HassShoppingListAddItem"
+INTENT_LAST_ITEMS = "HassShoppingListLastItems"
 
 
 async def async_setup_intents.opp):
@@ -20,7 +20,7 @@ class AddItemIntent(intent.IntentHandler):
     intent_type = INTENT_ADD_ITEM
     slot_schema = {"item": cv.string}
 
-    async def async_op.dle(self, intent_obj):
+    async def async_handle(self, intent_obj):
         """Handle the intent."""
         slots = self.async_validate_slots(intent_obj.slots)
         item = slots["item"]["value"]
@@ -38,7 +38,7 @@ class ListTopItemsIntent(intent.IntentHandler):
     intent_type = INTENT_LAST_ITEMS
     slot_schema = {"item": cv.string}
 
-    async def async_op.dle(self, intent_obj):
+    async def async_handle(self, intent_obj):
         """Handle the intent."""
         items = intent_obj.opp.data[DOMAIN].items[-5:]
         response = intent_obj.create_response()

@@ -3,7 +3,7 @@ import logging
 
 import smarttub
 
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
 )
@@ -31,6 +31,11 @@ class SmartTubEntity(CoordinatorEntity):
         super().__init__(coordinator)
         self.spa = spa
         self._entity_type = entity_type
+
+    @property
+    def unique_id(self) -> str:
+        """Return a unique id for the entity."""
+        return f"{self.spa.id}-{self._entity_type}"
 
     @property
     def device_info(self) -> str:

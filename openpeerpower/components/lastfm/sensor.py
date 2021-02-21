@@ -9,8 +9,8 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_API_KEY
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ class LastfmSensor(Entity):
 
     def __init__(self, user, lastfm_api):
         """Initialize the sensor."""
-        self._unique_id = op.hlib.sha256(user.encode("utf-8")).hexdigest()
+        self._unique_id = hashlib.sha256(user.encode("utf-8")).hexdigest()
         self._user = lastfm_api.get_user(user)
         self._name = user
         self._lastfm = lastfm_api

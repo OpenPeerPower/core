@@ -1,7 +1,7 @@
 {
   "domain": "tmb",
   "name": "Transports Metropolitans de Barcelona",
-  "documentation": "https://www.openpeerpower.io/integrations/tmb",
+  "documentation": "https://www.open-peer-power.io/integrations/tmb",
   "requirements": ["tmb==0.0.4"],
   "codeowners": ["@alemuro"]
 }

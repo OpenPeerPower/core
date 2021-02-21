@@ -1,7 +1,7 @@
 {
   "domain": "shiftr",
   "name": "shiftr.io",
-  "documentation": "https://www.openpeerpower.io/integrations/shiftr",
+  "documentation": "https://www.open-peer-power.io/integrations/shiftr",
   "requirements": ["paho-mqtt==1.5.1"],
   "codeowners": ["@fabaff"]
 }

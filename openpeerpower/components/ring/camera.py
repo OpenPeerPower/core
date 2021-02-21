@@ -11,9 +11,9 @@ import requests
 from openpeerpower.components.camera import Camera
 from openpeerpower.components.ffmpeg import DATA_FFMPEG
 from openpeerpower.const import ATTR_ATTRIBUTION
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.aiohttp_client import async_aiohttp_proxy_stream
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.core import callback
+from openpeerpower.helpers.aiohttp_client import async_aiohttp_proxy_stream
+from openpeerpower.util import dt as dt_util
 
 from . import ATTRIBUTION, DOMAIN
 from .entity import RingEntityMixin
@@ -25,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up a Ring Door Bell and StickUp Camera."""
-    devices = opp.data[DOMAIN][config_entry.entry_id]["devices"]
+    devices =.opp.data[DOMAIN][config_entry.entry_id]["devices"]
 
     cams = []
     for camera in chain(
@@ -53,17 +53,17 @@ class RingCam(RingEntityMixin, Camera):
         self._video_url = None
         self._expires_at = dt_util.utcnow() - FORCE_REFRESH_INTERVAL
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         await self.ring_objects["history_data"].async_track_device(
             self._device, self._history_update_callback
         )
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Disconnect callbacks."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
 
         self.ring_objects["history_data"].async_untrack_device(
             self._device, self._history_update_callback
@@ -74,13 +74,13 @@ class RingCam(RingEntityMixin, Camera):
         """Call update method."""
         if history_data:
             self._last_event = history_data[0]
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
         else:
             self._last_event = None
             self._last_video_id = None
             self._video_url = None
             self._expires_at = dt_util.utcnow()
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     @property
     def name(self):

@@ -87,5 +87,5 @@ async def get_coordinator.opp):
         update_method=async_get_cases,
         update_interval=timedelta(hours=1),
     )
-    await opp..data[DOMAIN].async_refresh()
+    await.opp.data[DOMAIN].async_refresh()
     return.opp.data[DOMAIN]

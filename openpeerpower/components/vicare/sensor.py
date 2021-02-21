@@ -253,8 +253,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    vicare_api = opp.data[VICARE_DOMAIN][VICARE_API]
-    heating_type = opp.data[VICARE_DOMAIN][VICARE_HEATING_TYPE]
+    vicare_api =.opp.data[VICARE_DOMAIN][VICARE_API]
+    heating_type =.opp.data[VICARE_DOMAIN][VICARE_HEATING_TYPE]
 
     sensors = SENSORS_GENERIC.copy()
 

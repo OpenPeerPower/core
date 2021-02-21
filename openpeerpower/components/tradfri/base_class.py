@@ -34,7 +34,7 @@ class TradfriBaseClass(Entity):
 
     def __init__(self, device, api, gateway_id):
         """Initialize a device."""
-        self._api = op.dle_error(api)
+        self._api = handle_error(api)
         self._device = None
         self._device_control = None
         self._device_data = None
@@ -48,7 +48,7 @@ class TradfriBaseClass(Entity):
     def _async_start_observe(self, exc=None):
         """Start observation of device."""
         if exc:
-            self.async_write_op.state()
+            self.async_write_ha_state()
             _LOGGER.warning("Observation failed for %s", self._name, exc_info=exc)
 
         try:
@@ -62,7 +62,7 @@ class TradfriBaseClass(Entity):
             _LOGGER.warning("Observation failed, trying again", exc_info=err)
             self._async_start_observe()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Start thread when added to.opp."""
         self._async_start_observe()
 
@@ -85,7 +85,7 @@ class TradfriBaseClass(Entity):
     def _observe_update(self, device):
         """Receive new state data for this device."""
         self._refresh(device)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _refresh(self, device):
         """Refresh the device data."""

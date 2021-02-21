@@ -15,8 +15,8 @@ from openpeerpower.const import (
     CONF_DEVICES,
     STATE_ON,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import event as evt
+from openpeerpower.core import callback
+from openpeerpower.helpers import event as evt
 
 from . import (
     CONF_DATA_BITS,
@@ -173,9 +173,9 @@ class RfxtrxBinarySensor(RfxtrxEntity, BinarySensorEntity):
         self._cmd_on = cmd_on
         self._cmd_off = cmd_off
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Restore device state."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         if self._event is None:
             old_state = await self.async_get_last_state()
@@ -231,7 +231,7 @@ class RfxtrxBinarySensor(RfxtrxEntity, BinarySensorEntity):
             self._apply_event_standard(event)
 
     @callback
-    def _op.dle_event(self, event, device_id):
+    def _handle_event(self, event, device_id):
         """Check if event applies to me and update."""
         if device_id != self._device_id:
             return
@@ -245,7 +245,7 @@ class RfxtrxBinarySensor(RfxtrxEntity, BinarySensorEntity):
 
         self._apply_event(event)
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
         if self._delay_listener:
             self._delay_listener()
@@ -258,7 +258,7 @@ class RfxtrxBinarySensor(RfxtrxEntity, BinarySensorEntity):
                 """Switch device off after a delay."""
                 self._delay_listener = None
                 self._state = False
-                self.async_write_op.state()
+                self.async_write_ha_state()
 
             self._delay_listener = evt.async_call_later(
                 self.opp, self._off_delay, off_delay_listener

@@ -73,7 +73,7 @@ SCAN_INTERVAL = timedelta(seconds=10)
 AUTHENTICATION_LIST = {"basic": "basic"}
 
 
-def _op._unique_names(devices):
+def _has_unique_names(devices):
     names = [device[CONF_NAME] for device in devices]
     vol.Schema(vol.Unique())(names)
     return devices
@@ -108,7 +108,7 @@ AMCREST_SCHEMA = vol.Schema(
 )
 
 CONFIG_SCHEMA = vol.Schema(
-    {DOMAIN: vol.All(cv.ensure_list, [AMCREST_SCHEMA], _op._unique_names)},
+    {DOMAIN: vol.All(cv.ensure_list, [AMCREST_SCHEMA], _has_unique_names)},
     extra=vol.ALLOW_EXTRA,
 )
 
@@ -118,7 +118,7 @@ class AmcrestChecker(Http):
 
     def __init__(self,.opp, name, host, port, user, password):
         """Initialize."""
-        self._opp = opp
+        self..opp =.opp
         self._wrap_name = name
         self._wrap_errors = 0
         self._wrap_lock = threading.Lock()
@@ -147,9 +147,9 @@ class AmcrestChecker(Http):
 
     def _start_recovery(self):
         self._wrap_event_flag.clear()
-        dispatcher_send(self._opp, service_signal(SERVICE_UPDATE, self._wrap_name))
+        dispatcher_send(self..opp, service_signal(SERVICE_UPDATE, self._wrap_name))
         self._unsub_recheck = track_time_interval(
-            self._opp, self._wrap_test_online, RECHECK_INTERVAL
+            self..opp, self._wrap_test_online, RECHECK_INTERVAL
         )
 
     def command(self, *args, **kwargs):
@@ -185,7 +185,7 @@ class AmcrestChecker(Http):
             self._unsub_recheck = None
             _LOGGER.error("%s camera back online", self._wrap_name)
             self._wrap_event_flag.set()
-            dispatcher_send(self._opp, service_signal(SERVICE_UPDATE, self._wrap_name))
+            dispatcher_send(self..opp, service_signal(SERVICE_UPDATE, self._wrap_name))
         return ret
 
     def _wrap_test_online(self, now):
@@ -216,7 +216,7 @@ def _start_event_monitor.opp, name, api, event_codes):
     thread = threading.Thread(
         target=_monitor_events,
         name=f"Amcrest {name}",
-        args= opp, name, api, event_codes),
+        args=.opp, name, api, event_codes),
         daemon=True,
     )
     thread.start()
@@ -289,7 +289,7 @@ def setup.opp, config):
 
     async def async_extract_from_service(call):
         if call.context.user_id:
-            user = await opp..auth.async_get_user(call.context.user_id)
+            user = await.opp.auth.async_get_user(call.context.user_id)
             if user is None:
                 raise UnknownUser(context=call.context)
         else:
@@ -318,7 +318,7 @@ def setup.opp, config):
             entity_ids.append(entity_id)
         return entity_ids
 
-    async def async_service_op.dler(call):
+    async def async_service_handler(call):
         args = []
         for arg in CAMERA_SERVICES[call.service][2]:
             args.append(call.data[arg])
@@ -326,7 +326,7 @@ def setup.opp, config):
             async_dispatcher_send.opp, service_signal(call.service, entity_id), *args)
 
     for service, params in CAMERA_SERVICES.items():
-       .opp.services.register(DOMAIN, service, async_service_op.dler, params[0])
+       .opp.services.register(DOMAIN, service, async_service_handler, params[0])
 
     return True
 

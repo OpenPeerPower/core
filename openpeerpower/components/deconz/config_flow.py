@@ -16,8 +16,8 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.components import ssdp
 from openpeerpower.const import CONF_API_KEY, CONF_HOST, CONF_PORT
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import aiohttp_client
+from openpeerpower.core import callback
+from openpeerpower.helpers import aiohttp_client
 
 from .const import (
     CONF_ALLOW_CLIP_SENSOR,
@@ -49,7 +49,7 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_PUSH
 
-    _oppio_discovery = None
+    .oppio_discovery = None
 
     @staticmethod
     @callback
@@ -199,7 +199,7 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         parsed_url = urlparse(discovery_info[ssdp.ATTR_SSDP_LOCATION])
 
         entry = await self.async_set_unique_id(self.bridge_id)
-        if entry and entry.source == "oppio":
+        if entry and entry.source == .oppio":
             return self.async_abort(reason="already_configured")
 
         self._abort_if_unique_id_configured(
@@ -215,12 +215,12 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         return await self.async_step_link()
 
-    async def async_step_oppio(self, discovery_info):
-        """Prepare configuration for a Opp.io deCONZ bridge.
+    async def async_step.oppio(self, discovery_info):
+        """Prepare configuration for a Hass.io deCONZ bridge.
 
         This flow is triggered by the discovery component.
         """
-        LOGGER.debug("deCONZ OPPIO discovery %s", pformat(discovery_info))
+        LOGGER.debug("deCONZ HASSIO discovery %s", pformat(discovery_info))
 
         self.bridge_id = normalize_bridge_id(discovery_info[CONF_SERIAL])
         await self.async_set_unique_id(self.bridge_id)
@@ -233,24 +233,24 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             }
         )
 
-        self._oppio_discovery = discovery_info
+        self..oppio_discovery = discovery_info
 
-        return await self.async_step_oppio_confirm()
+        return await self.async_step.oppio_confirm()
 
-    async def async_step_oppio_confirm(self, user_input=None):
-        """Confirm a Opp.io discovery."""
+    async def async_step.oppio_confirm(self, user_input=None):
+        """Confirm a Hass.io discovery."""
         if user_input is not None:
             self.deconz_config = {
-                CONF_HOST: self._oppio_discovery[CONF_HOST],
-                CONF_PORT: self._oppio_discovery[CONF_PORT],
-                CONF_API_KEY: self._oppio_discovery[CONF_API_KEY],
+                CONF_HOST: self..oppio_discovery[CONF_HOST],
+                CONF_PORT: self..oppio_discovery[CONF_PORT],
+                CONF_API_KEY: self..oppio_discovery[CONF_API_KEY],
             }
 
             return await self._create_entry()
 
         return self.async_show_form(
-            step_id="oppio_confirm",
-            description_placeholders={"addon": self._oppio_discovery["addon"]},
+            step_id=.oppio_confirm",
+            description_placeholders={"addon": self..oppio_discovery["addon"]},
         )
 
 

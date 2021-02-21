@@ -3,7 +3,7 @@ import logging
 
 from pyrainbird import RainbirdController
 
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.entity import Entity
 
 from . import (
     DATA_RAINBIRD,
@@ -22,7 +22,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    controller = opp.data[DATA_RAINBIRD][discovery_info[RAINBIRD_CONTROLLER]]
+    controller =.opp.data[DATA_RAINBIRD][discovery_info[RAINBIRD_CONTROLLER]]
     add_entities(
         [RainBirdSensor(controller, sensor_type) for sensor_type in SENSOR_TYPES], True
     )

@@ -2,7 +2,7 @@
   "domain": "notion",
   "name": "Notion",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/notion",
+  "documentation": "https://www.open-peer-power.io/integrations/notion",
   "requirements": ["aionotion==1.1.0"],
   "codeowners": ["@bachya"]
 }

@@ -1,8 +1,8 @@
 {
   "domain": "panel_custom",
   "name": "Custom Panel",
-  "documentation": "https://www.openpeerpower.io/integrations/panel_custom",
+  "documentation": "https://www.open-peer-power.io/integrations/panel_custom",
   "dependencies": ["frontend"],
-  "codeowners": ["@openpeerpower/frontend"],
+  "codeowners": ["@open-peer-power/frontend"],
   "quality_scale": "internal"
 }

@@ -142,17 +142,17 @@ def valid_state(state: str) -> bool:
 
 def callback(func: CALLABLE_T) -> CALLABLE_T:
     """Annotation to mark method as safe to call from within the event loop."""
-    setattr(func, "_opp_callback", True)
+    setattr(func, ".opp_callback", True)
     return func
 
 
 def is_callback(func: Callable[..., Any]) -> bool:
     """Check if function is safe to be called in the event loop."""
-    return getattr(func, "_opp_callback", False) is True
+    return getattr(func, ".opp_callback", False) is True
 
 
 @enum.unique
-class OppJobType(enum.Enum):
+class HassJobType(enum.Enum):
     """Represent a job type."""
 
     Coroutinefunction = 1
@@ -160,7 +160,7 @@ class OppJobType(enum.Enum):
     Executor = 3
 
 
-class OppJob:
+class HassJob:
     """Represent a job to be run later.
 
     We check the callable type in advance
@@ -173,7 +173,7 @@ class OppJob:
     def __init__(self, target: Callable):
         """Create a job object."""
         if asyncio.iscoroutine(target):
-            raise ValueError("Coroutine not allowed to be passed to OppJob")
+            raise ValueError("Coroutine not allowed to be passed to HassJob")
 
         self.target = target
         self.job_type = _get_callable_job_type(target)
@@ -183,7 +183,7 @@ class OppJob:
         return f"<Job {self.job_type} {self.target}>"
 
 
-def _get_callable_job_type(target: Callable) -> OppJobType:
+def _get_callable_job_type(target: Callable) -> HassJobType:
     """Determine the job type from the callable."""
     # Check for partials to properly determine if coroutine function
     check_target = target
@@ -191,10 +191,10 @@ def _get_callable_job_type(target: Callable) -> OppJobType:
         check_target = check_target.func
 
     if asyncio.iscoroutinefunction(check_target):
-        return OppJobType.Coroutinefunction
+        return HassJobType.Coroutinefunction
     if is_callback(check_target):
-        return OppJobType.Callback
-    return OppJobType.Executor
+        return HassJobType.Callback
+    return HassJobType.Executor
 
 
 class CoreState(enum.Enum):
@@ -253,7 +253,7 @@ class OpenPeerPower:
         """Start Open Peer Power.
 
         Note: This function is only used for testing.
-        For regular use, use "await opp..run()".
+        For regular use, use "await.opp.run()".
         """
         # Register the async start
         fire_coroutine_threadsafe(self.async_start(), self.loop)
@@ -280,9 +280,9 @@ class OpenPeerPower:
         await self.async_start()
         if attach_signals:
             # pylint: disable=import-outside-toplevel
-            from openpeerpower.helpers.signal import async_register_signal_op.dling
+            from openpeerpower.helpers.signal import async_register_signal_handling
 
-            async_register_signal_op.dling(self)
+            async_register_signal_handling(self)
 
         await self._stopped.wait()
         return self.exit_code
@@ -308,7 +308,7 @@ class OpenPeerPower:
             _LOGGER.warning(
                 "Something is blocking Open Peer Power from wrapping up the "
                 "start up phase. We're going to continue anyway. Please "
-                "report the following info at https://github.com/openpeerpower/core/issues: %s",
+                "report the following info at https://github.com/open-peer-power/core/issues: %s",
                 ", ".join(self.config.components),
             )
 
@@ -354,21 +354,21 @@ class OpenPeerPower:
         if asyncio.iscoroutine(target):
             return self.async_create_task(cast(Coroutine, target))
 
-        return self.async_add_opp_job(OppJob(target), *args)
+        return self.async_add.opp_job(HassJob(target), *args)
 
     @callback
-    def async_add_opp_job(
-        self,.oppjob: OppJob, *args: Any
+    def async_add.opp_job(
+        self,.oppjob: HassJob, *args: Any
     ) -> Optional[asyncio.Future]:
-        """Add a OppJob from within the event loop.
+        """Add a HassJob from within the event loop.
 
         This method must be run in the event loop.
-       .oppjob: OppJob to call.
+       .oppjob: HassJob to call.
         args: parameters for method to call.
         """
-        if.oppjob.job_type == OppJobType.Coroutinefunction:
+        if.oppjob.job_type == HassJobType.Coroutinefunction:
             task = self.loop.create_task.oppjob.target(*args))
-        elif.oppjob.job_type == OppJobType.Callback:
+        elif.oppjob.job_type == HassJobType.Callback:
             self.loop.call_soon.oppjob.target, *args)
             return None
         else:
@@ -421,21 +421,21 @@ class OpenPeerPower:
         self._track_task = False
 
     @callback
-    def async_run_opp_job(
-        self,.oppjob: OppJob, *args: Any
+    def async_run.opp_job(
+        self,.oppjob: HassJob, *args: Any
     ) -> Optional[asyncio.Future]:
-        """Run a OppJob from within the event loop.
+        """Run a HassJob from within the event loop.
 
         This method must be run in the event loop.
 
-       .oppjob: OppJob
+       .oppjob: HassJob
         args: parameters for method to call.
         """
-        if.oppjob.job_type == OppJobType.Callback:
+        if.oppjob.job_type == HassJobType.Callback:
            .oppjob.target(*args)
             return None
 
-        return self.async_add_opp_job.oppjob, *args)
+        return self.async_add.opp_job.oppjob, *args)
 
     @callback
     def async_run_job(
@@ -451,7 +451,7 @@ class OpenPeerPower:
         if asyncio.iscoroutine(target):
             return self.async_create_task(cast(Coroutine, target))
 
-        return self.async_run_opp_job(OppJob(target), *args)
+        return self.async_run.opp_job(HassJob(target), *args)
 
     def block_till_done(self) -> None:
         """Block until all pending work is done."""
@@ -619,7 +619,7 @@ class Event:
         self.time_fired = time_fired or dt_util.utcnow()
         self.context: Context = context or Context()
 
-    def __op.h__(self) -> int:
+    def __hash__(self) -> int:
         """Make hashable."""
         # The only event type that shares context are the TIME_CHANGED
         return hash((self.event_type, self.context.id, self.time_fired))
@@ -662,8 +662,8 @@ class EventBus:
 
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize a new event bus."""
-        self._listeners: Dict[str, List[Tuple[OppJob, Optional[Callable]]]] = {}
-        self._opp = opp
+        self._listeners: Dict[str, List[Tuple[HassJob, Optional[Callable]]]] = {}
+        self..opp =.opp
 
     @callback
     def async_listeners(self) -> Dict[str, int]:
@@ -676,7 +676,7 @@ class EventBus:
     @property
     def listeners(self) -> Dict[str, int]:
         """Return dictionary with events and the number of listeners."""
-        return run_callback_threadsafe(self._opp.loop, self.async_listeners).result()
+        return run_callback_threadsafe(self..opp.loop, self.async_listeners).result()
 
     def fire(
         self,
@@ -686,7 +686,7 @@ class EventBus:
         context: Optional[Context] = None,
     ) -> None:
         """Fire an event."""
-        self._opp.loop.call_soon_threadsafe(
+        self..opp.loop.call_soon_threadsafe(
             self.async_fire, event_type, event_data, origin, context
         )
 
@@ -726,7 +726,7 @@ class EventBus:
                 except Exception:  # pylint: disable=broad-except
                     _LOGGER.exception("Error in event filter")
                     continue
-            self._opp.async_add_opp_job(job, event)
+            self..opp.async_add.opp_job(job, event)
 
     def listen(self, event_type: str, listener: Callable) -> CALLBACK_TYPE:
         """Listen for all events or events of a specific type.
@@ -735,12 +735,12 @@ class EventBus:
         as event_type.
         """
         async_remove_listener = run_callback_threadsafe(
-            self._opp.loop, self.async_listen, event_type, listener
+            self..opp.loop, self.async_listen, event_type, listener
         ).result()
 
         def remove_listener() -> None:
             """Remove the listener."""
-            run_callback_threadsafe(self._opp.loop, async_remove_listener).result()
+            run_callback_threadsafe(self..opp.loop, async_remove_listener).result()
 
         return remove_listener
 
@@ -765,12 +765,12 @@ class EventBus:
         if event_filter is not None and not is_callback(event_filter):
             raise OpenPeerPowerError(f"Event filter {event_filter} is not a callback")
         return self._async_listen_filterable_job(
-            event_type, (OppJob(listener), event_filter)
+            event_type, (HassJob(listener), event_filter)
         )
 
     @callback
     def _async_listen_filterable_job(
-        self, event_type: str, filterable_job: Tuple[OppJob, Optional[Callable]]
+        self, event_type: str, filterable_job: Tuple[HassJob, Optional[Callable]]
     ) -> CALLBACK_TYPE:
         self._listeners.setdefault(event_type, []).append(filterable_job)
 
@@ -789,12 +789,12 @@ class EventBus:
         Returns function to unsubscribe the listener.
         """
         async_remove_listener = run_callback_threadsafe(
-            self._opp.loop, self.async_listen_once, event_type, listener
+            self..opp.loop, self.async_listen_once, event_type, listener
         ).result()
 
         def remove_listener() -> None:
             """Remove the listener."""
-            run_callback_threadsafe(self._opp.loop, async_remove_listener).result()
+            run_callback_threadsafe(self..opp.loop, async_remove_listener).result()
 
         return remove_listener
 
@@ -809,7 +809,7 @@ class EventBus:
 
         This method must be run in the event loop.
         """
-        filterable_job: Optional[Tuple[OppJob, Optional[Callable]]] = None
+        filterable_job: Optional[Tuple[HassJob, Optional[Callable]]] = None
 
         @callback
         def _onetime_listener(event: Event) -> None:
@@ -825,15 +825,15 @@ class EventBus:
             setattr(_onetime_listener, "run", True)
             assert filterable_job is not None
             self._async_remove_listener(event_type, filterable_job)
-            self._opp.async_run_job(listener, event)
+            self..opp.async_run_job(listener, event)
 
-        filterable_job = (OppJob(_onetime_listener), None)
+        filterable_job = (HassJob(_onetime_listener), None)
 
         return self._async_listen_filterable_job(event_type, filterable_job)
 
     @callback
     def _async_remove_listener(
-        self, event_type: str, filterable_job: Tuple[OppJob, Optional[Callable]]
+        self, event_type: str, filterable_job: Tuple[HassJob, Optional[Callable]]
     ) -> None:
         """Remove a listener of a specific event_type.
 
@@ -1243,7 +1243,7 @@ class Service:
         context: Optional[Context] = None,
     ) -> None:
         """Initialize a service."""
-        self.job = OppJob(func)
+        self.job = HassJob(func)
         self.schema = schema
 
 
@@ -1282,12 +1282,12 @@ class ServiceRegistry:
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize a service registry."""
         self._services: Dict[str, Dict[str, Service]] = {}
-        self._opp = opp
+        self..opp =.opp
 
     @property
     def services(self) -> Dict[str, Dict[str, Service]]:
         """Return dictionary with per domain a list of available services."""
-        return run_callback_threadsafe(self._opp.loop, self.async_services).result()
+        return run_callback_threadsafe(self..opp.loop, self.async_services).result()
 
     @callback
     def async_services(self) -> Dict[str, Dict[str, Service]]:
@@ -1317,7 +1317,7 @@ class ServiceRegistry:
         Schema is called to coerce and validate the service data.
         """
         run_callback_threadsafe(
-            self._opp.loop, self.async_register, domain, service, service_func, schema
+            self..opp.loop, self.async_register, domain, service, service_func, schema
         ).result()
 
     @callback
@@ -1344,14 +1344,14 @@ class ServiceRegistry:
         else:
             self._services[domain] = {service: service_obj}
 
-        self._opp.bus.async_fire(
+        self..opp.bus.async_fire(
             EVENT_SERVICE_REGISTERED, {ATTR_DOMAIN: domain, ATTR_SERVICE: service}
         )
 
     def remove(self, domain: str, service: str) -> None:
         """Remove a registered service from service handler."""
         run_callback_threadsafe(
-            self._opp.loop, self.async_remove, domain, service
+            self..opp.loop, self.async_remove, domain, service
         ).result()
 
     @callback
@@ -1372,7 +1372,7 @@ class ServiceRegistry:
         if not self._services[domain]:
             self._services.pop(domain)
 
-        self._opp.bus.async_fire(
+        self..opp.bus.async_fire(
             EVENT_SERVICE_REMOVED, {ATTR_DOMAIN: domain, ATTR_SERVICE: service}
         )
 
@@ -1395,7 +1395,7 @@ class ServiceRegistry:
             self.async_call(
                 domain, service, service_data, blocking, context, limit, target
             ),
-            self._opp.loop,
+            self..opp.loop,
         ).result()
 
     async def async_call(
@@ -1439,7 +1439,7 @@ class ServiceRegistry:
 
         if handler.schema:
             try:
-                processed_data = op.dler.schema(service_data)
+                processed_data = handler.schema(service_data)
             except vol.Invalid:
                 _LOGGER.debug(
                     "Invalid data for service call %s.%s: %s",
@@ -1453,7 +1453,7 @@ class ServiceRegistry:
 
         service_call = ServiceCall(domain, service, processed_data, context)
 
-        self._opp.bus.async_fire(
+        self..opp.bus.async_fire(
             EVENT_CALL_SERVICE,
             {
                 ATTR_DOMAIN: domain.lower(),
@@ -1468,7 +1468,7 @@ class ServiceRegistry:
             self._run_service_in_background(coro, service_call)
             return None
 
-        task = self._opp.async_create_task(coro)
+        task = self..opp.async_create_task(coro)
         try:
             await asyncio.wait({task}, timeout=limit)
         except asyncio.CancelledError:
@@ -1513,18 +1513,18 @@ class ServiceRegistry:
             except Exception:  # pylint: disable=broad-except
                 _LOGGER.exception("Error executing service: %s", service_call)
 
-        self._opp.async_create_task(catch_exceptions())
+        self..opp.async_create_task(catch_exceptions())
 
     async def _execute_service(
         self, handler: Service, service_call: ServiceCall
     ) -> None:
         """Execute a service."""
-        if handler.job.job_type == OppJobType.Coroutinefunction:
+        if handler.job.job_type == HassJobType.Coroutinefunction:
             await handler.job.target(service_call)
-        elif handler.job.job_type == OppJobType.Callback:
+        elif handler.job.job_type == HassJobType.Callback:
             handler.job.target(service_call)
         else:
-            await self._opp.async_add_executor_job(handler.job.target, service_call)
+            await self..opp.async_add_executor_job(handler.job.target, service_call)
 
 
 class Config:
@@ -1532,7 +1532,7 @@ class Config:
 
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize a new config object."""
-        self.opp = opp
+        self.opp =.opp
 
         self.latitude: float = 0
         self.longitude: float = 0
@@ -1760,7 +1760,7 @@ def _async_create_timer.opp: OpenPeerPower) -> None:
 
         slp_seconds = 1 - (now.microsecond / 10 ** 6)
         target = monotonic() + slp_seconds
-        handle = opp.loop.call_later(slp_seconds, fire_time_event, target)
+        handle =.opp.loop.call_later(slp_seconds, fire_time_event, target)
 
     @callback
     def fire_time_event(target: float) -> None:

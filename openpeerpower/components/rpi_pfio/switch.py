@@ -67,10 +67,10 @@ class RPiPFIOSwitch(ToggleEntity):
         """Turn the device on."""
         rpi_pfio.write_output(self._port, 0 if self._invert_logic else 1)
         self._state = True
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
         rpi_pfio.write_output(self._port, 1 if self._invert_logic else 0)
         self._state = False
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

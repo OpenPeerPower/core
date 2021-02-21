@@ -132,7 +132,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
     ).async_setup.opp)
 
-    async def reload_service_op.dler(service_call: ServiceCallType) -> None:
+    async def reload_service_handler(service_call: ServiceCallType) -> None:
         """Reload yaml entities."""
         conf = await component.async_prepare_reload(skip_reset=True)
         if conf is None:
@@ -145,7 +145,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
        .opp,
         DOMAIN,
         SERVICE_RELOAD,
-        reload_service_op.dler,
+        reload_service_handler,
         schema=RELOAD_SERVICE_SCHEMA,
     )
 
@@ -237,9 +237,9 @@ class InputDatetime(RestoreEntity):
         input_dt.editable = False
         return input_dt
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         # Priority 1: Initial value
         if self.state is not None:
@@ -392,9 +392,9 @@ class InputDatetime(RestoreEntity):
         self._current_datetime = dt_util.DEFAULT_TIME_ZONE.localize(
             py_datetime.datetime.combine(date, time)
         )
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_update_config(self, config: typing.Dict) -> None:
         """Handle when the config is updated."""
         self._config = config
-        self.async_write_op.state()
+        self.async_write_ha_state()

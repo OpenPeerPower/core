@@ -48,7 +48,7 @@ class AlexaDirective:
         _endpoint_id = self._directive[API_ENDPOINT]["endpointId"]
         self.entity_id = _endpoint_id.replace("#", ".")
 
-        self.entity = opp.states.get(self.entity_id)
+        self.entity =.opp.states.get(self.entity_id)
         if not self.entity or not config.should_expose(self.entity_id):
             raise AlexaInvalidEndpointError(_endpoint_id)
 
@@ -170,7 +170,7 @@ class AlexaResponse:
         the new value of the property, and Alexa will respond to the user
         "Thermostat set to 20 degrees".
 
-        async_op.dle_message() will call .merge_context_properties() for every
+        async_handle_message() will call .merge_context_properties() for every
         request automatically, however often handlers will call services to
         change state but the effects of those changes are applied
         asynchronously. Thus, handlers should call this method to confirm

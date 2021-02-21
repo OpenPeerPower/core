@@ -53,7 +53,7 @@ class TellstickLight(TellstickDevice, LightEntity):
         """Flag supported features."""
         return SUPPORT_TELLSTICK
 
-    def _parse_op.data(self, kwargs):
+    def _parse_ha_data(self, kwargs):
         """Turn the value from HA into something useful."""
         return kwargs.get(ATTR_BRIGHTNESS)
 

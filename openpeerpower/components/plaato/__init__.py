@@ -180,7 +180,7 @@ async def async_unload_webhook.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_unload_coordinator.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload auth token based entry."""
-    coordinator = opp.data[DOMAIN][entry.entry_id][COORDINATOR]
+    coordinator =.opp.data[DOMAIN][entry.entry_id][COORDINATOR]
     return await async_unload_platforms.opp, entry, coordinator.platforms)
 
 
@@ -202,7 +202,7 @@ async def async_unload_platforms.opp: OpenPeerPower, entry: ConfigEntry, platfor
 
 async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
-    await opp..config_entries.async_reload(entry.entry_id)
+    await.opp.config_entries.async_reload(entry.entry_id)
 
 
 async def handle_webhook.opp, webhook_id, request):
@@ -238,7 +238,7 @@ class PlaatoCoordinator(DataUpdateCoordinator):
     ):
         """Initialize."""
         self.api = Plaato(auth_token=auth_token)
-        self.opp = opp
+        self.opp =.opp
         self.device_type = device_type
         self.platforms = []
 

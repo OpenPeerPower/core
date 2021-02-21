@@ -7,8 +7,8 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import aiohttp_client
+from openpeerpower.core import callback
+from openpeerpower.helpers import aiohttp_client
 
 from .const import (  # pylint: disable=unused-import
     CONF_THRESHOLD,

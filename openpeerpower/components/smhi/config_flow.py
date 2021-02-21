@@ -4,10 +4,10 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers import aiohttp_client
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.util import slugify
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers import aiohttp_client
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.util import slugify
 
 from .const import DOMAIN, HOME_LOCATION_NAME
 
@@ -51,10 +51,10 @@ class SmhiFlowHandler(config_entries.ConfigFlow):
             else:
                 self._errors["base"] = "wrong_location"
 
-        # If opp config has the location set and is a valid coordinate the
+        # If.opp config has the location set and is a valid coordinate the
         # default location is set as default values in the form
         if not smhi_locations(self.opp):
-            if await self._openpeerpowerr_location_exists():
+            if await self._openpeerpower_location_exists():
                 return await self._show_config_form(
                     name=HOME_LOCATION_NAME,
                     latitude=self.opp.config.latitude,
@@ -63,7 +63,7 @@ class SmhiFlowHandler(config_entries.ConfigFlow):
 
         return await self._show_config_form()
 
-    async def _openpeerpowerr_location_exists(self) -> bool:
+    async def _openpeerpower_location_exists(self) -> bool:
         """Return true if default location is set and is valid."""
         if self.opp.config.latitude != 0.0 and self.opp.config.longitude != 0.0:
             # Return true if valid location

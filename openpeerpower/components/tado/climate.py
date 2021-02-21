@@ -78,8 +78,8 @@ async def async_setup_entry(
 ):
     """Set up the Tado climate platform."""
 
-    tado = opp.data[DOMAIN][entry.entry_id][DATA]
-    entities = await opp..async_add_executor_job(_generate_entities, tado)
+    tado =.opp.data[DOMAIN][entry.entry_id][DATA]
+    entities = await.opp.async_add_executor_job(_generate_entities, tado)
 
     platform = entity_platform.current_platform.get()
 
@@ -261,7 +261,7 @@ class TadoClimate(TadoZoneEntity, ClimateEntity):
 
         self._async_update_zone_data()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register for sensor updates."""
 
         self.async_on_remove(
@@ -493,7 +493,7 @@ class TadoClimate(TadoZoneEntity, ClimateEntity):
     def _async_update_callback(self):
         """Load tado data and update state."""
         self._async_update_zone_data()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def _normalize_target_temp_for_hvac_mode(self):
         # Set a target temperature if we don't have any

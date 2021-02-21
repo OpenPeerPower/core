@@ -39,7 +39,7 @@ from openpeerpower.components.weather import (
     WeatherEntity,
 )
 from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME, TEMP_CELSIUS
-from openpeerpowerr.helpers import config_validation as cv
+from openpeerpower.helpers import config_validation as cv
 
 # Reuse data and API logic from the sensor implementation
 from .const import DEFAULT_TIMEFRAME

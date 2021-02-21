@@ -20,8 +20,8 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the Smarty Sensor Platform."""
-    smarty = opp.data[DOMAIN]["api"]
-    name = opp.data[DOMAIN]["name"]
+    smarty =.opp.data[DOMAIN]["api"]
+    name =.opp.data[DOMAIN]["name"]
 
     sensors = [
         SupplyAirTemperatureSensor(name, smarty),
@@ -73,14 +73,14 @@ class SmartySensor(Entity):
         """Return the unit this state is expressed in."""
         return self._unit_of_measurement
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call to update."""
         async_dispatcher_connect(self.opp, SIGNAL_UPDATE_SMARTY, self._update_callback)
 
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
 
 class SupplyAirTemperatureSensor(SmartySensor):

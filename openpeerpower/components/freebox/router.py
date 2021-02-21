@@ -10,12 +10,12 @@ from freebox_api.exceptions import HttpRequestError
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST, CONF_PORT
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.device_registry import CONNECTION_NETWORK_MAC
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
-from openpeerpowerr.helpers.event import async_track_time_interval
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.util import slugify
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.event import async_track_time_interval
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.util import slugify
 
 from .const import (
     API_VERSION,
@@ -36,7 +36,7 @@ class FreeboxRouter:
 
     def __init__(self,.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
         """Initialize a Freebox router."""
-        self.opp = opp
+        self.opp =.opp
         self._entry = entry
         self._host = entry.data[CONF_HOST]
         self._port = entry.data[CONF_PORT]

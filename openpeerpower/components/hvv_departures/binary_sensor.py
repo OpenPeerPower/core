@@ -24,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the binary_sensor platform."""
-    hub = opp.data[DOMAIN][entry.entry_id]
+    hub =.opp.data[DOMAIN][entry.entry_id]
     station_name = entry.data[CONF_STATION]["name"]
     station = entry.data[CONF_STATION]
 
@@ -187,10 +187,10 @@ class HvvDepartureBinarySensor(CoordinatorEntity, BinarySensorEntity):
             if v is not None
         }
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """When entity is added to.opp."""
         self.async_on_remove(
-            self.coordinator.async_add_listener(self.async_write_op.state)
+            self.coordinator.async_add_listener(self.async_write_ha_state)
         )
 
     async def async_update(self):

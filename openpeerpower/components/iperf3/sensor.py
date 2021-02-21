@@ -70,9 +70,9 @@ class Iperf3Sensor(RestoreEntity):
         """Return the polling requirement for this sensor."""
         return False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         self.async_on_remove(
             async_dispatcher_connect(
@@ -94,4 +94,4 @@ class Iperf3Sensor(RestoreEntity):
     @callback
     def _schedule_immediate_update(self, host):
         if host == self._iperf3_data.host:
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)

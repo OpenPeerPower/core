@@ -7,11 +7,11 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_API_KEY, CONF_NAME, HTTP_OK
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import Throttle
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import Throttle
 
 from .const import DOMAIN
 
@@ -143,7 +143,7 @@ class AfterShipSensor(Entity):
         """Icon to use in the frontend."""
         return ICON
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
@@ -154,7 +154,7 @@ class AfterShipSensor(Entity):
     async def _force_update(self):
         """Force update of data."""
         await self.async_update(no_throttle=True)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @Throttle(MIN_TIME_BETWEEN_UPDATES)
     async def async_update(self, **kwargs):

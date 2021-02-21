@@ -10,11 +10,11 @@ from openpeerpower.const import (
     STATE_LOCKED,
     STATE_ON,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import TemplateError
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.reload import async_setup_reload_service
-from openpeerpowerr.helpers.script import Script
+from openpeerpower.core import callback
+from openpeerpower.exceptions import TemplateError
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.reload import async_setup_reload_service
+from openpeerpower.helpers.script import Script
 
 from .const import CONF_AVAILABILITY_TEMPLATE, DOMAIN, PLATFORMS
 from .template_entity import TemplateEntity
@@ -126,23 +126,23 @@ class TemplateLock(TemplateEntity, LockEntity):
 
         self._state = False
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
         self.add_template_attribute(
             "_state", self._state_template, None, self._update_state
         )
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
     async def async_lock(self, **kwargs):
         """Lock the device."""
         if self._optimistic:
             self._state = True
-            self.async_write_op.state()
+            self.async_write_ha_state()
         await self._command_lock.async_run(context=self._context)
 
     async def async_unlock(self, **kwargs):
         """Unlock the device."""
         if self._optimistic:
             self._state = False
-            self.async_write_op.state()
+            self.async_write_ha_state()
         await self._command_unlock.async_run(context=self._context)

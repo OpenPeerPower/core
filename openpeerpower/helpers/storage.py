@@ -8,7 +8,7 @@ from typing import Any, Callable, Dict, List, Optional, Type, Union
 from openpeerpower.const import EVENT_OPENPEERPOWER_FINAL_WRITE
 from openpeerpower.core import CALLBACK_TYPE, CoreState, OpenPeerPower, callback
 from openpeerpower.helpers.event import async_call_later
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 from openpeerpower.util import json as json_util
 
 # mypy: allow-untyped-calls, allow-untyped-defs, no-warn-return-any
@@ -18,7 +18,7 @@ STORAGE_DIR = ".storage"
 _LOGGER = logging.getLogger(__name__)
 
 
-@bind_opp
+@bind.opp
 async def async_migrator(
    .opp,
     old_path,
@@ -47,7 +47,7 @@ async def async_migrator(
 
         return json_util.load_json(old_path)
 
-    config = await opp..async_add_executor_job(load_old_config)
+    config = await.opp.async_add_executor_job(load_old_config)
 
     if config is None:
         return None
@@ -56,11 +56,11 @@ async def async_migrator(
         config = await old_conf_migrate_func(config)
 
     await store.async_save(config)
-    await opp..async_add_executor_job(os.remove, old_path)
+    await.opp.async_add_executor_job(os.remove, old_path)
     return config
 
 
-@bind_opp
+@bind.opp
 class Store:
     """Class to help storing data."""
 
@@ -76,7 +76,7 @@ class Store:
         """Initialize storage class."""
         self.version = version
         self.key = key
-        self.opp = opp
+        self.opp =.opp
         self._private = private
         self._data: Optional[Dict[str, Any]] = None
         self._unsub_delay_listener: Optional[CALLBACK_TYPE] = None
@@ -148,7 +148,7 @@ class Store:
             self._async_ensure_final_write_listener()
             return
 
-        await self._async_op.dle_write_data()
+        await self._async_handle_write_data()
 
     @callback
     def async_delay_save(self, data_func: Callable[[], Dict], delay: float = 0) -> None:
@@ -193,14 +193,14 @@ class Store:
         if self.opp.state == CoreState.stopping:
             self._async_ensure_final_write_listener()
             return
-        await self._async_op.dle_write_data()
+        await self._async_handle_write_data()
 
     async def _async_callback_final_write(self, _event):
         """Handle a write because Open Peer Power is in final write state."""
         self._unsub_final_write_listener = None
-        await self._async_op.dle_write_data()
+        await self._async_handle_write_data()
 
-    async def _async_op.dle_write_data(self, *_args):
+    async def _async_handle_write_data(self, *_args):
         """Handle writing the config."""
         async with self._write_lock:
             self._async_cleanup_delay_listener()

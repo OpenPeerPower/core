@@ -6,7 +6,7 @@ from toonapi import ToonConnectionError, ToonError
 _LOGGER = logging.getLogger(__name__)
 
 
-def toon_exception_op.dler(func):
+def toon_exception_handler(func):
     """Decorate Toon calls to handle Toon exceptions.
 
     A decorator that wraps the passed in function, catches Toon errors,

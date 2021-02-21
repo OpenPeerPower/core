@@ -5,10 +5,10 @@ import logging
 from openpeerpower.components.remote import ATTR_ACTIVITY, ATTR_DELAY_SECS
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST, CONF_NAME
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import entity_registry
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .const import DOMAIN, HARMONY_OPTIONS_UPDATE, PLATFORMS
 from .data import HarmonyData
@@ -115,7 +115,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     # Shutdown a harmony remote for removal
-    data = opp.data[DOMAIN][entry.entry_id]
+    data =.opp.data[DOMAIN][entry.entry_id]
     await data.shutdown()
 
     if unload_ok:

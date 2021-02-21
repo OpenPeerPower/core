@@ -15,7 +15,7 @@ from .const import (
     MANUFACTURER,
     SIGNAL_NAME,
 )
-from .data_op.dler import CAMERA_DATA_CLASS_NAME, NetatmoDataHandler
+from .data_handler import CAMERA_DATA_CLASS_NAME, NetatmoDataHandler
 from .netatmo_entity_base import NetatmoBase
 
 _LOGGER = logging.getLogger(__name__)
@@ -29,22 +29,22 @@ async def async_setup_entry.opp, entry, async_add_entities):
         )
         return
 
-    data_op.dler = opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
+    data_handler =.opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
 
     async def get_entities():
         """Retrieve Netatmo entities."""
-        await data_op.dler.register_data_class(
+        await data_handler.register_data_class(
             CAMERA_DATA_CLASS_NAME, CAMERA_DATA_CLASS_NAME, None
         )
 
         entities = []
         all_cameras = []
 
-        if CAMERA_DATA_CLASS_NAME not in data_op.dler.data:
+        if CAMERA_DATA_CLASS_NAME not in data_handler.data:
             raise PlatformNotReady
 
         try:
-            for home in data_op.dler.data[CAMERA_DATA_CLASS_NAME].cameras.values():
+            for home in data_handler.data[CAMERA_DATA_CLASS_NAME].cameras.values():
                 for camera in home.values():
                     all_cameras.append(camera)
 
@@ -56,7 +56,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
                 _LOGGER.debug("Adding camera light %s %s", camera["id"], camera["name"])
                 entities.append(
                     NetatmoLight(
-                        data_op.dler,
+                        data_handler,
                         camera["id"],
                         camera["type"],
                         camera["home_id"],
@@ -73,14 +73,14 @@ class NetatmoLight(NetatmoBase, LightEntity):
 
     def __init__(
         self,
-        data_op.dler: NetatmoDataHandler,
+        data_handler: NetatmoDataHandler,
         camera_id: str,
         camera_type: str,
         home_id: str,
     ):
         """Initialize a Netatmo Presence camera light."""
         LightEntity.__init__(self)
-        super().__init__(data_op.dler)
+        super().__init__(data_handler)
 
         self._data_classes.append(
             {"name": CAMERA_DATA_CLASS_NAME, SIGNAL_NAME: CAMERA_DATA_CLASS_NAME}
@@ -93,9 +93,9 @@ class NetatmoLight(NetatmoBase, LightEntity):
         self._is_on = False
         self._unique_id = f"{self._id}-light"
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Entity created."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         self._listeners.append(
             async_dispatcher_connect(
@@ -120,13 +120,13 @@ class NetatmoLight(NetatmoBase, LightEntity):
         ):
             self._is_on = bool(data["sub_type"] == "on")
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
             return
 
     @property
     def available(self) -> bool:
         """If the webhook is not established, mark as unavailable."""
-        return bool(self.data_op.dler.webhook)
+        return bool(self.data_handler.webhook)
 
     @property
     def is_on(self):

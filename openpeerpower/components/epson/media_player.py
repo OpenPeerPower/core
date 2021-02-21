@@ -67,7 +67,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Epson projector from a config entry."""
     unique_id = config_entry.entry_id
-    projector = opp.data[DOMAIN][unique_id]
+    projector =.opp.data[DOMAIN][unique_id]
     projector_entity = EpsonProjectorMediaPlayer(
         projector, config_entry.title, unique_id
     )

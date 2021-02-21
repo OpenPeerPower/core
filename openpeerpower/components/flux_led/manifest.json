@@ -1,7 +1,7 @@
 {
   "domain": "flux_led",
   "name": "Flux LED/MagicLight",
-  "documentation": "https://www.openpeerpower.io/integrations/flux_led",
+  "documentation": "https://www.open-peer-power.io/integrations/flux_led",
   "requirements": ["flux_led==0.22"],
   "codeowners": []
 }

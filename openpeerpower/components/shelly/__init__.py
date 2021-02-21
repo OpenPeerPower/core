@@ -14,9 +14,9 @@ from openpeerpower.const import (
     CONF_USERNAME,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import aiohttp_client, device_registry, update_coordinator
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import aiohttp_client, device_registry, update_coordinator
 
 from .const import (
     AIOSHELLY_DEVICE_TIMEOUT_SEC,
@@ -120,7 +120,7 @@ async def async_device_setup(
    .opp: OpenPeerPower, entry: ConfigEntry, device: aioshelly.Device
 ):
     """Set up a device that is online."""
-    device_wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][
+    device_wrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][
         COAP
     ] = ShellyDeviceWrapper.opp, entry, device)
     await device_wrapper.async_setup()
@@ -161,19 +161,19 @@ class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
             name=device_name,
             update_interval=timedelta(seconds=update_interval),
         )
-        self.opp = opp
+        self.opp =.opp
         self.entry = entry
         self.device = device
 
-        self._async_remove_device_updates_op.dler = self.async_add_listener(
-            self._async_device_updates_op.dler
+        self._async_remove_device_updates_handler = self.async_add_listener(
+            self._async_device_updates_handler
         )
         self._last_input_events_count = {}
 
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._op.dle_op.stop)
+       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._handle_ha_stop)
 
     @callback
-    def _async_device_updates_op.dler(self):
+    def _async_device_updates_handler(self):
         """Handle device updates."""
         if not self.device.initialized:
             return
@@ -258,10 +258,10 @@ class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
     def shutdown(self):
         """Shutdown the wrapper."""
         self.device.shutdown()
-        self._async_remove_device_updates_op.dler()
+        self._async_remove_device_updates_handler()
 
     @callback
-    def _op.dle_op.stop(self, _):
+    def _handle_ha_stop(self, _):
         """Handle Open Peer Power stopping."""
         _LOGGER.debug("Stopping ShellyDeviceWrapper for %s", self.name)
         self.shutdown()
@@ -307,7 +307,7 @@ class ShellyDeviceRestWrapper(update_coordinator.DataUpdateCoordinator):
 
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    device = opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id].get(DEVICE)
+    device =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id].get(DEVICE)
     if device is not None:
         # If device is present, device wrapper is not setup yet
         device.shutdown()

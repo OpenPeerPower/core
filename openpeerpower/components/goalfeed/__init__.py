@@ -6,7 +6,7 @@ import requests
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 # Version downgraded due to regression in library
 # For details: https://github.com/nlsdfnbch/Pysher/issues/38
@@ -35,13 +35,13 @@ def setup.opp, config):
     username = conf.get(CONF_USERNAME)
     password = conf.get(CONF_PASSWORD)
 
-    def goal_op.dler(data):
+    def goal_handler(data):
         """Handle goal events."""
         goal = json.loads(json.loads(data))
 
        .opp.bus.fire("goal", event_data=goal)
 
-    def connect_op.dler(data):
+    def connect_handler(data):
         """Handle connection."""
         post_data = {
             "username": username,
@@ -51,13 +51,13 @@ def setup.opp, config):
         resp = requests.post(GOALFEED_AUTH_ENDPOINT, post_data, timeout=30).json()
 
         channel = pusher.subscribe("private-goals", resp["auth"])
-        channel.bind("goal", goal_op.dler)
+        channel.bind("goal", goal_handler)
 
     pusher = pysher.Pusher(
         GOALFEED_APP_ID, secure=False, port=8080, custom_host=GOALFEED_HOST
     )
 
-    pusher.connection.bind("pusher:connection_established", connect_op.dler)
+    pusher.connection.bind("pusher:connection_established", connect_handler)
     pusher.connect()
 
     return True

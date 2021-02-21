@@ -23,7 +23,7 @@ CONF_COMPONENT_REPORTING = "include_used_components"
 
 DOMAIN = "updater"
 
-UPDATER_URL = "https://updater.openpeerpower.io/"
+UPDATER_URL = "https://updater.open-peer-power.io/"
 
 CONFIG_SCHEMA = vol.Schema(
     {
@@ -58,7 +58,7 @@ async def async_setup.opp, config):
 
     conf = config.get(DOMAIN, {})
     if conf.get(CONF_REPORTING):
-        huuid = await opp..helpers.instance_id.async_get()
+        huuid = await.opp.helpers.instance_id.async_get()
     else:
         huuid = None
 
@@ -77,8 +77,8 @@ async def async_setup.opp, config):
             return Updater(False, "", "")
 
         # Load data from Supervisor
-        if.opp.components.oppio.is_oppio():
-            core_info = opp.components.oppio.get_core_info()
+        if.opp.components.oppio.is.oppio():
+            core_info =.opp.components.oppio.get_core_info()
             newest = core_info["version_latest"]
 
         # Validate version
@@ -103,7 +103,7 @@ async def async_setup.opp, config):
 
         return Updater(update_available, newest, release_notes)
 
-    coordinator = opp.data[DOMAIN] = update_coordinator.DataUpdateCoordinator[Updater](
+    coordinator =.opp.data[DOMAIN] = update_coordinator.DataUpdateCoordinator[Updater](
        .opp,
         _LOGGER,
         name="Open Peer Power update",
@@ -124,12 +124,12 @@ async def async_setup.opp, config):
 async def get_newest_version.opp, huuid, include_components):
     """Get the newest Open Peer Power version."""
     if huuid:
-        info_object = await opp..helpers.system_info.async_get_system_info()
+        info_object = await.opp.helpers.system_info.async_get_system_info()
 
         if include_components:
             info_object["components"] = list.opp.config.components)
 
-        linux_dist = await opp..async_add_executor_job(linux_distribution, False)
+        linux_dist = await.opp.async_add_executor_job(linux_distribution, False)
         info_object["distribution"] = linux_dist[0]
         info_object["os_version"] = linux_dist[1]
 

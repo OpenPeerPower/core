@@ -53,7 +53,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     username = conf[CONF_USERNAME]
     password = conf[CONF_PASSWORD]
 
-    client = await opp..async_add_executor_job(
+    client = await.opp.async_add_executor_job(
         TotalConnectClient.TotalConnectClient, username, password
     )
 

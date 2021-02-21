@@ -31,11 +31,11 @@ from openpeerpower.const import (
     STATE_ALARM_PENDING,
     STATE_ALARM_TRIGGERED,
 )
-from openpeerpowerr.core import callback
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.event import track_point_in_time
-from openpeerpowerr.helpers.restore_state import RestoreEntity
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.event import track_point_in_time
+from openpeerpower.helpers.restore_state import RestoreEntity
+import openpeerpower.util.dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -187,11 +187,11 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
     ):
         """Init the manual alarm panel."""
         self._state = STATE_ALARM_DISARMED
-        self._opp = opp
+        self..opp =.opp
         self._name = name
         if code_template:
             self._code = code_template
-            self._code.opp = opp
+            self._code.opp =.opp
         else:
             self._code = code or None
         self._code_arm_required = code_arm_required
@@ -298,7 +298,7 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
 
         self._state = STATE_ALARM_DISARMED
         self._state_ts = dt_util.utcnow()
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def alarm_arm_home(self, code=None):
         """Send arm home command."""
@@ -355,17 +355,17 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
         self._previous_state = self._state
         self._state = state
         self._state_ts = dt_util.utcnow()
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
         if state == STATE_ALARM_TRIGGERED:
             pending_time = self._pending_time(state)
             track_point_in_time(
-                self._opp, self.async_scheduled_update, self._state_ts + pending_time
+                self..opp, self.async_scheduled_update, self._state_ts + pending_time
             )
 
             trigger_time = self._trigger_time_by_state[self._previous_state]
             track_point_in_time(
-                self._opp,
+                self..opp,
                 self.async_scheduled_update,
                 self._state_ts + pending_time + trigger_time,
             )
@@ -373,7 +373,7 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
             arming_time = self._arming_time(state)
             if arming_time:
                 track_point_in_time(
-                    self._opp,
+                    self..opp,
                     self.async_scheduled_update,
                     self._state_ts + arming_time,
                 )
@@ -406,11 +406,11 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
     @callback
     def async_scheduled_update(self, now):
         """Update state at a scheduled point in time."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         state = await self.async_get_last_state()
         if state:
             if (

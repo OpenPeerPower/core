@@ -7,8 +7,8 @@ from openpeerpower.const import (
     VOLT,
     VOLUME_LITERS,
 )
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.icon import icon_for_battery_level, icon_for_signal_level
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.icon import icon_for_battery_level, icon_for_signal_level
 
 from .account import StarlineAccount, StarlineDevice
 from .const import DOMAIN
@@ -28,7 +28,7 @@ SENSOR_TYPES = {
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the StarLine sensors."""
-    account: StarlineAccount = opp.data[DOMAIN][entry.entry_id]
+    account: StarlineAccount =.opp.data[DOMAIN][entry.entry_id]
     entities = []
     for device in account.api.devices.values():
         for key, value in SENSOR_TYPES.items():

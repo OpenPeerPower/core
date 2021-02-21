@@ -5,8 +5,8 @@ import voluptuous as vol
 
 from openpeerpower.components.notify import PLATFORM_SCHEMA, BaseNotificationService
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.core import split_entity_id
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import split_entity_id
+import openpeerpower.helpers.config_validation as cv
 
 from . import ATTR_ENTITY_ID, ATTR_LANGUAGE, ATTR_MESSAGE, DOMAIN
 

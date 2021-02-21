@@ -1,7 +1,7 @@
 {
   "domain": "eafm",
   "name": "Environment Agency Flood Gauges",
-  "documentation": "https://www.openpeerpower.io/integrations/eafm",
+  "documentation": "https://www.open-peer-power.io/integrations/eafm",
   "config_flow": true,
   "codeowners": ["@Jc2k"],
   "requirements": ["aioeafm==0.1.2"]

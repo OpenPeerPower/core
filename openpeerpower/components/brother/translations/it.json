@@ -16,7 +16,7 @@
                     "host": "Host",
                     "type": "Tipo di stampante"
                 },
-                "description": "Configurare l'integrazione della stampante Brother. In caso di problemi con la configurazione, visitare: https://www.openpeerpower.io/integrations/brother"
+                "description": "Configurare l'integrazione della stampante Brother. In caso di problemi con la configurazione, visitare: https://www.open-peer-power.io/integrations/brother"
             },
             "zeroconf_confirm": {
                 "data": {

@@ -24,7 +24,7 @@ STRICT_MATCH = functools.partial(ZHA_ENTITIES.strict_match, DOMAIN)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation device tracker from config entry."""
-    entities_to_create = opp.data[DATA_ZHA][DOMAIN]
+    entities_to_create =.opp.data[DATA_ZHA][DOMAIN]
 
     unsub = async_dispatcher_connect(
        .opp,
@@ -49,9 +49,9 @@ class ZHADeviceScannerEntity(ScannerEntity, ZhaEntity):
         self._should_poll = True
         self._battery_level = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         if self._battery_channel:
             self.async_accept_signal(
                 self._battery_channel,
@@ -88,7 +88,7 @@ class ZHADeviceScannerEntity(ScannerEntity, ZhaEntity):
         self.debug("battery_percentage_remaining updated: %s", value)
         self._connected = True
         self._battery_level = Battery.formatter(value)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def battery_level(self):

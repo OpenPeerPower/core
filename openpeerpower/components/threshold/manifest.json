@@ -1,7 +1,7 @@
 {
   "domain": "threshold",
   "name": "Threshold",
-  "documentation": "https://www.openpeerpower.io/integrations/threshold",
+  "documentation": "https://www.open-peer-power.io/integrations/threshold",
   "codeowners": ["@fabaff"],
   "quality_scale": "internal"
 }

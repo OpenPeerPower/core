@@ -1,6 +1,6 @@
 """Support for UPnP/IGD Sensors."""
 from datetime import timedelta
-from typing import Any, Mapping
+from typing import Any, Mapping, Optional
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import DATA_BYTES, DATA_RATE_KIBIBYTES_PER_SECOND
@@ -84,7 +84,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up the UPnP/IGD sensors."""
     udn = config_entry.data[CONFIG_ENTRY_UDN]
-    device: Device = opp.data[DOMAIN][DOMAIN_DEVICES][udn]
+    device: Device =.opp.data[DOMAIN][DOMAIN_DEVICES][udn]
 
     update_interval_sec = config_entry.options.get(
         CONFIG_ENTRY_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
@@ -176,7 +176,7 @@ class RawUpnpSensor(UpnpSensor):
     """Representation of a UPnP/IGD sensor."""
 
     @property
-    def state(self) -> str:
+    def state(self) -> Optional[str]:
         """Return the state of the device."""
         device_value_key = self._sensor_type["device_value_key"]
         value = self.coordinator.data[device_value_key]
@@ -209,12 +209,12 @@ class DerivedUpnpSensor(UpnpSensor):
         """Return the unit of measurement of this entity, if any."""
         return self._sensor_type["derived_unit"]
 
-    def _op._overflowed(self, current_value) -> bool:
+    def _has_overflowed(self, current_value) -> bool:
         """Check if value has overflowed."""
         return current_value < self._last_value
 
     @property
-    def state(self) -> str:
+    def state(self) -> Optional[str]:
         """Return the state of the device."""
         # Can't calculate any derivative if we have only one value.
         device_value_key = self._sensor_type["device_value_key"]
@@ -222,7 +222,7 @@ class DerivedUpnpSensor(UpnpSensor):
         if current_value is None:
             return None
         current_timestamp = self.coordinator.data[TIMESTAMP]
-        if self._last_value is None or self._op._overflowed(current_value):
+        if self._last_value is None or self._has_overflowed(current_value):
             self._last_value = current_value
             self._last_timestamp = current_timestamp
             return None

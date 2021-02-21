@@ -8,8 +8,8 @@ from openpeerpower.components.cover import (
     SUPPORT_OPEN,
     CoverEntity,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import (
     CONF_INVERT_OPENCLOSE_BUTTONS,
@@ -62,7 +62,7 @@ class ZwaveRollershutter(ZWaveDeviceEntity, CoverEntity):
     def __init__(self,.opp, values, invert_buttons, invert_percent):
         """Initialize the Z-Wave rollershutter."""
         ZWaveDeviceEntity.__init__(self, values, DOMAIN)
-        self._network = opp.data[DATA_NETWORK]
+        self._network =.opp.data[DATA_NETWORK]
         self._open_id = None
         self._close_id = None
         self._current_position = None

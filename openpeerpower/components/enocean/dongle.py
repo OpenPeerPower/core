@@ -29,21 +29,21 @@ class EnOceanDongle:
         )
         self.serial_path = serial_path
         self.identifier = basename(normpath(serial_path))
-        self.opp = opp
-        self.dispatcher_disconnect_op.dle = None
+        self.opp =.opp
+        self.dispatcher_disconnect_handle = None
 
     async def async_setup(self):
         """Finish the setup of the bridge and supported platforms."""
         self._communicator.start()
-        self.dispatcher_disconnect_op.dle = async_dispatcher_connect(
+        self.dispatcher_disconnect_handle = async_dispatcher_connect(
             self.opp, SIGNAL_SEND_MESSAGE, self._send_message_callback
         )
 
     def unload(self):
         """Disconnect callbacks established at init time."""
-        if self.dispatcher_disconnect_op.dle:
-            self.dispatcher_disconnect_op.dle()
-            self.dispatcher_disconnect_op.dle = None
+        if self.dispatcher_disconnect_handle:
+            self.dispatcher_disconnect_handle()
+            self.dispatcher_disconnect_handle = None
 
     def _send_message_callback(self, command):
         """Send a command through the EnOcean dongle."""

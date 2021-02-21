@@ -86,7 +86,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
 
     config = {}
 
-    result = await opp..async_add_executor_job(
+    result = await.opp.async_add_executor_job(
         _try_connect_and_fetch_basic_info, data[CONF_HOST], data[CONF_ACCESS_TOKEN]
     )
 

@@ -4,18 +4,18 @@ import logging
 import pykulersky
 
 from openpeerpower import config_entries
-from openpeerpowerr.helpers import config_entry_flow
+from openpeerpower.helpers import config_entry_flow
 
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
 
-async def _async_op._devices.opp) -> bool:
+async def _async_has_devices.opp) -> bool:
     """Return if there are devices that can be discovered."""
     # Check if there are any devices that can be discovered in the network.
     try:
-        devices = await opp..async_add_executor_job(
+        devices = await.opp.async_add_executor_job(
             pykulersky.discover_bluetooth_devices
         )
     except pykulersky.PykulerskyException as exc:
@@ -25,5 +25,5 @@ async def _async_op._devices.opp) -> bool:
 
 
 config_entry_flow.register_discovery_flow(
-    DOMAIN, "Kuler Sky", _async_op._devices, config_entries.CONN_CLASS_LOCAL_POLL
+    DOMAIN, "Kuler Sky", _async_has_devices, config_entries.CONN_CLASS_LOCAL_POLL
 )

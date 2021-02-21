@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PLATFORM
-from openpeerpower.core import OppJob, callback
+from openpeerpower.core import HassJob, callback
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.event import async_track_time_change
 
@@ -60,7 +60,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     hours = config.get(CONF_HOURS)
     minutes = config.get(CONF_MINUTES)
     seconds = config.get(CONF_SECONDS)
-    job = OppJob(action)
+    job = HassJob(action)
 
     # If larger units are specified, default the smaller units to zero
     if minutes is None and hours is not None:
@@ -71,7 +71,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     @callback
     def time_automation_listener(now):
         """Listen for time changes and calls action."""
-       .opp.async_run_opp_job(
+       .opp.async_run.opp_job(
             job,
             {
                 "trigger": {

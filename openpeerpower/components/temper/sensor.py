@@ -35,7 +35,7 @@ def get_temper_devices():
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Temper sensors."""
-    temp_unit = opp.config.units.temperature_unit
+    temp_unit =.opp.config.units.temperature_unit
     name = config.get(CONF_NAME)
     scaling = {"scale": config.get(CONF_SCALE), "offset": config.get(CONF_OFFSET)}
     temper_devices = get_temper_devices()

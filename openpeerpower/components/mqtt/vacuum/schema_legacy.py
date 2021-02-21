@@ -322,7 +322,7 @@ class MqttVacuum(MqttEntity, VacuumEntity):
                 if fan_speed:
                     self._fan_speed = fan_speed
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         topics_list = {topic for topic in self._state_topics.values() if topic}
         self._sub_state = await subscription.async_subscribe_topics(
@@ -396,7 +396,7 @@ class MqttVacuum(MqttEntity, VacuumEntity):
             self._retain,
         )
         self._status = "Cleaning"
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the vacuum off."""
@@ -411,7 +411,7 @@ class MqttVacuum(MqttEntity, VacuumEntity):
             self._retain,
         )
         self._status = "Turning Off"
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_stop(self, **kwargs):
         """Stop the vacuum."""
@@ -426,7 +426,7 @@ class MqttVacuum(MqttEntity, VacuumEntity):
             self._retain,
         )
         self._status = "Stopping the current task"
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_clean_spot(self, **kwargs):
         """Perform a spot clean-up."""
@@ -441,7 +441,7 @@ class MqttVacuum(MqttEntity, VacuumEntity):
             self._retain,
         )
         self._status = "Cleaning spot"
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_locate(self, **kwargs):
         """Locate the vacuum (usually by playing a song)."""
@@ -456,7 +456,7 @@ class MqttVacuum(MqttEntity, VacuumEntity):
             self._retain,
         )
         self._status = "Hi, I'm over here!"
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_start_pause(self, **kwargs):
         """Start, pause or resume the cleaning task."""
@@ -471,7 +471,7 @@ class MqttVacuum(MqttEntity, VacuumEntity):
             self._retain,
         )
         self._status = "Pausing/Resuming cleaning..."
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_return_to_base(self, **kwargs):
         """Tell the vacuum to return to its dock."""
@@ -486,7 +486,7 @@ class MqttVacuum(MqttEntity, VacuumEntity):
             self._retain,
         )
         self._status = "Returning home..."
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_set_fan_speed(self, fan_speed, **kwargs):
         """Set fan speed."""
@@ -499,7 +499,7 @@ class MqttVacuum(MqttEntity, VacuumEntity):
             self.opp, self._set_fan_speed_topic, fan_speed, self._qos, self._retain
         )
         self._status = f"Setting fan to {fan_speed}..."
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_send_command(self, command, params=None, **kwargs):
         """Send a command to a vacuum cleaner."""
@@ -515,4 +515,4 @@ class MqttVacuum(MqttEntity, VacuumEntity):
             self.opp, self._send_command_topic, message, self._qos, self._retain
         )
         self._status = f"Sending command {message}..."
-        self.async_write_op.state()
+        self.async_write_ha_state()

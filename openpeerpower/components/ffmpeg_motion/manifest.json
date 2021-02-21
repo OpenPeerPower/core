@@ -1,7 +1,7 @@
 {
   "domain": "ffmpeg_motion",
   "name": "FFmpeg Motion",
-  "documentation": "https://www.openpeerpower.io/integrations/ffmpeg_motion",
+  "documentation": "https://www.open-peer-power.io/integrations/ffmpeg_motion",
   "dependencies": ["ffmpeg"],
   "codeowners": []
 }

@@ -1,4 +1,4 @@
-"""Support for my.openpeerpower.io redirect service."""
+"""Support for my.open-peer-power.io redirect service."""
 
 DOMAIN = "my"
 URL_PATH = "_my_redirect"

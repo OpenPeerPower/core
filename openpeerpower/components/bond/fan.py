@@ -16,6 +16,7 @@ from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.entity import Entity
 from openpeerpower.util.percentage import (
+    int_states_in_range,
     percentage_to_ranged_value,
     ranged_value_to_percentage,
 )
@@ -33,7 +34,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up Bond fan devices."""
-    data = opp.data[DOMAIN][entry.entry_id]
+    data =.opp.data[DOMAIN][entry.entry_id]
     hub: BondHub = data[HUB]
     bpup_subs: BPUPSubscriptions = data[BPUP_SUBS]
 
@@ -84,6 +85,11 @@ class BondFan(BondEntity, FanEntity):
         if not self._speed or not self._power:
             return 0
         return ranged_value_to_percentage(self._speed_range, self._speed)
+
+    @property
+    def speed_count(self) -> int:
+        """Return the number of speeds the fan supports."""
+        return int_states_in_range(self._speed_range)
 
     @property
     def current_direction(self) -> Optional[str]:

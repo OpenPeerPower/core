@@ -1,7 +1,7 @@
 {
   "domain": "ripple",
   "name": "Ripple",
-  "documentation": "https://www.openpeerpower.io/integrations/ripple",
+  "documentation": "https://www.open-peer-power.io/integrations/ripple",
   "requirements": ["python-ripple-api==0.0.3"],
   "codeowners": []
 }

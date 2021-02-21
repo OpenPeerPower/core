@@ -107,9 +107,9 @@ class MobileAppEntity(TrackerEntity, RestoreEntity):
         """Return the device info."""
         return device_info(self._entry.data)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity about to be added to Open Peer Power."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self._dispatch_unsub = self.opp.helpers.dispatcher.async_dispatcher_connect(
             SIGNAL_LOCATION_UPDATE.format(self._entry.entry_id), self.update_data
         )
@@ -133,9 +133,9 @@ class MobileAppEntity(TrackerEntity, RestoreEntity):
         data.update({key: attr[key] for key in attr if key in ATTR_KEYS})
         self._data = data
 
-    async def async_will_remove_from_opp(self):
+    async def async_will_remove_from.opp(self):
         """Call when entity is being removed from.opp."""
-        await super().async_will_remove_from_opp()
+        await super().async_will_remove_from.opp()
 
         if self._dispatch_unsub:
             self._dispatch_unsub()
@@ -145,4 +145,4 @@ class MobileAppEntity(TrackerEntity, RestoreEntity):
     def update_data(self, data):
         """Mark the device as seen."""
         self._data = data
-        self.async_write_op.state()
+        self.async_write_ha_state()

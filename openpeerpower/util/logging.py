@@ -50,7 +50,7 @@ class OpenPeerPowerQueueHandler(logging.handlers.QueueHandler):
 
 
 @callback
-def async_activate_log_queue_op.dler.opp: OpenPeerPower) -> None:
+def async_activate_log_queue_handler.opp: OpenPeerPower) -> None:
     """
     Migrate the existing log handlers to use the queue.
 
@@ -58,27 +58,27 @@ def async_activate_log_queue_op.dler.opp: OpenPeerPower) -> None:
     in the event loop as log messages are written in another thread.
     """
     simple_queue = queue.SimpleQueue()  # type: ignore
-    queue_op.dler = OpenPeerPowerQueueHandler(simple_queue)
-    logging.root.addHandler(queue_op.dler)
+    queue_handler = OpenPeerPowerQueueHandler(simple_queue)
+    logging.root.addHandler(queue_handler)
 
-    migrated_op.dlers = []
+    migrated_handlers = []
     for handler in logging.root.handlers[:]:
-        if handler is queue_op.dler:
+        if handler is queue_handler:
             continue
         logging.root.removeHandler(handler)
-        migrated_op.dlers.append(handler)
+        migrated_handlers.append(handler)
 
-    listener = logging.handlers.QueueListener(simple_queue, *migrated_op.dlers)
+    listener = logging.handlers.QueueListener(simple_queue, *migrated_handlers)
 
     listener.start()
 
     @callback
-    def _async_stop_queue_op.dler(_: Any) -> None:
+    def _async_stop_queue_handler(_: Any) -> None:
         """Cleanup handler."""
-        logging.root.removeHandler(queue_op.dler)
+        logging.root.removeHandler(queue_handler)
         listener.stop()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, _async_stop_queue_op.dler)
+   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, _async_stop_queue_handler)
 
 
 def log_exception(format_err: Callable[..., Any], *args: Any) -> None:
@@ -89,7 +89,7 @@ def log_exception(format_err: Callable[..., Any], *args: Any) -> None:
     else:
         # If Python is unable to access the sources files, the call stack frame
         # will be missing information, so let's guard.
-        # https://github.com/openpeerpower/core/issues/24982
+        # https://github.com/open-peer-power/core/issues/24982
         module_name = __name__
 
     # Do not print the wrapper in the traceback

@@ -48,7 +48,7 @@ from openpeerpower.helpers.event import async_track_state_change_event
 from openpeerpower.helpers.restore_state import RestoreEntity
 from openpeerpower.helpers.storage import Store
 from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -88,10 +88,10 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-@bind_opp
+@bind.opp
 async def async_create_person.opp, name, *, user_id=None, device_trackers=None):
     """Create a new person."""
-    await opp..data[DOMAIN][1].async_create_item(
+    await.opp.data[DOMAIN][1].async_create_item(
         {
             ATTR_NAME: name,
             ATTR_USER_ID: user_id,
@@ -100,7 +100,7 @@ async def async_create_person.opp, name, *, user_id=None, device_trackers=None):
     )
 
 
-@bind_opp
+@bind.opp
 async def async_add_user_device_tracker(
    .opp: OpenPeerPower, user_id: str, device_tracker_entity_id: str
 ):
@@ -266,7 +266,7 @@ async def filter_yaml_data.opp: OpenPeerPowerType, persons: List[dict]) -> List[
         user_id = person_conf.get(CONF_USER_ID)
 
         if user_id is not None:
-            if await opp..auth.async_get_user(user_id) is None:
+            if await.opp.auth.async_get_user(user_id) is None:
                 _LOGGER.error(
                     "Invalid user_id detected for person %s",
                     person_conf[collection.CONF_ID],
@@ -326,7 +326,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
 
     websocket_api.async_register_command.opp, ws_list_person)
 
-    async def _op.dle_user_removed(event: Event) -> None:
+    async def _handle_user_removed(event: Event) -> None:
         """Handle a user being removed."""
         user_id = event.data[ATTR_USER_ID]
         for person in storage_collection.async_items():
@@ -335,7 +335,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
                     person[CONF_ID], {CONF_USER_ID: None}
                 )
 
-   .opp.bus.async_listen(EVENT_USER_REMOVED, _op.dle_user_removed)
+   .opp.bus.async_listen(EVENT_USER_REMOVED, _handle_user_removed)
 
     async def async_reload_yaml(call: ServiceCall):
         """Reload YAML."""
@@ -419,24 +419,24 @@ class Person(RestoreEntity):
         """Return a unique ID for the person."""
         return self._config[CONF_ID]
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register device trackers."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         state = await self.async_get_last_state()
         if state:
             self._parse_source_state(state)
 
         if self.opp.is_running:
-            # Update person now if opp is already running.
+            # Update person now if.opp is already running.
             await self.async_update_config(self._config)
         else:
-            # Wait for opp start to not have race between person
+            # Wait for.opp start to not have race between person
             # and device trackers finishing setup.
-            async def person_start_opp(now):
+            async def person_start.opp(now):
                 await self.async_update_config(self._config)
 
             self.opp.bus.async_listen_once(
-                EVENT_OPENPEERPOWER_START, person_start_opp
+                EVENT_OPENPEERPOWER_START, person_start.opp
             )
 
     async def async_update_config(self, config):
@@ -453,13 +453,13 @@ class Person(RestoreEntity):
             _LOGGER.debug("Subscribe to device trackers for %s", self.entity_id)
 
             self._unsub_track_device = async_track_state_change_event(
-                self.opp, trackers, self._async_op.dle_tracker_update
+                self.opp, trackers, self._async_handle_tracker_update
             )
 
         self._update_state()
 
     @callback
-    def _async_op.dle_tracker_update(self, event):
+    def _async_handle_tracker_update(self, event):
         """Handle the device tracker state changes."""
         self._update_state()
 
@@ -496,7 +496,7 @@ class Person(RestoreEntity):
             self._longitude = None
             self._gps_accuracy = None
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _parse_source_state(self, state):
@@ -516,7 +516,7 @@ def ws_list_person(
    .opp: OpenPeerPowerType, connection: websocket_api.ActiveConnection, msg
 ):
     """List persons."""
-    yaml, storage = opp.data[DOMAIN]
+    yaml, storage =.opp.data[DOMAIN]
     connection.send_result(
         msg[ATTR_ID], {"storage": storage.async_items(), "config": yaml.async_items()}
     )

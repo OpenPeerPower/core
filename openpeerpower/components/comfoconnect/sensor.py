@@ -243,7 +243,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the ComfoConnect fan platform."""
-    ccb = opp.data[DOMAIN]
+    ccb =.opp.data[DOMAIN]
 
     sensors = []
     for resource in config[CONF_RESOURCES]:
@@ -268,7 +268,7 @@ class ComfoConnectSensor(Entity):
         self._sensor_id = SENSOR_TYPES[self._sensor_type][ATTR_ID]
         self._name = name
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register for sensor updates."""
         _LOGGER.debug(
             "Registering for sensor %s (%d)", self._sensor_type, self._sensor_id
@@ -277,14 +277,14 @@ class ComfoConnectSensor(Entity):
             async_dispatcher_connect(
                 self.opp,
                 SIGNAL_COMFOCONNECT_UPDATE_RECEIVED.format(self._sensor_id),
-                self._op.dle_update,
+                self._handle_update,
             )
         )
         await self.opp.async_add_executor_job(
             self._ccb.comfoconnect.register_sensor, self._sensor_id
         )
 
-    def _op.dle_update(self, value):
+    def _handle_update(self, value):
         """Handle update callbacks."""
         _LOGGER.debug(
             "Handle update for sensor %s (%d): %s",
@@ -295,7 +295,7 @@ class ComfoConnectSensor(Entity):
         self._ccb.data[self._sensor_id] = round(
             value * SENSOR_TYPES[self._sensor_type].get(ATTR_MULTIPLIER, 1), 2
         )
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def state(self):

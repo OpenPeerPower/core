@@ -16,9 +16,9 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up FireServiceRota switch based on a config entry."""
-    client = opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
+    client =.opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
 
-    coordinator = opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_COORDINATOR]
+    coordinator =.opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_COORDINATOR]
 
     async_add_entities([ResponseSwitch(coordinator, client, entry)])
 
@@ -117,7 +117,7 @@ class ResponseSwitch(SwitchEntity):
         await self._client.async_set_response(value)
         self.client_update()
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Register update callback."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -127,13 +127,13 @@ class ResponseSwitch(SwitchEntity):
             )
         )
         self.async_on_remove(
-            self._coordinator.async_add_listener(self.async_write_op.state)
+            self._coordinator.async_add_listener(self.async_write_ha_state)
         )
 
     @callback
     def client_update(self) -> None:
         """Handle updated incident data from the client."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
     async def async_update(self) -> bool:
         """Update FireServiceRota response data."""

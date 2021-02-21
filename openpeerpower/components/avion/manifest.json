@@ -1,7 +1,7 @@
 {
   "domain": "avion",
   "name": "Avi-on",
-  "documentation": "https://www.openpeerpower.io/integrations/avion",
+  "documentation": "https://www.open-peer-power.io/integrations/avion",
   "requirements": ["avion==0.10"],
   "codeowners": []
 }

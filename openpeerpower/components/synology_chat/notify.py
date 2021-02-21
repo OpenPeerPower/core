@@ -11,7 +11,7 @@ from openpeerpower.components.notify import (
     BaseNotificationService,
 )
 from openpeerpower.const import CONF_RESOURCE, CONF_VERIFY_SSL, HTTP_CREATED, HTTP_OK
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 ATTR_FILE_URL = "file_url"
 

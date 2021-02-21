@@ -51,7 +51,7 @@ from .const import (
     UOM_TO_STATES,
 )
 from .entity import ISYNodeEntity
-from .helpers import convert_isy_value_to_opp, migrate_old_unique_ids
+from .helpers import convert_isy_value_to.opp, migrate_old_unique_ids
 
 ISY_SUPPORTED_FEATURES = (
     SUPPORT_FAN_MODE | SUPPORT_TARGET_TEMPERATURE | SUPPORT_TARGET_TEMPERATURE_RANGE
@@ -66,7 +66,7 @@ async def async_setup_entry(
     """Set up the ISY994 thermostat platform."""
     entities = []
 
-   .opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
+   .opp_isy_data =.opp.data[ISY994_DOMAIN][entry.entry_id]
     for node in.opp_isy_data[ISY994_NODES][CLIMATE]:
         entities.append(ISYThermostatEntity(node))
 
@@ -155,7 +155,7 @@ class ISYThermostatEntity(ISYNodeEntity, ClimateEntity):
     @property
     def current_temperature(self) -> Optional[float]:
         """Return the current temperature."""
-        return convert_isy_value_to_opp(
+        return convert_isy_value_to.opp(
             self._node.status, self._uom, self._node.prec, 1
         )
 
@@ -179,7 +179,7 @@ class ISYThermostatEntity(ISYNodeEntity, ClimateEntity):
         target = self._node.aux_properties.get(PROP_SETPOINT_COOL)
         if not target:
             return None
-        return convert_isy_value_to_opp(target.value, target.uom, target.prec, 1)
+        return convert_isy_value_to.opp(target.value, target.uom, target.prec, 1)
 
     @property
     def target_temperature_low(self) -> Optional[float]:
@@ -187,7 +187,7 @@ class ISYThermostatEntity(ISYNodeEntity, ClimateEntity):
         target = self._node.aux_properties.get(PROP_SETPOINT_HEAT)
         if not target:
             return None
-        return convert_isy_value_to_opp(target.value, target.uom, target.prec, 1)
+        return convert_isy_value_to.opp(target.value, target.uom, target.prec, 1)
 
     @property
     def fan_modes(self):
@@ -220,7 +220,7 @@ class ISYThermostatEntity(ISYNodeEntity, ClimateEntity):
             self._node.set_climate_setpoint_cool(int(target_temp_high))
             # Presumptive setting--event stream will correct if cmd fails:
             self._target_temp_high = target_temp_high
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def set_fan_mode(self, fan_mode: str) -> None:
         """Set new target fan mode."""
@@ -228,7 +228,7 @@ class ISYThermostatEntity(ISYNodeEntity, ClimateEntity):
         self._node.set_fan_mode(HA_FAN_TO_ISY.get(fan_mode))
         # Presumptive setting--event stream will correct if cmd fails:
         self._fan_mode = fan_mode
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
@@ -236,4 +236,4 @@ class ISYThermostatEntity(ISYNodeEntity, ClimateEntity):
         self._node.set_climate_mode(HA_HVAC_TO_ISY.get(hvac_mode))
         # Presumptive setting--event stream will correct if cmd fails:
         self._hvac_mode = hvac_mode
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

@@ -26,7 +26,7 @@ async def async_setup_entry(
     """Set up the Firmata lights."""
     new_entities = []
 
-    board = opp.data[DOMAIN][config_entry.entry_id]
+    board =.opp.data[DOMAIN][config_entry.entry_id]
     for light in board.lights:
         pin = light[CONF_PIN]
         pin_mode = light[CONF_PIN_MODE]
@@ -66,7 +66,7 @@ class FirmataLight(FirmataPinEntity, LightEntity):
         # Default first turn on to max
         self._last_on_level = 255
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Set up a light."""
         await self._api.start_pin()
 
@@ -89,10 +89,10 @@ class FirmataLight(FirmataPinEntity, LightEntity):
         """Turn on light."""
         level = kwargs.get(ATTR_BRIGHTNESS, self._last_on_level)
         await self._api.set_level(level)
-        self.async_write_op.state()
+        self.async_write_ha_state()
         self._last_on_level = level
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn off light."""
         await self._api.set_level(0)
-        self.async_write_op.state()
+        self.async_write_ha_state()

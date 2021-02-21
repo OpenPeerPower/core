@@ -6,7 +6,7 @@ from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.typing import OpenPeerPowerType
 
-from . import WLEDDataUpdateCoordinator, WLEDDeviceEntity, wled_exception_op.dler
+from . import WLEDDataUpdateCoordinator, WLEDDeviceEntity, wled_exception_handler
 from .const import (
     ATTR_DURATION,
     ATTR_FADE,
@@ -24,7 +24,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up WLED switch based on a config entry."""
-    coordinator: WLEDDataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id]
+    coordinator: WLEDDataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id]
 
     switches = [
         WLEDNightlightSwitch(entry.entry_id, coordinator),
@@ -85,12 +85,12 @@ class WLEDNightlightSwitch(WLEDSwitch):
         """Return the state of the switch."""
         return bool(self.coordinator.data.state.nightlight.on)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the WLED nightlight switch."""
         await self.coordinator.wled.nightlight(on=False)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the WLED nightlight switch."""
         await self.coordinator.wled.nightlight(on=True)
@@ -119,12 +119,12 @@ class WLEDSyncSendSwitch(WLEDSwitch):
         """Return the state of the switch."""
         return bool(self.coordinator.data.state.sync.send)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the WLED sync send switch."""
         await self.coordinator.wled.sync(send=False)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the WLED sync send switch."""
         await self.coordinator.wled.sync(send=True)
@@ -153,12 +153,12 @@ class WLEDSyncReceiveSwitch(WLEDSwitch):
         """Return the state of the switch."""
         return bool(self.coordinator.data.state.sync.receive)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the WLED sync receive switch."""
         await self.coordinator.wled.sync(receive=False)
 
-    @wled_exception_op.dler
+    @wled_exception_handler
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the WLED sync receive switch."""
         await self.coordinator.wled.sync(receive=True)

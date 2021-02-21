@@ -1,6 +1,6 @@
 {
   "domain": "graphite",
   "name": "Graphite",
-  "documentation": "https://www.openpeerpower.io/integrations/graphite",
+  "documentation": "https://www.open-peer-power.io/integrations/graphite",
   "codeowners": []
 }

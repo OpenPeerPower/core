@@ -45,7 +45,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the Microsoft Face detection platform."""
-    api = opp.data[DATA_MICROSOFT_FACE]
+    api =.opp.data[DATA_MICROSOFT_FACE]
     attributes = config[CONF_ATTRIBUTES]
 
     entities = []

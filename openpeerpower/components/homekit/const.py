@@ -103,8 +103,8 @@ SERVICE_HOMEKIT_RESET_ACCESSORY = "reset_accessory"
 # #### String Constants ####
 BRIDGE_MODEL = "Bridge"
 BRIDGE_NAME = "Open Peer Power Bridge"
-SHORT_BRIDGE_NAME = "OPP Bridge"
-SHORT_ACCESSORY_NAME = "OPP Accessory"
+SHORT_BRIDGE_NAME = "HASS Bridge"
+SHORT_ACCESSORY_NAME = "HASS Accessory"
 BRIDGE_SERIAL_NUMBER = "homekit.bridge"
 MANUFACTURER = "Open Peer Power"
 

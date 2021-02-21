@@ -1,7 +1,7 @@
 {
   "domain": "cpuspeed",
   "name": "CPU Speed",
-  "documentation": "https://www.openpeerpower.io/integrations/cpuspeed",
+  "documentation": "https://www.open-peer-power.io/integrations/cpuspeed",
   "requirements": ["py-cpuinfo==7.0.0"],
   "codeowners": ["@fabaff"]
 }

@@ -31,8 +31,8 @@ from openpeerpower.components.climate.const import (
     SUPPORT_TARGET_TEMPERATURE_RANGE,
 )
 from openpeerpower.const import ATTR_TEMPERATURE, TEMP_CELSIUS, TEMP_FAHRENHEIT
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import ZWaveDeviceEntity, const
 
@@ -141,7 +141,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 def get_device.opp, values, **kwargs):
     """Create Z-Wave entity device."""
-    temp_unit = opp.config.units.temperature_unit
+    temp_unit =.opp.config.units.temperature_unit
     if values.primary.command_class == const.COMMAND_CLASS_THERMOSTAT_SETPOINT:
         return ZWaveClimateSingleSetpoint(values, temp_unit)
     if values.primary.command_class == const.COMMAND_CLASS_THERMOSTAT_MODE:

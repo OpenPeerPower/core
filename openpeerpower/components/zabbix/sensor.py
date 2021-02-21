@@ -35,7 +35,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Zabbix sensor platform."""
     sensors = []
 
-    zapi = opp.data[zabbix.DOMAIN]
+    zapi =.opp.data[zabbix.DOMAIN]
     if not zapi:
         _LOGGER.error("zapi is None. Zabbix integration hasn't been loaded?")
         return False

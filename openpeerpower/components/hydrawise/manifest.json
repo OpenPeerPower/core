@@ -1,7 +1,7 @@
 {
   "domain": "hydrawise",
   "name": "Hunter Hydrawise",
-  "documentation": "https://www.openpeerpower.io/integrations/hydrawise",
+  "documentation": "https://www.open-peer-power.io/integrations/hydrawise",
   "requirements": ["hydrawiser==0.2"],
   "codeowners": ["@ptcryan"]
 }

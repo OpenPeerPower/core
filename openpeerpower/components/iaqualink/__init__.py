@@ -25,16 +25,16 @@ from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.dispatcher import (
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.event import async_track_time_interval
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.event import async_track_time_interval
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from .const import DOMAIN, UPDATE_INTERVAL
 
@@ -78,11 +78,11 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     password = entry.data[CONF_PASSWORD]
 
     # These will contain the initialized devices
-    binary_sensors = opp.data[DOMAIN][BINARY_SENSOR_DOMAIN] = []
-    climates = opp.data[DOMAIN][CLIMATE_DOMAIN] = []
-    lights = opp.data[DOMAIN][LIGHT_DOMAIN] = []
-    sensors = opp.data[DOMAIN][SENSOR_DOMAIN] = []
-    switches = opp.data[DOMAIN][SWITCH_DOMAIN] = []
+    binary_sensors =.opp.data[DOMAIN][BINARY_SENSOR_DOMAIN] = []
+    climates =.opp.data[DOMAIN][CLIMATE_DOMAIN] = []
+    lights =.opp.data[DOMAIN][LIGHT_DOMAIN] = []
+    sensors =.opp.data[DOMAIN][SENSOR_DOMAIN] = []
+    switches =.opp.data[DOMAIN][SWITCH_DOMAIN] = []
 
     session = async_get_clientsession.opp)
     aqualink = AqualinkClient(username, password, session)
@@ -119,7 +119,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
         elif isinstance(dev, AqualinkToggle):
             switches += [dev]
 
-    forward_setup = opp.config_entries.async_forward_entry_setup
+    forward_setup =.opp.config_entries.async_forward_entry_setup
     if binary_sensors:
         _LOGGER.debug("Got %s binary sensors: %s", len(binary_sensors), binary_sensors)
        .opp.async_create_task(forward_setup(entry, BINARY_SENSOR_DOMAIN))
@@ -157,7 +157,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    forward_unload = opp.config_entries.async_forward_entry_unload
+    forward_unload =.opp.config_entries.async_forward_entry_unload
 
     tasks = []
 
@@ -203,10 +203,10 @@ class AqualinkEntity(Entity):
         """Initialize the entity."""
         self.dev = dev
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Set up a listener when this entity is added to HA."""
         self.async_on_remove(
-            async_dispatcher_connect(self.opp, DOMAIN, self.async_write_op.state)
+            async_dispatcher_connect(self.opp, DOMAIN, self.async_write_ha_state)
         )
 
     @property

@@ -68,7 +68,7 @@ async def async_get_conditions(
         if entry.domain != DOMAIN:
             continue
 
-        state = opp.states.get(entry.entity_id)
+        state =.opp.states.get(entry.entity_id)
 
         # We need a state or else we can't populate the different armed conditions
         if state is None:

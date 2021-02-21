@@ -1,7 +1,7 @@
 {
   "domain": "oru",
   "name": "Orange and Rockland Utility (ORU)",
-  "documentation": "https://www.openpeerpower.io/integrations/oru",
+  "documentation": "https://www.open-peer-power.io/integrations/oru",
   "codeowners": ["@bvlaicu"],
   "requirements": ["oru==0.1.11"]
 }

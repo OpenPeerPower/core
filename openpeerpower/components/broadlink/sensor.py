@@ -46,7 +46,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Broadlink sensor."""
-    device = opp.data[DOMAIN].devices[config_entry.entry_id]
+    device =.opp.data[DOMAIN].devices[config_entry.entry_id]
     sensor_data = device.update_manager.coordinator.data
     sensors = [
         BroadlinkSensor(device, monitored_condition)
@@ -117,9 +117,9 @@ class BroadlinkSensor(Entity):
         """Update data."""
         if self._coordinator.last_update_success:
             self._state = self._coordinator.data[self._monitored_condition]
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when the sensor is added to.opp."""
         self.async_on_remove(self._coordinator.async_add_listener(self.update_data))
 

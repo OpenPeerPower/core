@@ -8,9 +8,9 @@
             "cannot_connect": "Tilkobling mislyktes"
         },
         "step": {
-            "oppio_confirm": {
-                "description": "Vil du konfigurere Open Peer Power til \u00e5 koble til AdGuard Home gitt av Opp.io-tillegg {addon}?",
-                "title": "AdGuard Home via Opp.io-tillegg"
+            .oppio_confirm": {
+                "description": "Vil du konfigurere Open Peer Power til \u00e5 koble til AdGuard Home gitt av Hass.io-tillegg {addon}?",
+                "title": "AdGuard Home via Hass.io-tillegg"
             },
             "user": {
                 "data": {

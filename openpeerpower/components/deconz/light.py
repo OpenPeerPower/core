@@ -21,9 +21,9 @@ from openpeerpower.components.light import (
     SUPPORT_TRANSITION,
     LightEntity,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-import openpeerpowerr.util.color as color_util
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+import openpeerpower.util.color as color_util
 
 from .const import (
     COVER_TYPES,

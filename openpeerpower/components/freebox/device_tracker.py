@@ -5,10 +5,10 @@ from typing import Dict
 from openpeerpower.components.device_tracker import SOURCE_TYPE_ROUTER
 from openpeerpower.components.device_tracker.config_entry import ScannerEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.device_registry import CONNECTION_NETWORK_MAC
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import callback
+from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DEFAULT_DEVICE_NAME, DEVICE_ICONS, DOMAIN
 from .router import FreeboxRouter
@@ -18,7 +18,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up device tracker for Freebox component."""
-    router = opp.data[DOMAIN][entry.unique_id]
+    router =.opp.data[DOMAIN][entry.unique_id]
     tracked = set()
 
     @callback
@@ -128,9 +128,9 @@ class FreeboxDevice(ScannerEntity):
     def async_on_demand_update(self):
         """Update state."""
         self.async_update_state()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register state update callback."""
         self.async_update_state()
         self.async_on_remove(

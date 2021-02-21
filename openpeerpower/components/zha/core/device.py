@@ -91,7 +91,7 @@ class ZHADevice(LogMixin):
         zha_gateway: zha_typing.ZhaGatewayType,
     ):
         """Initialize the gateway."""
-        self.opp = opp
+        self.opp =.opp
         self._zigpy_device = zigpy_device
         self._zha_gateway = zha_gateway
         self._available = False
@@ -114,18 +114,18 @@ class ZHADevice(LogMixin):
                 self.opp, self._check_available, timedelta(seconds=keep_alive_interval)
             )
         )
-        self._op.device_id = None
+        self._ha_device_id = None
         self.status = DeviceStatus.CREATED
         self._channels = channels.Channels(self)
 
     @property
     def device_id(self):
         """Return the HA device registry device id."""
-        return self._op.device_id
+        return self._ha_device_id
 
     def set_device_id(self, device_id):
         """Set the HA device registry device id."""
-        self._op.device_id = device_id
+        self._ha_device_id = device_id
 
     @property
     def device(self) -> zha_typing.ZigpyDeviceType:
@@ -414,7 +414,7 @@ class ZHADevice(LogMixin):
         self.debug("completed initialization")
 
     @callback
-    def async_cleanup_op.dles(self) -> None:
+    def async_cleanup_handles(self) -> None:
         """Unsubscribe the dispatchers and timers."""
         for unsubscribe in self.unsubs:
             unsubscribe()

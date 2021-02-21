@@ -1,7 +1,7 @@
 {
-  "domain": "oppio",
+  "domain": "opp.",
   "name": "Open Peer Power Supervisor",
-  "documentation": "https://www.openpeerpower.io/oppio",
+  "documentation": "https://www.openpeerpower.io/opp.",
   "dependencies": ["http"],
   "after_dependencies": ["panel_custom"],
   "codeowners": ["@openpeerpower/supervisor"]

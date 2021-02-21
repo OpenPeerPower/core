@@ -11,9 +11,9 @@ import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_NAME, HTTP_OK, TIME_MINUTES
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
+import openpeerpower.util.dt as dt_util
 
 _RESOURCE = "https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation"
 

@@ -10,8 +10,8 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import Context, State
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import Context, State
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import (
     ATTR_AWAY_MODE,
@@ -51,7 +51,7 @@ async def _async_reproduce_state(
     reproduce_options: Optional[Dict[str, Any]] = None,
 ) -> None:
     """Reproduce a single state."""
-    cur_state = opp.states.get(state.entity_id)
+    cur_state =.opp.states.get(state.entity_id)
 
     if cur_state is None:
         _LOGGER.warning("Unable to find entity %s", state.entity_id)
@@ -84,7 +84,7 @@ async def _async_reproduce_state(
             service = SERVICE_SET_OPERATION_MODE
             service_data[ATTR_OPERATION_MODE] = state.state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN, service, service_data, context=context, blocking=True
         )
 
@@ -93,7 +93,7 @@ async def _async_reproduce_state(
         != cur_state.attributes.get(ATTR_TEMPERATURE)
         and state.attributes.get(ATTR_TEMPERATURE) is not None
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_SET_TEMPERATURE,
             {
@@ -108,7 +108,7 @@ async def _async_reproduce_state(
         state.attributes.get(ATTR_AWAY_MODE) != cur_state.attributes.get(ATTR_AWAY_MODE)
         and state.attributes.get(ATTR_AWAY_MODE) is not None
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_SET_AWAY_MODE,
             {

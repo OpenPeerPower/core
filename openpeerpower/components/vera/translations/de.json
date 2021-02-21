@@ -22,7 +22,7 @@
                     "exclude": "Vera-Ger\u00e4te-IDs, die vom Open Peer Power ausgeschlossen werden sollen.",
                     "lights": "Vera Switch-Ger\u00e4te-IDs, die im Open Peer Power als Lichter behandelt werden sollen."
                 },
-                "description": "Weitere Informationen zu optionalen Parametern finden Sie in der Vera-Dokumentation: https://www.openpeerpower.io/integrations/vera/. Hinweis: Alle \u00c4nderungen hier erfordern einen Neustart des Open Peer Power-Servers. Geben Sie ein Leerzeichen ein, um Werte zu l\u00f6schen.",
+                "description": "Weitere Informationen zu optionalen Parametern finden Sie in der Vera-Dokumentation: https://www.open-peer-power.io/integrations/vera/. Hinweis: Alle \u00c4nderungen hier erfordern einen Neustart des Open Peer Power-Servers. Geben Sie ein Leerzeichen ein, um Werte zu l\u00f6schen.",
                 "title": "Vera Controller Optionen"
             }
         }

@@ -8,7 +8,7 @@ from openpeerpower.components.light import (
     SUPPORT_TRANSITION,
     LightEntity,
 )
-from openpeerpowerr.helpers import entity_platform
+from openpeerpower.helpers import entity_platform
 
 from . import UpbAttachedEntity
 from .const import DOMAIN, UPB_BLINK_RATE_SCHEMA, UPB_BRIGHTNESS_RATE_SCHEMA
@@ -21,7 +21,7 @@ SERVICE_LIGHT_BLINK = "light_blink"
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the UPB light based on a config entry."""
 
-    upb = opp.data[DOMAIN][config_entry.entry_id]["upb"]
+    upb =.opp.data[DOMAIN][config_entry.entry_id]["upb"]
     unique_id = config_entry.entry_id
     async_add_entities(
         UpbLight(upb.devices[dev], unique_id, upb) for dev in upb.devices

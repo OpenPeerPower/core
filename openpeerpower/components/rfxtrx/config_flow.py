@@ -19,13 +19,13 @@ from openpeerpower.const import (
     CONF_PORT,
     CONF_TYPE,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import config_validation as cv
-from openpeerpowerr.helpers.device_registry import (
+from openpeerpower.core import callback
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.device_registry import (
     async_entries_for_config_entry,
     async_get_registry as async_get_device_registry,
 )
-from openpeerpowerr.helpers.entity_registry import (
+from openpeerpower.helpers.entity_registry import (
     async_entries_for_device,
     async_get_registry as async_get_entity_registry,
 )

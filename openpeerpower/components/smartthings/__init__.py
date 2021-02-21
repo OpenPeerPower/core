@@ -69,7 +69,7 @@ async def async_migrate_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     # Remove the entry which will invoke the callback to delete the app.
    .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
     # only create new flow if there isn't a pending one for SmartThings.
-    flows = opp.config_entries.flow.async_progress()
+    flows =.opp.config_entries.flow.async_progress()
     if not [flow for flow in flows if flow["handler"] == DOMAIN]:
        .opp.async_create_task(
            .opp.config_entries.flow.async_init(DOMAIN, context={"source": "import"})
@@ -102,7 +102,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     try:
         # See if the app is already setup. This occurs when there are
         # installs in multiple SmartThings locations (valid use-case)
-        manager = opp.data[DOMAIN][DATA_MANAGER]
+        manager =.opp.data[DOMAIN][DATA_MANAGER]
         smart_app = manager.smartapps.get(entry.data[CONF_APP_ID])
         if not smart_app:
             # Validate and setup the app.
@@ -175,7 +175,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     if remove_entry:
        .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
         # only create new flow if there isn't a pending one for SmartThings.
-        flows = opp.config_entries.flow.async_progress()
+        flows =.opp.config_entries.flow.async_progress()
         if not [flow for flow in flows if flow["handler"] == DOMAIN]:
            .opp.async_create_task(
                .opp.config_entries.flow.async_init(
@@ -208,7 +208,7 @@ async def async_get_entry_scenes(entry: ConfigEntry, api):
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
-    broker = opp.data[DOMAIN][DATA_BROKERS].pop(entry.entry_id, None)
+    broker =.opp.data[DOMAIN][DATA_BROKERS].pop(entry.entry_id, None)
     if broker:
         broker.disconnect()
 
@@ -240,7 +240,7 @@ async def async_remove_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None
 
     # Remove the app if not referenced by other entries, which if already
     # removed raises a HTTP_FORBIDDEN error.
-    all_entries = opp.config_entries.async_entries(DOMAIN)
+    all_entries =.opp.config_entries.async_entries(DOMAIN)
     app_id = entry.data[CONF_APP_ID]
     app_count = sum(1 for entry in all_entries if entry.data[CONF_APP_ID] == app_id)
     if app_count > 1:
@@ -276,7 +276,7 @@ class DeviceBroker:
         scenes: Iterable,
     ):
         """Create a new instance of the DeviceBroker."""
-        self._opp = opp
+        self..opp =.opp
         self._entry = entry
         self._installed_app_id = entry.data[CONF_INSTALLED_APP_ID]
         self._smart_app = smart_app
@@ -319,7 +319,7 @@ class DeviceBroker:
                 self._entry.data[CONF_CLIENT_ID],
                 self._entry.data[CONF_CLIENT_SECRET],
             )
-            self._opp.config_entries.async_update_entry(
+            self..opp.config_entries.async_update_entry(
                 self._entry,
                 data={
                     **self._entry.data,
@@ -332,11 +332,11 @@ class DeviceBroker:
             )
 
         self._regenerate_token_remove = async_track_time_interval(
-            self._opp, regenerate_refresh_token, TOKEN_REFRESH_INTERVAL
+            self..opp, regenerate_refresh_token, TOKEN_REFRESH_INTERVAL
         )
 
         # Connect handler to incoming device events
-        self._event_disconnect = self._smart_app.connect_event(self._event_op.dler)
+        self._event_disconnect = self._smart_app.connect_event(self._event_handler)
 
     def disconnect(self):
         """Disconnects handlers/listeners for device/lifecycle events."""
@@ -355,7 +355,7 @@ class DeviceBroker:
         slots = self._assignments.get(device_id, {})
         return any(value for value in slots.values() if value == platform)
 
-    async def _event_op.dler(self, req, resp, app):
+    async def _event_handler(self, req, resp, app):
         """Broker for incoming events."""
         # Do not process events received from a different installed app
         # under the same parent SmartApp (valid use-scenario)
@@ -390,7 +390,7 @@ class DeviceBroker:
                     "name": device.label,
                     "data": evt.data,
                 }
-                self._opp.bus.async_fire(EVENT_BUTTON, data)
+                self..opp.bus.async_fire(EVENT_BUTTON, data)
                 _LOGGER.debug("Fired button event: %s", data)
             else:
                 data = {
@@ -406,7 +406,7 @@ class DeviceBroker:
 
             updated_devices.add(device.device_id)
 
-        async_dispatcher_send(self._opp, SIGNAL_SMARTTHINGS_UPDATE, updated_devices)
+        async_dispatcher_send(self..opp, SIGNAL_SMARTTHINGS_UPDATE, updated_devices)
 
 
 class SmartThingsEntity(Entity):
@@ -417,19 +417,19 @@ class SmartThingsEntity(Entity):
         self._device = device
         self._dispatcher_remove = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Device added to.opp."""
 
         async def async_update_state(devices):
             """Update device state."""
             if self._device.device_id in devices:
-                await self.async_update_op.state(True)
+                await self.async_update_ha_state(True)
 
         self._dispatcher_remove = async_dispatcher_connect(
             self.opp, SIGNAL_SMARTTHINGS_UPDATE, async_update_state
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from.opp(self) -> None:
         """Disconnect the device when removed."""
         if self._dispatcher_remove:
             self._dispatcher_remove()

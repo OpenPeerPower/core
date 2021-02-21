@@ -27,7 +27,7 @@ class IHCDevice(Entity):
             self.ihc_note = ""
             self.ihc_position = ""
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Add callback for IHC changes."""
         self.ihc_controller.add_notify_event(self.ihc_id, self.on_ihc_change, True)
 

@@ -8,8 +8,8 @@ import voluptuous as vol
 
 from openpeerpower.components.tts import CONF_LANG, PLATFORM_SCHEMA, Provider
 from openpeerpower.const import CONF_API_KEY, HTTP_OK
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -164,7 +164,7 @@ class VoiceRSSProvider(Provider):
 
     def __init__(self,.opp, conf):
         """Init VoiceRSS TTS service."""
-        self.opp = opp
+        self.opp =.opp
         self._extension = conf[CONF_CODEC]
         self._lang = conf[CONF_LANG]
         self.name = "VoiceRSS"

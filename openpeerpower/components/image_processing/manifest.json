@@ -1,7 +1,7 @@
 {
   "domain": "image_processing",
   "name": "Image Processing",
-  "documentation": "https://www.openpeerpower.io/integrations/image_processing",
+  "documentation": "https://www.open-peer-power.io/integrations/image_processing",
   "dependencies": ["camera"],
   "codeowners": []
 }

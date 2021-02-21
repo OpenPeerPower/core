@@ -45,12 +45,12 @@ _LOGGER = logging.getLogger(__name__)
 HC_HUMIDIFIER = 1
 HC_DEHUMIDIFIER = 2
 
-HC_OPP_TO_HOMEKIT_DEVICE_CLASS = {
+HC_HASS_TO_HOMEKIT_DEVICE_CLASS = {
     DEVICE_CLASS_HUMIDIFIER: HC_HUMIDIFIER,
     DEVICE_CLASS_DEHUMIDIFIER: HC_DEHUMIDIFIER,
 }
 
-HC_OPP_TO_HOMEKIT_DEVICE_CLASS_NAME = {
+HC_HASS_TO_HOMEKIT_DEVICE_CLASS_NAME = {
     DEVICE_CLASS_HUMIDIFIER: "Humidifier",
     DEVICE_CLASS_DEHUMIDIFIER: "Dehumidifier",
 }
@@ -76,7 +76,7 @@ class HumidifierDehumidifier(HomeAccessory):
         self.chars = []
         state = self.opp.states.get(self.entity_id)
         device_class = state.attributes.get(ATTR_DEVICE_CLASS, DEVICE_CLASS_HUMIDIFIER)
-        self._hk_device_class = HC_OPP_TO_HOMEKIT_DEVICE_CLASS[device_class]
+        self._hk_device_class = HC_HASS_TO_HOMEKIT_DEVICE_CLASS[device_class]
 
         self._target_humidity_char_name = HC_DEVICE_CLASS_TO_TARGET_CHAR[
             self._hk_device_class
@@ -98,7 +98,7 @@ class HumidifierDehumidifier(HomeAccessory):
                 CHAR_TARGET_HUMIDIFIER_DEHUMIDIFIER,
                 value=self._hk_device_class,
                 valid_values={
-                    HC_OPP_TO_HOMEKIT_DEVICE_CLASS_NAME[
+                    HC_HASS_TO_HOMEKIT_DEVICE_CLASS_NAME[
                         device_class
                     ]: self._hk_device_class
                 },
@@ -143,7 +143,7 @@ class HumidifierDehumidifier(HomeAccessory):
             if humidity_state:
                 self._async_update_current_humidity(humidity_state)
 
-    async def run_op.dler(self):
+    async def run(self):
         """Handle accessory driver started event.
 
         Run inside the Open Peer Power event loop.
@@ -155,7 +155,7 @@ class HumidifierDehumidifier(HomeAccessory):
                 self.async_update_current_humidity_event,
             )
 
-        await super().run_op.dler()
+        await super().run()
 
     @callback
     def async_update_current_humidity_event(self, event):
@@ -201,7 +201,7 @@ class HumidifierDehumidifier(HomeAccessory):
                 )
 
         if CHAR_ACTIVE in char_values:
-            self.call_service(
+            self.async_call_service(
                 DOMAIN,
                 SERVICE_TURN_ON if char_values[CHAR_ACTIVE] else SERVICE_TURN_OFF,
                 {ATTR_ENTITY_ID: self.entity_id},
@@ -210,7 +210,7 @@ class HumidifierDehumidifier(HomeAccessory):
 
         if self._target_humidity_char_name in char_values:
             humidity = round(char_values[self._target_humidity_char_name])
-            self.call_service(
+            self.async_call_service(
                 DOMAIN,
                 SERVICE_SET_HUMIDITY,
                 {ATTR_ENTITY_ID: self.entity_id, ATTR_HUMIDITY: humidity},

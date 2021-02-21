@@ -5,7 +5,7 @@ from aiohttp import hdrs
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PLATFORM, CONF_WEBHOOK_ID
-from openpeerpower.core import OppJob, callback
+from openpeerpower.core import HassJob, callback
 import openpeerpower.helpers.config_validation as cv
 
 # mypy: allow-untyped-defs
@@ -17,7 +17,7 @@ TRIGGER_SCHEMA = vol.Schema(
 )
 
 
-async def _op.dle_webhook(job,.opp, webhook_id, request):
+async def _handle_webhook(job,.opp, webhook_id, request):
     """Handle incoming webhook."""
     result = {"platform": "webhook", "webhook_id": webhook_id}
 
@@ -28,18 +28,18 @@ async def _op.dle_webhook(job,.opp, webhook_id, request):
 
     result["query"] = request.query
     result["description"] = "webhook"
-   .opp.async_run_opp_job(job, {"trigger": result})
+   .opp.async_run.opp_job(job, {"trigger": result})
 
 
 async def async_attach_trigger.opp, config, action, automation_info):
     """Trigger based on incoming webhooks."""
     webhook_id = config.get(CONF_WEBHOOK_ID)
-    job = OppJob(action)
+    job = HassJob(action)
    .opp.components.webhook.async_register(
         automation_info["domain"],
         automation_info["name"],
         webhook_id,
-        partial(_op.dle_webhook, job),
+        partial(_handle_webhook, job),
     )
 
     @callback

@@ -7,8 +7,8 @@ import voluptuous as vol
 from openpeerpower.components.discovery import SERVICE_FREEBOX
 from openpeerpower.config_entries import SOURCE_DISCOVERY, SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import CONF_HOST, CONF_PORT, EVENT_OPENPEERPOWER_STOP
-from openpeerpowerr.helpers import config_validation as cv, discovery
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers import config_validation as cv, discovery
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DOMAIN, PLATFORMS
 from .router import FreeboxRouter
@@ -99,7 +99,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         )
     )
     if unload_ok:
-        router = opp.data[DOMAIN].pop(entry.unique_id)
+        router =.opp.data[DOMAIN].pop(entry.unique_id)
         await router.close()
 
     return unload_ok

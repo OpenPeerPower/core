@@ -15,9 +15,9 @@ async def async_setup_entry(
 ) -> None:
     """Set up FireServiceRota binary sensor based on a config entry."""
 
-    client = opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
+    client =.opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
 
-    coordinator: DataUpdateCoordinator = opp.data[FIRESERVICEROTA_DOMAIN][
+    coordinator: DataUpdateCoordinator =.opp.data[FIRESERVICEROTA_DOMAIN][
         entry.entry_id
     ][DATA_COORDINATOR]
 

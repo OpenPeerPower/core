@@ -52,8 +52,8 @@ class LGDevice(MediaPlayerEntity):
         self._treble = 0
         self._device = None
 
-    async def async_added_to_opp(self):
-        """Register the callback after opp is ready for it."""
+    async def async_added_to.opp(self):
+        """Register the callback after.opp is ready for it."""
         await self.opp.async_add_executor_job(self._connect)
 
     def _connect(self):
@@ -110,7 +110,7 @@ class LGDevice(MediaPlayerEntity):
                 self._equaliser = data["i_curr_eq"]
             if "s_user_name" in data:
                 self._name = data["s_user_name"]
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def update(self):
         """Trigger updates from the device."""

@@ -2,11 +2,11 @@
   "domain": "poolsense",
   "name": "PoolSense",
   "config_flow": true,
-  "documentation": "https://www.openpeerpower.io/integrations/poolsense",
+  "documentation": "https://www.open-peer-power.io/integrations/poolsense",
   "requirements": [
     "poolsense==0.0.8"
   ],
   "codeowners": [
-    "@op.mishkyd"
+    "@haemishkyd"
   ]
 }

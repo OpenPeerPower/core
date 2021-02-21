@@ -76,7 +76,7 @@ async def handle_webhook.opp, webhook_id, request):
         _LOGGER.error("Could not get information from POST <%s>", error)
         return
 
-    camera = opp.data[PUSH_CAMERA_DATA][webhook_id]
+    camera =.opp.data[PUSH_CAMERA_DATA][webhook_id]
 
     if camera.image_field not in data:
         _LOGGER.warning("Webhook call without POST parameter <%s>", camera.image_field)
@@ -103,9 +103,9 @@ class PushCamera(Camera):
         self._current_image = None
         self._image_field = image_field
         self.webhook_id = webhook_id
-        self.webhook_url = opp.components.webhook.async_generate_url(webhook_id)
+        self.webhook_url =.opp.components.webhook.async_generate_url(webhook_id)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[PUSH_CAMERA_DATA][self.webhook_id] = self
 
@@ -144,7 +144,7 @@ class PushCamera(Camera):
             self._state = STATE_IDLE
             self._expired_listener = None
             _LOGGER.debug("Reset state")
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         if self._expired_listener:
             self._expired_listener()
@@ -153,7 +153,7 @@ class PushCamera(Camera):
             self.opp, reset_state, dt_util.utcnow() + self._timeout
         )
 
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_camera_image(self):
         """Return a still image response."""

@@ -45,7 +45,7 @@ SENSOR_TYPES_BATTERY = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the August sensors."""
-    data = opp.data[DOMAIN][config_entry.entry_id][DATA_AUGUST]
+    data =.opp.data[DOMAIN][config_entry.entry_id][DATA_AUGUST]
     devices = []
     migrate_unique_id_devices = []
     operation_sensors = []
@@ -188,9 +188,9 @@ class AugustOperatorSensor(AugustEntityMixin, RestoreEntity, Entity):
 
         return attributes
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Restore ATTR_CHANGED_BY on startup since it is likely no longer in the activity log."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
 
         last_state = await self.async_get_last_state()
         if not last_state or last_state.state == STATE_UNAVAILABLE:

@@ -23,7 +23,7 @@
                 "data": {
                     "environment": "Nom opcional de l'entorn.",
                     "event_custom_components": "Envia esdeveniments de components personalitzats",
-                    "event_op.dled": "Envia esdeveniments gestionats",
+                    "event_handled": "Envia esdeveniments gestionats",
                     "event_third_party_packages": "Envia esdeveniments de tercers",
                     "logging_event_level": "El nivell (log level) en que Sentry registrar\u00e0 un esdeveniment",
                     "logging_level": "El nivell (log level) en que Sentry registrar\u00e0 en miques",

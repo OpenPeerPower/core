@@ -23,29 +23,29 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_setup_auth_view.opp: OpenPeerPowerType, user: User):
+def async_setup_auth_view.opp.OpenPeerPowerType, user: User):
     """Auth setup."""
-    oppio_auth = OppIOAuth.opp, user)
-    oppio_password_reset = OppIOPasswordReset.opp, user)
+    opp._auth = OppIOAuth.opp.user)
+    opp._password_reset = OppIOPasswordReset.opp.user)
 
-   .opp.http.register_view(oppio_auth)
-   .opp.http.register_view(oppio_password_reset)
+   .opp.ttp.register_view(opp._auth)
+   .opp.ttp.register_view(opp._password_reset)
 
 
 class OppIOBaseAuth(OpenPeerPowerView):
     """Opp.io view to handle auth requests."""
 
-    def __init__(self,.opp: OpenPeerPowerType, user: User):
+    def __init__(self,.opp.OpenPeerPowerType, user: User):
         """Initialize WebView."""
-        self.opp = opp
+        self opp. opp
         self.user = user
 
     def _check_access(self, request: web.Request):
         """Check if this call is from Supervisor."""
         # Check caller IP
-        oppio_ip = os.environ["OPPIO"].split(":")[0]
+        opp._ip = os.environ["OPPIO"].split(":")[0]
         if ip_address(request.transport.get_extra_info("peername")[0]) != ip_address(
-            oppio_ip
+            opp._ip
         ):
             _LOGGER.error("Invalid auth request from %s", request.remote)
             raise HTTPUnauthorized()
@@ -59,8 +59,8 @@ class OppIOBaseAuth(OpenPeerPowerView):
 class OppIOAuth(OppIOBaseAuth):
     """Opp.io view to handle auth requests."""
 
-    name = "api:oppio:auth"
-    url = "/api/oppio_auth"
+    name = "api:opp.:auth"
+    url = "/api/opp._auth"
 
     @RequestDataValidator(
         vol.Schema(
@@ -75,7 +75,7 @@ class OppIOAuth(OppIOBaseAuth):
     async def post(self, request, data):
         """Handle auth requests."""
         self._check_access(request)
-        provider = auth_op.async_get_provider(request.app["opp"])
+        provider = auth_op.async_get_provider(request.app["opp.)
 
         try:
             await provider.async_validate_login(
@@ -90,8 +90,8 @@ class OppIOAuth(OppIOBaseAuth):
 class OppIOPasswordReset(OppIOBaseAuth):
     """Opp.io view to handle password reset requests."""
 
-    name = "api:oppio:auth:password:reset"
-    url = "/api/oppio_auth/password_reset"
+    name = "api:opp.:auth:password:reset"
+    url = "/api/opp._auth/password_reset"
 
     @RequestDataValidator(
         vol.Schema(
@@ -105,7 +105,7 @@ class OppIOPasswordReset(OppIOBaseAuth):
     async def post(self, request, data):
         """Handle password reset requests."""
         self._check_access(request)
-        provider = auth_op.async_get_provider(request.app["opp"])
+        provider = auth_op.async_get_provider(request.app["opp.)
 
         try:
             await provider.async_change_password(

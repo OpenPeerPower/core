@@ -14,7 +14,7 @@
                 "data": {
                     "api_key": "API v\u00f5ti"
                 },
-                "description": "On vaja 16-kohalist API-v\u00f5tit, juhiste saamiseks vaata https://www.openpeerpower.io/integrations/motion_blinds/#retrieving-the-key",
+                "description": "On vaja 16-kohalist API-v\u00f5tit, juhiste saamiseks vaata https://www.open-peer-power.io/integrations/motion_blinds/#retrieving-the-key",
                 "title": ""
             },
             "select": {

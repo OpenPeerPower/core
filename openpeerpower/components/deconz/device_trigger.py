@@ -5,7 +5,7 @@ from openpeerpower.components.device_automation import TRIGGER_BASE_SCHEMA
 from openpeerpower.components.device_automation.exceptions import (
     InvalidDeviceAutomationConfig,
 )
-from openpeerpower.components.openpeerpowerr.triggers import event as event_trigger
+from openpeerpower.components.openpeerpower.triggers import event as event_trigger
 from openpeerpower.const import (
     CONF_DEVICE_ID,
     CONF_DOMAIN,
@@ -409,7 +409,7 @@ async def async_validate_trigger_config.opp, config):
     """Validate config."""
     config = TRIGGER_SCHEMA(config)
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(config[CONF_DEVICE_ID])
 
     trigger = (config[CONF_TYPE], config[CONF_SUBTYPE])
@@ -434,7 +434,7 @@ async def async_validate_trigger_config.opp, config):
 
 async def async_attach_trigger.opp, config, action, automation_info):
     """Listen for state changes based on configuration."""
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(config[CONF_DEVICE_ID])
 
     trigger = (config[CONF_TYPE], config[CONF_SUBTYPE])
@@ -467,7 +467,7 @@ async def async_get_triggers.opp, device_id):
     Retrieve the deconz event object matching device entry.
     Generate device trigger list.
     """
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(device_id)
 
     if device.model not in REMOTES:

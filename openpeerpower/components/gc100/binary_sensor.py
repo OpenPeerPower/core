@@ -3,7 +3,7 @@ import voluptuous as vol
 
 from openpeerpower.components.binary_sensor import PLATFORM_SCHEMA, BinarySensorEntity
 from openpeerpower.const import DEVICE_DEFAULT_NAME
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 from . import CONF_PORTS, DATA_GC100
 
@@ -56,4 +56,4 @@ class GC100BinarySensor(BinarySensorEntity):
     def set_state(self, state):
         """Set the current state."""
         self._state = state == 1
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()

@@ -1,7 +1,7 @@
 {
   "domain": "configurator",
   "name": "Configurator",
-  "documentation": "https://www.openpeerpower.io/integrations/configurator",
-  "codeowners": ["@openpeerpower/core"],
+  "documentation": "https://www.open-peer-power.io/integrations/configurator",
+  "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"
 }

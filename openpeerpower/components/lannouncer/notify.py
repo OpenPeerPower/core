@@ -11,7 +11,7 @@ from openpeerpower.components.notify import (
     BaseNotificationService,
 )
 from openpeerpower.const import CONF_HOST, CONF_PORT
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 ATTR_METHOD = "method"
 ATTR_METHOD_DEFAULT = "speak"
@@ -42,7 +42,7 @@ class LannouncerNotificationService(BaseNotificationService):
 
     def __init__(self,.opp, host, port):
         """Initialize the service."""
-        self._opp = opp
+        self..opp =.opp
         self._host = host
         self._port = port
 

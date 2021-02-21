@@ -35,9 +35,9 @@ from openpeerpower.const import (
     TEMP_FAHRENHEIT,
     __version__,
 )
-from openpeerpowerr.core import OpenPeerPower, State, callback
-from openpeerpowerr.helpers import network
-from openpeerpowerr.util.decorator import Registry
+from openpeerpower.core import OpenPeerPower, State, callback
+from openpeerpower.helpers import network
+from openpeerpower.util.decorator import Registry
 
 from .capabilities import (
     Alexa,
@@ -253,7 +253,7 @@ class AlexaEntity:
 
     def __init__(self,.opp: OpenPeerPower, config: "AbstractConfig", entity: State):
         """Initialize Alexa Entity."""
-        self.opp = opp
+        self.opp =.opp
         self.config = config
         self.entity = entity
         self.entity_conf = config.entity_config.get(entity.entity_id, {})
@@ -857,7 +857,7 @@ class CameraCapabilities(AlexaEntity):
         yield Alexa(self.opp)
 
     def _check_requirements(self):
-        """Check the opp URL for HTTPS scheme."""
+        """Check the.opp URL for HTTPS scheme."""
         if "stream" not in self.opp.config.components:
             _LOGGER.debug(
                 "%s requires stream component for AlexaCameraStreamController",

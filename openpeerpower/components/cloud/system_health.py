@@ -3,7 +3,7 @@ from.opp_nabucasa import Cloud
 from yarl import URL
 
 from openpeerpower.components import system_health
-from openpeerpowerr.core import OpenPeerPower, callback
+from openpeerpower.core import OpenPeerPower, callback
 
 from .client import CloudClient
 from .const import DOMAIN
@@ -19,7 +19,7 @@ def async_register(
 
 async def system_health_info.opp):
     """Get info for the info page."""
-    cloud: Cloud = opp.data[DOMAIN]
+    cloud: Cloud =.opp.data[DOMAIN]
     client: CloudClient = cloud.client
 
     data = {

@@ -9,7 +9,7 @@ ICON = "mdi:toggle-switch"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Smappee Comfort Plugs."""
-    smappee_base = opp.data[DOMAIN][config_entry.entry_id]
+    smappee_base =.opp.data[DOMAIN][config_entry.entry_id]
 
     entities = []
     for service_location in smappee_base.smappee.service_locations.values():
@@ -176,7 +176,7 @@ class SmappeeActuator(SwitchEntity):
         new_state = self._service_location.actuators.get(self._actuator_id).state
         if new_state != self._state:
             self._state = new_state
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self._connection_state = self._service_location.actuators.get(
             self._actuator_id

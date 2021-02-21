@@ -1,7 +1,7 @@
 {
   "domain": "pilight",
   "name": "Pilight",
-  "documentation": "https://www.openpeerpower.io/integrations/pilight",
+  "documentation": "https://www.open-peer-power.io/integrations/pilight",
   "requirements": ["pilight==0.1.1"],
   "codeowners": ["@trekky12"]
 }

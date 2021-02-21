@@ -27,6 +27,7 @@ from .const import (
     ATTR_MANUFACTURER,
     ATTR_MODEL,
     ATTR_SOFTWARE_VERSION,
+    ATTR_SUGGESTED_AREA,
     DOMAIN,
 )
 
@@ -78,7 +79,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     return unload_ok
 
 
-def roku_exception_op.dler(func):
+def roku_exception_handler(func):
     """Decorate Roku calls to handle Roku exceptions."""
 
     async def handler(self, *args, **kwargs):
@@ -161,4 +162,5 @@ class RokuEntity(CoordinatorEntity):
             ATTR_MANUFACTURER: self.coordinator.data.info.brand,
             ATTR_MODEL: self.coordinator.data.info.model_name,
             ATTR_SOFTWARE_VERSION: self.coordinator.data.info.version,
+            ATTR_SUGGESTED_AREA: self.coordinator.data.info.device_location,
         }

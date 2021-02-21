@@ -24,7 +24,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up Sonarr sensors based on a config entry."""
     options = entry.options
-    sonarr = opp.data[DOMAIN][entry.entry_id][DATA_SONARR]
+    sonarr =.opp.data[DOMAIN][entry.entry_id][DATA_SONARR]
 
     entities = [
         SonarrCommandsSensor(sonarr, entry.entry_id),
@@ -40,7 +40,7 @@ async def async_setup_entry(
     async_add_entities(entities, True)
 
 
-def sonarr_exception_op.dler(func):
+def sonarr_exception_handler(func):
     """Decorate Sonarr calls to handle Sonarr exceptions.
 
     A decorator that wraps the passed in function, catches Sonarr errors,
@@ -125,7 +125,7 @@ class SonarrCommandsSensor(SonarrSensor):
             enabled_default=False,
         )
 
-    @sonarr_exception_op.dler
+    @sonarr_exception_handler
     async def async_update(self) -> None:
         """Update entity."""
         self._commands = await self.sonarr.commands()
@@ -164,7 +164,7 @@ class SonarrDiskspaceSensor(SonarrSensor):
             enabled_default=False,
         )
 
-    @sonarr_exception_op.dler
+    @sonarr_exception_handler
     async def async_update(self) -> None:
         """Update entity."""
         app = await self.sonarr.update()
@@ -211,7 +211,7 @@ class SonarrQueueSensor(SonarrSensor):
             enabled_default=False,
         )
 
-    @sonarr_exception_op.dler
+    @sonarr_exception_handler
     async def async_update(self) -> None:
         """Update entity."""
         self._queue = await self.sonarr.queue()
@@ -252,7 +252,7 @@ class SonarrSeriesSensor(SonarrSensor):
             enabled_default=False,
         )
 
-    @sonarr_exception_op.dler
+    @sonarr_exception_handler
     async def async_update(self) -> None:
         """Update entity."""
         self._items = await self.sonarr.series()
@@ -290,7 +290,7 @@ class SonarrUpcomingSensor(SonarrSensor):
             unit_of_measurement="Episodes",
         )
 
-    @sonarr_exception_op.dler
+    @sonarr_exception_handler
     async def async_update(self) -> None:
         """Update entity."""
         local = dt_util.start_of_local_day().replace(microsecond=0)
@@ -335,7 +335,7 @@ class SonarrWantedSensor(SonarrSensor):
             enabled_default=False,
         )
 
-    @sonarr_exception_op.dler
+    @sonarr_exception_handler
     async def async_update(self) -> None:
         """Update entity."""
         self._results = await self.sonarr.wanted(page_size=self._max_items)

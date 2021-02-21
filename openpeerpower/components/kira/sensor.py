@@ -16,7 +16,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is not None:
         name = discovery_info.get(CONF_NAME)
         device = discovery_info.get(CONF_DEVICE)
-        kira = opp.data[DOMAIN][CONF_SENSOR][name]
+        kira =.opp.data[DOMAIN][CONF_SENSOR][name]
 
         add_entities([KiraReceiver(device, kira)])
 
@@ -37,7 +37,7 @@ class KiraReceiver(Entity):
         _LOGGER.debug("Kira Code: %s", code_name)
         self._state = code_name
         self._device = device
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     @property
     def name(self):

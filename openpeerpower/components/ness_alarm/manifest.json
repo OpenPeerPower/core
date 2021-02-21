@@ -1,7 +1,7 @@
 {
   "domain": "ness_alarm",
   "name": "Ness Alarm",
-  "documentation": "https://www.openpeerpower.io/integrations/ness_alarm",
+  "documentation": "https://www.open-peer-power.io/integrations/ness_alarm",
   "requirements": ["nessclient==0.9.15"],
   "codeowners": ["@nickw444"]
 }

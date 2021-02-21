@@ -1,7 +1,7 @@
 """Support for Ambient Weather Station binary sensors."""
 from openpeerpower.components.binary_sensor import BinarySensorEntity
 from openpeerpower.const import ATTR_NAME
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from . import (
     SENSOR_TYPES,
@@ -29,7 +29,7 @@ from .const import (
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Ambient PWS binary sensors based on a config entry."""
-    ambient = opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
+    ambient =.opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
 
     binary_sensor_list = []
     for mac_address, station in ambient.stations.items():

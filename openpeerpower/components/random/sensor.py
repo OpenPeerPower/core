@@ -10,8 +10,8 @@ from openpeerpower.const import (
     CONF_NAME,
     CONF_UNIT_OF_MEASUREMENT,
 )
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.entity import Entity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity import Entity
 
 ATTR_MAXIMUM = "maximum"
 ATTR_MINIMUM = "minimum"

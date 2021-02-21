@@ -53,7 +53,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     # Cleanup
-    parent = opp.data[DOMAIN][entry.entry_id]
+    parent =.opp.data[DOMAIN][entry.entry_id]
     await parent.async_reset()
     del.opp.data[DOMAIN][entry.entry_id]
 
@@ -114,13 +114,13 @@ class WiLightDevice(Entity):
     def handle_event_callback(self, states):
         """Propagate changes through ha."""
         self._status = states
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_update(self):
         """Synchronize state with api_device."""
         await self._client.status(self._index)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register update callback."""
         self._client.register_status_callback(self.handle_event_callback, self._index)
         await self._client.status(self._index)

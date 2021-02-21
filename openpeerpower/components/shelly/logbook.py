@@ -1,7 +1,7 @@
 """Describe Shelly logbook events."""
 
 from openpeerpower.const import ATTR_DEVICE_ID
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from .const import (
     ATTR_CHANNEL,

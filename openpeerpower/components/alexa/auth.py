@@ -8,9 +8,9 @@ import aiohttp
 import async_timeout
 
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET, HTTP_OK
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import aiohttp_client
-from openpeerpowerr.util import dt
+from openpeerpower.core import callback
+from openpeerpower.helpers import aiohttp_client
+from openpeerpower.util import dt
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -30,13 +30,13 @@ class Auth:
 
     def __init__(self,.opp, client_id, client_secret):
         """Initialize the Auth class."""
-        self.opp = opp
+        self.opp =.opp
 
         self.client_id = client_id
         self.client_secret = client_secret
 
         self._prefs = None
-        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
 
         self._get_token_lock = asyncio.Lock()
 

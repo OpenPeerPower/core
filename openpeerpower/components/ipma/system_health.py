@@ -1,6 +1,6 @@
 """Provide info to system health."""
 from openpeerpower.components import system_health
-from openpeerpowerr.core import OpenPeerPower, callback
+from openpeerpower.core import OpenPeerPower, callback
 
 IPMA_API_URL = "http://api.ipma.pt"
 

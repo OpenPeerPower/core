@@ -17,7 +17,7 @@ import openpeerpower.util.dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
-PUSH_URL = "https://ios-push.openpeerpower.io/push"
+PUSH_URL = "https://ios-push.open-peer-power.io/push"
 
 
 # pylint: disable=invalid-name

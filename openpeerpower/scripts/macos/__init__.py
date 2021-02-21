@@ -18,7 +18,7 @@ def install_osx():
     with open(template_path, encoding="utf-8") as tinp:
         plist = tinp.read()
 
-    plist = plist.replace("$OPP_PATH$",.opp_path)
+    plist = plist.replace("$HASS_PATH$",.opp_path)
     plist = plist.replace("$USER$", user)
 
     path = os.path.expanduser("~/Library/LaunchAgents/org.openpeerpower.plist")

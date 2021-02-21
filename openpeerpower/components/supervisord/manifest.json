@@ -1,6 +1,6 @@
 {
   "domain": "supervisord",
   "name": "Supervisord",
-  "documentation": "https://www.openpeerpower.io/integrations/supervisord",
+  "documentation": "https://www.open-peer-power.io/integrations/supervisord",
   "codeowners": []
 }

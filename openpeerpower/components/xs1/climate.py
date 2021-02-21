@@ -18,8 +18,8 @@ SUPPORT_HVAC = [HVAC_MODE_HEAT]
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the XS1 thermostat platform."""
-    actuators = opp.data[COMPONENT_DOMAIN][ACTUATORS]
-    sensors = opp.data[COMPONENT_DOMAIN][SENSORS]
+    actuators =.opp.data[COMPONENT_DOMAIN][ACTUATORS]
+    sensors =.opp.data[COMPONENT_DOMAIN][SENSORS]
 
     thermostat_entities = []
     for actuator in actuators:
@@ -107,7 +107,7 @@ class XS1ThermostatEntity(XS1DeviceEntity, ClimateEntity):
         self.device.set_value(temp)
 
         if self.sensor is not None:
-            self.schedule_update_op.state()
+            self.schedule_update_ha_state()
 
     def set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""

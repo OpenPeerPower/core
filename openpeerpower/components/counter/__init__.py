@@ -236,9 +236,9 @@ class Counter(RestoreEntity):
 
         return state
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Call when entity about to be added to Open Peer Power."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         # __init__ will set self._state to self._initial, only override
         # if needed.
         if self._config[CONF_RESTORE]:
@@ -254,19 +254,19 @@ class Counter(RestoreEntity):
     def async_decrement(self) -> None:
         """Decrement the counter."""
         self._state = self.compute_next_state(self._state - self._config[CONF_STEP])
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_increment(self) -> None:
         """Increment a counter."""
         self._state = self.compute_next_state(self._state + self._config[CONF_STEP])
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_reset(self) -> None:
         """Reset a counter."""
         self._state = self.compute_next_state(self._config[CONF_INITIAL])
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def async_configure(self, **kwargs) -> None:
@@ -274,10 +274,10 @@ class Counter(RestoreEntity):
         new_state = kwargs.pop(VALUE, self._state)
         self._config = {**self._config, **kwargs}
         self._state = self.compute_next_state(new_state)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_update_config(self, config: Dict) -> None:
         """Change the counter's settings WS CRUD."""
         self._config = config
         self._state = self.compute_next_state(self._state)
-        self.async_write_op.state()
+        self.async_write_ha_state()

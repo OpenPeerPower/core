@@ -9,14 +9,14 @@ from openpeerpower.const import ATTR_ENTITY_ID
 from openpeerpower.helpers import config_validation as cv, dispatcher
 from openpeerpower.helpers.network import get_url
 
-from .const import DOMAIN, SIGNAL_OPP_CAST_SHOW_VIEW
+from .const import DOMAIN, SIGNAL_HASS_CAST_SHOW_VIEW
 
 SERVICE_SHOW_VIEW = "show_lovelace_view"
 ATTR_VIEW_PATH = "view_path"
 ATTR_URL_PATH = "dashboard_path"
 
 
-async def async_setup_op.cast(
+async def async_setup_ha_cast(
    .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up Open Peer Power Cast."""
@@ -24,10 +24,10 @@ async def async_setup_op.cast(
     user: Optional[auth.models.User] = None
 
     if user_id is not None:
-        user = await opp..auth.async_get_user(user_id)
+        user = await.opp.auth.async_get_user(user_id)
 
     if user is None:
-        user = await opp..auth.async_create_system_user(
+        user = await.opp.auth.async_create_system_user(
             "Open Peer Power Cast", [auth.GROUP_ID_ADMIN]
         )
        .opp.config_entries.async_update_entry(
@@ -37,7 +37,7 @@ async def async_setup_op.cast(
     if user.refresh_tokens:
         refresh_token: auth.models.RefreshToken = list(user.refresh_tokens.values())[0]
     else:
-        refresh_token = await opp..auth.async_create_refresh_token(user)
+        refresh_token = await.opp.auth.async_create_refresh_token(user)
 
     async def handle_show_view(call: core.ServiceCall):
         """Handle a Show View service call."""
@@ -53,7 +53,7 @@ async def async_setup_op.cast(
 
         dispatcher.async_dispatcher_send(
            .opp,
-            SIGNAL_OPP_CAST_SHOW_VIEW,
+            SIGNAL_HASS_CAST_SHOW_VIEW,
             controller,
             call.data[ATTR_ENTITY_ID],
             call.data[ATTR_VIEW_PATH],
@@ -81,5 +81,5 @@ async def async_remove_user(
     user_id: Optional[str] = entry.data.get("user_id")
 
     if user_id is not None:
-        user = await opp..auth.async_get_user(user_id)
-        await opp..auth.async_remove_user(user)
+        user = await.opp.auth.async_get_user(user_id)
+        await.opp.auth.async_remove_user(user)

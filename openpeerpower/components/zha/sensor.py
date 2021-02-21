@@ -69,7 +69,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up the Zigbee Home Automation sensor from config entry."""
-    entities_to_create = opp.data[DATA_ZHA][DOMAIN]
+    entities_to_create =.opp.data[DATA_ZHA][DOMAIN]
 
     unsub = async_dispatcher_connect(
        .opp,
@@ -105,9 +105,9 @@ class Sensor(ZhaEntity):
         super().__init__(unique_id, zha_device, channels, **kwargs)
         self._channel: ChannelType = channels[0]
 
-    async def async_added_to_opp(self) -> None:
+    async def async_added_to.opp(self) -> None:
         """Run when about to be added to.opp."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         self.async_accept_signal(
             self._channel, SIGNAL_ATTR_UPDATED, self.async_set_state
         )
@@ -134,7 +134,7 @@ class Sensor(ZhaEntity):
     @callback
     def async_set_state(self, attr_id: int, attr_name: str, value: Any) -> None:
         """Handle state update from channel."""
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def formatter(self, value: int) -> Union[int, float]:
         """Numeric pass-through formatter."""

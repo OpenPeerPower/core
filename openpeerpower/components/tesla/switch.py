@@ -10,7 +10,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Tesla binary_sensors by config_entry."""
-    coordinator = opp.data[TESLA_DOMAIN][config_entry.entry_id]["coordinator"]
+    coordinator =.opp.data[TESLA_DOMAIN][config_entry.entry_id]["coordinator"]
     entities = []
     for device in.opp.data[TESLA_DOMAIN][config_entry.entry_id]["devices"]["switch"]:
         if device.type == "charger switch":
@@ -30,13 +30,13 @@ class ChargerSwitch(TeslaDevice, SwitchEntity):
         """Send the on command."""
         _LOGGER.debug("Enable charging: %s", self.name)
         await self.tesla_device.start_charge()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Send the off command."""
         _LOGGER.debug("Disable charging for: %s", self.name)
         await self.tesla_device.stop_charge()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_on(self):
@@ -53,13 +53,13 @@ class RangeSwitch(TeslaDevice, SwitchEntity):
         """Send the on command."""
         _LOGGER.debug("Enable max range charging: %s", self.name)
         await self.tesla_device.set_max()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Send the off command."""
         _LOGGER.debug("Disable max range charging: %s", self.name)
         await self.tesla_device.set_standard()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_on(self):
@@ -91,13 +91,13 @@ class UpdateSwitch(TeslaDevice, SwitchEntity):
         """Send the on command."""
         _LOGGER.debug("Enable updates: %s %s", self.name, self.tesla_device.id())
         self.controller.set_updates(self.tesla_device.id(), True)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Send the off command."""
         _LOGGER.debug("Disable updates: %s %s", self.name, self.tesla_device.id())
         self.controller.set_updates(self.tesla_device.id(), False)
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_on(self):
@@ -114,13 +114,13 @@ class SentryModeSwitch(TeslaDevice, SwitchEntity):
         """Send the on command."""
         _LOGGER.debug("Enable sentry mode: %s", self.name)
         await self.tesla_device.enable_sentry_mode()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
         """Send the off command."""
         _LOGGER.debug("Disable sentry mode: %s", self.name)
         await self.tesla_device.disable_sentry_mode()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @property
     def is_on(self):

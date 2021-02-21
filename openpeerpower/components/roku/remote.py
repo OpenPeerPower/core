@@ -5,7 +5,7 @@ from openpeerpower.components.remote import ATTR_NUM_REPEATS, RemoteEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.helpers.typing import OpenPeerPowerType
 
-from . import RokuDataUpdateCoordinator, RokuEntity, roku_exception_op.dler
+from . import RokuDataUpdateCoordinator, RokuEntity, roku_exception_handler
 from .const import DOMAIN
 
 
@@ -15,7 +15,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List, bool], None],
 ) -> bool:
     """Load Roku remote based on a config entry."""
-    coordinator = opp.data[DOMAIN][entry.entry_id]
+    coordinator =.opp.data[DOMAIN][entry.entry_id]
     unique_id = coordinator.data.info.serial_number
     async_add_entities([RokuRemote(unique_id, coordinator)], True)
 
@@ -43,19 +43,19 @@ class RokuRemote(RokuEntity, RemoteEntity):
         """Return true if device is on."""
         return not self.coordinator.data.state.standby
 
-    @roku_exception_op.dler
+    @roku_exception_handler
     async def async_turn_on(self, **kwargs) -> None:
         """Turn the device on."""
         await self.coordinator.roku.remote("poweron")
         await self.coordinator.async_request_refresh()
 
-    @roku_exception_op.dler
+    @roku_exception_handler
     async def async_turn_off(self, **kwargs) -> None:
         """Turn the device off."""
         await self.coordinator.roku.remote("poweroff")
         await self.coordinator.async_request_refresh()
 
-    @roku_exception_op.dler
+    @roku_exception_handler
     async def async_send_command(self, command: List, **kwargs) -> None:
         """Send a command to one device."""
         num_repeats = kwargs[ATTR_NUM_REPEATS]

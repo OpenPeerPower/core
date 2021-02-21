@@ -21,7 +21,7 @@ from openpeerpower.const import (
     CONF_TIMEOUT,
     CONF_VALUE_TEMPLATE,
 )
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         value_template = device_config.get(CONF_VALUE_TEMPLATE)
 
         if value_template is not None:
-            value_template.opp = opp
+            value_template.opp =.opp
 
         switches.append(
             TelnetSwitch(
@@ -98,7 +98,7 @@ class TelnetSwitch(SwitchEntity):
         timeout,
     ):
         """Initialize the switch."""
-        self._opp = opp
+        self..opp =.opp
         self.entity_id = ENTITY_ID_FORMAT.format(object_id)
         self._resource = resource
         self._port = port

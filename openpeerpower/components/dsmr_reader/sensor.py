@@ -1,8 +1,8 @@
 """Support for DSMR Reader through MQTT."""
 from openpeerpower.components import mqtt
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.util import slugify
+from openpeerpower.core import callback
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.util import slugify
 
 from .definitions import DEFINITIONS
 
@@ -38,7 +38,7 @@ class DSMRSensor(Entity):
         self._transform = self._definition.get("transform")
         self._state = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Subscribe to MQTT events."""
 
         @callback
@@ -50,7 +50,7 @@ class DSMRSensor(Entity):
             else:
                 self._state = message.payload
 
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         await mqtt.async_subscribe(self.opp, self._topic, message_received, 1)
 

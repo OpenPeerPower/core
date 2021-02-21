@@ -13,8 +13,8 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Velbus switch based on config_entry."""
-    cntrl = opp.data[DOMAIN][entry.entry_id]["cntrl"]
-    modules_data = opp.data[DOMAIN][entry.entry_id]["switch"]
+    cntrl =.opp.data[DOMAIN][entry.entry_id]["cntrl"]
+    modules_data =.opp.data[DOMAIN][entry.entry_id]["switch"]
     entities = []
     for address, channel in modules_data:
         module = cntrl.get_module(address)

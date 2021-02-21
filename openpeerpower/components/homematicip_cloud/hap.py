@@ -24,7 +24,7 @@ class HomematicipAuth:
 
     def __init__(self,.opp, config) -> None:
         """Initialize HomematicIP Cloud client registration."""
-        self.opp = opp
+        self.opp =.opp
         self.config = config
         self.auth = None
 
@@ -72,7 +72,7 @@ class HomematicipHAP:
 
     def __init__(self,.opp: OpenPeerPowerType, config_entry: ConfigEntry) -> None:
         """Initialize HomematicIP Cloud connection."""
-        self.opp = opp
+        self.opp =.opp
         self.config_entry = config_entry
         self.home = None
 
@@ -86,7 +86,7 @@ class HomematicipHAP:
     async def async_setup(self, tries: int = 0) -> bool:
         """Initialize connection."""
         try:
-            self.home = await self.get_op.(
+            self.home = await self.get_hap(
                 self.opp,
                 self.config_entry.data.get(HMIPC_HAPID),
                 self.config_entry.data.get(HMIPC_AUTHTOKEN),
@@ -233,7 +233,7 @@ class HomematicipHAP:
             "Reset connection to access point id %s", self.config_entry.unique_id
         )
 
-    async def get_op.(
+    async def get_hap(
         self,.opp: OpenPeerPowerType, hapid: str, authtoken: str, name: str
     ) -> AsyncHome:
         """Create a HomematicIP access point object."""

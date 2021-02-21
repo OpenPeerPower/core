@@ -9,8 +9,8 @@ from maxcube.cube import MaxCube
 import voluptuous as vol
 
 from openpeerpower.const import CONF_HOST, CONF_PORT, CONF_SCAN_INTERVAL
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.discovery import load_platform
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.discovery import load_platform
 
 _LOGGER = logging.getLogger(__name__)
 

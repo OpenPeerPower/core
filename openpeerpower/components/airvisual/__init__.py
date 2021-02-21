@@ -22,10 +22,10 @@ from openpeerpower.const import (
     CONF_SHOW_ON_MAP,
     CONF_STATE,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers import aiohttp_client, config_validation as cv
-from openpeerpowerr.helpers.update_coordinator import (
+from openpeerpower.core import callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import aiohttp_client, config_validation as cv
+from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
     UpdateFailed,
@@ -98,7 +98,7 @@ def async_get_cloud_coordinators_by_api_key.opp, api_key):
     """Get all DataUpdateCoordinator objects related to a particular API key."""
     coordinators = []
     for entry_id, coordinator in.opp.data[DOMAIN][DATA_COORDINATOR].items():
-        config_entry = opp.config_entries.async_get_entry(entry_id)
+        config_entry =.opp.config_entries.async_get_entry(entry_id)
         if config_entry.data.get(CONF_API_KEY) == api_key:
             coordinators.append(coordinator)
     return coordinators
@@ -330,7 +330,7 @@ async def async_unload_entry.opp, config_entry):
     )
     if unload_ok:
        .opp.data[DOMAIN][DATA_COORDINATOR].pop(config_entry.entry_id)
-        remove_listener = opp.data[DOMAIN][DATA_LISTENER].pop(config_entry.entry_id)
+        remove_listener =.opp.data[DOMAIN][DATA_LISTENER].pop(config_entry.entry_id)
         remove_listener()
 
         if (
@@ -348,7 +348,7 @@ async def async_unload_entry.opp, config_entry):
 
 async def async_reload_entry.opp, config_entry):
     """Handle an options update."""
-    await opp..config_entries.async_reload(config_entry.entry_id)
+    await.opp.config_entries.async_reload(config_entry.entry_id)
 
 
 class AirVisualEntity(CoordinatorEntity):
@@ -376,14 +376,14 @@ class AirVisualEntity(CoordinatorEntity):
         """Return the unit the value is expressed in."""
         return self._unit
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register callbacks."""
 
         @callback
         def update():
             """Update the state."""
             self.update_from_latest_data()
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
         self.async_on_remove(self.coordinator.async_add_listener(update))
 

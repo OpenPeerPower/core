@@ -33,9 +33,9 @@ from openpeerpower.components.weather import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME, TEMP_CELSIUS
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers import aiohttp_client
-from openpeerpowerr.util import Throttle, slugify
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import aiohttp_client
+from openpeerpower.util import Throttle, slugify
 
 from .const import ATTR_SMHI_CLOUDINESS, ENTITY_ID_SENSOR_FORMAT
 

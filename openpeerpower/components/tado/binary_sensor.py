@@ -59,7 +59,7 @@ async def async_setup_entry(
 ):
     """Set up the Tado sensor platform."""
 
-    tado = opp.data[DOMAIN][entry.entry_id][DATA]
+    tado =.opp.data[DOMAIN][entry.entry_id][DATA]
     devices = tado.devices
     zones = tado.zones
     entities = []
@@ -110,7 +110,7 @@ class TadoDeviceBinarySensor(TadoDeviceEntity, BinarySensorEntity):
 
         self._state = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register for sensor updates."""
 
         self.async_on_remove(
@@ -152,7 +152,7 @@ class TadoDeviceBinarySensor(TadoDeviceEntity, BinarySensorEntity):
     def _async_update_callback(self):
         """Update and write state."""
         self._async_update_device_data()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _async_update_device_data(self):
@@ -185,7 +185,7 @@ class TadoZoneBinarySensor(TadoZoneEntity, BinarySensorEntity):
         self._state = None
         self._tado_zone_data = None
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register for sensor updates."""
 
         self.async_on_remove(
@@ -233,7 +233,7 @@ class TadoZoneBinarySensor(TadoZoneEntity, BinarySensorEntity):
     def _async_update_callback(self):
         """Update and write state."""
         self._async_update_zone_data()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     @callback
     def _async_update_zone_data(self):

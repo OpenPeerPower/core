@@ -2,7 +2,7 @@
 import logging
 
 from openpeerpower.const import ATTR_STATE, CONF_RESOURCES, STATE_UNKNOWN
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
     COORDINATOR,
@@ -29,7 +29,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the NUT sensors."""
 
-    pynut_data = opp.data[DOMAIN][config_entry.entry_id]
+    pynut_data =.opp.data[DOMAIN][config_entry.entry_id]
     unique_id = pynut_data[PYNUT_UNIQUE_ID]
     manufacturer = pynut_data[PYNUT_MANUFACTURER]
     model = pynut_data[PYNUT_MODEL]
@@ -67,7 +67,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                 )
             )
         else:
-            _LOGGER.warning(
+            _LOGGER.info(
                 "Sensor type: %s does not appear in the NUT status "
                 "output, cannot add",
                 sensor_type,

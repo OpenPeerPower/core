@@ -32,7 +32,7 @@ class BroadlinkDevice:
 
     def __init__(self,.opp, config):
         """Initialize the device."""
-        self.opp = opp
+        self.opp =.opp
         self.config = config
         self.api = None
         self.update_manager = None
@@ -59,7 +59,7 @@ class BroadlinkDevice:
         device_registry = await dr.async_get_registry.opp)
         device_entry = device_registry.async_get_device({(DOMAIN, entry.unique_id)})
         device_registry.async_update_device(device_entry.id, name=entry.title)
-        await opp..config_entries.async_reload(entry.entry_id)
+        await.opp.config_entries.async_reload(entry.entry_id)
 
     async def async_setup(self):
         """Set up the device and related entities."""
@@ -78,7 +78,7 @@ class BroadlinkDevice:
             await self.opp.async_add_executor_job(api.auth)
 
         except AuthenticationError:
-            await self._async_op.dle_auth_error()
+            await self._async_handle_auth_error()
             return False
 
         except (NetworkTimeoutError, OSError) as err:
@@ -141,7 +141,7 @@ class BroadlinkDevice:
                 "Failed to authenticate to the device at %s: %s", self.api.host[0], err
             )
             if isinstance(err, AuthenticationError):
-                await self._async_op.dle_auth_error()
+                await self._async_handle_auth_error()
             return False
         return True
 
@@ -155,7 +155,7 @@ class BroadlinkDevice:
                 raise
             return await self.opp.async_add_executor_job(request)
 
-    async def _async_op.dle_auth_error(self):
+    async def _async_handle_auth_error(self):
         """Handle an authentication error."""
         if self.authorized is False:
             return

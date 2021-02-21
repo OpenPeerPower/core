@@ -49,7 +49,7 @@ async def async_setup_platform(
 
     covers = []
     for cover in discovery_info[CONF_COVERS]:
-        hub: ModbusHub = opp.data[MODBUS_DOMAIN][discovery_info[CONF_NAME]]
+        hub: ModbusHub =.opp.data[MODBUS_DOMAIN][discovery_info[CONF_NAME]]
         covers.append(ModbusCover(hub, cover))
 
     async_add_entities(covers)
@@ -96,7 +96,7 @@ class ModbusCover(CoverEntity, RestoreEntity):
             self._status_register = self._register
             self._status_register_type = CALL_TYPE_REGISTER_HOLDING
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Handle entity which will be added."""
         state = await self.async_get_last_state()
         if not state:
@@ -176,7 +176,7 @@ class ModbusCover(CoverEntity, RestoreEntity):
         else:
             self._value = self._read_status_register()
 
-        self.schedule_update_op.state()
+        self.schedule_update_ha_state()
 
     def _read_status_register(self) -> Optional[int]:
         """Read status register using the Modbus hub slave."""

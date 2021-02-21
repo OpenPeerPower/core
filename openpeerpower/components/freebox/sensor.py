@@ -3,11 +3,11 @@ from typing import Dict
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import DATA_RATE_KILOBYTES_PER_SECOND
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.typing import OpenPeerPowerType
+import openpeerpower.util.dt as dt_util
 
 from .const import (
     CALL_SENSORS,
@@ -26,7 +26,7 @@ async def async_setup_entry(
    .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the sensors."""
-    router = opp.data[DOMAIN][entry.unique_id]
+    router =.opp.data[DOMAIN][entry.unique_id]
     entities = []
 
     for sensor_name in router.sensors_temperature:
@@ -118,9 +118,9 @@ class FreeboxSensor(Entity):
     def async_on_demand_update(self):
         """Update state."""
         self.async_update_state()
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Register state update callback."""
         self.async_update_state()
         self.async_on_remove(

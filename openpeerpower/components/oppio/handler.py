@@ -155,7 +155,7 @@ class OppIO:
         return self.send_command(f"/discovery/{uuid}", method="get")
 
     @_api_bool
-    async def update_opp_api(self, http_config, refresh_token):
+    async def update_opp.pi(self, http_config, refresh_token):
         """Update Open Peer Power API data on Opp.io."""
         port = http_config.get(CONF_SERVER_PORT) or SERVER_PORT
         options = {
@@ -174,7 +174,7 @@ class OppIO:
         return await self.send_command("/openpeerpower/options", payload=options)
 
     @_api_bool
-    def update_opp_timezone(self, timezone):
+    def update_opp.imezone(self, timezone):
         """Update Open -Peer-Power timezone data on Opp.io.
 
         This method return a coroutine.

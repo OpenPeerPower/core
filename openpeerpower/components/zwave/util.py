@@ -2,7 +2,7 @@
 import asyncio
 import logging
 
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 from . import const
 
@@ -104,7 +104,7 @@ def node_device_id_and_name(node, instance=1):
     return ((const.DOMAIN, node.node_id, instance), name)
 
 
-async def check_op._unique_id(entity, ready_callback, timeout_callback):
+async def check_has_unique_id(entity, ready_callback, timeout_callback):
     """Wait for entity to have unique_id."""
     start_time = dt_util.utcnow()
     while True:

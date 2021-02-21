@@ -21,8 +21,8 @@ from openpeerpower.const import (
     STATE_ALARM_DISARMED,
     STATE_ALARM_TRIGGERED,
 )
-from openpeerpowerr.exceptions import PlatformNotReady
-from openpeerpowerr.helpers import config_validation as cv, entity_platform
+from openpeerpower.exceptions import PlatformNotReady
+from openpeerpower.helpers import config_validation as cv, entity_platform
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -54,7 +54,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     try:
         alarm_client = client.Client(url)
-        await opp..async_add_executor_job(alarm_client.list_zones)
+        await.opp.async_add_executor_job(alarm_client.list_zones)
     except requests.exceptions.ConnectionError as ex:
         _LOGGER.error(
             "Unable to connect to %(host)s: %(reason)s",

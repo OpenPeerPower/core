@@ -18,7 +18,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up NZBGet sensor based on a config entry."""
-    coordinator: NZBGetDataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id][
+    coordinator: NZBGetDataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id][
         DATA_COORDINATOR
     ]
 

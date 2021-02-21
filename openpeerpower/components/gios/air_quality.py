@@ -9,7 +9,7 @@ from openpeerpower.components.air_quality import (
     AirQualityEntity,
 )
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.helpers.update_coordinator import CoordinatorEntity
+from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from .const import ATTR_STATION, DEFAULT_NAME, DOMAIN, ICONS_MAP, MANUFACTURER
 
@@ -31,7 +31,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Add a GIOS entities from a config_entry."""
     name = config_entry.data[CONF_NAME]
 
-    coordinator = opp.data[DOMAIN][config_entry.entry_id]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id]
 
     async_add_entities([GiosAirQuality(coordinator, name)], False)
 

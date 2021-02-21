@@ -60,7 +60,7 @@ from openpeerpower.helpers.config_validation import (  # noqa: F401
 from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.entity_component import EntityComponent
 from openpeerpower.helpers.network import get_url
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 from .const import (
     ATTR_APP_ID,
@@ -177,7 +177,7 @@ ATTR_TO_PROPERTY = [
 ]
 
 
-@bind_opp
+@bind.opp
 def is_on.opp, entity_id=None):
     """
     Return true if specified media player entity_id is on.
@@ -209,11 +209,11 @@ def _rename_keys(**keys):
 
 async def async_setup.opp, config):
     """Track states and offer events for media_players."""
-    component = opp.data[DOMAIN] = EntityComponent(
+    component =.opp.data[DOMAIN] = EntityComponent(
         logging.getLogger(__name__), DOMAIN,.opp, SCAN_INTERVAL
     )
 
-   .opp.components.websocket_api.async_register_command(websocket_op.dle_thumbnail)
+   .opp.components.websocket_api.async_register_command(websocket_handle_thumbnail)
    .opp.components.websocket_api.async_register_command(websocket_browse_media)
    .opp.http.register_view(MediaPlayerImageView(component))
 
@@ -344,12 +344,12 @@ async def async_setup.opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await opp..data[DOMAIN].async_setup_entry(entry)
+    return await.opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await opp..data[DOMAIN].async_unload_entry(entry)
+    return await.opp.data[DOMAIN].async_unload_entry(entry)
 
 
 class MediaPlayerEntity(Entity):
@@ -419,7 +419,7 @@ class MediaPlayerEntity(Entity):
         return False
 
     @property
-    def media_image_op.h(self):
+    def media_image_hash(self):
         """Hash value for media image."""
         url = self.media_image_url
         if url is not None:
@@ -803,14 +803,14 @@ class MediaPlayerEntity(Entity):
     @property
     def media_image_local(self):
         """Return local url to media image."""
-        image_op.h = self.media_image_op.h
+        image_hash = self.media_image_hash
 
-        if image_op.h is None:
+        if image_hash is None:
             return None
 
         return (
             f"/api/media_player_proxy/{self.entity_id}?"
-            f"token={self.access_token}&cache={image_op.h}"
+            f"token={self.access_token}&cache={image_hash}"
         )
 
     @property
@@ -986,12 +986,12 @@ class MediaPlayerImageView(OpenPeerPowerView):
     }
 )
 @websocket_api.async_response
-async def websocket_op.dle_thumbnail.opp, connection, msg):
+async def websocket_handle_thumbnail.opp, connection, msg):
     """Handle get media player cover command.
 
     Async friendly.
     """
-    component = opp.data[DOMAIN]
+    component =.opp.data[DOMAIN]
     player = component.get_entity(msg["entity_id"])
 
     if player is None:
@@ -1046,7 +1046,7 @@ async def websocket_browse_media.opp, connection, msg):
 
     To use, media_player integrations can implement MediaPlayerEntity.async_browse_media()
     """
-    component = opp.data[DOMAIN]
+    component =.opp.data[DOMAIN]
     player: Optional[MediaPlayerDevice] = component.get_entity(msg["entity_id"])
 
     if player is None:

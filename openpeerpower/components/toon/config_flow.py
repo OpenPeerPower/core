@@ -58,7 +58,7 @@ class ToonFlowHandler(AbstractOAuth2FlowHandler, domain=DOMAIN):
         if config is not None and CONF_MIGRATE in config:
             self.context.update({CONF_MIGRATE: config[CONF_MIGRATE]})
         else:
-            await self._async_op.dle_discovery_without_unique_id()
+            await self._async_handle_discovery_without_unique_id()
 
         return await self.async_step_user()
 

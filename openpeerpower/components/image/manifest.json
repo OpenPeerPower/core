@@ -2,9 +2,9 @@
   "domain": "image",
   "name": "Image",
   "config_flow": false,
-  "documentation": "https://www.openpeerpower.io/integrations/image",
+  "documentation": "https://www.open-peer-power.io/integrations/image",
   "requirements": ["pillow==8.1.0"],
   "dependencies": ["http"],
-  "codeowners": ["@openpeerpower/core"],
+  "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"
 }

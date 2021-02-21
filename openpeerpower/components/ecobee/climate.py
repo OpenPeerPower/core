@@ -71,7 +71,7 @@ HUMIDIFIER_MANUAL_MODE = "manual"
 
 
 # Order matters, because for reverse mapping we don't want to map HEAT to AUX
-ECOBEE_HVAC_TO_OPP = collections.OrderedDict(
+ECOBEE_HVAC_TO_HASS = collections.OrderedDict(
     [
         ("heat", HVAC_MODE_HEAT),
         ("cool", HVAC_MODE_COOL),
@@ -81,7 +81,7 @@ ECOBEE_HVAC_TO_OPP = collections.OrderedDict(
     ]
 )
 
-ECOBEE_HVAC_ACTION_TO_OPP = {
+ECOBEE_HVAC_ACTION_TO_HASS = {
     # Map to None if we do not know how to represent.
     "heatPump": CURRENT_HVAC_HEAT,
     "heatPump2": CURRENT_HVAC_HEAT,
@@ -173,7 +173,7 @@ SUPPORT_FLAGS = (
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the ecobee thermostat."""
 
-    data = opp.data[DOMAIN]
+    data =.opp.data[DOMAIN]
 
     devices = [Thermostat(data, index) for index in range(len(data.ecobee.thermostats))]
 
@@ -188,7 +188,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         for thermostat in devices:
             if thermostat.entity_id == entity_id:
                 thermostat.create_vacation(service.data)
-                thermostat.schedule_update_op.state(True)
+                thermostat.schedule_update_ha_state(True)
                 break
 
     def delete_vacation_service(service):
@@ -199,7 +199,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         for thermostat in devices:
             if thermostat.entity_id == entity_id:
                 thermostat.delete_vacation(vacation_name)
-                thermostat.schedule_update_op.state(True)
+                thermostat.schedule_update_ha_state(True)
                 break
 
     def fan_min_on_time_set_service(service):
@@ -217,7 +217,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         for thermostat in target_thermostats:
             thermostat.set_fan_min_on_time(str(fan_min_on_time))
 
-            thermostat.schedule_update_op.state(True)
+            thermostat.schedule_update_ha_state(True)
 
     def resume_program_set_service(service):
         """Resume the program on the target thermostats."""
@@ -234,7 +234,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         for thermostat in target_thermostats:
             thermostat.resume_program(resume_all)
 
-            thermostat.schedule_update_op.state(True)
+            thermostat.schedule_update_ha_state(True)
 
    .opp.services.async_register(
         DOMAIN,
@@ -359,7 +359,7 @@ class Thermostat(ClimateEntity):
             _LOGGER.error(
                 "Model number for ecobee thermostat %s not recognized. "
                 "Please visit this link and provide the following information: "
-                "https://github.com/openpeerpower/core/issues/27172 "
+                "https://github.com/open-peer-power/core/issues/27172 "
                 "Unrecognized model number: %s",
                 self.name,
                 self.thermostat["modelNumber"],
@@ -476,7 +476,7 @@ class Thermostat(ClimateEntity):
     @property
     def hvac_mode(self):
         """Return current operation."""
-        return ECOBEE_HVAC_TO_OPP[self.thermostat["settings"]["hvacMode"]]
+        return ECOBEE_HVAC_TO_HASS[self.thermostat["settings"]["hvacMode"]]
 
     @property
     def hvac_modes(self):
@@ -502,9 +502,9 @@ class Thermostat(ClimateEntity):
             return CURRENT_HVAC_IDLE
 
         actions = [
-            ECOBEE_HVAC_ACTION_TO_OPP[status]
+            ECOBEE_HVAC_ACTION_TO_HASS[status]
             for status in self.thermostat["equipmentStatus"].split(",")
-            if ECOBEE_HVAC_ACTION_TO_OPP[status] is not None
+            if ECOBEE_HVAC_ACTION_TO_HASS[status] is not None
         ]
 
         for action in (
@@ -703,7 +703,7 @@ class Thermostat(ClimateEntity):
     def set_hvac_mode(self, hvac_mode):
         """Set HVAC mode (auto, auxHeatOnly, cool, heat, off)."""
         ecobee_value = next(
-            (k for k, v in ECOBEE_HVAC_TO_OPP.items() if v == hvac_mode), None
+            (k for k, v in ECOBEE_HVAC_TO_HASS.items() if v == hvac_mode), None
         )
         if ecobee_value is None:
             _LOGGER.error("Invalid mode for set_hvac_mode: %s", hvac_mode)

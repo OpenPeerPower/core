@@ -14,7 +14,7 @@
     </dict>
 
     <key>Program</key>
-    <string>$OPP_PATH$</string>
+    <string>$HASS_PATH$</string>
 
     <key>AbandonProcessGroup</key>
     <false/>

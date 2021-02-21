@@ -1,7 +1,7 @@
 {
   "domain": "ads",
   "name": "ADS",
-  "documentation": "https://www.openpeerpower.io/integrations/ads",
+  "documentation": "https://www.open-peer-power.io/integrations/ads",
   "requirements": ["pyads==3.2.2"],
   "codeowners": []
 }

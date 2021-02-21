@@ -38,7 +38,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     garmin_client = Garmin(username, password)
 
     try:
-        await opp..async_add_executor_job(garmin_client.login)
+        await.opp.async_add_executor_job(garmin_client.login)
     except (
         GarminConnectAuthenticationError,
         GarminConnectTooManyRequestsError,
@@ -86,7 +86,7 @@ class GarminConnectData:
 
     def __init__(self,.opp, client):
         """Initialize."""
-        self.opp = opp
+        self.opp =.opp
         self.client = client
         self.data = None
 

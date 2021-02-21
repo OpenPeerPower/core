@@ -26,13 +26,13 @@ from openpeerpower.const import (
     DEVICE_CLASS_TIMESTAMP,
     DEVICE_CLASS_VOLTAGE,
 )
-from openpeerpowerr.core import OpenPeerPower, callback
-from openpeerpowerr.helpers import condition, config_validation as cv
-from openpeerpowerr.helpers.entity_registry import (
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers import condition, config_validation as cv
+from openpeerpower.helpers.entity_registry import (
     async_entries_for_device,
     async_get_registry,
 )
-from openpeerpowerr.helpers.typing import ConfigType
+from openpeerpower.helpers.typing import ConfigType
 
 from . import DOMAIN
 
@@ -113,7 +113,7 @@ async def async_get_conditions(
 
     for entry in entries:
         device_class = DEVICE_CLASS_NONE
-        state = opp.states.get(entry.entity_id)
+        state =.opp.states.get(entry.entity_id)
         unit_of_measurement = (
             state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) if state else None
         )
@@ -163,7 +163,7 @@ def async_condition_from_config(
 
 async def async_get_condition_capabilities.opp, config):
     """List condition capabilities."""
-    state = opp.states.get(config[CONF_ENTITY_ID])
+    state =.opp.states.get(config[CONF_ENTITY_ID])
     unit_of_measurement = (
         state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) if state else None
     )

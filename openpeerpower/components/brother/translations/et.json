@@ -16,7 +16,7 @@
                     "host": "Host",
                     "type": "Printeri t\u00fc\u00fcp"
                 },
-                "description": "Seadista Brotheri printeri sidumine. Kui seadistamisega on probleeme mine aadressile https://www.openpeerpower.io/integrations/brother"
+                "description": "Seadista Brotheri printeri sidumine. Kui seadistamisega on probleeme mine aadressile https://www.open-peer-power.io/integrations/brother"
             },
             "zeroconf_confirm": {
                 "data": {

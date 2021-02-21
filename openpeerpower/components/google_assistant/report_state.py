@@ -96,7 +96,7 @@ def async_enable_report_state.opp: OpenPeerPower, google_config: AbstractConfig)
 
         await google_config.async_report_state_all({"devices": {"states": entities}})
 
-        unsub = opp.helpers.event.async_track_state_change(
+        unsub =.opp.helpers.event.async_track_state_change(
             MATCH_ALL, async_entity_state_listener
         )
 

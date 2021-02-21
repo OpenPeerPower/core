@@ -162,12 +162,12 @@ class MiFloraSensor(Entity):
         # Use median_count = 1 if no filtering is required.
         self.median_count = median
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Set initial state."""
 
         @callback
         def on_startup(_):
-            self.async_schedule_update_op.state(True)
+            self.async_schedule_update_ha_state(True)
 
         self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, on_startup)
 

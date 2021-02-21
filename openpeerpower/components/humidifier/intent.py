@@ -2,9 +2,9 @@
 import voluptuous as vol
 
 from openpeerpower.const import ATTR_ENTITY_ID, STATE_OFF
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers import intent
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import intent
+import openpeerpower.helpers.config_validation as cv
 
 from . import (
     ATTR_AVAILABLE_MODES,
@@ -17,8 +17,8 @@ from . import (
     SUPPORT_MODES,
 )
 
-INTENT_HUMIDITY = "OppHumidifierSetpoint"
-INTENT_MODE = "OppHumidifierMode"
+INTENT_HUMIDITY = "HassHumidifierSetpoint"
+INTENT_MODE = "HassHumidifierMode"
 
 
 async def async_setup_intents.opp: OpenPeerPower) -> None:
@@ -36,11 +36,11 @@ class HumidityHandler(intent.IntentHandler):
         vol.Required("humidity"): vol.All(vol.Coerce(int), vol.Range(0, 100)),
     }
 
-    async def async_op.dle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
-        """Handle the opp intent."""
-        opp = intent_obj.opp
+    async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
+        """Handle the.opp intent."""
+       .opp = intent_obj.opp
         slots = self.async_validate_slots(intent_obj.slots)
-        state = opp.helpers.intent.async_match_state(
+        state =.opp.helpers.intent.async_match_state(
             slots["name"]["value"],.opp.states.async_all(DOMAIN)
         )
 
@@ -49,7 +49,7 @@ class HumidityHandler(intent.IntentHandler):
         humidity = slots["humidity"]["value"]
 
         if state.state == STATE_OFF:
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 DOMAIN, SERVICE_TURN_ON, service_data, context=intent_obj.context
             )
             speech = f"Turned {state.name} on and set humidity to {humidity}%"
@@ -57,7 +57,7 @@ class HumidityHandler(intent.IntentHandler):
             speech = f"The {state.name} is set to {humidity}%"
 
         service_data[ATTR_HUMIDITY] = humidity
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_SET_HUMIDITY,
             service_data,
@@ -80,11 +80,11 @@ class SetModeHandler(intent.IntentHandler):
         vol.Required("mode"): cv.string,
     }
 
-    async def async_op.dle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
-        """Handle the opp intent."""
-        opp = intent_obj.opp
+    async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
+        """Handle the.opp intent."""
+       .opp = intent_obj.opp
         slots = self.async_validate_slots(intent_obj.slots)
-        state = opp.helpers.intent.async_match_state(
+        state =.opp.helpers.intent.async_match_state(
             slots["name"]["value"],
            .opp.states.async_all(DOMAIN),
         )
@@ -100,7 +100,7 @@ class SetModeHandler(intent.IntentHandler):
             )
 
         if state.state == STATE_OFF:
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 DOMAIN,
                 SERVICE_TURN_ON,
                 service_data,
@@ -112,7 +112,7 @@ class SetModeHandler(intent.IntentHandler):
             speech = f"The mode for {state.name} is set to {mode}"
 
         service_data[ATTR_MODE] = mode
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_SET_MODE,
             service_data,

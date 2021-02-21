@@ -28,8 +28,8 @@ from openpeerpower.const import (
     CONF_URL,
     HTTP_DIGEST_AUTHENTICATION,
 )
-from openpeerpowerr.exceptions import TemplateError
-import openpeerpowerr.helpers.config_validation as cv
+from openpeerpower.exceptions import TemplateError
+import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -334,7 +334,7 @@ async def async_setup.opp, config):
                 ):
                     data[attribute] = attribute_templ
                 else:
-                    attribute_templ.opp = opp
+                    attribute_templ.opp =.opp
                     try:
                         data[attribute] = attribute_templ.async_render(
                             parse_result=False
@@ -363,7 +363,7 @@ async def async_setup.opp, config):
         _LOGGER.debug("New telegram message %s: %s", msgtype, kwargs)
 
         if msgtype == SERVICE_SEND_MESSAGE:
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                 partial(notify_service.send_message, **kwargs)
             )
         elif msgtype in [
@@ -374,23 +374,23 @@ async def async_setup.opp, config):
             SERVICE_SEND_VOICE,
             SERVICE_SEND_DOCUMENT,
         ]:
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                 partial(notify_service.send_file, msgtype, **kwargs)
             )
         elif msgtype == SERVICE_SEND_LOCATION:
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                 partial(notify_service.send_location, **kwargs)
             )
         elif msgtype == SERVICE_ANSWER_CALLBACK_QUERY:
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                 partial(notify_service.answer_callback_query, **kwargs)
             )
         elif msgtype == SERVICE_DELETE_MESSAGE:
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                 partial(notify_service.delete_message, **kwargs)
             )
         else:
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                 partial(notify_service.edit_message, msgtype, **kwargs)
             )
 
@@ -431,7 +431,7 @@ class TelegramNotificationService:
         self._parsers = {PARSER_HTML: ParseMode.HTML, PARSER_MD: ParseMode.MARKDOWN}
         self._parse_mode = self._parsers.get(parser)
         self.bot = bot
-        self.opp = opp
+        self.opp =.opp
 
     def _get_msg_ids(self, msg_data, chat_id):
         """Get the message id to edit.
@@ -830,7 +830,7 @@ class BaseTelegramBotEntity:
     def __init__(self,.opp, allowed_chat_ids):
         """Initialize the bot base class."""
         self.allowed_chat_ids = allowed_chat_ids
-        self.opp = opp
+        self.opp =.opp
 
     def _get_message_data(self, msg_data):
         """Return boolean msg_data_is_ok and dict msg_data."""

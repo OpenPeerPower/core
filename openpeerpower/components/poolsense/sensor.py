@@ -8,7 +8,7 @@ from openpeerpower.const import (
     PERCENTAGE,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.helpers.entity import Entity
+from openpeerpower.helpers.entity import Entity
 
 from . import PoolSenseEntity
 from .const import ATTRIBUTION, DOMAIN
@@ -68,7 +68,7 @@ SENSORS = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Defer sensor setup to the shared sensor module."""
-    coordinator = opp.data[DOMAIN][config_entry.entry_id]
+    coordinator =.opp.data[DOMAIN][config_entry.entry_id]
 
     sensors_list = []
     for sensor in SENSORS:

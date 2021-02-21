@@ -7,8 +7,8 @@ import voluptuous as vol
 
 from openpeerpower.components.switch import PLATFORM_SCHEMA, SwitchEntity
 from openpeerpower.const import CONF_MAC, CONF_NAME, CONF_PASSWORD
-import openpeerpowerr.helpers.config_validation as cv
-from openpeerpowerr.helpers.restore_state import RestoreEntity
+import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.restore_state import RestoreEntity
 
 DEFAULT_NAME = "Switchbot"
 
@@ -41,9 +41,9 @@ class SwitchBot(SwitchEntity, RestoreEntity):
         self._mac = mac
         self._device = switchbot.Switchbot(mac=mac, password=password)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Run when entity about to be added."""
-        await super().async_added_to_opp()
+        await super().async_added_to.opp()
         state = await self.async_get_last_state()
         if not state:
             return

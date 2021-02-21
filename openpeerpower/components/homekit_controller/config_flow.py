@@ -23,7 +23,7 @@ HOMEKIT_BRIDGE_MODEL = "Open Peer Power HomeKit Bridge"
 
 HOMEKIT_IGNORE = [
     # eufy Indoor Cam 2K and 2K Pan & Tilt
-    # https://github.com/openpeerpower/core/issues/42307
+    # https://github.com/open-peer-power/core/issues/42307
     "T8400",
     "T8410",
     # Hive Hub - vendor does not give user a pairing code
@@ -32,7 +32,7 @@ HOMEKIT_IGNORE = [
 
 PAIRING_FILE = "pairing.json"
 
-MDNS_SUFFIX = "._op.._tcp.local."
+MDNS_SUFFIX = "._hap._tcp.local."
 
 PIN_FORMAT = re.compile(r"^(\d{3})-{0,1}(\d{2})-{0,1}(\d{3})$")
 
@@ -163,7 +163,7 @@ class HomekitControllerFlowHandler(config_entries.ConfigFlow):
                     "host": record["address"],
                     "port": record["port"],
                     "hostname": record["name"],
-                    "type": "_op.._tcp.local.",
+                    "type": "_hap._tcp.local.",
                     "name": record["name"],
                     "properties": {
                         "md": record["md"],
@@ -214,7 +214,7 @@ class HomekitControllerFlowHandler(config_entries.ConfigFlow):
         # It changes if a device is factory reset.
         hkid = properties["id"]
         model = properties["md"]
-        name = discovery_info["name"].replace("._op.._tcp.local.", "")
+        name = discovery_info["name"].replace("._hap._tcp.local.", "")
         status_flags = int(properties["sf"])
         paired = not status_flags & 0x01
 

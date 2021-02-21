@@ -26,7 +26,7 @@ from openpeerpower.const import (
     STATE_ALARM_ARMED_HOME,
     STATE_ALARM_DISARMED,
 )
-import openpeerpowerr.helpers.config_validation as cv
+import openpeerpower.helpers.config_validation as cv
 
 CONF_AREA_ID = "area_id"
 

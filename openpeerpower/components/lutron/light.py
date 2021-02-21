@@ -23,7 +23,7 @@ def to_lutron_level(level):
     return float((level * 100) / 255)
 
 
-def to_opp_level(level):
+def to.opp_level(level):
     """Convert the given Lutron (0.0-100.0) light level to Open Peer Power (0-255)."""
     return int((level * 255) / 100)
 
@@ -44,7 +44,7 @@ class LutronLight(LutronDevice, LightEntity):
     @property
     def brightness(self):
         """Return the brightness of the light."""
-        new_brightness = to_opp_level(self._lutron_device.last_level())
+        new_brightness = to.opp_level(self._lutron_device.last_level())
         if new_brightness != 0:
             self._prev_brightness = new_brightness
         return new_brightness
@@ -77,4 +77,4 @@ class LutronLight(LutronDevice, LightEntity):
     def update(self):
         """Call when forcing a refresh of the device."""
         if self._prev_brightness is None:
-            self._prev_brightness = to_opp_level(self._lutron_device.level)
+            self._prev_brightness = to.opp_level(self._lutron_device.level)

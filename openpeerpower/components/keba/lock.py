@@ -9,7 +9,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    keba = opp.data[DOMAIN]
+    keba =.opp.data[DOMAIN]
 
     sensors = [KebaLock(keba, "Authentication", "authentication")]
     async_add_entities(sensors)
@@ -59,8 +59,8 @@ class KebaLock(LockEntity):
 
     def update_callback(self):
         """Schedule a state update."""
-        self.async_schedule_update_op.state(True)
+        self.async_schedule_update_ha_state(True)
 
-    async def async_added_to_opp(self):
+    async def async_added_to.opp(self):
         """Add update callback after being added to.opp."""
         self._keba.add_update_listener(self.update_callback)
