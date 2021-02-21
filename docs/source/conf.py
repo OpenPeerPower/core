@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Open -Peer-Power documentation build configuration file, created by
+# Open-Peer-Power documentation build configuration file, created by
 # sphinx-quickstart on Sun Aug 28 13:13:10 2016.
 #
 # This file is execfile()d with the current directory set to its
@@ -217,7 +217,7 @@ html_theme_options = {
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = 'Open -Peer-Power v0.27.0'
+# html_title = 'Open-Peer-Power v0.27.0'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -327,7 +327,7 @@ html_sidebars = {
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "Open -Peer-Powerdoc"
+htmlhelp_basename = "Open-Peer-Powerdoc"
 
 # -- Options for LaTeX output ---------------------------------------------
 

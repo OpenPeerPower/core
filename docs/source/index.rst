@@ -19,4 +19,4 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-.. _Open Peer Power developers: https://developers.openpeerpower.io/
+.. _Open Peer Power developers: https://developers.open-peer-power.io/
