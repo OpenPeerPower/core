@@ -31,7 +31,7 @@ def entity_reg.opp):
 async def test_get_actions.opp, device_reg, entity_reg):
     """Test we get the expected actions from a NEW_DOMAIN."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -94,11 +94,11 @@ async def test_action.opp):
     turn_on_calls = async_mock_service.opp, "NEW_DOMAIN", "turn_on")
 
    .opp.bus.async_fire("test_event_turn_off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(turn_off_calls) == 1
     assert len(turn_on_calls) == 0
 
    .opp.bus.async_fire("test_event_turn_on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(turn_off_calls) == 1
     assert len(turn_on_calls) == 1

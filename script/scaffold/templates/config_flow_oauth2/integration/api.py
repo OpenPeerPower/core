@@ -21,7 +21,7 @@ class ConfigEntryAuth(my_pypi_package.AbstractAuth):
         oauth_session: config_entry_oauth2_flow.OAuth2Session,
     ):
         """Initialize NEW_NAME Auth."""
-        self.opp = opp
+        self.opp =.opp
         self.session = oauth_session
         super().__init__(self.session.token)
 

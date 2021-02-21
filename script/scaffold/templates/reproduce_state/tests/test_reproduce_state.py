@@ -13,7 +13,7 @@ async def test_reproducing_states.opp, caplog):
     turn_off_calls = async_mock_service.opp, "NEW_DOMAIN", "turn_off")
 
     # These calls should do nothing as entities already in desired state
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State("NEW_DOMAIN.entity_off", "off"),
             State("NEW_DOMAIN.entity_on", "on", {"color": "red"}),
@@ -25,7 +25,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(turn_off_calls) == 0
 
     # Test invalid state is handled
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [State("NEW_DOMAIN.entity_off", "not_supported")], blocking=True
     )
 
@@ -34,7 +34,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(turn_off_calls) == 0
 
     # Make sure correct services are called
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State("NEW_DOMAIN.entity_on", "off"),
             State("NEW_DOMAIN.entity_off", "on", {"color": "red"}),

@@ -38,7 +38,7 @@ def calls.opp):
 async def test_get_triggers.opp, device_reg, entity_reg):
     """Test we get the expected triggers from a NEW_DOMAIN."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -117,7 +117,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is turning on.
    .opp.states.async_set("NEW_DOMAIN.entity", STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "turn_on - device - {} - off - on - None".format(
         "NEW_DOMAIN.entity"
@@ -125,7 +125,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is turning off.
    .opp.states.async_set("NEW_DOMAIN.entity", STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "turn_off - device - {} - on - off - None".format(
         "NEW_DOMAIN.entity"

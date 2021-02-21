@@ -37,7 +37,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
 
     # If your PyPI package is not built with async, pass your methods
     # to the executor:
-    # await opp..async_add_executor_job(
+    # await.opp.async_add_executor_job(
     #     your_validate_func, data["username"], data["password"]
     # )
 
