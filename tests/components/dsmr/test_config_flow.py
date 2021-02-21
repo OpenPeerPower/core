@@ -178,7 +178,7 @@ async def test_import_update.opp, dsmr_connection_send_validate_fixture):
     ), patch("openpeerpower.components.dsmr.async_unload_entry", return_value=True):
         await.opp.config_entries.async_setup(entry.entry_id)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     new_entry_data = {
         "port": "/dev/ttyUSB0",
@@ -196,7 +196,7 @@ async def test_import_update.opp, dsmr_connection_send_validate_fixture):
             data=new_entry_data,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
@@ -239,7 +239,7 @@ async def test_options_flow.opp):
     ), patch("openpeerpower.components.dsmr.async_unload_entry", return_value=True):
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert entry.options == {"time_between_update": 15}
 

@@ -15,7 +15,7 @@ async def setup_component.opp, config_entry):
     """Set up the component for testing."""
     config_entry.add_to_opp.opp)
     assert await async_setup_component.opp, DOMAIN, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_sign_in.opp, config_entry, controller):

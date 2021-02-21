@@ -208,7 +208,7 @@ async def test_setup_core_push_timezone.opp, aioclient_mock):
 
     with patch("openpeerpowerr.util.dt.set_default_time_zone"):
         await.opp.config.async_update(time_zone="America/New_York")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert aioclient_mock.mock_calls[-1][2]["timezone"] == "America/New_York"
 
 
@@ -285,14 +285,14 @@ async def test_service_calls(oppio_env,.opp, aioclient_mock):
     await.opp.services.async_call(
         "oppio", "addon_stdin", {"addon": "test", "input": "test"}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert aioclient_mock.call_count == 7
     assert aioclient_mock.mock_calls[-1][2] == "test"
 
     await.opp.services.async_call("oppio", "host_shutdown", {})
     await.opp.services.async_call("oppio", "host_reboot", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert aioclient_mock.call_count == 9
 
@@ -302,7 +302,7 @@ async def test_service_calls(oppio_env,.opp, aioclient_mock):
         "snapshot_partial",
         {"addons": ["test"], "folders": ["ssl"], "password": "123456"},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert aioclient_mock.call_count == 11
     assert aioclient_mock.mock_calls[-1][2] == {
@@ -323,7 +323,7 @@ async def test_service_calls(oppio_env,.opp, aioclient_mock):
             "password": "123456",
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert aioclient_mock.call_count == 13
     assert aioclient_mock.mock_calls[-1][2] == {
@@ -342,12 +342,12 @@ async def test_service_calls_core(oppio_env,.opp, aioclient_mock):
     aioclient_mock.post("http://127.0.0.1/openpeerpower/stop", json={"result": "ok"})
 
     await.opp.services.async_call("openpeerpowerr", "stop")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert aioclient_mock.call_count == 4
 
     await.opp.services.async_call("openpeerpowerr", "check_config")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert aioclient_mock.call_count == 4
 
@@ -355,7 +355,7 @@ async def test_service_calls_core(oppio_env,.opp, aioclient_mock):
         "openpeerpower.config.async_check_op.config_file", return_value=None
     ) as mock_check_config:
         await.opp.services.async_call("openpeerpowerr", "restart")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert mock_check_config.called
 
     assert aioclient_mock.call_count == 5
@@ -375,7 +375,7 @@ async def test_websocket_supervisor_event(
     )
 
     assert await websocket_client.receive_json()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert test_event[0].data == {"event": "test"}
 

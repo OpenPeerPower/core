@@ -448,7 +448,7 @@ async def test_option_flow_new_users_available.opp, entry, setup_plex_server):
     entry.options = OPTIONS_OWNER_ONLY
 
     mock_plex_server = await setup_plex_server(config_entry=entry)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     server_id = mock_plex_server.machine_identifier
     monitored_users = opp.data[DOMAIN][SERVERS][server_id].option_monitored_users

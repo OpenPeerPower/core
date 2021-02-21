@@ -53,7 +53,7 @@ async def test_user_flow.opp, user_flow):
         return_value=True,
     ) as mock_setup_entry:
         result = await.opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TEST_HOST["host"]
@@ -100,7 +100,7 @@ async def test_form_valid_auth.opp, user_flow):
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_CREDENTIALS
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TEST_HOST["host"]
@@ -150,7 +150,7 @@ async def test_form_valid_ws_port.opp, user_flow):
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_WS_PORT
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TEST_HOST["host"]
@@ -195,7 +195,7 @@ async def test_form_empty_ws_port.opp, user_flow):
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"ws_port": 0}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TEST_HOST["host"]
@@ -438,7 +438,7 @@ async def test_discovery.opp):
         result = await.opp.config_entries.flow.async_configure(
             flow_id=result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "hostname"
@@ -604,7 +604,7 @@ async def test_form_import.opp):
             context={"source": config_entries.SOURCE_IMPORT},
             data=TEST_IMPORT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TEST_IMPORT["name"]

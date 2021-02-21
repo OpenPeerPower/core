@@ -229,7 +229,7 @@ async def test_light_unloaded_removed.opp, utcnow):
     assert not conn.pollable_characteristics
 
     await helper.config_entry.async_remove.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Make sure entity is removed
     assert.opp.states.get(helper.entity_id).state == STATE_UNAVAILABLE

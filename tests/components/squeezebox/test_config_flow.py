@@ -76,7 +76,7 @@ async def test_user_form.opp):
             CONF_PASSWORD: "",
         }
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 
@@ -216,7 +216,7 @@ async def test_import.opp):
         )
         assert result["type"] == RESULT_TYPE_CREATE_ENTRY
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 

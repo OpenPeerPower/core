@@ -104,7 +104,7 @@ async def test_update_from_signal.opp, device_factory):
     # Act
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.sensor_1_battery")
     assert state is not None
     assert state.state == "75"

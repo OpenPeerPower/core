@@ -39,7 +39,7 @@ async def test_form.opp):
             result["flow_id"],
             {"api_user": "test-api-user", "api_key": "test-api-key"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Default username"

@@ -109,7 +109,7 @@ async def test_reproduce_with_no_entity.opp):
 
     await state.async_reproduce_state.opp, op.State("light.test", "on"))
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 0
     assert.opp.states.get("light.test") is None
@@ -123,7 +123,7 @@ async def test_reproduce_turn_on.opp):
 
     await state.async_reproduce_state.opp, op.State("light.test", "on"))
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) > 0
     last_call = calls[-1]
@@ -140,7 +140,7 @@ async def test_reproduce_turn_off.opp):
 
     await state.async_reproduce_state.opp, op.State("light.test", "off"))
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) > 0
     last_call = calls[-1]
@@ -161,7 +161,7 @@ async def test_reproduce_complex_data.opp):
        .opp, op.State("light.test", "on", {"rgb_color": complex_data})
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) > 0
     last_call = calls[-1]
@@ -178,7 +178,7 @@ async def test_reproduce_bad_state.opp):
 
     await state.async_reproduce_state.opp, op.State("light.test", "bad"))
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 0
     assert.opp.states.get("light.test").state == "off"

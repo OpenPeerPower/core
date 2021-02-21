@@ -11,7 +11,7 @@ async def setup_platform.opp, config_entry, config):
     """Set up the media player platform for testing."""
     config_entry.add_to_opp.opp)
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_async_setup_entry_hosts.opp, config_entry, config, soco):

@@ -131,7 +131,7 @@ async def test_options_flow_implementation.opp):
         config_entry.add_to_opp.opp)
 
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -141,7 +141,7 @@ async def test_options_flow_implementation.opp):
             result["flow_id"],
             user_input={CONF_READ_ONLY: False, CONF_USE_LOCATION: False},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["data"] == {

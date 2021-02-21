@@ -70,7 +70,7 @@ async def test_discovery.opp: OpenPeerPower):
     assert result3["type"] == "create_entry"
     assert result3["title"] == UNIQUE_NAME
     assert result3["data"] == {CONF_ID: ID}
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     mock_setup.assert_called_once()
     mock_setup_entry.assert_called_once()
 
@@ -151,7 +151,7 @@ async def test_import.opp: OpenPeerPower):
         CONF_SAVE_ON_CHANGE: DEFAULT_SAVE_ON_CHANGE,
         CONF_NIGHTLIGHT_SWITCH: True,
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     mock_setup.assert_called_once()
     mock_setup_entry.assert_called_once()
 
@@ -203,7 +203,7 @@ async def test_manual.opp: OpenPeerPower):
         result4 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {CONF_HOST: IP_ADDRESS}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert result4["type"] == "create_entry"
     assert result4["title"] == IP_ADDRESS
     assert result4["data"] == {CONF_HOST: IP_ADDRESS}
@@ -231,7 +231,7 @@ async def test_options.opp: OpenPeerPower):
     mocked_bulb = _mocked_bulb()
     with patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     config = {
         CONF_NAME: NAME,
@@ -255,7 +255,7 @@ async def test_options.opp: OpenPeerPower):
         result2 = await.opp.config_entries.options.async_configure(
             result["flow_id"], user_input
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert result2["type"] == "create_entry"
     assert result2["data"] == config
     assert result2["data"] == config_entry.options

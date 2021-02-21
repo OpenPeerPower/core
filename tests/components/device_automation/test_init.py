@@ -622,7 +622,7 @@ async def test_automation_with_sub_condition.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     ent1, ent2, ent3 = platform.ENTITIES
 
     assert await async_setup_component(
@@ -695,30 +695,30 @@ async def test_automation_with_sub_condition.opp, calls):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
     assert.opp.states.get(ent2.entity_id).state == STATE_OFF
     assert len(calls) == 0
 
    .opp.bus.async_fire("test_event1")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "or event - test_event1"
 
    .opp.states.async_set(ent1.entity_id, STATE_OFF)
    .opp.bus.async_fire("test_event1")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set(ent2.entity_id, STATE_ON)
    .opp.bus.async_fire("test_event1")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "or event - test_event1"
 
    .opp.states.async_set(ent1.entity_id, STATE_ON)
    .opp.bus.async_fire("test_event1")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 4
     assert _same_lists(
         [calls[2].data["some"], calls[3].data["some"]],

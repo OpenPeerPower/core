@@ -657,7 +657,7 @@ async def test_render_template_error_in_template_code.opp, websocket_client, cap
 async def test_render_template_with_delayed_error.opp, websocket_client, caplog):
     """Test a template with an error that only happens after a state change."""
    .opp.states.async_set("sensor.test", "on")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     template_str = """
 {% if states.sensor.test.state %}
@@ -670,7 +670,7 @@ async def test_render_template_with_delayed_error.opp, websocket_client, caplog)
     await websocket_client.send_json(
         {"id": 5, "type": "render_template", "template": template_str}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     msg = await websocket_client.receive_json()
 
@@ -679,7 +679,7 @@ async def test_render_template_with_delayed_error.opp, websocket_client, caplog)
     assert msg["success"]
 
    .opp.states.async_remove("sensor.test")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     msg = await websocket_client.receive_json()
     assert msg["id"] == 5

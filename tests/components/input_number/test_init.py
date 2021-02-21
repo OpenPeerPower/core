@@ -150,13 +150,13 @@ async def test_increment.opp):
     assert 50 == float(state.state)
 
     await increment.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 51 == float(state.state)
 
     await increment.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 51 == float(state.state)
@@ -173,13 +173,13 @@ async def test_decrement.opp):
     assert 50 == float(state.state)
 
     await decrement.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 49 == float(state.state)
 
     await decrement.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 49 == float(state.state)
@@ -351,7 +351,7 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
@@ -559,6 +559,6 @@ async def test_setup_no_config.opp,.opp_admin_user):
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert count_start == len.opp.states.async_entity_ids())

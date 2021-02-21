@@ -89,7 +89,7 @@ async def _device_form.opp, flow_id, connection, user_input):
         return_value=True,
     ) as mock_setup_entry:
         result = await.opp.config_entries.flow.async_configure(flow_id, user_input)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     return result, mock_setup, mock_setup_entry
 
 

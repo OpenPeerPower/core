@@ -24,7 +24,7 @@ from openpeerpowerr.setup import async_setup_component
 async def test_async_setup_creates_entry.opp, config):
     """Test component setup creates entry from config."""
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     entry = entries[0]
@@ -38,7 +38,7 @@ async def test_async_setup_updates_entry.opp, config_entry, config, controller):
     config[DOMAIN][CONF_HOST] = "127.0.0.2"
     config_entry.add_to_opp.opp)
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     entry = entries[0]
@@ -51,7 +51,7 @@ async def test_async_setup_returns_true.opp, config_entry, config):
     """Test component setup from config."""
     config_entry.add_to_opp.opp)
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0] == config_entry
@@ -61,7 +61,7 @@ async def test_async_setup_no_config_returns_true.opp, config_entry):
     """Test component setup from entry only."""
     config_entry.add_to_opp.opp)
     assert await async_setup_component.opp, DOMAIN, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0] == config_entry
@@ -75,7 +75,7 @@ async def test_async_setup_entry_loads_platforms(
     with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await async_setup_entry.opp, config_entry)
         # Assert platforms loaded
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert forward_mock.call_count == 1
         assert controller.connect.call_count == 1
         assert controller.get_players.call_count == 1
@@ -98,7 +98,7 @@ async def test_async_setup_entry_not_signed_in_loads_platforms(
     with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await async_setup_entry.opp, config_entry)
         # Assert platforms loaded
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert forward_mock.call_count == 1
         assert controller.connect.call_count == 1
         assert controller.get_players.call_count == 1
@@ -122,7 +122,7 @@ async def test_async_setup_entry_connect_failure.opp, config_entry, controller):
     controller.connect.side_effect = HeosError()
     with pytest.raises(ConfigEntryNotReady):
         await async_setup_entry.opp, config_entry)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert controller.connect.call_count == 1
     assert controller.disconnect.call_count == 1
     controller.connect.reset_mock()
@@ -135,7 +135,7 @@ async def test_async_setup_entry_player_failure.opp, config_entry, controller):
     controller.get_players.side_effect = HeosError()
     with pytest.raises(ConfigEntryNotReady):
         await async_setup_entry.opp, config_entry)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert controller.connect.call_count == 1
     assert controller.disconnect.call_count == 1
     controller.connect.reset_mock()
@@ -150,7 +150,7 @@ async def test_unload_entry.opp, config_entry, controller):
        .opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as unload:
         assert await async_unload_entry.opp, config_entry)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert controller_manager.disconnect.call_count == 1
         assert unload.call_count == 1
     assert DOMAIN not in.opp.data

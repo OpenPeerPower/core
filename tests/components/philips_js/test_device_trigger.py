@@ -64,6 +64,6 @@ async def test_if_fires_on_turn_on_request.opp, calls, mock_entity, mock_device)
         blocking=True,
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == mock_device.id

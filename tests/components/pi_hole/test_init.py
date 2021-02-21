@@ -45,7 +45,7 @@ async def test_setup_minimal_config.opp):
            .opp, pi_hole.DOMAIN, {pi_hole.DOMAIN: [{"host": "pi.hole"}]}
         )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert (
        .opp.states.get("sensor.pi_hole_ads_blocked_today").name
@@ -105,7 +105,7 @@ async def test_setup_name_config.opp):
             {pi_hole.DOMAIN: [{"host": "pi.hole", "name": "Custom"}]},
         )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert (
        .opp.states.get("sensor.custom_ads_blocked_today").name
@@ -123,7 +123,7 @@ async def test_switch.opp, caplog):
             {pi_hole.DOMAIN: [{"host": "pi.hole1", "api_key": "1"}]},
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         await.opp.services.async_call(
             switch.DOMAIN,
@@ -176,7 +176,7 @@ async def test_disable_service_call.opp):
             },
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         await.opp.services.async_call(
             pi_hole.DOMAIN,
@@ -185,7 +185,7 @@ async def test_disable_service_call.opp):
             blocking=True,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         mocked_hole.disable.assert_called_once_with(1)
 
@@ -207,11 +207,11 @@ async def test_unload.opp):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert entry.entry_id in.opp.data[pi_hole.DOMAIN]
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert entry.entry_id not in.opp.data[pi_hole.DOMAIN]
 
 
@@ -223,7 +223,7 @@ async def test_migrate.opp):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert entry.data == CONF_CONFIG_ENTRY
 
@@ -238,7 +238,7 @@ async def test_migrate_statistics_only.opp):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     config_entry_data = {**CONF_CONFIG_ENTRY}
     config_entry_data[CONF_STATISTICS_ONLY] = True

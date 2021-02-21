@@ -179,7 +179,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
             activation_timeout = async_call_later.opp, 10, unregister_webhook)
 
-            await.opp.async_add_executor_job(
+            await opp.async_add_executor_job(
                .opp.data[DOMAIN][entry.entry_id][AUTH].addwebhook, webhook_url
             )
             _LOGGER.info("Register Netatmo webhook: %s", webhook_url)
@@ -202,7 +202,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     if CONF_WEBHOOK_ID in entry.data:
-        await.opp.async_add_executor_job(
+        await opp.async_add_executor_job(
            .opp.data[DOMAIN][entry.entry_id][AUTH].dropwebhook
         )
         _LOGGER.info("Unregister Netatmo webhook.")

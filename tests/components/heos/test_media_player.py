@@ -60,7 +60,7 @@ async def setup_platform.opp, config_entry, config):
     """Set up the media player platform for testing."""
     config_entry.add_to_opp.opp)
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_state_attributes.opp, config_entry, config, controller):
@@ -110,7 +110,7 @@ async def test_updates_from_signals.opp, config_entry, config, controller, favor
     player.heos.dispatcher.send(
         const.SIGNAL_PLAYER_EVENT, 2, const.EVENT_PLAYER_STATE_CHANGED
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("media_player.test_player")
     assert state.state == STATE_IDLE
 
@@ -119,7 +119,7 @@ async def test_updates_from_signals.opp, config_entry, config, controller, favor
     player.heos.dispatcher.send(
         const.SIGNAL_PLAYER_EVENT, player.player_id, const.EVENT_PLAYER_STATE_CHANGED
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("media_player.test_player")
     assert state.state == STATE_PLAYING
@@ -132,7 +132,7 @@ async def test_updates_from_signals.opp, config_entry, config, controller, favor
         player.player_id,
         const.EVENT_PLAYER_NOW_PLAYING_PROGRESS,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_MEDIA_POSITION_UPDATED_AT] is not None
     assert state.attributes[ATTR_MEDIA_DURATION] == 360
@@ -228,7 +228,7 @@ async def test_updates_from_players_changed(
         const.SIGNAL_CONTROLLER_EVENT, const.EVENT_PLAYERS_CHANGED, change_data
     )
     await event.wait()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("media_player.test_player").state == STATE_PLAYING
 
 
@@ -476,7 +476,7 @@ async def test_select_favorite.opp, config_entry, config, controller, favorites)
     player.heos.dispatcher.send(
         const.SIGNAL_PLAYER_EVENT, player.player_id, const.EVENT_PLAYER_STATE_CHANGED
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_INPUT_SOURCE] == favorite.name
 
@@ -500,7 +500,7 @@ async def test_select_radio_favorite.opp, config_entry, config, controller, favo
     player.heos.dispatcher.send(
         const.SIGNAL_PLAYER_EVENT, player.player_id, const.EVENT_PLAYER_STATE_CHANGED
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_INPUT_SOURCE] == favorite.name
 
@@ -548,7 +548,7 @@ async def test_select_input_source(
     player.heos.dispatcher.send(
         const.SIGNAL_PLAYER_EVENT, player.player_id, const.EVENT_PLAYER_STATE_CHANGED
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_INPUT_SOURCE] == input_source.name
 

@@ -60,7 +60,7 @@ async def test_august_is_offline.opp):
         side_effect=asyncio.TimeoutError,
     ):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -161,7 +161,7 @@ async def test_set_up_from_yaml.opp):
         return_value=True,
     ):
         assert await async_setup_component.opp, DOMAIN, _mock_get_config())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup_august.mock_calls) == 1
     call = mock_setup_august.call_args
     args, _ = call
@@ -195,7 +195,7 @@ async def test_auth_fails.opp):
         side_effect=ClientResponseError(None, None, status=401),
     ):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
@@ -223,7 +223,7 @@ async def test_bad_password.opp):
         ),
     ):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
@@ -249,7 +249,7 @@ async def test_http_failure.opp):
         side_effect=ClientResponseError(None, None, status=500),
     ):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -273,7 +273,7 @@ async def test_unknown_auth_state.opp):
         return_value=_mock_august_authentication("original_token", 1234, None),
     ):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
@@ -301,7 +301,7 @@ async def test_requires_validation_state.opp):
         ),
     ):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 

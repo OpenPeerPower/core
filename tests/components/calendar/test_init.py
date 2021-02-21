@@ -8,7 +8,7 @@ import openpeerpowerr.util.dt as dt_util
 async def test_events_http_api.opp,.opp_client):
     """Test the calendar demo view."""
     await async_setup_component.opp, "calendar", {"calendar": {"platform": "demo"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     client = await.opp_client()
     response = await client.get("/api/calendars/calendar.calendar_2")
     assert response.status == 400
@@ -28,7 +28,7 @@ async def test_events_http_api.opp,.opp_client):
 async def test_calendars_http_api.opp,.opp_client):
     """Test the calendar demo view."""
     await async_setup_component.opp, "calendar", {"calendar": {"platform": "demo"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     client = await.opp_client()
     response = await client.get("/api/calendars")
     assert response.status == 200

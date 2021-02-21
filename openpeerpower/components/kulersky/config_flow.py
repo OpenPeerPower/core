@@ -15,7 +15,7 @@ async def _async_op._devices.opp) -> bool:
     """Return if there are devices that can be discovered."""
     # Check if there are any devices that can be discovered in the network.
     try:
-        devices = await.opp.async_add_executor_job(
+        devices = await opp.async_add_executor_job(
             pykulersky.discover_bluetooth_devices
         )
     except pykulersky.PykulerskyException as exc:

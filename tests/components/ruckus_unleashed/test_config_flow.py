@@ -39,7 +39,7 @@ async def test_form.opp):
             result["flow_id"],
             CONFIG,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == DEFAULT_TITLE
@@ -155,7 +155,7 @@ async def test_form_duplicate_error.opp):
 
         future = utcnow() + timedelta(minutes=60)
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}

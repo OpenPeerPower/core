@@ -103,7 +103,7 @@ async def test_send_code_no_protocol.opp):
                 service_data={"noprotocol": "test", "value": 42},
                 blocking=True,
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
         except MultipleInvalid as error:
             assert "required key not provided @ data['protocol']" in str(error)
 
@@ -124,7 +124,7 @@ async def test_send_code(mock_pilight_error,.opp):
             service_data=service_data,
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         error_log_call = mock_pilight_error.call_args_list[-1]
         service_data["protocol"] = [service_data["protocol"]]
         assert str(service_data) in str(error_log_call)
@@ -148,7 +148,7 @@ async def test_send_code_fail(mock_pilight_error,.opp):
                 service_data=service_data,
                 blocking=True,
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
             error_log_call = mock_pilight_error.call_args_list[-1]
             assert "Pilight send failed" in str(error_log_call)
 
@@ -184,13 +184,13 @@ async def test_send_code_delay(mock_pilight_error,.opp):
         service_data2["protocol"] = [service_data2["protocol"]]
 
         async_fire_time_changed.opp, dt_util.utcnow())
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         error_log_call = mock_pilight_error.call_args_list[-1]
         assert str(service_data1) in str(error_log_call)
 
         new_time = dt_util.utcnow() + timedelta(seconds=5)
         async_fire_time_changed.opp, new_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         error_log_call = mock_pilight_error.call_args_list[-1]
         assert str(service_data2) in str(error_log_call)
 
@@ -205,7 +205,7 @@ async def test_start_stop(mock_pilight_error,.opp):
 
         # Test startup
         await.opp.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         error_log_call = mock_pilight_error.call_args_list[-2]
         assert "PilightDaemonSim callback" in str(error_log_call)
@@ -228,7 +228,7 @@ async def test_receive_code(mock_debug,.opp):
 
         # Test startup
         await.opp.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         expected_message = dict(
             {
@@ -261,7 +261,7 @@ async def test_whitelist_exact_match(mock_debug,.opp):
         )
 
         await.opp.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         expected_message = dict(
             {
@@ -292,7 +292,7 @@ async def test_whitelist_partial_match(mock_debug,.opp):
         )
 
         await.opp.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         expected_message = dict(
             {
@@ -326,7 +326,7 @@ async def test_whitelist_or_match(mock_debug,.opp):
         )
 
         await.opp.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         expected_message = dict(
             {
@@ -357,7 +357,7 @@ async def test_whitelist_no_match(mock_debug,.opp):
         )
 
         await.opp.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         debug_log_call = mock_debug.call_args_list[-3]
 
         assert not ("Event pilight_received" in debug_log_call)
@@ -372,9 +372,9 @@ async def test_call_rate_delay_throttle_enabled.opp):
     action = limit.limited(lambda x: runs.append(x))
 
     for i in range(3):
-        await.opp.async_add_executor_job(action, i)
+        await opp.async_add_executor_job(action, i)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert runs == [0]
 
     exp = []
@@ -383,7 +383,7 @@ async def test_call_rate_delay_throttle_enabled.opp):
         exp.append(i)
         shifted_time = now + (timedelta(seconds=delay + 0.1) * i)
         async_fire_time_changed.opp, shifted_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert runs == exp
 
 

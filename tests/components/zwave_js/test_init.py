@@ -71,7 +71,7 @@ async def test_initialized_timeout.opp, client, connect_timeout):
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -92,7 +92,7 @@ async def test_on_node_added_ready(
     )
 
     client.driver.controller.emit("node added", event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
@@ -121,7 +121,7 @@ async def test_on_node_added_not_ready(
     )
 
     client.driver.controller.emit("node added", event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
@@ -132,7 +132,7 @@ async def test_on_node_added_not_ready(
 
     node.data["ready"] = True
     node.emit("ready", event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
@@ -167,7 +167,7 @@ async def test_existing_node_not_ready.opp, client, multisensor_6, device_regist
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
@@ -178,7 +178,7 @@ async def test_existing_node_not_ready.opp, client, multisensor_6, device_regist
 
     node.data["ready"] = True
     node.emit("ready", event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
@@ -280,7 +280,7 @@ async def test_removed_device.opp, client, multiple_devices, integration):
     # Remove a node and reload the entry
     old_node = nodes.pop(13)
     await.opp.config_entries.async_reload(integration.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Assert that the node and all of it's entities were removed from the device and
     # entity registry

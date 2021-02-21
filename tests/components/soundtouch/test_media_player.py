@@ -109,7 +109,7 @@ def volume_fixture():
 async def setup_soundtouch.opp, config):
     """Set up soundtouch integration."""
     assert await async_setup_component.opp, "media_player", {"media_player": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await.opp.async_start()
 
 
@@ -309,7 +309,7 @@ async def test_ensure_setup_discovery(mocked_status, mocked_volume,.opp, one_dev
     await async_load_platform(
        .opp, "media_player", DOMAIN, new_device, {"media_player": {}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert one_device.call_count == 1
     assert one_device.call_args == call("192.168.1.1", 8090)
@@ -334,7 +334,7 @@ async def test_ensure_setup_discovery_no_duplicate(
     await async_load_platform(
        .opp, "media_player", DOMAIN, new_device, {"media_player": DEVICE_1_CONFIG}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert one_device.call_count == 2
     assert len.opp.states.async_all()) == 2
 
@@ -347,7 +347,7 @@ async def test_ensure_setup_discovery_no_duplicate(
     await async_load_platform(
        .opp, "media_player", DOMAIN, existing_device, {"media_player": DEVICE_1_CONFIG}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert one_device.call_count == 2
     assert len.opp.states.async_all()) == 2
 

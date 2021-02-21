@@ -90,7 +90,7 @@ async def test_get_services_cached.opp):
 
         services = 4
         async_fire_time_changed.opp, utcnow())
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # Check cache purged
         assert await account_link._get_services.opp) == 4
@@ -143,7 +143,7 @@ async def test_implementation.opp, flow_op.dler):
             "token_type": "bearer",
         }
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Flow finished!
     result = await.opp.config_entries.flow.async_configure(result["flow_id"])

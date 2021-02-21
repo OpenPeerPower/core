@@ -54,7 +54,7 @@ async def test_config_yaml_alias_anchor.opp, entities):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await activate.opp, "scene.test")
 
@@ -82,7 +82,7 @@ async def test_config_yaml_bool.opp, entities):
         doc = yaml_loader.yaml.safe_load(file)
 
     assert await async_setup_component.opp, scene.DOMAIN, doc)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await activate.opp, "scene.test")
 
@@ -110,7 +110,7 @@ async def test_activate_scene.opp, entities):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await activate.opp, "scene.test")
 
     assert light.is_on.opp, light_1.entity_id)
@@ -122,7 +122,7 @@ async def test_activate_scene.opp, entities):
     await.opp.services.async_call(
         scene.DOMAIN, "turn_on", {"transition": 42, "entity_id": "scene.test"}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].domain == "light"
@@ -153,7 +153,7 @@ async def setup_lights.opp, entities):
     assert await async_setup_component(
        .opp, light.DOMAIN, {light.DOMAIN: {"platform": "test"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     light_1, light_2 = entities
 
@@ -163,7 +163,7 @@ async def setup_lights.opp, entities):
         {"entity_id": [light_1.entity_id, light_2.entity_id]},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not light.is_on.opp, light_1.entity_id)
     assert not light.is_on.opp, light_2.entity_id)

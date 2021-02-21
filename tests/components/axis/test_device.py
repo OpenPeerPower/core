@@ -291,7 +291,7 @@ async def setup_axis_integration.opp, config=ENTRY_CONFIG, options=ENTRY_OPTIONS
     with patch("axis.rtsp.RTSPClient.start", return_value=True), respx.mock:
         mock_default_vapix_requests(respx)
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return config_entry
 
@@ -354,7 +354,7 @@ async def test_device_support_mqtt.opp, mqtt_mock):
 
     assert len.opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)) == 0
     async_fire_mqtt_message.opp, topic, message)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)) == 1
 
     pir = opp.states.get(f"{BINARY_SENSOR_DOMAIN}.{NAME}_pir_0")
@@ -383,7 +383,7 @@ async def test_update_address.opp):
             },
             context={"source": SOURCE_ZEROCONF},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert device.api.config.host == "2.3.4.5"
     assert len(mock_setup_entry.mock_calls) == 1
@@ -438,7 +438,7 @@ async def test_new_event_sends_signal.opp):
 
     with patch.object(axis.device, "async_dispatcher_send") as mock_dispatch_send:
         axis_device.async_event_callback(action=OPERATION_INITIALIZED, event_id="event")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_dispatch_send.mock_calls) == 1
     assert len(mock_dispatch_send.mock_calls[0]) == 3

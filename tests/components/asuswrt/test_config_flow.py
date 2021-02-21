@@ -71,7 +71,7 @@ async def test_user.opp, connect):
             context={"source": SOURCE_USER},
             data=CONFIG_DATA,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == HOST
@@ -94,7 +94,7 @@ async def test_import.opp, connect):
             context={"source": SOURCE_IMPORT},
             data=CONFIG_DATA,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == HOST
@@ -127,7 +127,7 @@ async def test_import_ssh.opp, connect):
             context={"source": SOURCE_IMPORT},
             data=config_data,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == HOST
@@ -271,7 +271,7 @@ async def test_options_flow.opp):
 
     with patch("openpeerpower.components.asuswrt.async_setup_entry", return_value=True):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

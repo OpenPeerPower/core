@@ -448,7 +448,7 @@ async def test_options_global.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.data["automatic_add"]
 
@@ -504,7 +504,7 @@ async def test_options_add_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.data["automatic_add"]
 
@@ -596,7 +596,7 @@ async def test_options_add_remove_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.data["automatic_add"]
 
@@ -630,7 +630,7 @@ async def test_options_add_remove_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not entry.data["automatic_add"]
 
@@ -661,7 +661,7 @@ async def test_options_replace_sensor_device.opp):
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_f0_04_rssi_numeric"
@@ -749,7 +749,7 @@ async def test_options_replace_sensor_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_registry = await async_get_entity_registry.opp)
 
@@ -828,7 +828,7 @@ async def test_options_replace_control_device.opp):
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
@@ -888,7 +888,7 @@ async def test_options_replace_control_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_registry = await async_get_entity_registry.opp)
 
@@ -932,7 +932,7 @@ async def test_options_remove_multiple_devices.opp):
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.ac_213c7f2_48")
     assert state
@@ -971,7 +971,7 @@ async def test_options_remove_multiple_devices.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.ac_213c7f2_48")
     assert not state
@@ -1047,7 +1047,7 @@ async def test_options_add_and_configure_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.data["automatic_add"]
 
@@ -1095,7 +1095,7 @@ async def test_options_add_and_configure_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.data["devices"]["0913000022670e013970"]
     assert entry.data["devices"]["0913000022670e013970"]["fire_event"]
@@ -1121,7 +1121,7 @@ async def test_options_configure_rfy_cover_device.opp):
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(entry.entry_id)
 
@@ -1147,7 +1147,7 @@ async def test_options_configure_rfy_cover_device.opp):
         },
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.data["devices"]["071a000001020301"]["venetian_blind_mode"] == "EU"
 
@@ -1182,7 +1182,7 @@ async def test_options_configure_rfy_cover_device.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.data["devices"]["071a000001020301"]["venetian_blind_mode"] == "EU"
 

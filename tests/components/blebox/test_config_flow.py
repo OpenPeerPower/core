@@ -142,7 +142,7 @@ async def test_flow_with_unsupported_version.opp, product_class_mock):
 async def test_async_setup.opp):
     """Test async_setup (for coverage)."""
     assert await async_setup_component.opp, "blebox", {"host": "172.2.3.4"})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_already_configured.opp, valid_feature_mock):
@@ -152,7 +152,7 @@ async def test_already_configured.opp, valid_feature_mock):
     config.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(config.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
@@ -170,7 +170,7 @@ async def test_async_setup_entry.opp, valid_feature_mock):
     config.add_to_opp.opp)
 
     assert await.opp.config_entries.async_setup(config.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.config_entries.async_entries() == [config]
     assert config.state == config_entries.ENTRY_STATE_LOADED
@@ -183,10 +183,10 @@ async def test_async_remove_entry.opp, valid_feature_mock):
     config.add_to_opp.opp)
 
     assert await.opp.config_entries.async_setup(config.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await.opp.config_entries.async_remove(config.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.config_entries.async_entries() == []
     assert config.state == config_entries.ENTRY_STATE_NOT_LOADED

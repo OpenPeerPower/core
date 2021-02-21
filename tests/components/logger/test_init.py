@@ -44,7 +44,7 @@ async def test_setting_level.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mocks) == 4
 

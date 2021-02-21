@@ -113,7 +113,7 @@ async def test_segment_change_state(
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_TRANSITION: 5},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             on=False,
             segment_id=0,
@@ -133,7 +133,7 @@ async def test_segment_change_state(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             brightness=42,
             color_primary=(255, 0, 0),
@@ -150,7 +150,7 @@ async def test_segment_change_state(
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_COLOR_TEMP: 400},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             color_primary=(255, 159, 70),
             on=True,
@@ -171,7 +171,7 @@ async def test_master_change_state(
             {ATTR_ENTITY_ID: "light.wled_rgb_light_master", ATTR_TRANSITION: 5},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             on=False,
             transition=50,
@@ -188,7 +188,7 @@ async def test_master_change_state(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             brightness=42,
             on=True,
@@ -202,7 +202,7 @@ async def test_master_change_state(
             {ATTR_ENTITY_ID: "light.wled_rgb_light_master", ATTR_TRANSITION: 5},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             on=False,
             transition=50,
@@ -219,7 +219,7 @@ async def test_master_change_state(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             brightness=42,
             on=True,
@@ -246,14 +246,14 @@ async def test_dynamically_op.dle_segments(
         return_value=device,
     ):
         async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert.opp.states.get("light.wled_rgb_light_segment_0")
         assert not.opp.states.get("light.wled_rgb_light_segment_1")
         assert not.opp.states.get("light.wled_rgb_light_master")
 
     # Test adding if segment shows up again, including the master entity
     async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("light.wled_rgb_light_master")
     assert.opp.states.get("light.wled_rgb_light_segment_0")
@@ -275,7 +275,7 @@ async def test_single_segment_behavior(
         return_value=device,
     ):
         async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not.opp.states.get("light.wled_rgb_light_master")
 
@@ -291,7 +291,7 @@ async def test_single_segment_behavior(
         return_value=device,
     ):
         async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state
@@ -304,7 +304,7 @@ async def test_single_segment_behavior(
         return_value=device,
     ):
         async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state
         assert state.state == STATE_OFF
@@ -317,7 +317,7 @@ async def test_single_segment_behavior(
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_TRANSITION: 5},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         master_mock.assert_called_once_with(
             on=False,
             transition=50,
@@ -338,7 +338,7 @@ async def test_single_segment_behavior(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         master_mock.assert_called_once_with(on=True, transition=50, brightness=42)
         segment_mock.assert_called_once_with(on=True, segment_id=0, brightness=255)
 
@@ -357,7 +357,7 @@ async def test_light_error(
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_ON
@@ -379,7 +379,7 @@ async def test_light_connection_error(
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_UNAVAILABLE
@@ -403,7 +403,7 @@ async def test_rgbw_light(
             {ATTR_ENTITY_ID: "light.wled_rgbw_light", ATTR_COLOR_TEMP: 400},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             on=True,
             segment_id=0,
@@ -417,7 +417,7 @@ async def test_rgbw_light(
             {ATTR_ENTITY_ID: "light.wled_rgbw_light", ATTR_WHITE_VALUE: 100},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             color_primary=(255, 0, 0, 100),
             on=True,
@@ -435,7 +435,7 @@ async def test_rgbw_light(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             color_primary=(0, 0, 0, 100),
             on=True,
@@ -463,7 +463,7 @@ async def test_effect_service(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             effect="Rainbow",
             intensity=200,
@@ -480,7 +480,7 @@ async def test_effect_service(
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_EFFECT: 9},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             segment_id=0,
             effect=9,
@@ -498,7 +498,7 @@ async def test_effect_service(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             intensity=200,
             reverse=True,
@@ -519,7 +519,7 @@ async def test_effect_service(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             effect="Rainbow",
             palette="Tiamat",
@@ -540,7 +540,7 @@ async def test_effect_service(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             effect="Rainbow",
             intensity=200,
@@ -560,7 +560,7 @@ async def test_effect_service(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             effect="Rainbow",
             intensity=200,
@@ -583,7 +583,7 @@ async def test_effect_service_error(
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_EFFECT: 9},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_ON
@@ -606,7 +606,7 @@ async def test_preset_service(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         light_mock.assert_called_once_with(
             preset=1,
         )
@@ -626,7 +626,7 @@ async def test_preset_service_error(
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_PRESET: 1},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_ON

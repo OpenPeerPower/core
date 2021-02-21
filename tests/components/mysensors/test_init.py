@@ -240,7 +240,7 @@ async def test_import(
     ) as mock_setup_entry:
         result = await async_setup_component.opp, DOMAIN, config)
         assert result == expected_to_succeed
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_setup_entry.mock_calls) == expected_calls
 

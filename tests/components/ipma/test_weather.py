@@ -140,7 +140,7 @@ async def test_setup_configuration.opp):
             weather.DOMAIN,
             {"weather": {"name": "HomeTown", "platform": "ipma", "mode": "hourly"}},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("weather.hometown")
     assert state.state == "rainy"
@@ -162,7 +162,7 @@ async def test_setup_config_flow.opp):
     ):
         entry = MockConfigEntry(domain="ipma", data=TEST_CONFIG)
         await.opp.config_entries.async_forward_entry_setup(entry, WEATHER_DOMAIN)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("weather.hometown")
     assert state.state == "rainy"
@@ -187,7 +187,7 @@ async def test_daily_forecast.opp):
             weather.DOMAIN,
             {"weather": {"name": "HomeTown", "platform": "ipma", "mode": "daily"}},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("weather.hometown")
     assert state.state == "rainy"
@@ -213,7 +213,7 @@ async def test_hourly_forecast.opp):
             weather.DOMAIN,
             {"weather": {"name": "HomeTown", "platform": "ipma", "mode": "hourly"}},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("weather.hometown")
     assert state.state == "rainy"

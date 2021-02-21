@@ -66,7 +66,7 @@ async def test_form.opp, mock_setup, mock_setup_entry):
         result["flow_id"],
         MOCK_USERINPUT,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Philips TV (1234567890)"

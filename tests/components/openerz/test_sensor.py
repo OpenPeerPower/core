@@ -24,7 +24,7 @@ async def test_sensor_state.opp):
         patched_connector.return_value = pickup_instance
 
         await async_setup_component.opp, SENSOR_DOMAIN, MOCK_CONFIG)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         entity_id = "sensor.test_name"
         test_openerz_state = opp.states.get(entity_id)

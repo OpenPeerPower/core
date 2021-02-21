@@ -36,9 +36,9 @@ async def test_unload_entry.opp):
         config_entry.add_to_opp.opp)
 
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert config_entry.state == ENTRY_STATE_LOADED
 
         await.opp.config_entries.async_unload(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert config_entry.state == ENTRY_STATE_NOT_LOADED

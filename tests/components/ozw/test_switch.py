@@ -25,7 +25,7 @@ async def test_switch.opp, generic_data, sent_messages, switch_msg):
     switch_msg.payload["Value"] = True
     switch_msg.encode()
     receive_message(switch_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.smart_plug_switch")
     assert state is not None

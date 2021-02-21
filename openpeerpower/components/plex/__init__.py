@@ -94,7 +94,7 @@ async def async_setup_entry.opp, entry):
         entry.entry_id,
     )
     try:
-        await.opp.async_add_executor_job(plex_server.connect)
+        await opp.async_add_executor_job(plex_server.connect)
     except ShouldUpdateConfigEntry:
         new_server_data = {
             **entry.data[PLEX_SERVER_CONFIG],
@@ -216,7 +216,7 @@ async def async_setup_entry.opp, entry):
         except (plexapi.exceptions.BadRequest, plexapi.exceptions.Unauthorized):
             return None
 
-    await.opp.async_add_executor_job(get_plex_account, plex_server)
+    await opp.async_add_executor_job(get_plex_account, plex_server)
 
     return True
 

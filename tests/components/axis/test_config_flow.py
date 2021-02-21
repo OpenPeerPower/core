@@ -110,7 +110,7 @@ async def test_manual_configuration_update_configuration.opp):
                 CONF_PORT: 80,
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
@@ -241,7 +241,7 @@ async def test_reauth_flow_update_configuration.opp):
                 CONF_PORT: 80,
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
@@ -442,7 +442,7 @@ async def test_discovery_flow_updated_configuration(
         result = await.opp.config_entries.flow.async_init(
             AXIS_DOMAIN, data=discovery_info, context={"source": source}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"

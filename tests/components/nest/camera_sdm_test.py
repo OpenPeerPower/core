@@ -124,7 +124,7 @@ async def fire_alarm.opp, point_in_time):
     """Fire an alarm and wait for callbacks to run."""
     with patch("openpeerpowerr.util.dt.utcnow", return_value=point_in_time):
         async_fire_time_changed.opp, point_in_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def async_get_image.opp):
@@ -335,7 +335,7 @@ async def test_camera_removed.opp, auth):
 
     # Fetch an event image, exercising cleanup on remove
     await subscriber.async_receive_event(make_motion_event())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     auth.responses = [
         aiohttp.web.json_response(GENERATE_IMAGE_URL_RESPONSE),
         aiohttp.web.Response(body=IMAGE_BYTES_FROM_EVENT),
@@ -345,7 +345,7 @@ async def test_camera_removed.opp, auth):
 
     for config_entry in.opp.config_entries.async_entries(DOMAIN):
         await.opp.config_entries.async_remove(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -392,7 +392,7 @@ async def test_camera_image_from_last_event.opp, auth):
 
     # Simulate a pubsub message received by the subscriber with a motion event.
     await subscriber.async_receive_event(make_motion_event())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     auth.responses = [
         # Fake response from API that returns url image
@@ -425,7 +425,7 @@ async def test_camera_image_from_event_not_supported.opp, auth):
     assert.opp.states.get("camera.my_camera")
 
     await subscriber.async_receive_event(make_motion_event())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Camera fetches a stream url since CameraEventImage is not supported
     auth.responses = [make_stream_url_response()]
@@ -441,7 +441,7 @@ async def test_generate_event_image_url_failure.opp, auth):
     assert.opp.states.get("camera.my_camera")
 
     await subscriber.async_receive_event(make_motion_event())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     auth.responses = [
         # Fail to generate the image url
@@ -461,7 +461,7 @@ async def test_fetch_event_image_failure.opp, auth):
     assert.opp.states.get("camera.my_camera")
 
     await subscriber.async_receive_event(make_motion_event())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     auth.responses = [
         # Fake response from API that returns url image
@@ -485,7 +485,7 @@ async def test_event_image_expired.opp, auth):
     # Simulate a pubsub message has already expired
     event_timestamp = utcnow() - datetime.timedelta(seconds=40)
     await subscriber.async_receive_event(make_motion_event(timestamp=event_timestamp))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Fallback to a stream url since the event message is expired.
     auth.responses = [make_stream_url_response()]
@@ -502,7 +502,7 @@ async def test_event_image_becomes_expired.opp, auth):
 
     event_timestamp = utcnow()
     await subscriber.async_receive_event(make_motion_event(timestamp=event_timestamp))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     auth.responses = [
         # Fake response from API that returns url image
@@ -544,7 +544,7 @@ async def test_multiple_event_images.opp, auth):
 
     event_timestamp = utcnow()
     await subscriber.async_receive_event(make_motion_event(timestamp=event_timestamp))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     auth.responses = [
         # Fake response from API that returns url image
@@ -563,7 +563,7 @@ async def test_multiple_event_images.opp, auth):
     await subscriber.async_receive_event(
         make_motion_event(event_id="updated-event-id", timestamp=next_event_timestamp)
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     image = await async_get_image.opp)
     assert image.content == b"updated image bytes"

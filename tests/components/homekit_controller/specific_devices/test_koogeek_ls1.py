@@ -92,7 +92,7 @@ async def test_recover_from_failure.opp, utcnow, failure_cls):
     # Test that entity changes state when network error goes away
     next_update += timedelta(seconds=60)
     async_fire_time_changed.opp, next_update)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = await helper.poll_and_get_state()
     assert state.state == "on"

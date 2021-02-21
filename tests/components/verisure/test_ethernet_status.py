@@ -40,7 +40,7 @@ async def setup_verisure.opp, config, response):
     """Set up mock verisure."""
     with mock_hub(config, response):
         await async_setup_component.opp, VERISURE_DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_verisure_no_ethernet_status.opp):

@@ -124,7 +124,7 @@ async def test_ssl_profile_defaults_modern.opp):
         side_effect=server_context_modern,
     ) as mock_context:
         await.opp.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_context.mock_calls) == 1
 
@@ -145,7 +145,7 @@ async def test_ssl_profile_change_intermediate.opp):
         side_effect=server_context_intermediate,
     ) as mock_context:
         await.opp.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_context.mock_calls) == 1
 
@@ -164,7 +164,7 @@ async def test_ssl_profile_change_modern.opp):
         side_effect=server_context_modern,
     ) as mock_context:
         await.opp.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_context.mock_calls) == 1
 

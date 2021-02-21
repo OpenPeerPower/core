@@ -78,7 +78,7 @@ async def test_user_connection_fails.opp, mock_try_connection, mock_finish_setup
 async def test_manual_config_set.opp, mock_try_connection, mock_finish_setup):
     """Test we ignore entry if manual config available."""
     assert await async_setup_component.opp, "mqtt", {"mqtt": {"broker": "bla"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_finish_setup.mock_calls) == 1
 
     mock_try_connection.return_value = True
@@ -177,7 +177,7 @@ async def test_option_flow.opp, mqtt_mock, mock_try_connection):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "options"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mqtt_mock.async_connect.call_count == 0
 
     result = await.opp.config_entries.options.async_configure(
@@ -218,7 +218,7 @@ async def test_option_flow.opp, mqtt_mock, mock_try_connection):
         },
     }
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mqtt_mock.async_connect.call_count == 1
 
 
@@ -249,7 +249,7 @@ async def test_disable_birth_will.opp, mqtt_mock, mock_try_connection):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "options"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mqtt_mock.async_connect.call_count == 0
 
     result = await.opp.config_entries.options.async_configure(
@@ -280,7 +280,7 @@ async def test_disable_birth_will.opp, mqtt_mock, mock_try_connection):
         mqtt.CONF_WILL_MESSAGE: {},
     }
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mqtt_mock.async_connect.call_count == 1
 
 

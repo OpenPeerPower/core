@@ -52,7 +52,7 @@ async def setup_awair.opp, fixtures):
     with patch("python_awair.AwairClient.query", side_effect=fixtures):
         entry.add_to_opp.opp)
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 def assert_expected_properties(

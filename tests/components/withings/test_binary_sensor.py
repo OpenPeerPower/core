@@ -43,12 +43,12 @@ async def test_binary_sensor(
 
     resp = await component_factory.call_webhook(person0.user_id, NotifyAppli.BED_IN)
     assert resp.message_code == 0
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(entity_id0).state == STATE_ON
 
     resp = await component_factory.call_webhook(person0.user_id, NotifyAppli.BED_OUT)
     assert resp.message_code == 0
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(entity_id0).state == STATE_OFF
 
     # person 1
@@ -56,7 +56,7 @@ async def test_binary_sensor(
 
     resp = await component_factory.call_webhook(person1.user_id, NotifyAppli.BED_IN)
     assert resp.message_code == 0
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(entity_id1).state == STATE_ON
 
     # Unload

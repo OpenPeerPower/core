@@ -31,7 +31,7 @@ async def test_form.opp, aioclient_mock_fixture):
         assert result2["type"] == "create_entry"
         assert result2["title"] == "Home"
         assert result2["data"] == {"username": TEST_USER_ID, "password": TEST_PASSWORD}
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 

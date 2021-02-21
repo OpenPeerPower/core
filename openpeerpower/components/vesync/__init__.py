@@ -70,7 +70,7 @@ async def async_setup_entry.opp, config_entry):
 
     manager = VeSync(username, password, time_zone)
 
-    login = await.opp.async_add_executor_job(manager.login)
+    login = await opp.async_add_executor_job(manager.login)
 
     if not login:
         _LOGGER.error("Unable to login to the VeSync server")

@@ -58,7 +58,7 @@ async def turn_fan_on(
         service_data=service_data,
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_entity_registry.opp: core.OpenPeerPower):
@@ -229,7 +229,7 @@ async def test_set_speed_off.opp: core.OpenPeerPower):
             service_data={ATTR_ENTITY_ID: "fan.name_1", ATTR_SPEED: SPEED_OFF},
             blocking=True,
         )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     mock_turn_off.assert_called_with("test-device-id", Action.turn_off())
 
@@ -247,7 +247,7 @@ async def test_turn_off_fan.opp: core.OpenPeerPower):
             {ATTR_ENTITY_ID: "fan.name_1"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_turn_off.assert_called_once_with("test-device-id", Action.turn_off())
 
@@ -258,7 +258,7 @@ async def test_update_reports_fan_on.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"power": 1, "speed": 1}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("fan.name_1").state == "on"
 
@@ -269,7 +269,7 @@ async def test_update_reports_fan_off.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"power": 0, "speed": 1}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("fan.name_1").state == "off"
 
@@ -280,7 +280,7 @@ async def test_update_reports_direction_forward.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"direction": Direction.FORWARD}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("fan.name_1").attributes[ATTR_DIRECTION] == DIRECTION_FORWARD
 
@@ -291,7 +291,7 @@ async def test_update_reports_direction_reverse.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"direction": Direction.REVERSE}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("fan.name_1").attributes[ATTR_DIRECTION] == DIRECTION_REVERSE
 
@@ -309,7 +309,7 @@ async def test_set_fan_direction.opp: core.OpenPeerPower):
             {ATTR_ENTITY_ID: "fan.name_1", ATTR_DIRECTION: DIRECTION_FORWARD},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_set_direction.assert_called_once_with(
         "test-device-id", Action.set_direction(Direction.FORWARD)

@@ -35,7 +35,7 @@ async def test_thermostat(coordinator, spa,.opp, config_entry):
     }
     config_entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_id = f"climate.{spa.brand}_{spa.model}_thermostat"
     state = opp.states.get(entity_id)

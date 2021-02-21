@@ -102,7 +102,7 @@ async def test_sensors_options_changed.opp):
             entry=entry,
             options={CONF_UNIT_OF_MEASUREMENT: MMOL_L},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert entry.options == {CONF_UNIT_OF_MEASUREMENT: MMOL_L}
 

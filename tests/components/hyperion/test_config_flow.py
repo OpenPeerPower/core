@@ -114,7 +114,7 @@ async def _create_mock_entry.opp: OpenPeerPowerType) -> MockConfigEntry:
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return entry
 
@@ -147,7 +147,7 @@ async def _configure_flow(
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=user_input
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     return result
 
 
@@ -364,7 +364,7 @@ async def test_auth_create_token_approval_declined.opp: OpenPeerPowerType) -> No
         }
 
         result = await _configure_flow.opp, result)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP
         assert result["step_id"] == "create_token_external"
 
@@ -474,7 +474,7 @@ async def test_ssdp_success.opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
         result = await _init_flow.opp, source=SOURCE_SSDP, data=TEST_SSDP_SERVICE_INFO)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Accept the confirmation.
     with patch(
@@ -501,7 +501,7 @@ async def test_ssdp_cannot_connect.opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
         result = await _init_flow.opp, source=SOURCE_SSDP, data=TEST_SSDP_SERVICE_INFO)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "cannot_connect"
@@ -518,7 +518,7 @@ async def test_ssdp_missing_serial.opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
         result = await _init_flow.opp, source=SOURCE_SSDP, data=bad_data)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "no_id"
@@ -536,7 +536,7 @@ async def test_ssdp_failure_bad_port_json.opp: OpenPeerPowerType) -> None:
     ):
         result = await _init_flow.opp, source=SOURCE_SSDP, data=bad_data)
         result = await _configure_flow.opp, result)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["data"][CONF_PORT] == const.DEFAULT_PORT_JSON
@@ -590,7 +590,7 @@ async def test_ssdp_abort_duplicates.opp: OpenPeerPowerType) -> None:
         result_2 = await _init_flow(
            .opp, source=SOURCE_SSDP, data=TEST_SSDP_SERVICE_INFO
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result_1["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result_2["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -607,7 +607,7 @@ async def test_options.opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert.opp.states.get(TEST_ENTITY_ID_1) is not None
 
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
@@ -618,7 +618,7 @@ async def test_options.opp: OpenPeerPowerType) -> None:
         result = await.opp.config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_PRIORITY: new_priority}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["data"] == {CONF_PRIORITY: new_priority}
 
@@ -656,7 +656,7 @@ async def test_reauth_success.opp: OpenPeerPowerType) -> None:
             source=SOURCE_REAUTH,
             data=config_data,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
         result = await _configure_flow(
@@ -688,6 +688,6 @@ async def test_reauth_cannot_connect.opp: OpenPeerPowerType) -> None:
             source=SOURCE_REAUTH,
             data=config_data,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "cannot_connect"

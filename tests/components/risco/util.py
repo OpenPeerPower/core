@@ -38,7 +38,7 @@ async def setup_risco.opp, events=[], options={}):
         return_value=events,
     ):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return config_entry
 

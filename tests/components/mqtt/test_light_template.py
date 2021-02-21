@@ -87,7 +87,7 @@ async def test_setup_fails.opp, mqtt_mock):
             light.DOMAIN,
             {light.DOMAIN: {"platform": "mqtt", "schema": "template", "name": "test"}},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert.opp.states.get("light.test") is None
 
     with assert_setup_component(0, light.DOMAIN):
@@ -103,7 +103,7 @@ async def test_setup_fails.opp, mqtt_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert.opp.states.get("light.test") is None
 
     with assert_setup_component(0, light.DOMAIN):
@@ -120,7 +120,7 @@ async def test_setup_fails.opp, mqtt_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert.opp.states.get("light.test") is None
 
     with assert_setup_component(0, light.DOMAIN):
@@ -137,7 +137,7 @@ async def test_setup_fails.opp, mqtt_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert.opp.states.get("light.test") is None
 
 
@@ -166,7 +166,7 @@ async def test_state_change_via_topic.opp, mqtt_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("light.test")
     assert state.state == STATE_OFF
@@ -222,7 +222,7 @@ async def test_state_brightness_color_effect_temp_white_change_via_topic(
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("light.test")
     assert state.state == STATE_OFF
@@ -330,7 +330,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
                     }
                 },
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
@@ -469,7 +469,7 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("light.test")
     assert state.state == STATE_OFF
@@ -583,7 +583,7 @@ async def test_effect.opp, mqtt_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("light.test")
     assert state.state == STATE_OFF
@@ -634,7 +634,7 @@ async def test_flash.opp, mqtt_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("light.test")
     assert state.state == STATE_OFF
@@ -682,7 +682,7 @@ async def test_transition.opp, mqtt_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("light.test")
     assert state.state == STATE_OFF
@@ -738,7 +738,7 @@ async def test_invalid_values.opp, mqtt_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("light.test")
     assert state.state == STATE_OFF
@@ -1039,7 +1039,7 @@ async def test_max_mireds.opp, mqtt_mock):
     }
 
     assert await async_setup_component.opp, light.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.test")
     assert state.attributes.get("min_mireds") == 153

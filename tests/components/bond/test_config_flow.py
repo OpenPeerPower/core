@@ -29,7 +29,7 @@ async def test_user_form.opp: core.OpenPeerPower):
             result["flow_id"],
             {CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "test-bond-id"
@@ -142,7 +142,7 @@ async def test_user_form_one_entry_per_device_allowed.opp: core.OpenPeerPower):
     assert result2["type"] == "abort"
     assert result2["reason"] == "already_configured"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0
 
@@ -165,7 +165,7 @@ async def test_zeroconf_form.opp: core.OpenPeerPower):
             result["flow_id"],
             {CONF_ACCESS_TOKEN: "test-token"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "test-bond-id"
@@ -202,7 +202,7 @@ async def test_zeroconf_already_configured.opp: core.OpenPeerPower):
     assert result["reason"] == "already_configured"
     assert entry.data["host"] == "updated-host"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0
 

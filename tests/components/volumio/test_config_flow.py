@@ -51,7 +51,7 @@ async def test_form.opp):
             result["flow_id"],
             TEST_CONNECTION,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "TestVolumio"
@@ -90,7 +90,7 @@ async def test_form_updates_unique_id.opp):
             result["flow_id"],
             TEST_CONNECTION,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "abort"
     assert result2["reason"] == "already_configured"
@@ -119,7 +119,7 @@ async def test_empty_system_info.opp):
             result["flow_id"],
             TEST_CONNECTION,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == TEST_CONNECTION["host"]
@@ -192,7 +192,7 @@ async def test_discovery.opp):
             result["flow_id"],
             user_input={},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == TEST_DISCOVERY_RESULT["name"]
@@ -265,7 +265,7 @@ async def test_discovery_updates_unique_id.opp):
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"

@@ -650,7 +650,7 @@ async def async_op.dle_snapshot_service(camera, service):
             img_file.write(image_data)
 
     try:
-        await.opp.async_add_executor_job(_write_image, snapshot_file, image)
+        await opp.async_add_executor_job(_write_image, snapshot_file, image)
     except OSError as err:
         _LOGGER.error("Can't write image to file: %s", err)
 

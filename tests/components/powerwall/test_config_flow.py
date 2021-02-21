@@ -44,7 +44,7 @@ async def test_form_source_user.opp):
             result["flow_id"],
             VALID_CONFIG,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "My site"
@@ -206,7 +206,7 @@ async def test_dhcp_discovery.opp):
             result["flow_id"],
             VALID_CONFIG,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Some site"
@@ -249,7 +249,7 @@ async def test_form_reauth.opp):
                 CONF_PASSWORD: "new-test-password",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "abort"
     assert result2["reason"] == "reauth_successful"

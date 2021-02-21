@@ -23,7 +23,7 @@ async def test_one_switch.opp, rfxtrx):
     mock_entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.ac_213c7f2_16")
     assert state
@@ -66,7 +66,7 @@ async def test_state_restore.opp, rfxtrx, state):
     mock_entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get(entity_id).state == state
 
@@ -85,7 +85,7 @@ async def test_several_switches.opp, rfxtrx):
     mock_entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.ac_213c7f2_48")
     assert state
@@ -114,12 +114,12 @@ async def test_repetitions.opp, rfxtrx, repetitions):
     mock_entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await.opp.services.async_call(
         "switch", "turn_on", {"entity_id": "switch.ac_213c7f2_48"}, blocking=True
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert rfxtrx.transport.send.call_count == repetitions
 
@@ -162,7 +162,7 @@ async def test_unknown_event_code.opp, rfxtrx):
     mock_entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     conf_entries = opp.config_entries.async_entries(DOMAIN)
     assert len(conf_entries) == 1

@@ -26,11 +26,11 @@ async def test_state.opp):
     with patch("openpeerpowerr.util.dt.utcnow") as now:
         now.return_value = base
        .opp.states.async_set(entity_id, 1, {})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         now.return_value += timedelta(seconds=3600)
        .opp.states.async_set(entity_id, 1, {}, force_update=True)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("sensor.derivative")
     assert state is not None
@@ -54,7 +54,7 @@ async def _setup_sensor.opp, config):
 
     entity_id = config["sensor"]["source"]
    .opp.states.async_set(entity_id, 0, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     return config, entity_id
 
@@ -69,7 +69,7 @@ async def setup_tests.opp, config, times, values, expected_state):
         for time, value in zip(times, values):
             now.return_value = base + timedelta(seconds=time)
            .opp.states.async_set(entity_id, value, {}, force_update=True)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
     state = opp.states.get("sensor.power")
     assert state is not None
@@ -170,7 +170,7 @@ async def test_data_moving_average_for_discrete_sensor.opp):
         now = base + timedelta(seconds=time)
         with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
            .opp.states.async_set(entity_id, value, {}, force_update=True)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         if time_window < time < times[-1] - time_window:
             state = opp.states.get("sensor.power")
@@ -201,13 +201,13 @@ async def test_prefix.opp):
        .opp.states.async_set(
             entity_id, 1000, {"unit_of_measurement": POWER_WATT}, force_update=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         now.return_value += timedelta(seconds=3600)
        .opp.states.async_set(
             entity_id, 1000, {"unit_of_measurement": POWER_WATT}, force_update=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("sensor.derivative")
     assert state is not None
@@ -237,11 +237,11 @@ async def test_suffix.opp):
     with patch("openpeerpowerr.util.dt.utcnow") as now:
         now.return_value = base
        .opp.states.async_set(entity_id, 1000, {})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         now.return_value += timedelta(seconds=10)
        .opp.states.async_set(entity_id, 1000, {}, force_update=True)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("sensor.derivative")
     assert state is not None

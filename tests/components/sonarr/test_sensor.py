@@ -48,7 +48,7 @@ async def test_sensors(
         )
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     for (unique, oid) in sensors.items():
         entity = registry.async_get(f"sensor.{oid}")
@@ -137,7 +137,7 @@ async def test_availability(
     future = now + timedelta(minutes=1)
     with patch("openpeerpowerr.util.dt.utcnow", return_value=future):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(UPCOMING_ENTITY_ID).state == STATE_UNAVAILABLE
 
@@ -148,7 +148,7 @@ async def test_availability(
     future += timedelta(minutes=1)
     with patch("openpeerpowerr.util.dt.utcnow", return_value=future):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(UPCOMING_ENTITY_ID).state == "1"
 
@@ -159,7 +159,7 @@ async def test_availability(
     future += timedelta(minutes=1)
     with patch("openpeerpowerr.util.dt.utcnow", return_value=future):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(UPCOMING_ENTITY_ID).state == STATE_UNAVAILABLE
 
@@ -170,6 +170,6 @@ async def test_availability(
     future += timedelta(minutes=1)
     with patch("openpeerpowerr.util.dt.utcnow", return_value=future):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(UPCOMING_ENTITY_ID).state == "1"

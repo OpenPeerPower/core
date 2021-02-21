@@ -47,7 +47,7 @@ async def test_not_found.opp, mock_disco):
         result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     stop_disco.assert_called_once()
 
@@ -76,6 +76,6 @@ async def test_found.opp, mock_disco):
         result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_setup.assert_called_once()

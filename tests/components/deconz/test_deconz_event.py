@@ -73,7 +73,7 @@ async def test_deconz_events.opp, aioclient_mock):
     events = async_capture_events.opp, CONF_DECONZ_EVENT)
 
     gateway.api.sensors["1"].update({"state": {"buttonevent": 2000}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].data == {
@@ -84,7 +84,7 @@ async def test_deconz_events.opp, aioclient_mock):
     }
 
     gateway.api.sensors["3"].update({"state": {"buttonevent": 2000}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 2
     assert events[1].data == {
@@ -96,7 +96,7 @@ async def test_deconz_events.opp, aioclient_mock):
     }
 
     gateway.api.sensors["4"].update({"state": {"gesture": 0}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 3
     assert events[2].data == {
@@ -110,7 +110,7 @@ async def test_deconz_events.opp, aioclient_mock):
     gateway.api.sensors["5"].update(
         {"state": {"buttonevent": 6002, "angle": 110, "xy": [0.5982, 0.3897]}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 4
     assert events[3].data == {
@@ -131,6 +131,6 @@ async def test_deconz_events.opp, aioclient_mock):
     assert len(gateway.events) == 0
 
     await.opp.config_entries.async_remove(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
     assert len(gateway.events) == 0

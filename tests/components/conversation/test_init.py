@@ -31,7 +31,7 @@ async def test_calling_intent.opp):
         {conversation.ATTR_TEXT: "I would like the Grolsch beer"},
         context=context,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(intents) == 1
     intent = intents[0]
@@ -58,7 +58,7 @@ async def test_register_before_setup.opp):
     await.opp.services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: "A Grolsch beer, please"}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(intents) == 1
     intent = intents[0]
@@ -72,7 +72,7 @@ async def test_register_before_setup.opp):
         "process",
         {conversation.ATTR_TEXT: "I would like the Grolsch beer"},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(intents) == 2
     intent = intents[1]
@@ -142,7 +142,7 @@ async def test_turn_on_intent.opp, sentence):
     await.opp.services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     call = calls[0]
@@ -166,7 +166,7 @@ async def test_turn_off_intent.opp, sentence):
     await.opp.services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     call = calls[0]
@@ -190,7 +190,7 @@ async def test_toggle_intent.opp, sentence):
     await.opp.services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     call = calls[0]

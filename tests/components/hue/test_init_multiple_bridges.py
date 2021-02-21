@@ -112,7 +112,7 @@ async def setup_bridge.opp, mock_bridge, config_entry):
    .opp.data[hue.DOMAIN][config_entry.entry_id] = mock_bridge
     await.opp.config_entries.async_forward_entry_setup(config_entry, "light")
     # To flush out the service call to update the group
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 @pytest.fixture

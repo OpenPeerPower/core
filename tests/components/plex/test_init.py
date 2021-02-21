@@ -43,7 +43,7 @@ async def test_setup_config_entry_with_error.opp, entry):
     ):
         entry.add_to_opp.opp)
         assert await.opp.config_entries.async_setup(entry.entry_id) is False
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_SETUP_RETRY
@@ -54,7 +54,7 @@ async def test_setup_config_entry_with_error.opp, entry):
     ):
         next_update = dt_util.utcnow() + timedelta(seconds=30)
         async_fire_time_changed.opp, next_update)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_SETUP_ERROR
@@ -95,7 +95,7 @@ async def test_setup_with_photo_session.opp, entry, setup_plex_server):
 
     assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     media_player = opp.states.get(
         "media_player.plex_plex_for_android_tv_shield_android_tv"
@@ -149,7 +149,7 @@ async def test_setup_when_certificate_changed(
     requests_mock.get(f"{old_url}/accounts", status_code=401)
     old_entry.add_to_opp.opp)
     assert await.opp.config_entries.async_setup(old_entry.entry_id) is False
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert old_entry.state == ENTRY_STATE_SETUP_ERROR
     await.opp.config_entries.async_unload(old_entry.entry_id)
@@ -159,7 +159,7 @@ async def test_setup_when_certificate_changed(
     requests_mock.get("https://plex.tv/api/resources", text=empty_payload)
 
     assert await.opp.config_entries.async_setup(old_entry.entry_id) is False
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert old_entry.state == ENTRY_STATE_SETUP_ERROR
     await.opp.config_entries.async_unload(old_entry.entry_id)
@@ -171,7 +171,7 @@ async def test_setup_when_certificate_changed(
     requests_mock.get(f"{new_url}/accounts", text=plex_server_accounts)
 
     assert await.opp.config_entries.async_setup(old_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert old_entry.state == ENTRY_STATE_LOADED
@@ -201,4 +201,4 @@ async def test_bad_token_with_tokenless_server(
 
     # Ensure updates that rely on account return nothing
     trigger_plex_update(mock_websocket)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()

@@ -65,7 +65,7 @@ async def test_missing_credentials(eebrightbox_mock,.opp):
 
     assert result
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("device_tracker.hostnameaa") is None
     assert.opp.states.get("device_tracker.hostname11") is None
@@ -85,7 +85,7 @@ async def test_invalid_credentials(eebrightbox_mock,.opp):
 
     assert result
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("device_tracker.hostnameaa") is None
     assert.opp.states.get("device_tracker.hostname11") is None
@@ -105,7 +105,7 @@ async def test_get_devices(eebrightbox_mock,.opp):
 
     assert result
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("device_tracker.hostnameaa") is not None
     assert.opp.states.get("device_tracker.hostname11") is not None

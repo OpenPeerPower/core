@@ -91,7 +91,7 @@ async def test_brightness_light.opp):
     await trt.execute(
         trait.COMMAND_BRIGHTNESS_ABSOLUTE, BASIC_DATA, {"brightness": 50}, {}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data == {ATTR_ENTITY_ID: "light.bla", light.ATTR_BRIGHTNESS_PCT: 50}
@@ -680,7 +680,7 @@ async def test_scene_script.opp):
     await trt.execute(trait.COMMAND_ACTIVATE_SCENE, BASIC_DATA, {}, {})
 
     # We don't wait till script execution is done.
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data == {ATTR_ENTITY_ID: "script.bla"}

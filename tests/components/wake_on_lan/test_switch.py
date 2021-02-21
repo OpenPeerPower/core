@@ -38,7 +38,7 @@ async def test_valid_hostname.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
@@ -79,7 +79,7 @@ async def test_valid_hostname_windows.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
@@ -116,7 +116,7 @@ async def test_broadcast_config_ip_and_port.opp, mock_send_magic_packet):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
@@ -152,7 +152,7 @@ async def test_broadcast_config_ip.opp, mock_send_magic_packet):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
@@ -180,7 +180,7 @@ async def test_broadcast_config_port.opp, mock_send_magic_packet):
         switch.DOMAIN,
         {"switch": {"platform": "wake_on_lan", "mac": mac, "broadcast_port": port}},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
@@ -212,7 +212,7 @@ async def test_off_script.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     calls = async_mock_service.opp, "shell_command", "turn_off_target")
 
     state = opp.states.get("switch.wake_on_lan")
@@ -259,7 +259,7 @@ async def test_invalid_hostname_windows.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state

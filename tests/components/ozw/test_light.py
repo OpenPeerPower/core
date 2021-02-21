@@ -45,7 +45,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     light_msg.payload["Value"] = byte_to_zwave_brightness(new_brightness)
     light_msg.encode()
     receive_message(light_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -78,7 +78,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     light_msg.payload["Value"] = 0
     light_msg.encode()
     receive_message(light_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -113,7 +113,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     light_msg.payload["Value"] = byte_to_zwave_brightness(new_brightness)
     light_msg.encode()
     receive_message(light_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -144,7 +144,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     light_msg.payload["Value"] = byte_to_zwave_brightness(new_brightness)
     light_msg.encode()
     receive_message(light_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -177,7 +177,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     light_rgb_msg.encode()
     receive_message(light_msg)
     receive_message(light_rgb_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -210,7 +210,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     light_rgb_msg.encode()
     receive_message(light_msg)
     receive_message(light_rgb_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -243,7 +243,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     light_rgb_msg.encode()
     receive_message(light_msg)
     receive_message(light_rgb_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -276,7 +276,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     light_rgb_msg.encode()
     receive_message(light_msg)
     receive_message(light_rgb_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -309,7 +309,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     light_rgb_msg.encode()
     receive_message(light_msg)
     receive_message(light_rgb_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -342,7 +342,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
     light_rgb_msg.encode()
     receive_message(light_msg)
     receive_message(light_rgb_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -384,7 +384,7 @@ async def test_pure_rgb_dimmer_light(
     light_pure_rgb_msg.payload["Value"] = "#ff4cff00"
     light_pure_rgb_msg.encode()
     receive_message(light_pure_rgb_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.kitchen_rgb_strip_level")
     assert state is not None
@@ -423,7 +423,7 @@ async def test_no_rgb_light.opp, light_data, light_no_rgb_msg, sent_messages):
     light_no_rgb_msg.payload["Value"] = byte_to_zwave_brightness(new_brightness)
     light_no_rgb_msg.encode()
     receive_message(light_no_rgb_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.master_bedroom_l_level")
     assert state is not None
@@ -467,7 +467,7 @@ async def test_no_ww_light(
     light_rgb_msg.encode()
     receive_message(light_msg)
     receive_message(light_rgb_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -511,7 +511,7 @@ async def test_no_cw_light(
     light_rgb_msg.encode()
     receive_message(light_msg)
     receive_message(light_rgb_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -553,7 +553,7 @@ async def test_wc_light.opp, light_wc_data, light_msg, light_rgb_msg, sent_messa
     light_rgb_msg.encode()
     receive_message(light_msg)
     receive_message(light_rgb_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
     assert state is not None
@@ -596,7 +596,7 @@ async def test_new_ozw_light.opp, light_new_ozw_data, light_msg, sent_messages):
     light_msg.payload["Value"] = 255
     light_msg.encode()
     receive_message(light_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Test turning off with new duration (newer openzwave)(new max)
     await.opp.services.async_call(
@@ -620,7 +620,7 @@ async def test_new_ozw_light.opp, light_new_ozw_data, light_msg, sent_messages):
     light_msg.payload["Value"] = 0
     light_msg.encode()
     receive_message(light_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Test turning on with new duration (newer openzwave)(factory default)
     new_transition = 8000
@@ -648,4 +648,4 @@ async def test_new_ozw_light.opp, light_new_ozw_data, light_msg, sent_messages):
     light_msg.payload["Value"] = 255
     light_msg.encode()
     receive_message(light_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()

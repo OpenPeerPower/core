@@ -40,7 +40,7 @@ async def test_user_form.opp):
             result["flow_id"],
             {"host": "1.2.3.4", "name": "friend"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "friend"
@@ -88,7 +88,7 @@ async def test_form_ssdp.opp):
             result["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Harmony Hub"
@@ -164,11 +164,11 @@ async def test_options_flow.opp, mock_hc, mock_write_config):
 
     config_entry.add_to_opp.opp)
     assert await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     result = await.opp.config_entries.options.async_init(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert await.opp.config_entries.async_unload(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"

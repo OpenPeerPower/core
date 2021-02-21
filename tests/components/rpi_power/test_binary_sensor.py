@@ -26,7 +26,7 @@ async def _async_setup_component.opp, detected):
     entry.add_to_opp.opp)
     with patch(MODULE, return_value=mocked_under_voltage):
         await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     return mocked_under_voltage
 
 
@@ -59,7 +59,7 @@ async def test_new_detected.opp, caplog):
     type(mocked_under_voltage).get = MagicMock(return_value=False)
     future = dt_util.utcnow() + timedelta(minutes=1)
     async_fire_time_changed.opp, future)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(ENTITY_ID)
     assert (
         len(

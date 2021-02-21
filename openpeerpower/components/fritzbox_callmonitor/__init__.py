@@ -37,7 +37,7 @@ async def async_setup_entry.opp, config_entry):
     )
 
     try:
-        await.opp.async_add_executor_job(fritzbox_phonebook.init_phonebook)
+        await opp.async_add_executor_job(fritzbox_phonebook.init_phonebook)
     except FritzSecurityError as ex:
         _LOGGER.error(
             "User has insufficient permissions to access AVM FRITZ!Box settings and its phonebooks: %s",

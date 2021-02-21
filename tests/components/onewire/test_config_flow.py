@@ -72,7 +72,7 @@ async def test_user_owserver.opp):
             CONF_HOST: "1.2.3.4",
             CONF_PORT: 1234,
         }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
@@ -110,7 +110,7 @@ async def test_user_owserver_duplicate.opp):
     )
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
@@ -167,7 +167,7 @@ async def test_user_sysbus.opp):
         CONF_TYPE: CONF_TYPE_SYSBUS,
         CONF_MOUNT_DIR: "/sys/bus/directory",
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
@@ -210,7 +210,7 @@ async def test_user_sysbus_duplicate.opp):
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
@@ -238,7 +238,7 @@ async def test_import_sysbus.opp):
         CONF_TYPE: CONF_TYPE_SYSBUS,
         CONF_MOUNT_DIR: DEFAULT_SYSBUS_MOUNT_DIR,
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
@@ -269,7 +269,7 @@ async def test_import_sysbus_with_mount_dir.opp):
         CONF_TYPE: CONF_TYPE_SYSBUS,
         CONF_MOUNT_DIR: DEFAULT_SYSBUS_MOUNT_DIR,
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
@@ -298,7 +298,7 @@ async def test_import_owserver.opp):
         CONF_HOST: "1.2.3.4",
         CONF_PORT: DEFAULT_OWSERVER_PORT,
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
@@ -328,7 +328,7 @@ async def test_import_owserver_with_port.opp):
         CONF_HOST: "1.2.3.4",
         CONF_PORT: 1234,
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
@@ -357,6 +357,6 @@ async def test_import_owserver_duplicate.opp):
     )
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1

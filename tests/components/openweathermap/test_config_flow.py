@@ -53,14 +53,14 @@ async def test_form.opp):
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         conf_entries = opp.config_entries.async_entries(DOMAIN)
         entry = conf_entries[0]
         assert entry.state == "loaded"
 
         await.opp.config_entries.async_unload(conf_entries[0].entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert entry.state == "not_loaded"
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -84,7 +84,7 @@ async def test_form_options.opp):
         config_entry.add_to_opp.opp)
 
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert config_entry.state == "loaded"
 
@@ -103,7 +103,7 @@ async def test_form_options.opp):
             CONF_LANGUAGE: DEFAULT_LANGUAGE,
         }
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert config_entry.state == "loaded"
 
@@ -122,7 +122,7 @@ async def test_form_options.opp):
             CONF_LANGUAGE: DEFAULT_LANGUAGE,
         }
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert config_entry.state == "loaded"
 

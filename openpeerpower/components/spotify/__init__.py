@@ -72,7 +72,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     spotify = Spotify(auth=session.token["access_token"])
 
     try:
-        current_user = await.opp.async_add_executor_job(spotify.me)
+        current_user = await opp.async_add_executor_job(spotify.me)
     except SpotifyException as err:
         raise ConfigEntryNotReady from err
 

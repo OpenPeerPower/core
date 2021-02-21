@@ -67,7 +67,7 @@ async def test_full_flow(
         "openpeerpower.components.home_connect.async_setup_entry", return_value=True
     ) as mock_setup_entry:
         result = await.opp.config_entries.flow.async_configure(result["flow_id"])
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert len(mock_setup_entry.mock_calls) == 1

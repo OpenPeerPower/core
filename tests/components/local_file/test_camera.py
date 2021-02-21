@@ -25,7 +25,7 @@ async def test_loading_file.opp,.opp_client):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -58,7 +58,7 @@ async def test_file_not_readable.opp, caplog):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert "Could not read" in caplog.text
     assert "config_test" in caplog.text
@@ -93,7 +93,7 @@ async def test_camera_content_type.opp,.opp_client):
         "camera",
         {"camera": [cam_config_jpg, cam_config_png, cam_config_svg, cam_config_noext]},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -146,7 +146,7 @@ async def test_update_file_path.opp):
             "file_path": "mock/path_2.jpg",
         }
         await async_setup_component.opp, "camera", {"camera": [camera_1, camera_2]})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # Fetch state and check motion detection attribute
         state = opp.states.get("camera.local_file")
@@ -156,7 +156,7 @@ async def test_update_file_path.opp):
         service_data = {"entity_id": "camera.local_file", "file_path": "new/path.jpg"}
 
         await.opp.services.async_call(DOMAIN, SERVICE_UPDATE_FILE_PATH, service_data)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("camera.local_file")
         assert state.attributes.get("file_path") == "new/path.jpg"

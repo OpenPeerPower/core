@@ -134,7 +134,7 @@ async def test_setup_component_test_service_start.opp):
     await ffmpeg_dev.async_added_to_opp()
 
     async_start.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert ffmpeg_dev.called_start
 
@@ -148,7 +148,7 @@ async def test_setup_component_test_service_stop.opp):
     await ffmpeg_dev.async_added_to_opp()
 
     async_stop.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert ffmpeg_dev.called_stop
 
@@ -162,7 +162,7 @@ async def test_setup_component_test_service_restart.opp):
     await ffmpeg_dev.async_added_to_opp()
 
     async_restart.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert ffmpeg_dev.called_stop
     assert ffmpeg_dev.called_start
@@ -177,7 +177,7 @@ async def test_setup_component_test_service_start_with_entity.opp):
     await ffmpeg_dev.async_added_to_opp()
 
     async_start.opp, "test.ffmpeg_device")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert ffmpeg_dev.called_start
     assert ffmpeg_dev.called_entities == ["test.ffmpeg_device"]

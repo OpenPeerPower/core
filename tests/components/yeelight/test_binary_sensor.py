@@ -18,7 +18,7 @@ async def test_nightlight.opp: OpenPeerPower):
         f"{MODULE}.config_flow.yeelight.Bulb", return_value=mocked_bulb
     ):
         await async_setup_component.opp, DOMAIN, YAML_CONFIGURATION)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # active_mode
     assert.opp.states.get(ENTITY_BINARY_SENSOR).state == "off"

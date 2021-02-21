@@ -41,7 +41,7 @@ async def rpi_fixture.opp, aioclient_mock, mock_supervisor):
         },
     )
     assert await async_setup_component.opp, "oppio", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 @pytest.fixture(name="no_rpi")
@@ -55,7 +55,7 @@ async def no_rpi_fixture.opp, aioclient_mock, mock_supervisor):
         },
     )
     assert await async_setup_component.opp, "oppio", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 @pytest.fixture(name="mock_supervisor")
@@ -92,7 +92,7 @@ async def test_onboarding_progress.opp,.opp_storage, aiohttp_client):
     mock_storage.opp_storage, {"done": ["hello"]})
 
     assert await async_setup_component.opp, "onboarding", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
 
@@ -112,7 +112,7 @@ async def test_onboarding_user_already_done.opp,.opp_storage, aiohttp_client):
 
     with patch.object(onboarding, "STEPS", ["hello", "world"]):
         assert await async_setup_component.opp, "onboarding", {})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
 
@@ -134,7 +134,7 @@ async def test_onboarding_user.opp,.opp_storage, aiohttp_client):
     """Test creating a new user."""
     assert await async_setup_component.opp, "person", {})
     assert await async_setup_component.opp, "onboarding", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
 
@@ -195,7 +195,7 @@ async def test_onboarding_user_invalid_name.opp,.opp_storage, aiohttp_client):
     mock_storage.opp_storage, {"done": []})
 
     assert await async_setup_component.opp, "onboarding", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
 
@@ -217,7 +217,7 @@ async def test_onboarding_user_race.opp,.opp_storage, aiohttp_client):
     mock_storage.opp_storage, {"done": ["hello"]})
 
     assert await async_setup_component.opp, "onboarding", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
 
@@ -252,7 +252,7 @@ async def test_onboarding_integration.opp,.opp_storage,.opp_client,.opp_admin_us
     mock_storage.opp_storage, {"done": [const.STEP_USER]})
 
     assert await async_setup_component.opp, "onboarding", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -295,7 +295,7 @@ async def test_onboarding_integration_missing_credential(
     mock_storage.opp_storage, {"done": [const.STEP_USER]})
 
     assert await async_setup_component.opp, "onboarding", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
     refresh_token.credential = None
@@ -317,7 +317,7 @@ async def test_onboarding_integration_invalid_redirect_uri(
     mock_storage.opp_storage, {"done": [const.STEP_USER]})
 
     assert await async_setup_component.opp, "onboarding", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -341,7 +341,7 @@ async def test_onboarding_integration_requires_auth.opp,.opp_storage, aiohttp_cl
     mock_storage.opp_storage, {"done": [const.STEP_USER]})
 
     assert await async_setup_component.opp, "onboarding", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
 
@@ -357,7 +357,7 @@ async def test_onboarding_core_sets_up_met.opp,.opp_storage,.opp_client):
     mock_storage.opp_storage, {"done": [const.STEP_USER]})
 
     assert await async_setup_component.opp, "onboarding", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -365,7 +365,7 @@ async def test_onboarding_core_sets_up_met.opp,.opp_storage,.opp_client):
 
     assert resp.status == 200
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids("weather")) == 1
 
 
@@ -377,7 +377,7 @@ async def test_onboarding_core_sets_up_rpi_power(
     await async_setup_component.opp, "persistent_notification", {})
 
     assert await async_setup_component.opp, "onboarding", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -388,7 +388,7 @@ async def test_onboarding_core_sets_up_rpi_power(
 
         assert resp.status == 200
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     rpi_power_state = opp.states.get("binary_sensor.rpi_power_status")
     assert rpi_power_state
@@ -402,7 +402,7 @@ async def test_onboarding_core_no_rpi_power(
     await async_setup_component.opp, "persistent_notification", {})
 
     assert await async_setup_component.opp, "onboarding", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -413,7 +413,7 @@ async def test_onboarding_core_no_rpi_power(
 
         assert resp.status == 200
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     rpi_power_state = opp.states.get("binary_sensor.rpi_power_status")
     assert not rpi_power_state

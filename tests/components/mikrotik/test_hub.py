@@ -43,7 +43,7 @@ async def setup_mikrotik_entry.opp, **kwargs):
         mikrotik.hub.MikrotikData, "command", new=mock_command
     ):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         return.opp.data[mikrotik.DOMAIN][config_entry.entry_id]
 
 

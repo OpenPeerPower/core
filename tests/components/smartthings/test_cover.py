@@ -159,7 +159,7 @@ async def test_update_to_open_from_signal.opp, device_factory):
     # Act
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("cover.garage")
     assert state is not None
     assert state.state == STATE_OPEN
@@ -177,7 +177,7 @@ async def test_update_to_closed_from_signal.opp, device_factory):
     # Act
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("cover.garage")
     assert state is not None
     assert state.state == STATE_CLOSED

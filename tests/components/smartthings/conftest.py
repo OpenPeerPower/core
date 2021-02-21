@@ -70,7 +70,7 @@ async def setup_platform.opp, platform: str, *, devices=None, scenes=None):
 
    .opp.data[DOMAIN] = {DATA_BROKERS: {config_entry.entry_id: broker}}
     await.opp.config_entries.async_forward_entry_setup(config_entry, platform)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     return config_entry
 
 

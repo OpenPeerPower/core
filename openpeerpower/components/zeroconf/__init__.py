@@ -91,7 +91,7 @@ async def async_get_instance.opp):
 async def _async_get_instance.opp, **zcargs):
     logging.getLogger("zeroconf").setLevel(logging.NOTSET)
 
-    zeroconf = await.opp.async_add_executor_job(partial(HaZeroconf, **zcargs))
+    zeroconf = await opp.async_add_executor_job(partial(HaZeroconf, **zcargs))
 
     install_multiple_zeroconf_catcher(zeroconf)
 
@@ -151,7 +151,7 @@ async def async_setup.opp, config):
         Wait till started or otherwise HTTP is not up and running.
         """
         uuid = await.opp.helpers.instance_id.async_get()
-        await.opp.async_add_executor_job(
+        await opp.async_add_executor_job(
             _register_opp_zc_service,.opp, zeroconf, uuid
         )
 

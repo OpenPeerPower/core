@@ -77,7 +77,7 @@ async def test_in_period_on_start.opp):
         return_value=test_time,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.evening")
     assert state.state == STATE_ON
@@ -96,7 +96,7 @@ async def test_midnight_turnover_before_midnight_inside_period.opp):
         return_value=test_time,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.night")
     assert state.state == STATE_ON
@@ -117,12 +117,12 @@ async def test_midnight_turnover_after_midnight_inside_period.opp):
         return_value=test_time,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("binary_sensor.night")
         assert state.state == STATE_OFF
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
@@ -133,7 +133,7 @@ async def test_midnight_turnover_after_midnight_inside_period.opp):
             op.EVENT_TIME_CHANGED, {op.ATTR_NOW: test_time + timedelta(hours=1)}
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get("binary_sensor.night")
         assert state.state == STATE_ON
 
@@ -153,7 +153,7 @@ async def test_midnight_turnover_before_midnight_outside_period.opp):
         return_value=test_time,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.night")
     assert state.state == STATE_OFF
@@ -175,7 +175,7 @@ async def test_midnight_turnover_after_midnight_outside_period.opp):
         return_value=test_time,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.night")
     assert state.state == STATE_OFF
@@ -189,7 +189,7 @@ async def test_midnight_turnover_after_midnight_outside_period.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: switchover_time})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get("binary_sensor.night")
         assert state.state == STATE_ON
 
@@ -203,7 +203,7 @@ async def test_midnight_turnover_after_midnight_outside_period.opp):
             {op.ATTR_NOW: switchover_time + timedelta(minutes=1, seconds=1)},
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get("binary_sensor.night")
         assert state.state == STATE_OFF
 
@@ -236,9 +236,9 @@ async def test_from_sunrise_to_sunset.opp):
         return_value=testtime,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
 
@@ -249,7 +249,7 @@ async def test_from_sunrise_to_sunset.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
@@ -261,12 +261,12 @@ async def test_from_sunrise_to_sunset.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset + timedelta(seconds=-1)
     with patch(
@@ -275,12 +275,12 @@ async def test_from_sunrise_to_sunset.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset
     with patch(
@@ -289,12 +289,12 @@ async def test_from_sunrise_to_sunset.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset + timedelta(seconds=1)
     with patch(
@@ -303,7 +303,7 @@ async def test_from_sunrise_to_sunset.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
@@ -334,9 +334,9 @@ async def test_from_sunset_to_sunrise.opp):
         return_value=testtime,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
 
@@ -347,7 +347,7 @@ async def test_from_sunset_to_sunrise.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
@@ -359,7 +359,7 @@ async def test_from_sunset_to_sunrise.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
@@ -371,7 +371,7 @@ async def test_from_sunset_to_sunrise.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
@@ -383,10 +383,10 @@ async def test_from_sunset_to_sunrise.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         # assert state == "dupa"
         assert state.state == STATE_OFF
 
@@ -397,7 +397,7 @@ async def test_from_sunset_to_sunrise.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
@@ -432,7 +432,7 @@ async def test_offset.opp):
         return_value=testtime,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state.state == STATE_OFF
@@ -443,7 +443,7 @@ async def test_offset.opp):
         return_value=testtime,
     ):
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
@@ -454,7 +454,7 @@ async def test_offset.opp):
         return_value=testtime,
     ):
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
@@ -465,7 +465,7 @@ async def test_offset.opp):
         return_value=testtime,
     ):
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
@@ -476,7 +476,7 @@ async def test_offset.opp):
         return_value=testtime,
     ):
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
@@ -506,7 +506,7 @@ async def test_offset_overnight.opp):
         return_value=testtime,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state.state == STATE_OFF
@@ -517,7 +517,7 @@ async def test_offset_overnight.opp):
         return_value=testtime,
     ):
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
@@ -554,9 +554,9 @@ async def test_norwegian_case_winter.opp):
         return_value=testtime,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
 
@@ -567,7 +567,7 @@ async def test_norwegian_case_winter.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
@@ -579,7 +579,7 @@ async def test_norwegian_case_winter.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
@@ -591,12 +591,12 @@ async def test_norwegian_case_winter.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset + timedelta(seconds=-1)
     with patch(
@@ -605,12 +605,12 @@ async def test_norwegian_case_winter.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset
     with patch(
@@ -619,12 +619,12 @@ async def test_norwegian_case_winter.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset + timedelta(seconds=1)
     with patch(
@@ -633,7 +633,7 @@ async def test_norwegian_case_winter.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
@@ -671,9 +671,9 @@ async def test_norwegian_case_summer.opp):
         return_value=testtime,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
 
@@ -684,7 +684,7 @@ async def test_norwegian_case_summer.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
@@ -696,7 +696,7 @@ async def test_norwegian_case_summer.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
@@ -708,12 +708,12 @@ async def test_norwegian_case_summer.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset + timedelta(seconds=-1)
     with patch(
@@ -722,12 +722,12 @@ async def test_norwegian_case_summer.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset
     with patch(
@@ -736,12 +736,12 @@ async def test_norwegian_case_summer.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset + timedelta(seconds=1)
     with patch(
@@ -750,7 +750,7 @@ async def test_norwegian_case_summer.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
@@ -788,9 +788,9 @@ async def test_sun_offset.opp):
         return_value=testtime,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
 
@@ -801,7 +801,7 @@ async def test_sun_offset.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
@@ -813,12 +813,12 @@ async def test_sun_offset.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset + timedelta(seconds=-1)
     with patch(
@@ -827,12 +827,12 @@ async def test_sun_offset.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset
     with patch(
@@ -841,12 +841,12 @@ async def test_sun_offset.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     testtime = sunset + timedelta(seconds=1)
     with patch(
@@ -855,7 +855,7 @@ async def test_sun_offset.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_OFF
@@ -872,7 +872,7 @@ async def test_sun_offset.opp):
     ):
 
        .opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: testtime})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == STATE_ON
@@ -899,9 +899,9 @@ async def test_dst.opp):
         return_value=testtime,
     ):
         await async_setup_component.opp, "binary_sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get(entity_id)
         state.attributes["after"] == "2019-03-31T03:30:00+02:00"
         state.attributes["before"] == "2019-03-31T03:40:00+02:00"

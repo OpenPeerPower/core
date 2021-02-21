@@ -114,7 +114,7 @@ async def test_services.opp, mock_light_profiles):
     assert await async_setup_component(
        .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     ent1, ent2, ent3 = platform.ENTITIES
 
@@ -513,7 +513,7 @@ async def test_light_profiles(
     assert await async_setup_component(
        .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     ent1, _, _ = platform.ENTITIES
 
@@ -543,7 +543,7 @@ async def test_default_profiles_group.opp, mock_light_profiles):
     assert await async_setup_component(
        .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     profile = light.Profile("group.all_lights.default", 0.4, 0.6, 99, 2)
     mock_light_profiles[profile.name] = profile
@@ -620,7 +620,7 @@ async def test_default_profiles_light(
     assert await async_setup_component(
        .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     profile = light.Profile("group.all_lights.default", 0.3, 0.5, 200, 0)
     mock_light_profiles[profile.name] = profile
@@ -662,7 +662,7 @@ async def test_light_context.opp,.opp_admin_user):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.ceiling")
     assert state is not None
@@ -686,7 +686,7 @@ async def test_light_turn_on_auth.opp,.opp_admin_user):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.ceiling")
     assert state is not None
@@ -711,7 +711,7 @@ async def test_light_brightness_step.opp):
     entity.supported_features = light.SUPPORT_BRIGHTNESS
     entity.brightness = 100
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)
     assert state is not None
@@ -746,7 +746,7 @@ async def test_light_brightness_pct_conversion.opp):
     entity.supported_features = light.SUPPORT_BRIGHTNESS
     entity.brightness = 100
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)
     assert state is not None
@@ -855,7 +855,7 @@ invalid_no_brightness_no_color_no_transition,,,
     profiles = orig_Profiles.opp)
     with patch("builtins.open", mock_open(read_data=csv_file)):
         await profiles.async_initialize()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert profiles.data["no_color"].hs_color is None
     assert profiles.data["no_color"].brightness == 100

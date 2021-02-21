@@ -52,7 +52,7 @@ async def test_turn_on_switch.opp: core.OpenPeerPower):
             {ATTR_ENTITY_ID: "switch.name_1"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_turn_on.assert_called_once_with("test-device-id", Action.turn_on())
 
@@ -70,7 +70,7 @@ async def test_turn_off_switch.opp: core.OpenPeerPower):
             {ATTR_ENTITY_ID: "switch.name_1"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_turn_off.assert_called_once_with("test-device-id", Action.turn_off())
 
@@ -81,7 +81,7 @@ async def test_update_reports_switch_is_on.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"power": 1}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("switch.name_1").state == "on"
 
@@ -92,7 +92,7 @@ async def test_update_reports_switch_is_off.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"power": 0}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("switch.name_1").state == "off"
 

@@ -99,7 +99,7 @@ async def test_user_valid.opp):
             VALID_CONFIG,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == CAMERA_NAME
@@ -132,7 +132,7 @@ async def test_user_invalid_auth.opp):
             invalid_user,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {"base": "invalid_auth"}
@@ -161,7 +161,7 @@ async def test_user_cannot_connect.opp):
             invalid_host,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {"base": "cannot_connect"}
@@ -192,7 +192,7 @@ async def test_user_invalid_response.opp):
             invalid_response,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {"base": "invalid_response"}
@@ -224,7 +224,7 @@ async def test_user_already_configured.opp):
             VALID_CONFIG,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "already_configured"
@@ -250,7 +250,7 @@ async def test_user_unknown_exception.opp):
             VALID_CONFIG,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"] == {"base": "unknown"}
@@ -276,7 +276,7 @@ async def test_import_user_valid.opp):
             data=VALID_CONFIG,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == CAMERA_NAME
@@ -310,7 +310,7 @@ async def test_import_user_valid_with_name.opp):
             data=with_name,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == name
@@ -338,7 +338,7 @@ async def test_import_invalid_auth.opp):
             data=invalid_user,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "invalid_auth"
@@ -362,7 +362,7 @@ async def test_import_cannot_connect.opp):
             data=invalid_host,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "cannot_connect"
@@ -388,7 +388,7 @@ async def test_import_invalid_response.opp):
             data=invalid_response,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "invalid_response"
@@ -415,7 +415,7 @@ async def test_import_already_configured.opp):
             data=VALID_CONFIG,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "already_configured"
@@ -436,7 +436,7 @@ async def test_import_unknown_exception.opp):
             data=VALID_CONFIG,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "unknown"

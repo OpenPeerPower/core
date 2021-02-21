@@ -69,7 +69,7 @@ async def test_setup_in_bridge_mode.opp):
             result3["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result4["title"][:11] == "OPP Bridge"
@@ -128,7 +128,7 @@ async def test_setup_in_accessory_mode.opp):
             result3["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result4["title"][:14] == "OPP Accessory"
@@ -157,7 +157,7 @@ async def test_import.opp):
         domain=DOMAIN, data={CONF_NAME: "mock_name", CONF_PORT: 12345}
     )
     entry.add_to_opp.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.flow.async_init(
         DOMAIN,
@@ -178,7 +178,7 @@ async def test_import.opp):
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_NAME: "othername", CONF_PORT: 56789},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "othername:56789"
@@ -198,7 +198,7 @@ async def test_options_flow_exclude_mode_advanced(auto_start,.opp):
     config_entry.add_to_opp.opp)
 
    .opp.states.async_set("climate.old", "off")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": True}
@@ -248,7 +248,7 @@ async def test_options_flow_exclude_mode_basic.opp):
     config_entry.add_to_opp.opp)
 
    .opp.states.async_set("climate.old", "off")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
@@ -291,7 +291,7 @@ async def test_options_flow_include_mode_basic.opp):
    .opp.states.async_set("climate.old", "off")
    .opp.states.async_set("climate.new", "off")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
@@ -336,7 +336,7 @@ async def test_options_flow_exclude_mode_with_cameras.opp):
    .opp.states.async_set("camera.transcode_h264", "off")
    .opp.states.async_set("camera.excluded", "off")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
@@ -439,7 +439,7 @@ async def test_options_flow_include_mode_with_cameras.opp):
    .opp.states.async_set("camera.transcode_h264", "off")
    .opp.states.async_set("camera.excluded", "off")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
@@ -579,7 +579,7 @@ async def test_options_flow_blocked_when_from_yaml.opp):
     )
     config_entry.add_to_opp.opp)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
@@ -603,7 +603,7 @@ async def test_options_flow_include_mode_basic_accessory.opp):
    .opp.states.async_set("media_player.tv", "off")
    .opp.states.async_set("media_player.sonos", "off")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
@@ -686,7 +686,7 @@ async def test_converting_bridge_to_accessory_mode.opp, hk_driver):
             result3["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result4["title"][:11] == "OPP Bridge"
@@ -709,7 +709,7 @@ async def test_converting_bridge_to_accessory_mode.opp, hk_driver):
    .opp.states.async_set("camera.tv", "off")
    .opp.states.async_set("camera.sonos", "off")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}

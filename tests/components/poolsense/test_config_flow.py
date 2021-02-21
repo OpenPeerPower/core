@@ -47,7 +47,7 @@ async def test_valid_credentials.opp):
             context={"source": SOURCE_USER},
             data={CONF_EMAIL: "test-email", CONF_PASSWORD: "test-password"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == "test-email"

@@ -33,7 +33,7 @@ async def test_sensors(
     test_time = datetime(2019, 11, 11, 9, 10, 32, tzinfo=dt_util.UTC)
     with patch("openpeerpower.components.ipp.sensor.utcnow", return_value=test_time):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("sensor.epson_xp_6000_series")
     assert state

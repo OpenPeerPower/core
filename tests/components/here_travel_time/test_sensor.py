@@ -175,10 +175,10 @@ async def test_car.opp, requests_mock_car_disabled_response):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     assert sensor.state == "30"
@@ -237,10 +237,10 @@ async def test_traffic_mode_enabled.opp, requests_mock_credentials_check):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     # Test traffic mode enabled
@@ -264,10 +264,10 @@ async def test_imperial.opp, requests_mock_car_disabled_response):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     assert sensor.attributes.get(ATTR_DISTANCE) == 14.852635608048994
@@ -296,10 +296,10 @@ async def test_route_mode_shortest.opp, requests_mock_credentials_check):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     assert sensor.attributes.get(ATTR_DISTANCE) == 18.388
@@ -328,10 +328,10 @@ async def test_route_mode_fastest.opp, requests_mock_credentials_check):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     assert sensor.attributes.get(ATTR_DISTANCE) == 23.381
@@ -352,10 +352,10 @@ async def test_truck.opp, requests_mock_truck_response):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     _assert_truck_sensor(sensor)
@@ -384,10 +384,10 @@ async def test_public_transport.opp, requests_mock_credentials_check):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     assert sensor.state == "89"
@@ -435,10 +435,10 @@ async def test_public_transport_time_table.opp, requests_mock_credentials_check)
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     assert sensor.state == "80"
@@ -486,10 +486,10 @@ async def test_pedestrian.opp, requests_mock_credentials_check):
     }
 
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     assert sensor.state == "211"
@@ -538,10 +538,10 @@ async def test_bicycle.opp, requests_mock_credentials_check):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     assert sensor.state == "55"
@@ -602,17 +602,17 @@ async def test_location_zone.opp, requests_mock_truck_response, legacy_patchable
         }
         assert await async_setup_component.opp, "zone", zone_config)
         assert await async_setup_component.opp, DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
         async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
@@ -644,17 +644,17 @@ async def test_location_sensor(
             }
         }
         assert await async_setup_component.opp, DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
         async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
@@ -695,17 +695,17 @@ async def test_location_person(
             }
         }
         assert await async_setup_component.opp, DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
         async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
@@ -746,17 +746,17 @@ async def test_location_device_tracker(
             }
         }
         assert await async_setup_component.opp, DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
         async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
@@ -781,10 +781,10 @@ async def test_location_device_tracker_added_after_update(
             }
         }
         assert await async_setup_component.opp, DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
         assert len(caplog.records) == 2
@@ -811,7 +811,7 @@ async def test_location_device_tracker_added_after_update(
 
         # Test that update works more than once
         async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
@@ -850,10 +850,10 @@ async def test_location_device_tracker_in_zone(
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     _assert_truck_sensor(sensor)
@@ -884,10 +884,10 @@ async def test_route_not_found.opp, requests_mock_credentials_check, caplog):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(caplog.records) == 1
     assert NO_ROUTE_ERROR_MESSAGE in caplog.text
@@ -908,7 +908,7 @@ async def test_pattern_origin.opp, caplog):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(caplog.records) == 2
     assert "invalid latitude" in caplog.text
 
@@ -928,7 +928,7 @@ async def test_pattern_destination.opp, caplog):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(caplog.records) == 2
     assert "invalid latitude" in caplog.text
 
@@ -960,7 +960,7 @@ async def test_invalid_credentials.opp, requests_mock, caplog):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(caplog.records) == 1
     assert "Invalid credentials" in caplog.text
 
@@ -990,10 +990,10 @@ async def test_attribution.opp, requests_mock_credentials_check):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     assert (
@@ -1019,10 +1019,10 @@ async def test_pattern_entity_state.opp, requests_mock_truck_response, caplog):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(caplog.records) == 1
     assert "is not a valid set of coordinates" in caplog.text
@@ -1046,7 +1046,7 @@ async def test_pattern_entity_state_with_space.opp, requests_mock_truck_response
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_delayed_update.opp, requests_mock_truck_response, caplog):
@@ -1073,14 +1073,14 @@ async def test_delayed_update.opp, requests_mock_truck_response, caplog):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert await async_setup_component.opp, "sensor", sensor_config)
    .opp.states.async_set(
         "sensor.origin", ",".join([TRUCK_ORIGIN_LATITUDE, TRUCK_ORIGIN_LONGITUDE])
     )
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "Unable to find entity" not in caplog.text
 
@@ -1114,10 +1114,10 @@ async def test_arrival.opp, requests_mock_credentials_check):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     assert sensor.state == "80"
@@ -1152,10 +1152,10 @@ async def test_departure.opp, requests_mock_credentials_check):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
     assert sensor.state == "80"
@@ -1179,7 +1179,7 @@ async def test_arrival_only_allowed_for_timetable.opp, caplog):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(caplog.records) == 2
     assert "[arrival] is an invalid option" in caplog.text
 
@@ -1204,6 +1204,6 @@ async def test_exclusive_arrival_and_departure.opp, caplog):
         }
     }
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(caplog.records) == 2
     assert "two or more values in the same group of exclusion" in caplog.text

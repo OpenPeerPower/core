@@ -33,7 +33,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             entities += entity_list
         return entities
 
-    async_add_entities(await.opp.async_add_executor_job(get_entities), True)
+    async_add_entities(await opp.async_add_executor_job(get_entities), True)
 
 
 class HomeConnectProgramSwitch(HomeConnectEntity, SwitchEntity):

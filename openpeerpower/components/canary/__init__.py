@@ -89,7 +89,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
        .opp.config_entries.async_update_entry(entry, options=options)
 
     try:
-        canary_api = await.opp.async_add_executor_job(_get_canary_api_instance, entry)
+        canary_api = await opp.async_add_executor_job(_get_canary_api_instance, entry)
     except (ConnectTimeout, HTTPError) as error:
         _LOGGER.error("Unable to connect to Canary service: %s", str(error))
         raise ConfigEntryNotReady from error

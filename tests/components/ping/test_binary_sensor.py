@@ -22,7 +22,7 @@ async def test_reload.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 
@@ -40,7 +40,7 @@ async def test_reload.opp):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 

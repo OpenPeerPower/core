@@ -42,8 +42,8 @@ async def validate_input.opp: core.OpenPeerPower, data):
     """
     device = DoorBird(data[CONF_HOST], data[CONF_USERNAME], data[CONF_PASSWORD])
     try:
-        status = await.opp.async_add_executor_job(device.ready)
-        info = await.opp.async_add_executor_job(device.info)
+        status = await opp.async_add_executor_job(device.ready)
+        info = await opp.async_add_executor_job(device.info)
     except urllib.error.HTTPError as err:
         if err.code == HTTP_UNAUTHORIZED:
             raise InvalidAuth from err

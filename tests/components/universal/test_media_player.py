@@ -861,14 +861,14 @@ async def test_state_template.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 2
     await.opp.async_start()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_ON
    .opp.states.async_set("sensor.test_sensor", STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_OFF
 
 
@@ -887,7 +887,7 @@ async def test_device_class.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").attributes["device_class"] == "tv"
 
 
@@ -906,14 +906,14 @@ async def test_invalid_state_template.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 2
     await.opp.async_start()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_UNKNOWN
    .opp.states.async_set("sensor.test_sensor", "off")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_UNKNOWN
 
 
@@ -939,11 +939,11 @@ async def test_master_state_with_template.opp):
         },
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 3
     await.opp.async_start()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.states.get("media_player.tv").state == STATE_ON
 
     events = []
@@ -954,7 +954,7 @@ async def test_master_state_with_template.opp):
 
     context = Context()
    .opp.states.async_set("input_boolean.test", STATE_ON, context=context)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.states.get("media_player.tv").state == STATE_OFF
     assert events[0].context == context
@@ -982,15 +982,15 @@ async def test_reload.opp):
         },
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 3
     await.opp.async_start()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.states.get("media_player.tv").state == STATE_ON
 
    .opp.states.async_set("input_boolean.test", STATE_ON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.states.get("media_player.tv").state == STATE_OFF
 
@@ -1013,7 +1013,7 @@ async def test_reload.opp):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 5
 

@@ -45,7 +45,7 @@ async def test_form_user.opp):
                 CONF_SYSTEM_ID: "456",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "MyLink 1.1.1.1"
@@ -90,7 +90,7 @@ async def test_form_user_already_configured.opp):
                 CONF_SYSTEM_ID: "456",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "abort"
     assert len(mock_setup.mock_calls) == 0
@@ -119,7 +119,7 @@ async def test_form_import.opp):
                 CONF_SYSTEM_ID: 456,
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "MyLink 1.1.1.1"
@@ -156,7 +156,7 @@ async def test_form_import_with_entity_config.opp):
                 CONF_ENTITY_CONFIG: {"cover.xyz": {CONF_REVERSE: False}},
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "MyLink 1.1.1.1"
@@ -199,7 +199,7 @@ async def test_form_import_already_exists.opp):
                 CONF_SYSTEM_ID: "456",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "abort"
     assert len(mock_setup.mock_calls) == 0
@@ -294,7 +294,7 @@ async def test_options_not_loaded.opp):
         return_value={"result": []},
     ):
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
@@ -322,9 +322,9 @@ async def test_options_with_targets.opp, reversed):
         },
     ):
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
@@ -351,7 +351,7 @@ async def test_options_with_targets.opp, reversed):
             CONF_REVERSED_TARGET_IDS: {"a": reversed},
         }
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 @pytest.mark.parametrize("reversed", [True, False])
@@ -385,7 +385,7 @@ async def test_form_import_with_entity_config_modify_options.opp, reversed):
         assert await.opp.config_entries.async_setup(
             mock_imported_config_entry.entry_id
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert mock_imported_config_entry.options == {
             "reversed_target_ids": {"1.2": True}
@@ -394,7 +394,7 @@ async def test_form_import_with_entity_config_modify_options.opp, reversed):
         result = await.opp.config_entries.options.async_init(
             mock_imported_config_entry.entry_id
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
@@ -422,7 +422,7 @@ async def test_form_import_with_entity_config_modify_options.opp, reversed):
             CONF_REVERSED_TARGET_IDS: {"1.2": reversed},
         }
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_form_user_already_configured_from_dhcp.opp):
@@ -454,7 +454,7 @@ async def test_form_user_already_configured_from_dhcp.opp):
             },
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "abort"
     assert len(mock_setup.mock_calls) == 0
@@ -512,7 +512,7 @@ async def test_dhcp_discovery.opp):
                 CONF_SYSTEM_ID: "456",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "MyLink 1.1.1.1"

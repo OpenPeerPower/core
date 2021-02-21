@@ -82,7 +82,7 @@ async def async_setup_entities.opp, config, entity_ids):
     config_entry = mock_config()
     config_entry.add_to_opp.opp)
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     return [entity_registry.async_get(entity_id) for entity_id in entity_ids]

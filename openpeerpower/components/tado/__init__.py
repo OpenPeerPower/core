@@ -59,7 +59,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     tadoconnector = TadoConnector.opp, username, password, fallback)
 
     try:
-        await.opp.async_add_executor_job(tadoconnector.setup)
+        await opp.async_add_executor_job(tadoconnector.setup)
     except KeyError:
         _LOGGER.error("Failed to login to tado")
         return False
@@ -75,7 +75,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         raise ConfigEntryNotReady from ex
 
     # Do first update
-    await.opp.async_add_executor_job(tadoconnector.update)
+    await opp.async_add_executor_job(tadoconnector.update)
 
     # Poll for updates in the background
     update_track = async_track_time_interval(

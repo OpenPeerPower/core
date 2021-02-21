@@ -34,7 +34,7 @@ async def test_doorsense.opp):
     assert await.opp.services.async_call(
         LOCK_DOMAIN, SERVICE_UNLOCK, data, blocking=True
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     binary_sensor_online_with_doorsense_name = opp.states.get(
         "binary_sensor.online_with_doorsense_name_open"
@@ -44,7 +44,7 @@ async def test_doorsense.opp):
     assert await.opp.services.async_call(
         LOCK_DOMAIN, SERVICE_LOCK, data, blocking=True
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     binary_sensor_online_with_doorsense_name = opp.states.get(
         "binary_sensor.online_with_doorsense_name_open"

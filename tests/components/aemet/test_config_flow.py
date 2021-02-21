@@ -45,7 +45,7 @@ async def test_form.opp):
             result["flow_id"], CONFIG
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         conf_entries = opp.config_entries.async_entries(DOMAIN)
         entry = conf_entries[0]

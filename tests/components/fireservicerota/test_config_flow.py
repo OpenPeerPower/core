@@ -91,7 +91,7 @@ async def test_step_user.opp):
             DOMAIN, context={"source": "user"}, data=MOCK_CONF
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == MOCK_CONF[CONF_USERNAME]

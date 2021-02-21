@@ -32,7 +32,7 @@ async def test_form.opp):
                 "password": "test-password",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Name of the device"

@@ -228,7 +228,7 @@ async def _compute_state.opp, config):
     entity.opp = opp
     entity.schedule_update_op.state()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     return.opp.states.get("test.test")
 

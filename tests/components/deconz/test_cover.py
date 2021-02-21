@@ -105,7 +105,7 @@ async def test_cover.opp, aioclient_mock):
         "state": {"on": True},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("cover.level_controllable_cover").state == STATE_CLOSED
 
@@ -208,7 +208,7 @@ async def test_cover.opp, aioclient_mock):
         "state": {"on": True},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     deconz_old_brightness_cover = opp.states.get("cover.deconz_old_brightness_cover")
     assert deconz_old_brightness_cover.state == STATE_CLOSED
@@ -222,7 +222,7 @@ async def test_cover.opp, aioclient_mock):
         assert state.state == STATE_UNAVAILABLE
 
     await.opp.config_entries.async_remove(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 

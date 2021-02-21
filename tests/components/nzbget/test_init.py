@@ -29,7 +29,7 @@ async def test_import_from_yaml.opp) -> None:
     """Test import from YAML."""
     with _patch_version(), _patch_status(), _patch_history(), _patch_async_setup_entry():
         assert await async_setup_component.opp, DOMAIN, {DOMAIN: YAML_CONFIG})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
@@ -47,7 +47,7 @@ async def test_unload_entry.opp, nzbget_api):
     assert entry.state == ENTRY_STATE_LOADED
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert not.opp.data.get(DOMAIN)

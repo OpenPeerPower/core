@@ -171,5 +171,5 @@ async def test_async_update_with_timeout_and_recovery.opp, wemo_entity, pywemo_d
 
     # Check that the entity recovers and is available after the update succeeds.
     event.set()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF

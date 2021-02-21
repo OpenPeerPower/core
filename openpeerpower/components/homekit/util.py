@@ -445,7 +445,7 @@ async def async_find_next_available_port.opp: OpenPeerPower, start_port: int) ->
         if CONF_PORT in entry.data:
             exclude_ports.add(entry.data[CONF_PORT])
 
-    return await.opp.async_add_executor_job(
+    return await opp.async_add_executor_job(
         _find_next_available_port, start_port, exclude_ports
     )
 

@@ -169,7 +169,7 @@ async def test_turn_on_off_toggle.opp, toggle):
         )
     else:
         await.opp.services.async_call(DOMAIN, split_entity_id(ENTITY_ID)[1])
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not script.is_on.opp, ENTITY_ID)
     assert was_on
@@ -237,7 +237,7 @@ async def test_reload_service.opp, running):
         return_value={"script": {object_id: {"sequence": [{"delay": {"seconds": 5}}]}}},
     ):
         await.opp.services.async_call(DOMAIN, SERVICE_RELOAD, blocking=True)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     if running != "same":
         assert.opp.states.get(ENTITY_ID) is None
@@ -322,7 +322,7 @@ async def test_shared_context.opp):
     await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}, context=context
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert event_mock.call_count == 1
     assert run_mock.call_count == 1
@@ -612,7 +612,7 @@ async def test_concurrent_script.opp, concurrently):
 
         assert "script2b" == service_values[-1]
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not script.is_on.opp, "script.script1")
     assert not script.is_on.opp, "script.script2")

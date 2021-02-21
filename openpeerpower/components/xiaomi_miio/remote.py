@@ -73,7 +73,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     # Check that we can communicate with device.
     try:
-        device_info = await.opp.async_add_executor_job(device.info)
+        device_info = await opp.async_add_executor_job(device.info)
         model = device_info.model
         unique_id = f"{model}-{device_info.mac_address}"
         _LOGGER.info(
@@ -103,11 +103,11 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     async def async_service_led_off_op.dler(entity, service):
         """Handle set_led_off command."""
-        await.opp.async_add_executor_job(entity.device.set_indicator_led, False)
+        await opp.async_add_executor_job(entity.device.set_indicator_led, False)
 
     async def async_service_led_on_op.dler(entity, service):
         """Handle set_led_on command."""
-        await.opp.async_add_executor_job(entity.device.set_indicator_led, True)
+        await opp.async_add_executor_job(entity.device.set_indicator_led, True)
 
     async def async_service_learn_op.dler(entity, service):
         """Handle a learn command."""
@@ -115,14 +115,14 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
         slot = service.data.get(CONF_SLOT, entity.slot)
 
-        await.opp.async_add_executor_job(device.learn, slot)
+        await opp.async_add_executor_job(device.learn, slot)
 
         timeout = service.data.get(CONF_TIMEOUT, entity.timeout)
 
         _LOGGER.info("Press the key you want Open Peer Power to learn")
         start_time = utcnow()
         while (utcnow() - start_time) < timedelta(seconds=timeout):
-            message = await.opp.async_add_executor_job(device.read, slot)
+            message = await opp.async_add_executor_job(device.read, slot)
             _LOGGER.debug("Message received from device: '%s'", message)
 
             if "code" in message and message["code"]:
@@ -134,7 +134,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 return
 
             if "error" in message and message["error"]["message"] == "learn timeout":
-                await.opp.async_add_executor_job(device.learn, slot)
+                await opp.async_add_executor_job(device.learn, slot)
 
             await asyncio.sleep(1)
 

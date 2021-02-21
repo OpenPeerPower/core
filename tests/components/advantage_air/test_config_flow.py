@@ -36,7 +36,7 @@ async def test_form.opp, aioclient_mock):
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "testname"
     assert result2["data"] == USER_INPUT
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup_entry.mock_calls) == 1
 
     # Test Duplicate Config Flow

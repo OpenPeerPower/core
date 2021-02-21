@@ -30,7 +30,7 @@ async def test_process_integration_platforms.opp):
     assert processed[0][1] == loaded_platform
 
    .opp.bus.async_fire(EVENT_COMPONENT_LOADED, {ATTR_COMPONENT: "event"})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(processed) == 2
     assert processed[1][0] == "event"

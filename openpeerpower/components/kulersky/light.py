@@ -61,7 +61,7 @@ async def async_setup_entry(
             return
 
         async with.opp.data[DOMAIN]["discovery"]:
-            bluetooth_devices = await.opp.async_add_executor_job(
+            bluetooth_devices = await opp.async_add_executor_job(
                 pykulersky.discover_bluetooth_devices
             )
 
@@ -80,7 +80,7 @@ async def async_setup_entry(
                     # by another device. If the vendor's app is connected to
                     # the light when Open Peer Power tries to connect, this
                     # connection will fail.
-                    await.opp.async_add_executor_job(check_light, light)
+                    await opp.async_add_executor_job(check_light, light)
                 except pykulersky.PykulerskyException:
                     continue
                 # The light has successfully connected

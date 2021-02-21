@@ -287,7 +287,7 @@ async def async_test_home_assistant(loop, load_registries=True):
             entity_registry.async_load.opp),
             area_registry.async_load.opp),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
    .opp.state = op.CoreState.running
 

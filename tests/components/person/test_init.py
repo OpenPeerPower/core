@@ -151,13 +151,13 @@ async def test_setup_tracker.opp,.opp_admin_user):
     assert state.attributes.get(ATTR_USER_ID) == user_id
 
    .opp.states.async_set(DEVICE_TRACKER, "home")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
     assert state.state == "home"
@@ -172,7 +172,7 @@ async def test_setup_tracker.opp,.opp_admin_user):
         "not_home",
         {ATTR_LATITUDE: 10.123456, ATTR_LONGITUDE: 11.123456, ATTR_GPS_ACCURACY: 10},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
     assert state.state == "not_home"
@@ -207,11 +207,11 @@ async def test_setup_two_trackers.opp,.opp_admin_user):
     assert state.attributes.get(ATTR_USER_ID) == user_id
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.states.async_set(
         DEVICE_TRACKER, "home", {ATTR_SOURCE_TYPE: SOURCE_TYPE_ROUTER}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
     assert state.state == "home"
@@ -232,11 +232,11 @@ async def test_setup_two_trackers.opp,.opp_admin_user):
             ATTR_SOURCE_TYPE: SOURCE_TYPE_GPS,
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.states.async_set(
         DEVICE_TRACKER, "not_home", {ATTR_SOURCE_TYPE: SOURCE_TYPE_ROUTER}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
     assert state.state == "not_home"
@@ -250,7 +250,7 @@ async def test_setup_two_trackers.opp,.opp_admin_user):
    .opp.states.async_set(
         DEVICE_TRACKER_2, "zone1", {ATTR_SOURCE_TYPE: SOURCE_TYPE_GPS}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
     assert state.state == "zone1"
@@ -259,11 +259,11 @@ async def test_setup_two_trackers.opp,.opp_admin_user):
    .opp.states.async_set(
         DEVICE_TRACKER, "home", {ATTR_SOURCE_TYPE: SOURCE_TYPE_ROUTER}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.states.async_set(
         DEVICE_TRACKER_2, "zone2", {ATTR_SOURCE_TYPE: SOURCE_TYPE_GPS}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
     assert state.state == "home"
@@ -288,18 +288,18 @@ async def test_ignore_unavailable_states.opp,.opp_admin_user):
     assert state.state == STATE_UNKNOWN
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.states.async_set(DEVICE_TRACKER, "home")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.states.async_set(DEVICE_TRACKER, "unavailable")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Unknown, as only 1 device tracker has a state, but we ignore that one
     state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
 
    .opp.states.async_set(DEVICE_TRACKER_2, "not_home")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Take state of tracker 2
     state = opp.states.get("person.tracked_person")
@@ -307,7 +307,7 @@ async def test_ignore_unavailable_states.opp,.opp_admin_user):
 
     # state 1 is newer but ignored, keep tracker 2 state
    .opp.states.async_set(DEVICE_TRACKER, "unknown")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
     assert state.state == "not_home"
@@ -369,12 +369,12 @@ async def test_create_person_during_run.opp):
     config = {DOMAIN: {}}
     assert await async_setup_component.opp, DOMAIN, config)
    .opp.states.async_set(DEVICE_TRACKER, "home")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await.opp.components.person.async_create_person(
         "tracked person", device_trackers=[DEVICE_TRACKER]
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
     assert state.state == "home"
@@ -391,9 +391,9 @@ async def test_load_person_storage.opp,.opp_admin_user, storage_setup):
     assert state.attributes.get(ATTR_USER_ID) == opp_admin_user.id
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.states.async_set(DEVICE_TRACKER, "home")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
     assert state.state == "home"
@@ -673,7 +673,7 @@ async def test_update_person_when_user_removed(
     )
 
     await.opp.auth.async_remove_user.opp_read_only_user)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert storage_collection.data[person["id"]]["user_id"] is None
 
@@ -691,7 +691,7 @@ async def test_removing_device_tracker.opp, storage_setup):
     )
 
     reg.async_remove(entry.entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert storage_collection.data[person["id"]]["device_trackers"] == []
 
@@ -758,7 +758,7 @@ async def test_reload.opp,.opp_admin_user):
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids()) == 2
 

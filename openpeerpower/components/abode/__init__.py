@@ -119,7 +119,7 @@ async def async_setup_entry.opp, config_entry):
         )
 
     try:
-        abode = await.opp.async_add_executor_job(
+        abode = await opp.async_add_executor_job(
             Abode, username, password, True, True, True, cache
         )
 
@@ -144,8 +144,8 @@ async def async_setup_entry.opp, config_entry):
         )
 
     await setup_opp_events.opp)
-    await.opp.async_add_executor_job(setup_opp_services,.opp)
-    await.opp.async_add_executor_job(setup_abode_events,.opp)
+    await opp.async_add_executor_job(setup_opp_services,.opp)
+    await opp.async_add_executor_job(setup_abode_events,.opp)
 
     return True
 
@@ -165,8 +165,8 @@ async def async_unload_entry.opp, config_entry):
 
     await gather(*tasks)
 
-    await.opp.async_add_executor_job.opp.data[DOMAIN].abode.events.stop)
-    await.opp.async_add_executor_job.opp.data[DOMAIN].abode.logout)
+    await opp.async_add_executor_job.opp.data[DOMAIN].abode.events.stop)
+    await opp.async_add_executor_job.opp.data[DOMAIN].abode.logout)
 
    .opp.data[DOMAIN].logout_listener()
    .opp.data.pop(DOMAIN)
@@ -240,7 +240,7 @@ async def setup_opp_events.opp):
         LOGGER.info("Logged out of Abode")
 
     if not.opp.data[DOMAIN].polling:
-        await.opp.async_add_executor_job.opp.data[DOMAIN].abode.events.start)
+        await opp.async_add_executor_job.opp.data[DOMAIN].abode.events.start)
 
    .opp.data[DOMAIN].logout_listener = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, logout

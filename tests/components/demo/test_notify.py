@@ -55,7 +55,7 @@ async def setup_notify.opp):
     with assert_setup_component(1, notify.DOMAIN) as config:
         assert await async_setup_component.opp, notify.DOMAIN, CONFIG)
     assert config[notify.DOMAIN]
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_no_notify_service.opp, mock_demo_notify, caplog):
@@ -63,7 +63,7 @@ async def test_no_notify_service.opp, mock_demo_notify, caplog):
     caplog.set_level(logging.ERROR)
     mock_demo_notify.return_value = None
     await setup_notify.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mock_demo_notify.called
     assert "Failed to initialize notification service demo" in caplog.text
 
@@ -75,7 +75,7 @@ async def test_discover_notify.opp, mock_demo_notify):
     await discovery.async_load_platform(
        .opp, "notify", "demo", {"test_key": "test_val"}, {"notify": {}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert notify.DOMAIN in.opp.config.components
     assert mock_demo_notify.called
     assert mock_demo_notify.mock_calls[0][1] == (
@@ -92,7 +92,7 @@ async def test_sending_none_message.opp, events):
         await.opp.services.async_call(
             notify.DOMAIN, notify.SERVICE_NOTIFY, {notify.ATTR_MESSAGE: None}
         )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 0
 
 
@@ -105,7 +105,7 @@ async def test_sending_templated_message.opp, events):
         notify.ATTR_TITLE: "{{ states.sensor.temperature.name }}",
     }
     await.opp.services.async_call(notify.DOMAIN, notify.SERVICE_NOTIFY, data)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     last_event = events[-1]
     assert last_event.data[notify.ATTR_TITLE] == "temperature"
     assert last_event.data[notify.ATTR_MESSAGE] == "10"
@@ -120,7 +120,7 @@ async def test_method_forwards_correct_data.opp, events):
         notify.ATTR_DATA: {"hello": "world"},
     }
     await.opp.services.async_call(notify.DOMAIN, notify.SERVICE_NOTIFY, data)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     data = events[0].data
     assert {
@@ -144,7 +144,7 @@ async def test_calling_notify_from_script_loaded_from_yaml_without_title.opp, ev
        .opp, "script", {"script": {"test": {"sequence": step}}}
     )
     await.opp.services.async_call("script", "test")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     assert {
         "message": "Test 123 4",
@@ -166,7 +166,7 @@ async def test_calling_notify_from_script_loaded_from_yaml_with_title.opp, event
        .opp, "script", {"script": {"test": {"sequence": step}}}
     )
     await.opp.services.async_call("script", "test")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     assert {
         "message": "Test 123 4",
@@ -194,7 +194,7 @@ async def test_messages_to_targets_route.opp, calls, record_calls):
         {"message": "my message", "title": "my title", "data": {"hello": "world"}},
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     data = calls[0][0].data
 

@@ -47,7 +47,7 @@ async def test_form.opp):
                 CONF_PASSWORD: "test-password",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "my@email.tld"
@@ -206,7 +206,7 @@ async def test_form_needs_validate.opp):
             result["flow_id"],
             {VERIFICATION_CODE_KEY: "correct"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_send_verification_code.mock_calls) == 0
     assert len(mock_validate_verification_code.mock_calls) == 1
@@ -262,7 +262,7 @@ async def test_form_reauth.opp):
                 CONF_PASSWORD: "new-test-password",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "abort"
     assert result2["reason"] == "reauth_successful"

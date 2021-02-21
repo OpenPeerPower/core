@@ -66,7 +66,7 @@ async def test_setup.opp, aioclient_mock):
 
     with assert_setup_component(1, "sensor"):
         await async_setup_component.opp, "sensor", {"sensor": VALID_CONFIG})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_setup_pws.opp, aioclient_mock):
@@ -90,7 +90,7 @@ async def test_sensor.opp, aioclient_mock):
     aioclient_mock.get(URL, text=load_fixture("wunderground-valid.json"))
 
     await async_setup_component.opp, "sensor", {"sensor": VALID_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.pws_weather")
     assert state.state == "Clear"
@@ -143,7 +143,7 @@ async def test_invalid_data.opp, aioclient_mock):
     aioclient_mock.get(URL, text=load_fixture("wunderground-invalid.json"))
 
     await async_setup_component.opp, "sensor", {"sensor": VALID_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     for condition in VALID_CONFIG["monitored_conditions"]:
         state = opp.states.get(f"sensor.pws_{condition}")
@@ -157,7 +157,7 @@ async def test_entity_id_with_multiple_stations.opp, aioclient_mock):
 
     config = [VALID_CONFIG, {**VALID_CONFIG_PWS, "entity_namespace": "hi"}]
     await async_setup_component.opp, "sensor", {"sensor": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.pws_weather")
     assert state is not None
@@ -179,7 +179,7 @@ async def test_fails_because_of_unique_id.opp, aioclient_mock):
         VALID_CONFIG_PWS,
     ]
     await async_setup_component.opp, "sensor", {"sensor": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     states = opp.states.async_all()
     expected = len(VALID_CONFIG["monitored_conditions"]) + len(

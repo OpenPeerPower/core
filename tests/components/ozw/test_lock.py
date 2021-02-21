@@ -25,7 +25,7 @@ async def test_lock.opp, lock_data, sent_messages, lock_msg, caplog):
     lock_msg.payload["Value"] = True
     lock_msg.encode()
     receive_message(lock_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("lock.danalock_v3_btze_locked")
     assert state is not None

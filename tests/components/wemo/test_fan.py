@@ -47,13 +47,13 @@ async def test_fan_registry_state_callback(
     # On state.
     pywemo_device.get_state.return_value = 1
     pywemo_registry.callbacks[pywemo_device.name](pywemo_device, "", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(wemo_entity.entity_id).state == STATE_ON
 
     # Off state.
     pywemo_device.get_state.return_value = 0
     pywemo_registry.callbacks[pywemo_device.name](pywemo_device, "", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF
 
 

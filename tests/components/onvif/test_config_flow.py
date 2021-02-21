@@ -172,7 +172,7 @@ async def setup_onvif_integration(
         mock_discovery.return_value = []
         setup_mock_device(mock_device)
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     return config_entry
 
 
@@ -225,7 +225,7 @@ async def test_flow_discovered_devices.opp):
                 },
             )
 
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
             assert len(mock_setup.mock_calls) == 1
             assert len(mock_setup_entry.mock_calls) == 1
 
@@ -399,7 +399,7 @@ async def test_flow_manual_entry.opp):
                 },
             )
 
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
             assert len(mock_setup.mock_calls) == 1
             assert len(mock_setup_entry.mock_calls) == 1
 
@@ -440,7 +440,7 @@ async def test_flow_import_no_mac.opp):
             },
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 

@@ -43,7 +43,7 @@ async def test_config_flow(
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get("sensor.test")
         check_valid_state(state, tariff="normal")
         assert pvpc_aioclient_mock.call_count == 1
@@ -75,7 +75,7 @@ async def test_config_flow(
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get("sensor.test")
         check_valid_state(state, tariff="normal")
         assert pvpc_aioclient_mock.call_count == 2

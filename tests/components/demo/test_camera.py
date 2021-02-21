@@ -27,7 +27,7 @@ async def demo_camera.opp):
     assert await async_setup_component(
        .opp, CAMERA_DOMAIN, {CAMERA_DOMAIN: {"platform": DOMAIN}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_init_state_is_streaming.opp):

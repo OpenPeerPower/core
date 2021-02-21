@@ -32,7 +32,7 @@ async def test_form.opp):
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], _flow_data()
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "1.1.1.1"

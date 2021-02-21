@@ -50,7 +50,7 @@ def device_fixture(main_zone):
 async def test_setup_host.opp, device, main_zone):
     """Test set up integration with host."""
     assert await async_setup_component.opp, mp.DOMAIN, CONFIG)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("media_player.yamaha_receiver_main_zone")
 
@@ -64,7 +64,7 @@ async def test_setup_no_host.opp, device, main_zone):
         assert await async_setup_component(
            .opp, mp.DOMAIN, {"media_player": {"platform": "yamaha"}}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("media_player.yamaha_receiver_main_zone")
 
@@ -83,7 +83,7 @@ async def test_setup_discovery.opp, device, main_zone):
     await async_load_platform(
        .opp, mp.DOMAIN, "yamaha", discovery_info, {mp.DOMAIN: {}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("media_player.yamaha_receiver_main_zone")
 
@@ -104,7 +104,7 @@ async def test_setup_zone_ignore.opp, device, main_zone):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("media_player.yamaha_receiver_main_zone")
 
@@ -114,7 +114,7 @@ async def test_setup_zone_ignore.opp, device, main_zone):
 async def test_enable_output.opp, device, main_zone):
     """Test enable output service."""
     assert await async_setup_component.opp, mp.DOMAIN, CONFIG)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     port = "hdmi1"
     enabled = True
@@ -136,7 +136,7 @@ async def test_select_scene.opp, device, main_zone, caplog):
     type(main_zone).scene = scene_prop
 
     assert await async_setup_component.opp, mp.DOMAIN, CONFIG)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     scene = "TV Viewing"
     data = {

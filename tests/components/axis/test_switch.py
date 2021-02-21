@@ -69,7 +69,7 @@ async def test_switches_with_port_cgi.opp):
     device.api.vapix.ports["1"].name = ""
 
     device.api.event.update(EVENTS)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
@@ -116,7 +116,7 @@ async def test_switches_with_port_management.opp):
     device.api.vapix.ports["1"].name = ""
 
     device.api.event.update(EVENTS)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 

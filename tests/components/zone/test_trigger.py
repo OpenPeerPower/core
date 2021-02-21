@@ -42,7 +42,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
    .opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.881011, "longitude": -117.234758}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -80,7 +80,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
         {"latitude": 32.880586, "longitude": -117.237564},
         context=context,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].context.parent_id == context.id
@@ -90,7 +90,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
    .opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.881011, "longitude": -117.234758}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await.opp.services.async_call(
         automation.DOMAIN,
@@ -102,7 +102,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
    .opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.880586, "longitude": -117.237564}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -112,7 +112,7 @@ async def test_if_not_fires_for_enter_on_zone_leave.opp, calls):
    .opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.880586, "longitude": -117.237564}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -133,7 +133,7 @@ async def test_if_not_fires_for_enter_on_zone_leave.opp, calls):
    .opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.881011, "longitude": -117.234758}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -143,7 +143,7 @@ async def test_if_fires_on_zone_leave.opp, calls):
    .opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.880586, "longitude": -117.237564}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -164,7 +164,7 @@ async def test_if_fires_on_zone_leave.opp, calls):
    .opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.881011, "longitude": -117.234758}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -174,7 +174,7 @@ async def test_if_not_fires_for_leave_on_zone_enter.opp, calls):
    .opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.881011, "longitude": -117.234758}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -195,7 +195,7 @@ async def test_if_not_fires_for_leave_on_zone_enter.opp, calls):
    .opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.880586, "longitude": -117.237564}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -205,7 +205,7 @@ async def test_zone_condition.opp, calls):
    .opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.880586, "longitude": -117.237564}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -224,5 +224,5 @@ async def test_zone_condition.opp, calls):
     )
 
    .opp.bus.async_fire("test_event")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1

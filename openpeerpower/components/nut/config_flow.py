@@ -93,7 +93,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     password = data.get(CONF_PASSWORD)
 
     data = PyNUTData(host, port, alias, username, password)
-    await.opp.async_add_executor_job(data.update)
+    await opp.async_add_executor_job(data.update)
     status = data.status
     if not status:
         raise CannotConnect

@@ -44,7 +44,7 @@ async def init_integration.opp) -> MockConfigEntry:
     ):
         entry.add_to_opp.opp)
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return entry
 
@@ -64,7 +64,7 @@ async def init_integration_unavailable.opp) -> MockConfigEntry:
     ):
         entry.add_to_opp.opp)
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return entry
 
@@ -83,6 +83,6 @@ async def init_integration_empty_response.opp) -> MockConfigEntry:
     ):
         entry.add_to_opp.opp)
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return entry

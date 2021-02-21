@@ -90,7 +90,7 @@ async def test_setups.opp: OpenPeerPower, protocol, connection, title):
             **connection,
             CONF_PROTOCOL: protocol,
         }
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
@@ -141,7 +141,7 @@ async def test_options_arm_flow.opp: OpenPeerPower):
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(entry.entry_id)
 
@@ -179,7 +179,7 @@ async def test_options_zone_flow.opp: OpenPeerPower):
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(entry.entry_id)
 
@@ -255,7 +255,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(entry.entry_id)
 

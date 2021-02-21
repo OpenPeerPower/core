@@ -59,7 +59,7 @@ async def test_full_upb_flow_with_serial_port.opp):
                 "file_path": "upb.upe",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert flow["type"] == "form"
     assert flow["errors"] == {}
@@ -78,7 +78,7 @@ async def test_form_user_with_tcp_upb.opp):
     result = await valid_tcp_flow.opp)
     assert result["type"] == "create_entry"
     assert result["data"] == {"host": "tcp://1.2.3.4", "file_path": "upb.upe"}
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_form_cannot_connect.opp):
@@ -108,7 +108,7 @@ async def test_form_user_with_already_configured.opp):
     result2 = await valid_tcp_flow.opp)
     assert result2["type"] == "abort"
     assert result2["reason"] == "already_configured"
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_form_import.opp):
@@ -125,7 +125,7 @@ async def test_form_import.opp):
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": "tcp://42.4.2.42", "file_path": "upb.upe"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "UPB"
@@ -149,4 +149,4 @@ async def test_form_junk_input.opp):
     assert result["type"] == "form"
     assert result["errors"] == {"base": "unknown"}
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()

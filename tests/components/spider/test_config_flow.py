@@ -43,7 +43,7 @@ async def test_user.opp, spider):
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=SPIDER_USER_DATA
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == DOMAIN
@@ -70,7 +70,7 @@ async def test_import.opp, spider):
             context={"source": config_entries.SOURCE_IMPORT},
             data=SPIDER_USER_DATA,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == DOMAIN

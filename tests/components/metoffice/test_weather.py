@@ -33,7 +33,7 @@ async def test_site_cannot_connect.opp, requests_mock, legacy_patchable_time):
     )
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("weather.met_office_wavertree") is None
     for sensor_id in WAVERTREE_SENSOR_RESULTS:
@@ -65,7 +65,7 @@ async def test_site_cannot_update.opp, requests_mock, legacy_patchable_time):
     )
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity = opp.states.get("weather.met_office_wavertree")
     assert entity
@@ -74,7 +74,7 @@ async def test_site_cannot_update.opp, requests_mock, legacy_patchable_time):
 
     future_time = utcnow() + timedelta(minutes=20)
     async_fire_time_changed.opp, future_time)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity = opp.states.get("weather.met_office_wavertree")
     assert entity.state == STATE_UNAVAILABLE
@@ -104,7 +104,7 @@ async def test_one_weather_site_running.opp, requests_mock, legacy_patchable_tim
     )
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Wavertree weather platform expected results
     entity = opp.states.get("weather.met_office_wavertree")
@@ -151,7 +151,7 @@ async def test_two_weather_sites_running.opp, requests_mock, legacy_patchable_ti
     )
     entry2.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry2.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Wavertree weather platform expected results
     entity = opp.states.get("weather.met_office_wavertree")

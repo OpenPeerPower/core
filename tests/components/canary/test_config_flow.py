@@ -36,7 +36,7 @@ async def test_user_form.opp, canary_config_flow):
             result["flow_id"],
             USER_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == "test-username"
@@ -120,7 +120,7 @@ async def test_options_flow.opp, canary):
             result["flow_id"],
             user_input={CONF_FFMPEG_ARGUMENTS: "-v", CONF_TIMEOUT: 7},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["data"][CONF_FFMPEG_ARGUMENTS] == "-v"

@@ -197,7 +197,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         _LOGGER.warning("Platform already setup on %s, skipping", address)
         return
 
-    adbkey, signer, adb_log = await.opp.async_add_executor_job(
+    adbkey, signer, adb_log = await opp.async_add_executor_job(
         setup_androidtv,.opp, config
     )
 

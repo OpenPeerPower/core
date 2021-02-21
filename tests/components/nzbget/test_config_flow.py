@@ -41,7 +41,7 @@ async def test_user_form.opp):
             result["flow_id"],
             USER_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == "10.10.10.30"
@@ -71,7 +71,7 @@ async def test_user_form_show_advanced_options.opp):
             result["flow_id"],
             user_input_advanced,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == "10.10.10.30"
@@ -144,7 +144,7 @@ async def test_options_flow.opp, nzbget_api):
 
     with patch("openpeerpower.components.nzbget.PLATFORMS", []):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert entry.options[CONF_SCAN_INTERVAL] == 5
 
@@ -157,7 +157,7 @@ async def test_options_flow.opp, nzbget_api):
             result["flow_id"],
             user_input={CONF_SCAN_INTERVAL: 15},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["data"][CONF_SCAN_INTERVAL] == 15

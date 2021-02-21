@@ -23,7 +23,7 @@ async def async_setup_gree.opp):
     """Set up the gree switch platform."""
     MockConfigEntry(domain=GREE_DOMAIN).add_to_opp.opp)
     await async_setup_component.opp, GREE_DOMAIN, {GREE_DOMAIN: {DOMAIN: {}}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_send_panel_light_on.opp, discovery, device):

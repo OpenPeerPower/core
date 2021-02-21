@@ -122,7 +122,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     # Test incoming mode change to auto,
     # resulting in multiple setpoints
     receive_message(climate_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("climate.ct32_thermostat_mode")
     assert state is not None
     assert state.state == HVAC_MODE_HEAT_COOL

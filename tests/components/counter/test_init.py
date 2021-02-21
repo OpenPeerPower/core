@@ -99,12 +99,12 @@ async def test_config_options.opp):
     }
 
     assert await async_setup_component.opp, "counter", config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     _LOGGER.debug("ENTITIES: %s",.opp.states.async_entity_ids())
 
     assert count_start + 3 == len.opp.states.async_entity_ids())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state_1 = opp.states.get("counter.test_1")
     state_2 = opp.states.get("counter.test_2")
@@ -138,25 +138,25 @@ async def test_methods.opp):
     assert 0 == int(state.state)
 
     async_increment.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 1 == int(state.state)
 
     async_increment.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 2 == int(state.state)
 
     async_decrement.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 1 == int(state.state)
 
     async_reset.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 0 == int(state.state)
@@ -176,19 +176,19 @@ async def test_methods_with_config.opp):
     assert 10 == int(state.state)
 
     async_increment.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 15 == int(state.state)
 
     async_increment.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 20 == int(state.state)
 
     async_decrement.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 15 == int(state.state)

@@ -58,7 +58,7 @@ async def async_setup_entry.opp, entry):
     if CONF_HOST in conf:
         # Session(**conf) does blocking IO when
         # communicating with local devices.
-        session = await.opp.async_add_executor_job(partial(Session, **conf))
+        session = await opp.async_add_executor_job(partial(Session, **conf))
     else:
         session = Session(
             PUBLIC_KEY, NOT_SO_PRIVATE_KEY, application=APPLICATION_NAME, **conf

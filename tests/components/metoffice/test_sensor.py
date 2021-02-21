@@ -42,7 +42,7 @@ async def test_one_sensor_site_running.opp, requests_mock, legacy_patchable_time
     )
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     running_sensor_ids = opp.states.async_entity_ids("sensor")
     assert len(running_sensor_ids) > 0
@@ -94,7 +94,7 @@ async def test_two_sensor_sites_running.opp, requests_mock, legacy_patchable_tim
     )
     entry2.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry2.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     running_sensor_ids = opp.states.async_entity_ids("sensor")
     assert len(running_sensor_ids) > 0

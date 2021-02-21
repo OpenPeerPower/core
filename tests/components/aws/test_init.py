@@ -34,7 +34,7 @@ async def test_empty_config.opp):
     """Test a default config will be create for empty config."""
     with async_patch("aiobotocore.AioSession", new=MockAioSession):
         await async_setup_component.opp, "aws", {"aws": {}})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
@@ -63,7 +63,7 @@ async def test_empty_credential.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
@@ -98,7 +98,7 @@ async def test_profile_credential.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
@@ -143,7 +143,7 @@ async def test_access_key_credential.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
@@ -182,7 +182,7 @@ async def test_notify_credential.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
@@ -214,7 +214,7 @@ async def test_notify_credential_profile.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None
@@ -246,7 +246,7 @@ async def test_credential_skip_validate.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     sessions = opp.data[aws.DATA_SESSIONS]
     assert sessions is not None

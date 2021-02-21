@@ -65,7 +65,7 @@ async def test_disabled_notification_sensor.opp, multisensor_6, integration):
 
     # reload integration and check if entity is correctly there
     await.opp.config_entries.async_reload(integration.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(NOTIFICATION_MOTION_SENSOR)
     assert state.state == "Motion detection"

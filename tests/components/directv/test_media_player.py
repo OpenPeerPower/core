@@ -339,7 +339,7 @@ async def test_attributes_paused(
         "openpeerpowerr.util.dt.utcnow", return_value=mock_now + timedelta(minutes=5)
     ):
         await async_media_pause.opp, CLIENT_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get(CLIENT_ENTITY_ID)
     assert state.state == STATE_PAUSED
@@ -356,40 +356,40 @@ async def test_main_services(
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_turn_off.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("poweroff", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_turn_on.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("poweron", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_media_pause.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("pause", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_media_play.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("play", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_media_next_track.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("ffwd", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_media_previous_track.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("rew", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_media_stop.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("stop", "0")
 
     with patch("directv.DIRECTV.tune") as tune_mock:
         await async_play_media.opp, "channel", 312, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         tune_mock.assert_called_once_with("312", "0")

@@ -99,7 +99,7 @@ async def test_owserver_switch(owproxy,.opp, device_id):
         "openpeerpower.components.onewire.switch.DEVICE_SWITCHES", patch_device_switches
     ):
         await setup_onewire_patched_owserver_integration.opp)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(entity_registry.entities) == len(expected_sensors)
 
@@ -123,7 +123,7 @@ async def test_owserver_switch(owproxy,.opp, device_id):
             {ATTR_ENTITY_ID: entity_id},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert state.state == expected_sensor["result"]

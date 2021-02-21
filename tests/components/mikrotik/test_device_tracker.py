@@ -61,7 +61,7 @@ async def test_device_trackers.opp, legacy_patchable_time):
         WIRELESS_DATA.append(DEVICE_2_WIRELESS)
 
         await hub.async_update()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         device_2 = opp.states.get("device_tracker.device_2")
         assert device_2 is not None
@@ -78,7 +78,7 @@ async def test_device_trackers.opp, legacy_patchable_time):
             minutes=4
         )
         await hub.async_update()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         device_2 = opp.states.get("device_tracker.device_2")
         assert device_2.state != "not_home"
@@ -88,7 +88,7 @@ async def test_device_trackers.opp, legacy_patchable_time):
             minutes=5
         )
         await hub.async_update()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         device_2 = opp.states.get("device_tracker.device_2")
         assert device_2.state == "not_home"

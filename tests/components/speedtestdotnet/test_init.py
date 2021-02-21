@@ -73,7 +73,7 @@ async def test_unload_entry.opp):
         await.opp.config_entries.async_setup(entry.entry_id)
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
     assert speedtestdotnet.DOMAIN not in.opp.data

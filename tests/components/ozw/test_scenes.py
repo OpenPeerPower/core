@@ -39,7 +39,7 @@ async def test_scenes.opp, generic_data, sent_messages):
     message.encode()
     receive_message(message)
     # wait for the event
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data["scene_value_id"] == 16
 
@@ -81,7 +81,7 @@ async def test_scenes.opp, generic_data, sent_messages):
     message.encode()
     receive_message(message)
     # wait for the event
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 2
     assert events[1].data["scene_id"] == 1
     assert events[1].data["scene_label"] == "Scene 1"

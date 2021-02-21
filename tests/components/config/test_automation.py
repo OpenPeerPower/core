@@ -96,7 +96,7 @@ async def test_bad_formatted_automations.opp,.opp_client):
             "/api/config/automation/config/moon",
             data=json.dumps({"trigger": [], "action": [], "condition": []}),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert resp.status == 200
     result = await resp.json()
@@ -154,7 +154,7 @@ async def test_delete_automation.opp,.opp_client):
         "openpeerpower.components.config._write", mock_write
     ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
         resp = await client.delete("/api/config/automation/config/sun")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert resp.status == 200
     result = await resp.json()

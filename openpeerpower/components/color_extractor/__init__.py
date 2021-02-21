@@ -75,7 +75,7 @@ async def async_setup.opp,.opp_config):
             elif ATTR_PATH in service_data:
                 image_type = "file path"
                 image_reference = service_data.pop(ATTR_PATH)
-                color = await.opp.async_add_executor_job(
+                color = await opp.async_add_executor_job(
                     extract_color_from_path, image_reference
                 )
 

@@ -257,7 +257,7 @@ async def test_options_flow.opp):
         "bravia_tv.BraviaRC.is_connected", return_value=True
     ), patch("bravia_tv.BraviaRC.get_system_info", return_value=BRAVIA_SYSTEM_INFO):
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     with patch("bravia_tv.BraviaRC.load_source_list", return_value=BRAVIA_SOURCE_LIST):
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)

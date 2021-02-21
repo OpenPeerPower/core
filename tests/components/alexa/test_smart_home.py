@@ -61,14 +61,14 @@ async def mock_camera.opp):
     assert await async_setup_component(
        .opp, "camera", {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 @pytest.fixture
 async def mock_stream.opp):
     """Initialize a demo camera platform with streaming."""
     assert await async_setup_component.opp, "stream", {"stream": {}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 def test_create_api_message_defaults.opp):
@@ -2174,7 +2174,7 @@ async def test_exclude_filters.opp):
     )
 
     msg = await smart_home.async_op.dle_message.opp, alexa_config, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     msg = msg["event"]
 
@@ -2205,7 +2205,7 @@ async def test_include_filters.opp):
     )
 
     msg = await smart_home.async_op.dle_message.opp, alexa_config, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     msg = msg["event"]
 
@@ -2230,7 +2230,7 @@ async def test_never_exposed_entities.opp):
     )
 
     msg = await smart_home.async_op.dle_message.opp, alexa_config, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     msg = msg["event"]
 
@@ -2244,7 +2244,7 @@ async def test_api_entity_not_exists.opp):
     call_switch = async_mock_service.opp, "switch", "turn_on")
 
     msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -2283,7 +2283,7 @@ async def test_api_accept_grant.opp):
 
     # setup test devices
     msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -2338,7 +2338,7 @@ async def test_logging_request.opp, events):
     await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request, context)
 
     # To trigger event listener
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     event = events[0]
@@ -2358,7 +2358,7 @@ async def test_logging_request_with_entity.opp, events):
     await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request, context)
 
     # To trigger event listener
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     event = events[0]
@@ -2383,7 +2383,7 @@ async def test_disabled.opp):
     msg = await smart_home.async_op.dle_message(
        .opp, DEFAULT_CONFIG, request, enabled=False
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -3853,7 +3853,7 @@ async def test_initialize_camera_stream.opp, mock_camera, mock_stream):
         return_value="rtsp://example.local",
     ):
         msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert "event" in msg
     response = msg["event"]

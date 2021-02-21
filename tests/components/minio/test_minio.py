@@ -71,7 +71,7 @@ async def test_minio_services.opp, caplog, minio_client):
     )
 
     await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "Setup of domain minio took" in caplog.text
 
@@ -134,7 +134,7 @@ async def test_minio_listen.opp, caplog, minio_client_event):
     )
 
     await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "Setup of domain minio took" in caplog.text
 

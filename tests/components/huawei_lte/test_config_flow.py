@@ -150,7 +150,7 @@ async def test_success.opp, login_requests_mock):
             context={"source": config_entries.SOURCE_USER},
             data=FIXTURE_USER_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["data"][CONF_URL] == FIXTURE_USER_INPUT[CONF_URL]

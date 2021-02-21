@@ -48,13 +48,13 @@ async def test_publish_without_mqtt.opp, caplog):
         mqtt_entries = opp.config_entries.async_entries("mqtt")
         mqtt_entry = mqtt_entries[0]
         await.opp.config_entries.async_remove(mqtt_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not.opp.config_entries.async_entries("mqtt")
 
         # Sending a message should not error with the MQTT integration not set up.
         send_message("test_topic", "test_payload")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert "MQTT integration is not set up" in caplog.text
 
@@ -86,7 +86,7 @@ async def test_unload_entry.opp, generic_data, switch_msg, caplog):
     # Send a message for a switch from the broker to check that
     # all entity topic subscribers are unsubscribed.
     receive_message(switch_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids("switch")) == 1
     for entity in entities:
@@ -98,7 +98,7 @@ async def test_unload_entry.opp, generic_data, switch_msg, caplog):
     # This asserts that we have unsubscribed the entity addition signals
     # when unloading the integration previously.
     await setup_ozw.opp, entry=entry, fixture=generic_data)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.state == config_entries.ENTRY_STATE_LOADED
     assert len.opp.states.async_entity_ids("switch")) == 1
@@ -185,7 +185,7 @@ async def test_setup_entry_with_addon.opp, get_addon_discovery_info):
 
     with patch("openpeerpower.components.ozw.MQTTClient", autospec=True) as mock_client:
         assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert mock_client.return_value.start_client.call_count == 1
 
@@ -235,7 +235,7 @@ async def test_unload_entry_with_addon(
 
     with patch("openpeerpower.components.ozw.MQTTClient", autospec=True) as mock_client:
         assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert mock_client.return_value.start_client.call_count == 1
     assert entry.state == config_entries.ENTRY_STATE_LOADED

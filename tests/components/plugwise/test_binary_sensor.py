@@ -24,7 +24,7 @@ async def test_anna_climate_binary_sensor_change.opp, mock_smile_anna):
     assert entry.state == ENTRY_STATE_LOADED
 
    .opp.states.async_set("binary_sensor.auxiliary_dhw_state", STATE_ON, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.auxiliary_dhw_state")
     assert str(state.state) == STATE_ON

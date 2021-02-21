@@ -28,7 +28,7 @@ async def test_form.opp, mock_simple_nws_config):
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"api_key": "test"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "ABC"
@@ -94,7 +94,7 @@ async def test_form_already_configured.opp, mock_simple_nws_config):
             result["flow_id"],
             {"api_key": "test"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert len(mock_setup.mock_calls) == 1
@@ -116,6 +116,6 @@ async def test_form_already_configured.opp, mock_simple_nws_config):
         )
     assert result2["type"] == "abort"
     assert result2["reason"] == "already_configured"
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0

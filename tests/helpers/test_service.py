@@ -298,7 +298,7 @@ async def test_extract_entity_ids.opp):
    .opp.states.async_set("light.Kitchen", STATE_OFF)
 
     assert await async_setup_component.opp, "group", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await.opp.components.group.Group.async_create_group(
        .opp, "test", ["light.Ceiling", "light.Kitchen"]
     )

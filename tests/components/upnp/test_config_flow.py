@@ -263,7 +263,7 @@ async def test_options_flow.opp: OpenPeerPowerType):
     ), patch.object(Device, "async_discover", AsyncMock(return_value=discoveries)):
         # Initialisation of component.
         await async_setup_component.opp, "upnp", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # DataUpdateCoordinator gets a default of 30 seconds for updates.
         coordinator = opp.data[DOMAIN][DOMAIN_COORDINATORS][mock_device.udn]

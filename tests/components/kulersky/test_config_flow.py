@@ -34,7 +34,7 @@ async def test_flow_success.opp):
             result["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Kuler Sky"
@@ -69,7 +69,7 @@ async def test_flow_no_devices_found.opp):
 
     assert result2["type"] == "abort"
     assert result2["reason"] == "no_devices_found"
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0
 
@@ -99,6 +99,6 @@ async def test_flow_exceptions_caught.opp):
 
     assert result2["type"] == "abort"
     assert result2["reason"] == "no_devices_found"
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0

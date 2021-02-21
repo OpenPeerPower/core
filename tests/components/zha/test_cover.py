@@ -120,7 +120,7 @@ async def test_cover(m1,.opp, zha_device_joined_restored, zigpy_cover_device):
 
     # allow traffic to flow through the gateway and device
     await async_enable_traffic.opp, [zha_device])
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # test that the state has changed from unavailable to off
     await send_attributes_report.opp, cluster, {0: 0, 8: 100, 1: 1})
@@ -208,7 +208,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
 
     # allow traffic to flow through the gateway and device
     await async_enable_traffic.opp, [zha_device])
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # test that the state has changed from unavailable to off
     await send_attributes_report.opp, cluster_on_off, {8: 0, 0: False, 1: 1})
@@ -360,7 +360,7 @@ async def test_keen_vent.opp, zha_device_joined_restored, zigpy_keen_vent):
 
     # allow traffic to flow through the gateway and device
     await async_enable_traffic.opp, [zha_device])
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # test that the state has changed from unavailable to off
     await send_attributes_report.opp, cluster_on_off, {8: 0, 0: False, 1: 1})
@@ -411,7 +411,7 @@ async def test_cover_remote.opp, zha_device_joined_restored, zigpy_cover_remote)
     # up command
     hdr = make_zcl_header(0, global_command=False)
     cluster.handle_message(hdr, [])
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(zha_events) == 1
     assert zha_events[0].data[ATTR_COMMAND] == "up_open"
@@ -419,7 +419,7 @@ async def test_cover_remote.opp, zha_device_joined_restored, zigpy_cover_remote)
     # down command
     hdr = make_zcl_header(1, global_command=False)
     cluster.handle_message(hdr, [])
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(zha_events) == 2
     assert zha_events[1].data[ATTR_COMMAND] == "down_close"

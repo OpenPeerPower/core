@@ -47,7 +47,7 @@ async def test_get_actions.opp, device_reg, entity_reg):
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     expected_actions = [
         {
@@ -89,7 +89,7 @@ async def test_get_actions_tilt.opp, device_reg, entity_reg):
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     expected_actions = [
         {
@@ -143,7 +143,7 @@ async def test_get_actions_set_pos.opp, device_reg, entity_reg):
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     expected_actions = [
         {
@@ -173,7 +173,7 @@ async def test_get_actions_set_tilt_pos.opp, device_reg, entity_reg):
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     expected_actions = [
         {
@@ -222,7 +222,7 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
     )
 
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     actions = await async_get_device_automations.opp, "action", device_entry.id)
     assert len(actions) == 3  # open, close, stop
@@ -250,7 +250,7 @@ async def test_get_action_capabilities_set_pos.opp, device_reg, entity_reg):
     )
 
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     expected_capabilities = {
         "extra_fields": [
@@ -293,7 +293,7 @@ async def test_get_action_capabilities_set_tilt_pos.opp, device_reg, entity_reg)
     )
 
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     expected_capabilities = {
         "extra_fields": [
@@ -360,26 +360,26 @@ async def test_action.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     open_calls = async_mock_service.opp, "cover", "open_cover")
     close_calls = async_mock_service.opp, "cover", "close_cover")
     stop_calls = async_mock_service.opp, "cover", "stop_cover")
 
    .opp.bus.async_fire("test_event_open")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 0
     assert len(stop_calls) == 0
 
    .opp.bus.async_fire("test_event_close")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 1
     assert len(stop_calls) == 0
 
    .opp.bus.async_fire("test_event_stop")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 1
     assert len(stop_calls) == 1
@@ -417,23 +417,23 @@ async def test_action_tilt.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     open_calls = async_mock_service.opp, "cover", "open_cover_tilt")
     close_calls = async_mock_service.opp, "cover", "close_cover_tilt")
 
    .opp.bus.async_fire("test_event_open")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 0
 
    .opp.bus.async_fire("test_event_close")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 1
 
    .opp.bus.async_fire("test_event_stop")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 1
 
@@ -478,19 +478,19 @@ async def test_action_set_position.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     cover_pos_calls = async_mock_service.opp, "cover", "set_cover_position")
     tilt_pos_calls = async_mock_service.opp, "cover", "set_cover_tilt_position")
 
    .opp.bus.async_fire("test_event_set_pos")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(cover_pos_calls) == 1
     assert cover_pos_calls[0].data["position"] == 25
     assert len(tilt_pos_calls) == 0
 
    .opp.bus.async_fire("test_event_set_tilt_pos")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(cover_pos_calls) == 1
     assert len(tilt_pos_calls) == 1
     assert tilt_pos_calls[0].data["tilt_position"] == 75

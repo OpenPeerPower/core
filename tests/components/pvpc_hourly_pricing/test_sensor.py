@@ -24,7 +24,7 @@ async def _process_time_step(
 
     mock_data["return_time"] += timedelta(minutes=delta_min)
    .opp.bus.async_fire(EVENT_TIME_CHANGED, {ATTR_NOW: mock_data["return_time"]})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     return state
 
 
@@ -41,7 +41,7 @@ async def test_sensor_availability(
 
     with patch("openpeerpowerr.util.dt.utcnow", new=mock_now):
         assert await async_setup_component.opp, DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         caplog.clear()
         assert pvpc_aioclient_mock.call_count == 2
 

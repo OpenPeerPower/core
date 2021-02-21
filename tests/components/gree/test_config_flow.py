@@ -15,6 +15,6 @@ async def test_creating_entry_sets_up_climate.opp, discovery, device, setup):
     result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(setup.mock_calls) == 1

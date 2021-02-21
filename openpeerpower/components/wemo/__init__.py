@@ -99,7 +99,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     # Keep track of WeMo device subscriptions for push updates
     registry = opp.data[DOMAIN]["registry"] = pywemo.SubscriptionRegistry()
-    await.opp.async_add_executor_job(registry.start)
+    await opp.async_add_executor_job(registry.start)
 
     wemo_dispatcher = WemoDispatcher(entry)
     wemo_discovery = WemoDiscovery.opp, wemo_dispatcher)
@@ -107,7 +107,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     async def async_stop_wemo(event):
         """Shutdown Wemo subscriptions and subscription thread on exit."""
         _LOGGER.debug("Shutting down WeMo event subscriptions")
-        await.opp.async_add_executor_job(registry.stop)
+        await opp.async_add_executor_job(registry.stop)
         wemo_discovery.async_stop_discovery()
 
    .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_wemo)

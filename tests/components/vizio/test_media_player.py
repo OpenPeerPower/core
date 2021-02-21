@@ -84,7 +84,7 @@ async def _add_config_entry_to_opp(
 ) -> None:
     config_entry.add_to_opp.opp)
     assert await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 def _get_op.power_state(vizio_power_state: Optional[bool]) -> str:
@@ -486,7 +486,7 @@ async def _test_update_availability_switch(
             "openpeerpowerr.util.utcnow", return_value=future
         ):
             async_fire_time_changed.opp, future)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
             if final_power_state is None:
                 assert.opp.states.get(ENTITY_ID).state == STATE_UNAVAILABLE
             else:
@@ -745,7 +745,7 @@ async def test_apps_update(
                 return_value=APP_LIST,
             ):
                 async_fire_time_changed.opp, dt_util.now() + timedelta(days=2))
-                await.opp.async_block_till_done()
+                await opp.async_block_till_done()
                 # Check source list, remove TV inputs, and verify that the integration is
                 # now using the APP_LIST list
                 sources = opp.states.get(ENTITY_ID).attributes["source_list"]

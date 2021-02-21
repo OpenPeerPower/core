@@ -144,7 +144,7 @@ def device_climate_mock.opp, zigpy_device_mock, zha_device_joined):
         zigpy_device.endpoints[1].thermostat.PLUGGED_ATTR_READS = plugged_attrs
         zha_device = await zha_device_joined(zigpy_device)
         await async_enable_traffic.opp, [zha_device])
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         return zha_device
 
     return _dev

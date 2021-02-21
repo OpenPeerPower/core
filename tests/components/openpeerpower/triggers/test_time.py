@@ -57,10 +57,10 @@ async def test_if_fires_using_at.opp, calls):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     async_fire_time_changed.opp, trigger_dt + timedelta(seconds=1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data["some"] == "time - 5"
@@ -112,10 +112,10 @@ async def test_if_fires_using_at_input_datetime.opp, calls, has_date, has_time):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     async_fire_time_changed.opp, trigger_dt + timedelta(seconds=1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert (
@@ -139,7 +139,7 @@ async def test_if_fires_using_at_input_datetime.opp, calls, has_date, has_time):
     )
 
     async_fire_time_changed.opp, trigger_dt + timedelta(seconds=1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 2
     assert (
@@ -175,16 +175,16 @@ async def test_if_fires_using_multiple_at.opp, calls):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     async_fire_time_changed.opp, trigger_dt + timedelta(seconds=1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data["some"] == "time - 5"
 
     async_fire_time_changed.opp, trigger_dt + timedelta(hours=1, seconds=1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 2
     assert calls[1].data["some"] == "time - 6"
@@ -219,13 +219,13 @@ async def test_if_not_fires_using_wrong_at.opp, calls):
                     }
                 },
             )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     async_fire_time_changed(
        .opp, now.replace(year=now.year + 1, hour=1, minute=0, second=5)
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -242,20 +242,20 @@ async def test_if_action_before.opp, calls):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     before_10 = dt_util.now().replace(hour=8)
     after_10 = dt_util.now().replace(hour=14)
 
     with patch("openpeerpowerr.helpers.condition.dt_util.now", return_value=before_10):
        .opp.bus.async_fire("test_event")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(calls) == 1
 
     with patch("openpeerpowerr.helpers.condition.dt_util.now", return_value=after_10):
        .opp.bus.async_fire("test_event")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -273,20 +273,20 @@ async def test_if_action_after.opp, calls):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     before_10 = dt_util.now().replace(hour=8)
     after_10 = dt_util.now().replace(hour=14)
 
     with patch("openpeerpowerr.helpers.condition.dt_util.now", return_value=before_10):
        .opp.bus.async_fire("test_event")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(calls) == 0
 
     with patch("openpeerpowerr.helpers.condition.dt_util.now", return_value=after_10):
        .opp.bus.async_fire("test_event")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -304,7 +304,7 @@ async def test_if_action_one_weekday.opp, calls):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     days_past_monday = dt_util.now().weekday()
     monday = dt_util.now() - timedelta(days=days_past_monday)
@@ -312,13 +312,13 @@ async def test_if_action_one_weekday.opp, calls):
 
     with patch("openpeerpowerr.helpers.condition.dt_util.now", return_value=monday):
        .opp.bus.async_fire("test_event")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(calls) == 1
 
     with patch("openpeerpowerr.helpers.condition.dt_util.now", return_value=tuesday):
        .opp.bus.async_fire("test_event")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -336,7 +336,7 @@ async def test_if_action_list_weekday.opp, calls):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     days_past_monday = dt_util.now().weekday()
     monday = dt_util.now() - timedelta(days=days_past_monday)
@@ -345,19 +345,19 @@ async def test_if_action_list_weekday.opp, calls):
 
     with patch("openpeerpowerr.helpers.condition.dt_util.now", return_value=monday):
        .opp.bus.async_fire("test_event")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(calls) == 1
 
     with patch("openpeerpowerr.helpers.condition.dt_util.now", return_value=tuesday):
        .opp.bus.async_fire("test_event")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(calls) == 2
 
     with patch("openpeerpowerr.helpers.condition.dt_util.now", return_value=wednesday):
        .opp.bus.async_fire("test_event")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(calls) == 2
 
@@ -383,7 +383,7 @@ async def test_untrack_time_change.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     await.opp.services.async_call(
         automation.DOMAIN,
@@ -427,10 +427,10 @@ async def test_if_fires_using_at_sensor.opp, calls):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     async_fire_time_changed.opp, trigger_dt + timedelta(seconds=1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert (
@@ -445,10 +445,10 @@ async def test_if_fires_using_at_sensor.opp, calls):
         trigger_dt.isoformat(),
         {ATTR_DEVICE_CLASS: sensor.DEVICE_CLASS_TIMESTAMP},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_time_changed.opp, trigger_dt + timedelta(seconds=1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 2
     assert (
@@ -462,16 +462,16 @@ async def test_if_fires_using_at_sensor.opp, calls):
             trigger_dt.isoformat(),
             {ATTR_DEVICE_CLASS: sensor.DEVICE_CLASS_TIMESTAMP},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
        .opp.states.async_set(
             "sensor.next_alarm",
             broken,
             {ATTR_DEVICE_CLASS: sensor.DEVICE_CLASS_TIMESTAMP},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         async_fire_time_changed.opp, trigger_dt + timedelta(seconds=1))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # We should not have listened to anything
         assert len(calls) == 2
@@ -482,15 +482,15 @@ async def test_if_fires_using_at_sensor.opp, calls):
         trigger_dt.isoformat(),
         {ATTR_DEVICE_CLASS: sensor.DEVICE_CLASS_TIMESTAMP},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.states.async_set(
         "sensor.next_alarm",
         trigger_dt.isoformat(),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_time_changed.opp, trigger_dt + timedelta(seconds=1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # We should not have listened to anything
     assert len(calls) == 2
@@ -562,7 +562,7 @@ async def test_datetime_in_past_on_load.opp, calls):
     )
 
     async_fire_time_changed.opp, now)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -577,7 +577,7 @@ async def test_datetime_in_past_on_load.opp, calls):
     )
 
     async_fire_time_changed.opp, future + timedelta(seconds=1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert (

@@ -33,7 +33,7 @@ async def _async_manipulate_security_zones(
 
     home.update_home_only(json)
     home.fire_update_event(json)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_manually_configured_platform.opp):

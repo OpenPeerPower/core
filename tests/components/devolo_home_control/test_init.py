@@ -66,6 +66,6 @@ async def test_unload_entry.opp: OpenPeerPower):
     entry = configure_integration.opp)
     with patch("openpeerpower.components.devolo_home_control.HomeControl"):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         await.opp.config_entries.async_unload(entry.entry_id)
         assert entry.state == ENTRY_STATE_NOT_LOADED

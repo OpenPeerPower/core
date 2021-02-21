@@ -71,7 +71,7 @@ async def mock_client.opp,.opp_client, registrations=None):
         "openpeerpower.components.html5.notify._load_config", return_value=registrations
     ):
         await async_setup_component.opp, "notify", {"notify": {"platform": "html5"}})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return await.opp_client()
 

@@ -31,7 +31,7 @@ async def test_form.opp):
             result["flow_id"],
             {"username": "test-plum-username", "password": "test-plum-password"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "test-plum-username"
@@ -87,7 +87,7 @@ async def test_form_one_entry_per_email_allowed.opp):
         )
 
     assert result2["type"] == "abort"
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0
 
@@ -115,6 +115,6 @@ async def test_import.opp):
             "username": "test-plum-username",
             "password": "test-plum-password",
         }
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1

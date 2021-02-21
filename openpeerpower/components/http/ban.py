@@ -99,7 +99,7 @@ async def process_wrong_login(request):
     remote_addr = ip_address(request.remote)
     remote_host = request.remote
     try:
-        remote_host, _, _ = await.opp.async_add_executor_job(
+        remote_host, _, _ = await opp.async_add_executor_job(
             gethostbyaddr, request.remote
         )
     except herror:
@@ -139,7 +139,7 @@ async def process_wrong_login(request):
         new_ban = IpBan(remote_addr)
         request.app[KEY_BANNED_IPS].append(new_ban)
 
-        await.opp.async_add_executor_job(
+        await opp.async_add_executor_job(
             update_ip_bans_config,.opp.config.path(IP_BANS_FILE), new_ban
         )
 
@@ -189,7 +189,7 @@ async def async_load_ip_bans_config.opp: OpenPeerPower, path: str) -> List[IpBan
     ip_list: List[IpBan] = []
 
     try:
-        list_ = await.opp.async_add_executor_job(load_yaml_config_file, path)
+        list_ = await opp.async_add_executor_job(load_yaml_config_file, path)
     except FileNotFoundError:
         return ip_list
     except OpenPeerPowerError as err:

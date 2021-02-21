@@ -28,7 +28,7 @@ async def test_switch_toggles(mock_hc,.opp, mock_write_config):
 
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # mocks start with current activity == Watch TV
     assert.opp.states.is_state(ENTITY_REMOTE, STATE_ON)
@@ -62,7 +62,7 @@ async def test_remote_toggles(mock_hc,.opp, mock_write_config):
 
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # mocks start with current activity == Watch TV
     assert.opp.states.is_state(ENTITY_REMOTE, STATE_ON)
@@ -76,7 +76,7 @@ async def test_remote_toggles(mock_hc,.opp, mock_write_config):
         {ATTR_ENTITY_ID: ENTITY_REMOTE},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.is_state(ENTITY_REMOTE, STATE_OFF)
     assert.opp.states.is_state(ENTITY_WATCH_TV, STATE_OFF)
@@ -89,7 +89,7 @@ async def test_remote_toggles(mock_hc,.opp, mock_write_config):
         {ATTR_ENTITY_ID: ENTITY_REMOTE},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.is_state(ENTITY_REMOTE, STATE_ON)
     assert.opp.states.is_state(ENTITY_WATCH_TV, STATE_ON)
@@ -102,7 +102,7 @@ async def test_remote_toggles(mock_hc,.opp, mock_write_config):
         {ATTR_ENTITY_ID: ENTITY_REMOTE, ATTR_ACTIVITY: "Play Music"},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.is_state(ENTITY_REMOTE, STATE_ON)
     assert.opp.states.is_state(ENTITY_WATCH_TV, STATE_OFF)
@@ -115,7 +115,7 @@ async def test_remote_toggles(mock_hc,.opp, mock_write_config):
         {ATTR_ENTITY_ID: ENTITY_REMOTE, ATTR_ACTIVITY: ACTIVITIES_TO_IDS["Watch TV"]},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.is_state(ENTITY_REMOTE, STATE_ON)
     assert.opp.states.is_state(ENTITY_WATCH_TV, STATE_ON)
@@ -129,4 +129,4 @@ async def _toggle_switch_and_wait.opp, service_name, entity):
         {ATTR_ENTITY_ID: entity},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()

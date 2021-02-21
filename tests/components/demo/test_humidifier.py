@@ -35,7 +35,7 @@ async def setup_demo_humidifier.opp):
     assert await async_setup_component(
        .opp, DOMAIN, {"humidifier": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 def test_setup_params.opp):
@@ -64,7 +64,7 @@ async def test_set_target_humidity_bad_attr.opp):
             {ATTR_HUMIDITY: None, ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER},
             blocking=True,
         )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_HUMIDITY) == 54
@@ -81,7 +81,7 @@ async def test_set_target_humidity.opp):
         {ATTR_HUMIDITY: 64, ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_HUMIDITY) == 64
@@ -95,7 +95,7 @@ async def test_set_hold_mode_away.opp):
         {ATTR_MODE: MODE_AWAY, ATTR_ENTITY_ID: ENTITY_HYGROSTAT},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_HYGROSTAT)
     assert state.attributes.get(ATTR_MODE) == MODE_AWAY
@@ -109,7 +109,7 @@ async def test_set_hold_mode_eco.opp):
         {ATTR_MODE: MODE_ECO, ATTR_ENTITY_ID: ENTITY_HYGROSTAT},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_HYGROSTAT)
     assert state.attributes.get(ATTR_MODE) == MODE_ECO

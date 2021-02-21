@@ -35,7 +35,7 @@ async def test_form.opp):
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {CONF_ACCESS_TOKEN: "access_token"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "JuiceNet"
@@ -114,7 +114,7 @@ async def test_import.opp):
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_ACCESS_TOKEN: "access_token"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "JuiceNet"

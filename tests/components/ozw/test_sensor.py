@@ -68,7 +68,7 @@ async def test_sensor_enabled.opp, generic_data, sensor_msg):
 
     receive_msg = await setup_ozw.opp, fixture=generic_data)
     receive_msg(sensor_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entry.entity_id)
     assert state is not None
@@ -90,7 +90,7 @@ async def test_string_sensor.opp, string_sensor_data):
     )
 
     await setup_ozw.opp, fixture=string_sensor_data)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entry.entity_id)
     assert state is not None

@@ -29,7 +29,7 @@ async def test_zwave_ws_api.opp, mock_openzwave,.opp_ws_client):
         },
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_ws_client.opp)
 
@@ -59,7 +59,7 @@ async def test_zwave_ozw_migration_api.opp, mock_openzwave,.opp_ws_client):
         },
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_ws_client.opp)
 

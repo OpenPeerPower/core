@@ -90,7 +90,7 @@ async def test_multiple_attrs.opp):
        .opp, [State(ENTITY_1, STATE_ON, {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})]
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 1
     assert turn_on_calls[0].data == {"entity_id": ENTITY_1}
@@ -114,7 +114,7 @@ async def test_turn_off_multiple_attrs.opp):
        .opp, [State(ENTITY_1, STATE_OFF, {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})]
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 0
     assert len(turn_off_calls) == 1
@@ -141,7 +141,7 @@ async def test_multiple_modes.opp):
         ],
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 2
     assert len(turn_off_calls) == 0
@@ -174,7 +174,7 @@ async def test_state_with_none.opp):
 
     await async_reproduce_states.opp, [State(ENTITY_1, None)])
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 0
     assert len(turn_off_calls) == 0
@@ -199,7 +199,7 @@ async def test_state_with_context.opp):
         context=context,
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 1
     assert turn_on_calls[0].data == {"entity_id": ENTITY_1}
@@ -229,7 +229,7 @@ async def test_attribute.opp, service, attribute):
 
     await async_reproduce_states.opp, [State(ENTITY_1, STATE_ON, {attribute: value})])
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 0
     assert len(turn_off_calls) == 0

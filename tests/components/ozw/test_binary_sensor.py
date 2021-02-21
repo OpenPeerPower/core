@@ -38,7 +38,7 @@ async def test_binary_sensor.opp, generic_data, binary_sensor_msg):
 
     # Test incoming state change
     receive_msg(binary_sensor_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("binary_sensor.trisensor_home_security_motion_detected")
     assert state.state == "on"
 
@@ -59,7 +59,7 @@ async def test_sensor_enabled.opp, generic_data, binary_sensor_alt_msg):
 
     receive_msg = await setup_ozw.opp, fixture=generic_data)
     receive_msg(binary_sensor_alt_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entry.entity_id)
     assert state is not None

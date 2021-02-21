@@ -40,7 +40,7 @@ async def run_sensor_test(
     for (initial_value, state_value) in assert_states:
         setattr(vera_device, class_property, initial_value)
         update_callback(vera_device)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get(entity_id)
         assert state.state == state_value
         if assert_unit_of_measurement:
@@ -194,5 +194,5 @@ async def test_scene_controller_sensor(
 
     vera_device.get_last_scene_time.return_value = "1111"
     update_callback(vera_device)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == "id0"

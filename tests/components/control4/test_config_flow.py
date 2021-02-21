@@ -75,7 +75,7 @@ async def test_form.opp):
                 CONF_PASSWORD: "test-password",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "control4_model_00AA00AA00AA"

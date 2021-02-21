@@ -78,7 +78,7 @@ async def test_availability.opp, aioclient_mock):
     future = utcnow() + timedelta(minutes=60)
 
     async_fire_time_changed.opp, future)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("air_quality.home")
     assert state
@@ -89,7 +89,7 @@ async def test_availability.opp, aioclient_mock):
     future = utcnow() + timedelta(minutes=120)
 
     async_fire_time_changed.opp, future)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("air_quality.home")
     assert state

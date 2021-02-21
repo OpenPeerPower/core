@@ -51,7 +51,7 @@ async def test_form.opp):
                 CONF_MANUAL_RUN_MINS: 5,
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "myusername"

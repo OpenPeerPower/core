@@ -20,7 +20,7 @@ async def test_moon_day1.opp):
 
     await async_setup_component.opp, HA_DOMAIN, {})
     assert await async_setup_component.opp, "sensor", config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.moon_day1")
 
@@ -38,7 +38,7 @@ async def test_moon_day2.opp):
 
     await async_setup_component.opp, HA_DOMAIN, {})
     assert await async_setup_component.opp, "sensor", config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.moon_day2")
 
@@ -58,4 +58,4 @@ async def async_update_entity.opp, entity_id):
         {ATTR_ENTITY_ID: entity_id},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()

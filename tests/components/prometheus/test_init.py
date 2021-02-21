@@ -40,7 +40,7 @@ async def prometheus_client.opp,.opp_client):
     await async_setup_component(
        .opp, climate.DOMAIN, {"climate": [{"platform": "demo"}]}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await async_setup_component(
        .opp, humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
@@ -222,7 +222,7 @@ async def test_minimal_config.opp, mock_client):
     """Test the minimal config and defaults of component."""
     config = {prometheus.DOMAIN: {}}
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
@@ -249,7 +249,7 @@ async def test_full_config.opp, mock_client):
         }
     }
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
@@ -271,7 +271,7 @@ async def _setup.opp, filter_config):
     """Shared set up for filtering tests."""
     config = {prometheus.DOMAIN: {"filter": filter_config}}
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     return.opp.bus.listen.call_args_list[0][0][1]
 
 

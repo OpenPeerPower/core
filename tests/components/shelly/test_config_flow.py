@@ -51,7 +51,7 @@ async def test_form.opp):
             result["flow_id"],
             {"host": "1.1.1.1"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "Test name"
@@ -97,7 +97,7 @@ async def test_title_without_name.opp):
             result["flow_id"],
             {"host": "1.1.1.1"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "shelly1pm-12345"
@@ -147,7 +147,7 @@ async def test_form_auth.opp):
             result2["flow_id"],
             {"username": "test username", "password": "test password"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result3["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result3["title"] == "Test name"
@@ -369,7 +369,7 @@ async def test_zeroconf.opp):
             result["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "Test name"
@@ -433,7 +433,7 @@ async def test_zeroconf_sleeping_device.opp):
             result["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "Test name"
@@ -601,7 +601,7 @@ async def test_zeroconf_require_auth.opp):
             result2["flow_id"],
             {"username": "test username", "password": "test password"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result3["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result3["title"] == "Test name"

@@ -39,7 +39,7 @@ async def test_setup_platform_valid_config.opp, mock_socket):
     """Check a valid configuration."""
     with assert_setup_component(1, "binary_sensor"):
         assert await async_setup_component.opp, "binary_sensor", TEST_CONFIG)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_setup_platform_invalid_config.opp, mock_socket):
@@ -50,14 +50,14 @@ async def test_setup_platform_invalid_config.opp, mock_socket):
             "binary_sensor",
             {"binary_sensor": {"platform": "tcp", "porrt": 1234}},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_state.opp, mock_socket, now):
     """Check the state and update of the binary sensor."""
     mock_socket.recv.return_value = b"off"
     assert await async_setup_component.opp, "binary_sensor", TEST_CONFIG)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
 
@@ -75,7 +75,7 @@ async def test_state.opp, mock_socket, now):
     mock_socket.recv.return_value = b"on"
 
     async_fire_time_changed.opp, now + timedelta(seconds=45))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
 

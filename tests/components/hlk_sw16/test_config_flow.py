@@ -76,7 +76,7 @@ async def test_form.opp):
             result["flow_id"],
             conf,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "127.0.0.1:8080"
@@ -106,7 +106,7 @@ async def test_form.opp):
 
     assert result4["type"] == "form"
     assert result4["errors"] == {"base": "already_configured"}
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_import.opp):
@@ -138,7 +138,7 @@ async def test_import.opp):
             result["flow_id"],
             conf,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "127.0.0.1:8080"

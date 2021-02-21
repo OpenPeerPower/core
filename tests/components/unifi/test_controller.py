@@ -193,7 +193,7 @@ async def setup_unifi_integration(
 
     with patch.object(aiounifi.websocket.WSClient, "start", return_value=True):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     if config_entry.entry_id not in.opp.data[UNIFI_DOMAIN]:
         return None
@@ -287,7 +287,7 @@ async def test_reset_after_successful_setup.opp, aioclient_mock):
     assert len(controller.listeners) == 6
 
     result = await controller.async_reset()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result is True
     assert len(controller.listeners) == 0

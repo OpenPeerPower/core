@@ -99,5 +99,5 @@ async def async_update_device(
         for callback_fn in callbacks:
             callback_fn(message)
 
-    await.opp.async_add_executor_job(_run_callbacks)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(_run_callbacks)
+    await opp.async_block_till_done()

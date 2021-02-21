@@ -48,7 +48,7 @@ async def test_authorization_error.opp: OpenPeerPower) -> None:
             result["flow_id"],
             FIXTURE_USER_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "user"
@@ -72,7 +72,7 @@ async def test_reauth_authorization_error.opp: OpenPeerPower) -> None:
             result["flow_id"],
             FIXTURE_REAUTH_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "reauth"
@@ -96,7 +96,7 @@ async def test_connection_error.opp: OpenPeerPower) -> None:
             result["flow_id"],
             FIXTURE_USER_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "user"
@@ -120,7 +120,7 @@ async def test_reauth_connection_error.opp: OpenPeerPower) -> None:
             result["flow_id"],
             FIXTURE_REAUTH_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "reauth"
@@ -149,7 +149,7 @@ async def test_project_error.opp: OpenPeerPower) -> None:
             result["flow_id"],
             FIXTURE_USER_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "user"
@@ -178,7 +178,7 @@ async def test_reauth_project_error.opp: OpenPeerPower) -> None:
             result["flow_id"],
             FIXTURE_REAUTH_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "reauth"
@@ -219,7 +219,7 @@ async def test_reauth_flow.opp: OpenPeerPower) -> None:
             result["flow_id"],
             FIXTURE_REAUTH_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result2["reason"] == "reauth_successful"
@@ -254,7 +254,7 @@ async def test_full_flow_implementation.opp: OpenPeerPower) -> None:
             result["flow_id"],
             FIXTURE_USER_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 

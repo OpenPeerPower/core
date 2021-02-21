@@ -70,7 +70,7 @@ async def async_wemo_entity_fixture.opp, pywemo_device):
             },
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     entity_entries = list(entity_registry.entities.values())

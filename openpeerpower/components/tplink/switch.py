@@ -31,7 +31,7 @@ SLEEP_TIME = 2
 
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry, async_add_entities):
     """Set up switches."""
-    entities = await.opp.async_add_executor_job(
+    entities = await opp.async_add_executor_job(
         add_available_devices,.opp, CONF_SWITCH, SmartPlugSwitch
     )
 

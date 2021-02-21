@@ -43,7 +43,7 @@ async def test_turn_on.opp):
     turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
     await.opp.services.async_call(DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID})
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 1
     call = turn_on_calls[-1]
@@ -59,7 +59,7 @@ async def test_turn_off.opp):
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID}
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(turn_off_calls) == 1
     call = turn_off_calls[-1]
@@ -83,7 +83,7 @@ async def test_send_command.opp):
 
     await.opp.services.async_call(DOMAIN, SERVICE_SEND_COMMAND, data)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(send_command_calls) == 1
     call = send_command_calls[-1]
@@ -107,7 +107,7 @@ async def test_learn_command.opp):
     }
     await.opp.services.async_call(DOMAIN, SERVICE_LEARN_COMMAND, data)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(learn_command_calls) == 1
     call = learn_command_calls[-1]
@@ -131,7 +131,7 @@ async def test_delete_command.opp):
 
     await.opp.services.async_call(DOMAIN, SERVICE_DELETE_COMMAND, data)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(delete_command_calls) == 1
     call = delete_command_calls[-1]

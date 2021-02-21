@@ -36,7 +36,7 @@ async def test_capture_image.opp):
             {ATTR_ENTITY_ID: "camera.test_cam"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_capture.assert_called_once()
 
 
@@ -51,7 +51,7 @@ async def test_camera_on.opp):
             {ATTR_ENTITY_ID: "camera.test_cam"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_capture.assert_called_once_with(False)
 
 
@@ -66,5 +66,5 @@ async def test_camera_off.opp):
             {ATTR_ENTITY_ID: "camera.test_cam"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_capture.assert_called_once_with(True)

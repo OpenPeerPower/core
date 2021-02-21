@@ -72,7 +72,7 @@ async def test_async_setup_entry_sets_up_hub_and_supported_domains.opp: OpenPeer
         ) as mock_switch_async_setup_entry:
             result = await setup_bond_entity.opp, config_entry, patch_device_ids=True)
             assert result is True
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
     assert config_entry.entry_id in.opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_LOADED
@@ -108,10 +108,10 @@ async def test_unload_config_entry.opp: OpenPeerPower):
         patch_platforms=True,
     )
     assert result is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await.opp.config_entries.async_unload(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert config_entry.entry_id not in.opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_NOT_LOADED
@@ -155,7 +155,7 @@ async def test_old_identifiers_are_removed.opp: OpenPeerPower):
         return_value={}
     ):
         assert await.opp.config_entries.async_setup(config_entry.entry_id) is True
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert config_entry.entry_id in.opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_LOADED

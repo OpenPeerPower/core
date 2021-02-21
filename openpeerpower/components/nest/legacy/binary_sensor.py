@@ -118,7 +118,7 @@ async def async_setup_legacy_entry.opp, entry, async_add_entities):
 
         return sensors
 
-    async_add_entities(await.opp.async_add_executor_job(get_binary_sensors), True)
+    async_add_entities(await opp.async_add_executor_job(get_binary_sensors), True)
 
 
 class NestBinarySensor(NestSensorDevice, BinarySensorEntity):

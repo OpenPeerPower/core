@@ -48,6 +48,6 @@ async def init_integration.opp: OpenPeerPower, use_nickname=True) -> MockConfigE
         return_value=client_mock,
     ), patch("openpeerpower.components.mazda.MazdaAPI", return_value=client_mock):
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return config_entry

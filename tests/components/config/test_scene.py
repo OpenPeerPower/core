@@ -150,7 +150,7 @@ async def test_delete_scene.opp,.opp_client):
         "openpeerpower.components.config._write", mock_write
     ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
         resp = await client.delete("/api/config/scene/config/light_on")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert resp.status == 200
     result = await resp.json()

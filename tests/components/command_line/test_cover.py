@@ -73,7 +73,7 @@ async def test_state_value.opp):
             )
             is True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert "unknown" == opp.states.get("cover.test").state
 
@@ -105,7 +105,7 @@ async def test_reload.opp):
         DOMAIN,
         {"cover": {"platform": "command_line", "covers": {"test": test_cover}}},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
     assert.opp.states.get("cover.test").state
@@ -122,7 +122,7 @@ async def test_reload.opp):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 

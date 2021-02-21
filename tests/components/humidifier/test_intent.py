@@ -34,7 +34,7 @@ async def test_intent_set_humidity.opp):
         intent.INTENT_HUMIDITY,
         {"name": {"value": "Bedroom humidifier"}, "humidity": {"value": "50"}},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result.speech["plain"]["speech"] == "The bedroom humidifier is set to 50%"
 
@@ -61,7 +61,7 @@ async def test_intent_set_humidity_and_turn_on.opp):
         intent.INTENT_HUMIDITY,
         {"name": {"value": "Bedroom humidifier"}, "humidity": {"value": "50"}},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert (
         result.speech["plain"]["speech"]
@@ -102,7 +102,7 @@ async def test_intent_set_mode.opp):
         intent.INTENT_MODE,
         {"name": {"value": "Bedroom humidifier"}, "mode": {"value": "away"}},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert (
         result.speech["plain"]["speech"]
@@ -139,7 +139,7 @@ async def test_intent_set_mode_and_turn_on.opp):
         intent.INTENT_MODE,
         {"name": {"value": "Bedroom humidifier"}, "mode": {"value": "away"}},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert (
         result.speech["plain"]["speech"]

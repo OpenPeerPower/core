@@ -45,7 +45,7 @@ async def async_setup.opp, config):
     if DOMAIN in config:
        .opp.data[DOMAIN] = {}
         for entry_config in config[DOMAIN]:
-            ip_address = await.opp.async_add_executor_job(
+            ip_address = await opp.async_add_executor_job(
                 socket.gethostbyname, entry_config[CONF_HOST]
             )
            .opp.data[DOMAIN][ip_address] = {

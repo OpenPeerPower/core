@@ -520,7 +520,7 @@ class TodoistProjectData:
                 or task[PROJECT_ID] in self._project_id_whitelist
             ]
         else:
-            project_data = await.opp.async_add_executor_job(
+            project_data = await opp.async_add_executor_job(
                 self._api.projects.get_data, self._id
             )
             project_task_data = project_data[TASKS]

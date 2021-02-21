@@ -23,7 +23,7 @@ async def test_services.opp, config_entry, aioclient_mock_fixture, aioclient_moc
     assert await async_setup_component(
        .opp, FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
     assert aioclient_mock.call_count == 4
@@ -34,7 +34,7 @@ async def test_services.opp, config_entry, aioclient_mock_fixture, aioclient_moc
         {ATTR_ENTITY_ID: SWITCH_ENTITY_ID},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert aioclient_mock.call_count == 5
 
     await.opp.services.async_call(
@@ -43,7 +43,7 @@ async def test_services.opp, config_entry, aioclient_mock_fixture, aioclient_moc
         {ATTR_ENTITY_ID: SWITCH_ENTITY_ID},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert aioclient_mock.call_count == 6
 
     await.opp.services.async_call(
@@ -52,7 +52,7 @@ async def test_services.opp, config_entry, aioclient_mock_fixture, aioclient_moc
         {ATTR_ENTITY_ID: SWITCH_ENTITY_ID},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert aioclient_mock.call_count == 7
 
     await.opp.services.async_call(
@@ -65,5 +65,5 @@ async def test_services.opp, config_entry, aioclient_mock_fixture, aioclient_moc
         },
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert aioclient_mock.call_count == 8

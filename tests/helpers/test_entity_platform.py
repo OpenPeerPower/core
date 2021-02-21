@@ -47,7 +47,7 @@ async def test_polling_only_updates_entities_it_should_poll.opp):
     poll_ent.async_update.reset_mock()
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=20))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not no_poll_ent.async_update.called
     assert poll_ent.async_update.called
@@ -84,7 +84,7 @@ async def test_polling_updates_entities_with_exception.opp):
     update_err.clear()
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=20))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(update_ok) == 3
     assert len(update_err) == 1
@@ -102,7 +102,7 @@ async def test_update_state_adds_entities.opp):
     ent2.update = lambda *_: component.add_entities([ent1])
 
     async_fire_time_changed.opp, dt_util.utcnow() + DEFAULT_SCAN_INTERVAL)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids()) == 2
 
@@ -115,7 +115,7 @@ async def test_update_state_adds_entities_with_update_before_add_true.opp):
     ent.update = Mock(spec_set=True)
 
     await component.async_add_entities([ent], True)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids()) == 1
     assert ent.update.called
@@ -129,7 +129,7 @@ async def test_update_state_adds_entities_with_update_before_add_false.opp):
     ent.update = Mock(spec_set=True)
 
     await component.async_add_entities([ent], False)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids()) == 1
     assert not ent.update.called
@@ -152,7 +152,7 @@ async def test_set_scan_interval_via_platform(mock_track,.opp):
 
     component.setup({DOMAIN: {"platform": "platform"}})
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mock_track.called
     assert timedelta(seconds=30) == mock_track.call_args[0][2]
 
@@ -184,7 +184,7 @@ async def test_platform_warn_slow_setup.opp):
 
     with patch.object.opp.loop, "call_later") as mock_call:
         await component.async_setup({DOMAIN: {"platform": "platform"}})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert mock_call.called
 
         # mock_calls[0] is the warning message for component setup
@@ -210,7 +210,7 @@ async def test_platform_error_slow_setup.opp, caplog):
         component = EntityComponent(_LOGGER, DOMAIN,.opp)
         mock_entity_platform.opp, "test_domain.test_platform", platform)
         await component.async_setup({DOMAIN: {"platform": "test_platform"}})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert len(called) == 1
         assert "test_domain.test_platform" not in.opp.config.components
         assert "test_platform is taking longer than 0 seconds" in caplog.text
@@ -244,7 +244,7 @@ async def test_parallel_updates_async_platform.opp):
     component._platforms = {}
 
     await component.async_setup({DOMAIN: {"platform": "platform"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     handle = list(component._platforms.values())[-1]
     assert handle.parallel_updates is None
@@ -271,7 +271,7 @@ async def test_parallel_updates_async_platform_with_constant.opp):
     component._platforms = {}
 
     await component.async_setup({DOMAIN: {"platform": "platform"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     handle = list(component._platforms.values())[-1]
 
@@ -297,7 +297,7 @@ async def test_parallel_updates_sync_platform.opp):
     component._platforms = {}
 
     await component.async_setup({DOMAIN: {"platform": "platform"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     handle = list(component._platforms.values())[-1]
 
@@ -324,7 +324,7 @@ async def test_parallel_updates_sync_platform_with_constant.opp):
     component._platforms = {}
 
     await component.async_setup({DOMAIN: {"platform": "platform"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     handle = list(component._platforms.values())[-1]
 
@@ -538,8 +538,8 @@ async def test_entity_registry_updates_name.opp):
     assert state.name == "before update"
 
     registry.async_update_entity("test_domain.world", name="after update")
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("test_domain.world")
     assert state.name == "after update"
@@ -561,7 +561,7 @@ async def test_setup_entry.opp):
     )
 
     assert await entity_platform.async_setup_entry(config_entry)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     full_name = f"{entity_platform.domain}.{config_entry.domain}"
     assert full_name in.opp.config.components
     assert len.opp.states.async_entity_ids()) == 1
@@ -644,8 +644,8 @@ async def test_entity_registry_updates_entity_id.opp):
     registry.async_update_entity(
         "test_domain.world", new_entity_id="test_domain.planet"
     )
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("test_domain.world") is None
     assert.opp.states.get("test_domain.planet") is not None
@@ -693,8 +693,8 @@ async def test_entity_registry_updates_invalid_entity_id.opp):
             "test_domain.world", new_entity_id="diff_domain.world"
         )
 
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("test_domain.world") is not None
     assert.opp.states.get("invalid_entity_id") is None
@@ -743,7 +743,7 @@ async def test_device_info_called.opp):
     )
 
     assert await entity_platform.async_setup_entry(config_entry)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids()) == 2
 
@@ -796,7 +796,7 @@ async def test_device_info_not_overrides.opp):
     )
 
     assert await entity_platform.async_setup_entry(config_entry)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     device2 = registry.async_get_device(set(), {("mac", "abcd")})
     assert device2 is not None
@@ -966,7 +966,7 @@ async def test_setup_entry_with_entities_that_block_forever.opp, caplog):
         entity_platform, "SLOW_ADD_MIN_TIMEOUT", 0.01
     ):
         assert await mock_entity_platform.async_setup_entry(config_entry)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     full_name = f"{mock_entity_platform.domain}.{config_entry.domain}"
     assert full_name in.opp.config.components
     assert len.opp.states.async_entity_ids()) == 0

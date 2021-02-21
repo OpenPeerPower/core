@@ -128,4 +128,4 @@ async def setup_bridge_for_sensors.opp, mock_bridge, hostname=None):
    .opp.config_entries._entries.append(config_entry)
 
     # and make sure it completes before going further
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()

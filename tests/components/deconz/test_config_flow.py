@@ -459,7 +459,7 @@ async def test_ssdp_discovery_update_configuration.opp, aioclient_mock):
             },
             context={"source": SOURCE_SSDP},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
@@ -535,7 +535,7 @@ async def test_flow_oppio_discovery.opp):
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["result"].data == {
@@ -565,7 +565,7 @@ async def test_oppio_discovery_update_configuration.opp, aioclient_mock):
             },
             context={"source": SOURCE_OPPIO},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"

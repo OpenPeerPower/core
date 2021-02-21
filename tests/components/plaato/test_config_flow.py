@@ -249,7 +249,7 @@ async def test_options.opp):
     ) as mock_setup_entry:
 
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
@@ -261,7 +261,7 @@ async def test_options.opp):
             user_input={CONF_SCAN_INTERVAL: 10},
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["data"][CONF_SCAN_INTERVAL] == 10
@@ -287,7 +287,7 @@ async def test_options_webhook.opp, webhook_id):
     ) as mock_setup_entry:
 
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
@@ -300,7 +300,7 @@ async def test_options_webhook.opp, webhook_id):
             user_input={CONF_WEBHOOK_ID: WEBHOOK_ID},
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["data"][CONF_WEBHOOK_ID] == CONF_WEBHOOK_ID

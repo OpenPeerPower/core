@@ -56,7 +56,7 @@ async def test_async_setup_entry_default.opp: OpenPeerPowerType):
         # initialisation of component, no device discovered
         async_discover.return_value = []
         await async_setup_component.opp, "upnp", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # loading of config_entry, device discovered
         async_discover.return_value = discoveries
@@ -112,7 +112,7 @@ async def test_sync_setup_entry_multiple_discoveries.opp: OpenPeerPowerType):
         # initialisation of component, no device discovered
         async_discover.return_value = []
         await async_setup_component.opp, "upnp", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # loading of config_entry, device discovered
         async_discover.return_value = discoveries

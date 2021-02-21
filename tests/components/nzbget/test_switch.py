@@ -32,7 +32,7 @@ async def test_download_switch.opp, nzbget_api) -> None:
     instance.status.return_value["DownloadPaused"] = True
 
     await.opp.helpers.entity_component.async_update_entity(entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state

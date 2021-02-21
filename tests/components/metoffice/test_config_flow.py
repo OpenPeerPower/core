@@ -42,7 +42,7 @@ async def test_form.opp, requests_mock):
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"api_key": TEST_API_KEY}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == TEST_SITE_NAME_WAVERTREE

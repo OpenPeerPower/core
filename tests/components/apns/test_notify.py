@@ -319,7 +319,7 @@ async def test_send_with_state(mock_client,.opp):
         "openpeerpower.components.apns.notify.load_yaml_config_file",
         Mock(return_value=yaml_file),
     ), patch("os.path.isfile", Mock(return_value=True)):
-        notify_service = await.opp.async_add_executor_job(
+        notify_service = await opp.async_add_executor_job(
             apns.ApnsNotificationService,
            .opp,
             "test_app",

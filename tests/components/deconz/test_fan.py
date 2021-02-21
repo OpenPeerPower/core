@@ -76,7 +76,7 @@ async def test_fans.opp, aioclient_mock):
         "state": {"speed": 0},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("fan.ceiling_fan").state == STATE_OFF
     assert.opp.states.get("fan.ceiling_fan").attributes["speed"] == SPEED_OFF
@@ -165,7 +165,7 @@ async def test_fans.opp, aioclient_mock):
         "state": {"speed": 3},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("fan.ceiling_fan").state == STATE_ON
     assert.opp.states.get("fan.ceiling_fan").attributes["speed"] == SPEED_MEDIUM
@@ -178,5 +178,5 @@ async def test_fans.opp, aioclient_mock):
         assert state.state == STATE_UNAVAILABLE
 
     await.opp.config_entries.async_remove(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0

@@ -57,7 +57,7 @@ async def test_set_alarm_away.opp):
                 {ATTR_ENTITY_ID: DEVICE_ID},
                 blocking=True,
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
             mock_set_away.assert_called_once()
 
         with patch(
@@ -67,8 +67,8 @@ async def test_set_alarm_away.opp):
             mock_mode.return_value = CONST.MODE_AWAY
 
             update_callback = mock_callback.call_args[0][1]
-            await.opp.async_add_executor_job(update_callback, "area_1")
-            await.opp.async_block_till_done()
+            await opp.async_add_executor_job(update_callback, "area_1")
+            await opp.async_block_till_done()
 
             state = opp.states.get(DEVICE_ID)
             assert state.state == STATE_ALARM_ARMED_AWAY
@@ -86,7 +86,7 @@ async def test_set_alarm_home.opp):
                 {ATTR_ENTITY_ID: DEVICE_ID},
                 blocking=True,
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
             mock_set_home.assert_called_once()
 
         with patch(
@@ -95,8 +95,8 @@ async def test_set_alarm_home.opp):
             mock_mode.return_value = CONST.MODE_HOME
 
             update_callback = mock_callback.call_args[0][1]
-            await.opp.async_add_executor_job(update_callback, "area_1")
-            await.opp.async_block_till_done()
+            await opp.async_add_executor_job(update_callback, "area_1")
+            await opp.async_block_till_done()
 
             state = opp.states.get(DEVICE_ID)
             assert state.state == STATE_ALARM_ARMED_HOME
@@ -113,7 +113,7 @@ async def test_set_alarm_standby.opp):
                 {ATTR_ENTITY_ID: DEVICE_ID},
                 blocking=True,
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
             mock_set_standby.assert_called_once()
 
         with patch(
@@ -122,8 +122,8 @@ async def test_set_alarm_standby.opp):
             mock_mode.return_value = CONST.MODE_STANDBY
 
             update_callback = mock_callback.call_args[0][1]
-            await.opp.async_add_executor_job(update_callback, "area_1")
-            await.opp.async_block_till_done()
+            await opp.async_add_executor_job(update_callback, "area_1")
+            await opp.async_block_till_done()
 
             state = opp.states.get(DEVICE_ID)
             assert state.state == STATE_ALARM_DISARMED
@@ -133,7 +133,7 @@ async def test_state_unknown.opp):
     """Test an unknown alarm control panel state."""
     with patch("abodepy.ALARM.AbodeAlarm.mode", new_callable=PropertyMock) as mock_mode:
         await setup_platform.opp, ALARM_DOMAIN)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         mock_mode.return_value = None
 

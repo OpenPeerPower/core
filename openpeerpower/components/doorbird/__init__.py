@@ -128,8 +128,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     device = DoorBird(device_ip, username, password)
     try:
-        status = await.opp.async_add_executor_job(device.ready)
-        info = await.opp.async_add_executor_job(device.info)
+        status = await opp.async_add_executor_job(device.ready)
+        info = await opp.async_add_executor_job(device.info)
     except urllib.error.HTTPError as err:
         if err.code == HTTP_UNAUTHORIZED:
             _LOGGER.error(
@@ -193,7 +193,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def _async_register_events.opp, doorstation):
     try:
-        await.opp.async_add_executor_job(doorstation.register_events,.opp)
+        await opp.async_add_executor_job(doorstation.register_events,.opp)
     except HTTPError:
        .opp.components.persistent_notification.create(
             "Doorbird configuration failed.  Please verify that API "

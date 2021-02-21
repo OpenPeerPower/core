@@ -58,7 +58,7 @@ async def test_setup_platform.opp):
                 ],
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # No device is set up
     mocked_device.assert_not_called()
@@ -74,7 +74,7 @@ async def test_setup_failed.opp, caplog):
 
     with _patch_media_player_device(mocked_device):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     all_states = opp.states.async_all()
     assert len(all_states) == 0
     warning_records = [x for x in caplog.records if x.levelno == logging.WARNING]
@@ -86,7 +86,7 @@ async def test_setup_failed.opp, caplog):
     type(mocked_device).get_supported_methods = AsyncMock()
     with _patch_media_player_device(mocked_device):
         async_fire_time_changed.opp, utcnow + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     all_states = opp.states.async_all()
     assert len(all_states) == 1
     assert not any(x.levelno == logging.WARNING for x in caplog.records)
@@ -101,7 +101,7 @@ async def test_state.opp):
 
     with _patch_media_player_device(mocked_device):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_ID)
     assert state.name == FRIENDLY_NAME
@@ -134,7 +134,7 @@ async def test_services.opp):
 
     with _patch_media_player_device(mocked_device):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     async def _call(service, **argv):
         await.opp.services.async_call(
@@ -184,7 +184,7 @@ async def test_services.opp):
     entry2.add_to_opp.opp)
     with _patch_media_player_device(mocked_device2):
         await.opp.config_entries.async_setup(entry2.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     await.opp.services.async_call(
         songpal.DOMAIN,
@@ -204,7 +204,7 @@ async def test_websocket_events.opp):
 
     with _patch_media_player_device(mocked_device):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mocked_device.listen_notifications.assert_called_once()
     assert mocked_device.on_notification.call_count == 4
@@ -242,7 +242,7 @@ async def test_disconnected.opp, caplog):
 
     with _patch_media_player_device(mocked_device):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     async def _assert_state():
         state = opp.states.get(ENTITY_ID)

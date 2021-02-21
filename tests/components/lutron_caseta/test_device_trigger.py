@@ -222,7 +222,7 @@ async def test_if_fires_on_button_event.opp, calls, device_reg):
         ATTR_ACTION: "press",
     }
    .opp.bus.async_fire(LUTRON_CASETA_BUTTON_EVENT, message)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data["some"] == "test_trigger_button_press"
@@ -262,7 +262,7 @@ async def test_validate_trigger_config_no_device.opp, calls, device_reg):
         ATTR_ACTION: "press",
     }
    .opp.bus.async_fire(LUTRON_CASETA_BUTTON_EVENT, message)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -306,7 +306,7 @@ async def test_validate_trigger_config_unknown_device.opp, calls, device_reg):
         ATTR_ACTION: "press",
     }
    .opp.bus.async_fire(LUTRON_CASETA_BUTTON_EVENT, message)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 0
 

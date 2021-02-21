@@ -22,5 +22,5 @@ async def test_form.opp):
     assert result2["data"] == {
         "country": OPTION_WORLDWIDE,
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 4

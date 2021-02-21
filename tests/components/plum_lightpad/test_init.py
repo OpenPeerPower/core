@@ -37,7 +37,7 @@ async def test_async_setup_imports_from_config.opp: OpenPeerPower):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result is True
     assert len(mock_loadCloudData.mock_calls) == 1
@@ -60,7 +60,7 @@ async def test_async_setup_entry_sets_up_light.opp: OpenPeerPower):
         result = await.opp.config_entries.async_setup(config_entry.entry_id)
         assert result is True
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_loadCloudData.mock_calls) == 1
     assert len(mock_light_async_setup_entry.mock_calls) == 1

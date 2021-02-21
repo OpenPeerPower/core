@@ -34,7 +34,7 @@ async def test_user.opp):
     assert result["result"].unique_id == f"{HOST}:{PORT}"
 
     with patch("openpeerpower.components.cert_expiry.sensor.async_setup_entry"):
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_user_with_bad_cert.opp):
@@ -60,7 +60,7 @@ async def test_user_with_bad_cert.opp):
     assert result["result"].unique_id == f"{HOST}:{PORT}"
 
     with patch("openpeerpower.components.cert_expiry.sensor.async_setup_entry"):
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_import_host_only.opp):
@@ -74,7 +74,7 @@ async def test_import_host_only.opp):
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "import"}, data={CONF_HOST: HOST}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == HOST
@@ -96,7 +96,7 @@ async def test_import_host_and_port.opp):
             context={"source": "import"},
             data={CONF_HOST: HOST, CONF_PORT: PORT},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == HOST
@@ -116,7 +116,7 @@ async def test_import_non_default_port.opp):
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "import"}, data={CONF_HOST: HOST, CONF_PORT: 888}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == f"{HOST}:888"
@@ -138,7 +138,7 @@ async def test_import_with_name.opp):
             context={"source": "import"},
             data={CONF_NAME: "legacy", CONF_HOST: HOST, CONF_PORT: PORT},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == HOST

@@ -28,7 +28,7 @@ async def test_form.opp):
             result["flow_id"],
             {CONF_EMAIL: "mock@example.com", CONF_PASSWORD: "test-password"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "mock@example.com"
@@ -115,7 +115,7 @@ async def test_import.opp):
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=imported_conf
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "mock@example.com"

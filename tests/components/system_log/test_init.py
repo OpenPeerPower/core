@@ -27,12 +27,12 @@ def simple_queue():
 
 async def _async_block_until_queue_empty.opp, sq):
     # Unfortunately we are stuck with polling
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     while not sq.empty():
         await asyncio.sleep(0.01)
    .opp.data[system_log.DOMAIN].acquire()
    .opp.data[system_log.DOMAIN].release()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def get_error_log.opp,.opp_client, expected_count):
@@ -244,7 +244,7 @@ async def test_write_log.opp):
         await.opp.services.async_call(
             system_log.DOMAIN, system_log.SERVICE_WRITE, {"message": "test_message"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     mock_logging.assert_called_once_with("openpeerpower.components.system_log.external")
     assert logger.method_calls[0] == ("error", ("test_message",))
 
@@ -258,7 +258,7 @@ async def test_write_choose_logger.opp):
             system_log.SERVICE_WRITE,
             {"message": "test_message", "logger": "myLogger"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     mock_logging.assert_called_once_with("myLogger")
 
 
@@ -272,7 +272,7 @@ async def test_write_choose_level.opp):
             system_log.SERVICE_WRITE,
             {"message": "test_message", "level": "debug"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert logger.method_calls[0] == ("debug", ("test_message",))
 
 

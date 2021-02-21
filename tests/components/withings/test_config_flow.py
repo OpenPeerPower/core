@@ -50,7 +50,7 @@ async def test_config_reauth_profile(
     }
     await async_process_op.core_config.opp,.opp_config.get(HA_DOMAIN))
     assert await async_setup_component.opp, const.DOMAIN,.opp_config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     config_entry = MockConfigEntry(
         domain=const.DOMAIN, data={const.PROFILE: "person0"}, unique_id="0"

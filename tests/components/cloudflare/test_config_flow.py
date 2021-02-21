@@ -42,7 +42,7 @@ async def test_user_form.opp, cfupdate_flow):
         result["flow_id"],
         USER_INPUT,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "zone"
@@ -52,7 +52,7 @@ async def test_user_form.opp, cfupdate_flow):
         result["flow_id"],
         USER_INPUT_ZONE,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "records"
@@ -63,7 +63,7 @@ async def test_user_form.opp, cfupdate_flow):
             result["flow_id"],
             USER_INPUT_RECORDS,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == USER_INPUT_ZONE[CONF_ZONE]

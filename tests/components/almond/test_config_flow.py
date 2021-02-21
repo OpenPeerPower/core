@@ -22,7 +22,7 @@ async def test_import.opp):
             DOMAIN,
             {DOMAIN: {"type": "local", "host": "http://localhost:3000"}},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     entry = opp.config_entries.async_entries(DOMAIN)[0]
@@ -40,7 +40,7 @@ async def test_import_cannot_connect.opp):
             DOMAIN,
             {DOMAIN: {"type": "local", "host": "http://localhost:3000"}},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 0
 

@@ -22,7 +22,7 @@ async def test_jewish_calendar_min_config.opp):
     assert await async_setup_component(
        .opp, jewish_calendar.DOMAIN, {"jewish_calendar": {}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("sensor.jewish_calendar_date") is not None
 
 
@@ -31,7 +31,7 @@ async def test_jewish_calendar_hebrew.opp):
     assert await async_setup_component(
        .opp, jewish_calendar.DOMAIN, {"jewish_calendar": {"language": "hebrew"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("sensor.jewish_calendar_date") is not None
 
 
@@ -180,11 +180,11 @@ async def test_jewish_calendar_sensor(
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     result = (
         dt_util.as_utc(time_zone.localize(result)) if isinstance(result, dt) else result
@@ -527,11 +527,11 @@ async def test_shabbat_times_sensor(
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     for sensor_type, result_value in result.items():
         if not sensor_type.startswith(language):
@@ -598,11 +598,11 @@ async def test_omer_sensor.opp, legacy_patchable_time, test_time, result):
         assert await async_setup_component(
            .opp, jewish_calendar.DOMAIN, {"jewish_calendar": {"name": "test"}}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.test_day_of_the_omer").state == result
 
@@ -632,10 +632,10 @@ async def test_dafyomi_sensor.opp, legacy_patchable_time, test_time, result):
         assert await async_setup_component(
            .opp, jewish_calendar.DOMAIN, {"jewish_calendar": {"name": "test"}}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.test_daf_yomi").state == result

@@ -115,7 +115,7 @@ async def test_speaker_options_flow(
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_SPEAKER_CONFIG
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     entry = result["result"]
 
@@ -143,7 +143,7 @@ async def test_tv_options_flow_no_apps(
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_VALID_TV_CONFIG
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     entry = result["result"]
 
@@ -174,7 +174,7 @@ async def test_tv_options_flow_with_apps(
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_VALID_TV_CONFIG
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     entry = result["result"]
 
@@ -206,7 +206,7 @@ async def test_tv_options_flow_start_with_volume(
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_VALID_TV_CONFIG
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     entry = result["result"]
 
@@ -477,7 +477,7 @@ async def test_import_flow_update_options(
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_SPEAKER_CONFIG),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["result"].options == {CONF_VOLUME_STEP: DEFAULT_VOLUME_STEP}
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -508,7 +508,7 @@ async def test_import_flow_update_name_and_apps(
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_IMPORT_VALID_TV_CONFIG),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["result"].data[CONF_NAME] == NAME
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -542,7 +542,7 @@ async def test_import_flow_update_remove_apps(
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_TV_WITH_EXCLUDE_CONFIG),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["result"].data[CONF_NAME] == NAME
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -655,7 +655,7 @@ async def test_import_flow_additional_configs(
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_TV_WITH_ADDITIONAL_APPS_CONFIG),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["result"].data[CONF_NAME] == NAME
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY

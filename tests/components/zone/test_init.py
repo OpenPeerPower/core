@@ -121,7 +121,7 @@ async def test_active_zone_skips_passive_zones.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     active = zone.async_active_zone.opp, 32.880600, -117.237561)
     assert active is None
 
@@ -142,7 +142,7 @@ async def test_active_zone_skips_passive_zones_2.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     active = zone.async_active_zone.opp, 32.880700, -117.237561)
     assert "zone.active_zone" == active.entity_id
 
@@ -231,7 +231,7 @@ async def test_core_config_update.opp):
     await.opp.config.async_update(
         location_name="Updated Name", latitude=10, longitude=20
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     home_updated = opp.states.get("zone.home")
 
@@ -295,7 +295,7 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert count_start + 3 == len.opp.states.async_entity_ids())
 
@@ -478,7 +478,7 @@ async def test_import_config_entry.opp):
     )
     entry.add_to_opp.opp)
     assert await setup.async_setup_component.opp, DOMAIN, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.config_entries.async_entries()) == 0
 
     state = opp.states.get("zone.from_config_entry")

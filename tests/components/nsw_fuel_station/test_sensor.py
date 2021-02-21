@@ -81,7 +81,7 @@ async def test_setup.opp):
         assert await async_setup_component(
            .opp, sensor.DOMAIN, {"sensor": VALID_CONFIG}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     fake_entities = ["my_fake_station_p95", "my_fake_station_e10"]
 
@@ -97,7 +97,7 @@ async def test_setup.opp):
 async def test_sensor_values.opp):
     """Test retrieval of sensor values."""
     assert await async_setup_component.opp, sensor.DOMAIN, {"sensor": VALID_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "140.0" == opp.states.get("sensor.my_fake_station_e10").state
     assert "150.0" == opp.states.get("sensor.my_fake_station_p95").state

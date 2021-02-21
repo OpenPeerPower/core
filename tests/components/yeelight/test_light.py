@@ -135,7 +135,7 @@ async def test_services.opp: OpenPeerPower, caplog):
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     async def _async_test_service(
         service,
@@ -342,7 +342,7 @@ async def test_device_types.opp: OpenPeerPower):
     async def _async_setup(config_entry):
         with patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
             await.opp.config_entries.async_setup(config_entry.entry_id)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
     async def _async_test(
         bulb_type,
@@ -572,7 +572,7 @@ async def test_effects.opp: OpenPeerPower):
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(ENTITY_LIGHT).attributes.get(
         "effect_list"

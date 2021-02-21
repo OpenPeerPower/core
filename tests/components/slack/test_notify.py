@@ -59,7 +59,7 @@ async def test_setup.opp: OpenPeerPowerType, caplog: LogCaptureFixture):
     ) as mock_client:
 
         await async_setup_component.opp, notify.DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert.opp.services.has_service(notify.DOMAIN, SERVICE_NAME)
         caplog_records_slack = filter_log_records(caplog)
         assert len(caplog_records_slack) == 0
@@ -79,7 +79,7 @@ async def test_setup_clientError.opp: OpenPeerPowerType, caplog: LogCaptureFixtu
 
         client.auth_test.side_effect = [aiohttp.ClientError]
         await async_setup_component.opp, notify.DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert.opp.services.has_service(notify.DOMAIN, SERVICE_NAME)
         caplog_records_slack = filter_log_records(caplog)
         assert len(caplog_records_slack) == 1
@@ -99,7 +99,7 @@ async def test_setup_slackApiError.opp: OpenPeerPowerType, caplog: LogCaptureFix
 
         client.auth_test.side_effect = [err := SlackApiError("msg", "resp")]
         await async_setup_component.opp, notify.DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert.opp.services.has_service(notify.DOMAIN, SERVICE_NAME) is False
         caplog_records_slack = filter_log_records(caplog)
         assert len(caplog_records_slack) == 1

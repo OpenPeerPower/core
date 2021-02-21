@@ -95,7 +95,7 @@ def setup.opp, config):
         """Capture a new picture from a smartcam."""
         device_id = service.data[ATTR_DEVICE_SERIAL]
         try:
-            await.opp.async_add_executor_job(HUB.smartcam_capture, device_id)
+            await opp.async_add_executor_job(HUB.smartcam_capture, device_id)
             LOGGER.debug("Capturing new image from %s", ATTR_DEVICE_SERIAL)
         except verisure.Error as ex:
             LOGGER.error("Could not capture image, %s", ex)
@@ -108,7 +108,7 @@ def setup.opp, config):
         """Disable autolock on a doorlock."""
         device_id = service.data[ATTR_DEVICE_SERIAL]
         try:
-            await.opp.async_add_executor_job(HUB.disable_autolock, device_id)
+            await opp.async_add_executor_job(HUB.disable_autolock, device_id)
             LOGGER.debug("Disabling autolock on%s", ATTR_DEVICE_SERIAL)
         except verisure.Error as ex:
             LOGGER.error("Could not disable autolock, %s", ex)
@@ -121,7 +121,7 @@ def setup.opp, config):
         """Enable autolock on a doorlock."""
         device_id = service.data[ATTR_DEVICE_SERIAL]
         try:
-            await.opp.async_add_executor_job(HUB.enable_autolock, device_id)
+            await opp.async_add_executor_job(HUB.enable_autolock, device_id)
             LOGGER.debug("Enabling autolock on %s", ATTR_DEVICE_SERIAL)
         except verisure.Error as ex:
             LOGGER.error("Could not enable autolock, %s", ex)

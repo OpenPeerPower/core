@@ -44,7 +44,7 @@ async def test_create_area.opp, registry, update_events):
     assert area.name == "mock"
     assert len(registry.areas) == 1
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(update_events) == 1
     assert update_events[0]["action"] == "create"
@@ -60,7 +60,7 @@ async def test_create_area_with_name_already_in_use.opp, registry, update_events
         assert area1 != area2
         assert e_info == "Name is already in use"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(registry.areas) == 1
     assert len(update_events) == 1
@@ -85,7 +85,7 @@ async def test_delete_area.opp, registry, update_events):
 
     assert not registry.areas
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(update_events) == 2
     assert update_events[0]["action"] == "create"
@@ -114,7 +114,7 @@ async def test_update_area.opp, registry, update_events):
     assert updated_area.name == "mock1"
     assert len(registry.areas) == 1
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(update_events) == 2
     assert update_events[0]["action"] == "create"

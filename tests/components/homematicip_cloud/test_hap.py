@@ -161,7 +161,7 @@ async def test_auth_create.opp, simple_mock_auth):
         return_value=simple_mock_auth,
     ):
         assert await hmip_auth.async_setup()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert hmip_auth.auth.pin == HAPPIN
 
 

@@ -44,7 +44,7 @@ async def test_sensors.opp):
         return_value=json.loads(load_fixture("brother_printer_data.json")),
     ):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("sensor.hl_l2340dw_status")
     assert state
@@ -264,7 +264,7 @@ async def test_availability.opp):
     future = utcnow() + timedelta(minutes=5)
     with patch("brother.Brother._get_data", side_effect=ConnectionError()):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("sensor.hl_l2340dw_status")
         assert state
@@ -276,7 +276,7 @@ async def test_availability.opp):
         return_value=json.loads(load_fixture("brother_printer_data.json")),
     ):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("sensor.hl_l2340dw_status")
         assert state

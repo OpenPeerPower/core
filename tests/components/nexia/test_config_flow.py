@@ -33,7 +33,7 @@ async def test_form.opp):
             result["flow_id"],
             {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "myhouse"

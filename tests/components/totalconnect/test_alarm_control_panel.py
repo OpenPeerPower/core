@@ -58,7 +58,7 @@ async def test_arm_home_success.opp):
             ALARM_DOMAIN, SERVICE_ALARM_ARM_HOME, DATA, blocking=True
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert STATE_ALARM_ARMED_HOME == opp.states.get(ENTITY_ID).state
 
 
@@ -76,7 +76,7 @@ async def test_arm_home_failure.opp):
             await.opp.services.async_call(
                 ALARM_DOMAIN, SERVICE_ALARM_ARM_HOME, DATA, blocking=True
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
         assert f"{e.value}" == "TotalConnect failed to arm home test."
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
@@ -94,7 +94,7 @@ async def test_arm_away_success.opp):
         await.opp.services.async_call(
             ALARM_DOMAIN, SERVICE_ALARM_ARM_AWAY, DATA, blocking=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state
 
 
@@ -112,7 +112,7 @@ async def test_arm_away_failure.opp):
             await.opp.services.async_call(
                 ALARM_DOMAIN, SERVICE_ALARM_ARM_AWAY, DATA, blocking=True
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
         assert f"{e.value}" == "TotalConnect failed to arm away test."
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
@@ -130,7 +130,7 @@ async def test_disarm_success.opp):
         await.opp.services.async_call(
             ALARM_DOMAIN, SERVICE_ALARM_DISARM, DATA, blocking=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
 
@@ -148,6 +148,6 @@ async def test_disarm_failure.opp):
             await.opp.services.async_call(
                 ALARM_DOMAIN, SERVICE_ALARM_DISARM, DATA, blocking=True
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
         assert f"{e.value}" == "TotalConnect failed to disarm test."
         assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state

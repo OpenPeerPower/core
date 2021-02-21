@@ -74,7 +74,7 @@ async def test_owserver_binary_sensor(owproxy,.opp, device_id):
         patch_device_binary_sensors,
     ):
         await setup_onewire_patched_owserver_integration.opp)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(entity_registry.entities) == len(expected_sensors)
 

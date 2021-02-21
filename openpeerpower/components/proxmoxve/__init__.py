@@ -117,7 +117,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
 
             return proxmox_client
 
-    proxmox_client = await.opp.async_add_executor_job(build_client)
+    proxmox_client = await opp.async_add_executor_job(build_client)
 
     async def async_update_data() -> dict:
         """Fetch data from API endpoint."""
@@ -172,7 +172,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
 
             return data
 
-        return await.opp.async_add_executor_job(poll_api)
+        return await opp.async_add_executor_job(poll_api)
 
     coordinator = DataUpdateCoordinator(
        .opp,

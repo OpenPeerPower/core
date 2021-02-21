@@ -128,7 +128,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     platform = entry.data[CONF_PLATFORM]
 
     try:
-        await.opp.async_add_executor_job(
+        await opp.async_add_executor_job(
             tuya.init, username, password, country_code, platform
         )
     except (
@@ -206,7 +206,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         """Check if accesstoken is expired and pull device list from server."""
         _LOGGER.debug("Pull devices from Tuya")
         # Add new discover device.
-        device_list = await.opp.async_add_executor_job(_get_updated_devices)
+        device_list = await opp.async_add_executor_job(_get_updated_devices)
         await async_load_devices(device_list)
         # Delete not exist device.
         newlist_ids = []

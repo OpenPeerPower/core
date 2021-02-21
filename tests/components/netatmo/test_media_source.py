@@ -28,7 +28,7 @@ async def test_async_browse_media.opp):
     }
 
     assert await async_setup_component.opp, const.DOMAIN, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Test camera not exists
     with pytest.raises(media_source.BrowseError) as excinfo:

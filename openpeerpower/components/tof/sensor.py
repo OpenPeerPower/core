@@ -54,10 +54,10 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     unit = LENGTH_MILLIMETERS
     xshut = config.get(CONF_XSHUT)
 
-    sensor = await.opp.async_add_executor_job(partial(VL53L1X, bus_number))
-    await.opp.async_add_executor_job(init_tof_0, xshut, sensor)
+    sensor = await opp.async_add_executor_job(partial(VL53L1X, bus_number))
+    await opp.async_add_executor_job(init_tof_0, xshut, sensor)
     await asyncio.sleep(0.01)
-    await.opp.async_add_executor_job(init_tof_1, xshut)
+    await opp.async_add_executor_job(init_tof_1, xshut)
     await asyncio.sleep(0.01)
 
     dev = [VL53L1XSensor(sensor, name, unit, i2c_address)]

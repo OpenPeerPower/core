@@ -513,7 +513,7 @@ class HistoryPeriodView(OpenPeerPowerView):
 
         return cast(
             web.Response,
-            await.opp.async_add_executor_job(
+            await opp.async_add_executor_job(
                 self._sorted_significant_states_json,
                .opp,
                 start_time,

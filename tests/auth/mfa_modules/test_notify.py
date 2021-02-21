@@ -156,7 +156,7 @@ async def test_login_flow_validates_mfa.opp):
         assert result["data_schema"].schema.get("code") == str
 
     # wait service call finished
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(notify_calls) == 1
     notify_call = notify_calls[0]
@@ -175,7 +175,7 @@ async def test_login_flow_validates_mfa.opp):
         assert result["errors"]["base"] == "invalid_code"
 
     # wait service call finished
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # would not send new code, allow user retry
     assert len(notify_calls) == 1
@@ -199,7 +199,7 @@ async def test_login_flow_validates_mfa.opp):
         assert result["reason"] == "too_many_retry"
 
     # wait service call finished
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # restart login
     result = await.opp.auth.login_flow.async_init((provider.type, provider.id))
@@ -214,7 +214,7 @@ async def test_login_flow_validates_mfa.opp):
         assert result["data_schema"].schema.get("code") == str
 
     # wait service call finished
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(notify_calls) == 2
     notify_call = notify_calls[1]
@@ -254,7 +254,7 @@ async def test_setup_user_notify_service.opp):
         assert step["step_id"] == "setup"
 
     # wait service call finished
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(notify_calls) == 1
     notify_call = notify_calls[0]
@@ -271,7 +271,7 @@ async def test_setup_user_notify_service.opp):
         assert step["errors"]["base"] == "invalid_code"
 
     # wait service call finished
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(notify_calls) == 2
     notify_call = notify_calls[1]
@@ -379,7 +379,7 @@ async def test_not_raise_exception_when_service_not_exist.opp):
         assert result["reason"] == "unknown_error"
 
     # wait service call finished
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_race_condition_in_data_loading.opp):

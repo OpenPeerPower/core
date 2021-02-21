@@ -40,7 +40,7 @@ async def test_config_update(gogogate2api_mock,.opp: OpenPeerPower) -> None:
     config_entry.add_to_opp.opp)
 
     assert not await.opp.config_entries.async_setup(entry_id=config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert config_entry.data == {
         CONF_DEVICE: DEVICE_TYPE_GOGOGATE2,
         CONF_IP_ADDRESS: "127.0.0.1",
@@ -69,7 +69,7 @@ async def test_config_no_update(ismartgateapi_mock,.opp: OpenPeerPower) -> None:
     config_entry.add_to_opp.opp)
 
     assert not await.opp.config_entries.async_setup(entry_id=config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert config_entry.data == {
         CONF_DEVICE: DEVICE_TYPE_ISMARTGATE,
         CONF_IP_ADDRESS: "127.0.0.1",

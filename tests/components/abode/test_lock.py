@@ -46,7 +46,7 @@ async def test_lock.opp):
         await.opp.services.async_call(
             LOCK_DOMAIN, SERVICE_LOCK, {ATTR_ENTITY_ID: DEVICE_ID}, blocking=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_lock.assert_called_once()
 
 
@@ -58,5 +58,5 @@ async def test_unlock.opp):
         await.opp.services.async_call(
             LOCK_DOMAIN, SERVICE_UNLOCK, {ATTR_ENTITY_ID: DEVICE_ID}, blocking=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_unlock.assert_called_once()

@@ -41,7 +41,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
             start_date = datetime.now() + timedelta(days=-1)
             end_date = datetime.now()
             with async_timeout.timeout(10):
-                hourly_usage = await.opp.async_add_executor_job(
+                hourly_usage = await opp.async_add_executor_job(
                     api.usage,
                     start_date,
                     end_date,

@@ -603,6 +603,6 @@ async def _async_get_device(
     # Set up device
     bulb = Bulb(host, model=model or None)
     if capabilities is None:
-        capabilities = await.opp.async_add_executor_job(bulb.get_capabilities)
+        capabilities = await opp.async_add_executor_job(bulb.get_capabilities)
 
     return YeelightDevice.opp, host, entry.options, bulb, capabilities)

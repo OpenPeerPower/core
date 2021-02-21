@@ -98,7 +98,7 @@ async def test_import_setup.opp):
 
     assert not.opp.config_entries.async_entries(DOMAIN)
     assert await async_setup_component.opp, DOMAIN, {"owntracks": {}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.config_entries.async_entries(DOMAIN)
 
 

@@ -10,7 +10,7 @@ async def async_setup_entry.opp, config, async_add_entities):
     async_add_entities(
         [
             SpiderPowerPlug(api, entity)
-            for entity in await.opp.async_add_executor_job(api.get_power_plugs)
+            for entity in await opp.async_add_executor_job(api.get_power_plugs)
         ]
     )
 

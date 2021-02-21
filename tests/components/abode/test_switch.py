@@ -50,7 +50,7 @@ async def test_switch_on.opp):
         assert await.opp.services.async_call(
             SWITCH_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: DEVICE_ID}, blocking=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         mock_switch_on.assert_called_once()
 
@@ -63,7 +63,7 @@ async def test_switch_off.opp):
         assert await.opp.services.async_call(
             SWITCH_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: DEVICE_ID}, blocking=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         mock_switch_off.assert_called_once()
 
@@ -88,7 +88,7 @@ async def test_turn_automation_off.opp):
             {ATTR_ENTITY_ID: AUTOMATION_ID},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         mock_trigger.assert_called_once_with(False)
 
@@ -104,7 +104,7 @@ async def test_turn_automation_on.opp):
             {ATTR_ENTITY_ID: AUTOMATION_ID},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         mock_trigger.assert_called_once_with(True)
 
@@ -120,6 +120,6 @@ async def test_trigger_automation.opp, requests_mock):
             {ATTR_ENTITY_ID: AUTOMATION_ID},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         mock.assert_called_once()

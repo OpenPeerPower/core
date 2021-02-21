@@ -278,7 +278,7 @@ async def test_setup_and_stop.opp):
         dhcp.DOMAIN,
         {},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch("openpeerpower.components.dhcp.AsyncSniffer.start") as start_call, patch(
         "openpeerpower.components.dhcp._verify_l2socket_creation_permission",
@@ -286,10 +286,10 @@ async def test_setup_and_stop.opp):
         "openpeerpower.components.dhcp.compile_filter",
     ):
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     start_call.assert_called_once()
 
@@ -302,7 +302,7 @@ async def test_setup_fails_as_root.opp, caplog):
         dhcp.DOMAIN,
         {},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     wait_event = threading.Event()
 
@@ -311,10 +311,10 @@ async def test_setup_fails_as_root.opp, caplog):
         side_effect=Scapy_Exception,
     ):
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     wait_event.set()
     assert "Cannot watch for dhcp packets" in caplog.text
 
@@ -327,16 +327,16 @@ async def test_setup_fails_non_root.opp, caplog):
         dhcp.DOMAIN,
         {},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch("os.geteuid", return_value=10), patch(
         "openpeerpower.components.dhcp._verify_l2socket_creation_permission",
         side_effect=Scapy_Exception,
     ):
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert "Cannot watch for dhcp packets without root or CAP_NET_RAW" in caplog.text
 
@@ -349,7 +349,7 @@ async def test_setup_fails_with_broken_libpcap.opp, caplog):
         dhcp.DOMAIN,
         {},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.dhcp._verify_l2socket_creation_permission",
@@ -360,9 +360,9 @@ async def test_setup_fails_with_broken_libpcap.opp, caplog):
         "openpeerpower.components.dhcp.AsyncSniffer",
     ) as async_sniffer:
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert compile_filter.called
     assert not async_sniffer.called
@@ -394,9 +394,9 @@ async def test_device_tracker_hostname_and_macaddress_exists_before_start.opp):
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
         await device_tracker_watcher.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         await device_tracker_watcher.async_stop()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_init.mock_calls) == 1
     assert mock_init.mock_calls[0][1][0] == "mock-domain"
@@ -420,7 +420,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start.opp):
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
         await device_tracker_watcher.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
        .opp.states.async_set(
             "device_tracker.august_connect",
             STATE_HOME,
@@ -431,9 +431,9 @@ async def test_device_tracker_hostname_and_macaddress_after_start.opp):
                 ATTR_MAC: "B8:B7:F1:6D:B5:33",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         await device_tracker_watcher.async_stop()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_init.mock_calls) == 1
     assert mock_init.mock_calls[0][1][0] == "mock-domain"
@@ -457,7 +457,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start_not_home.opp):
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
         await device_tracker_watcher.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
        .opp.states.async_set(
             "device_tracker.august_connect",
             STATE_NOT_HOME,
@@ -468,9 +468,9 @@ async def test_device_tracker_hostname_and_macaddress_after_start_not_home.opp):
                 ATTR_MAC: "B8:B7:F1:6D:B5:33",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         await device_tracker_watcher.async_stop()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_init.mock_calls) == 0
 
@@ -487,7 +487,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start_not_router.opp
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
         await device_tracker_watcher.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
        .opp.states.async_set(
             "device_tracker.august_connect",
             STATE_HOME,
@@ -498,9 +498,9 @@ async def test_device_tracker_hostname_and_macaddress_after_start_not_router.opp
                 ATTR_MAC: "B8:B7:F1:6D:B5:33",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         await device_tracker_watcher.async_stop()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_init.mock_calls) == 0
 
@@ -519,7 +519,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start_hostname_missi
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
         await device_tracker_watcher.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
        .opp.states.async_set(
             "device_tracker.august_connect",
             STATE_HOME,
@@ -529,9 +529,9 @@ async def test_device_tracker_hostname_and_macaddress_after_start_hostname_missi
                 ATTR_MAC: "B8:B7:F1:6D:B5:33",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         await device_tracker_watcher.async_stop()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_init.mock_calls) == 0
 
@@ -558,8 +558,8 @@ async def test_device_tracker_ignore_self_assigned_ips_before_start.opp):
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
         await device_tracker_watcher.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         await device_tracker_watcher.async_stop()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_init.mock_calls) == 0

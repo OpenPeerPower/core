@@ -29,7 +29,7 @@ async def test_basic_usage.opp, tmpdir):
     entry.add_to_opp.opp)
 
     assert await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.services.has_service(DOMAIN, SERVICE_START)
 
@@ -44,12 +44,12 @@ async def test_basic_usage.opp, tmpdir):
        .opp.config, "path", _mock_path
     ):
         await.opp.services.async_call(DOMAIN, SERVICE_START, {CONF_SECONDS: 0.000001})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert os.path.exists(last_filename)
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_memory_usage.opp, tmpdir):
@@ -61,7 +61,7 @@ async def test_memory_usage.opp, tmpdir):
     entry.add_to_opp.opp)
 
     assert await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.services.has_service(DOMAIN, SERVICE_MEMORY)
 
@@ -76,12 +76,12 @@ async def test_memory_usage.opp, tmpdir):
        .opp.config, "path", _mock_path
     ):
         await.opp.services.async_call(DOMAIN, SERVICE_MEMORY, {CONF_SECONDS: 0.000001})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         mock_hpy.assert_called_once()
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_object_growth_logging.opp, caplog):
@@ -92,7 +92,7 @@ async def test_object_growth_logging.opp, caplog):
     entry.add_to_opp.opp)
 
     assert await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.services.has_service(DOMAIN, SERVICE_START_LOG_OBJECTS)
     assert.opp.services.has_service(DOMAIN, SERVICE_STOP_LOG_OBJECTS)
@@ -100,28 +100,28 @@ async def test_object_growth_logging.opp, caplog):
     await.opp.services.async_call(
         DOMAIN, SERVICE_START_LOG_OBJECTS, {CONF_SCAN_INTERVAL: 10}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "Growth" in caplog.text
     caplog.clear()
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=11))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert "Growth" in caplog.text
 
     await.opp.services.async_call(DOMAIN, SERVICE_STOP_LOG_OBJECTS, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     caplog.clear()
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=21))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert "Growth" not in caplog.text
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=31))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert "Growth" not in caplog.text
 
 
@@ -133,17 +133,17 @@ async def test_dump_log_object.opp, caplog):
     entry.add_to_opp.opp)
 
     assert await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.services.has_service(DOMAIN, SERVICE_DUMP_LOG_OBJECTS)
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_DUMP_LOG_OBJECTS, {CONF_TYPE: "MockConfigEntry"}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "MockConfigEntry" in caplog.text
     caplog.clear()
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()

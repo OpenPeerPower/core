@@ -80,7 +80,7 @@ async def test_form(
         result = await.opp.config_entries.flow.async_configure(
             flow_id=result["flow_id"], user_input=user_input
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == UPNP_FRIENDLY_NAME
@@ -128,7 +128,7 @@ async def test_form_unknown_error.opp: OpenPeerPowerType) -> None:
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "unknown"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_validate_input.mock_calls) == 1
 
 
@@ -196,7 +196,7 @@ async def test_homekit_discovery(
         result = await.opp.config_entries.flow.async_configure(
             flow_id=result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == NAME_ROKUTV
@@ -278,7 +278,7 @@ async def test_ssdp_discovery(
         result = await.opp.config_entries.flow.async_configure(
             flow_id=result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == UPNP_FRIENDLY_NAME

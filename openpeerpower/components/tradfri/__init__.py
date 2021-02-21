@@ -66,7 +66,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
         entry.data.get("host") for entry in.opp.config_entries.async_entries(DOMAIN)
     ]
 
-    legacy_hosts = await.opp.async_add_executor_job(
+    legacy_hosts = await opp.async_add_executor_job(
         load_json,.opp.config.path(CONFIG_FILE)
     )
 

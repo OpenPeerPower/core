@@ -38,7 +38,7 @@ async def test_form.opp):
             result["flow_id"],
             DATA,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Aurora - Home"
@@ -99,7 +99,7 @@ async def test_option_flow.opp):
 
     with patch("openpeerpower.components.aurora.async_setup_entry", return_value=True):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         result = await.opp.config_entries.options.async_init(
             entry.entry_id,
             data=None,

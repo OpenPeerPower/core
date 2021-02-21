@@ -30,7 +30,7 @@ async def test_creating_entry_sets_up_sensor.opp):
         return_value=mock_coro(True),
     ) as mock_setup:
         assert await async_setup_component.opp, ios.DOMAIN, {ios.DOMAIN: {}})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
 
@@ -41,7 +41,7 @@ async def test_configuring_ios_creates_entry.opp):
         "openpeerpower.components.ios.async_setup_entry", return_value=mock_coro(True)
     ) as mock_setup:
         await async_setup_component.opp, ios.DOMAIN, {"ios": {"push": {}}})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
 
@@ -52,6 +52,6 @@ async def test_not_configuring_ios_not_creates_entry.opp):
         "openpeerpower.components.ios.async_setup_entry", return_value=mock_coro(True)
     ) as mock_setup:
         await async_setup_component.opp, ios.DOMAIN, {"foo": "bar"})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 0

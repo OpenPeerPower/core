@@ -188,7 +188,7 @@ async def test_migration.opp):
         "pyairvisual.air_quality.AirQuality.nearest_city"
     ), patch.object.opp.config_entries, "async_forward_entry_setup"):
         assert await async_setup_component.opp, DOMAIN, {DOMAIN: conf})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     config_entries = opp.config_entries.async_entries(DOMAIN)
 

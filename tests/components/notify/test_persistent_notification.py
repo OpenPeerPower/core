@@ -9,13 +9,13 @@ async def test_async_send_message.opp: OpenPeerPower):
     """Test sending a message to notify.persistent_notification service."""
     await async_setup_component.opp, pn.DOMAIN, {"core": {}})
     await async_setup_component.opp, notify.DOMAIN, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     message = {"message": "Hello", "title": "Test notification"}
     await.opp.services.async_call(
         notify.DOMAIN, notify.SERVICE_PERSISTENT_NOTIFICATION, message
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_ids = opp.states.async_entity_ids(pn.DOMAIN)
     assert len(entity_ids) == 1

@@ -42,7 +42,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("fan.tasmota")
     assert state.state == "unavailable"
@@ -98,13 +98,13 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("fan.tasmota")
     assert state.state == STATE_OFF
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Turn the fan on and verify MQTT message is sent
@@ -164,13 +164,13 @@ async def test_invalid_fan_speed.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("fan.tasmota")
     assert state.state == STATE_OFF
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Set an unsupported speed and verify MQTT message is not sent

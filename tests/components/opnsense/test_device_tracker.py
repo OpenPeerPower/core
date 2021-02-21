@@ -55,7 +55,7 @@ async def test_get_scanner.opp, mocked_opnsense, mock_device_tracker_conf):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result
     device_1 = opp.states.get("device_tracker.desktop")
     assert device_1 is not None

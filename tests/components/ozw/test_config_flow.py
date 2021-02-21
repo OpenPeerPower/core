@@ -92,7 +92,7 @@ async def test_user_not_supervisor_create_entry.opp, mqtt):
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -144,7 +144,7 @@ async def test_not_addon.opp, supervisor, mqtt):
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"use_addon": False}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -177,7 +177,7 @@ async def test_addon_running.opp, supervisor, addon_running, addon_options):
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"use_addon": True}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -230,7 +230,7 @@ async def test_addon_installed(
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"usb_path": "/test", "network_key": "abc123"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -311,7 +311,7 @@ async def test_addon_not_installed(
     assert result["type"] == "progress"
 
     # Make sure the flow continues when the progress task is done.
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
@@ -327,7 +327,7 @@ async def test_addon_not_installed(
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"usb_path": "/test", "network_key": "abc123"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -357,7 +357,7 @@ async def test_install_addon_failure.opp, supervisor, addon_installed, install_a
     assert result["type"] == "progress"
 
     # Make sure the flow continues when the progress task is done.
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
@@ -385,7 +385,7 @@ async def test_supervisor_discovery.opp, supervisor, addon_running, addon_option
         return_value=True,
     ) as mock_setup_entry:
         result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -429,7 +429,7 @@ async def test_clean_discovery_on_user_create(
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"use_addon": False}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.config_entries.flow.async_progress()) == 0
     assert result["type"] == "create_entry"
@@ -527,7 +527,7 @@ async def test_discovery_addon_not_installed(
     assert result["step_id"] == "install_addon"
     assert result["type"] == "progress"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
@@ -570,7 +570,7 @@ async def test_import_addon_installed(
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], default_input
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE

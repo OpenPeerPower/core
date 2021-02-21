@@ -22,7 +22,7 @@ ENTITY_PWM = "number.pwm_1"
 async def setup_demo_number.opp):
     """Initialize setup demo Number entity."""
     assert await async_setup_component.opp, DOMAIN, {"number": {"platform": "demo"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 def test_setup_params.opp):
@@ -56,7 +56,7 @@ async def test_set_value_bad_attr.opp):
             {ATTR_VALUE: None, ATTR_ENTITY_ID: ENTITY_VOLUME},
             blocking=True,
         )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
@@ -74,7 +74,7 @@ async def test_set_value_bad_range.opp):
             {ATTR_VALUE: 1024, ATTR_ENTITY_ID: ENTITY_VOLUME},
             blocking=True,
         )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
@@ -91,7 +91,7 @@ async def test_set_set_value.opp):
         {ATTR_VALUE: 23, ATTR_ENTITY_ID: ENTITY_VOLUME},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "23.0"

@@ -26,7 +26,7 @@ async def test_fail_setup_raising_discovery.opp, numato_fixture, caplog, monkeyp
     """
     monkeypatch.setattr(numato_fixture, "discover", mockup_raise)
     assert not await async_setup_component.opp, "numato", NUMATO_CFG)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_opp_numato_api_wrong_port_directions.opp, numato_fixture):
@@ -68,7 +68,7 @@ async def test_invalid_port_number.opp, numato_fixture, config):
     sensorports_cfg["one"] = port1_config
     del sensorports_cfg["1"]
     assert not await async_setup_component.opp, "numato", config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not numato_fixture.devices
 
 

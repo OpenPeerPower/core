@@ -390,7 +390,7 @@ async def test_thermostat_set_hvac_mode.opp, auth):
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
 
     await common.async_set_hvac_mode.opp, HVAC_MODE_HEAT)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert auth.method == "post"
     assert auth.url == "some-device-id:executeCommand"
@@ -423,7 +423,7 @@ async def test_thermostat_set_hvac_mode.opp, auth):
         auth=None,
     )
     await subscriber.async_receive_event(event)
-    await.opp.async_block_till_done()  # Process dispatch/update signal
+    await opp.async_block_till_done()  # Process dispatch/update signal
 
     thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
@@ -447,7 +447,7 @@ async def test_thermostat_set_hvac_mode.opp, auth):
         auth=None,
     )
     await subscriber.async_receive_event(event)
-    await.opp.async_block_till_done()  # Process dispatch/update signal
+    await opp.async_block_till_done()  # Process dispatch/update signal
 
     thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
@@ -477,7 +477,7 @@ async def test_thermostat_invalid_hvac_mode.opp, auth):
 
     with pytest.raises(ValueError):
         await common.async_set_hvac_mode.opp, HVAC_MODE_DRY)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert thermostat.state == HVAC_MODE_OFF
     assert auth.method is None  # No communication with API
@@ -512,7 +512,7 @@ async def test_thermostat_set_eco_preset.opp, auth):
 
     # Turn on eco mode
     await common.async_set_preset_mode.opp, PRESET_ECO)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert auth.method == "post"
     assert auth.url == "some-device-id:executeCommand"
@@ -548,7 +548,7 @@ async def test_thermostat_set_eco_preset.opp, auth):
         auth=auth,
     )
     await subscriber.async_receive_event(event)
-    await.opp.async_block_till_done()  # Process dispatch/update signal
+    await opp.async_block_till_done()  # Process dispatch/update signal
 
     thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
@@ -558,7 +558,7 @@ async def test_thermostat_set_eco_preset.opp, auth):
 
     # Turn off eco mode
     await common.async_set_preset_mode.opp, PRESET_NONE)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert auth.method == "post"
     assert auth.url == "some-device-id:executeCommand"
@@ -591,7 +591,7 @@ async def test_thermostat_set_cool.opp, auth):
     assert thermostat.state == HVAC_MODE_COOL
 
     await common.async_set_temperature.opp, temperature=24.0)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert auth.method == "post"
     assert auth.url == "some-device-id:executeCommand"
@@ -624,7 +624,7 @@ async def test_thermostat_set_heat.opp, auth):
     assert thermostat.state == HVAC_MODE_HEAT
 
     await common.async_set_temperature.opp, temperature=20.0)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert auth.method == "post"
     assert auth.url == "some-device-id:executeCommand"
@@ -660,7 +660,7 @@ async def test_thermostat_set_heat_cool.opp, auth):
     await common.async_set_temperature(
        .opp, target_temp_low=20.0, target_temp_high=24.0
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert auth.method == "post"
     assert auth.url == "some-device-id:executeCommand"
@@ -810,7 +810,7 @@ async def test_thermostat_set_fan.opp, auth):
 
     # Turn off fan mode
     await common.async_set_fan_mode.opp, FAN_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert auth.method == "post"
     assert auth.url == "some-device-id:executeCommand"
@@ -854,7 +854,7 @@ async def test_thermostat_fan_empty.opp):
 
     # Ignores set_fan_mode since it is lacking SUPPORT_FAN_MODE
     await common.async_set_fan_mode.opp, FAN_ON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert ATTR_FAN_MODE not in thermostat.attributes
     assert ATTR_FAN_MODES not in thermostat.attributes
@@ -898,7 +898,7 @@ async def test_thermostat_invalid_fan_mode.opp):
 
     with pytest.raises(ValueError):
         await common.async_set_fan_mode.opp, FAN_LOW)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_thermostat_set_hvac_fan_only.opp, auth):
@@ -929,7 +929,7 @@ async def test_thermostat_set_hvac_fan_only.opp, auth):
     assert thermostat.attributes[ATTR_FAN_MODES] == [FAN_ON, FAN_OFF]
 
     await common.async_set_hvac_mode.opp, HVAC_MODE_FAN_ONLY)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(auth.captured_requests) == 2
 
@@ -1001,7 +1001,7 @@ async def test_thermostat_target_temp.opp, auth):
         auth=None,
     )
     await subscriber.async_receive_event(event)
-    await.opp.async_block_till_done()  # Process dispatch/update signal
+    await opp.async_block_till_done()  # Process dispatch/update signal
 
     thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
@@ -1036,11 +1036,11 @@ async def test_thermostat_missing_mode_traits.opp):
     assert ATTR_FAN_MODES not in thermostat.attributes
 
     await common.async_set_temperature.opp, temperature=24.0)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert ATTR_TEMPERATURE not in thermostat.attributes
 
     await common.async_set_preset_mode.opp, PRESET_ECO)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert ATTR_PRESET_MODE not in thermostat.attributes
 
 
@@ -1078,7 +1078,7 @@ async def test_thermostat_missing_temperature_trait.opp):
     assert ATTR_FAN_MODES not in thermostat.attributes
 
     await common.async_set_temperature.opp, temperature=24.0)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert thermostat.attributes[ATTR_TEMPERATURE] is None
 
 
@@ -1108,7 +1108,7 @@ async def test_thermostat_unexpected_hvac_status.opp):
 
     with pytest.raises(ValueError):
         await common.async_set_hvac_mode.opp, HVAC_MODE_DRY)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert thermostat.state == HVAC_MODE_OFF
 
 
@@ -1206,7 +1206,7 @@ async def test_thermostat_invalid_set_preset_mode.opp, auth):
     # Set preset mode that is invalid
     with pytest.raises(ValueError):
         await common.async_set_preset_mode.opp, PRESET_SLEEP)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # No RPC sent
     assert auth.method is None

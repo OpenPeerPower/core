@@ -106,13 +106,13 @@ async def test_set_value.opp):
     assert str(state.state) == "test"
 
     set_value.opp, entity_id, "testing")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert str(state.state) == "testing"
 
     set_value.opp, entity_id, "testing too long")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert str(state.state) == "testing"
@@ -301,7 +301,7 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
@@ -499,6 +499,6 @@ async def test_setup_no_config.opp,.opp_admin_user):
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert count_start == len.opp.states.async_entity_ids())

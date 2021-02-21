@@ -50,7 +50,7 @@ async def test_hmip_remove_device.opp, default_mock_op._factory):
 
     hmip_device.fire_remove_event()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(device_registry.devices) == pre_device_count - 1
     assert len(entity_registry.entities) == pre_entity_count - 3
@@ -81,7 +81,7 @@ async def test_hmip_add_device.opp, default_mock_op._factory, hmip_config_entry)
     pre_mapping_count = len(mock_op..hmip_device_by_entity_id)
 
     hmip_device.fire_remove_event()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(device_registry.devices) == pre_device_count - 1
     assert len(entity_registry.entities) == pre_entity_count - 3
@@ -97,7 +97,7 @@ async def test_hmip_add_device.opp, default_mock_op._factory, hmip_config_entry)
         "openpeerpower.components.homematicip_cloud.hap.asyncio.sleep"
     ):
         mock_op..home.fire_create_event(event_type=EventType.DEVICE_ADDED)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(device_registry.devices) == pre_device_count
     assert len(entity_registry.entities) == pre_entity_count
@@ -127,7 +127,7 @@ async def test_hmip_remove_group.opp, default_mock_op._factory):
     pre_mapping_count = len(mock_op..hmip_device_by_entity_id)
 
     hmip_device.fire_remove_event()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(device_registry.devices) == pre_device_count
     assert len(entity_registry.entities) == pre_entity_count - 1
@@ -185,7 +185,7 @@ async def test_op._reconnected.opp, default_mock_op._factory):
 
     mock_op.._accesspoint_connected = False  # pylint: disable=protected-access
     await async_manipulate_test_data.opp, mock_op..home, "connected", True)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 

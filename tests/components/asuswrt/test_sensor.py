@@ -113,9 +113,9 @@ async def test_sensors.opp, connect):
 
     # initial devices setup
     assert await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get(f"{device_tracker.DOMAIN}.test").state == STATE_HOME
     assert.opp.states.get(f"{device_tracker.DOMAIN}.testtwo").state == STATE_HOME
@@ -131,7 +131,7 @@ async def test_sensors.opp, connect):
         "a3:b3:c3:d3:e3:f3", "192.168.1.4", "TestThree"
     )
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # consider home option set, all devices still home
     assert.opp.states.get(f"{device_tracker.DOMAIN}.test").state == STATE_HOME
@@ -142,9 +142,9 @@ async def test_sensors.opp, connect):
    .opp.config_entries.async_update_entry(
         config_entry, options={CONF_CONSIDER_HOME: 0}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # consider home option not set, device "test" not home
     assert.opp.states.get(f"{device_tracker.DOMAIN}.test").state == STATE_NOT_HOME

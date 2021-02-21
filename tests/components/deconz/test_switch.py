@@ -129,7 +129,7 @@ async def test_power_plugs.opp, aioclient_mock):
         assert state.state == STATE_UNAVAILABLE
 
     await.opp.config_entries.async_remove(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -189,5 +189,5 @@ async def test_sirens.opp, aioclient_mock):
         assert state.state == STATE_UNAVAILABLE
 
     await.opp.config_entries.async_remove(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0

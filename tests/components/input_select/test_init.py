@@ -159,13 +159,13 @@ async def test_select_option.opp):
     assert "some option" == state.state
 
     select_option.opp, entity_id, "another option")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "another option" == state.state
 
     select_option.opp, entity_id, "non existing option")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "another option" == state.state
@@ -191,13 +191,13 @@ async def test_select_next.opp):
     assert "middle option" == state.state
 
     select_next.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "last option" == state.state
 
     select_next.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "first option" == state.state
@@ -223,13 +223,13 @@ async def test_select_previous.opp):
     assert "middle option" == state.state
 
     select_previous.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "first option" == state.state
 
     select_previous.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "last option" == state.state
@@ -255,13 +255,13 @@ async def test_select_first_last.opp):
     assert "middle option" == state.state
 
     select_first.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "first option" == state.state
 
     select_last.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "last option" == state.state
@@ -328,18 +328,18 @@ async def test_set_options_service.opp):
 
     data = {ATTR_OPTIONS: ["test1", "test2"], "entity_id": entity_id}
     await.opp.services.async_call(DOMAIN, SERVICE_SET_OPTIONS, data)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "test1" == state.state
 
     select_option.opp, entity_id, "first option")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert "test1" == state.state
 
     select_option.opp, entity_id, "test2")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert "test2" == state.state
 
@@ -488,7 +488,7 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
@@ -671,6 +671,6 @@ async def test_setup_no_config.opp,.opp_admin_user):
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert count_start == len.opp.states.async_entity_ids())

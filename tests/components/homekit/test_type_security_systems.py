@@ -32,10 +32,10 @@ async def test_switch_set_state.opp, hk_driver, events):
     entity_id = "alarm_control_panel.test"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = SecuritySystem.opp, hk_driver, "SecuritySystem", entity_id, 2, config)
     await acc.run_op.dler()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.aid == 2
     assert acc.category == 11  # AlarmSystem
@@ -44,32 +44,32 @@ async def test_switch_set_state.opp, hk_driver, events):
     assert acc.char_target_state.value == 3
 
    .opp.states.async_set(entity_id, STATE_ALARM_ARMED_AWAY)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_target_state.value == 1
     assert acc.char_current_state.value == 1
 
    .opp.states.async_set(entity_id, STATE_ALARM_ARMED_HOME)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_target_state.value == 0
     assert acc.char_current_state.value == 0
 
    .opp.states.async_set(entity_id, STATE_ALARM_ARMED_NIGHT)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_target_state.value == 2
     assert acc.char_current_state.value == 2
 
    .opp.states.async_set(entity_id, STATE_ALARM_DISARMED)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_target_state.value == 3
     assert acc.char_current_state.value == 3
 
    .opp.states.async_set(entity_id, STATE_ALARM_TRIGGERED)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_target_state.value == 3
     assert acc.char_current_state.value == 4
 
    .opp.states.async_set(entity_id, STATE_UNKNOWN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_target_state.value == 3
     assert acc.char_current_state.value == 4
 
@@ -79,8 +79,8 @@ async def test_switch_set_state.opp, hk_driver, events):
     call_arm_night = async_mock_service.opp, DOMAIN, "alarm_arm_night")
     call_disarm = async_mock_service.opp, DOMAIN, "alarm_disarm")
 
-    await.opp.async_add_executor_job(acc.char_target_state.client_update_value, 0)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_state.client_update_value, 0)
+    await opp.async_block_till_done()
     assert call_arm_home
     assert call_arm_home[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_arm_home[0].data[ATTR_CODE] == code
@@ -88,8 +88,8 @@ async def test_switch_set_state.opp, hk_driver, events):
     assert len(events) == 1
     assert events[-1].data[ATTR_VALUE] is None
 
-    await.opp.async_add_executor_job(acc.char_target_state.client_update_value, 1)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_state.client_update_value, 1)
+    await opp.async_block_till_done()
     assert call_arm_away
     assert call_arm_away[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_arm_away[0].data[ATTR_CODE] == code
@@ -97,8 +97,8 @@ async def test_switch_set_state.opp, hk_driver, events):
     assert len(events) == 2
     assert events[-1].data[ATTR_VALUE] is None
 
-    await.opp.async_add_executor_job(acc.char_target_state.client_update_value, 2)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_state.client_update_value, 2)
+    await opp.async_block_till_done()
     assert call_arm_night
     assert call_arm_night[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_arm_night[0].data[ATTR_CODE] == code
@@ -106,8 +106,8 @@ async def test_switch_set_state.opp, hk_driver, events):
     assert len(events) == 3
     assert events[-1].data[ATTR_VALUE] is None
 
-    await.opp.async_add_executor_job(acc.char_target_state.client_update_value, 3)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_state.client_update_value, 3)
+    await opp.async_block_till_done()
     assert call_disarm
     assert call_disarm[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_disarm[0].data[ATTR_CODE] == code
@@ -122,14 +122,14 @@ async def test_no_alarm_code.opp, hk_driver, config, events):
     entity_id = "alarm_control_panel.test"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = SecuritySystem.opp, hk_driver, "SecuritySystem", entity_id, 2, config)
 
     # Set from HomeKit
     call_arm_home = async_mock_service.opp, DOMAIN, "alarm_arm_home")
 
-    await.opp.async_add_executor_job(acc.char_target_state.client_update_value, 0)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_state.client_update_value, 0)
+    await opp.async_block_till_done()
     assert call_arm_home
     assert call_arm_home[0].data[ATTR_ENTITY_ID] == entity_id
     assert ATTR_CODE not in call_arm_home[0].data
@@ -235,11 +235,11 @@ async def test_supported_states.opp, hk_driver, events):
         attrs = {"supported_features": test_config.get("features")}
 
        .opp.states.async_set(entity_id, None, attributes=attrs)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         acc = SecuritySystem.opp, hk_driver, "SecuritySystem", entity_id, 2, config)
         await acc.run_op.dler()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         valid_current_values = acc.char_current_state.properties.get("ValidValues")
         valid_target_values = acc.char_target_state.properties.get("ValidValues")

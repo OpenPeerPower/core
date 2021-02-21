@@ -31,7 +31,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     fan_msg.payload["Value"] = 0
     fan_msg.encode()
     receive_message(fan_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
@@ -58,7 +58,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     fan_msg.payload["Value"] = 66
     fan_msg.encode()
     receive_message(fan_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
@@ -86,7 +86,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     fan_msg.payload["Value"] = 99
     fan_msg.encode()
     receive_message(fan_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None
@@ -114,7 +114,7 @@ async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
     fan_msg.payload["Value"] = 0
     fan_msg.encode()
     receive_message(fan_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("fan.in_wall_smart_fan_control_level")
     assert state is not None

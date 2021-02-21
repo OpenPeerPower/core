@@ -36,7 +36,7 @@ async def test_source_select.opp):
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.attributes.get(mp.ATTR_INPUT_SOURCE) == "dvd"
 
@@ -67,7 +67,7 @@ async def test_repeat_set.opp):
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.attributes.get(mp.ATTR_MEDIA_REPEAT) == mp.const.REPEAT_MODE_OFF
 
@@ -86,7 +86,7 @@ async def test_clear_playlist.opp):
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING
@@ -106,7 +106,7 @@ async def test_volume_services.opp):
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_VOLUME_LEVEL) == 1.0
@@ -178,7 +178,7 @@ async def test_turning_off_and_on.opp):
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING
@@ -219,7 +219,7 @@ async def test_playing_pausing.opp):
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING
@@ -266,7 +266,7 @@ async def test_prev_next_track.opp):
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY_ID)
     assert state.attributes.get(mp.ATTR_MEDIA_TRACK) == 1
@@ -301,7 +301,7 @@ async def test_prev_next_track.opp):
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     ent_id = "media_player.lounge_room"
     state = opp.states.get(ent_id)
@@ -331,7 +331,7 @@ async def test_play_media.opp):
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     ent_id = "media_player.living_room"
     state = opp.states.get(ent_id)
@@ -369,7 +369,7 @@ async def test_seek.opp, mock_media_seek):
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     ent_id = "media_player.living_room"
     state = opp.states.get(ent_id)
@@ -405,7 +405,7 @@ async def test_media_image_proxy.opp,.opp_client):
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     fake_picture_data = "test.test"
 

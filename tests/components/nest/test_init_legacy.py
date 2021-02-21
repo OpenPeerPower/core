@@ -68,7 +68,7 @@ async def test_thermostat.opp):
         {"fan": None},
     ):
         assert await async_setup_component.opp, DOMAIN, CONFIG)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     climate = opp.states.get("climate.my_thermostat")
     assert climate is not None

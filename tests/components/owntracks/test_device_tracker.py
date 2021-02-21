@@ -304,7 +304,7 @@ async def setup_owntracks.opp, config, ctx_cls=owntracks.OwnTracksContext):
 
     with patch.object(owntracks, "OwnTracksContext", ctx_cls):
         assert await async_setup_component.opp, "owntracks", {"owntracks": config})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 @pytest.fixture
@@ -348,8 +348,8 @@ async def send_message.opp, topic, message, corrupt=False):
     else:
         mod_message = str_message
     async_fire_mqtt_message.opp, topic, mod_message)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 def assert_location_state.opp, location):
@@ -969,7 +969,7 @@ async def test_mobile_multiple_async_enter_exit.opp, context):
        .opp, EVENT_TOPIC, json.dumps(MOBILE_BEACON_ENTER_EVENT_MESSAGE)
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
     assert len(context().mobile_beacons_active["greg_phone"]) == 0
 
@@ -1531,7 +1531,7 @@ async def test_restore_state.opp,.opp_client):
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
     resp = await client.post(
@@ -1540,13 +1540,13 @@ async def test_restore_state.opp,.opp_client):
         headers={"X-Limit-u": "Paulus", "X-Limit-d": "Pixel"},
     )
     assert resp.status == 200
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state_1 = opp.states.get("device_tracker.paulus_pixel")
     assert state_1 is not None
 
     await.opp.config_entries.async_reload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state_2 = opp.states.get("device_tracker.paulus_pixel")
     assert state_2 is not None
@@ -1569,7 +1569,7 @@ async def test_returns_empty_friends.opp,.opp_client):
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
     resp = await client.post(
@@ -1590,7 +1590,7 @@ async def test_returns_array_friends.opp,.opp_client):
     otracks.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(otracks.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Setup device_trackers
     assert await async_setup_component(

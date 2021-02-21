@@ -29,7 +29,7 @@ async def setup_comp.opp):
     assert await async_setup_component(
        .opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": DOMAIN}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_state_attributes.opp):

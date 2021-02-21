@@ -25,7 +25,7 @@ async def test_async_setup_entry.opp, aioclient_mock):
     assert entry.state == ENTRY_STATE_LOADED
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert entry.state == ENTRY_STATE_NOT_LOADED
 
 

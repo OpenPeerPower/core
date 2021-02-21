@@ -19,7 +19,7 @@ async def test_islamic_prayer_times_sensors.opp, legacy_patchable_time):
         return_value=PRAYER_TIMES,
     ), patch("openpeerpowerr.util.dt.now", return_value=NOW):
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         for prayer in PRAYER_TIMES:
             assert (

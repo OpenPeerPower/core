@@ -61,7 +61,7 @@ async def test_update_device_config.opp,.opp_client):
                 {"name": "Beer", "entities": ["light.top", "light.bottom"]}
             ),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert resp.status == 200
     result = await resp.json()

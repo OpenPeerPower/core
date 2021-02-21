@@ -249,7 +249,7 @@ async def test_device_setup_registry.opp):
     entity_registry = mock_registry.opp)
 
     _, mock_entry = await device.setup_entry.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(device_registry.devices) == 1
 
@@ -329,13 +329,13 @@ async def test_device_update_listener.opp):
     entity_registry = mock_registry.opp)
 
     mock_api, mock_entry = await device.setup_entry.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.broadlink.device.blk.gendevice", return_value=mock_api
     ):
        .opp.config_entries.async_update_entry(mock_entry, title="New Name")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     device_entry = device_registry.async_get_device({(DOMAIN, mock_entry.unique_id)})
     assert device_entry.name == "New Name"

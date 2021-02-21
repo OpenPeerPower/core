@@ -36,7 +36,7 @@ async def test_form.opp):
         assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result2["title"] == SERVER_STATUS.name  # pylint: disable=maybe-no-member
         assert result2["data"] == CONFIG
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 

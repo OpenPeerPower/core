@@ -50,7 +50,7 @@ async def test_sensors_pro.opp, canary) -> None:
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["sensor"]):
         assert await async_setup_component.opp, DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     sensors = {
         "home_dining_room_temperature": (
@@ -115,7 +115,7 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["sensor"]):
         assert await async_setup_component.opp, DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     entity_id = "sensor.home_dining_room_air_quality"
     state = opp.states.get(entity_id)
@@ -131,7 +131,7 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
     future = utcnow() + timedelta(seconds=30)
     async_fire_time_changed.opp, future)
     await.opp.helpers.entity_component.async_update_entity(entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state
@@ -146,7 +146,7 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
     future += timedelta(seconds=30)
     async_fire_time_changed.opp, future)
     await.opp.helpers.entity_component.async_update_entity(entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state
@@ -175,7 +175,7 @@ async def test_sensors_flex.opp, canary) -> None:
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["sensor"]):
         assert await async_setup_component.opp, DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     sensors = {
         "home_dining_room_battery": (

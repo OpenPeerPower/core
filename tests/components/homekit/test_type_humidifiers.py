@@ -48,14 +48,14 @@ async def test_humidifier.opp, hk_driver, events):
     entity_id = "humidifier.test"
 
    .opp.states.async_set(entity_id, STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
        .opp, hk_driver, "HumidifierDehumidifier", entity_id, 1, None
     )
     hk_driver.add_accessory(acc)
 
     await acc.run_op.dler()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.aid == 1
     assert acc.category == CATEGORY_HUMIDIFIER
@@ -78,7 +78,7 @@ async def test_humidifier.opp, hk_driver, events):
         STATE_ON,
         {ATTR_HUMIDITY: 47},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_target_humidity.value == 47.0
     assert acc.char_current_humidifier_dehumidifier.value == 2
     assert acc.char_target_humidifier_dehumidifier.value == 1
@@ -89,7 +89,7 @@ async def test_humidifier.opp, hk_driver, events):
         STATE_OFF,
         {ATTR_HUMIDITY: 42, ATTR_DEVICE_CLASS: DEVICE_CLASS_HUMIDIFIER},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_target_humidity.value == 42.0
     assert acc.char_current_humidifier_dehumidifier.value == 0
     assert acc.char_target_humidifier_dehumidifier.value == 1
@@ -113,7 +113,7 @@ async def test_humidifier.opp, hk_driver, events):
         "mock_addr",
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(call_set_humidity) == 1
     assert call_set_humidity[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_humidity[0].data[ATTR_HUMIDITY] == 39.0
@@ -129,14 +129,14 @@ async def test_dehumidifier.opp, hk_driver, events):
    .opp.states.async_set(
         entity_id, STATE_OFF, {ATTR_DEVICE_CLASS: DEVICE_CLASS_DEHUMIDIFIER}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
        .opp, hk_driver, "HumidifierDehumidifier", entity_id, 1, None
     )
     hk_driver.add_accessory(acc)
 
     await acc.run_op.dler()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.aid == 1
     assert acc.category == CATEGORY_HUMIDIFIER
@@ -159,7 +159,7 @@ async def test_dehumidifier.opp, hk_driver, events):
         STATE_ON,
         {ATTR_HUMIDITY: 30},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_target_humidity.value == 30.0
     assert acc.char_current_humidifier_dehumidifier.value == 3
     assert acc.char_target_humidifier_dehumidifier.value == 2
@@ -170,7 +170,7 @@ async def test_dehumidifier.opp, hk_driver, events):
         STATE_OFF,
         {ATTR_HUMIDITY: 42},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_target_humidity.value == 42.0
     assert acc.char_current_humidifier_dehumidifier.value == 0
     assert acc.char_target_humidifier_dehumidifier.value == 2
@@ -194,7 +194,7 @@ async def test_dehumidifier.opp, hk_driver, events):
         "mock_addr",
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(call_set_humidity) == 1
     assert call_set_humidity[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_humidity[0].data[ATTR_HUMIDITY] == 39.0
@@ -214,14 +214,14 @@ async def test_hygrostat_power_state.opp, hk_driver, events):
         STATE_ON,
         {ATTR_HUMIDITY: 43},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
        .opp, hk_driver, "HumidifierDehumidifier", entity_id, 1, None
     )
     hk_driver.add_accessory(acc)
 
     await acc.run_op.dler()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.char_current_humidifier_dehumidifier.value == 2
     assert acc.char_target_humidifier_dehumidifier.value == 1
@@ -232,7 +232,7 @@ async def test_hygrostat_power_state.opp, hk_driver, events):
         STATE_OFF,
         {ATTR_HUMIDITY: 43},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_humidifier_dehumidifier.value == 0
     assert acc.char_target_humidifier_dehumidifier.value == 1
     assert acc.char_active.value == 0
@@ -255,7 +255,7 @@ async def test_hygrostat_power_state.opp, hk_driver, events):
         "mock_addr",
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(call_turn_on) == 1
     assert call_turn_on[0].data[ATTR_ENTITY_ID] == entity_id
     assert acc.char_active.value == 1
@@ -277,7 +277,7 @@ async def test_hygrostat_power_state.opp, hk_driver, events):
         "mock_addr",
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(call_turn_off) == 1
     assert call_turn_off[0].data[ATTR_ENTITY_ID] == entity_id
     assert acc.char_active.value == 0
@@ -292,14 +292,14 @@ async def test_hygrostat_get_humidity_range.opp, hk_driver):
    .opp.states.async_set(
         entity_id, STATE_OFF, {ATTR_MIN_HUMIDITY: 40, ATTR_MAX_HUMIDITY: 45}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
        .opp, hk_driver, "HumidifierDehumidifier", entity_id, 1, None
     )
     hk_driver.add_accessory(acc)
 
     await acc.run_op.dler()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.char_target_humidity.properties[PROP_MAX_VALUE] == 45
     assert acc.char_target_humidity.properties[PROP_MIN_VALUE] == 40
@@ -317,11 +317,11 @@ async def test_humidifier_with_linked_humidity_sensor.opp, hk_driver):
             ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE,
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entity_id = "humidifier.test"
 
    .opp.states.async_set(entity_id, STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
        .opp,
         hk_driver,
@@ -333,7 +333,7 @@ async def test_humidifier_with_linked_humidity_sensor.opp, hk_driver):
     hk_driver.add_accessory(acc)
 
     await acc.run_op.dler()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.char_current_humidity.value == 42.0
 
@@ -345,7 +345,7 @@ async def test_humidifier_with_linked_humidity_sensor.opp, hk_driver):
             ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE,
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.char_current_humidity.value == 43.0
 
@@ -357,12 +357,12 @@ async def test_humidifier_with_linked_humidity_sensor.opp, hk_driver):
             ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE,
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.char_current_humidity.value == 43.0
 
    .opp.states.async_remove(humidity_sensor_entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.char_current_humidity.value == 43.0
 
@@ -373,7 +373,7 @@ async def test_humidifier_with_a_missing_linked_humidity_sensor.opp, hk_driver):
     entity_id = "humidifier.test"
 
    .opp.states.async_set(entity_id, STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
        .opp,
         hk_driver,
@@ -385,7 +385,7 @@ async def test_humidifier_with_a_missing_linked_humidity_sensor.opp, hk_driver):
     hk_driver.add_accessory(acc)
 
     await acc.run_op.dler()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.char_current_humidity.value == 0
 
@@ -395,14 +395,14 @@ async def test_humidifier_as_dehumidifier.opp, hk_driver, events, caplog):
     entity_id = "humidifier.test"
 
    .opp.states.async_set(entity_id, STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
        .opp, hk_driver, "HumidifierDehumidifier", entity_id, 1, None
     )
     hk_driver.add_accessory(acc)
 
     await acc.run_op.dler()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.char_target_humidifier_dehumidifier.value == 1
 
@@ -424,6 +424,6 @@ async def test_humidifier_as_dehumidifier.opp, hk_driver, events, caplog):
         "mock_addr",
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert "TargetHumidifierDehumidifierState is not supported" in caplog.text
     assert len(events) == 0

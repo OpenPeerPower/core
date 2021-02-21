@@ -124,7 +124,7 @@ async def test_setup_config_entry_dynamic_instances.opp: OpenPeerPowerType) -> N
         side_effect=[master_client, entity_client, entity_client],
     ):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(TEST_ENTITY_ID_1) is not None
     assert.opp.states.get(TEST_ENTITY_ID_2) is not None
@@ -150,7 +150,7 @@ async def test_setup_config_entry_dynamic_instances.opp: OpenPeerPowerType) -> N
                 ],
             }
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(TEST_ENTITY_ID_1) is None
     assert.opp.states.get(TEST_ENTITY_ID_2) is not None
@@ -174,7 +174,7 @@ async def test_setup_config_entry_dynamic_instances.opp: OpenPeerPowerType) -> N
                 const.KEY_DATA: [TEST_INSTANCE_2, TEST_INSTANCE_3],
             }
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(TEST_ENTITY_ID_1) is None
     assert.opp.states.get(TEST_ENTITY_ID_2) is not None
@@ -198,7 +198,7 @@ async def test_setup_config_entry_dynamic_instances.opp: OpenPeerPowerType) -> N
                 ],
             }
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(TEST_ENTITY_ID_1) is None
     assert.opp.states.get(TEST_ENTITY_ID_2) is not None
@@ -215,7 +215,7 @@ async def test_setup_config_entry_dynamic_instances.opp: OpenPeerPowerType) -> N
                 const.KEY_DATA: [TEST_INSTANCE_1, TEST_INSTANCE_2, TEST_INSTANCE_3],
             }
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(TEST_ENTITY_ID_1) is not None
     assert.opp.states.get(TEST_ENTITY_ID_2) is not None

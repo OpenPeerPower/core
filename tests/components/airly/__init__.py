@@ -26,6 +26,6 @@ async def init_integration.opp, aioclient_mock) -> MockConfigEntry:
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_valid_station.json"))
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     return entry

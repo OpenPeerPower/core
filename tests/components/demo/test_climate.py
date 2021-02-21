@@ -56,7 +56,7 @@ async def setup_demo_climate.opp):
     """Initialize setup demo climate."""
    .opp.config.units = METRIC_SYSTEM
     assert await async_setup_component.opp, DOMAIN, {"climate": {"platform": "demo"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 def test_setup_params.opp):

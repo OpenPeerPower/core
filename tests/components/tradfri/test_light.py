@@ -115,7 +115,7 @@ async def setup_integration.opp):
 
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 def mock_light(test_features=None, test_state=None, light_number=0):
@@ -254,7 +254,7 @@ async def test_turn_on(
         {"entity_id": f"light.tradfri_light_{device_id}", **test_data},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Check that the light is observed.
     mock_func = light.observe
@@ -276,7 +276,7 @@ async def test_turn_on(
     light_data = Light(dev, 0)
     light.light_control.lights[0] = light_data
     callback(light)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Check that the state is correct.
     states = opp.states.get(f"light.tradfri_light_{device_id}")
@@ -300,7 +300,7 @@ async def test_turn_off.opp, mock_gateway, api_factory):
     await.opp.services.async_call(
         "light", "turn_off", {"entity_id": "light.tradfri_light_0"}, blocking=True
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Check that the light is observed.
     mock_func = light.observe
@@ -321,7 +321,7 @@ async def test_turn_off.opp, mock_gateway, api_factory):
     light_data = Light(dev, 0)
     light.light_control.lights[0] = light_data
     callback(light)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Check that the state is correct.
     states = opp.states.get("light.tradfri_light_0")
@@ -384,7 +384,7 @@ async def test_group_turn_on.opp, mock_gateway, api_factory):
         {"entity_id": "light.tradfri_group_2", "brightness": 100, "transition": 1},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     group.set_state.assert_called_with(1)
     group2.set_dimmer.assert_called_with(100)
@@ -401,6 +401,6 @@ async def test_group_turn_off.opp, mock_gateway, api_factory):
     await.opp.services.async_call(
         "light", "turn_off", {"entity_id": "light.tradfri_group_0"}, blocking=True
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     group.set_state.assert_called_with(0)

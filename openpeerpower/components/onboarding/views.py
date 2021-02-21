@@ -104,7 +104,7 @@ class UserOnboardingView(_BaseOnboardingView):
             await provider.async_initialize()
 
             user = await.opp.auth.async_create_user(data["name"], [GROUP_ID_ADMIN])
-            await.opp.async_add_executor_job(
+            await opp.async_add_executor_job(
                 provider.data.add_auth, data["username"], data["password"]
             )
             credentials = await provider.async_get_or_create_credentials(

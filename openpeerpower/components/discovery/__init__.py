@@ -193,7 +193,7 @@ async def async_setup.opp, config):
     async def scan_devices(now):
         """Scan for devices."""
         try:
-            results = await.opp.async_add_executor_job(
+            results = await opp.async_add_executor_job(
                 _discover, netdisco, zeroconf_instance
             )
 

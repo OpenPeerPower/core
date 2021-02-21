@@ -134,7 +134,7 @@ async def async_setup_cast.opp, config=None):
     ) as add_entities:
         MockConfigEntry(domain="cast").add_to_opp.opp)
         await async_setup_component.opp, "cast", {"cast": {"media_player": config}})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return add_entities
 
@@ -152,8 +152,8 @@ async def async_setup_cast_internal_discovery.opp, config=None):
         return_value=browser,
     ) as start_discovery:
         add_entities = await async_setup_cast.opp, config)
-        await.opp.async_block_till_done()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert start_discovery.call_count == 1
 
@@ -204,7 +204,7 @@ async def async_setup_media_player_cast.opp: OpenPeerPowerType, info: Chromecast
         await async_setup_component(
            .opp, "cast", {"cast": {"media_player": {"uuid": info.uuid}}}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         discovery_callback = cast_listener.call_args[0][0]
 
@@ -217,8 +217,8 @@ async def async_setup_media_player_cast.opp: OpenPeerPowerType, info: Chromecast
         )
         discovery_callback(info.uuid, service_name)
 
-        await.opp.async_block_till_done()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert get_chromecast.call_count == 1
 
         def discover_chromecast(service_name: str, info: ChromecastInfo) -> None:
@@ -291,7 +291,7 @@ async def test_internal_discovery_callback_fill_out.opp):
 
         async_dispatcher_connect.opp, "cast_discovered", signal)
         discover_cast("the-service", info)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # when called with incomplete info, it should use HTTP to get missing
         discover = signal.mock_calls[0][1][0]
@@ -318,7 +318,7 @@ async def test_internal_discovery_callback_fill_out_default_manufacturer.opp):
 
         async_dispatcher_connect.opp, "cast_discovered", signal)
         discover_cast("the-service", info)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # when called with incomplete info, it should use HTTP to get missing
         discover = signal.mock_calls[0][1][0]
@@ -345,7 +345,7 @@ async def test_internal_discovery_callback_fill_out_fail.opp):
 
         async_dispatcher_connect.opp, "cast_discovered", signal)
         discover_cast("the-service", info)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # when called with incomplete info, it should use HTTP to get missing
         discover = signal.mock_calls[0][1][0]
@@ -377,7 +377,7 @@ async def test_internal_discovery_callback_fill_out_group.opp):
 
         async_dispatcher_connect.opp, "cast_discovered", signal)
         discover_cast("the-service", info)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # when called with incomplete info, it should use HTTP to get missing
         discover = signal.mock_calls[0][1][0]
@@ -402,7 +402,7 @@ async def test_stop_discovery_called_on_stop.opp):
     ) as stop_discovery:
         # stop discovery should be called on shutdown
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         stop_discovery.assert_called_once_with(browser)
 
@@ -446,8 +446,8 @@ async def test_replay_past_chromecasts.opp):
         return_value=zconf_2,
     ):
         discover_cast("service2", cast_group2)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()  # having tasks that add jobs
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()  # having tasks that add jobs
     assert add_dev1.call_count == 0
 
     with patch(
@@ -455,13 +455,13 @@ async def test_replay_past_chromecasts.opp):
         return_value=zconf_1,
     ):
         discover_cast("service1", cast_group1)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()  # having tasks that add jobs
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()  # having tasks that add jobs
     assert add_dev1.call_count == 1
 
     add_dev2 = Mock()
     await cast._async_setup_platform.opp, {"host": "host2"}, add_dev2)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert add_dev2.call_count == 1
 
 
@@ -481,8 +481,8 @@ async def test_manual_cast_chromecasts_uuid.opp):
         return_value=zconf_2,
     ):
         discover_cast("service2", cast_2)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()  # having tasks that add jobs
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()  # having tasks that add jobs
     assert add_dev1.call_count == 0
 
     with patch(
@@ -490,8 +490,8 @@ async def test_manual_cast_chromecasts_uuid.opp):
         return_value=zconf_1,
     ):
         discover_cast("service1", cast_1)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()  # having tasks that add jobs
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()  # having tasks that add jobs
     assert add_dev1.call_count == 1
 
 
@@ -509,8 +509,8 @@ async def test_auto_cast_chromecasts.opp):
         return_value=zconf_1,
     ):
         discover_cast("service2", cast_2)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()  # having tasks that add jobs
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()  # having tasks that add jobs
     assert add_dev1.call_count == 1
 
     with patch(
@@ -518,8 +518,8 @@ async def test_auto_cast_chromecasts.opp):
         return_value=zconf_2,
     ):
         discover_cast("service1", cast_1)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()  # having tasks that add jobs
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()  # having tasks that add jobs
     assert add_dev1.call_count == 2
 
 
@@ -550,8 +550,8 @@ async def test_discover_dynamic_group.opp, dial_mock, pycast_mock, caplog):
         return_value=zconf_1,
     ):
         discover_cast("service", cast_1)
-        await.opp.async_block_till_done()
-        await.opp.async_block_till_done()  # having tasks that add jobs
+        await opp.async_block_till_done()
+        await opp.async_block_till_done()  # having tasks that add jobs
     pycast_mock.get_chromecast_from_service.assert_called()
     pycast_mock.get_chromecast_from_service.reset_mock()
     assert add_dev1.call_count == 0
@@ -563,8 +563,8 @@ async def test_discover_dynamic_group.opp, dial_mock, pycast_mock, caplog):
         return_value=zconf_2,
     ):
         discover_cast("service", cast_2)
-        await.opp.async_block_till_done()
-        await.opp.async_block_till_done()  # having tasks that add jobs
+        await opp.async_block_till_done()
+        await opp.async_block_till_done()  # having tasks that add jobs
     pycast_mock.get_chromecast_from_service.assert_called()
     pycast_mock.get_chromecast_from_service.reset_mock()
     assert add_dev1.call_count == 0
@@ -576,8 +576,8 @@ async def test_discover_dynamic_group.opp, dial_mock, pycast_mock, caplog):
         return_value=zconf_1,
     ):
         discover_cast("service", cast_1)
-        await.opp.async_block_till_done()
-        await.opp.async_block_till_done()  # having tasks that add jobs
+        await opp.async_block_till_done()
+        await opp.async_block_till_done()  # having tasks that add jobs
     pycast_mock.get_chromecast_from_service.assert_not_called()
     assert add_dev1.call_count == 0
     assert reg.async_get_entity_id("media_player", "cast", cast_1.uuid) is None
@@ -590,8 +590,8 @@ async def test_discover_dynamic_group.opp, dial_mock, pycast_mock, caplog):
         return_value=zconf_1,
     ):
         remove_cast("service", cast_1)
-        await.opp.async_block_till_done()
-        await.opp.async_block_till_done()  # having tasks that add jobs
+        await opp.async_block_till_done()
+        await opp.async_block_till_done()  # having tasks that add jobs
 
     assert "Disconnecting from chromecast" in caplog.text
 
@@ -611,8 +611,8 @@ async def test_update_cast_chromecasts.opp):
         return_value=zconf_1,
     ):
         discover_cast("service1", cast_1)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()  # having tasks that add jobs
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()  # having tasks that add jobs
     assert add_dev1.call_count == 1
 
     with patch(
@@ -620,8 +620,8 @@ async def test_update_cast_chromecasts.opp):
         return_value=zconf_2,
     ):
         discover_cast("service2", cast_2)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()  # having tasks that add jobs
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()  # having tasks that add jobs
     assert add_dev1.call_count == 1
 
 
@@ -639,14 +639,14 @@ async def test_entity_availability.opp: OpenPeerPowerType):
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.state == "unknown"
 
     connection_status = MagicMock()
     connection_status.status = "DISCONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.state == "unavailable"
 
@@ -667,7 +667,7 @@ async def test_entity_cast_status.opp: OpenPeerPowerType):
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state is not None
@@ -690,7 +690,7 @@ async def test_entity_cast_status.opp: OpenPeerPowerType):
     cast_status.volume_level = 0.5
     cast_status.volume_muted = False
     cast_status_cb(cast_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.attributes.get("volume_level") == 0.5
     assert not state.attributes.get("is_volume_muted")
@@ -699,7 +699,7 @@ async def test_entity_cast_status.opp: OpenPeerPowerType):
     cast_status.volume_level = 0.2
     cast_status.volume_muted = True
     cast_status_cb(cast_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.attributes.get("volume_level") == 0.2
     assert state.attributes.get("is_volume_muted")
@@ -708,7 +708,7 @@ async def test_entity_cast_status.opp: OpenPeerPowerType):
     cast_status = MagicMock()
     cast_status.volume_control_type = "fixed"
     cast_status_cb(cast_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.attributes.get("supported_features") == (
         SUPPORT_PAUSE
@@ -736,7 +736,7 @@ async def test_entity_play_media.opp: OpenPeerPowerType):
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state is not None
@@ -765,7 +765,7 @@ async def test_entity_play_media_cast.opp: OpenPeerPowerType, quick_play_mock):
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state is not None
@@ -798,7 +798,7 @@ async def test_entity_play_media_cast_invalid.opp, caplog, quick_play_mock):
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state is not None
@@ -845,7 +845,7 @@ async def test_entity_play_media_sign_URL.opp: OpenPeerPowerType):
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Play_media
     await common.async_play_media.opp, "audio", "/best.mp3", entity_id)
@@ -871,7 +871,7 @@ async def test_entity_media_content_type.opp: OpenPeerPowerType):
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state is not None
@@ -884,27 +884,27 @@ async def test_entity_media_content_type.opp: OpenPeerPowerType):
     media_status.media_is_musictrack = False
     media_status.media_is_tvshow = False
     media_status_cb(media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.attributes.get("media_content_type") is None
 
     media_status.media_is_tvshow = True
     media_status_cb(media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.attributes.get("media_content_type") == "tvshow"
 
     media_status.media_is_tvshow = False
     media_status.media_is_musictrack = True
     media_status_cb(media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.attributes.get("media_content_type") == "music"
 
     media_status.media_is_musictrack = True
     media_status.media_is_movie = True
     media_status_cb(media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.attributes.get("media_content_type") == "movie"
 
@@ -925,7 +925,7 @@ async def test_entity_control.opp: OpenPeerPowerType):
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state is not None
@@ -988,7 +988,7 @@ async def test_entity_control.opp: OpenPeerPowerType):
     media_status.supports_queue_next = True
     media_status.supports_seek = True
     media_status_cb(media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state.attributes.get("supported_features") == (
@@ -1034,7 +1034,7 @@ async def test_entity_media_states.opp: OpenPeerPowerType):
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state is not None
@@ -1045,34 +1045,34 @@ async def test_entity_media_states.opp: OpenPeerPowerType):
     media_status = MagicMock(images=None)
     media_status.player_is_playing = True
     media_status_cb(media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.state == "playing"
 
     media_status.player_is_playing = False
     media_status.player_is_paused = True
     media_status_cb(media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.state == "paused"
 
     media_status.player_is_paused = False
     media_status.player_is_idle = True
     media_status_cb(media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.state == "idle"
 
     media_status.player_is_idle = False
     chromecast.is_idle = True
     media_status_cb(media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.state == "off"
 
     chromecast.is_idle = False
     media_status_cb(media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.state == "unknown"
 
@@ -1095,7 +1095,7 @@ async def test_group_media_states.opp, mz_mock):
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state is not None
@@ -1109,7 +1109,7 @@ async def test_group_media_states.opp, mz_mock):
     # Player has no state, group is playing -> Should report 'playing'
     group_media_status.player_is_playing = True
     group_media_status_cb(str(FakeGroupUUID), group_media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.state == "playing"
 
@@ -1117,15 +1117,15 @@ async def test_group_media_states.opp, mz_mock):
     player_media_status.player_is_playing = False
     player_media_status.player_is_paused = True
     media_status_cb(player_media_status)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.state == "paused"
 
     # Player is in unknown state, group is playing -> Should report 'playing'
     player_media_status.player_state = "UNKNOWN"
     media_status_cb(player_media_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state.state == "playing"
 
@@ -1149,7 +1149,7 @@ async def test_group_media_control.opp, mz_mock):
     connection_status = MagicMock()
     connection_status.status = "CONNECTED"
     conn_status_cb(connection_status)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state is not None
@@ -1325,14 +1325,14 @@ async def test_disconnect_on_stop.opp: OpenPeerPowerType):
     chromecast, _ = await async_setup_media_player_cast.opp, info)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert chromecast.disconnect.call_count == 1
 
 
 async def test_entry_setup_no_config.opp: OpenPeerPowerType):
     """Test setting up entry with no config.."""
     await async_setup_component.opp, "cast", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.cast.media_player._async_setup_platform",
@@ -1348,7 +1348,7 @@ async def test_entry_setup_single_config.opp: OpenPeerPowerType):
     await async_setup_component(
        .opp, "cast", {"cast": {"media_player": {"uuid": "bla"}}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.cast.media_player._async_setup_platform",
@@ -1364,7 +1364,7 @@ async def test_entry_setup_list_config.opp: OpenPeerPowerType):
     await async_setup_component(
        .opp, "cast", {"cast": {"media_player": [{"uuid": "bla"}, {"uuid": "blu"}]}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.cast.media_player._async_setup_platform",
@@ -1381,7 +1381,7 @@ async def test_entry_setup_platform_not_ready.opp: OpenPeerPowerType):
     await async_setup_component(
        .opp, "cast", {"cast": {"media_player": {"uuid": "bla"}}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.cast.media_player._async_setup_platform",

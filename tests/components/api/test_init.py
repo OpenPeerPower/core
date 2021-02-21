@@ -121,13 +121,13 @@ async def test_api_state_change_push.opp, mock_api_client):
    .opp.bus.async_listen(const.EVENT_STATE_CHANGED, event_listener)
 
     await mock_api_client.post("/api/states/test.test", json={"state": "not_to_be_set"})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 0
 
     await mock_api_client.post(
         "/api/states/test.test", json={"state": "not_to_be_set", "force_update": True}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
 
 
@@ -144,7 +144,7 @@ async def test_api_fire_event_with_no_data.opp, mock_api_client):
    .opp.bus.async_listen_once("test.event_no_data", listener)
 
     await mock_api_client.post("/api/events/test.event_no_data")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(test_value) == 1
 
@@ -167,7 +167,7 @@ async def test_api_fire_event_with_data.opp, mock_api_client):
 
     await mock_api_client.post("/api/events/test_event_with_data", json={"test": 1})
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(test_value) == 1
 
@@ -188,7 +188,7 @@ async def test_api_fire_event_with_invalid_json.opp, mock_api_client):
         "/api/events/test_event_bad_data", data=json.dumps("not an object")
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert resp.status == 400
     assert len(test_value) == 0
@@ -198,7 +198,7 @@ async def test_api_fire_event_with_invalid_json.opp, mock_api_client):
         "/api/events/test_event_bad_data", data=json.dumps([1, 2, 3])
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert resp.status == 400
     assert len(test_value) == 0
@@ -264,7 +264,7 @@ async def test_api_call_service_no_data.opp, mock_api_client):
    .opp.services.async_register("test_domain", "test_service", listener)
 
     await mock_api_client.post("/api/services/test_domain/test_service")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(test_value) == 1
 
 
@@ -287,7 +287,7 @@ async def test_api_call_service_with_data.opp, mock_api_client):
         "/api/services/test_domain/test_service", json={"test": 1}
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(test_value) == 1
 
 
@@ -423,7 +423,7 @@ async def test_api_fire_event_context.opp, mock_api_client,.opp_access_token):
         "/api/events/test.event",
         headers={"authorization": f"Bearer .opp_access_token}"},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
 
@@ -439,7 +439,7 @@ async def test_api_call_service_context.opp, mock_api_client,.opp_access_token):
         "/api/services/test_domain/test_service",
         headers={"authorization": f"Bearer .opp_access_token}"},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
 

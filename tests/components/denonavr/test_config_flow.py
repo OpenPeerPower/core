@@ -532,7 +532,7 @@ async def test_options_flow.opp):
     config_entry.add_to_opp.opp)
 
     assert await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 

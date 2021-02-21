@@ -165,7 +165,7 @@ async def test_event_updates_sensor.opp):
         auth=None,
     )
     await subscriber.async_receive_event(event)
-    await.opp.async_block_till_done()  # Process dispatch/update signal
+    await opp.async_block_till_done()  # Process dispatch/update signal
 
     temperature = opp.states.get("sensor.my_sensor_temperature")
     assert temperature is not None

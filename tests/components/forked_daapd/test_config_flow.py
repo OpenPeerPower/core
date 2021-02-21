@@ -82,7 +82,7 @@ async def test_config_flow.opp, config_entry):
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=config_data
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == "My Music on myhost"
         assert result["data"][CONF_HOST] == config_data[CONF_HOST]
@@ -95,7 +95,7 @@ async def test_config_flow.opp, config_entry):
             context={"source": SOURCE_USER},
             data=config_entry.data,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
@@ -112,7 +112,7 @@ async def test_zeroconf_updates_title.opp, config_entry):
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=discovery_info
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert config_entry.title == "zeroconf_test"
     assert len.opp.config_entries.async_entries(DOMAIN)) == 2
@@ -203,7 +203,7 @@ async def test_options_flow.opp, config_entry):
         mock_get_request.return_value = SAMPLE_CONFIG
         config_entry.add_to_opp.opp)
         await config_entry.async_setup.opp)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

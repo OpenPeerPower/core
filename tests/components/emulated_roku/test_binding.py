@@ -56,7 +56,7 @@ async def test_events_fired_properly.opp):
         roku_event_op.dler.on_keypress("Test Emulated Roku", "C")
         roku_event_op.dler.launch("Test Emulated Roku", "1")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 4
 

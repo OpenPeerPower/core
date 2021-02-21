@@ -185,7 +185,7 @@ async def setup_bridge.opp, mock_bridge):
    .opp.data[hue.DOMAIN] = {config_entry.entry_id: mock_bridge}
     await.opp.config_entries.async_forward_entry_setup(config_entry, "light")
     # To flush out the service call to update the group
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_not_load_groups_if_old_bridge.opp, mock_bridge):

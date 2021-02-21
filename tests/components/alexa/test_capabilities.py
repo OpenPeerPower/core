@@ -56,7 +56,7 @@ async def test_api_adjust_brightness.opp, result, adjust):
     call_light = async_mock_service.opp, "light", "turn_on")
 
     msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -86,7 +86,7 @@ async def test_api_set_color_rgb.opp):
     call_light = async_mock_service.opp, "light", "turn_on")
 
     msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -112,7 +112,7 @@ async def test_api_set_color_temperature.opp):
     call_light = async_mock_service.opp, "light", "turn_on")
 
     msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -140,7 +140,7 @@ async def test_api_decrease_color_temp.opp, result, initial):
     call_light = async_mock_service.opp, "light", "turn_on")
 
     msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -168,7 +168,7 @@ async def test_api_increase_color_temp.opp, result, initial):
     call_light = async_mock_service.opp, "light", "turn_on")
 
     msg = await smart_home.async_op.dle_message.opp, DEFAULT_CONFIG, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]

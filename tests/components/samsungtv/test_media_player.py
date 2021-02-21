@@ -166,7 +166,7 @@ def mock_now():
 async def setup_samsungtv.opp, config):
     """Set up mock Samsung TV."""
     await async_setup_component.opp, SAMSUNGTV_DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_setup_with_turnon.opp, remote):
@@ -214,14 +214,14 @@ async def test_setup_websocket_2.opp, mock_now):
     assert entry is config_entries[0]
 
     assert await async_setup_component.opp, SAMSUNGTV_DOMAIN, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     next_update = mock_now + timedelta(minutes=5)
     with patch(
         "openpeerpower.components.samsungtv.bridge.SamsungTVWS"
     ) as remote, patch("openpeerpowerr.util.dt.utcnow", return_value=next_update):
         async_fire_time_changed.opp, next_update)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state
@@ -236,7 +236,7 @@ async def test_update_on.opp, remote, mock_now):
     next_update = mock_now + timedelta(minutes=5)
     with patch("openpeerpowerr.util.dt.utcnow", return_value=next_update):
         async_fire_time_changed.opp, next_update)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
@@ -254,7 +254,7 @@ async def test_update_off.opp, remote, mock_now):
         next_update = mock_now + timedelta(minutes=5)
         with patch("openpeerpowerr.util.dt.utcnow", return_value=next_update):
             async_fire_time_changed.opp, next_update)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         state = opp.states.get(ENTITY_ID)
         assert state.state == STATE_OFF
@@ -271,7 +271,7 @@ async def test_update_access_denied.opp, remote, mock_now):
         next_update = mock_now + timedelta(minutes=5)
         with patch("openpeerpowerr.util.dt.utcnow", return_value=next_update):
             async_fire_time_changed.opp, next_update)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
     assert [
         flow
@@ -295,7 +295,7 @@ async def test_update_connection_failure.opp, remotews, mock_now):
             next_update = mock_now + timedelta(minutes=5)
             with patch("openpeerpowerr.util.dt.utcnow", return_value=next_update):
                 async_fire_time_changed.opp, next_update)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
     assert [
         flow
@@ -316,7 +316,7 @@ async def test_update_unhandled_response.opp, remote, mock_now):
         next_update = mock_now + timedelta(minutes=5)
         with patch("openpeerpowerr.util.dt.utcnow", return_value=next_update):
             async_fire_time_changed.opp, next_update)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         state = opp.states.get(ENTITY_ID)
         assert state.state == STATE_ON

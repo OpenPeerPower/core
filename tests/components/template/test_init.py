@@ -29,10 +29,10 @@ async def test_reloadable.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.state").state == "mytest"
     assert len.opp.states.async_all()) == 2
@@ -49,7 +49,7 @@ async def test_reloadable.opp):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 3
 
@@ -76,10 +76,10 @@ async def test_reloadable_can_remove.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.state").state == "mytest"
     assert len.opp.states.async_all()) == 2
@@ -96,7 +96,7 @@ async def test_reloadable_can_remove.opp):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 
@@ -120,10 +120,10 @@ async def test_reloadable_stops_on_invalid_config.opp):
         },
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.state").state == "mytest"
     assert len.opp.states.async_all()) == 2
@@ -140,7 +140,7 @@ async def test_reloadable_stops_on_invalid_config.opp):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.state").state == "mytest"
     assert len.opp.states.async_all()) == 2
@@ -165,10 +165,10 @@ async def test_reloadable_op.dles_partial_valid_config.opp):
         },
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.state").state == "mytest"
     assert len.opp.states.async_all()) == 2
@@ -185,7 +185,7 @@ async def test_reloadable_op.dles_partial_valid_config.opp):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 3
 
@@ -226,10 +226,10 @@ async def test_reloadable_multiple_platforms.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.state").state == "mytest"
     assert.opp.states.get("binary_sensor.state").state == "off"
@@ -248,7 +248,7 @@ async def test_reloadable_multiple_platforms.opp):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 3
 
@@ -272,7 +272,7 @@ async def test_reload_sensors_that_reference_other_template_sensors.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     yaml_path = path.join(
         _get_fixtures_base_path(),
         "fixtures",
@@ -285,17 +285,17 @@ async def test_reload_sensors_that_reference_other_template_sensors.opp):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 3
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     next_time = dt_util.utcnow() + timedelta(seconds=1.2)
     with patch(
         "openpeerpowerr.helpers.ratelimit.dt_util.utcnow", return_value=next_time
     ):
         async_fire_time_changed.opp, next_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.test1").state == "3"
     assert.opp.states.get("sensor.test2").state == "1"

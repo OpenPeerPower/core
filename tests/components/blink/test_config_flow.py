@@ -32,7 +32,7 @@ async def test_form.opp):
             result["flow_id"],
             {"username": "blink@example.com", "password": "example"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "blink"
@@ -89,7 +89,7 @@ async def test_form_2fa.opp):
         result3 = await.opp.config_entries.flow.async_configure(
             result2["flow_id"], {"pin": "1234"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result3["type"] == "create_entry"
     assert result3["title"] == "blink"
@@ -286,7 +286,7 @@ async def test_options_flow.opp):
         "openpeerpower.components.blink.Blink", return_value=mock_blink
     ):
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}

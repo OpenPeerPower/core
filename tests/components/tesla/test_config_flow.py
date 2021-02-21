@@ -43,7 +43,7 @@ async def test_form.opp):
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {CONF_PASSWORD: "test", CONF_USERNAME: "test@email.com"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "test@email.com"

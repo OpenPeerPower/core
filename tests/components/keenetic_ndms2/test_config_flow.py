@@ -61,7 +61,7 @@ async def test_flow_works.opp: OpenPeerPowerType, connect):
             result["flow_id"],
             user_input=MOCK_DATA,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == MOCK_NAME
@@ -83,7 +83,7 @@ async def test_import_works.opp: OpenPeerPowerType, connect):
             context={"source": config_entries.SOURCE_IMPORT},
             data=MOCK_DATA,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == MOCK_NAME
@@ -102,7 +102,7 @@ async def test_options.opp):
         "openpeerpower.components.keenetic_ndms2.async_setup_entry", return_value=True
     ) as mock_setup_entry:
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1

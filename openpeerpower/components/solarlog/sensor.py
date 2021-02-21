@@ -34,7 +34,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
     host = url.geturl()
 
     try:
-        api = await.opp.async_add_executor_job(SolarLog, host)
+        api = await opp.async_add_executor_job(SolarLog, host)
         _LOGGER.debug("Connected to Solar-Log device, setting up entries")
     except (OSError, HTTPError, Timeout):
         _LOGGER.error(
@@ -43,7 +43,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
         return
 
     # Create solarlog data service which will retrieve and update the data.
-    data = await.opp.async_add_executor_job(SolarlogData,.opp, api, host)
+    data = await opp.async_add_executor_job(SolarlogData,.opp, api, host)
 
     # Create a new sensor for each sensor type.
     entities = []

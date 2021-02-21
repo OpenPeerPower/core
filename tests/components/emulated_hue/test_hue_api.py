@@ -302,7 +302,7 @@ async def test_lights_all_dimmable.opp, aiohttp_client):
     await setup.async_setup_component(
        .opp, http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: HTTP_SERVER_PORT}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     hue_config = {
         emulated_hue.CONF_LISTEN_PORT: BRIDGE_SERVER_PORT,
         emulated_hue.CONF_EXPOSE_BY_DEFAULT: True,
@@ -314,7 +314,7 @@ async def test_lights_all_dimmable.opp, aiohttp_client):
             emulated_hue.DOMAIN,
             {emulated_hue.DOMAIN: hue_config},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     config = Config(None, hue_config)
     config.numbers = ENTITY_IDS_BY_NUMBER
     web_app = opp.http.app
@@ -757,7 +757,7 @@ async def test_put_light_state.opp,.opp_hue, hue_client):
         transitiontime=60,
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert call_turn_on[0]
     assert call_turn_on[0].data[ATTR_ENTITY_ID] == ["light.ceiling_lights"]
     assert call_turn_on[0].data[light.ATTR_BRIGHTNESS] == 99

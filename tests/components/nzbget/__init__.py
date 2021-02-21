@@ -79,7 +79,7 @@ async def init_integration(
     entry.add_to_opp.opp)
 
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     return entry
 

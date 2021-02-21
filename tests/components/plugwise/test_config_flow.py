@@ -83,7 +83,7 @@ async def test_form.opp):
             {CONF_HOST: TEST_HOST, CONF_PASSWORD: TEST_PASSWORD},
         )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["data"] == {
@@ -123,7 +123,7 @@ async def test_zeroconf_form.opp):
             {CONF_PASSWORD: TEST_PASSWORD},
         )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["data"] == {
@@ -164,7 +164,7 @@ async def test_form_username.opp):
             },
         )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["data"] == {
@@ -200,7 +200,7 @@ async def test_form_username.opp):
             {CONF_PASSWORD: TEST_PASSWORD},
         )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result4["type"] == "abort"
     assert result4["reason"] == "already_configured"
@@ -294,7 +294,7 @@ async def test_options_flow_power.opp, mock_smile) -> None:
         "openpeerpower.components.plugwise.async_setup_entry", return_value=True
     ):
         assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(entry.entry_id)
 
@@ -326,7 +326,7 @@ async def test_options_flow_thermo.opp, mock_smile) -> None:
         "openpeerpower.components.plugwise.async_setup_entry", return_value=True
     ):
         assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(entry.entry_id)
 

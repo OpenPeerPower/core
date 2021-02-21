@@ -81,7 +81,7 @@ async def test_successful_discovery_and_auth.opp):
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # Should go straight to link if server was discovered
         assert result["type"] == "form"
@@ -91,7 +91,7 @@ async def test_successful_discovery_and_auth.opp):
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["title"] == "Roon Labs Music Player"
     assert result2["data"] == {
@@ -121,7 +121,7 @@ async def test_unsuccessful_discovery_user_form_and_auth.opp):
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # Should show the form if server was not discovered
         assert result["type"] == "form"
@@ -134,7 +134,7 @@ async def test_unsuccessful_discovery_user_form_and_auth.opp):
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["title"] == "Roon Labs Music Player"
     assert result2["data"] == {
@@ -170,7 +170,7 @@ async def test_successful_discovery_no_auth.opp):
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # Should go straight to link if server was discovered
         assert result["type"] == "form"
@@ -180,7 +180,7 @@ async def test_successful_discovery_no_auth.opp):
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["errors"] == {"base": "invalid_auth"}
 
@@ -205,7 +205,7 @@ async def test_unexpected_exception.opp):
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # Should go straight to link if server was discovered
         assert result["type"] == "form"
@@ -215,6 +215,6 @@ async def test_unexpected_exception.opp):
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["errors"] == {"base": "unknown"}

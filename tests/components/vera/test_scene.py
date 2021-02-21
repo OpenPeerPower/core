@@ -28,4 +28,4 @@ async def test_scene(
         "turn_on",
         {"entity_id": entity_id},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()

@@ -30,7 +30,7 @@ async def test_climate_thermostat_run.opp):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
         config_entry.add_to_opp.opp)
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("climate.master_bathroom")
     assert state.state == "auto"
@@ -63,7 +63,7 @@ async def test_climate_thermostat_schedule_hold_unavailable.opp):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
         config_entry.add_to_opp.opp)
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("climate.guest_bathroom")
 
@@ -93,7 +93,7 @@ async def test_climate_thermostat_schedule_hold_available.opp):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
         config_entry.add_to_opp.opp)
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("climate.available_bathroom")
 
@@ -127,7 +127,7 @@ async def test_climate_thermostat_schedule_temporary_hold.opp):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
         config_entry.add_to_opp.opp)
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("climate.temp_bathroom")
 
@@ -154,7 +154,7 @@ async def test_climate_thermostat_schedule_temporary_hold.opp):
         service_data={ATTR_ENTITY_ID: "climate.temp_bathroom", "temperature": 90},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # opportunistic set
     state = opp.states.get("climate.temp_bathroom")
@@ -163,7 +163,7 @@ async def test_climate_thermostat_schedule_temporary_hold.opp):
 
     # and the api poll returns it to the mock
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=3))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("climate.temp_bathroom")
     assert state.attributes["preset_mode"] == "Run Schedule"
     assert state.attributes["temperature"] == 37.2

@@ -27,7 +27,7 @@ async def setup_component.opp):
             DOMAIN,
             {DOMAIN: {CONF_CLIENT_ID: "client", CONF_CLIENT_SECRET: "secret"}},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_abort_if_no_configuration.opp):

@@ -166,7 +166,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
         "state": {"on": False},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     rgb_light = opp.states.get("light.rgb_light")
     assert rgb_light.state == STATE_OFF
@@ -239,7 +239,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
         "state": {"on": True},
     }
     gateway.api.event_op.dler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Service turn off light with short flashing
 
@@ -277,7 +277,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
         assert state.state == STATE_UNAVAILABLE
 
     await.opp.config_entries.async_remove(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -302,7 +302,7 @@ async def test_disable_light_groups.opp, aioclient_mock):
    .opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_DECONZ_GROUPS: True}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 6
     assert.opp.states.get("light.light_group")
@@ -310,7 +310,7 @@ async def test_disable_light_groups.opp, aioclient_mock):
    .opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_DECONZ_GROUPS: False}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 5
     assert.opp.states.get("light.light_group") is None
@@ -494,7 +494,7 @@ async def test_non_color_light_reports_color.opp, aioclient_mock):
         "uniqueid": "ec:1b:bd:ff:fe:ee:ed:dd-01",
     }
     gateway.api.event_op.dler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Bug is fixed if we reach this point, but device won't have neither color temp nor color
     with pytest.raises(KeyError):

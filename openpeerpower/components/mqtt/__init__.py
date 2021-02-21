@@ -502,7 +502,7 @@ async def async_setup_entry.opp, entry):
         async def finish_dump(_):
             """Write dump to file."""
             unsub()
-            await.opp.async_add_executor_job(write_dump)
+            await opp.async_add_executor_job(write_dump)
 
         event.async_call_later.opp, call.data["duration"], finish_dump)
 

@@ -51,7 +51,7 @@ async def test_form.opp):
                 CONF_CLIENT_SECRET: "client_secret",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "test-username"
@@ -92,7 +92,7 @@ async def test_form_import.opp):
                 CONF_CLIENT_SECRET: "client_secret",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "test-username"

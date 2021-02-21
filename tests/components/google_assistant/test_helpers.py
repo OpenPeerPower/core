@@ -183,7 +183,7 @@ async def test_agent_user_id_storage.opp,.opp_storage):
 
     async def _check_after_delay(data):
         async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=2))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert.opp_storage["google_assistant"] == {
             "version": 1,

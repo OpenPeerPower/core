@@ -115,7 +115,7 @@ async def test_success.opp, aioclient_mock):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["data"][CONF_URL] == FIXTURE_USER_INPUT[CONF_URL]
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup_entry.mock_calls) == 1
 
 

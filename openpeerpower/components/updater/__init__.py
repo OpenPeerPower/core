@@ -129,7 +129,7 @@ async def get_newest_version.opp, huuid, include_components):
         if include_components:
             info_object["components"] = list.opp.config.components)
 
-        linux_dist = await.opp.async_add_executor_job(linux_distribution, False)
+        linux_dist = await opp.async_add_executor_job(linux_distribution, False)
         info_object["distribution"] = linux_dist[0]
         info_object["os_version"] = linux_dist[1]
 

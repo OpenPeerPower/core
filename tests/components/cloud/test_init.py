@@ -100,7 +100,7 @@ async def test_startup_shutdown_events.opp, mock_cloud_fixture):
     """Test if the cloud will start on startup event."""
     with patch("opp_nabucasa.Cloud.stop") as mock_stop:
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert mock_stop.called
 
@@ -139,13 +139,13 @@ async def test_on_connect.opp, mock_cloud_fixture):
 
     assert "async_setup" in str(cl.iot._on_connect[-1])
     await cl.iot._on_connect[-1]()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids("binary_sensor")) == 1
 
     with patch("openpeerpowerr.helpers.discovery.async_load_platform") as mock_load:
         await cl.iot._on_connect[-1]()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_load.mock_calls) == 0
 

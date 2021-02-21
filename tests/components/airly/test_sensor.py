@@ -92,7 +92,7 @@ async def test_availability.opp, aioclient_mock):
     aioclient_mock.get(API_POINT_URL, exc=ConnectionError())
     future = utcnow() + timedelta(minutes=60)
     async_fire_time_changed.opp, future)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.home_humidity")
     assert state
@@ -102,7 +102,7 @@ async def test_availability.opp, aioclient_mock):
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_valid_station.json"))
     future = utcnow() + timedelta(minutes=120)
     async_fire_time_changed.opp, future)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.home_humidity")
     assert state

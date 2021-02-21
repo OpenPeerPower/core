@@ -241,7 +241,7 @@ async def test_exclude_and_light_ids(
     update_callback(vera_device2)
     update_callback(vera_device3)
     update_callback(vera_device4)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get(entity_id1) is None
     assert.opp.states.get(entity_id2) is not None

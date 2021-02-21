@@ -35,7 +35,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Dexcom from a config entry."""
     try:
-        dexcom = await.opp.async_add_executor_job(
+        dexcom = await opp.async_add_executor_job(
             Dexcom,
             entry.data[CONF_USERNAME],
             entry.data[CONF_PASSWORD],
@@ -53,7 +53,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     async def async_update_data():
         try:
-            return await.opp.async_add_executor_job(dexcom.get_current_glucose_reading)
+            return await opp.async_add_executor_job(dexcom.get_current_glucose_reading)
         except SessionError as error:
             raise UpdateFailed(error) from error
 

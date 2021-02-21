@@ -30,7 +30,7 @@ async def test_flow.opp, first_con, second_con, exp_type, exp_result, exp_reason
             context={"source": config_entries.SOURCE_IMPORT},
             data={dynalite.CONF_HOST: host},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert result["type"] == exp_type
     if exp_result:
         assert result["result"].state == exp_result
@@ -72,7 +72,7 @@ async def test_existing_update.opp):
     ) as mock_dyn_dev:
         mock_dyn_dev().async_setup = AsyncMock(return_value=True)
         assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_dyn_dev().configure.assert_called_once()
         assert mock_dyn_dev().configure.mock_calls[0][1][0]["port"] == port1
         result = await.opp.config_entries.flow.async_init(
@@ -80,7 +80,7 @@ async def test_existing_update.opp):
             context={"source": config_entries.SOURCE_IMPORT},
             data={dynalite.CONF_HOST: host, dynalite.CONF_PORT: port2},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert mock_dyn_dev().configure.call_count == 2
         assert mock_dyn_dev().configure.mock_calls[1][1][0]["port"] == port2
     assert result["type"] == "abort"

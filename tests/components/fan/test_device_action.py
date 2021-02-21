@@ -95,11 +95,11 @@ async def test_action.opp):
     turn_on_calls = async_mock_service.opp, "fan", "turn_on")
 
    .opp.bus.async_fire("test_event_turn_off")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(turn_off_calls) == 1
     assert len(turn_on_calls) == 0
 
    .opp.bus.async_fire("test_event_turn_on")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(turn_off_calls) == 1
     assert len(turn_on_calls) == 1

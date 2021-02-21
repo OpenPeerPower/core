@@ -648,12 +648,12 @@ async def test_connect_retry.opp, mock_panel):
     )
 
     # confirm switch is unavailable after initial attempt
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("switch.konnected_445566_actuator_6").state == "unavailable"
 
     # confirm switch is unavailable after second attempt
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=11))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await.opp.helpers.entity_component.async_update_entity(
         "switch.konnected_445566_actuator_6"
     )
@@ -661,7 +661,7 @@ async def test_connect_retry.opp, mock_panel):
 
     # confirm switch is available after third attempt
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=21))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await.opp.helpers.entity_component.async_update_entity(
         "switch.konnected_445566_actuator_6"
     )

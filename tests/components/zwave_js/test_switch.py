@@ -129,7 +129,7 @@ async def test_barrier_signaling_switch.opp, gdc_zw062, integration, client):
     }
 
     # state change is optimistic and writes state
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity)
     assert state.state == STATE_OFF
@@ -170,7 +170,7 @@ async def test_barrier_signaling_switch.opp, gdc_zw062, integration, client):
     }
 
     # state change is optimistic and writes state
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity)
     assert state.state == STATE_ON

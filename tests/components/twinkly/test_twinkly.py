@@ -101,7 +101,7 @@ async def test_turn_on.opp: OpenPeerPower):
     await.opp.services.async_call(
         "light", "turn_on", service_data={"entity_id": entity.entity_id}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)
 
@@ -123,7 +123,7 @@ async def test_turn_on_with_brightness.opp: OpenPeerPower):
         "turn_on",
         service_data={"entity_id": entity.entity_id, "brightness": 255},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)
 
@@ -140,7 +140,7 @@ async def test_turn_off.opp: OpenPeerPower):
     await.opp.services.async_call(
         "light", "turn_off", service_data={"entity_id": entity.entity_id}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)
 
@@ -170,7 +170,7 @@ async def test_update_name.opp: OpenPeerPower):
     await.opp.services.async_call(
         "light", "turn_off", service_data={"entity_id": entity.entity_id}
     )  # We call turn_off which will automatically cause an async_update
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)
 
@@ -209,7 +209,7 @@ async def _create_entries(
         )
         config_entry.add_to_opp.opp)
         assert await.opp.config_entries.async_setup(client.id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     device_registry = await.opp.helpers.device_registry.async_get_registry()
     entity_registry = await.opp.helpers.entity_registry.async_get_registry()

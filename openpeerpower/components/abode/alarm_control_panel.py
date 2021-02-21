@@ -21,7 +21,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Abode alarm control panel device."""
     data = opp.data[DOMAIN]
     async_add_entities(
-        [AbodeAlarm(data, await.opp.async_add_executor_job(data.abode.get_alarm))]
+        [AbodeAlarm(data, await opp.async_add_executor_job(data.abode.get_alarm))]
     )
 
 

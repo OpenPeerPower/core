@@ -45,7 +45,7 @@ async def test_alarm_control_panel.opp, canary) -> None:
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["alarm_control_panel"]):
         assert await async_setup_component.opp, DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.home"
     entity_entry = registry.async_get(entity_id)
@@ -61,7 +61,7 @@ async def test_alarm_control_panel.opp, canary) -> None:
     type(mocked_location).is_private = PropertyMock(return_value=True)
 
     await.opp.helpers.entity_component.async_update_entity(entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state
@@ -76,7 +76,7 @@ async def test_alarm_control_panel.opp, canary) -> None:
     )
 
     await.opp.helpers.entity_component.async_update_entity(entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state
@@ -88,7 +88,7 @@ async def test_alarm_control_panel.opp, canary) -> None:
     )
 
     await.opp.helpers.entity_component.async_update_entity(entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state
@@ -100,7 +100,7 @@ async def test_alarm_control_panel.opp, canary) -> None:
     )
 
     await.opp.helpers.entity_component.async_update_entity(entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state
@@ -127,7 +127,7 @@ async def test_alarm_control_panel_services.opp, canary) -> None:
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["alarm_control_panel"]):
         assert await async_setup_component.opp, DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.home"
 

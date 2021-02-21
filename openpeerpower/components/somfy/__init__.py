@@ -92,7 +92,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
     async def _update_all_devices():
         """Update all the devices."""
-        devices = await.opp.async_add_executor_job(data[API].get_devices)
+        devices = await opp.async_add_executor_job(data[API].get_devices)
         previous_devices = data[COORDINATOR].data
         # Sometimes Somfy returns an empty list.
         if not devices and previous_devices:

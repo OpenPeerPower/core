@@ -21,7 +21,7 @@ async def test_unload_entry.opp, cfupdate):
     assert entry.state == ENTRY_STATE_LOADED
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert not.opp.data.get(DOMAIN)
@@ -53,6 +53,6 @@ async def test_integration_services.opp, cfupdate):
         {},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     instance.update_records.assert_called_once()

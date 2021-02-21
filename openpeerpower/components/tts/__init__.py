@@ -142,7 +142,7 @@ async def async_setup.opp, config):
                    .opp, p_config, discovery_info
                 )
             else:
-                provider = await.opp.async_add_executor_job(
+                provider = await opp.async_add_executor_job(
                     platform.get_engine,.opp, p_config, discovery_info
                 )
 

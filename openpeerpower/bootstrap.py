@@ -82,7 +82,7 @@ async def async_setup_opp(
    .opp.config.config_dir = runtime_config.config_dir
 
     async_enable_logging(
-       .opp,
+        opp,
         runtime_config.verbose,
         runtime_config.log_rotate_days,
         runtime_config.log_file,
@@ -106,7 +106,7 @@ async def async_setup_opp(
     safe_mode = runtime_config.safe_mode
 
     if not safe_mode:
-        await.opp.async_add_executor_job(conf_util.process_op.config_upgrade,.opp)
+        await opp.async_add_executor_job(conf_util.process_op.config_upgrade,.opp)
 
         try:
             config_dict = await conf_util.async_opp_config_yaml.opp)
@@ -550,6 +550,6 @@ async def _async_set_up_integrations(
     _LOGGER.debug("Waiting for startup to wrap up")
     try:
         async with.opp.timeout.async_timeout(WRAP_UP_TIMEOUT, cool_down=COOLDOWN_TIME):
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
     except asyncio.TimeoutError:
         _LOGGER.warning("Setup timed out for bootstrap - moving forward")

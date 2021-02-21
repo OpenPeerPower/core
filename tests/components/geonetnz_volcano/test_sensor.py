@@ -55,7 +55,7 @@ async def test_setup.opp, legacy_patchable_time):
         assert await async_setup_component.opp, geonetnz_volcano.DOMAIN, CONFIG)
         # Artificially trigger update and collect events.
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         all_states = opp.states.async_all()
         # 3 sensor entities
@@ -99,7 +99,7 @@ async def test_setup.opp, legacy_patchable_time):
         # Simulate an update - two existing, one new entry, one outdated entry
         mock_feed_update.return_value = "OK", [mock_entry_1, mock_entry_4, mock_entry_3]
         async_fire_time_changed.opp, utcnow + DEFAULT_SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         all_states = opp.states.async_all()
         assert len(all_states) == 4
@@ -108,7 +108,7 @@ async def test_setup.opp, legacy_patchable_time):
         # so no changes to entities.
         mock_feed_update.return_value = "OK_NO_DATA", None
         async_fire_time_changed.opp, utcnow + 2 * DEFAULT_SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         all_states = opp.states.async_all()
         assert len(all_states) == 4
@@ -116,7 +116,7 @@ async def test_setup.opp, legacy_patchable_time):
         # Simulate an update - empty data, keep all entities
         mock_feed_update.return_value = "ERROR", None
         async_fire_time_changed.opp, utcnow + 3 * DEFAULT_SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         all_states = opp.states.async_all()
         assert len(all_states) == 4
@@ -124,7 +124,7 @@ async def test_setup.opp, legacy_patchable_time):
         # Simulate an update - regular data for 3 entries
         mock_feed_update.return_value = "OK", [mock_entry_1, mock_entry_2, mock_entry_3]
         async_fire_time_changed.opp, utcnow + 4 * DEFAULT_SCAN_INTERVAL)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         all_states = opp.states.async_all()
         assert len(all_states) == 4
@@ -147,7 +147,7 @@ async def test_setup_imperial.opp):
         assert await async_setup_component.opp, geonetnz_volcano.DOMAIN, CONFIG)
         # Artificially trigger update and collect events.
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         all_states = opp.states.async_all()
         assert len(all_states) == 1

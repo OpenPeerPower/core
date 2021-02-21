@@ -33,7 +33,7 @@ async def test_cover.opp, cover_data, sent_messages, cover_msg):
     cover_msg.payload["Value"] = 50
     cover_msg.encode()
     receive_message(cover_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Test opening
     await.opp.services.async_call(
@@ -158,7 +158,7 @@ async def test_barrier.opp, cover_gdo_data, sent_messages, cover_gdo_msg):
     cover_gdo_msg.payload[VALUE_ID][VALUE_SELECTED_ID] = 4
     cover_gdo_msg.encode()
     receive_message(cover_gdo_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("cover.gd00z_4_barrier_state")
     assert state is not None

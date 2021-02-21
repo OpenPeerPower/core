@@ -54,7 +54,7 @@ async def test_siren_can_be_turned_on.opp, requests_mock):
         "switch", "turn_on", {"entity_id": "switch.front_siren"}, blocking=True
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("switch.front_siren")
     assert state.state == "on"
 
@@ -72,7 +72,7 @@ async def test_updates_work.opp, requests_mock):
 
     await.opp.services.async_call("ring", "update", {}, blocking=True)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.front_siren")
     assert state.state == "on"

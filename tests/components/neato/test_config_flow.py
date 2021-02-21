@@ -146,7 +146,7 @@ async def test_reauth(
         "openpeerpower.components.neato.async_setup_entry", return_value=True
     ) as mock_setup:
         result3 = await.opp.config_entries.flow.async_configure(result2["flow_id"])
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     new_entry = opp.config_entries.async_get_entry("my_entry")
 

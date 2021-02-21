@@ -100,11 +100,11 @@ async def test_issur_melacha_sensor(
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert (
            .opp.states.get("binary_sensor.test_issur_melacha_in_effect").state

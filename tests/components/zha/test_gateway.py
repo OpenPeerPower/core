@@ -115,7 +115,7 @@ async def test_device_left.opp, zigpy_dev_basic, zha_dev_basic):
     assert zha_dev_basic.available is True
 
     get_zha_gateway.opp).device_left(zigpy_dev_basic)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert zha_dev_basic.available is False
 
 
@@ -132,7 +132,7 @@ async def test_gateway_group_methods.opp, device_light_1, device_light_2, coordi
 
     # test creating a group with 2 members
     zha_group = await zha_gateway.async_create_zigpy_group("Test Group", members)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert zha_group is not None
     assert len(zha_group.members) == 2
@@ -147,7 +147,7 @@ async def test_gateway_group_methods.opp, device_light_1, device_light_2, coordi
 
     # test removing a group
     await zha_gateway.async_remove_zigpy_group(zha_group.group_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # we shouldn't have the group anymore
     assert zha_gateway.async_get_group_by_name(zha_group.name) is None
@@ -159,7 +159,7 @@ async def test_gateway_group_methods.opp, device_light_1, device_light_2, coordi
     zha_group = await zha_gateway.async_create_zigpy_group(
         "Test Group", [GroupMember(device_light_1.ieee, 1)]
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert zha_group is not None
     assert len(zha_group.members) == 1
@@ -197,7 +197,7 @@ async def test_updating_device_store.opp, zigpy_dev_basic, zha_dev_basic):
     zigpy_dev_basic.last_seen = None
     assert zha_dev_basic.last_seen is None
     await zha_gateway.async_update_device_storage()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entry = zha_gateway.zha_storage.async_get_or_create_device(zha_dev_basic)
     assert entry.last_seen == last_seen
 
@@ -208,7 +208,7 @@ async def test_updating_device_store.opp, zigpy_dev_basic, zha_dev_basic):
 
     # test that we still put good values in storage
     await zha_gateway.async_update_device_storage()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entry = zha_gateway.zha_storage.async_get_or_create_device(zha_dev_basic)
     assert entry.last_seen == last_seen
 
@@ -221,7 +221,7 @@ async def test_cleaning_up_storage.opp, zigpy_dev_basic, zha_dev_basic,.opp_stor
 
     assert zha_dev_basic.last_seen is not None
     await zha_gateway.zha_storage.async_save()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp_storage["zha.storage"]["data"]["devices"]
     device = opp_storage["zha.storage"]["data"]["devices"][0]
@@ -229,7 +229,7 @@ async def test_cleaning_up_storage.opp, zigpy_dev_basic, zha_dev_basic,.opp_stor
 
     zha_dev_basic.device.last_seen = time.time() - TOMBSTONE_LIFETIME - 1
     await zha_gateway.async_update_device_storage()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await zha_gateway.zha_storage.async_save()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not.opp_storage["zha.storage"]["data"]["devices"]

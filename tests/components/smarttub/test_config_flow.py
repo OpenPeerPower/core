@@ -32,7 +32,7 @@ async def test_form.opp, smarttub_api):
         "email": "test-email",
         "password": "test-password",
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     mock_setup.assert_called_once()
     mock_setup_entry.assert_called_once()
 

@@ -53,7 +53,7 @@ async def test_default_setup.opp, monkeypatch):
     event_callback(
         {"id": "test", "sensor": "temperature", "value": 1, "unit": TEMP_CELSIUS}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.test").state == "1"
 
@@ -61,7 +61,7 @@ async def test_default_setup.opp, monkeypatch):
     event_callback(
         {"id": "test2", "sensor": "temperature", "value": 0, "unit": TEMP_CELSIUS}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # test  state of new sensor
     new_sensor = opp.states.get("sensor.test2")
@@ -85,7 +85,7 @@ async def test_disable_automatic_add.opp, monkeypatch):
     event_callback(
         {"id": "test2", "sensor": "temperature", "value": 0, "unit": TEMP_CELSIUS}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # make sure new device is not added
     assert not.opp.states.get("sensor.test2")
@@ -111,7 +111,7 @@ async def test_entity_availability.opp, monkeypatch):
     disconnect_callback()
 
     # Wait for dispatch events to propagate
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Entity should be unavailable
     assert.opp.states.get("sensor.test").state == "unavailable"
@@ -120,7 +120,7 @@ async def test_entity_availability.opp, monkeypatch):
     disconnect_callback()
 
     # Wait for dispatch events to propagate
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Entities should be available again
     assert.opp.states.get("sensor.test").state == STATE_UNKNOWN
@@ -159,7 +159,7 @@ async def test_aliases.opp, monkeypatch):
             "unit": PERCENTAGE,
         }
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # test  state of new sensor
     updated_sensor = opp.states.get("sensor.test_02")
@@ -185,7 +185,7 @@ async def test_race_condition.opp, monkeypatch):
     # tmp_entity must no be added to EVENT_KEY_COMMAND
     assert tmp_entity not in.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_COMMAND]["test3"]
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # test  state of new sensor
     updated_sensor = opp.states.get("sensor.test3")
@@ -197,7 +197,7 @@ async def test_race_condition.opp, monkeypatch):
     assert new_sensor.state == "ok"
 
     event_callback({"id": "test3", "sensor": "battery", "value": "ko", "unit": ""})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     # tmp_entity must be deleted from EVENT_KEY_COMMAND
     assert tmp_entity not in.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR]["test3"]
 

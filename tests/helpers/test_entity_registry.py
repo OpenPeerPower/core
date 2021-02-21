@@ -42,7 +42,7 @@ async def test_get_or_create_returns_same_entry.opp, registry, update_events):
     entry = registry.async_get_or_create("light", "hue", "1234")
     entry2 = registry.async_get_or_create("light", "hue", "1234")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(registry.entities) == 1
     assert entry is entry2
@@ -306,7 +306,7 @@ async def test_updating_config_entry_id.opp, registry, update_events):
     assert entry.entity_id == entry2.entity_id
     assert entry2.config_entry_id == "mock-id-2"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(update_events) == 2
     assert update_events[0]["action"] == "create"
@@ -328,7 +328,7 @@ async def test_removing_config_entry_id.opp, registry, update_events):
 
     assert not registry.entities
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(update_events) == 2
     assert update_events[0]["action"] == "create"
@@ -560,7 +560,7 @@ async def test_restore_states.opp):
     )
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     simple = opp.states.get("light.simple")
     assert simple is not None
@@ -586,7 +586,7 @@ async def test_restore_states.opp):
     registry.async_remove("light.simple")
     registry.async_remove("light.all_info_set")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("light.simple") is None
     assert.opp.states.get("light.disabled") is None
@@ -693,7 +693,7 @@ async def test_remove_device_removes_entities.opp, registry):
     assert registry.async_is_registered(entry.entity_id)
 
     device_registry.async_remove_device(device_entry.id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not registry.async_is_registered(entry.entity_id)
 
@@ -726,7 +726,7 @@ async def test_update_device_race.opp, registry):
     assert registry.async_is_registered(entry.entity_id)
 
     device_registry.async_remove_device(device_entry.id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not registry.async_is_registered(entry.entity_id)
 
@@ -762,7 +762,7 @@ async def test_disable_device_disables_entities.opp, registry):
     assert entry2.disabled
 
     device_registry.async_update_device(device_entry.id, disabled_by="user")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entry1 = registry.async_get(entry1.entity_id)
     assert entry1.disabled
@@ -772,7 +772,7 @@ async def test_disable_device_disables_entities.opp, registry):
     assert entry2.disabled_by == "user"
 
     device_registry.async_update_device(device_entry.id, disabled_by=None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entry1 = registry.async_get(entry1.entity_id)
     assert not entry1.disabled

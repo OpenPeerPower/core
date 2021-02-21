@@ -22,7 +22,7 @@ from tests.common import MockConfigEntry
 async def test_setup.opp: OpenPeerPowerType, fritz: Mock):
     """Test setup of integration."""
     assert await async_setup_component.opp, FB_DOMAIN, MOCK_CONFIG)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entries = opp.config_entries.async_entries()
     assert entries
     assert entries[0].data[CONF_HOST] == "fake_host"
@@ -45,7 +45,7 @@ async def test_setup_duplicate_config.opp: OpenPeerPowerType, fritz: Mock, caplo
         }
     }
     assert not await async_setup_component.opp, FB_DOMAIN, DUPLICATE)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not.opp.states.async_entity_ids()
     assert not.opp.states.async_all()
     assert "duplicate host entries found" in caplog.text
@@ -68,7 +68,7 @@ async def test_unload_remove.opp: OpenPeerPowerType, fritz: Mock):
     assert entry is config_entries[0]
 
     assert await async_setup_component.opp, FB_DOMAIN, {}) is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_LOADED
     state = opp.states.get(entity_id)
@@ -82,7 +82,7 @@ async def test_unload_remove.opp: OpenPeerPowerType, fritz: Mock):
     assert state.state == STATE_UNAVAILABLE
 
     await.opp.config_entries.async_remove(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert fritz().logout.call_count == 1
     assert entry.state == ENTRY_STATE_NOT_LOADED

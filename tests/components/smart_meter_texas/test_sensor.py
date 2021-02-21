@@ -57,5 +57,5 @@ async def test_generic_entity_update_service.opp, config_entry, aioclient_mock):
             {ATTR_ENTITY_ID: TEST_ENTITY_ID},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         updater.assert_called_once()

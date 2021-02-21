@@ -603,7 +603,7 @@ async def test_availability.opp):
         side_effect=ConnectionError(),
     ):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("sensor.home_cloud_ceiling")
         assert state
@@ -617,7 +617,7 @@ async def test_availability.opp):
         ),
     ):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("sensor.home_cloud_ceiling")
         assert state

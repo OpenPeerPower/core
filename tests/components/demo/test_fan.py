@@ -33,7 +33,7 @@ FANS_WITH_PRESET_MODES = FULL_FAN_ENTITY_IDS + [
 async def setup_comp.opp):
     """Initialize components."""
     assert await async_setup_component.opp, fan.DOMAIN, {"fan": {"platform": "demo"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 @pytest.mark.parametrize("fan_entity_id", LIMITED_AND_FULL_FAN_ENTITY_IDS)
@@ -177,7 +177,7 @@ async def test_turn_on_with_preset_mode_only.opp, fan_entity_id):
             {ATTR_ENTITY_ID: fan_entity_id, fan.ATTR_PRESET_MODE: "invalid"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -257,7 +257,7 @@ async def test_turn_on_with_preset_mode_and_speed.opp, fan_entity_id):
             {ATTR_ENTITY_ID: fan_entity_id, fan.ATTR_PRESET_MODE: "invalid"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -368,7 +368,7 @@ async def test_set_preset_mode_invalid.opp, fan_entity_id):
             {ATTR_ENTITY_ID: fan_entity_id, fan.ATTR_PRESET_MODE: "invalid"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     with pytest.raises(ValueError):
         await.opp.services.async_call(
@@ -377,7 +377,7 @@ async def test_set_preset_mode_invalid.opp, fan_entity_id):
             {ATTR_ENTITY_ID: fan_entity_id, fan.ATTR_PRESET_MODE: "invalid"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 @pytest.mark.parametrize("fan_entity_id", FULL_FAN_ENTITY_IDS)

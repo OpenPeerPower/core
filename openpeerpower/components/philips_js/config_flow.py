@@ -24,7 +24,7 @@ async def validate_input.opp: core.OpenPeerPower, data: FlowUserDict):
     """Validate the user input allows us to connect."""
     hub = PhilipsTV(data[CONF_HOST], data[CONF_API_VERSION])
 
-    await.opp.async_add_executor_job(hub.getSystem)
+    await opp.async_add_executor_job(hub.getSystem)
 
     if hub.system is None:
         raise ConnectionFailure

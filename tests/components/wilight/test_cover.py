@@ -90,7 +90,7 @@ async def test_open_close_cover_state(
         blocking=True,
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("cover.wl000000000099_1")
     assert state
     assert state.state == STATE_OPENING
@@ -103,7 +103,7 @@ async def test_open_close_cover_state(
         blocking=True,
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("cover.wl000000000099_1")
     assert state
     assert state.state == STATE_CLOSING
@@ -116,7 +116,7 @@ async def test_open_close_cover_state(
         blocking=True,
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("cover.wl000000000099_1")
     assert state
     assert state.state == STATE_OPEN
@@ -130,7 +130,7 @@ async def test_open_close_cover_state(
         blocking=True,
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("cover.wl000000000099_1")
     assert state
     assert state.state == STATE_OPEN

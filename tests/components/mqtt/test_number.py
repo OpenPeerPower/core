@@ -60,18 +60,18 @@ async def test_run_number_setup.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, topic, "10")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("number.test_number")
     assert state.state == "10"
 
     async_fire_mqtt_message.opp, topic, "20.5")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("number.test_number")
     assert state.state == "20.5"
@@ -98,7 +98,7 @@ async def test_run_number_service_optimistic.opp, mqtt_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("number.test_number")
     assert state.state == "3"
@@ -161,7 +161,7 @@ async def test_run_number_service.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, state_topic, "32")
     state = opp.states.get("number.test_number")

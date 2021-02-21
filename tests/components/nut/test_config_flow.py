@@ -58,7 +58,7 @@ async def test_form_zeroconf.opp):
             result2["flow_id"],
             {"resources": ["battery.voltage", "ups.status", "ups.status.display"]},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result3["type"] == "create_entry"
     assert result3["title"] == "192.168.1.5:1234"
@@ -117,7 +117,7 @@ async def test_form_user_one_ups.opp):
             result2["flow_id"],
             {"resources": ["battery.voltage", "ups.status", "ups.status.display"]},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result3["type"] == "create_entry"
     assert result3["title"] == "1.1.1.1:2222"
@@ -196,7 +196,7 @@ async def test_form_user_multiple_ups.opp):
             result3["flow_id"],
             {"resources": ["battery.voltage"]},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result4["type"] == "create_entry"
     assert result4["title"] == "ups2@1.1.1.1:2222"
@@ -260,7 +260,7 @@ async def test_form_user_one_ups_with_ignored_entry.opp):
             result2["flow_id"],
             {"resources": ["battery.voltage", "ups.status", "ups.status.display"]},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result3["type"] == "create_entry"
     assert result3["title"] == "1.1.1.1:2222"

@@ -25,7 +25,7 @@ async def test_connection_state_changes(mock_hc,.opp, mock_write_config):
 
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     data = opp.data[DOMAIN][entry.entry_id]
 
@@ -35,7 +35,7 @@ async def test_connection_state_changes(mock_hc,.opp, mock_write_config):
     assert.opp.states.is_state(ENTITY_PLAY_MUSIC, STATE_OFF)
 
     data._disconnected()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Entities do not immediately show as unavailable
     assert.opp.states.is_state(ENTITY_REMOTE, STATE_ON)
@@ -44,13 +44,13 @@ async def test_connection_state_changes(mock_hc,.opp, mock_write_config):
 
     future_time = utcnow() + timedelta(seconds=10)
     async_fire_time_changed.opp, future_time)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.is_state(ENTITY_REMOTE, STATE_UNAVAILABLE)
     assert.opp.states.is_state(ENTITY_WATCH_TV, STATE_UNAVAILABLE)
     assert.opp.states.is_state(ENTITY_PLAY_MUSIC, STATE_UNAVAILABLE)
 
     data._connected()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.is_state(ENTITY_REMOTE, STATE_ON)
     assert.opp.states.is_state(ENTITY_WATCH_TV, STATE_ON)
@@ -61,7 +61,7 @@ async def test_connection_state_changes(mock_hc,.opp, mock_write_config):
     future_time = utcnow() + timedelta(seconds=10)
     async_fire_time_changed.opp, future_time)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.is_state(ENTITY_REMOTE, STATE_ON)
     assert.opp.states.is_state(ENTITY_WATCH_TV, STATE_ON)
     assert.opp.states.is_state(ENTITY_PLAY_MUSIC, STATE_OFF)

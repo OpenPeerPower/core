@@ -268,7 +268,7 @@ async def async_setup.opp, config):
                    .opp, p_config, discovery_info
                 )
             elif hasattr(platform, "get_service"):
-                notify_service = await.opp.async_add_executor_job(
+                notify_service = await opp.async_add_executor_job(
                     platform.get_service,.opp, p_config, discovery_info
                 )
             else:

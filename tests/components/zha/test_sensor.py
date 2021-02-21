@@ -178,7 +178,7 @@ async def test_sensor(
     entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
 
     await async_enable_traffic.opp, [zha_device], enabled=False)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     # ensure the sensor entity was created
     assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
@@ -214,7 +214,7 @@ def.opp_ms.opp):
         await config_util.async_process_op.core_config(
            .opp, {CONF_UNIT_SYSTEM: meas_sys}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         return.opp
 
     return _opp_ms
@@ -309,7 +309,7 @@ async def test_temp_uom(
         assert.opp.states.get(entity_id).state == STATE_UNKNOWN
 
     await send_attribute_report.opp, cluster, 0, raw_temp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state is not None
     assert round(float(state.state)) == expected

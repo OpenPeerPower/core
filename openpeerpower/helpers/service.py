@@ -424,7 +424,7 @@ async def async_get_all_descriptions(
             *(async_get_integration.opp, domain) for domain in missing),
         )
 
-        contents = await.opp.async_add_executor_job(
+        contents = await opp.async_add_executor_job(
             _load_services_files,.opp, integrations
         )
 

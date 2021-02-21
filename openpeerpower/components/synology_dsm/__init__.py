@@ -209,7 +209,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
     # For SSDP compat
     if not entry.data.get(CONF_MAC):
-        network = await.opp.async_add_executor_job(getattr, api.dsm, "network")
+        network = await opp.async_add_executor_job(getattr, api.dsm, "network")
        .opp.config_entries.async_update_entry(
             entry, data={**entry.data, CONF_MAC: network.macs}
         )
@@ -220,7 +220,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         surveillance_station = api.surveillance_station
         try:
             async with async_timeout.timeout(10):
-                await.opp.async_add_executor_job(surveillance_station.update)
+                await opp.async_add_executor_job(surveillance_station.update)
         except SynologyDSMAPIErrorException as err:
             raise UpdateFailed(f"Error communicating with API: {err}") from err
 

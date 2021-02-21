@@ -20,7 +20,7 @@ async def async_init_integration.opp: OpenPeerPower) -> MockConfigEntry:
         )
         entry.add_to_opp.opp)
         assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         return entry
 
 
@@ -30,5 +30,5 @@ async def async_init_entry.opp: OpenPeerPower, entry: MockConfigEntry):
     with patch(f"{PATH_HOMEKIT}.HomeKit.async_start"):
         entry.add_to_opp.opp)
         assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         return entry

@@ -113,7 +113,7 @@ async def test_cannot_connect.opp):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
         config_entry.add_to_opp.opp)
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         registry = await.opp.helpers.entity_registry.async_get_registry()
         assert not registry.async_is_registered(FIRST_ENTITY_ID)
         assert not registry.async_is_registered(SECOND_ENTITY_ID)
@@ -129,7 +129,7 @@ async def test_unauthorized.opp):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
         config_entry.add_to_opp.opp)
         await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         registry = await.opp.helpers.entity_registry.async_get_registry()
         assert not registry.async_is_registered(FIRST_ENTITY_ID)
         assert not registry.async_is_registered(SECOND_ENTITY_ID)
@@ -160,7 +160,7 @@ async def test_setup.opp, two_part_alarm):
 async def _check_state.opp, alarm, property, state, entity_id, partition_id):
     with patch.object(alarm.partitions[partition_id], property, return_value=True):
         await async_update_entity.opp, entity_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert.opp.states.get(entity_id).state == state
 

@@ -145,7 +145,7 @@ async def test_sync_message.opp):
             ],
         },
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].event_type == EVENT_SYNC_RECEIVED
@@ -262,7 +262,7 @@ async def test_sync_in_area(area_on_device,.opp, registries):
             ],
         },
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].event_type == EVENT_SYNC_RECEIVED
@@ -349,7 +349,7 @@ async def test_query_message.opp):
         },
     }
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 4
     assert events[0].event_type == EVENT_QUERY_RECEIVED
@@ -381,7 +381,7 @@ async def test_query_message.opp):
 async def test_execute.opp):
     """Test an execute command."""
     await async_setup_component.opp, "light", {"light": {"platform": "demo"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await.opp.services.async_call(
         "light", "turn_off", {"entity_id": "light.ceiling_lights"}, blocking=True
@@ -572,7 +572,7 @@ async def test_raising_error_trait.opp):
 
     events = []
    .opp.bus.async_listen(EVENT_COMMAND_RECEIVED, events.append)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await sh.async_op.dle_message(
        .opp,
@@ -724,7 +724,7 @@ async def test_unavailable_state_does_sync.opp):
             ],
         },
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].event_type == EVENT_SYNC_RECEIVED

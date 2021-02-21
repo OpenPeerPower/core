@@ -21,7 +21,7 @@ async def test_intent_set_color.opp):
         intent.INTENT_SET,
         {"name": {"value": "Hello"}, "color": {"value": "blue"}},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result.speech["plain"]["speech"] == "Changed hello 2 to the color blue"
 
@@ -72,7 +72,7 @@ async def test_intent_set_color_and_brightness.opp):
             "brightness": {"value": "20"},
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert (
         result.speech["plain"]["speech"]

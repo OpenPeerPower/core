@@ -141,7 +141,7 @@ async def setup_mock_component.opp, entry=None):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     mock_entities = opp.states.async_entity_ids()
 
@@ -160,7 +160,7 @@ async def mock_ddp_response.opp, mock_status_data):
     mock_response = get_ddp_message(mock_status_header, mock_status_data).encode()
 
     mock_protocol.datagram_received(mock_response, (MOCK_HOST, MOCK_RANDOM_PORT))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_media_player_is_setup_correctly_with_entry.opp):
@@ -294,7 +294,7 @@ async def test_device_info_is_set_from_status_correctly.opp, patch_get_status):
     patch_get_status.return_value = MOCK_STATUS_STANDBY
     mock_entity_id = await setup_mock_component.opp)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Reformat mock status-sw_version for assertion.
     mock_version = MOCK_STATUS_STANDBY["system-version"]
@@ -375,7 +375,7 @@ async def test_turn_on.opp):
         await.opp.services.async_call(
             "media_player", "turn_on", {ATTR_ENTITY_ID: mock_entity_id}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
 
@@ -391,7 +391,7 @@ async def test_turn_off.opp):
         await.opp.services.async_call(
             "media_player", "turn_off", {ATTR_ENTITY_ID: mock_entity_id}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
 
@@ -407,7 +407,7 @@ async def test_toggle.opp):
         await.opp.services.async_call(
             "media_player", "toggle", {ATTR_ENTITY_ID: mock_entity_id}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
 
@@ -423,7 +423,7 @@ async def test_media_pause.opp):
         await.opp.services.async_call(
             "media_player", "media_pause", {ATTR_ENTITY_ID: mock_entity_id}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
 
@@ -439,7 +439,7 @@ async def test_media_stop.opp):
         await.opp.services.async_call(
             "media_player", "media_stop", {ATTR_ENTITY_ID: mock_entity_id}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
 

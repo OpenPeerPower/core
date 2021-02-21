@@ -284,6 +284,6 @@ async def test_login_recovers_bad_internet.opp, caplog):
     assert "Unable to activate Alexa Report State" in caplog.text
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=30))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(client._alexa_config.async_enable_proactive_mode.mock_calls) == 2

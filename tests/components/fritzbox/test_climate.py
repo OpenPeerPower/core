@@ -50,7 +50,7 @@ ENTITY_ID = f"{DOMAIN}.fake_name"
 async def setup_fritzbox.opp: OpenPeerPowerType, config: dict):
     """Set up mock AVM Fritz!Box."""
     assert await async_setup_component.opp, FB_DOMAIN, config) is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_setup.opp: OpenPeerPowerType, fritz: Mock):
@@ -123,7 +123,7 @@ async def test_update.opp: OpenPeerPowerType, fritz: Mock):
 
     next_update = dt_util.utcnow() + timedelta(seconds=200)
     async_fire_time_changed.opp, next_update)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(ENTITY_ID)
 
     assert device.update.call_count == 1
@@ -144,7 +144,7 @@ async def test_update_error.opp: OpenPeerPowerType, fritz: Mock):
 
     next_update = dt_util.utcnow() + timedelta(seconds=200)
     async_fire_time_changed.opp, next_update)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert device.update.call_count == 1
     assert fritz().login.call_count == 2
@@ -287,7 +287,7 @@ async def test_preset_mode_update.opp: OpenPeerPowerType, fritz: Mock):
 
     next_update = dt_util.utcnow() + timedelta(seconds=200)
     async_fire_time_changed.opp, next_update)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(ENTITY_ID)
 
     assert device.update.call_count == 1
@@ -298,7 +298,7 @@ async def test_preset_mode_update.opp: OpenPeerPowerType, fritz: Mock):
 
     next_update = dt_util.utcnow() + timedelta(seconds=200)
     async_fire_time_changed.opp, next_update)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(ENTITY_ID)
 
     assert device.update.call_count == 2

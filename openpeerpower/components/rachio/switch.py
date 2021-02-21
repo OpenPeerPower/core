@@ -92,7 +92,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Rachio switches."""
     zone_entities = []
     has_flex_sched = False
-    entities = await.opp.async_add_executor_job(_create_entities,.opp, config_entry)
+    entities = await opp.async_add_executor_job(_create_entities,.opp, config_entry)
     for entity in entities:
         if isinstance(entity, RachioZone):
             zone_entities.append(entity)

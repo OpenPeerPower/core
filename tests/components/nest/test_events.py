@@ -108,7 +108,7 @@ async def test_doorbell_chime_event.opp):
     await subscriber.async_receive_event(
         create_event("sdm.devices.events.DoorbellChime.Chime", timestamp=timestamp)
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     event_time = timestamp.replace(microsecond=0)
     assert len(events) == 1
@@ -135,7 +135,7 @@ async def test_camera_motion_event.opp):
     await subscriber.async_receive_event(
         create_event("sdm.devices.events.CameraMotion.Motion", timestamp=timestamp)
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     event_time = timestamp.replace(microsecond=0)
     assert len(events) == 1
@@ -162,7 +162,7 @@ async def test_camera_sound_event.opp):
     await subscriber.async_receive_event(
         create_event("sdm.devices.events.CameraSound.Sound", timestamp=timestamp)
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     event_time = timestamp.replace(microsecond=0)
     assert len(events) == 1
@@ -189,7 +189,7 @@ async def test_camera_person_event.opp):
     await subscriber.async_receive_event(
         create_event("sdm.devices.events.CameraPerson.Person", timestamp=timestamp)
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     event_time = timestamp.replace(microsecond=0)
     assert len(events) == 1
@@ -225,7 +225,7 @@ async def test_camera_multiple_event.opp):
 
     timestamp = utcnow()
     await subscriber.async_receive_event(create_events(event_map, timestamp=timestamp))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     event_time = timestamp.replace(microsecond=0)
     assert len(events) == 2
@@ -250,7 +250,7 @@ async def test_unknown_event.opp):
         create_device_traits("sdm.devices.traits.DoorbellChime"),
     )
     await subscriber.async_receive_event(create_event("some-event-id"))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 0
 
@@ -266,7 +266,7 @@ async def test_unknown_device_id.opp):
     await subscriber.async_receive_event(
         create_event("sdm.devices.events.DoorbellChime.Chime", "invalid-device-id")
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 0
 
@@ -288,6 +288,6 @@ async def test_event_message_without_device_event.opp):
         auth=None,
     )
     await subscriber.async_receive_event(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 0

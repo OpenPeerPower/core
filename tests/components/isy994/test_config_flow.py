@@ -94,7 +94,7 @@ async def test_form.opp: OpenPeerPowerType):
             result["flow_id"],
             MOCK_USER_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == f"{MOCK_DEVICE_NAME} ({MOCK_HOSTNAME})"
     assert result2["result"].unique_id == MOCK_UUID
@@ -311,7 +311,7 @@ async def test_form_ssdp.opp: OpenPeerPowerType):
             result["flow_id"],
             MOCK_USER_INPUT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == f"{MOCK_DEVICE_NAME} ({MOCK_HOSTNAME})"

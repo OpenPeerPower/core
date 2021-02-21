@@ -38,7 +38,7 @@ async def test_scenes.opp, hank_binary_switch, integration, client):
     )
     node.receive_event(event)
     # wait for the event
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data["home_id"] == client.driver.controller.home_id
     assert events[0].data["node_id"] == 32
@@ -76,7 +76,7 @@ async def test_scenes.opp, hank_binary_switch, integration, client):
     )
     node.receive_event(event)
     # wait for the event
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 2
     assert events[1].data["command_class"] == 43
     assert events[1].data["command_class_name"] == "Scene Activation"
@@ -122,7 +122,7 @@ async def test_scenes.opp, hank_binary_switch, integration, client):
     )
     node.receive_event(event)
     # wait for the event
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 3
     assert events[2].data["command_class"] == 91
     assert events[2].data["command_class_name"] == "Central Scene"
@@ -149,7 +149,7 @@ async def test_notifications.opp, hank_binary_switch, integration, client):
     )
     node.receive_event(event)
     # wait for the event
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data["type"] == "notification"
     assert events[0].data["home_id"] == client.driver.controller.home_id

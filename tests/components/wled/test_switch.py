@@ -80,7 +80,7 @@ async def test_switch_change_state(
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_nightlight"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         nightlight_mock.assert_called_once_with(on=True)
 
     with patch("wled.WLED.nightlight") as nightlight_mock:
@@ -90,7 +90,7 @@ async def test_switch_change_state(
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_nightlight"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         nightlight_mock.assert_called_once_with(on=False)
 
     # Sync send
@@ -101,7 +101,7 @@ async def test_switch_change_state(
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_sync_send"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         sync_mock.assert_called_once_with(send=True)
 
     with patch("wled.WLED.sync") as sync_mock:
@@ -111,7 +111,7 @@ async def test_switch_change_state(
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_sync_send"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         sync_mock.assert_called_once_with(send=False)
 
     # Sync receive
@@ -122,7 +122,7 @@ async def test_switch_change_state(
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_sync_receive"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         sync_mock.assert_called_once_with(receive=False)
 
     with patch("wled.WLED.sync") as sync_mock:
@@ -132,7 +132,7 @@ async def test_switch_change_state(
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_sync_receive"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         sync_mock.assert_called_once_with(receive=True)
 
 
@@ -150,7 +150,7 @@ async def test_switch_error(
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_nightlight"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("switch.wled_rgb_light_nightlight")
         assert state.state == STATE_OFF
@@ -172,7 +172,7 @@ async def test_switch_connection_error(
             {ATTR_ENTITY_ID: "switch.wled_rgb_light_nightlight"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("switch.wled_rgb_light_nightlight")
         assert state.state == STATE_UNAVAILABLE

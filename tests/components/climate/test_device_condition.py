@@ -165,7 +165,7 @@ async def test_if_state.opp, calls):
         },
     )
    .opp.bus.async_fire("test_event1")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_hvac_mode - event - test_event1"
 
@@ -180,11 +180,11 @@ async def test_if_state.opp, calls):
 
     # Should not fire
    .opp.bus.async_fire("test_event1")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
 
    .opp.bus.async_fire("test_event2")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_preset_mode - event - test_event2"
@@ -200,7 +200,7 @@ async def test_if_state.opp, calls):
 
     # Should not fire
    .opp.bus.async_fire("test_event2")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 2
 
 

@@ -259,7 +259,7 @@ async def async_create_default_config.opp: OpenPeerPower) -> bool:
 
     Return if creation was successful.
     """
-    return await.opp.async_add_executor_job(
+    return await opp.async_add_executor_job(
         _write_default_config,.opp.config.config_dir
     )
 

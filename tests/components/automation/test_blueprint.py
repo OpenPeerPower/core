@@ -78,7 +78,7 @@ async def test_notify_leaving_zone.opp):
     ) as mock_call_action:
         # Leaving zone to no zone
         set_person_state("not_home")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 1
         _opp, config, variables, _context = mock_call_action.mock_calls[0][1]
@@ -93,25 +93,25 @@ async def test_notify_leaving_zone.opp):
 
         # Should not increase when we go to another zone
         set_person_state("bla")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 1
 
         # Should not increase when we go into the zone
         set_person_state("School")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 1
 
         # Should not increase when we move in the zone
         set_person_state("School", {"extra_key": "triggers change with same state"})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 1
 
         # Should increase when leaving zone for another zone
         set_person_state("Just Outside School")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 2
 
@@ -176,7 +176,7 @@ async def test_motion_light.opp):
         await asyncio.sleep(0)
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=120))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(turn_off_calls) == 1
 

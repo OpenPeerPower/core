@@ -222,7 +222,7 @@ async def setup_integration(
 
     if not skip_entry_setup:
         await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return entry
 

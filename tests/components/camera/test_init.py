@@ -24,7 +24,7 @@ async def mock_camera_fixture.opp):
     assert await async_setup_component(
        .opp, "camera", {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.demo.camera.Path.read_bytes",
@@ -53,7 +53,7 @@ async def image_mock_url_fixture.opp):
     await async_setup_component(
        .opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_get_image_from_camera.opp, image_mock_url):
@@ -293,7 +293,7 @@ async def test_no_preload_stream.opp, mock_stream):
         mock_stream_source.return_value = io.BytesIO()
         await async_setup_component.opp, "camera", {DOMAIN: {"platform": "demo"}})
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert not mock_request_stream.called
 
 
@@ -312,9 +312,9 @@ async def test_preload_stream.opp, mock_stream):
         assert await async_setup_component(
            .opp, "camera", {DOMAIN: {"platform": "demo"}}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert mock_create_stream.called
 
 

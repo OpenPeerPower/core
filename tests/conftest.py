@@ -456,7 +456,7 @@ async def mqtt_mock.opp, mqtt_client_mock, mqtt_config):
 
     result = await async_setup_component.opp, mqtt.DOMAIN, {mqtt.DOMAIN: mqtt_config})
     assert result
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Workaround: asynctest==0.13 fails on @functools.lru_cache
     spec = dir.opp.data["mqtt"])

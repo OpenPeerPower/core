@@ -34,7 +34,7 @@ async def test_fetching_url.opp,.opp_client):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -67,7 +67,7 @@ async def test_fetching_without_verify_ssl(aioclient_mock,.opp,.opp_client):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -94,7 +94,7 @@ async def test_fetching_url_with_verify_ssl(aioclient_mock,.opp,.opp_client):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -123,7 +123,7 @@ async def test_limit_refetch.opp,.opp_client):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -184,7 +184,7 @@ async def test_stream_source(aioclient_mock,.opp,.opp_client,.opp_ws_client):
         },
     )
     assert await async_setup_component.opp, "stream", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.states.async_set("sensor.temp", "5")
 
@@ -225,7 +225,7 @@ async def test_stream_source_error(aioclient_mock,.opp,.opp_client,.opp_ws_clien
         },
     )
     assert await async_setup_component.opp, "stream", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.camera.Stream.endpoint_url",
@@ -264,7 +264,7 @@ async def test_no_stream_source(aioclient_mock,.opp,.opp_client,.opp_ws_client):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.camera.Stream.endpoint_url",
@@ -309,7 +309,7 @@ async def test_camera_content_type.opp,.opp_client):
     await async_setup_component(
        .opp, "camera", {"camera": [cam_config_svg, cam_config_normal]}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -346,7 +346,7 @@ async def test_reloading.opp,.opp_client):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await.opp_client()
 
@@ -369,7 +369,7 @@ async def test_reloading.opp,.opp_client):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 

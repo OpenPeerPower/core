@@ -146,7 +146,7 @@ class ComponentFactory:
 
         # Setup Open Peer Power.
         assert await async_setup_component.opp, DOMAIN,.opp_config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # Setup component through config flow.
         if controller_config.config_source == ConfigSource.CONFIG_FLOW:
@@ -155,7 +155,7 @@ class ComponentFactory:
                 context={"source": config_entries.SOURCE_USER},
                 data=component_config,
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         # Setup component directly from config entry.
         if controller_config.config_source == ConfigSource.CONFIG_ENTRY:
@@ -168,7 +168,7 @@ class ComponentFactory:
             entry.add_to_opp.opp)
 
             await.opp.config_entries.async_setup(entry.entry_id)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         update_callback = (
             controller.register.call_args_list[0][0][1]

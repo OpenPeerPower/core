@@ -36,7 +36,7 @@ async def test_async_send_command(mock_hc,.opp, mock_write_config):
 
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     data = opp.data[DOMAIN][entry.entry_id]
     send_commands_mock = data._client.send_commands
@@ -174,7 +174,7 @@ async def test_async_send_command_custom_delay(mock_hc,.opp, mock_write_config):
 
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     data = opp.data[DOMAIN][entry.entry_id]
     send_commands_mock = data._client.send_commands
@@ -210,7 +210,7 @@ async def test_change_channel(mock_hc,.opp, mock_write_config):
 
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     data = opp.data[DOMAIN][entry.entry_id]
     change_channel_mock = data._client.change_channel
@@ -222,7 +222,7 @@ async def test_change_channel(mock_hc,.opp, mock_write_config):
         {ATTR_ENTITY_ID: ENTITY_REMOTE, ATTR_CHANNEL: 100},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     change_channel_mock.assert_awaited_once_with(100)
 
@@ -235,7 +235,7 @@ async def test_sync(mock_hc, mock_write_config,.opp):
 
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     data = opp.data[DOMAIN][entry.entry_id]
     sync_mock = data._client.sync
@@ -247,7 +247,7 @@ async def test_sync(mock_hc, mock_write_config,.opp):
         {ATTR_ENTITY_ID: ENTITY_REMOTE},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     sync_mock.assert_awaited_once()
     mock_write_config.assert_called()
@@ -260,4 +260,4 @@ async def _send_commands_and_wait.opp, service_data):
         service_data,
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()

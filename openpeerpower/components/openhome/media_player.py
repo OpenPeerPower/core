@@ -42,7 +42,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     description = discovery_info.get("ssdp_description")
 
     _LOGGER.info("Openhome device found: %s", name)
-    device = await.opp.async_add_executor_job(Device, description)
+    device = await opp.async_add_executor_job(Device, description)
 
     # if device has already been discovered
     if device.Uuid() in openhome_data:

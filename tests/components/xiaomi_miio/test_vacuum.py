@@ -533,5 +533,5 @@ async def setup_component.opp, entity_name):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     return entity_id

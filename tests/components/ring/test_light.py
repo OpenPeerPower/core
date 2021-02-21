@@ -52,7 +52,7 @@ async def test_light_can_be_turned_on.opp, requests_mock):
     await.opp.services.async_call(
         "light", "turn_on", {"entity_id": "light.front_light"}, blocking=True
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.front_light")
     assert state.state == "on"
@@ -71,7 +71,7 @@ async def test_updates_work.opp, requests_mock):
 
     await.opp.services.async_call("ring", "update", {}, blocking=True)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("light.front_light")
     assert state.state == "on"

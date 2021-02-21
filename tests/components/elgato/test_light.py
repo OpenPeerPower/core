@@ -65,7 +65,7 @@ async def test_light_change_state(
             },
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert len(mock_light.mock_calls) == 1
         mock_light.assert_called_with(on=True, brightness=100, temperature=100)
 
@@ -79,7 +79,7 @@ async def test_light_change_state(
             {ATTR_ENTITY_ID: "light.frenck"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert len(mock_light.mock_calls) == 1
         mock_light.assert_called_with(on=False)
 
@@ -103,6 +103,6 @@ async def test_light_unavailable(
                 {ATTR_ENTITY_ID: "light.frenck"},
                 blocking=True,
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
             state = opp.states.get("light.frenck")
             assert state.state == STATE_UNAVAILABLE

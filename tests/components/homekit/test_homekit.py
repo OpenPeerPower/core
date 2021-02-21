@@ -95,7 +95,7 @@ async def test_setup_min.opp, mock_zeroconf):
         mock_homekit.return_value = homekit = Mock()
         type(homekit).async_start = AsyncMock()
         assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
        .opp,
@@ -113,7 +113,7 @@ async def test_setup_min.opp, mock_zeroconf):
     # Test auto start enabled
     mock_homekit.reset_mock()
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     mock_homekit().async_start.assert_called()
 
@@ -131,7 +131,7 @@ async def test_setup_auto_start_disabled.opp, mock_zeroconf):
         mock_homekit.return_value = homekit = Mock()
         type(homekit).async_start = AsyncMock()
         assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
        .opp,
@@ -150,7 +150,7 @@ async def test_setup_auto_start_disabled.opp, mock_zeroconf):
     homekit.reset_mock()
     homekit.async_start.reset_mock()
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert homekit.async_start.called is False
 
     # Test start call with driver is ready
@@ -159,7 +159,7 @@ async def test_setup_auto_start_disabled.opp, mock_zeroconf):
     homekit.status = STATUS_READY
 
     await.opp.services.async_call(DOMAIN, SERVICE_HOMEKIT_START, blocking=True)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert homekit.async_start.called is True
 
     # Test start call with driver started
@@ -168,7 +168,7 @@ async def test_setup_auto_start_disabled.opp, mock_zeroconf):
     homekit.status = STATUS_STOPPED
 
     await.opp.services.async_call(DOMAIN, SERVICE_HOMEKIT_START, blocking=True)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert homekit.async_start.called is False
 
 
@@ -198,7 +198,7 @@ async def test_homekit_setup.opp, hk_driver, mock_zeroconf):
         f"{PATH_HOMEKIT}.HomeDriver", return_value=hk_driver
     ) as mock_driver, patch("openpeerpowerr.util.get_local_ip") as mock_ip:
         mock_ip.return_value = IP_ADDRESS
-        await.opp.async_add_executor_job(homekit.setup, zeroconf_mock)
+        await opp.async_add_executor_job(homekit.setup, zeroconf_mock)
 
     path = get_persist_fullpath_for_entry_id.opp, entry.entry_id)
     mock_driver.assert_called_with(
@@ -240,7 +240,7 @@ async def test_homekit_setup_ip_address.opp, hk_driver, mock_zeroconf):
     mock_zeroconf = MagicMock()
     path = get_persist_fullpath_for_entry_id.opp, entry.entry_id)
     with patch(f"{PATH_HOMEKIT}.HomeDriver", return_value=hk_driver) as mock_driver:
-        await.opp.async_add_executor_job(homekit.setup, mock_zeroconf)
+        await opp.async_add_executor_job(homekit.setup, mock_zeroconf)
     mock_driver.assert_called_with(
        .opp,
         entry.entry_id,
@@ -276,7 +276,7 @@ async def test_homekit_setup_advertise_ip.opp, hk_driver, mock_zeroconf):
     zeroconf_instance = MagicMock()
     path = get_persist_fullpath_for_entry_id.opp, entry.entry_id)
     with patch(f"{PATH_HOMEKIT}.HomeDriver", return_value=hk_driver) as mock_driver:
-        await.opp.async_add_executor_job(homekit.setup, zeroconf_instance)
+        await opp.async_add_executor_job(homekit.setup, zeroconf_instance)
     mock_driver.assert_called_with(
        .opp,
         entry.entry_id,
@@ -511,7 +511,7 @@ async def test_homekit_start.opp, hk_driver, device_reg):
     ) as hk_driver_start:
         await homekit.async_start()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     mock_add_acc.assert_any_call(state)
     mock_setup_msg.assert_called_with.opp, entry.entry_id, None, pin, ANY)
     hk_driver_add_acc.assert_called_with(homekit.bridge)
@@ -521,7 +521,7 @@ async def test_homekit_start.opp, hk_driver, device_reg):
     # Test start() if already started
     hk_driver_start.reset_mock()
     await homekit.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not hk_driver_start.called
 
     assert device_reg.async_get(bridge_with_wrong_mac.id) is None
@@ -592,7 +592,7 @@ async def test_homekit_start_with_a_broken_accessory.opp, hk_driver, mock_zeroco
     ) as hk_driver_start:
         await homekit.async_start()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     mock_setup_msg.assert_called_with.opp, entry.entry_id, None, pin, ANY)
     hk_driver_add_acc.assert_called_with(homekit.bridge)
     assert hk_driver_start.called
@@ -601,7 +601,7 @@ async def test_homekit_start_with_a_broken_accessory.opp, hk_driver, mock_zeroco
     # Test start() if already started
     hk_driver_start.reset_mock()
     await homekit.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not hk_driver_start.called
 
 
@@ -627,19 +627,19 @@ async def test_homekit_stop.opp):
 
     assert homekit.status == STATUS_READY
     await homekit.async_stop()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     homekit.status = STATUS_WAIT
     await homekit.async_stop()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     homekit.status = STATUS_STOPPED
     await homekit.async_stop()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert homekit.driver.async_stop.called is False
 
     # Test if driver is started
     homekit.status = STATUS_RUNNING
     await homekit.async_stop()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert homekit.driver.async_stop.called is True
 
 
@@ -684,7 +684,7 @@ async def test_homekit_reset_accessories.opp, mock_zeroconf):
             {ATTR_ENTITY_ID: entity_id},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert hk_driver_config_changed.call_count == 2
         assert mock_add_accessory.called
@@ -728,7 +728,7 @@ async def test_homekit_too_many_accessories.opp, hk_driver, caplog, mock_zerocon
         f"{PATH_HOMEKIT}.HomeBridge", _mock_bridge
     ):
         await homekit.async_start()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert "would exceed" in caplog.text
 
 
@@ -801,7 +801,7 @@ async def test_homekit_finds_linked_batteries(
         "pyhap.accessory_driver.AccessoryDriver.start_service"
     ):
         await homekit.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
        .opp,
@@ -886,7 +886,7 @@ async def test_homekit_async_get_integration_fails(
         "pyhap.accessory_driver.AccessoryDriver.start_service"
     ):
         await homekit.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
        .opp,
@@ -919,7 +919,7 @@ async def test_yaml_updates_update_config_entry_for_name.opp, mock_zeroconf):
         assert await async_setup_component(
            .opp, "homekit", {"homekit": {CONF_NAME: BRIDGE_NAME, CONF_PORT: 12345}}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
        .opp,
@@ -937,7 +937,7 @@ async def test_yaml_updates_update_config_entry_for_name.opp, mock_zeroconf):
     # Test auto start enabled
     mock_homekit.reset_mock()
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     mock_homekit().async_start.assert_called()
 
@@ -953,7 +953,7 @@ async def test_raise_config_entry_not_ready.opp, mock_zeroconf):
 
     with patch(f"{PATH_HOMEKIT}.HomeKit.setup", side_effect=OSError):
         assert not await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_homekit_uses_system_zeroconf.opp, hk_driver, mock_zeroconf):
@@ -971,10 +971,10 @@ async def test_homekit_uses_system_zeroconf.opp, hk_driver, mock_zeroconf):
     ):
         entry.add_to_opp.opp)
         assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert.opp.data[DOMAIN][entry.entry_id][HOMEKIT].driver.advertiser == system_zc
         assert await.opp.config_entries.async_unload(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 def _write_data(path: str, data: Dict) -> None:
@@ -1050,7 +1050,7 @@ async def test_homekit_ignored_missing_devices(
         "pyhap.accessory_driver.AccessoryDriver.start_service"
     ):
         await homekit.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     mock_get_acc.assert_any_call(
        .opp,
@@ -1124,7 +1124,7 @@ async def test_homekit_finds_linked_motion_sensors(
         "pyhap.accessory_driver.AccessoryDriver.start_service"
     ):
         await homekit.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
        .opp,
@@ -1201,7 +1201,7 @@ async def test_homekit_finds_linked_humidity_sensors(
         "pyhap.accessory_driver.AccessoryDriver.start_service"
     ):
         await homekit.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
        .opp,
@@ -1233,7 +1233,7 @@ async def test_reload.opp, mock_zeroconf):
         assert await async_setup_component(
            .opp, "homekit", {"homekit": {CONF_NAME: "reloadable", CONF_PORT: 12345}}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
        .opp,
@@ -1269,7 +1269,7 @@ async def test_reload.opp, mock_zeroconf):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_homekit2.assert_any_call(
        .opp,
@@ -1321,7 +1321,7 @@ async def test_homekit_start_in_accessory_mode.opp, hk_driver, device_reg):
     ) as hk_driver_start:
         await homekit.async_start()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     mock_add_acc.assert_not_called()
     mock_setup_msg.assert_called_with.opp, entry.entry_id, None, pin, ANY)
     assert hk_driver_start.called

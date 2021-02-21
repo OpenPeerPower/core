@@ -25,7 +25,7 @@ async def test_setup_entry_account_error.opp):
     ):
         entry.add_to_opp.opp)
         result = await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result is False
 
@@ -45,7 +45,7 @@ async def test_setup_entry_session_error.opp):
     ):
         entry.add_to_opp.opp)
         result = await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result is False
 
@@ -58,7 +58,7 @@ async def test_unload_entry.opp):
     assert entry.state == ENTRY_STATE_LOADED
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert not.opp.data.get(DOMAIN)

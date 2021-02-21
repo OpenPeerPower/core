@@ -47,7 +47,7 @@ async def test_full_user_flow_implementation.opp):
     assert result2["data"] == {
         "dsn": "http://public@sentry.local/1",
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
@@ -112,7 +112,7 @@ async def test_options_flow.opp):
 
     with patch("openpeerpower.components.sentry.async_setup_entry", return_value=True):
         assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(entry.entry_id)
 

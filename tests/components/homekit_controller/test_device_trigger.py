@@ -246,7 +246,7 @@ async def test_op.dle_events.opp, utcnow, calls):
         "Button 1", {CharacteristicsTypes.INPUT_EVENT: 0}
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "device - button1 - single_press"
 
@@ -255,7 +255,7 @@ async def test_op.dle_events.opp, utcnow, calls):
         "Button 1", {CharacteristicsTypes.INPUT_EVENT: 1}
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
 
     # Make sure automation doesn't trigger for double press
@@ -263,7 +263,7 @@ async def test_op.dle_events.opp, utcnow, calls):
         "Button 1", {CharacteristicsTypes.INPUT_EVENT: 2}
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
 
     # Make sure second automation fires for long press
@@ -271,7 +271,7 @@ async def test_op.dle_events.opp, utcnow, calls):
         "Button 2", {CharacteristicsTypes.INPUT_EVENT: 2}
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "device - button2 - long_press"
 
@@ -295,5 +295,5 @@ async def test_op.dle_events.opp, utcnow, calls):
         "Button 2", {CharacteristicsTypes.INPUT_EVENT: 2}
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 2

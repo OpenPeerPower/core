@@ -9,7 +9,7 @@ from openpeerpowerr.setup import async_setup_component
 async def setup_comp.opp):
     """Set up demo component."""
     assert await async_setup_component.opp, stt.DOMAIN, {"stt": {"platform": "demo"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_demo_settings.opp_client):

@@ -46,7 +46,7 @@ async def test_user_form.opp):
             result["flow_id"],
             {"host": "1.2.3.4"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "AlexanderHD"
@@ -110,7 +110,7 @@ async def test_form_homekit.opp):
         return_value=True,
     ) as mock_setup_entry:
         result2 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "PowerViewHub"

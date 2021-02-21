@@ -171,7 +171,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
     )
 
     try:
-        await.opp.async_add_executor_job(manager.authenticate)
+        await opp.async_add_executor_job(manager.authenticate)
     except upcloud_api.UpCloudAPIError:
         _LOGGER.error("Authentication failed", exc_info=True)
         return False

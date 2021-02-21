@@ -125,7 +125,7 @@ async def test_full_reauth_flow_implementation(
         result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=user_input
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "reauth_successful"
@@ -214,7 +214,7 @@ async def test_options_flow.opp, aioclient_mock: AiohttpClientMocker):
             result["flow_id"],
             user_input={CONF_UPCOMING_DAYS: 2, CONF_WANTED_MAX_ITEMS: 100},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["data"][CONF_UPCOMING_DAYS] == 2

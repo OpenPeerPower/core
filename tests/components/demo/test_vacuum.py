@@ -51,7 +51,7 @@ ENTITY_VACUUM_STATE = f"{DOMAIN}.{DEMO_VACUUM_STATE}".lower()
 async def setup_demo_vacuum.opp):
     """Initialize setup demo vacuum."""
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "demo"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_supported_features.opp):
@@ -107,11 +107,11 @@ async def test_supported_features.opp):
 async def test_methods.opp):
     """Test if methods call the services as expected."""
    .opp.states.async_set(ENTITY_VACUUM_BASIC, STATE_ON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert vacuum.is_on.opp, ENTITY_VACUUM_BASIC)
 
    .opp.states.async_set(ENTITY_VACUUM_BASIC, STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not vacuum.is_on.opp, ENTITY_VACUUM_BASIC)
 
     await common.async_turn_on.opp, ENTITY_VACUUM_COMPLETE)
@@ -189,7 +189,7 @@ async def test_methods.opp):
 async def test_unsupported_methods.opp):
     """Test service calls for unsupported vacuums."""
    .opp.states.async_set(ENTITY_VACUUM_NONE, STATE_ON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert vacuum.is_on.opp, ENTITY_VACUUM_NONE)
 
     await common.async_turn_off.opp, ENTITY_VACUUM_NONE)
@@ -199,7 +199,7 @@ async def test_unsupported_methods.opp):
     assert vacuum.is_on.opp, ENTITY_VACUUM_NONE)
 
    .opp.states.async_set(ENTITY_VACUUM_NONE, STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not vacuum.is_on.opp, ENTITY_VACUUM_NONE)
 
     await common.async_turn_on.opp, ENTITY_VACUUM_NONE)
@@ -231,14 +231,14 @@ async def test_unsupported_methods.opp):
 
     # VacuumEntity should not support start and pause methods.
    .opp.states.async_set(ENTITY_VACUUM_COMPLETE, STATE_ON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
 
     await common.async_pause.opp, ENTITY_VACUUM_COMPLETE)
     assert vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
 
    .opp.states.async_set(ENTITY_VACUUM_COMPLETE, STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
 
     await common.async_start.opp, ENTITY_VACUUM_COMPLETE)

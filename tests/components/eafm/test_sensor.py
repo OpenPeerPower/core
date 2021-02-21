@@ -37,7 +37,7 @@ async def async_setup_test_fixture.opp, mock_get_station, initial_value):
 
     assert await async_setup_component.opp, "eafm", {})
     assert entry.state == config_entries.ENTRY_STATE_LOADED
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async def poll(value):
         mock_get_station.reset_mock(return_value=True, side_effect=True)
@@ -49,7 +49,7 @@ async def async_setup_test_fixture.opp, mock_get_station, initial_value):
 
         next_update = dt_util.utcnow() + datetime.timedelta(60 * 15)
         async_fire_time_changed.opp, next_update)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return entry, poll
 

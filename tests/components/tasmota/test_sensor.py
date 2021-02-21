@@ -99,13 +99,13 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_mqtt_message(
        .opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.tasmota_dht11_temperature")
     assert state.state == "unavailable"
@@ -144,13 +144,13 @@ async def test_nested_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_mqtt_message(
        .opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.tasmota_tx23_speed_act")
     assert state.state == "unavailable"
@@ -189,13 +189,13 @@ async def test_indexed_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_mqtt_message(
        .opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.tasmota_energy_totaltariff_1")
     assert state.state == "unavailable"
@@ -245,8 +245,8 @@ async def test_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "unavailable"
@@ -261,7 +261,7 @@ async def test_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"Wifi":{"Signal":20.5}}'
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "20.5"
 
@@ -271,7 +271,7 @@ async def test_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/STATUS11",
         '{"StatusSTS":{"Wifi":{"Signal":20.0}}}',
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "20.0"
 
@@ -298,8 +298,8 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "unavailable"
@@ -316,7 +316,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
         "tasmota_49A3BC/stat/STATUS1",
         '{"StatusPRM":{"RestartReason":"Some reason"}}',
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "Some reason"
 
@@ -326,13 +326,13 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
         "tasmota_49A3BC/stat/STATUS1",
         '{"StatusPRM":{"RestartReason":"Another reason"}}',
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "Some reason"
 
     # Device signals online again
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "Some reason"
 
@@ -342,7 +342,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
         "tasmota_49A3BC/stat/STATUS1",
         '{"StatusPRM":{"RestartReason":"Another reason"}}',
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "Another reason"
 
@@ -352,7 +352,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
         "tasmota_49A3BC/stat/STATUS1",
         '{"StatusPRM":{"RestartReason":"Third reason"}}',
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "Another reason"
 
@@ -382,8 +382,8 @@ async def test_restart_time_status_sensor_state_via_mqtt(
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "unavailable"
@@ -402,7 +402,7 @@ async def test_restart_time_status_sensor_state_via_mqtt(
         "tasmota_49A3BC/stat/STATUS11",
         '{"StatusSTS":{"UptimeSec":"3600"}}',
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "2020-11-11T07:00:00+00:00"
 
@@ -424,13 +424,13 @@ async def test_attributes.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_mqtt_message(
        .opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.tasmota_dht11_temperature")
     assert state.attributes.get("device_class") == "temperature"
@@ -456,13 +456,13 @@ async def test_nested_sensor_attributes.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_mqtt_message(
        .opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.tasmota_tx23_speed_act")
     assert state.attributes.get("device_class") is None
@@ -494,13 +494,13 @@ async def test_indexed_sensor_attributes.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_mqtt_message(
        .opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.tasmota_dummy1_temperature_0")
     assert state.attributes.get("device_class") == "temperature"
@@ -528,8 +528,8 @@ async def test_enable_status_sensor.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.tasmota_signal")
     assert state is None
@@ -543,13 +543,13 @@ async def test_enable_status_sensor.opp, mqtt_mock, setup_tasmota):
     )
     assert updated_entry != entry
     assert updated_entry.disabled is False
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_time_changed(
        .opp,
         dt.utcnow() + timedelta(seconds=config_entries.RELOAD_AFTER_UPDATE_DELAY + 1),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Fake re-send of retained discovery message
     async_fire_mqtt_message(
@@ -557,7 +557,7 @@ async def test_enable_status_sensor.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.tasmota_signal")
     assert state.state == "unavailable"

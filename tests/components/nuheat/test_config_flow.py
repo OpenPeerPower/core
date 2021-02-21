@@ -40,7 +40,7 @@ async def test_form_user.opp):
                 CONF_PASSWORD: "test-password",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Master bathroom"

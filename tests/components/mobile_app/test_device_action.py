@@ -58,7 +58,7 @@ async def test_action.opp, push_registration):
         "openpeerpower.components.mobile_app.notify.MobileAppNotificationService.async_send_message"
     ) as mock_send_message:
        .opp.bus.async_fire("test_notify")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert len(mock_send_message.mock_calls) == 1
 
     assert mock_send_message.mock_calls[0][2] == {

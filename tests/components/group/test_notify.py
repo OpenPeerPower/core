@@ -28,7 +28,7 @@ async def test_send_message_with_data.opp):
         "group",
         {},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch.object(demo, "get_service", mock_get_service):
         await async_setup_component(
@@ -41,7 +41,7 @@ async def test_send_message_with_data.opp):
                 ]
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     service = await group.async_get_service(
        .opp,
@@ -64,7 +64,7 @@ async def test_send_message_with_data.opp):
         "Hello", title="Test notification", data={"hello": "world"}
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert service1.send_message.mock_calls[0][1][0] == "Hello"
     assert service1.send_message.mock_calls[0][2] == {
@@ -87,7 +87,7 @@ async def test_reload_notify.opp):
         "group",
         {},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -104,7 +104,7 @@ async def test_reload_notify.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.services.has_service(notify.DOMAIN, "demo1")
     assert.opp.services.has_service(notify.DOMAIN, "demo2")
@@ -122,7 +122,7 @@ async def test_reload_notify.opp):
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.services.has_service(notify.DOMAIN, "demo1")
     assert.opp.services.has_service(notify.DOMAIN, "demo2")

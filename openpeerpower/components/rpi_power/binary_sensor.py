@@ -24,7 +24,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ):
     """Set up rpi_power binary sensor."""
-    under_voltage = await.opp.async_add_executor_job(new_under_voltage)
+    under_voltage = await opp.async_add_executor_job(new_under_voltage)
     async_add_entities([RaspberryChargerBinarySensor(under_voltage)], True)
 
 

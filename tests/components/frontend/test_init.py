@@ -199,7 +199,7 @@ async def test_themes_save_storage.opp,.opp_storage, frontend_themes):
     # To trigger the call_later
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=60))
     # To execute the save
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp_storage[THEMES_STORAGE_KEY]["data"] == {
         "frontend_default_theme": "happy",

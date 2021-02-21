@@ -187,7 +187,7 @@ async def test_configure_service_with_faulty_field.opp, aioclient_mock):
         await.opp.services.async_call(
             DECONZ_DOMAIN, SERVICE_CONFIGURE_DEVICE, service_data=data
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_configure_service_with_faulty_entity.opp, aioclient_mock):
@@ -203,7 +203,7 @@ async def test_configure_service_with_faulty_entity.opp, aioclient_mock):
         await.opp.services.async_call(
             DECONZ_DOMAIN, SERVICE_CONFIGURE_DEVICE, service_data=data
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         put_state.assert_not_called()
 
 
@@ -224,7 +224,7 @@ async def test_service_refresh_devices.opp, aioclient_mock):
     await.opp.services.async_call(
         DECONZ_DOMAIN, SERVICE_DEVICE_REFRESH, service_data=data
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert gateway.deconz_ids == {
         "light.group_1_name": "/groups/1",
@@ -281,7 +281,7 @@ async def test_remove_orphaned_entries_service.opp, aioclient_mock):
         SERVICE_REMOVE_ORPHANED_ENTRIES,
         service_data=data,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert (
         len(

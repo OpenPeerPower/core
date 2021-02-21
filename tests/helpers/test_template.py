@@ -1341,7 +1341,7 @@ async def test_closest_function_home_vs_group_entity_id.opp):
     )
 
     assert await async_setup_component.opp, "group", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await group.Group.async_create_group.opp, "location group", ["test_domain.object"])
 
     info = render_to_info.opp, '{{ closest("group.location_group").entity_id }}')
@@ -1369,7 +1369,7 @@ async def test_closest_function_home_vs_group_state.opp):
     )
 
     assert await async_setup_component.opp, "group", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await group.Group.async_create_group.opp, "location group", ["test_domain.object"])
 
     info = render_to_info.opp, '{{ closest("group.location_group").entity_id }}')
@@ -1417,7 +1417,7 @@ async def test_expand.opp):
     assert info.rate_limit == template.DOMAIN_STATES_RATE_LIMIT
 
     assert await async_setup_component.opp, "group", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await group.Group.async_create_group.opp, "new group", ["test.object"])
 
     info = render_to_info(
@@ -1453,7 +1453,7 @@ async def test_expand.opp):
    .opp.states.async_set("sensor.power_3", 400.4)
 
     assert await async_setup_component.opp, "group", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await group.Group.async_create_group(
        .opp, "power sensors", ["sensor.power_1", "sensor.power_2", "sensor.power_3"]
     )
@@ -1623,7 +1623,7 @@ async def test_async_render_to_info_with_wildcard_matching_state.opp):
    .opp.states.async_set("cover.office_skylight", "open")
    .opp.states.async_set("cover.x_skylight", "open")
    .opp.states.async_set("binary_sensor.door", "open")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     info = render_to_info.opp, template_complex_str)
 
@@ -1955,7 +1955,7 @@ async def test_async_render_to_info_in_conditional.opp):
 
    .opp.states.async_set("sensor.xyz", "dog")
    .opp.states.async_set("sensor.cow", "True")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     template_str = """
 {% if states("sensor.xyz") == "dog" %}
@@ -1972,7 +1972,7 @@ async def test_async_render_to_info_in_conditional.opp):
    .opp.states.async_set("sensor.xyz", "sheep")
    .opp.states.async_set("sensor.pig", "oink")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     tmp = template.Template(template_str,.opp)
     info = tmp.async_render_to_info()
@@ -2167,7 +2167,7 @@ async def test_lifecycle.opp):
        .opp.states.async_set(f"sensor.sensor{i}", "on")
    .opp.states.async_set("sensor.removed", "off")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.states.async_set("sun.sun", "below", {"elevation": 60, "next_rising": "later"})
     for i in range(2):
@@ -2176,7 +2176,7 @@ async def test_lifecycle.opp):
    .opp.states.async_set("sensor.new", "off")
    .opp.states.async_remove("sensor.removed")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     tmp = template.Template("{{ states | count }}",.opp)
 

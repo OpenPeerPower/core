@@ -61,7 +61,7 @@ async def test_form.opp, mock_login, mock_get_devices):
             result["flow_id"],
             {"username": "test-email@test-domain.com", "password": "test-password"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "test-email@test-domain.com"
@@ -128,7 +128,7 @@ async def test_import_with_token.opp, mock_login, mock_get_devices):
             context={"source": config_entries.SOURCE_IMPORT},
             data={"username": "test-email@test-domain.com", "token": "test-token"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "test-email@test-domain.com"
@@ -165,7 +165,7 @@ async def test_token_refresh.opp, mock_login, mock_get_devices):
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0
 

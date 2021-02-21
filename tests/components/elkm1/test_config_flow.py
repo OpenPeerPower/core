@@ -55,7 +55,7 @@ async def test_form_user_with_secure_elk.opp):
                 "prefix": "",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "ElkM1"
@@ -100,7 +100,7 @@ async def test_form_user_with_non_secure_elk.opp):
                 "prefix": "guest_house",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "guest_house"
@@ -145,7 +145,7 @@ async def test_form_user_with_serial_elk.opp):
                 "prefix": "",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "ElkM1"
@@ -263,7 +263,7 @@ async def test_form_import.opp):
                 },
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "ohana"

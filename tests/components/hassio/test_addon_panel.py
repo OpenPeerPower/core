@@ -49,7 +49,7 @@ async def test_oppio_addon_panel_startup.opp, aioclient_mock, oppio_env):
         "openpeerpower.components.oppio.addon_panel._register_panel",
     ) as mock_panel:
         await async_setup_component.opp, "oppio", {})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 3
         assert mock_panel.called
@@ -91,7 +91,7 @@ async def test_oppio_addon_panel_api.opp, aioclient_mock, oppio_env,.opp_client)
         "openpeerpower.components.oppio.addon_panel._register_panel",
     ) as mock_panel:
         await async_setup_component.opp, "oppio", {})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 3
         assert mock_panel.called

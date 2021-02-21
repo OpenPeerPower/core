@@ -107,7 +107,7 @@ async def test_reading_yaml_config.opp, yaml_devices):
         picture="http://test.picture",
         icon="mdi:kettle",
     )
-    await.opp.async_add_executor_job(
+    await opp.async_add_executor_job(
         legacy.update_config, yaml_devices, dev_id, device
     )
     assert await async_setup_component.opp, device_tracker.DOMAIN, TEST_PLATFORM)
@@ -212,7 +212,7 @@ async def test_discover_platform(mock_demo_setup_scanner, mock_see,.opp):
     await discovery.async_load_platform(
        .opp, device_tracker.DOMAIN, "demo", {"test_key": "test_val"}, {"bla": {}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert device_tracker.DOMAIN in.opp.config.components
     assert mock_demo_setup_scanner.called
     assert mock_demo_setup_scanner.call_args[0] == (
@@ -249,7 +249,7 @@ async def test_update_stale.opp, mock_device_tracker_conf):
                     }
                 },
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
     assert STATE_HOME == opp.states.get("device_tracker.dev1").state
 
@@ -260,7 +260,7 @@ async def test_update_stale.opp, mock_device_tracker_conf):
         return_value=scan_time,
     ):
         async_fire_time_changed.opp, scan_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert STATE_NOT_HOME == opp.states.get("device_tracker.dev1").state
 
@@ -309,7 +309,7 @@ async def test_see_service(mock_see,.opp):
         "attributes": {"test": "test"},
     }
     common.async_see.opp, **params)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mock_see.call_count == 1
     assert mock_see.call_count == 1
     assert mock_see.call_args == call(**params)
@@ -318,7 +318,7 @@ async def test_see_service(mock_see,.opp):
     params["dev_id"] += chr(233)  # e' acute accent from icloud
 
     common.async_see.opp, **params)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mock_see.call_count == 1
     assert mock_see.call_count == 1
     assert mock_see.call_args == call(**params)
@@ -335,7 +335,7 @@ async def test_see_service_guard_config_entry.opp, mock_device_tracker_conf):
     params = {"dev_id": dev_id, "gps": [0.3, 0.8]}
 
     common.async_see.opp, **params)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not devices
 
@@ -356,7 +356,7 @@ async def test_new_device_event_fired.opp, mock_device_tracker_conf):
     common.async_see.opp, "mac_1", host_name="hello")
     common.async_see.opp, "mac_1", host_name="hello")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(test_events) == 1
 
@@ -379,7 +379,7 @@ async def test_duplicate_yaml_keys.opp, mock_device_tracker_conf):
     common.async_see.opp, "mac_1", host_name="hello")
     common.async_see.opp, "mac_2", host_name="hello")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(devices) == 2
     assert devices[0].dev_id != devices[1].dev_id
@@ -392,7 +392,7 @@ async def test_invalid_dev_id.opp, mock_device_tracker_conf):
         assert await async_setup_component.opp, device_tracker.DOMAIN, TEST_PLATFORM)
 
     common.async_see.opp, dev_id="hello-world")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not devices
 
@@ -413,7 +413,7 @@ async def test_see_state.opp, yaml_devices):
     }
 
     common.async_see.opp, **params)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     config = await legacy.async_load_config(yaml_devices,.opp, timedelta(seconds=0))
     assert len(config) == 1
@@ -470,7 +470,7 @@ async def test_see_passive_zone_state.opp, mock_device_tracker_conf):
                     }
                 },
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
     state = opp.states.get("device_tracker.dev1")
     attrs = state.attributes
@@ -490,7 +490,7 @@ async def test_see_passive_zone_state.opp, mock_device_tracker_conf):
         return_value=scan_time,
     ):
         async_fire_time_changed.opp, scan_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("device_tracker.dev1")
     attrs = state.attributes
@@ -522,7 +522,7 @@ async def test_see_failures(mock_warning,.opp, mock_device_tracker_conf):
     await tracker.async_see(mac="mac_1_bad_gps", gps=1)
     await tracker.async_see(mac="mac_2_bad_gps", gps=[1])
     await tracker.async_see(mac="mac_3_bad_gps", gps="gps")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert mock_warning.call_count == 3
     assert len(devices) == 4
@@ -571,7 +571,7 @@ async def test_adding_unknown_device_to_config(mock_device_tracker_conf,.opp):
        .opp, device_tracker.DOMAIN, {device_tracker.DOMAIN: {CONF_PLATFORM: "test"}}
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(mock_device_tracker_conf) == 1
     device = mock_device_tracker_conf[0]
@@ -583,7 +583,7 @@ async def test_picture_and_icon_on_see_discovery(mock_device_tracker_conf,.opp):
     """Test that picture and icon are set in initial see."""
     tracker = legacy.DeviceTracker.opp, timedelta(seconds=60), False, {}, [])
     await tracker.async_see(dev_id=11, picture="pic_url", icon="mdi:icon")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_device_tracker_conf) == 1
     assert mock_device_tracker_conf[0].icon == "mdi:icon"
     assert mock_device_tracker_conf[0].entity_picture == "pic_url"
@@ -595,7 +595,7 @@ async def test_backward_compatibility_for_track_new(mock_device_tracker_conf,.op
        .opp, timedelta(seconds=60), False, {device_tracker.CONF_TRACK_NEW: True}, []
     )
     await tracker.async_see(dev_id=13)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_device_tracker_conf) == 1
     assert mock_device_tracker_conf[0].track is False
 
@@ -606,7 +606,7 @@ async def test_old_style_track_new_is_skipped(mock_device_tracker_conf,.opp):
        .opp, timedelta(seconds=60), None, {device_tracker.CONF_TRACK_NEW: False}, []
     )
     await tracker.async_see(dev_id=14)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_device_tracker_conf) == 1
     assert mock_device_tracker_conf[0].track is False
 

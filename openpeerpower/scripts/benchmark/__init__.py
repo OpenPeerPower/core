@@ -77,7 +77,7 @@ async def fire_events.opp):
 
     start = timer()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert count == events_to_fire
 
@@ -109,7 +109,7 @@ async def fire_events_with_filter.opp):
 
     start = timer()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert count == 0
 
@@ -208,7 +208,7 @@ async def state_changed_event_helper.opp):
 
     start = timer()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert count == events_to_fire
 
@@ -243,7 +243,7 @@ async def state_changed_event_filter_helper.opp):
 
     start = timer()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert count == 0
 

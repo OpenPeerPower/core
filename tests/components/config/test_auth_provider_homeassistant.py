@@ -31,7 +31,7 @@ async def owner_access_token.opp,.opp_owner_user):
 @pytest.fixture
 async def.opp_admin_credential.opp, auth_provider):
     """Overload credentials to admin user."""
-    await.opp.async_add_executor_job(
+    await opp.async_add_executor_job(
         auth_provider.data.add_auth, "test-user", "test-pass"
     )
 

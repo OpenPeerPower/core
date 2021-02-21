@@ -33,7 +33,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     port = entry.data[CONF_PORT]
 
     try:
-        monoprice = await.opp.async_add_executor_job(get_monoprice, port)
+        monoprice = await opp.async_add_executor_job(get_monoprice, port)
     except SerialException as err:
         _LOGGER.error("Error connecting to Monoprice controller at %s", port)
         raise ConfigEntryNotReady from err

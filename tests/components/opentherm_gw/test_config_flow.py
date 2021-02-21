@@ -41,7 +41,7 @@ async def test_form_user.opp):
         result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {CONF_NAME: "Test Entry 1", CONF_DEVICE: "/dev/ttyUSB0"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Test Entry 1"

@@ -54,7 +54,7 @@ async def test_unload_entry.opp, mock_smile_adam):
 
     mock_smile_adam.async_reset = AsyncMock(return_value=True)
     await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert not.opp.data[DOMAIN]
 
@@ -65,5 +65,5 @@ async def test_async_setup_entry_fail.opp):
 
     entry.add_to_opp.opp)
     await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert entry.state == ENTRY_STATE_SETUP_ERROR

@@ -42,7 +42,7 @@ async def get_form(
         stepuser["flow_id"],
         {CONF_GATEWAY_TYPE: gatway_type},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result["type"] == "form"
     assert result["step_id"] == expected_step_id
 
@@ -69,7 +69,7 @@ async def test_config_mqtt.opp: OpenPeerPowerType):
                 CONF_VERSION: "2.4",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     if "errors" in result2:
         assert not result2["errors"]
@@ -110,7 +110,7 @@ async def test_config_serial.opp: OpenPeerPowerType):
                 CONF_VERSION: "2.4",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     if "errors" in result2:
         assert not result2["errors"]
@@ -146,7 +146,7 @@ async def test_config_tcp.opp: OpenPeerPowerType):
                 CONF_VERSION: "2.4",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     if "errors" in result2:
         assert not result2["errors"]
@@ -182,7 +182,7 @@ async def test_fail_to_connect.opp: OpenPeerPowerType):
                 CONF_VERSION: "2.4",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "form"
     assert "errors" in result2
@@ -366,7 +366,7 @@ async def test_config_invalid(
             flow_id,
             user_input,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "form"
     assert "errors" in result2
@@ -430,7 +430,7 @@ async def test_import.opp: OpenPeerPowerType, user_input: Dict):
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, data=user_input, context={"source": config_entries.SOURCE_IMPORT}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
 
@@ -727,7 +727,7 @@ async def test_duplicate(
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, data=second_input, context={"source": config_entries.SOURCE_IMPORT}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         if expected_result is None:
             assert result["type"] == "create_entry"
         else:

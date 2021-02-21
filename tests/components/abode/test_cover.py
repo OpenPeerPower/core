@@ -46,7 +46,7 @@ async def test_open.opp):
         await.opp.services.async_call(
             COVER_DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: DEVICE_ID}, blocking=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_open.assert_called_once()
 
 
@@ -61,5 +61,5 @@ async def test_close.opp):
             {ATTR_ENTITY_ID: DEVICE_ID},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_close.assert_called_once()

@@ -136,14 +136,14 @@ async def test_availability(
         "openpeerpower.components.roku.Roku.update", side_effect=RokuError
     ), patch("openpeerpowerr.util.dt.utcnow", return_value=future):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert.opp.states.get(MAIN_ENTITY_ID).state == STATE_UNAVAILABLE
 
     future += timedelta(minutes=1)
 
     with patch("openpeerpowerr.util.dt.utcnow", return_value=future):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert.opp.states.get(MAIN_ENTITY_ID).state == STATE_HOME
 
 
