@@ -56,7 +56,7 @@ REQUIRES = [
     "yarl==1.6.3",
 ]
 
-MIN_PY_VERSION = ".".join(map(str,.opp_const.REQUIRED_PYTHON_VER))
+MIN_PY_VERSION = ".".join(map(str,.opp.onst.REQUIRED_PYTHON_VER))
 
 setup(
     name=PROJECT_PACKAGE_NAME,
@@ -72,5 +72,5 @@ setup(
     install_requires=REQUIRES,
     python_requires=f">={MIN_PY_VERSION}",
     test_suite="tests",
-    entry_points={"console_scripts": ["opp = openpeerpower.__main__:main"]},
+    entry_points={"console_scripts": [.opp = openpeerpower.__main__:main"]},
 )

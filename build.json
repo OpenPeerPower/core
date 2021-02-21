@@ -1,5 +1,5 @@
 {
-  "image": "openpeerpower/{arch}-openpeerpowerr",
+  "image": "openpeerpower/{arch}-openpeerpower",
   "build_from": {
     "aarch64": "openpeerpower/aarch64-openpeerpower-base:2021.02.0",
     "armhf": "openpeerpower/armhf-openpeerpower-base:2021.02.0",

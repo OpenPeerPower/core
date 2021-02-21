@@ -623,7 +623,7 @@ omit =
     openpeerpower/components/netatmo/camera.py
     openpeerpower/components/netatmo/climate.py
     openpeerpower/components/netatmo/const.py
-    openpeerpower/components/netatmo/data_op.dler.py
+    openpeerpower/components/netatmo/data_handler.py
     openpeerpower/components/netatmo/helper.py
     openpeerpower/components/netatmo/light.py
     openpeerpower/components/netatmo/netatmo_entity_base.py
@@ -787,6 +787,8 @@ omit =
     openpeerpower/components/rest/switch.py
     openpeerpower/components/ring/camera.py
     openpeerpower/components/ripple/sensor.py
+    openpeerpower/components/rituals_perfume_genie/switch.py
+    openpeerpower/components/rituals_perfume_genie/__init__.py
     openpeerpower/components/rocketchat/notify.py
     openpeerpower/components/roomba/binary_sensor.py
     openpeerpower/components/roomba/braava.py

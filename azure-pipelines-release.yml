@@ -164,7 +164,7 @@ stages:
           -v $(pwd):/data:ro \
           openpeerpower/amd64-builder:$(versionBuilder) \
           --openpeerpower-machine "$(openpeerpowerRelease)=$(buildMachine)" \
-          -t /data/machine --docker-hub openpeerpowerr
+          -t /data/machine --docker-hub openpeerpower
       displayName: 'Build Machine'
 
 - stage: 'Publish'
@@ -192,9 +192,9 @@ stages:
         git clone https://github.com/openpeerpower/version
         cd version
 
-        dev_version="$(jq --raw-output '.openpeerpowerr.default' dev.json)"
-        beta_version="$(jq --raw-output '.openpeerpowerr.default' beta.json)"
-        stable_version="$(jq --raw-output '.openpeerpowerr.default' stable.json)"
+        dev_version="$(jq --raw-output '.openpeerpower.default' dev.json)"
+        beta_version="$(jq --raw-output '.openpeerpower.default' beta.json)"
+        stable_version="$(jq --raw-output '.openpeerpower.default' stable.json)"
 
         if [[ "$version" =~ d ]]; then
           sed -i "s|$dev_version|$version|g" dev.json
@@ -224,41 +224,41 @@ stages:
           local tag_l=$1
           local tag_r=$2
 
-          docker manifest create openpeerpower/openpeerpower:${tag_l} \
-            openpeerpower/amd64-openpeerpowerr:${tag_r} \
-            openpeerpower/i386-openpeerpowerr:${tag_r} \
-            openpeerpower/armhf-openpeerpowerr:${tag_r} \
-            openpeerpower/armv7-openpeerpowerr:${tag_r} \
-            openpeerpower/aarch64-openpeerpowerr:${tag_r}
+          docker manifest create openpeerpower/open-peer-power:${tag_l} \
+            openpeerpower/amd64-openpeerpower:${tag_r} \
+            openpeerpower/i386-openpeerpower:${tag_r} \
+            openpeerpower/armhf-openpeerpower:${tag_r} \
+            openpeerpower/armv7-openpeerpower:${tag_r} \
+            openpeerpower/aarch64-openpeerpower:${tag_r}
 
-          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
-            openpeerpower/amd64-openpeerpowerr:${tag_r} \
+          docker manifest annotate openpeerpower/open-peer-power:${tag_l} \
+            openpeerpower/amd64-openpeerpower:${tag_r} \
             --os linux --arch amd64
 
-          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
-            openpeerpower/i386-openpeerpowerr:${tag_r} \
+          docker manifest annotate openpeerpower/open-peer-power:${tag_l} \
+            openpeerpower/i386-openpeerpower:${tag_r} \
             --os linux --arch 386
 
-          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
-            openpeerpower/armhf-openpeerpowerr:${tag_r} \
+          docker manifest annotate openpeerpower/open-peer-power:${tag_l} \
+            openpeerpower/armhf-openpeerpower:${tag_r} \
             --os linux --arch arm --variant=v6
 
-          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
-            openpeerpower/armv7-openpeerpowerr:${tag_r} \
+          docker manifest annotate openpeerpower/open-peer-power:${tag_l} \
+            openpeerpower/armv7-openpeerpower:${tag_r} \
             --os linux --arch arm --variant=v7
 
-          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
-            openpeerpower/aarch64-openpeerpowerr:${tag_r} \
+          docker manifest annotate openpeerpower/open-peer-power:${tag_l} \
+            openpeerpower/aarch64-openpeerpower:${tag_r} \
             --os linux --arch arm64 --variant=v8
 
           docker manifest push --purge openpeerpower/openpeerpower:${tag_l}
         }
 
-        docker pull openpeerpower/amd64-openpeerpowerr:$(openpeerpowerRelease)
-        docker pull openpeerpower/i386-openpeerpowerr:$(openpeerpowerRelease)
-        docker pull openpeerpower/armhf-openpeerpowerr:$(openpeerpowerRelease)
-        docker pull openpeerpower/armv7-openpeerpowerr:$(openpeerpowerRelease)
-        docker pull openpeerpower/aarch64-openpeerpowerr:$(openpeerpowerRelease)
+        docker pull openpeerpower/amd64-openpeerpower:$(openpeerpowerRelease)
+        docker pull openpeerpower/i386-openpeerpower:$(openpeerpowerRelease)
+        docker pull openpeerpower/armhf-openpeerpower:$(openpeerpowerRelease)
+        docker pull openpeerpower/armv7-openpeerpower:$(openpeerpowerRelease)
+        docker pull openpeerpower/aarch64-openpeerpower:$(openpeerpowerRelease)
 
         # Create version tag
         create_manifest "$(openpeerpowerRelease)" "$(openpeerpowerRelease)"
