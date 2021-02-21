@@ -47,7 +47,7 @@ async def test_sensors(
             disabled_by=None,
         )
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     for (unique, oid) in sensors.items():

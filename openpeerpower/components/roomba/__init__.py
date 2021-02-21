@@ -97,7 +97,7 @@ async def async_disconnect_or_timeout.opp, roomba):
 
 async def async_update_options.opp, config_entry):
     """Update options."""
-    await.opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry.opp, config_entry):

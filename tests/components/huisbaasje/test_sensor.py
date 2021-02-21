@@ -39,7 +39,7 @@ async def test_setup_entry.opp: OpenPeerPower):
         )
        .opp.config_entries._entries.append(config_entry)
 
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
         # Assert data is loaded
@@ -96,7 +96,7 @@ async def test_setup_entry_absent_measurement.opp: OpenPeerPower):
         )
        .opp.config_entries._entries.append(config_entry)
 
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
         # Assert data is loaded

@@ -938,7 +938,7 @@ async def test_async_remove_user.opp):
     )
     assert len(user.credentials) == 1
 
-    await.opp.auth.async_remove_user(user)
+    await opp.auth.async_remove_user(user)
 
     assert len(await manager.async_get_users()) == 0
     assert len(user.credentials) == 0

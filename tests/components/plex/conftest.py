@@ -395,7 +395,7 @@ def setup_plex_server(
             return_value=MockGDM(disabled=disable_gdm),
         ):
             config_entry.add_to_opp.opp)
-            assert await.opp.config_entries.async_setup(config_entry.entry_id)
+            assert await opp.config_entries.async_setup(config_entry.entry_id)
             await opp.async_block_till_done()
             websocket_connected(mock_websocket)
             await opp.async_block_till_done()

@@ -134,7 +134,7 @@ async def test_services.opp: OpenPeerPower, caplog):
 
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     async def _async_test_service(
@@ -341,7 +341,7 @@ async def test_device_types.opp: OpenPeerPower):
 
     async def _async_setup(config_entry):
         with patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
-            await.opp.config_entries.async_setup(config_entry.entry_id)
+            await opp.config_entries.async_setup(config_entry.entry_id)
             await opp.async_block_till_done()
 
     async def _async_test(
@@ -374,7 +374,7 @@ async def test_device_types.opp: OpenPeerPower):
         target_properties["music_mode"] = False
         assert dict(state.attributes) == target_properties
 
-        await.opp.config_entries.async_unload(config_entry.entry_id)
+        await opp.config_entries.async_unload(config_entry.entry_id)
         await config_entry.async_remove.opp)
         registry = await entity_registry.async_get_registry.opp)
         registry.async_clear_config_entry(config_entry.entry_id)
@@ -402,7 +402,7 @@ async def test_device_types.opp: OpenPeerPower):
         nightlight_properties["music_mode"] = False
         assert dict(state.attributes) == nightlight_properties
 
-        await.opp.config_entries.async_unload(config_entry.entry_id)
+        await opp.config_entries.async_unload(config_entry.entry_id)
         await config_entry.async_remove.opp)
         registry.async_clear_config_entry(config_entry.entry_id)
 
@@ -571,7 +571,7 @@ async def test_effects.opp: OpenPeerPower):
 
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     assert.opp.states.get(ENTITY_LIGHT).attributes.get(

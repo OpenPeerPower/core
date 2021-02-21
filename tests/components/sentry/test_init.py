@@ -38,7 +38,7 @@ async def test_setup_entry.opp: OpenPeerPower) -> None:
     ) as sentry_logging_mock, patch(
         "openpeerpower.components.sentry.sentry_sdk"
     ) as sentry_mock:
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     # Test CONF_ENVIRONMENT is migrated to entry options
@@ -88,7 +88,7 @@ async def test_setup_entry_with_tracing.opp: OpenPeerPower) -> None:
     ), patch("openpeerpower.components.sentry.LoggingIntegration"), patch(
         "openpeerpower.components.sentry.sentry_sdk"
     ) as sentry_mock:
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     call_args = sentry_mock.init.call_args[1]

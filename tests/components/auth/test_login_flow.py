@@ -88,10 +88,10 @@ async def test_invalid_username_password.opp, aiohttp_client):
 async def test_login_exist_user.opp, aiohttp_client):
     """Test logging in with exist user."""
     client = await async_setup_auth.opp, aiohttp_client, setup_api=True)
-    cred = await.opp.auth.auth_providers[0].async_get_or_create_credentials(
+    cred = await opp.auth.auth_providers[0].async_get_or_create_credentials(
         {"username": "test-user"}
     )
-    await.opp.auth.async_get_or_create_user(cred)
+    await opp.auth.async_get_or_create_user(cred)
 
     resp = await client.post(
         "/auth/login_flow",

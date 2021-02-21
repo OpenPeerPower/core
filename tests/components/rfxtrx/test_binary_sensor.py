@@ -27,7 +27,7 @@ async def test_one.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.ac_213c7f2_48")
@@ -51,9 +51,9 @@ async def test_one_pt2262.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
     state = opp.states.get("binary_sensor.pt2262_22670e")
     assert state
@@ -78,9 +78,9 @@ async def test_pt2262_unconfigured.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
     state = opp.states.get("binary_sensor.pt2262_22670e")
     assert state
@@ -109,7 +109,7 @@ async def test_state_restore.opp, rfxtrx, state, event):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.states.get(entity_id).state == state
@@ -128,7 +128,7 @@ async def test_several.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.ac_213c7f2_48")
@@ -180,9 +180,9 @@ async def test_off_delay_restore.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
     state = opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
@@ -198,9 +198,9 @@ async def test_off_delay.opp, rfxtrx, timestep):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
     state = opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
@@ -301,9 +301,9 @@ async def test_pt2262_duplicate_id.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
     state = opp.states.get("binary_sensor.pt2262_22670e")
     assert state

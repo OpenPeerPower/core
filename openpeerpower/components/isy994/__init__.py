@@ -202,7 +202,7 @@ async def _async_update_listener(
    .opp: OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Handle options update."""
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
 @callback

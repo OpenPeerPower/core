@@ -35,7 +35,7 @@ def load_smt_fixture(name):
 async def setup_integration.opp, config_entry, aioclient_mock, **kwargs):
     """Initialize the Smart Meter Texas integration for testing."""
     mock_connection(aioclient_mock, **kwargs)
-    await.opp.config_entries.async_setup(config_entry.entry_id)
+    await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
 
 

@@ -129,7 +129,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
     services.remove.opp)
 
-    return await.opp.config_entries.async_forward_entry_unload(
+    return await opp.config_entries.async_forward_entry_unload(
         entry, MEDIA_PLAYER_DOMAIN
     )
 

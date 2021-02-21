@@ -23,7 +23,7 @@ async def test_sensors.opp):
     ), patch(
         "openpeerpower.components.powerwall.Powerwall", return_value=mock_powerwall
     ):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.grid_status")

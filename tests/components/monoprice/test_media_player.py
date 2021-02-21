@@ -102,7 +102,7 @@ async def test_cannot_connect.opp):
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG)
         config_entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
         assert.opp.states.get(ZONE_1_ID) is None
 
@@ -114,7 +114,7 @@ async def _setup_monoprice.opp, monoprice):
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG)
         config_entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
 
@@ -127,7 +127,7 @@ async def _setup_monoprice_with_options.opp, monoprice):
             domain=DOMAIN, data=MOCK_CONFIG, options=MOCK_OPTIONS
         )
         config_entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
 
@@ -139,7 +139,7 @@ async def _setup_monoprice_not_first_run.opp, monoprice):
         data = {**MOCK_CONFIG, CONF_NOT_FIRST_RUN: True}
         config_entry = MockConfigEntry(domain=DOMAIN, data=data)
         config_entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
 

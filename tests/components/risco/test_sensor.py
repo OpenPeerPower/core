@@ -117,7 +117,7 @@ async def test_cannot_connect.opp):
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
         config_entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     registry = await.opp.helpers.entity_registry.async_get_registry()
@@ -134,7 +134,7 @@ async def test_unauthorized.opp):
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
         config_entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     registry = await.opp.helpers.entity_registry.async_get_registry()

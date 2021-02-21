@@ -312,17 +312,17 @@ async def async_setup.opp, config):
 
     refresh_token = None
     if "oppio_user" in data:
-        user = await.opp.auth.async_get_user(data["oppio_user"])
+        user = await opp.auth.async_get_user(data["oppio_user"])
         if user and user.refresh_tokens:
             refresh_token = list(user.refresh_tokens.values())[0]
 
             # Migrate old Opp.io users to be admin.
             if not user.is_admin:
-                await.opp.auth.async_update_user(user, group_ids=[GROUP_ID_ADMIN])
+                await opp.auth.async_update_user(user, group_ids=[GROUP_ID_ADMIN])
 
     if refresh_token is None:
-        user = await.opp.auth.async_create_system_user("Opp.io", [GROUP_ID_ADMIN])
-        refresh_token = await.opp.auth.async_create_refresh_token(user)
+        user = await opp.auth.async_create_system_user("Opp.io", [GROUP_ID_ADMIN])
+        refresh_token = await opp.auth.async_create_refresh_token(user)
         data["oppio_user"] = user.id
         await store.async_save(data)
 

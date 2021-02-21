@@ -252,7 +252,7 @@ async def test_remove_entry.opp, manager):
 
     async def mock_unload_entry.opp, entry):
         """Mock unloading an entry."""
-        result = await.opp.config_entries.async_forward_entry_unload(entry, "light")
+        result = await opp.config_entries.async_forward_entry_unload(entry, "light")
         assert result
         return result
 
@@ -563,7 +563,7 @@ async def test_forward_entry_sets_up_component.opp):
        .opp, MockModule("forwarded", async_setup_entry=mock_forwarded_setup_entry)
     )
 
-    await.opp.config_entries.async_forward_entry_setup(entry, "forwarded")
+    await opp.config_entries.async_forward_entry_setup(entry, "forwarded")
     assert len(mock_original_setup_entry.mock_calls) == 0
     assert len(mock_forwarded_setup_entry.mock_calls) == 1
 
@@ -581,7 +581,7 @@ async def test_forward_entry_does_not_setup_entry_if_setup_fails.opp):
         ),
     )
 
-    await.opp.config_entries.async_forward_entry_setup(entry, "forwarded")
+    await opp.config_entries.async_forward_entry_setup(entry, "forwarded")
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 0
 

@@ -101,7 +101,7 @@ async def test_options.opp):
     ) as mock_setup, patch(
         "openpeerpower.components.keenetic_ndms2.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1

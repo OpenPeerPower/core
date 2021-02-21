@@ -299,7 +299,7 @@ async def _async_entry_updated(
    .opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> None:
     """Handle entry updates."""
-    await.opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry(

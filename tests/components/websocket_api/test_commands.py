@@ -396,7 +396,7 @@ async def test_call_service_context_with_user.opp, aiohttp_client,.opp_access_to
         msg = await ws.receive_json()
         assert msg["success"]
 
-        refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
+        refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
 
         assert len(calls) == 1
         call = calls[0]

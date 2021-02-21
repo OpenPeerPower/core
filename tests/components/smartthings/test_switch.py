@@ -95,6 +95,6 @@ async def test_unload_config_entry.opp, device_factory):
     device = device_factory("Switch 1", [Capability.switch], {Attribute.switch: "on"})
     config_entry = await setup_platform.opp, SWITCH_DOMAIN, devices=[device])
     # Act
-    await.opp.config_entries.async_forward_entry_unload(config_entry, "switch")
+    await opp.config_entries.async_forward_entry_unload(config_entry, "switch")
     # Assert
     assert.opp.states.get("switch.switch_1").state == STATE_UNAVAILABLE

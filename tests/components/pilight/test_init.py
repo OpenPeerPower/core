@@ -204,7 +204,7 @@ async def test_start_stop(mock_pilight_error,.opp):
         assert await async_setup_component.opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
 
         # Test startup
-        await.opp.async_start()
+        await opp.async_start()
         await opp.async_block_till_done()
 
         error_log_call = mock_pilight_error.call_args_list[-2]
@@ -214,7 +214,7 @@ async def test_start_stop(mock_pilight_error,.opp):
 
         # Test stop
         with patch.object.opp.loop, "stop"):
-            await.opp.async_stop()
+            await opp.async_stop()
         error_log_call = mock_pilight_error.call_args_list[-1]
         assert "PilightDaemonSim stop" in str(error_log_call)
 
@@ -227,7 +227,7 @@ async def test_receive_code(mock_debug,.opp):
         assert await async_setup_component.opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
 
         # Test startup
-        await.opp.async_start()
+        await opp.async_start()
         await opp.async_block_till_done()
 
         expected_message = dict(
@@ -260,7 +260,7 @@ async def test_whitelist_exact_match(mock_debug,.opp):
            .opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
         )
 
-        await.opp.async_start()
+        await opp.async_start()
         await opp.async_block_till_done()
 
         expected_message = dict(
@@ -291,7 +291,7 @@ async def test_whitelist_partial_match(mock_debug,.opp):
            .opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
         )
 
-        await.opp.async_start()
+        await opp.async_start()
         await opp.async_block_till_done()
 
         expected_message = dict(
@@ -325,7 +325,7 @@ async def test_whitelist_or_match(mock_debug,.opp):
            .opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
         )
 
-        await.opp.async_start()
+        await opp.async_start()
         await opp.async_block_till_done()
 
         expected_message = dict(
@@ -356,7 +356,7 @@ async def test_whitelist_no_match(mock_debug,.opp):
            .opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
         )
 
-        await.opp.async_start()
+        await opp.async_start()
         await opp.async_block_till_done()
         debug_log_call = mock_debug.call_args_list[-3]
 

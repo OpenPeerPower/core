@@ -321,7 +321,7 @@ async def test_options_with_targets.opp, reversed):
             ]
         },
     ):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
         await opp.async_block_till_done()
@@ -382,7 +382,7 @@ async def test_form_import_with_entity_config_modify_options.opp, reversed):
         "openpeerpower.components.somfy_mylink.SomfyMyLinkSynergy.status_info",
         return_value=mock_status_info,
     ):
-        assert await.opp.config_entries.async_setup(
+        assert await opp.config_entries.async_setup(
             mock_imported_config_entry.entry_id
         )
         await opp.async_block_till_done()

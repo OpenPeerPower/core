@@ -57,7 +57,7 @@ async def test_async_setup_entry_sets_up_light.opp: OpenPeerPower):
     ) as mock_loadCloudData, patch(
         "openpeerpower.components.plum_lightpad.light.async_setup_entry"
     ) as mock_light_async_setup_entry:
-        result = await.opp.config_entries.async_setup(config_entry.entry_id)
+        result = await opp.config_entries.async_setup(config_entry.entry_id)
         assert result is True
 
         await opp.async_block_till_done()
@@ -80,7 +80,7 @@ async def test_async_setup_entry_op.dles_auth_error.opp: OpenPeerPower):
     ), patch(
         "openpeerpower.components.plum_lightpad.light.async_setup_entry"
     ) as mock_light_async_setup_entry:
-        result = await.opp.config_entries.async_setup(config_entry.entry_id)
+        result = await opp.config_entries.async_setup(config_entry.entry_id)
 
     assert result is False
     assert len(mock_light_async_setup_entry.mock_calls) == 0
@@ -100,7 +100,7 @@ async def test_async_setup_entry_op.dles_http_error.opp: OpenPeerPower):
     ), patch(
         "openpeerpower.components.plum_lightpad.light.async_setup_entry"
     ) as mock_light_async_setup_entry:
-        result = await.opp.config_entries.async_setup(config_entry.entry_id)
+        result = await opp.config_entries.async_setup(config_entry.entry_id)
 
     assert result is False
     assert len(mock_light_async_setup_entry.mock_calls) == 0

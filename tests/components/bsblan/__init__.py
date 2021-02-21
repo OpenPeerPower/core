@@ -48,7 +48,7 @@ async def init_integration(
     entry.add_to_opp.opp)
 
     if not skip_setup:
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     return entry
@@ -82,7 +82,7 @@ async def init_integration_without_auth(
     entry.add_to_opp.opp)
 
     if not skip_setup:
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     return entry

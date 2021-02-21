@@ -139,7 +139,7 @@ async def async_unload_entry.opp, config_entry):
         unsub_dispatcher()
 
     for component in COMPONENTS:
-        await.opp.config_entries.async_forward_entry_unload(config_entry, component)
+        await opp.config_entries.async_forward_entry_unload(config_entry, component)
 
     return True
 

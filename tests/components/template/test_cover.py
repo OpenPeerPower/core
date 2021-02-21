@@ -59,7 +59,7 @@ async def test_template_state_text.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.async_set("cover.test_state", STATE_OPEN)
@@ -102,7 +102,7 @@ async def test_template_state_boolean.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -137,7 +137,7 @@ async def test_template_position.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.async_set("cover.test", STATE_CLOSED)
@@ -193,7 +193,7 @@ async def test_template_tilt.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -228,7 +228,7 @@ async def test_template_out_of_bounds.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -267,7 +267,7 @@ async def test_template_mutex.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -314,7 +314,7 @@ async def test_template_open_and_close.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -352,7 +352,7 @@ async def test_template_non_numeric.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -384,7 +384,7 @@ async def test_open_action.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -423,7 +423,7 @@ async def test_close_stop_action.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -471,7 +471,7 @@ async def test_set_position.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.async_set("input_number.test", 42)
@@ -546,7 +546,7 @@ async def test_set_tilt_position.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     await.opp.services.async_call(
@@ -588,7 +588,7 @@ async def test_open_tilt_action.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     await.opp.services.async_call(
@@ -627,7 +627,7 @@ async def test_close_tilt_action.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     await.opp.services.async_call(
@@ -656,7 +656,7 @@ async def test_set_position_optimistic.opp, calls):
             },
         )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -721,7 +721,7 @@ async def test_set_tilt_position_optimistic.opp, calls):
             },
         )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -796,7 +796,7 @@ async def test_icon_template.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -840,7 +840,7 @@ async def test_entity_picture_template.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -882,7 +882,7 @@ async def test_availability_template.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("availability_state.state", STATE_OFF)
@@ -922,7 +922,7 @@ async def test_availability_without_availability_template.opp, calls):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -956,7 +956,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("cover.test_template_cover") != STATE_UNAVAILABLE
@@ -991,7 +991,7 @@ async def test_device_class.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -1026,7 +1026,7 @@ async def test_invalid_device_class.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("cover.test_template_cover")
@@ -1072,7 +1072,7 @@ async def test_unique_id.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
@@ -1108,7 +1108,7 @@ async def test_state_gets_lowercased.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
@@ -1156,7 +1156,7 @@ async def test_self_referencing_icon_with_no_template_is_not_a_loop.opp, caplog)
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

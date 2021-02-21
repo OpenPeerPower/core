@@ -22,7 +22,7 @@ async def auth_provider(local_auth):
 @pytest.fixture
 async def owner_access_token.opp,.opp_owner_user):
     """Access token for owner user."""
-    refresh_token = await.opp.auth.async_create_refresh_token(
+    refresh_token = await opp.auth.async_create_refresh_token(
        .opp_owner_user, CLIENT_ID
     )
     return.opp.auth.async_create_access_token(refresh_token)
@@ -194,7 +194,7 @@ async def test_delete_removes_credential.opp,.opp_ws_client,.opp_storage):
     }
 
     user.credentials.append(
-        await.opp.auth.auth_providers[0].async_get_or_create_credentials(
+        await opp.auth.auth_providers[0].async_get_or_create_credentials(
             {"username": "test-user"}
         )
     )

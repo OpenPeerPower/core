@@ -157,7 +157,7 @@ async def test_unload.opp):
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_unload",
         return_value=None,
     ) as mock_unload:
-        assert await.opp.config_entries.async_unload(entry.entry_id)
+        assert await opp.config_entries.async_unload(entry.entry_id)
 
     assert len(mock_unload.mock_calls) == 1
     assert mock_forward.mock_calls[0][1][0] is entry

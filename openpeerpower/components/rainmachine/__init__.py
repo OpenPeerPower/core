@@ -185,7 +185,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 async def async_reload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Handle an options update."""
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
 class RainMachineEntity(CoordinatorEntity):

@@ -146,7 +146,7 @@ async def test_setup_api_push_api_data_default.opp, aioclient_mock,.opp_storage)
     assert not aioclient_mock.mock_calls[1][2]["ssl"]
     assert aioclient_mock.mock_calls[1][2]["port"] == 8123
     refresh_token = aioclient_mock.mock_calls[1][2]["refresh_token"]
-    oppio_user = await.opp.auth.async_get_user(
+    oppio_user = await opp.auth.async_get_user(
        .opp_storage[STORAGE_KEY]["data"]["oppio_user"]
     )
     assert oppio_user is not None
@@ -163,9 +163,9 @@ async def test_setup_api_push_api_data_default.opp, aioclient_mock,.opp_storage)
 async def test_setup_adds_admin_group_to_user.opp, aioclient_mock,.opp_storage):
     """Test setup with API push default data."""
     # Create user without admin
-    user = await.opp.auth.async_create_system_user("Opp.io")
+    user = await opp.auth.async_create_system_user("Opp.io")
     assert not user.is_admin
-    await.opp.auth.async_create_refresh_token(user)
+    await opp.auth.async_create_refresh_token(user)
 
    .opp_storage[STORAGE_KEY] = {
         "data": {"oppio_user": user.id},
@@ -182,8 +182,8 @@ async def test_setup_adds_admin_group_to_user.opp, aioclient_mock,.opp_storage):
 
 async def test_setup_api_existing_oppio_user.opp, aioclient_mock,.opp_storage):
     """Test setup with API push default data."""
-    user = await.opp.auth.async_create_system_user("Opp.io test")
-    token = await.opp.auth.async_create_refresh_token(user)
+    user = await opp.auth.async_create_system_user("Opp.io test")
+    token = await opp.auth.async_create_refresh_token(user)
    .opp_storage[STORAGE_KEY] = {"version": 1, "data": {"oppio_user": user.id}}
     with patch.dict(os.environ, MOCK_ENVIRON):
         result = await async_setup_component.opp, "oppio", {"http": {}, "oppio": {}})

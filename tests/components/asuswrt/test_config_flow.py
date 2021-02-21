@@ -270,7 +270,7 @@ async def test_options_flow.opp):
     config_entry.add_to_opp.opp)
 
     with patch("openpeerpower.components.asuswrt.async_setup_entry", return_value=True):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 

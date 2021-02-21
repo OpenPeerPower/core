@@ -285,7 +285,7 @@ async def test_options_flow.opp):
     with patch("openpeerpower.components.blink.Auth", return_value=mock_auth), patch(
         "openpeerpower.components.blink.Blink", return_value=mock_blink
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(

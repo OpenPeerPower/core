@@ -51,7 +51,7 @@ async def setup_awair.opp, fixtures):
     entry = MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG)
     with patch("python_awair.AwairClient.query", side_effect=fixtures):
         entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
 

@@ -46,7 +46,7 @@ async def mock_discovery.opp, discoveries, config=BASE_CONFIG):
     ) as mock_platform:
         assert await async_setup_component.opp, "discovery", config)
         await opp.async_block_till_done()
-        await.opp.async_start()
+        await opp.async_start()
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
         async_fire_time_changed.opp, utcnow())

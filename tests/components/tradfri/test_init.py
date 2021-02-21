@@ -95,7 +95,7 @@ async def test_entry_setup_unload.opp, api_factory, gateway_id):
     with patch.object(
        .opp.config_entries, "async_forward_entry_setup", return_value=True
     ) as setup:
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
         assert setup.call_count == len(tradfri.PLATFORMS)
 
@@ -114,7 +114,7 @@ async def test_entry_setup_unload.opp, api_factory, gateway_id):
     with patch.object(
        .opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as unload:
-        assert await.opp.config_entries.async_unload(entry.entry_id)
+        assert await opp.config_entries.async_unload(entry.entry_id)
         await opp.async_block_till_done()
         assert unload.call_count == len(tradfri.PLATFORMS)
         assert api_factory.shutdown.call_count == 1

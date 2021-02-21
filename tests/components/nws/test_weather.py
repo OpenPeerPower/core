@@ -55,7 +55,7 @@ async def test_imperial_metric(
         data=NWS_CONFIG,
     )
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     state = opp.states.get("weather.abc_hourly")
@@ -96,7 +96,7 @@ async def test_none_values.opp, mock_simple_nws):
         data=NWS_CONFIG,
     )
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     state = opp.states.get("weather.abc_daynight")
@@ -121,7 +121,7 @@ async def test_none.opp, mock_simple_nws):
         data=NWS_CONFIG,
     )
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     state = opp.states.get("weather.abc_daynight")
@@ -147,7 +147,7 @@ async def test_error_station.opp, mock_simple_nws):
         data=NWS_CONFIG,
     )
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.states.get("weather.abc_hourly") is None
@@ -165,7 +165,7 @@ async def test_entity_refresh.opp, mock_simple_nws):
         data=NWS_CONFIG,
     )
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
     instance.update_observation.assert_called_once()
     instance.update_forecast.assert_called_once()
@@ -206,7 +206,7 @@ async def test_error_observation.opp, mock_simple_nws):
             data=NWS_CONFIG,
         )
         entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
         instance.update_observation.assert_called_once()
@@ -257,7 +257,7 @@ async def test_error_forecast.opp, mock_simple_nws):
         data=NWS_CONFIG,
     )
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     instance.update_forecast.assert_called_once()
@@ -298,7 +298,7 @@ async def test_error_forecast_hourly.opp, mock_simple_nws):
         data=NWS_CONFIG,
     )
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     state = opp.states.get("weather.abc_hourly")
@@ -327,7 +327,7 @@ async def test_forecast_hourly_disable_enable.opp, mock_simple_nws):
     )
     entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     registry = await.opp.helpers.entity_registry.async_get_registry()

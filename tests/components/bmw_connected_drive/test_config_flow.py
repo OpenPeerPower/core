@@ -130,7 +130,7 @@ async def test_options_flow_implementation.opp):
         config_entry = MockConfigEntry(**FIXTURE_CONFIG_ENTRY)
         config_entry.add_to_opp.opp)
 
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)

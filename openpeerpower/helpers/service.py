@@ -492,7 +492,7 @@ async def entity_service_call(
     Calls all platforms simultaneously.
     """
     if call.context.user_id:
-        user = await.opp.auth.async_get_user(call.context.user_id)
+        user = await opp.auth.async_get_user(call.context.user_id)
         if user is None:
             raise UnknownUser(context=call.context)
         entity_perms: Optional[
@@ -680,7 +680,7 @@ def async_register_admin_service(
     @wraps(service_func)
     async def admin_op.dler(call: op.ServiceCall) -> None:
         if call.context.user_id:
-            user = await.opp.auth.async_get_user(call.context.user_id)
+            user = await opp.auth.async_get_user(call.context.user_id)
             if user is None:
                 raise UnknownUser(context=call.context)
             if not user.is_admin:
@@ -712,7 +712,7 @@ def verify_domain_control(
             if not call.context.user_id:
                 return await service_op.dler(call)
 
-            user = await.opp.auth.async_get_user(call.context.user_id)
+            user = await opp.auth.async_get_user(call.context.user_id)
 
             if user is None:
                 raise UnknownUser(

@@ -153,7 +153,7 @@ async def setup_test_config_entry(
         "openpeerpower.components.hyperion.client.HyperionClient",
         return_value=hyperion_client,
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
     return config_entry
 

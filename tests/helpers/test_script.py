@@ -577,7 +577,7 @@ async def test_wait_for_trigger_variables.opp):
         assert script_obj.last_action == wait_alias
        .opp.states.async_set("switch.test", "off")
         # the script task +  2 tasks created by wait_for_trigger script step
-        await.opp.async_wait_for_task_count(3)
+        await opp.async_wait_for_task_count(3)
         async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
         await opp.async_block_till_done()
     except (AssertionError, asyncio.TimeoutError):

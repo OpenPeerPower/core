@@ -91,7 +91,7 @@ class RegistrationsView(OpenPeerPowerView):
             # Fallback to DEVICE_ID
             data[ATTR_DEVICE_NAME] = data[ATTR_DEVICE_ID]
 
-        await.opp.async_create_task(
+        await opp.async_create_task(
            .opp.config_entries.flow.async_init(
                 DOMAIN, data=data, context={"source": "registration"}
             )

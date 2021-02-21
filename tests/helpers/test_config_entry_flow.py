@@ -313,7 +313,7 @@ async def test_webhook_create_cloudhook.opp, webhook_flow_conf):
         return_value={"cloudhook_url": "https://example.com"},
     ) as mock_delete:
 
-        result = await.opp.config_entries.async_remove(result["result"].entry_id)
+        result = await opp.config_entries.async_remove(result["result"].entry_id)
 
     assert len(mock_delete.mock_calls) == 1
     assert result["require_restart"] is False

@@ -43,7 +43,7 @@ async def test_async_setup_raises_entry_not_ready.opp: OpenPeerPower):
     config_entry.add_to_opp.opp)
 
     with patch_bond_version(side_effect=ClientConnectionError()):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
 
@@ -110,7 +110,7 @@ async def test_unload_config_entry.opp: OpenPeerPower):
     assert result is True
     await opp.async_block_till_done()
 
-    await.opp.config_entries.async_unload(config_entry.entry_id)
+    await opp.config_entries.async_unload(config_entry.entry_id)
     await opp.async_block_till_done()
 
     assert config_entry.entry_id not in.opp.data[DOMAIN]
@@ -154,7 +154,7 @@ async def test_old_identifiers_are_removed.opp: OpenPeerPower):
     ), patch_bond_device_state(
         return_value={}
     ):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id) is True
+        assert await opp.config_entries.async_setup(config_entry.entry_id) is True
         await opp.async_block_till_done()
 
     assert config_entry.entry_id in.opp.data[DOMAIN]

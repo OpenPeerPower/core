@@ -160,7 +160,7 @@ async def test_reauth_flow.opp: OpenPeerPower) -> None:
         )
         mock_config.add_to_opp.opp)
 
-        await.opp.config_entries.async_setup(mock_config.entry_id)
+        await opp.config_entries.async_setup(mock_config.entry_id)
         await opp.async_block_till_done()
 
         result = await.opp.config_entries.flow.async_init(

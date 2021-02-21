@@ -56,7 +56,7 @@ def setup_auth.opp, app):
         if auth_type != "Bearer":
             return False
 
-        refresh_token = await.opp.auth.async_validate_access_token(auth_val)
+        refresh_token = await opp.auth.async_validate_access_token(auth_val)
 
         if refresh_token is None:
             return False
@@ -87,7 +87,7 @@ def setup_auth.opp, app):
         if claims["path"] != request.path:
             return False
 
-        refresh_token = await.opp.auth.async_get_refresh_token(claims["iss"])
+        refresh_token = await opp.auth.async_get_refresh_token(claims["iss"])
 
         if refresh_token is None:
             return False

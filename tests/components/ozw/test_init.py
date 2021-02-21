@@ -35,7 +35,7 @@ async def test_setup_entry_without_mqtt.opp):
     )
     entry.add_to_opp.opp)
 
-    assert not await.opp.config_entries.async_setup(entry.entry_id)
+    assert not await opp.config_entries.async_setup(entry.entry_id)
 
 
 async def test_publish_without_mqtt.opp, caplog):
@@ -47,7 +47,7 @@ async def test_publish_without_mqtt.opp, caplog):
 
         mqtt_entries = opp.config_entries.async_entries("mqtt")
         mqtt_entry = mqtt_entries[0]
-        await.opp.config_entries.async_remove(mqtt_entry.entry_id)
+        await opp.config_entries.async_remove(mqtt_entry.entry_id)
         await opp.async_block_till_done()
 
         assert not.opp.config_entries.async_entries("mqtt")
@@ -74,7 +74,7 @@ async def test_unload_entry.opp, generic_data, switch_msg, caplog):
     assert entry.state == config_entries.ENTRY_STATE_LOADED
     assert len.opp.states.async_entity_ids("switch")) == 1
 
-    await.opp.config_entries.async_unload(entry.entry_id)
+    await opp.config_entries.async_unload(entry.entry_id)
 
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
     entities = opp.states.async_entity_ids("switch")
@@ -119,7 +119,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-    await.opp.config_entries.async_remove(entry.entry_id)
+    await opp.config_entries.async_remove(entry.entry_id)
 
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
     assert len.opp.config_entries.async_entries(DOMAIN)) == 0
@@ -134,7 +134,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     entry.add_to_opp.opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-    await.opp.config_entries.async_remove(entry.entry_id)
+    await opp.config_entries.async_remove(entry.entry_id)
 
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 1
@@ -148,7 +148,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     stop_addon.side_effect = OppioAPIError()
 
-    await.opp.config_entries.async_remove(entry.entry_id)
+    await opp.config_entries.async_remove(entry.entry_id)
 
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 0
@@ -164,7 +164,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     uninstall_addon.side_effect = OppioAPIError()
 
-    await.opp.config_entries.async_remove(entry.entry_id)
+    await opp.config_entries.async_remove(entry.entry_id)
 
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 1
@@ -184,7 +184,7 @@ async def test_setup_entry_with_addon.opp, get_addon_discovery_info):
     entry.add_to_opp.opp)
 
     with patch("openpeerpower.components.ozw.MQTTClient", autospec=True) as mock_client:
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     assert mock_client.return_value.start_client.call_count == 1
@@ -213,7 +213,7 @@ async def test_setup_entry_without_addon_info.opp, get_addon_discovery_info):
     get_addon_discovery_info.return_value = None
 
     with patch("openpeerpower.components.ozw.MQTTClient", autospec=True) as mock_client:
-        assert not await.opp.config_entries.async_setup(entry.entry_id)
+        assert not await opp.config_entries.async_setup(entry.entry_id)
 
     assert mock_client.return_value.start_client.call_count == 0
     assert entry.state == config_entries.ENTRY_STATE_SETUP_RETRY
@@ -234,12 +234,12 @@ async def test_unload_entry_with_addon(
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 
     with patch("openpeerpower.components.ozw.MQTTClient", autospec=True) as mock_client:
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     assert mock_client.return_value.start_client.call_count == 1
     assert entry.state == config_entries.ENTRY_STATE_LOADED
 
-    await.opp.config_entries.async_unload(entry.entry_id)
+    await opp.config_entries.async_unload(entry.entry_id)
 
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED

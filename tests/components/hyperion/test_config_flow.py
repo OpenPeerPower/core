@@ -113,7 +113,7 @@ async def _create_mock_entry.opp: OpenPeerPowerType) -> MockConfigEntry:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     return entry
@@ -606,7 +606,7 @@ async def test_options.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
         assert.opp.states.get(TEST_ENTITY_ID_1) is not None
 

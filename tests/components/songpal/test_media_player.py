@@ -73,7 +73,7 @@ async def test_setup_failed.opp, caplog):
     entry.add_to_opp.opp)
 
     with _patch_media_player_device(mocked_device):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
     all_states = opp.states.async_all()
     assert len(all_states) == 0
@@ -100,7 +100,7 @@ async def test_state.opp):
     entry.add_to_opp.opp)
 
     with _patch_media_player_device(mocked_device):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_ID)
@@ -133,7 +133,7 @@ async def test_services.opp):
     entry.add_to_opp.opp)
 
     with _patch_media_player_device(mocked_device):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     async def _call(service, **argv):
@@ -183,7 +183,7 @@ async def test_services.opp):
     )
     entry2.add_to_opp.opp)
     with _patch_media_player_device(mocked_device2):
-        await.opp.config_entries.async_setup(entry2.entry_id)
+        await opp.config_entries.async_setup(entry2.entry_id)
         await opp.async_block_till_done()
 
     await.opp.services.async_call(
@@ -203,7 +203,7 @@ async def test_websocket_events.opp):
     entry.add_to_opp.opp)
 
     with _patch_media_player_device(mocked_device):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     mocked_device.listen_notifications.assert_called_once()
@@ -241,7 +241,7 @@ async def test_disconnected.opp, caplog):
     entry.add_to_opp.opp)
 
     with _patch_media_player_device(mocked_device):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     async def _assert_state():

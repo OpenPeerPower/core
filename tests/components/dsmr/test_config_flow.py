@@ -176,7 +176,7 @@ async def test_import_update.opp, dsmr_connection_send_validate_fixture):
     with patch(
         "openpeerpower.components.dsmr.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.dsmr.async_unload_entry", return_value=True):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
 
     await opp.async_block_till_done()
 

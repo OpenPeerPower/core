@@ -230,7 +230,7 @@ async def test_options.opp: OpenPeerPower):
 
     mocked_bulb = _mocked_bulb()
     with patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     config = {

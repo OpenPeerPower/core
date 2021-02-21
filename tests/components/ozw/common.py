@@ -24,7 +24,7 @@ async def setup_ozw.opp, entry=None, fixture=None):
 
     with patch("openpeerpower.components.mqtt.async_subscribe") as mock_subscribe:
         mock_subscribe.return_value = Mock()
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     assert "ozw" in.opp.config.components

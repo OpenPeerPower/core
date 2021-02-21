@@ -99,7 +99,7 @@ async def test_options.opp):
 
     with patch("speedtest.Speedtest") as mock_api:
         mock_api.return_value.get_servers.return_value = MOCK_SERVERS
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
 
         result = await.opp.config_entries.options.async_init(entry.entry_id)
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

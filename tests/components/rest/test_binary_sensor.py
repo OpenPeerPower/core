@@ -345,7 +345,7 @@ async def test_reload.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

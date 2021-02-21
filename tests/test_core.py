@@ -161,7 +161,7 @@ async def test_stage_shutdown.opp):
     test_close = async_capture_events.opp, EVENT_OPENPEERPOWER_CLOSE)
     test_all = async_capture_events.opp, MATCH_ALL)
 
-    await.opp.async_stop()
+    await opp.async_stop()
 
     assert len(test_stop) == 1
     assert len(test_close) == 1
@@ -187,7 +187,7 @@ async def test_shutdown_calls_block_till_done_after_shutdown_run_callback_thread
         "openpeerpowerr.core.shutdown_run_callback_threadsafe",
         _record_shutdown_run_callback_threadsafe,
     ):
-        await.opp.async_stop()
+        await opp.async_stop()
 
     assert stop_calls[-2] == ("shutdown_run_callback_threadsafe",.opp.loop)
     assert stop_calls[-1] == "async_block_till_done"
@@ -1117,7 +1117,7 @@ async def test_opp_start_starts_the_timer(loop):
 
     try:
         with patch("openpeerpowerr.core._async_create_timer") as mock_timer:
-            await.opp.async_start()
+            await opp.async_start()
 
         assert.opp.state == op.CoreState.running
         assert not.opp._track_task
@@ -1125,7 +1125,7 @@ async def test_opp_start_starts_the_timer(loop):
         assert mock_timer.mock_calls[0][1][0] is.opp
 
     finally:
-        await.opp.async_stop()
+        await opp.async_stop()
         assert.opp.state == op.CoreState.stopped
 
 
@@ -1138,7 +1138,7 @@ async def test_start_taking_too_long(loop, caplog):
         with patch.object(
            .opp, "async_block_till_done", side_effect=asyncio.TimeoutError
         ), patch("openpeerpowerr.core._async_create_timer") as mock_timer:
-            await.opp.async_start()
+            await opp.async_start()
 
         assert.opp.state == op.CoreState.running
         assert len(mock_timer.mock_calls) == 1
@@ -1146,7 +1146,7 @@ async def test_start_taking_too_long(loop, caplog):
         assert "Something is blocking Open Peer Power" in caplog.text
 
     finally:
-        await.opp.async_stop()
+        await opp.async_stop()
         assert.opp.state == op.CoreState.stopped
 
 
@@ -1162,7 +1162,7 @@ async def test_track_task_functions(loop):
        .opp.async_track_tasks()
         assert.opp._track_task
     finally:
-        await.opp.async_stop()
+        await opp.async_stop()
 
 
 async def test_service_executed_with_subservices.opp):
@@ -1354,7 +1354,7 @@ async def test_start_events.opp):
 
    .opp.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, capture_core_state)
 
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert all_events == [

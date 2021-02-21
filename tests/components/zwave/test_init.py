@@ -43,7 +43,7 @@ async def zwave_setup_ready.opp, zwave_setup):
     zwave_network = opp.data[DATA_NETWORK]
     zwave_network.state = MockNetwork.STATE_READY
 
-    await.opp.async_start()
+    await opp.async_start()
 
 
 async def test_valid_device_config.opp, mock_openzwave):
@@ -208,7 +208,7 @@ async def test_zwave_ready_wait.opp, mock_openzwave, zwave_setup):
             with patch.object(zwave, "_LOGGER") as mock_logger:
                .opp.data[DATA_NETWORK].state = MockNetwork.STATE_STARTED
 
-                await.opp.async_start()
+                await opp.async_start()
 
                 assert len(sleeps) == const.NETWORK_READY_WAIT_SECS
                 assert mock_logger.warning.called
@@ -427,7 +427,7 @@ async def test_value_entities.opp, mock_openzwave):
     zwave_network = opp.data[DATA_NETWORK]
     zwave_network.state = MockNetwork.STATE_READY
 
-    await.opp.async_start()
+    await opp.async_start()
 
     assert mock_receivers
 

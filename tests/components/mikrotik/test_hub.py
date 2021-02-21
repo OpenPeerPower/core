@@ -42,7 +42,7 @@ async def setup_mikrotik_entry.opp, **kwargs):
     with patch("librouteros.connect"), patch.object(
         mikrotik.hub.MikrotikData, "command", new=mock_command
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
         return.opp.data[mikrotik.DOMAIN][config_entry.entry_id]
 
@@ -84,7 +84,7 @@ async def test_hub_setup_failed.opp):
         "librouteros.connect", side_effect=librouteros.exceptions.ConnectionClosed
     ):
 
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
 
         assert config_entry.state == config_entries.ENTRY_STATE_SETUP_RETRY
 
@@ -98,7 +98,7 @@ async def test_hub_setup_failed.opp):
         side_effect=librouteros.exceptions.TrapError("invalid user name or password"),
     ):
 
-        result = await.opp.config_entries.async_setup(config_entry.entry_id)
+        result = await opp.config_entries.async_setup(config_entry.entry_id)
 
         assert result is False
         assert len(forward_entry_setup.mock_calls) == 0

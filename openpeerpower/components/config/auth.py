@@ -31,7 +31,7 @@ async def async_setup.opp):
 @websocket_api.async_response
 async def websocket_list.opp, connection, msg):
     """Return a list of users."""
-    result = [_user_info(u) for u in await.opp.auth.async_get_users()]
+    result = [_user_info(u) for u in await opp.auth.async_get_users()]
 
     connection.send_message(websocket_api.result_message(msg["id"], result))
 
@@ -48,7 +48,7 @@ async def websocket_delete.opp, connection, msg):
         )
         return
 
-    user = await.opp.auth.async_get_user(msg["user_id"])
+    user = await opp.auth.async_get_user(msg["user_id"])
 
     if not user:
         connection.send_message(
@@ -56,7 +56,7 @@ async def websocket_delete.opp, connection, msg):
         )
         return
 
-    await.opp.auth.async_remove_user(user)
+    await opp.auth.async_remove_user(user)
 
     connection.send_message(websocket_api.result_message(msg["id"]))
 
@@ -72,7 +72,7 @@ async def websocket_delete.opp, connection, msg):
 )
 async def websocket_create.opp, connection, msg):
     """Create a user."""
-    user = await.opp.auth.async_create_user(msg["name"], msg.get("group_ids"))
+    user = await opp.auth.async_create_user(msg["name"], msg.get("group_ids"))
 
     connection.send_message(
         websocket_api.result_message(msg["id"], {"user": _user_info(user)})
@@ -92,7 +92,7 @@ async def websocket_create.opp, connection, msg):
 )
 async def websocket_update.opp, connection, msg):
     """Update a user."""
-    user = await.opp.auth.async_get_user(msg.pop("user_id"))
+    user = await opp.auth.async_get_user(msg.pop("user_id"))
 
     if not user:
         connection.send_message(
@@ -125,7 +125,7 @@ async def websocket_update.opp, connection, msg):
     msg.pop("type")
     msg_id = msg.pop("id")
 
-    await.opp.auth.async_update_user(user, **msg)
+    await opp.auth.async_update_user(user, **msg)
 
     connection.send_message(
         websocket_api.result_message(msg_id, {"user": _user_info(user)})

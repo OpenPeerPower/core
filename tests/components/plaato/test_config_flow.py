@@ -248,7 +248,7 @@ async def test_options.opp):
         "openpeerpower.components.plaato.async_setup_entry", return_value=True
     ) as mock_setup_entry:
 
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
@@ -286,7 +286,7 @@ async def test_options_webhook.opp, webhook_id):
         "openpeerpower.components.plaato.async_setup_entry", return_value=True
     ) as mock_setup_entry:
 
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)

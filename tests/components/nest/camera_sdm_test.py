@@ -344,7 +344,7 @@ async def test_camera_removed.opp, auth):
     assert image.content == IMAGE_BYTES_FROM_EVENT
 
     for config_entry in.opp.config_entries.async_entries(DOMAIN):
-        await.opp.config_entries.async_remove(config_entry.entry_id)
+        await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 

@@ -106,7 +106,7 @@ async def test_user_form_duplicate.opp):
     with _patch_glucose_readings(), _patch_server_status():
         unique_id = op.h_from_url(CONFIG[CONF_URL])
         entry = MockConfigEntry(domain=DOMAIN, unique_id=unique_id)
-        await.opp.config_entries.async_add(entry)
+        await opp.config_entries.async_add(entry)
         result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_USER},

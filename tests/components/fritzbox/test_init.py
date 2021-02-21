@@ -74,14 +74,14 @@ async def test_unload_remove.opp: OpenPeerPowerType, fritz: Mock):
     state = opp.states.get(entity_id)
     assert state
 
-    await.opp.config_entries.async_unload(entry.entry_id)
+    await opp.config_entries.async_unload(entry.entry_id)
 
     assert fritz().logout.call_count == 1
     assert entry.state == ENTRY_STATE_NOT_LOADED
     state = opp.states.get(entity_id)
     assert state.state == STATE_UNAVAILABLE
 
-    await.opp.config_entries.async_remove(entry.entry_id)
+    await opp.config_entries.async_remove(entry.entry_id)
     await opp.async_block_till_done()
 
     assert fritz().logout.call_count == 1

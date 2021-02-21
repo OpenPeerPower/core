@@ -241,9 +241,9 @@ async def.opp_admin_credential.opp, local_auth):
 @pytest.fixture
 async def.opp_access_token.opp,.opp_admin_user,.opp_admin_credential):
     """Return an access token to access Open Peer Power."""
-    await.opp.auth.async_link_user.opp_admin_user,.opp_admin_credential)
+    await opp.auth.async_link_user.opp_admin_user,.opp_admin_credential)
 
-    refresh_token = await.opp.auth.async_create_refresh_token(
+    refresh_token = await opp.auth.async_create_refresh_token(
        .opp_admin_user, CLIENT_ID, credential.opp_admin_credential
     )
     return.opp.auth.async_create_access_token(refresh_token)

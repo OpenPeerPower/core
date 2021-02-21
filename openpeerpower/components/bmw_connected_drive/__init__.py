@@ -194,7 +194,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def update_listener.opp, config_entry):
     """Handle options update."""
-    await.opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(config_entry.entry_id)
 
 
 def setup_account(entry: ConfigEntry,.opp, name: str) -> BMWConnectedDriveAccount:

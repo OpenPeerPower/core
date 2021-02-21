@@ -40,7 +40,7 @@ async def test_add_unique_id.opp):
     assert mock_entry.unique_id is None
 
     with patch("abodepy.UTILS"):
-        await.opp.config_entries.async_reload(mock_entry.entry_id)
+        await opp.config_entries.async_reload(mock_entry.entry_id)
         await opp.async_block_till_done()
 
     assert mock_entry.unique_id == mock_entry.data[CONF_USERNAME]
@@ -53,7 +53,7 @@ async def test_unload_entry.opp):
     with patch("abodepy.Abode.logout") as mock_logout, patch(
         "abodepy.event_controller.AbodeEventController.stop"
     ) as mock_events_stop:
-        assert await.opp.config_entries.async_unload(mock_entry.entry_id)
+        assert await opp.config_entries.async_unload(mock_entry.entry_id)
         mock_logout.assert_called_once()
         mock_events_stop.assert_called_once()
 

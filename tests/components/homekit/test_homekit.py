@@ -94,7 +94,7 @@ async def test_setup_min.opp, mock_zeroconf):
     with patch(f"{PATH_HOMEKIT}.HomeKit") as mock_homekit:
         mock_homekit.return_value = homekit = Mock()
         type(homekit).async_start = AsyncMock()
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
@@ -130,7 +130,7 @@ async def test_setup_auto_start_disabled.opp, mock_zeroconf):
     with patch(f"{PATH_HOMEKIT}.HomeKit") as mock_homekit:
         mock_homekit.return_value = homekit = Mock()
         type(homekit).async_start = AsyncMock()
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
@@ -952,7 +952,7 @@ async def test_raise_config_entry_not_ready.opp, mock_zeroconf):
     entry.add_to_opp.opp)
 
     with patch(f"{PATH_HOMEKIT}.HomeKit.setup", side_effect=OSError):
-        assert not await.opp.config_entries.async_setup(entry.entry_id)
+        assert not await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
 
@@ -970,10 +970,10 @@ async def test_homekit_uses_system_zeroconf.opp, hk_driver, mock_zeroconf):
         f"{PATH_HOMEKIT}.HomeKit.async_stop"
     ):
         entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
         assert.opp.data[DOMAIN][entry.entry_id][HOMEKIT].driver.advertiser == system_zc
-        assert await.opp.config_entries.async_unload(entry.entry_id)
+        assert await opp.config_entries.async_unload(entry.entry_id)
         await opp.async_block_till_done()
 
 

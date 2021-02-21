@@ -44,6 +44,6 @@ async def test_unload_config_entry.opp, scene):
     # Arrange
     config_entry = await setup_platform.opp, SCENE_DOMAIN, scenes=[scene])
     # Act
-    await.opp.config_entries.async_forward_entry_unload(config_entry, SCENE_DOMAIN)
+    await opp.config_entries.async_forward_entry_unload(config_entry, SCENE_DOMAIN)
     # Assert
     assert.opp.states.get("scene.test_scene").state == STATE_UNAVAILABLE

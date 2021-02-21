@@ -117,7 +117,7 @@ async def test_user_form_duplicate.opp):
         return_value=True,
     ):
         entry = MockConfigEntry(domain=DOMAIN, unique_id=UUID)
-        await.opp.config_entries.async_add(entry)
+        await opp.config_entries.async_add(entry)
         result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
@@ -262,7 +262,7 @@ async def test_import_existing.opp):
         return_value={"ip": HOST, "uuid": UUID},
     ):
         entry = MockConfigEntry(domain=DOMAIN, unique_id=UUID)
-        await.opp.config_entries.async_add(entry)
+        await opp.config_entries.async_add(entry)
         result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},

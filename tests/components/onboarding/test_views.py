@@ -155,7 +155,7 @@ async def test_onboarding_user.opp,.opp_storage, aiohttp_client):
     data = await resp.json()
     assert "auth_code" in data
 
-    users = await.opp.auth.async_get_users()
+    users = await opp.auth.async_get_users()
     assert len(users) == 1
     user = users[0]
     assert user.name == "Test Name"
@@ -177,7 +177,7 @@ async def test_onboarding_user.opp,.opp_storage, aiohttp_client):
     tokens = await resp.json()
 
     assert (
-        await.opp.auth.async_validate_access_token(tokens["access_token"]) is not None
+        await opp.auth.async_validate_access_token(tokens["access_token"]) is not None
     )
 
     # Validate created areas
@@ -280,11 +280,11 @@ async def test_onboarding_integration.opp,.opp_storage,.opp_client,.opp_admin_us
     tokens = await resp.json()
 
     assert (
-        await.opp.auth.async_validate_access_token(tokens["access_token"]) is not None
+        await opp.auth.async_validate_access_token(tokens["access_token"]) is not None
     )
 
     # Onboarding refresh token and new refresh token
-    for user in await.opp.auth.async_get_users():
+    for user in await opp.auth.async_get_users():
         assert len(user.refresh_tokens) == 2, user
 
 
@@ -297,7 +297,7 @@ async def test_onboarding_integration_missing_credential(
     assert await async_setup_component.opp, "onboarding", {})
     await opp.async_block_till_done()
 
-    refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
     refresh_token.credential = None
 
     client = await.opp_client()
@@ -332,7 +332,7 @@ async def test_onboarding_integration_invalid_redirect_uri(
     assert const.STEP_INTEGRATION in.opp_storage[const.DOMAIN]["data"]["done"]
 
     # Only refresh token from onboarding should be there
-    for user in await.opp.auth.async_get_users():
+    for user in await opp.auth.async_get_users():
         assert len(user.refresh_tokens) == 1, user
 
 

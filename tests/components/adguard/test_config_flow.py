@@ -162,7 +162,7 @@ async def test_oppio_update_instance_running.opp, aioclient_mock):
         "async_forward_entry_setup",
         return_value=True,
     ) as mock_load:
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         assert entry.state == config_entries.ENTRY_STATE_LOADED
         assert len(mock_load.mock_calls) == 2
 

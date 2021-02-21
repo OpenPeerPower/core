@@ -123,7 +123,7 @@ async def test_setup_config_entry_dynamic_instances.opp: OpenPeerPowerType) -> N
         "openpeerpower.components.hyperion.client.HyperionClient",
         side_effect=[master_client, entity_client, entity_client],
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     assert.opp.states.get(TEST_ENTITY_ID_1) is not None
@@ -721,7 +721,7 @@ async def test_unload_entry.opp: OpenPeerPowerType) -> None:
     entry = _get_config_entry_from_unique_id.opp, TEST_SYSINFO_ID)
     assert entry
 
-    await.opp.config_entries.async_unload(entry.entry_id)
+    await opp.config_entries.async_unload(entry.entry_id)
     assert client.async_client_disconnect.call_count == 2
 
 
@@ -752,7 +752,7 @@ async def test_setup_entry_no_token_reauth.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
-        assert not await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert not await opp.config_entries.async_setup(config_entry.entry_id)
         assert client.async_client_disconnect.called
         mock_flow_init.assert_called_once_with(
             DOMAIN,
@@ -776,7 +776,7 @@ async def test_setup_entry_bad_token_reauth.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
-        assert not await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert not await opp.config_entries.async_setup(config_entry.entry_id)
         assert client.async_client_disconnect.called
         mock_flow_init.assert_called_once_with(
             DOMAIN,

@@ -103,7 +103,7 @@ class UserOnboardingView(_BaseOnboardingView):
             provider = _async_get_opp_provider.opp)
             await provider.async_initialize()
 
-            user = await.opp.auth.async_create_user(data["name"], [GROUP_ID_ADMIN])
+            user = await opp.auth.async_create_user(data["name"], [GROUP_ID_ADMIN])
             await opp.async_add_executor_job(
                 provider.data.add_auth, data["username"], data["password"]
             )
@@ -111,7 +111,7 @@ class UserOnboardingView(_BaseOnboardingView):
                 {"username": data["username"]}
             )
             await provider.data.async_save()
-            await.opp.auth.async_link_user(user, credentials)
+            await opp.auth.async_link_user(user, credentials)
             if "person" in.opp.config.components:
                 await.opp.components.person.async_create_person(
                     data["name"], user_id=user.id
@@ -204,7 +204,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
                     "invalid client id or redirect uri", HTTP_BAD_REQUEST
                 )
 
-            refresh_token = await.opp.auth.async_get_refresh_token(refresh_token_id)
+            refresh_token = await opp.auth.async_get_refresh_token(refresh_token_id)
             if refresh_token is None or refresh_token.credential is None:
                 return self.json_message(
                     "Credentials for user not available", HTTP_FORBIDDEN

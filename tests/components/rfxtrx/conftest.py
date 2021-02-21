@@ -55,9 +55,9 @@ async def rfxtrx_automatic_fixture.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     yield rfxtrx
 
 

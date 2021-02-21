@@ -171,7 +171,7 @@ async def setup_onvif_integration(
         # no discovery
         mock_discovery.return_value = []
         setup_mock_device(mock_device)
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
     return config_entry
 

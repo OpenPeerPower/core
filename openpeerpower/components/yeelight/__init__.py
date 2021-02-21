@@ -277,7 +277,7 @@ def _async_unique_name(capabilities: dict) -> str:
 
 async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
 class YeelightScanner:

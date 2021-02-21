@@ -185,7 +185,7 @@ async def test_set_config_unique_id(
         mock.return_value = data_manager
         config_entry.add_to_opp.opp)
 
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         assert config_entry.unique_id == "my_user_id"
 
 

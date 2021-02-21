@@ -191,6 +191,6 @@ async def test_unload_config_entry.opp, device_factory):
     )
     config_entry = await setup_platform.opp, COVER_DOMAIN, devices=[device])
     # Act
-    await.opp.config_entries.async_forward_entry_unload(config_entry, COVER_DOMAIN)
+    await opp.config_entries.async_forward_entry_unload(config_entry, COVER_DOMAIN)
     # Assert
     assert.opp.states.get("cover.garage").state == STATE_UNAVAILABLE

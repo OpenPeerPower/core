@@ -32,7 +32,7 @@ async def test_site_cannot_connect.opp, requests_mock, legacy_patchable_time):
         data=METOFFICE_CONFIG_WAVERTREE,
     )
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.states.get("weather.met_office_wavertree") is None
@@ -64,7 +64,7 @@ async def test_site_cannot_update.opp, requests_mock, legacy_patchable_time):
         data=METOFFICE_CONFIG_WAVERTREE,
     )
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     entity = opp.states.get("weather.met_office_wavertree")
@@ -103,7 +103,7 @@ async def test_one_weather_site_running.opp, requests_mock, legacy_patchable_tim
         data=METOFFICE_CONFIG_WAVERTREE,
     )
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     # Wavertree weather platform expected results
@@ -144,13 +144,13 @@ async def test_two_weather_sites_running.opp, requests_mock, legacy_patchable_ti
         data=METOFFICE_CONFIG_WAVERTREE,
     )
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     entry2 = MockConfigEntry(
         domain=DOMAIN,
         data=METOFFICE_CONFIG_KINGSLYNN,
     )
     entry2.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry2.entry_id)
+    await opp.config_entries.async_setup(entry2.entry_id)
     await opp.async_block_till_done()
 
     # Wavertree weather platform expected results

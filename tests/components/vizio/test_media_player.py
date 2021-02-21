@@ -83,7 +83,7 @@ async def _add_config_entry_to_opp(
    .opp: OpenPeerPowerType, config_entry: MockConfigEntry
 ) -> None:
     config_entry.add_to_opp.opp)
-    assert await.opp.config_entries.async_setup(config_entry.entry_id)
+    assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
 
 

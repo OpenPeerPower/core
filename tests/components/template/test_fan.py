@@ -66,7 +66,7 @@ async def test_missing_optional_config.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, None, None, None, None)
@@ -92,7 +92,7 @@ async def test_missing_value_template_config.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -118,7 +118,7 @@ async def test_missing_turn_on_config.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -144,7 +144,7 @@ async def test_missing_turn_off_config.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -168,7 +168,7 @@ async def test_invalid_config.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -216,7 +216,7 @@ async def test_templates_with_entities.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_OFF, None, 0, None, None, None)
@@ -270,7 +270,7 @@ async def test_templates_with_entities_and_invalid_percentage.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
@@ -326,7 +326,7 @@ async def test_templates_with_entities_and_preset_modes.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, None, None, None, None)
@@ -373,7 +373,7 @@ async def test_template_with_unavailable_entities.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
     assert.opp.states.get(_TEST_FAN).state == STATE_OFF
 
@@ -403,7 +403,7 @@ async def test_template_with_unavailable_parameters.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, 0, None, None, None)
@@ -435,7 +435,7 @@ async def test_availability_template_with_entities.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     # When template returns true..
@@ -477,7 +477,7 @@ async def test_templates_with_valid_values.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
@@ -507,7 +507,7 @@ async def test_templates_invalid_values.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_OFF, None, 0, None, None, None)
@@ -540,7 +540,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("fan.test_fan").state != STATE_UNAVAILABLE
@@ -1013,7 +1013,7 @@ async def _register_components.opp, speed_list=None, preset_modes=None):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
 
@@ -1056,7 +1056,7 @@ async def test_unique_id.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

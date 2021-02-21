@@ -48,7 +48,7 @@ def mock_device_reg.opp):
 @fixture
 async def mock_entity.opp, mock_device_reg, mock_config_entry):
     """Get standard player."""
-    assert await.opp.config_entries.async_setup(mock_config_entry.entry_id)
+    assert await opp.config_entries.async_setup(mock_config_entry.entry_id)
     await opp.async_block_till_done()
     return MOCK_ENTITY_ID
 

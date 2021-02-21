@@ -151,7 +151,7 @@ async def test_already_configured.opp, valid_feature_mock):
     config = mock_config("172.2.3.4")
     config.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(config.entry_id)
+    await opp.config_entries.async_setup(config.entry_id)
     await opp.async_block_till_done()
 
     result = await.opp.config_entries.flow.async_init(
@@ -169,7 +169,7 @@ async def test_async_setup_entry.opp, valid_feature_mock):
     config = mock_config()
     config.add_to_opp.opp)
 
-    assert await.opp.config_entries.async_setup(config.entry_id)
+    assert await opp.config_entries.async_setup(config.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.config_entries.async_entries() == [config]
@@ -182,10 +182,10 @@ async def test_async_remove_entry.opp, valid_feature_mock):
     config = mock_config()
     config.add_to_opp.opp)
 
-    assert await.opp.config_entries.async_setup(config.entry_id)
+    assert await opp.config_entries.async_setup(config.entry_id)
     await opp.async_block_till_done()
 
-    assert await.opp.config_entries.async_remove(config.entry_id)
+    assert await opp.config_entries.async_remove(config.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.config_entries.async_entries() == []

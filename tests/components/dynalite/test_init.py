@@ -269,13 +269,13 @@ async def test_unload_entry.opp):
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
         return_value=True,
     ):
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
     assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 1
     with patch.object(
        .opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_unload:
-        assert await.opp.config_entries.async_unload(entry.entry_id)
+        assert await opp.config_entries.async_unload(entry.entry_id)
         await opp.async_block_till_done()
         assert mock_unload.call_count == len(dynalite.ENTITY_PLATFORMS)
         expected_calls = [

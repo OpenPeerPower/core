@@ -29,7 +29,7 @@ async def test_climate_thermostat_run.opp):
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
         config_entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     state = opp.states.get("climate.master_bathroom")
@@ -62,7 +62,7 @@ async def test_climate_thermostat_schedule_hold_unavailable.opp):
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
         config_entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     state = opp.states.get("climate.guest_bathroom")
@@ -92,7 +92,7 @@ async def test_climate_thermostat_schedule_hold_available.opp):
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
         config_entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     state = opp.states.get("climate.available_bathroom")
@@ -126,7 +126,7 @@ async def test_climate_thermostat_schedule_temporary_hold.opp):
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
         config_entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     state = opp.states.get("climate.temp_bathroom")

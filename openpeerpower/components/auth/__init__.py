@@ -272,12 +272,12 @@ class TokenView(OpenPeerPowerView):
         if token is None:
             return web.Response(status=HTTP_OK)
 
-        refresh_token = await.opp.auth.async_get_refresh_token_by_token(token)
+        refresh_token = await opp.auth.async_get_refresh_token_by_token(token)
 
         if refresh_token is None:
             return web.Response(status=HTTP_OK)
 
-        await.opp.auth.async_remove_refresh_token(refresh_token)
+        await opp.auth.async_remove_refresh_token(refresh_token)
         return web.Response(status=HTTP_OK)
 
     async def _async_op.dle_auth_code(self,.opp, data, remote_addr):
@@ -305,7 +305,7 @@ class TokenView(OpenPeerPowerView):
                 status_code=HTTP_BAD_REQUEST,
             )
 
-        user = await.opp.auth.async_get_or_create_user(credential)
+        user = await opp.auth.async_get_or_create_user(credential)
 
         if not user.is_active:
             return self.json(
@@ -313,7 +313,7 @@ class TokenView(OpenPeerPowerView):
                 status_code=HTTP_FORBIDDEN,
             )
 
-        refresh_token = await.opp.auth.async_create_refresh_token(
+        refresh_token = await opp.auth.async_create_refresh_token(
             user, client_id, credential=credential
         )
         try:
@@ -351,7 +351,7 @@ class TokenView(OpenPeerPowerView):
         if token is None:
             return self.json({"error": "invalid_request"}, status_code=HTTP_BAD_REQUEST)
 
-        refresh_token = await.opp.auth.async_get_refresh_token_by_token(token)
+        refresh_token = await opp.auth.async_get_refresh_token_by_token(token)
 
         if refresh_token is None:
             return self.json({"error": "invalid_grant"}, status_code=HTTP_BAD_REQUEST)
@@ -403,7 +403,7 @@ class LinkUserView(OpenPeerPowerView):
         if credentials is None:
             return self.json_message("Invalid code", status_code=HTTP_BAD_REQUEST)
 
-        await.opp.auth.async_link_user(user, credentials)
+        await opp.auth.async_link_user(user, credentials)
         return self.json_message("User linked")
 
 
@@ -459,7 +459,7 @@ async def websocket_current_user(
 ):
     """Return the current user."""
     user = connection.user
-    enabled_modules = await.opp.auth.async_get_enabled_mfa(user)
+    enabled_modules = await opp.auth.async_get_enabled_mfa(user)
 
     connection.send_message(
         websocket_api.result_message(
@@ -495,7 +495,7 @@ async def websocket_create_long_lived_access_token(
    .opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """Create or a long-lived access token."""
-    refresh_token = await.opp.auth.async_create_refresh_token(
+    refresh_token = await opp.auth.async_create_refresh_token(
         connection.user,
         client_name=msg["client_name"],
         client_icon=msg.get("client_icon"),
@@ -554,7 +554,7 @@ async def websocket_delete_refresh_token(
             msg["id"], "invalid_token_id", "Received invalid token"
         )
 
-    await.opp.auth.async_remove_refresh_token(refresh_token)
+    await opp.auth.async_remove_refresh_token(refresh_token)
 
     connection.send_message(websocket_api.result_message(msg["id"], {}))
 

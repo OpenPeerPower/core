@@ -62,7 +62,7 @@ async def mock_light.opp, mock_entry):
             light, "get_color", return_value=(0, 0, 0, 0)
         ):
             mock_entry.add_to_opp.opp)
-            await.opp.config_entries.async_setup(mock_entry.entry_id)
+            await opp.config_entries.async_setup(mock_entry.entry_id)
             await opp.async_block_till_done()
 
         assert mock_connect.called
@@ -85,7 +85,7 @@ async def test_init.opp, mock_light):
     with patch.object.opp.loop, "stop"), patch.object(
         mock_light, "disconnect"
     ) as mock_disconnect:
-        await.opp.async_stop()
+        await opp.async_stop()
         await opp.async_block_till_done()
 
     assert mock_disconnect.called
@@ -113,7 +113,7 @@ async def test_discovery_lock.opp, mock_entry):
         "openpeerpower.components.kulersky.light.async_track_time_interval",
     ) as mock_track_time_interval:
         mock_entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await opp.config_entries.async_setup(mock_entry.entry_id)
         await opp.async_block_till_done()
 
         with patch.object(
@@ -165,7 +165,7 @@ async def test_discovery_connection_error.opp, mock_entry):
         ):
             mockdevice.return_value = light
             mock_entry.add_to_opp.opp)
-            await.opp.config_entries.async_setup(mock_entry.entry_id)
+            await opp.config_entries.async_setup(mock_entry.entry_id)
             await opp.async_block_till_done()
 
     # Assert entity was not added
@@ -176,7 +176,7 @@ async def test_discovery_connection_error.opp, mock_entry):
 async def test_remove_entry.opp, mock_light, mock_entry):
     """Test platform setup."""
     with patch.object(mock_light, "disconnect") as mock_disconnect:
-        await.opp.config_entries.async_remove(mock_entry.entry_id)
+        await opp.config_entries.async_remove(mock_entry.entry_id)
 
     assert mock_disconnect.called
 

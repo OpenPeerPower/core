@@ -230,7 +230,7 @@ async def async_check_config(config_dir):
     opp = core.OpenPeerPower()
    .opp.config.config_dir = config_dir
     components = await async_check_op.config_file.opp)
-    await.opp.async_stop(force=True)
+    await opp.async_stop(force=True)
     return components
 
 

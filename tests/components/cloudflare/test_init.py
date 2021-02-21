@@ -20,7 +20,7 @@ async def test_unload_entry.opp, cfupdate):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
-    assert await.opp.config_entries.async_unload(entry.entry_id)
+    assert await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
@@ -35,7 +35,7 @@ async def test_async_setup_raises_entry_not_ready.opp, cfupdate):
     entry.add_to_opp.opp)
 
     instance.get_zone_id.side_effect = CloudflareConnectionException()
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
 
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 

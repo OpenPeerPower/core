@@ -342,7 +342,7 @@ async def async_unload_entry.opp, entry):
 
 async def async_reload_entry.opp, config_entry):
     """Handle an options update."""
-    await.opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(config_entry.entry_id)
 
 
 class SimpliSafeWebsocket:

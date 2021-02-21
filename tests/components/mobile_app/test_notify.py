@@ -85,19 +85,19 @@ async def setup_push_receiver.opp, aioclient_mock):
         version=1,
     )
     loaded_late_entry.add_to_opp.opp)
-    assert await.opp.config_entries.async_setup(loaded_late_entry.entry_id)
+    assert await opp.config_entries.async_setup(loaded_late_entry.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.services.has_service("notify", "mobile_app_loaded_late")
 
-    assert await.opp.config_entries.async_remove(loaded_late_entry.entry_id)
+    assert await opp.config_entries.async_remove(loaded_late_entry.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.services.has_service("notify", "mobile_app_test")
     assert not.opp.services.has_service("notify", "mobile_app_loaded_late")
 
     loaded_late_entry.add_to_opp.opp)
-    assert await.opp.config_entries.async_setup(loaded_late_entry.entry_id)
+    assert await opp.config_entries.async_setup(loaded_late_entry.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.services.has_service("notify", "mobile_app_test")

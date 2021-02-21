@@ -188,7 +188,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
     await coordinator.async_refresh()
 
     for component in PLATFORMS:
-        await.opp.async_create_task(
+        await opp.async_create_task(
            .opp.helpers.discovery.async_load_platform(
                 component, DOMAIN, {"config": config}, config
             )

@@ -237,7 +237,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 async def async_unload_entry.opp, config_entry):
     """Unload the config entry."""
     for domain in CONFIG_ENTRY_DOMAINS:
-        await.opp.config_entries.async_forward_entry_unload(config_entry, domain)
+        await opp.config_entries.async_forward_entry_unload(config_entry, domain)
 
     coordinator: UpCloudDataUpdateCoordinator = opp.data[
         DATA_UPCLOUD

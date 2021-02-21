@@ -186,6 +186,6 @@ async def test_unload_config_entry.opp, device_factory):
     )
     config_entry = await setup_platform.opp, FAN_DOMAIN, devices=[device])
     # Act
-    await.opp.config_entries.async_forward_entry_unload(config_entry, "fan")
+    await opp.config_entries.async_forward_entry_unload(config_entry, "fan")
     # Assert
     assert.opp.states.get("fan.fan_1").state == STATE_UNAVAILABLE

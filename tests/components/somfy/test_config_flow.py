@@ -119,7 +119,7 @@ async def test_full_flow(
     entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert entry.state == config_entries.ENTRY_STATE_LOADED
 
-    assert await.opp.config_entries.async_unload(entry.entry_id)
+    assert await opp.config_entries.async_unload(entry.entry_id)
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 
 

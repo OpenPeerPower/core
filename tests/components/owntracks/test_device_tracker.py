@@ -1530,7 +1530,7 @@ async def test_restore_state.opp,.opp_client):
     )
     entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     client = await.opp_client()
@@ -1545,7 +1545,7 @@ async def test_restore_state.opp,.opp_client):
     state_1 = opp.states.get("device_tracker.paulus_pixel")
     assert state_1 is not None
 
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
     await opp.async_block_till_done()
 
     state_2 = opp.states.get("device_tracker.paulus_pixel")
@@ -1568,7 +1568,7 @@ async def test_returns_empty_friends.opp,.opp_client):
     )
     entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     client = await.opp_client()
@@ -1589,7 +1589,7 @@ async def test_returns_array_friends.opp,.opp_client):
     )
     otracks.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(otracks.entry_id)
+    await opp.config_entries.async_setup(otracks.entry_id)
     await opp.async_block_till_done()
 
     # Setup device_trackers

@@ -101,11 +101,11 @@ async def test_binary_sensors.opp, aioclient_mock):
 
     assert.opp.states.get("binary_sensor.presence_sensor").state == STATE_ON
 
-    await.opp.config_entries.async_unload(config_entry.entry_id)
+    await opp.config_entries.async_unload(config_entry.entry_id)
 
     assert.opp.states.get("binary_sensor.presence_sensor").state == STATE_UNAVAILABLE
 
-    await.opp.config_entries.async_remove(config_entry.entry_id)
+    await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 

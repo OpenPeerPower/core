@@ -52,7 +52,7 @@ async def test_template_state_text.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("alarm_control_panel.test", STATE_ALARM_ARMED_HOME)
@@ -141,7 +141,7 @@ async def test_optimistic_states.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -196,7 +196,7 @@ async def test_no_action_scripts.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("alarm_control_panel.test", STATE_ALARM_ARMED_AWAY)
@@ -273,7 +273,7 @@ async def test_template_syntax_error.opp, caplog):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 0
@@ -318,7 +318,7 @@ async def test_invalid_name_does_not_create.opp, caplog):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 0
@@ -339,7 +339,7 @@ async def test_invalid_panel_does_not_create.opp, caplog):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 0
@@ -355,7 +355,7 @@ async def test_no_panels_does_not_create.opp, caplog):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 0
@@ -401,7 +401,7 @@ async def test_name.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -444,7 +444,7 @@ async def test_arm_home_action.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     service_calls = async_mock_service.opp, "test", "automation")
@@ -491,7 +491,7 @@ async def test_arm_away_action.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     service_calls = async_mock_service.opp, "test", "automation")
@@ -538,7 +538,7 @@ async def test_arm_night_action.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     service_calls = async_mock_service.opp, "test", "automation")
@@ -585,7 +585,7 @@ async def test_disarm_action.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     service_calls = async_mock_service.opp, "test", "automation")
@@ -621,7 +621,7 @@ async def test_unique_id.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

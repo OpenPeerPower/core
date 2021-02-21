@@ -162,7 +162,7 @@ async def test_options_flow.opp):
     ), patch(
         "accuweather.AccuWeather.async_get_forecast"
     ):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
@@ -178,5 +178,5 @@ async def test_options_flow.opp):
         assert config_entry.options == {CONF_FORECAST: True}
 
         await opp.async_block_till_done()
-        assert await.opp.config_entries.async_unload(config_entry.entry_id)
+        assert await opp.config_entries.async_unload(config_entry.entry_id)
         await opp.async_block_till_done()

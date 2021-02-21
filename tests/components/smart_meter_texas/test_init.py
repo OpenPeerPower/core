@@ -66,7 +66,7 @@ async def test_unload_config_entry.opp, config_entry, aioclient_mock):
     assert config_entries[0] is config_entry
     assert config_entry.state == ENTRY_STATE_LOADED
 
-    await.opp.config_entries.async_unload(config_entry.entry_id)
+    await opp.config_entries.async_unload(config_entry.entry_id)
     await opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_NOT_LOADED

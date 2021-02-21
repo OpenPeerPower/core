@@ -32,7 +32,7 @@ async def test_update_device.opp):
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
         mock_dyn_dev().async_setup = AsyncMock(return_value=True)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         # Not waiting so it add the devices before registration
         update_device_func = mock_dyn_dev.mock_calls[1][2]["update_device_func"]
     device = Mock()
@@ -62,7 +62,7 @@ async def test_add_devices_then_register.opp):
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
         mock_dyn_dev().async_setup = AsyncMock(return_value=True)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         # Not waiting so it add the devices before registration
         new_device_func = mock_dyn_dev.mock_calls[1][2]["new_device_func"]
     # Now with devices
@@ -95,7 +95,7 @@ async def test_register_then_add_devices.opp):
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
         mock_dyn_dev().async_setup = AsyncMock(return_value=True)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
         new_device_func = mock_dyn_dev.mock_calls[1][2]["new_device_func"]
     # Now with devices
@@ -122,7 +122,7 @@ async def test_notifications.opp):
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
         mock_dyn_dev().async_setup = AsyncMock(return_value=True)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
         notification_func = mock_dyn_dev.mock_calls[1][2]["notification_func"]
     event_listener1 = Mock()

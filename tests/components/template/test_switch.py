@@ -56,7 +56,7 @@ async def test_template_state_text.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_state", STATE_ON)
@@ -99,7 +99,7 @@ async def test_template_state_boolean_on.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
@@ -133,7 +133,7 @@ async def test_template_state_boolean_off.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
@@ -170,7 +170,7 @@ async def test_icon_template.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
@@ -213,7 +213,7 @@ async def test_entity_picture_template.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
@@ -253,7 +253,7 @@ async def test_template_syntax_error.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -286,7 +286,7 @@ async def test_invalid_name_does_not_create.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -307,7 +307,7 @@ async def test_invalid_switch_does_not_create.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -321,7 +321,7 @@ async def test_no_switches_does_not_create.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -354,7 +354,7 @@ async def test_missing_on_does_not_create.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -387,7 +387,7 @@ async def test_missing_off_does_not_create.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -416,7 +416,7 @@ async def test_on_action.opp, calls):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_state", STATE_OFF)
@@ -456,7 +456,7 @@ async def test_on_action_optimistic.opp, calls):
         },
     )
 
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_template_switch", STATE_OFF)
@@ -500,7 +500,7 @@ async def test_off_action.opp, calls):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_state", STATE_ON)
@@ -540,7 +540,7 @@ async def test_off_action_optimistic.opp, calls):
         },
     )
 
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_template_switch", STATE_ON)
@@ -631,7 +631,7 @@ async def test_available_template_with_entities.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("availability_state.state", STATE_ON)
@@ -672,7 +672,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("switch.test_template_switch").state != STATE_UNAVAILABLE
@@ -718,7 +718,7 @@ async def test_unique_id.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

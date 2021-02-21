@@ -107,7 +107,7 @@ async def test_startup_shutdown_events.opp, mock_cloud_fixture):
 
 async def test_setup_existing_cloud_user.opp,.opp_storage):
     """Test setup with API push default data."""
-    user = await.opp.auth.async_create_system_user("Cloud test")
+    user = await opp.auth.async_create_system_user("Cloud test")
    .opp_storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": user.id}}
     with patch("opp_nabucasa.Cloud.start"):
         result = await async_setup_component(

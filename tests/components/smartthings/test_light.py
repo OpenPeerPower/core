@@ -306,6 +306,6 @@ async def test_unload_config_entry.opp, device_factory):
     )
     config_entry = await setup_platform.opp, LIGHT_DOMAIN, devices=[device])
     # Act
-    await.opp.config_entries.async_forward_entry_unload(config_entry, "light")
+    await opp.config_entries.async_forward_entry_unload(config_entry, "light")
     # Assert
     assert.opp.states.get("light.color_dimmer_2").state == STATE_UNAVAILABLE

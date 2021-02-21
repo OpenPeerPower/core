@@ -168,4 +168,4 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 async def _update_listener.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Handle options update."""
     _LOGGER.debug("AlarmDecoder options updated: %s", entry.as_dict()["options"])
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)

@@ -108,12 +108,12 @@ async def test_remove_entry.opp, mock_zeroconf):
     ), patch(
         "pychromecast.discovery.stop_discovery"
     ):
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
     assert "cast" in.opp.config.components
 
     user_id = entry.data.get("user_id")
-    assert await.opp.auth.async_get_user(user_id)
+    assert await opp.auth.async_get_user(user_id)
 
-    assert await.opp.config_entries.async_remove(entry.entry_id)
-    assert not await.opp.auth.async_get_user(user_id)
+    assert await opp.config_entries.async_remove(entry.entry_id)
+    assert not await opp.auth.async_get_user(user_id)

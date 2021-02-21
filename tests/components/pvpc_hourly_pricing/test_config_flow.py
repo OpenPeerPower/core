@@ -62,7 +62,7 @@ async def test_config_flow(
         # Check removal
         registry = await entity_registry.async_get_registry.opp)
         registry_entity = registry.async_get("sensor.test")
-        assert await.opp.config_entries.async_remove(registry_entity.config_entry_id)
+        assert await opp.config_entries.async_remove(registry_entity.config_entry_id)
 
         # and add it again with UI
         result = await.opp.config_entries.flow.async_init(

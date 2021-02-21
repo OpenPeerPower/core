@@ -863,7 +863,7 @@ async def test_state_template.opp):
     )
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 2
-    await.opp.async_start()
+    await opp.async_start()
 
     await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_ON
@@ -908,7 +908,7 @@ async def test_invalid_state_template.opp):
     )
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 2
-    await.opp.async_start()
+    await opp.async_start()
 
     await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_UNKNOWN
@@ -941,7 +941,7 @@ async def test_master_state_with_template.opp):
 
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 3
-    await.opp.async_start()
+    await opp.async_start()
 
     await opp.async_block_till_done()
    .opp.states.get("media_player.tv").state == STATE_ON
@@ -984,7 +984,7 @@ async def test_reload.opp):
 
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 3
-    await.opp.async_start()
+    await opp.async_start()
 
     await opp.async_block_till_done()
    .opp.states.get("media_player.tv").state == STATE_ON

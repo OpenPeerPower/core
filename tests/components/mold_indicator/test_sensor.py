@@ -76,7 +76,7 @@ async def test_invalidcalib.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
     moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
@@ -112,7 +112,7 @@ async def test_invalidhum.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
     moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
@@ -157,7 +157,7 @@ async def test_calculation.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
     moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
@@ -196,7 +196,7 @@ async def test_unknown_sensor.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
    .opp.states.async_set(
         "test.indoortemp", STATE_UNKNOWN, {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
@@ -270,7 +270,7 @@ async def test_sensor_changed.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
    .opp.states.async_set(
         "test.indoortemp", "30", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}

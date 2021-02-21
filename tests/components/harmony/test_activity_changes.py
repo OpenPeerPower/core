@@ -27,7 +27,7 @@ async def test_switch_toggles(mock_hc,.opp, mock_write_config):
     )
 
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     # mocks start with current activity == Watch TV
@@ -61,7 +61,7 @@ async def test_remote_toggles(mock_hc,.opp, mock_write_config):
     )
 
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     # mocks start with current activity == Watch TV

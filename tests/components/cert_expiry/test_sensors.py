@@ -31,7 +31,7 @@ async def test_async_setup_entry(mock_now,.opp):
         return_value=timestamp,
     ):
         entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
@@ -55,7 +55,7 @@ async def test_async_setup_entry_bad_cert.opp):
         side_effect=ssl.SSLError("some error"),
     ):
         entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
@@ -78,7 +78,7 @@ async def test_async_setup_entry_host_unavailable.opp):
         side_effect=socket.gaierror,
     ):
         entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(entry.entry_id) is False
+        assert await opp.config_entries.async_setup(entry.entry_id) is False
         await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_SETUP_RETRY
@@ -111,7 +111,7 @@ async def test_update_sensor.opp):
         return_value=timestamp,
     ):
         entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
@@ -153,7 +153,7 @@ async def test_update_sensor_network_errors.opp):
         return_value=timestamp,
     ):
         entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")

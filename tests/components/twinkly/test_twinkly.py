@@ -185,7 +185,7 @@ async def test_unload.opp: OpenPeerPower):
     _, _, client = await _create_entries.opp)
     entry_id = client.id
 
-    assert await.opp.config_entries.async_unload(entry_id)
+    assert await opp.config_entries.async_unload(entry_id)
 
 
 async def _create_entries(
@@ -208,7 +208,7 @@ async def _create_entries(
             entry_id=client.id,
         )
         config_entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(client.id)
+        assert await opp.config_entries.async_setup(client.id)
         await opp.async_block_till_done()
 
     device_registry = await.opp.helpers.device_registry.async_get_registry()

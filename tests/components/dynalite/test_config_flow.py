@@ -71,7 +71,7 @@ async def test_existing_update.opp):
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
         mock_dyn_dev().async_setup = AsyncMock(return_value=True)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
         mock_dyn_dev().configure.assert_called_once()
         assert mock_dyn_dev().configure.mock_calls[0][1][0]["port"] == port1

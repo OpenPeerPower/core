@@ -162,7 +162,7 @@ async def test_auth_active_access_with_access_token_in_header(
     token = opp_access_token
     setup_auth.opp, app)
     client = await aiohttp_client(app)
-    refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
 
     req = await client.get("/", headers={"Authorization": f"Bearer {token}"})
     assert req.status == 200
@@ -182,7 +182,7 @@ async def test_auth_active_access_with_access_token_in_header(
     req = await client.get("/", headers={"Authorization": f"BEARER {token}"})
     assert req.status == 401
 
-    refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
     refresh_token.user.is_active = False
     req = await client.get("/", headers={"Authorization": f"Bearer {token}"})
     assert req.status == 401
@@ -232,7 +232,7 @@ async def test_auth_access_signed_path.opp, app, aiohttp_client,.opp_access_toke
     setup_auth.opp, app)
     client = await aiohttp_client(app)
 
-    refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
 
     signed_path = async_sign_path.opp, refresh_token.id, "/", timedelta(seconds=5))
 
@@ -258,6 +258,6 @@ async def test_auth_access_signed_path.opp, app, aiohttp_client,.opp_access_toke
     assert req.status == 401
 
     # refresh token gone should also invalidate signature
-    await.opp.auth.async_remove_refresh_token(refresh_token)
+    await opp.auth.async_remove_refresh_token(refresh_token)
     req = await client.get(signed_path)
     assert req.status == 401

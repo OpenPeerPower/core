@@ -140,7 +140,7 @@ async def test_options_arm_flow.opp: OpenPeerPower):
     entry = MockConfigEntry(domain=DOMAIN)
     entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(entry.entry_id)
@@ -178,7 +178,7 @@ async def test_options_zone_flow.opp: OpenPeerPower):
     entry = MockConfigEntry(domain=DOMAIN)
     entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(entry.entry_id)
@@ -254,7 +254,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     entry = MockConfigEntry(domain=DOMAIN)
     entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(entry.entry_id)

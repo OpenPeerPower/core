@@ -274,7 +274,7 @@ async def test_device_unload_works.opp):
     with patch.object(
        .opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_forward:
-        await.opp.config_entries.async_unload(mock_entry.entry_id)
+        await opp.config_entries.async_unload(mock_entry.entry_id)
 
     assert mock_entry.state == ENTRY_STATE_NOT_LOADED
     forward_entries = {c[1][1] for c in mock_forward.mock_calls}
@@ -297,7 +297,7 @@ async def test_device_unload_authentication_error.opp):
     with patch.object(
        .opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_forward:
-        await.opp.config_entries.async_unload(mock_entry.entry_id)
+        await opp.config_entries.async_unload(mock_entry.entry_id)
 
     assert mock_entry.state == ENTRY_STATE_NOT_LOADED
     assert mock_forward.call_count == 0
@@ -315,7 +315,7 @@ async def test_device_unload_update_failed.opp):
     with patch.object(
        .opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_forward:
-        await.opp.config_entries.async_unload(mock_entry.entry_id)
+        await opp.config_entries.async_unload(mock_entry.entry_id)
 
     assert mock_entry.state == ENTRY_STATE_NOT_LOADED
     assert mock_forward.call_count == 0

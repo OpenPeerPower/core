@@ -182,12 +182,12 @@ async def test_options_flow.opp):
     config_entry.add_to_opp.opp)
 
     # Set up the integration to make sure the config flow module is loaded.
-    assert await.opp.config_entries.async_setup(config_entry.entry_id)
+    assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
 
     # Unload the integration to prepare for the test.
     with patch("openpeerpower.components.tuya.async_unload_entry", return_value=True):
-        assert await.opp.config_entries.async_unload(config_entry.entry_id)
+        assert await opp.config_entries.async_unload(config_entry.entry_id)
         await opp.async_block_till_done()
 
     # Test check for integration not loaded
@@ -196,7 +196,7 @@ async def test_options_flow.opp):
     assert result["reason"] == RESULT_CONN_ERROR
 
     # Load integration and enter options
-    await.opp.config_entries.async_setup(config_entry.entry_id)
+    await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
    .opp.data[DOMAIN] = {TUYA_DATA: MockTuya()}
     result = await.opp.config_entries.options.async_init(config_entry.entry_id)

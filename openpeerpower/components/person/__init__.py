@@ -266,7 +266,7 @@ async def filter_yaml_data.opp: OpenPeerPowerType, persons: List[dict]) -> List[
         user_id = person_conf.get(CONF_USER_ID)
 
         if user_id is not None:
-            if await.opp.auth.async_get_user(user_id) is None:
+            if await opp.auth.async_get_user(user_id) is None:
                 _LOGGER.error(
                     "Invalid user_id detected for person %s",
                     person_conf[collection.CONF_ID],

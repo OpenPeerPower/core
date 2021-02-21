@@ -290,7 +290,7 @@ async def setup_axis_integration.opp, config=ENTRY_CONFIG, options=ENTRY_OPTIONS
 
     with patch("axis.rtsp.RTSPClient.start", return_value=True), respx.mock:
         mock_default_vapix_requests(respx)
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     return config_entry

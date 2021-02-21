@@ -222,7 +222,7 @@ async def test_migrate_zwave.opp, migration_data,.opp_ws_client, zwave_integrati
     # Check that the zwave integration fails entry setup after migration
     zwave_config_entry = MockConfigEntry(domain="zwave")
     zwave_config_entry.add_to_opp.opp)
-    assert not await.opp.config_entries.async_setup(zwave_config_entry.entry_id)
+    assert not await opp.config_entries.async_setup(zwave_config_entry.entry_id)
 
 
 async def test_migrate_zwave_dry_run(
@@ -276,7 +276,7 @@ async def test_migrate_zwave_dry_run(
     # Check that the zwave integration can be setup after dry run
     zwave_config_entry = zwave_integration
     with patch("openzwave.option.ZWaveOption"), patch("openzwave.network.ZWaveNetwork"):
-        assert await.opp.config_entries.async_setup(zwave_config_entry.entry_id)
+        assert await opp.config_entries.async_setup(zwave_config_entry.entry_id)
 
 
 async def test_migrate_zwave_not_setup.opp, migration_data,.opp_ws_client):

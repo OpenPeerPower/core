@@ -78,7 +78,7 @@ async def init_integration(
     entry = MockConfigEntry(domain=DOMAIN, data=data, options=options)
     entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     return entry

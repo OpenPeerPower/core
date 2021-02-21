@@ -117,7 +117,7 @@ async def setup_deconz_integration(
         mock_deconz_request(aioclient_mock, config, get_state_response)
 
     with patch("pydeconz.DeconzSession.start", return_value=True):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
 
     return config_entry

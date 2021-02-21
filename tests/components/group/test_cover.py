@@ -88,7 +88,7 @@ async def setup_comp.opp, config_count):
     with assert_setup_component(count, DOMAIN):
         await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
 

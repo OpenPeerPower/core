@@ -20,7 +20,7 @@ async def test_one_light.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
     state = opp.states.get("light.ac_213c7f2_16")
@@ -106,7 +106,7 @@ async def test_state_restore.opp, rfxtrx, state, brightness):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.states.get(entity_id).state == state
@@ -126,9 +126,9 @@ async def test_several_lights.opp, rfxtrx):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
     state = opp.states.get("light.ac_213c7f2_48")
     assert state
@@ -172,7 +172,7 @@ async def test_repetitions.opp, rfxtrx, repetitions):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
     await.opp.services.async_call(

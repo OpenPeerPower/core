@@ -467,7 +467,7 @@ async def async_unload_entry(
 
     # Forward config entry unload to platforms
     for domain in CONFIG_ENTRY_PLATFORMS:
-        await.opp.config_entries.async_forward_entry_unload(config_entry, domain)
+        await opp.config_entries.async_forward_entry_unload(config_entry, domain)
 
     # Forget about the router and invoke its cleanup
     router = opp.data[DOMAIN].routers.pop(config_entry.data[CONF_URL])

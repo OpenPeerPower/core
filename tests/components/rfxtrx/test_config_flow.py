@@ -660,7 +660,7 @@ async def test_options_replace_sensor_device.opp):
     )
     entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(
@@ -827,7 +827,7 @@ async def test_options_replace_control_device.opp):
     )
     entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.ac_118cdea_2")
@@ -931,7 +931,7 @@ async def test_options_remove_multiple_devices.opp):
     )
     entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.ac_213c7f2_48")
@@ -1120,7 +1120,7 @@ async def test_options_configure_rfy_cover_device.opp):
     )
     entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     result = await.opp.config_entries.options.async_init(entry.entry_id)

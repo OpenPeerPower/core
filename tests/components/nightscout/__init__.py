@@ -43,7 +43,7 @@ async def init_integration.opp) -> MockConfigEntry:
         return_value=SERVER_STATUS,
     ):
         entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     return entry
@@ -63,7 +63,7 @@ async def init_integration_unavailable.opp) -> MockConfigEntry:
         return_value=SERVER_STATUS,
     ):
         entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     return entry
@@ -82,7 +82,7 @@ async def init_integration_empty_response.opp) -> MockConfigEntry:
         return_value=SERVER_STATUS,
     ):
         entry.add_to_opp.opp)
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     return entry

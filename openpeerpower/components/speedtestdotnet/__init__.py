@@ -109,7 +109,7 @@ async def async_unload_entry.opp, config_entry):
 
    .opp.data[DOMAIN].async_unload()
 
-    await.opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
+    await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
 
    .opp.data.pop(DOMAIN)
 

@@ -1108,7 +1108,7 @@ async def test_available_template_with_entities.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     # When template returns true..
@@ -1159,7 +1159,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("light.test_template_light").state != STATE_UNAVAILABLE
@@ -1203,7 +1203,7 @@ async def test_unique_id.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

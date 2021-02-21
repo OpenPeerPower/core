@@ -112,7 +112,7 @@ async def test_sensors.opp, connect):
     config_entry.add_to_opp.opp)
 
     # initial devices setup
-    assert await.opp.config_entries.async_setup(config_entry.entry_id)
+    assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
     await opp.async_block_till_done()

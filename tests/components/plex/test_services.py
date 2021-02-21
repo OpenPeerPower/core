@@ -146,7 +146,7 @@ async def test_sonos_play_media(
         assert "No Plex servers available" in str(excinfo.value)
 
     # Complete setup of a Plex server
-    await.opp.config_entries.async_unload(entry.entry_id)
+    await opp.config_entries.async_unload(entry.entry_id)
     mock_plex_server = await setup_plex_server()
 
     # Test with no speakers available

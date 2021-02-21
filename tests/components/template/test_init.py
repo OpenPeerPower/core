@@ -31,7 +31,7 @@ async def test_reloadable.opp):
     )
     await opp.async_block_till_done()
 
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.state").state == "mytest"
@@ -78,7 +78,7 @@ async def test_reloadable_can_remove.opp):
     )
     await opp.async_block_till_done()
 
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.state").state == "mytest"
@@ -122,7 +122,7 @@ async def test_reloadable_stops_on_invalid_config.opp):
 
     await opp.async_block_till_done()
 
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.state").state == "mytest"
@@ -167,7 +167,7 @@ async def test_reloadable_op.dles_partial_valid_config.opp):
 
     await opp.async_block_till_done()
 
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.state").state == "mytest"
@@ -228,7 +228,7 @@ async def test_reloadable_multiple_platforms.opp):
     )
     await opp.async_block_till_done()
 
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.state").state == "mytest"

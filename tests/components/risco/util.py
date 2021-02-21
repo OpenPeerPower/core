@@ -37,7 +37,7 @@ async def setup_risco.opp, events=[], options={}):
         "openpeerpower.components.risco.RiscoAPI.get_events",
         return_value=events,
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     return config_entry

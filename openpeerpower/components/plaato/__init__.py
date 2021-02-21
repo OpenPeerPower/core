@@ -202,7 +202,7 @@ async def async_unload_platforms.opp: OpenPeerPower, entry: ConfigEntry, platfor
 
 async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
 async def handle_webhook.opp, webhook_id, request):

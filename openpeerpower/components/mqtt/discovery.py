@@ -219,7 +219,7 @@ async def async_start(
 
                         await tag.async_setup_entry.opp, config_entry)
                     else:
-                        await.opp.config_entries.async_forward_entry_setup(
+                        await opp.config_entries.async_forward_entry_setup(
                             config_entry, component
                         )
                    .opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)

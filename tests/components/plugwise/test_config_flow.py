@@ -293,7 +293,7 @@ async def test_options_flow_power.opp, mock_smile) -> None:
     with patch(
         "openpeerpower.components.plugwise.async_setup_entry", return_value=True
     ):
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(entry.entry_id)
@@ -325,7 +325,7 @@ async def test_options_flow_thermo.opp, mock_smile) -> None:
     with patch(
         "openpeerpower.components.plugwise.async_setup_entry", return_value=True
     ):
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(entry.entry_id)

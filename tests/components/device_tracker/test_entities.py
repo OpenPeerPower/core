@@ -23,7 +23,7 @@ async def test_scanner_entity_device_tracker.opp):
     config_entry = MockConfigEntry(domain="test")
     config_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_forward_entry_setup(config_entry, DOMAIN)
+    await opp.config_entries.async_forward_entry_setup(config_entry, DOMAIN)
     await opp.async_block_till_done()
 
     entity_id = "device_tracker.unnamed_device"

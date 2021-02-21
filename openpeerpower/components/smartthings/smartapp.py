@@ -487,7 +487,7 @@ async def smartapp_uninstall.opp: OpenPeerPowerType, req, resp, app):
     if entry:
         # Add as job not needed because the current coroutine was invoked
         # from the dispatcher and is not being awaited.
-        await.opp.config_entries.async_remove(entry.entry_id)
+        await opp.config_entries.async_remove(entry.entry_id)
 
     _LOGGER.debug(
         "Uninstalled SmartApp '%s' under parent app '%s'",

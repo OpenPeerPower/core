@@ -190,7 +190,7 @@ async def setup_integration(
             media_state=media_state,
             server_error=server_error,
         )
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     return entry

@@ -116,6 +116,6 @@ async def test_unload_config_entry.opp, device_factory):
     device = device_factory("Sensor 1", [Capability.battery], {Attribute.battery: 100})
     config_entry = await setup_platform.opp, SENSOR_DOMAIN, devices=[device])
     # Act
-    await.opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
+    await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
     # Assert
     assert.opp.states.get("sensor.sensor_1_battery").state == STATE_UNAVAILABLE

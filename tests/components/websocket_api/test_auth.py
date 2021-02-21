@@ -123,7 +123,7 @@ async def test_auth_active_with_token(
 
 async def test_auth_active_user_inactive.opp, aiohttp_client,.opp_access_token):
     """Test authenticating with a token."""
-    refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
     refresh_token.user.is_active = False
     assert await async_setup_component.opp, "websocket_api", {})
     await opp.async_block_till_done()

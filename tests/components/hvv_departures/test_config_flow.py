@@ -274,7 +274,7 @@ async def test_options_flow.opp):
         "openpeerpower.components.hvv_departures.hub.GTI.departureList",
         return_value=FIXTURE_DEPARTURE_LIST,
     ):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
@@ -324,7 +324,7 @@ async def test_options_flow_invalid_auth.opp):
         "openpeerpower.components.hvv_departures.hub.GTI.departureList",
         return_value=FIXTURE_DEPARTURE_LIST,
     ):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     with patch(
@@ -365,7 +365,7 @@ async def test_options_flow_cannot_connect.opp):
         "openpeerpower.components.hvv_departures.hub.GTI.departureList",
         return_value=FIXTURE_DEPARTURE_LIST,
     ):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
     with patch(

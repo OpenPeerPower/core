@@ -336,7 +336,7 @@ async def test_open_close_update(gogogate2api_mock,.opp: OpenPeerPower) -> None:
     config_entry.add_to_opp.opp)
 
     assert.opp.states.get("cover.door1") is None
-    assert await.opp.config_entries.async_setup(config_entry.entry_id)
+    assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
     assert.opp.states.get("cover.door1").state == STATE_OPEN
 
@@ -367,7 +367,7 @@ async def test_open_close_update(gogogate2api_mock,.opp: OpenPeerPower) -> None:
     await opp.async_block_till_done()
     assert.opp.states.get("cover.door1").state == STATE_UNKNOWN
 
-    assert await.opp.config_entries.async_unload(config_entry.entry_id)
+    assert await opp.config_entries.async_unload(config_entry.entry_id)
     assert not.opp.states.async_entity_ids(DOMAIN)
 
 
@@ -393,7 +393,7 @@ async def test_availability(ismartgateapi_mock,.opp: OpenPeerPower) -> None:
     config_entry.add_to_opp.opp)
 
     assert.opp.states.get("cover.door1") is None
-    assert await.opp.config_entries.async_setup(config_entry.entry_id)
+    assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
     assert.opp.states.get("cover.door1")
     assert (
@@ -442,7 +442,7 @@ async def test_device_info_ismartgate(ismartgateapi_mock,.opp: OpenPeerPower) ->
         },
     )
     config_entry.add_to_opp.opp)
-    assert await.opp.config_entries.async_setup(config_entry.entry_id)
+    assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
 
     device = device_registry.async_get_device({(DOMAIN, "xyz")})
@@ -477,7 +477,7 @@ async def test_device_info_gogogate2(gogogate2api_mock,.opp: OpenPeerPower) -> N
         },
     )
     config_entry.add_to_opp.opp)
-    assert await.opp.config_entries.async_setup(config_entry.entry_id)
+    assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
 
     device = device_registry.async_get_device({(DOMAIN, "xyz")})

@@ -111,7 +111,7 @@ async def test_login_flow_validates_mfa.opp):
     user = MockUser(
         id="mock-user", is_owner=False, is_active=False, name="Paulus"
     ).add_to_auth_manager.opp.auth)
-    await.opp.auth.async_link_user(
+    await opp.auth.async_link_user(
         user,
         auth_models.Credentials(
             id="mock-id",
@@ -126,29 +126,29 @@ async def test_login_flow_validates_mfa.opp):
        .opp, "notify", "test-notify", NOTIFY_SERVICE_SCHEMA
     )
 
-    await.opp.auth.async_enable_user_mfa(
+    await opp.auth.async_enable_user_mfa(
         user, "notify", {"notify_service": "test-notify"}
     )
 
     provider = opp.auth.auth_providers[0]
 
-    result = await.opp.auth.login_flow.async_init((provider.type, provider.id))
+    result = await opp.auth.login_flow.async_init((provider.type, provider.id))
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await.opp.auth.login_flow.async_configure(
+    result = await opp.auth.login_flow.async_configure(
         result["flow_id"], {"username": "incorrect-user", "password": "test-pass"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"]["base"] == "invalid_auth"
 
-    result = await.opp.auth.login_flow.async_configure(
+    result = await opp.auth.login_flow.async_configure(
         result["flow_id"], {"username": "test-user", "password": "incorrect-pass"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"]["base"] == "invalid_auth"
 
     with patch("pyotp.HOTP.at", return_value=MOCK_CODE):
-        result = await.opp.auth.login_flow.async_configure(
+        result = await opp.auth.login_flow.async_configure(
             result["flow_id"], {"username": "test-user", "password": "test-pass"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -167,7 +167,7 @@ async def test_login_flow_validates_mfa.opp):
     assert MOCK_CODE in message.async_render()
 
     with patch("pyotp.HOTP.verify", return_value=False):
-        result = await.opp.auth.login_flow.async_configure(
+        result = await opp.auth.login_flow.async_configure(
             result["flow_id"], {"code": "invalid-code"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -184,7 +184,7 @@ async def test_login_flow_validates_mfa.opp):
     with patch("pyotp.HOTP.verify", return_value=False), patch(
         "pyotp.HOTP.at", return_value=MOCK_CODE_2
     ):
-        result = await.opp.auth.login_flow.async_configure(
+        result = await opp.auth.login_flow.async_configure(
             result["flow_id"], {"code": "invalid-code"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -192,7 +192,7 @@ async def test_login_flow_validates_mfa.opp):
         assert result["errors"]["base"] == "invalid_code"
 
         # after the 3rd failure, flow abort
-        result = await.opp.auth.login_flow.async_configure(
+        result = await opp.auth.login_flow.async_configure(
             result["flow_id"], {"code": "invalid-code"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -202,11 +202,11 @@ async def test_login_flow_validates_mfa.opp):
     await opp.async_block_till_done()
 
     # restart login
-    result = await.opp.auth.login_flow.async_init((provider.type, provider.id))
+    result = await opp.auth.login_flow.async_init((provider.type, provider.id))
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
     with patch("pyotp.HOTP.at", return_value=MOCK_CODE):
-        result = await.opp.auth.login_flow.async_configure(
+        result = await opp.auth.login_flow.async_configure(
             result["flow_id"], {"username": "test-user", "password": "test-pass"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -225,7 +225,7 @@ async def test_login_flow_validates_mfa.opp):
     assert MOCK_CODE in message.async_render()
 
     with patch("pyotp.HOTP.verify", return_value=True):
-        result = await.opp.auth.login_flow.async_configure(
+        result = await opp.auth.login_flow.async_configure(
             result["flow_id"], {"code": MOCK_CODE}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -351,7 +351,7 @@ async def test_not_raise_exception_when_service_not_exist.opp):
     user = MockUser(
         id="mock-user", is_owner=False, is_active=False, name="Paulus"
     ).add_to_auth_manager.opp.auth)
-    await.opp.auth.async_link_user(
+    await opp.auth.async_link_user(
         user,
         auth_models.Credentials(
             id="mock-id",
@@ -362,17 +362,17 @@ async def test_not_raise_exception_when_service_not_exist.opp):
         ),
     )
 
-    await.opp.auth.async_enable_user_mfa(
+    await opp.auth.async_enable_user_mfa(
         user, "notify", {"notify_service": "invalid-notify"}
     )
 
     provider = opp.auth.auth_providers[0]
 
-    result = await.opp.auth.login_flow.async_init((provider.type, provider.id))
+    result = await opp.auth.login_flow.async_init((provider.type, provider.id))
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
     with patch("pyotp.HOTP.at", return_value=MOCK_CODE):
-        result = await.opp.auth.login_flow.async_configure(
+        result = await opp.auth.login_flow.async_configure(
             result["flow_id"], {"username": "test-user", "password": "test-pass"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

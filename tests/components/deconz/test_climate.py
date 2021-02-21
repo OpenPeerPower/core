@@ -332,14 +332,14 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
             blocking=True,
         )
 
-    await.opp.config_entries.async_unload(config_entry.entry_id)
+    await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
     assert len.opp.states.async_all()) == 2
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
-    await.opp.config_entries.async_remove(config_entry.entry_id)
+    await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 

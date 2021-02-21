@@ -122,8 +122,8 @@ async def setup_bridge_for_sensors.opp, mock_bridge, hostname=None):
     )
     mock_bridge.config_entry = config_entry
    .opp.data[hue.DOMAIN] = {config_entry.entry_id: mock_bridge}
-    await.opp.config_entries.async_forward_entry_setup(config_entry, "binary_sensor")
-    await.opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
+    await opp.config_entries.async_forward_entry_setup(config_entry, "binary_sensor")
+    await opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
     # simulate a full setup by manually adding the bridge config entry
    .opp.config_entries._entries.append(config_entry)
 

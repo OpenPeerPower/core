@@ -99,7 +99,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
 async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     for domain in PLATFORMS:
-        await.opp.config_entries.async_forward_entry_unload(config_entry, domain)
+        await opp.config_entries.async_forward_entry_unload(config_entry, domain)
 
     account: StarlineAccount = opp.data[DOMAIN][config_entry.entry_id]
     account.unload()

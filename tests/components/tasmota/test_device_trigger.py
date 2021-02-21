@@ -1046,7 +1046,7 @@ async def test_attach_remove_config_entry.opp, device_reg, mqtt_mock, setup_tasm
 
     # Remove the Tasmota config entry
     config_entries = opp.config_entries.async_entries("tasmota")
-    await.opp.config_entries.async_remove(config_entries[0].entry_id)
+    await opp.config_entries.async_remove(config_entries[0].entry_id)
     await opp.async_block_till_done()
 
     # Verify the triggers are no longer active

@@ -101,7 +101,7 @@ async def test_oppio_discovery_startup_done.opp, aioclient_mock, oppio_client):
         "openpeerpower.components.mqtt.config_flow.FlowHandler.async_step_oppio",
         return_value={"type": "abort"},
     ) as mock_mqtt:
-        await.opp.async_start()
+        await opp.async_start()
         await async_setup_component.opp, "oppio", {})
         await opp.async_block_till_done()
 

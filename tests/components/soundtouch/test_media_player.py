@@ -110,7 +110,7 @@ async def setup_soundtouch.opp, config):
     """Set up soundtouch integration."""
     assert await async_setup_component.opp, "media_player", {"media_player": config})
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
 
 class MockDevice(STD):

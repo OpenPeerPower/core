@@ -28,7 +28,7 @@ async def test_basic_usage.opp, tmpdir):
     entry = MockConfigEntry(domain=DOMAIN)
     entry.add_to_opp.opp)
 
-    assert await.opp.config_entries.async_setup(entry.entry_id)
+    assert await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.services.has_service(DOMAIN, SERVICE_START)
@@ -48,7 +48,7 @@ async def test_basic_usage.opp, tmpdir):
 
     assert os.path.exists(last_filename)
 
-    assert await.opp.config_entries.async_unload(entry.entry_id)
+    assert await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
 
 
@@ -60,7 +60,7 @@ async def test_memory_usage.opp, tmpdir):
     entry = MockConfigEntry(domain=DOMAIN)
     entry.add_to_opp.opp)
 
-    assert await.opp.config_entries.async_setup(entry.entry_id)
+    assert await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.services.has_service(DOMAIN, SERVICE_MEMORY)
@@ -80,7 +80,7 @@ async def test_memory_usage.opp, tmpdir):
 
         mock_hpy.assert_called_once()
 
-    assert await.opp.config_entries.async_unload(entry.entry_id)
+    assert await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
 
 
@@ -91,7 +91,7 @@ async def test_object_growth_logging.opp, caplog):
     entry = MockConfigEntry(domain=DOMAIN)
     entry.add_to_opp.opp)
 
-    assert await.opp.config_entries.async_setup(entry.entry_id)
+    assert await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.services.has_service(DOMAIN, SERVICE_START_LOG_OBJECTS)
@@ -117,7 +117,7 @@ async def test_object_growth_logging.opp, caplog):
     await opp.async_block_till_done()
     assert "Growth" not in caplog.text
 
-    assert await.opp.config_entries.async_unload(entry.entry_id)
+    assert await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=31))
@@ -132,7 +132,7 @@ async def test_dump_log_object.opp, caplog):
     entry = MockConfigEntry(domain=DOMAIN)
     entry.add_to_opp.opp)
 
-    assert await.opp.config_entries.async_setup(entry.entry_id)
+    assert await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     assert.opp.services.has_service(DOMAIN, SERVICE_DUMP_LOG_OBJECTS)
@@ -145,5 +145,5 @@ async def test_dump_log_object.opp, caplog):
     assert "MockConfigEntry" in caplog.text
     caplog.clear()
 
-    assert await.opp.config_entries.async_unload(entry.entry_id)
+    assert await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()

@@ -48,7 +48,7 @@ async def test_setup_entry_fails.opp):
     with patch.object(axis, "AxisNetworkDevice") as mock_device_class:
         mock_device_class.return_value = mock_device
 
-        assert not await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert not await opp.config_entries.async_setup(config_entry.entry_id)
 
     assert not.opp.data[AXIS_DOMAIN]
 
@@ -59,7 +59,7 @@ async def test_unload_entry.opp):
     device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
     assert.opp.data[AXIS_DOMAIN]
 
-    assert await.opp.config_entries.async_unload(device.config_entry.entry_id)
+    assert await opp.config_entries.async_unload(device.config_entry.entry_id)
     assert not.opp.data[AXIS_DOMAIN]
 
 

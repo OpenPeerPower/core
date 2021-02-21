@@ -61,7 +61,7 @@ async def test_async_setup_entry_default.opp: OpenPeerPowerType):
         # loading of config_entry, device discovered
         async_discover.return_value = discoveries
         entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(entry.entry_id) is True
+        assert await opp.config_entries.async_setup(entry.entry_id) is True
 
         # ensure device is stored/used
         async_create_device.assert_called_with.opp, discoveries[0][DISCOVERY_LOCATION])
@@ -117,7 +117,7 @@ async def test_sync_setup_entry_multiple_discoveries.opp: OpenPeerPowerType):
         # loading of config_entry, device discovered
         async_discover.return_value = discoveries
         entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(entry.entry_id) is True
+        assert await opp.config_entries.async_setup(entry.entry_id) is True
 
         # ensure device is stored/used
         async_create_device.assert_called_with.opp, discoveries[1][DISCOVERY_LOCATION])

@@ -34,6 +34,6 @@ async def test_unload_config_entry.opp, discovery, device):
         assert len(climate_setup.mock_calls) == 1
         assert entry.state == ENTRY_STATE_LOADED
 
-    await.opp.config_entries.async_unload(entry.entry_id)
+    await opp.config_entries.async_unload(entry.entry_id)
 
     assert entry.state == ENTRY_STATE_NOT_LOADED

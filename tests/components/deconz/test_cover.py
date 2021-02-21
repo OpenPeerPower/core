@@ -214,14 +214,14 @@ async def test_cover.opp, aioclient_mock):
     assert deconz_old_brightness_cover.state == STATE_CLOSED
     assert deconz_old_brightness_cover.attributes["current_position"] == 0
 
-    await.opp.config_entries.async_unload(config_entry.entry_id)
+    await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
     assert len.opp.states.async_all()) == 5
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
-    await.opp.config_entries.async_remove(config_entry.entry_id)
+    await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 

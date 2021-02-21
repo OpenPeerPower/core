@@ -135,7 +135,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
 async def _async_update_listener.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     """Handle options update."""
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
 def _get_canary_api_instance(entry: ConfigEntry) -> Api:

@@ -361,7 +361,7 @@ async def test_form_user_reuses_existing_assets_when_pairing_again.opp, tmpdir):
     with patch(
         "openpeerpower.components.lutron_caseta.async_unload_entry", return_value=True
     ) as mock_unload:
-        await.opp.config_entries.async_remove(result3["result"].entry_id)
+        await opp.config_entries.async_remove(result3["result"].entry_id)
         await opp.async_block_till_done()
 
     assert len(mock_unload.mock_calls) == 1

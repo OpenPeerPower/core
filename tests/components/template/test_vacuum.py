@@ -47,7 +47,7 @@ async def test_missing_optional_config.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_UNKNOWN, None)
@@ -68,7 +68,7 @@ async def test_missing_start_config.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -89,7 +89,7 @@ async def test_invalid_config.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
@@ -120,7 +120,7 @@ async def test_templates_with_entities.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_UNKNOWN, None)
@@ -153,7 +153,7 @@ async def test_templates_with_valid_values.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_CLEANING, 100)
@@ -180,7 +180,7 @@ async def test_templates_invalid_values.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_UNKNOWN, None)
@@ -208,7 +208,7 @@ async def test_invalid_templates.opp, calls):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     _verify.opp, STATE_UNKNOWN, None)
@@ -234,7 +234,7 @@ async def test_available_template_with_entities.opp, calls):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     # When template returns true..
@@ -271,7 +271,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("vacuum.test_template_vacuum") != STATE_UNAVAILABLE
@@ -300,7 +300,7 @@ async def test_attribute_templates.opp, calls):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("vacuum.test_template_vacuum")
@@ -338,7 +338,7 @@ async def test_invalid_attribute_template.opp, caplog):
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert "test_attribute" in caplog.text
@@ -519,7 +519,7 @@ async def _register_basic_vacuum.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
 
@@ -609,7 +609,7 @@ async def _register_components.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
 
@@ -638,7 +638,7 @@ async def test_unique_id.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

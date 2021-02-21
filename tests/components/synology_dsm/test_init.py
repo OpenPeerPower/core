@@ -37,6 +37,6 @@ async def test_services_registered.opp: OpenPeerPowerType):
             },
         )
         entry.add_to_opp.opp)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         for service in SERVICES:
             assert.opp.services.has_service(DOMAIN, service)

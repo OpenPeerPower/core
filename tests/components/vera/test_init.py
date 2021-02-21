@@ -146,7 +146,7 @@ async def test_unload(
     assert entries
 
     for config_entry in entries:
-        assert await.opp.config_entries.async_unload(config_entry.entry_id)
+        assert await opp.config_entries.async_unload(config_entry.entry_id)
         assert config_entry.state == ENTRY_STATE_NOT_LOADED
 
 
@@ -172,7 +172,7 @@ async def test_async_setup_entry_error(
     )
     entry.add_to_opp.opp)
 
-    assert not await.opp.config_entries.async_setup(entry.entry_id)
+    assert not await opp.config_entries.async_setup(entry.entry_id)
 
 
 @pytest.mark.parametrize(

@@ -1157,7 +1157,7 @@ async def test_logbook_context_from_template.opp,.opp_client):
     )
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     # Entity added (should not be logged)
@@ -1243,7 +1243,7 @@ async def test_logbook_entity_matches_only.opp,.opp_client):
     )
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     # Entity added (should not be logged)
@@ -1317,7 +1317,7 @@ async def test_logbook_entity_matches_only_multiple.opp,.opp_client):
     )
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     # Entity added (should not be logged)

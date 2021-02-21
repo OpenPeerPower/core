@@ -55,7 +55,7 @@ async def mock_light.opp, mock_entry):
     ), patch.object(light, "connect"), patch.object(
         light, "get_state", return_value=mock_state
     ):
-        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await opp.config_entries.async_setup(mock_entry.entry_id)
         await opp.async_block_till_done()
 
     light.is_connected.return_value = True
@@ -89,7 +89,7 @@ async def test_init.opp, mock_entry):
         "openpeerpower.components.zerproc.light.pyzerproc.discover",
         return_value=[mock_light_1, mock_light_2],
     ):
-        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await opp.config_entries.async_setup(mock_entry.entry_id)
         await opp.async_block_till_done()
 
     state = opp.states.get("light.ledblue_ccddeeff")
@@ -113,7 +113,7 @@ async def test_init.opp, mock_entry):
     }
 
     with patch.object.opp.loop, "stop"):
-        await.opp.async_stop()
+        await opp.async_stop()
 
     assert mock_light_1.disconnect.called
     assert mock_light_2.disconnect.called
@@ -129,7 +129,7 @@ async def test_discovery_exception.opp, mock_entry):
         "openpeerpower.components.zerproc.light.pyzerproc.discover",
         side_effect=pyzerproc.ZerprocException("TEST"),
     ):
-        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await opp.config_entries.async_setup(mock_entry.entry_id)
         await opp.async_block_till_done()
 
     # The exception should be captured and no entities should be added
@@ -158,7 +158,7 @@ async def test_connect_exception.opp, mock_entry):
     ), patch.object(
         mock_light_1, "connect", side_effect=pyzerproc.ZerprocException("TEST")
     ):
-        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await opp.config_entries.async_setup(mock_entry.entry_id)
         await opp.async_block_till_done()
 
     # The exception connecting to light 1 should be captured, but light 2
@@ -169,7 +169,7 @@ async def test_connect_exception.opp, mock_entry):
 async def test_remove_entry.opp, mock_light, mock_entry):
     """Test platform setup."""
     with patch.object(mock_light, "disconnect") as mock_disconnect:
-        await.opp.config_entries.async_remove(mock_entry.entry_id)
+        await opp.config_entries.async_remove(mock_entry.entry_id)
 
     assert mock_disconnect.called
 
@@ -179,7 +179,7 @@ async def test_remove_entry_exceptions_caught.opp, mock_light, mock_entry):
     with patch.object(
         mock_light, "disconnect", side_effect=pyzerproc.ZerprocException("Mock error")
     ) as mock_disconnect:
-        await.opp.config_entries.async_remove(mock_entry.entry_id)
+        await opp.config_entries.async_remove(mock_entry.entry_id)
 
     assert mock_disconnect.called
 

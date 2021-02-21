@@ -56,6 +56,6 @@ async def async_unload_entry.opp, entry):
     """Unload a config entry."""
    .opp.data.pop(DATA_LIFX_MANAGER).cleanup()
 
-    await.opp.config_entries.async_forward_entry_unload(entry, LIGHT_DOMAIN)
+    await opp.config_entries.async_forward_entry_unload(entry, LIGHT_DOMAIN)
 
     return True

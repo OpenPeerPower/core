@@ -126,7 +126,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def update_listener.opp, config_entry):
     """Update when config_entry options update."""
     _LOGGER.debug("Config entry was updated, rerunning setup")
-    await.opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):

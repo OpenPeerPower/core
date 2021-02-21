@@ -15,4 +15,4 @@ async def test_setup_entry.opp, config_entry, aioclient_mock_fixture):
     await opp.async_block_till_done()
     assert len.opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
 
-    assert await.opp.config_entries.async_unload(config_entry.entry_id)
+    assert await opp.config_entries.async_unload(config_entry.entry_id)

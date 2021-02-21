@@ -35,7 +35,7 @@ async def test_async_send_command(mock_hc,.opp, mock_write_config):
     )
 
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     data = opp.data[DOMAIN][entry.entry_id]
@@ -173,7 +173,7 @@ async def test_async_send_command_custom_delay(mock_hc,.opp, mock_write_config):
     )
 
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     data = opp.data[DOMAIN][entry.entry_id]
@@ -209,7 +209,7 @@ async def test_change_channel(mock_hc,.opp, mock_write_config):
     )
 
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     data = opp.data[DOMAIN][entry.entry_id]
@@ -234,7 +234,7 @@ async def test_sync(mock_hc, mock_write_config,.opp):
     )
 
     entry.add_to_opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
     data = opp.data[DOMAIN][entry.entry_id]

@@ -289,7 +289,7 @@ async def setup_ozw.opp, mock_openzwave):
         config_entries.CONN_CLASS_LOCAL_PUSH,
         system_options={},
     )
-    await.opp.config_entries.async_forward_entry_setup(config_entry, "lock")
+    await opp.config_entries.async_forward_entry_setup(config_entry, "lock")
     await opp.async_block_till_done()
 
 

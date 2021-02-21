@@ -74,7 +74,7 @@ async def async_setup.opp, config):
 
         try:
             # establish connection to PCHK server
-            await.opp.async_create_task(connection.async_connect(timeout=15))
+            await opp.async_create_task(connection.async_connect(timeout=15))
             connections.append(connection)
             _LOGGER.info('LCN connected to "%s"', connection_name)
         except TimeoutError:

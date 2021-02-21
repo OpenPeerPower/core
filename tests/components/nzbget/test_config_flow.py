@@ -143,7 +143,7 @@ async def test_options_flow.opp, nzbget_api):
     entry.add_to_opp.opp)
 
     with patch("openpeerpower.components.nzbget.PLATFORMS", []):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     assert entry.options[CONF_SCAN_INTERVAL] == 5

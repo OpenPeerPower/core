@@ -59,7 +59,7 @@ async def test_form.opp):
         entry = conf_entries[0]
         assert entry.state == "loaded"
 
-        await.opp.config_entries.async_unload(conf_entries[0].entry_id)
+        await opp.config_entries.async_unload(conf_entries[0].entry_id)
         await opp.async_block_till_done()
         assert entry.state == "not_loaded"
 
@@ -83,7 +83,7 @@ async def test_form_options.opp):
         )
         config_entry.add_to_opp.opp)
 
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
         assert config_entry.state == "loaded"

@@ -129,7 +129,7 @@ async def async_unload_entry.opp, config_entry):
         client.unsub_timer()
 
     for platform in PLATFORMS:
-        await.opp.config_entries.async_forward_entry_unload(config_entry, platform)
+        await opp.config_entries.async_forward_entry_unload(config_entry, platform)
 
     if not.opp.data[DOMAIN]:
        .opp.services.async_remove(DOMAIN, SERVICE_ADD_TORRENT)

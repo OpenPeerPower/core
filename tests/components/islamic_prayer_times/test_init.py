@@ -49,7 +49,7 @@ async def test_successful_config_entry.opp, legacy_patchable_time):
         "prayer_times_calculator.PrayerTimesCalculator.fetch_prayer_times",
         return_value=PRAYER_TIMES,
     ):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
         assert entry.state == config_entries.ENTRY_STATE_LOADED
@@ -72,7 +72,7 @@ async def test_setup_failed.opp, legacy_patchable_time):
         "prayer_times_calculator.PrayerTimesCalculator.fetch_prayer_times",
         side_effect=InvalidResponseError(),
     ):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
         assert entry.state == config_entries.ENTRY_STATE_SETUP_RETRY
 
@@ -89,9 +89,9 @@ async def test_unload_entry.opp, legacy_patchable_time):
         "prayer_times_calculator.PrayerTimesCalculator.fetch_prayer_times",
         return_value=PRAYER_TIMES,
     ):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
 
-        assert await.opp.config_entries.async_unload(entry.entry_id)
+        assert await opp.config_entries.async_unload(entry.entry_id)
         await opp.async_block_till_done()
         assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
         assert islamic_prayer_times.DOMAIN not in.opp.data
@@ -106,7 +106,7 @@ async def test_islamic_prayer_times_timestamp_format.opp, legacy_patchable_time)
         "prayer_times_calculator.PrayerTimesCalculator.fetch_prayer_times",
         return_value=PRAYER_TIMES,
     ), patch("openpeerpowerr.util.dt.now", return_value=NOW):
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
         assert (
@@ -129,7 +129,7 @@ async def test_update.opp, legacy_patchable_time):
             NEW_PRAYER_TIMES,
         ]
 
-        await.opp.config_entries.async_setup(entry.entry_id)
+        await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
         pt_data = opp.data[islamic_prayer_times.DOMAIN]

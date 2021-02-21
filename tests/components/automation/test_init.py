@@ -786,7 +786,7 @@ async def test_initial_value_on.opp):
     )
     assert automation.is_on.opp, "automation.hello")
 
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
    .opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
@@ -813,7 +813,7 @@ async def test_initial_value_off_but_restore_on.opp):
     )
     assert not automation.is_on.opp, "automation.hello")
 
-    await.opp.async_start()
+    await opp.async_start()
    .opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 0

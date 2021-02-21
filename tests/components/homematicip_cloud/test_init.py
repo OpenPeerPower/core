@@ -158,7 +158,7 @@ async def test_unload_entry.opp):
     config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 1
     assert config_entries[0].state == ENTRY_STATE_LOADED
-    await.opp.config_entries.async_unload(config_entries[0].entry_id)
+    await opp.config_entries.async_unload(config_entries[0].entry_id)
     assert config_entries[0].state == ENTRY_STATE_NOT_LOADED
     assert mock_op..return_value.mock_calls[2][0] == "async_reset"
     # entry is unloaded
@@ -202,7 +202,7 @@ async def test_setup_services_and_unload_services.opp):
     config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 1
 
-    await.opp.config_entries.async_unload(config_entries[0].entry_id)
+    await opp.config_entries.async_unload(config_entries[0].entry_id)
     # Check services are removed
     assert not.opp.services.async_services().get(HMIPC_DOMAIN)
 
@@ -235,14 +235,14 @@ async def test_setup_two_op.s_unload_one_by_one.opp):
     config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 2
     # unload the first AP
-    await.opp.config_entries.async_unload(config_entries[0].entry_id)
+    await opp.config_entries.async_unload(config_entries[0].entry_id)
 
     # services still exists
     hmipc_services = opp.services.async_services()[HMIPC_DOMAIN]
     assert len(hmipc_services) == 8
 
     # unload the second AP
-    await.opp.config_entries.async_unload(config_entries[1].entry_id)
+    await opp.config_entries.async_unload(config_entries[1].entry_id)
 
     # Check services are removed
     assert not.opp.services.async_services().get(HMIPC_DOMAIN)

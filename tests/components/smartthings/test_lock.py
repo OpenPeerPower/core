@@ -103,6 +103,6 @@ async def test_unload_config_entry.opp, device_factory):
     device = device_factory("Lock_1", [Capability.lock], {Attribute.lock: "locked"})
     config_entry = await setup_platform.opp, LOCK_DOMAIN, devices=[device])
     # Act
-    await.opp.config_entries.async_forward_entry_unload(config_entry, "lock")
+    await opp.config_entries.async_forward_entry_unload(config_entry, "lock")
     # Assert
     assert.opp.states.get("lock.lock_1").state == STATE_UNAVAILABLE

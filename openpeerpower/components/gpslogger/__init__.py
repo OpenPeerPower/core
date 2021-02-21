@@ -108,7 +108,7 @@ async def async_unload_entry.opp, entry):
     """Unload a config entry."""
    .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
    .opp.data[DOMAIN]["unsub_device_tracker"].pop(entry.entry_id)()
-    await.opp.config_entries.async_forward_entry_unload(entry, DEVICE_TRACKER)
+    await opp.config_entries.async_forward_entry_unload(entry, DEVICE_TRACKER)
     return True
 
 

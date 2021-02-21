@@ -113,7 +113,7 @@ async def test_icon_template.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test_template_sensor")
@@ -149,7 +149,7 @@ async def test_entity_picture_template.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test_template_sensor")
@@ -183,7 +183,7 @@ async def test_attribute_templates.opp):
         )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test_template_sensor")
@@ -224,7 +224,7 @@ async def test_match_all.opp):
                 },
             )
 
-            await.opp.async_start()
+            await opp.async_start()
             await opp.async_block_till_done()
             init_calls = len(_update_state.mock_calls)
 
@@ -251,7 +251,7 @@ async def test_event.opp):
         assert await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -281,7 +281,7 @@ async def test_template_delay_on.opp):
     }
     await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
    .opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
@@ -341,7 +341,7 @@ async def test_template_delay_off.opp):
    .opp.states.async_set("sensor.test_state", "on")
     await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
    .opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
@@ -400,7 +400,7 @@ async def test_template_with_templated_delay_on.opp):
     }
     await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
    .opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
@@ -460,7 +460,7 @@ async def test_template_with_templated_delay_off.opp):
    .opp.states.async_set("sensor.test_state", "on")
     await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
    .opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
@@ -519,7 +519,7 @@ async def test_template_with_delay_on_based_on_input.opp):
     }
     await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
    .opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
@@ -591,7 +591,7 @@ async def test_template_with_delay_off_based_on_input.opp):
     }
     await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
    .opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
@@ -663,7 +663,7 @@ async def test_available_without_availability_template.opp):
     }
     await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -690,7 +690,7 @@ async def test_availability_template.opp):
     }
     await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_state", STATE_OFF)
@@ -730,7 +730,7 @@ async def test_invalid_attribute_template.opp, caplog):
     )
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 2
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert "test_attribute" in caplog.text
@@ -756,7 +756,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.my_sensor").state != STATE_UNAVAILABLE
@@ -856,7 +856,7 @@ async def test_unique_id.opp):
     )
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
@@ -881,7 +881,7 @@ async def test_template_validation_error.opp, caplog):
     }
     await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")

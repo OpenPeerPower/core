@@ -49,7 +49,7 @@ async def test_default_state.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("light.bedroom_group")
@@ -78,7 +78,7 @@ async def test_state_reporting.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("light.test1", STATE_ON)
@@ -115,7 +115,7 @@ async def test_brightness.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set(
@@ -158,7 +158,7 @@ async def test_color.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set(
@@ -198,7 +198,7 @@ async def test_white_value.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set(
@@ -236,7 +236,7 @@ async def test_color_temp.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set(
@@ -281,7 +281,7 @@ async def test_emulated_color_temp_group.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("light.bed_light", STATE_ON, {ATTR_SUPPORTED_FEATURES: 2})
@@ -328,7 +328,7 @@ async def test_min_max_mireds.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set(
@@ -375,7 +375,7 @@ async def test_effect_list.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set(
@@ -430,7 +430,7 @@ async def test_effect.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set(
@@ -478,7 +478,7 @@ async def test_supported_features.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
    .opp.states.async_set("light.test1", STATE_ON, {ATTR_SUPPORTED_FEATURES: 0})
@@ -522,7 +522,7 @@ async def test_service_calls.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert.opp.states.get("light.light_group").state == STATE_ON
@@ -595,7 +595,7 @@ async def test_invalid_service_calls.opp):
        .opp, {"entities": ["light.test1", "light.test2"]}, add_entities
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     assert add_entities.call_count == 1
@@ -658,7 +658,7 @@ async def test_reload.opp):
     await opp.async_block_till_done()
 
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
 
     await opp.async_block_till_done()
     assert.opp.states.get("light.light_group").state == STATE_ON
@@ -785,7 +785,7 @@ async def test_nested_group.opp):
         },
     )
     await opp.async_block_till_done()
-    await.opp.async_start()
+    await opp.async_start()
     await opp.async_block_till_done()
 
     state = opp.states.get("light.bedroom_group")

@@ -161,7 +161,7 @@ async def test_setup_config_flow.opp):
         return_value=MockLocation(),
     ):
         entry = MockConfigEntry(domain="ipma", data=TEST_CONFIG)
-        await.opp.config_entries.async_forward_entry_setup(entry, WEATHER_DOMAIN)
+        await opp.config_entries.async_forward_entry_setup(entry, WEATHER_DOMAIN)
         await opp.async_block_till_done()
 
     state = opp.states.get("weather.hometown")

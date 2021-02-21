@@ -24,7 +24,7 @@ async def init_integration.opp, skip_setup=False) -> MockConfigEntry:
             "brother.Brother._get_data",
             return_value=json.loads(load_fixture("brother_printer_data.json")),
         ):
-            await.opp.config_entries.async_setup(entry.entry_id)
+            await opp.config_entries.async_setup(entry.entry_id)
             await opp.async_block_till_done()
 
     return entry

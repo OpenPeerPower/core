@@ -286,7 +286,7 @@ async def test_options_flow_correct_prefixes.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
         return_value=True,
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == RESULT_TYPE_FORM
@@ -315,7 +315,7 @@ async def test_options_flow_incorrect_prefixes.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
         return_value=True,
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == RESULT_TYPE_FORM
@@ -344,7 +344,7 @@ async def test_options_flow_no_prefixes.opp: OpenPeerPower) -> None:
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
         return_value=True,
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == RESULT_TYPE_FORM

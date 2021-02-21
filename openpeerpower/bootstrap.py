@@ -141,7 +141,7 @@ async def async_setup_opp(
         # do a clean stop without knowing what is broken
         with contextlib.suppress(asyncio.TimeoutError):
             async with.opp.timeout.async_timeout(10):
-                await.opp.async_stop()
+                await opp.async_stop()
 
         safe_mode = True
         old_config = opp.config
@@ -200,7 +200,7 @@ async def async_from_config_dict(
     start = monotonic()
 
    .opp.config_entries = config_entries.ConfigEntries.opp, config)
-    await.opp.config_entries.async_initialize()
+    await opp.config_entries.async_initialize()
 
     # Set up core.
     _LOGGER.debug("Setting up %s", CORE_INTEGRATIONS)

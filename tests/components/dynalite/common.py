@@ -39,7 +39,7 @@ async def create_entity_from_device.opp, device):
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
         mock_dyn_dev().async_setup = AsyncMock(return_value=True)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
         new_device_func = mock_dyn_dev.mock_calls[1][2]["new_device_func"]
         new_device_func([device])

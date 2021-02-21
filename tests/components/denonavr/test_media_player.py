@@ -72,7 +72,7 @@ async def setup_denonavr.opp):
 
     mock_entry.add_to_opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_ID)
