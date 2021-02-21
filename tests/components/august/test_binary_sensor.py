@@ -25,28 +25,28 @@ async def test_doorsense.opp):
     )
     await _create_august_with_devices.opp, [lock_one])
 
-    binary_sensor_online_with_doorsense_name = opp.states.get(
+    binary_sensor_online_with_doorsense_name =.opp.states.get(
         "binary_sensor.online_with_doorsense_name_open"
     )
     assert binary_sensor_online_with_doorsense_name.state == STATE_ON
 
     data = {ATTR_ENTITY_ID: "lock.online_with_doorsense_name"}
-    assert await opp..services.async_call(
+    assert await.opp.services.async_call(
         LOCK_DOMAIN, SERVICE_UNLOCK, data, blocking=True
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    binary_sensor_online_with_doorsense_name = opp.states.get(
+    binary_sensor_online_with_doorsense_name =.opp.states.get(
         "binary_sensor.online_with_doorsense_name_open"
     )
     assert binary_sensor_online_with_doorsense_name.state == STATE_ON
 
-    assert await opp..services.async_call(
+    assert await.opp.services.async_call(
         LOCK_DOMAIN, SERVICE_LOCK, data, blocking=True
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    binary_sensor_online_with_doorsense_name = opp.states.get(
+    binary_sensor_online_with_doorsense_name =.opp.states.get(
         "binary_sensor.online_with_doorsense_name_open"
     )
     assert binary_sensor_online_with_doorsense_name.state == STATE_OFF
@@ -57,19 +57,19 @@ async def test_create_doorbell.opp):
     doorbell_one = await _mock_doorbell_from_fixture.opp, "get_doorbell.json")
     await _create_august_with_devices.opp, [doorbell_one])
 
-    binary_sensor_k98gidt45gul_name_motion = opp.states.get(
+    binary_sensor_k98gidt45gul_name_motion =.opp.states.get(
         "binary_sensor.k98gidt45gul_name_motion"
     )
     assert binary_sensor_k98gidt45gul_name_motion.state == STATE_OFF
-    binary_sensor_k98gidt45gul_name_online = opp.states.get(
+    binary_sensor_k98gidt45gul_name_online =.opp.states.get(
         "binary_sensor.k98gidt45gul_name_online"
     )
     assert binary_sensor_k98gidt45gul_name_online.state == STATE_ON
-    binary_sensor_k98gidt45gul_name_ding = opp.states.get(
+    binary_sensor_k98gidt45gul_name_ding =.opp.states.get(
         "binary_sensor.k98gidt45gul_name_ding"
     )
     assert binary_sensor_k98gidt45gul_name_ding.state == STATE_OFF
-    binary_sensor_k98gidt45gul_name_motion = opp.states.get(
+    binary_sensor_k98gidt45gul_name_motion =.opp.states.get(
         "binary_sensor.k98gidt45gul_name_motion"
     )
     assert binary_sensor_k98gidt45gul_name_motion.state == STATE_OFF
@@ -80,15 +80,15 @@ async def test_create_doorbell_offline.opp):
     doorbell_one = await _mock_doorbell_from_fixture.opp, "get_doorbell.offline.json")
     await _create_august_with_devices.opp, [doorbell_one])
 
-    binary_sensor_tmt100_name_motion = opp.states.get(
+    binary_sensor_tmt100_name_motion =.opp.states.get(
         "binary_sensor.tmt100_name_motion"
     )
     assert binary_sensor_tmt100_name_motion.state == STATE_UNAVAILABLE
-    binary_sensor_tmt100_name_online = opp.states.get(
+    binary_sensor_tmt100_name_online =.opp.states.get(
         "binary_sensor.tmt100_name_online"
     )
     assert binary_sensor_tmt100_name_online.state == STATE_OFF
-    binary_sensor_tmt100_name_ding = opp.states.get("binary_sensor.tmt100_name_ding")
+    binary_sensor_tmt100_name_ding =.opp.states.get("binary_sensor.tmt100_name_ding")
     assert binary_sensor_tmt100_name_ding.state == STATE_UNAVAILABLE
 
 
@@ -100,15 +100,15 @@ async def test_create_doorbell_with_motion.opp):
     )
     await _create_august_with_devices.opp, [doorbell_one], activities=activities)
 
-    binary_sensor_k98gidt45gul_name_motion = opp.states.get(
+    binary_sensor_k98gidt45gul_name_motion =.opp.states.get(
         "binary_sensor.k98gidt45gul_name_motion"
     )
     assert binary_sensor_k98gidt45gul_name_motion.state == STATE_ON
-    binary_sensor_k98gidt45gul_name_online = opp.states.get(
+    binary_sensor_k98gidt45gul_name_online =.opp.states.get(
         "binary_sensor.k98gidt45gul_name_online"
     )
     assert binary_sensor_k98gidt45gul_name_online.state == STATE_ON
-    binary_sensor_k98gidt45gul_name_ding = opp.states.get(
+    binary_sensor_k98gidt45gul_name_ding =.opp.states.get(
         "binary_sensor.k98gidt45gul_name_ding"
     )
     assert binary_sensor_k98gidt45gul_name_ding.state == STATE_OFF
@@ -119,7 +119,7 @@ async def test_doorbell_device_registry.opp):
     doorbell_one = await _mock_doorbell_from_fixture.opp, "get_doorbell.offline.json")
     await _create_august_with_devices.opp, [doorbell_one])
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
 
     reg_device = device_registry.async_get_device(identifiers={("august", "tmt100")})
     assert reg_device.model == "hydra1"

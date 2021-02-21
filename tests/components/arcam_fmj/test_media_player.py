@@ -22,7 +22,7 @@ MOCK_TURN_ON = {
 
 async def update(player, force_refresh=False):
     """Force a update of player and return current state data."""
-    await player.async_update_op.state(force_refresh=force_refresh)
+    await player.async_update_ha_state(force_refresh=force_refresh)
     return player.opp.states.get(player.entity_id)
 
 
@@ -86,7 +86,7 @@ async def test_mute_volume(player, state, mute):
     """Test mute functionality."""
     await player.async_mute_volume(mute)
     state.set_mute.assert_called_with(mute)
-    player.async_write_op.state.assert_called_with()
+    player.async_write_ha_state.assert_called_with()
 
 
 async def test_name(player):
@@ -121,7 +121,7 @@ async def test_2ch(player, state, fmt, result):
 )
 async def test_select_source.opp, player_setup, state, source, value):
     """Test selection of source."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "media_player",
         SERVICE_SELECT_SOURCE,
         service_data={ATTR_ENTITY_ID: player_setup, ATTR_INPUT_SOURCE: source},
@@ -169,14 +169,14 @@ async def test_volume_up(player, state):
     """Test mute functionality."""
     await player.async_volume_up()
     state.inc_volume.assert_called_with()
-    player.async_write_op.state.assert_called_with()
+    player.async_write_ha_state.assert_called_with()
 
 
 async def test_volume_down(player, state):
     """Test mute functionality."""
     await player.async_volume_down()
     state.dec_volume.assert_called_with()
-    player.async_write_op.state.assert_called_with()
+    player.async_write_ha_state.assert_called_with()
 
 
 @pytest.mark.parametrize(
@@ -312,7 +312,7 @@ async def test_media_title(player, state, source, channel, title):
             assert data.attributes["media_title"] == title
 
 
-async def test_added_to_opp(player, state):
+async def test_added_to.opp(player, state):
     """Test addition to.opp."""
     from openpeerpower.components.arcam_fmj.const import (
         SIGNAL_CLIENT_DATA,
@@ -328,7 +328,7 @@ async def test_added_to_opp(player, state):
     player.opp = MagicMock()
     player.opp.helpers.dispatcher.async_dispatcher_connect.side_effects = _connect
 
-    await player.async_added_to_opp()
+    await player.async_added_to.opp()
     state.start.assert_called_with()
     player.opp.helpers.dispatcher.async_dispatcher_connect.assert_any_call(
         SIGNAL_CLIENT_DATA, ANY

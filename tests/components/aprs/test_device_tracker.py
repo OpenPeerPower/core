@@ -6,7 +6,7 @@ import aprslib
 import openpeerpower.components.aprs.device_tracker as device_tracker
 from openpeerpower.const import EVENT_OPENPEERPOWER_START
 
-from tests.common import get_test_home_assistant
+from tests.common import get_test_open_peer_power
 
 DEFAULT_PORT = 14580
 
@@ -304,7 +304,7 @@ def test_setup_scanner():
     with patch(
         "openpeerpower.components.aprs.device_tracker.AprsListenerThread"
     ) as listener:
-        opp = get_test_home_assistant()
+       .opp = get_test_open_peer_power()
        .opp.start()
 
         config = {
@@ -327,7 +327,7 @@ def test_setup_scanner():
 
 def test_setup_scanner_timeout():
     """Test setup_scanner failure from timeout."""
-    opp = get_test_home_assistant()
+   .opp = get_test_open_peer_power()
    .opp.start()
 
     config = {

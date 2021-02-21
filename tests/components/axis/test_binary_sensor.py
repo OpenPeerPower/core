@@ -6,7 +6,7 @@ from openpeerpower.components.binary_sensor import (
     DOMAIN as BINARY_SENSOR_DOMAIN,
 )
 from openpeerpower.const import STATE_OFF, STATE_ON
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .test_device import NAME, setup_axis_integration
 
@@ -60,19 +60,19 @@ async def test_no_binary_sensors.opp):
 async def test_binary_sensors.opp):
     """Test that sensors are loaded properly."""
     config_entry = await setup_axis_integration.opp)
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.event.update(EVENTS)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)) == 2
 
-    pir = opp.states.get(f"{BINARY_SENSOR_DOMAIN}.{NAME}_pir_0")
+    pir =.opp.states.get(f"{BINARY_SENSOR_DOMAIN}.{NAME}_pir_0")
     assert pir.state == STATE_OFF
     assert pir.name == f"{NAME} PIR 0"
     assert pir.attributes["device_class"] == DEVICE_CLASS_MOTION
 
-    vmd4 = opp.states.get(f"{BINARY_SENSOR_DOMAIN}.{NAME}_vmd4_profile_1")
+    vmd4 =.opp.states.get(f"{BINARY_SENSOR_DOMAIN}.{NAME}_vmd4_profile_1")
     assert vmd4.state == STATE_ON
     assert vmd4.name == f"{NAME} VMD4 Profile 1"
     assert vmd4.attributes["device_class"] == DEVICE_CLASS_MOTION

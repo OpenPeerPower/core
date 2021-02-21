@@ -16,7 +16,7 @@ from tests.common import MockConfigEntry
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -28,7 +28,7 @@ async def test_invalid_access_token.opp):
     """Test that errors are shown when the access token is invalid."""
 
     with patch("python_awair.AwairClient.query", side_effect=AuthError()):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 
@@ -39,7 +39,7 @@ async def test_unexpected_api_error.opp):
     """Test that we abort on generic errors."""
 
     with patch("python_awair.AwairClient.query", side_effect=AwairError()):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 
@@ -56,11 +56,11 @@ async def test_duplicate_error.opp):
         "openpeerpower.components.awair.sensor.async_setup_entry",
         return_value=True,
     ):
-        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to_opp(
+        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to.opp(
            .opp
         )
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 
@@ -74,7 +74,7 @@ async def test_no_devices_error.opp):
     with patch(
         "python_awair.AwairClient.query", side_effect=[USER_FIXTURE, NO_DEVICES_FIXTURE]
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 
@@ -91,7 +91,7 @@ async def test_import.opp):
         "openpeerpower.components.awair.sensor.async_setup_entry",
         return_value=True,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={CONF_ACCESS_TOKEN: CONFIG[CONF_ACCESS_TOKEN]},
@@ -107,7 +107,7 @@ async def test_import_aborts_on_api_error.opp):
     """Test config.yaml imports on api error."""
 
     with patch("python_awair.AwairClient.query", side_effect=AwairError()):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={CONF_ACCESS_TOKEN: CONFIG[CONF_ACCESS_TOKEN]},
@@ -126,11 +126,11 @@ async def test_import_aborts_if_configured.opp):
         "openpeerpower.components.awair.sensor.async_setup_entry",
         return_value=True,
     ):
-        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to_opp(
+        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to.opp(
            .opp
         )
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={CONF_ACCESS_TOKEN: CONFIG[CONF_ACCESS_TOKEN]},
@@ -149,12 +149,12 @@ async def test_reauth.opp):
         return_value=True,
     ):
         mock_config = MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG)
-        mock_config.add_to_opp.opp)
+        mock_config.add_to.opp.opp)
        .opp.config_entries.async_update_entry(
             mock_config, data={**CONFIG, CONF_ACCESS_TOKEN: "blah"}
         )
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "reauth", "unique_id": UNIQUE_ID},
             data=CONFIG,
@@ -164,7 +164,7 @@ async def test_reauth.opp):
         assert result["reason"] == "reauth_successful"
 
     with patch("python_awair.AwairClient.query", side_effect=AuthError()):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "reauth", "unique_id": UNIQUE_ID},
             data=CONFIG,
@@ -173,7 +173,7 @@ async def test_reauth.opp):
         assert result["errors"] == {CONF_ACCESS_TOKEN: "invalid_access_token"}
 
     with patch("python_awair.AwairClient.query", side_effect=AwairError()):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "reauth", "unique_id": UNIQUE_ID},
             data=CONFIG,
@@ -192,7 +192,7 @@ async def test_create_entry.opp):
         "openpeerpower.components.awair.sensor.async_setup_entry",
         return_value=True,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 

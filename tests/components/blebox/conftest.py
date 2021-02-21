@@ -7,7 +7,7 @@ import pytest
 
 from openpeerpower.components.blebox.const import DOMAIN
 from openpeerpower.const import CONF_HOST, CONF_PORT
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 from tests.components.light.conftest import mock_light_profiles  # noqa
@@ -66,7 +66,7 @@ def mock_config(ip_address="172.100.123.4"):
 
 @pytest.fixture(name="config")
 def config_fixture():
-    """Create opp config fixture."""
+    """Create.opp config fixture."""
     return {DOMAIN: {CONF_HOST: "172.100.123.4", CONF_PORT: 80}}
 
 
@@ -80,11 +80,11 @@ async def async_setup_entities.opp, config, entity_ids):
     """Return configured entries with the given entity ids."""
 
     config_entry = mock_config()
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     assert await async_setup_component.opp, DOMAIN, config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     return [entity_registry.async_get(entity_id) for entity_id in entity_ids]
 
 

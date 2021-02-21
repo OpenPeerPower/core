@@ -8,9 +8,9 @@ import pytest
 import voluptuous as vol
 
 from openpeerpower import const
-from openpeerpowerr.bootstrap import DATA_LOGGING
-import openpeerpowerr.core as ha
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.bootstrap import DATA_LOGGING
+import openpeerpower.core as ha
+from openpeerpower.setup import async_setup_component
 
 from tests.common import async_mock_service
 
@@ -29,8 +29,8 @@ async def test_api_list_state_entities.opp, mock_api_client):
     assert resp.status == 200
     json = await resp.json()
 
-    remote_data = [op.State.from_dict(item) for item in json]
-    assert remote_data == opp.states.async_all()
+    remote_data = [ha.State.from_dict(item) for item in json]
+    assert remote_data ==.opp.states.async_all()
 
 
 async def test_api_get_state.opp, mock_api_client):
@@ -40,9 +40,9 @@ async def test_api_get_state.opp, mock_api_client):
     assert resp.status == 200
     json = await resp.json()
 
-    data = op.State.from_dict(json)
+    data = ha.State.from_dict(json)
 
-    state = opp.states.get("hello.world")
+    state =.opp.states.get("hello.world")
 
     assert data.state == state.state
     assert data.last_changed == state.last_changed
@@ -113,7 +113,7 @@ async def test_api_state_change_push.opp, mock_api_client):
 
     events = []
 
-    @op.callback
+    @ha.callback
     def event_listener(event):
         """Track events."""
         events.append(event)
@@ -121,13 +121,13 @@ async def test_api_state_change_push.opp, mock_api_client):
    .opp.bus.async_listen(const.EVENT_STATE_CHANGED, event_listener)
 
     await mock_api_client.post("/api/states/test.test", json={"state": "not_to_be_set"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 0
 
     await mock_api_client.post(
         "/api/states/test.test", json={"state": "not_to_be_set", "force_update": True}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 1
 
 
@@ -136,7 +136,7 @@ async def test_api_fire_event_with_no_data.opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(event):
         """Record that our event got called."""
         test_value.append(1)
@@ -144,7 +144,7 @@ async def test_api_fire_event_with_no_data.opp, mock_api_client):
    .opp.bus.async_listen_once("test.event_no_data", listener)
 
     await mock_api_client.post("/api/events/test.event_no_data")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(test_value) == 1
 
@@ -154,7 +154,7 @@ async def test_api_fire_event_with_data.opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(event):
         """Record that our event got called.
 
@@ -167,7 +167,7 @@ async def test_api_fire_event_with_data.opp, mock_api_client):
 
     await mock_api_client.post("/api/events/test_event_with_data", json={"test": 1})
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(test_value) == 1
 
@@ -177,7 +177,7 @@ async def test_api_fire_event_with_invalid_json.opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(event):
         """Record that our event got called."""
         test_value.append(1)
@@ -188,7 +188,7 @@ async def test_api_fire_event_with_invalid_json.opp, mock_api_client):
         "/api/events/test_event_bad_data", data=json.dumps("not an object")
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert resp.status == 400
     assert len(test_value) == 0
@@ -198,7 +198,7 @@ async def test_api_fire_event_with_invalid_json.opp, mock_api_client):
         "/api/events/test_event_bad_data", data=json.dumps([1, 2, 3])
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert resp.status == 400
     assert len(test_value) == 0
@@ -224,7 +224,7 @@ async def test_api_get_components.opp, mock_api_client):
     """Test the return of the components."""
     resp = await mock_api_client.get(const.URL_API_COMPONENTS)
     result = await resp.json()
-    assert set(result) == opp.config.components
+    assert set(result) ==.opp.config.components
 
 
 async def test_api_get_event_listeners.opp, mock_api_client):
@@ -232,7 +232,7 @@ async def test_api_get_event_listeners.opp, mock_api_client):
     resp = await mock_api_client.get(const.URL_API_EVENTS)
     data = await resp.json()
 
-    local = opp.bus.async_listeners()
+    local =.opp.bus.async_listeners()
 
     for event in data:
         assert local.pop(event["event"]) == event["listener_count"]
@@ -244,7 +244,7 @@ async def test_api_get_services.opp, mock_api_client):
     """Test if we can get a dict describing current services."""
     resp = await mock_api_client.get(const.URL_API_SERVICES)
     data = await resp.json()
-    local_services = opp.services.async_services()
+    local_services =.opp.services.async_services()
 
     for serv_domain in data:
         local = local_services.pop(serv_domain["domain"])
@@ -256,7 +256,7 @@ async def test_api_call_service_no_data.opp, mock_api_client):
     """Test if the API allows us to call a service."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(service_call):
         """Record that our service got called."""
         test_value.append(1)
@@ -264,7 +264,7 @@ async def test_api_call_service_no_data.opp, mock_api_client):
    .opp.services.async_register("test_domain", "test_service", listener)
 
     await mock_api_client.post("/api/services/test_domain/test_service")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(test_value) == 1
 
 
@@ -272,7 +272,7 @@ async def test_api_call_service_with_data.opp, mock_api_client):
     """Test if the API allows us to call a service."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(service_call):
         """Record that our service got called.
 
@@ -287,7 +287,7 @@ async def test_api_call_service_with_data.opp, mock_api_client):
         "/api/services/test_domain/test_service", json={"test": 1}
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(test_value) == 1
 
 
@@ -395,7 +395,7 @@ async def test_api_error_log.opp, aiohttp_client,.opp_access_token,.opp_admin_us
         )
 
     assert len(mock_file.mock_calls) == 1
-    assert mock_file.mock_calls[0][1][0] == opp.data[DATA_LOGGING]
+    assert mock_file.mock_calls[0][1][0] ==.opp.data[DATA_LOGGING]
     assert resp.status == 200
     assert await resp.text() == "Hello"
 
@@ -412,7 +412,7 @@ async def test_api_fire_event_context.opp, mock_api_client,.opp_access_token):
     """Test if the API sets right context if we fire an event."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(event):
         """Record that our event got called."""
         test_value.append(event)
@@ -423,9 +423,9 @@ async def test_api_fire_event_context.opp, mock_api_client,.opp_access_token):
         "/api/events/test.event",
         headers={"authorization": f"Bearer .opp_access_token}"},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    refresh_token = await opp..auth.async_validate_access_token.opp_access_token)
+    refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
 
     assert len(test_value) == 1
     assert test_value[0].context.user_id == refresh_token.user.id
@@ -439,9 +439,9 @@ async def test_api_call_service_context.opp, mock_api_client,.opp_access_token):
         "/api/services/test_domain/test_service",
         headers={"authorization": f"Bearer .opp_access_token}"},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    refresh_token = await opp..auth.async_validate_access_token.opp_access_token)
+    refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
 
     assert len(calls) == 1
     assert calls[0].context.user_id == refresh_token.user.id
@@ -455,9 +455,9 @@ async def test_api_set_state_context.opp, mock_api_client,.opp_access_token):
         headers={"authorization": f"Bearer .opp_access_token}"},
     )
 
-    refresh_token = await opp..auth.async_validate_access_token.opp_access_token)
+    refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
 
-    state = opp.states.get("light.kitchen")
+    state =.opp.states.get("light.kitchen")
     assert state.context.user_id == refresh_token.user.id
 
 
@@ -538,7 +538,7 @@ async def test_api_call_service_bad_data.opp, mock_api_client):
     """Test if the API fails 400 if unknown service."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(service_call):
         """Record that our service got called."""
         test_value.append(1)

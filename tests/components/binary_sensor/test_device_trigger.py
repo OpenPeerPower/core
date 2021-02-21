@@ -7,9 +7,9 @@ import openpeerpower.components.automation as automation
 from openpeerpower.components.binary_sensor import DEVICE_CLASSES, DOMAIN
 from openpeerpower.components.binary_sensor.device_trigger import ENTITY_TRIGGERS
 from openpeerpower.const import CONF_PLATFORM, STATE_OFF, STATE_ON
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import (
     MockConfigEntry,
@@ -47,7 +47,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -61,7 +61,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
         )
 
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     expected_triggers = [
         {
@@ -81,7 +81,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
 async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a binary_sensor trigger."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -105,7 +105,7 @@ async def test_if_fires_on_state_change.opp, calls):
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
 
@@ -165,19 +165,19 @@ async def test_if_fires_on_state_change.opp, calls):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(sensor1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
    .opp.states.async_set(sensor1.entity_id, STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "not_bat_low device - {} - on - off - None".format(
         sensor1.entity_id
     )
 
    .opp.states.async_set(sensor1.entity_id, STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "bat_low device - {} - off - on - None".format(
         sensor1.entity_id
@@ -190,7 +190,7 @@ async def test_if_fires_on_state_change_with_for.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
 
@@ -227,17 +227,17 @@ async def test_if_fires_on_state_change_with_for.opp, calls):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(sensor1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
    .opp.states.async_set(sensor1.entity_id, STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert calls[0].data["some"] == "turn_off device - {} - on - off - 0:00:05".format(
         sensor1.entity_id
     )

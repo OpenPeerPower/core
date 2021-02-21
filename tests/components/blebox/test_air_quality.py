@@ -38,7 +38,7 @@ async def test_init(airsensor,.opp, config):
     entry = await async_setup_entity.opp, config, entity_id)
     assert entry.unique_id == "BleBox-airSensor-1afe34db9437-0.air"
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.name == "airSensor-0.air"
 
     assert ATTR_PM_0_1 not in state.attributes
@@ -49,7 +49,7 @@ async def test_init(airsensor,.opp, config):
 
     assert state.state == STATE_UNKNOWN
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
 
     assert device.name == "My air sensor"
@@ -72,7 +72,7 @@ async def test_update(airsensor,.opp, config):
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
     await async_setup_entity.opp, config, entity_id)
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
 
     assert state.attributes[ATTR_PM_0_1] == 49
     assert state.attributes[ATTR_PM_2_5] == 222

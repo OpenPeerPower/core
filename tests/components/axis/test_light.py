@@ -12,7 +12,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .test_device import (
     API_DISCOVERY_RESPONSE,
@@ -74,10 +74,10 @@ async def test_no_light_entity_without_light_control_representation.opp):
         LIGHT_CONTROL_RESPONSE, light_control
     ):
         config_entry = await setup_axis_integration.opp)
-        device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+        device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.event.update([EVENT_ON])
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert not.opp.states.async_entity_ids(LIGHT_DOMAIN)
 
@@ -89,7 +89,7 @@ async def test_lights.opp):
 
     with patch.dict(API_DISCOVERY_RESPONSE, api_discovery):
         config_entry = await setup_axis_integration.opp)
-        device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+        device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     # Add light
     with patch(
@@ -100,13 +100,13 @@ async def test_lights.opp):
         return_value={"data": {"ranges": [{"high": 150}]}},
     ):
         device.api.event.update([EVENT_ON])
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(LIGHT_DOMAIN)) == 1
 
     entity_id = f"{LIGHT_DOMAIN}.{NAME}_ir_light_0"
 
-    light_0 = opp.states.get(entity_id)
+    light_0 =.opp.states.get(entity_id)
     assert light_0.state == STATE_ON
     assert light_0.name == f"{NAME} IR Light 0"
 
@@ -119,7 +119,7 @@ async def test_lights.opp):
         "axis.light_control.LightControl.get_current_intensity",
         return_value={"data": {"intensity": 100}},
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: entity_id, ATTR_BRIGHTNESS: 50},
@@ -135,7 +135,7 @@ async def test_lights.opp):
         "axis.light_control.LightControl.get_current_intensity",
         return_value={"data": {"intensity": 100}},
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: entity_id},
@@ -145,9 +145,9 @@ async def test_lights.opp):
 
     # Event turn off light
     device.api.event.update([EVENT_OFF])
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    light_0 = opp.states.get(entity_id)
+    light_0 =.opp.states.get(entity_id)
     assert light_0.state == STATE_OFF
 
     # Turn on, set brightness
@@ -159,7 +159,7 @@ async def test_lights.opp):
         "axis.light_control.LightControl.get_current_intensity",
         return_value={"data": {"intensity": 100}},
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: entity_id},
@@ -175,7 +175,7 @@ async def test_lights.opp):
         "axis.light_control.LightControl.get_current_intensity",
         return_value={"data": {"intensity": 100}},
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: entity_id},

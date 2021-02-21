@@ -11,7 +11,7 @@ from openpeerpower.components.azure_devops.const import (
     CONF_PROJECT,
     DOMAIN,
 )
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry
 
@@ -23,7 +23,7 @@ UNIQUE_ID = "random_project"
 
 async def test_show_user_form.opp: OpenPeerPower) -> None:
     """Test that the setup form is served."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -37,18 +37,18 @@ async def test_authorization_error.opp: OpenPeerPower) -> None:
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.authorize",
         return_value=False,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "user"
 
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             FIXTURE_USER_INPUT,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "user"
@@ -61,18 +61,18 @@ async def test_reauth_authorization_error.opp: OpenPeerPower) -> None:
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.authorize",
         return_value=False,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "reauth"
 
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             FIXTURE_REAUTH_INPUT,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "reauth"
@@ -85,18 +85,18 @@ async def test_connection_error.opp: OpenPeerPower) -> None:
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.authorize",
         side_effect=aiohttp.ClientError,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "user"
 
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             FIXTURE_USER_INPUT,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "user"
@@ -109,18 +109,18 @@ async def test_reauth_connection_error.opp: OpenPeerPower) -> None:
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.authorize",
         side_effect=aiohttp.ClientError,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "reauth"
 
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             FIXTURE_REAUTH_INPUT,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "reauth"
@@ -138,18 +138,18 @@ async def test_project_error.opp: OpenPeerPower) -> None:
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.get_project",
         return_value=None,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "user"
 
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             FIXTURE_USER_INPUT,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "user"
@@ -167,18 +167,18 @@ async def test_reauth_project_error.opp: OpenPeerPower) -> None:
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.get_project",
         return_value=None,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "reauth"
 
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             FIXTURE_REAUTH_INPUT,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "reauth"
@@ -194,9 +194,9 @@ async def test_reauth_flow.opp: OpenPeerPower) -> None:
         mock_config = MockConfigEntry(
             domain=DOMAIN, unique_id=UNIQUE_ID, data=FIXTURE_USER_INPUT
         )
-        mock_config.add_to_opp.opp)
+        mock_config.add_to.opp.opp)
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
         )
 
@@ -215,11 +215,11 @@ async def test_reauth_flow.opp: OpenPeerPower) -> None:
             "abcd-abcd-abcd-abcd", FIXTURE_USER_INPUT[CONF_PROJECT]
         ),
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             FIXTURE_REAUTH_INPUT,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result2["reason"] == "reauth_successful"
@@ -243,18 +243,18 @@ async def test_full_flow_implementation.opp: OpenPeerPower) -> None:
             "abcd-abcd-abcd-abcd", FIXTURE_USER_INPUT[CONF_PROJECT]
         ),
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "user"
 
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             FIXTURE_USER_INPUT,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 

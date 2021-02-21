@@ -29,8 +29,8 @@ from openpeerpower.const import (
     STATE_LOCKED,
     STATE_ON,
 )
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 from tests.components.august.mocks import (
@@ -52,15 +52,15 @@ async def test_august_is_offline.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     await setup.async_setup_component.opp, "persistent_notification", {})
     with patch(
         "august.authenticator_async.AuthenticatorAsync.async_authenticate",
         side_effect=asyncio.TimeoutError,
     ):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -82,7 +82,7 @@ async def test_unlock_throws_august_api_http_error.opp):
     last_err = None
     data = {ATTR_ENTITY_ID: "lock.a6697750d607098bae8d6baa11ef8063_name"}
     try:
-        await opp..services.async_call(LOCK_DOMAIN, SERVICE_UNLOCK, data, blocking=True)
+        await.opp.services.async_call(LOCK_DOMAIN, SERVICE_UNLOCK, data, blocking=True)
     except OpenPeerPowerError as err:
         last_err = err
     assert (
@@ -108,7 +108,7 @@ async def test_lock_throws_august_api_http_error.opp):
     last_err = None
     data = {ATTR_ENTITY_ID: "lock.a6697750d607098bae8d6baa11ef8063_name"}
     try:
-        await opp..services.async_call(LOCK_DOMAIN, SERVICE_LOCK, data, blocking=True)
+        await.opp.services.async_call(LOCK_DOMAIN, SERVICE_LOCK, data, blocking=True)
     except OpenPeerPowerError as err:
         last_err = err
     assert (
@@ -125,25 +125,25 @@ async def test_inoperative_locks_are_filtered_out.opp):
        .opp, [august_operative_lock, august_inoperative_lock]
     )
 
-    lock_abc_name = opp.states.get("lock.abc_name")
+    lock_abc_name =.opp.states.get("lock.abc_name")
     assert lock_abc_name is None
-    lock_a6697750d607098bae8d6baa11ef8063_name = opp.states.get(
+    lock_a6697750d607098bae8d6baa11ef8063_name =.opp.states.get(
         "lock.a6697750d607098bae8d6baa11ef8063_name"
     )
     assert lock_a6697750d607098bae8d6baa11ef8063_name.state == STATE_LOCKED
 
 
-async def test_lock_op._doorsense.opp):
+async def test_lock_has_doorsense.opp):
     """Check to see if a lock has doorsense."""
     doorsenselock = await _mock_doorsense_enabled_august_lock_detail.opp)
     nodoorsenselock = await _mock_doorsense_missing_august_lock_detail.opp)
     await _create_august_with_devices.opp, [doorsenselock, nodoorsenselock])
 
-    binary_sensor_online_with_doorsense_name_open = opp.states.get(
+    binary_sensor_online_with_doorsense_name_open =.opp.states.get(
         "binary_sensor.online_with_doorsense_name_open"
     )
     assert binary_sensor_online_with_doorsense_name_open.state == STATE_ON
-    binary_sensor_missing_doorsense_id_name_open = opp.states.get(
+    binary_sensor_missing_doorsense_id_name_open =.opp.states.get(
         "binary_sensor.missing_doorsense_id_name_open"
     )
     assert binary_sensor_missing_doorsense_id_name_open is None
@@ -161,7 +161,7 @@ async def test_set_up_from_yaml.opp):
         return_value=True,
     ):
         assert await async_setup_component.opp, DOMAIN, _mock_get_config())
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(mock_setup_august.mock_calls) == 1
     call = mock_setup_august.call_args
     args, _ = call
@@ -186,7 +186,7 @@ async def test_auth_fails.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     assert.opp.config_entries.flow.async_progress() == []
 
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -194,12 +194,12 @@ async def test_auth_fails.opp):
         "august.authenticator_async.AuthenticatorAsync.async_authenticate",
         side_effect=ClientResponseError(None, None, status=401),
     ):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
-    flows = opp.config_entries.flow.async_progress()
+    flows =.opp.config_entries.flow.async_progress()
 
     assert flows[0]["step_id"] == "user"
 
@@ -212,7 +212,7 @@ async def test_bad_password.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     assert.opp.config_entries.flow.async_progress() == []
 
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -222,12 +222,12 @@ async def test_bad_password.opp):
             "original_token", 1234, AuthenticationState.BAD_PASSWORD
         ),
     ):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
-    flows = opp.config_entries.flow.async_progress()
+    flows =.opp.config_entries.flow.async_progress()
 
     assert flows[0]["step_id"] == "user"
 
@@ -240,7 +240,7 @@ async def test_http_failure.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     assert.opp.config_entries.flow.async_progress() == []
 
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -248,8 +248,8 @@ async def test_http_failure.opp):
         "august.authenticator_async.AuthenticatorAsync.async_authenticate",
         side_effect=ClientResponseError(None, None, status=500),
     ):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -264,7 +264,7 @@ async def test_unknown_auth_state.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     assert.opp.config_entries.flow.async_progress() == []
 
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -272,12 +272,12 @@ async def test_unknown_auth_state.opp):
         "august.authenticator_async.AuthenticatorAsync.async_authenticate",
         return_value=_mock_august_authentication("original_token", 1234, None),
     ):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
-    flows = opp.config_entries.flow.async_progress()
+    flows =.opp.config_entries.flow.async_progress()
 
     assert flows[0]["step_id"] == "user"
 
@@ -290,7 +290,7 @@ async def test_requires_validation_state.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     assert.opp.config_entries.flow.async_progress() == []
 
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -300,8 +300,8 @@ async def test_requires_validation_state.opp):
             "original_token", 1234, AuthenticationState.REQUIRES_VALIDATION
         ),
     ):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 

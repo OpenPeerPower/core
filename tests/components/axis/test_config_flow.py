@@ -31,7 +31,7 @@ from openpeerpower.const import (
     CONF_PORT,
     CONF_USERNAME,
 )
-from openpeerpowerr.data_entry_flow import (
+from openpeerpower.data_entry_flow import (
     RESULT_TYPE_ABORT,
     RESULT_TYPE_CREATE_ENTRY,
     RESULT_TYPE_FORM,
@@ -51,9 +51,9 @@ from tests.common import MockConfigEntry
 
 async def test_flow_manual_configuration.opp):
     """Test that config flow works."""
-    MockConfigEntry(domain=AXIS_DOMAIN, source=SOURCE_IGNORE).add_to_opp.opp)
+    MockConfigEntry(domain=AXIS_DOMAIN, source=SOURCE_IGNORE).add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -62,7 +62,7 @@ async def test_flow_manual_configuration.opp):
 
     with respx.mock:
         mock_default_vapix_requests(respx)
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_HOST: "1.2.3.4",
@@ -87,9 +87,9 @@ async def test_flow_manual_configuration.opp):
 async def test_manual_configuration_update_configuration.opp):
     """Test that config flow fails on already configured device."""
     config_entry = await setup_axis_integration.opp)
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -101,7 +101,7 @@ async def test_manual_configuration_update_configuration.opp):
         return_value=True,
     ) as mock_setup_entry, respx.mock:
         mock_default_vapix_requests(respx, "2.3.4.5")
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_HOST: "2.3.4.5",
@@ -110,7 +110,7 @@ async def test_manual_configuration_update_configuration.opp):
                 CONF_PORT: 80,
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
@@ -120,7 +120,7 @@ async def test_manual_configuration_update_configuration.opp):
 
 async def test_flow_fails_faulty_credentials.opp):
     """Test that config flow fails on faulty credentials."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -131,7 +131,7 @@ async def test_flow_fails_faulty_credentials.opp):
         "openpeerpower.components.axis.config_flow.get_device",
         side_effect=config_flow.AuthenticationRequired,
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_HOST: "1.2.3.4",
@@ -146,7 +146,7 @@ async def test_flow_fails_faulty_credentials.opp):
 
 async def test_flow_fails_cannot_connect.opp):
     """Test that config flow fails on cannot connect."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -157,7 +157,7 @@ async def test_flow_fails_cannot_connect.opp):
         "openpeerpower.components.axis.config_flow.get_device",
         side_effect=config_flow.CannotConnect,
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_HOST: "1.2.3.4",
@@ -176,14 +176,14 @@ async def test_flow_create_entry_multiple_existing_entries_of_same_model.opp):
         domain=AXIS_DOMAIN,
         data={CONF_NAME: "M1065-LW 0", CONF_MODEL: "M1065-LW"},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     entry2 = MockConfigEntry(
         domain=AXIS_DOMAIN,
         data={CONF_NAME: "M1065-LW 1", CONF_MODEL: "M1065-LW"},
     )
-    entry2.add_to_opp.opp)
+    entry2.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -192,7 +192,7 @@ async def test_flow_create_entry_multiple_existing_entries_of_same_model.opp):
 
     with respx.mock:
         mock_default_vapix_requests(respx)
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_HOST: "1.2.3.4",
@@ -219,9 +219,9 @@ async def test_flow_create_entry_multiple_existing_entries_of_same_model.opp):
 async def test_reauth_flow_update_configuration.opp):
     """Test that config flow fails on already configured device."""
     config_entry = await setup_axis_integration.opp)
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN,
         context={"source": SOURCE_REAUTH},
         data=config_entry.data,
@@ -232,7 +232,7 @@ async def test_reauth_flow_update_configuration.opp):
 
     with respx.mock:
         mock_default_vapix_requests(respx, "2.3.4.5")
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_HOST: "2.3.4.5",
@@ -241,7 +241,7 @@ async def test_reauth_flow_update_configuration.opp):
                 CONF_PORT: 80,
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
@@ -308,7 +308,7 @@ async def test_reauth_flow_update_configuration.opp):
 )
 async def test_discovery_flow.opp, source: str, discovery_info: dict):
     """Test the different discovery flows for new devices work."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN, data=discovery_info, context={"source": source}
     )
 
@@ -317,7 +317,7 @@ async def test_discovery_flow.opp, source: str, discovery_info: dict):
 
     with respx.mock:
         mock_default_vapix_requests(respx)
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_HOST: "1.2.3.4",
@@ -378,7 +378,7 @@ async def test_discovered_device_already_configured(
     config_entry = await setup_axis_integration.opp)
     assert config_entry.data[CONF_HOST] == DEFAULT_HOST
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN, data=discovery_info, context={"source": source}
     )
 
@@ -439,10 +439,10 @@ async def test_discovery_flow_updated_configuration(
         return_value=True,
     ) as mock_setup_entry, respx.mock:
         mock_default_vapix_requests(respx, "2.3.4.5")
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             AXIS_DOMAIN, data=discovery_info, context={"source": source}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
@@ -491,7 +491,7 @@ async def test_discovery_flow_ignore_non_axis_device(
    .opp, source: str, discovery_info: dict
 ):
     """Test that discovery flow ignores devices with non Axis OUI."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN, data=discovery_info, context={"source": source}
     )
 
@@ -529,7 +529,7 @@ async def test_discovery_flow_ignore_link_local_address(
    .opp, source: str, discovery_info: dict
 ):
     """Test that discovery flow ignores devices with link local addresses."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN, data=discovery_info, context={"source": source}
     )
 
@@ -540,13 +540,13 @@ async def test_discovery_flow_ignore_link_local_address(
 async def test_option_flow.opp):
     """Test config flow options."""
     config_entry = await setup_axis_integration.opp)
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
     assert device.option_stream_profile == DEFAULT_STREAM_PROFILE
     assert device.option_video_source == DEFAULT_VIDEO_SOURCE
 
     with respx.mock:
         mock_default_vapix_requests(respx)
-        result = await opp..config_entries.options.async_init(
+        result = await.opp.config_entries.options.async_init(
             device.config_entry.entry_id
         )
 
@@ -562,7 +562,7 @@ async def test_option_flow.opp):
         1,
     }
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_STREAM_PROFILE: "profile_1", CONF_VIDEO_SOURCE: 1},
     )

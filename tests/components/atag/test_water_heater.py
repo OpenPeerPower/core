@@ -5,7 +5,7 @@ from unittest.mock import patch
 from openpeerpower.components.atag import DOMAIN, WATER_HEATER
 from openpeerpower.components.water_heater import SERVICE_SET_TEMPERATURE
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_TEMPERATURE
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.components.atag import UID, init_integration
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -19,7 +19,7 @@ async def test_water_heater(
     """Test the creation of Atag water heater."""
     with patch("pyatag.entities.DHW.status"):
         entry = await init_integration.opp, aioclient_mock)
-        registry = await opp..helpers.entity_registry.async_get_registry()
+        registry = await.opp.helpers.entity_registry.async_get_registry()
 
         assert registry.async_is_registered(WATER_HEATER_ID)
         entry = registry.async_get(WATER_HEATER_ID)
@@ -32,11 +32,11 @@ async def test_setting_target_temperature(
     """Test setting the water heater device."""
     await init_integration.opp, aioclient_mock)
     with patch("pyatag.entities.DHW.set_temp") as mock_set_temp:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             WATER_HEATER,
             SERVICE_SET_TEMPERATURE,
             {ATTR_ENTITY_ID: WATER_HEATER_ID, ATTR_TEMPERATURE: 50},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         mock_set_temp.assert_called_once_with(50)

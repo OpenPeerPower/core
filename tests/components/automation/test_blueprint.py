@@ -7,9 +7,9 @@ from unittest.mock import patch
 
 from openpeerpower.components import automation
 from openpeerpower.components.blueprint import models
-from openpeerpowerr.core import callback
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt as dt_util, yaml
+from openpeerpower.core import callback
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt as dt_util, yaml
 
 from tests.common import async_fire_time_changed, async_mock_service
 
@@ -78,45 +78,45 @@ async def test_notify_leaving_zone.opp):
     ) as mock_call_action:
         # Leaving zone to no zone
         set_person_state("not_home")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 1
-        _opp, config, variables, _context = mock_call_action.mock_calls[0][1]
+        .opp, config, variables, _context = mock_call_action.mock_calls[0][1]
         message_tpl = config.pop("message")
         assert config == {
             "domain": "mobile_app",
             "type": "notify",
             "device_id": "abcdefgh",
         }
-        message_tpl.opp = opp
+        message_tpl.opp =.opp
         assert message_tpl.async_render(variables) == "Paulus has left School"
 
         # Should not increase when we go to another zone
         set_person_state("bla")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 1
 
         # Should not increase when we go into the zone
         set_person_state("School")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 1
 
         # Should not increase when we move in the zone
         set_person_state("School", {"extra_key": "triggers change with same state"})
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 1
 
         # Should increase when leaving zone for another zone
         set_person_state("Just Outside School")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 2
 
         # Verify trigger works
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "automation",
             "trigger",
             {"entity_id": "automation.automation_0"},
@@ -176,7 +176,7 @@ async def test_motion_light.opp):
         await asyncio.sleep(0)
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=120))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(turn_off_calls) == 1
 
@@ -203,7 +203,7 @@ async def test_motion_light.opp):
     assert len(turn_off_calls) == 1
 
     # Verify trigger works
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "automation",
         "trigger",
         {"entity_id": "automation.automation_0"},

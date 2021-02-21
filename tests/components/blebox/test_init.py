@@ -16,11 +16,11 @@ async def test_setup_failure.opp, caplog):
     patch_product_identify(None, side_effect=blebox_uniapi.error.ClientError)
 
     entry = mock_config()
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     caplog.set_level(logging.ERROR)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert "Identify failed at 172.100.123.4:80 ()" in caplog.text
     assert entry.state == ENTRY_STATE_SETUP_RETRY
@@ -32,11 +32,11 @@ async def test_setup_failure_on_connection.opp, caplog):
     patch_product_identify(None, side_effect=blebox_uniapi.error.ConnectionError)
 
     entry = mock_config()
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     caplog.set_level(logging.ERROR)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert "Identify failed at 172.100.123.4:80 ()" in caplog.text
     assert entry.state == ENTRY_STATE_SETUP_RETRY
@@ -47,14 +47,14 @@ async def test_unload_config_entry.opp):
     patch_product_identify(None)
 
     entry = mock_config()
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
     assert.opp.data[DOMAIN]
 
-    await opp..config_entries.async_unload(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_unload(entry.entry_id)
+    await.opp.async_block_till_done()
     assert not.opp.data.get(DOMAIN)
 
     assert entry.state == ENTRY_STATE_NOT_LOADED

@@ -12,7 +12,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .test_device import (
     API_DISCOVERY_PORT_MANAGEMENT,
@@ -60,7 +60,7 @@ async def test_no_switches.opp):
 async def test_switches_with_port_cgi.opp):
     """Test that switches are loaded properly using port.cgi."""
     config_entry = await setup_axis_integration.opp)
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.vapix.ports = {"0": AsyncMock(), "1": AsyncMock()}
     device.api.vapix.ports["0"].name = "Doorbell"
@@ -69,21 +69,21 @@ async def test_switches_with_port_cgi.opp):
     device.api.vapix.ports["1"].name = ""
 
     device.api.event.update(EVENTS)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
-    relay_1 = opp.states.get(f"{SWITCH_DOMAIN}.{NAME}_relay_1")
+    relay_1 =.opp.states.get(f"{SWITCH_DOMAIN}.{NAME}_relay_1")
     assert relay_1.state == STATE_ON
     assert relay_1.name == f"{NAME} Relay 1"
 
     entity_id = f"{SWITCH_DOMAIN}.{NAME}_doorbell"
 
-    relay_0 = opp.states.get(entity_id)
+    relay_0 =.opp.states.get(entity_id)
     assert relay_0.state == STATE_OFF
     assert relay_0.name == f"{NAME} Doorbell"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity_id},
@@ -91,7 +91,7 @@ async def test_switches_with_port_cgi.opp):
     )
     device.api.vapix.ports["0"].close.assert_called_once()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: entity_id},
@@ -107,7 +107,7 @@ async def test_switches_with_port_management.opp):
 
     with patch.dict(API_DISCOVERY_RESPONSE, api_discovery):
         config_entry = await setup_axis_integration.opp)
-        device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+        device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.vapix.ports = {"0": AsyncMock(), "1": AsyncMock()}
     device.api.vapix.ports["0"].name = "Doorbell"
@@ -116,21 +116,21 @@ async def test_switches_with_port_management.opp):
     device.api.vapix.ports["1"].name = ""
 
     device.api.event.update(EVENTS)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
-    relay_1 = opp.states.get(f"{SWITCH_DOMAIN}.{NAME}_relay_1")
+    relay_1 =.opp.states.get(f"{SWITCH_DOMAIN}.{NAME}_relay_1")
     assert relay_1.state == STATE_ON
     assert relay_1.name == f"{NAME} Relay 1"
 
     entity_id = f"{SWITCH_DOMAIN}.{NAME}_doorbell"
 
-    relay_0 = opp.states.get(entity_id)
+    relay_0 =.opp.states.get(entity_id)
     assert relay_0.state == STATE_OFF
     assert relay_0.name == f"{NAME} Doorbell"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity_id},
@@ -138,7 +138,7 @@ async def test_switches_with_port_management.opp):
     )
     device.api.vapix.ports["0"].close.assert_called_once()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: entity_id},

@@ -5,15 +5,15 @@ import ambiclimate
 
 from openpeerpower import data_entry_flow
 from openpeerpower.components.ambiclimate import config_flow
-from openpeerpower.config import async_process_op.core_config
+from openpeerpower.config import async_process_ha_core_config
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import aiohttp
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import aiohttp
 
 
 async def init_config_flow.opp):
     """Init a configuration flow."""
-    await async_process_op.core_config(
+    await async_process_ha_core_config(
        .opp,
         {"external_url": "https://example.com"},
     )
@@ -22,14 +22,14 @@ async def init_config_flow.opp):
     config_flow.register_flow_implementation.opp, "id", "secret")
     flow = config_flow.AmbiclimateFlowHandler()
 
-    flow.opp = opp
+    flow.opp =.opp
     return flow
 
 
 async def test_abort_if_no_implementation_registered.opp):
     """Test we abort if no implementation is registered."""
     flow = config_flow.AmbiclimateFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -120,11 +120,11 @@ async def test_view.opp):
     request = aiohttp.MockRequest(
         b"", query_string="code=test_code", mock_source="test"
     )
-    request.app = {"opp":.opp}
+    request.app = {.opp":.opp}
     view = config_flow.AmbiclimateAuthCallbackView()
     assert await view.get(request) == "OK!"
 
     request = aiohttp.MockRequest(b"", query_string="", mock_source="test")
-    request.app = {"opp":.opp}
+    request.app = {.opp":.opp}
     view = config_flow.AmbiclimateAuthCallbackView()
     assert await view.get(request) == "No code"

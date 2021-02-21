@@ -2,7 +2,7 @@
 
 from openpeerpower.components.atag import DOMAIN
 from openpeerpower.const import CONF_EMAIL, CONF_HOST, CONF_PORT, CONTENT_TYPE_JSON
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -76,10 +76,10 @@ async def init_integration(
     )
 
     entry = MockConfigEntry(domain=DOMAIN, data=USER_INPUT)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     if not skip_setup:
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     return entry

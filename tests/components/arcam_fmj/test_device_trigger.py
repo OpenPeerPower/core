@@ -3,7 +3,7 @@ import pytest
 
 from openpeerpower.components.arcam_fmj.const import DOMAIN
 import openpeerpower.components.automation as automation
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -36,7 +36,7 @@ def calls.opp):
 async def test_get_triggers.opp, device_reg, entity_reg):
     """Test we get the expected triggers from a arcam_fmj."""
     config_entry = MockConfigEntry(domain=DOMAIN, data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         identifiers={(DOMAIN, "host", 1234)},
@@ -89,13 +89,13 @@ async def test_if_fires_on_turn_on_request.opp, calls, player_setup, state):
         },
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "media_player",
         "turn_on",
         {"entity_id": player_setup},
         blocking=True,
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == player_setup

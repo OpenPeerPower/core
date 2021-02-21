@@ -21,7 +21,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.util import color
+from openpeerpower.util import color
 
 from .conftest import async_setup_entity, mock_feature
 
@@ -56,7 +56,7 @@ async def test_dimmer_init(dimmer,.opp, config):
     entry = await async_setup_entity.opp, config, entity_id)
     assert entry.unique_id == "BleBox-dimmerBox-1afe34e750b8-brightness"
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.name == "dimmerBox-brightness"
 
     supported_features = state.attributes[ATTR_SUPPORTED_FEATURES]
@@ -65,7 +65,7 @@ async def test_dimmer_init(dimmer,.opp, config):
     assert state.attributes[ATTR_BRIGHTNESS] == 65
     assert state.state == STATE_ON
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
 
     assert device.name == "My dimmer"
@@ -86,7 +86,7 @@ async def test_dimmer_update(dimmer,.opp, config):
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
     await async_setup_entity.opp, config, entity_id)
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes[ATTR_BRIGHTNESS] == 53
     assert state.state == STATE_ON
 
@@ -105,7 +105,7 @@ async def test_dimmer_on(dimmer,.opp, config):
     await async_setup_entity.opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_OFF
 
     def turn_on(brightness):
@@ -114,14 +114,14 @@ async def test_dimmer_on(dimmer,.opp, config):
         feature_mock.is_on = True  # on
 
     feature_mock.async_on = AsyncMock(side_effect=turn_on)
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         SERVICE_TURN_ON,
         {"entity_id": entity_id},
         blocking=True,
     )
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 254
 
@@ -140,7 +140,7 @@ async def test_dimmer_on_with_brightness(dimmer,.opp, config):
     await async_setup_entity.opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_OFF
 
     def turn_on(brightness):
@@ -155,14 +155,14 @@ async def test_dimmer_on_with_brightness(dimmer,.opp, config):
         return brightness
 
     feature_mock.apply_brightness = apply
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         SERVICE_TURN_ON,
         {"entity_id": entity_id, ATTR_BRIGHTNESS: 202},
         blocking=True,
     )
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes[ATTR_BRIGHTNESS] == 202
     assert state.state == STATE_ON
 
@@ -179,7 +179,7 @@ async def test_dimmer_off(dimmer,.opp, config):
     await async_setup_entity.opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ON
 
     def turn_off():
@@ -187,14 +187,14 @@ async def test_dimmer_off(dimmer,.opp, config):
         feature_mock.brightness = 0  # off
 
     feature_mock.async_off = AsyncMock(side_effect=turn_off)
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         SERVICE_TURN_OFF,
         {"entity_id": entity_id},
         blocking=True,
     )
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_OFF
     assert ATTR_BRIGHTNESS not in state.attributes
 
@@ -227,7 +227,7 @@ async def test_wlightbox_s_init(wlightbox_s,.opp, config):
     entry = await async_setup_entity.opp, config, entity_id)
     assert entry.unique_id == "BleBox-wLightBoxS-1afe34e750b8-color"
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.name == "wLightBoxS-color"
 
     supported_features = state.attributes[ATTR_SUPPORTED_FEATURES]
@@ -236,7 +236,7 @@ async def test_wlightbox_s_init(wlightbox_s,.opp, config):
     assert ATTR_BRIGHTNESS not in state.attributes
     assert state.state == STATE_OFF
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
 
     assert device.name == "My wLightBoxS"
@@ -259,7 +259,7 @@ async def test_wlightbox_s_update(wlightbox_s,.opp, config):
 
     await async_setup_entity.opp, config, entity_id)
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 0xAB
 
@@ -277,7 +277,7 @@ async def test_wlightbox_s_on(wlightbox_s,.opp, config):
     await async_setup_entity.opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_OFF
 
     def turn_on(brightness):
@@ -286,14 +286,14 @@ async def test_wlightbox_s_on(wlightbox_s,.opp, config):
         feature_mock.is_on = True  # on
 
     feature_mock.async_on = AsyncMock(side_effect=turn_on)
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         SERVICE_TURN_ON,
         {"entity_id": entity_id},
         blocking=True,
     )
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes[ATTR_BRIGHTNESS] == 254
     assert state.state == STATE_ON
 
@@ -327,7 +327,7 @@ async def test_wlightbox_init(wlightbox,.opp, config):
     entry = await async_setup_entity.opp, config, entity_id)
     assert entry.unique_id == "BleBox-wLightBox-1afe34e750b8-color"
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.name == "wLightBox-color"
 
     supported_features = state.attributes[ATTR_SUPPORTED_FEATURES]
@@ -339,7 +339,7 @@ async def test_wlightbox_init(wlightbox,.opp, config):
     assert ATTR_BRIGHTNESS not in state.attributes
     assert state.state == STATE_OFF
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
 
     assert device.name == "My wLightBox"
@@ -362,7 +362,7 @@ async def test_wlightbox_update(wlightbox,.opp, config):
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
     await async_setup_entity.opp, config, entity_id)
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes[ATTR_HS_COLOR] == (352.32, 100.0)
     assert state.attributes[ATTR_WHITE_VALUE] == 0x3A
     assert state.state == STATE_ON
@@ -380,7 +380,7 @@ async def test_wlightbox_on_via_just_whiteness(wlightbox,.opp, config):
     await async_setup_entity.opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_OFF
 
     def turn_on(value):
@@ -400,14 +400,14 @@ async def test_wlightbox_on_via_just_whiteness(wlightbox,.opp, config):
 
     feature_mock.sensible_on_value = "f1e2d305"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         SERVICE_TURN_ON,
         {"entity_id": entity_id, ATTR_WHITE_VALUE: 0xC7},
         blocking=True,
     )
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ON
     assert state.attributes[ATTR_WHITE_VALUE] == 0xC7
 
@@ -426,7 +426,7 @@ async def test_wlightbox_on_via_reset_whiteness(wlightbox,.opp, config):
     await async_setup_entity.opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_OFF
 
     def turn_on(value):
@@ -446,14 +446,14 @@ async def test_wlightbox_on_via_reset_whiteness(wlightbox,.opp, config):
 
     feature_mock.sensible_on_value = "f1e2d305"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         SERVICE_TURN_ON,
         {"entity_id": entity_id, ATTR_WHITE_VALUE: 0x0},
         blocking=True,
     )
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ON
     assert state.attributes[ATTR_WHITE_VALUE] == 0x0
     assert state.attributes[ATTR_HS_COLOR] == color.color_RGB_to_hs(0xF1, 0xE2, 0xD3)
@@ -472,7 +472,7 @@ async def test_wlightbox_on_via_just_hsl_color(wlightbox,.opp, config):
     await async_setup_entity.opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_OFF
 
     hs_color = color.color_RGB_to_hs(0xFF, 0xA1, 0xB2)
@@ -493,14 +493,14 @@ async def test_wlightbox_on_via_just_hsl_color(wlightbox,.opp, config):
     feature_mock.apply_color = apply_color
     feature_mock.sensible_on_value = "c1a2e3e4"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         SERVICE_TURN_ON,
         {"entity_id": entity_id, ATTR_HS_COLOR: hs_color},
         blocking=True,
     )
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes[ATTR_HS_COLOR] == hs_color
     assert state.attributes[ATTR_WHITE_VALUE] == 0xE4
     assert state.state == STATE_ON
@@ -518,7 +518,7 @@ async def test_wlightbox_on_to_last_color(wlightbox,.opp, config):
     await async_setup_entity.opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_OFF
 
     def turn_on(value):
@@ -530,14 +530,14 @@ async def test_wlightbox_on_to_last_color(wlightbox,.opp, config):
     feature_mock.async_on = AsyncMock(side_effect=turn_on)
     feature_mock.sensible_on_value = "f1e2d3e4"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         SERVICE_TURN_ON,
         {"entity_id": entity_id},
         blocking=True,
     )
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes[ATTR_WHITE_VALUE] == 0xE4
     assert state.attributes[ATTR_HS_COLOR] == color.color_RGB_to_hs(0xF1, 0xE2, 0xD3)
     assert state.state == STATE_ON
@@ -555,7 +555,7 @@ async def test_wlightbox_off(wlightbox,.opp, config):
     await async_setup_entity.opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ON
 
     def turn_off():
@@ -565,14 +565,14 @@ async def test_wlightbox_off(wlightbox,.opp, config):
 
     feature_mock.async_off = AsyncMock(side_effect=turn_off)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         SERVICE_TURN_OFF,
         {"entity_id": entity_id},
         blocking=True,
     )
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert ATTR_WHITE_VALUE not in state.attributes
     assert ATTR_HS_COLOR not in state.attributes
     assert state.state == STATE_OFF
@@ -602,7 +602,7 @@ async def test_turn_on_failure(feature,.opp, config, caplog):
     await async_setup_entity.opp, config, entity_id)
 
     feature_mock.sensible_on_value = 123
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         SERVICE_TURN_ON,
         {"entity_id": entity_id},

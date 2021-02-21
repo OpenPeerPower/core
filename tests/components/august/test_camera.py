@@ -19,12 +19,12 @@ async def test_create_doorbell.opp, aiohttp_client):
     ):
         await _create_august_with_devices.opp, [doorbell_one])
 
-        camera_k98gidt45gul_name_camera = opp.states.get(
+        camera_k98gidt45gul_name_camera =.opp.states.get(
             "camera.k98gidt45gul_name_camera"
         )
         assert camera_k98gidt45gul_name_camera.state == STATE_IDLE
 
-        url = opp.states.get("camera.k98gidt45gul_name_camera").attributes[
+        url =.opp.states.get("camera.k98gidt45gul_name_camera").attributes[
             "entity_picture"
         ]
 

@@ -25,10 +25,10 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import Context, CoreState, State, callback
-from openpeerpowerr.exceptions import OpenPeerPowerError, Unauthorized
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import Context, CoreState, State, callback
+from openpeerpower.exceptions import OpenPeerPowerError, Unauthorized
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import assert_setup_component, async_mock_service, mock_restore_cache
 from tests.components.logbook.test_init import MockLazyEventPartialState
@@ -77,13 +77,13 @@ async def test_service_specify_data.opp, calls):
 
     time = dt_util.utcnow()
 
-    with patch("openpeerpowerr.helpers.script.utcnow", return_value=time):
+    with patch("openpeerpower.helpers.script.utcnow", return_value=time):
        .opp.bus.async_fire("test_event")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data["some"] == "event - test_event"
-    state = opp.states.get("automation.hello")
+    state =.opp.states.get("automation.hello")
     assert state is not None
     assert state.attributes.get("last_triggered") == time
 
@@ -102,7 +102,7 @@ async def test_service_specify_entity_id.opp, calls):
     )
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert ["hello.world"] == calls[0].data.get(ATTR_ENTITY_ID)
 
@@ -124,7 +124,7 @@ async def test_service_specify_entity_id_list.opp, calls):
     )
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert ["hello.world", "hello.world2"] == calls[0].data.get(ATTR_ENTITY_ID)
 
@@ -146,10 +146,10 @@ async def test_two_triggers.opp, calls):
     )
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
    .opp.states.async_set("test.entity", "hello")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
 
 
@@ -176,18 +176,18 @@ async def test_trigger_service_ignoring_condition.opp, caplog, calls):
     caplog.set_level(logging.WARNING)
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
     assert len(caplog.record_tuples) == 1
     assert caplog.record_tuples[0][1] == logging.WARNING
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "automation", "trigger", {"entity_id": "automation.test"}, blocking=True
     )
     assert len(calls) == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "automation",
         "trigger",
         {"entity_id": "automation.test", "skip_condition": True},
@@ -195,7 +195,7 @@ async def test_trigger_service_ignoring_condition.opp, caplog, calls):
     )
     assert len(calls) == 2
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "automation",
         "trigger",
         {"entity_id": "automation.test", "skip_condition": False},
@@ -228,17 +228,17 @@ async def test_two_conditions_with_and.opp, calls):
 
    .opp.states.async_set(entity_id, 100)
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set(entity_id, 101)
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set(entity_id, 151)
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -258,12 +258,12 @@ async def test_shorthand_conditions_template.opp, calls):
 
    .opp.states.async_set("test.entity", "hello")
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set("test.entity", "goodbye")
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -287,11 +287,11 @@ async def test_automation_list_setting.opp, calls):
     )
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
    .opp.bus.async_fire("test_event_2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
 
 
@@ -312,7 +312,7 @@ async def test_automation_calling_two_actions.opp, calls):
     )
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 2
     assert calls[0].data["position"] == 0
@@ -347,7 +347,7 @@ async def test_shared_context.opp, calls):
    .opp.bus.async_listen("test_event2", first_automation_listener)
    .opp.bus.async_listen(EVENT_AUTOMATION_TRIGGERED, event_mock)
    .opp.bus.async_fire("test_event", context=context)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Ensure events was fired
     assert first_automation_listener.call_count == 1
@@ -367,7 +367,7 @@ async def test_shared_context.opp, calls):
     assert args[0].context is first_trigger_context
 
     # Ensure the 'hello' automation state has the right context
-    state = opp.states.get("automation.hello")
+    state =.opp.states.get("automation.hello")
     assert state is not None
     assert state.context is first_trigger_context
 
@@ -409,10 +409,10 @@ async def test_services.opp, calls):
     assert automation.is_on.opp, entity_id)
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         automation.DOMAIN,
         SERVICE_TURN_OFF,
         {
@@ -423,19 +423,19 @@ async def test_services.opp, calls):
 
     assert not automation.is_on.opp, entity_id)
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         automation.DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
 
     assert automation.is_on.opp, entity_id)
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         automation.DOMAIN,
         SERVICE_TOGGLE,
         {ATTR_ENTITY_ID: entity_id},
@@ -443,26 +443,26 @@ async def test_services.opp, calls):
     )
     assert not automation.is_on.opp, entity_id)
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         automation.DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
-    await opp..services.async_call(
+    await.opp.services.async_call(
         automation.DOMAIN, SERVICE_TRIGGER, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
     assert len(calls) == 3
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         automation.DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
-    await opp..services.async_call(
+    await.opp.services.async_call(
         automation.DOMAIN, SERVICE_TRIGGER, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
     assert len(calls) == 4
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         automation.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
     assert automation.is_on.opp, entity_id)
@@ -486,12 +486,12 @@ async def test_reload_config_service.opp, calls,.opp_admin_user,.opp_read_only_u
     )
     assert.opp.states.get("automation.hello") is not None
     assert.opp.states.get("automation.bye") is None
-    listeners = opp.bus.async_listeners()
+    listeners =.opp.bus.async_listeners()
     assert listeners.get("test_event") == 1
     assert listeners.get("test_event2") is None
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data.get("event") == "test_event"
@@ -516,35 +516,35 @@ async def test_reload_config_service.opp, calls,.opp_admin_user,.opp_read_only_u
         },
     ):
         with pytest.raises(Unauthorized):
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 automation.DOMAIN,
                 SERVICE_RELOAD,
                 context=Context(user_id.opp_read_only_user.id),
                 blocking=True,
             )
-        await opp..services.async_call(
+        await.opp.services.async_call(
             automation.DOMAIN,
             SERVICE_RELOAD,
             context=Context(user_id.opp_admin_user.id),
             blocking=True,
         )
         # De-flake ?!
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(test_reload_event) == 1
 
     assert.opp.states.get("automation.hello") is None
     assert.opp.states.get("automation.bye") is not None
-    listeners = opp.bus.async_listeners()
+    listeners =.opp.bus.async_listeners()
     assert listeners.get("test_event") is None
     assert listeners.get("test_event2") == 1
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data.get("event") == "test_event2"
 
@@ -569,7 +569,7 @@ async def test_reload_config_when_invalid_config.opp, calls):
     assert.opp.states.get("automation.hello") is not None
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data.get("event") == "test_event"
@@ -579,16 +579,16 @@ async def test_reload_config_when_invalid_config.opp, calls):
         autospec=True,
         return_value={automation.DOMAIN: "not valid"},
     ):
-        await opp..services.async_call(automation.DOMAIN, SERVICE_RELOAD, blocking=True)
+        await.opp.services.async_call(automation.DOMAIN, SERVICE_RELOAD, blocking=True)
 
     assert.opp.states.get("automation.hello") is None
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_reload_config_op.dles_load_fails.opp, calls):
+async def test_reload_config_handles_load_fails.opp, calls):
     """Test the reload config service."""
     assert await async_setup_component(
        .opp,
@@ -607,7 +607,7 @@ async def test_reload_config_op.dles_load_fails.opp, calls):
     assert.opp.states.get("automation.hello") is not None
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data.get("event") == "test_event"
@@ -616,12 +616,12 @@ async def test_reload_config_op.dles_load_fails.opp, calls):
         "openpeerpower.config.load_yaml_config_file",
         side_effect=OpenPeerPowerError("bla"),
     ):
-        await opp..services.async_call(automation.DOMAIN, SERVICE_RELOAD, blocking=True)
+        await.opp.services.async_call(automation.DOMAIN, SERVICE_RELOAD, blocking=True)
 
     assert.opp.states.get("automation.hello") is not None
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
 
 
@@ -657,14 +657,14 @@ async def test_automation_stops.opp, calls, service):
     await running.wait()
 
     if service == "turn_off_stop":
-        await opp..services.async_call(
+        await.opp.services.async_call(
             automation.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: entity_id},
             blocking=True,
         )
     elif service == "turn_off_no_stop":
-        await opp..services.async_call(
+        await.opp.services.async_call(
             automation.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: entity_id, automation.CONF_STOP_ACTIONS: False},
@@ -676,12 +676,12 @@ async def test_automation_stops.opp, calls, service):
             autospec=True,
             return_value=config,
         ):
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 automation.DOMAIN, SERVICE_RELOAD, blocking=True
             )
 
    .opp.states.async_set(test_entity, "goodbye")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == (1 if service == "turn_off_no_stop" else 0)
 
@@ -715,12 +715,12 @@ async def test_automation_restore_state.opp):
 
     assert await async_setup_component.opp, automation.DOMAIN, config)
 
-    state = opp.states.get("automation.hello")
+    state =.opp.states.get("automation.hello")
     assert state
     assert state.state == STATE_ON
     assert state.attributes["last_triggered"] is None
 
-    state = opp.states.get("automation.bye")
+    state =.opp.states.get("automation.bye")
     assert state
     assert state.state == STATE_OFF
     assert state.attributes["last_triggered"] == time
@@ -730,13 +730,13 @@ async def test_automation_restore_state.opp):
     assert automation.is_on.opp, "automation.bye") is False
 
    .opp.bus.async_fire("test_event_bye")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
     assert automation.is_on.opp, "automation.hello")
 
    .opp.bus.async_fire("test_event_hello")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -760,7 +760,7 @@ async def test_initial_value_off.opp):
     assert not automation.is_on.opp, "automation.hello")
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -786,10 +786,10 @@ async def test_initial_value_on.opp):
     )
     assert automation.is_on.opp, "automation.hello")
 
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -813,9 +813,9 @@ async def test_initial_value_off_but_restore_on.opp):
     )
     assert not automation.is_on.opp, "automation.hello")
 
-    await opp..async_start()
+    await.opp.async_start()
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -839,7 +839,7 @@ async def test_initial_value_on_but_restore_off.opp):
     assert automation.is_on.opp, "automation.hello")
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -862,7 +862,7 @@ async def test_no_initial_value_and_restore_off.opp):
     assert not automation.is_on.opp, "automation.hello")
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -884,7 +884,7 @@ async def test_automation_is_on_if_no_initial_state_or_restore.opp):
     assert automation.is_on.opp, "automation.hello")
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -907,15 +907,15 @@ async def test_automation_not_trigger_on_bootstrap.opp):
     assert automation.is_on.opp, "automation.hello")
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert automation.is_on.opp, "automation.hello")
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert ["hello.world"] == calls[0].data.get(ATTR_ENTITY_ID)
@@ -952,7 +952,7 @@ async def test_automation_with_error_in_script.opp, caplog):
     )
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert "Service not found" in caplog.text
     assert "Traceback" not in caplog.text
 
@@ -972,7 +972,7 @@ async def test_automation_with_error_in_script_2.opp, caplog):
     )
 
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert "string value is None" in caplog.text
 
 
@@ -1014,17 +1014,17 @@ async def test_automation_restore_last_triggered_with_initial_state.opp):
 
     await async_setup_component.opp, automation.DOMAIN, config)
 
-    state = opp.states.get("automation.hello")
+    state =.opp.states.get("automation.hello")
     assert state
     assert state.state == STATE_OFF
     assert state.attributes["last_triggered"] is None
 
-    state = opp.states.get("automation.bye")
+    state =.opp.states.get("automation.bye")
     assert state
     assert state.state == STATE_OFF
     assert state.attributes["last_triggered"] == time
 
-    state = opp.states.get("automation.solong")
+    state =.opp.states.get("automation.solong")
     assert state
     assert state.state == STATE_ON
     assert state.attributes["last_triggered"] == time
@@ -1218,27 +1218,27 @@ async def test_automation_variables.opp, caplog):
         },
     )
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["value"] == "defined_in_config"
     assert calls[0].data["event_type"] == "test_event"
 
    .opp.bus.async_fire("test_event_2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
    .opp.bus.async_fire("test_event_2", {"pass_condition": True})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
 
     assert "Error rendering variables" not in caplog.text
    .opp.bus.async_fire("test_event_3")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert "Error rendering variables" in caplog.text
 
    .opp.bus.async_fire("test_event_3", {"break": 0})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 3
 
 
@@ -1288,13 +1288,13 @@ async def test_automation_trigger_variables.opp, caplog):
         },
     )
    .opp.bus.async_fire("test_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["value"] == "defined_in_config"
     assert calls[0].data["event_type"] == "test_event"
 
    .opp.bus.async_fire("test_event_2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["value"] == "overridden_in_config"
     assert calls[1].data["event_type"] == "test_event_2"
@@ -1303,7 +1303,7 @@ async def test_automation_trigger_variables.opp, caplog):
 
 
 async def test_automation_bad_trigger_variables.opp, caplog):
-    """Test automation trigger variables accessing opp is rejected."""
+    """Test automation trigger variables accessing.opp is rejected."""
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
@@ -1326,7 +1326,7 @@ async def test_automation_bad_trigger_variables.opp, caplog):
    .opp.bus.async_fire("test_event")
     assert "Use of 'states' is not supported in limited templates" in caplog.text
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -1348,7 +1348,7 @@ async def test_blueprint_automation.opp, calls):
         },
     )
    .opp.bus.async_fire("blueprint_event")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert automation.entities_in_automation.opp, "automation.automation_0") == [
         "light.kitchen"

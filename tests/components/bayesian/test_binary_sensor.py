@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from openpeerpower import config as.opp_config
 from openpeerpower.components.bayesian import DOMAIN, binary_sensor as bayesian
-from openpeerpower.components.openpeerpowerr import (
+from openpeerpower.components.openpeerpower import (
     DOMAIN as HA_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
@@ -16,11 +16,11 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.core import Context, callback
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import Context, callback
+from openpeerpower.setup import async_setup_component
 
 
-async def test_load_values_when_added_to_opp.opp):
+async def test_load_values_when_added_to.opp.opp):
     """Test that sensor initializes with observations of relevant entities."""
 
     config = {
@@ -42,12 +42,12 @@ async def test_load_values_when_added_to_opp.opp):
     }
 
    .opp.states.async_set("sensor.test_monitored", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert state.attributes.get("observations")[0]["prob_given_true"] == 0.8
     assert state.attributes.get("observations")[0]["prob_given_false"] == 0.4
 
@@ -74,12 +74,12 @@ async def test_unknown_state_does_not_influence_probability.opp):
     }
 
    .opp.states.async_set("sensor.test_monitored", STATE_UNKNOWN)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert state.attributes.get("observations") == []
 
 
@@ -111,12 +111,12 @@ async def test_sensor_numeric_state.opp):
     }
 
     assert await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_monitored", 4)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
 
     assert [] == state.attributes.get("observations")
     assert 0.2 == state.attributes.get("probability")
@@ -124,14 +124,14 @@ async def test_sensor_numeric_state.opp):
     assert state.state == "off"
 
    .opp.states.async_set("sensor.test_monitored", 6)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", 4)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", 6)
    .opp.states.async_set("sensor.test_monitored1", 6)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert state.attributes.get("observations")[0]["prob_given_true"] == 0.6
     assert state.attributes.get("observations")[1]["prob_given_true"] == 0.9
     assert state.attributes.get("observations")[1]["prob_given_false"] == 0.1
@@ -141,19 +141,19 @@ async def test_sensor_numeric_state.opp):
 
    .opp.states.async_set("sensor.test_monitored", 6)
    .opp.states.async_set("sensor.test_monitored1", 0)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", 4)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert 0.2 == state.attributes.get("probability")
 
     assert state.state == "off"
 
    .opp.states.async_set("sensor.test_monitored", 15)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
 
     assert state.state == "off"
 
@@ -179,11 +179,11 @@ async def test_sensor_state.opp):
     }
 
     assert await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_monitored", "on")
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
 
     assert [] == state.attributes.get("observations")
     assert 0.2 == state.attributes.get("probability")
@@ -191,13 +191,13 @@ async def test_sensor_state.opp):
     assert state.state == "off"
 
    .opp.states.async_set("sensor.test_monitored", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", "on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert state.attributes.get("observations")[0]["prob_given_true"] == 0.8
     assert state.attributes.get("observations")[0]["prob_given_false"] == 0.4
     assert round(abs(0.33 - state.attributes.get("probability")), 7) == 0
@@ -205,11 +205,11 @@ async def test_sensor_state.opp):
     assert state.state == "on"
 
    .opp.states.async_set("sensor.test_monitored", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", "on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert round(abs(0.2 - state.attributes.get("probability")), 7) == 0
 
     assert state.state == "off"
@@ -235,11 +235,11 @@ async def test_sensor_value_template.opp):
     }
 
     assert await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_monitored", "on")
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
 
     assert [] == state.attributes.get("observations")
     assert 0.2 == state.attributes.get("probability")
@@ -247,13 +247,13 @@ async def test_sensor_value_template.opp):
     assert state.state == "off"
 
    .opp.states.async_set("sensor.test_monitored", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", "on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert state.attributes.get("observations")[0]["prob_given_true"] == 0.8
     assert state.attributes.get("observations")[0]["prob_given_false"] == 0.4
     assert round(abs(0.33 - state.attributes.get("probability")), 7) == 0
@@ -261,11 +261,11 @@ async def test_sensor_value_template.opp):
     assert state.state == "on"
 
    .opp.states.async_set("sensor.test_monitored", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", "on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert round(abs(0.2 - state.attributes.get("probability")), 7) == 0
 
     assert state.state == "off"
@@ -291,12 +291,12 @@ async def test_threshold.opp):
     }
 
     assert await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_monitored", "on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert round(abs(1.0 - state.attributes.get("probability")), 7) == 0
 
     assert state.state == "on"
@@ -330,11 +330,11 @@ async def test_multiple_observations.opp):
     }
 
     assert await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_monitored", "off")
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
 
     for key, attrs in state.attributes.items():
         json.dumps(attrs)
@@ -344,13 +344,13 @@ async def test_multiple_observations.opp):
     assert state.state == "off"
 
    .opp.states.async_set("sensor.test_monitored", "blue")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", "blue")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
 
     assert state.attributes.get("observations")[0]["prob_given_true"] == 0.8
     assert state.attributes.get("observations")[0]["prob_given_false"] == 0.4
@@ -359,11 +359,11 @@ async def test_multiple_observations.opp):
     assert state.state == "on"
 
    .opp.states.async_set("sensor.test_monitored", "blue")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored", "red")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert round(abs(0.11 - state.attributes.get("probability")), 7) == 0
 
     assert state.state == "off"
@@ -416,28 +416,28 @@ async def test_observed_entities.opp):
     }
 
     assert await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_monitored", "on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored1", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert [] == state.attributes.get("occurred_observation_entities")
 
    .opp.states.async_set("sensor.test_monitored", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert ["sensor.test_monitored"] == state.attributes.get(
         "occurred_observation_entities"
     )
 
    .opp.states.async_set("sensor.test_monitored1", "on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert ["sensor.test_monitored", "sensor.test_monitored1"] == sorted(
         state.attributes.get("occurred_observation_entities")
     )
@@ -469,28 +469,28 @@ async def test_state_attributes_are_serializable.opp):
     }
 
     assert await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_monitored", "on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_monitored1", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert [] == state.attributes.get("occurred_observation_entities")
 
    .opp.states.async_set("sensor.test_monitored", "off")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert ["sensor.test_monitored"] == state.attributes.get(
         "occurred_observation_entities"
     )
 
    .opp.states.async_set("sensor.test_monitored1", "on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test_binary")
+    state =.opp.states.get("binary_sensor.test_binary")
     assert ["sensor.test_monitored", "sensor.test_monitored1"] == sorted(
         state.attributes.get("occurred_observation_entities")
     )
@@ -518,7 +518,7 @@ async def test_template_error.opp, caplog):
     }
 
     await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test_binary").state == "off"
 
@@ -548,17 +548,17 @@ async def test_update_request_with_template.opp):
     await async_setup_component.opp, "binary_sensor", config)
     await async_setup_component.opp, HA_DOMAIN, {})
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test_binary").state == "off"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: "binary_sensor.test_binary"},
         blocking=True,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("binary_sensor.test_binary").state == "off"
 
 
@@ -585,20 +585,20 @@ async def test_update_request_without_template.opp):
     await async_setup_component.opp, "binary_sensor", config)
     await async_setup_component.opp, HA_DOMAIN, {})
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_monitored", "on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test_binary").state == "off"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: "binary_sensor.test_binary"},
         blocking=True,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("binary_sensor.test_binary").state == "off"
 
 
@@ -625,16 +625,16 @@ async def test_monitored_sensor_goes_away.opp):
     await async_setup_component.opp, "binary_sensor", config)
     await async_setup_component.opp, HA_DOMAIN, {})
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_monitored", "on")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test_binary").state == "on"
 
    .opp.states.async_remove("sensor.test_monitored")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("binary_sensor.test_binary").state == "on"
 
 
@@ -660,7 +660,7 @@ async def test_reload.opp):
     }
 
     await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 
@@ -672,13 +672,13 @@ async def test_reload.opp):
         "bayesian/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 
@@ -710,7 +710,7 @@ async def test_template_triggers.opp):
     }
 
     await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test_binary").state == STATE_OFF
 
@@ -721,8 +721,8 @@ async def test_template_triggers.opp):
 
     context = Context()
    .opp.states.async_set("input_boolean.test", STATE_ON, context=context)
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert events[0].context == context
 
@@ -749,7 +749,7 @@ async def test_state_triggers.opp):
         }
     }
     await async_setup_component.opp, "binary_sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test_binary").state == STATE_OFF
 
@@ -760,7 +760,7 @@ async def test_state_triggers.opp):
 
     context = Context()
    .opp.states.async_set("sensor.test_monitored", STATE_ON, context=context)
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert events[0].context == context

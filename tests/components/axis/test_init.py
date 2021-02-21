@@ -13,9 +13,9 @@ from openpeerpower.const import (
     CONF_PORT,
     CONF_USERNAME,
 )
-from openpeerpowerr.helpers import entity_registry
-from openpeerpowerr.helpers.device_registry import format_mac
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers.device_registry import format_mac
+from openpeerpower.setup import async_setup_component
 
 from .test_device import MAC, setup_axis_integration
 
@@ -40,7 +40,7 @@ async def test_setup_entry_fails.opp):
     config_entry = MockConfigEntry(
         domain=AXIS_DOMAIN, data={CONF_MAC: "0123"}, version=3
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     mock_device = Mock()
     mock_device.async_setup = AsyncMock(return_value=False)
@@ -48,7 +48,7 @@ async def test_setup_entry_fails.opp):
     with patch.object(axis, "AxisNetworkDevice") as mock_device_class:
         mock_device_class.return_value = mock_device
 
-        assert not await opp..config_entries.async_setup(config_entry.entry_id)
+        assert not await.opp.config_entries.async_setup(config_entry.entry_id)
 
     assert not.opp.data[AXIS_DOMAIN]
 
@@ -56,10 +56,10 @@ async def test_setup_entry_fails.opp):
 async def test_unload_entry.opp):
     """Test successful unload of entry."""
     config_entry = await setup_axis_integration.opp)
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
     assert.opp.data[AXIS_DOMAIN]
 
-    assert await opp..config_entries.async_unload(device.config_entry.entry_id)
+    assert await.opp.config_entries.async_unload(device.config_entry.entry_id)
     assert not.opp.data[AXIS_DOMAIN]
 
 

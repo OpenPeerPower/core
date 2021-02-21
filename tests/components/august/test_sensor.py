@@ -16,7 +16,7 @@ async def test_create_doorbell.opp):
     doorbell_one = await _mock_doorbell_from_fixture.opp, "get_doorbell.json")
     await _create_august_with_devices.opp, [doorbell_one])
 
-    sensor_k98gidt45gul_name_battery = opp.states.get(
+    sensor_k98gidt45gul_name_battery =.opp.states.get(
         "sensor.k98gidt45gul_name_battery"
     )
     assert sensor_k98gidt45gul_name_battery.state == "96"
@@ -29,9 +29,9 @@ async def test_create_doorbell_offline.opp):
     """Test creation of a doorbell that is offline."""
     doorbell_one = await _mock_doorbell_from_fixture.opp, "get_doorbell.offline.json")
     await _create_august_with_devices.opp, [doorbell_one])
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    sensor_tmt100_name_battery = opp.states.get("sensor.tmt100_name_battery")
+    sensor_tmt100_name_battery =.opp.states.get("sensor.tmt100_name_battery")
     assert sensor_tmt100_name_battery.state == "81"
     assert sensor_tmt100_name_battery.attributes["unit_of_measurement"] == PERCENTAGE
 
@@ -40,14 +40,14 @@ async def test_create_doorbell_offline.opp):
     assert entry.unique_id == "tmt100_device_battery"
 
 
-async def test_create_doorbell_op.dwired.opp):
+async def test_create_doorbell_hardwired.opp):
     """Test creation of a doorbell that is hardwired without a battery."""
     doorbell_one = await _mock_doorbell_from_fixture(
        .opp, "get_doorbell.nobattery.json"
     )
     await _create_august_with_devices.opp, [doorbell_one])
 
-    sensor_tmt100_name_battery = opp.states.get("sensor.tmt100_name_battery")
+    sensor_tmt100_name_battery =.opp.states.get("sensor.tmt100_name_battery")
     assert sensor_tmt100_name_battery is None
 
 
@@ -55,9 +55,9 @@ async def test_create_lock_with_linked_keypad.opp):
     """Test creation of a lock with a linked keypad that both have a battery."""
     lock_one = await _mock_lock_from_fixture.opp, "get_lock.doorsense_init.json")
     await _create_august_with_devices.opp, [lock_one])
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    sensor_a6697750d607098bae8d6baa11ef8063_name_battery = opp.states.get(
+    sensor_a6697750d607098bae8d6baa11ef8063_name_battery =.opp.states.get(
         "sensor.a6697750d607098bae8d6baa11ef8063_name_battery"
     )
     assert sensor_a6697750d607098bae8d6baa11ef8063_name_battery.state == "88"
@@ -73,7 +73,7 @@ async def test_create_lock_with_linked_keypad.opp):
     assert entry
     assert entry.unique_id == "A6697750D607098BAE8D6BAA11EF8063_device_battery"
 
-    state = opp.states.get("sensor.front_door_lock_keypad_battery")
+    state =.opp.states.get("sensor.front_door_lock_keypad_battery")
     assert state.state == "60"
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == PERCENTAGE
     entry = entity_registry.async_get("sensor.front_door_lock_keypad_battery")
@@ -85,9 +85,9 @@ async def test_create_lock_with_low_battery_linked_keypad.opp):
     """Test creation of a lock with a linked keypad that both have a battery."""
     lock_one = await _mock_lock_from_fixture.opp, "get_lock.low_keypad_battery.json")
     await _create_august_with_devices.opp, [lock_one])
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    sensor_a6697750d607098bae8d6baa11ef8063_name_battery = opp.states.get(
+    sensor_a6697750d607098bae8d6baa11ef8063_name_battery =.opp.states.get(
         "sensor.a6697750d607098bae8d6baa11ef8063_name_battery"
     )
     assert sensor_a6697750d607098bae8d6baa11ef8063_name_battery.state == "88"
@@ -103,7 +103,7 @@ async def test_create_lock_with_low_battery_linked_keypad.opp):
     assert entry
     assert entry.unique_id == "A6697750D607098BAE8D6BAA11EF8063_device_battery"
 
-    state = opp.states.get("sensor.front_door_lock_keypad_battery")
+    state =.opp.states.get("sensor.front_door_lock_keypad_battery")
     assert state.state == "10"
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == PERCENTAGE
     entry = entity_registry.async_get("sensor.front_door_lock_keypad_battery")
@@ -133,7 +133,7 @@ async def test_lock_operator_bluetooth.opp):
     )
     await _create_august_with_devices.opp, [lock_one], activities=activities)
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     lock_operator_sensor = entity_registry.async_get(
         "sensor.online_with_doorsense_name_operator"
     )
@@ -177,7 +177,7 @@ async def test_lock_operator_keypad.opp):
     )
     await _create_august_with_devices.opp, [lock_one], activities=activities)
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     lock_operator_sensor = entity_registry.async_get(
         "sensor.online_with_doorsense_name_operator"
     )
@@ -219,7 +219,7 @@ async def test_lock_operator_remote.opp):
     activities = await _mock_activities_from_fixture.opp, "get_activity.lock.json")
     await _create_august_with_devices.opp, [lock_one], activities=activities)
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     lock_operator_sensor = entity_registry.async_get(
         "sensor.online_with_doorsense_name_operator"
     )
@@ -263,7 +263,7 @@ async def test_lock_operator_autorelock.opp):
     )
     await _create_august_with_devices.opp, [lock_one], activities=activities)
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     lock_operator_sensor = entity_registry.async_get(
         "sensor.online_with_doorsense_name_operator"
     )

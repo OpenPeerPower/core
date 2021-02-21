@@ -1,6 +1,6 @@
 """Tests for the auth component."""
 from openpeerpower import auth
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import ensure_auth_manager_loaded
 

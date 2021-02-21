@@ -286,12 +286,12 @@ async def setup_axis_integration.opp, config=ENTRY_CONFIG, options=ENTRY_OPTIONS
         version=3,
         unique_id=FORMATTED_MAC,
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch("axis.rtsp.RTSPClient.start", return_value=True), respx.mock:
         mock_default_vapix_requests(respx)
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
     return config_entry
 
@@ -303,7 +303,7 @@ async def test_device_setup.opp):
         return_value=True,
     ) as forward_entry_setup:
         config_entry = await setup_axis_integration.opp)
-        device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+        device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     assert device.api.vapix.firmware_version == "9.10.1"
     assert device.api.vapix.product_number == "M1065-LW"
@@ -331,7 +331,7 @@ async def test_device_info.opp):
 
     with patch.dict(API_DISCOVERY_RESPONSE, api_discovery):
         config_entry = await setup_axis_integration.opp)
-        device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+        device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     assert device.api.vapix.firmware_version == "9.80.1"
     assert device.api.vapix.product_number == "M1065-LW"
@@ -354,10 +354,10 @@ async def test_device_support_mqtt.opp, mqtt_mock):
 
     assert len.opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)) == 0
     async_fire_mqtt_message.opp, topic, message)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)) == 1
 
-    pir = opp.states.get(f"{BINARY_SENSOR_DOMAIN}.{NAME}_pir_0")
+    pir =.opp.states.get(f"{BINARY_SENSOR_DOMAIN}.{NAME}_pir_0")
     assert pir.state == STATE_ON
     assert pir.name == f"{NAME} PIR 0"
 
@@ -365,7 +365,7 @@ async def test_device_support_mqtt.opp, mqtt_mock):
 async def test_update_address.opp):
     """Test update address works."""
     config_entry = await setup_axis_integration.opp)
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
     assert device.api.config.host == "1.2.3.4"
 
     with patch(
@@ -373,7 +373,7 @@ async def test_update_address.opp):
         return_value=True,
     ) as mock_setup_entry, respx.mock:
         mock_default_vapix_requests(respx, "2.3.4.5")
-        await opp..config_entries.flow.async_init(
+        await.opp.config_entries.flow.async_init(
             AXIS_DOMAIN,
             data={
                 "host": "2.3.4.5",
@@ -383,7 +383,7 @@ async def test_update_address.opp):
             },
             context={"source": SOURCE_ZEROCONF},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert device.api.config.host == "2.3.4.5"
     assert len(mock_setup_entry.mock_calls) == 1
@@ -392,7 +392,7 @@ async def test_update_address.opp):
 async def test_device_unavailable.opp):
     """Successful setup."""
     config_entry = await setup_axis_integration.opp)
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
     device.async_connection_status_callback(status=False)
     assert not device.available
 
@@ -400,7 +400,7 @@ async def test_device_unavailable.opp):
 async def test_device_reset.opp):
     """Successfully reset device."""
     config_entry = await setup_axis_integration.opp)
-    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
     result = await device.async_reset()
     assert result is True
 
@@ -438,7 +438,7 @@ async def test_new_event_sends_signal.opp):
 
     with patch.object(axis.device, "async_dispatcher_send") as mock_dispatch_send:
         axis_device.async_event_callback(action=OPERATION_INITIALIZED, event_id="event")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_dispatch_send.mock_calls) == 1
     assert len(mock_dispatch_send.mock_calls[0]) == 3
@@ -446,7 +446,7 @@ async def test_new_event_sends_signal.opp):
 
 async def test_shutdown():
     """Successful shutdown."""
-    opp = Mock()
+   .opp = Mock()
     entry = Mock()
     entry.data = ENTRY_CONFIG
 

@@ -9,7 +9,7 @@ from openpeerpower.components.axis.const import (
 )
 from openpeerpower.components.camera import DOMAIN as CAMERA_DOMAIN
 from openpeerpower.const import STATE_IDLE
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .test_device import ENTRY_OPTIONS, NAME, setup_axis_integration
 
@@ -34,7 +34,7 @@ async def test_camera.opp):
 
     entity_id = f"{CAMERA_DOMAIN}.{NAME}"
 
-    cam = opp.states.get(entity_id)
+    cam =.opp.states.get(entity_id)
     assert cam.state == STATE_IDLE
     assert cam.name == NAME
 
@@ -56,7 +56,7 @@ async def test_camera_with_stream_profile.opp):
 
     entity_id = f"{CAMERA_DOMAIN}.{NAME}"
 
-    cam = opp.states.get(entity_id)
+    cam =.opp.states.get(entity_id)
     assert cam.state == STATE_IDLE
     assert cam.name == NAME
 
