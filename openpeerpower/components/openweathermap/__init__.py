@@ -78,7 +78,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
 
 async def async_migrate_entry.opp, entry):
     """Migrate old entry."""
-    config_entries =.opp.config_entries
+    config_entries = opp.config_entries
     data = entry.data
     version = entry.version
 

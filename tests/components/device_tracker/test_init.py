@@ -45,7 +45,7 @@ _LOGGER = logging.getLogger(__name__)
 @pytest.fixture(name="yaml_devices")
 def mock_yaml_devices.opp):
     """Get a path for storing yaml devices."""
-    yaml_devices =.opp.config.path(legacy.YAML_DEVICES)
+    yaml_devices = opp.config.path(legacy.YAML_DEVICES)
     if os.path.isfile(yaml_devices):
         os.remove(yaml_devices)
     yield yaml_devices
@@ -539,7 +539,7 @@ async def test_async_added_to.opp.opp):
     }
     mock_restore_cache.opp, [State("device_tracker.jk", "home", attr)])
 
-    path =.opp.config.path(legacy.YAML_DEVICES)
+    path = opp.config.path(legacy.YAML_DEVICES)
 
     files = {path: "jk:\n  name: JK Phone\n  track: True"}
     with patch_yaml_files(files):

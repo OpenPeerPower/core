@@ -306,7 +306,7 @@ async def test_load_unload_entry.opp, locative_client, webhook_id):
     assert state.state == "not_home"
     assert len.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
 
-    entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    entry = opp.config_entries.async_entries(DOMAIN)[0]
 
     await locative.async_unload_entry.opp, entry)
     await.opp.async_block_till_done()

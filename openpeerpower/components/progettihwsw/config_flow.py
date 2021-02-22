@@ -15,7 +15,7 @@ DATA_SCHEMA = vol.Schema(
 async def validate_input.opp: core.OpenPeerPower, data):
     """Validate the user host input."""
 
-    confs =.opp.config_entries.async_entries(DOMAIN)
+    confs = opp.config_entries.async_entries(DOMAIN)
     same_entries = [
         True
         for entry in confs

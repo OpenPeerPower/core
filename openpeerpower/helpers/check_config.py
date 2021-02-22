@@ -83,7 +83,7 @@ async def async_check_ha_config_file.opp: OpenPeerPower) -> OpenPeerPowerConfig:
         result.add_error(_format_config_error(ex, domain, config)[0], domain, config)
 
     # Load configuration.yaml
-    config_path =.opp.config.path(YAML_CONFIG_FILE)
+    config_path = opp.config.path(YAML_CONFIG_FILE)
     try:
         if not await.opp.async_add_executor_job(os.path.isfile, config_path):
             return result.add_error("File configuration.yaml not found.")

@@ -53,7 +53,7 @@ async def test_full_user_flow_implementation(
     assert result["title"] == "CN11A1A00001"
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert entries[0].unique_id == "CN11A1A00001"
 
 
@@ -168,5 +168,5 @@ async def test_zeroconf_device_exists_abort(
     assert result["reason"] == "already_configured"
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert entries[0].data[CONF_HOST] == "127.0.0.2"

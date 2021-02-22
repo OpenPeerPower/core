@@ -41,7 +41,7 @@ def entity_reg.opp):
 )
 async def test_subscribing_config_topic.opp, mqtt_mock):
     """Test setting up discovery."""
-    entry =.opp.config_entries.async_entries(mqtt.DOMAIN)[0]
+    entry = opp.config_entries.async_entries(mqtt.DOMAIN)[0]
 
     discovery_topic = "openpeerpower"
     await async_start.opp, discovery_topic, entry)
@@ -570,7 +570,7 @@ async def test_mqtt_integration_discovery_subscribe_unsubscribe(
     """Check MQTT integration discovery subscribe and unsubscribe."""
     mock_entity_platform.opp, "config_flow.comp", None)
 
-    entry =.opp.config_entries.async_entries("mqtt")[0]
+    entry = opp.config_entries.async_entries("mqtt")[0]
     mqtt_mock().connected = True
 
     with patch(
@@ -608,7 +608,7 @@ async def test_mqtt_discovery_unsubscribe_once.opp, mqtt_client_mock, mqtt_mock)
     """Check MQTT integration discovery unsubscribe once."""
     mock_entity_platform.opp, "config_flow.comp", None)
 
-    entry =.opp.config_entries.async_entries("mqtt")[0]
+    entry = opp.config_entries.async_entries("mqtt")[0]
     mqtt_mock().connected = True
 
     with patch(

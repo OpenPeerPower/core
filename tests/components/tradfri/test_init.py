@@ -34,7 +34,7 @@ async def test_config_yaml_host_imported.opp):
         )
         await.opp.async_block_till_done()
 
-    progress =.opp.config_entries.flow.async_progress()
+    progress = opp.config_entries.flow.async_progress()
     assert len(progress) == 1
     assert progress[0]["handler"] == "tradfri"
     assert progress[0]["context"] == {"source": "import"}

@@ -186,7 +186,7 @@ async def test_webhook_handle_get_config.opp, create_registrations, webhook_clie
     if "allowlist_external_dirs" in json:
         json["allowlist_external_dirs"] = set(json["allowlist_external_dirs"])
 
-   .opp_config =.opp.config.as_dict()
+   .opp_config = opp.config.as_dict()
 
     expected_dict = {
         "latitude":.opp_config["latitude"],

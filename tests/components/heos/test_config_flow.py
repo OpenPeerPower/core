@@ -86,7 +86,7 @@ async def test_discovery_shows_create_form.opp, controller, discovery_data):
         heos.DOMAIN, context={"source": "ssdp"}, data=discovery_data
     )
     await.opp.async_block_till_done()
-    flows_in_progress =.opp.config_entries.flow.async_progress()
+    flows_in_progress = opp.config_entries.flow.async_progress()
     assert flows_in_progress[0]["context"]["unique_id"] == DOMAIN
     assert len(flows_in_progress) == 1
     assert.opp.data[DATA_DISCOVERED_HOSTS] == {"Office (127.0.0.1)": "127.0.0.1"}
@@ -99,7 +99,7 @@ async def test_discovery_shows_create_form.opp, controller, discovery_data):
         heos.DOMAIN, context={"source": "ssdp"}, data=discovery_data
     )
     await.opp.async_block_till_done()
-    flows_in_progress =.opp.config_entries.flow.async_progress()
+    flows_in_progress = opp.config_entries.flow.async_progress()
     assert flows_in_progress[0]["context"]["unique_id"] == DOMAIN
     assert len(flows_in_progress) == 1
     assert.opp.data[DATA_DISCOVERED_HOSTS] == {
@@ -131,7 +131,7 @@ async def test_discovery_sets_the_unique_id.opp, controller, discovery_data):
         heos.DOMAIN, context={"source": SOURCE_SSDP}, data=discovery_data
     )
     await.opp.async_block_till_done()
-    flows_in_progress =.opp.config_entries.flow.async_progress()
+    flows_in_progress = opp.config_entries.flow.async_progress()
     assert flows_in_progress[0]["context"]["unique_id"] == DOMAIN
     assert len(flows_in_progress) == 1
     assert.opp.data[DATA_DISCOVERED_HOSTS] == {"Bedroom (127.0.0.2)": "127.0.0.2"}

@@ -104,7 +104,7 @@ async def async_setup_legacy.opp, config):
     local_auth.initialize.opp, conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET])
 
     filename = config.get(CONF_FILENAME, NEST_CONFIG_FILE)
-    access_token_cache_file =.opp.config.path(filename)
+    access_token_cache_file = opp.config.path(filename)
 
    .opp.async_create_task(
        .opp.config_entries.flow.async_init(

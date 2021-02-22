@@ -67,7 +67,7 @@ class AlexaTempRangeError(AlexaError):
 
     def __init__(self,.opp, temp, min_temp, max_temp):
         """Initialize TempRange error."""
-        unit =.opp.config.units.temperature_unit
+        unit = opp.config.units.temperature_unit
         temp_range = {
             "minimumValue": {"value": min_temp, "scale": API_TEMP_UNITS[unit]},
             "maximumValue": {"value": max_temp, "scale": API_TEMP_UNITS[unit]},

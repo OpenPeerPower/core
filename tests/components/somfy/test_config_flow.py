@@ -116,7 +116,7 @@ async def test_full_flow(
     }
 
     assert DOMAIN in.opp.config.components
-    entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert entry.state == config_entries.ENTRY_STATE_LOADED
 
     assert await.opp.config_entries.async_unload(entry.entry_id)

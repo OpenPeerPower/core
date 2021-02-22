@@ -95,7 +95,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         manager_options["send_message"] = mqtt_client.send_message
 
     else:
-        mqtt_entries =.opp.config_entries.async_entries("mqtt")
+        mqtt_entries = opp.config_entries.async_entries("mqtt")
         if not mqtt_entries or mqtt_entries[0].state != ENTRY_STATE_LOADED:
             _LOGGER.error("MQTT integration is not set up")
             return False

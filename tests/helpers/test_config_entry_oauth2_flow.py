@@ -333,7 +333,7 @@ async def test_full_flow(
         "expires_in": 60,
     }
 
-    entry =.opp.config_entries.async_entries(TEST_DOMAIN)[0]
+    entry = opp.config_entries.async_entries(TEST_DOMAIN)[0]
 
     assert (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(

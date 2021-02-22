@@ -22,7 +22,7 @@ async def test_unload_entry.opp, mock_simple_nws):
     assert DOMAIN in.opp.data
 
     assert len.opp.data[DOMAIN]) == 1
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
 
     assert await.opp.config_entries.async_unload(entries[0].entry_id)

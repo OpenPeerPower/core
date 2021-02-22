@@ -45,7 +45,7 @@ async def test_publish_without_mqtt.opp, caplog):
 
         send_message = ozw_options.call_args[1]["send_message"]
 
-        mqtt_entries =.opp.config_entries.async_entries("mqtt")
+        mqtt_entries = opp.config_entries.async_entries("mqtt")
         mqtt_entry = mqtt_entries[0]
         await.opp.config_entries.async_remove(mqtt_entry.entry_id)
         await.opp.async_block_till_done()

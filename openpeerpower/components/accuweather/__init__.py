@@ -96,7 +96,7 @@ class AccuWeatherDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize."""
         self.location_key = location_key
         self.forecast = forecast
-        self.is_metric =.opp.config.units.is_metric
+        self.is_metric = opp.config.units.is_metric
         self.accuweather = AccuWeather(api_key, session, location_key=self.location_key)
 
         # Enabling the forecast download increases the number of requests per data

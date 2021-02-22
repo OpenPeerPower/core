@@ -33,7 +33,7 @@ async def async_unload_entry.opp, entry):
    .opp.data[DOMAIN].pop(entry.entry_id)
 
     # Stop server discovery task if this is the last config entry.
-    current_entries =.opp.config_entries.async_entries(DOMAIN)
+    current_entries = opp.config_entries.async_entries(DOMAIN)
     if len(current_entries) == 1 and current_entries[0] == entry:
         _LOGGER.debug("Stopping server discovery task")
        .opp.data[DOMAIN][DISCOVERY_TASK].cancel()

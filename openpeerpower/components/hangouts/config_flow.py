@@ -25,7 +25,7 @@ from .hangups_utils import (
 @callback
 def configured_hangouts.opp):
     """Return the configures Google Hangouts Account."""
-    entries =.opp.config_entries.async_entries(HANGOUTS_DOMAIN)
+    entries = opp.config_entries.async_entries(HANGOUTS_DOMAIN)
     if entries:
         return entries[0]
     return None

@@ -900,8 +900,8 @@ def closest.opp, *args):
 
     """
     if len(args) == 1:
-        latitude =.opp.config.latitude
-        longitude =.opp.config.longitude
+        latitude = opp.config.latitude
+        longitude = opp.config.longitude
         entities = args[0]
 
     elif len(args) == 2:

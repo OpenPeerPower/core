@@ -367,7 +367,7 @@ async def test_ssdp_host_update.opp, mock_panel):
     assert result["type"] == "abort"
 
     # confirm the host value was updated, access_token was not
-    entry =.opp.config_entries.async_entries(config_flow.DOMAIN)[0]
+    entry = opp.config_entries.async_entries(config_flow.DOMAIN)[0]
     assert entry.data["host"] == "1.1.1.1"
     assert entry.data["port"] == 1234
     assert entry.data["access_token"] == "11223344556677889900"

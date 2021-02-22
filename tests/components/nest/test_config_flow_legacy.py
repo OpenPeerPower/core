@@ -190,7 +190,7 @@ async def test_step_import.opp):
         )
         await.opp.async_block_till_done()
 
-    flow =.opp.config_entries.flow.async_progress()[0]
+    flow = opp.config_entries.flow.async_progress()[0]
     result = await.opp.config_entries.flow.async_configure(flow["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -210,6 +210,6 @@ async def test_step_import_with_token_cache.opp):
         )
         await.opp.async_block_till_done()
 
-    entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    entry = opp.config_entries.async_entries(DOMAIN)[0]
 
     assert entry.data == {"impl_domain": "nest", "tokens": {"access_token": "yo"}}

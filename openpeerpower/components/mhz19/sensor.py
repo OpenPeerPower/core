@@ -56,7 +56,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             err,
         )
         return False
-    SENSOR_TYPES[SENSOR_TEMPERATURE][1] =.opp.config.units.temperature_unit
+    SENSOR_TYPES[SENSOR_TEMPERATURE][1] = opp.config.units.temperature_unit
 
     data = MHZClient(co2sensor, config.get(CONF_SERIAL_DEVICE))
     dev = []

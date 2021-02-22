@@ -29,7 +29,7 @@ CONFIG = {
 
 def get_config_entry.opp):
     """Return a single config entry."""
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     return entries[0]
 
@@ -142,7 +142,7 @@ async def test_reauth.opp, oauth):
     )
 
     # Advance through the reauth flow
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["step_id"] == "reauth_confirm"
 
@@ -196,7 +196,7 @@ async def test_unexpected_existing_config_entries.opp, oauth):
     )
     old_entry.add_to.opp.opp)
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 2
 
     # Invoke the reauth flow
@@ -206,13 +206,13 @@ async def test_unexpected_existing_config_entries.opp, oauth):
     assert result["type"] == "form"
     assert result["step_id"] == "reauth_confirm"
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
 
     result = await.opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
     await oauth.async_oauth_flow(result)
 
     # Only a single entry now exists, and the other was cleaned up
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     entry = entries[0]
     assert entry.unique_id == DOMAIN

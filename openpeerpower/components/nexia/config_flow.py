@@ -22,7 +22,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
 
-    state_file =.opp.config.path(f"nexia_config_{data[CONF_USERNAME]}.conf")
+    state_file = opp.config.path(f"nexia_config_{data[CONF_USERNAME]}.conf")
     try:
         nexia_home = NexiaHome(
             username=data[CONF_USERNAME],

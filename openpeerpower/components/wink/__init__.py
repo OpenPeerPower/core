@@ -215,7 +215,7 @@ def _request_app_setup_opp, config):
 
     def wink_configuration_callback(callback_data):
         """Handle configuration updates."""
-        _config_path =.opp.config.path(WINK_CONFIG_FILE)
+        _config_path = opp.config.path(WINK_CONFIG_FILE)
         if not os.path.isfile(_config_path):
             setup_opp, config)
             return
@@ -319,7 +319,7 @@ def setup_opp, config):
         _LOGGER.info("Using OAuth authentication")
         if not local_control:
             pywink.disable_local_control()
-        config_path =.opp.config.path(WINK_CONFIG_FILE)
+        config_path = opp.config.path(WINK_CONFIG_FILE)
         if os.path.isfile(config_path):
             config_file = load_json(config_path)
             if config_file == DEFAULT_CONFIG:
@@ -411,7 +411,7 @@ def setup_opp, config):
     def save_credentials(event):
         """Save currently set OAuth credentials."""
         if.opp.data[DOMAIN]["oauth"].get("email") is None:
-            config_path =.opp.config.path(WINK_CONFIG_FILE)
+            config_path = opp.config.path(WINK_CONFIG_FILE)
             _config = pywink.get_current_oauth_credentials()
             save_json(config_path, _config)
 

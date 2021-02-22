@@ -171,7 +171,7 @@ def request_app_setup_opp, config, add_entities, config_path, discovery_info=Non
 
     def fitbit_configuration_callback(callback_data):
         """Handle configuration updates."""
-        config_path =.opp.config.path(FITBIT_CONFIG_FILE)
+        config_path = opp.config.path(FITBIT_CONFIG_FILE)
         if os.path.isfile(config_path):
             config_file = load_json(config_path)
             if config_file == DEFAULT_CONFIG:
@@ -234,7 +234,7 @@ def request_oauth_completion.opp):
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Fitbit sensor."""
-    config_path =.opp.config.path(FITBIT_CONFIG_FILE)
+    config_path = opp.config.path(FITBIT_CONFIG_FILE)
     if os.path.isfile(config_path):
         config_file = load_json(config_path)
         if config_file == DEFAULT_CONFIG:

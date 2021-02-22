@@ -110,7 +110,7 @@ async def async_setup_entry.opp, config_entry):
     username = config_entry.data.get(CONF_USERNAME)
     password = config_entry.data.get(CONF_PASSWORD)
     polling = config_entry.data.get(CONF_POLLING)
-    cache =.opp.config.path(DEFAULT_CACHEDB)
+    cache = opp.config.path(DEFAULT_CACHEDB)
 
     # For previous config entries where unique_id is None
     if config_entry.unique_id is None:

@@ -27,8 +27,8 @@ async def test_setting_rising.opp, legacy_patchable_time):
     astral = Astral()
     utc_today = utc_now.date()
 
-    latitude =.opp.config.latitude
-    longitude =.opp.config.longitude
+    latitude = opp.config.latitude
+    longitude = opp.config.longitude
 
     mod = -1
     while True:

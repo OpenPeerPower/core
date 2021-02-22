@@ -157,7 +157,7 @@ class RememberTheMilkConfiguration:
 
     def __init__(self,.opp):
         """Create new instance of configuration."""
-        self._config_file_path =.opp.config.path(CONFIG_FILE_NAME)
+        self._config_file_path = opp.config.path(CONFIG_FILE_NAME)
         if not os.path.isfile(self._config_file_path):
             self._config = {}
             return

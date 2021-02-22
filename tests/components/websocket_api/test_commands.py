@@ -355,7 +355,7 @@ async def test_get_config.opp, websocket_client):
             msg["result"]["allowlist_external_urls"]
         )
 
-    assert msg["result"] ==.opp.config.as_dict()
+    assert msg["result"] == opp.config.as_dict()
 
 
 async def test_ping(websocket_client):

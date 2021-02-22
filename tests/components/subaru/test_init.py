@@ -42,7 +42,7 @@ async def test_setup_with_no_config.opp):
 
 async def test_setup_ev.opp, ev_entry):
     """Test setup with an EV vehicle."""
-    check_entry =.opp.config_entries.async_get_entry(ev_entry.entry_id)
+    check_entry = opp.config_entries.async_get_entry(ev_entry.entry_id)
     assert check_entry
     assert check_entry.state == ENTRY_STATE_LOADED
 
@@ -55,7 +55,7 @@ async def test_setup_g2.opp):
         vehicle_data=VEHICLE_DATA[TEST_VIN_3_G2],
         vehicle_status=VEHICLE_STATUS_G2,
     )
-    check_entry =.opp.config_entries.async_get_entry(entry.entry_id)
+    check_entry = opp.config_entries.async_get_entry(entry.entry_id)
     assert check_entry
     assert check_entry.state == ENTRY_STATE_LOADED
 
@@ -65,7 +65,7 @@ async def test_setup_g1.opp):
     entry = await setup_subaru_integration(
        .opp, vehicle_list=[TEST_VIN_1_G1], vehicle_data=VEHICLE_DATA[TEST_VIN_1_G1]
     )
-    check_entry =.opp.config_entries.async_get_entry(entry.entry_id)
+    check_entry = opp.config_entries.async_get_entry(entry.entry_id)
     assert check_entry
     assert check_entry.state == ENTRY_STATE_LOADED
 
@@ -79,7 +79,7 @@ async def test_unsuccessful_connect.opp):
         vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
         vehicle_status=VEHICLE_STATUS_EV,
     )
-    check_entry =.opp.config_entries.async_get_entry(entry.entry_id)
+    check_entry = opp.config_entries.async_get_entry(entry.entry_id)
     assert check_entry
     assert check_entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -93,7 +93,7 @@ async def test_invalid_credentials.opp):
         vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
         vehicle_status=VEHICLE_STATUS_EV,
     )
-    check_entry =.opp.config_entries.async_get_entry(entry.entry_id)
+    check_entry = opp.config_entries.async_get_entry(entry.entry_id)
     assert check_entry
     assert check_entry.state == ENTRY_STATE_SETUP_ERROR
 

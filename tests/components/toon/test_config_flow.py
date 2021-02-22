@@ -297,11 +297,11 @@ async def test_import_migration(
 
     await setup_component.opp)
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].version == 1
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["context"][CONF_MIGRATE] == old_entry.entry_id
 
@@ -334,6 +334,6 @@ async def test_import_migration(
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].version == 2

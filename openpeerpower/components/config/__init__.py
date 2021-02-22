@@ -153,7 +153,7 @@ class BaseEditConfigView(OpenPeerPowerView):
         except (vol.Invalid, OpenPeerPowerError) as err:
             return self.json_message(f"Message malformed: {err}", HTTP_BAD_REQUEST)
 
-        path =.opp.config.path(self.path)
+        path = opp.config.path(self.path)
 
         async with self.mutation_lock:
             current = await self.read_config.opp)
@@ -174,7 +174,7 @@ class BaseEditConfigView(OpenPeerPowerView):
         async with self.mutation_lock:
             current = await self.read_config.opp)
             value = self._get_value.opp, current, config_key)
-            path =.opp.config.path(self.path)
+            path = opp.config.path(self.path)
 
             if value is None:
                 return self.json_message("Resource not found", HTTP_NOT_FOUND)

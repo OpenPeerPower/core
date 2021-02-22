@@ -224,7 +224,7 @@ async def test_api_get_components.opp, mock_api_client):
     """Test the return of the components."""
     resp = await mock_api_client.get(const.URL_API_COMPONENTS)
     result = await resp.json()
-    assert set(result) ==.opp.config.components
+    assert set(result) == opp.config.components
 
 
 async def test_api_get_event_listeners.opp, mock_api_client):

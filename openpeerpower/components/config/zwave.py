@@ -60,7 +60,7 @@ class ZWaveLogView(OpenPeerPowerView):
 
     def _get_log(self,.opp, lines):
         """Retrieve the logfile content."""
-        logfilepath =.opp.config.path(OZW_LOG_FILENAME)
+        logfilepath = opp.config.path(OZW_LOG_FILENAME)
         with open(logfilepath) as logfile:
             data = (line.rstrip() for line in logfile)
             if lines == 0:

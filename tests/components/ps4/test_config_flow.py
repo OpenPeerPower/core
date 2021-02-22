@@ -180,7 +180,7 @@ async def test_multiple_flow_implementation.opp):
     assert result["title"] == MOCK_TITLE
 
     # Check if entry exists.
-    entries =.opp.config_entries.async_entries()
+    entries = opp.config_entries.async_entries()
     assert len(entries) == 1
     # Check if there is a device config in entry.
     entry_1 = entries[0]
@@ -232,7 +232,7 @@ async def test_multiple_flow_implementation.opp):
     assert result["title"] == MOCK_TITLE
 
     # Check if there are 2 entries.
-    entries =.opp.config_entries.async_entries()
+    entries = opp.config_entries.async_entries()
     assert len(entries) == 2
     # Check if there is device config in the last entry.
     entry_2 = entries[-1]

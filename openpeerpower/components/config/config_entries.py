@@ -240,7 +240,7 @@ def config_entries_progress.opp, connection, msg):
 async def system_options_list.opp, connection, msg):
     """List all system options for a config entry."""
     entry_id = msg["entry_id"]
-    entry =.opp.config_entries.async_get_entry(entry_id)
+    entry = opp.config_entries.async_get_entry(entry_id)
 
     if entry:
         connection.send_result(msg["id"], entry.system_options.as_dict())
@@ -255,7 +255,7 @@ def send_entry_not_found(connection, msg_id):
 
 def get_entry.opp, connection, entry_id, msg_id):
     """Get entry, send error message if it doesn't exist."""
-    entry =.opp.config_entries.async_get_entry(entry_id)
+    entry = opp.config_entries.async_get_entry(entry_id)
     if entry is None:
         send_entry_not_found(connection, msg_id)
     return entry

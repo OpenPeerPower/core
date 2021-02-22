@@ -61,7 +61,7 @@ class SmartPlugSwitch(SwitchEntity):
 
     def __init__(self,.opp, data, name):
         """Initialize the switch."""
-        self.units =.opp.config.units
+        self.units = opp.config.units
         self.data = data
         self._name = name
 

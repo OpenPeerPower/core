@@ -140,7 +140,7 @@ async def test_manual_flow_works.opp, aioclient_mock):
         "host": "2.2.2.2",
         "username": "username-abc",
     }
-    entries =.opp.config_entries.async_entries("hue")
+    entries = opp.config_entries.async_entries("hue")
     assert len(entries) == 2
     entry = entries[-1]
     assert entry.unique_id == "id-1234"
@@ -547,7 +547,7 @@ async def test_creating_entry_removes_entries_for_same_host_or_bridge.opp):
         "host": "2.2.2.2",
         "username": "username-abc",
     }
-    entries =.opp.config_entries.async_entries("hue")
+    entries = opp.config_entries.async_entries("hue")
     assert len(entries) == 2
     new_entry = entries[-1]
     assert orig_entry.entry_id != new_entry.entry_id

@@ -199,7 +199,7 @@ async def test_auth_fails.opp):
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
 
     assert flows[0]["step_id"] == "user"
 
@@ -227,7 +227,7 @@ async def test_bad_password.opp):
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
 
     assert flows[0]["step_id"] == "user"
 
@@ -277,7 +277,7 @@ async def test_unknown_auth_state.opp):
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
 
     assert flows[0]["step_id"] == "user"
 

@@ -78,7 +78,7 @@ async def async_setup_entry.opp, config_entry):
 
     device_dict = await async_process_devices.opp, manager)
 
-    forward_setup =.opp.config_entries.async_forward_entry_setup
+    forward_setup = opp.config_entries.async_forward_entry_setup
 
    .opp.data[DOMAIN] = {}
    .opp.data[DOMAIN][VS_MANAGER] = manager

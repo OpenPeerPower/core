@@ -23,7 +23,7 @@ from tests.components.tts.test_init import mutagen_mock  # noqa: F401
 def cleanup_cache.opp):
     """Clean up TTS cache."""
     yield
-    default_tts =.opp.config.path(tts.DEFAULT_CACHE_DIR)
+    default_tts = opp.config.path(tts.DEFAULT_CACHE_DIR)
     if os.path.isdir(default_tts):
         shutil.rmtree(default_tts)
 

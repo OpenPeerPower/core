@@ -67,7 +67,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up the Bravia TV platform."""
     host = config[CONF_HOST]
 
-    bravia_config_file_path =.opp.config.path(BRAVIA_CONFIG_FILE)
+    bravia_config_file_path = opp.config.path(BRAVIA_CONFIG_FILE)
     bravia_config = await.opp.async_add_executor_job(
         load_json, bravia_config_file_path
     )

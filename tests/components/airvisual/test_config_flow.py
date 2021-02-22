@@ -190,7 +190,7 @@ async def test_migration.opp):
         assert await async_setup_component.opp, DOMAIN, {DOMAIN: conf})
         await.opp.async_block_till_done()
 
-    config_entries =.opp.config_entries.async_entries(DOMAIN)
+    config_entries = opp.config_entries.async_entries(DOMAIN)
 
     assert len(config_entries) == 2
 

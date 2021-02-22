@@ -147,7 +147,7 @@ def setup_platform.opp, config, add_entities_callback, discovery_info=None):
         options = config.get(CONF_OPTIONS)
 
         if options.get("units") is None:
-            options["units"] =.opp.config.units.name
+            options["units"] = opp.config.units.name
 
         travel_mode = config.get(CONF_TRAVEL_MODE)
         mode = options.get(CONF_MODE)

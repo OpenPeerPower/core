@@ -76,7 +76,7 @@ async def async_unload_entry.opp, entry):
 
 async def async_migrate_entry.opp, entry):
     """Migrate old entry."""
-    config_entries =.opp.config_entries
+    config_entries = opp.config_entries
     data = entry.data
     version = entry.version
 
@@ -159,7 +159,7 @@ def format_unique_id(creds, mac_address):
 
 def load_games.opp: OpenPeerPowerType, unique_id: str) -> dict:
     """Load games for sources."""
-    g_file =.opp.config.path(GAMES_FILE.format(unique_id))
+    g_file = opp.config.path(GAMES_FILE.format(unique_id))
     try:
         games = load_json(g_file)
     except OpenPeerPowerError as error:
@@ -178,7 +178,7 @@ def load_games.opp: OpenPeerPowerType, unique_id: str) -> dict:
 
 def save_games.opp: OpenPeerPowerType, games: dict, unique_id: str):
     """Save games to file."""
-    g_file =.opp.config.path(GAMES_FILE.format(unique_id))
+    g_file = opp.config.path(GAMES_FILE.format(unique_id))
     try:
         save_json(g_file, games)
     except OSError as error:

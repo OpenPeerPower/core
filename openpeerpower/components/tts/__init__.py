@@ -530,7 +530,7 @@ class Provider:
 def _init_tts_cache_dir.opp, cache_dir):
     """Init cache folder."""
     if not os.path.isabs(cache_dir):
-        cache_dir =.opp.config.path(cache_dir)
+        cache_dir = opp.config.path(cache_dir)
     if not os.path.isdir(cache_dir):
         _LOGGER.info("Create cache dir %s", cache_dir)
         os.mkdir(cache_dir)

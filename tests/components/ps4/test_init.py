@@ -134,7 +134,7 @@ async def test_creating_entry_sets_up_media_player.opp):
 async def test_config_flow_entry_migrate.opp):
     """Test that config flow entry is migrated correctly."""
     # Start with the config entry at Version 1.
-    manager =.opp.config_entries
+    manager = opp.config_entries
     mock_entry = MOCK_ENTRY_VERSION_1
     mock_entry.add_to_manager(manager)
     mock_e_registry = mock_registry.opp)

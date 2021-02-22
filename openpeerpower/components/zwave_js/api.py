@@ -276,7 +276,7 @@ class DumpView(OpenPeerPowerView):
         if config_entry_id not in.opp.data[DOMAIN]:
             raise web_exceptions.HTTPBadRequest
 
-        entry =.opp.config_entries.async_get_entry(config_entry_id)
+        entry = opp.config_entries.async_get_entry(config_entry_id)
 
         msgs = await dump.dump_msgs(entry.data[CONF_URL], async_get_clientsession.opp))
 

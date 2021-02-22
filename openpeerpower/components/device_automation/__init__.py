@@ -123,7 +123,7 @@ async def _async_get_device_automations.opp, automation_type, device_id):
         raise DeviceNotFound
 
     for entry_id in device.config_entries:
-        config_entry =.opp.config_entries.async_get_entry(entry_id)
+        config_entry = opp.config_entries.async_get_entry(entry_id)
         domains.add(config_entry.domain)
 
     entity_entries = async_entries_for_device(entity_registry, device_id)

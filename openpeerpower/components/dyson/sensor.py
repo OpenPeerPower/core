@@ -64,7 +64,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         return
 
    .opp.data.setdefault(DYSON_SENSOR_DEVICES, [])
-    unit =.opp.config.units.temperature_unit
+    unit = opp.config.units.temperature_unit
     devices =.opp.data[DYSON_SENSOR_DEVICES]
 
     # Get Dyson Devices from parent component

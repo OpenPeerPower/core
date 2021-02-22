@@ -40,7 +40,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     if DOMAIN not in config:
         return True
     host = config[DOMAIN][CONF_HOST]
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     if not entries:
         # Create new entry based on config
        .opp.async_create_task(

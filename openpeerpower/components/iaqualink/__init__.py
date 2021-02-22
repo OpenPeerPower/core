@@ -119,7 +119,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
         elif isinstance(dev, AqualinkToggle):
             switches += [dev]
 
-    forward_setup =.opp.config_entries.async_forward_entry_setup
+    forward_setup = opp.config_entries.async_forward_entry_setup
     if binary_sensors:
         _LOGGER.debug("Got %s binary sensors: %s", len(binary_sensors), binary_sensors)
        .opp.async_create_task(forward_setup(entry, BINARY_SENSOR_DOMAIN))
@@ -157,7 +157,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    forward_unload =.opp.config_entries.async_forward_entry_unload
+    forward_unload = opp.config_entries.async_forward_entry_unload
 
     tasks = []
 

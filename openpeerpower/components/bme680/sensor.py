@@ -108,7 +108,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the BME680 sensor."""
-    SENSOR_TYPES[SENSOR_TEMP][1] =.opp.config.units.temperature_unit
+    SENSOR_TYPES[SENSOR_TEMP][1] = opp.config.units.temperature_unit
     name = config[CONF_NAME]
 
     sensor_handler = await.opp.async_add_executor_job(_setup_bme680, config)

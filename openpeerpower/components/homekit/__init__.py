@@ -177,7 +177,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     if DOMAIN not in config:
         return True
 
-    current_entries =.opp.config_entries.async_entries(DOMAIN)
+    current_entries = opp.config_entries.async_entries(DOMAIN)
     entries_by_name = _async_get_entries_by_name(current_entries)
 
     for index, conf in enumerate(config[DOMAIN]):
@@ -397,7 +397,7 @@ def _async_register_events_and_services.opp: OpenPeerPower):
         if not config or DOMAIN not in config:
             return
 
-        current_entries =.opp.config_entries.async_entries(DOMAIN)
+        current_entries = opp.config_entries.async_entries(DOMAIN)
         entries_by_name = _async_get_entries_by_name(current_entries)
 
         for conf in config[DOMAIN]:

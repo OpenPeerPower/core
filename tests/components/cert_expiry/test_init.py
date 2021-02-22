@@ -51,7 +51,7 @@ async def test_update_unique_id.opp):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_HOST: HOST, CONF_PORT: PORT})
     entry.add_to.opp.opp)
 
-    config_entries =.opp.config_entries.async_entries(DOMAIN)
+    config_entries = opp.config_entries.async_entries(DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
     assert not entry.unique_id
@@ -77,7 +77,7 @@ async def test_unload_config_entry(mock_now,.opp):
     )
     entry.add_to.opp.opp)
 
-    config_entries =.opp.config_entries.async_entries(DOMAIN)
+    config_entries = opp.config_entries.async_entries(DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
 

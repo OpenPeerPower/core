@@ -28,7 +28,7 @@ LOCATION_MESSAGE_INCOMPLETE = {"longitude": 2.0}
 @pytest.fixture(autouse=True)
 def setup_comp.opp, mqtt_mock):
     """Initialize components."""
-    yaml_devices =.opp.config.path(YAML_DEVICES)
+    yaml_devices = opp.config.path(YAML_DEVICES)
     yield
     if os.path.isfile(yaml_devices):
         os.remove(yaml_devices)

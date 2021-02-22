@@ -444,7 +444,7 @@ async def test_options_update(
 ) -> None:
     """Test when config entry update event fires."""
     await _test_setup_speaker.opp, True)
-    config_entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    config_entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert config_entry.options
     new_options = config_entry.options.copy()
     updated_options = {CONF_VOLUME_STEP: VOLUME_STEP}

@@ -239,7 +239,7 @@ async def test_load_unload_entry.opp, client, webhook_id):
     assert STATE_HOME == state_name
     assert len.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
 
-    entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    entry = opp.config_entries.async_entries(DOMAIN)[0]
 
     assert await traccar.async_unload_entry.opp, entry)
     await.opp.async_block_till_done()

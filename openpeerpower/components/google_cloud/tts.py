@@ -145,7 +145,7 @@ async def async_get_engine.opp, config, discovery_info=None):
     """Set up Google Cloud TTS component."""
     key_file = config.get(CONF_KEY_FILE)
     if key_file:
-        key_file =.opp.config.path(key_file)
+        key_file = opp.config.path(key_file)
         if not os.path.isfile(key_file):
             _LOGGER.error("File %s doesn't exist", key_file)
             return None

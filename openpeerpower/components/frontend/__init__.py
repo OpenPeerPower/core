@@ -276,7 +276,7 @@ async def async_setup_opp, config):
         "/.well-known/change-password", "/profile", redirect_exc=web.HTTPFound
     )
 
-    local =.opp.config.path("www")
+    local = opp.config.path("www")
     if os.path.isdir(local):
        .opp.http.register_static_path("/local", local, not is_dev)
 

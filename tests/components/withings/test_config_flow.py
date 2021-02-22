@@ -101,6 +101,6 @@ async def test_config_reauth_profile(
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
 
-    entries =.opp.config_entries.async_entries(const.DOMAIN)
+    entries = opp.config_entries.async_entries(const.DOMAIN)
     assert entries
     assert entries[0].data["token"]["refresh_token"] == "mock-refresh-token"

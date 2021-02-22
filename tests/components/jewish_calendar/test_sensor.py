@@ -592,7 +592,7 @@ OMER_TEST_IDS = [
 @pytest.mark.parametrize(["test_time", "result"], OMER_PARAMS, ids=OMER_TEST_IDS)
 async def test_omer_sensor.opp, legacy_patchable_time, test_time, result):
     """Test Omer Count sensor output."""
-    test_time =.opp.config.time_zone.localize(test_time)
+    test_time = opp.config.time_zone.localize(test_time)
 
     with alter_time(test_time):
         assert await async_setup_component(
@@ -626,7 +626,7 @@ DAFYOMI_TEST_IDS = [
 @pytest.mark.parametrize(["test_time", "result"], DAFYOMI_PARAMS, ids=DAFYOMI_TEST_IDS)
 async def test_dafyomi_sensor.opp, legacy_patchable_time, test_time, result):
     """Test Daf Yomi sensor output."""
-    test_time =.opp.config.time_zone.localize(test_time)
+    test_time = opp.config.time_zone.localize(test_time)
 
     with alter_time(test_time):
         assert await async_setup_component(

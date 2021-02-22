@@ -25,7 +25,7 @@ async def test_import.opp):
         await.opp.async_block_till_done()
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
-    entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert entry.data["type"] == "local"
     assert entry.data["host"] == "http://localhost:3000"
 
@@ -66,7 +66,7 @@ async def test.oppio.opp):
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
-    entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert entry.data["type"] == "local"
     assert entry.data["host"] == "http://almond-addon:1234"
 
@@ -150,6 +150,6 @@ async def test_full_flow(
     assert len(mock_setup.mock_calls) == 1
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
-    entry =.opp.config_entries.async_entries(DOMAIN)[0]
+    entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert entry.data["type"] == "oauth2"
     assert entry.data["host"] == "https://almond.stanford.edu/me"

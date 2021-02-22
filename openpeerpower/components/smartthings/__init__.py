@@ -69,7 +69,7 @@ async def async_migrate_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     # Remove the entry which will invoke the callback to delete the app.
    .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
     # only create new flow if there isn't a pending one for SmartThings.
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     if not [flow for flow in flows if flow["handler"] == DOMAIN]:
        .opp.async_create_task(
            .opp.config_entries.flow.async_init(DOMAIN, context={"source": "import"})
@@ -175,7 +175,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     if remove_entry:
        .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
         # only create new flow if there isn't a pending one for SmartThings.
-        flows =.opp.config_entries.flow.async_progress()
+        flows = opp.config_entries.flow.async_progress()
         if not [flow for flow in flows if flow["handler"] == DOMAIN]:
            .opp.async_create_task(
                .opp.config_entries.flow.async_init(
@@ -240,7 +240,7 @@ async def async_remove_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None
 
     # Remove the app if not referenced by other entries, which if already
     # removed raises a HTTP_FORBIDDEN error.
-    all_entries =.opp.config_entries.async_entries(DOMAIN)
+    all_entries = opp.config_entries.async_entries(DOMAIN)
     app_id = entry.data[CONF_APP_ID]
     app_count = sum(1 for entry in all_entries if entry.data[CONF_APP_ID] == app_id)
     if app_count > 1:

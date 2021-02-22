@@ -115,7 +115,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
             return {}
         return devices
 
-    yaml_path =.opp.config.path(YAML_DEVICES)
+    yaml_path = opp.config.path(YAML_DEVICES)
     devs_to_track = []
     devs_donot_track = []
     devs_track_battery = {}

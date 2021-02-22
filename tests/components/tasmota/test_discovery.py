@@ -249,7 +249,7 @@ async def test_device_remove_stale.opp, mqtt_mock, caplog, device_reg, setup_tas
     """Test removing a stale (undiscovered) device does not throw."""
     mac = "00000049A3BC"
 
-    config_entry =.opp.config_entries.async_entries("tasmota")[0]
+    config_entry = opp.config_entries.async_entries("tasmota")[0]
 
     # Create a device
     device_reg.async_get_or_create(

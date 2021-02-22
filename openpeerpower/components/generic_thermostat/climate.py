@@ -110,7 +110,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     initial_hvac_mode = config.get(CONF_INITIAL_HVAC_MODE)
     away_temp = config.get(CONF_AWAY_TEMP)
     precision = config.get(CONF_PRECISION)
-    unit =.opp.config.units.temperature_unit
+    unit = opp.config.units.temperature_unit
     unique_id = config.get(CONF_UNIQUE_ID)
 
     async_add_entities(

@@ -25,7 +25,7 @@ async def test_async_setup_creates_entry.opp, config):
     """Test component setup creates entry from config."""
     assert await async_setup_component.opp, DOMAIN, config)
     await.opp.async_block_till_done()
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     entry = entries[0]
     assert entry.title == "Controller (127.0.0.1)"
@@ -39,7 +39,7 @@ async def test_async_setup_updates_entry.opp, config_entry, config, controller):
     config_entry.add_to.opp.opp)
     assert await async_setup_component.opp, DOMAIN, config)
     await.opp.async_block_till_done()
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     entry = entries[0]
     assert entry.title == "Controller (127.0.0.2)"
@@ -52,7 +52,7 @@ async def test_async_setup_returns_true.opp, config_entry, config):
     config_entry.add_to.opp.opp)
     assert await async_setup_component.opp, DOMAIN, config)
     await.opp.async_block_till_done()
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0] == config_entry
 
@@ -62,7 +62,7 @@ async def test_async_setup_no_config_returns_true.opp, config_entry):
     config_entry.add_to.opp.opp)
     assert await async_setup_component.opp, DOMAIN, {})
     await.opp.async_block_till_done()
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0] == config_entry
 

@@ -724,7 +724,7 @@ async def test_integration_discovery.opp):
     with patch("openpeerpower.components.plex.config_flow.GDM", return_value=mock_gdm):
         await config_flow.async_discover.opp)
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
 
     assert len(flows) == 1
 
@@ -758,7 +758,7 @@ async def test_trigger_reauth.opp, entry, mock_plex_server, mock_websocket):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state != ENTRY_STATE_LOADED
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["context"]["source"] == SOURCE_REAUTH
 

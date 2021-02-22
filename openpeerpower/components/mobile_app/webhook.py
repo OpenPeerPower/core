@@ -534,7 +534,7 @@ async def webhook_get_zones.opp, config_entry, data):
 @WEBHOOK_COMMANDS.register("get_config")
 async def webhook_get_config.opp, config_entry, data):
     """Handle a get config webhook."""
-   .opp_config =.opp.config.as_dict()
+   .opp_config = opp.config.as_dict()
 
     resp = {
         "latitude":.opp_config["latitude"],

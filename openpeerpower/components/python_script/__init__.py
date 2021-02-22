@@ -78,7 +78,7 @@ class ScriptError(OpenPeerPowerError):
 
 def setup_opp, config):
     """Initialize the Python script component."""
-    path =.opp.config.path(FOLDER)
+    path = opp.config.path(FOLDER)
 
     if not os.path.isdir(path):
         _LOGGER.warning("Folder %s not found in configuration folder", FOLDER)
@@ -97,7 +97,7 @@ def setup_opp, config):
 
 def discover_scripts.opp):
     """Discover python scripts in folder."""
-    path =.opp.config.path(FOLDER)
+    path = opp.config.path(FOLDER)
 
     if not os.path.isdir(path):
         _LOGGER.warning("Folder %s not found in configuration folder", FOLDER)

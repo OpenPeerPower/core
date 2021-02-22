@@ -45,7 +45,7 @@ def setup_opp, config):
     urls = config.get(DOMAIN)[CONF_URLS]
     scan_interval = config.get(DOMAIN).get(CONF_SCAN_INTERVAL)
     max_entries = config.get(DOMAIN).get(CONF_MAX_ENTRIES)
-    data_file =.opp.config.path(f"{DOMAIN}.pickle")
+    data_file = opp.config.path(f"{DOMAIN}.pickle")
     storage = StoredData(data_file)
     feeds = [
         FeedManager(url, scan_interval, max_entries,.opp, storage) for url in urls

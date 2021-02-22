@@ -493,7 +493,7 @@ async def test_import_flow_update_options(
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "updated_entry"
-    config_entry =.opp.config_entries.async_get_entry(entry_id)
+    config_entry = opp.config_entries.async_get_entry(entry_id)
     assert config_entry.options[CONF_VOLUME_STEP] == VOLUME_STEP + 1
 
 
@@ -525,7 +525,7 @@ async def test_import_flow_update_name_and_apps(
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "updated_entry"
-    config_entry =.opp.config_entries.async_get_entry(entry_id)
+    config_entry = opp.config_entries.async_get_entry(entry_id)
     assert config_entry.data[CONF_NAME] == NAME2
     assert config_entry.data[CONF_APPS] == {CONF_INCLUDE: [CURRENT_APP]}
     assert config_entry.options[CONF_APPS] == {CONF_INCLUDE: [CURRENT_APP]}
@@ -546,7 +546,7 @@ async def test_import_flow_update_remove_apps(
 
     assert result["result"].data[CONF_NAME] == NAME
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
-    config_entry =.opp.config_entries.async_get_entry(result["result"].entry_id)
+    config_entry = opp.config_entries.async_get_entry(result["result"].entry_id)
     assert CONF_APPS in config_entry.data
     assert CONF_APPS in config_entry.options
 
@@ -659,7 +659,7 @@ async def test_import_flow_additional_configs(
 
     assert result["result"].data[CONF_NAME] == NAME
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
-    config_entry =.opp.config_entries.async_get_entry(result["result"].entry_id)
+    config_entry = opp.config_entries.async_get_entry(result["result"].entry_id)
     assert CONF_APPS in config_entry.data
     assert CONF_APPS not in config_entry.options
 

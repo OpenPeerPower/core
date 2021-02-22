@@ -158,7 +158,7 @@ class LovelaceYAML(LovelaceConfig):
         """Initialize the YAML config."""
         super().__init__.opp, url_path, config)
 
-        self.path =.opp.config.path(
+        self.path = opp.config.path(
             config[CONF_FILENAME] if config else LOVELACE_CONFIG_FILE
         )
         self._cache = None

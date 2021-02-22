@@ -209,7 +209,7 @@ async def test_setup_websocket_2.opp, mock_now):
     )
     entry.add_to.opp.opp)
 
-    config_entries =.opp.config_entries.async_entries(SAMSUNGTV_DOMAIN)
+    config_entries = opp.config_entries.async_entries(SAMSUNGTV_DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
 

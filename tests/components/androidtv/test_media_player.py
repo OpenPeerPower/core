@@ -298,7 +298,7 @@ async def test_adb_shell_returns_none_firetv_adb_server.opp):
 async def test_setup_with_adbkey.opp):
     """Test that setup succeeds when using an ADB key."""
     config = copy.deepcopy(CONFIG_ANDROIDTV_PYTHON_ADB)
-    config[DOMAIN][CONF_ADBKEY] =.opp.config.path("user_provided_adbkey")
+    config[DOMAIN][CONF_ADBKEY] = opp.config.path("user_provided_adbkey")
     patch_key, entity_id = _setup(config)
 
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[

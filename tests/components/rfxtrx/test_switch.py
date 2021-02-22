@@ -164,7 +164,7 @@ async def test_unknown_event_code.opp, rfxtrx):
     await.opp.config_entries.async_setup(mock_entry.entry_id)
     await.opp.async_block_till_done()
 
-    conf_entries =.opp.config_entries.async_entries(DOMAIN)
+    conf_entries = opp.config_entries.async_entries(DOMAIN)
     assert len(conf_entries) == 1
 
     entry = conf_entries[0]

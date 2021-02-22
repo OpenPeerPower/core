@@ -74,7 +74,7 @@ async def test_setup_with_insecure_config_entry.opp, entry, setup_plex_server):
 
 async def test_unload_config_entry.opp, entry, mock_plex_server):
     """Test unloading a config entry."""
-    config_entries =.opp.config_entries.async_entries(const.DOMAIN)
+    config_entries = opp.config_entries.async_entries(const.DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
     assert entry.state == ENTRY_STATE_LOADED

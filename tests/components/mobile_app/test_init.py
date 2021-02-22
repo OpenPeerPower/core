@@ -9,7 +9,7 @@ from tests.common import async_mock_service
 async def test_unload_unloads.opp, create_registrations, webhook_client):
     """Test we clean up when we unload."""
     # Second config entry is the one without encryption
-    config_entry =.opp.config_entries.async_entries("mobile_app")[1]
+    config_entry = opp.config_entries.async_entries("mobile_app")[1]
     webhook_id = config_entry.data["webhook_id"]
     calls = async_mock_service.opp, "test", "mobile_app")
 

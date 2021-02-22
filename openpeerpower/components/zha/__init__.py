@@ -102,7 +102,7 @@ async def async_setup_entry.opp, config_entry):
     zha_data[DATA_ZHA_DISPATCHERS] = []
     zha_data[DATA_ZHA_PLATFORM_LOADED] = []
     for component in COMPONENTS:
-        coro =.opp.config_entries.async_forward_entry_setup(config_entry, component)
+        coro = opp.config_entries.async_forward_entry_setup(config_entry, component)
         zha_data[DATA_ZHA_PLATFORM_LOADED].append.opp.async_create_task(coro))
 
     device_registry = await.opp.helpers.device_registry.async_get_registry()

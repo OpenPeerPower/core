@@ -47,7 +47,7 @@ async def test_form.opp):
 
         await.opp.async_block_till_done()
 
-        conf_entries =.opp.config_entries.async_entries(DOMAIN)
+        conf_entries = opp.config_entries.async_entries(DOMAIN)
         entry = conf_entries[0]
         assert entry.state == ENTRY_STATE_LOADED
 

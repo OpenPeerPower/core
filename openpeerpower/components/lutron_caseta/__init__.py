@@ -94,9 +94,9 @@ async def async_setup_entry.opp, config_entry):
     """Set up a bridge from a config entry."""
 
     host = config_entry.data[CONF_HOST]
-    keyfile =.opp.config.path(config_entry.data[CONF_KEYFILE])
-    certfile =.opp.config.path(config_entry.data[CONF_CERTFILE])
-    ca_certs =.opp.config.path(config_entry.data[CONF_CA_CERTS])
+    keyfile = opp.config.path(config_entry.data[CONF_KEYFILE])
+    certfile = opp.config.path(config_entry.data[CONF_CERTFILE])
+    ca_certs = opp.config.path(config_entry.data[CONF_CA_CERTS])
     bridge = None
 
     try:

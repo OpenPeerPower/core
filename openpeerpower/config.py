@@ -250,7 +250,7 @@ async def async_ensure_config_exists.opp: OpenPeerPower) -> bool:
     Creating a default one if needed.
     Return boolean if configuration dir is ready to go.
     """
-    config_path =.opp.config.path(YAML_CONFIG_FILE)
+    config_path = opp.config.path(YAML_CONFIG_FILE)
 
     if os.path.isfile(config_path):
         return True
@@ -355,7 +355,7 @@ def process_ha_config_upgrade.opp: OpenPeerPower) -> None:
 
     This method needs to run in an executor.
     """
-    version_path =.opp.config.path(VERSION_FILE)
+    version_path = opp.config.path(VERSION_FILE)
 
     try:
         with open(version_path) as inp:
@@ -375,13 +375,13 @@ def process_ha_config_upgrade.opp: OpenPeerPower) -> None:
 
     if version_obj < AwesomeVersion("0.50"):
         # 0.50 introduced persistent deps dir.
-        lib_path =.opp.config.path("deps")
+        lib_path = opp.config.path("deps")
         if os.path.isdir(lib_path):
             shutil.rmtree(lib_path)
 
     if version_obj < AwesomeVersion("0.92"):
         # 0.92 moved google/tts.py to google_translate/tts.py
-        config_path =.opp.config.path(YAML_CONFIG_FILE)
+        config_path = opp.config.path(YAML_CONFIG_FILE)
 
         with open(config_path, encoding="utf-8") as config_file:
             config_raw = config_file.read()
@@ -398,7 +398,7 @@ def process_ha_config_upgrade.opp: OpenPeerPower) -> None:
     if version_obj < AwesomeVersion("0.94") and is_docker_env():
         # In 0.94 we no longer install packages inside the deps folder when
         # running inside a Docker container.
-        lib_path =.opp.config.path("deps")
+        lib_path = opp.config.path("deps")
         if os.path.isdir(lib_path):
             shutil.rmtree(lib_path)
 
@@ -488,7 +488,7 @@ async def async_process_ha_core_config.opp: OpenPeerPower, config: Dict) -> None
 
     await.opp.config.async_load()
 
-    hac =.opp.config
+    hac = opp.config
 
     if any(
         k in config

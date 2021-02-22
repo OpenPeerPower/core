@@ -142,7 +142,7 @@ async def test_unload(
        .opp.opp, controller_config=new_simple_controller_config()
     )
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert entries
 
     for config_entry in entries:

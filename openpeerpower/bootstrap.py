@@ -79,7 +79,7 @@ async def async_setup_opp(
 ) -> Optional[core.OpenPeerPower]:
     """Set up Open Peer Power."""
     opp = core.OpenPeerPower()
-   .opp.config.config_dir = runtime_config.config_dir
+    opp.config.config_dir = runtime_config.config_dir
 
     async_enable_logging(
        .opp,
@@ -89,7 +89,7 @@ async def async_setup_opp(
         runtime_config.log_no_color,
     )
 
-   .opp.config.skip_pip = runtime_config.skip_pip
+    opp.config.skip_pip = runtime_config.skip_pip
     if runtime_config.skip_pip:
         _LOGGER.warning(
             "Skipping pip installation of required modules. This may cause issues"
@@ -134,7 +134,7 @@ async def async_setup_opp(
 
     elif (
         "frontend" in.opp.data.get(DATA_SETUP, {})
-        and "frontend" not in.opp.config.components
+        and "frontend" not in opp.config.components
     ):
         _LOGGER.warning("Detected that frontend did not load. Activating safe mode")
         # Ask integrations to shut down. It's messy but we can't
@@ -144,17 +144,17 @@ async def async_setup_opp(
                 await.opp.async_stop()
 
         safe_mode = True
-        old_config =.opp.config
+        old_config = opp.config
 
         opp = core.OpenPeerPower()
-       .opp.config.skip_pip = old_config.skip_pip
-       .opp.config.internal_url = old_config.internal_url
-       .opp.config.external_url = old_config.external_url
-       .opp.config.config_dir = old_config.config_dir
+        opp.config.skip_pip = old_config.skip_pip
+        opp.config.internal_url = old_config.internal_url
+        opp.config.external_url = old_config.external_url
+        opp.config.config_dir = old_config.config_dir
 
     if safe_mode:
         _LOGGER.info("Starting in safe mode")
-       .opp.config.safe_mode = True
+        opp.config.safe_mode = True
 
         http_conf = (await http.async_get_last_config.opp)) or {}
 
@@ -173,13 +173,13 @@ def open.opp_ui.opp: core.OpenPeerPower) -> None:
     """Open the UI."""
     import webbrowser  # pylint: disable=import-outside-toplevel
 
-    if.opp.config.api is None or "frontend" not in.opp.config.components:
+    if opp.config.api is None or "frontend" not in opp.config.components:
         _LOGGER.warning("Cannot launch the UI because frontend not loaded")
         return
 
-    scheme = "https" if.opp.config.api.use_ssl else "http"
+    scheme = "https" if opp.config.api.use_ssl else "http"
     url = str(
-        yarl.URL.build(scheme=scheme, host="127.0.0.1", port.opp.config.api.port)
+        yarl.URL.build(scheme=scheme, host="127.0.0.1", port opp.config.api.port)
     )
 
     if not webbrowser.open(url):
@@ -199,8 +199,8 @@ async def async_from_config_dict(
     """
     start = monotonic()
 
-   .opp.config_entries = config_entries.ConfigEntries.opp, config)
-    await.opp.config_entries.async_initialize()
+    opp.config_entries = config_entries.ConfigEntries.opp, config)
+    await opp.config_entries.async_initialize()
 
     # Set up core.
     _LOGGER.debug("Setting up %s", CORE_INTEGRATIONS)
@@ -315,7 +315,7 @@ def async_enable_logging(
 
     # Log errors to a file if we have write access to file or config dir
     if log_file is None:
-        err_log_path =.opp.config.path(ERROR_LOG_FILENAME)
+        err_log_path = opp.config.path(ERROR_LOG_FILENAME)
     else:
         err_log_path = os.path.abspath(log_file)
 
@@ -371,8 +371,8 @@ def _get_domains.opp: core.OpenPeerPower, config: Dict[str, Any]) -> Set[str]:
     domains = {key.split(" ")[0] for key in config if key != core.DOMAIN}
 
     # Add config entry domains
-    if not.opp.config.safe_mode:
-        domains.update.opp.config_entries.async_domains())
+    if not opp.config.safe_mode:
+        domains.update opp.config_entries.async_domains())
 
     # Make sure the Hass.io component is loaded
     if "HASSIO" in os.environ:

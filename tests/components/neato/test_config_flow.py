@@ -148,7 +148,7 @@ async def test_reauth(
         result3 = await.opp.config_entries.flow.async_configure(result2["flow_id"])
         await.opp.async_block_till_done()
 
-    new_entry =.opp.config_entries.async_get_entry("my_entry")
+    new_entry = opp.config_entries.async_get_entry("my_entry")
 
     assert result3["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result3["reason"] == "reauth_successful"

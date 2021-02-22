@@ -52,7 +52,7 @@ async def test_setup_platform.opp, dsmr_connection_fixture):
     assert not async_add_entities.called
 
     # Check config entry
-    conf_entries =.opp.config_entries.async_entries(DOMAIN)
+    conf_entries = opp.config_entries.async_entries(DOMAIN)
 
     assert len(conf_entries) == 1
 

@@ -89,7 +89,7 @@ async def async_setup_opp, config):
    .opp.data[DOMAIN] = {"yaml_options": options}
 
     # check if already configured
-    domains_list =.opp.config_entries.async_domains()
+    domains_list = opp.config_entries.async_domains()
     if DOMAIN in domains_list:
         return True
 

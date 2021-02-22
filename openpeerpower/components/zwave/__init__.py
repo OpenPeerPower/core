@@ -256,7 +256,7 @@ async def async_get_ozw_migration_data.opp):
     """Return dict with info for migration to ozw integration."""
     data_to_migrate = {}
 
-    zwave_config_entries =.opp.config_entries.async_entries(DOMAIN)
+    zwave_config_entries = opp.config_entries.async_entries(DOMAIN)
     if not zwave_config_entries:
         _LOGGER.error("Config entry not set up")
         return data_to_migrate
@@ -301,7 +301,7 @@ async def async_get_ozw_migration_data.opp):
 @callback
 def async_is_ozw_migrated.opp):
     """Return True if migration to ozw is done."""
-    ozw_config_entries =.opp.config_entries.async_entries("ozw")
+    ozw_config_entries = opp.config_entries.async_entries("ozw")
     if not ozw_config_entries:
         return False
 

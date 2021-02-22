@@ -23,7 +23,7 @@ async def test_setup_opp: OpenPeerPowerType, fritz: Mock):
     """Test setup of integration."""
     assert await async_setup_component.opp, FB_DOMAIN, MOCK_CONFIG)
     await.opp.async_block_till_done()
-    entries =.opp.config_entries.async_entries()
+    entries = opp.config_entries.async_entries()
     assert entries
     assert entries[0].data[CONF_HOST] == "fake_host"
     assert entries[0].data[CONF_PASSWORD] == "fake_pass"
@@ -63,7 +63,7 @@ async def test_unload_remove.opp: OpenPeerPowerType, fritz: Mock):
     )
     entry.add_to.opp.opp)
 
-    config_entries =.opp.config_entries.async_entries(FB_DOMAIN)
+    config_entries = opp.config_entries.async_entries(FB_DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
 

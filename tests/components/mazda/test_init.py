@@ -49,11 +49,11 @@ async def test_init_auth_failure.opp: OpenPeerPower):
         await.opp.config_entries.async_setup(config_entry.entry_id)
         await.opp.async_block_till_done()
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].state == ENTRY_STATE_SETUP_ERROR
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["step_id"] == "reauth"
 
@@ -70,7 +70,7 @@ async def test_update_auth_failure.opp: OpenPeerPower):
         await.opp.config_entries.async_setup(config_entry.entry_id)
         await.opp.async_block_till_done()
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].state == ENTRY_STATE_LOADED
 
@@ -85,7 +85,7 @@ async def test_update_auth_failure.opp: OpenPeerPower):
         await coordinator.async_refresh()
         await.opp.async_block_till_done()
 
-    flows =.opp.config_entries.flow.async_progress()
+    flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["step_id"] == "reauth"
 

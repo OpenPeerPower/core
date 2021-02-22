@@ -72,7 +72,7 @@ async def test_sensor.opp, create_registrations, webhook_client):
     assert len(dev_reg.devices) == len(create_registrations)
 
     # Reload to verify state is restored
-    config_entry =.opp.config_entries.async_entries("mobile_app")[1]
+    config_entry = opp.config_entries.async_entries("mobile_app")[1]
     await.opp.config_entries.async_unload(config_entry.entry_id)
     await.opp.async_block_till_done()
     unloaded_entity =.opp.states.get("sensor.test_1_battery_state")

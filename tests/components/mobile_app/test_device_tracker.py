@@ -92,7 +92,7 @@ async def test_restoring_location.opp, create_registrations, webhook_client):
     state_1 =.opp.states.get("device_tracker.test_1_2")
     assert state_1 is not None
 
-    config_entry =.opp.config_entries.async_entries("mobile_app")[1]
+    config_entry = opp.config_entries.async_entries("mobile_app")[1]
 
     # mobile app doesn't support unloading, so we just reload device tracker
     await.opp.config_entries.async_forward_entry_unload(config_entry, "device_tracker")

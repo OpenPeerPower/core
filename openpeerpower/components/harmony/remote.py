@@ -66,7 +66,7 @@ async def async_setup_entry(
     default_activity = entry.options.get(ATTR_ACTIVITY)
     delay_secs = entry.options.get(ATTR_DELAY_SECS, DEFAULT_DELAY_SECS)
 
-    harmony_conf_file =.opp.config.path(f"harmony_{entry.unique_id}.conf")
+    harmony_conf_file = opp.config.path(f"harmony_{entry.unique_id}.conf")
     device = HarmonyRemote(data, default_activity, delay_secs, harmony_conf_file)
     async_add_entities([device])
 

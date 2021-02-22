@@ -647,7 +647,7 @@ async def async_api_previous.opp, config, directive, context):
 
 def temperature_from_object.opp, temp_obj, interval=False):
     """Get temperature from Temperature object in requested unit."""
-    to_unit =.opp.config.units.temperature_unit
+    to_unit = opp.config.units.temperature_unit
     from_unit = TEMP_CELSIUS
     temp = float(temp_obj["value"])
 
@@ -667,7 +667,7 @@ async def async_api_set_target_temp.opp, config, directive, context):
     entity = directive.entity
     min_temp = entity.attributes.get(climate.ATTR_MIN_TEMP)
     max_temp = entity.attributes.get(climate.ATTR_MAX_TEMP)
-    unit =.opp.config.units.temperature_unit
+    unit = opp.config.units.temperature_unit
 
     data = {ATTR_ENTITY_ID: entity.entity_id}
 
@@ -727,7 +727,7 @@ async def async_api_adjust_target_temp.opp, config, directive, context):
     entity = directive.entity
     min_temp = entity.attributes.get(climate.ATTR_MIN_TEMP)
     max_temp = entity.attributes.get(climate.ATTR_MAX_TEMP)
-    unit =.opp.config.units.temperature_unit
+    unit = opp.config.units.temperature_unit
 
     temp_delta = temperature_from_object(
        .opp, directive.payload["targetSetpointDelta"], interval=True

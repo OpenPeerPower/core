@@ -1006,7 +1006,7 @@ async def websocket_remove_device.opp, connection, msg):
         return
 
     for config_entry in device.config_entries:
-        config_entry =.opp.config_entries.async_get_entry(config_entry)
+        config_entry = opp.config_entries.async_get_entry(config_entry)
         # Only delete the device if it belongs to an MQTT device entry
         if config_entry.domain == DOMAIN:
             dev_registry.async_remove_device(device_id)

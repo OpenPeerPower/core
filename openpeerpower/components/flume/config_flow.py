@@ -43,7 +43,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     password = data[CONF_PASSWORD]
     client_id = data[CONF_CLIENT_ID]
     client_secret = data[CONF_CLIENT_SECRET]
-    flume_token_full_path =.opp.config.path(f"{BASE_TOKEN_FILENAME}-{username}")
+    flume_token_full_path = opp.config.path(f"{BASE_TOKEN_FILENAME}-{username}")
 
     try:
         flume_auth = await.opp.async_add_executor_job(

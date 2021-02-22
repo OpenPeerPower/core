@@ -39,7 +39,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     username = conf[CONF_USERNAME]
     password = conf[CONF_PASSWORD]
 
-    state_file =.opp.config.path(f"nexia_config_{username}.conf")
+    state_file = opp.config.path(f"nexia_config_{username}.conf")
 
     try:
         nexia_home = await.opp.async_add_executor_job(

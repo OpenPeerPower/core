@@ -366,7 +366,7 @@ def async_setup_scanner_platform(
 
 async def get_tracker.opp, config):
     """Create a tracker."""
-    yaml_path =.opp.config.path(YAML_DEVICES)
+    yaml_path = opp.config.path(YAML_DEVICES)
 
     conf = config.get(DOMAIN, [])
     conf = conf[0] if conf else {}

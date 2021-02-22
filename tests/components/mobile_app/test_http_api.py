@@ -37,7 +37,7 @@ async def test_registration.opp,.opp_client,.opp_admin_user):
     assert CONF_WEBHOOK_ID in register_json
     assert CONF_SECRET in register_json
 
-    entries =.opp.config_entries.async_entries(DOMAIN)
+    entries = opp.config_entries.async_entries(DOMAIN)
 
     assert entries[0].unique_id == "io.openpeerpower.mobile_app_test-mock-device-id"
     assert entries[0].data["device_id"] == REGISTER_CLEARTEXT["device_id"]
