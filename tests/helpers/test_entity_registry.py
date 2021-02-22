@@ -4,8 +4,8 @@ from unittest.mock import patch
 import pytest
 
 from openpeerpower.const import EVENT_OPENPEERPOWER_START, STATE_UNAVAILABLE
-from openpeerpowerr.core import CoreState, callback, valid_entity_id
-from openpeerpowerr.helpers import entity_registry
+from openpeerpower.core import CoreState, callback, valid_entity_id
+from openpeerpower.helpers import entity_registry
 
 from tests.common import (
     MockConfigEntry,
@@ -14,7 +14,7 @@ from tests.common import (
     mock_registry,
 )
 
-YAML__OPEN_PATH = "openpeerpowerr.util.yaml.loader.open"
+YAML__OPEN_PATH = "openpeerpower.util.yaml.loader.open"
 
 
 @pytest.fixture
@@ -42,7 +42,7 @@ async def test_get_or_create_returns_same_entry.opp, registry, update_events):
     entry = registry.async_get_or_create("light", "hue", "1234")
     entry2 = registry.async_get_or_create("light", "hue", "1234")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(registry.entities) == 1
     assert entry is entry2
@@ -74,7 +74,7 @@ def test_get_or_create_updates_data(registry):
         capabilities={"max": 100},
         supported_features=5,
         device_class="mock-device-class",
-        disabled_by=entity_registry.DISABLED_OPP,
+        disabled_by=entity_registry.DISABLED_HASS,
         unit_of_measurement="initial-unit_of_measurement",
         original_name="initial-original_name",
         original_icon="initial-original_icon",
@@ -85,7 +85,7 @@ def test_get_or_create_updates_data(registry):
     assert orig_entry.capabilities == {"max": 100}
     assert orig_entry.supported_features == 5
     assert orig_entry.device_class == "mock-device-class"
-    assert orig_entry.disabled_by == entity_registry.DISABLED_OPP
+    assert orig_entry.disabled_by == entity_registry.DISABLED_HASS
     assert orig_entry.unit_of_measurement == "initial-unit_of_measurement"
     assert orig_entry.original_name == "initial-original_name"
     assert orig_entry.original_icon == "initial-original_icon"
@@ -116,7 +116,7 @@ def test_get_or_create_updates_data(registry):
     assert new_entry.original_name == "updated-original_name"
     assert new_entry.original_icon == "updated-original_icon"
     # Should not be updated
-    assert new_entry.disabled_by == entity_registry.DISABLED_OPP
+    assert new_entry.disabled_by == entity_registry.DISABLED_HASS
 
 
 def test_get_or_create_suggested_object_id_conflict_register(registry):
@@ -162,12 +162,12 @@ async def test_loading_saving_data.opp, registry):
         capabilities={"max": 100},
         supported_features=5,
         device_class="mock-device-class",
-        disabled_by=entity_registry.DISABLED_OPP,
+        disabled_by=entity_registry.DISABLED_HASS,
         original_name="Original Name",
-        original_icon="opp:original-icon",
+        original_icon=.opp:original-icon",
     )
     orig_entry2 = registry.async_update_entity(
-        orig_entry2.entity_id, name="User Name", icon="opp:user-icon"
+        orig_entry2.entity_id, name="User Name", icon=.opp:user-icon"
     )
 
     assert len(registry.entities) == 2
@@ -187,14 +187,14 @@ async def test_loading_saving_data.opp, registry):
 
     assert new_entry2.device_id == "mock-dev-id"
     assert new_entry2.area_id == "mock-area-id"
-    assert new_entry2.disabled_by == entity_registry.DISABLED_OPP
+    assert new_entry2.disabled_by == entity_registry.DISABLED_HASS
     assert new_entry2.capabilities == {"max": 100}
     assert new_entry2.supported_features == 5
     assert new_entry2.device_class == "mock-device-class"
     assert new_entry2.name == "User Name"
-    assert new_entry2.icon == "opp:user-icon"
+    assert new_entry2.icon == .opp:user-icon"
     assert new_entry2.original_name == "Original Name"
-    assert new_entry2.original_icon == "opp:original-icon"
+    assert new_entry2.original_icon == .opp:original-icon"
 
 
 def test_generate_entity_considers_registered_entities(registry):
@@ -242,16 +242,16 @@ async def test_loading_extra_values.opp,.opp_storage):
                     "disabled_by": "user",
                 },
                 {
-                    "entity_id": "test.disabled_opp",
+                    "entity_id": "test.disabled.opp",
                     "platform": "super_platform",
                     "unique_id": "disabled.opp",
-                    "disabled_by": "opp",
+                    "disabled_by": .opp",
                 },
                 {
                     "entity_id": "test.invalid__entity",
                     "platform": "super_platform",
                     "unique_id": "invalid.opp",
-                    "disabled_by": "opp",
+                    "disabled_by": .opp",
                 },
             ]
         },
@@ -272,14 +272,14 @@ async def test_loading_extra_values.opp,.opp_storage):
     assert entry_without_name.name is None
     assert not entry_with_name.disabled
 
-    entry_disabled_opp = registry.async_get_or_create(
+    entry_disabled.opp = registry.async_get_or_create(
         "test", "super_platform", "disabled.opp"
     )
     entry_disabled_user = registry.async_get_or_create(
         "test", "super_platform", "disabled-user"
     )
-    assert entry_disabled_opp.disabled
-    assert entry_disabled_opp.disabled_by == entity_registry.DISABLED_OPP
+    assert entry_disabled.opp.disabled
+    assert entry_disabled.opp.disabled_by == entity_registry.DISABLED_HASS
     assert entry_disabled_user.disabled
     assert entry_disabled_user.disabled_by == entity_registry.DISABLED_USER
 
@@ -306,7 +306,7 @@ async def test_updating_config_entry_id.opp, registry, update_events):
     assert entry.entity_id == entry2.entity_id
     assert entry2.config_entry_id == "mock-id-2"
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(update_events) == 2
     assert update_events[0]["action"] == "create"
@@ -328,7 +328,7 @@ async def test_removing_config_entry_id.opp, registry, update_events):
 
     assert not registry.entities
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(update_events) == 2
     assert update_events[0]["action"] == "create"
@@ -361,11 +361,11 @@ async def test_migration.opp):
             "unique_id": "test-unique",
             "platform": "test-platform",
             "name": "Test Name",
-            "disabled_by": "opp",
+            "disabled_by": .opp",
         }
     }
     with patch("os.path.isfile", return_value=True), patch("os.remove"), patch(
-        "openpeerpowerr.helpers.entity_registry.load_yaml", return_value=old_conf
+        "openpeerpower.helpers.entity_registry.load_yaml", return_value=old_conf
     ):
         await entity_registry.async_load.opp)
         registry = entity_registry.async_get.opp)
@@ -378,7 +378,7 @@ async def test_migration.opp):
         config_entry=mock_config,
     )
     assert entry.name == "Test Name"
-    assert entry.disabled_by == "opp"
+    assert entry.disabled_by == .opp"
     assert entry.config_entry_id == "test-config-id"
 
 
@@ -497,13 +497,13 @@ async def test_update_entity(registry):
 
 async def test_disabled_by(registry):
     """Test that we can disable an entry when we create it."""
-    entry = registry.async_get_or_create("light", "hue", "5678", disabled_by="opp")
-    assert entry.disabled_by == "opp"
+    entry = registry.async_get_or_create("light", "hue", "5678", disabled_by=.opp")
+    assert entry.disabled_by == .opp"
 
     entry = registry.async_get_or_create(
         "light", "hue", "5678", disabled_by="integration"
     )
-    assert entry.disabled_by == "opp"
+    assert entry.disabled_by == .opp"
 
     entry2 = registry.async_get_or_create("light", "hue", "1234")
     assert entry2.disabled_by is None
@@ -545,7 +545,7 @@ async def test_restore_states.opp):
         "hue",
         "5678",
         suggested_object_id="disabled",
-        disabled_by=entity_registry.DISABLED_OPP,
+        disabled_by=entity_registry.DISABLED_HASS,
     )
     registry.async_get_or_create(
         "light",
@@ -556,21 +556,21 @@ async def test_restore_states.opp):
         supported_features=5,
         device_class="mock-device-class",
         original_name="Mock Original Name",
-        original_icon="opp:original-icon",
+        original_icon=.opp:original-icon",
     )
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    simple = opp.states.get("light.simple")
+    simple =.opp.states.get("light.simple")
     assert simple is not None
     assert simple.state == STATE_UNAVAILABLE
     assert simple.attributes == {"restored": True, "supported_features": 0}
 
-    disabled = opp.states.get("light.disabled")
+    disabled =.opp.states.get("light.disabled")
     assert disabled is None
 
-    all_info_set = opp.states.get("light.all_info_set")
+    all_info_set =.opp.states.get("light.all_info_set")
     assert all_info_set is not None
     assert all_info_set.state == STATE_UNAVAILABLE
     assert all_info_set.attributes == {
@@ -579,14 +579,14 @@ async def test_restore_states.opp):
         "device_class": "mock-device-class",
         "restored": True,
         "friendly_name": "Mock Original Name",
-        "icon": "opp:original-icon",
+        "icon": .opp:original-icon",
     }
 
     registry.async_remove("light.disabled")
     registry.async_remove("light.simple")
     registry.async_remove("light.all_info_set")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("light.simple") is None
     assert.opp.states.get("light.disabled") is None
@@ -693,7 +693,7 @@ async def test_remove_device_removes_entities.opp, registry):
     assert registry.async_is_registered(entry.entity_id)
 
     device_registry.async_remove_device(device_entry.id)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert not registry.async_is_registered(entry.entity_id)
 
@@ -726,7 +726,7 @@ async def test_update_device_race.opp, registry):
     assert registry.async_is_registered(entry.entity_id)
 
     device_registry.async_remove_device(device_entry.id)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert not registry.async_is_registered(entry.entity_id)
 
@@ -735,7 +735,7 @@ async def test_disable_device_disables_entities.opp, registry):
     """Test that we disable entities tied to a device."""
     device_registry = mock_device_registry.opp)
     config_entry = MockConfigEntry(domain="light")
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     device_entry = device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
@@ -757,12 +757,21 @@ async def test_disable_device_disables_entities.opp, registry):
         device_id=device_entry.id,
         disabled_by="user",
     )
+    entry3 = registry.async_get_or_create(
+        "light",
+        "hue",
+        "EFGH",
+        config_entry=config_entry,
+        device_id=device_entry.id,
+        disabled_by="config_entry",
+    )
 
     assert not entry1.disabled
     assert entry2.disabled
+    assert entry3.disabled
 
     device_registry.async_update_device(device_entry.id, disabled_by="user")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entry1 = registry.async_get(entry1.entity_id)
     assert entry1.disabled
@@ -770,15 +779,86 @@ async def test_disable_device_disables_entities.opp, registry):
     entry2 = registry.async_get(entry2.entity_id)
     assert entry2.disabled
     assert entry2.disabled_by == "user"
+    entry3 = registry.async_get(entry3.entity_id)
+    assert entry3.disabled
+    assert entry3.disabled_by == "config_entry"
 
     device_registry.async_update_device(device_entry.id, disabled_by=None)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entry1 = registry.async_get(entry1.entity_id)
     assert not entry1.disabled
     entry2 = registry.async_get(entry2.entity_id)
     assert entry2.disabled
     assert entry2.disabled_by == "user"
+    entry3 = registry.async_get(entry3.entity_id)
+    assert entry3.disabled
+    assert entry3.disabled_by == "config_entry"
+
+
+async def test_disable_config_entry_disables_entities.opp, registry):
+    """Test that we disable entities tied to a config entry."""
+    device_registry = mock_device_registry.opp)
+    config_entry = MockConfigEntry(domain="light")
+    config_entry.add_to.opp.opp)
+
+    device_entry = device_registry.async_get_or_create(
+        config_entry_id=config_entry.entry_id,
+        connections={("mac", "12:34:56:AB:CD:EF")},
+    )
+
+    entry1 = registry.async_get_or_create(
+        "light",
+        "hue",
+        "5678",
+        config_entry=config_entry,
+        device_id=device_entry.id,
+    )
+    entry2 = registry.async_get_or_create(
+        "light",
+        "hue",
+        "ABCD",
+        config_entry=config_entry,
+        device_id=device_entry.id,
+        disabled_by="user",
+    )
+    entry3 = registry.async_get_or_create(
+        "light",
+        "hue",
+        "EFGH",
+        config_entry=config_entry,
+        device_id=device_entry.id,
+        disabled_by="device",
+    )
+
+    assert not entry1.disabled
+    assert entry2.disabled
+    assert entry3.disabled
+
+    await.opp.config_entries.async_set_disabled_by(config_entry.entry_id, "user")
+    await.opp.async_block_till_done()
+
+    entry1 = registry.async_get(entry1.entity_id)
+    assert entry1.disabled
+    assert entry1.disabled_by == "config_entry"
+    entry2 = registry.async_get(entry2.entity_id)
+    assert entry2.disabled
+    assert entry2.disabled_by == "user"
+    entry3 = registry.async_get(entry3.entity_id)
+    assert entry3.disabled
+    assert entry3.disabled_by == "device"
+
+    await.opp.config_entries.async_set_disabled_by(config_entry.entry_id, None)
+    await.opp.async_block_till_done()
+
+    entry1 = registry.async_get(entry1.entity_id)
+    assert not entry1.disabled
+    entry2 = registry.async_get(entry2.entity_id)
+    assert entry2.disabled
+    assert entry2.disabled_by == "user"
+    # The device was re-enabled, so entity disabled by the device will be re-enabled too
+    entry3 = registry.async_get(entry3.entity_id)
+    assert not entry3.disabled_by
 
 
 async def test_disabled_entities_excluded_from_entity_list.opp, registry):

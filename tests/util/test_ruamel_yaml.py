@@ -5,8 +5,8 @@ from tempfile import mkdtemp
 import pytest
 from ruamel.yaml import YAML
 
-from openpeerpowerr.exceptions import OpenPeerPowerError
-import openpeerpowerr.util.ruamel_yaml as util_yaml
+from openpeerpower.exceptions import OpenPeerPowerError
+import openpeerpower.util.ruamel_yaml as util_yaml
 
 TEST_YAML_A = """\
 title: My Awesome Home
@@ -44,11 +44,11 @@ views:
 
         # The picture entity card will represent an entity with a picture
       - type: picture-entity
-        image: https://www.openpeerpower.io/images/default-social.png
+        image: https://www.open-peer-power.io/images/default-social.png
         entity: light.bed_light
 
     # Specify a tab icon if you want the view tab to be an icon.
-  - icon: mdi:openpeerpower
+  - icon: mdi:open-peer-power
     # Title of the view. Will be used as the tooltip for tab icon
     title: Second view
     cards:

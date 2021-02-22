@@ -1,7 +1,7 @@
 """Test the entity values helper."""
 from collections import OrderedDict
 
-from openpeerpowerr.helpers.entity_values import EntityValues as EV
+from openpeerpower.helpers.entity_values import EntityValues as EV
 
 ent = "test.test"
 

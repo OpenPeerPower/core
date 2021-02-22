@@ -1,4 +1,4 @@
-"""Tests for oppfest version."""
+"""Tests for.oppfest version."""
 import pytest
 import voluptuous as vol
 
@@ -11,7 +11,7 @@ from script.oppfest.model import Integration
 
 @pytest.fixture
 def integration():
-    """Fixture for oppfest integration model."""
+    """Fixture for.oppfest integration model."""
     integration = Integration("")
     integration.manifest = {
         "domain": "test",

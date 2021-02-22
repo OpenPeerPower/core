@@ -8,7 +8,7 @@ from openpeerpower.const import (
     VOLUME_LITERS,
     VOLUME_MILLILITERS,
 )
-import openpeerpowerr.util.volume as volume_util
+import openpeerpower.util.volume as volume_util
 
 INVALID_SYMBOL = "bob"
 VALID_SYMBOL = VOLUME_LITERS

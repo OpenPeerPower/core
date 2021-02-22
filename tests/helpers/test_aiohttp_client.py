@@ -5,9 +5,9 @@ from unittest.mock import Mock, patch
 import aiohttp
 import pytest
 
-from openpeerpowerr.core import EVENT_OPENPEERPOWER_CLOSE
-import openpeerpowerr.helpers.aiohttp_client as client
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import EVENT_OPENPEERPOWER_CLOSE
+import openpeerpower.helpers.aiohttp_client as client
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(name="camera_client")
@@ -71,7 +71,7 @@ async def test_get_clientsession_cleanup.opp):
     assert isinstance.opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.data[client.DATA_CLIENTSESSION].closed
     assert.opp.data[client.DATA_CONNECTOR].closed
@@ -87,7 +87,7 @@ async def test_get_clientsession_cleanup_without_ssl.opp):
     assert isinstance.opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.data[client.DATA_CLIENTSESSION_NOTVERIFY].closed
     assert.opp.data[client.DATA_CONNECTOR_NOTVERIFY].closed
@@ -110,7 +110,7 @@ async def test_get_clientsession_patched_close.opp):
 async def test_warning_close_session_integration.opp, caplog):
     """Test log warning message when closing the session from integration context."""
     with patch(
-        "openpeerpowerr.helpers.frame.extract_stack",
+        "openpeerpower.helpers.frame.extract_stack",
         return_value=[
             Mock(
                 filename="/home/paulus/openpeerpower/core.py",
@@ -141,7 +141,7 @@ async def test_warning_close_session_integration.opp, caplog):
 async def test_warning_close_session_custom.opp, caplog):
     """Test log warning message when closing the session from custom context."""
     with patch(
-        "openpeerpowerr.helpers.frame.extract_stack",
+        "openpeerpower.helpers.frame.extract_stack",
         return_value=[
             Mock(
                 filename="/home/paulus/openpeerpower/core.py",

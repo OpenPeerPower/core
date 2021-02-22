@@ -1,10 +1,10 @@
 """Test script init."""
 from unittest.mock import patch
 
-import openpeerpowerr.scripts as scripts
+import openpeerpower.scripts as scripts
 
 
-@patch("openpeerpowerr.scripts.get_default_config_dir", return_value="/default")
+@patch("openpeerpower.scripts.get_default_config_dir", return_value="/default")
 def test_config_per_platform(mock_def):
     """Test config per platform method."""
     assert scripts.get_default_config_dir() == "/default"

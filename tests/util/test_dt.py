@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 import pytest
 
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 DEFAULT_TIME_ZONE = dt_util.DEFAULT_TIME_ZONE
 TEST_TIME_ZONE = "America/Los_Angeles"

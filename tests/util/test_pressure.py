@@ -8,7 +8,7 @@ from openpeerpower.const import (
     PRESSURE_PA,
     PRESSURE_PSI,
 )
-import openpeerpowerr.util.pressure as pressure_util
+import openpeerpower.util.pressure as pressure_util
 
 INVALID_SYMBOL = "bob"
 VALID_SYMBOL = PRESSURE_PA

@@ -2,7 +2,7 @@
 
 from ipaddress import ip_address
 
-import openpeerpowerr.util.network as network_util
+import openpeerpower.util.network as network_util
 
 
 def test_is_loopback():

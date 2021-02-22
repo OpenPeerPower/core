@@ -64,7 +64,7 @@ class MockAlarm(MockEntity, AlarmControlPanelEntity):
     @property
     def code_arm_required(self):
         """Whether the code is required for arm actions."""
-        return self._op.dle("code_arm_required")
+        return self._handle("code_arm_required")
 
     @property
     def state(self):
@@ -84,25 +84,25 @@ class MockAlarm(MockEntity, AlarmControlPanelEntity):
     def alarm_arm_away(self, code=None):
         """Send arm away command."""
         self._state = STATE_ALARM_ARMED_AWAY
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def alarm_arm_home(self, code=None):
         """Send arm home command."""
         self._state = STATE_ALARM_ARMED_HOME
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def alarm_arm_night(self, code=None):
         """Send arm night command."""
         self._state = STATE_ALARM_ARMED_NIGHT
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
     def alarm_disarm(self, code=None):
         """Send disarm command."""
         if code == "1234":
             self._state = STATE_ALARM_DISARMED
-            self.async_write_op.state()
+            self.async_write_ha_state()
 
     def alarm_trigger(self, code=None):
         """Send alarm trigger command."""
         self._state = STATE_ALARM_TRIGGERED
-        self.async_write_op.state()
+        self.async_write_ha_state()

@@ -4,8 +4,8 @@ import asyncio
 
 import pytest
 
-from openpeerpowerr.util.async_ import run_callback_threadsafe
-from openpeerpowerr.util.thread import ThreadWithException
+from openpeerpower.util.async_ import run_callback_threadsafe
+from openpeerpower.util.thread import ThreadWithException
 
 
 async def test_thread_with_exception_invalid.opp):

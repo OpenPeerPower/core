@@ -14,7 +14,7 @@ from openpeerpower.const import (
     VOLUME,
     VOLUME_LITERS,
 )
-from openpeerpowerr.util.unit_system import IMPERIAL_SYSTEM, METRIC_SYSTEM, UnitSystem
+from openpeerpower.util.unit_system import IMPERIAL_SYSTEM, METRIC_SYSTEM, UnitSystem
 
 SYSTEM_NAME = "TEST"
 INVALID_UNIT = "INVALID"

@@ -1,5 +1,5 @@
 """The tests for the EntityFilter component."""
-from openpeerpowerr.helpers.entityfilter import (
+from openpeerpower.helpers.entityfilter import (
     FILTER_SCHEMA,
     INCLUDE_EXCLUDE_FILTER_SCHEMA,
     generate_filter,

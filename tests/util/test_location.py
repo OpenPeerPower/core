@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 import aiohttp
 import pytest
 
-import openpeerpowerr.util.location as location_util
+import openpeerpower.util.location as location_util
 
 from tests.common import load_fixture
 
@@ -109,7 +109,7 @@ async def test_detect_location_info_ip_api(aioclient_mock, session):
     """Test detect location info using ip-api.com."""
     aioclient_mock.get(location_util.IP_API, text=load_fixture("ip-api.com.json"))
 
-    with patch("openpeerpowerr.util.location._get_ipapi", return_value=None):
+    with patch("openpeerpower.util.location._get_ipapi", return_value=None):
         info = await location_util.async_detect_location_info(session, _test_real=True)
 
     assert info is not None
@@ -128,8 +128,8 @@ async def test_detect_location_info_ip_api(aioclient_mock, session):
 
 async def test_detect_location_info_both_queries_fail(session):
     """Ensure we return None if both queries fail."""
-    with patch("openpeerpowerr.util.location._get_ipapi", return_value=None), patch(
-        "openpeerpowerr.util.location._get_ip_api", return_value=None
+    with patch("openpeerpower.util.location._get_ipapi", return_value=None), patch(
+        "openpeerpower.util.location._get_ip_api", return_value=None
     ):
         info = await location_util.async_detect_location_info(session, _test_real=True)
     assert info is None

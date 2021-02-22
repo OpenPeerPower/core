@@ -1,16 +1,16 @@
 """Tests Open Peer Power location helpers."""
 from openpeerpower.const import ATTR_LATITUDE, ATTR_LONGITUDE
-from openpeerpowerr.core import State
-from openpeerpowerr.helpers import location
+from openpeerpower.core import State
+from openpeerpower.helpers import location
 
 
-def test_op._location_with_invalid_states():
+def test_has_location_with_invalid_states():
     """Set up the tests."""
     for state in (None, 1, "hello", object):
         assert not location.has_location(state)
 
 
-def test_op._location_with_states_with_invalid_locations():
+def test_has_location_with_states_with_invalid_locations():
     """Set up the tests."""
     state = State(
         "hello.world", "invalid", {ATTR_LATITUDE: "no number", ATTR_LONGITUDE: 123.12}
@@ -18,7 +18,7 @@ def test_op._location_with_states_with_invalid_locations():
     assert not location.has_location(state)
 
 
-def test_op._location_with_states_with_valid_location():
+def test_has_location_with_states_with_valid_location():
     """Set up the tests."""
     state = State(
         "hello.world", "invalid", {ATTR_LATITUDE: 123.12, ATTR_LONGITUDE: 123.12}

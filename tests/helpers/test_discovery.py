@@ -2,13 +2,13 @@
 from unittest.mock import patch
 
 from openpeerpower import setup
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import discovery
+from openpeerpower.core import callback
+from openpeerpower.helpers import discovery
 
 from tests.common import (
     MockModule,
     MockPlatform,
-    get_test_home_assistant,
+    get_test_open_peer_power,
     mock_coro,
     mock_entity_platform,
     mock_integration,
@@ -20,13 +20,13 @@ class TestHelpersDiscovery:
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self, method):
         """Stop everything that was started."""
         self.opp.stop()
 
-    @patch("openpeerpowerr.setup.async_setup_component", return_value=mock_coro())
+    @patch("openpeerpower.setup.async_setup_component", return_value=mock_coro())
     def test_listen(self, mock_setup_component):
         """Test discovery listen/discover combo."""
         helpers = self.opp.helpers
@@ -65,7 +65,7 @@ class TestHelpersDiscovery:
         assert len(calls_multi) == 2
         assert ["test service", "another service"] == [info[0] for info in calls_multi]
 
-    @patch("openpeerpowerr.setup.async_setup_component", return_value=mock_coro(True))
+    @patch("openpeerpower.setup.async_setup_component", return_value=mock_coro(True))
     def test_platform(self, mock_setup_component):
         """Test discover platform method."""
         calls = []
@@ -169,7 +169,7 @@ class TestHelpersDiscovery:
         assert "test_component" in self.opp.config.components
         assert "switch" in self.opp.config.components
 
-    @patch("openpeerpowerr.helpers.signal.async_register_signal_op.dling")
+    @patch("openpeerpower.helpers.signal.async_register_signal_handling")
     def test_1st_discovers_2nd_component(self, mock_signal):
         """Test that we don't break if one component discovers the other.
 

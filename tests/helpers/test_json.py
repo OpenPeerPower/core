@@ -2,8 +2,8 @@
 import pytest
 
 from openpeerpower import core
-from openpeerpowerr.helpers.json import JSONEncoder
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.helpers.json import JSONEncoder
+from openpeerpower.util import dt as dt_util
 
 
 def test_json_encoder.opp):

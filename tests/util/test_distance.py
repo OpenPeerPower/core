@@ -12,7 +12,7 @@ from openpeerpower.const import (
     LENGTH_MILLIMETERS,
     LENGTH_YARD,
 )
-import openpeerpowerr.util.distance as distance_util
+import openpeerpower.util.distance as distance_util
 
 INVALID_SYMBOL = "bob"
 VALID_SYMBOL = LENGTH_KILOMETERS

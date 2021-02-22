@@ -2,7 +2,7 @@
 import pytest
 import voluptuous as vol
 
-from openpeerpowerr.helpers import selector
+from openpeerpower.helpers import selector
 
 
 @pytest.mark.parametrize(

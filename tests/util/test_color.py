@@ -2,7 +2,7 @@
 import pytest
 import voluptuous as vol
 
-import openpeerpowerr.util.color as color_util
+import openpeerpower.util.color as color_util
 
 GAMUT = color_util.GamutType(
     color_util.XYPoint(0.704, 0.296),
@@ -330,14 +330,14 @@ def test_should_return_pure_white_at_6600():
     assert (255, 255, 255) == rgb
 
 
-def test_color_above_6600_should_op.e_more_blue_than_red_or_green():
+def test_color_above_6600_should_have_more_blue_than_red_or_green():
     """Function should return a higher blue value for blue-ish light."""
     rgb = color_util.color_temperature_to_rgb(6700)
     assert rgb[2] > rgb[1]
     assert rgb[2] > rgb[0]
 
 
-def test_color_below_6600_should_op.e_more_red_than_blue_or_green():
+def test_color_below_6600_should_have_more_red_than_blue_or_green():
     """Function should return a higher red value for red-ish light."""
     rgb = color_util.color_temperature_to_rgb(6500)
     assert rgb[0] > rgb[1]

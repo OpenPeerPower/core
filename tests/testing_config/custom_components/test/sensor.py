@@ -61,9 +61,9 @@ class MockSensor(MockEntity):
     @property
     def device_class(self):
         """Return the class of this sensor."""
-        return self._op.dle("device_class")
+        return self._handle("device_class")
 
     @property
     def unit_of_measurement(self):
         """Return the unit_of_measurement of this sensor."""
-        return self._op.dle("unit_of_measurement")
+        return self._handle("unit_of_measurement")

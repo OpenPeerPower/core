@@ -2,9 +2,9 @@
 import asyncio
 from datetime import timedelta
 
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import ratelimit
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.core import callback
+from openpeerpower.helpers import ratelimit
+from openpeerpower.util import dt as dt_util
 
 
 async def test_hit.opp):
@@ -30,7 +30,7 @@ async def test_hit.opp):
 
     assert not refresh_called
 
-    assert rate_limiter.async_op._timer("key1")
+    assert rate_limiter.async_has_timer("key1")
 
     await asyncio.sleep(0.002)
     assert refresh_called
@@ -63,7 +63,7 @@ async def test_miss.opp):
         is None
     )
     assert not refresh_called
-    assert not rate_limiter.async_op._timer("key1")
+    assert not rate_limiter.async_has_timer("key1")
 
     assert (
         rate_limiter.async_schedule_action(
@@ -72,7 +72,7 @@ async def test_miss.opp):
         is None
     )
     assert not refresh_called
-    assert not rate_limiter.async_op._timer("key1")
+    assert not rate_limiter.async_has_timer("key1")
     rate_limiter.async_remove()
 
 
@@ -95,7 +95,7 @@ async def test_no_limit.opp):
         is None
     )
     assert not refresh_called
-    assert not rate_limiter.async_op._timer("key1")
+    assert not rate_limiter.async_has_timer("key1")
 
     rate_limiter.async_triggered("key1", dt_util.utcnow())
 
@@ -104,5 +104,5 @@ async def test_no_limit.opp):
         is None
     )
     assert not refresh_called
-    assert not rate_limiter.async_op._timer("key1")
+    assert not rate_limiter.async_has_timer("key1")
     rate_limiter.async_remove()

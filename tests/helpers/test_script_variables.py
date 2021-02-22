@@ -1,7 +1,7 @@
 """Test script variables."""
 import pytest
 
-from openpeerpowerr.helpers import config_validation as cv, template
+from openpeerpower.helpers import config_validation as cv, template
 
 
 async def test_static_vars():

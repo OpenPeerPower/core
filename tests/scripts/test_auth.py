@@ -3,8 +3,8 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from openpeerpowerr.auth.providers import openpeerpower as.opp_auth
-from openpeerpowerr.scripts import auth as script_auth
+from openpeerpower.auth.providers import openpeerpower as.opp_auth
+from openpeerpower.scripts import auth as script_auth
 
 from tests.common import register_auth_provider
 
@@ -12,8 +12,8 @@ from tests.common import register_auth_provider
 @pytest.fixture
 def provider.opp):
     """Open Peer Power auth provider."""
-    provider = opp.loop.run_until_complete(
-        register_auth_provider.opp, {"type": "openpeerpowerr"})
+    provider =.opp.loop.run_until_complete(
+        register_auth_provider.opp, {"type": "openpeerpower"})
     )
    .opp.loop.run_until_complete(provider.async_initialize())
     return provider

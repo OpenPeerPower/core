@@ -9,7 +9,7 @@ import pytz
 import voluptuous as vol
 
 from openpeerpower.components import group
-from openpeerpower.config import async_process_op.core_config
+from openpeerpower.config import async_process_ha_core_config
 from openpeerpower.const import (
     ATTR_UNIT_OF_MEASUREMENT,
     LENGTH_METERS,
@@ -18,11 +18,13 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     VOLUME_LITERS,
 )
-from openpeerpowerr.exceptions import TemplateError
-from openpeerpowerr.helpers import template
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
-from openpeerpowerr.util.unit_system import UnitSystem
+from openpeerpower.exceptions import TemplateError
+from openpeerpower.helpers import template
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
+from openpeerpower.util.unit_system import UnitSystem
+
+from tests.common import MockConfigEntry, mock_device_registry, mock_registry
 
 
 def _set_up_units.opp):
@@ -71,8 +73,8 @@ def test_template_equality():
 
     assert template_one == template_one_1
     assert template_one != template_two
-    assert hash(template_one) == op.h(template_one_1)
-    assert hash(template_one) != op.h(template_two)
+    assert hash(template_one) == hash(template_one_1)
+    assert hash(template_one) != hash(template_two)
 
     assert str(template_one_1) == 'Template("{{ template_one }}")'
 
@@ -529,7 +531,7 @@ def test_as_local.opp):
     """Test converting time to local."""
 
    .opp.states.async_set("test.object", "available")
-    last_updated = opp.states.get("test.object").last_updated
+    last_updated =.opp.states.get("test.object").last_updated
     assert template.Template(
         "{{ as_local(states.test.object.last_updated) }}",.opp
     ).async_render() == str(dt_util.as_local(last_updated))
@@ -580,7 +582,7 @@ def test_ord.opp):
 def test_base64_encode.opp):
     """Test the base64_encode filter."""
     assert (
-        template.Template('{{ "openpeerpowerr" | base64_encode }}',.opp).async_render()
+        template.Template('{{ "openpeerpower" | base64_encode }}',.opp).async_render()
         == "aG9tZWFzc2lzdGFudA=="
     )
 
@@ -591,7 +593,7 @@ def test_base64_decode.opp):
         template.Template(
             '{{ "aG9tZWFzc2lzdGFudA==" | base64_decode }}',.opp
         ).async_render()
-        == "openpeerpowerr"
+        == "openpeerpower"
     )
 
 
@@ -841,13 +843,13 @@ def test_states_function.opp):
 
 
 @patch(
-    "openpeerpowerr.helpers.template.TemplateEnvironment.is_safe_callable",
+    "openpeerpower.helpers.template.TemplateEnvironment.is_safe_callable",
     return_value=True,
 )
 def test_now(mock_is_safe,.opp):
     """Test now method."""
     now = dt_util.now()
-    with patch("openpeerpowerr.util.dt.now", return_value=now):
+    with patch("openpeerpower.util.dt.now", return_value=now):
         info = template.Template("{{ now().isoformat() }}",.opp).async_render_to_info()
         assert now.isoformat() == info.result()
 
@@ -855,13 +857,13 @@ def test_now(mock_is_safe,.opp):
 
 
 @patch(
-    "openpeerpowerr.helpers.template.TemplateEnvironment.is_safe_callable",
+    "openpeerpower.helpers.template.TemplateEnvironment.is_safe_callable",
     return_value=True,
 )
 def test_utcnow(mock_is_safe,.opp):
     """Test now method."""
     utcnow = dt_util.utcnow()
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=utcnow):
+    with patch("openpeerpower.util.dt.utcnow", return_value=utcnow):
         info = template.Template(
             "{{ utcnow().isoformat() }}",.opp
         ).async_render_to_info()
@@ -871,13 +873,13 @@ def test_utcnow(mock_is_safe,.opp):
 
 
 @patch(
-    "openpeerpowerr.helpers.template.TemplateEnvironment.is_safe_callable",
+    "openpeerpower.helpers.template.TemplateEnvironment.is_safe_callable",
     return_value=True,
 )
 def test_relative_time(mock_is_safe,.opp):
     """Test relative_time method."""
     now = datetime.strptime("2000-01-01 10:00:00 +00:00", "%Y-%m-%d %H:%M:%S %z")
-    with patch("openpeerpowerr.util.dt.now", return_value=now):
+    with patch("openpeerpower.util.dt.now", return_value=now):
         assert (
             "1 hour"
             == template.Template(
@@ -916,13 +918,13 @@ def test_relative_time(mock_is_safe,.opp):
 
 
 @patch(
-    "openpeerpowerr.helpers.template.TemplateEnvironment.is_safe_callable",
+    "openpeerpower.helpers.template.TemplateEnvironment.is_safe_callable",
     return_value=True,
 )
 def test_timedelta(mock_is_safe,.opp):
     """Test relative_time method."""
     now = datetime.strptime("2000-01-01 10:00:00 +00:00", "%Y-%m-%d %H:%M:%S %z")
-    with patch("openpeerpowerr.util.dt.now", return_value=now):
+    with patch("openpeerpower.util.dt.now", return_value=now):
         assert (
             "0:02:00"
             == template.Template(
@@ -1341,7 +1343,7 @@ async def test_closest_function_home_vs_group_entity_id.opp):
     )
 
     assert await async_setup_component.opp, "group", {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await group.Group.async_create_group.opp, "location group", ["test_domain.object"])
 
     info = render_to_info.opp, '{{ closest("group.location_group").entity_id }}')
@@ -1369,7 +1371,7 @@ async def test_closest_function_home_vs_group_state.opp):
     )
 
     assert await async_setup_component.opp, "group", {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await group.Group.async_create_group.opp, "location group", ["test_domain.object"])
 
     info = render_to_info.opp, '{{ closest("group.location_group").entity_id }}')
@@ -1417,7 +1419,7 @@ async def test_expand.opp):
     assert info.rate_limit == template.DOMAIN_STATES_RATE_LIMIT
 
     assert await async_setup_component.opp, "group", {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await group.Group.async_create_group.opp, "new group", ["test.object"])
 
     info = render_to_info(
@@ -1453,7 +1455,7 @@ async def test_expand.opp):
    .opp.states.async_set("sensor.power_3", 400.4)
 
     assert await async_setup_component.opp, "group", {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await group.Group.async_create_group(
        .opp, "power sensors", ["sensor.power_1", "sensor.power_2", "sensor.power_3"]
     )
@@ -1466,6 +1468,79 @@ async def test_expand.opp):
         info,
         200.2 + 400.4,
         {"group.power_sensors", "sensor.power_1", "sensor.power_2", "sensor.power_3"},
+    )
+    assert info.rate_limit is None
+
+
+async def test_device_entities.opp):
+    """Test expand function."""
+    config_entry = MockConfigEntry(domain="light")
+    device_registry = mock_device_registry.opp)
+    entity_registry = mock_registry.opp)
+
+    # Test non existing device ids
+    info = render_to_info.opp, "{{ device_entities('abc123') }}")
+    assert_result_info(info, [])
+    assert info.rate_limit is None
+
+    info = render_to_info.opp, "{{ device_entities(56) }}")
+    assert_result_info(info, [])
+    assert info.rate_limit is None
+
+    # Test device without entities
+    device_entry = device_registry.async_get_or_create(
+        config_entry_id=config_entry.entry_id,
+        connections={("mac", "12:34:56:AB:CD:EF")},
+    )
+    info = render_to_info.opp, f"{{{{ device_entities('{device_entry.id}') }}}}")
+    assert_result_info(info, [])
+    assert info.rate_limit is None
+
+    # Test device with single entity, which has no state
+    entity_registry.async_get_or_create(
+        "light",
+        "hue",
+        "5678",
+        config_entry=config_entry,
+        device_id=device_entry.id,
+    )
+    info = render_to_info.opp, f"{{{{ device_entities('{device_entry.id}') }}}}")
+    assert_result_info(info, ["light.hue_5678"], [])
+    assert info.rate_limit is None
+    info = render_to_info(
+       .opp,
+        f"{{{{ device_entities('{device_entry.id}') | expand | map(attribute='entity_id') | join(', ') }}}}",
+    )
+    assert_result_info(info, "", ["light.hue_5678"])
+    assert info.rate_limit is None
+
+    # Test device with single entity, with state
+   .opp.states.async_set("light.hue_5678", "happy")
+    info = render_to_info(
+       .opp,
+        f"{{{{ device_entities('{device_entry.id}') | expand | map(attribute='entity_id') | join(', ') }}}}",
+    )
+    assert_result_info(info, "light.hue_5678", ["light.hue_5678"])
+    assert info.rate_limit is None
+
+    # Test device with multiple entities, which have a state
+    entity_registry.async_get_or_create(
+        "light",
+        "hue",
+        "ABCD",
+        config_entry=config_entry,
+        device_id=device_entry.id,
+    )
+   .opp.states.async_set("light.hue_abcd", "camper")
+    info = render_to_info.opp, f"{{{{ device_entities('{device_entry.id}') }}}}")
+    assert_result_info(info, ["light.hue_5678", "light.hue_abcd"], [])
+    assert info.rate_limit is None
+    info = render_to_info(
+       .opp,
+        f"{{{{ device_entities('{device_entry.id}') | expand | map(attribute='entity_id') | join(', ') }}}}",
+    )
+    assert_result_info(
+        info, "light.hue_5678, light.hue_abcd", ["light.hue_5678", "light.hue_abcd"]
     )
     assert info.rate_limit is None
 
@@ -1623,7 +1698,7 @@ async def test_async_render_to_info_with_wildcard_matching_state.opp):
    .opp.states.async_set("cover.office_skylight", "open")
    .opp.states.async_set("cover.x_skylight", "open")
    .opp.states.async_set("binary_sensor.door", "open")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     info = render_to_info.opp, template_complex_str)
 
@@ -1955,7 +2030,7 @@ async def test_async_render_to_info_in_conditional.opp):
 
    .opp.states.async_set("sensor.xyz", "dog")
    .opp.states.async_set("sensor.cow", "True")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     template_str = """
 {% if states("sensor.xyz") == "dog" %}
@@ -1972,7 +2047,7 @@ async def test_async_render_to_info_in_conditional.opp):
    .opp.states.async_set("sensor.xyz", "sheep")
    .opp.states.async_set("sensor.pig", "oink")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     tmp = template.Template(template_str,.opp)
     info = tmp.async_render_to_info()
@@ -2034,7 +2109,7 @@ def test_length_of_states.opp):
     assert tpl.async_render() == 2
 
 
-def test_render_complex_op.dling_non_template_values.opp):
+def test_render_complex_handling_non_template_values.opp):
     """Test that we can render non-template fields."""
     assert template.render_complex(
         {True: 1, False: template.Template("{{ hello }}",.opp)}, {"hello": 2}
@@ -2064,7 +2139,7 @@ async def test_cache_garbage_collection():
         (template_string),
     )
     tpl.ensure_valid()
-    assert template._NO_OPP_ENV.template_cache.get(
+    assert template._NO_HASS_ENV.template_cache.get(
         template_string
     )  # pylint: disable=protected-access
 
@@ -2072,16 +2147,16 @@ async def test_cache_garbage_collection():
         (template_string),
     )
     tpl2.ensure_valid()
-    assert template._NO_OPP_ENV.template_cache.get(
+    assert template._NO_HASS_ENV.template_cache.get(
         template_string
     )  # pylint: disable=protected-access
 
     del tpl
-    assert template._NO_OPP_ENV.template_cache.get(
+    assert template._NO_HASS_ENV.template_cache.get(
         template_string
     )  # pylint: disable=protected-access
     del tpl2
-    assert not template._NO_OPP_ENV.template_cache.get(
+    assert not template._NO_HASS_ENV.template_cache.get(
         template_string
     )  # pylint: disable=protected-access
 
@@ -2167,7 +2242,7 @@ async def test_lifecycle.opp):
        .opp.states.async_set(f"sensor.sensor{i}", "on")
    .opp.states.async_set("sensor.removed", "off")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("sun.sun", "below", {"elevation": 60, "next_rising": "later"})
     for i in range(2):
@@ -2176,7 +2251,7 @@ async def test_lifecycle.opp):
    .opp.states.async_set("sensor.new", "off")
    .opp.states.async_remove("sensor.removed")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     tmp = template.Template("{{ states | count }}",.opp)
 
@@ -2284,19 +2359,19 @@ async def test_state_attributes.opp):
         "{{ states.sensor.test.object_id }}",
        .opp,
     )
-    assert tpl.async_render() == opp.states.get("sensor.test").object_id
+    assert tpl.async_render() ==.opp.states.get("sensor.test").object_id
 
     tpl = template.Template(
         "{{ states.sensor.test.domain }}",
        .opp,
     )
-    assert tpl.async_render() == opp.states.get("sensor.test").domain
+    assert tpl.async_render() ==.opp.states.get("sensor.test").domain
 
     tpl = template.Template(
         "{{ states.sensor.test.context.id }}",
        .opp,
     )
-    assert tpl.async_render() == opp.states.get("sensor.test").context.id
+    assert tpl.async_render() ==.opp.states.get("sensor.test").context.id
 
     tpl = template.Template(
         "{{ states.sensor.test.state_with_unit }}",
@@ -2350,7 +2425,7 @@ async def test_legacy_templates.opp):
         == 12
     )
 
-    await async_process_op.core_config.opp, {"legacy_templates": True})
+    await async_process_ha_core_config.opp, {"legacy_templates": True})
     assert (
         template.Template("{{ states.sensor.temperature.state }}",.opp).async_render()
         == "12"

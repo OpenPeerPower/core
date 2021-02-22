@@ -5,7 +5,7 @@ import subprocess
 
 import pytest
 
-from openpeerpowerr.util import process
+from openpeerpower.util import process
 
 
 async def test_kill_process():

@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from openpeerpower import util
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 
 def test_sanitize_filename():
@@ -182,14 +182,14 @@ def test_throttle():
     assert len(calls1) == 2
     assert len(calls2) == 1
 
-    with patch("openpeerpowerr.util.utcnow", return_value=plus3):
+    with patch("openpeerpower.util.utcnow", return_value=plus3):
         test_throttle1()
         test_throttle2()
 
     assert len(calls1) == 2
     assert len(calls2) == 1
 
-    with patch("openpeerpowerr.util.utcnow", return_value=plus5):
+    with patch("openpeerpower.util.utcnow", return_value=plus5):
         test_throttle1()
         test_throttle2()
 

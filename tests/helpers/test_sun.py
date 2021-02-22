@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 from unittest.mock import patch
 
 from openpeerpower.const import SUN_EVENT_SUNRISE, SUN_EVENT_SUNSET
-import openpeerpowerr.helpers.sun as sun
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.helpers.sun as sun
+import openpeerpower.util.dt as dt_util
 
 
 def test_next_events.opp):
@@ -16,8 +16,8 @@ def test_next_events.opp):
     astral = Astral()
     utc_today = utc_now.date()
 
-    latitude = opp.config.latitude
-    longitude = opp.config.longitude
+    latitude =.opp.config.latitude
+    longitude =.opp.config.longitude
 
     mod = -1
     while True:
@@ -71,7 +71,7 @@ def test_next_events.opp):
             break
         mod += 1
 
-    with patch("openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=utc_now):
+    with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=utc_now):
         assert next_dawn == sun.get_astral_event_next.opp, "dawn")
         assert next_dusk == sun.get_astral_event_next.opp, "dusk")
         assert next_midnight == sun.get_astral_event_next.opp, "solar_midnight")
@@ -88,8 +88,8 @@ def test_date_events.opp):
     astral = Astral()
     utc_today = utc_now.date()
 
-    latitude = opp.config.latitude
-    longitude = opp.config.longitude
+    latitude =.opp.config.latitude
+    longitude =.opp.config.longitude
 
     dawn = astral.dawn_utc(utc_today, latitude, longitude)
     dusk = astral.dusk_utc(utc_today, latitude, longitude)
@@ -114,8 +114,8 @@ def test_date_events_default_date.opp):
     astral = Astral()
     utc_today = utc_now.date()
 
-    latitude = opp.config.latitude
-    longitude = opp.config.longitude
+    latitude =.opp.config.latitude
+    longitude =.opp.config.longitude
 
     dawn = astral.dawn_utc(utc_today, latitude, longitude)
     dusk = astral.dusk_utc(utc_today, latitude, longitude)
@@ -124,7 +124,7 @@ def test_date_events_default_date.opp):
     sunrise = astral.sunrise_utc(utc_today, latitude, longitude)
     sunset = astral.sunset_utc(utc_today, latitude, longitude)
 
-    with patch("openpeerpowerr.util.dt.now", return_value=utc_now):
+    with patch("openpeerpower.util.dt.now", return_value=utc_now):
         assert dawn == sun.get_astral_event_date.opp, "dawn", utc_today)
         assert dusk == sun.get_astral_event_date.opp, "dusk", utc_today)
         assert midnight == sun.get_astral_event_date.opp, "solar_midnight", utc_today)
@@ -141,8 +141,8 @@ def test_date_events_accepts_datetime.opp):
     astral = Astral()
     utc_today = utc_now.date()
 
-    latitude = opp.config.latitude
-    longitude = opp.config.longitude
+    latitude =.opp.config.latitude
+    longitude =.opp.config.longitude
 
     dawn = astral.dawn_utc(utc_today, latitude, longitude)
     dusk = astral.dusk_utc(utc_today, latitude, longitude)
@@ -162,11 +162,11 @@ def test_date_events_accepts_datetime.opp):
 def test_is_up.opp):
     """Test retrieving next sun events."""
     utc_now = datetime(2016, 11, 1, 12, 0, 0, tzinfo=dt_util.UTC)
-    with patch("openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=utc_now):
+    with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=utc_now):
         assert not sun.is_up.opp)
 
     utc_now = datetime(2016, 11, 1, 18, 0, 0, tzinfo=dt_util.UTC)
-    with patch("openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=utc_now):
+    with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=utc_now):
         assert sun.is_up.opp)
 
 

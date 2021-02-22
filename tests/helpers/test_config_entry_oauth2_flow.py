@@ -8,8 +8,8 @@ import aiohttp
 import pytest
 
 from openpeerpower import config_entries, data_entry_flow, setup
-from openpeerpowerr.helpers import config_entry_oauth2_flow
-from openpeerpowerr.helpers.network import NoURLAvailableError
+from openpeerpower.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers.network import NoURLAvailableError
 
 from tests.common import MockConfigEntry, mock_platform
 
@@ -33,7 +33,7 @@ async def local_impl.opp):
 
 
 @pytest.fixture
-def flow_op.dler.opp):
+def flow_handler.opp):
     """Return a registered config flow."""
 
     mock_platform.opp, f"{TEST_DOMAIN}.config_flow")
@@ -104,21 +104,21 @@ def test_inherit_enforces_domain_set():
             TestFlowHandler()
 
 
-async def test_abort_if_no_implementation.opp, flow_op.dler):
+async def test_abort_if_no_implementation.opp, flow_handler):
     """Check flow abort when no implementations."""
-    flow = flow_op.dler()
-    flow.opp = opp
+    flow = flow_handler()
+    flow.opp =.opp
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "missing_configuration"
 
 
-async def test_abort_if_authorization_timeout.opp, flow_op.dler, local_impl):
+async def test_abort_if_authorization_timeout.opp, flow_handler, local_impl):
     """Check timeout generating authorization url."""
-    flow_op.dler.async_register_implementation.opp, local_impl)
+    flow_handler.async_register_implementation.opp, local_impl)
 
-    flow = flow_op.dler()
-    flow.opp = opp
+    flow = flow_handler()
+    flow.opp =.opp
 
     with patch.object(
         local_impl, "async_generate_authorize_url", side_effect=asyncio.TimeoutError
@@ -129,12 +129,12 @@ async def test_abort_if_authorization_timeout.opp, flow_op.dler, local_impl):
     assert result["reason"] == "authorize_url_timeout"
 
 
-async def test_abort_if_no_url_available.opp, flow_op.dler, local_impl):
+async def test_abort_if_no_url_available.opp, flow_handler, local_impl):
     """Check no_url_available generating authorization url."""
-    flow_op.dler.async_register_implementation.opp, local_impl)
+    flow_handler.async_register_implementation.opp, local_impl)
 
-    flow = flow_op.dler()
-    flow.opp = opp
+    flow = flow_handler()
+    flow.opp =.opp
 
     with patch.object(
         local_impl, "async_generate_authorize_url", side_effect=NoURLAvailableError
@@ -147,19 +147,19 @@ async def test_abort_if_no_url_available.opp, flow_op.dler, local_impl):
 
 async def test_abort_if_oauth_error(
    .opp,
-    flow_op.dler,
+    flow_handler,
     local_impl,
     aiohttp_client,
     aioclient_mock,
     current_request_with_host,
 ):
     """Check bad oauth token."""
-    flow_op.dler.async_register_implementation.opp, local_impl)
+    flow_handler.async_register_implementation.opp, local_impl)
     config_entry_oauth2_flow.async_register_implementation(
        .opp, TEST_DOMAIN, MockOAuth2Implementation()
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -167,7 +167,7 @@ async def test_abort_if_oauth_error(
     assert result["step_id"] == "pick_implementation"
 
     # Pick implementation
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"implementation": TEST_DOMAIN}
     )
 
@@ -201,20 +201,20 @@ async def test_abort_if_oauth_error(
         },
     )
 
-    result = await opp..config_entries.flow.async_configure(result["flow_id"])
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "oauth_error"
 
 
-async def test_step_discovery.opp, flow_op.dler, local_impl):
+async def test_step_discovery.opp, flow_handler, local_impl):
     """Check flow triggers from discovery."""
-    flow_op.dler.async_register_implementation.opp, local_impl)
+    flow_handler.async_register_implementation.opp, local_impl)
     config_entry_oauth2_flow.async_register_implementation(
        .opp, TEST_DOMAIN, MockOAuth2Implementation()
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}
     )
 
@@ -222,21 +222,21 @@ async def test_step_discovery.opp, flow_op.dler, local_impl):
     assert result["step_id"] == "pick_implementation"
 
 
-async def test_abort_discovered_multiple.opp, flow_op.dler, local_impl):
+async def test_abort_discovered_multiple.opp, flow_handler, local_impl):
     """Test if aborts when discovered multiple times."""
-    flow_op.dler.async_register_implementation.opp, local_impl)
+    flow_handler.async_register_implementation.opp, local_impl)
     config_entry_oauth2_flow.async_register_implementation(
        .opp, TEST_DOMAIN, MockOAuth2Implementation()
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_SSDP}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pick_implementation"
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}
     )
 
@@ -244,9 +244,9 @@ async def test_abort_discovered_multiple.opp, flow_op.dler, local_impl):
     assert result["reason"] == "already_in_progress"
 
 
-async def test_abort_discovered_existing_entries.opp, flow_op.dler, local_impl):
+async def test_abort_discovered_existing_entries.opp, flow_handler, local_impl):
     """Test if abort discovery when entries exists."""
-    flow_op.dler.async_register_implementation.opp, local_impl)
+    flow_handler.async_register_implementation.opp, local_impl)
     config_entry_oauth2_flow.async_register_implementation(
        .opp, TEST_DOMAIN, MockOAuth2Implementation()
     )
@@ -255,9 +255,9 @@ async def test_abort_discovered_existing_entries.opp, flow_op.dler, local_impl):
         domain=TEST_DOMAIN,
         data={},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_SSDP}
     )
 
@@ -267,19 +267,19 @@ async def test_abort_discovered_existing_entries.opp, flow_op.dler, local_impl):
 
 async def test_full_flow(
    .opp,
-    flow_op.dler,
+    flow_handler,
     local_impl,
     aiohttp_client,
     aioclient_mock,
     current_request_with_host,
 ):
     """Check full flow."""
-    flow_op.dler.async_register_implementation.opp, local_impl)
+    flow_handler.async_register_implementation.opp, local_impl)
     config_entry_oauth2_flow.async_register_implementation(
        .opp, TEST_DOMAIN, MockOAuth2Implementation()
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -287,7 +287,7 @@ async def test_full_flow(
     assert result["step_id"] == "pick_implementation"
 
     # Pick implementation
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"implementation": TEST_DOMAIN}
     )
 
@@ -321,7 +321,7 @@ async def test_full_flow(
         },
     )
 
-    result = await opp..config_entries.flow.async_configure(result["flow_id"])
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["data"]["auth_implementation"] == TEST_DOMAIN
 
@@ -333,7 +333,7 @@ async def test_full_flow(
         "expires_in": 60,
     }
 
-    entry = opp.config_entries.async_entries(TEST_DOMAIN)[0]
+    entry =.opp.config_entries.async_entries(TEST_DOMAIN)[0]
 
     assert (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
@@ -375,9 +375,9 @@ async def test_local_refresh_token.opp, local_impl, aioclient_mock):
     }
 
 
-async def test_oauth_session.opp, flow_op.dler, local_impl, aioclient_mock):
+async def test_oauth_session.opp, flow_handler, local_impl, aioclient_mock):
     """Test the OAuth2 session helper."""
-    flow_op.dler.async_register_implementation.opp, local_impl)
+    flow_handler.async_register_implementation.opp, local_impl)
 
     aioclient_mock.post(
         TOKEN_URL, json={"access_token": ACCESS_TOKEN_2, "expires_in": 100}
@@ -420,10 +420,10 @@ async def test_oauth_session.opp, flow_op.dler, local_impl, aioclient_mock):
 
 
 async def test_oauth_session_with_clock_slightly_out_of_sync(
-   .opp, flow_op.dler, local_impl, aioclient_mock
+   .opp, flow_handler, local_impl, aioclient_mock
 ):
     """Test the OAuth2 session helper when the remote clock is slightly out of sync."""
-    flow_op.dler.async_register_implementation.opp, local_impl)
+    flow_handler.async_register_implementation.opp, local_impl)
 
     aioclient_mock.post(
         TOKEN_URL, json={"access_token": ACCESS_TOKEN_2, "expires_in": 19}
@@ -466,10 +466,10 @@ async def test_oauth_session_with_clock_slightly_out_of_sync(
 
 
 async def test_oauth_session_no_token_refresh_needed(
-   .opp, flow_op.dler, local_impl, aioclient_mock
+   .opp, flow_handler, local_impl, aioclient_mock
 ):
     """Test the OAuth2 session helper when no refresh is needed."""
-    flow_op.dler.async_register_implementation.opp, local_impl)
+    flow_handler.async_register_implementation.opp, local_impl)
 
     aioclient_mock.post("https://example.com", status=201)
 
@@ -550,10 +550,10 @@ async def test_implementation_provider.opp, local_impl):
 
 
 async def test_oauth_session_refresh_failure(
-   .opp, flow_op.dler, local_impl, aioclient_mock
+   .opp, flow_handler, local_impl, aioclient_mock
 ):
     """Test the OAuth2 session helper when no refresh is needed."""
-    flow_op.dler.async_register_implementation.opp, local_impl)
+    flow_handler.async_register_implementation.opp, local_impl)
 
     aioclient_mock.post(TOKEN_URL, status=400)
 

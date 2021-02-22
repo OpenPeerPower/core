@@ -47,9 +47,9 @@ class MockLock(MockEntity, LockEntity):
     @property
     def is_locked(self):
         """Return true if the lock is locked."""
-        return self._op.dle("is_locked")
+        return self._handle("is_locked")
 
     @property
     def supported_features(self):
         """Return the class of this sensor."""
-        return self._op.dle("supported_features")
+        return self._handle("supported_features")

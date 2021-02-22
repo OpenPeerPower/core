@@ -3,8 +3,8 @@
 import pytest
 import voluptuous as vol
 
-from openpeerpowerr.core import State
-from openpeerpowerr.helpers import config_validation as cv, intent
+from openpeerpower.core import State
+from openpeerpower.helpers import config_validation as cv, intent
 
 
 class MockIntentHandler(intent.IntentHandler):

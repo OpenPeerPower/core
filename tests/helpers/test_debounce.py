@@ -1,7 +1,7 @@
 """Tests for debounce."""
 from unittest.mock import AsyncMock
 
-from openpeerpowerr.helpers import debounce
+from openpeerpower.helpers import debounce
 
 
 async def test_immediate_works.opp):
@@ -40,7 +40,7 @@ async def test_immediate_works.opp):
     # Call and let timer run out
     await debouncer.async_call()
     assert len(calls) == 2
-    await debouncer._op.dle_timer_finish()
+    await debouncer._handle_timer_finish()
     assert len(calls) == 2
     assert debouncer._timer_task is None
     assert debouncer._execute_at_end_of_timer is False
@@ -88,7 +88,7 @@ async def test_not_immediate_works.opp):
     # Call and let timer run out
     await debouncer.async_call()
     assert len(calls) == 0
-    await debouncer._op.dle_timer_finish()
+    await debouncer._handle_timer_finish()
     assert len(calls) == 1
     assert debouncer._timer_task is not None
     assert debouncer._execute_at_end_of_timer is False
@@ -149,7 +149,7 @@ async def test_immediate_works_with_function_swapped.opp):
     await debouncer.async_call()
     assert len(calls) == 2
     assert calls == [1, 2]
-    await debouncer._op.dle_timer_finish()
+    await debouncer._handle_timer_finish()
     assert len(calls) == 2
     assert calls == [1, 2]
     assert debouncer._timer_task is None

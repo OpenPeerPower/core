@@ -8,9 +8,9 @@ from unittest.mock import patch
 import pytest
 
 from openpeerpower.config import YAML_CONFIG_FILE, load_yaml_config_file
-from openpeerpowerr.exceptions import OpenPeerPowerError
-import openpeerpowerr.util.yaml as yaml
-from openpeerpowerr.util.yaml import loader as yaml_loader
+from openpeerpower.exceptions import OpenPeerPowerError
+import openpeerpower.util.yaml as yaml
+from openpeerpower.util.yaml import loader as yaml_loader
 
 from tests.common import get_test_config_dir, patch_yaml_files
 
@@ -94,7 +94,7 @@ def test_include_yaml():
             assert doc["key"] == {}
 
 
-@patch("openpeerpowerr.util.yaml.loader.os.walk")
+@patch("openpeerpower.util.yaml.loader.os.walk")
 def test_include_dir_list(mock_walk):
     """Test include dir list yaml."""
     mock_walk.return_value = [["/test", [], ["two.yaml", "one.yaml"]]]
@@ -106,7 +106,7 @@ def test_include_dir_list(mock_walk):
             assert doc["key"] == sorted(["one", "two"])
 
 
-@patch("openpeerpowerr.util.yaml.loader.os.walk")
+@patch("openpeerpower.util.yaml.loader.os.walk")
 def test_include_dir_list_recursive(mock_walk):
     """Test include dir recursive list yaml."""
     mock_walk.return_value = [
@@ -133,7 +133,7 @@ def test_include_dir_list_recursive(mock_walk):
             assert sorted(doc["key"]) == sorted(["zero", "one", "two"])
 
 
-@patch("openpeerpowerr.util.yaml.loader.os.walk")
+@patch("openpeerpower.util.yaml.loader.os.walk")
 def test_include_dir_named(mock_walk):
     """Test include dir named yaml."""
     mock_walk.return_value = [
@@ -148,7 +148,7 @@ def test_include_dir_named(mock_walk):
             assert doc["key"] == correct
 
 
-@patch("openpeerpowerr.util.yaml.loader.os.walk")
+@patch("openpeerpower.util.yaml.loader.os.walk")
 def test_include_dir_named_recursive(mock_walk):
     """Test include dir named yaml."""
     mock_walk.return_value = [
@@ -176,7 +176,7 @@ def test_include_dir_named_recursive(mock_walk):
             assert doc["key"] == correct
 
 
-@patch("openpeerpowerr.util.yaml.loader.os.walk")
+@patch("openpeerpower.util.yaml.loader.os.walk")
 def test_include_dir_merge_list(mock_walk):
     """Test include dir merge list yaml."""
     mock_walk.return_value = [["/test", [], ["first.yaml", "second.yaml"]]]
@@ -190,7 +190,7 @@ def test_include_dir_merge_list(mock_walk):
             assert sorted(doc["key"]) == sorted(["one", "two", "three"])
 
 
-@patch("openpeerpowerr.util.yaml.loader.os.walk")
+@patch("openpeerpower.util.yaml.loader.os.walk")
 def test_include_dir_merge_list_recursive(mock_walk):
     """Test include dir merge list yaml."""
     mock_walk.return_value = [
@@ -217,7 +217,7 @@ def test_include_dir_merge_list_recursive(mock_walk):
             assert sorted(doc["key"]) == sorted(["one", "two", "three", "four"])
 
 
-@patch("openpeerpowerr.util.yaml.loader.os.walk")
+@patch("openpeerpower.util.yaml.loader.os.walk")
 def test_include_dir_merge_named(mock_walk):
     """Test include dir merge named yaml."""
     mock_walk.return_value = [["/test", [], ["first.yaml", "second.yaml"]]]
@@ -234,7 +234,7 @@ def test_include_dir_merge_named(mock_walk):
             assert doc["key"] == {"key1": "one", "key2": "two", "key3": "three"}
 
 
-@patch("openpeerpowerr.util.yaml.loader.os.walk")
+@patch("openpeerpower.util.yaml.loader.os.walk")
 def test_include_dir_merge_named_recursive(mock_walk):
     """Test include dir merge named yaml."""
     mock_walk.return_value = [
@@ -266,7 +266,7 @@ def test_include_dir_merge_named_recursive(mock_walk):
             }
 
 
-@patch("openpeerpowerr.util.yaml.loader.open", create=True)
+@patch("openpeerpower.util.yaml.loader.open", create=True)
 def test_load_yaml_encoding_error(mock_open):
     """Test raising a UnicodeDecodeError."""
     mock_open.side_effect = UnicodeDecodeError("", b"", 1, 0, "")
@@ -421,7 +421,7 @@ class TestSecrets(unittest.TestCase):
         with pytest.raises(OpenPeerPowerError):
             load_yaml(self._yaml_path, "api_password: !secret logger")
 
-    @patch("openpeerpowerr.util.yaml.loader._LOGGER.error")
+    @patch("openpeerpower.util.yaml.loader._LOGGER.error")
     def test_bad_logger_value(self, mock_error):
         """Ensure logger: debug was removed."""
         yaml.clear_secret_cache()

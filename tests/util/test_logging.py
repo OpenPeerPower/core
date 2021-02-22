@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 import pytest
 
-import openpeerpowerr.util.logging as logging_util
+import openpeerpower.util.logging as logging_util
 
 
 def test_sensitive_data_filter():
@@ -22,7 +22,7 @@ def test_sensitive_data_filter():
     assert sensitive_record.msg == "******* log"
 
 
-async def test_logging_with_queue_op.dler():
+async def test_logging_with_queue_handler():
     """Test logging with OpenPeerPowerQueueHandler."""
 
     simple_queue = queue.SimpleQueue()  # type: ignore
@@ -50,9 +50,9 @@ async def test_logging_with_queue_op.dler():
 
     with patch.object(handler, "enqueue", side_effect=OSError), patch.object(
         handler, "handleError"
-    ) as mock_op.dle_error:
+    ) as mock_handle_error:
         handler.emit(log_record)
-        mock_op.dle_error.assert_called_once()
+        mock_handle_error.assert_called_once()
 
     handler.close()
 
@@ -60,10 +60,10 @@ async def test_logging_with_queue_op.dler():
     assert simple_queue.empty()
 
 
-async def test_migrate_log_op.dler.opp):
+async def test_migrate_log_handler.opp):
     """Test migrating log handlers."""
 
-    logging_util.async_activate_log_queue_op.dler.opp)
+    logging_util.async_activate_log_queue_handler.opp)
 
     assert len(logging.root.handlers) == 1
     assert isinstance(logging.root.handlers[0], logging_util.OpenPeerPowerQueueHandler)
@@ -77,6 +77,6 @@ async def test_async_create_catching_coro.opp, caplog):
         raise Exception("This is a bad coroutine")
 
    .opp.async_create_task(logging_util.async_create_catching_coro(job()))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert "This is a bad coroutine" in caplog.text
     assert "in test_async_create_catching_coro" in caplog.text

@@ -6,10 +6,10 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from openpeerpowerr.generated import config_flows
-from openpeerpowerr.helpers import translation
-from openpeerpowerr.loader import async_get_integration
-from openpeerpowerr.setup import async_setup_component, setup_component
+from openpeerpower.generated import config_flows
+from openpeerpower.helpers import translation
+from openpeerpower.loader import async_get_integration
+from openpeerpower.setup import async_setup_component, setup_component
 
 
 @pytest.fixture
@@ -88,10 +88,10 @@ async def test_component_translation_path.opp):
 def test_load_translations_files.opp):
     """Test the load translation files function."""
     # Test one valid and one invalid file
-    file1 = opp.config.path(
+    file1 =.opp.config.path(
         "custom_components", "test", "translations", "switch.en.json"
     )
-    file2 = opp.config.path(
+    file2 =.opp.config.path(
         "custom_components", "test", "translations", "invalid.json"
     )
     assert translation.load_translations_files(
@@ -111,7 +111,7 @@ async def test_get_translations.opp, mock_config_flows):
     assert translations == {}
 
     assert await async_setup_component.opp, "switch", {"switch": {"platform": "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     translations = await translation.async_get_translations.opp, "en", "state")
 
@@ -143,13 +143,13 @@ async def test_get_translations_loads_config_flows.opp, mock_config_flows):
     integration.name = "Component 1"
 
     with patch(
-        "openpeerpowerr.helpers.translation.component_translation_path",
+        "openpeerpower.helpers.translation.component_translation_path",
         return_value="bla.json",
     ), patch(
-        "openpeerpowerr.helpers.translation.load_translations_files",
+        "openpeerpower.helpers.translation.load_translations_files",
         return_value={"component1": {"title": "world"}},
     ), patch(
-        "openpeerpowerr.helpers.translation.async_get_integration",
+        "openpeerpower.helpers.translation.async_get_integration",
         return_value=integration,
     ):
         translations = await translation.async_get_translations(
@@ -172,13 +172,13 @@ async def test_get_translations_loads_config_flows.opp, mock_config_flows):
     integration.name = "Component 2"
 
     with patch(
-        "openpeerpowerr.helpers.translation.component_translation_path",
+        "openpeerpower.helpers.translation.component_translation_path",
         return_value="bla.json",
     ), patch(
-        "openpeerpowerr.helpers.translation.load_translations_files",
+        "openpeerpower.helpers.translation.load_translations_files",
         return_value={"component2": {"title": "world"}},
     ), patch(
-        "openpeerpowerr.helpers.translation.async_get_integration",
+        "openpeerpower.helpers.translation.async_get_integration",
         return_value=integration,
     ):
         translations = await translation.async_get_translations(
@@ -220,13 +220,13 @@ async def test_get_translations_while_loading_components.opp):
         return {"component1": {"title": "world"}}
 
     with patch(
-        "openpeerpowerr.helpers.translation.component_translation_path",
+        "openpeerpower.helpers.translation.component_translation_path",
         return_value="bla.json",
     ), patch(
-        "openpeerpowerr.helpers.translation.load_translations_files",
+        "openpeerpower.helpers.translation.load_translations_files",
         mock_load_translation_files,
     ), patch(
-        "openpeerpowerr.helpers.translation.async_get_integration",
+        "openpeerpower.helpers.translation.async_get_integration",
         return_value=integration,
     ):
         tasks = [
@@ -276,7 +276,7 @@ async def test_translation_merging.opp, caplog):
         return result
 
     with patch(
-        "openpeerpowerr.helpers.translation.load_translations_files",
+        "openpeerpower.helpers.translation.load_translations_files",
         side_effect=mock_load_translations_files,
     ):
         translations = await translation.async_get_translations.opp, "en", "state")
@@ -317,7 +317,7 @@ async def test_caching.opp):
 
     # Patch with same method so we can count invocations
     with patch(
-        "openpeerpowerr.helpers.translation._merge_resources",
+        "openpeerpower.helpers.translation._merge_resources",
         side_effect=translation._merge_resources,
     ) as mock_merge:
         load1 = await translation.async_get_translations.opp, "en", "state")
@@ -351,7 +351,7 @@ async def test_caching.opp):
 
     # Patch with same method so we can count invocations
     with patch(
-        "openpeerpowerr.helpers.translation._build_resources",
+        "openpeerpower.helpers.translation._build_resources",
         side_effect=translation._build_resources,
     ) as mock_build:
         load_sensor_only = await translation.async_get_translations(

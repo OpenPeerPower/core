@@ -4,12 +4,12 @@ from unittest.mock import patch
 import pytest
 
 from openpeerpower.config import YAML_CONFIG_FILE
-import openpeerpowerr.scripts.check_config as check_config
+import openpeerpower.scripts.check_config as check_config
 
 from tests.common import get_test_config_dir, patch_yaml_files
 
 BASE_CONFIG = (
-    "openpeerpowerr:\n"
+    "openpeerpower:\n"
     "  name: Home\n"
     "  latitude: -26.107361\n"
     "  longitude: 28.054500\n"
@@ -19,12 +19,12 @@ BASE_CONFIG = (
     "\n\n"
 )
 
-BAD_CORE_CONFIG = "openpeerpowerr:\n  unit_system: bad\n\n\n"
+BAD_CORE_CONFIG = "openpeerpower:\n  unit_system: bad\n\n\n"
 
 
 @pytest.fixture(autouse=True)
-async def apply_stop_opp(stop_opp):
-    """Make sure all opp are stopped."""
+async def apply_stop.opp(stop.opp):
+    """Make sure all.opp are stopped."""
 
 
 def normalize_yaml_files(check_dict):
@@ -39,8 +39,8 @@ def test_bad_core_config(isfile_patch, loop):
     files = {YAML_CONFIG_FILE: BAD_CORE_CONFIG}
     with patch_yaml_files(files):
         res = check_config.check(get_test_config_dir())
-        assert res["except"].keys() == {"openpeerpowerr"}
-        assert res["except"]["openpeerpowerr"][1] == {"unit_system": "bad"}
+        assert res["except"].keys() == {"openpeerpower"}
+        assert res["except"]["openpeerpower"][1] == {"unit_system": "bad"}
 
 
 @patch("os.path.isfile", return_value=True)
@@ -49,7 +49,7 @@ def test_config_platform_valid(isfile_patch, loop):
     files = {YAML_CONFIG_FILE: BASE_CONFIG + "light:\n  platform: demo"}
     with patch_yaml_files(files):
         res = check_config.check(get_test_config_dir())
-        assert res["components"].keys() == {"openpeerpowerr", "light"}
+        assert res["components"].keys() == {"openpeerpower", "light"}
         assert res["components"]["light"] == [{"platform": "demo"}]
         assert res["except"] == {}
         assert res["secret_cache"] == {}
@@ -64,7 +64,7 @@ def test_component_platform_not_found(isfile_patch, loop):
     files = {YAML_CONFIG_FILE: BASE_CONFIG + "beer:"}
     with patch_yaml_files(files):
         res = check_config.check(get_test_config_dir())
-        assert res["components"].keys() == {"openpeerpowerr"}
+        assert res["components"].keys() == {"openpeerpower"}
         assert res["except"] == {
             check_config.ERROR_STR: [
                 "Component error: beer - Integration 'beer' not found."
@@ -77,7 +77,7 @@ def test_component_platform_not_found(isfile_patch, loop):
     files = {YAML_CONFIG_FILE: BASE_CONFIG + "light:\n  platform: beer"}
     with patch_yaml_files(files):
         res = check_config.check(get_test_config_dir())
-        assert res["components"].keys() == {"openpeerpowerr", "light"}
+        assert res["components"].keys() == {"openpeerpower", "light"}
         assert res["components"]["light"] == []
         assert res["except"] == {
             check_config.ERROR_STR: [
@@ -105,7 +105,7 @@ def test_secrets(isfile_patch, loop):
         res = check_config.check(get_test_config_dir(), True)
 
         assert res["except"] == {}
-        assert res["components"].keys() == {"openpeerpowerr", "http"}
+        assert res["components"].keys() == {"openpeerpower", "http"}
         assert res["components"]["http"] == {
             "cors_allowed_origins": ["http://google.com"],
             "ip_ban_enabled": True,
@@ -130,10 +130,10 @@ def test_package_invalid(isfile_patch, loop):
     with patch_yaml_files(files):
         res = check_config.check(get_test_config_dir())
 
-        assert res["except"].keys() == {"openpeerpowerr.packages.p1.group"}
-        assert res["except"]["openpeerpowerr.packages.p1.group"][1] == {"group": ["a"]}
+        assert res["except"].keys() == {"openpeerpower.packages.p1.group"}
+        assert res["except"]["openpeerpower.packages.p1.group"][1] == {"group": ["a"]}
         assert len(res["except"]) == 1
-        assert res["components"].keys() == {"openpeerpowerr"}
+        assert res["components"].keys() == {"openpeerpower"}
         assert len(res["components"]) == 1
         assert res["secret_cache"] == {}
         assert res["secrets"] == {}

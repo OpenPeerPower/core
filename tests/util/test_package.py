@@ -9,7 +9,7 @@ from unittest.mock import MagicMock, call, patch
 import pkg_resources
 import pytest
 
-import openpeerpowerr.util.package as package
+import openpeerpower.util.package as package
 
 RESOURCE_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "resources")
@@ -25,7 +25,7 @@ TEST_ZIP_REQ = "file://{}#{}".format(
 @pytest.fixture
 def mock_sys():
     """Mock sys."""
-    with patch("openpeerpowerr.util.package.sys", spec=object) as sys_mock:
+    with patch("openpeerpower.util.package.sys", spec=object) as sys_mock:
         sys_mock.executable = "python3"
         yield sys_mock
 
@@ -45,7 +45,7 @@ def lib_dir(deps_dir):
 @pytest.fixture
 def mock_popen(lib_dir):
     """Return a Popen mock."""
-    with patch("openpeerpowerr.util.package.Popen") as popen_mock:
+    with patch("openpeerpower.util.package.Popen") as popen_mock:
         popen_mock.return_value.communicate.return_value = (
             bytes(lib_dir, "utf-8"),
             b"error",
@@ -57,15 +57,15 @@ def mock_popen(lib_dir):
 @pytest.fixture
 def mock_env_copy():
     """Mock os.environ.copy."""
-    with patch("openpeerpowerr.util.package.os.environ.copy") as env_copy:
+    with patch("openpeerpower.util.package.os.environ.copy") as env_copy:
         env_copy.return_value = {}
         yield env_copy
 
 
 @pytest.fixture
 def mock_venv():
-    """Mock openpeerpowerr.util.package.is_virtual_env."""
-    with patch("openpeerpowerr.util.package.is_virtual_env") as mock:
+    """Mock openpeerpower.util.package.is_virtual_env."""
+    with patch("openpeerpower.util.package.is_virtual_env") as mock:
         mock.return_value = True
         yield mock
 
@@ -222,7 +222,7 @@ async def test_async_get_user_site(mock_env_copy):
     env["PYTHONUSERBASE"] = os.path.abspath(deps_dir)
     args = [sys.executable, "-m", "site", "--user-site"]
     with patch(
-        "openpeerpowerr.util.package.asyncio.create_subprocess_exec",
+        "openpeerpower.util.package.asyncio.create_subprocess_exec",
         return_value=mock_async_subprocess(),
     ) as popen_mock:
         ret = await package.async_get_user_site(deps_dir)

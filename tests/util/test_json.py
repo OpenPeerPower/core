@@ -11,9 +11,9 @@ from unittest.mock import Mock
 
 import pytest
 
-from openpeerpowerr.core import Event, State
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.util.json import (
+from openpeerpower.core import Event, State
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.util.json import (
     SerializationError,
     find_paths_unserializable_data,
     load_json,

@@ -8,7 +8,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.helpers.temperature import display_temp
+from openpeerpower.helpers.temperature import display_temp
 
 TEMP = 24.636626
 
@@ -22,7 +22,7 @@ def test_temperature_not_a_number.opp):
     assert f"Temperature is not a number: {temp}" in str(exception.value)
 
 
-def test_celsius_op.ves.opp):
+def test_celsius_halves.opp):
     """Test temperature to celsius rounding to halves."""
     assert display_temp.opp, TEMP, TEMP_CELSIUS, PRECISION_HALVES) == 24.5
 

@@ -42,9 +42,9 @@ class MockBinarySensor(MockEntity, BinarySensorEntity):
     @property
     def is_on(self):
         """Return true if the binary sensor is on."""
-        return self._op.dle("is_on")
+        return self._handle("is_on")
 
     @property
     def device_class(self):
         """Return the class of this sensor."""
-        return self._op.dle("device_class")
+        return self._handle("device_class")

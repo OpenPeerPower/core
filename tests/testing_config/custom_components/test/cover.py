@@ -76,19 +76,19 @@ class MockCover(MockEntity, CoverEntity):
     @property
     def current_cover_position(self):
         """Return current position of cover."""
-        return self._op.dle("current_cover_position")
+        return self._handle("current_cover_position")
 
     @property
     def current_cover_tilt_position(self):
         """Return current position of cover tilt."""
-        return self._op.dle("current_cover_tilt_position")
+        return self._handle("current_cover_tilt_position")
 
     @property
     def supported_features(self):
         """Flag supported features."""
         supported_features = SUPPORT_OPEN | SUPPORT_CLOSE | SUPPORT_STOP
 
-        if self._op.dle("supports_tilt"):
+        if self._handle("supports_tilt"):
             supported_features |= (
                 SUPPORT_OPEN_TILT | SUPPORT_CLOSE_TILT | SUPPORT_STOP_TILT
             )

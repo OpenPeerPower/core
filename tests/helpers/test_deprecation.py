@@ -1,7 +1,7 @@
 """Test deprecation helpers."""
 from unittest.mock import MagicMock, patch
 
-from openpeerpowerr.helpers.deprecation import (
+from openpeerpower.helpers.deprecation import (
     deprecated_function,
     deprecated_substitute,
     get_deprecated,

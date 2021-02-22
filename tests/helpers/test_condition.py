@@ -4,11 +4,11 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpowerr.exceptions import ConditionError, OpenPeerPowerError
-from openpeerpowerr.helpers import condition
-from openpeerpowerr.helpers.template import Template
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt
+from openpeerpower.exceptions import ConditionError, OpenPeerPowerError
+from openpeerpower.helpers import condition
+from openpeerpower.helpers.template import Template
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt
 
 
 async def test_invalid_condition.opp):
@@ -34,6 +34,7 @@ async def test_and_condition.opp):
     test = await condition.async_from_config(
        .opp,
         {
+            "alias": "And Condition",
             "condition": "and",
             "conditions": [
                 {
@@ -49,6 +50,9 @@ async def test_and_condition.opp):
             ],
         },
     )
+
+    with pytest.raises(ConditionError):
+        test.opp)
 
    .opp.states.async_set("sensor.temperature", 120)
     assert not test.opp)
@@ -68,6 +72,7 @@ async def test_and_condition_with_template.opp):
             "condition": "and",
             "conditions": [
                 {
+                    "alias": "Template Condition",
                     "condition": "template",
                     "value_template": '{{ states.sensor.temperature.state == "100" }}',
                 },
@@ -95,6 +100,7 @@ async def test_or_condition.opp):
     test = await condition.async_from_config(
        .opp,
         {
+            "alias": "Or Condition",
             "condition": "or",
             "conditions": [
                 {
@@ -110,6 +116,9 @@ async def test_or_condition.opp):
             ],
         },
     )
+
+    with pytest.raises(ConditionError):
+        test.opp)
 
    .opp.states.async_set("sensor.temperature", 120)
     assert not test.opp)
@@ -153,6 +162,7 @@ async def test_not_condition.opp):
     test = await condition.async_from_config(
        .opp,
         {
+            "alias": "Not Condition",
             "condition": "not",
             "conditions": [
                 {
@@ -168,6 +178,9 @@ async def test_not_condition.opp):
             ],
         },
     )
+
+    with pytest.raises(ConditionError):
+        test.opp)
 
    .opp.states.async_set("sensor.temperature", 101)
     assert test.opp)
@@ -217,36 +230,45 @@ async def test_not_condition_with_template.opp):
 
 async def test_time_window.opp):
     """Test time condition windows."""
-    sixam = dt.parse_time("06:00:00")
-    sixpm = dt.parse_time("18:00:00")
+    sixam = "06:00:00"
+    sixpm = "18:00:00"
+
+    test1 = await condition.async_from_config(
+       .opp,
+        {"alias": "Time Cond", "condition": "time", "after": sixam, "before": sixpm},
+    )
+    test2 = await condition.async_from_config(
+       .opp,
+        {"alias": "Time Cond", "condition": "time", "after": sixpm, "before": sixam},
+    )
 
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.now",
+        "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=3),
     ):
-        assert not condition.time.opp, after=sixam, before=sixpm)
-        assert condition.time.opp, after=sixpm, before=sixam)
+        assert not test1.opp)
+        assert test2.opp)
 
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.now",
+        "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=9),
     ):
-        assert condition.time.opp, after=sixam, before=sixpm)
-        assert not condition.time.opp, after=sixpm, before=sixam)
+        assert test1.opp)
+        assert not test2.opp)
 
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.now",
+        "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=15),
     ):
-        assert condition.time.opp, after=sixam, before=sixpm)
-        assert not condition.time.opp, after=sixpm, before=sixam)
+        assert test1.opp)
+        assert not test2.opp)
 
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.now",
+        "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=21),
     ):
-        assert not condition.time.opp, after=sixam, before=sixpm)
-        assert condition.time.opp, after=sixpm, before=sixam)
+        assert not test1.opp)
+        assert test2.opp)
 
 
 async def test_time_using_input_datetime.opp):
@@ -262,7 +284,7 @@ async def test_time_using_input_datetime.opp):
         },
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "input_datetime",
         "set_datetime",
         {
@@ -276,7 +298,7 @@ async def test_time_using_input_datetime.opp):
         blocking=True,
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "input_datetime",
         "set_datetime",
         {
@@ -291,7 +313,7 @@ async def test_time_using_input_datetime.opp):
     )
 
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.now",
+        "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=3),
     ):
         assert not condition.time(
@@ -302,7 +324,7 @@ async def test_time_using_input_datetime.opp):
         )
 
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.now",
+        "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=9),
     ):
         assert condition.time(
@@ -313,7 +335,7 @@ async def test_time_using_input_datetime.opp):
         )
 
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.now",
+        "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=15),
     ):
         assert condition.time(
@@ -324,7 +346,7 @@ async def test_time_using_input_datetime.opp):
         )
 
     with patch(
-        "openpeerpowerr.helpers.condition.dt_util.now",
+        "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=21),
     ):
         assert not condition.time(
@@ -430,6 +452,7 @@ async def test_multiple_states.opp):
             "condition": "and",
             "conditions": [
                 {
+                    "alias": "State Condition",
                     "condition": "state",
                     "entity_id": "sensor.temperature",
                     "state": ["100", "200"],
@@ -466,7 +489,8 @@ async def test_state_attribute.opp):
     )
 
    .opp.states.async_set("sensor.temperature", 100, {"unkown_attr": 200})
-    assert not test.opp)
+    with pytest.raises(ConditionError):
+        test.opp)
 
    .opp.states.async_set("sensor.temperature", 100, {"attribute1": 200})
     assert test.opp)
@@ -499,7 +523,7 @@ async def test_state_attribute_boolean.opp):
    .opp.states.async_set("sensor.temperature", 100, {"happening": True})
     assert not test.opp)
 
-   .opp.states.async_set("sensor.temperature", 100, {"no_op.pening": 201})
+   .opp.states.async_set("sensor.temperature", 100, {"no_happening": 201})
     with pytest.raises(ConditionError):
         test.opp)
 
@@ -557,7 +581,7 @@ async def test_state_using_input_entities.opp):
    .opp.states.async_set("sensor.salut", "hello")
     assert not test.opp)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "input_text",
         "set_value",
         {
@@ -574,7 +598,7 @@ async def test_state_using_input_entities.opp):
    .opp.states.async_set("sensor.salut", "cya")
     assert test.opp)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "input_select",
         "select_option",
         {
@@ -699,6 +723,7 @@ async def test_numeric_state_multiple_entities.opp):
             "condition": "and",
             "conditions": [
                 {
+                    "alias": "Numeric State Condition",
                     "condition": "numeric_state",
                     "entity_id": ["sensor.temperature_1", "sensor.temperature_2"],
                     "below": 50,
@@ -720,7 +745,7 @@ async def test_numeric_state_multiple_entities.opp):
     assert not test.opp)
 
 
-async def test_numberic_state_attribute.opp):
+async def test_numeric_state_attribute.opp):
     """Test with numeric state attribute in condition."""
     test = await condition.async_from_config(
        .opp,
@@ -738,7 +763,8 @@ async def test_numberic_state_attribute.opp):
     )
 
    .opp.states.async_set("sensor.temperature", 100, {"unkown_attr": 10})
-    assert not test.opp)
+    with pytest.raises(ConditionError):
+        assert test.opp)
 
    .opp.states.async_set("sensor.temperature", 100, {"attribute1": 49})
     assert test.opp)
@@ -750,7 +776,8 @@ async def test_numberic_state_attribute.opp):
     assert not test.opp)
 
    .opp.states.async_set("sensor.temperature", 100, {"attribute1": None})
-    assert not test.opp)
+    with pytest.raises(ConditionError):
+        assert test.opp)
 
 
 async def test_numeric_state_using_input_number.opp):
@@ -790,7 +817,7 @@ async def test_numeric_state_using_input_number.opp):
    .opp.states.async_set("sensor.temperature", 100)
     assert not test.opp)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "input_number",
         "set_value",
         {
@@ -811,6 +838,86 @@ async def test_numeric_state_using_input_number.opp):
         )
 
 
+async def test_zone_raises.opp):
+    """Test that zone raises ConditionError on errors."""
+    test = await condition.async_from_config(
+       .opp,
+        {
+            "condition": "zone",
+            "entity_id": "device_tracker.cat",
+            "zone": "zone.home",
+        },
+    )
+
+    with pytest.raises(ConditionError, match="Unknown zone"):
+        test.opp)
+
+   .opp.states.async_set(
+        "zone.home",
+        "zoning",
+        {"name": "home", "latitude": 2.1, "longitude": 1.1, "radius": 10},
+    )
+
+    with pytest.raises(ConditionError, match="Unknown entity"):
+        test.opp)
+
+   .opp.states.async_set(
+        "device_tracker.cat",
+        "home",
+        {"friendly_name": "cat"},
+    )
+
+    with pytest.raises(ConditionError, match="latitude"):
+        test.opp)
+
+   .opp.states.async_set(
+        "device_tracker.cat",
+        "home",
+        {"friendly_name": "cat", "latitude": 2.1},
+    )
+
+    with pytest.raises(ConditionError, match="longitude"):
+        test.opp)
+
+   .opp.states.async_set(
+        "device_tracker.cat",
+        "home",
+        {"friendly_name": "cat", "latitude": 2.1, "longitude": 1.1},
+    )
+
+    # All okay, now test multiple failed conditions
+    assert test.opp)
+
+    test = await condition.async_from_config(
+       .opp,
+        {
+            "condition": "zone",
+            "entity_id": ["device_tracker.cat", "device_tracker.dog"],
+            "zone": ["zone.home", "zone.work"],
+        },
+    )
+
+    with pytest.raises(ConditionError, match="dog"):
+        test.opp)
+
+    with pytest.raises(ConditionError, match="work"):
+        test.opp)
+
+   .opp.states.async_set(
+        "zone.work",
+        "zoning",
+        {"name": "work", "latitude": 20, "longitude": 10, "radius": 25000},
+    )
+
+   .opp.states.async_set(
+        "device_tracker.dog",
+        "work",
+        {"friendly_name": "dog", "latitude": 20.1, "longitude": 10.1},
+    )
+
+    assert test.opp)
+
+
 async def test_zone_multiple_entities.opp):
     """Test with multiple entities in condition."""
     test = await condition.async_from_config(
@@ -819,6 +926,7 @@ async def test_zone_multiple_entities.opp):
             "condition": "and",
             "conditions": [
                 {
+                    "alias": "Zone Condition",
                     "condition": "zone",
                     "entity_id": ["device_tracker.person_1", "device_tracker.person_2"],
                     "zone": "zone.home",

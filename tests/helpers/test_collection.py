@@ -4,7 +4,7 @@ import logging
 import pytest
 import voluptuous as vol
 
-from openpeerpowerr.helpers import collection, entity, entity_component, storage
+from openpeerpower.helpers import collection, entity, entity_component, storage
 
 from tests.common import flush_store
 
@@ -48,7 +48,7 @@ class MockEntity(entity.Entity):
     async def async_update_config(self, config):
         """Update entity config."""
         self._config = config
-        self.async_write_op.state()
+        self.async_write_ha_state()
 
 
 class MockStorageCollection(collection.StorageCollection):
@@ -274,7 +274,7 @@ async def test_storage_collection_websocket.opp,.opp_ws_client):
         {vol.Optional("name"): str},
     ).async_setup.opp)
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     # Create invalid
     await client.send_json(

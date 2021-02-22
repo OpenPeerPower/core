@@ -2,7 +2,7 @@
 import pytest
 import voluptuous as vol
 
-from openpeerpowerr.helpers.trigger import async_validate_trigger_config
+from openpeerpower.helpers.trigger import async_validate_trigger_config
 
 
 async def test_bad_trigger_platform.opp):

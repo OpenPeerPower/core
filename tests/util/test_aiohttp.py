@@ -1,6 +1,6 @@
 """Test aiohttp request helper."""
 
-from openpeerpowerr.util import aiohttp
+from openpeerpower.util import aiohttp
 
 
 async def test_request_json():

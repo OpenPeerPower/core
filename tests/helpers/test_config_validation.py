@@ -9,8 +9,8 @@ import uuid
 import pytest
 import voluptuous as vol
 
-import openpeerpowerr
-from openpeerpowerr.helpers import config_validation as cv, template
+import openpeerpower
+from openpeerpower.helpers import config_validation as cv, template
 
 
 def test_boolean():
@@ -101,8 +101,8 @@ def test_url():
         "invalid",
         None,
         100,
-        "htp://op.io",
-        "http//op.io",
+        "htp://ha.io",
+        "http//ha.io",
         "http://??,**",
         "https://??,**",
     ):
@@ -112,9 +112,9 @@ def test_url():
     for value in (
         "http://localhost",
         "https://localhost/test/index.html",
-        "http://openpeerpower.io",
-        "http://openpeerpower.io/test/",
-        "https://community.openpeerpower.io/",
+        "http://open-peer-power.io",
+        "http://open-peer-power.io/test/",
+        "https://community.open-peer-power.io/",
     ):
         assert schema(value)
 
@@ -327,7 +327,7 @@ def test_service():
     with pytest.raises(vol.MultipleInvalid):
         schema("invalid_turn_on")
 
-    schema("openpeerpowerr.turn_on")
+    schema("openpeerpower.turn_on")
 
 
 def test_service_schema():
@@ -336,13 +336,13 @@ def test_service_schema():
         {},
         None,
         {
-            "service": "openpeerpowerr.turn_on",
-            "service_template": "openpeerpowerr.turn_on",
+            "service": "openpeerpower.turn_on",
+            "service_template": "openpeerpower.turn_on",
         },
         {"data": {"entity_id": "light.kitchen"}},
-        {"service": "openpeerpowerr.turn_on", "data": None},
+        {"service": "openpeerpower.turn_on", "data": None},
         {
-            "service": "openpeerpowerr.turn_on",
+            "service": "openpeerpower.turn_on",
             "data_template": {"brightness": "{{ no_end"},
         },
     )
@@ -351,12 +351,17 @@ def test_service_schema():
             cv.SERVICE_SCHEMA(value)
 
     options = (
-        {"service": "openpeerpowerr.turn_on"},
-        {"service": "openpeerpowerr.turn_on", "entity_id": "light.kitchen"},
+        {"service": "openpeerpower.turn_on"},
+        {"service": "openpeerpower.turn_on", "entity_id": "light.kitchen"},
         {"service": "light.turn_on", "entity_id": "all"},
         {
-            "service": "openpeerpowerr.turn_on",
+            "service": "openpeerpower.turn_on",
             "entity_id": ["light.kitchen", "light.ceiling"],
+        },
+        {
+            "service": "light.turn_on",
+            "entity_id": "all",
+            "alias": "turn on kitchen lights",
         },
     )
     for value in options:
@@ -420,7 +425,7 @@ def test_string_with_no_html():
         3,
         "Hello",
         "**Hello**",
-        "This has no HTML [Link](https://openpeerpower.io)",
+        "This has no HTML [Link](https://open-peer-power.io)",
     ):
         schema(value)
 
@@ -643,7 +648,7 @@ def test_deprecated_with_no_optionals(caplog, schema):
     assert len(caplog.records) == 1
     assert caplog.records[0].name in [
         __name__,
-        "openpeerpowerr.helpers.config_validation",
+        "openpeerpower.helpers.config_validation",
     ]
     assert (
         "The 'mars' option is deprecated, please remove it from your configuration"
@@ -808,7 +813,7 @@ def test_key_dependency():
         schema(value)
 
 
-def test_op._at_most_one_key():
+def test_has_at_most_one_key():
     """Test has_at_most_one_key validator."""
     schema = vol.Schema(cv.has_at_most_one_key("beer", "soda"))
 
@@ -820,7 +825,7 @@ def test_op._at_most_one_key():
         schema(value)
 
 
-def test_op._at_least_one_key():
+def test_has_at_least_one_key():
     """Test has_at_least_one_key validator."""
     schema = vol.Schema(cv.has_at_least_one_key("beer", "soda"))
 

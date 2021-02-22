@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
-from openpeerpowerr.util import async_ as hasync
+from openpeerpower.util import async_ as hasync
 
 
 @patch("asyncio.coroutines.iscoroutine")
@@ -79,7 +79,7 @@ async def test_check_loop_async():
 async def test_check_loop_async_integration(caplog):
     """Test check_loop detects when called from event loop from integration context."""
     with patch(
-        "openpeerpowerr.util.async_.extract_stack",
+        "openpeerpower.util.async_.extract_stack",
         return_value=[
             Mock(
                 filename="/home/paulus/openpeerpower/core.py",
@@ -108,7 +108,7 @@ async def test_check_loop_async_integration(caplog):
 async def test_check_loop_async_custom(caplog):
     """Test check_loop detects when called from event loop with custom component context."""
     with patch(
-        "openpeerpowerr.util.async_.extract_stack",
+        "openpeerpower.util.async_.extract_stack",
         return_value=[
             Mock(
                 filename="/home/paulus/openpeerpower/core.py",
@@ -143,7 +143,7 @@ def test_check_loop_sync(caplog):
 def test_protect_loop_sync():
     """Test protect_loop calls check_loop."""
     calls = []
-    with patch("openpeerpowerr.util.async_.check_loop") as mock_loop:
+    with patch("openpeerpower.util.async_.check_loop") as mock_loop:
         hasync.protect_loop(calls.append)(1)
     assert len(mock_loop.mock_calls) == 1
     assert calls == [1]
@@ -193,7 +193,7 @@ async def test_run_callback_threadsafe.opp):
 
     # Verify that async_block_till_done will flush
     # out the callback
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert it_ran is True
 
 

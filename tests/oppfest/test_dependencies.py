@@ -1,4 +1,4 @@
-"""Tests for oppfest dependency finder."""
+"""Tests for.oppfest dependency finder."""
 import ast
 
 import pytest
@@ -63,7 +63,7 @@ import openpeerpower.components.renamed_absolute as hue
     assert mock_collector.unfiltered_referenced == {"renamed_absolute"}
 
 
-def test_opp_components_var(mock_collector):
+def test.opp_components_var(mock_collector):
     """Test detecting a.opp_components_var reference."""
     mock_collector.visit(
         ast.parse(
@@ -73,10 +73,10 @@ def bla.opp):
 """
         )
     )
-    assert mock_collector.unfiltered_referenced == {"opp_components_var"}
+    assert mock_collector.unfiltered_referenced == {.opp_components_var"}
 
 
-def test_opp_components_class(mock_collector):
+def test.opp_components_class(mock_collector):
     """Test detecting a.opp_components_class reference."""
     mock_collector.visit(
         ast.parse(
@@ -87,7 +87,7 @@ class Hello:
 """
         )
     )
-    assert mock_collector.unfiltered_referenced == {"opp_components_class"}
+    assert mock_collector.unfiltered_referenced == {.opp_components_class"}
 
 
 def test_all_imports(mock_collector):
@@ -117,6 +117,6 @@ class Hello:
         "subimport",
         "child_import_field",
         "renamed_absolute",
-        "opp_components_var",
-        "opp_components_class",
+        .opp_components_var",
+        .opp_components_class",
     }

@@ -1,7 +1,7 @@
 """Test inputs."""
 import pytest
 
-from openpeerpowerr.util.yaml import (
+from openpeerpower.util.yaml import (
     Input,
     UndefinedSubstitution,
     extract_inputs,

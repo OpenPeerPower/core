@@ -5,8 +5,8 @@ from unittest.mock import Mock, patch
 import httpx
 import pytest
 
-from openpeerpowerr.core import EVENT_OPENPEERPOWER_CLOSE
-import openpeerpowerr.helpers.httpx_client as client
+from openpeerpower.core import EVENT_OPENPEERPOWER_CLOSE
+import openpeerpower.helpers.httpx_client as client
 
 
 async def test_get_async_client_with_ssl.opp):
@@ -50,7 +50,7 @@ async def test_get_async_client_cleanup.opp):
     assert isinstance.opp.data[client.DATA_ASYNC_CLIENT], httpx.AsyncClient)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.data[client.DATA_ASYNC_CLIENT].is_closed
 
@@ -62,7 +62,7 @@ async def test_get_async_client_cleanup_without_ssl.opp):
     assert isinstance.opp.data[client.DATA_ASYNC_CLIENT_NOVERIFY], httpx.AsyncClient)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.data[client.DATA_ASYNC_CLIENT_NOVERIFY].is_closed
 
@@ -83,7 +83,7 @@ async def test_get_async_client_patched_close.opp):
 async def test_warning_close_session_integration.opp, caplog):
     """Test log warning message when closing the session from integration context."""
     with patch(
-        "openpeerpowerr.helpers.frame.extract_stack",
+        "openpeerpower.helpers.frame.extract_stack",
         return_value=[
             Mock(
                 filename="/home/paulus/openpeerpower/core.py",
@@ -115,7 +115,7 @@ async def test_warning_close_session_integration.opp, caplog):
 async def test_warning_close_session_custom.opp, caplog):
     """Test log warning message when closing the session from custom context."""
     with patch(
-        "openpeerpowerr.helpers.frame.extract_stack",
+        "openpeerpower.helpers.frame.extract_stack",
         return_value=[
             Mock(
                 filename="/home/paulus/openpeerpower/core.py",

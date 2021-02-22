@@ -2,7 +2,7 @@
 
 import uuid
 
-import openpeerpowerr.util.uuid as uuid_util
+import openpeerpower.util.uuid as uuid_util
 
 
 async def test_uuid_util_random_uuid_hex():

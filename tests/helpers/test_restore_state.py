@@ -3,17 +3,17 @@ from datetime import datetime
 from unittest.mock import patch
 
 from openpeerpower.const import EVENT_OPENPEERPOWER_START
-from openpeerpowerr.core import CoreState, State
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.helpers.restore_state import (
+from openpeerpower.core import CoreState, State
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.restore_state import (
     DATA_RESTORE_STATE_TASK,
     STORAGE_KEY,
     RestoreEntity,
     RestoreStateData,
     StoredState,
 )
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.util import dt as dt_util
 
 
 async def test_caching_data.opp):
@@ -26,22 +26,22 @@ async def test_caching_data.opp):
     ]
 
     data = await RestoreStateData.async_get_instance.opp)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await data.store.async_save([state.as_dict() for state in stored_states])
 
     # Emulate a fresh load
    .opp.data[DATA_RESTORE_STATE_TASK] = None
 
     entity = RestoreEntity()
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "input_boolean.b1"
 
     # Mock that only b1 is present this run
     with patch(
-        "openpeerpowerr.helpers.restore_state.Store.async_save"
+        "openpeerpower.helpers.restore_state.Store.async_save"
     ) as mock_write_data:
         state = await entity.async_get_last_state()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert state is not None
     assert state.entity_id == "input_boolean.b1"
@@ -50,7 +50,7 @@ async def test_caching_data.opp):
     assert mock_write_data.called
 
 
-async def test_opp_starting.opp):
+async def test.opp_starting.opp):
     """Test that we cache data."""
    .opp.state = CoreState.starting
 
@@ -62,37 +62,37 @@ async def test_opp_starting.opp):
     ]
 
     data = await RestoreStateData.async_get_instance.opp)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await data.store.async_save([state.as_dict() for state in stored_states])
 
     # Emulate a fresh load
    .opp.data[DATA_RESTORE_STATE_TASK] = None
 
     entity = RestoreEntity()
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "input_boolean.b1"
 
     # Mock that only b1 is present this run
     states = [State("input_boolean.b1", "on")]
     with patch(
-        "openpeerpowerr.helpers.restore_state.Store.async_save"
+        "openpeerpower.helpers.restore_state.Store.async_save"
     ) as mock_write_data, patch.object.opp.states, "async_all", return_value=states):
         state = await entity.async_get_last_state()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert state is not None
     assert state.entity_id == "input_boolean.b1"
     assert state.state == "on"
 
-    # Assert that no data was written yet, since opp is still starting.
+    # Assert that no data was written yet, since.opp is still starting.
     assert not mock_write_data.called
 
-    # Finish opp startup
+    # Finish.opp startup
     with patch(
-        "openpeerpowerr.helpers.restore_state.Store.async_save"
+        "openpeerpower.helpers.restore_state.Store.async_save"
     ) as mock_write_data:
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     # Assert that this session states were written
     assert mock_write_data.called
@@ -108,14 +108,14 @@ async def test_dump_data.opp):
     ]
 
     entity = Entity()
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "input_boolean.b0"
-    await entity.async_internal_added_to_opp()
+    await entity.async_internal_added_to.opp()
 
     entity = RestoreEntity()
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "input_boolean.b1"
-    await entity.async_internal_added_to_opp()
+    await entity.async_internal_added_to.opp()
 
     data = await RestoreStateData.async_get_instance.opp)
     now = dt_util.utcnow()
@@ -132,7 +132,7 @@ async def test_dump_data.opp):
     }
 
     with patch(
-        "openpeerpowerr.helpers.restore_state.Store.async_save"
+        "openpeerpower.helpers.restore_state.Store.async_save"
     ) as mock_write_data, patch.object.opp.states, "async_all", return_value=states):
         await data.async_dump_states()
 
@@ -158,7 +158,7 @@ async def test_dump_data.opp):
     await entity.async_remove()
 
     with patch(
-        "openpeerpowerr.helpers.restore_state.Store.async_save"
+        "openpeerpower.helpers.restore_state.Store.async_save"
     ) as mock_write_data, patch.object.opp.states, "async_all", return_value=states):
         await data.async_dump_states()
 
@@ -181,19 +181,19 @@ async def test_dump_error.opp):
     ]
 
     entity = Entity()
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "input_boolean.b0"
-    await entity.async_internal_added_to_opp()
+    await entity.async_internal_added_to.opp()
 
     entity = RestoreEntity()
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "input_boolean.b1"
-    await entity.async_internal_added_to_opp()
+    await entity.async_internal_added_to.opp()
 
     data = await RestoreStateData.async_get_instance.opp)
 
     with patch(
-        "openpeerpowerr.helpers.restore_state.Store.async_save",
+        "openpeerpower.helpers.restore_state.Store.async_save",
         side_effect=OpenPeerPowerError,
     ) as mock_write_data, patch.object.opp.states, "async_all", return_value=states):
         await data.async_dump_states()
@@ -204,11 +204,11 @@ async def test_dump_error.opp):
 async def test_load_error.opp):
     """Test that we cache data."""
     entity = RestoreEntity()
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "input_boolean.b1"
 
     with patch(
-        "openpeerpowerr.helpers.storage.Store.async_load",
+        "openpeerpower.helpers.storage.Store.async_load",
         side_effect=OpenPeerPowerError,
     ):
         state = await entity.async_get_last_state()
@@ -219,9 +219,9 @@ async def test_load_error.opp):
 async def test_state_saved_on_remove.opp):
     """Test that we save entity state on removal."""
     entity = RestoreEntity()
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "input_boolean.b0"
-    await entity.async_internal_added_to_opp()
+    await entity.async_internal_added_to.opp()
 
     now = dt_util.utcnow()
    .opp.states.async_set(
@@ -245,7 +245,7 @@ async def test_state_saved_on_remove.opp):
 async def test_restoring_invalid_entity_id.opp,.opp_storage):
     """Test restoring invalid entity IDs."""
     entity = RestoreEntity()
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "test.invalid__entity_id"
     now = dt_util.utcnow().isoformat()
    .opp_storage[STORAGE_KEY] = {

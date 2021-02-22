@@ -26,7 +26,7 @@
    </Ethernet>
    <WIFI>
       <clientinfo>
-         <interface>OPP</interface>
+         <interface>HASS</interface>
          <IPv4Addr>192.168.0.194/24</IPv4Addr>
          <index>3</index>
          <interfaceid>3</interfaceid>
