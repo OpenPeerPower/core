@@ -27,13 +27,13 @@ from openpeerpower.const import (
     CONF_UNIT_SYSTEM_METRIC,
     __version__,
 )
-from openpeerpowerr.core import SOURCE_STORAGE, OpenPeerPowerError
-from openpeerpowerr.helpers import config_validation as cv
-import openpeerpowerr.helpers.check_config as check_config
-from openpeerpowerr.helpers.entity import Entity
-from openpeerpowerr.loader import async_get_integration
-from openpeerpowerr.util import dt as dt_util
-from openpeerpowerr.util.yaml import SECRET_YAML
+from openpeerpower.core import SOURCE_STORAGE, OpenPeerPowerError
+from openpeerpower.helpers import config_validation as cv
+import openpeerpower.helpers.check_config as check_config
+from openpeerpower.helpers.entity import Entity
+from openpeerpower.loader import async_get_integration
+from openpeerpower.util import dt as dt_util
+from openpeerpower.util.yaml import SECRET_YAML
 
 from tests.common import get_test_config_dir, patch_yaml_files
 
@@ -221,14 +221,14 @@ def test_customize_glob_is_ordered():
 
 
 async def _compute_state.opp, config):
-    await config_util.async_process_op.core_config.opp, config)
+    await config_util.async_process_op_core_config.opp, config)
 
     entity = Entity()
     entity.entity_id = "test.test"
     entity.opp = opp
     entity.schedule_update_op.state()
 
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     return.opp.states.get("test.test")
 
@@ -258,9 +258,9 @@ def test_remove_lib_on_upgrade(mock_docker, mock_os, mock_shutil,.opp):
     with patch("openpeerpower.config.open", mock_open, create=True):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
-        opened_file.readline.return_value = op.version
+        opened_file.readline.return_value = op_version
        .opp.config.path = mock.Mock()
-        config_util.process_op.config_upgrade.opp)
+        config_util.process_op_config_upgrade.opp)
        .opp_path = opp.config.path.return_value
 
         assert mock_os.path.isdir.call_count == 1
@@ -280,9 +280,9 @@ def test_remove_lib_on_upgrade_94(mock_docker, mock_os, mock_shutil,.opp):
     with patch("openpeerpower.config.open", mock_open, create=True):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
-        opened_file.readline.return_value = op.version
+        opened_file.readline.return_value = op_version
        .opp.config.path = mock.Mock()
-        config_util.process_op.config_upgrade.opp)
+        config_util.process_op_config_upgrade.opp)
        .opp_path = opp.config.path.return_value
 
         assert mock_os.path.isdir.call_count == 1
@@ -301,9 +301,9 @@ def test_process_config_upgrade.opp):
     ):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
-        opened_file.readline.return_value = op.version
+        opened_file.readline.return_value = op_version
 
-        config_util.process_op.config_upgrade.opp)
+        config_util.process_op_config_upgrade.opp)
 
         assert opened_file.write.call_count == 1
         assert opened_file.write.call_args == mock.call("0.91.0")
@@ -317,9 +317,9 @@ def test_config_upgrade_same_version.opp):
     with patch("openpeerpower.config.open", mock_open, create=True):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
-        opened_file.readline.return_value = op.version
+        opened_file.readline.return_value = op_version
 
-        config_util.process_op.config_upgrade.opp)
+        config_util.process_op_config_upgrade.opp)
 
         assert opened_file.write.call_count == 0
 
@@ -331,7 +331,7 @@ def test_config_upgrade_no_file.opp):
     with patch("openpeerpower.config.open", mock_open, create=True):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
-        config_util.process_op.config_upgrade.opp)
+        config_util.process_op_config_upgrade.opp)
         assert opened_file.write.call_count == 1
         assert opened_file.write.call_args == mock.call(__version__)
 
@@ -352,7 +352,7 @@ async def test_loading_configuration_from_storage.opp,.opp_storage):
         "key": "core.config",
         "version": 1,
     }
-    await config_util.async_process_op.core_config(
+    await config_util.async_process_op_core_config(
        .opp, {"allowlist_external_dirs": "/etc"}
     )
 
@@ -383,7 +383,7 @@ async def test_loading_configuration_from_storage_with_yaml_only.opp,.opp_storag
         "key": "core.config",
         "version": 1,
     }
-    await config_util.async_process_op.core_config(
+    await config_util.async_process_op_core_config(
        .opp, {"media_dirs": {"mymedia": "/usr"}, "allowlist_external_dirs": "/etc"}
     )
 
@@ -416,7 +416,7 @@ async def test_updating_configuration.opp,.opp_storage):
         "version": 1,
     }
    .opp_storage["core.config"] = dict(core_data)
-    await config_util.async_process_op.core_config(
+    await config_util.async_process_op_core_config(
        .opp, {"allowlist_external_dirs": "/etc"}
     )
     await opp..config.async_update(latitude=50)
@@ -441,7 +441,7 @@ async def test_override_stored_configuration.opp,.opp_storage):
         "key": "core.config",
         "version": 1,
     }
-    await config_util.async_process_op.core_config(
+    await config_util.async_process_op_core_config(
        .opp, {"latitude": 60, "allowlist_external_dirs": "/etc"}
     )
 
@@ -458,7 +458,7 @@ async def test_override_stored_configuration.opp,.opp_storage):
 
 async def test_loading_configuration.opp):
     """Test loading core config onto opp object."""
-    await config_util.async_process_op.core_config(
+    await config_util.async_process_op_core_config(
        .opp,
         {
             "latitude": 60,
@@ -493,7 +493,7 @@ async def test_loading_configuration.opp):
 
 async def test_loading_configuration_temperature_unit.opp):
     """Test backward compatibility when loading core config."""
-    await config_util.async_process_op.core_config(
+    await config_util.async_process_op_core_config(
        .opp,
         {
             "latitude": 60,
@@ -521,7 +521,7 @@ async def test_loading_configuration_temperature_unit.opp):
 async def test_loading_configuration_default_media_dirs_docker.opp):
     """Test loading core config onto opp object."""
     with patch("openpeerpower.config.is_docker_env", return_value=True):
-        await config_util.async_process_op.core_config(
+        await config_util.async_process_op_core_config(
            .opp,
             {
                 "name": "Huis",
@@ -536,7 +536,7 @@ async def test_loading_configuration_default_media_dirs_docker.opp):
 
 async def test_loading_configuration_from_packages.opp):
     """Test loading packages config onto opp object config."""
-    await config_util.async_process_op.core_config(
+    await config_util.async_process_op_core_config(
        .opp,
         {
             "latitude": 39,
@@ -560,7 +560,7 @@ async def test_loading_configuration_from_packages.opp):
 
     # Empty packages not allowed
     with pytest.raises(MultipleInvalid):
-        await config_util.async_process_op.core_config(
+        await config_util.async_process_op_core_config(
            .opp,
             {
                 "latitude": 39,
@@ -574,20 +574,20 @@ async def test_loading_configuration_from_packages.opp):
         )
 
 
-@patch("openpeerpowerr.helpers.check_config.async_check_op.config_file")
-async def test_check_op.config_file_correct(mock_check,.opp):
+@patch("openpeerpower.helpers.check_config.async_check_op_config_file")
+async def test_check_op_config_file_correct(mock_check,.opp):
     """Check that restart propagates to stop."""
     mock_check.return_value = check_config.OpenPeerPowerConfig()
-    assert await config_util.async_check_op.config_file.opp) is None
+    assert await config_util.async_check_op_config_file.opp) is None
 
 
-@patch("openpeerpowerr.helpers.check_config.async_check_op.config_file")
-async def test_check_op.config_file_wrong(mock_check,.opp):
+@patch("openpeerpower.helpers.check_config.async_check_op_config_file")
+async def test_check_op_config_file_wrong(mock_check,.opp):
     """Check that restart with a bad config doesn't propagate to stop."""
     mock_check.return_value = check_config.OpenPeerPowerConfig()
     mock_check.return_value.add_error("bad")
 
-    assert await config_util.async_check_op.config_file.opp) == "bad"
+    assert await config_util.async_check_op_config_file.opp) == "bad"
 
 
 @patch("openpeerpower.config.os.path.isfile", mock.Mock(return_value=True))
@@ -817,10 +817,10 @@ async def test_merge_customize.opp):
         "time_zone": "GMT",
         "customize": {"a.a": {"friendly_name": "A"}},
         "packages": {
-            "pkg1": {"openpeerpowerr": {"customize": {"b.b": {"friendly_name": "BB"}}}}
+            "pkg1": {"openpeerpower": {"customize": {"b.b": {"friendly_name": "BB"}}}}
         },
     }
-    await config_util.async_process_op.core_config.opp, core_config)
+    await config_util.async_process_op_core_config.opp, core_config)
 
     assert.opp.data[config_util.DATA_CUSTOMIZE].get("b.b") == {"friendly_name": "BB"}
 
@@ -835,17 +835,17 @@ async def test_auth_provider_config.opp):
         CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_IMPERIAL,
         "time_zone": "GMT",
         CONF_AUTH_PROVIDERS: [
-            {"type": "openpeerpowerr"},
+            {"type": "openpeerpower"},
             {"type": "legacy_api_password", "api_password": "some-pass"},
         ],
         CONF_AUTH_MFA_MODULES: [{"type": "totp"}, {"type": "totp", "id": "second"}],
     }
     if hasattr.opp, "auth"):
         del.opp.auth
-    await config_util.async_process_op.core_config.opp, core_config)
+    await config_util.async_process_op_core_config.opp, core_config)
 
     assert len.opp.auth.auth_providers) == 2
-    assert.opp.auth.auth_providers[0].type == "openpeerpowerr"
+    assert.opp.auth.auth_providers[0].type == "openpeerpower"
     assert.opp.auth.auth_providers[1].type == "legacy_api_password"
     assert len.opp.auth.auth_mfa_modules) == 2
     assert.opp.auth.auth_mfa_modules[0].id == "totp"
@@ -864,10 +864,10 @@ async def test_auth_provider_config_default.opp):
     }
     if hasattr.opp, "auth"):
         del.opp.auth
-    await config_util.async_process_op.core_config.opp, core_config)
+    await config_util.async_process_op_core_config.opp, core_config)
 
     assert len.opp.auth.auth_providers) == 1
-    assert.opp.auth.auth_providers[0].type == "openpeerpowerr"
+    assert.opp.auth.auth_providers[0].type == "openpeerpower"
     assert len.opp.auth.auth_mfa_modules) == 1
     assert.opp.auth.auth_mfa_modules[0].id == "totp"
 
@@ -895,7 +895,7 @@ async def test_disallowed_auth_provider_config.opp):
         ],
     }
     with pytest.raises(Invalid):
-        await config_util.async_process_op.core_config.opp, core_config)
+        await config_util.async_process_op_core_config.opp, core_config)
 
 
 async def test_disallowed_duplicated_auth_provider_config.opp):
@@ -907,10 +907,10 @@ async def test_disallowed_duplicated_auth_provider_config.opp):
         "name": "Huis",
         CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_IMPERIAL,
         "time_zone": "GMT",
-        CONF_AUTH_PROVIDERS: [{"type": "openpeerpowerr"}, {"type": "openpeerpowerr"}],
+        CONF_AUTH_PROVIDERS: [{"type": "openpeerpower"}, {"type": "openpeerpower"}],
     }
     with pytest.raises(Invalid):
-        await config_util.async_process_op.core_config.opp, core_config)
+        await config_util.async_process_op_core_config.opp, core_config)
 
 
 async def test_disallowed_auth_mfa_module_config.opp):
@@ -930,7 +930,7 @@ async def test_disallowed_auth_mfa_module_config.opp):
         ],
     }
     with pytest.raises(Invalid):
-        await config_util.async_process_op.core_config.opp, core_config)
+        await config_util.async_process_op_core_config.opp, core_config)
 
 
 async def test_disallowed_duplicated_auth_mfa_module_config.opp):
@@ -945,7 +945,7 @@ async def test_disallowed_duplicated_auth_mfa_module_config.opp):
         CONF_AUTH_MFA_MODULES: [{"type": "totp"}, {"type": "totp"}],
     }
     with pytest.raises(Invalid):
-        await config_util.async_process_op.core_config.opp, core_config)
+        await config_util.async_process_op_core_config.opp, core_config)
 
 
 async def test_merge_split_component_definition.opp):
@@ -1087,6 +1087,26 @@ async def test_component_config_exceptions.opp, caplog):
         "Error importing config platform test_domain: ModuleNotFoundError: No module named 'not_installed_something'"
         in caplog.text
     )
+
+    # get_component raising
+    caplog.clear()
+    assert (
+        await config_util.async_process_component_config(
+           .opp,
+            {"test_domain": {}},
+            integration=Mock(
+                pkg_path="openpeerpower.components.test_domain",
+                domain="test_domain",
+                get_component=Mock(
+                    side_effect=FileNotFoundError(
+                        "No such file or directory: b'liblibc.a'"
+                    )
+                ),
+            ),
+        )
+        is None
+    )
+    assert "Unable to import test_domain: No such file or directory" in caplog.text
 
 
 @pytest.mark.parametrize(

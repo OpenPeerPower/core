@@ -3,7 +3,7 @@ import pytest
 import voluptuous as vol
 
 from openpeerpower import data_entry_flow
-from openpeerpowerr.util.decorator import Registry
+from openpeerpower.util.decorator import Registry
 
 from tests.common import async_capture_events
 
@@ -19,12 +19,12 @@ def manager():
 
         async def async_create_flow(self, handler_key, *, context, data):
             """Test create flow."""
-            handler = op.dlers.get(handler_key)
+            handler = handlers.get(handler_key)
 
             if handler is None:
                 raise data_entry_flow.UnknownHandler
 
-            flow = op.dler()
+            flow = handler()
             flow.init_step = context.get("init_step", "init")
             return flow
 
@@ -37,14 +37,14 @@ def manager():
 
     mgr = FlowManager(None)
     mgr.mock_created_entries = entries
-    mgr.mock_reg_op.dler = op.dlers.register
+    mgr.mock_reg_handler = handlers.register
     return mgr
 
 
-async def test_configure_reuses_op.dler_instance(manager):
+async def test_configure_reuses_handler_instance(manager):
     """Test that we reuse instances."""
 
-    @manager.mock_reg_op.dler("test")
+    @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
         handle_count = 0
 
@@ -72,7 +72,7 @@ async def test_configure_reuses_op.dler_instance(manager):
 async def test_configure_two_steps(manager):
     """Test that we reuse instances."""
 
-    @manager.mock_reg_op.dler("test")
+    @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
         VERSION = 1
 
@@ -108,7 +108,7 @@ async def test_show_form(manager):
     """Test that we can show a form."""
     schema = vol.Schema({vol.Required("username"): str, vol.Required("password"): str})
 
-    @manager.mock_reg_op.dler("test")
+    @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
         async def async_step_init(self, user_input=None):
             return self.async_show_form(
@@ -126,7 +126,7 @@ async def test_show_form(manager):
 async def test_abort_removes_instance(manager):
     """Test that abort removes the flow from progress."""
 
-    @manager.mock_reg_op.dler("test")
+    @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
         is_new = True
 
@@ -148,7 +148,7 @@ async def test_abort_removes_instance(manager):
 async def test_create_saves_data(manager):
     """Test creating a config entry."""
 
-    @manager.mock_reg_op.dler("test")
+    @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
         VERSION = 5
 
@@ -170,7 +170,7 @@ async def test_create_saves_data(manager):
 async def test_discovery_init_flow(manager):
     """Test a flow initialized by discovery."""
 
-    @manager.mock_reg_op.dler("test")
+    @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
         VERSION = 5
 
@@ -241,7 +241,7 @@ async def test_external_step.opp, manager):
     """Test external step logic."""
     manager.opp = opp
 
-    @manager.mock_reg_op.dler("test")
+    @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
         VERSION = 5
         data = None
@@ -271,7 +271,7 @@ async def test_external_step.opp, manager):
     result = await manager.async_configure(result["flow_id"], {"title": "Hello"})
     assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP_DONE
 
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data == {
         "handler": "test",
@@ -289,7 +289,7 @@ async def test_show_progress.opp, manager):
     """Test show progress logic."""
     manager.opp = opp
 
-    @manager.mock_reg_op.dler("test")
+    @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
         VERSION = 5
         data = None
@@ -328,7 +328,7 @@ async def test_show_progress.opp, manager):
     assert result["type"] == data_entry_flow.RESULT_TYPE_SHOW_PROGRESS
     assert result["progress_action"] == "task_two"
 
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data == {
         "handler": "test",
@@ -341,7 +341,7 @@ async def test_show_progress.opp, manager):
     result = await manager.async_configure(result["flow_id"], {"title": "Hello"})
     assert result["type"] == data_entry_flow.RESULT_TYPE_SHOW_PROGRESS_DONE
 
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 2
     assert events[1].data == {
         "handler": "test",
@@ -358,7 +358,7 @@ async def test_show_progress.opp, manager):
 async def test_abort_flow_exception(manager):
     """Test that the AbortFlow exception works."""
 
-    @manager.mock_reg_op.dler("test")
+    @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
         async def async_step_init(self, user_input=None):
             raise data_entry_flow.AbortFlow("mock-reason", {"placeholder": "yo"})

@@ -21,13 +21,13 @@ import uuid
 from aiohttp.test_utils import unused_port as get_test_instance_port  # noqa
 
 from openpeerpower import auth, config_entries, core as ha, loader
-from openpeerpowerr.auth import (
+from openpeerpower.auth import (
     auth_store,
     models as auth_models,
     permissions as auth_permissions,
     providers as auth_providers,
 )
-from openpeerpowerr.auth.permissions import system_policies
+from openpeerpower.auth.permissions import system_policies
 from openpeerpower.components import recorder
 from openpeerpower.components.device_automation import (  # noqa: F401
     _async_get_device_automation_capabilities as async_get_device_automation_capabilities,
@@ -46,8 +46,8 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import BLOCK_LOG_TIMEOUT, State
-from openpeerpowerr.helpers import (
+from openpeerpower.core import BLOCK_LOG_TIMEOUT, State
+from openpeerpower.helpers import (
     area_registry,
     device_registry,
     entity,
@@ -57,12 +57,12 @@ from openpeerpowerr.helpers import (
     restore_state,
     storage,
 )
-from openpeerpowerr.helpers.json import JSONEncoder
-from openpeerpowerr.setup import async_setup_component, setup_component
-from openpeerpowerr.util.async_ import run_callback_threadsafe
-import openpeerpowerr.util.dt as date_util
-from openpeerpowerr.util.unit_system import METRIC_SYSTEM
-import openpeerpowerr.util.yaml.loader as yaml_loader
+from openpeerpower.helpers.json import JSONEncoder
+from openpeerpower.setup import async_setup_component, setup_component
+from openpeerpower.util.async_ import run_callback_threadsafe
+import openpeerpower.util.dt as date_util
+from openpeerpower.util.unit_system import METRIC_SYSTEM
+import openpeerpower.util.yaml.loader as yaml_loader
 
 _LOGGER = logging.getLogger(__name__)
 INSTANCES = []
@@ -79,7 +79,7 @@ def threadsafe_callback_factory(func):
     @ft.wraps(func)
     def threadsafe(*args, **kwargs):
         """Call func threadsafe."""
-        opp = args[0]
+       .opp = args[0]
         return run_callback_threadsafe(
            .opp.loop, ft.partial(func, *args, **kwargs)
         ).result()
@@ -96,7 +96,7 @@ def threadsafe_coroutine_factory(func):
     @ft.wraps(func)
     def threadsafe(*args, **kwargs):
         """Call func threadsafe."""
-        opp = args[0]
+       .opp = args[0]
         return asyncio.run_coroutine_threadsafe(
             func(*args, **kwargs),.opp.loop
         ).result()
@@ -109,11 +109,11 @@ def get_test_config_dir(*add_path):
     return os.path.join(os.path.dirname(__file__), "testing_config", *add_path)
 
 
-def get_test_home_assistant():
+def get_test_open_peer_power():
     """Return a Open Peer Power object pointing at test config directory."""
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    opp = loop.run_until_complete(async_test_home_assistant(loop))
+   .opp = loop.run_until_complete(async_test_open_peer_power(loop))
 
     loop_stop_event = threading.Event()
 
@@ -124,7 +124,7 @@ def get_test_home_assistant():
         loop.run_forever()
         loop_stop_event.set()
 
-    orig_stop = opp.stop
+    orig_stop =.opp.stop
    .opp._stopped = Mock(set=loop.stop)
 
     def start_opp(*mocks):
@@ -146,7 +146,7 @@ def get_test_home_assistant():
 
 
 # pylint: disable=protected-access
-async def async_test_home_assistant(loop, load_registries=True):
+async def async_test_open_peer_power(loop, load_registries=True):
     """Return a Open Peer Power object pointing at test config dir."""
     opp = op.OpenPeerPower()
     store = auth_store.AuthStore.opp)
@@ -287,7 +287,7 @@ async def async_test_home_assistant(loop, load_registries=True):
             entity_registry.async_load.opp),
             area_registry.async_load.opp),
         )
-        await opp..async_block_till_done()
+        await opp.async_block_till_done()
 
    .opp.state = op.CoreState.running
 
@@ -297,7 +297,7 @@ async def async_test_home_assistant(loop, load_registries=True):
     async def mock_async_start():
         """Start the mocking."""
         # We only mock time during tests and we want to track tasks
-        with patch("openpeerpowerr.core._async_create_timer"), patch.object(
+        with patch("openpeerpower.core._async_create_timer"), patch.object(
            .opp, "async_stop_track_tasks"
         ):
             await orig_start()
@@ -339,7 +339,7 @@ def async_mock_intent.opp, intent_typ):
     class MockIntentHandler(intent.IntentHandler):
         intent_type = intent_typ
 
-        async def async_op.dle(self, intent):
+        async def async_handle(self, intent):
             """Handle the intent."""
             intents.append(intent)
             return intent.create_response()
@@ -355,7 +355,7 @@ def async_fire_mqtt_message.opp, topic, payload, qos=0, retain=False):
     if isinstance(payload, str):
         payload = payload.encode("utf-8")
     msg = Message(topic, payload, qos, retain)
-   .opp.data["mqtt"]._mqtt_op.dle_message(msg)
+   .opp.data["mqtt"]._mqtt_handle_message(msg)
 
 
 fire_mqtt_message = threadsafe_callback_factory(async_fire_mqtt_message)
@@ -377,7 +377,7 @@ def async_fire_time_changed.opp, datetime_, fire_all=False):
 
         if fire_all or mock_seconds_into_future >= future_seconds:
             with patch(
-                "openpeerpowerr.helpers.event.time_tracker_utcnow",
+                "openpeerpower.helpers.event.time_tracker_utcnow",
                 return_value=date_util.as_utc(datetime_),
             ):
                 task._run()
@@ -666,7 +666,7 @@ class MockEntityPlatform(entity_platform.EntityPlatform):
     ):
         """Initialize a mock entity platform."""
         if logger is None:
-            logger = logging.getLogger("openpeerpowerr.helpers.entity_platform")
+            logger = logging.getLogger("openpeerpower.helpers.entity_platform")
 
         # Otherwise the constructor will blow up.
         if isinstance(platform, Mock) and isinstance(platform.PARALLEL_UPDATES, Mock):
@@ -749,6 +749,7 @@ class MockConfigEntry(config_entries.ConfigEntry):
         system_options={},
         connection_class=config_entries.CONN_CLASS_UNKNOWN,
         unique_id=None,
+        disabled_by=None,
     ):
         """Initialize a mock config entry."""
         kwargs = {
@@ -761,6 +762,7 @@ class MockConfigEntry(config_entries.ConfigEntry):
             "title": title,
             "connection_class": connection_class,
             "unique_id": unique_id,
+            "disabled_by": disabled_by,
         }
         if source is not None:
             kwargs["source"] = source
@@ -927,59 +929,59 @@ class MockEntity(entity.Entity):
     @property
     def name(self):
         """Return the name of the entity."""
-        return self._op.dle("name")
+        return self._handle("name")
 
     @property
     def should_poll(self):
         """Return the ste of the polling."""
-        return self._op.dle("should_poll")
+        return self._handle("should_poll")
 
     @property
     def unique_id(self):
         """Return the unique ID of the entity."""
-        return self._op.dle("unique_id")
+        return self._handle("unique_id")
 
     @property
     def state(self):
         """Return the state of the entity."""
-        return self._op.dle("state")
+        return self._handle("state")
 
     @property
     def available(self):
         """Return True if entity is available."""
-        return self._op.dle("available")
+        return self._handle("available")
 
     @property
     def device_info(self):
         """Info how it links to a device."""
-        return self._op.dle("device_info")
+        return self._handle("device_info")
 
     @property
     def device_class(self):
         """Info how device should be classified."""
-        return self._op.dle("device_class")
+        return self._handle("device_class")
 
     @property
     def unit_of_measurement(self):
         """Info on the units the entity state is in."""
-        return self._op.dle("unit_of_measurement")
+        return self._handle("unit_of_measurement")
 
     @property
     def capability_attributes(self):
         """Info about capabilities."""
-        return self._op.dle("capability_attributes")
+        return self._handle("capability_attributes")
 
     @property
     def supported_features(self):
         """Info about supported features."""
-        return self._op.dle("supported_features")
+        return self._handle("supported_features")
 
     @property
     def entity_registry_enabled_default(self):
         """Return if the entity should be enabled when first added to the entity registry."""
-        return self._op.dle("entity_registry_enabled_default")
+        return self._handle("entity_registry_enabled_default")
 
-    def _op.dle(self, attr):
+    def _handle(self, attr):
         """Return attribute value."""
         if attr in self._values:
             return self._values[attr]
@@ -1030,15 +1032,15 @@ def mock_storage(data=None):
         data.pop(store.key, None)
 
     with patch(
-        "openpeerpowerr.helpers.storage.Store._async_load",
+        "openpeerpower.helpers.storage.Store._async_load",
         side_effect=mock_async_load,
         autospec=True,
     ), patch(
-        "openpeerpowerr.helpers.storage.Store._write_data",
+        "openpeerpower.helpers.storage.Store._write_data",
         side_effect=mock_write_data,
         autospec=True,
     ), patch(
-        "openpeerpowerr.helpers.storage.Store.async_remove",
+        "openpeerpower.helpers.storage.Store.async_remove",
         side_effect=mock_remove,
         autospec=True,
     ):
@@ -1052,12 +1054,12 @@ async def flush_store(store):
 
     store._async_cleanup_final_write_listener()
     store._async_cleanup_delay_listener()
-    await store._async_op.dle_write_data()
+    await store._async_handle_write_data()
 
 
 async def get_system_health_info.opp, domain):
     """Get system health info."""
-    return await opp..data["system_health"][domain].info_callback.opp)
+    return await.opp.data["system_health"][domain].info_callback.opp)
 
 
 def mock_integration.opp, module):
@@ -1126,11 +1128,11 @@ def async_mock_signal.opp, signal):
     calls = []
 
     @op.callback
-    def mock_signal_op.dler(*args):
+    def mock_signal_handler(*args):
         """Mock service call."""
         calls.append(args)
 
-   .opp.helpers.dispatcher.async_dispatcher_connect(signal, mock_signal_op.dler)
+   .opp.helpers.dispatcher.async_dispatcher_connect(signal, mock_signal_handler)
 
     return calls
 
@@ -1139,8 +1141,8 @@ class hashdict(dict):
     """
     hashable dict implementation, suitable for use as a key into other dicts.
 
-        >>> h1 = op.hdict({"apples": 1, "bananas":2})
-        >>> h2 = op.hdict({"bananas": 3, "mangoes": 5})
+        >>> h1 = hashdict({"apples": 1, "bananas":2})
+        >>> h2 = hashdict({"bananas": 3, "mangoes": 5})
         >>> h1+h2
         hashdict(apples=1, bananas=3, mangoes=5)
         >>> d1 = {}
@@ -1150,7 +1152,7 @@ class hashdict(dict):
         >>> d1[h2]
         Traceback (most recent call last):
         ...
-        KeyError: op.hdict(bananas=3, mangoes=5)
+        KeyError: hashdict(bananas=3, mangoes=5)
 
     based on answers from
        http://stackoverflow.com/questions/1151658/python-hashable-dicts
@@ -1163,7 +1165,7 @@ class hashdict(dict):
     def __repr__(self):  # noqa: D105 no docstring
         return ", ".join(f"{i[0]!s}={i[1]!r}" for i in self.__key())
 
-    def __op.h__(self):  # noqa: D105 no docstring
+    def __hash__(self):  # noqa: D105 no docstring
         return hash(self.__key())
 
     def __setitem__(self, key, value):  # noqa: D105 no docstring
@@ -1191,7 +1193,7 @@ class hashdict(dict):
     # __add__ is ok because it creates a new object
     # while the new object is under construction, it's ok to mutate it
     def __add__(self, right):  # noqa: D105 no docstring
-        result = op.hdict(self)
+        result = hashdict(self)
         dict.update(result, right)
         return result
 

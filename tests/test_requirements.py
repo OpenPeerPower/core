@@ -5,7 +5,7 @@ from unittest.mock import call, patch
 import pytest
 
 from openpeerpower import loader, setup
-from openpeerpowerr.requirements import (
+from openpeerpower.requirements import (
     CONSTRAINT_FILE,
     RequirementsNotFound,
     async_get_integration_with_requirements,
@@ -25,9 +25,9 @@ def env_without_wheel_links():
 async def test_requirement_installed_in_venv.opp):
     """Test requirement installed in virtual environment."""
     with patch("os.path.dirname", return_value="ha_package_path"), patch(
-        "openpeerpowerr.util.package.is_virtual_env", return_value=True
-    ), patch("openpeerpowerr.util.package.is_docker_env", return_value=False), patch(
-        "openpeerpowerr.util.package.install_package", return_value=True
+        "openpeerpower.util.package.is_virtual_env", return_value=True
+    ), patch("openpeerpower.util.package.is_docker_env", return_value=False), patch(
+        "openpeerpower.util.package.install_package", return_value=True
     ) as mock_install, patch.dict(
         os.environ, env_without_wheel_links(), clear=True
     ):
@@ -45,9 +45,9 @@ async def test_requirement_installed_in_venv.opp):
 async def test_requirement_installed_in_deps.opp):
     """Test requirement installed in deps directory."""
     with patch("os.path.dirname", return_value="ha_package_path"), patch(
-        "openpeerpowerr.util.package.is_virtual_env", return_value=False
-    ), patch("openpeerpowerr.util.package.is_docker_env", return_value=False), patch(
-        "openpeerpowerr.util.package.install_package", return_value=True
+        "openpeerpower.util.package.is_virtual_env", return_value=False
+    ), patch("openpeerpower.util.package.is_docker_env", return_value=False), patch(
+        "openpeerpower.util.package.install_package", return_value=True
     ) as mock_install, patch.dict(
         os.environ, env_without_wheel_links(), clear=True
     ):
@@ -66,14 +66,14 @@ async def test_requirement_installed_in_deps.opp):
 async def test_install_existing_package.opp):
     """Test an install attempt on an existing package."""
     with patch(
-        "openpeerpowerr.util.package.install_package", return_value=True
+        "openpeerpower.util.package.install_package", return_value=True
     ) as mock_inst:
         await async_process_requirements.opp, "test_component", ["hello==1.0.0"])
 
     assert len(mock_inst.mock_calls) == 1
 
-    with patch("openpeerpowerr.util.package.is_installed", return_value=True), patch(
-        "openpeerpowerr.util.package.install_package"
+    with patch("openpeerpower.util.package.is_installed", return_value=True), patch(
+        "openpeerpower.util.package.install_package"
     ) as mock_inst:
         await async_process_requirements.opp, "test_component", ["hello==1.0.0"])
 
@@ -83,7 +83,7 @@ async def test_install_existing_package.opp):
 async def test_install_missing_package.opp):
     """Test an install attempt on an existing package."""
     with patch(
-        "openpeerpowerr.util.package.install_package", return_value=False
+        "openpeerpower.util.package.install_package", return_value=False
     ) as mock_inst:
         with pytest.raises(RequirementsNotFound):
             await async_process_requirements.opp, "test_component", ["hello==1.0.0"])
@@ -114,9 +114,9 @@ async def test_get_integration_with_requirements.opp):
     )
 
     with patch(
-        "openpeerpowerr.util.package.is_installed", return_value=False
+        "openpeerpower.util.package.is_installed", return_value=False
     ) as mock_is_installed, patch(
-        "openpeerpowerr.util.package.install_package", return_value=True
+        "openpeerpower.util.package.install_package", return_value=True
     ) as mock_inst:
 
         integration = await async_get_integration_with_requirements(
@@ -145,9 +145,9 @@ async def test_install_with_wheels_index.opp):
    .opp.config.skip_pip = False
     mock_integration.opp, MockModule("comp", requirements=["hello==1.0.0"]))
 
-    with patch("openpeerpowerr.util.package.is_installed", return_value=False), patch(
-        "openpeerpowerr.util.package.is_docker_env", return_value=True
-    ), patch("openpeerpowerr.util.package.install_package") as mock_inst, patch.dict(
+    with patch("openpeerpower.util.package.is_installed", return_value=False), patch(
+        "openpeerpower.util.package.is_docker_env", return_value=True
+    ), patch("openpeerpower.util.package.install_package") as mock_inst, patch.dict(
         os.environ, {"WHEELS_LINKS": "https://wheels.opp.io/test"}
     ), patch(
         "os.path.dirname"
@@ -169,9 +169,9 @@ async def test_install_on_docker.opp):
    .opp.config.skip_pip = False
     mock_integration.opp, MockModule("comp", requirements=["hello==1.0.0"]))
 
-    with patch("openpeerpowerr.util.package.is_installed", return_value=False), patch(
-        "openpeerpowerr.util.package.is_docker_env", return_value=True
-    ), patch("openpeerpowerr.util.package.install_package") as mock_inst, patch(
+    with patch("openpeerpower.util.package.is_installed", return_value=False), patch(
+        "openpeerpower.util.package.is_docker_env", return_value=True
+    ), patch("openpeerpower.util.package.install_package") as mock_inst, patch(
         "os.path.dirname"
     ) as mock_dir, patch.dict(
         os.environ, env_without_wheel_links(), clear=True
@@ -196,7 +196,7 @@ async def test_discovery_requirements_mqtt.opp):
        .opp, MockModule("mqtt_comp", partial_manifest={"mqtt": ["foo/discovery"]})
     )
     with patch(
-        "openpeerpowerr.requirements.async_process_requirements",
+        "openpeerpower.requirements.async_process_requirements",
     ) as mock_process:
         await async_get_integration_with_requirements.opp, "mqtt_comp")
 
@@ -213,7 +213,7 @@ async def test_discovery_requirements_ssdp.opp):
        .opp, MockModule("ssdp_comp", partial_manifest={"ssdp": [{"st": "roku:ecp"}]})
     )
     with patch(
-        "openpeerpowerr.requirements.async_process_requirements",
+        "openpeerpower.requirements.async_process_requirements",
     ) as mock_process:
         await async_get_integration_with_requirements.opp, "ssdp_comp")
 
@@ -238,7 +238,7 @@ async def test_discovery_requirements_zeroconf.opp, partial_manifest):
     )
 
     with patch(
-        "openpeerpowerr.requirements.async_process_requirements",
+        "openpeerpower.requirements.async_process_requirements",
     ) as mock_process:
         await async_get_integration_with_requirements.opp, "comp")
 
@@ -261,7 +261,7 @@ async def test_discovery_requirements_dhcp.opp):
         ),
     )
     with patch(
-        "openpeerpowerr.requirements.async_process_requirements",
+        "openpeerpower.requirements.async_process_requirements",
     ) as mock_process:
         await async_get_integration_with_requirements.opp, "comp")
 

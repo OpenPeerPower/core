@@ -13,9 +13,9 @@ import pytest
 import requests_mock as _requests_mock
 
 from openpeerpower import core as ha, loader, runner, util
-from openpeerpowerr.auth.const import GROUP_ID_ADMIN, GROUP_ID_READ_ONLY
-from openpeerpowerr.auth.models import Credentials
-from openpeerpowerr.auth.providers import openpeerpowerr, legacy_api_password
+from openpeerpower.auth.const import GROUP_ID_ADMIN, GROUP_ID_READ_ONLY
+from openpeerpower.auth.models import Credentials
+from openpeerpower.auth.providers import openpeerpower, legacy_api_password
 from openpeerpower.components import mqtt
 from openpeerpower.components.websocket_api.auth import (
     TYPE_AUTH,
@@ -24,10 +24,10 @@ from openpeerpower.components.websocket_api.auth import (
 )
 from openpeerpower.components.websocket_api.http import URL
 from openpeerpower.const import ATTR_NOW, EVENT_TIME_CHANGED
-from openpeerpowerr.exceptions import ServiceNotFound
-from openpeerpowerr.helpers import config_entry_oauth2_flow, event
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import location
+from openpeerpower.exceptions import ServiceNotFound
+from openpeerpower.helpers import config_entry_oauth2_flow, event
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import location
 
 from tests.ignore_uncaught_exceptions import IGNORE_UNCAUGHT_EXCEPTIONS
 
@@ -38,7 +38,7 @@ from tests.common import (  # noqa: E402, isort:skip
     INSTANCES,
     MockUser,
     async_fire_mqtt_message,
-    async_test_home_assistant,
+    async_test_open_peer_power,
     mock_storage as mock_storage,
 )
 from tests.test_util.aiohttp import mock_aiohttp_client  # noqa: E402, isort:skip
@@ -134,11 +134,11 @@ def load_registries():
 def.opp(loop, load_registries,.opp_storage, request):
     """Fixture to provide a test instance of Open Peer Power."""
 
-    def exc_op.dle(loop, context):
+    def exc_handle(loop, context):
         """Handle exceptions by rethrowing them, which will fail the test."""
         # Most of these contexts will contain an exception, but not all.
         # The docs note the key as "optional"
-        # See https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.call_exception_op.dler
+        # See https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.call_exception_handler
         if "exception" in context:
             exceptions.append(context["exception"])
         else:
@@ -148,12 +148,12 @@ def.opp(loop, load_registries,.opp_storage, request):
                     % context["message"]
                 )
             )
-        orig_exception_op.dler(loop, context)
+        orig_exception_handler(loop, context)
 
     exceptions = []
-    opp = loop.run_until_complete(async_test_home_assistant(loop, load_registries))
-    orig_exception_op.dler = loop.get_exception_op.dler()
-    loop.set_exception_op.dler(exc_op.dle)
+   .opp = loop.run_until_complete(async_test_open_peer_power(loop, load_registries))
+    orig_exception_handler = loop.get_exception_handler()
+    loop.set_exception_handler(exc_handle)
 
     yield.opp
 
@@ -176,12 +176,12 @@ async def stop_opp():
 
     created = []
 
-    def mock_opp():
-       .opp_inst = orig_opp()
+    def mock.opp():
+       .opp_inst = orig.opp()
         created.append.opp_inst)
         return.opp_inst
 
-    with patch("openpeerpowerr.core.OpenPeerPower", mock_opp):
+    with patch("openpeerpower.core.OpenPeerPower", mock.opp):
         yield
 
     for.opp_inst in created:
@@ -189,8 +189,8 @@ async def stop_opp():
             continue
 
         with patch.object.opp_inst.loop, "stop"):
-            await opp._inst.async_block_till_done()
-            await opp._inst.async_stop(force=True)
+            await.opp_inst.async_block_till_done()
+            await.opp_inst.async_stop(force=True)
 
 
 @pytest.fixture
@@ -231,7 +231,7 @@ async def.opp_admin_credential.opp, local_auth):
     """Provide credentials for admin user."""
     return Credentials(
         id="mock-credential-id",
-        auth_provider_type="openpeerpowerr",
+        auth_provider_type="openpeerpower",
         auth_provider_id=None,
         data={"username": "admin"},
         is_new=False,
@@ -241,7 +241,7 @@ async def.opp_admin_credential.opp, local_auth):
 @pytest.fixture
 async def.opp_access_token.opp,.opp_admin_user,.opp_admin_credential):
     """Return an access token to access Open Peer Power."""
-    await opp..auth.async_link_user.opp_admin_user,.opp_admin_credential)
+    await opp.auth.async_link_user.opp_admin_user,.opp_admin_credential)
 
     refresh_token = await opp..auth.async_create_refresh_token(
        .opp_admin_user, CLIENT_ID, credential.opp_admin_credential
@@ -278,7 +278,7 @@ def.opp_read_only_access_token.opp,.opp_read_only_user, local_auth):
     """Return a Open Peer Power read only user."""
     credential = Credentials(
         id="mock-readonly-credential-id",
-        auth_provider_type="openpeerpowerr",
+        auth_provider_type="openpeerpower",
         auth_provider_id=None,
         data={"username": "readonly"},
         is_new=False,
@@ -308,8 +308,8 @@ def legacy_auth.opp):
 @pytest.fixture
 def local_auth.opp):
     """Load local auth provider."""
-    prv = openpeerpowerr.OppAuthProvider(
-       .opp,.opp.auth._store, {"type": "openpeerpowerr"}
+    prv = openpeerpower.OppAuthProvider(
+       .opp,.opp.auth._store, {"type": "openpeerpower"}
     )
    .opp.loop.run_until_complete(prv.async_initialize())
    .opp.auth._providers[(prv.type, prv.id)] = prv
@@ -396,7 +396,7 @@ def fail_on_log_exception(request, monkeypatch):
     def log_exception(format_err, *args):
         raise
 
-    monkeypatch.setattr("openpeerpowerr.util.logging.log_exception", log_exception)
+    monkeypatch.setattr("openpeerpower.util.logging.log_exception", log_exception)
 
 
 @pytest.fixture
@@ -456,7 +456,7 @@ async def mqtt_mock.opp, mqtt_client_mock, mqtt_config):
 
     result = await async_setup_component.opp, mqtt.DOMAIN, {mqtt.DOMAIN: mqtt_config})
     assert result
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     # Workaround: asynctest==0.13 fails on @functools.lru_cache
     spec = dir.opp.data["mqtt"])
@@ -582,10 +582,10 @@ def legacy_patchable_time():
         return.opp.bus.async_listen(EVENT_TIME_CHANGED, pattern_time_change_listener)
 
     with patch(
-        "openpeerpowerr.helpers.event.async_track_point_in_utc_time",
+        "openpeerpower.helpers.event.async_track_point_in_utc_time",
         async_track_point_in_utc_time,
     ), patch(
-        "openpeerpowerr.helpers.event.async_track_utc_time_change",
+        "openpeerpower.helpers.event.async_track_utc_time_change",
         async_track_utc_time_change,
     ):
         yield

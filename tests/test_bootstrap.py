@@ -8,8 +8,8 @@ import pytest
 
 from openpeerpower import bootstrap, core, runner
 import openpeerpower.config as config_util
-from openpeerpowerr.exceptions import OpenPeerPowerError
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.exceptions import OpenPeerPowerError
+import openpeerpower.util.dt as dt_util
 
 from tests.common import (
     MockModule,
@@ -43,12 +43,12 @@ def mock_http_start_stop():
         yield
 
 
-@patch("openpeerpowerr.bootstrap.async_enable_logging", Mock())
-async def test_home_assistant_core_config_validation.opp):
+@patch("openpeerpower.bootstrap.async_enable_logging", Mock())
+async def test_open_peer_power_core_config_validation.opp):
     """Test if we pass in wrong information for HA conf."""
     # Extensive HA conf validation testing is done
     result = await bootstrap.async_from_config_dict(
-        {"openpeerpowerr": {"latitude": "some string"}},.opp
+        {"openpeerpower": {"latitude": "some string"}},.opp
     )
     assert result is None
 
@@ -56,10 +56,10 @@ async def test_home_assistant_core_config_validation.opp):
 async def test_async_enable_logging.opp):
     """Test to ensure logging is migrated to the queue handlers."""
     with patch("logging.getLogger"), patch(
-        "openpeerpowerr.bootstrap.async_activate_log_queue_op.dler"
-    ) as mock_async_activate_log_queue_op.dler:
+        "openpeerpower.bootstrap.async_activate_log_queue_handler"
+    ) as mock_async_activate_log_queue_handler:
         bootstrap.async_enable_logging.opp)
-        mock_async_activate_log_queue_op.dler.assert_called_once()
+        mock_async_activate_log_queue_handler.assert_called_once()
 
 
 async def test_load_oppio.opp):
@@ -82,7 +82,7 @@ async def test_empty_setup.opp):
 async def test_core_failure_loads_safe_mode.opp, caplog):
     """Test failing core setup aborts further setup."""
     with patch(
-        "openpeerpower.components.openpeerpowerr.async_setup",
+        "openpeerpower.components.openpeerpower.async_setup",
         return_value=mock_coro(False),
     ):
         await bootstrap.async_from_config_dict({"group": {}},.opp)
@@ -96,7 +96,7 @@ async def test_core_failure_loads_safe_mode.opp, caplog):
 async def test_setting_up_config.opp):
     """Test we set up domains in config."""
     await bootstrap._async_set_up_integrations(
-       .opp, {"group hello": {}, "openpeerpowerr": {}}
+       .opp, {"group hello": {}, "openpeerpower": {}}
     )
 
     assert "group" in.opp.config.components
@@ -321,7 +321,7 @@ async def test_setup_after_deps_not_present.opp):
 def mock_is_virtual_env():
     """Mock enable logging."""
     with patch(
-        "openpeerpowerr.bootstrap.is_virtual_env", return_value=False
+        "openpeerpower.bootstrap.is_virtual_env", return_value=False
     ) as is_virtual_env:
         yield is_virtual_env
 
@@ -329,7 +329,7 @@ def mock_is_virtual_env():
 @pytest.fixture
 def mock_enable_logging():
     """Mock enable logging."""
-    with patch("openpeerpowerr.bootstrap.async_enable_logging") as enable_logging:
+    with patch("openpeerpower.bootstrap.async_enable_logging") as enable_logging:
         yield enable_logging
 
 
@@ -337,18 +337,18 @@ def mock_enable_logging():
 def mock_mount_local_lib_path():
     """Mock enable logging."""
     with patch(
-        "openpeerpowerr.bootstrap.async_mount_local_lib_path"
+        "openpeerpower.bootstrap.async_mount_local_lib_path"
     ) as mount_local_lib_path:
         yield mount_local_lib_path
 
 
 @pytest.fixture
-def mock_process_op.config_upgrade():
+def mock_process_op_config_upgrade():
     """Mock enable logging."""
     with patch(
-        "openpeerpower.config.process_op.config_upgrade"
-    ) as process_op.config_upgrade:
-        yield process_op.config_upgrade
+        "openpeerpower.config.process_op_config_upgrade"
+    ) as process_op_config_upgrade:
+        yield process_op_config_upgrade
 
 
 @pytest.fixture
@@ -365,7 +365,7 @@ async def test_setup_opp(
     mock_is_virtual_env,
     mock_mount_local_lib_path,
     mock_ensure_config_exists,
-    mock_process_op.config_upgrade,
+    mock_process_op_config_upgrade,
     caplog,
     loop,
 ):
@@ -406,7 +406,7 @@ async def test_setup_opp(
     )
     assert len(mock_mount_local_lib_path.mock_calls) == 1
     assert len(mock_ensure_config_exists.mock_calls) == 1
-    assert len(mock_process_op.config_upgrade.mock_calls) == 1
+    assert len(mock_process_op_config_upgrade.mock_calls) == 1
 
 
 async def test_setup_opp_takes_longer_than_log_slow_startup(
@@ -414,7 +414,7 @@ async def test_setup_opp_takes_longer_than_log_slow_startup(
     mock_is_virtual_env,
     mock_mount_local_lib_path,
     mock_ensure_config_exists,
-    mock_process_op.config_upgrade,
+    mock_process_op_config_upgrade,
     caplog,
     loop,
 ):
@@ -455,7 +455,7 @@ async def test_setup_opp_invalid_yaml(
     mock_is_virtual_env,
     mock_mount_local_lib_path,
     mock_ensure_config_exists,
-    mock_process_op.config_upgrade,
+    mock_process_op_config_upgrade,
     loop,
 ):
     """Test it works."""
@@ -483,7 +483,7 @@ async def test_setup_opp_config_dir_nonexistent(
     mock_is_virtual_env,
     mock_mount_local_lib_path,
     mock_ensure_config_exists,
-    mock_process_op.config_upgrade,
+    mock_process_op_config_upgrade,
     loop,
 ):
     """Test it works."""
@@ -510,7 +510,7 @@ async def test_setup_opp_safe_mode(
     mock_is_virtual_env,
     mock_mount_local_lib_path,
     mock_ensure_config_exists,
-    mock_process_op.config_upgrade,
+    mock_process_op_config_upgrade,
     loop,
 ):
     """Test it works."""
@@ -543,13 +543,13 @@ async def test_setup_opp_invalid_core_config(
     mock_is_virtual_env,
     mock_mount_local_lib_path,
     mock_ensure_config_exists,
-    mock_process_op.config_upgrade,
+    mock_process_op_config_upgrade,
     loop,
 ):
     """Test it works."""
     with patch(
         "openpeerpower.config.async_opp_config_yaml",
-        return_value={"openpeerpowerr": {"non-existing": 1}},
+        return_value={"openpeerpower": {"non-existing": 1}},
     ):
         opp = await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
@@ -571,7 +571,7 @@ async def test_setup_safe_mode_if_no_frontend(
     mock_is_virtual_env,
     mock_mount_local_lib_path,
     mock_ensure_config_exists,
-    mock_process_op.config_upgrade,
+    mock_process_op_config_upgrade,
     loop,
 ):
     """Test we setup safe mode if frontend didn't load."""
@@ -581,9 +581,9 @@ async def test_setup_safe_mode_if_no_frontend(
     log_no_color = Mock()
 
     with patch(
-        "openpeerpower.config.async_opp_config_yaml",
+        "openpeerpower.config.async.opp_config_yaml",
         return_value={
-            "openpeerpowerr": {
+            "openpeerpower": {
                 "internal_url": "http://192.168.1.100:8123",
                 "external_url": "https://abcdef.ui.nabu.casa",
             },

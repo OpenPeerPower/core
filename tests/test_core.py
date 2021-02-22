@@ -32,14 +32,14 @@ from openpeerpower.const import (
     MATCH_ALL,
     __version__,
 )
-import openpeerpowerr.core as ha
-from openpeerpowerr.exceptions import (
+import openpeerpower.core as ha
+from openpeerpower.exceptions import (
     InvalidEntityFormatError,
     InvalidStateError,
     ServiceNotFound,
 )
-import openpeerpowerr.util.dt as dt_util
-from openpeerpowerr.util.unit_system import METRIC_SYSTEM
+import openpeerpower.util.dt as dt_util
+from openpeerpower.util.unit_system import METRIC_SYSTEM
 
 from tests.common import async_capture_events, async_mock_service
 
@@ -48,7 +48,7 @@ PST = pytz.timezone("America/Los_Angeles")
 
 def test_split_entity_id():
     """Test split_entity_id."""
-    assert op.split_entity_id("domain.object_id") == ["domain", "object_id"]
+    assert op_split_entity_id("domain.object_id") == ["domain", "object_id"]
 
 
 def test_async_add_opp_job_schedule_callback():
@@ -161,7 +161,7 @@ async def test_stage_shutdown.opp):
     test_close = async_capture_events.opp, EVENT_OPENPEERPOWER_CLOSE)
     test_all = async_capture_events.opp, MATCH_ALL)
 
-    await opp..async_stop()
+    await opp.async_stop()
 
     assert len(test_stop) == 1
     assert len(test_close) == 1
@@ -184,10 +184,10 @@ async def test_shutdown_calls_block_till_done_after_shutdown_run_callback_thread
         stop_calls.append(("shutdown_run_callback_threadsafe", loop))
 
     with patch.object.opp, "async_block_till_done", _record_block_till_done), patch(
-        "openpeerpowerr.core.shutdown_run_callback_threadsafe",
+        "openpeerpower.core.shutdown_run_callback_threadsafe",
         _record_shutdown_run_callback_threadsafe,
     ):
-        await opp..async_stop()
+        await opp.async_stop()
 
     assert stop_calls[-2] == ("shutdown_run_callback_threadsafe",.opp.loop)
     assert stop_calls[-1] == "async_block_till_done"
@@ -229,7 +229,7 @@ async def test_async_add_job_pending_tasks_coro.opp):
     await wait_finish_callback()
 
     assert len.opp._pending_tasks) == 2
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(call_count) == 2
 
 
@@ -252,7 +252,7 @@ async def test_async_add_job_pending_tasks_executor.opp):
     await wait_finish_callback()
 
     assert len.opp._pending_tasks) == 2
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(call_count) == 2
 
 
@@ -275,7 +275,7 @@ async def test_async_add_job_pending_tasks_callback.opp):
 
     await wait_finish_callback()
 
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp._pending_tasks) == 0
     assert len(call_count) == 2
@@ -396,12 +396,12 @@ async def test_eventbus_filtered_listener.opp):
     unsub = opp.bus.async_listen("test", listener, event_filter=filter)
 
    .opp.bus.async_fire("test", {"filtered": True})
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 0
 
    .opp.bus.async_fire("test", {"filtered": False})
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -420,14 +420,14 @@ async def test_eventbus_unsubscribe_listener.opp):
     unsub = opp.bus.async_listen("test", listener)
 
    .opp.bus.async_fire("test")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
 
     unsub()
 
    .opp.bus.async_fire("event")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -437,16 +437,16 @@ async def test_eventbus_listen_once_event_with_callback.opp):
     runs = []
 
     @op.callback
-    def event_op.dler(event):
+    def event_handler(event):
         runs.append(event)
 
-   .opp.bus.async_listen_once("test_event", event_op.dler)
+   .opp.bus.async_listen_once("test_event", event_handler)
 
    .opp.bus.async_fire("test_event")
     # Second time it should not increase runs
    .opp.bus.async_fire("test_event")
 
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(runs) == 1
 
 
@@ -454,16 +454,16 @@ async def test_eventbus_listen_once_event_with_coroutine.opp):
     """Test listen_once_event method."""
     runs = []
 
-    async def event_op.dler(event):
+    async def event_handler(event):
         runs.append(event)
 
-   .opp.bus.async_listen_once("test_event", event_op.dler)
+   .opp.bus.async_listen_once("test_event", event_handler)
 
    .opp.bus.async_fire("test_event")
     # Second time it should not increase runs
    .opp.bus.async_fire("test_event")
 
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(runs) == 1
 
 
@@ -471,16 +471,16 @@ async def test_eventbus_listen_once_event_with_thread.opp):
     """Test listen_once_event method."""
     runs = []
 
-    def event_op.dler(event):
+    def event_handler(event):
         runs.append(event)
 
-   .opp.bus.async_listen_once("test_event", event_op.dler)
+   .opp.bus.async_listen_once("test_event", event_handler)
 
    .opp.bus.async_fire("test_event")
     # Second time it should not increase runs
    .opp.bus.async_fire("test_event")
 
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(runs) == 1
 
 
@@ -493,7 +493,7 @@ async def test_eventbus_thread_event_listener.opp):
 
    .opp.bus.async_listen("test_thread", thread_listener)
    .opp.bus.async_fire("test_thread")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(thread_calls) == 1
 
 
@@ -507,7 +507,7 @@ async def test_eventbus_callback_event_listener.opp):
 
    .opp.bus.async_listen("test_callback", callback_listener)
    .opp.bus.async_fire("test_callback")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(callback_calls) == 1
 
 
@@ -520,7 +520,7 @@ async def test_eventbus_coroutine_event_listener.opp):
 
    .opp.bus.async_listen("test_coroutine", coroutine_listener)
    .opp.bus.async_fire("test_coroutine")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(coroutine_calls) == 1
 
 
@@ -634,7 +634,7 @@ async def test_statemachine_remove.opp):
 
     assert "light.bowl" in.opp.states.async_entity_ids()
     assert.opp.states.async_remove("light.bowl")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "light.bowl" not in.opp.states.async_entity_ids()
     assert len(events) == 1
@@ -645,7 +645,7 @@ async def test_statemachine_remove.opp):
 
     # If it does not exist, we should get False
     assert not.opp.states.async_remove("light.Bowl")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
 
 
@@ -654,7 +654,7 @@ async def test_statemachine_case_insensitivty.opp):
     events = async_capture_events.opp, EVENT_STATE_CHANGED)
 
    .opp.states.async_set("light.BOWL", "off")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.is_state("light.bowl", "off")
     assert len(events) == 1
@@ -667,9 +667,9 @@ async def test_statemachine_last_changed_not_updated_on_same_state.opp):
 
     future = dt_util.utcnow() + timedelta(hours=10)
 
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=future):
+    with patch("openpeerpower.util.dt.utcnow", return_value=future):
        .opp.states.async_set("light.Bowl", "on", {"attr": "triggers_change"})
-        await opp..async_block_till_done()
+        await opp.async_block_till_done()
 
     state2 = opp.states.get("light.Bowl")
     assert state2 is not None
@@ -682,23 +682,23 @@ async def test_statemachine_force_update.opp):
     events = async_capture_events.opp, EVENT_STATE_CHANGED)
 
    .opp.states.async_set("light.bowl", "on")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 0
 
    .opp.states.async_set("light.bowl", "on", None, True)
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
 
 
 def test_service_call_repr():
     """Test ServiceCall repr."""
-    call = op.ServiceCall("openpeerpowerr", "start")
-    assert str(call) == f"<ServiceCall openpeerpowerr.start (c:{call.context.id})>"
+    call = op.ServiceCall("openpeerpower", "start")
+    assert str(call) == f"<ServiceCall openpeerpower.start (c:{call.context.id})>"
 
-    call2 = op.ServiceCall("openpeerpowerr", "start", {"fast": "yes"})
+    call2 = op.ServiceCall("openpeerpower", "start", {"fast": "yes"})
     assert (
         str(call2)
-        == f"<ServiceCall openpeerpowerr.start (c:{call2.context.id}): fast=yes>"
+        == f"<ServiceCall openpeerpower.start (c:{call2.context.id}): fast=yes>"
     )
 
 
@@ -715,7 +715,7 @@ async def test_serviceregistry_call_with_blocking_done_in_time.opp):
     """Test call with blocking."""
     registered_events = async_capture_events.opp, EVENT_SERVICE_REGISTERED)
     calls = async_mock_service.opp, "test_domain", "register_calls")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(registered_events) == 1
     assert registered_events[0].data["domain"] == "test_domain"
@@ -737,11 +737,11 @@ async def test_serviceregistry_async_service.opp):
     """Test registering and calling an async service."""
     calls = []
 
-    async def service_op.dler(call):
+    async def service_handler(call):
         """Service handler coroutine."""
         calls.append(call)
 
-   .opp.services.async_register("test_domain", "register_calls", service_op.dler)
+   .opp.services.async_register("test_domain", "register_calls", service_handler)
 
     assert await opp..services.async_call(
         "test_domain", "REGISTER_CALLS", blocking=True
@@ -753,14 +753,14 @@ async def test_serviceregistry_async_service_partial.opp):
     """Test registering and calling an wrapped async service."""
     calls = []
 
-    async def service_op.dler(call):
+    async def service_handler(call):
         """Service handler coroutine."""
         calls.append(call)
 
    .opp.services.async_register(
-        "test_domain", "register_calls", functools.partial(service_op.dler)
+        "test_domain", "register_calls", functools.partial(service_handler)
     )
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await opp..services.async_call(
         "test_domain", "REGISTER_CALLS", blocking=True
@@ -773,11 +773,11 @@ async def test_serviceregistry_callback_service.opp):
     calls = []
 
     @op.callback
-    def service_op.dler(call):
+    def service_handler(call):
         """Service handler coroutine."""
         calls.append(call)
 
-   .opp.services.async_register("test_domain", "register_calls", service_op.dler)
+   .opp.services.async_register("test_domain", "register_calls", service_handler)
 
     assert await opp..services.async_call(
         "test_domain", "REGISTER_CALLS", blocking=True
@@ -793,7 +793,7 @@ async def test_serviceregistry_remove_service.opp):
     assert.opp.services.has_service("test_Domain", "test_Service")
 
    .opp.services.async_remove("test_Domain", "test_Service")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not.opp.services.has_service("test_Domain", "test_Service")
     assert len(calls_remove) == 1
@@ -806,7 +806,7 @@ async def test_serviceregistry_service_that_not_exists.opp):
     calls_remove = async_capture_events.opp, EVENT_SERVICE_REMOVED)
     assert not.opp.services.has_service("test_xxx", "test_yyy")
    .opp.services.async_remove("test_xxx", "test_yyy")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls_remove) == 0
 
     with pytest.raises(ServiceNotFound):
@@ -816,11 +816,11 @@ async def test_serviceregistry_service_that_not_exists.opp):
 async def test_serviceregistry_async_service_raise_exception.opp):
     """Test registering and calling an async service raise exception."""
 
-    async def service_op.dler(_):
+    async def service_handler(_):
         """Service handler coroutine."""
         raise ValueError
 
-   .opp.services.async_register("test_domain", "register_calls", service_op.dler)
+   .opp.services.async_register("test_domain", "register_calls", service_handler)
 
     with pytest.raises(ValueError):
         assert await opp..services.async_call(
@@ -829,18 +829,18 @@ async def test_serviceregistry_async_service_raise_exception.opp):
 
     # Non-blocking service call never throw exception
     await opp..services.async_call("test_domain", "REGISTER_CALLS", blocking=False)
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_serviceregistry_callback_service_raise_exception.opp):
     """Test registering and calling an callback service raise exception."""
 
     @op.callback
-    def service_op.dler(_):
+    def service_handler(_):
         """Service handler coroutine."""
         raise ValueError
 
-   .opp.services.async_register("test_domain", "register_calls", service_op.dler)
+   .opp.services.async_register("test_domain", "register_calls", service_handler)
 
     with pytest.raises(ValueError):
         assert await opp..services.async_call(
@@ -848,8 +848,8 @@ async def test_serviceregistry_callback_service_raise_exception.opp):
         )
 
     # Non-blocking service call never throw exception
-    await opp..services.async_call("test_domain", "REGISTER_CALLS", blocking=False)
-    await opp..async_block_till_done()
+    await opp.services.async_call("test_domain", "REGISTER_CALLS", blocking=False)
+    await opp.async_block_till_done()
 
 
 def test_config_defaults():
@@ -992,8 +992,8 @@ async def test_event_on_update.opp):
 
     assert.opp.config.latitude != 12
 
-    await opp..config.async_update(latitude=12)
-    await opp..async_block_till_done()
+    await opp.config.async_update(latitude=12)
+    await opp.async_block_till_done()
 
     assert.opp.config.latitude == 12
     assert len(events) == 1
@@ -1003,10 +1003,10 @@ async def test_event_on_update.opp):
 async def test_bad_timezone_raises_value_error.opp):
     """Test bad timezone raises ValueError."""
     with pytest.raises(ValueError):
-        await opp..config.async_update(time_zone="not_a_timezone")
+        await opp.config.async_update(time_zone="not_a_timezone")
 
 
-@patch("openpeerpowerr.core.monotonic")
+@patch("openpeerpower.core.monotonic")
 def test_create_timer(mock_monotonic, loop):
     """Test create timer."""
     opp = MagicMock()
@@ -1020,7 +1020,7 @@ def test_create_timer(mock_monotonic, loop):
     mock_monotonic.side_effect = 10.2, 10.8, 11.3
 
     with patch.object(ha, "callback", mock_callback), patch(
-        "openpeerpowerr.core.dt_util.utcnow",
+        "openpeerpower.core.dt_util.utcnow",
         return_value=datetime(2018, 12, 31, 3, 4, 5, 333333),
     ):
         op._async_create_timer.opp)
@@ -1035,7 +1035,7 @@ def test_create_timer(mock_monotonic, loop):
     assert abs(target - 10.866667) < 0.001
 
     with patch(
-        "openpeerpowerr.core.dt_util.utcnow",
+        "openpeerpower.core.dt_util.utcnow",
         return_value=datetime(2018, 12, 31, 3, 4, 6, 100000),
     ):
         callback(target)
@@ -1058,7 +1058,7 @@ def test_create_timer(mock_monotonic, loop):
     assert event_data[ATTR_NOW] == datetime(2018, 12, 31, 3, 4, 6, 100000)
 
 
-@patch("openpeerpowerr.core.monotonic")
+@patch("openpeerpower.core.monotonic")
 def test_timer_out_of_sync(mock_monotonic, loop):
     """Test create timer."""
     opp = MagicMock()
@@ -1072,7 +1072,7 @@ def test_timer_out_of_sync(mock_monotonic, loop):
     mock_monotonic.side_effect = 10.2, 13.3, 13.4
 
     with patch.object(ha, "callback", mock_callback), patch(
-        "openpeerpowerr.core.dt_util.utcnow",
+        "openpeerpower.core.dt_util.utcnow",
         return_value=datetime(2018, 12, 31, 3, 4, 5, 333333),
     ):
         op._async_create_timer.opp)
@@ -1080,7 +1080,7 @@ def test_timer_out_of_sync(mock_monotonic, loop):
     delay, callback, target = opp.loop.call_later.mock_calls[0][1]
 
     with patch(
-        "openpeerpowerr.core.dt_util.utcnow",
+        "openpeerpower.core.dt_util.utcnow",
         return_value=datetime(2018, 12, 31, 3, 4, 8, 200000),
     ):
         callback(target)
@@ -1116,8 +1116,8 @@ async def test_opp_start_starts_the_timer(loop):
     opp = op.OpenPeerPower()
 
     try:
-        with patch("openpeerpowerr.core._async_create_timer") as mock_timer:
-            await opp..async_start()
+        with patch("openpeerpower.core._async_create_timer") as mock_timer:
+            await opp.async_start()
 
         assert.opp.state == op.CoreState.running
         assert not.opp._track_task
@@ -1125,7 +1125,7 @@ async def test_opp_start_starts_the_timer(loop):
         assert mock_timer.mock_calls[0][1][0] is.opp
 
     finally:
-        await opp..async_stop()
+        await opp.async_stop()
         assert.opp.state == op.CoreState.stopped
 
 
@@ -1137,8 +1137,8 @@ async def test_start_taking_too_long(loop, caplog):
     try:
         with patch.object(
            .opp, "async_block_till_done", side_effect=asyncio.TimeoutError
-        ), patch("openpeerpowerr.core._async_create_timer") as mock_timer:
-            await opp..async_start()
+        ), patch("openpeerpower.core._async_create_timer") as mock_timer:
+            await opp.async_start()
 
         assert.opp.state == op.CoreState.running
         assert len(mock_timer.mock_calls) == 1
@@ -1146,7 +1146,7 @@ async def test_start_taking_too_long(loop, caplog):
         assert "Something is blocking Open Peer Power" in caplog.text
 
     finally:
-        await opp..async_stop()
+        await opp.async_stop()
         assert.opp.state == op.CoreState.stopped
 
 
@@ -1162,7 +1162,7 @@ async def test_track_task_functions(loop):
        .opp.async_track_tasks()
         assert.opp._track_task
     finally:
-        await opp..async_stop()
+        await opp.async_stop()
 
 
 async def test_service_executed_with_subservices.opp):
@@ -1209,7 +1209,7 @@ async def test_service_call_event_contains_original_data.opp):
     await opp..services.async_call(
         "test", "service", {"number": "23"}, blocking=True, context=context
     )
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data["service_data"]["number"] == "23"
     assert events[0].context is context
@@ -1239,18 +1239,18 @@ async def test_async_functions_with_callback.opp):
     async def test():
         runs.append(True)
 
-    await opp..async_add_job(test)
+    await opp.async_add_job(test)
     assert len(runs) == 1
 
    .opp.async_run_job(test)
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert len(runs) == 2
 
     @op.callback
-    async def service_op.dler(call):
+    async def service_handler(call):
         runs.append(True)
 
-   .opp.services.async_register("test_domain", "test_service", service_op.dler)
+   .opp.services.async_register("test_domain", "test_service", service_handler)
 
     await opp..services.async_call("test_domain", "test_service", blocking=True)
     assert len(runs) == 3
@@ -1262,7 +1262,7 @@ async def test_cancel_service_task.opp, cancel_call):
     service_called = asyncio.Event()
     service_cancelled = False
 
-    async def service_op.dler(call):
+    async def service_handler(call):
         nonlocal service_cancelled
         service_called.set()
         try:
@@ -1271,7 +1271,7 @@ async def test_cancel_service_task.opp, cancel_call):
             service_cancelled = True
             raise
 
-   .opp.services.async_register("test_domain", "test_service", service_op.dler)
+   .opp.services.async_register("test_domain", "test_service", service_handler)
     call_task = opp.async_create_task(
        .opp.services.async_call("test_domain", "test_service", blocking=True)
     )
@@ -1354,8 +1354,8 @@ async def test_start_events.opp):
 
    .opp.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, capture_core_state)
 
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert all_events == [
         EVENT_CORE_CONFIG_UPDATE,
@@ -1377,11 +1377,11 @@ async def test_log_blocking_events.opp, caplog):
         await asyncio.sleep(0.1)
 
    .opp.async_create_task(_wait_a_bit_1())
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch.object(ha, "BLOCK_LOG_TIMEOUT", 0.0001):
        .opp.async_create_task(_wait_a_bit_2())
-        await opp..async_block_till_done()
+        await opp.async_block_till_done()
 
     assert "_wait_a_bit_2" in caplog.text
     assert "_wait_a_bit_1" not in caplog.text
@@ -1409,7 +1409,7 @@ async def test_chained_logging_hits_log_timeout.opp, caplog):
 
     with patch.object(ha, "BLOCK_LOG_TIMEOUT", 0.0001):
        .opp.async_create_task(_task_chain_1())
-        await opp..async_block_till_done()
+        await opp.async_block_till_done()
 
     assert "_task_chain_" in caplog.text
 
@@ -1435,7 +1435,7 @@ async def test_chained_logging_misses_log_timeout.opp, caplog):
        .opp.async_create_task(_task_chain_1())
 
    .opp.async_create_task(_task_chain_1())
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "_task_chain_" not in caplog.text
 
@@ -1530,7 +1530,7 @@ async def test_state_change_events_match_state_time.opp):
    .opp.bus.async_listen(op.EVENT_STATE_CHANGED, _event_listener)
 
    .opp.states.async_set("light.bedroom", "on")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("light.bedroom")
 
     assert state.last_updated == events[0].time_fired

@@ -29,7 +29,7 @@ def async_setup_discovery_view.opp.OpenPeerPowerView, opp.):
    .opp.ttp.register_view(opp._discovery)
 
     # Handle exists discovery messages
-    async def _async_discovery_start_op.dler(event):
+    async def _async_discovery_start_handler(event):
         """Process all exists discovery on startup."""
         try:
             data = await opp.o.retrieve_discovery_messages()
@@ -45,7 +45,7 @@ def async_setup_discovery_view.opp.OpenPeerPowerView, opp.):
             await asyncio.wait(jobs)
 
    .opp.us.async_listen_once(
-        EVENT_OPENPEERPOWER_START, _async_discovery_start_op.dler
+        EVENT_OPENPEERPOWER_START, _async_discovery_start_handler
     )
 
 

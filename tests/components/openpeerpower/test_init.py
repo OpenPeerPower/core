@@ -199,7 +199,7 @@ class TestComponentsCore(unittest.TestCase):
 
     @patch("openpeerpower.config.os.path.isfile", Mock(return_value=True))
     @patch("openpeerpower.components.openpeerpower._LOGGER.error")
-    @patch("openpeerpower.config.async_process_op.core_config")
+    @patch("openpeerpower.config.async_process_op_core_config")
     def test_reload_core_with_wrong_conf(self, mock_process, mock_error):
         """Test reload core conf service."""
         files = {config.YAML_CONFIG_FILE: yaml.dump(["invalid", "config"])}
@@ -218,7 +218,7 @@ class TestComponentsCore(unittest.TestCase):
         assert mock_stop.called
 
     @patch("openpeerpower.core.OpenPeerPower.async_stop", return_value=None)
-    @patch("openpeerpower.config.async_check_op.config_file", return_value=None)
+    @patch("openpeerpower.config.async_check_op_config_file", return_value=None)
     def test_restart_openpeerpower(self, mock_check, mock_restart):
         """Test stop service."""
         restart(self opp.
@@ -228,7 +228,7 @@ class TestComponentsCore(unittest.TestCase):
 
     @patch("openpeerpower.core.OpenPeerPower.async_stop", return_value=None)
     @patch(
-        "openpeerpower.config.async_check_op.config_file",
+        "openpeerpower.config.async_check_op_config_file",
         side_effect=OpenPeerPowerError("Test error"),
     )
     def test_restart_openpeerpower_wrong_conf(self, mock_check, mock_restart):
@@ -239,7 +239,7 @@ class TestComponentsCore(unittest.TestCase):
         assert not mock_restart.called
 
     @patch("openpeerpower.core.OpenPeerPower.async_stop", return_value=None)
-    @patch("openpeerpower.config.async_check_op.config_file", return_value=None)
+    @patch("openpeerpower.config.async_check_op_config_file", return_value=None)
     def test_check_config(self, mock_check, mock_stop):
         """Test stop service."""
         check_config(self opp.

@@ -73,7 +73,7 @@ async def test_component_wrapper.opp):
 
     components = loader.Components.opp)
     components.persistent_notification.async_create("message")
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -92,7 +92,7 @@ async def test_helpers_wrapper.opp):
     helpers.discovery.async_listen("service_name", discovery_callback)
 
     await helpers.discovery.async_discover("service_name", "hello", None, {})
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result == ["hello"]
 
@@ -149,7 +149,7 @@ async def test_custom_integration_missing_version.opp, caplog):
         loader.manifest_from_legacy_module("test2", "custom_components.test2"),
     )
 
-    with patch("openpeerpowerr.loader.async_get_custom_components") as mock_get:
+    with patch("openpeerpower.loader.async_get_custom_components") as mock_get:
         mock_get.return_value = {
             "test1": test_integration_1,
             "test2": test_integration_2,
@@ -183,7 +183,7 @@ async def test_custom_integration_version_not_valid.opp, caplog):
        .opp, "custom_components.test", None, {"domain": "test", "version": "test"}
     )
 
-    with patch("openpeerpowerr.loader.async_get_custom_components") as mock_get:
+    with patch("openpeerpower.loader.async_get_custom_components") as mock_get:
         mock_get.return_value = {"test": test_integration}
 
         await loader.async_get_integration.opp, "test")
@@ -394,7 +394,7 @@ async def test_get_custom_components.opp, enable_custom_integrations):
     test_1_integration = _get_test_integration.opp, "test_1", False)
     test_2_integration = _get_test_integration.opp, "test_2", True)
 
-    name = "openpeerpowerr.loader._async_get_custom_components"
+    name = "openpeerpower.loader._async_get_custom_components"
     with patch(name) as mock_get:
         mock_get.return_value = {
             "test_1": test_1_integration,
@@ -412,7 +412,7 @@ async def test_get_config_flows.opp):
     test_1_integration = _get_test_integration.opp, "test_1", False)
     test_2_integration = _get_test_integration.opp, "test_2", True)
 
-    with patch("openpeerpowerr.loader.async_get_custom_components") as mock_get:
+    with patch("openpeerpower.loader.async_get_custom_components") as mock_get:
         mock_get.return_value = {
             "test_1": test_1_integration,
             "test_2": test_2_integration,
@@ -429,7 +429,7 @@ async def test_get_zeroconf.opp):
        .opp, "test_2", True
     )
 
-    with patch("openpeerpowerr.loader.async_get_custom_components") as mock_get:
+    with patch("openpeerpower.loader.async_get_custom_components") as mock_get:
         mock_get.return_value = {
             "test_1": test_1_integration,
             "test_2": test_2_integration,
@@ -445,7 +445,7 @@ async def test_get_dhcp.opp):
     """Verify that custom components with dhcp are found."""
     test_1_integration = _get_test_integration_with_dhcp_matcher.opp, "test_1", True)
 
-    with patch("openpeerpowerr.loader.async_get_custom_components") as mock_get:
+    with patch("openpeerpower.loader.async_get_custom_components") as mock_get:
         mock_get.return_value = {
             "test_1": test_1_integration,
         }
@@ -463,7 +463,7 @@ async def test_get_homekit.opp):
     test_1_integration = _get_test_integration.opp, "test_1", True)
     test_2_integration = _get_test_integration.opp, "test_2", True)
 
-    with patch("openpeerpowerr.loader.async_get_custom_components") as mock_get:
+    with patch("openpeerpower.loader.async_get_custom_components") as mock_get:
         mock_get.return_value = {
             "test_1": test_1_integration,
             "test_2": test_2_integration,
@@ -478,7 +478,7 @@ async def test_get_ssdp.opp):
     test_1_integration = _get_test_integration.opp, "test_1", True)
     test_2_integration = _get_test_integration.opp, "test_2", True)
 
-    with patch("openpeerpowerr.loader.async_get_custom_components") as mock_get:
+    with patch("openpeerpower.loader.async_get_custom_components") as mock_get:
         mock_get.return_value = {
             "test_1": test_1_integration,
             "test_2": test_2_integration,
@@ -493,7 +493,7 @@ async def test_get_mqtt.opp):
     test_1_integration = _get_test_integration.opp, "test_1", True)
     test_2_integration = _get_test_integration.opp, "test_2", True)
 
-    with patch("openpeerpowerr.loader.async_get_custom_components") as mock_get:
+    with patch("openpeerpower.loader.async_get_custom_components") as mock_get:
         mock_get.return_value = {
             "test_1": test_1_integration,
             "test_2": test_2_integration,

@@ -365,7 +365,7 @@ async def async_setup.opp.config):
 
     await push_config(None)
 
-    async def async_service_op.dler(service):
+    async def async_service_handler(service):
         """Handle service calls for Opp.io."""
         api_command = MAP_SERVICE_API[service.service][0]
         data = service.data.copy()
@@ -391,7 +391,7 @@ async def async_setup.opp.config):
 
     for service, settings in MAP_SERVICE_API.items():
        .opp.ervices.async_register(
-            DOMAIN, service, async_service_op.dler, schema=settings[1]
+            DOMAIN, service, async_service_handler, schema=settings[1]
         )
 
     async def update_info_data(now):
@@ -419,7 +419,7 @@ async def async_setup.opp.config):
             return
 
         try:
-            errors = await conf_util.async_check_op.config_file.opp)
+            errors = await conf_util.async_check_op_config_file.opp)
         except OpenPeerPowerError:
             return
 

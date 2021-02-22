@@ -11,13 +11,13 @@ import voluptuous as vol
 from openpeerpower import config_entries, setup
 import openpeerpower.config as config_util
 from openpeerpower.const import EVENT_COMPONENT_LOADED, EVENT_OPENPEERPOWER_START
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import discovery
-from openpeerpowerr.helpers.config_validation import (
+from openpeerpower.core import callback
+from openpeerpower.helpers import discovery
+from openpeerpower.helpers.config_validation import (
     PLATFORM_SCHEMA,
     PLATFORM_SCHEMA_BASE,
 )
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 from tests.common import (
     MockConfigEntry,
@@ -25,7 +25,7 @@ from tests.common import (
     MockPlatform,
     assert_setup_component,
     get_test_config_dir,
-    get_test_home_assistant,
+    get_test_open_peer_power,
     mock_entity_platform,
     mock_integration,
 )
@@ -35,7 +35,7 @@ VERSION_PATH = os.path.join(get_test_config_dir(), config_util.VERSION_FILE)
 
 
 @pytest.fixture(autouse=True)
-def mock_op.dlers():
+def mock_handlers():
     """Mock config flows."""
 
     class MockFlowHandler(config_entries.ConfigFlow):
@@ -56,7 +56,7 @@ class TestSetup:
     # pylint: disable=invalid-name, no-self-use
     def setup_method(self, method):
         """Set up the test."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self, method):
         """Clean up."""
@@ -264,7 +264,7 @@ class TestSetup:
         assert setup.setup_component(self.opp, "comp", {})
         assert not mock_setup.called
 
-    @patch("openpeerpowerr.util.package.install_package", return_value=False)
+    @patch("openpeerpower.util.package.install_package", return_value=False)
     def test_component_not_installed_if_requirement_fails(self, mock_install):
         """Component setup should fail if requirement can't install."""
         self.opp.config.skip_pip = False
@@ -532,29 +532,29 @@ async def test_when_setup_already_loaded.opp):
         calls.append(component)
 
     setup.async_when_setup.opp, "test", mock_callback)
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert calls == []
 
    .opp.config.components.add("test")
    .opp.bus.async_fire(EVENT_COMPONENT_LOADED, {"component": "test"})
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert calls == ["test"]
 
     # Event listener should be gone
    .opp.bus.async_fire(EVENT_COMPONENT_LOADED, {"component": "test"})
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert calls == ["test"]
 
     # Should be called right away
     setup.async_when_setup.opp, "test", mock_callback)
-    await opp..async_block_till_done()
+    await opp.async_block_till_done()
     assert calls == ["test", "test"]
 
 
 async def test_setup_import_blows_up.opp):
     """Test that we handle it correctly when importing integration blows up."""
     with patch(
-        "openpeerpowerr.loader.Integration.get_component", side_effect=ValueError
+        "openpeerpower.loader.Integration.get_component", side_effect=ValueError
     ):
         assert not await setup.async_setup_component.opp, "sun", {})
 

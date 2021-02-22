@@ -1,8 +1,8 @@
 """List of tests that have uncaught exceptions today. Will be shrunk over time."""
 IGNORE_UNCAUGHT_EXCEPTIONS = [
     (
-        "test_openpeerpowerr_bridge",
-        "test_openpeerpowerr_bridge_fan_setup",
+        "test_openpeerpower_bridge",
+        "test_openpeerpower_bridge_fan_setup",
     ),
     (
         "tests.components.owntracks.test_device_tracker",
@@ -10,7 +10,7 @@ IGNORE_UNCAUGHT_EXCEPTIONS = [
     ),
     (
         "tests.components.smartthings.test_init",
-        "test_event_op.dler_dispatches_updated_devices",
+        "test_event_handler_dispatches_updated_devices",
     ),
     (
         "tests.components.unifi.test_controller",
