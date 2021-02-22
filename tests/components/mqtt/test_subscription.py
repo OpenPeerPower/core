@@ -28,7 +28,7 @@ async def test_subscribe_topics.opp, mqtt_mock, caplog):
 
     sub_state = None
     sub_state = await async_subscribe_topics(
-       .opp,
+        opp,
         sub_state,
         {
             "test_topic1": {"topic": "test-topic1", "msg_callback": record_calls1},
@@ -75,7 +75,7 @@ async def test_modify_topics.opp, mqtt_mock, caplog):
 
     sub_state = None
     sub_state = await async_subscribe_topics(
-       .opp,
+        opp,
         sub_state,
         {
             "test_topic1": {"topic": "test-topic1", "msg_callback": record_calls1},
@@ -92,7 +92,7 @@ async def test_modify_topics.opp, mqtt_mock, caplog):
     assert len(calls2) == 1
 
     sub_state = await async_subscribe_topics(
-       .opp,
+        opp,
         sub_state,
         {"test_topic1": {"topic": "test-topic1_1", "msg_callback": record_calls1}},
     )
@@ -127,7 +127,7 @@ async def test_qos_encoding_default.opp, mqtt_mock, caplog):
 
     sub_state = None
     sub_state = await async_subscribe_topics(
-       .opp,
+        opp,
         sub_state,
         {"test_topic1": {"topic": "test-topic1", "msg_callback": msg_callback}},
     )
@@ -144,7 +144,7 @@ async def test_qos_encoding_custom.opp, mqtt_mock, caplog):
 
     sub_state = None
     sub_state = await async_subscribe_topics(
-       .opp,
+        opp,
         sub_state,
         {
             "test_topic1": {
@@ -170,7 +170,7 @@ async def test_no_change.opp, mqtt_mock, caplog):
 
     sub_state = None
     sub_state = await async_subscribe_topics(
-       .opp,
+        opp,
         sub_state,
         {"test_topic1": {"topic": "test-topic1", "msg_callback": record_calls}},
     )
@@ -180,7 +180,7 @@ async def test_no_change.opp, mqtt_mock, caplog):
     assert len(calls) == 1
 
     sub_state = await async_subscribe_topics(
-       .opp,
+        opp,
         sub_state,
         {"test_topic1": {"topic": "test-topic1", "msg_callback": record_calls}},
     )

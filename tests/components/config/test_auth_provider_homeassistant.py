@@ -87,7 +87,7 @@ async def test_create_auth_unknown_user.opp_ws_client, opp):
 
 
 async def test_create_auth_requires_admin(
-   .opp, opp_ws_client, opp_read_only_access_token
+    opp, opp_ws_client, opp_read_only_access_token
 ):
     """Test create requires admin to call API."""
     client = await opp_ws_client.opp, opp_read_only_access_token)
@@ -264,7 +264,7 @@ async def test_change_password.opp, opp_ws_client, auth_provider):
 
 
 async def test_change_password_wrong_pw(
-   .opp, opp_ws_client, opp_admin_user, auth_provider
+    opp, opp_ws_client, opp_admin_user, auth_provider
 ):
     """Test that change password fails with invalid password."""
 
@@ -344,7 +344,7 @@ async def test_admin_change_password_no_user.opp, opp_ws_client, owner_access_to
 
 
 async def test_admin_change_password_no_cred(
-   .opp, opp_ws_client, owner_access_token, opp_admin_user
+    opp, opp_ws_client, owner_access_token, opp_admin_user
 ):
     """Test that change password fails with unknown credential."""
 
@@ -366,7 +366,7 @@ async def test_admin_change_password_no_cred(
 
 
 async def test_admin_change_password(
-   .opp,
+    opp,
    .opp_ws_client,
     owner_access_token,
     auth_provider,

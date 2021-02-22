@@ -19,7 +19,7 @@ async def test_reproducing_states.opp, caplog):
 
     # Setup entity
     assert await async_setup_component(
-       .opp,
+        opp,
         "input_select",
         {
             "input_select": {

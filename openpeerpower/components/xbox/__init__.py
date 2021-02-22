@@ -58,9 +58,9 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         return True
 
     config_flow.OAuth2FlowHandler.async_register_implementation(
-       .opp,
+        opp,
         config_entry_oauth2_flow.LocalOAuth2Implementation(
-           .opp,
+            opp,
             DOMAIN,
             config[DOMAIN][CONF_CLIENT_ID],
             config[DOMAIN][CONF_CLIENT_SECRET],
@@ -76,7 +76,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up xbox from a config entry."""
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-           .opp, entry
+            opp, entry
         )
     )
     session = config_entry_oauth2_flow.OAuth2Session.opp, entry, implementation)
@@ -172,7 +172,7 @@ class XboxUpdateCoordinator(DataUpdateCoordinator):
     ) -> None:
         """Initialize."""
         super().__init__(
-           .opp,
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=timedelta(seconds=10),

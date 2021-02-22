@@ -29,7 +29,7 @@ class RuckusUnleashedDataUpdateCoordinator(DataUpdateCoordinator):
         update_interval = timedelta(seconds=SCAN_INTERVAL)
 
         super().__init__(
-           .opp,
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=update_interval,

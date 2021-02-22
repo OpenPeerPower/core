@@ -21,7 +21,7 @@ async def test_hue_bridge_setup_opp):
     assert battery.unique_id == "homekit-6623462389072572-644245094400"
 
     battery_helper = Helper(
-       .opp, "sensor.hue_dimmer_switch_battery", pairing, accessories[0], config_entry
+        opp, "sensor.hue_dimmer_switch_battery", pairing, accessories[0], config_entry
     )
     battery_state = await battery_helper.poll_and_get_state()
     assert battery_state.attributes["friendly_name"] == "Hue dimmer switch Battery"

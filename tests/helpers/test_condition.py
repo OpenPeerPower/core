@@ -15,7 +15,7 @@ async def test_invalid_condition.opp):
     """Test if invalid condition raises."""
     with pytest.raises(OpenPeerPowerError):
         await condition.async_from_config(
-           .opp,
+            opp,
             {
                 "condition": "invalid",
                 "conditions": [
@@ -32,7 +32,7 @@ async def test_invalid_condition.opp):
 async def test_and_condition.opp):
     """Test the 'and' condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "alias": "And Condition",
             "condition": "and",
@@ -67,7 +67,7 @@ async def test_and_condition.opp):
 async def test_and_condition_with_template.opp):
     """Test the 'and' condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "and",
             "conditions": [
@@ -98,7 +98,7 @@ async def test_and_condition_with_template.opp):
 async def test_or_condition.opp):
     """Test the 'or' condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "alias": "Or Condition",
             "condition": "or",
@@ -133,7 +133,7 @@ async def test_or_condition.opp):
 async def test_or_condition_with_template.opp):
     """Test the 'or' condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "or",
             "conditions": [
@@ -160,7 +160,7 @@ async def test_or_condition_with_template.opp):
 async def test_not_condition.opp):
     """Test the 'not' condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "alias": "Not Condition",
             "condition": "not",
@@ -198,7 +198,7 @@ async def test_not_condition.opp):
 async def test_not_condition_with_template.opp):
     """Test the 'or' condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "not",
             "conditions": [
@@ -234,11 +234,11 @@ async def test_time_window.opp):
     sixpm = "18:00:00"
 
     test1 = await condition.async_from_config(
-       .opp,
+        opp,
         {"alias": "Time Cond", "condition": "time", "after": sixam, "before": sixpm},
     )
     test2 = await condition.async_from_config(
-       .opp,
+        opp,
         {"alias": "Time Cond", "condition": "time", "after": sixpm, "before": sixam},
     )
 
@@ -274,7 +274,7 @@ async def test_time_window.opp):
 async def test_time_using_input_datetime.opp):
     """Test time conditions using input_datetime entities."""
     await async_setup_component(
-       .opp,
+        opp,
         "input_datetime",
         {
             "input_datetime": {
@@ -317,10 +317,10 @@ async def test_time_using_input_datetime.opp):
         return_value=dt.now().replace(hour=3),
     ):
         assert not condition.time(
-           .opp, after="input_datetime.am", before="input_datetime.pm"
+            opp, after="input_datetime.am", before="input_datetime.pm"
         )
         assert condition.time(
-           .opp, after="input_datetime.pm", before="input_datetime.am"
+            opp, after="input_datetime.pm", before="input_datetime.am"
         )
 
     with patch(
@@ -328,10 +328,10 @@ async def test_time_using_input_datetime.opp):
         return_value=dt.now().replace(hour=9),
     ):
         assert condition.time(
-           .opp, after="input_datetime.am", before="input_datetime.pm"
+            opp, after="input_datetime.am", before="input_datetime.pm"
         )
         assert not condition.time(
-           .opp, after="input_datetime.pm", before="input_datetime.am"
+            opp, after="input_datetime.pm", before="input_datetime.am"
         )
 
     with patch(
@@ -339,10 +339,10 @@ async def test_time_using_input_datetime.opp):
         return_value=dt.now().replace(hour=15),
     ):
         assert condition.time(
-           .opp, after="input_datetime.am", before="input_datetime.pm"
+            opp, after="input_datetime.am", before="input_datetime.pm"
         )
         assert not condition.time(
-           .opp, after="input_datetime.pm", before="input_datetime.am"
+            opp, after="input_datetime.pm", before="input_datetime.am"
         )
 
     with patch(
@@ -350,10 +350,10 @@ async def test_time_using_input_datetime.opp):
         return_value=dt.now().replace(hour=21),
     ):
         assert not condition.time(
-           .opp, after="input_datetime.am", before="input_datetime.pm"
+            opp, after="input_datetime.am", before="input_datetime.pm"
         )
         assert condition.time(
-           .opp, after="input_datetime.pm", before="input_datetime.am"
+            opp, after="input_datetime.pm", before="input_datetime.am"
         )
 
     with pytest.raises(ConditionError):
@@ -366,7 +366,7 @@ async def test_time_using_input_datetime.opp):
 async def test_if_numeric_state_raises_on_unavailable.opp, caplog):
     """Test numeric_state raises on unavailable/unknown state."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {"condition": "numeric_state", "entity_id": "sensor.temperature", "below": 42},
     )
 
@@ -389,7 +389,7 @@ async def test_state_raises.opp):
     # Unknown entity_id
     with pytest.raises(ConditionError, match="Unknown entity"):
         test = await condition.async_from_config(
-           .opp,
+            opp,
             {
                 "condition": "state",
                 "entity_id": "sensor.door_unknown",
@@ -402,7 +402,7 @@ async def test_state_raises.opp):
     # Unknown attribute
     with pytest.raises(ConditionError, match=r"Attribute .* does not exist"):
         test = await condition.async_from_config(
-           .opp,
+            opp,
             {
                 "condition": "state",
                 "entity_id": "sensor.door",
@@ -418,7 +418,7 @@ async def test_state_raises.opp):
 async def test_state_multiple_entities.opp):
     """Test with multiple entities in condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "and",
             "conditions": [
@@ -447,7 +447,7 @@ async def test_state_multiple_entities.opp):
 async def test_multiple_states.opp):
     """Test with multiple states in condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "and",
             "conditions": [
@@ -474,7 +474,7 @@ async def test_multiple_states.opp):
 async def test_state_attribute.opp):
     """Test with state attribute in condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "and",
             "conditions": [
@@ -508,7 +508,7 @@ async def test_state_attribute.opp):
 async def test_state_attribute_boolean.opp):
     """Test with boolean state attribute in condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "state",
             "entity_id": "sensor.temperature",
@@ -534,7 +534,7 @@ async def test_state_attribute_boolean.opp):
 async def test_state_using_input_entities.opp):
     """Test state conditions using input_* entities."""
     await async_setup_component(
-       .opp,
+        opp,
         "input_text",
         {
             "input_text": {
@@ -544,7 +544,7 @@ async def test_state_using_input_entities.opp):
     )
 
     await async_setup_component(
-       .opp,
+        opp,
         "input_select",
         {
             "input_select": {
@@ -554,7 +554,7 @@ async def test_state_using_input_entities.opp):
     )
 
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "and",
             "conditions": [
@@ -618,7 +618,7 @@ async def test_numeric_state_raises.opp):
     # Unknown entity_id
     with pytest.raises(ConditionError, match="Unknown entity"):
         test = await condition.async_from_config(
-           .opp,
+            opp,
             {
                 "condition": "numeric_state",
                 "entity_id": "sensor.temperature_unknown",
@@ -631,7 +631,7 @@ async def test_numeric_state_raises.opp):
     # Unknown attribute
     with pytest.raises(ConditionError, match=r"Attribute .* does not exist"):
         test = await condition.async_from_config(
-           .opp,
+            opp,
             {
                 "condition": "numeric_state",
                 "entity_id": "sensor.temperature",
@@ -646,7 +646,7 @@ async def test_numeric_state_raises.opp):
     # Template error
     with pytest.raises(ConditionError, match="ZeroDivisionError"):
         test = await condition.async_from_config(
-           .opp,
+            opp,
             {
                 "condition": "numeric_state",
                 "entity_id": "sensor.temperature",
@@ -661,7 +661,7 @@ async def test_numeric_state_raises.opp):
     # Unavailable state
     with pytest.raises(ConditionError, match="State is not available"):
         test = await condition.async_from_config(
-           .opp,
+            opp,
             {
                 "condition": "numeric_state",
                 "entity_id": "sensor.temperature",
@@ -675,7 +675,7 @@ async def test_numeric_state_raises.opp):
     # Bad number
     with pytest.raises(ConditionError, match="cannot be processed as a number"):
         test = await condition.async_from_config(
-           .opp,
+            opp,
             {
                 "condition": "numeric_state",
                 "entity_id": "sensor.temperature",
@@ -689,7 +689,7 @@ async def test_numeric_state_raises.opp):
     # Below entity missing
     with pytest.raises(ConditionError, match="below entity"):
         test = await condition.async_from_config(
-           .opp,
+            opp,
             {
                 "condition": "numeric_state",
                 "entity_id": "sensor.temperature",
@@ -703,7 +703,7 @@ async def test_numeric_state_raises.opp):
     # Above entity missing
     with pytest.raises(ConditionError, match="above entity"):
         test = await condition.async_from_config(
-           .opp,
+            opp,
             {
                 "condition": "numeric_state",
                 "entity_id": "sensor.temperature",
@@ -718,7 +718,7 @@ async def test_numeric_state_raises.opp):
 async def test_numeric_state_multiple_entities.opp):
     """Test with multiple entities in condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "and",
             "conditions": [
@@ -748,7 +748,7 @@ async def test_numeric_state_multiple_entities.opp):
 async def test_numeric_state_attribute.opp):
     """Test with numeric state attribute in condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "and",
             "conditions": [
@@ -783,7 +783,7 @@ async def test_numeric_state_attribute.opp):
 async def test_numeric_state_using_input_number.opp):
     """Test numeric_state conditions using input_number entities."""
     await async_setup_component(
-       .opp,
+        opp,
         "input_number",
         {
             "input_number": {
@@ -794,7 +794,7 @@ async def test_numeric_state_using_input_number.opp):
     )
 
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "and",
             "conditions": [
@@ -830,18 +830,18 @@ async def test_numeric_state_using_input_number.opp):
 
     with pytest.raises(ConditionError):
         condition.async_numeric_state(
-           .opp, entity="sensor.temperature", below="input_number.not_exist"
+            opp, entity="sensor.temperature", below="input_number.not_exist"
         )
     with pytest.raises(ConditionError):
         condition.async_numeric_state(
-           .opp, entity="sensor.temperature", above="input_number.not_exist"
+            opp, entity="sensor.temperature", above="input_number.not_exist"
         )
 
 
 async def test_zone_raises.opp):
     """Test that zone raises ConditionError on errors."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "zone",
             "entity_id": "device_tracker.cat",
@@ -889,7 +889,7 @@ async def test_zone_raises.opp):
     assert test.opp)
 
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "zone",
             "entity_id": ["device_tracker.cat", "device_tracker.dog"],
@@ -921,7 +921,7 @@ async def test_zone_raises.opp):
 async def test_zone_multiple_entities.opp):
     """Test with multiple entities in condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "and",
             "conditions": [
@@ -981,7 +981,7 @@ async def test_zone_multiple_entities.opp):
 async def test_multiple_zones.opp):
     """Test with multiple entities in condition."""
     test = await condition.async_from_config(
-       .opp,
+        opp,
         {
             "condition": "and",
             "conditions": [
@@ -1155,7 +1155,7 @@ async def test_extract_devices():
 async def test_condition_template_error(opp):
     """Test invalid template."""
     test = await condition.async_from_config(
-       .opp, {"condition": "template", "value_template": "{{ undefined.state }}"}
+        opp, {"condition": "template", "value_template": "{{ undefined.state }}"}
     )
 
     with pytest.raises(ConditionError, match="template"):
@@ -1165,21 +1165,21 @@ async def test_condition_template_error(opp):
 async def test_condition_template_invalid_results.opp):
     """Test template condition render false with invalid results."""
     test = await condition.async_from_config(
-       .opp, {"condition": "template", "value_template": "{{ 'string' }}"}
+        opp, {"condition": "template", "value_template": "{{ 'string' }}"}
     )
     assert not test.opp)
 
     test = await condition.async_from_config(
-       .opp, {"condition": "template", "value_template": "{{ 10.1 }}"}
+        opp, {"condition": "template", "value_template": "{{ 10.1 }}"}
     )
     assert not test.opp)
 
     test = await condition.async_from_config(
-       .opp, {"condition": "template", "value_template": "{{ 42 }}"}
+        opp, {"condition": "template", "value_template": "{{ 42 }}"}
     )
     assert not test.opp)
 
     test = await condition.async_from_config(
-       .opp, {"condition": "template", "value_template": "{{ [1, 2, 3] }}"}
+        opp, {"condition": "template", "value_template": "{{ [1, 2, 3] }}"}
     )
     assert not test.opp)

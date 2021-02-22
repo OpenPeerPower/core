@@ -105,7 +105,7 @@ class HpIloSensor(Entity):
 
     def __init__(
         self,
-       .opp,
+        opp,
         hp_ilo_data,
         sensor_type,
         sensor_name,

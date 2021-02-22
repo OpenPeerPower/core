@@ -225,7 +225,7 @@ async def setup_smartapp_endpoint.opp: OpenPeerPowerType):
 
     # Register webhook
     webhook.async_register(
-       .opp, DOMAIN, "SmartApp", config[CONF_WEBHOOK_ID], smartapp_webhook
+        opp, DOMAIN, "SmartApp", config[CONF_WEBHOOK_ID], smartapp_webhook
     )
 
     # Create webhook if eligible
@@ -432,7 +432,7 @@ async def _continue_flow(
 async def smartapp_install.opp: OpenPeerPowerType, req, resp, app):
     """Handle a SmartApp installation and continue the config flow."""
     await _continue_flow(
-       .opp, app.app_id, req.location_id, req.installed_app_id, req.refresh_token
+        opp, app.app_id, req.location_id, req.installed_app_id, req.refresh_token
     )
     _LOGGER.debug(
         "Installed SmartApp '%s' under parent app '%s'",
@@ -463,7 +463,7 @@ async def smartapp_update.opp: OpenPeerPowerType, req, resp, app):
         )
 
     await _continue_flow(
-       .opp, app.app_id, req.location_id, req.installed_app_id, req.refresh_token
+        opp, app.app_id, req.location_id, req.installed_app_id, req.refresh_token
     )
     _LOGGER.debug(
         "Updated SmartApp '%s' under parent app '%s'", req.installed_app_id, app.app_id

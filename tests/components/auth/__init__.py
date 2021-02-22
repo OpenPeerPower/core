@@ -18,7 +18,7 @@ EMPTY_CONFIG = []
 
 
 async def async_setup_auth(
-   .opp,
+    opp,
     aiohttp_client,
     provider_configs=BASE_CONFIG,
     module_configs=EMPTY_CONFIG,
@@ -26,7 +26,7 @@ async def async_setup_auth(
 ):
     """Set up authentication and create an HTTP client."""
    .opp.auth = await auth.auth_manager_from_config(
-       .opp, provider_configs, module_configs
+        opp, provider_configs, module_configs
     )
     ensure_auth_manager_loaded.opp.auth)
     await async_setup_component.opp, "auth", {})

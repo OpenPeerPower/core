@@ -45,7 +45,7 @@ async def ignore_frontend_deps.opp):
 async def frontend.opp, ignore_frontend_deps):
     """Frontend setup with themes."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "frontend",
         {},
     )
@@ -55,7 +55,7 @@ async def frontend.opp, ignore_frontend_deps):
 async def frontend_themes.opp):
     """Frontend setup with themes."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "frontend",
         CONFIG_THEMES,
     )
@@ -83,7 +83,7 @@ async def ws_client.opp, opp_ws_client, frontend):
 async def mock_http_client_with_urls.opp, aiohttp_client, ignore_frontend_deps):
     """Start the Open Peer Power HTTP component."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "frontend",
         {
             DOMAIN: {

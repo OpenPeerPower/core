@@ -56,13 +56,13 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             raise UpdateFailed from err
 
     coordinator = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name=DEFAULT_DEVICE_NAME,
         update_method=async_update_data,
         update_interval=SCAN_INTERVAL,
         request_refresh_debouncer=debounce.Debouncer(
-           .opp, _LOGGER, cooldown=0.3, immediate=True
+            opp, _LOGGER, cooldown=0.3, immediate=True
         ),
     )
     await coordinator.async_refresh()

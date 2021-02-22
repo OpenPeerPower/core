@@ -16,7 +16,7 @@ async def test_reloadable.opp):
    .opp.states.async_set("sensor.test_sensor", "mytest")
 
     await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -63,7 +63,7 @@ async def test_reloadable_can_remove.opp):
    .opp.states.async_set("sensor.test_sensor", "mytest")
 
     await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -106,7 +106,7 @@ async def test_reloadable_stops_on_invalid_config(opp):
    .opp.states.async_set("sensor.test_sensor", "mytest")
 
     await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -151,7 +151,7 @@ async def test_reloadable_handles_partial_valid_config(opp):
    .opp.states.async_set("sensor.test_sensor", "mytest")
 
     await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -199,7 +199,7 @@ async def test_reloadable_multiple_platforms.opp):
    .opp.states.async_set("sensor.test_sensor", "mytest")
 
     await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -213,7 +213,7 @@ async def test_reloadable_multiple_platforms.opp):
         },
     )
     await async_setup_component(
-       .opp,
+        opp,
         "binary_sensor",
         {
             "binary_sensor": {
@@ -261,7 +261,7 @@ async def test_reload_sensors_that_reference_other_template_sensors.opp):
     """Test that we can reload sensor that reference other template sensors."""
 
     await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {

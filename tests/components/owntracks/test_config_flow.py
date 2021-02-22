@@ -51,7 +51,7 @@ def mock_not_supports_encryption():
 async def init_config_flow.opp):
     """Init a configuration flow."""
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"external_url": BASE_URL},
     )
     flow = config_flow.OwnTracksFlow()
@@ -92,7 +92,7 @@ async def test_import.opp, webhook_id, secret):
 async def test_import_setup_opp):
     """Test that we automatically create a config flow."""
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"external_url": "http://example.com"},
     )
 
@@ -135,7 +135,7 @@ async def test_user_not_supports_encryption.opp, not_supports_encryption):
 async def test_unload.opp):
     """Test unloading a config flow."""
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"external_url": "http://example.com"},
     )
 

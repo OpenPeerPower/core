@@ -42,7 +42,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     )
     local_source.async_setup_opp)
     await async_process_integration_platforms(
-       .opp, DOMAIN, _process_media_source_platform
+        opp, DOMAIN, _process_media_source_platform
     )
     return True
 
@@ -118,7 +118,7 @@ async def websocket_resolve_media.opp, connection, msg):
     else:
         if url[0] == "/":
             url = async_sign_path(
-               .opp,
+                opp,
                 connection.refresh_token_id,
                 url,
                 timedelta(seconds=msg["expires"]),

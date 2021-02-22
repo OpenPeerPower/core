@@ -161,7 +161,7 @@ async def test_switch.opp, zha_device_joined_restored, zigpy_device):
 
 
 async def test_zha_group_switch_entity(
-   .opp, device_switch_1, device_switch_2, coordinator
+    opp, device_switch_1, device_switch_2, coordinator
 ):
     """Test the switch entity for a ZHA group."""
     zha_gateway = get_zha_gateway.opp)

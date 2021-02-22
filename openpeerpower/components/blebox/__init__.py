@@ -75,7 +75,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 @callback
 def create_blebox_entities(
-   .opp, config_entry, async_add_entities, entity_klass, entity_type
+    opp, config_entry, async_add_entities, entity_klass, entity_type
 ):
     """Create entities from a BleBox product's features."""
 

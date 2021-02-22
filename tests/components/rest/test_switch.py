@@ -41,7 +41,7 @@ async def test_setup_missing_config(opp):
 async def test_setup_missing_schema.opp):
     """Test setup with resource missing schema."""
     assert not await rest.async_setup_platform(
-       .opp,
+        opp,
         {CONF_PLATFORM: DOMAIN, CONF_RESOURCE: "localhost"},
         None,
     )
@@ -51,7 +51,7 @@ async def test_setup_failed_connect.opp, aioclient_mock):
     """Test setup when connection error occurs."""
     aioclient_mock.get("http://localhost", exc=aiohttp.ClientError)
     assert not await rest.async_setup_platform(
-       .opp,
+        opp,
         {CONF_PLATFORM: DOMAIN, CONF_RESOURCE: "http://localhost"},
         None,
     )
@@ -61,7 +61,7 @@ async def test_setup_timeout.opp, aioclient_mock):
     """Test setup when connection timeout occurs."""
     aioclient_mock.get("http://localhost", exc=asyncio.TimeoutError())
     assert not await rest.async_setup_platform(
-       .opp,
+        opp,
         {CONF_PLATFORM: DOMAIN, CONF_RESOURCE: "http://localhost"},
         None,
     )
@@ -72,7 +72,7 @@ async def test_setup_minimum.opp, aioclient_mock):
     aioclient_mock.get("http://localhost", status=HTTP_OK)
     with assert_setup_component(1, SWITCH_DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             SWITCH_DOMAIN,
             {
                 SWITCH_DOMAIN: {
@@ -90,7 +90,7 @@ async def test_setup_query_params.opp, aioclient_mock):
     aioclient_mock.get("http://localhost/?search=something", status=HTTP_OK)
     with assert_setup_component(1, SWITCH_DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             SWITCH_DOMAIN,
             {
                 SWITCH_DOMAIN: {
@@ -110,7 +110,7 @@ async def test_setup_opp, aioclient_mock):
     """Test setup with valid configuration."""
     aioclient_mock.get("http://localhost", status=HTTP_OK)
     assert await async_setup_component(
-       .opp,
+        opp,
         SWITCH_DOMAIN,
         {
             SWITCH_DOMAIN: {
@@ -133,7 +133,7 @@ async def test_setup_with_state_resource.opp, aioclient_mock):
     aioclient_mock.get("http://localhost", status=HTTP_NOT_FOUND)
     aioclient_mock.get("http://localhost/state", status=HTTP_OK)
     assert await async_setup_component(
-       .opp,
+        opp,
         SWITCH_DOMAIN,
         {
             SWITCH_DOMAIN: {

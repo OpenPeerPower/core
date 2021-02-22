@@ -51,7 +51,7 @@ async def test_sunset_trigger.opp, calls, legacy_patchable_time):
 
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
         await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -92,7 +92,7 @@ async def test_sunrise_trigger.opp, calls, legacy_patchable_time):
 
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
         await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -114,7 +114,7 @@ async def test_sunset_trigger_with_offset.opp, calls, legacy_patchable_time):
 
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
         await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -147,7 +147,7 @@ async def test_sunrise_trigger_with_offset.opp, calls, legacy_patchable_time):
 
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
         await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -173,7 +173,7 @@ async def test_if_action_before_sunrise_no_offset.opp, calls):
     Before sunrise is true from midnight until sunset, local time.
     """
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -222,7 +222,7 @@ async def test_if_action_after_sunrise_no_offset.opp, calls):
     After sunrise is true from sunrise until midnight, local time.
     """
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -271,7 +271,7 @@ async def test_if_action_before_sunrise_with_offset.opp, calls):
     Before sunrise is true from midnight until sunset, local time.
     """
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -352,7 +352,7 @@ async def test_if_action_before_sunset_with_offset.opp, calls):
     Before sunset is true from midnight until sunset, local time.
     """
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -433,7 +433,7 @@ async def test_if_action_after_sunrise_with_offset.opp, calls):
     After sunrise is true from sunrise until midnight, local time.
     """
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -528,7 +528,7 @@ async def test_if_action_after_sunset_with_offset.opp, calls):
     After sunset is true from sunset until midnight, local time.
     """
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -581,7 +581,7 @@ async def test_if_action_before_and_after_during.opp, calls):
     This is true from sunrise until sunset.
     """
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -648,7 +648,7 @@ async def test_if_action_before_sunrise_no_offset_kotzebue.opp, calls):
    .opp.config.latitude = 66.5
    .opp.config.longitude = 162.4
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -704,7 +704,7 @@ async def test_if_action_after_sunrise_no_offset_kotzebue.opp, calls):
    .opp.config.latitude = 66.5
    .opp.config.longitude = 162.4
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -760,7 +760,7 @@ async def test_if_action_before_sunset_no_offset_kotzebue.opp, calls):
    .opp.config.latitude = 66.5
    .opp.config.longitude = 162.4
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -816,7 +816,7 @@ async def test_if_action_after_sunset_no_offset_kotzebue.opp, calls):
    .opp.config.latitude = 66.5
    .opp.config.longitude = 162.4
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {

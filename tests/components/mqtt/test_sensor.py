@@ -55,7 +55,7 @@ DEFAULT_CONFIG = {
 async def test_setting_sensor_value_via_mqtt_message.opp, mqtt_mock):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -78,7 +78,7 @@ async def test_setting_sensor_value_via_mqtt_message.opp, mqtt_mock):
 async def test_setting_sensor_value_expires_availability_topic.opp, mqtt_mock, caplog):
     """Test the expiration of the value."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -108,7 +108,7 @@ async def test_setting_sensor_value_expires_availability_topic.opp, mqtt_mock, c
 async def test_setting_sensor_value_expires.opp, mqtt_mock, caplog):
     """Test the expiration of the value."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -184,7 +184,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
 async def test_setting_sensor_value_via_mqtt_json_message.opp, mqtt_mock):
     """Test the setting of the value via MQTT with JSON payload."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -207,7 +207,7 @@ async def test_setting_sensor_value_via_mqtt_json_message.opp, mqtt_mock):
 async def test_force_update_disabled.opp, mqtt_mock):
     """Test force update option."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -240,7 +240,7 @@ async def test_force_update_disabled.opp, mqtt_mock):
 async def test_force_update_enabled.opp, mqtt_mock):
     """Test force update option."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -274,70 +274,70 @@ async def test_force_update_enabled.opp, mqtt_mock):
 async def test_availability_when_connection_lost.opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_availability_without_topic.opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_default_availability_payload.opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_payload(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_default_availability_list_payload.opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_list_payload(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_default_availability_list_payload_all.opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_list_payload_all(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_default_availability_list_payload_any.opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_list_payload_any(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_default_availability_list_single.opp, mqtt_mock, caplog):
     """Test availability list and availability_topic are mutually exclusive."""
     await help_test_default_availability_list_single(
-       .opp, mqtt_mock, caplog, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_custom_availability_payload.opp, mqtt_mock):
     """Test availability by custom payload with defined topic."""
     await help_test_custom_availability_payload(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_discovery_update_availability.opp, mqtt_mock):
     """Test availability discovery update."""
     await help_test_discovery_update_availability(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_invalid_device_class.opp, mqtt_mock):
     """Test device_class option with invalid value."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -357,7 +357,7 @@ async def test_invalid_device_class.opp, mqtt_mock):
 async def test_valid_device_class.opp, mqtt_mock):
     """Test device_class option with valid values."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": [
@@ -382,35 +382,35 @@ async def test_valid_device_class.opp, mqtt_mock):
 async def test_setting_attribute_via_mqtt_json_message.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_via_mqtt_json_message(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_setting_attribute_with_template.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_with_template(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_not_dict.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_not_dict(
-       .opp, mqtt_mock, caplog, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
-       .opp, mqtt_mock, caplog, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_discovery_update_attr.opp, mqtt_mock, caplog):
     """Test update of discovered MQTTAttributes."""
     await help_test_discovery_update_attr(
-       .opp, mqtt_mock, caplog, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -465,7 +465,7 @@ async def test_discovery_update_sensor_topic_template.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-       .opp,
+        opp,
         mqtt_mock,
         caplog,
         sensor.DOMAIN,
@@ -498,7 +498,7 @@ async def test_discovery_update_sensor_template.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-       .opp,
+        opp,
         mqtt_mock,
         caplog,
         sensor.DOMAIN,
@@ -516,7 +516,7 @@ async def test_discovery_update_unchanged_sensor.opp, mqtt_mock, caplog):
         "openpeerpower.components.mqtt.sensor.MqttSensor.discovery_update"
     ) as discovery_update:
         await help_test_discovery_update_unchanged(
-           .opp, mqtt_mock, caplog, sensor.DOMAIN, data1, discovery_update
+            opp, mqtt_mock, caplog, sensor.DOMAIN, data1, discovery_update
         )
 
 
@@ -526,49 +526,49 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
     data1 = '{ "name": "Beer", "state_topic": "test_topic#" }'
     data2 = '{ "name": "Milk", "state_topic": "test_topic" }'
     await help_test_discovery_broken(
-       .opp, mqtt_mock, caplog, sensor.DOMAIN, data1, data2
+        opp, mqtt_mock, caplog, sensor.DOMAIN, data1, data2
     )
 
 
 async def test_entity_device_info_with_connection.opp, mqtt_mock):
     """Test MQTT sensor device registry integration."""
     await help_test_entity_device_info_with_connection(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_with_identifier.opp, mqtt_mock):
     """Test MQTT sensor device registry integration."""
     await help_test_entity_device_info_with_identifier(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_update.opp, mqtt_mock):
     """Test device registry update."""
     await help_test_entity_device_info_update(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_remove.opp, mqtt_mock):
     """Test device registry remove."""
     await help_test_entity_device_info_remove(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_id_update_subscriptions.opp, mqtt_mock):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     await help_test_entity_id_update_subscriptions(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_id_update_discovery_update.opp, mqtt_mock):
     """Test MQTT discovery update when entity_id is updated."""
     await help_test_entity_id_update_discovery_update(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -608,26 +608,26 @@ async def test_entity_debug_info.opp, mqtt_mock):
 async def test_entity_debug_info_max_messages.opp, mqtt_mock):
     """Test MQTT sensor debug info."""
     await help_test_entity_debug_info_max_messages(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_debug_info_message.opp, mqtt_mock):
     """Test MQTT debug info."""
     await help_test_entity_debug_info_message(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_debug_info_remove.opp, mqtt_mock):
     """Test MQTT sensor debug info."""
     await help_test_entity_debug_info_remove(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_debug_info_update_entity_id.opp, mqtt_mock):
     """Test MQTT sensor debug info."""
     await help_test_entity_debug_info_update_entity_id(
-       .opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )

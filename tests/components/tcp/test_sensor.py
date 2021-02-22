@@ -68,7 +68,7 @@ async def test_setup_platform_invalid_config(opp, mock_socket):
     """Check an invalid configuration."""
     with assert_setup_component(0):
         assert await async_setup_component(
-           .opp, "sensor", {"sensor": {"platform": "tcp", "porrt": 1234}}
+            opp, "sensor", {"sensor": {"platform": "tcp", "porrt": 1234}}
         )
         await opp.async_block_till_done()
 

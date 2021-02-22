@@ -68,7 +68,7 @@ async def test_turn_on_with_mode.opp):
     calls_2 = async_mock_service.opp, DOMAIN, SERVICE_SELECT_SOUND_MODE)
 
     await async_reproduce_states(
-       .opp, [State(ENTITY_1, "on", {ATTR_SOUND_MODE: "dummy"})]
+        opp, [State(ENTITY_1, "on", {ATTR_SOUND_MODE: "dummy"})]
     )
 
     await opp.async_block_till_done()
@@ -133,7 +133,7 @@ async def test_attribute_no_state.opp):
     value = "dummy"
 
     await async_reproduce_states(
-       .opp, [State(ENTITY_1, None, {ATTR_SOUND_MODE: value})]
+        opp, [State(ENTITY_1, None, {ATTR_SOUND_MODE: value})]
     )
 
     await opp.async_block_till_done()
@@ -176,7 +176,7 @@ async def test_play_media.opp):
     value_3 = "dummy_3"
 
     await async_reproduce_states(
-       .opp,
+        opp,
         [
             State(
                 ENTITY_1,
@@ -187,7 +187,7 @@ async def test_play_media.opp):
     )
 
     await async_reproduce_states(
-       .opp,
+        opp,
         [
             State(
                 ENTITY_1,

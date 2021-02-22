@@ -123,7 +123,7 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
     assert len(triggers) == 1
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "trigger", trigger
+            opp, "trigger", trigger
         )
         assert capabilities == expected_capabilities
 
@@ -159,7 +159,7 @@ async def test_get_trigger_capabilities_none.opp, device_reg, entity_reg):
     expected_capabilities = {}
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "trigger", trigger
+            opp, "trigger", trigger
         )
         assert capabilities == expected_capabilities
 
@@ -174,7 +174,7 @@ async def test_if_fires_not_on_above_below.opp, calls, caplog):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -204,7 +204,7 @@ async def test_if_fires_on_state_above.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -262,7 +262,7 @@ async def test_if_fires_on_state_below.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -320,7 +320,7 @@ async def test_if_fires_on_state_between.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -391,7 +391,7 @@ async def test_if_fires_on_state_change_with_for.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

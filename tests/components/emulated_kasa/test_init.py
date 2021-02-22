@@ -157,7 +157,7 @@ async def test_float.opp):
     """Test a configuration using a simple float."""
     config = CONFIG_SWITCH[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-       .opp,
+        opp,
         SWITCH_DOMAIN,
         {SWITCH_DOMAIN: {"platform": "demo"}},
     )
@@ -200,7 +200,7 @@ async def test_switch_power.opp):
     """Test a configuration using a simple float."""
     config = CONFIG_SWITCH_NO_POWER[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-       .opp,
+        opp,
         SWITCH_DOMAIN,
         {SWITCH_DOMAIN: {"platform": "demo"}},
     )
@@ -259,7 +259,7 @@ async def test_template.opp):
     """Test a configuration using a complex template."""
     config = CONFIG_FAN[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-       .opp, FAN_DOMAIN, {FAN_DOMAIN: {"platform": "demo"}}
+        opp, FAN_DOMAIN, {FAN_DOMAIN: {"platform": "demo"}}
     )
     with patch(
         "sense_energy.SenseLink",
@@ -318,10 +318,10 @@ async def test_sensor.opp):
     """Test a configuration using a sensor in a template."""
     config = CONFIG_LIGHT[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-       .opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
+        opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         SENSOR_DOMAIN,
         {SENSOR_DOMAIN: {"platform": "demo"}},
     )
@@ -375,7 +375,7 @@ async def test_sensor_state.opp):
     """Test a configuration using a sensor in a template."""
     config = CONFIG_SENSOR[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-       .opp,
+        opp,
         SENSOR_DOMAIN,
         {SENSOR_DOMAIN: {"platform": "demo"}},
     )
@@ -422,16 +422,16 @@ async def test_multiple_devices.opp):
     """Test that devices are reported correctly."""
     config = CONFIG[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-       .opp, SWITCH_DOMAIN, {SWITCH_DOMAIN: {"platform": "demo"}}
+        opp, SWITCH_DOMAIN, {SWITCH_DOMAIN: {"platform": "demo"}}
     )
     assert await async_setup_component(
-       .opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
+        opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
     )
     assert await async_setup_component(
-       .opp, FAN_DOMAIN, {FAN_DOMAIN: {"platform": "demo"}}
+        opp, FAN_DOMAIN, {FAN_DOMAIN: {"platform": "demo"}}
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         SENSOR_DOMAIN,
         {SENSOR_DOMAIN: {"platform": "demo"}},
     )

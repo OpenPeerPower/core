@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PLATFORM
-from openpeerpower.core import HassJob
+from openpeerpower.core import OppJob
 from openpeerpower.helpers import config_validation as cv
 
 from .const import DEVICE_ID, DOMAIN, EVENT_TAG_SCANNED, TAG_ID
@@ -21,7 +21,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     tag_ids = set(config[TAG_ID])
     device_ids = set(config[DEVICE_ID]) if DEVICE_ID in config else None
 
-    job = HassJob(action)
+    job = OppJob(action)
 
     async def handle_event(event):
         """Listen for tag scan events and calls the action when data matches."""

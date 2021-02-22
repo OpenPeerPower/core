@@ -75,7 +75,7 @@ async def _async_create_entities.opp, config):
 
         sensors.append(
             SensorTemplate(
-               .opp,
+                opp,
                 device,
                 friendly_name,
                 friendly_name_template,
@@ -104,7 +104,7 @@ class SensorTemplate(TemplateEntity, Entity):
 
     def __init__(
         self,
-       .opp,
+        opp,
         device_id,
         friendly_name,
         friendly_name_template,

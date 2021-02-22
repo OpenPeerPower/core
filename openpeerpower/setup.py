@@ -172,7 +172,7 @@ async def _async_setup_component(
         return False
 
     processed_config = await conf_util.async_process_component_config(
-       .opp, config, integration
+        opp, config, integration
     )
 
     if processed_config is None:
@@ -341,7 +341,7 @@ async def async_process_deps_reqs(
     if not.opp.config.skip_pip and integration.requirements:
         async with.opp.timeout.async_freeze(integration.domain):
             await requirements.async_get_integration_with_requirements(
-               .opp, integration.domain
+                opp, integration.domain
             )
 
     processed.add(integration.domain)

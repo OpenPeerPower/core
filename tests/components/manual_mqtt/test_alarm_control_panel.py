@@ -28,7 +28,7 @@ async def test_fail_setup_without_state_topic.opp, mqtt_mock):
     """Test for failing with no state topic."""
     with assert_setup_component(0) as config:
         assert await async_setup_component(
-           .opp,
+            opp,
             alarm_control_panel.DOMAIN,
             {
                 alarm_control_panel.DOMAIN: {
@@ -44,7 +44,7 @@ async def test_fail_setup_without_command_topic.opp, mqtt_mock):
     """Test failing with no command topic."""
     with assert_setup_component(0):
         assert await async_setup_component(
-           .opp,
+            opp,
             alarm_control_panel.DOMAIN,
             {
                 alarm_control_panel.DOMAIN: {
@@ -58,7 +58,7 @@ async def test_fail_setup_without_command_topic.opp, mqtt_mock):
 async def test_arm_home_no_pending.opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -87,7 +87,7 @@ async def test_arm_home_no_pending.opp, mqtt_mock):
 async def test_arm_home_no_pending_when_code_not_req.opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -117,7 +117,7 @@ async def test_arm_home_no_pending_when_code_not_req.opp, mqtt_mock):
 async def test_arm_home_with_pending.opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -159,7 +159,7 @@ async def test_arm_home_with_pending.opp, mqtt_mock):
 async def test_arm_home_with_invalid_code.opp, mqtt_mock):
     """Attempt to arm home without a valid code."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -188,7 +188,7 @@ async def test_arm_home_with_invalid_code.opp, mqtt_mock):
 async def test_arm_away_no_pending.opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -217,7 +217,7 @@ async def test_arm_away_no_pending.opp, mqtt_mock):
 async def test_arm_away_no_pending_when_code_not_req.opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -247,7 +247,7 @@ async def test_arm_away_no_pending_when_code_not_req.opp, mqtt_mock):
 async def test_arm_home_with_template_code.opp, mqtt_mock):
     """Attempt to arm with a template-based code."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -277,7 +277,7 @@ async def test_arm_home_with_template_code.opp, mqtt_mock):
 async def test_arm_away_with_pending.opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -319,7 +319,7 @@ async def test_arm_away_with_pending.opp, mqtt_mock):
 async def test_arm_away_with_invalid_code.opp, mqtt_mock):
     """Attempt to arm away without a valid code."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -348,7 +348,7 @@ async def test_arm_away_with_invalid_code.opp, mqtt_mock):
 async def test_arm_night_no_pending.opp, mqtt_mock):
     """Test arm night method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -377,7 +377,7 @@ async def test_arm_night_no_pending.opp, mqtt_mock):
 async def test_arm_night_no_pending_when_code_not_req.opp, mqtt_mock):
     """Test arm night method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -407,7 +407,7 @@ async def test_arm_night_no_pending_when_code_not_req.opp, mqtt_mock):
 async def test_arm_night_with_pending.opp, mqtt_mock):
     """Test arm night method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -455,7 +455,7 @@ async def test_arm_night_with_pending.opp, mqtt_mock):
 async def test_arm_night_with_invalid_code.opp, mqtt_mock):
     """Attempt to arm night without a valid code."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -484,7 +484,7 @@ async def test_arm_night_with_invalid_code.opp, mqtt_mock):
 async def test_trigger_no_pending.opp, mqtt_mock):
     """Test triggering when no pending submitted method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -522,7 +522,7 @@ async def test_trigger_no_pending.opp, mqtt_mock):
 async def test_trigger_with_delay.opp, mqtt_mock):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -570,7 +570,7 @@ async def test_trigger_with_delay.opp, mqtt_mock):
 async def test_trigger_zero_trigger_time.opp, mqtt_mock):
     """Test disabled trigger."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -599,7 +599,7 @@ async def test_trigger_zero_trigger_time.opp, mqtt_mock):
 async def test_trigger_zero_trigger_time_with_pending.opp, mqtt_mock):
     """Test disabled trigger."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -628,7 +628,7 @@ async def test_trigger_zero_trigger_time_with_pending.opp, mqtt_mock):
 async def test_trigger_with_pending.opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -680,7 +680,7 @@ async def test_trigger_with_pending.opp, mqtt_mock):
 async def test_trigger_with_disarm_after_trigger.opp, mqtt_mock):
     """Test disarm after trigger."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -719,7 +719,7 @@ async def test_trigger_with_disarm_after_trigger.opp, mqtt_mock):
 async def test_trigger_with_zero_specific_trigger_time.opp, mqtt_mock):
     """Test trigger method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -749,7 +749,7 @@ async def test_trigger_with_zero_specific_trigger_time.opp, mqtt_mock):
 async def test_trigger_with_unused_zero_specific_trigger_time.opp, mqtt_mock):
     """Test disarm after trigger."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -789,7 +789,7 @@ async def test_trigger_with_unused_zero_specific_trigger_time.opp, mqtt_mock):
 async def test_trigger_with_specific_trigger_time.opp, mqtt_mock):
     """Test disarm after trigger."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -828,7 +828,7 @@ async def test_trigger_with_specific_trigger_time.opp, mqtt_mock):
 async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp, mqtt_mock):
     """Test no disarm after back to back trigger."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -887,7 +887,7 @@ async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp, mqtt_mock)
 async def test_disarm_while_pending_trigger.opp, mqtt_mock):
     """Test disarming while pending state."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -930,7 +930,7 @@ async def test_disarm_while_pending_trigger.opp, mqtt_mock):
 async def test_disarm_during_trigger_with_invalid_code.opp, mqtt_mock):
     """Test disarming while code is invalid."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -974,7 +974,7 @@ async def test_disarm_during_trigger_with_invalid_code.opp, mqtt_mock):
 async def test_trigger_with_unused_specific_delay.opp, mqtt_mock):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1023,7 +1023,7 @@ async def test_trigger_with_unused_specific_delay.opp, mqtt_mock):
 async def test_trigger_with_specific_delay.opp, mqtt_mock):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1072,7 +1072,7 @@ async def test_trigger_with_specific_delay.opp, mqtt_mock):
 async def test_trigger_with_pending_and_delay.opp, mqtt_mock):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1133,7 +1133,7 @@ async def test_trigger_with_pending_and_delay.opp, mqtt_mock):
 async def test_trigger_with_pending_and_specific_delay.opp, mqtt_mock):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1195,7 +1195,7 @@ async def test_trigger_with_pending_and_specific_delay.opp, mqtt_mock):
 async def test_armed_home_with_specific_pending.opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1231,7 +1231,7 @@ async def test_armed_home_with_specific_pending.opp, mqtt_mock):
 async def test_armed_away_with_specific_pending.opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1267,7 +1267,7 @@ async def test_armed_away_with_specific_pending.opp, mqtt_mock):
 async def test_armed_night_with_specific_pending.opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1303,7 +1303,7 @@ async def test_armed_night_with_specific_pending.opp, mqtt_mock):
 async def test_trigger_with_specific_pending.opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1351,7 +1351,7 @@ async def test_trigger_with_specific_pending.opp, mqtt_mock):
 async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time, mqtt_mock):
     """Test pending state with and without zero trigger time."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1424,7 +1424,7 @@ async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time, mqtt
 async def test_disarm_with_template_code.opp, mqtt_mock):
     """Attempt to disarm with a valid or invalid template-based code."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1466,7 +1466,7 @@ async def test_disarm_with_template_code.opp, mqtt_mock):
 async def test_arm_home_via_command_topic.opp, mqtt_mock):
     """Test arming home via command topic."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             alarm_control_panel.DOMAIN: {
@@ -1505,7 +1505,7 @@ async def test_arm_home_via_command_topic.opp, mqtt_mock):
 async def test_arm_away_via_command_topic.opp, mqtt_mock):
     """Test arming away via command topic."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             alarm_control_panel.DOMAIN: {
@@ -1544,7 +1544,7 @@ async def test_arm_away_via_command_topic.opp, mqtt_mock):
 async def test_arm_night_via_command_topic.opp, mqtt_mock):
     """Test arming night via command topic."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             alarm_control_panel.DOMAIN: {
@@ -1583,7 +1583,7 @@ async def test_arm_night_via_command_topic.opp, mqtt_mock):
 async def test_disarm_pending_via_command_topic.opp, mqtt_mock):
     """Test disarming pending alarm via command topic."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             alarm_control_panel.DOMAIN: {
@@ -1617,7 +1617,7 @@ async def test_disarm_pending_via_command_topic.opp, mqtt_mock):
 async def test_state_changes_are_published_to_mqtt.opp, mqtt_mock):
     """Test publishing of MQTT messages when state changes."""
     assert await async_setup_component(
-       .opp,
+        opp,
         alarm_control_panel.DOMAIN,
         {
             alarm_control_panel.DOMAIN: {

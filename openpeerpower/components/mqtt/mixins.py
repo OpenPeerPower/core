@@ -155,12 +155,12 @@ async def async_setup_entry_helper.opp, domain, async_setup, schema):
             discovery_hash = discovery_data[ATTR_DISCOVERY_HASH]
             clear_discovery_hash.opp, discovery_hash)
             async_dispatcher_send(
-               .opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
+                opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
             )
             raise
 
     async_dispatcher_connect(
-       .opp, MQTT_DISCOVERY_NEW.format(domain, "mqtt"), async_discover
+        opp, MQTT_DISCOVERY_NEW.format(domain, "mqtt"), async_discover
     )
 
 

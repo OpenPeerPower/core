@@ -145,7 +145,7 @@ async def async_setup_opp, config):
     ssl_profile = conf[CONF_SSL_PROFILE]
 
     server = OpenPeerPowerHTTP(
-       .opp,
+        opp,
         server_host=server_host,
         server_port=server_port,
         ssl_certificate=ssl_certificate,
@@ -211,7 +211,7 @@ class OpenPeerPowerHTTP:
 
     def __init__(
         self,
-       .opp,
+        opp,
         ssl_certificate,
         ssl_peer_certificate,
         ssl_key,

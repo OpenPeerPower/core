@@ -4,7 +4,7 @@ from openpeerpower.components.image_processing import ImageProcessingEntity
 
 
 async def async_setup_platform(
-   .opp, config, async_add_entities_callback, discovery_info=None
+    opp, config, async_add_entities_callback, discovery_info=None
 ):
     """Set up the test image_processing platform."""
     async_add_entities_callback([TestImageProcessing("camera.demo_camera", "Test")])

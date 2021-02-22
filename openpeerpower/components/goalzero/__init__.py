@@ -52,7 +52,7 @@ async def async_setup_entry.opp, entry):
             raise UpdateFailed(f"Failed to communicating with API: {err}") from err
 
     coordinator = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name=name,
         update_method=async_update_data,

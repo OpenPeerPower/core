@@ -59,7 +59,7 @@ async def system_health_info.opp.OpenPeerPower):
        .opp.SUPERVISOR_PING, OBSERVER_URL
     )
     information["version_api"] = system_health.async_check_can_reach_url(
-       .opp,
+        opp,
         f"https://version.openpeerpower.io/{info.get('channel')}.json",
         "/opp./system",
     )

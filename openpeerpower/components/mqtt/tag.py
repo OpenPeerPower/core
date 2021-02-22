@@ -74,7 +74,7 @@ async def async_setup_tag.opp, config, config_entry, discovery_data):
            .opp.data[TAGS][device_id] = {}
 
     tag_scanner = MQTTTagScanner(
-       .opp,
+        opp,
         config,
         device_id,
         discovery_data,

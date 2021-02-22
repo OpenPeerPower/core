@@ -48,7 +48,7 @@ def setup_zone.opp):
     """Create test zone."""
    .opp.loop.run_until_complete(
         async_setup_component(
-           .opp,
+            opp,
             zone.DOMAIN,
             {
                 "zone": {
@@ -100,7 +100,7 @@ async def test_if_fires_on_zone_change.opp, calls):
     )
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -183,7 +183,7 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
     capabilities = await device_trigger.async_get_trigger_capabilities(
-       .opp,
+        opp,
         {
             "platform": "device",
             "domain": DOMAIN,

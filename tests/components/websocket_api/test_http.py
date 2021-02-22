@@ -57,7 +57,7 @@ async def test_pending_msg_peak.opp, mock_low_peak, opp_ws_client, caplog):
     instance._send_message({})
 
     async_fire_time_changed(
-       .opp, utcnow() + timedelta(seconds=const.PENDING_MSG_PEAK_TIME + 1)
+        opp, utcnow() + timedelta(seconds=const.PENDING_MSG_PEAK_TIME + 1)
     )
 
     msg = await websocket_client.receive()

@@ -225,7 +225,7 @@ async def test_setup_config_flow_initiated.opp):
     """Test if config flow is initiated in setup."""
     assert (
         await async_setup_component(
-           .opp,
+            opp,
             DOMAIN,
             {DOMAIN: {CONF_HOST: "0.0.0.0"}},
         )

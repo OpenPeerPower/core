@@ -172,7 +172,7 @@ class WemoDispatcher:
 
         else:
             async_dispatcher_send(
-               .opp,
+                opp,
                 f"{DOMAIN}.{component}",
                 device,
             )

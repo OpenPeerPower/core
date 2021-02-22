@@ -84,7 +84,7 @@ async def async_setup_opp, config):
     """Set up TP-Link LTE component."""
     if DATA_KEY not in.opp.data:
         websession = async_create_clientsession(
-           .opp, cookie_jar=aiohttp.CookieJar(unsafe=True)
+            opp, cookie_jar=aiohttp.CookieJar(unsafe=True)
         )
        .opp.data[DATA_KEY] = LTEData(websession)
 
@@ -98,7 +98,7 @@ async def async_setup_opp, config):
         for notify_conf in conf.get(CONF_NOTIFY, []):
            .opp.async_create_task(
                 discovery.async_load_platform(
-                   .opp, "notify", DOMAIN, notify_conf, config
+                    opp, "notify", DOMAIN, notify_conf, config
                 )
             )
 

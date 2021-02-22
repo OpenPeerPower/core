@@ -95,7 +95,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         )
 
     coordinator_forecast = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name=f"Météo-France forecast for city {entry.title}",
         update_method=_async_update_data_forecast_forecast,
@@ -113,7 +113,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     # Check if rain forecast is available.
     if coordinator_forecast.data.position.get("rain_product_available") == 1:
         coordinator_rain = DataUpdateCoordinator(
-           .opp,
+            opp,
             _LOGGER,
             name=f"Météo-France rain for city {entry.title}",
             update_method=_async_update_data_rain,
@@ -138,7 +138,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     if is_valid_warning_department(department):
         if not.opp.data[DOMAIN].get(department):
             coordinator_alert = DataUpdateCoordinator(
-               .opp,
+                opp,
                 _LOGGER,
                 name=f"Météo-France alert for department {department}",
                 update_method=_async_update_data_alert,

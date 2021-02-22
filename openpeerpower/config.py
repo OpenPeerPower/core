@@ -312,7 +312,7 @@ def _write_default_config(config_dir: str) -> bool:
         return False
 
 
-async def async.opp_config_yaml(opp: OpenPeerPower) -> Dict:
+async def async(opp_config_yaml(opp: OpenPeerPower) -> Dict:
     """Load YAML from a Open Peer Power configuration file.
 
     This function allow a component inside the asyncio loop to reload its
@@ -471,7 +471,7 @@ async def async_process_op_core_config(opp: OpenPeerPower, config: Dict) -> None
     config = CORE_CONFIG_SCHEMA(config)
 
     # Only load auth during startup.
-    if not hasattr.opp, "auth"):
+    if not hasattr(opp, "auth"):
         auth_conf = config.get(CONF_AUTH_PROVIDERS)
 
         if auth_conf is None:
@@ -483,7 +483,7 @@ async def async_process_op_core_config(opp: OpenPeerPower, config: Dict) -> None
         )
 
         setattr(
-           .opp, "auth", await auth.auth_manager_from_config(opp, auth_conf, mfa_conf)
+            opp, "auth", await auth.auth_manager_from_config(opp, auth_conf, mfa_conf)
         )
 
     await opp.config.async_load()
@@ -571,7 +571,7 @@ async def async_process_op_core_config(opp: OpenPeerPower, config: Dict) -> None
         cust_domain.update(pkg_cust[CONF_CUSTOMIZE_DOMAIN])
         cust_glob.update(pkg_cust[CONF_CUSTOMIZE_GLOB])
 
-   .opp.data[DATA_CUSTOMIZE] = EntityValues(cust_exact, cust_domain, cust_glob)
+    opp.data[DATA_CUSTOMIZE] = EntityValues(cust_exact, cust_domain, cust_glob)
 
     if CONF_UNIT_SYSTEM in config:
         if config[CONF_UNIT_SYSTEM] == CONF_UNIT_SYSTEM_IMPERIAL:
@@ -693,7 +693,7 @@ async def merge_packages_config(
 
             try:
                 integration = await async_get_integration_with_requirements(
-                   .opp, domain
+                    opp, domain
                 )
                 component = integration.get_component()
             except INTEGRATION_LOAD_EXCEPTIONS as ex:
@@ -774,7 +774,7 @@ async def async_process_component_config(
     ):
         try:
             return await config_validator.async_validate_config(  # type: ignore
-               .opp, config
+                opp, config
             )
         except (vol.Invalid, OpenPeerPowerError) as ex:
             async_log_exception(ex, domain, config, opp, integration.documentation)
@@ -845,7 +845,7 @@ async def async_process_component_config(
                     ex,
                     f"{domain}.{p_name}",
                     p_config,
-                   .opp,
+                    opp,
                     p_integration.documentation,
                 )
                 continue
@@ -874,7 +874,7 @@ def config_without_domain(config: Dict, domain: str) -> Dict:
     return {key: value for key, value in config.items() if key not in filter_keys}
 
 
-async def async_check_op_config_file.opp: OpenPeerPower) -> Optional[str]:
+async def async_check_op_config_file(opp: OpenPeerPower) -> Optional[str]:
     """Check if Open Peer Power configuration file is valid.
 
     This method is a coroutine.
@@ -916,5 +916,5 @@ def async_notify_setup_error(
     message += "\nPlease check your config and [logs](/config/logs)."
 
     persistent_notification.async_create(
-       .opp, message, "Invalid config", "invalid_config"
+        opp, message, "Invalid config", "invalid_config"
     )

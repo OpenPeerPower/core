@@ -484,7 +484,7 @@ class UniFiController:
 
 
 async def get_controller(
-   .opp, host, username, password, port, site, verify_ssl, async_callback=None
+    opp, host, username, password, port, site, verify_ssl, async_callback=None
 ):
     """Create a controller object and verify authentication."""
     sslcontext = None
@@ -495,7 +495,7 @@ async def get_controller(
             sslcontext = ssl.create_default_context(cafile=verify_ssl)
     else:
         session = aiohttp_client.async_create_clientsession(
-           .opp, verify_ssl=verify_ssl, cookie_jar=CookieJar(unsafe=True)
+            opp, verify_ssl=verify_ssl, cookie_jar=CookieJar(unsafe=True)
         )
 
     controller = aiounifi.Controller(

@@ -53,7 +53,7 @@ def _reauth_flow_wrapper.opp, data):
         )
     )
     persistent_notification.async_create(
-       .opp,
+        opp,
         "Blink configuration migrated to a new version. Please go to the integrations page to re-configure (such as sending a new 2FA key).",
         "Blink Migration",
     )

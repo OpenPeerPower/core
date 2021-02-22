@@ -240,7 +240,7 @@ def ihc_setup_opp, config, conf, controller_id):
         return False
 
     if conf[CONF_AUTOSETUP] and not autosetup_ihc_products(
-       .opp, config, ihc_controller, controller_id
+        opp, config, ihc_controller, controller_id
     ):
         return False
     # Manual configuration

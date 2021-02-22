@@ -61,7 +61,7 @@ async def async_validate_config_item.opp, config, full_config=None):
     config = PLATFORM_SCHEMA(config)
 
     config[CONF_TRIGGER] = await async_validate_trigger_config(
-       .opp, config[CONF_TRIGGER]
+        opp, config[CONF_TRIGGER]
     )
 
     if CONF_CONDITION in config:
@@ -73,7 +73,7 @@ async def async_validate_config_item.opp, config, full_config=None):
         )
 
     config[CONF_ACTION] = await script.async_validate_actions_config(
-       .opp, config[CONF_ACTION]
+        opp, config[CONF_ACTION]
     )
 
     return config

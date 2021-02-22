@@ -170,7 +170,7 @@ async def async_setup_scanner.opp, config, async_see, discovery_info=None):
 
     scanner = TraccarScanner(
         api,
-       .opp,
+        opp,
         async_see,
         config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL),
         config[CONF_MAX_ACCURACY],
@@ -188,7 +188,7 @@ class TraccarScanner:
     def __init__(
         self,
         api,
-       .opp,
+        opp,
         async_see,
         scan_interval,
         max_accuracy,

@@ -95,7 +95,7 @@ async def test_get_condition_capabilities.opp, device_reg, entity_reg):
     conditions = await async_get_device_automations.opp, "condition", device_entry.id)
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "condition", condition
+            opp, "condition", condition
         )
         assert capabilities == expected_capabilities
 
@@ -111,7 +111,7 @@ async def test_if_state.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -190,7 +190,7 @@ async def test_if_fires_on_for_condition.opp, calls):
     with patch("openpeerpower.core.dt_util.utcnow") as mock_utcnow:
         mock_utcnow.return_value = point1
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: [

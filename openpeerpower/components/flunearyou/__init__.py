@@ -57,7 +57,7 @@ async def async_setup_entry.opp, config_entry):
         coordinator = opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id][
             api_category
         ] = DataUpdateCoordinator(
-           .opp,
+            opp,
             LOGGER,
             name=f"{api_category} ({latitude}, {longitude})",
             update_interval=DEFAULT_UPDATE_INTERVAL,

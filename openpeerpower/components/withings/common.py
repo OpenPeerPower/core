@@ -580,7 +580,7 @@ class DataManager:
         self._api_notification_id = f"withings_{self._user_id}"
 
         self.subscription_update_coordinator = DataUpdateCoordinator(
-           .opp,
+            opp,
             _LOGGER,
             name="subscription_update_coordinator",
             update_interval=timedelta(minutes=120),
@@ -589,7 +589,7 @@ class DataManager:
         self.poll_data_update_coordinator = DataUpdateCoordinator[
             Dict[MeasureType, Any]
         ](
-           .opp,
+            opp,
             _LOGGER,
             name="poll_data_update_coordinator",
             update_interval=timedelta(minutes=120)
@@ -1031,13 +1031,13 @@ async def async_get_data_manager(
 
         _LOGGER.debug("Creating withings data manager for profile: %s", profile)
         config_entry_data[const.DATA_MANAGER] = DataManager(
-           .opp,
+            opp,
             profile,
             ConfigEntryWithingsApi(
                .opp.opp,
                 config_entry=config_entry,
                 implementation=await config_entry_oauth2_flow.async_get_config_entry_implementation(
-                   .opp, config_entry
+                    opp, config_entry
                 ),
             ),
             config_entry.data["token"]["userid"],

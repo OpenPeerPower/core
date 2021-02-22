@@ -36,7 +36,7 @@ async def test_template_state_text.opp, calls):
     """Test the state text of a template."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -79,7 +79,7 @@ async def test_template_state_boolean.opp, calls):
     """Test the value_template attribute."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -114,7 +114,7 @@ async def test_template_position.opp, calls):
    .opp.states.async_set("cover.test", STATE_OPEN)
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -169,7 +169,7 @@ async def test_template_tilt.opp, calls):
     """Test the tilt_template attribute."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -204,7 +204,7 @@ async def test_template_out_of_bounds.opp, calls):
     """Test template out-of-bounds condition."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -240,7 +240,7 @@ async def test_template_mutex.opp, calls):
     """Test that only value or position template can be used."""
     with assert_setup_component(0, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -276,7 +276,7 @@ async def test_template_mutex.opp, calls):
 async def test_template_open_or_position.opp, caplog):
     """Test that at least one of open_cover or set_position is used."""
     assert await setup.async_setup_component(
-       .opp,
+        opp,
         "cover",
         {
             "cover": {
@@ -295,7 +295,7 @@ async def test_template_open_and_close.opp, calls):
     """Test that if open_cover is specified, close_cover is too."""
     with assert_setup_component(0, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -324,7 +324,7 @@ async def test_template_non_numeric.opp, calls):
     """Test that tilt_template values are numeric."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -364,7 +364,7 @@ async def test_open_action.opp, calls):
     """Test the open_cover command."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -402,7 +402,7 @@ async def test_close_stop_action.opp, calls):
     """Test the close-cover and stop_cover commands."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -446,12 +446,12 @@ async def test_set_position.opp, calls):
     """Test the set_position command."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "input_number",
             {"input_number": {"test": {"min": "0", "max": "100", "initial": "42"}}},
         )
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -522,7 +522,7 @@ async def test_set_tilt_position.opp, calls):
     """Test the set_tilt_position command."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -564,7 +564,7 @@ async def test_open_tilt_action.opp, calls):
     """Test the open_cover_tilt command."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -603,7 +603,7 @@ async def test_close_tilt_action.opp, calls):
     """Test the close_cover_tilt command."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -642,7 +642,7 @@ async def test_set_position_optimistic.opp, calls):
     """Test optimistic position mode."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -705,7 +705,7 @@ async def test_set_tilt_position_optimistic.opp, calls):
     """Test the optimistic tilt_position mode."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -770,7 +770,7 @@ async def test_icon_template.opp, calls):
     """Test icon template."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -814,7 +814,7 @@ async def test_entity_picture_template.opp, calls):
     """Test icon template."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -858,7 +858,7 @@ async def test_availability_template.opp, calls):
     """Test availability template."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -899,7 +899,7 @@ async def test_availability_template.opp, calls):
 async def test_availability_without_availability_template.opp, calls):
     """Test that component is available if there is no."""
     assert await setup.async_setup_component(
-       .opp,
+        opp,
         "cover",
         {
             "cover": {
@@ -932,7 +932,7 @@ async def test_availability_without_availability_template.opp, calls):
 async def test_invalid_availability_template_keeps_component_available.opp, caplog):
     """Test that an invalid availability keeps the device available."""
     assert await setup.async_setup_component(
-       .opp,
+        opp,
         "cover",
         {
             "cover": {
@@ -967,7 +967,7 @@ async def test_device_class.opp, calls):
     """Test device class."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -1002,7 +1002,7 @@ async def test_invalid_device_class.opp, calls):
     """Test device class."""
     with assert_setup_component(0, "cover"):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             "cover",
             {
                 "cover": {
@@ -1036,7 +1036,7 @@ async def test_invalid_device_class.opp, calls):
 async def test_unique_id.opp):
     """Test unique_id option only creates one cover per id."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "cover",
         {
             "cover": {
@@ -1084,7 +1084,7 @@ async def test_state_gets_lowercased.opp):
    .opp.states.async_set("binary_sensor.garage_door_sensor", "off")
 
     await setup.async_setup_component(
-       .opp,
+        opp,
         "cover",
         {
             "cover": {
@@ -1129,7 +1129,7 @@ async def test_self_referencing_icon_with_no_template_is_not_a_loop.opp, caplog)
           {% endif %}"""
 
     await setup.async_setup_component(
-       .opp,
+        opp,
         "cover",
         {
             "cover": {

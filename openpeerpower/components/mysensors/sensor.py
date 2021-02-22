@@ -69,7 +69,7 @@ async def async_setup_entry(
     async def async_discover(discovery_info):
         """Discover and add a MySensors sensor."""
         mysensors.setup_mysensors_platform(
-           .opp,
+            opp,
             DOMAIN,
             discovery_info,
             MySensorsSensor,
@@ -77,10 +77,10 @@ async def async_setup_entry(
         )
 
     await on_unload(
-       .opp,
+        opp,
         config_entry,
         async_dispatcher_connect(
-           .opp,
+            opp,
             MYSENSORS_DISCOVERY.format(config_entry.entry_id, DOMAIN),
             async_discover,
         ),

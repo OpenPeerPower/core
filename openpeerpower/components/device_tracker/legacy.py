@@ -173,7 +173,7 @@ async def async_setup_integration.opp: OpenPeerPowerType, config: ConfigType) ->
 
     # Clean up stale devices
     async_track_utc_time_change(
-       .opp, tracker.async_update_stale, second=range(0, 60, 5)
+        opp, tracker.async_update_stale, second=range(0, 60, 5)
     )
 
     async def async_see_service(call):
@@ -225,7 +225,7 @@ class DeviceTrackerPlatform:
             setup = None
             if hasattr(self.platform, "async_get_scanner"):
                 scanner = await self.platform.async_get_scanner(
-                   .opp, {DOMAIN: self.config}
+                    opp, {DOMAIN: self.config}
                 )
             elif hasattr(self.platform, "get_scanner"):
                 scanner = await opp.async_add_executor_job(
@@ -233,12 +233,12 @@ class DeviceTrackerPlatform:
                 )
             elif hasattr(self.platform, "async_setup_scanner"):
                 setup = await self.platform.async_setup_scanner(
-                   .opp, self.config, tracker.async_see, discovery_info
+                    opp, self.config, tracker.async_see, discovery_info
                 )
             elif hasattr(self.platform, "setup_scanner"):
                 setup = await opp.async_add_executor_job(
                     self.platform.setup_scanner,
-                   .opp,
+                    opp,
                     self.config,
                     tracker.see,
                     discovery_info,
@@ -248,7 +248,7 @@ class DeviceTrackerPlatform:
 
             if scanner:
                 async_setup_scanner_platform(
-                   .opp, self.config, scanner, tracker.async_see, self.type
+                    opp, self.config, scanner, tracker.async_see, self.type
                 )
                 return
 
@@ -284,7 +284,7 @@ async def async_extract_config(opp, config):
 
 
 async def async_create_platform_type(
-   .opp, config, p_type, p_config
+    opp, config, p_type, p_config
 ) -> Optional[DeviceTrackerPlatform]:
     """Determine type of platform."""
     platform = await async_prepare_setup_platform.opp, config, DOMAIN, p_type)

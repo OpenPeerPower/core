@@ -145,7 +145,7 @@ async def test_latest_and_es5_build.opp):
 async def test_url_path_conflict.opp):
     """Test config with overlapping url path."""
     assert await setup.async_setup_component(
-       .opp,
+        opp,
         "panel_custom",
         {
             "panel_custom": [

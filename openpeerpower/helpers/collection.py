@@ -371,7 +371,7 @@ class StorageCollectionWebsocket:
         """Set up the websocket commands."""
         if create_list:
             websocket_api.async_register_command(
-               .opp,
+                opp,
                 f"{self.api_prefix}/list",
                 self.ws_list_item,
                 websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
@@ -381,7 +381,7 @@ class StorageCollectionWebsocket:
 
         if create_create:
             websocket_api.async_register_command(
-               .opp,
+                opp,
                 f"{self.api_prefix}/create",
                 websocket_api.require_admin(
                     websocket_api.async_response(self.ws_create_item)
@@ -395,7 +395,7 @@ class StorageCollectionWebsocket:
             )
 
         websocket_api.async_register_command(
-           .opp,
+            opp,
             f"{self.api_prefix}/update",
             websocket_api.require_admin(
                 websocket_api.async_response(self.ws_update_item)
@@ -410,7 +410,7 @@ class StorageCollectionWebsocket:
         )
 
         websocket_api.async_register_command(
-           .opp,
+            opp,
             f"{self.api_prefix}/delete",
             websocket_api.require_admin(
                 websocket_api.async_response(self.ws_delete_item)

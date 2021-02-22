@@ -77,7 +77,7 @@ DEFAULT_CONFIG_2 = {vacuum.DOMAIN: {"platform": "mqtt", "name": "test"}}
 async def test_default_supported_features.opp, mqtt_mock):
     """Test that the correct supported features."""
     assert await async_setup_component(
-       .opp, vacuum.DOMAIN, {vacuum.DOMAIN: DEFAULT_CONFIG}
+        opp, vacuum.DOMAIN, {vacuum.DOMAIN: DEFAULT_CONFIG}
     )
     await opp.async_block_till_done()
     entity = opp.states.get("vacuum.mqtttest")
@@ -158,7 +158,7 @@ async def test_all_commands.opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
 
     await common.async_send_command(
-       .opp, "44 FE 93", {"key": "value"}, entity_id="vacuum.mqtttest"
+        opp, "44 FE 93", {"key": "value"}, entity_id="vacuum.mqtttest"
     )
     assert json.loads(mqtt_mock.async_publish.mock_calls[-1][1][1]) == {
         "command": "44 FE 93",
@@ -166,7 +166,7 @@ async def test_all_commands.opp, mqtt_mock):
     }
 
     await common.async_send_command(
-       .opp, "44 FE 93", {"key": "value"}, entity_id="vacuum.mqtttest"
+        opp, "44 FE 93", {"key": "value"}, entity_id="vacuum.mqtttest"
     )
     assert json.loads(mqtt_mock.async_publish.mock_calls[-1][1][1]) == {
         "command": "44 FE 93",
@@ -549,63 +549,63 @@ async def test_missing_fan_speed_template.opp, mqtt_mock):
 async def test_availability_when_connection_lost.opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
-       .opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
 async def test_availability_without_topic.opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
-       .opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
 async def test_default_availability_payload.opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_payload(
-       .opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
 async def test_custom_availability_payload.opp, mqtt_mock):
     """Test availability by custom payload with defined topic."""
     await help_test_custom_availability_payload(
-       .opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
 async def test_setting_attribute_via_mqtt_json_message.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_via_mqtt_json_message(
-       .opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
 async def test_setting_attribute_with_template.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_with_template(
-       .opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
 async def test_update_with_json_attrs_not_dict.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_not_dict(
-       .opp, mqtt_mock, caplog, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, caplog, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
 async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
-       .opp, mqtt_mock, caplog, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, caplog, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
 async def test_discovery_update_attr.opp, mqtt_mock, caplog):
     """Test update of discovered MQTTAttributes."""
     await help_test_discovery_update_attr(
-       .opp, mqtt_mock, caplog, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, caplog, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
@@ -641,7 +641,7 @@ async def test_discovery_update_vacuum.opp, mqtt_mock, caplog):
     data1 = '{ "name": "Beer",' '  "command_topic": "test_topic" }'
     data2 = '{ "name": "Milk",' '  "command_topic": "test_topic" }'
     await help_test_discovery_update(
-       .opp, mqtt_mock, caplog, vacuum.DOMAIN, data1, data2
+        opp, mqtt_mock, caplog, vacuum.DOMAIN, data1, data2
     )
 
 
@@ -652,7 +652,7 @@ async def test_discovery_update_unchanged_vacuum.opp, mqtt_mock, caplog):
         "openpeerpower.components.mqtt.vacuum.schema_legacy.MqttVacuum.discovery_update"
     ) as discovery_update:
         await help_test_discovery_update_unchanged(
-           .opp, mqtt_mock, caplog, vacuum.DOMAIN, data1, discovery_update
+            opp, mqtt_mock, caplog, vacuum.DOMAIN, data1, discovery_update
         )
 
 
@@ -662,35 +662,35 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
     data1 = '{ "name": "Beer",' '  "command_topic": "test_topic#" }'
     data2 = '{ "name": "Milk",' '  "command_topic": "test_topic" }'
     await help_test_discovery_broken(
-       .opp, mqtt_mock, caplog, vacuum.DOMAIN, data1, data2
+        opp, mqtt_mock, caplog, vacuum.DOMAIN, data1, data2
     )
 
 
 async def test_entity_device_info_with_connection.opp, mqtt_mock):
     """Test MQTT vacuum device registry integration."""
     await help_test_entity_device_info_with_connection(
-       .opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
 async def test_entity_device_info_with_identifier.opp, mqtt_mock):
     """Test MQTT vacuum device registry integration."""
     await help_test_entity_device_info_with_identifier(
-       .opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
 async def test_entity_device_info_update.opp, mqtt_mock):
     """Test device registry update."""
     await help_test_entity_device_info_update(
-       .opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
 async def test_entity_device_info_remove.opp, mqtt_mock):
     """Test device registry remove."""
     await help_test_entity_device_info_remove(
-       .opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
@@ -707,14 +707,14 @@ async def test_entity_id_update_subscriptions.opp, mqtt_mock):
         }
     }
     await help_test_entity_id_update_subscriptions(
-       .opp, mqtt_mock, vacuum.DOMAIN, config, ["test-topic", "avty-topic"]
+        opp, mqtt_mock, vacuum.DOMAIN, config, ["test-topic", "avty-topic"]
     )
 
 
 async def test_entity_id_update_discovery_update.opp, mqtt_mock):
     """Test MQTT discovery update when entity_id is updated."""
     await help_test_entity_id_update_discovery_update(
-       .opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
+        opp, mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
@@ -731,5 +731,5 @@ async def test_entity_debug_info_message.opp, mqtt_mock):
         }
     }
     await help_test_entity_debug_info_message(
-       .opp, mqtt_mock, vacuum.DOMAIN, config, "test-topic"
+        opp, mqtt_mock, vacuum.DOMAIN, config, "test-topic"
     )

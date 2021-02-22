@@ -78,7 +78,7 @@ class AlexaIntentsView(http.OpenPeerPowerView):
             _LOGGER.warning(str(err))
             return self.json(
                 intent_error_response(
-                   .opp,
+                    opp,
                     message,
                     "This intent is not yet configured within Open Peer Power.",
                 )
@@ -88,7 +88,7 @@ class AlexaIntentsView(http.OpenPeerPowerView):
             _LOGGER.error("Received invalid slot data from Alexa: %s", err)
             return self.json(
                 intent_error_response(
-                   .opp, message, "Invalid slot information received for this intent."
+                    opp, message, "Invalid slot information received for this intent."
                 )
             )
 
@@ -157,7 +157,7 @@ async def async_handle_intent.opp, message):
         intent_name = alexa_intent_info["name"]
 
     intent_response = await intent.async_handle(
-       .opp,
+        opp,
         DOMAIN,
         intent_name,
         {key: {"value": value} for key, value in alexa_response.variables.items()},

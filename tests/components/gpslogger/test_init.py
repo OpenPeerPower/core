@@ -46,7 +46,7 @@ async def gpslogger_client(loop, opp, aiohttp_client):
 async def setup_zones(loop, opp):
     """Set up Zone config in HA."""
     assert await async_setup_component(
-       .opp,
+        opp,
         zone.DOMAIN,
         {
             "zone": {
@@ -64,7 +64,7 @@ async def setup_zones(loop, opp):
 async def webhook_id.opp, gpslogger_client):
     """Initialize the GPSLogger component and get the webhook_id."""
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(

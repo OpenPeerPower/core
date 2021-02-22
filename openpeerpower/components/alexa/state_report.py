@@ -62,7 +62,7 @@ async def async_enable_proactive_mode.opp, smart_home_config):
             return
 
         alexa_changed_entity: AlexaEntity = ENTITY_ADAPTERS[new_state.domain](
-           .opp, smart_home_config, new_state
+            opp, smart_home_config, new_state
         )
 
         # Determine how entity should be reported on
@@ -98,12 +98,12 @@ async def async_enable_proactive_mode.opp, smart_home_config):
 
         if should_report:
             await async_send_changereport_message(
-               .opp, smart_home_config, alexa_changed_entity, alexa_properties
+                opp, smart_home_config, alexa_changed_entity, alexa_properties
             )
 
         elif should_doorbell:
             await async_send_doorbell_event_message(
-               .opp, smart_home_config, alexa_changed_entity
+                opp, smart_home_config, alexa_changed_entity
             )
 
     return.opp.helpers.event.async_track_state_change(
@@ -112,7 +112,7 @@ async def async_enable_proactive_mode.opp, smart_home_config):
 
 
 async def async_send_changereport_message(
-   .opp, config, alexa_entity, alexa_properties, *, invalidate_access_token=True
+    opp, config, alexa_entity, alexa_properties, *, invalidate_access_token=True
 ):
     """Send a ChangeReport message for an Alexa entity.
 
@@ -166,7 +166,7 @@ async def async_send_changereport_message(
     ):
         config.async_invalidate_access_token()
         return await async_send_changereport_message(
-           .opp, config, alexa_entity, alexa_properties, invalidate_access_token=False
+            opp, config, alexa_entity, alexa_properties, invalidate_access_token=False
         )
 
     _LOGGER.error(

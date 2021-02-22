@@ -33,7 +33,7 @@ async def test_notify_file.opp, timestamp):
     message = "one, two, testing, testing"
     with assert_setup_component(1) as handle_config:
         assert await async_setup_component(
-           .opp,
+            opp,
             notify.DOMAIN,
             {
                 "notify": {

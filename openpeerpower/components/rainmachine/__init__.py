@@ -145,7 +145,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             api_category
         ] = DataUpdateCoordinator(
-           .opp,
+            opp,
             LOGGER,
             name=f'{controller.name} ("{api_category}")',
             update_interval=DEFAULT_UPDATE_INTERVAL,

@@ -32,7 +32,7 @@ async def test_config_cover.opp, do_options, read_type):
             }
         )
     await base_config_test(
-       .opp,
+        opp,
         device_config,
         device_name,
         COVER_DOMAIN,
@@ -71,7 +71,7 @@ async def test_coil_cover.opp, regs, expected):
     """Run test for given config."""
     cover_name = "modbus_test_cover"
     state = await base_test(
-       .opp,
+        opp,
         {
             CONF_NAME: cover_name,
             CALL_TYPE_COIL: 1234,
@@ -118,7 +118,7 @@ async def test_register_COVER.opp, regs, expected):
     """Run test for given config."""
     cover_name = "modbus_test_cover"
     state = await base_test(
-       .opp,
+        opp,
         {
             CONF_NAME: cover_name,
             CONF_REGISTER: 1234,

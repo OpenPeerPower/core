@@ -28,7 +28,7 @@ async def test_static_duplicate_static_entry.opp, pywemo_device):
     """Duplicate static entries are merged into a single entity."""
     static_config_entry = f"{MOCK_HOST}:{MOCK_PORT}"
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -49,7 +49,7 @@ async def test_static_duplicate_static_entry.opp, pywemo_device):
 async def test_static_config_with_port.opp, pywemo_device):
     """Static device with host and port is added and removed."""
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -67,7 +67,7 @@ async def test_static_config_with_port.opp, pywemo_device):
 async def test_static_config_without_port.opp, pywemo_device):
     """Static device with host and no port is added and removed."""
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -85,7 +85,7 @@ async def test_static_config_without_port.opp, pywemo_device):
 async def test_static_config_with_invalid_host.opp):
     """Component setup fails if a static host is invalid."""
     setup_success = await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -129,7 +129,7 @@ async def test_discovery.opp, pywemo_registry):
         "pywemo.discovery.device_from_uuid_and_location", side_effect=create_device
     ), patch("pywemo.ssdp.scan", return_value=upnp_entries) as mock_scan:
         assert await async_setup_component(
-           .opp, DOMAIN, {DOMAIN: {CONF_DISCOVERY: True}}
+            opp, DOMAIN, {DOMAIN: {CONF_DISCOVERY: True}}
         )
         await pywemo_registry.semaphore.acquire()  # Returns after platform setup.
         mock_scan.assert_called()
@@ -138,7 +138,7 @@ async def test_discovery.opp, pywemo_registry):
 
         # Test that discovery runs periodically and the async_dispatcher_send code works.
         async_fire_time_changed(
-           .opp,
+            opp,
             dt.utcnow()
             + timedelta(seconds=WemoDiscovery.ADDITIONAL_SECONDS_BETWEEN_SCANS + 1),
         )

@@ -43,7 +43,7 @@ def update_events.opp):
 
 
 async def test_get_or_create_returns_same_entry(
-   .opp, registry, area_registry, update_events
+    opp, registry, area_registry, update_events
 ):
     """Make sure we do not duplicate entries."""
     entry = registry.async_get_or_create(
@@ -1180,7 +1180,7 @@ async def test_get_or_create_sets_default_values.opp, registry):
 
 
 async def test_verify_suggested_area_does_not_overwrite_area_id(
-   .opp, registry, area_registry
+    opp, registry, area_registry
 ):
     """Make sure suggested area does not override a set area id."""
     game_room_area = area_registry.async_create("Game Room")

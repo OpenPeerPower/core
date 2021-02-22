@@ -54,7 +54,7 @@ async def test.oppio_addon_panel_startup.opp, aioclient_mock, oppio_env):
         assert aioclient_mock.call_count == 3
         assert mock_panel.called
         mock_panel.assert_called_with(
-           .opp,
+            opp,
             "test1",
             {"enable": True, "title": "Test", "icon": "mdi:test", "admin": False},
         )
@@ -96,7 +96,7 @@ async def test.oppio_addon_panel_api.opp, aioclient_mock, oppio_env, opp_client)
         assert aioclient_mock.call_count == 3
         assert mock_panel.called
         mock_panel.assert_called_with(
-           .opp,
+            opp,
             "test1",
             {"enable": True, "title": "Test", "icon": "mdi:test", "admin": False},
         )
@@ -111,7 +111,7 @@ async def test.oppio_addon_panel_api.opp, aioclient_mock, oppio_env, opp_client)
         assert mock_panel.call_count == 2
 
         mock_panel.assert_called_with(
-           .opp,
+            opp,
             "test1",
             {"enable": True, "title": "Test", "icon": "mdi:test", "admin": False},
         )

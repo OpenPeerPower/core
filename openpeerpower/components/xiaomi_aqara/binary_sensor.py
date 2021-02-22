@@ -90,7 +90,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                     entity,
                     "Wall Switch (Left)",
                     data_key_left,
-                   .opp,
+                    opp,
                     gateway,
                     config_entry,
                 )
@@ -100,7 +100,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                     entity,
                     "Wall Switch (Right)",
                     data_key_right,
-                   .opp,
+                    opp,
                     gateway,
                     config_entry,
                 )
@@ -110,7 +110,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                     entity,
                     "Wall Switch (Both)",
                     "dual_channel",
-                   .opp,
+                    opp,
                     gateway,
                     config_entry,
                 )

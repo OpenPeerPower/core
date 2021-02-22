@@ -24,7 +24,7 @@ async def test_state_none.opp):
             "command_off": f"echo 0 > {path}",
         }
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 "switch": {
@@ -70,7 +70,7 @@ async def test_state_value.opp):
             "value_template": '{{ value=="1" }}',
         }
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 "switch": {
@@ -118,7 +118,7 @@ async def test_state_json_value.opp):
             "value_template": '{{ value_json.status=="ok" }}',
         }
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 "switch": {
@@ -163,7 +163,7 @@ async def test_state_code.opp):
             "command_off": f"echo 0 > {path}",
         }
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 "switch": {
@@ -203,7 +203,7 @@ def test_assumed_state_should_be_true_if_command_state_is_none.opp):
     # args:.opp, device_name, friendly_name, command_on, command_off,
     #       command_state, value_template
     init_args = [
-       .opp,
+        opp,
         "test_device_name",
         "Test friendly name!",
         "echo 'on command'",
@@ -226,7 +226,7 @@ def test_assumed_state_should_be_true_if_command_state_is_none.opp):
 def test_entity_id_set_correctly.opp):
     """Test that entity_id is set correctly from object_id."""
     init_args = [
-       .opp,
+        opp,
         "test_device_name",
         "Test friendly name!",
         "echo 'on command'",

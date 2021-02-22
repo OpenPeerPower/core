@@ -44,7 +44,7 @@ async def test_service_data_not_a_dict.opp, calls):
     """Test service data not dict."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -58,7 +58,7 @@ async def test_service_data_not_a_dict.opp, calls):
 async def test_service_specify_data.opp, calls):
     """Test service data."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -91,7 +91,7 @@ async def test_service_specify_data.opp, calls):
 async def test_service_specify_entity_id.opp, calls):
     """Test service data."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -110,7 +110,7 @@ async def test_service_specify_entity_id.opp, calls):
 async def test_service_specify_entity_id_list.opp, calls):
     """Test service data."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -132,7 +132,7 @@ async def test_service_specify_entity_id_list.opp, calls):
 async def test_two_triggers.opp, calls):
     """Test triggers."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -156,7 +156,7 @@ async def test_two_triggers.opp, calls):
 async def test_trigger_service_ignoring_condition.opp, caplog, calls):
     """Test triggers."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -208,7 +208,7 @@ async def test_two_conditions_with_and.opp, calls):
     """Test two and conditions."""
     entity_id = "test.entity"
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -245,7 +245,7 @@ async def test_two_conditions_with_and.opp, calls):
 async def test_shorthand_conditions_template.opp, calls):
     """Test shorthand nation form in conditions."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -270,7 +270,7 @@ async def test_shorthand_conditions_template.opp, calls):
 async def test_automation_list_setting.opp, calls):
     """Event is not a valid condition."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -298,7 +298,7 @@ async def test_automation_list_setting.opp, calls):
 async def test_automation_calling_two_actions.opp, calls):
     """Test if we can call two actions from automation async definition."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -322,7 +322,7 @@ async def test_automation_calling_two_actions.opp, calls):
 async def test_shared_context.opp, calls):
     """Test that the shared context is passed down the chain."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -394,7 +394,7 @@ async def test_services.opp, calls):
     assert not automation.is_on.opp, entity_id)
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -471,7 +471,7 @@ async def test_services.opp, calls):
 async def test_reload_config_service.opp, calls, opp_admin_user, opp_read_only_user):
     """Test the reload config service."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -553,7 +553,7 @@ async def test_reload_config_when_invalid_config(opp, calls):
     """Test the reload config service handling invalid config."""
     with assert_setup_component(1, automation.DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -591,7 +591,7 @@ async def test_reload_config_when_invalid_config(opp, calls):
 async def test_reload_config_handles_load_fails.opp, calls):
     """Test the reload config service."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -691,7 +691,7 @@ async def test_automation_restore_state.opp):
     time = dt_util.utcnow()
 
     mock_restore_cache(
-       .opp,
+        opp,
         (
             State("automation.hello", STATE_ON),
             State("automation.bye", STATE_OFF, {"last_triggered": time}),
@@ -746,7 +746,7 @@ async def test_initial_value_off.opp):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -770,7 +770,7 @@ async def test_initial_value_on.opp):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -800,7 +800,7 @@ async def test_initial_value_off_but_restore_on.opp):
     mock_restore_cache.opp, (State("automation.hello", STATE_ON),))
 
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -825,7 +825,7 @@ async def test_initial_value_on_but_restore_off.opp):
     mock_restore_cache.opp, (State("automation.hello", STATE_OFF),))
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -849,7 +849,7 @@ async def test_no_initial_value_and_restore_off.opp):
     mock_restore_cache.opp, (State("automation.hello", STATE_OFF),))
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -871,7 +871,7 @@ async def test_automation_is_on_if_no_initial_state_or_restore.opp):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -894,7 +894,7 @@ async def test_automation_not_trigger_on_bootstrap.opp):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -924,7 +924,7 @@ async def test_automation_not_trigger_on_bootstrap.opp):
 async def test_automation_bad_trigger.opp, caplog):
     """Test bad trigger configuration."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -940,7 +940,7 @@ async def test_automation_bad_trigger.opp, caplog):
 async def test_automation_with_error_in_script.opp, caplog):
     """Test automation with an error in script."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -960,7 +960,7 @@ async def test_automation_with_error_in_script.opp, caplog):
 async def test_automation_with_error_in_script_2.opp, caplog):
     """Test automation with an error in script."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -981,7 +981,7 @@ async def test_automation_restore_last_triggered_with_initial_state.opp):
     time = dt_util.utcnow()
 
     mock_restore_cache(
-       .opp,
+        opp,
         (
             State("automation.hello", STATE_ON),
             State("automation.bye", STATE_ON, {"last_triggered": time}),
@@ -1033,7 +1033,7 @@ async def test_automation_restore_last_triggered_with_initial_state.opp):
 async def test_extraction_functions.opp):
     """Test extraction functions."""
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: [
@@ -1138,7 +1138,7 @@ async def test_logbook_humanify_automation_triggered_event.opp):
 
     event1, event2 = list(
         logbook.humanify(
-           .opp,
+            opp,
             [
                 MockLazyEventPartialState(
                     EVENT_AUTOMATION_TRIGGERED,
@@ -1174,7 +1174,7 @@ async def test_automation_variables.opp, caplog):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -1247,7 +1247,7 @@ async def test_automation_trigger_variables.opp, caplog):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -1307,7 +1307,7 @@ async def test_automation_bad_trigger_variables.opp, caplog):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -1333,7 +1333,7 @@ async def test_automation_bad_trigger_variables.opp, caplog):
 async def test_blueprint_automation.opp, calls):
     """Test blueprint automation."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "automation",
         {
             "automation": {

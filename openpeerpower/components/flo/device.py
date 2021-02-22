@@ -29,7 +29,7 @@ class FloDeviceDataUpdateCoordinator(DataUpdateCoordinator):
         self._device_information: Optional[Dict[str, Any]] = None
         self._water_usage: Optional[Dict[str, Any]] = None
         super().__init__(
-           .opp,
+            opp,
             LOGGER,
             name=f"{FLO_DOMAIN}-{device_id}",
             update_interval=timedelta(seconds=60),

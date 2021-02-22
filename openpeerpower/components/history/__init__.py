@@ -94,7 +94,7 @@ def get_significant_states.opp, *args, **kwargs):
 
 
 def _get_significant_states(
-   .opp,
+    opp,
     session,
     start_time,
     end_time=None,
@@ -153,7 +153,7 @@ def _get_significant_states(
         _LOGGER.debug("get_significant_states took %fs", elapsed)
 
     return _sorted_states_to_json(
-       .opp,
+        opp,
         session,
         states,
         start_time,
@@ -227,7 +227,7 @@ def get_last_state_changes.opp, number_of_states, entity_id):
         entity_ids = [entity_id] if entity_id is not None else None
 
         return _sorted_states_to_json(
-           .opp,
+            opp,
             session,
             reversed(states),
             start_time,
@@ -247,17 +247,17 @@ def get_states.opp, utc_point_in_time, entity_ids=None, run=None, filters=None):
 
     with session_scope.opp.opp) as session:
         return _get_states_with_session(
-           .opp, session, utc_point_in_time, entity_ids, run, filters
+            opp, session, utc_point_in_time, entity_ids, run, filters
         )
 
 
 def _get_states_with_session(
-   .opp, session, utc_point_in_time, entity_ids=None, run=None, filters=None
+    opp, session, utc_point_in_time, entity_ids=None, run=None, filters=None
 ):
     """Return the states at a specific point in time."""
     if entity_ids and len(entity_ids) == 1:
         return _get_single_entity_states_with_session(
-           .opp, session, utc_point_in_time, entity_ids[0]
+            opp, session, utc_point_in_time, entity_ids[0]
         )
 
     if run is None:
@@ -336,7 +336,7 @@ def _get_single_entity_states_with_session.opp, session, utc_point_in_time, enti
 
 
 def _sorted_states_to_json(
-   .opp,
+    opp,
     session,
     states,
     start_time,
@@ -367,7 +367,7 @@ def _sorted_states_to_json(
     if include_start_time_state:
         run = recorder.run_information_from_instance.opp, start_time)
         for state in _get_states_with_session(
-           .opp, session, start_time, entity_ids, run=run, filters=filters
+            opp, session, start_time, entity_ids, run=run, filters=filters
         ):
             state.last_changed = start_time
             state.last_updated = start_time
@@ -515,7 +515,7 @@ class HistoryPeriodView(OpenPeerPowerView):
             web.Response,
             await opp.async_add_executor_job(
                 self._sorted_significant_states_json,
-               .opp,
+                opp,
                 start_time,
                 end_time,
                 entity_ids,
@@ -527,7 +527,7 @@ class HistoryPeriodView(OpenPeerPowerView):
 
     def _sorted_significant_states_json(
         self,
-       .opp,
+        opp,
         start_time,
         end_time,
         entity_ids,
@@ -540,7 +540,7 @@ class HistoryPeriodView(OpenPeerPowerView):
 
         with session_scope.opp.opp) as session:
             result = _get_significant_states(
-               .opp,
+                opp,
                 session,
                 start_time,
                 end_time,

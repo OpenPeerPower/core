@@ -7,7 +7,7 @@ from .const import DOMAIN, LOGGER
 
 @callback
 def async_add_acmeda_entities(
-   .opp, entity_class, config_entry, current, async_add_entities
+    opp, entity_class, config_entry, current, async_add_entities
 ):
     """Add any new entities."""
     hub = opp.data[DOMAIN][config_entry.entry_id]

@@ -306,7 +306,7 @@ class Integration:
                 continue
 
             return cls(
-               .opp, f"{root_module.__name__}.{domain}", manifest_path.parent, manifest
+                opp, f"{root_module.__name__}.{domain}", manifest_path.parent, manifest
             )
 
         return None
@@ -325,7 +325,7 @@ class Integration:
             return None
 
         return cls(
-           .opp,
+            opp,
             comp.__name__,
             pathlib.Path(comp.__file__).parent,
             manifest_from_legacy_module(domain, comp),
@@ -749,7 +749,7 @@ async def _async_component_dependencies(
 
         if dep_integration.dependencies:
             dep_loaded = await _async_component_dependencies(
-               .opp, start_domain, dep_integration, loaded, loading
+                opp, start_domain, dep_integration, loaded, loading
             )
 
             loaded.update(dep_loaded)

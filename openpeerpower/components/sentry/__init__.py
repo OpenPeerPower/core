@@ -86,7 +86,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         integrations=[sentry_logging, AioHttpIntegration(), SqlalchemyIntegration()],
         release=current_version,
         before_send=lambda event, hint: process_before_send(
-           .opp,
+            opp,
             entry.options,
             channel,
             huuid,

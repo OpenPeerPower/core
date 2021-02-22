@@ -67,7 +67,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 @bind.opp
 async def async_register_panel(
-   .opp,
+    opp,
     # The url to serve the panel
     frontend_url_path,
     # The webcomponent name that loads your panel

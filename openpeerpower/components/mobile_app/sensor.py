@@ -65,7 +65,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         async_add_entities([MobileAppSensor(data, device, config_entry)])
 
     async_dispatcher_connect(
-       .opp,
+        opp,
         f"{DOMAIN}_{ENTITY_TYPE}_register",
         partial(handle_sensor_registration, webhook_id),
     )

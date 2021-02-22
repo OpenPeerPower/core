@@ -570,7 +570,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
             if state_will_change:
                 # Wait for the state to change.
                 await wait_for_state_change_or_timeout(
-                   .opp, entity_id, STATE_CACHED_TIMEOUT
+                    opp, entity_id, STATE_CACHED_TIMEOUT
                 )
 
         # Create success responses for all received keys

@@ -72,7 +72,7 @@ async def _async_create_entities.opp, config):
 
         switches.append(
             SwitchTemplate(
-               .opp,
+                opp,
                 device,
                 friendly_name,
                 state_template,
@@ -99,7 +99,7 @@ class SwitchTemplate(TemplateEntity, SwitchEntity, RestoreEntity):
 
     def __init__(
         self,
-       .opp,
+        opp,
         device_id,
         friendly_name,
         state_template,

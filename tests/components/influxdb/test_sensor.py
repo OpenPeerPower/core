@@ -310,7 +310,7 @@ async def test_config_failure.opp, config_ext):
     indirect=["mock_client"],
 )
 async def test_state_matches_query_result(
-   .opp, mock_client, config_ext, queries, set_query_mock, make_resultset
+    opp, mock_client, config_ext, queries, set_query_mock, make_resultset
 ):
     """Test state of sensor matches respone from query api."""
     set_query_mock(mock_client, return_value=make_resultset(42))
@@ -341,7 +341,7 @@ async def test_state_matches_query_result(
     indirect=["mock_client"],
 )
 async def test_state_matches_first_query_result_for_multiple_return(
-   .opp, caplog, mock_client, config_ext, queries, set_query_mock, make_resultset
+    opp, caplog, mock_client, config_ext, queries, set_query_mock, make_resultset
 ):
     """Test state of sensor matches respone from query api."""
     set_query_mock(mock_client, return_value=make_resultset(42, "not used"))
@@ -367,7 +367,7 @@ async def test_state_matches_first_query_result_for_multiple_return(
     indirect=["mock_client"],
 )
 async def test_state_for_no_results(
-   .opp, caplog, mock_client, config_ext, queries, set_query_mock
+    opp, caplog, mock_client, config_ext, queries, set_query_mock
 ):
     """Test state of sensor matches respone from query api."""
     set_query_mock(mock_client)
@@ -428,7 +428,7 @@ async def test_state_for_no_results(
     indirect=["mock_client"],
 )
 async def test_error_querying_influx(
-   .opp, caplog, mock_client, config_ext, queries, set_query_mock, query_exception
+    opp, caplog, mock_client, config_ext, queries, set_query_mock, query_exception
 ):
     """Test behavior of sensor when influx returns error."""
     set_query_mock(mock_client, query_exception=query_exception)
@@ -470,7 +470,7 @@ async def test_error_querying_influx(
     indirect=["mock_client"],
 )
 async def test_error_rendering_template(
-   .opp, caplog, mock_client, config_ext, queries, set_query_mock, make_resultset
+    opp, caplog, mock_client, config_ext, queries, set_query_mock, make_resultset
 ):
     """Test behavior of sensor with error rendering template."""
     set_query_mock(mock_client, return_value=make_resultset(42))
@@ -529,7 +529,7 @@ async def test_error_rendering_template(
     indirect=["mock_client"],
 )
 async def test_connection_error_at_startup(
-   .opp,
+    opp,
     caplog,
     mock_client,
     config_ext,
@@ -582,7 +582,7 @@ async def test_connection_error_at_startup(
     indirect=["mock_client"],
 )
 async def test_data_repository_not_found(
-   .opp,
+    opp,
     caplog,
     mock_client,
     config_ext,

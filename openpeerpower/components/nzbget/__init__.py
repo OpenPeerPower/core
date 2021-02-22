@@ -90,7 +90,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
        .opp.config_entries.async_update_entry(entry, options=options)
 
     coordinator = NZBGetDataUpdateCoordinator(
-       .opp,
+        opp,
         config=entry.data,
         options=entry.options,
     )

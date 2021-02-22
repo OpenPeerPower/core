@@ -43,7 +43,7 @@ async def async_setup_entry.opp, entry):
             raise UpdateFailed(err) from err
 
     coordinator = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name="Advantage Air",
         update_method=async_get,

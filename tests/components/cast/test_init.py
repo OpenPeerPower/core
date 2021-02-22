@@ -38,7 +38,7 @@ async def test_configuring_cast_creates_entry.opp):
         "openpeerpower.components.cast.async_setup_entry", return_value=True
     ) as mock_setup:
         await async_setup_component(
-           .opp, cast.DOMAIN, {"cast": {"some_config": "to_trigger_import"}}
+            opp, cast.DOMAIN, {"cast": {"some_config": "to_trigger_import"}}
         )
         await opp.async_block_till_done()
 

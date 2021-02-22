@@ -36,7 +36,7 @@ async def test_default_setup_opp, monkeypatch):
     """Test all basic functionality of the rflink switch component."""
     # setup mocking rflink module
     event_callback, create, protocol, _ = await mock_rflink(
-       .opp, CONFIG, DOMAIN, monkeypatch
+        opp, CONFIG, DOMAIN, monkeypatch
     )
 
     # make sure arguments are passed
@@ -264,7 +264,7 @@ async def test_restore_state.opp, monkeypatch):
     }
 
     mock_restore_cache(
-       .opp, (State(f"{DOMAIN}.s1", STATE_ON), State(f"{DOMAIN}.s2", STATE_OFF))
+        opp, (State(f"{DOMAIN}.s1", STATE_ON), State(f"{DOMAIN}.s2", STATE_OFF))
     )
 
    .opp.state = CoreState.starting

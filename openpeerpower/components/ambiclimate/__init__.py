@@ -28,7 +28,7 @@ async def async_setup_opp, config):
     conf = config[DOMAIN]
 
     config_flow.register_flow_implementation(
-       .opp, conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET]
+        opp, conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET]
     )
 
     return True

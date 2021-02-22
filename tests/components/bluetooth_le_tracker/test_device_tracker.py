@@ -46,7 +46,7 @@ async def test_preserve_new_tracked_device_name.opp, mock_device_tracker_conf):
         # Tick until device seen enough times for to be registered for tracking
         for _ in range(device_tracker.MIN_SEEN_NEW - 1):
             async_fire_time_changed(
-               .opp,
+                opp,
                 dt_util.utcnow() + config[CONF_SCAN_INTERVAL] + timedelta(seconds=1),
             )
             await opp.async_block_till_done()

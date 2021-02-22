@@ -22,7 +22,7 @@ from openpeerpower.util.unit_system import METRIC_SYSTEM
 async def test_attributes.opp):
     """Test weather attributes."""
     assert await async_setup_component(
-       .opp, weather.DOMAIN, {"weather": {"platform": "demo"}}
+        opp, weather.DOMAIN, {"weather": {"platform": "demo"}}
     )
    .opp.config.units = METRIC_SYSTEM
     await opp.async_block_till_done()
@@ -58,7 +58,7 @@ async def test_attributes.opp):
 async def test_temperature_convert.opp):
     """Test temperature conversion."""
     assert await async_setup_component(
-       .opp, weather.DOMAIN, {"weather": {"platform": "demo"}}
+        opp, weather.DOMAIN, {"weather": {"platform": "demo"}}
     )
    .opp.config.units = METRIC_SYSTEM
     await opp.async_block_till_done()

@@ -42,11 +42,11 @@ async def test_zeroconf_abort_if_existing_entry.opp):
 
 
 async def test_full_flow(
-   .opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Check a full flow."""
     assert await setup.async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {CONF_CLIENT_ID: "client", CONF_CLIENT_SECRET: "secret"},
@@ -60,7 +60,7 @@ async def test_full_flow(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-       .opp,
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -112,11 +112,11 @@ async def test_full_flow(
 
 
 async def test_abort_if_spotify_error(
-   .opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Check Spotify errors causes flow to abort."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {CONF_CLIENT_ID: "client", CONF_CLIENT_SECRET: "secret"},
@@ -130,7 +130,7 @@ async def test_abort_if_spotify_error(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-       .opp,
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -160,11 +160,11 @@ async def test_abort_if_spotify_error(
 
 
 async def test_reauthentication(
-   .opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test Spotify reauthentication."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {CONF_CLIENT_ID: "client", CONF_CLIENT_SECRET: "secret"},
@@ -191,7 +191,7 @@ async def test_reauthentication(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-       .opp,
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -225,11 +225,11 @@ async def test_reauthentication(
 
 
 async def test_reauth_account_mismatch(
-   .opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test Spotify reauthentication with different account."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {CONF_CLIENT_ID: "client", CONF_CLIENT_SECRET: "secret"},
@@ -254,7 +254,7 @@ async def test_reauth_account_mismatch(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-       .opp,
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",

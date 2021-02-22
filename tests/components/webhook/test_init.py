@@ -37,7 +37,7 @@ async def test_unregistering_webhook.opp, mock_client):
 async def test_generate_webhook_url.opp):
     """Test we generate a webhook url correctly."""
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"external_url": "https://example.com"},
     )
     url = opp.components.webhook.async_generate_url("some_id")

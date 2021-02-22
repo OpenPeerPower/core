@@ -59,7 +59,7 @@ class AtagDataUpdateCoordinator(DataUpdateCoordinator):
         self.atag = AtagOne(session=session, **entry.data)
 
         super().__init__(
-           .opp, _LOGGER, name=DOMAIN, update_interval=timedelta(seconds=30)
+            opp, _LOGGER, name=DOMAIN, update_interval=timedelta(seconds=30)
         )
 
     async def _async_update_data(self):

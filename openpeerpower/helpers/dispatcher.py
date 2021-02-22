@@ -2,7 +2,7 @@
 import logging
 from typing import Any, Callable
 
-from openpeerpower.core import HassJob, callback
+from openpeerpower.core import OppJob, callback
 from openpeerpower.loader import bind.opp
 from openpeerpower.util.async_ import run_callback_threadsafe
 from openpeerpower.util.logging import catch_log_exception
@@ -41,7 +41,7 @@ def async_dispatcher_connect(
     if DATA_DISPATCHER not in.opp.data:
        .opp.data[DATA_DISPATCHER] = {}
 
-    job = HassJob(
+    job = OppJob(
         catch_log_exception(
             target,
             lambda *args: "Exception in {} when dispatching '{}': {}".format(

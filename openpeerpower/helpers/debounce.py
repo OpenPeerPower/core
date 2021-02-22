@@ -3,7 +3,7 @@ import asyncio
 from logging import Logger
 from typing import Any, Awaitable, Callable, Optional
 
-from openpeerpower.core import HassJob, OpenPeerPower, callback
+from openpeerpower.core import OppJob, OpenPeerPower, callback
 
 
 class Debouncer:
@@ -32,7 +32,7 @@ class Debouncer:
         self._timer_task: Optional[asyncio.TimerHandle] = None
         self._execute_at_end_of_timer: bool = False
         self._execute_lock = asyncio.Lock()
-        self._job: Optional[HassJob] = None if function is None else HassJob(function)
+        self._job: Optional[OppJob] = None if function is None else OppJob(function)
 
     @property
     def function(self) -> Optional[Callable[..., Awaitable[Any]]]:
@@ -44,7 +44,7 @@ class Debouncer:
         """Update the function being wrapped by the Debouncer."""
         self._function = function
         if self._job is None or function != self._job.target:
-            self._job = HassJob(function)
+            self._job = OppJob(function)
 
     async def async_call(self) -> None:
         """Call the function."""

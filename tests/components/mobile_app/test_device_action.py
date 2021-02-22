@@ -16,7 +16,7 @@ async def test_get_actions.opp, push_registration):
     ]
 
     capabilitites = await device_automation._async_get_device_automation_capabilities(
-       .opp, "action", {"domain": DOMAIN, "device_id": device_id, "type": "notify"}
+        opp, "action", {"domain": DOMAIN, "device_id": device_id, "type": "notify"}
     )
     assert "extra_fields" in capabilitites
 
@@ -26,7 +26,7 @@ async def test_action.opp, push_registration):
     webhook_id = push_registration["webhook_id"]
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

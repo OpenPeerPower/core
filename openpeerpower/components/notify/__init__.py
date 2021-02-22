@@ -253,7 +253,7 @@ async def async_setup_opp, config):
             p_config = {}
 
         platform = await async_prepare_setup_platform(
-           .opp, config, DOMAIN, integration_name
+            opp, config, DOMAIN, integration_name
         )
 
         if platform is None:
@@ -265,7 +265,7 @@ async def async_setup_opp, config):
         try:
             if hasattr(platform, "async_get_service"):
                 notify_service = await platform.async_get_service(
-                   .opp, p_config, discovery_info
+                    opp, p_config, discovery_info
                 )
             elif hasattr(platform, "get_service"):
                 notify_service = await opp.async_add_executor_job(

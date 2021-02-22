@@ -55,7 +55,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     cameras = [
         PushCamera(
-           .opp,
+            opp,
             config[CONF_NAME],
             config[CONF_BUFFER_SIZE],
             config[CONF_TIMEOUT],

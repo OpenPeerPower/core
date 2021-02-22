@@ -41,7 +41,7 @@ async def test_triggers.opp, tag_setup, calls):
     """Test tag triggers."""
     assert await tag_setup()
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -82,7 +82,7 @@ async def test_exception_bad_trigger.opp, calls, caplog):
     """Test for exception on event triggers firing."""
 
     await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -104,7 +104,7 @@ async def test_multiple_tags_and_devices_trigger.opp, tag_setup, calls):
     """Test multiple tags and devices triggers."""
     assert await tag_setup()
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

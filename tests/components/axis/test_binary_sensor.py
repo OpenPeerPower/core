@@ -40,7 +40,7 @@ async def test_platform_manually_configured.opp):
     """Test that nothing happens when platform is manually configured."""
     assert (
         await async_setup_component(
-           .opp,
+            opp,
             BINARY_SENSOR_DOMAIN,
             {BINARY_SENSOR_DOMAIN: {"platform": AXIS_DOMAIN}},
         )

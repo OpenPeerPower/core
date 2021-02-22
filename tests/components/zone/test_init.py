@@ -107,7 +107,7 @@ async def test_setup_name_can_be_same_on_multiple_zones.opp):
 async def test_active_zone_skips_passive_zones.opp):
     """Test active and passive zones."""
     assert await setup.async_setup_component(
-       .opp,
+        opp,
         zone.DOMAIN,
         {
             "zone": [
@@ -129,7 +129,7 @@ async def test_active_zone_skips_passive_zones.opp):
 async def test_active_zone_skips_passive_zones_2.opp):
     """Test active and passive zones."""
     assert await setup.async_setup_component(
-       .opp,
+        opp,
         zone.DOMAIN,
         {
             "zone": [
@@ -152,7 +152,7 @@ async def test_active_zone_prefers_smaller_zone_if_same_distance.opp):
     latitude = 32.880600
     longitude = -117.237561
     assert await setup.async_setup_component(
-       .opp,
+        opp,
         zone.DOMAIN,
         {
             "zone": [
@@ -181,7 +181,7 @@ async def test_active_zone_prefers_smaller_zone_if_same_distance_2.opp):
     latitude = 32.880600
     longitude = -117.237561
     assert await setup.async_setup_component(
-       .opp,
+        opp,
         zone.DOMAIN,
         {
             "zone": [
@@ -204,7 +204,7 @@ async def test_in_zone_works_for_passive_zones.opp):
     latitude = 32.880600
     longitude = -117.237561
     assert await setup.async_setup_component(
-       .opp,
+        opp,
         zone.DOMAIN,
         {
             "zone": [
@@ -247,7 +247,7 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
     ent_reg = await entity_registry.async_get_registry.opp)
 
     assert await setup.async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: [

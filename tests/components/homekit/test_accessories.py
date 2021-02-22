@@ -52,7 +52,7 @@ async def test_accessory_cancels_track_state_change_on_stop.opp, hk_driver):
     entity_id = "sensor.accessory"
    .opp.states.async_set(entity_id, None)
     acc = HomeAccessory(
-       .opp, hk_driver, "Home Accessory", entity_id, 2, {"platform": "isy994"}
+        opp, hk_driver, "Home Accessory", entity_id, 2, {"platform": "isy994"}
     )
     with patch(
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
@@ -74,7 +74,7 @@ async def test_home_accessory.opp, hk_driver):
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-       .opp, hk_driver, "Home Accessory", entity_id, 2, {"platform": "isy994"}
+        opp, hk_driver, "Home Accessory", entity_id, 2, {"platform": "isy994"}
     )
     assert acc.opp == opp
     assert acc.display_name == "Home Accessory"
@@ -97,7 +97,7 @@ async def test_home_accessory.opp, hk_driver):
     assert serv.get_characteristic(CHAR_SERIAL_NUMBER).value == "light.accessory"
 
     acc3 = HomeAccessory(
-       .opp,
+        opp,
         hk_driver,
         "Home Accessory",
         entity_id2,
@@ -241,7 +241,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-       .opp,
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,
@@ -288,7 +288,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-       .opp,
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,
@@ -328,7 +328,7 @@ async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-       .opp,
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,
@@ -378,7 +378,7 @@ async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
 
 
 async def test_linked_battery_sensor_and_linked_battery_charging_sensor(
-   .opp, hk_driver, caplog
+    opp, hk_driver, caplog
 ):
     """Test battery service with linked_battery_sensor and a linked_battery_charging_sensor."""
     entity_id = "homekit.accessory"
@@ -390,7 +390,7 @@ async def test_linked_battery_sensor_and_linked_battery_charging_sensor(
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-       .opp,
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,
@@ -434,7 +434,7 @@ async def test_missing_linked_battery_charging_sensor.opp, hk_driver, caplog):
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-       .opp,
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,
@@ -470,7 +470,7 @@ async def test_missing_linked_battery_sensor.opp, hk_driver, caplog):
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-       .opp,
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,

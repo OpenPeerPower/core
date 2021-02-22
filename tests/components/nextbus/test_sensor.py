@@ -113,7 +113,7 @@ async def test_validate_tags.opp, mock_nextbus, mock_nextbus_lists):
 
 
 async def test_verify_valid_state(
-   .opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
+    opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
 ):
     """Verify all attributes are set from a valid response."""
     await assert_setup_sensor.opp, CONFIG_BASIC)
@@ -132,7 +132,7 @@ async def test_verify_valid_state(
 
 
 async def test_message_dict(
-   .opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
+    opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
 ):
     """Verify that a single dict message is rendered correctly."""
     mock_nextbus_predictions.return_value = {
@@ -160,7 +160,7 @@ async def test_message_dict(
 
 
 async def test_message_list(
-   .opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
+    opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
 ):
     """Verify that a list of messages are rendered correctly."""
     mock_nextbus_predictions.return_value = {
@@ -188,7 +188,7 @@ async def test_message_list(
 
 
 async def test_direction_list(
-   .opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
+    opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
 ):
     """Verify that a list of messages are rendered correctly."""
     mock_nextbus_predictions.return_value = {
@@ -227,7 +227,7 @@ async def test_direction_list(
 
 
 async def test_custom_name(
-   .opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
+    opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
 ):
     """Verify that a custom name can be set via config."""
     config = deepcopy(CONFIG_BASIC)
@@ -239,7 +239,7 @@ async def test_custom_name(
 
 
 async def test_no_predictions(
-   .opp, mock_nextbus, mock_nextbus_predictions, mock_nextbus_lists
+    opp, mock_nextbus, mock_nextbus_predictions, mock_nextbus_lists
 ):
     """Verify there are no exceptions when no predictions are returned."""
     mock_nextbus_predictions.return_value = {}
@@ -252,7 +252,7 @@ async def test_no_predictions(
 
 
 async def test_verify_no_upcoming(
-   .opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
+    opp, mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
 ):
     """Verify attributes are set despite no upcoming times."""
     mock_nextbus_predictions.return_value = {

@@ -33,14 +33,14 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             return
         entities = await opp.async_add_executor_job(
             _setup_entities,
-           .opp,
+            opp,
             dev_ids,
             platform,
         )
         async_add_entities(entities)
 
     async_dispatcher_connect(
-       .opp, TUYA_DISCOVERY_NEW.format(SENSOR_DOMAIN), async_discover_sensor
+        opp, TUYA_DISCOVERY_NEW.format(SENSOR_DOMAIN), async_discover_sensor
     )
 
     devices_ids = opp.data[DOMAIN]["pending"].pop(SENSOR_DOMAIN)

@@ -21,7 +21,7 @@ async def test_koogeek_p1eu_setup_opp):
     assert entry.unique_id == "homekit-EUCP03190xxxxx48-7"
 
     helper = Helper(
-       .opp, "switch.koogeek_p1_a00aa0", pairing, accessories[0], config_entry
+        opp, "switch.koogeek_p1_a00aa0", pairing, accessories[0], config_entry
     )
     state = await helper.poll_and_get_state()
     assert state.attributes["friendly_name"] == "Koogeek-P1-A00AA0"
@@ -38,7 +38,7 @@ async def test_koogeek_p1eu_setup_opp):
     assert entry.unique_id == "homekit-EUCP03190xxxxx48-aid:1-sid:21-cid:21"
 
     helper = Helper(
-       .opp,
+        opp,
         "sensor.koogeek_p1_a00aa0_real_time_energy",
         pairing,
         accessories[0],

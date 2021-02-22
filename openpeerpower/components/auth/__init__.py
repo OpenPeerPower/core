@@ -183,7 +183,7 @@ RESULT_TYPE_USER = "user"
 
 @bind.opp
 def create_auth_code(
-   .opp, client_id: str, credential_or_user: Union[Credentials, User]
+    opp, client_id: str, credential_or_user: Union[Credentials, User]
 ) -> str:
     """Create an authorization code to fetch tokens."""
     return.opp.data[DOMAIN](client_id, credential_or_user)
@@ -570,7 +570,7 @@ def websocket_sign_path(
             msg["id"],
             {
                 "path": async_sign_path(
-                   .opp,
+                    opp,
                     connection.refresh_token_id,
                     msg["path"],
                     timedelta(seconds=msg["expires"]),

@@ -82,7 +82,7 @@ async def setup_tests.opp, config, times, values, expected_state):
 async def test_dataSet1.opp):
     """Test derivative sensor state."""
     await setup_tests(
-       .opp,
+        opp,
         {"unit_time": TIME_SECONDS},
         times=[20, 30, 40, 50],
         values=[10, 30, 5, 0],
@@ -93,7 +93,7 @@ async def test_dataSet1.opp):
 async def test_dataSet2.opp):
     """Test derivative sensor state."""
     await setup_tests(
-       .opp,
+        opp,
         {"unit_time": TIME_SECONDS},
         times=[20, 30],
         values=[5, 0],
@@ -104,7 +104,7 @@ async def test_dataSet2.opp):
 async def test_dataSet3.opp):
     """Test derivative sensor state."""
     state = await setup_tests(
-       .opp,
+        opp,
         {"unit_time": TIME_SECONDS},
         times=[20, 30],
         values=[5, 10],
@@ -117,7 +117,7 @@ async def test_dataSet3.opp):
 async def test_dataSet4.opp):
     """Test derivative sensor state."""
     await setup_tests(
-       .opp,
+        opp,
         {"unit_time": TIME_SECONDS},
         times=[20, 30],
         values=[5, 5],
@@ -128,7 +128,7 @@ async def test_dataSet4.opp):
 async def test_dataSet5.opp):
     """Test derivative sensor state."""
     await setup_tests(
-       .opp,
+        opp,
         {"unit_time": TIME_SECONDS},
         times=[20, 30],
         values=[10, -10],
@@ -157,7 +157,7 @@ async def test_data_moving_average_for_discrete_sensor.opp):
     times = list(range(0, 1800 + 30, 30))
 
     config, entity_id = await _setup_sensor(
-       .opp,
+        opp,
         {
             "time_window": {"seconds": time_window},
             "unit_time": TIME_MINUTES,

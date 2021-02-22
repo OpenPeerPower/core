@@ -351,7 +351,7 @@ async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
 
 
 async def test_pure_rgb_dimmer_light(
-   .opp, light_data, light_pure_rgb_msg, sent_messages
+    opp, light_data, light_pure_rgb_msg, sent_messages
 ):
     """Test light with no color channels command class."""
     receive_message = await setup_ozw.opp, fixture=light_data)
@@ -432,7 +432,7 @@ async def test_no_rgb_light.opp, light_data, light_no_rgb_msg, sent_messages):
 
 
 async def test_no_ww_light(
-   .opp, light_no_ww_data, light_msg, light_rgb_msg, sent_messages
+    opp, light_no_ww_data, light_msg, light_rgb_msg, sent_messages
 ):
     """Test setting up config entry."""
     receive_message = await setup_ozw.opp, fixture=light_no_ww_data)
@@ -476,7 +476,7 @@ async def test_no_ww_light(
 
 
 async def test_no_cw_light(
-   .opp, light_no_cw_data, light_msg, light_rgb_msg, sent_messages
+    opp, light_no_cw_data, light_msg, light_rgb_msg, sent_messages
 ):
     """Test setting up config entry."""
     receive_message = await setup_ozw.opp, fixture=light_no_cw_data)

@@ -97,7 +97,7 @@ def area_mock.opp):
     device_diff_area = dev_reg.DeviceEntry(area_id="diff-area")
 
     mock_device_registry(
-       .opp,
+        opp,
         {
             device_in_area.id: device_in_area,
             device_no_area.id: device_no_area,
@@ -144,7 +144,7 @@ def area_mock.opp):
         device_id=device_diff_area.id,
     )
     mock_registry(
-       .opp,
+        opp,
         {
             entity_in_own_area.entity_id: entity_in_own_area,
             entity_in_area.entity_id: entity_in_area,
@@ -300,7 +300,7 @@ async def test_extract_entity_ids.opp):
     assert await async_setup_component.opp, "group", {})
     await opp.async_block_till_done()
     await opp.components.group.Group.async_create_group(
-       .opp, "test", ["light.Ceiling", "light.Kitchen"]
+        opp, "test", ["light.Ceiling", "light.Kitchen"]
     )
 
     call = ha.ServiceCall("light", "turn_on", {ATTR_ENTITY_ID: "light.Bowl"})
@@ -310,16 +310,16 @@ async def test_extract_entity_ids.opp):
     call = ha.ServiceCall("light", "turn_on", {ATTR_ENTITY_ID: "group.test"})
 
     assert {"light.ceiling", "light.kitchen"} == await service.async_extract_entity_ids(
-       .opp, call
+        opp, call
     )
 
     assert {"group.test"} == await service.async_extract_entity_ids(
-       .opp, call, expand_group=False
+        opp, call, expand_group=False
     )
 
     assert (
         await service.async_extract_entity_ids(
-           .opp,
+            opp,
             ha.ServiceCall("light", "turn_on", {ATTR_ENTITY_ID: ENTITY_MATCH_NONE}),
         )
         == set()
@@ -351,7 +351,7 @@ async def test_extract_entity_ids_from_area.opp, area_mock):
 
     assert (
         await service.async_extract_entity_ids(
-           .opp, ha.ServiceCall("light", "turn_on", {"area_id": ENTITY_MATCH_NONE})
+            opp, ha.ServiceCall("light", "turn_on", {"area_id": ENTITY_MATCH_NONE})
         )
         == set()
     )
@@ -384,7 +384,7 @@ async def test_call_with_required_features.opp, mock_entities):
     """Test service calls invoked only if entity has required features."""
     test_service_mock = AsyncMock(return_value=None)
     await service.entity_service_call(
-       .opp,
+        opp,
         [Mock(entities=mock_entities)],
         test_service_mock,
         ha.ServiceCall("test_domain", "test_service", {"entity_id": "all"}),
@@ -404,7 +404,7 @@ async def test_call_with_both_required_features.opp, mock_entities):
     """Test service calls invoked only if entity has both features."""
     test_service_mock = AsyncMock(return_value=None)
     await service.entity_service_call(
-       .opp,
+        opp,
         [Mock(entities=mock_entities)],
         test_service_mock,
         ha.ServiceCall("test_domain", "test_service", {"entity_id": "all"}),
@@ -421,7 +421,7 @@ async def test_call_with_one_of_required_features.opp, mock_entities):
     """Test service calls invoked with one entity having the required features."""
     test_service_mock = AsyncMock(return_value=None)
     await service.entity_service_call(
-       .opp,
+        opp,
         [Mock(entities=mock_entities)],
         test_service_mock,
         ha.ServiceCall("test_domain", "test_service", {"entity_id": "all"}),
@@ -442,7 +442,7 @@ async def test_call_with_sync_func.opp, mock_entities):
     """Test invoking sync service calls."""
     test_service_mock = Mock(return_value=None)
     await service.entity_service_call(
-       .opp,
+        opp,
         [Mock(entities=mock_entities)],
         test_service_mock,
         ha.ServiceCall("test_domain", "test_service", {"entity_id": "light.kitchen"}),
@@ -454,7 +454,7 @@ async def test_call_with_sync_attr.opp, mock_entities):
     """Test invoking sync service calls."""
     mock_method = mock_entities["light.kitchen"].sync_method = Mock(return_value=None)
     await service.entity_service_call(
-       .opp,
+        opp,
         [Mock(entities=mock_entities)],
         "sync_method",
         ha.ServiceCall(
@@ -472,7 +472,7 @@ async def test_call_context_user_not_exist.opp):
     """Check we don't allow deleted users to do things."""
     with pytest.raises(exceptions.UnknownUser) as err:
         await service.entity_service_call(
-           .opp,
+            opp,
             [],
             Mock(),
             ha.ServiceCall(
@@ -496,7 +496,7 @@ async def test_call_context_target_all.opp, mock_handle_entity_call, mock_entiti
         ),
     ):
         await service.entity_service_call(
-           .opp,
+            opp,
             [Mock(entities=mock_entities)],
             Mock(),
             ha.ServiceCall(
@@ -512,7 +512,7 @@ async def test_call_context_target_all.opp, mock_handle_entity_call, mock_entiti
 
 
 async def test_call_context_target_specific(
-   .opp, mock_handle_entity_call, mock_entities
+    opp, mock_handle_entity_call, mock_entities
 ):
     """Check targeting specific entities."""
     with patch(
@@ -524,7 +524,7 @@ async def test_call_context_target_specific(
         ),
     ):
         await service.entity_service_call(
-           .opp,
+            opp,
             [Mock(entities=mock_entities)],
             Mock(),
             ha.ServiceCall(
@@ -540,7 +540,7 @@ async def test_call_context_target_specific(
 
 
 async def test_call_context_target_specific_no_auth(
-   .opp, mock_handle_entity_call, mock_entities
+    opp, mock_handle_entity_call, mock_entities
 ):
     """Check targeting specific entities without auth."""
     with pytest.raises(exceptions.Unauthorized) as err:
@@ -549,7 +549,7 @@ async def test_call_context_target_specific_no_auth(
             return_value=Mock(permissions=PolicyPermissions({}, None)),
         ):
             await service.entity_service_call(
-               .opp,
+                opp,
                 [Mock(entities=mock_entities)],
                 Mock(),
                 ha.ServiceCall(
@@ -567,7 +567,7 @@ async def test_call_context_target_specific_no_auth(
 async def test_call_no_context_target_all.opp, mock_handle_entity_call, mock_entities):
     """Check we target all if no user context given."""
     await service.entity_service_call(
-       .opp,
+        opp,
         [Mock(entities=mock_entities)],
         Mock(),
         ha.ServiceCall(
@@ -582,11 +582,11 @@ async def test_call_no_context_target_all.opp, mock_handle_entity_call, mock_ent
 
 
 async def test_call_no_context_target_specific(
-   .opp, mock_handle_entity_call, mock_entities
+    opp, mock_handle_entity_call, mock_entities
 ):
     """Check we can target specified entities."""
     await service.entity_service_call(
-       .opp,
+        opp,
         [Mock(entities=mock_entities)],
         Mock(),
         ha.ServiceCall(
@@ -601,11 +601,11 @@ async def test_call_no_context_target_specific(
 
 
 async def test_call_with_match_all(
-   .opp, mock_handle_entity_call, mock_entities, caplog
+    opp, mock_handle_entity_call, mock_entities, caplog
 ):
     """Check we only target allowed entities if targeting all."""
     await service.entity_service_call(
-       .opp,
+        opp,
         [Mock(entities=mock_entities)],
         Mock(),
         ha.ServiceCall("test_domain", "test_service", {"entity_id": "all"}),
@@ -620,7 +620,7 @@ async def test_call_with_match_all(
 async def test_call_with_omit_entity_id.opp, mock_handle_entity_call, mock_entities):
     """Check service call if we do not pass an entity ID."""
     await service.entity_service_call(
-       .opp,
+        opp,
         [Mock(entities=mock_entities)],
         Mock(),
         ha.ServiceCall("test_domain", "test_service"),
@@ -741,7 +741,7 @@ async def test_domain_control_unknown.opp, mock_entities):
 async def test_domain_control_unauthorized.opp, opp_read_only_user):
     """Test domain verification in a service call with an unauthorized user."""
     mock_registry(
-       .opp,
+        opp,
         {
             "light.kitchen": ent_reg.RegistryEntry(
                 entity_id="light.kitchen",
@@ -780,7 +780,7 @@ async def test_domain_control_unauthorized.opp, opp_read_only_user):
 async def test_domain_control_admin.opp, opp_admin_user):
     """Test domain verification in a service call with an admin user."""
     mock_registry(
-       .opp,
+        opp,
         {
             "light.kitchen": ent_reg.RegistryEntry(
                 entity_id="light.kitchen",
@@ -818,7 +818,7 @@ async def test_domain_control_admin.opp, opp_admin_user):
 async def test_domain_control_no_user.opp):
     """Test domain verification in a service call with no user."""
     mock_registry(
-       .opp,
+        opp,
         {
             "light.kitchen": ent_reg.RegistryEntry(
                 entity_id="light.kitchen",
@@ -882,7 +882,7 @@ async def test_extract_from_service_available_device.opp):
 
     assert (
         await service.async_extract_entities(
-           .opp,
+            opp,
             entities,
             ha.ServiceCall(
                 "test",

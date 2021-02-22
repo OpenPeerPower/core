@@ -13,7 +13,7 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     CONF_TYPE,
 )
-from openpeerpower.core import CALLBACK_TYPE, Event, HassJob, OpenPeerPower, callback
+from openpeerpower.core import CALLBACK_TYPE, Event, OppJob, OpenPeerPower, callback
 from openpeerpower.helpers import config_validation as cv, entity_registry
 from openpeerpower.helpers.typing import ConfigType
 
@@ -57,7 +57,7 @@ async def async_attach_trigger(
 ) -> CALLBACK_TYPE:
     """Attach a trigger."""
     config = TRIGGER_SCHEMA(config)
-    job = HassJob(action)
+    job = OppJob(action)
 
     if config[CONF_TYPE] == "turn_on":
         entity_id = config[CONF_ENTITY_ID]

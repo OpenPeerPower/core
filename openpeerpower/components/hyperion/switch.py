@@ -104,7 +104,7 @@ async def async_setup_entry(
         assert server_id
         for component in COMPONENT_SWITCHES:
             async_dispatcher_send(
-               .opp,
+                opp,
                 SIGNAL_ENTITY_REMOVE.format(
                     component_to_unique_id(component, instance_num),
                 ),

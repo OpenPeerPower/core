@@ -95,7 +95,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         for disc_info in async_discover_values(node):
             LOGGER.debug("Discovered entity: %s", disc_info)
             async_dispatcher_send(
-               .opp, f"{DOMAIN}_{entry.entry_id}_add_{disc_info.platform}", disc_info
+                opp, f"{DOMAIN}_{entry.entry_id}_add_{disc_info.platform}", disc_info
             )
         # add listener for stateless node value notification events
         node.on(
@@ -317,7 +317,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     if DATA_CLIENT_LISTEN_TASK in info:
         await disconnect_client(
-           .opp,
+            opp,
             entry,
             info[DATA_CLIENT],
             info[DATA_CLIENT_LISTEN_TASK],

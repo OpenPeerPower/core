@@ -71,7 +71,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     categories = config[CONF_CATEGORIES]
     # Initialize the entity manager.
     feed = QldBushfireFeedEntityManager(
-       .opp, add_entities, scan_interval, coordinates, radius_in_km, categories
+        opp, add_entities, scan_interval, coordinates, radius_in_km, categories
     )
 
     def start_feed_manager(event):

@@ -60,7 +60,7 @@ async def async_setup_entry(
             if device.is_online:
                 cameras.append(
                     CanaryCamera(
-                       .opp,
+                        opp,
                         coordinator,
                         location_id,
                         device,

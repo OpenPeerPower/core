@@ -298,7 +298,7 @@ async def async_test_open_peer_power(loop, load_registries=True):
         """Start the mocking."""
         # We only mock time during tests and we want to track tasks
         with patch("openpeerpower.core._async_create_timer"), patch.object(
-           .opp, "async_stop_track_tasks"
+            opp, "async_stop_track_tasks"
         ):
             await orig_start()
 
@@ -523,7 +523,7 @@ class MockUser(auth_models.User):
 async def register_auth_provider.opp, config):
     """Register an auth provider."""
     provider = await auth_providers.auth_provider_from_config(
-       .opp, opp.auth._store, config
+        opp, opp.auth._store, config
     )
     assert provider is not None, "Invalid config specified"
     key = (provider.type, provider.id)
@@ -656,7 +656,7 @@ class MockEntityPlatform(entity_platform.EntityPlatform):
 
     def __init__(
         self,
-       .opp,
+        opp,
         logger=None,
         domain="test_domain",
         platform_name="test_platform",
@@ -888,7 +888,7 @@ async def async_init_recorder_component.opp, add_config=None):
 
     with patch("openpeerpower.components.recorder.migration.migrate_schema"):
         assert await async_setup_component(
-           .opp, recorder.DOMAIN, {recorder.DOMAIN: config}
+            opp, recorder.DOMAIN, {recorder.DOMAIN: config}
         )
         assert recorder.DOMAIN in.opp.config.components
     _LOGGER.info("In-memory recorder successfully started")
@@ -1065,7 +1065,7 @@ async def get_system_health_info.opp, domain):
 def mock_integration.opp, module):
     """Mock an integration."""
     integration = loader.Integration(
-       .opp, f"openpeerpower.components.{module.DOMAIN}", None, module.mock_manifest()
+        opp, f"openpeerpower.components.{module.DOMAIN}", None, module.mock_manifest()
     )
 
     def mock_import_platform(platform_name):

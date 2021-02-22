@@ -321,7 +321,7 @@ def setup_opp: OpenPeerPower, base_config):
        .opp.data[key] = device
         ent_platform = base_config[DOMAIN][CONF_TYPES].get(key, platform)
         discovery.load_platform(
-           .opp,
+            opp,
             ent_platform,
             DOMAIN,
             discovered={ATTR_NEW: [key]},

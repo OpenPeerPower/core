@@ -42,7 +42,7 @@ class NZBGetDataUpdateCoordinator(DataUpdateCoordinator):
         update_interval = timedelta(seconds=options[CONF_SCAN_INTERVAL])
 
         super().__init__(
-           .opp,
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=update_interval,

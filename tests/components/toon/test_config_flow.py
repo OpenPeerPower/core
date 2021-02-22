@@ -17,13 +17,13 @@ from tests.common import MockConfigEntry
 async def setup_component.opp):
     """Set up Toon component."""
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"external_url": "https://example.com"},
     )
 
     with patch("os.path.isfile", return_value=False):
         assert await async_setup_component(
-           .opp,
+            opp,
             DOMAIN,
             {DOMAIN: {CONF_CLIENT_ID: "client", CONF_CLIENT_SECRET: "secret"}},
         )
@@ -41,7 +41,7 @@ async def test_abort_if_no_configuration.opp):
 
 
 async def test_full_flow_implementation(
-   .opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test registering an integration and finishing flow works."""
     await setup_component.opp)
@@ -55,7 +55,7 @@ async def test_full_flow_implementation(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-       .opp,
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -105,7 +105,7 @@ async def test_full_flow_implementation(
 
 
 async def test_no_agreements(
-   .opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test abort when there are no displays."""
     await setup_component.opp)
@@ -115,7 +115,7 @@ async def test_no_agreements(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-       .opp,
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -145,7 +145,7 @@ async def test_no_agreements(
 
 
 async def test_multiple_agreements(
-   .opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test abort when there are no displays."""
     await setup_component.opp)
@@ -155,7 +155,7 @@ async def test_multiple_agreements(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-       .opp,
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -195,7 +195,7 @@ async def test_multiple_agreements(
 
 
 async def test_agreement_already_set_up(
-   .opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test showing display form again if display already exists."""
     await setup_component.opp)
@@ -206,7 +206,7 @@ async def test_agreement_already_set_up(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-       .opp,
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -236,7 +236,7 @@ async def test_agreement_already_set_up(
 
 
 async def test_toon_abort(
-   .opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test we abort on Toon error."""
     await setup_component.opp)
@@ -245,7 +245,7 @@ async def test_toon_abort(
     )
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-       .opp,
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -289,7 +289,7 @@ async def test_import.opp, current_request_with_host):
 
 
 async def test_import_migration(
-   .opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test if importing step with migration works."""
     old_entry = MockConfigEntry(domain=DOMAIN, unique_id=123, version=1)
@@ -307,7 +307,7 @@ async def test_import_migration(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-       .opp,
+        opp,
         {
             "flow_id": flows[0]["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",

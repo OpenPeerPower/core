@@ -145,7 +145,7 @@ async def async_setup_opp, config):
 
         try:
             intent_response = await intent.async_handle(
-               .opp, DOMAIN, intent_type, slots, request["input"]
+                opp, DOMAIN, intent_type, slots, request["input"]
             )
             notification = {"sessionId": request.get("sessionId", "default")}
 
@@ -154,7 +154,7 @@ async def async_setup_opp, config):
 
             _LOGGER.debug("send_response %s", json.dumps(notification))
             mqtt.async_publish(
-               .opp, "hermes/dialogueManager/endSession", json.dumps(notification)
+                opp, "hermes/dialogueManager/endSession", json.dumps(notification)
             )
         except intent.UnknownIntent:
             _LOGGER.warning(
@@ -173,7 +173,7 @@ async def async_setup_opp, config):
             "init": {"type": "notification", "text": call.data.get(ATTR_TEXT)},
         }
         mqtt.async_publish(
-           .opp, "hermes/dialogueManager/startSession", json.dumps(notification)
+            opp, "hermes/dialogueManager/startSession", json.dumps(notification)
         )
         return
 
@@ -190,7 +190,7 @@ async def async_setup_opp, config):
             },
         }
         mqtt.async_publish(
-           .opp, "hermes/dialogueManager/startSession", json.dumps(notification)
+            opp, "hermes/dialogueManager/startSession", json.dumps(notification)
         )
         return
 

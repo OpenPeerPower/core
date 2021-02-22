@@ -82,7 +82,7 @@ def _setup_controller.opp, controller_config, config):
     _LOGGER.debug("Rain Bird Controller %d set to: %s", position, server)
     for platform in SUPPORTED_PLATFORMS:
         discovery.load_platform(
-           .opp,
+            opp,
             platform,
             DOMAIN,
             {RAINBIRD_CONTROLLER: position, **controller_config},

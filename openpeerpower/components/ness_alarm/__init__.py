@@ -113,7 +113,7 @@ async def async_setup_opp, config):
     def on_zone_change(zone_id: int, state: bool):
         """Receives and propagates zone state updates."""
         async_dispatcher_send(
-           .opp, SIGNAL_ZONE_CHANGED, ZoneChangedData(zone_id=zone_id, state=state)
+            opp, SIGNAL_ZONE_CHANGED, ZoneChangedData(zone_id=zone_id, state=state)
         )
 
     def on_state_change(arming_state: ArmingState):

@@ -31,7 +31,7 @@ def async_reload.opp):
 
 @bind.opp
 def set_group(
-   .opp,
+    opp,
     object_id,
     name=None,
     entity_ids=None,
@@ -41,7 +41,7 @@ def set_group(
     """Create/Update a group."""
    .opp.add_job(
         async_set_group,
-       .opp,
+        opp,
         object_id,
         name,
         entity_ids,
@@ -53,7 +53,7 @@ def set_group(
 @callback
 @bind.opp
 def async_set_group(
-   .opp,
+    opp,
     object_id,
     name=None,
     entity_ids=None,

@@ -55,7 +55,7 @@ DEFAULT_CONFIG = {
 async def test_setting_sensor_value_expires_availability_topic.opp, mqtt_mock, caplog):
     """Test the expiration of the value."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -85,7 +85,7 @@ async def test_setting_sensor_value_expires_availability_topic.opp, mqtt_mock, c
 async def test_setting_sensor_value_expires.opp, mqtt_mock, caplog):
     """Test the expiration of the value."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -158,7 +158,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
 
 
 async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
-   .opp, mqtt_mock, caplog
+    opp, mqtt_mock, caplog
 ):
     """Test that binary_sensor with expire_after set behaves correctly on discovery and discovery update."""
     config = {
@@ -176,7 +176,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_time_changed.opp, now)
         async_fire_mqtt_message(
-           .opp, "openpeerpower/binary_sensor/bla/config", config_msg
+            opp, "openpeerpower/binary_sensor/bla/config", config_msg
         )
         await opp.async_block_till_done()
 
@@ -207,7 +207,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_time_changed.opp, now)
         async_fire_mqtt_message(
-           .opp, "openpeerpower/binary_sensor/bla/config", config_msg
+            opp, "openpeerpower/binary_sensor/bla/config", config_msg
         )
         await opp.async_block_till_done()
 
@@ -228,7 +228,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
     # Resend config message to update discovery
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_mqtt_message(
-           .opp, "openpeerpower/binary_sensor/bla/config", config_msg
+            opp, "openpeerpower/binary_sensor/bla/config", config_msg
         )
         await opp.async_block_till_done()
 
@@ -240,7 +240,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
 async def test_setting_sensor_value_via_mqtt_message.opp, mqtt_mock):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -270,7 +270,7 @@ async def test_setting_sensor_value_via_mqtt_message.opp, mqtt_mock):
 async def test_invalid_sensor_value_via_mqtt_message.opp, mqtt_mock, caplog):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -308,7 +308,7 @@ async def test_invalid_sensor_value_via_mqtt_message.opp, mqtt_mock, caplog):
 async def test_setting_sensor_value_via_mqtt_message_and_template.opp, mqtt_mock):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -337,11 +337,11 @@ async def test_setting_sensor_value_via_mqtt_message_and_template.opp, mqtt_mock
 
 
 async def test_setting_sensor_value_via_mqtt_message_and_template2(
-   .opp, mqtt_mock, caplog
+    opp, mqtt_mock, caplog
 ):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -374,11 +374,11 @@ async def test_setting_sensor_value_via_mqtt_message_and_template2(
 
 
 async def test_setting_sensor_value_via_mqtt_message_empty_template(
-   .opp, mqtt_mock, caplog
+    opp, mqtt_mock, caplog
 ):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -409,7 +409,7 @@ async def test_setting_sensor_value_via_mqtt_message_empty_template(
 async def test_valid_device_class.opp, mqtt_mock):
     """Test the setting of a valid sensor class."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -429,7 +429,7 @@ async def test_valid_device_class.opp, mqtt_mock):
 async def test_invalid_device_class.opp, mqtt_mock):
     """Test the setting of an invalid sensor class."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -449,35 +449,35 @@ async def test_invalid_device_class.opp, mqtt_mock):
 async def test_availability_when_connection_lost.opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_availability_without_topic.opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_default_availability_payload.opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_payload(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_custom_availability_payload.opp, mqtt_mock):
     """Test availability by custom payload with defined topic."""
     await help_test_custom_availability_payload(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_force_update_disabled.opp, mqtt_mock):
     """Test force update option."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -512,7 +512,7 @@ async def test_force_update_disabled.opp, mqtt_mock):
 async def test_force_update_enabled.opp, mqtt_mock):
     """Test force update option."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -548,7 +548,7 @@ async def test_force_update_enabled.opp, mqtt_mock):
 async def test_off_delay.opp, mqtt_mock):
     """Test off_delay option."""
     assert await async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -595,35 +595,35 @@ async def test_off_delay.opp, mqtt_mock):
 async def test_setting_attribute_via_mqtt_json_message.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_via_mqtt_json_message(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_setting_attribute_with_template.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_with_template(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_not_dict.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_not_dict(
-       .opp, mqtt_mock, caplog, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
-       .opp, mqtt_mock, caplog, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_discovery_update_attr.opp, mqtt_mock, caplog):
     """Test update of discovered MQTTAttributes."""
     await help_test_discovery_update_attr(
-       .opp, mqtt_mock, caplog, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -652,7 +652,7 @@ async def test_discovery_removal_binary_sensor.opp, mqtt_mock, caplog):
     """Test removal of discovered binary_sensor."""
     data = json.dumps(DEFAULT_CONFIG[binary_sensor.DOMAIN])
     await help_test_discovery_removal(
-       .opp, mqtt_mock, caplog, binary_sensor.DOMAIN, data
+        opp, mqtt_mock, caplog, binary_sensor.DOMAIN, data
     )
 
 
@@ -682,7 +682,7 @@ async def test_discovery_update_binary_sensor_topic_template.opp, mqtt_mock, cap
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-       .opp,
+        opp,
         mqtt_mock,
         caplog,
         binary_sensor.DOMAIN,
@@ -717,7 +717,7 @@ async def test_discovery_update_binary_sensor_template.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-       .opp,
+        opp,
         mqtt_mock,
         caplog,
         binary_sensor.DOMAIN,
@@ -738,7 +738,7 @@ async def test_discovery_update_unchanged_binary_sensor.opp, mqtt_mock, caplog):
         "openpeerpower.components.mqtt.binary_sensor.MqttBinarySensor.discovery_update"
     ) as discovery_update:
         await help_test_discovery_update_unchanged(
-           .opp, mqtt_mock, caplog, binary_sensor.DOMAIN, data1, discovery_update
+            opp, mqtt_mock, caplog, binary_sensor.DOMAIN, data1, discovery_update
         )
 
 
@@ -748,54 +748,54 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
     data1 = '{ "name": "Beer",' '  "off_delay": -1 }'
     data2 = '{ "name": "Milk",' '  "state_topic": "test_topic" }'
     await help_test_discovery_broken(
-       .opp, mqtt_mock, caplog, binary_sensor.DOMAIN, data1, data2
+        opp, mqtt_mock, caplog, binary_sensor.DOMAIN, data1, data2
     )
 
 
 async def test_entity_device_info_with_connection.opp, mqtt_mock):
     """Test MQTT binary sensor device registry integration."""
     await help_test_entity_device_info_with_connection(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_with_identifier.opp, mqtt_mock):
     """Test MQTT binary sensor device registry integration."""
     await help_test_entity_device_info_with_identifier(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_update.opp, mqtt_mock):
     """Test device registry update."""
     await help_test_entity_device_info_update(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_remove.opp, mqtt_mock):
     """Test device registry remove."""
     await help_test_entity_device_info_remove(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_id_update_subscriptions.opp, mqtt_mock):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     await help_test_entity_id_update_subscriptions(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_id_update_discovery_update.opp, mqtt_mock):
     """Test MQTT discovery update when entity_id is updated."""
     await help_test_entity_id_update_discovery_update(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_debug_info_message.opp, mqtt_mock):
     """Test MQTT debug info."""
     await help_test_entity_debug_info_message(
-       .opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, binary_sensor.DOMAIN, DEFAULT_CONFIG
     )

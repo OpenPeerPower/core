@@ -5,7 +5,7 @@ import logging
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PAYLOAD, CONF_PLATFORM
-from openpeerpower.core import HassJob, callback
+from openpeerpower.core import OppJob, callback
 from openpeerpower.helpers import config_validation as cv, template
 
 from .. import mqtt
@@ -39,7 +39,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     payload = config.get(CONF_PAYLOAD)
     encoding = config[CONF_ENCODING] or None
     qos = config[CONF_QOS]
-    job = HassJob(action)
+    job = OppJob(action)
     variables = None
     if automation_info:
         variables = automation_info.get("variables")
@@ -77,6 +77,6 @@ async def async_attach_trigger.opp, config, action, automation_info):
     )
 
     remove = await mqtt.async_subscribe(
-       .opp, topic, mqtt_automation_listener, encoding=encoding, qos=qos
+        opp, topic, mqtt_automation_listener, encoding=encoding, qos=qos
     )
     return remove

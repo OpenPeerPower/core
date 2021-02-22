@@ -48,7 +48,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     add_entities(
         [
             WolSwitch(
-               .opp,
+                opp,
                 name,
                 host,
                 mac_address,
@@ -66,7 +66,7 @@ class WolSwitch(SwitchEntity):
 
     def __init__(
         self,
-       .opp,
+        opp,
         name,
         host,
         mac_address,

@@ -22,7 +22,7 @@ def setup_comp.opp):
     mock_component.opp, "group")
    .opp.loop.run_until_complete(
         async_setup_component(
-           .opp,
+            opp,
             zone.DOMAIN,
             {
                 "zone": {
@@ -45,7 +45,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -115,7 +115,7 @@ async def test_if_not_fires_for_enter_on_zone_leave.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -146,7 +146,7 @@ async def test_if_fires_on_zone_leave.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -177,7 +177,7 @@ async def test_if_not_fires_for_leave_on_zone_enter.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -208,7 +208,7 @@ async def test_zone_condition.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {

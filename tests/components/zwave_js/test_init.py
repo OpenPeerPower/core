@@ -77,7 +77,7 @@ async def test_initialized_timeout.opp, client, connect_timeout):
 
 
 async def test_on_node_added_ready(
-   .opp, multisensor_6_state, client, integration, device_registry
+    opp, multisensor_6_state, client, integration, device_registry
 ):
     """Test we handle a ready node added event."""
     node = Node(client, multisensor_6_state)
@@ -104,7 +104,7 @@ async def test_on_node_added_ready(
 
 
 async def test_on_node_added_not_ready(
-   .opp, multisensor_6_state, client, integration, device_registry
+    opp, multisensor_6_state, client, integration, device_registry
 ):
     """Test we handle a non ready node added event."""
     node_data = deepcopy(multisensor_6_state)  # Copy to allow modification in tests.
@@ -141,7 +141,7 @@ async def test_on_node_added_not_ready(
 
 
 async def test_existing_node_ready(
-   .opp, client, multisensor_6, integration, device_registry
+    opp, client, multisensor_6, integration, device_registry
 ):
     """Test we handle a ready node that exists during integration setup."""
     node = multisensor_6

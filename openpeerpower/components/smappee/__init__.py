@@ -58,9 +58,9 @@ async def async_setup_opp: OpenPeerPower, config: dict):
    .opp.data[DOMAIN][CONF_PLATFORM] = platform
 
     config_flow.SmappeeFlowHandler.async_register_implementation(
-       .opp,
+        opp,
         config_entry_oauth2_flow.LocalOAuth2Implementation(
-           .opp,
+            opp,
             DOMAIN,
             config[DOMAIN][CONF_CLIENT_ID],
             config[DOMAIN][CONF_CLIENT_SECRET],
@@ -81,7 +81,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     else:
         implementation = (
             await config_entry_oauth2_flow.async_get_config_entry_implementation(
-               .opp, entry
+                opp, entry
             )
         )
 

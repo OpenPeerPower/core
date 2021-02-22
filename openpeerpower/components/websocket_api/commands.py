@@ -293,7 +293,7 @@ async def handle_render_template.opp, connection, msg):
 
     try:
         info = async_track_template_result(
-           .opp,
+            opp,
             [TrackTemplate(template, variables)],
             _template_listener,
             raise_on_template_error=True,
@@ -381,7 +381,7 @@ async def handle_subscribe_trigger.opp, connection, msg):
 
     connection.subscriptions[msg["id"]] = (
         await trigger.async_initialize_triggers(
-           .opp,
+            opp,
             trigger_config,
             forward_triggers,
             const.DOMAIN,

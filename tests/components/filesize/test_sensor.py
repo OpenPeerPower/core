@@ -55,7 +55,7 @@ async def test_reload.opp, tmpdir):
     await opp.async_add_executor_job(create_file, testfile)
     with patch.object.opp.config, "is_allowed_path", return_value=True):
         await async_setup_component(
-           .opp,
+            opp,
             "sensor",
             {
                 "sensor": {

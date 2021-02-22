@@ -77,9 +77,9 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         return True
 
     config_flow.NetatmoFlowHandler.async_register_implementation(
-       .opp,
+        opp,
         config_entry_oauth2_flow.LocalOAuth2Implementation(
-           .opp,
+            opp,
             DOMAIN,
             config[DOMAIN][CONF_CLIENT_ID],
             config[DOMAIN][CONF_CLIENT_SECRET],
@@ -95,7 +95,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Netatmo from a config entry."""
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-           .opp, entry
+            opp, entry
         )
     )
 
@@ -121,7 +121,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             return
         _LOGGER.debug("Unregister Netatmo webhook (%s)", entry.data[CONF_WEBHOOK_ID])
         async_dispatcher_send(
-           .opp,
+            opp,
             f"signal-{DOMAIN}-webhook-None",
             {"type": "None", "data": {"push_type": "webhook_deactivation"}},
         )
@@ -157,7 +157,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
         try:
             webhook_register(
-               .opp, DOMAIN, "Netatmo", entry.data[CONF_WEBHOOK_ID], handle_webhook
+                opp, DOMAIN, "Netatmo", entry.data[CONF_WEBHOOK_ID], handle_webhook
             )
 
             async def handle_event(event):
@@ -172,7 +172,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                         activation_timeout()
 
             activation_listener = async_dispatcher_connect(
-               .opp,
+                opp,
                 f"signal-{DOMAIN}-webhook-None",
                 handle_event,
             )

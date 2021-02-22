@@ -28,7 +28,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         [
             # These fans implement the old model
             DemoFan(
-               .opp,
+                opp,
                 "fan1",
                 "Living Room Fan",
                 FULL_SUPPORT,
@@ -45,7 +45,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 ],
             ),
             DemoFan(
-               .opp,
+                opp,
                 "fan2",
                 "Ceiling Fan",
                 LIMITED_SUPPORT,
@@ -54,7 +54,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             ),
             # These fans implement the newer model
             AsyncDemoPercentageFan(
-               .opp,
+                opp,
                 "fan3",
                 "Percentage Full Fan",
                 FULL_SUPPORT,
@@ -67,7 +67,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 None,
             ),
             DemoPercentageFan(
-               .opp,
+                opp,
                 "fan4",
                 "Percentage Limited Fan",
                 LIMITED_SUPPORT,
@@ -80,7 +80,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 None,
             ),
             AsyncDemoPercentageFan(
-               .opp,
+                opp,
                 "fan5",
                 "Preset Only Limited Fan",
                 SUPPORT_PRESET_MODE,
@@ -106,7 +106,7 @@ class BaseDemoFan(FanEntity):
 
     def __init__(
         self,
-       .opp,
+        opp,
         unique_id: str,
         name: str,
         supported_features: int,

@@ -94,7 +94,7 @@ async def test_action.opp):
     )
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -155,7 +155,7 @@ async def test_capabilities.opp):
 
     # Set HVAC mode
     capabilities = await device_action.async_get_action_capabilities(
-       .opp,
+        opp,
         {
             "domain": DOMAIN,
             "device_id": "abcdefgh",
@@ -179,7 +179,7 @@ async def test_capabilities.opp):
 
     # Set preset mode
     capabilities = await device_action.async_get_action_capabilities(
-       .opp,
+        opp,
         {
             "domain": DOMAIN,
             "device_id": "abcdefgh",

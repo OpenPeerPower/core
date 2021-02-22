@@ -48,7 +48,7 @@ async def test_multiple_state.opp):
     calls_1 = async_mock_service.opp, DOMAIN, SERVICE_SET_HVAC_MODE)
 
     await async_reproduce_states(
-       .opp, [State(ENTITY_1, HVAC_MODE_HEAT), State(ENTITY_2, HVAC_MODE_AUTO)]
+        opp, [State(ENTITY_1, HVAC_MODE_HEAT), State(ENTITY_2, HVAC_MODE_AUTO)]
     )
 
     await opp.async_block_till_done()
@@ -83,7 +83,7 @@ async def test_state_with_context.opp):
     context = Context()
 
     await async_reproduce_states(
-       .opp, [State(ENTITY_1, HVAC_MODE_HEAT)], context=context
+        opp, [State(ENTITY_1, HVAC_MODE_HEAT)], context=context
     )
 
     await opp.async_block_till_done()

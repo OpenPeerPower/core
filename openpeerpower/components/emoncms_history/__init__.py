@@ -95,7 +95,7 @@ def setup_opp, config):
             )
 
         track_point_in_time(
-           .opp, update_emoncms, time + timedelta(seconds=conf.get(CONF_SCAN_INTERVAL))
+            opp, update_emoncms, time + timedelta(seconds=conf.get(CONF_SCAN_INTERVAL))
         )
 
     update_emoncms(dt_util.utcnow())

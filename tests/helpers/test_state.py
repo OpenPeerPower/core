@@ -68,17 +68,17 @@ async def test_call_to_component.opp):
             context = "dummy_context"
 
             await state.async_reproduce_state(
-               .opp,
+                opp,
                 [state_media_player, state_climate],
                 context=context,
             )
 
             media_player_fun.assert_called_once_with(
-               .opp, [state_media_player], context=context, reproduce_options=None
+                opp, [state_media_player], context=context, reproduce_options=None
             )
 
             climate_fun.assert_called_once_with(
-               .opp, [state_climate], context=context, reproduce_options=None
+                opp, [state_climate], context=context, reproduce_options=None
             )
 
 
@@ -158,7 +158,7 @@ async def test_reproduce_complex_data.opp):
     complex_data = [255, 100, 100]
 
     await state.async_reproduce_state(
-       .opp, ha.State("light.test", "on", {"rgb_color": complex_data})
+        opp, ha.State("light.test", "on", {"rgb_color": complex_data})
     )
 
     await opp.async_block_till_done()

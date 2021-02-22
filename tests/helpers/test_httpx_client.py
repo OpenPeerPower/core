@@ -37,7 +37,7 @@ async def test_create_async_httpx_client_without_ssl_and_cookies.opp):
     client.get_async_client.opp, verify_ssl=False)
 
     httpx_client = client.create_async_httpx_client(
-       .opp, verify_ssl=False, cookies={"bla": True}
+        opp, verify_ssl=False, cookies={"bla": True}
     )
     assert isinstance(httpx_client, httpx.AsyncClient)
     assert.opp.data[client.DATA_ASYNC_CLIENT_NOVERIFY] != httpx_client

@@ -251,7 +251,7 @@ async def async_setup_opp, config):
         if sensors:
            .opp.async_create_task(
                 discovery.async_load_platform(
-                   .opp,
+                    opp,
                     "sensor",
                     DOMAIN,
                     {CONF_NAME: name, CONF_HOST: host, CONF_SENSORS: sensors},
@@ -262,7 +262,7 @@ async def async_setup_opp, config):
         if switches:
            .opp.async_create_task(
                 discovery.async_load_platform(
-                   .opp,
+                    opp,
                     "switch",
                     DOMAIN,
                     {CONF_NAME: name, CONF_HOST: host, CONF_SWITCHES: switches},
@@ -273,7 +273,7 @@ async def async_setup_opp, config):
         if motion:
            .opp.async_create_task(
                 discovery.async_load_platform(
-                   .opp,
+                    opp,
                     "binary_sensor",
                     DOMAIN,
                     {CONF_HOST: host, CONF_NAME: name},

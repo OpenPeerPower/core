@@ -446,7 +446,7 @@ async def test_get_states_not_allows_nan.opp, websocket_client):
 
 
 async def test_subscribe_unsubscribe_events_whitelist(
-   .opp, websocket_client, opp_admin_user
+    opp, websocket_client, opp_admin_user
 ):
     """Test subscribe/unsubscribe events on whitelist."""
    .opp_admin_user.groups = []
@@ -483,7 +483,7 @@ async def test_subscribe_unsubscribe_events_whitelist(
 
 
 async def test_subscribe_unsubscribe_events_state_changed(
-   .opp, websocket_client, opp_admin_user
+    opp, websocket_client, opp_admin_user
 ):
     """Test subscribe/unsubscribe state_changed events."""
    .opp_admin_user.groups = []
@@ -556,7 +556,7 @@ async def test_render_template_renders_template.opp, websocket_client):
 
 
 async def test_render_template_manual_entity_ids_no_longer_needed(
-   .opp, websocket_client
+    opp, websocket_client
 ):
     """Test that updates to specified entity ids cause a template rerender."""
    .opp.states.async_set("light.test", "on")

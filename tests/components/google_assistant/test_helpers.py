@@ -28,7 +28,7 @@ async def test_google_entity_sync_serialize_with_local_sdk.opp):
    .opp.states.async_set("light.ceiling_lights", "off")
    .opp.config.api = Mock(port=1234, use_ssl=True)
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"external_url": "https://hostname:1234"},
     )
 

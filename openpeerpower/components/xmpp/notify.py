@@ -74,7 +74,7 @@ async def async_get_service.opp, config, discovery_info=None):
         config.get(CONF_TLS),
         config.get(CONF_VERIFY),
         config.get(CONF_ROOM),
-       .opp,
+        opp,
     )
 
 
@@ -120,7 +120,7 @@ async def async_send_message(
     use_tls,
     verify_certificate,
     room,
-   .opp,
+    opp,
     message,
     timeout=None,
     data=None,

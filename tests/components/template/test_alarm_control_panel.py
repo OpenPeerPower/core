@@ -17,7 +17,7 @@ from tests.components.alarm_control_panel import common
 async def test_template_state_text.opp):
     """Test the state text of a template."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {
@@ -107,7 +107,7 @@ async def test_template_state_text.opp):
 async def test_optimistic_states.opp):
     """Test the optimistic state."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {
@@ -149,7 +149,7 @@ async def test_optimistic_states.opp):
     assert state.state == "unknown"
 
     await common.async_alarm_arm_away(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -157,21 +157,21 @@ async def test_optimistic_states.opp):
     assert state.state == STATE_ALARM_ARMED_AWAY
 
     await common.async_alarm_arm_home(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     state = opp.states.get("alarm_control_panel.test_template_panel")
     await opp.async_block_till_done()
     assert state.state == STATE_ALARM_ARMED_HOME
 
     await common.async_alarm_arm_night(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     state = opp.states.get("alarm_control_panel.test_template_panel")
     await opp.async_block_till_done()
     assert state.state == STATE_ALARM_ARMED_NIGHT
 
     await common.async_alarm_disarm(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     state = opp.states.get("alarm_control_panel.test_template_panel")
     await opp.async_block_till_done()
@@ -181,7 +181,7 @@ async def test_optimistic_states.opp):
 async def test_no_action_scripts.opp):
     """Test no action scripts per state."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {
@@ -203,7 +203,7 @@ async def test_no_action_scripts.opp):
     await opp.async_block_till_done()
 
     await common.async_alarm_arm_away(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -211,7 +211,7 @@ async def test_no_action_scripts.opp):
     assert state.state == STATE_ALARM_ARMED_AWAY
 
     await common.async_alarm_arm_home(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -219,7 +219,7 @@ async def test_no_action_scripts.opp):
     assert state.state == STATE_ALARM_ARMED_AWAY
 
     await common.async_alarm_arm_night(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -227,7 +227,7 @@ async def test_no_action_scripts.opp):
     assert state.state == STATE_ALARM_ARMED_AWAY
 
     await common.async_alarm_disarm(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -238,7 +238,7 @@ async def test_no_action_scripts.opp):
 async def test_template_syntax_error(opp, caplog):
     """Test templating syntax error."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {
@@ -283,7 +283,7 @@ async def test_template_syntax_error(opp, caplog):
 async def test_invalid_name_does_not_create.opp, caplog):
     """Test invalid name."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {
@@ -328,7 +328,7 @@ async def test_invalid_name_does_not_create.opp, caplog):
 async def test_invalid_panel_does_not_create.opp, caplog):
     """Test invalid alarm control panel."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {
@@ -349,7 +349,7 @@ async def test_invalid_panel_does_not_create.opp, caplog):
 async def test_no_panels_does_not_create.opp, caplog):
     """Test if there are no panels -> no creation."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {"alarm_control_panel": {"platform": "template"}},
     )
@@ -365,7 +365,7 @@ async def test_no_panels_does_not_create.opp, caplog):
 async def test_name.opp):
     """Test the accessibility of the name attribute."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {
@@ -413,7 +413,7 @@ async def test_name.opp):
 async def test_arm_home_action.opp):
     """Test arm home action."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {
@@ -450,7 +450,7 @@ async def test_arm_home_action.opp):
     service_calls = async_mock_service.opp, "test", "automation")
 
     await common.async_alarm_arm_home(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
 
@@ -460,7 +460,7 @@ async def test_arm_home_action.opp):
 async def test_arm_away_action.opp):
     """Test arm away action."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {
@@ -497,7 +497,7 @@ async def test_arm_away_action.opp):
     service_calls = async_mock_service.opp, "test", "automation")
 
     await common.async_alarm_arm_away(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
 
@@ -507,7 +507,7 @@ async def test_arm_away_action.opp):
 async def test_arm_night_action.opp):
     """Test arm night action."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {
@@ -544,7 +544,7 @@ async def test_arm_night_action.opp):
     service_calls = async_mock_service.opp, "test", "automation")
 
     await common.async_alarm_arm_night(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
 
@@ -554,7 +554,7 @@ async def test_arm_night_action.opp):
 async def test_disarm_action.opp):
     """Test disarm action."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {
@@ -591,7 +591,7 @@ async def test_disarm_action.opp):
     service_calls = async_mock_service.opp, "test", "automation")
 
     await common.async_alarm_disarm(
-       .opp, entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
 
@@ -601,7 +601,7 @@ async def test_disarm_action.opp):
 async def test_unique_id.opp):
     """Test unique_id option only creates one alarm control panel per id."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         "alarm_control_panel",
         {
             "alarm_control_panel": {

@@ -36,7 +36,7 @@ async def test_if_fires_when_hour_matches.opp.calls):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -77,7 +77,7 @@ async def test_if_fires_when_minute_matches.opp.calls):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -108,7 +108,7 @@ async def test_if_fires_when_second_matches.opp.calls):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -139,7 +139,7 @@ async def test_if_fires_when_second_as_string_matches.opp.calls):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -172,7 +172,7 @@ async def test_if_fires_when_all_matches.opp.calls):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -205,7 +205,7 @@ async def test_if_fires_periodic_seconds.opp.calls):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -239,7 +239,7 @@ async def test_if_fires_periodic_minutes.opp.calls):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -272,7 +272,7 @@ async def test_if_fires_periodic_hours.opp.calls):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -305,7 +305,7 @@ async def test_default_values.opp.calls):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {

@@ -34,7 +34,7 @@ from openpeerpower.const import (
 from openpeerpower.core import (
     CALLBACK_TYPE,
     Event,
-    HassJob,
+    OppJob,
     OpenPeerPower,
     State,
     callback,
@@ -177,7 +177,7 @@ def async_track_state_change(
     else:
         entity_ids = tuple(entity_id.lower() for entity_id in entity_ids)
 
-    job = HassJob(action)
+    job = OppJob(action)
 
     @callback
     def state_change_filter(event: Event) -> bool:
@@ -289,7 +289,7 @@ def async_track_state_change_event(
             event_filter=_async_state_change_filter,
         )
 
-    job = HassJob(action)
+    job = OppJob(action)
 
     for entity_id in entity_ids:
         entity_callbacks.setdefault(entity_id, []).append(job)
@@ -298,7 +298,7 @@ def async_track_state_change_event(
     def remove_listener() -> None:
         """Remove state change listener."""
         _async_remove_indexed_listeners(
-           .opp,
+            opp,
             TRACK_STATE_CHANGE_CALLBACKS,
             TRACK_STATE_CHANGE_LISTENER,
             entity_ids,
@@ -319,7 +319,7 @@ def _async_remove_indexed_listeners(
     data_key: str,
     listener_key: str,
     storage_keys: Iterable[str],
-    job: HassJob,
+    job: OppJob,
 ) -> None:
     """Remove a listener."""
     callbacks = opp.data[data_key]
@@ -381,7 +381,7 @@ def async_track_entity_registry_updated_event(
             event_filter=_async_entity_registry_updated_filter,
         )
 
-    job = HassJob(action)
+    job = OppJob(action)
 
     for entity_id in entity_ids:
         entity_callbacks.setdefault(entity_id, []).append(job)
@@ -390,7 +390,7 @@ def async_track_entity_registry_updated_event(
     def remove_listener() -> None:
         """Remove state change listener."""
         _async_remove_indexed_listeners(
-           .opp,
+            opp,
             TRACK_ENTITY_REGISTRY_UPDATED_CALLBACKS,
             TRACK_ENTITY_REGISTRY_UPDATED_LISTENER,
             entity_ids,
@@ -454,7 +454,7 @@ def async_track_state_added_domain(
             event_filter=_async_state_change_filter,
         )
 
-    job = HassJob(action)
+    job = OppJob(action)
 
     for domain in domains:
         domain_callbacks.setdefault(domain, []).append(job)
@@ -463,7 +463,7 @@ def async_track_state_added_domain(
     def remove_listener() -> None:
         """Remove state change listener."""
         _async_remove_indexed_listeners(
-           .opp,
+            opp,
             TRACK_STATE_ADDED_DOMAIN_CALLBACKS,
             TRACK_STATE_ADDED_DOMAIN_LISTENER,
             domains,
@@ -507,7 +507,7 @@ def async_track_state_removed_domain(
             event_filter=_async_state_change_filter,
         )
 
-    job = HassJob(action)
+    job = OppJob(action)
 
     for domain in domains:
         domain_callbacks.setdefault(domain, []).append(job)
@@ -516,7 +516,7 @@ def async_track_state_removed_domain(
     def remove_listener() -> None:
         """Remove state change listener."""
         _async_remove_indexed_listeners(
-           .opp,
+            opp,
             TRACK_STATE_REMOVED_DOMAIN_CALLBACKS,
             TRACK_STATE_REMOVED_DOMAIN_LISTENER,
             domains,
@@ -730,7 +730,7 @@ def async_track_template(
     Callable to unregister the listener.
 
     """
-    job = HassJob(action)
+    job = OppJob(action)
 
     @callback
     def _template_changed_listener(
@@ -766,7 +766,7 @@ def async_track_template(
         )
 
     info = async_track_template_result(
-       .opp, [TrackTemplate(template, variables)], _template_changed_listener
+        opp, [TrackTemplate(template, variables)], _template_changed_listener
     )
 
     return info.async_remove
@@ -786,7 +786,7 @@ class _TrackTemplateResultInfo:
     ):
         """Handle removal / refresh of tracker init."""
         self.opp = opp
-        self._job = HassJob(action)
+        self._job = OppJob(action)
 
         for track_template_ in track_templates:
             track_template_.template.opp = opp
@@ -1087,7 +1087,7 @@ def async_track_same_state(
     async_remove_state_for_cancel: Optional[CALLBACK_TYPE] = None
     async_remove_state_for_listener: Optional[CALLBACK_TYPE] = None
 
-    job = HassJob(action)
+    job = OppJob(action)
 
     @callback
     def clear_listener() -> None:
@@ -1120,7 +1120,7 @@ def async_track_same_state(
             clear_listener()
 
     async_remove_state_for_listener = async_track_point_in_utc_time(
-       .opp, state_for_listener, dt_util.utcnow() + period
+        opp, state_for_listener, dt_util.utcnow() + period
     )
 
     if entity_ids == MATCH_ALL:
@@ -1129,7 +1129,7 @@ def async_track_same_state(
         )
     else:
         async_remove_state_for_cancel = async_track_state_change_event(
-           .opp,
+            opp,
             [entity_ids] if isinstance(entity_ids, str) else entity_ids,
             state_for_cancel_listener,
         )
@@ -1144,11 +1144,11 @@ track_same_state = threaded_listener_factory(async_track_same_state)
 @bind.opp
 def async_track_point_in_time(
     opp: OpenPeerPower,
-    action: Union[HassJob, Callable[..., None]],
+    action: Union[OppJob, Callable[..., None]],
     point_in_time: datetime,
 ) -> CALLBACK_TYPE:
     """Add a listener that fires once after a specific point in time."""
-    job = action if isinstance(action, HassJob) else HassJob(action)
+    job = action if isinstance(action, OppJob) else OppJob(action)
 
     @callback
     def utc_converter(utc_now: datetime) -> None:
@@ -1165,16 +1165,16 @@ track_point_in_time = threaded_listener_factory(async_track_point_in_time)
 @bind.opp
 def async_track_point_in_utc_time(
     opp: OpenPeerPower,
-    action: Union[HassJob, Callable[..., None]],
+    action: Union[OppJob, Callable[..., None]],
     point_in_time: datetime,
 ) -> CALLBACK_TYPE:
     """Add a listener that fires once after a specific point in UTC time."""
     # Ensure point_in_time is UTC
     utc_point_in_time = dt_util.as_utc(point_in_time)
 
-    # Since this is called once, we accept a HassJob so we can avoid
+    # Since this is called once, we accept a OppJob so we can avoid
     # having to figure out how to call the action every time its called.
-    job = action if isinstance(action, HassJob) else HassJob(action)
+    job = action if isinstance(action, OppJob) else OppJob(action)
 
     cancel_callback: Optional[asyncio.TimerHandle] = None
 
@@ -1217,11 +1217,11 @@ track_point_in_utc_time = threaded_listener_factory(async_track_point_in_utc_tim
 @callback
 @bind.opp
 def async_call_later(
-    opp: OpenPeerPower, delay: float, action: Union[HassJob, Callable[..., None]]
+    opp: OpenPeerPower, delay: float, action: Union[OppJob, Callable[..., None]]
 ) -> CALLBACK_TYPE:
     """Add a listener that is called in <delay>."""
     return async_track_point_in_utc_time(
-       .opp, action, dt_util.utcnow() + timedelta(seconds=delay)
+        opp, action, dt_util.utcnow() + timedelta(seconds=delay)
     )
 
 
@@ -1239,7 +1239,7 @@ def async_track_time_interval(
     remove = None
     interval_listener_job = None
 
-    job = HassJob(action)
+    job = OppJob(action)
 
     def next_interval() -> datetime:
         """Return the next interval."""
@@ -1252,11 +1252,11 @@ def async_track_time_interval(
         nonlocal interval_listener_job
 
         remove = async_track_point_in_utc_time(
-           .opp, interval_listener_job, next_interval()  # type: ignore
+            opp, interval_listener_job, next_interval()  # type: ignore
         )
        .opp.async_run.opp_job(job, now)
 
-    interval_listener_job = HassJob(interval_listener)
+    interval_listener_job = OppJob(interval_listener)
     remove = async_track_point_in_utc_time.opp, interval_listener_job, next_interval())
 
     def remove_listener() -> None:
@@ -1274,7 +1274,7 @@ class SunListener:
     """Helper class to help listen to sun events."""
 
     opp: OpenPeerPower = attr.ib()
-    job: HassJob = attr.ib()
+    job: OppJob = attr.ib()
     event: str = attr.ib()
     offset: Optional[timedelta] = attr.ib()
     _unsub_sun: Optional[CALLBACK_TYPE] = attr.ib(default=None)
@@ -1335,7 +1335,7 @@ def async_track_sunrise(
     opp: OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
 ) -> CALLBACK_TYPE:
     """Add a listener that will fire a specified offset from sunrise daily."""
-    listener = SunListener.opp, HassJob(action), SUN_EVENT_SUNRISE, offset)
+    listener = SunListener.opp, OppJob(action), SUN_EVENT_SUNRISE, offset)
     listener.async_attach()
     return listener.async_detach
 
@@ -1349,7 +1349,7 @@ def async_track_sunset(
     opp: OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
 ) -> CALLBACK_TYPE:
     """Add a listener that will fire a specified offset from sunset daily."""
-    listener = SunListener.opp, HassJob(action), SUN_EVENT_SUNSET, offset)
+    listener = SunListener.opp, OppJob(action), SUN_EVENT_SUNSET, offset)
     listener.async_attach()
     return listener.async_detach
 
@@ -1371,7 +1371,7 @@ def async_track_utc_time_change(
     local: bool = False,
 ) -> CALLBACK_TYPE:
     """Add a listener that will fire if time matches a pattern."""
-    job = HassJob(action)
+    job = OppJob(action)
     # We do not have to wrap the function with time pattern matching logic
     # if no pattern given
     if all(val is None for val in (hour, minute, second)):
@@ -1405,13 +1405,13 @@ def async_track_utc_time_change(
        .opp.async_run.opp_job(job, dt_util.as_local(now) if local else now)
 
         time_listener = async_track_point_in_utc_time(
-           .opp,
+            opp,
             pattern_time_change_listener,
             calculate_next(now + timedelta(seconds=1)),
         )
 
     time_listener = async_track_point_in_utc_time(
-       .opp, pattern_time_change_listener, calculate_next(dt_util.utcnow())
+        opp, pattern_time_change_listener, calculate_next(dt_util.utcnow())
     )
 
     @callback

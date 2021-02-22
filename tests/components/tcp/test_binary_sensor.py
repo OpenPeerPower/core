@@ -46,7 +46,7 @@ async def test_setup_platform_invalid_config(opp, mock_socket):
     """Check the invalid configuration."""
     with assert_setup_component(0):
         assert await async_setup_component(
-           .opp,
+            opp,
             "binary_sensor",
             {"binary_sensor": {"platform": "tcp", "porrt": 1234}},
         )

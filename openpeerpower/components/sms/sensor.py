@@ -19,7 +19,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     name = f"gsm_signal_imei_{imei}"
     entities.append(
         GSMSignalSensor(
-           .opp,
+            opp,
             gateway,
             name,
         )
@@ -32,7 +32,7 @@ class GSMSignalSensor(Entity):
 
     def __init__(
         self,
-       .opp,
+        opp,
         gateway,
         name,
     ):

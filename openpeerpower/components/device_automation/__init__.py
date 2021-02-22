@@ -93,12 +93,12 @@ async def async_get_device_automation_platform(
 
 
 async def _async_get_device_automations_from_domain(
-   .opp, domain, automation_type, device_id
+    opp, domain, automation_type, device_id
 ):
     """List device automations."""
     try:
         platform = await async_get_device_automation_platform(
-           .opp, domain, automation_type
+            opp, domain, automation_type
         )
     except InvalidDeviceAutomationConfig:
         return None
@@ -133,7 +133,7 @@ async def _async_get_device_automations.opp, automation_type, device_id):
     device_automations = await asyncio.gather(
         *(
             _async_get_device_automations_from_domain(
-               .opp, domain, automation_type, device_id
+                opp, domain, automation_type, device_id
             )
             for domain in domains
         )
@@ -149,7 +149,7 @@ async def _async_get_device_automation_capabilities.opp, automation_type, automa
     """List device automations."""
     try:
         platform = await async_get_device_automation_platform(
-           .opp, automation[CONF_DOMAIN], automation_type
+            opp, automation[CONF_DOMAIN], automation_type
         )
     except InvalidDeviceAutomationConfig:
         return {}
@@ -250,7 +250,7 @@ async def websocket_device_automation_get_action_capabilities.opp, connection, m
     """Handle request for device action capabilities."""
     action = msg["action"]
     capabilities = await _async_get_device_automation_capabilities(
-       .opp, "action", action
+        opp, "action", action
     )
     connection.send_result(msg["id"], capabilities)
 
@@ -267,7 +267,7 @@ async def websocket_device_automation_get_condition_capabilities.opp, connection
     """Handle request for device condition capabilities."""
     condition = msg["condition"]
     capabilities = await _async_get_device_automation_capabilities(
-       .opp, "condition", condition
+        opp, "condition", condition
     )
     connection.send_result(msg["id"], capabilities)
 
@@ -284,6 +284,6 @@ async def websocket_device_automation_get_trigger_capabilities.opp, connection, 
     """Handle request for device trigger capabilities."""
     trigger = msg["trigger"]
     capabilities = await _async_get_device_automation_capabilities(
-       .opp, "trigger", trigger
+        opp, "trigger", trigger
     )
     connection.send_result(msg["id"], capabilities)

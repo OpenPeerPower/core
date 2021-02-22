@@ -50,7 +50,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         return await client.async_update()
 
     coordinator = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name="duty binary sensor",
         update_method=async_update_data,

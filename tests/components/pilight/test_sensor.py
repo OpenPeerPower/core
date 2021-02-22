@@ -28,7 +28,7 @@ async def test_sensor_value_from_code.opp):
     """Test the setting of value via pilight."""
     with assert_setup_component(1):
         assert await async_setup_component(
-           .opp,
+            opp,
             sensor.DOMAIN,
             {
                 sensor.DOMAIN: {
@@ -59,7 +59,7 @@ async def test_disregard_wrong_payload.opp):
     """Test omitting setting of value with wrong payload."""
     with assert_setup_component(1):
         assert await async_setup_component(
-           .opp,
+            opp,
             sensor.DOMAIN,
             {
                 sensor.DOMAIN: {
@@ -74,7 +74,7 @@ async def test_disregard_wrong_payload.opp):
 
         # Try set value from data with incorrect payload
         fire_pilight_message(
-           .opp, protocol="test-protocol_2", data={"test": "data", "uuid": "0-0-0-0"}
+            opp, protocol="test-protocol_2", data={"test": "data", "uuid": "0-0-0-0"}
         )
         await opp.async_block_till_done()
         state = opp.states.get("sensor.test_2")
@@ -82,7 +82,7 @@ async def test_disregard_wrong_payload.opp):
 
         # Try set value from data with partially matched payload
         fire_pilight_message(
-           .opp, protocol="wrong-protocol", data={"test": "data", "uuid": "1-2-3-4"}
+            opp, protocol="wrong-protocol", data={"test": "data", "uuid": "1-2-3-4"}
         )
         await opp.async_block_till_done()
         state = opp.states.get("sensor.test_2")
@@ -90,7 +90,7 @@ async def test_disregard_wrong_payload.opp):
 
         # Try set value from data with fully matched payload
         fire_pilight_message(
-           .opp,
+            opp,
             protocol="test-protocol_2",
             data={"test": "data", "uuid": "1-2-3-4", "other_payload": 3.141},
         )
@@ -104,7 +104,7 @@ async def test_variable_missing.opp, caplog):
     caplog.set_level(logging.ERROR)
     with assert_setup_component(1):
         assert await async_setup_component(
-           .opp,
+            opp,
             sensor.DOMAIN,
             {
                 sensor.DOMAIN: {
@@ -119,7 +119,7 @@ async def test_variable_missing.opp, caplog):
 
         # Create code without sensor variable
         fire_pilight_message(
-           .opp,
+            opp,
             protocol="test-protocol",
             data={"uuid": "1-2-3-4", "other_variable": 3.141},
         )

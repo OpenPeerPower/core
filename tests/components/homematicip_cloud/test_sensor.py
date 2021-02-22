@@ -39,7 +39,7 @@ from .helper import async_manipulate_test_data, get_and_check_entity_basics
 async def test_manually_configured_platform.opp):
     """Test that we do not set up an access point."""
     assert await async_setup_component(
-       .opp, SENSOR_DOMAIN, {SENSOR_DOMAIN: {"platform": HMIPC_DOMAIN}}
+        opp, SENSOR_DOMAIN, {SENSOR_DOMAIN: {"platform": HMIPC_DOMAIN}}
     )
     assert not.opp.data.get(HMIPC_DOMAIN)
 
@@ -54,7 +54,7 @@ async def test_hmip_accesspoint_status.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
     assert hmip_device
     assert ha_state.state == "8.0"
@@ -71,7 +71,7 @@ async def test_hmip_heating_thermostat.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "0"
@@ -85,7 +85,7 @@ async def test_hmip_heating_thermostat.opp, default_mock_hap_factory):
     assert ha_state.state == "nn"
 
     await async_manipulate_test_data(
-       .opp, hmip_device, "valveState", ValveState.ADAPTION_DONE
+        opp, hmip_device, "valveState", ValveState.ADAPTION_DONE
     )
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == "37"
@@ -105,7 +105,7 @@ async def test_hmip_humidity_sensor.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "40"
@@ -128,7 +128,7 @@ async def test_hmip_temperature_sensor1.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "21.0"
@@ -153,7 +153,7 @@ async def test_hmip_temperature_sensor2.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "20.0"
@@ -178,7 +178,7 @@ async def test_hmip_temperature_sensor3.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "23.3"
@@ -203,7 +203,7 @@ async def test_hmip_power_sensor.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "0.0"
@@ -240,7 +240,7 @@ async def test_hmip_illuminance_sensor1.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "4890.0"
@@ -260,7 +260,7 @@ async def test_hmip_illuminance_sensor2.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "807.3"
@@ -283,7 +283,7 @@ async def test_hmip_windspeed_sensor.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "2.6"
@@ -330,7 +330,7 @@ async def test_hmip_today_rain_sensor.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "3.9"
@@ -350,7 +350,7 @@ async def test_hmip_passage_detector_delta_counter.opp, default_mock_hap_factory
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "164"

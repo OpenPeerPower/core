@@ -35,7 +35,7 @@ async def test_request_all_info.opp):
         configurator.ATTR_FIELDS: [],
         configurator.ATTR_ENTITY_PICTURE: "config entity picture",
         configurator.ATTR_CONFIGURE_ID: configurator.async_request_config(
-           .opp,
+            opp,
             name="Test Request",
             callback=lambda _: None,
             description="config description",
@@ -60,7 +60,7 @@ async def test_callback_called_on_configure.opp):
     """Test if our callback gets called when configure service called."""
     calls = []
     request_id = configurator.async_request_config(
-       .opp, "Test Request", lambda _: calls.append(1)
+        opp, "Test Request", lambda _: calls.append(1)
     )
 
     await opp.services.async_call(

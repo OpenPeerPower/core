@@ -94,7 +94,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     add_entities(
         [
             HistoryStatsSensor(
-               .opp, entity_id, entity_states, start, end, duration, sensor_type, name
+                opp, entity_id, entity_states, start, end, duration, sensor_type, name
             )
         ]
     )

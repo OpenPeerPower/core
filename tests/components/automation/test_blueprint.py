@@ -49,7 +49,7 @@ async def test_notify_leaving_zone.opp):
     set_person_state("School")
 
     assert await async_setup_component(
-       .opp, "zone", {"zone": {"name": "School", "latitude": 1, "longitude": 2}}
+        opp, "zone", {"zone": {"name": "School", "latitude": 1, "longitude": 2}}
     )
 
     with patch_blueprint(
@@ -57,7 +57,7 @@ async def test_notify_leaving_zone.opp):
         BUILTIN_BLUEPRINT_FOLDER / "notify_leaving_zone.yaml",
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             "automation",
             {
                 "automation": {
@@ -81,7 +81,7 @@ async def test_notify_leaving_zone.opp):
         await opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 1
-        .opp, config, variables, _context = mock_call_action.mock_calls[0][1]
+         opp, config, variables, _context = mock_call_action.mock_calls[0][1]
         message_tpl = config.pop("message")
         assert config == {
             "domain": "mobile_app",
@@ -134,7 +134,7 @@ async def test_motion_light.opp):
         BUILTIN_BLUEPRINT_FOLDER / "motion_light.yaml",
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             "automation",
             {
                 "automation": {

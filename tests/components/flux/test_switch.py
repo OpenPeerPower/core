@@ -26,7 +26,7 @@ from tests.common import (
 async def test_valid_config(opp):
     """Test configuration."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "switch",
         {
             "switch": {
@@ -47,7 +47,7 @@ async def test_restore_state_last_on.opp):
     mock_restore_cache.opp, [State("switch.flux", "on")])
 
     assert await async_setup_component(
-       .opp,
+        opp,
         "switch",
         {
             "switch": {
@@ -69,7 +69,7 @@ async def test_restore_state_last_off.opp):
     mock_restore_cache.opp, [State("switch.flux", "off")])
 
     assert await async_setup_component(
-       .opp,
+        opp,
         "switch",
         {
             "switch": {
@@ -89,7 +89,7 @@ async def test_restore_state_last_off.opp):
 async def test_valid_config_with_info.opp):
     """Test configuration."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "switch",
         {
             "switch": {
@@ -111,7 +111,7 @@ async def test_valid_config_no_name.opp):
     """Test configuration."""
     with assert_setup_component(1, "switch"):
         assert await async_setup_component(
-           .opp,
+            opp,
             "switch",
             {"switch": {"platform": "flux", "lights": ["light.desk", "light.lamp"]}},
         )
@@ -122,7 +122,7 @@ async def test_invalid_config_no_lights.opp):
     """Test configuration."""
     with assert_setup_component(0, "switch"):
         assert await async_setup_component(
-           .opp, "switch", {"switch": {"platform": "flux", "name": "flux"}}
+            opp, "switch", {"switch": {"platform": "flux", "name": "flux"}}
         )
         await opp.async_block_till_done()
 
@@ -132,7 +132,7 @@ async def test_flux_when_switch_is_off.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -161,7 +161,7 @@ async def test_flux_when_switch_is_off.opp, legacy_patchable_time):
     ):
         turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -183,7 +183,7 @@ async def test_flux_before_sunrise.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -212,7 +212,7 @@ async def test_flux_before_sunrise.opp, legacy_patchable_time):
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -242,7 +242,7 @@ async def test_flux_before_sunrise_known_location.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -266,7 +266,7 @@ async def test_flux_before_sunrise_known_location.opp, legacy_patchable_time):
         "openpeerpower.components.flux.switch.dt_utcnow", return_value=test_time
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -301,7 +301,7 @@ async def test_flux_after_sunrise_before_sunset.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -329,7 +329,7 @@ async def test_flux_after_sunrise_before_sunset.opp, legacy_patchable_time):
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -360,7 +360,7 @@ async def test_flux_after_sunset_before_stop.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -388,7 +388,7 @@ async def test_flux_after_sunset_before_stop.opp, legacy_patchable_time):
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -420,7 +420,7 @@ async def test_flux_after_stop_before_sunrise.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -448,7 +448,7 @@ async def test_flux_after_stop_before_sunrise.opp, legacy_patchable_time):
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -479,7 +479,7 @@ async def test_flux_with_custom_start_stop_times.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -507,7 +507,7 @@ async def test_flux_with_custom_start_stop_times.opp, legacy_patchable_time):
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -542,7 +542,7 @@ async def test_flux_before_sunrise_stop_next_day.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -570,7 +570,7 @@ async def test_flux_before_sunrise_stop_next_day.opp, legacy_patchable_time):
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -598,7 +598,7 @@ async def test_flux_before_sunrise_stop_next_day.opp, legacy_patchable_time):
 
 # pylint: disable=invalid-name
 async def test_flux_after_sunrise_before_sunset_stop_next_day(
-   .opp, legacy_patchable_time
+    opp, legacy_patchable_time
 ):
     """
     Test the flux switch after sunrise and before sunset.
@@ -608,7 +608,7 @@ async def test_flux_after_sunrise_before_sunset_stop_next_day(
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -636,7 +636,7 @@ async def test_flux_after_sunrise_before_sunset_stop_next_day(
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -665,7 +665,7 @@ async def test_flux_after_sunrise_before_sunset_stop_next_day(
 # pylint: disable=invalid-name
 @pytest.mark.parametrize("x", [0, 1])
 async def test_flux_after_sunset_before_midnight_stop_next_day(
-   .opp, legacy_patchable_time, x
+    opp, legacy_patchable_time, x
 ):
     """Test the flux switch after sunset and before stop.
 
@@ -674,7 +674,7 @@ async def test_flux_after_sunset_before_midnight_stop_next_day(
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -702,7 +702,7 @@ async def test_flux_after_sunset_before_midnight_stop_next_day(
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -730,7 +730,7 @@ async def test_flux_after_sunset_before_midnight_stop_next_day(
 
 # pylint: disable=invalid-name
 async def test_flux_after_sunset_after_midnight_stop_next_day(
-   .opp, legacy_patchable_time
+    opp, legacy_patchable_time
 ):
     """Test the flux switch after sunset and before stop.
 
@@ -739,7 +739,7 @@ async def test_flux_after_sunset_after_midnight_stop_next_day(
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -767,7 +767,7 @@ async def test_flux_after_sunset_after_midnight_stop_next_day(
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -795,7 +795,7 @@ async def test_flux_after_sunset_after_midnight_stop_next_day(
 
 # pylint: disable=invalid-name
 async def test_flux_after_stop_before_sunrise_stop_next_day(
-   .opp, legacy_patchable_time
+    opp, legacy_patchable_time
 ):
     """Test the flux switch after stop and before sunrise.
 
@@ -804,7 +804,7 @@ async def test_flux_after_stop_before_sunrise_stop_next_day(
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -832,7 +832,7 @@ async def test_flux_after_stop_before_sunrise_stop_next_day(
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -864,7 +864,7 @@ async def test_flux_with_custom_colortemps.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -892,7 +892,7 @@ async def test_flux_with_custom_colortemps.opp, legacy_patchable_time):
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -926,7 +926,7 @@ async def test_flux_with_custom_brightness.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -954,7 +954,7 @@ async def test_flux_with_custom_brightness.opp, legacy_patchable_time):
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -986,7 +986,7 @@ async def test_flux_with_multiple_lights.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -1033,7 +1033,7 @@ async def test_flux_with_multiple_lights.opp, legacy_patchable_time):
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -1069,7 +1069,7 @@ async def test_flux_with_mired.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -1096,7 +1096,7 @@ async def test_flux_with_mired.opp, legacy_patchable_time):
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -1126,7 +1126,7 @@ async def test_flux_with_rgb.opp, legacy_patchable_time):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component(
-       .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -1153,7 +1153,7 @@ async def test_flux_with_rgb.opp, legacy_patchable_time):
         side_effect=event_date,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {

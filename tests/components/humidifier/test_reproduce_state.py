@@ -87,7 +87,7 @@ async def test_multiple_attrs.opp):
     humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
 
     await async_reproduce_states(
-       .opp, [State(ENTITY_1, STATE_ON, {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})]
+        opp, [State(ENTITY_1, STATE_ON, {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})]
     )
 
     await opp.async_block_till_done()
@@ -111,7 +111,7 @@ async def test_turn_off_multiple_attrs.opp):
     humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
 
     await async_reproduce_states(
-       .opp, [State(ENTITY_1, STATE_OFF, {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})]
+        opp, [State(ENTITY_1, STATE_OFF, {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})]
     )
 
     await opp.async_block_till_done()
@@ -134,7 +134,7 @@ async def test_multiple_modes.opp):
     humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
 
     await async_reproduce_states(
-       .opp,
+        opp,
         [
             State(ENTITY_1, STATE_ON, {ATTR_MODE: MODE_ECO, ATTR_HUMIDITY: 40}),
             State(ENTITY_2, STATE_ON, {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 50}),
@@ -194,7 +194,7 @@ async def test_state_with_context.opp):
     context = Context()
 
     await async_reproduce_states(
-       .opp,
+        opp,
         [State(ENTITY_1, STATE_ON, {ATTR_MODE: MODE_AWAY, ATTR_HUMIDITY: 45})],
         context=context,
     )

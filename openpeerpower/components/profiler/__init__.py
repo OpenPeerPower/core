@@ -74,7 +74,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         )
         await opp.async_add_executor_job(_log_objects)
         domain_data[LOG_INTERVAL_SUB] = async_track_time_interval(
-           .opp, _log_objects, call.data[CONF_SCAN_INTERVAL]
+            opp, _log_objects, call.data[CONF_SCAN_INTERVAL]
         )
 
     async def _async_stop_log_objects(call: ServiceCall):
@@ -100,7 +100,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         )
 
     async_register_admin_service(
-       .opp,
+        opp,
         DOMAIN,
         SERVICE_START,
         _async_run_profile,
@@ -110,7 +110,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-       .opp,
+        opp,
         DOMAIN,
         SERVICE_MEMORY,
         _async_run_memory_profile,
@@ -120,7 +120,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-       .opp,
+        opp,
         DOMAIN,
         SERVICE_START_LOG_OBJECTS,
         _async_start_log_objects,
@@ -134,7 +134,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-       .opp,
+        opp,
         DOMAIN,
         SERVICE_STOP_LOG_OBJECTS,
         _async_stop_log_objects,
@@ -142,7 +142,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-       .opp,
+        opp,
         DOMAIN,
         SERVICE_DUMP_LOG_OBJECTS,
         _dump_log_objects,

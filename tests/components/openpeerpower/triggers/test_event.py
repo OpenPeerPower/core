@@ -32,7 +32,7 @@ async def test_if_fires_on_event.opp.calls):
     context = Context()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -64,7 +64,7 @@ async def test_if_fires_on_templated_event.opp.calls):
     context = Context()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -97,7 +97,7 @@ async def test_if_fires_on_multiple_events.opp.calls):
     context = Context()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -122,7 +122,7 @@ async def test_if_fires_on_multiple_events.opp.calls):
 async def test_if_fires_on_event_extra_data.opp.calls, context_with_user):
     """Test the firing of events still matches with event data and context."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -152,7 +152,7 @@ async def test_if_fires_on_event_extra_data.opp.calls, context_with_user):
 async def test_if_fires_on_event_with_data_and_context.opp.calls, context_with_user):
     """Test the firing of events with data and context."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -199,7 +199,7 @@ async def test_if_fires_on_event_with_templated_data_and_context(
 ):
     """Test the firing of events with templated data and context."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -255,7 +255,7 @@ async def test_if_fires_on_event_with_empty_data_and_context_config(
     empty dict for event_data instead of no key.
     """
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -282,7 +282,7 @@ async def test_if_fires_on_event_with_empty_data_and_context_config(
 async def test_if_fires_on_event_with_nested_data.opp.calls):
     """Test the firing of events with nested data."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -306,7 +306,7 @@ async def test_if_fires_on_event_with_nested_data.opp.calls):
 async def test_if_not_fires_if_event_data_not_matches.opp.calls):
     """Test firing of event if no data match."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -330,7 +330,7 @@ async def test_if_not_fires_if_event_context_not_matches(
 ):
     """Test firing of event if no context match."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -352,7 +352,7 @@ async def test_if_not_fires_if_event_context_not_matches(
 async def test_if_fires_on_multiple_user_ids.opp.calls, context_with_user):
     """Test the firing of event when the trigger has multiple user ids."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -375,7 +375,7 @@ async def test_if_fires_on_multiple_user_ids.opp.calls, context_with_user):
 async def test_event_data_with_list.opp.calls):
     """Test the (non)firing of event when the data schema has lists."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {

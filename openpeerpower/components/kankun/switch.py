@@ -45,7 +45,7 @@ def setup_platform.opp, config, add_entities_callback, discovery_info=None):
     for dev_name, properties in switches.items():
         devices.append(
             KankunSwitch(
-               .opp,
+                opp,
                 properties.get(CONF_NAME, dev_name),
                 properties.get(CONF_HOST),
                 properties.get(CONF_PORT, DEFAULT_PORT),

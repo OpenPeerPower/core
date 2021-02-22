@@ -24,14 +24,14 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             DemoCover.opp, "cover_2", "Hall Window", 10),
             DemoCover.opp, "cover_3", "Living Room Window", 70, 50),
             DemoCover(
-               .opp,
+                opp,
                 "cover_4",
                 "Garage Door",
                 device_class="garage",
                 supported_features=(SUPPORT_OPEN | SUPPORT_CLOSE),
             ),
             DemoCover(
-               .opp,
+                opp,
                 "cover_5",
                 "Pergola Roof",
                 tilt_position=60,
@@ -56,7 +56,7 @@ class DemoCover(CoverEntity):
 
     def __init__(
         self,
-       .opp,
+        opp,
         unique_id,
         name,
         position=None,

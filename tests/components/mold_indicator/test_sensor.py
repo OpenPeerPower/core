@@ -32,7 +32,7 @@ def init_sensors_fixture.opp):
 async def test_setup_opp):
     """Test the mold indicator sensor setup."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -63,7 +63,7 @@ async def test_invalidcalib.opp):
     )
 
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -98,7 +98,7 @@ async def test_invalidhum.opp):
     )
 
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -144,7 +144,7 @@ async def test_invalidhum.opp):
 async def test_calculation.opp):
     """Test the mold indicator internal calculations."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -183,7 +183,7 @@ async def test_calculation.opp):
 async def test_unknown_sensor.opp):
     """Test the sensor_changed function."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -257,7 +257,7 @@ async def test_unknown_sensor.opp):
 async def test_sensor_changed.opp):
     """Test the sensor_changed function."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {

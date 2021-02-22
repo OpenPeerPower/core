@@ -70,7 +70,7 @@ def app2.opp):
 def trusted_networks_auth.opp):
     """Load trusted networks auth provider."""
     prv = trusted_networks.TrustedNetworksAuthProvider(
-       .opp,
+        opp,
        .opp.auth._store,
         {"type": "trusted_networks", "trusted_networks": TRUSTED_NETWORKS},
     )
@@ -136,7 +136,7 @@ async def test_basic_auth_does_not_work(app, aiohttp_client, opp, legacy_auth):
 
 
 async def test_cannot_access_with_trusted_ip(
-   .opp, app2, trusted_networks_auth, aiohttp_client, opp_owner_user
+    opp, app2, trusted_networks_auth, aiohttp_client, opp_owner_user
 ):
     """Test access with an untrusted ip address."""
     setup_auth.opp, app2)
@@ -156,7 +156,7 @@ async def test_cannot_access_with_trusted_ip(
 
 
 async def test_auth_active_access_with_access_token_in_header(
-   .opp, app, aiohttp_client, opp_access_token
+    opp, app, aiohttp_client, opp_access_token
 ):
     """Test access with access token in header."""
     token = opp_access_token
@@ -189,7 +189,7 @@ async def test_auth_active_access_with_access_token_in_header(
 
 
 async def test_auth_active_access_with_trusted_ip(
-   .opp, app2, trusted_networks_auth, aiohttp_client, opp_owner_user
+    opp, app2, trusted_networks_auth, aiohttp_client, opp_owner_user
 ):
     """Test access with an untrusted ip address."""
     setup_auth.opp, app2)
@@ -251,7 +251,7 @@ async def test_auth_access_signed_path.opp, app, aiohttp_client, opp_access_toke
 
     # Never valid as expired in the past.
     expired_signed_path = async_sign_path(
-       .opp, refresh_token.id, "/", timedelta(seconds=-5)
+        opp, refresh_token.id, "/", timedelta(seconds=-5)
     )
 
     req = await client.get(expired_signed_path)

@@ -181,7 +181,7 @@ async def async_start(
             if discovery_hash not in.opp.data[PENDING_DISCOVERED]:
                .opp.data[PENDING_DISCOVERED][discovery_hash] = {
                     "unsub": async_dispatcher_connect(
-                       .opp,
+                        opp,
                         MQTT_DISCOVERY_DONE.format(discovery_hash),
                         discovery_done,
                     ),
@@ -196,7 +196,7 @@ async def async_start(
                 discovery_id,
             )
             async_dispatcher_send(
-               .opp, MQTT_DISCOVERY_UPDATED.format(discovery_hash), payload
+                opp, MQTT_DISCOVERY_UPDATED.format(discovery_hash), payload
             )
         elif payload:
             # Add component
@@ -225,12 +225,12 @@ async def async_start(
                    .opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
 
             async_dispatcher_send(
-               .opp, MQTT_DISCOVERY_NEW.format(component, "mqtt"), payload
+                opp, MQTT_DISCOVERY_NEW.format(component, "mqtt"), payload
             )
         else:
             # Unhandled discovery message
             async_dispatcher_send(
-               .opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
+                opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
             )
 
    .opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
@@ -286,7 +286,7 @@ async def async_start(
         for topic in topics:
             key = f"{integration}_{topic}"
            .opp.data[INTEGRATION_UNSUBSCRIBE][key] = await mqtt.async_subscribe(
-               .opp,
+                opp,
                 topic,
                 functools.partial(async_integration_message_received, integration),
                 0,

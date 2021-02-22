@@ -46,7 +46,7 @@ def track_connected.opp):
 
 
 async def test_auth_events(
-   .opp, no_auth_websocket_client, legacy_auth, opp_access_token, track_connected
+    opp, no_auth_websocket_client, legacy_auth, opp_access_token, track_connected
 ):
     """Test authenticating."""
 
@@ -110,7 +110,7 @@ async def test_pre_auth_only_auth_allowed(no_auth_websocket_client):
 
 
 async def test_auth_active_with_token(
-   .opp, no_auth_websocket_client, opp_access_token
+    opp, no_auth_websocket_client, opp_access_token
 ):
     """Test authenticating with a token."""
     await no_auth_websocket_client.send_json(

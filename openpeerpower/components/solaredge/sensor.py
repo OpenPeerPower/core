@@ -52,7 +52,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
         raise ConfigEntryNotReady from ex
 
     sensor_factory = SolarEdgeSensorFactory(
-       .opp, entry.title, entry.data[CONF_SITE_ID], api
+        opp, entry.title, entry.data[CONF_SITE_ID], api
     )
     for service in sensor_factory.all_services:
         service.async_setup()

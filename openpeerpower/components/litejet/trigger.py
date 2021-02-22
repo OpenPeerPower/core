@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PLATFORM
-from openpeerpower.core import HassJob, callback
+from openpeerpower.core import OppJob, callback
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.event import track_point_in_utc_time
 import openpeerpower.util.dt as dt_util
@@ -34,7 +34,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     held_less_than = config.get(CONF_HELD_LESS_THAN)
     pressed_time = None
     cancel_pressed_more_than = None
-    job = HassJob(action)
+    job = OppJob(action)
 
     @callback
     def call_action():
@@ -71,7 +71,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
            .opp.add_job(call_action)
         if held_more_than is not None and held_less_than is None:
             cancel_pressed_more_than = track_point_in_utc_time(
-               .opp, pressed_more_than_satisfied, dt_util.utcnow() + held_more_than
+                opp, pressed_more_than_satisfied, dt_util.utcnow() + held_more_than
             )
 
     def released():

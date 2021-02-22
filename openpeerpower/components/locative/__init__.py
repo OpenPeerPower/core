@@ -84,7 +84,7 @@ async def handle_webhook.opp, webhook_id, request):
         if current_state is None or current_state.state == location_name:
             location_name = STATE_NOT_HOME
             async_dispatcher_send(
-               .opp, TRACKER_UPDATE, device, gps_location, location_name
+                opp, TRACKER_UPDATE, device, gps_location, location_name
             )
             return web.Response(text="Setting location to not home", status=HTTP_OK)
 

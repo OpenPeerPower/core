@@ -9,7 +9,7 @@ from openpeerpower.setup import async_setup_component
 async def test_invalid_path_setup_opp):
     """Test that an invalid path is not set up."""
     assert not await async_setup_component(
-       .opp,
+        opp,
         folder_watcher.DOMAIN,
         {folder_watcher.DOMAIN: {folder_watcher.CONF_FOLDER: "invalid_path"}},
     )
@@ -21,7 +21,7 @@ async def test_valid_path_setup_opp):
    .opp.config.allowlist_external_dirs = {cwd}
     with patch.object(folder_watcher, "Watcher"):
         assert await async_setup_component(
-           .opp,
+            opp,
             folder_watcher.DOMAIN,
             {folder_watcher.DOMAIN: {folder_watcher.CONF_FOLDER: cwd}},
         )

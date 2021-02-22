@@ -70,7 +70,7 @@ async def async_setup_opp, config):
     # Set up input select
     tasks.append(
         bootstrap.async_setup_component(
-           .opp,
+            opp,
             "input_select",
             {
                 "input_select": {
@@ -91,7 +91,7 @@ async def async_setup_opp, config):
     # Set up input boolean
     tasks.append(
         bootstrap.async_setup_component(
-           .opp,
+            opp,
             "input_boolean",
             {
                 "input_boolean": {
@@ -108,7 +108,7 @@ async def async_setup_opp, config):
     # Set up input number
     tasks.append(
         bootstrap.async_setup_component(
-           .opp,
+            opp,
             "input_number",
             {
                 "input_number": {
@@ -167,7 +167,7 @@ async def finish_setup_opp, config):
 
     # Set up scripts
     await bootstrap.async_setup_component(
-       .opp,
+        opp,
         "script",
         {
             "script": {
@@ -196,7 +196,7 @@ async def finish_setup_opp, config):
 
     # Set up scenes
     await bootstrap.async_setup_component(
-       .opp,
+        opp,
         "scene",
         {
             "scene": [

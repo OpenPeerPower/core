@@ -25,7 +25,7 @@ async def test_unique_id_migration(mock_hc, opp, mock_write_config):
 
     entry.add_to.opp.opp)
     mock_registry(
-       .opp,
+        opp,
         {
             # old format
             ENTITY_WATCH_TV: entity_registry.RegistryEntry(

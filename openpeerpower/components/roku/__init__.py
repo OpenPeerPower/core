@@ -111,7 +111,7 @@ class RokuDataUpdateCoordinator(DataUpdateCoordinator[Device]):
         self.last_full_update = None
 
         super().__init__(
-           .opp,
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=SCAN_INTERVAL,

@@ -65,7 +65,7 @@ class CertExpiryDataUpdateCoordinator(DataUpdateCoordinator[datetime]):
         name = f"{self.host}{display_port}"
 
         super().__init__(
-           .opp,
+            opp,
             _LOGGER,
             name=name,
             update_interval=SCAN_INTERVAL,

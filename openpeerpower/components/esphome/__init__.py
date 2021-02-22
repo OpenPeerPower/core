@@ -81,7 +81,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     # Store client in per-config-entry.opp.data
     store = Store(
-       .opp, STORAGE_VERSION, f"esphome.{entry.entry_id}", encoder=JSONEncoder
+        opp, STORAGE_VERSION, f"esphome.{entry.entry_id}", encoder=JSONEncoder
     )
     entry_data = opp.data[DOMAIN][entry.entry_id] = RuntimeEntryData(
         client=cli, entry_id=entry.entry_id, store=store
@@ -165,7 +165,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     def async_on_state_subscription(entity_id: str) -> None:
         """Subscribe and forward states for requested entities."""
         unsub = async_track_state_change_event(
-           .opp, [entity_id], send_open_peer_power_state_event
+            opp, [entity_id], send_open_peer_power_state_event
         )
         entry_data.disconnect_callbacks.append(unsub)
         new_state = opp.states.get(entity_id)
@@ -181,7 +181,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             entry_data.device_info = await cli.device_info()
             entry_data.available = True
             device_id = await _async_setup_device_registry(
-               .opp, entry, entry_data.device_info
+                opp, entry, entry_data.device_info
             )
             entry_data.async_update_device_state.opp)
 

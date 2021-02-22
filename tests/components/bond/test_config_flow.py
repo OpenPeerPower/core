@@ -144,7 +144,7 @@ async def test_user_form_old_firmware.opp: core.OpenPeerPower):
 async def test_user_form_unexpected_client_error(opp: core.OpenPeerPower):
     """Test we handle unexpected client error gracefully."""
     await _help_test_form_unexpected_error(
-       .opp,
+        opp,
         source=config_entries.SOURCE_USER,
         user_input={CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
         error=ClientResponseError(Mock(), Mock(), status=500),
@@ -154,7 +154,7 @@ async def test_user_form_unexpected_client_error(opp: core.OpenPeerPower):
 async def test_user_form_unexpected_error(opp: core.OpenPeerPower):
     """Test we handle unexpected error gracefully."""
     await _help_test_form_unexpected_error(
-       .opp,
+        opp,
         source=config_entries.SOURCE_USER,
         user_input={CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
         error=Exception(),
@@ -254,7 +254,7 @@ async def test_zeroconf_already_configured.opp: core.OpenPeerPower):
 async def test_zeroconf_form_unexpected_error(opp: core.OpenPeerPower):
     """Test we handle unexpected error gracefully."""
     await _help_test_form_unexpected_error(
-       .opp,
+        opp,
         source=config_entries.SOURCE_ZEROCONF,
         initial_input={
             "name": "test-bond-id.some-other-tail-info",

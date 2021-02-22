@@ -45,7 +45,7 @@ DEFAULT_CONFIG = {
 async def test_controlling_state_via_topic.opp, mqtt_mock):
     """Test the controlling state via topic."""
     assert await async_setup_component(
-       .opp,
+        opp,
         switch.DOMAIN,
         {
             switch.DOMAIN: {
@@ -84,7 +84,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         return_value=fake_state,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -124,7 +124,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
 async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
     """Test the controlling state via topic and JSON message."""
     assert await async_setup_component(
-       .opp,
+        opp,
         switch.DOMAIN,
         {
             switch.DOMAIN: {
@@ -157,14 +157,14 @@ async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
 async def test_availability_when_connection_lost.opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
-       .opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_availability_without_topic.opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
-       .opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -182,7 +182,7 @@ async def test_default_availability_payload.opp, mqtt_mock):
     }
 
     await help_test_default_availability_payload(
-       .opp, mqtt_mock, switch.DOMAIN, config, True, "state-topic", "1"
+        opp, mqtt_mock, switch.DOMAIN, config, True, "state-topic", "1"
     )
 
 
@@ -200,14 +200,14 @@ async def test_custom_availability_payload.opp, mqtt_mock):
     }
 
     await help_test_custom_availability_payload(
-       .opp, mqtt_mock, switch.DOMAIN, config, True, "state-topic", "1"
+        opp, mqtt_mock, switch.DOMAIN, config, True, "state-topic", "1"
     )
 
 
 async def test_custom_state_payload.opp, mqtt_mock):
     """Test the state payload."""
     assert await async_setup_component(
-       .opp,
+        opp,
         switch.DOMAIN,
         {
             switch.DOMAIN: {
@@ -242,35 +242,35 @@ async def test_custom_state_payload.opp, mqtt_mock):
 async def test_setting_attribute_via_mqtt_json_message.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_via_mqtt_json_message(
-       .opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_setting_attribute_with_template.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_with_template(
-       .opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_not_dict.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_not_dict(
-       .opp, mqtt_mock, caplog, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
-       .opp, mqtt_mock, caplog, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_discovery_update_attr.opp, mqtt_mock, caplog):
     """Test update of discovered MQTTAttributes."""
     await help_test_discovery_update_attr(
-       .opp, mqtt_mock, caplog, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -333,7 +333,7 @@ async def test_discovery_update_switch_topic_template.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-       .opp,
+        opp,
         mqtt_mock,
         caplog,
         switch.DOMAIN,
@@ -368,7 +368,7 @@ async def test_discovery_update_switch_template.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-       .opp,
+        opp,
         mqtt_mock,
         caplog,
         switch.DOMAIN,
@@ -390,7 +390,7 @@ async def test_discovery_update_unchanged_switch.opp, mqtt_mock, caplog):
         "openpeerpower.components.mqtt.switch.MqttSwitch.discovery_update"
     ) as discovery_update:
         await help_test_discovery_update_unchanged(
-           .opp, mqtt_mock, caplog, switch.DOMAIN, data1, discovery_update
+            opp, mqtt_mock, caplog, switch.DOMAIN, data1, discovery_update
         )
 
 
@@ -404,54 +404,54 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
         '  "command_topic": "test_topic" }'
     )
     await help_test_discovery_broken(
-       .opp, mqtt_mock, caplog, switch.DOMAIN, data1, data2
+        opp, mqtt_mock, caplog, switch.DOMAIN, data1, data2
     )
 
 
 async def test_entity_device_info_with_connection.opp, mqtt_mock):
     """Test MQTT switch device registry integration."""
     await help_test_entity_device_info_with_connection(
-       .opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_with_identifier.opp, mqtt_mock):
     """Test MQTT switch device registry integration."""
     await help_test_entity_device_info_with_identifier(
-       .opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_update.opp, mqtt_mock):
     """Test device registry update."""
     await help_test_entity_device_info_update(
-       .opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_remove.opp, mqtt_mock):
     """Test device registry remove."""
     await help_test_entity_device_info_remove(
-       .opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_id_update_subscriptions.opp, mqtt_mock):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     await help_test_entity_id_update_subscriptions(
-       .opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_id_update_discovery_update.opp, mqtt_mock):
     """Test MQTT discovery update when entity_id is updated."""
     await help_test_entity_id_update_discovery_update(
-       .opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_debug_info_message.opp, mqtt_mock):
     """Test MQTT debug info."""
     await help_test_entity_debug_info_message(
-       .opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, switch.DOMAIN, DEFAULT_CONFIG
     )

@@ -42,7 +42,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         raise ConfigEntryNotReady()
 
     metoffice_coordinator = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name=f"MetOffice Coordinator for {site_name}",
         update_method=metoffice_data.async_update,

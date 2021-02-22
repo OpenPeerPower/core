@@ -107,7 +107,7 @@ async def async_aiohttp_proxy_web(
 
     try:
         return await async_aiohttp_proxy_stream(
-           .opp, request, req.content, req.headers.get(CONTENT_TYPE)
+            opp, request, req.content, req.headers.get(CONTENT_TYPE)
         )
     finally:
         req.close()

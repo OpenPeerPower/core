@@ -68,7 +68,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     async_add_entities(
         [
             ThresholdSensor(
-               .opp, entity_id, name, lower, upper, hysteresis, device_class
+                opp, entity_id, name, lower, upper, hysteresis, device_class
             )
         ],
     )
@@ -110,7 +110,7 @@ class ThresholdSensor(BinarySensorEntity):
             self.async_write_op_state()
 
         async_track_state_change_event(
-           .opp, [entity_id], async_threshold_sensor_state_listener
+            opp, [entity_id], async_threshold_sensor_state_listener
         )
 
     @property

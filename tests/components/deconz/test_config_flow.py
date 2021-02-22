@@ -487,11 +487,11 @@ async def test_ssdp_discovery_dont_update_configuration.opp, aioclient_mock):
 
 
 async def test_ssdp_discovery_dont_update_existing.oppio_configuration(
-   .opp, aioclient_mock
+    opp, aioclient_mock
 ):
     """Test to ensure the SSDP discovery does not update an Hass.io entry."""
     config_entry = await setup_deconz_integration(
-       .opp, aioclient_mock, source=SOURCE_HASSIO
+        opp, aioclient_mock, source=SOURCE_HASSIO
     )
 
     result = await opp.config_entries.flow.async_init(

@@ -96,7 +96,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
             raise UpdateFailed(f"Error occurred while fetching data: {err}") from err
 
     coordinator = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         # Name of the data. For logging purposes.
         name="hvv_departures.binary_sensor",

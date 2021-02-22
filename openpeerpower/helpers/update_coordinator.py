@@ -10,7 +10,7 @@ import aiohttp
 import requests
 
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
-from openpeerpower.core import CALLBACK_TYPE, Event, HassJob, OpenPeerPower, callback
+from openpeerpower.core import CALLBACK_TYPE, Event, OppJob, OpenPeerPower, callback
 from openpeerpower.helpers import entity, event
 from openpeerpower.util.dt import utcnow
 
@@ -51,14 +51,14 @@ class DataUpdateCoordinator(Generic[T]):
         self.data: Optional[T] = None
 
         self._listeners: List[CALLBACK_TYPE] = []
-        self._job = HassJob(self._handle_refresh_interval)
+        self._job = OppJob(self._handle_refresh_interval)
         self._unsub_refresh: Optional[CALLBACK_TYPE] = None
         self._request_refresh_task: Optional[asyncio.TimerHandle] = None
         self.last_update_success = True
 
         if request_refresh_debouncer is None:
             request_refresh_debouncer = Debouncer(
-               .opp,
+                opp,
                 logger,
                 cooldown=REQUEST_REFRESH_DEFAULT_COOLDOWN,
                 immediate=REQUEST_REFRESH_DEFAULT_IMMEDIATE,

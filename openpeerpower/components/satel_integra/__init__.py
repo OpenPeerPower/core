@@ -128,7 +128,7 @@ async def async_setup_opp, config):
 
    .opp.async_create_task(
         async_load_platform(
-           .opp,
+            opp,
             "binary_sensor",
             DOMAIN,
             {CONF_ZONES: zones, CONF_OUTPUTS: outputs},
@@ -138,7 +138,7 @@ async def async_setup_opp, config):
 
    .opp.async_create_task(
         async_load_platform(
-           .opp,
+            opp,
             "switch",
             DOMAIN,
             {

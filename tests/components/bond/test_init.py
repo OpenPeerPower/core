@@ -101,7 +101,7 @@ async def test_unload_config_entry.opp: OpenPeerPower):
     )
 
     result = await setup_bond_entity(
-       .opp,
+        opp,
         config_entry,
         patch_version=True,
         patch_device_ids=True,

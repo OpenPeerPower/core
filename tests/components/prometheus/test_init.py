@@ -38,12 +38,12 @@ async def prometheus_client.opp, opp_client):
     await async_setup_component.opp, sensor.DOMAIN, {"sensor": [{"platform": "demo"}]})
 
     await async_setup_component(
-       .opp, climate.DOMAIN, {"climate": [{"platform": "demo"}]}
+        opp, climate.DOMAIN, {"climate": [{"platform": "demo"}]}
     )
     await opp.async_block_till_done()
 
     await async_setup_component(
-       .opp, humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
+        opp, humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
     )
 
     sensor1 = DemoSensor(
@@ -279,7 +279,7 @@ async def _setup_opp, filter_config):
 async def test_allowlist.opp, mock_client):
     """Test an allowlist only config."""
     handler_method = await _setup(
-       .opp,
+        opp,
         {
             "include_domains": ["fake"],
             "include_entity_globs": ["test.included_*"],
@@ -309,7 +309,7 @@ async def test_allowlist.opp, mock_client):
 async def test_denylist.opp, mock_client):
     """Test a denylist only config."""
     handler_method = await _setup(
-       .opp,
+        opp,
         {
             "exclude_domains": ["fake"],
             "exclude_entity_globs": ["test.excluded_*"],
@@ -339,7 +339,7 @@ async def test_denylist.opp, mock_client):
 async def test_filtered_denylist.opp, mock_client):
     """Test a denylist config with a filtering allowlist."""
     handler_method = await _setup(
-       .opp,
+        opp,
         {
             "include_entities": ["fake.included", "test.excluded_test"],
             "exclude_domains": ["fake"],

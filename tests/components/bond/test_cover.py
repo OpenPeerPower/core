@@ -32,7 +32,7 @@ def shades(name: str):
 async def test_entity_registry.opp: core.OpenPeerPower):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(
-       .opp,
+        opp,
         COVER_DOMAIN,
         shades("name-1"),
         bond_version={"bondid": "test-hub-id"},
@@ -47,7 +47,7 @@ async def test_entity_registry.opp: core.OpenPeerPower):
 async def test_open_cover.opp: core.OpenPeerPower):
     """Tests that open cover command delegates to API."""
     await setup_platform(
-       .opp, COVER_DOMAIN, shades("name-1"), bond_device_id="test-device-id"
+        opp, COVER_DOMAIN, shades("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_open, patch_bond_device_state():
@@ -65,7 +65,7 @@ async def test_open_cover.opp: core.OpenPeerPower):
 async def test_close_cover.opp: core.OpenPeerPower):
     """Tests that close cover command delegates to API."""
     await setup_platform(
-       .opp, COVER_DOMAIN, shades("name-1"), bond_device_id="test-device-id"
+        opp, COVER_DOMAIN, shades("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_close, patch_bond_device_state():
@@ -83,7 +83,7 @@ async def test_close_cover.opp: core.OpenPeerPower):
 async def test_stop_cover.opp: core.OpenPeerPower):
     """Tests that stop cover command delegates to API."""
     await setup_platform(
-       .opp, COVER_DOMAIN, shades("name-1"), bond_device_id="test-device-id"
+        opp, COVER_DOMAIN, shades("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_hold, patch_bond_device_state():
@@ -123,5 +123,5 @@ async def test_update_reports_closed_cover.opp: core.OpenPeerPower):
 async def test_cover_available.opp: core.OpenPeerPower):
     """Tests that available state is updated based on API errors."""
     await help_test_entity_available(
-       .opp, COVER_DOMAIN, shades("name-1"), "cover.name_1"
+        opp, COVER_DOMAIN, shades("name-1"), "cover.name_1"
     )

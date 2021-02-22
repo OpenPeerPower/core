@@ -153,7 +153,7 @@ async def test_webhook_update_registration(webhook_client, authed_api_client):
 async def test_webhook_handle_get_zones.opp, create_registrations, webhook_client):
     """Test that we can get zones properly."""
     await async_setup_component(
-       .opp,
+        opp,
         ZONE_DOMAIN,
         {ZONE_DOMAIN: {}},
     )
@@ -323,7 +323,7 @@ async def test_webhook_enable_encryption.opp, webhook_client, create_registratio
 
 
 async def test_webhook_camera_stream_non_existent(
-   .opp, create_registrations, webhook_client
+    opp, create_registrations, webhook_client
 ):
     """Test fetching camera stream URLs for a non-existent camera."""
     webhook_id = create_registrations[1]["webhook_id"]
@@ -342,7 +342,7 @@ async def test_webhook_camera_stream_non_existent(
 
 
 async def test_webhook_camera_stream_non_hls(
-   .opp, create_registrations, webhook_client
+    opp, create_registrations, webhook_client
 ):
     """Test fetching camera stream URLs for a non-HLS/stream-supporting camera."""
    .opp.states.async_set("camera.non_stream_camera", "idle", {"supported_features": 0})
@@ -367,7 +367,7 @@ async def test_webhook_camera_stream_non_hls(
 
 
 async def test_webhook_camera_stream_stream_available(
-   .opp, create_registrations, webhook_client
+    opp, create_registrations, webhook_client
 ):
     """Test fetching camera stream URLs for an HLS/stream-supporting camera."""
    .opp.states.async_set(
@@ -395,7 +395,7 @@ async def test_webhook_camera_stream_stream_available(
 
 
 async def test_webhook_camera_stream_stream_available_but_errors(
-   .opp, create_registrations, webhook_client
+    opp, create_registrations, webhook_client
 ):
     """Test fetching camera stream URLs for an HLS/stream-supporting camera but that streaming errors."""
    .opp.states.async_set(

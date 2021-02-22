@@ -175,7 +175,7 @@ async def load_auth_provider_module(
     # https://github.com/python/mypy/issues/1424
     reqs = module.REQUIREMENTS  # type: ignore
     await requirements.async_process_requirements(
-       .opp, f"auth provider {provider}", reqs
+        opp, f"auth provider {provider}", reqs
     )
 
     processed.add(provider)

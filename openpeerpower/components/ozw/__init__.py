@@ -295,7 +295,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         else:
             ozw_data[DATA_UNSUBSCRIBE].append(
                 await mqtt.async_subscribe(
-                   .opp, f"{manager.options.topic_prefix}#", async_receive_message
+                    opp, f"{manager.options.topic_prefix}#", async_receive_message
                 )
             )
 

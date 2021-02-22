@@ -37,7 +37,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-       .opp,
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -80,7 +80,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-       .opp,
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -122,7 +122,7 @@ async def test_relay_as_light.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-       .opp,
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -135,13 +135,13 @@ async def test_relay_as_light.opp, mqtt_mock, setup_tasmota):
 
 
 async def test_availability_when_connection_lost(
-   .opp, mqtt_client_mock, mqtt_mock, setup_tasmota
+    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
 ):
     """Test availability after MQTT disconnection."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
     await help_test_availability_when_connection_lost(
-       .opp, mqtt_client_mock, mqtt_mock, switch.DOMAIN, config
+        opp, mqtt_client_mock, mqtt_mock, switch.DOMAIN, config
     )
 
 
@@ -157,19 +157,19 @@ async def test_availability_discovery_update.opp, mqtt_mock, setup_tasmota):
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
     await help_test_availability_discovery_update(
-       .opp, mqtt_mock, switch.DOMAIN, config
+        opp, mqtt_mock, switch.DOMAIN, config
     )
 
 
 async def test_availability_poll_state(
-   .opp, mqtt_client_mock, mqtt_mock, setup_tasmota
+    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
 ):
     """Test polling after MQTT connection (re)established."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
     poll_topic = "tasmota_49A3BC/cmnd/STATE"
     await help_test_availability_poll_state(
-       .opp, mqtt_client_mock, mqtt_mock, switch.DOMAIN, config, poll_topic, ""
+        opp, mqtt_client_mock, mqtt_mock, switch.DOMAIN, config, poll_topic, ""
     )
 
 
@@ -181,7 +181,7 @@ async def test_discovery_removal_switch.opp, mqtt_mock, caplog, setup_tasmota):
     config2["rl"][0] = 0
 
     await help_test_discovery_removal(
-       .opp, mqtt_mock, caplog, switch.DOMAIN, config1, config2
+        opp, mqtt_mock, caplog, switch.DOMAIN, config1, config2
     )
 
 
@@ -195,12 +195,12 @@ async def test_discovery_removal_relay_as_light.opp, mqtt_mock, caplog, setup_ta
     config2["so"]["30"] = 1  # Enforce Open Peer Power auto-discovery as light
 
     await help_test_discovery_removal(
-       .opp, mqtt_mock, caplog, switch.DOMAIN, config1, config2
+        opp, mqtt_mock, caplog, switch.DOMAIN, config1, config2
     )
 
 
 async def test_discovery_update_unchanged_switch(
-   .opp, mqtt_mock, caplog, setup_tasmota
+    opp, mqtt_mock, caplog, setup_tasmota
 ):
     """Test update of discovered switch."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -209,7 +209,7 @@ async def test_discovery_update_unchanged_switch(
         "openpeerpower.components.tasmota.switch.TasmotaSwitch.discovery_update"
     ) as discovery_update:
         await help_test_discovery_update_unchanged(
-           .opp, mqtt_mock, caplog, switch.DOMAIN, config, discovery_update
+            opp, mqtt_mock, caplog, switch.DOMAIN, config, discovery_update
         )
 
 
@@ -219,7 +219,7 @@ async def test_discovery_device_remove.opp, mqtt_mock, setup_tasmota):
     config["rl"][0] = 1
     unique_id = f"{DEFAULT_CONFIG['mac']}_switch_relay_0"
     await help_test_discovery_device_remove(
-       .opp, mqtt_mock, switch.DOMAIN, unique_id, config
+        opp, mqtt_mock, switch.DOMAIN, unique_id, config
     )
 
 
@@ -233,7 +233,7 @@ async def test_entity_id_update_subscriptions.opp, mqtt_mock, setup_tasmota):
         get_topic_tele_will(config),
     ]
     await help_test_entity_id_update_subscriptions(
-       .opp, mqtt_mock, switch.DOMAIN, config, topics
+        opp, mqtt_mock, switch.DOMAIN, config, topics
     )
 
 
@@ -242,5 +242,5 @@ async def test_entity_id_update_discovery_update.opp, mqtt_mock, setup_tasmota):
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
     await help_test_entity_id_update_discovery_update(
-       .opp, mqtt_mock, switch.DOMAIN, config
+        opp, mqtt_mock, switch.DOMAIN, config
     )

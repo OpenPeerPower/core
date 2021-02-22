@@ -24,7 +24,7 @@ from openpeerpower.setup import async_setup_component
 def rs.opp):
     """Return CommandCover instance."""
     return cmd_rs.CommandCover(
-       .opp,
+        opp,
         "foo",
         "command_open",
         "command_close",
@@ -67,7 +67,7 @@ async def test_state_value.opp):
         }
         assert (
             await async_setup_component(
-               .opp,
+                opp,
                 DOMAIN,
                 {"cover": {"platform": "command_line", "covers": {"test": test_cover}}},
             )
@@ -101,7 +101,7 @@ async def test_reload.opp):
         "value_template": "{{ value }}",
     }
     await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {"cover": {"platform": "command_line", "covers": {"test": test_cover}}},
     )

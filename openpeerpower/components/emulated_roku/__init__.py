@@ -77,7 +77,7 @@ async def async_setup_entry.opp, config_entry):
     upnp_bind_multicast = config.get(CONF_UPNP_BIND_MULTICAST)
 
     server = EmulatedRoku(
-       .opp,
+        opp,
         name,
         host_ip,
         listen_port,

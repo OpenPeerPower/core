@@ -73,7 +73,7 @@ async def async_setup_opp, config):
             # only one entity is required
            .opp.async_create_task(
                 discovery.async_load_platform(
-                   .opp,
+                    opp,
                     SENSOR_DOMAIN,
                     DOMAIN,
                     [{CONF_METER: meter, CONF_NAME: meter}],
@@ -101,7 +101,7 @@ async def async_setup_opp, config):
                 )
            .opp.async_create_task(
                 discovery.async_load_platform(
-                   .opp, SENSOR_DOMAIN, DOMAIN, tariff_confs, config
+                    opp, SENSOR_DOMAIN, DOMAIN, tariff_confs, config
                 )
             )
             register_services = True

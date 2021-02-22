@@ -41,7 +41,7 @@ CAMERA_SERVICES = {
 
 
 async def async_setup_entry(
-   .opp, config_entry, async_add_entities, discovery_info=None
+    opp, config_entry, async_add_entities, discovery_info=None
 ):
     """Set up the Agent cameras."""
     filter_urllib3_logging()

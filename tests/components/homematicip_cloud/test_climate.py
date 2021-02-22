@@ -34,7 +34,7 @@ from .helper import HAPID, async_manipulate_test_data, get_and_check_entity_basi
 async def test_manually_configured_platform.opp):
     """Test that we do not set up an access point."""
     assert await async_setup_component(
-       .opp, CLIMATE_DOMAIN, {CLIMATE_DOMAIN: {"platform": HMIPC_DOMAIN}}
+        opp, CLIMATE_DOMAIN, {CLIMATE_DOMAIN: {"platform": HMIPC_DOMAIN}}
     )
     assert not.opp.data.get(HMIPC_DOMAIN)
 
@@ -50,7 +50,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == HVAC_MODE_AUTO
@@ -143,7 +143,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
 
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "ECO")
     await async_manipulate_test_data(
-       .opp,
+        opp,
         mock_hap.home.get_functionalHome(IndoorClimateHome),
         "absenceType",
         AbsenceType.VACATION,
@@ -154,7 +154,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
 
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "ECO")
     await async_manipulate_test_data(
-       .opp,
+        opp,
         mock_hap.home.get_functionalHome(IndoorClimateHome),
         "absenceType",
         AbsenceType.PERIOD,
@@ -242,7 +242,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     hmip_device.activeProfile = hmip_device.profiles[3]
@@ -362,7 +362,7 @@ async def test_hmip_heating_group_heat_with_switch.opp, default_mock_hap_factory
         test_groups=[entity_name],
     )
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert hmip_device
@@ -386,7 +386,7 @@ async def test_hmip_heating_group_heat_with_radiator.opp, default_mock_hap_facto
         test_groups=[entity_name],
     )
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert hmip_device
@@ -521,7 +521,7 @@ async def test_hmip_heating_group_services.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
     assert ha_state
 

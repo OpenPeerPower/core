@@ -56,7 +56,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
         switches.append(
             CommandSwitch(
-               .opp,
+                opp,
                 object_id,
                 device_config.get(CONF_FRIENDLY_NAME, object_id),
                 device_config[CONF_COMMAND_ON],
@@ -79,7 +79,7 @@ class CommandSwitch(SwitchEntity):
 
     def __init__(
         self,
-       .opp,
+        opp,
         object_id,
         friendly_name,
         command_on,

@@ -20,7 +20,7 @@ def store.opp):
 def provider.opp, store):
     """Mock provider."""
     return tn_auth.TrustedNetworksAuthProvider(
-       .opp,
+        opp,
         store,
         tn_auth.CONFIG_SCHEMA(
             {
@@ -40,7 +40,7 @@ def provider.opp, store):
 def provider_with_user.opp, store):
     """Mock provider with trusted users config."""
     return tn_auth.TrustedNetworksAuthProvider(
-       .opp,
+        opp,
         store,
         tn_auth.CONFIG_SCHEMA(
             {
@@ -66,7 +66,7 @@ def provider_with_user.opp, store):
 def provider_bypass_login.opp, store):
     """Mock provider with allow_bypass_login config."""
     return tn_auth.TrustedNetworksAuthProvider(
-       .opp,
+        opp,
         store,
         tn_auth.CONFIG_SCHEMA(
             {
@@ -93,7 +93,7 @@ def manager.opp, store, provider):
 def manager_with_user.opp, store, provider_with_user):
     """Mock manager with trusted user."""
     return auth.AuthManager(
-       .opp,
+        opp,
         store,
         {(provider_with_user.type, provider_with_user.id): provider_with_user},
         {},
@@ -104,7 +104,7 @@ def manager_with_user.opp, store, provider_with_user):
 def manager_bypass_login.opp, store, provider_bypass_login):
     """Mock manager with allow bypass login."""
     return auth.AuthManager(
-       .opp,
+        opp,
         store,
         {(provider_bypass_login.type, provider_bypass_login.id): provider_bypass_login},
         {},

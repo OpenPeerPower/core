@@ -3,7 +3,7 @@ import voluptuous as vol
 
 from openpeerpower.components.geo_location import DOMAIN
 from openpeerpower.const import CONF_EVENT, CONF_PLATFORM, CONF_SOURCE, CONF_ZONE
-from openpeerpower.core import HassJob, callback
+from openpeerpower.core import OppJob, callback
 from openpeerpower.helpers import condition, config_validation as cv
 from openpeerpower.helpers.config_validation import entity_domain
 from openpeerpower.helpers.event import TrackStates, async_track_state_change_filtered
@@ -36,7 +36,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     source = config.get(CONF_SOURCE).lower()
     zone_entity_id = config.get(CONF_ZONE)
     trigger_event = config.get(CONF_EVENT)
-    job = HassJob(action)
+    job = OppJob(action)
 
     @callback
     def state_change_listener(event):
@@ -80,5 +80,5 @@ async def async_attach_trigger.opp, config, action, automation_info):
             )
 
     return async_track_state_change_filtered(
-       .opp, TrackStates(False, set(), {DOMAIN}), state_change_listener
+        opp, TrackStates(False, set(), {DOMAIN}), state_change_listener
     ).async_remove

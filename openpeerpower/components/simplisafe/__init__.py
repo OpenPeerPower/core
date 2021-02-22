@@ -215,7 +215,7 @@ async def async_setup_entry.opp, config_entry):
     _async_save_refresh_token.opp, config_entry, api.refresh_token)
 
     simplisafe = opp.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = SimpliSafe(
-       .opp, api, config_entry
+        opp, api, config_entry
     )
     await simplisafe.async_init()
 

@@ -146,7 +146,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
         # Sync device subscriptions
         await smartapp_sync_subscriptions(
-           .opp,
+            opp,
             token.access_token,
             installed_app.location_id,
             installed_app.installed_app_id,

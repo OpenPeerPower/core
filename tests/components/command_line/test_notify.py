@@ -98,7 +98,7 @@ class TestCommandLine(unittest.TestCase):
 async def test_timeout.opp, caplog):
     """Test we do not block forever."""
     assert await async_setup_component(
-       .opp,
+        opp,
         notify.DOMAIN,
         {
             "notify": {

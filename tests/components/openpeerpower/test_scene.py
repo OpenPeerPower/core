@@ -89,7 +89,7 @@ async def test_apply_service.opp.
 async def test_create_service.opp.caplog):
     """Test the create service."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "scene",
         {"scene": {"name": "hallo_2", "entities": {"light.kitchen": "on"}}},
     )
@@ -245,7 +245,7 @@ async def test_ensure_no_intersection.opp.
 async def test_scenes_with_entity.opp.
     """Test finding scenes with a specific entity."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "scene",
         {
             "scene": [
@@ -269,7 +269,7 @@ async def test_scenes_with_entity.opp.
 async def test_entities_in_scene.opp.
     """Test finding entities in a scene."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "scene",
         {
             "scene": [
@@ -295,7 +295,7 @@ async def test_entities_in_scene.opp.
 async def test_config(opp.
     """Test passing config in YAML."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "scene",
         {
             "scene": [

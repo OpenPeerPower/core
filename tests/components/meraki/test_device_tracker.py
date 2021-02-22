@@ -18,7 +18,7 @@ def meraki_client(loop, opp, opp_client):
     """Meraki mock client."""
     assert loop.run_until_complete(
         async_setup_component(
-           .opp,
+            opp,
             device_tracker.DOMAIN,
             {
                 device_tracker.DOMAIN: {

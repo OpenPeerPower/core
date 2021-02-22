@@ -37,7 +37,7 @@ def setup_comp.opp):
 async def test_if_fires_on_change_bool.opp, calls):
     """Test for firing on boolean change."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -71,7 +71,7 @@ async def test_if_fires_on_change_bool.opp, calls):
 async def test_if_fires_on_change_str.opp, calls):
     """Test for firing on change."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -94,7 +94,7 @@ async def test_if_fires_on_change_str.opp, calls):
 async def test_if_fires_on_change_str_crazy.opp, calls):
     """Test for firing on change."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -115,7 +115,7 @@ async def test_if_fires_on_change_str_crazy.opp, calls):
 async def test_if_not_fires_when_true_at_setup_opp, calls):
     """Test for not firing during startup."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -140,7 +140,7 @@ async def test_if_not_fires_because_fail.opp, calls):
    .opp.states.async_set("test.number", "1")
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -171,7 +171,7 @@ async def test_if_not_fires_because_fail.opp, calls):
 async def test_if_not_fires_on_change_bool.opp, calls):
     """Test for not firing on boolean change."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -192,7 +192,7 @@ async def test_if_not_fires_on_change_bool.opp, calls):
 async def test_if_not_fires_on_change_str.opp, calls):
     """Test for not firing on string change."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -210,7 +210,7 @@ async def test_if_not_fires_on_change_str.opp, calls):
 async def test_if_not_fires_on_change_str_crazy.opp, calls):
     """Test for not firing on string change."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -231,7 +231,7 @@ async def test_if_not_fires_on_change_str_crazy.opp, calls):
 async def test_if_fires_on_no_change.opp, calls):
     """Test for firing on no change."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -252,7 +252,7 @@ async def test_if_fires_on_no_change.opp, calls):
 async def test_if_fires_on_two_change.opp, calls):
     """Test for firing on two changes."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -279,7 +279,7 @@ async def test_if_fires_on_two_change.opp, calls):
 async def test_if_fires_on_change_with_template.opp, calls):
     """Test for firing on change with template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -300,7 +300,7 @@ async def test_if_fires_on_change_with_template.opp, calls):
 async def test_if_not_fires_on_change_with_template.opp, calls):
     """Test for not firing on change with template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -324,7 +324,7 @@ async def test_if_fires_on_change_with_template_advanced.opp, calls):
     """Test for firing on change with template advanced."""
     context = Context()
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -363,7 +363,7 @@ async def test_if_fires_on_change_with_template_advanced.opp, calls):
 async def test_if_fires_on_no_change_with_template_advanced.opp, calls):
     """Test for firing on no change with template advanced."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -394,7 +394,7 @@ async def test_if_fires_on_no_change_with_template_advanced.opp, calls):
 async def test_if_fires_on_change_with_template_2.opp, calls):
     """Test for firing on change with template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -437,7 +437,7 @@ async def test_if_fires_on_change_with_template_2.opp, calls):
 async def test_if_action.opp, calls):
     """Test for firing if action."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -473,7 +473,7 @@ async def test_if_fires_on_change_with_bad_template.opp, calls):
     """Test for firing on change with bad template."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -487,7 +487,7 @@ async def test_if_fires_on_change_with_bad_template.opp, calls):
 async def test_if_fires_on_change_with_bad_template_2.opp, calls):
     """Test for firing on change with bad template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -508,7 +508,7 @@ async def test_if_fires_on_change_with_bad_template_2.opp, calls):
 async def test_wait_template_with_trigger.opp, calls):
     """Test using wait template with 'trigger.entity_id'."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -556,7 +556,7 @@ async def test_wait_template_with_trigger.opp, calls):
 async def test_if_fires_on_change_with_for.opp, calls):
     """Test for firing on change with for."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -582,7 +582,7 @@ async def test_if_fires_on_change_with_for_advanced.opp, calls):
     """Test for firing on change with for advanced."""
     context = Context()
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -625,7 +625,7 @@ async def test_if_fires_on_change_with_for_advanced.opp, calls):
 async def test_if_fires_on_change_with_for_0.opp, calls):
     """Test for firing on change with for: 0."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -648,7 +648,7 @@ async def test_if_fires_on_change_with_for_0_advanced.opp, calls):
     """Test for firing on change with for: 0 advanced."""
     context = Context()
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -689,7 +689,7 @@ async def test_if_fires_on_change_with_for_2.opp, calls):
     """Test for firing on change with for."""
     context = Context()
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -730,7 +730,7 @@ async def test_if_fires_on_change_with_for_2.opp, calls):
 async def test_if_not_fires_on_change_with_for.opp, calls):
     """Test for firing on change with for."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -761,7 +761,7 @@ async def test_if_not_fires_on_change_with_for.opp, calls):
 async def test_if_not_fires_when_turned_off_with_for.opp, calls):
     """Test for firing on change with for."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -796,7 +796,7 @@ async def test_if_not_fires_when_turned_off_with_for.opp, calls):
 async def test_if_fires_on_change_with_for_template_1.opp, calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -821,7 +821,7 @@ async def test_if_fires_on_change_with_for_template_1.opp, calls):
 async def test_if_fires_on_change_with_for_template_2.opp, calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -846,7 +846,7 @@ async def test_if_fires_on_change_with_for_template_2.opp, calls):
 async def test_if_fires_on_change_with_for_template_3.opp, calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -871,7 +871,7 @@ async def test_if_fires_on_change_with_for_template_3.opp, calls):
 async def test_invalid_for_template_1.opp, calls):
     """Test for invalid for template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -899,7 +899,7 @@ async def test_if_fires_on_time_change.opp, calls):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {

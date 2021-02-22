@@ -139,7 +139,7 @@ async def async_setup_opp, config):
         try:
             if hasattr(platform, "async_get_engine"):
                 provider = await platform.async_get_engine(
-                   .opp, p_config, discovery_info
+                    opp, p_config, discovery_info
                 )
             else:
                 provider = await opp.async_add_executor_job(

@@ -109,7 +109,7 @@ async def test_tv_setup(
 ) -> None:
     """Test Roku TV setup."""
     await setup_integration(
-       .opp,
+        opp,
         aioclient_mock,
         device="rokutv",
         app="tvinput-dtv",
@@ -180,7 +180,7 @@ async def test_tv_supported_features(
 ) -> None:
     """Test supported features for Roku TV."""
     await setup_integration(
-       .opp,
+        opp,
         aioclient_mock,
         device="rokutv",
         app="tvinput-dtv",
@@ -289,7 +289,7 @@ async def test_tv_attributes(
 ) -> None:
     """Test attributes for Roku TV."""
     await setup_integration(
-       .opp,
+        opp,
         aioclient_mock,
         device="rokutv",
         app="tvinput-dtv",
@@ -313,7 +313,7 @@ async def test_tv_device_registry(
 ) -> None:
     """Test device registered for Roku TV in the device registry."""
     await setup_integration(
-       .opp,
+        opp,
         aioclient_mock,
         device="rokutv",
         app="tvinput-dtv",
@@ -451,7 +451,7 @@ async def test_tv_services(
 ) -> None:
     """Test the media player services related to Roku TV."""
     await setup_integration(
-       .opp,
+        opp,
         aioclient_mock,
         device="rokutv",
         app="tvinput-dtv",
@@ -504,7 +504,7 @@ async def test_tv_services(
 async def test_media_browse.opp, aioclient_mock, opp_ws_client):
     """Test browsing media."""
     await setup_integration(
-       .opp,
+        opp,
         aioclient_mock,
         device="rokutv",
         app="tvinput-dtv",
@@ -630,14 +630,14 @@ async def test_media_browse.opp, aioclient_mock, opp_ws_client):
 async def test_media_browse_internal.opp, aioclient_mock, opp_ws_client):
     """Test browsing media with internal url."""
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
     assert.opp.config.internal_url == "http://example.local:8123"
 
     await setup_integration(
-       .opp,
+        opp,
         aioclient_mock,
         device="rokutv",
         app="tvinput-dtv",

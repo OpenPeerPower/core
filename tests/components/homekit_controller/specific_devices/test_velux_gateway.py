@@ -30,7 +30,7 @@ async def test_simpleconnect_cover_setup_opp):
     assert cover.unique_id == "homekit-1111111a114a111a-8"
 
     cover_helper = Helper(
-       .opp,
+        opp,
         cover_id,
         pairing,
         accessories[0],
@@ -50,7 +50,7 @@ async def test_simpleconnect_cover_setup_opp):
     assert sensor.unique_id == "homekit-a11b111-8"
 
     sensor_helper = Helper(
-       .opp,
+        opp,
         sensor_id,
         pairing,
         accessories[0],

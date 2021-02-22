@@ -9,7 +9,7 @@ from haphilipsjs import ConnectionFailure, PhilipsTV
 from openpeerpower.components.automation import AutomationActionType
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_API_VERSION, CONF_HOST
-from openpeerpower.core import Context, HassJob, OpenPeerPower, callback
+from openpeerpower.core import Context, OppJob, OpenPeerPower, callback
 from openpeerpower.helpers.debounce import Debouncer
 from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
@@ -82,7 +82,7 @@ class PluggableAction:
             del self._actions[_remove]
             self._update()
 
-        job = HassJob(action)
+        job = OppJob(action)
 
         self._actions[_remove] = (job, variables)
         self._update()
@@ -111,12 +111,12 @@ class PhilipsTVDataUpdateCoordinator(DataUpdateCoordinator[None]):
         self.turn_on = PluggableAction(_update_listeners)
 
         super().__init__(
-           .opp,
+            opp,
             LOGGER,
             name=DOMAIN,
             update_interval=timedelta(seconds=30),
             request_refresh_debouncer=Debouncer(
-               .opp, LOGGER, cooldown=2.0, immediate=False
+                opp, LOGGER, cooldown=2.0, immediate=False
             ),
         )
 

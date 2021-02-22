@@ -54,7 +54,7 @@ async def test_humanifying_deconz_event.opp, aioclient_mock):
         },
     }
     config_entry = await setup_deconz_integration(
-       .opp, aioclient_mock, get_state_response=data
+        opp, aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
@@ -64,7 +64,7 @@ async def test_humanifying_deconz_event.opp, aioclient_mock):
 
     events = list(
         logbook.humanify(
-           .opp,
+            opp,
             [
                 # Event without matching device trigger
                 MockLazyEventPartialState(

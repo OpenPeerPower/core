@@ -25,13 +25,13 @@ async def http_client.opp, aiohttp_client):
 async def webhook_id_with_api_key.opp):
     """Initialize the Mailgun component and get the webhook_id."""
     await async_setup_component(
-       .opp,
+        opp,
         mailgun.DOMAIN,
         {mailgun.DOMAIN: {CONF_API_KEY: API_KEY, CONF_DOMAIN: "example.com"}},
     )
 
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(
@@ -51,7 +51,7 @@ async def webhook_id_without_api_key.opp):
     await async_setup_component.opp, mailgun.DOMAIN, {})
 
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(

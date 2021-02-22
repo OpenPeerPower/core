@@ -72,7 +72,7 @@ async def async_setup_entry(
     entities_to_create = opp.data[DATA_ZHA][DOMAIN]
 
     unsub = async_dispatcher_connect(
-       .opp,
+        opp,
         SIGNAL_ADD_ENTITIES,
         functools.partial(
             discovery.async_add_entities,

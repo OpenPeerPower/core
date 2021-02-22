@@ -153,7 +153,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     if discovery_info:
         _add_player(
-           .opp,
+            opp,
             async_add_entities,
             discovery_info.get(CONF_HOST),
             discovery_info.get(CONF_PORT),
@@ -164,7 +164,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if hosts:
         for host in hosts:
             _add_player(
-               .opp,
+                opp,
                 async_add_entities,
                 host.get(CONF_HOST),
                 host.get(CONF_PORT),

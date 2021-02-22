@@ -289,7 +289,7 @@ async def test_onboarding_integration.opp, opp_storage, opp_client, opp_admin_us
 
 
 async def test_onboarding_integration_missing_credential(
-   .opp, opp_storage, opp_client, opp_access_token
+    opp, opp_storage, opp_client, opp_access_token
 ):
     """Test that we fail integration step if user is missing credentials."""
     mock_storage.opp_storage, {"done": [const.STEP_USER]})
@@ -311,7 +311,7 @@ async def test_onboarding_integration_missing_credential(
 
 
 async def test_onboarding_integration_invalid_redirect_uri(
-   .opp, opp_storage, opp_client
+    opp, opp_storage, opp_client
 ):
     """Test finishing integration step."""
     mock_storage.opp_storage, {"done": [const.STEP_USER]})
@@ -370,7 +370,7 @@ async def test_onboarding_core_sets_up_met.opp, opp_storage, opp_client):
 
 
 async def test_onboarding_core_sets_up_rpi_power(
-   .opp, opp_storage, opp_client, aioclient_mock, rpi
+    opp, opp_storage, opp_client, aioclient_mock, rpi
 ):
     """Test that the core step sets up rpi_power on RPi."""
     mock_storage.opp_storage, {"done": [const.STEP_USER]})
@@ -395,7 +395,7 @@ async def test_onboarding_core_sets_up_rpi_power(
 
 
 async def test_onboarding_core_no_rpi_power(
-   .opp, opp_storage, opp_client, aioclient_mock, no_rpi
+    opp, opp_storage, opp_client, aioclient_mock, no_rpi
 ):
     """Test that the core step do not set up rpi_power on non RPi."""
     mock_storage.opp_storage, {"done": [const.STEP_USER]})

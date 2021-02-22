@@ -5,13 +5,13 @@ from openpeerpower.helpers import intent
 async def test_recent_items_intent.opp, sl_setup):
     """Test recent items."""
     await intent.async_handle(
-       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
     await intent.async_handle(
-       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
+        opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
     await intent.async_handle(
-       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "soda"}}
+        opp, "test", "HassShoppingListAddItem", {"item": {"value": "soda"}}
     )
 
     response = await intent.async_handle.opp, "test", "HassShoppingListLastItems")

@@ -75,7 +75,7 @@ def test_recorder_bad_execute.opp_recorder):
 
 
 def test_validate_or_move_away_sqlite_database_with_integrity_check(
-   .opp, tmpdir, caplog
+    opp, tmpdir, caplog
 ):
     """Ensure a malformed sqlite database is moved away.
 
@@ -111,7 +111,7 @@ def test_validate_or_move_away_sqlite_database_with_integrity_check(
 
 
 def test_validate_or_move_away_sqlite_database_without_integrity_check(
-   .opp, tmpdir, caplog
+    opp, tmpdir, caplog
 ):
     """Ensure a malformed sqlite database is moved away.
 

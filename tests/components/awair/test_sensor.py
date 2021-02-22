@@ -56,7 +56,7 @@ async def setup_awair.opp, fixtures):
 
 
 def assert_expected_properties(
-   .opp, registry, name, unique_id, state_value, attributes
+    opp, registry, name, unique_id, state_value, attributes
 ):
     """Assert expected properties from a dict."""
 
@@ -77,7 +77,7 @@ async def test_awair_gen1_sensors.opp):
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_awair_score",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_SCORE][ATTR_UNIQUE_ID]}",
@@ -86,7 +86,7 @@ async def test_awair_gen1_sensors.opp):
     )
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_temperature",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_TEMP][ATTR_UNIQUE_ID]}",
@@ -95,7 +95,7 @@ async def test_awair_gen1_sensors.opp):
     )
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_humidity",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_HUMID][ATTR_UNIQUE_ID]}",
@@ -104,7 +104,7 @@ async def test_awair_gen1_sensors.opp):
     )
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_carbon_dioxide",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_CO2][ATTR_UNIQUE_ID]}",
@@ -117,7 +117,7 @@ async def test_awair_gen1_sensors.opp):
     )
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_volatile_organic_compounds",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_VOC][ATTR_UNIQUE_ID]}",
@@ -130,7 +130,7 @@ async def test_awair_gen1_sensors.opp):
     )
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_pm2_5",
         # gen1 unique_id should be awair_12345-DUST, which matches old integration behavior
@@ -144,7 +144,7 @@ async def test_awair_gen1_sensors.opp):
     )
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_pm10",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_PM10][ATTR_UNIQUE_ID]}",
@@ -173,7 +173,7 @@ async def test_awair_gen2_sensors.opp):
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_awair_score",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_SCORE][ATTR_UNIQUE_ID]}",
@@ -182,7 +182,7 @@ async def test_awair_gen2_sensors.opp):
     )
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_pm2_5",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_PM25][ATTR_UNIQUE_ID]}",
@@ -207,7 +207,7 @@ async def test_awair_mint_sensors.opp):
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_awair_score",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_SCORE][ATTR_UNIQUE_ID]}",
@@ -216,7 +216,7 @@ async def test_awair_mint_sensors.opp):
     )
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_pm2_5",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_PM25][ATTR_UNIQUE_ID]}",
@@ -229,7 +229,7 @@ async def test_awair_mint_sensors.opp):
     )
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_illuminance",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_LUX][ATTR_UNIQUE_ID]}",
@@ -249,7 +249,7 @@ async def test_awair_glow_sensors.opp):
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_awair_score",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_SCORE][ATTR_UNIQUE_ID]}",
@@ -269,7 +269,7 @@ async def test_awair_omni_sensors.opp):
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_awair_score",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_SCORE][ATTR_UNIQUE_ID]}",
@@ -278,7 +278,7 @@ async def test_awair_omni_sensors.opp):
     )
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_sound_level",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_SPL_A][ATTR_UNIQUE_ID]}",
@@ -287,7 +287,7 @@ async def test_awair_omni_sensors.opp):
     )
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_illuminance",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_LUX][ATTR_UNIQUE_ID]}",
@@ -322,7 +322,7 @@ async def test_awair_unavailable.opp):
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(
-       .opp,
+        opp,
         registry,
         "sensor.living_room_awair_score",
         f"{AWAIR_UUID}_{SENSOR_TYPES[API_SCORE][ATTR_UNIQUE_ID]}",
@@ -335,7 +335,7 @@ async def test_awair_unavailable.opp):
             "sensor.living_room_awair_score"
         )
         assert_expected_properties(
-           .opp,
+            opp,
             registry,
             "sensor.living_room_awair_score",
             f"{AWAIR_UUID}_{SENSOR_TYPES[API_SCORE][ATTR_UNIQUE_ID]}",

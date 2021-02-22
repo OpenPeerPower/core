@@ -38,7 +38,7 @@ async def test_update_app_updated_needed.opp, app):
 
 
 async def test_smartapp_update_saves_token(
-   .opp, smartthings_mock, location, device_factory
+    opp, smartthings_mock, location, device_factory
 ):
     """Test update saves token."""
     # Arrange
@@ -87,7 +87,7 @@ async def test_smartapp_webhook.opp):
 
 
 async def test_smartapp_sync_subscriptions(
-   .opp, smartthings_mock, device_factory, subscription_factory
+    opp, smartthings_mock, device_factory, subscription_factory
 ):
     """Test synchronization adds and removes and ignores unused."""
     smartthings_mock.subscriptions.return_value = [
@@ -102,7 +102,7 @@ async def test_smartapp_sync_subscriptions(
     ]
 
     await smartapp.smartapp_sync_subscriptions(
-       .opp, str(uuid4()), str(uuid4()), str(uuid4()), devices
+        opp, str(uuid4()), str(uuid4()), str(uuid4()), devices
     )
 
     assert smartthings_mock.subscriptions.call_count == 1
@@ -111,7 +111,7 @@ async def test_smartapp_sync_subscriptions(
 
 
 async def test_smartapp_sync_subscriptions_up_to_date(
-   .opp, smartthings_mock, device_factory, subscription_factory
+    opp, smartthings_mock, device_factory, subscription_factory
 ):
     """Test synchronization does nothing when current."""
     smartthings_mock.subscriptions.return_value = [
@@ -126,7 +126,7 @@ async def test_smartapp_sync_subscriptions_up_to_date(
     ]
 
     await smartapp.smartapp_sync_subscriptions(
-       .opp, str(uuid4()), str(uuid4()), str(uuid4()), devices
+        opp, str(uuid4()), str(uuid4()), str(uuid4()), devices
     )
 
     assert smartthings_mock.subscriptions.call_count == 1
@@ -135,7 +135,7 @@ async def test_smartapp_sync_subscriptions_up_to_date(
 
 
 async def test_smartapp_sync_subscriptions_limit_warning(
-   .opp, smartthings_mock, device_factory, subscription_factory, caplog
+    opp, smartthings_mock, device_factory, subscription_factory, caplog
 ):
     """Test synchronization over the limit logs a warning."""
     smartthings_mock.subscriptions.return_value = []
@@ -144,7 +144,7 @@ async def test_smartapp_sync_subscriptions_limit_warning(
     ]
 
     await smartapp.smartapp_sync_subscriptions(
-       .opp, str(uuid4()), str(uuid4()), str(uuid4()), devices
+        opp, str(uuid4()), str(uuid4()), str(uuid4()), devices
     )
 
     assert (
@@ -154,7 +154,7 @@ async def test_smartapp_sync_subscriptions_limit_warning(
 
 
 async def test_smartapp_sync_subscriptions_handles_exceptions(
-   .opp, smartthings_mock, device_factory, subscription_factory
+    opp, smartthings_mock, device_factory, subscription_factory
 ):
     """Test synchronization does nothing when current."""
     smartthings_mock.delete_subscription.side_effect = Exception
@@ -171,7 +171,7 @@ async def test_smartapp_sync_subscriptions_handles_exceptions(
     ]
 
     await smartapp.smartapp_sync_subscriptions(
-       .opp, str(uuid4()), str(uuid4()), str(uuid4()), devices
+        opp, str(uuid4()), str(uuid4()), str(uuid4()), devices
     )
 
     assert smartthings_mock.subscriptions.call_count == 1

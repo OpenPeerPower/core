@@ -17,7 +17,7 @@ async def test_alexa_config_expose_entity_prefs.opp, cloud_prefs):
         alexa_default_expose=["light"],
     )
     conf = alexa_config.AlexaConfig(
-       .opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, None
+        opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, None
     )
 
     assert not conf.should_expose("light.kitchen")
@@ -36,7 +36,7 @@ async def test_alexa_config_expose_entity_prefs.opp, cloud_prefs):
 async def test_alexa_config_report_state.opp, cloud_prefs):
     """Test Alexa config should expose using prefs."""
     conf = alexa_config.AlexaConfig(
-       .opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, None
+        opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, None
     )
 
     assert cloud_prefs.alexa_report_state is False
@@ -70,7 +70,7 @@ async def test_alexa_config_invalidate_token.opp, cloud_prefs, aioclient_mock):
         },
     )
     conf = alexa_config.AlexaConfig(
-       .opp,
+        opp,
         ALEXA_SCHEMA({}),
         "mock-user-id",
         cloud_prefs,
@@ -153,7 +153,7 @@ async def test_alexa_update_expose_trigger_sync.opp, cloud_prefs):
 async def test_alexa_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
     """Test Alexa config responds to entity registry."""
     alexa_config.AlexaConfig(
-       .opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
+        opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
     )
 
     with patch_sync_helper() as (to_update, to_remove):
@@ -224,7 +224,7 @@ def test_enabled_requires_valid_sub.opp, mock_expired_cloud_login, cloud_prefs):
     assert.opp.data["cloud"].subscription_expired
 
     config = alexa_config.AlexaConfig(
-       .opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
+        opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
     )
 
     assert not config.enabled

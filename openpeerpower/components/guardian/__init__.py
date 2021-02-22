@@ -74,7 +74,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             api
         ] = GuardianDataUpdateCoordinator(
-           .opp,
+            opp,
             client=client,
             api_name=api,
             api_coro=api_coro,

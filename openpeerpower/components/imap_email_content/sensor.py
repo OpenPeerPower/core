@@ -60,7 +60,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if value_template is not None:
         value_template.opp = opp
     sensor = EmailContentSensor(
-       .opp,
+        opp,
         reader,
         config.get(CONF_NAME) or config.get(CONF_USERNAME),
         config.get(CONF_SENDERS),

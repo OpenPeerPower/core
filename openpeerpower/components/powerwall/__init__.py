@@ -139,7 +139,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             return await _async_update_powerwall_data.opp, entry, power_wall)
 
     coordinator = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name="Powerwall site",
         update_method=async_update_data,

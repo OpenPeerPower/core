@@ -58,7 +58,7 @@ async def test_get_actions.opp, device_reg, entity_reg):
 async def test_action.opp):
     """Test for turn_on and turn_off actions."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

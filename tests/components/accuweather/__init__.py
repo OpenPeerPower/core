@@ -8,7 +8,7 @@ from tests.common import MockConfigEntry, load_fixture
 
 
 async def init_integration(
-   .opp, forecast=False, unsupported_icon=False
+    opp, forecast=False, unsupported_icon=False
 ) -> MockConfigEntry:
     """Set up the AccuWeather integration in Open Peer Power."""
     options = {}

@@ -85,7 +85,7 @@ async def websocket_process.opp, connection, msg):
     connection.send_result(
         msg["id"],
         await _async_converse(
-           .opp, msg["text"], msg.get("conversation_id"), connection.context(msg)
+            opp, msg["text"], msg.get("conversation_id"), connection.context(msg)
         ),
     )
 
@@ -134,7 +134,7 @@ class ConversationProcessView(http.OpenPeerPowerView):
 
         try:
             intent_result = await _async_converse(
-               .opp, data["text"], data.get("conversation_id"), self.context(request)
+                opp, data["text"], data.get("conversation_id"), self.context(request)
             )
         except intent.IntentError as err:
             _LOGGER.error("Error handling intent: %s", err)

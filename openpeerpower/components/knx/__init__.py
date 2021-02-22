@@ -228,7 +228,7 @@ async def async_setup_opp, config):
     )
 
     async_register_admin_service(
-       .opp,
+        opp,
         DOMAIN,
         SERVICE_KNX_EVENT_REGISTER,
        .opp.data[DOMAIN].service_event_register_modify,
@@ -254,7 +254,7 @@ async def async_setup_opp, config):
         await async_setup_opp, config)
 
     async_register_admin_service(
-       .opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
+        opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
     return True

@@ -203,7 +203,7 @@ async def async_setup_opp, config):
             logger.error("Network is unreachable")
 
         async_track_point_in_utc_time(
-           .opp, scan_devices, dt_util.utcnow() + SCAN_INTERVAL
+            opp, scan_devices, dt_util.utcnow() + SCAN_INTERVAL
         )
 
     @callback

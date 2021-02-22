@@ -23,7 +23,7 @@ from openpeerpower.setup import async_setup_component
 async def test_setup_missing_config(opp):
     """Test setup with configuration missing required entries."""
     assert await async_setup_component(
-       .opp, sensor.DOMAIN, {"sensor": {"platform": "rest"}}
+        opp, sensor.DOMAIN, {"sensor": {"platform": "rest"}}
     )
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
@@ -32,7 +32,7 @@ async def test_setup_missing_config(opp):
 async def test_setup_missing_schema.opp):
     """Test setup with resource missing schema."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {"sensor": {"platform": "rest", "resource": "localhost", "method": "GET"}},
     )
@@ -45,7 +45,7 @@ async def test_setup_failed_connect.opp):
     """Test setup when connection error occurs."""
     respx.get("http://localhost").mock(side_effect=httpx.RequestError)
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -64,7 +64,7 @@ async def test_setup_timeout.opp):
     """Test setup when connection timeout occurs."""
     respx.get("http://localhost").mock(side_effect=asyncio.TimeoutError())
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {"sensor": {"platform": "rest", "resource": "localhost", "method": "GET"}},
     )
@@ -77,7 +77,7 @@ async def test_setup_minimum.opp):
     """Test setup with minimum configuration."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -97,7 +97,7 @@ async def test_manual_update.opp):
     await async_setup_component.opp, "openpeerpower", {})
     respx.get("http://localhost").respond(status_code=200, json={"data": "first"})
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -128,7 +128,7 @@ async def test_setup_minimum_resource_template.opp):
     """Test setup with minimum configuration (resource_template)."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -146,7 +146,7 @@ async def test_setup_duplicate_resource_template.opp):
     """Test setup with duplicate resources."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -165,7 +165,7 @@ async def test_setup_get.opp):
     """Test setup with valid configuration."""
     respx.get("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -205,7 +205,7 @@ async def test_setup_get_digest_auth.opp):
     """Test setup with valid configuration."""
     respx.get("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -234,7 +234,7 @@ async def test_setup_post.opp):
     """Test setup with valid configuration."""
     respx.post("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -267,7 +267,7 @@ async def test_setup_get_xml.opp):
         content="<dog>abc</dog>",
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -295,7 +295,7 @@ async def test_setup_query_params.opp):
     """Test setup with query params."""
     respx.get("http://localhost", params={"search": "something"}) % 200
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -319,7 +319,7 @@ async def test_update_with_json_attrs.opp):
         json={"key": "some_json_value"},
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -352,7 +352,7 @@ async def test_update_with_no_template.opp):
         json={"key": "some_json_value"},
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -385,7 +385,7 @@ async def test_update_with_json_attrs_no_data.opp, caplog):
         content="",
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -420,7 +420,7 @@ async def test_update_with_json_attrs_not_dict.opp, caplog):
         json=["list", "of", "things"],
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -456,7 +456,7 @@ async def test_update_with_json_attrs_bad_JSON.opp, caplog):
         content="This is text rather than JSON data.",
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -499,7 +499,7 @@ async def test_update_with_json_attrs_with_json_attrs_path.opp):
         },
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -536,7 +536,7 @@ async def test_update_with_xml_convert_json_attrs_with_json_attrs_path.opp):
         content="<toplevel><master_value>master</master_value><second_level><some_json_key>some_json_value</some_json_key><some_json_key2>some_json_value2</some_json_key2></second_level></toplevel>",
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -572,7 +572,7 @@ async def test_update_with_xml_convert_json_attrs_with_jsonattr_template.opp):
         content='<?xml version="1.0" encoding="utf-8"?><response><scan>0</scan><ver>12556</ver><count>48</count><ssid>alexander</ssid><bss><valid>0</valid><name>0</name><privacy>0</privacy><wlan>bogus</wlan><strength>0</strength></bss><led0>0</led0><led1>0</led1><led2>0</led2><led3>0</led3><led4>0</led4><led5>0</led5><led6>0</led6><led7>0</led7><btn0>up</btn0><btn1>up</btn1><btn2>up</btn2><btn3>up</btn3><pot0>0</pot0><usr0>0</usr0><temp0>0x0XF0x0XF</temp0><time0> 0</time0></response>',
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -603,7 +603,7 @@ async def test_update_with_xml_convert_json_attrs_with_jsonattr_template.opp):
 
 @respx.mock
 async def test_update_with_application_xml_convert_json_attrs_with_jsonattr_template(
-   .opp,
+    opp,
 ):
     """Test attributes get extracted from a JSON result that was converted from XML with application/xml mime type."""
 
@@ -613,7 +613,7 @@ async def test_update_with_application_xml_convert_json_attrs_with_jsonattr_temp
         content="<main><dog>1</dog><cat>3</cat></main>",
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -649,7 +649,7 @@ async def test_update_with_xml_convert_bad_xml.opp, caplog):
         content="",
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -684,7 +684,7 @@ async def test_update_with_failed_get.opp, caplog):
         content="",
     )
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {
@@ -716,7 +716,7 @@ async def test_reload.opp):
     respx.get("http://localhost") % 200
 
     await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {

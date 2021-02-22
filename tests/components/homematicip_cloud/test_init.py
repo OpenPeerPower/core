@@ -26,7 +26,7 @@ from tests.common import MockConfigEntry
 
 
 async def test_config_with_accesspoint_passed_to_config_entry(
-   .opp, mock_connection, simple_mock_home
+    opp, mock_connection, simple_mock_home
 ):
     """Test that config for a accesspoint are loaded via config entry."""
 
@@ -44,7 +44,7 @@ async def test_config_with_accesspoint_passed_to_config_entry(
         "openpeerpower.components.homematicip_cloud.hap.HomematicipHAP.async_connect",
     ):
         assert await async_setup_component(
-           .opp, HMIPC_DOMAIN, {HMIPC_DOMAIN: entry_config}
+            opp, HMIPC_DOMAIN, {HMIPC_DOMAIN: entry_config}
         )
 
     # config_entry created for access point
@@ -60,7 +60,7 @@ async def test_config_with_accesspoint_passed_to_config_entry(
 
 
 async def test_config_already_registered_not_passed_to_config_entry(
-   .opp, simple_mock_home
+    opp, simple_mock_home
 ):
     """Test that an already registered accesspoint does not get imported."""
 
@@ -88,7 +88,7 @@ async def test_config_already_registered_not_passed_to_config_entry(
         "openpeerpower.components.homematicip_cloud.hap.HomematicipHAP.async_connect",
     ):
         assert await async_setup_component(
-           .opp, HMIPC_DOMAIN, {HMIPC_DOMAIN: entry_config}
+            opp, HMIPC_DOMAIN, {HMIPC_DOMAIN: entry_config}
         )
 
     # no new config_entry created / still one config_entry
@@ -104,7 +104,7 @@ async def test_config_already_registered_not_passed_to_config_entry(
 
 
 async def test_load_entry_fails_due_to_connection_error(
-   .opp, hmip_config_entry, mock_connection_init
+    opp, hmip_config_entry, mock_connection_init
 ):
     """Test load entry fails due to connection error."""
     hmip_config_entry.add_to.opp.opp)

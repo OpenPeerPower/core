@@ -43,7 +43,7 @@ async def traccar_client(loop, opp, aiohttp_client):
 async def setup_zones(loop, opp):
     """Set up Zone config in HA."""
     assert await async_setup_component(
-       .opp,
+        opp,
         zone.DOMAIN,
         {
             "zone": {
@@ -61,7 +61,7 @@ async def setup_zones(loop, opp):
 async def webhook_id_fixture.opp, client):
     """Initialize the Traccar component and get the webhook_id."""
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"external_url": "http://example.com"},
     )
     result = await opp.config_entries.flow.async_init(

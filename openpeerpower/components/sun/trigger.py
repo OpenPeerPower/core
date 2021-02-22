@@ -9,7 +9,7 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     SUN_EVENT_SUNRISE,
 )
-from openpeerpower.core import HassJob, callback
+from openpeerpower.core import OppJob, callback
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.event import async_track_sunrise, async_track_sunset
 
@@ -31,7 +31,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     description = event
     if offset:
         description = f"{description} with offset"
-    job = HassJob(action)
+    job = OppJob(action)
 
     @callback
     def call_action():

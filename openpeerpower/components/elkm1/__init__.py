@@ -168,7 +168,7 @@ async def async_setup_opp: OpenPeerPower, opp_config: ConfigType) -> bool:
         # is called to avoid a situation where the user has to restart
         # twice for the changes to take effect
         current_config_entry = _async_find_matching_config_entry(
-           .opp, conf[CONF_PREFIX]
+            opp, conf[CONF_PREFIX]
         )
         if current_config_entry:
             # If they alter the yaml config we import the changes

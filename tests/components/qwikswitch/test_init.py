@@ -316,7 +316,7 @@ async def test_single_invalid_sensor.opp, aioclient_mock, qs_devices):
 
 
 async def test_non_binary_sensor_with_binary_args(
-   .opp, aioclient_mock, qs_devices, caplog
+    opp, aioclient_mock, qs_devices, caplog
 ):
     """Test that the system logs a warning when a non-binary device has binary specific args."""
 

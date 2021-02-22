@@ -185,7 +185,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
         logging.getLogger(f"{__name__}.yaml_collection"), id_manager
     )
     collection.sync_entity_lifecycle(
-       .opp, DOMAIN, DOMAIN, component, yaml_collection, Zone.from_yaml
+        opp, DOMAIN, DOMAIN, component, yaml_collection, Zone.from_yaml
     )
 
     storage_collection = ZoneStorageCollection(
@@ -194,7 +194,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
         id_manager,
     )
     collection.sync_entity_lifecycle(
-       .opp, DOMAIN, DOMAIN, component, storage_collection, Zone
+        opp, DOMAIN, DOMAIN, component, storage_collection, Zone
     )
 
     if config[DOMAIN]:
@@ -214,7 +214,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
         await yaml_collection.async_load(conf[DOMAIN])
 
     service.async_register_admin_service(
-       .opp,
+        opp,
         DOMAIN,
         SERVICE_RELOAD,
         reload_service_handler,

@@ -116,7 +116,7 @@ class SmartHomeView(OpenPeerPowerView):
         _LOGGER.debug("Received Alexa Smart Home request: %s", message)
 
         response = await async_handle_message(
-           .opp, self.smart_home_config, message, context=core.Context(user_id=user.id)
+            opp, self.smart_home_config, message, context=core.Context(user_id=user.id)
         )
         _LOGGER.debug("Sending Alexa Smart Home response: %s", response)
         return b"" if response is None else self.json(response)

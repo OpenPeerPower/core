@@ -145,7 +145,7 @@ async def test_methods.opp):
     assert "Returning home" in state.attributes.get(ATTR_STATUS)
 
     await common.async_set_fan_speed(
-       .opp, FAN_SPEEDS[-1], entity_id=ENTITY_VACUUM_COMPLETE
+        opp, FAN_SPEEDS[-1], entity_id=ENTITY_VACUUM_COMPLETE
     )
     state = opp.states.get(ENTITY_VACUUM_COMPLETE)
     assert state.attributes.get(ATTR_FAN_SPEED) == FAN_SPEEDS[-1]
@@ -176,7 +176,7 @@ async def test_methods.opp):
     assert state.state == STATE_RETURNING
 
     await common.async_set_fan_speed(
-       .opp, FAN_SPEEDS[-1], entity_id=ENTITY_VACUUM_STATE
+        opp, FAN_SPEEDS[-1], entity_id=ENTITY_VACUUM_STATE
     )
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.attributes.get(ATTR_FAN_SPEED) == FAN_SPEEDS[-1]
@@ -265,7 +265,7 @@ async def test_services.opp):
 
     params = {"rotate": 150, "speed": 20}
     await common.async_send_command(
-       .opp, "test_command", entity_id=ENTITY_VACUUM_BASIC, params=params
+        opp, "test_command", entity_id=ENTITY_VACUUM_BASIC, params=params
     )
     assert len(send_command_calls) == 1
     call = send_command_calls[-1]
@@ -280,7 +280,7 @@ async def test_services.opp):
     set_fan_speed_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_FAN_SPEED)
 
     await common.async_set_fan_speed(
-       .opp, FAN_SPEEDS[0], entity_id=ENTITY_VACUUM_COMPLETE
+        opp, FAN_SPEEDS[0], entity_id=ENTITY_VACUUM_COMPLETE
     )
     assert len(set_fan_speed_calls) == 1
     call = set_fan_speed_calls[-1]
@@ -325,7 +325,7 @@ async def test_send_command.opp):
     old_state_complete = opp.states.get(ENTITY_VACUUM_COMPLETE)
 
     await common.async_send_command(
-       .opp, "test_command", params={"p1": 3}, entity_id=group_vacuums
+        opp, "test_command", params={"p1": 3}, entity_id=group_vacuums
     )
 
     new_state_basic = opp.states.get(ENTITY_VACUUM_BASIC)

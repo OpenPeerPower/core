@@ -1093,7 +1093,7 @@ async def async_setup_platform(
     pws_id = config.get(CONF_PWS_ID)
 
     rest = WUndergroundData(
-       .opp,
+        opp,
         config.get(CONF_API_KEY),
         pws_id,
         config.get(CONF_LANG),

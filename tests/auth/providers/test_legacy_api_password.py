@@ -16,7 +16,7 @@ def store.opp):
 def provider.opp, store):
     """Mock provider."""
     return legacy_api_password.LegacyApiPasswordAuthProvider(
-       .opp, store, {"type": "legacy_api_password", "api_password": "test-password"}
+        opp, store, {"type": "legacy_api_password", "api_password": "test-password"}
     )
 
 

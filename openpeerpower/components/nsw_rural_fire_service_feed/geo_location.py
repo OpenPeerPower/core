@@ -77,7 +77,7 @@ async def async_setup_platform(
     categories = config.get(CONF_CATEGORIES)
     # Initialize the entity manager.
     manager = NswRuralFireServiceFeedEntityManager(
-       .opp, async_add_entities, scan_interval, coordinates, radius_in_km, categories
+        opp, async_add_entities, scan_interval, coordinates, radius_in_km, categories
     )
 
     async def start_feed_manager(event):
@@ -98,7 +98,7 @@ class NswRuralFireServiceFeedEntityManager:
 
     def __init__(
         self,
-       .opp,
+        opp,
         async_add_entities,
         scan_interval,
         coordinates,

@@ -61,7 +61,7 @@ def setup_opp, config):
         if token:
             _LOGGER.debug("found token for account %s", account_name)
             _create_instance(
-               .opp,
+                opp,
                 account_name,
                 api_key,
                 shared_secret,
@@ -71,7 +71,7 @@ def setup_opp, config):
             )
         else:
             _register_new_account(
-               .opp, account_name, api_key, shared_secret, stored_rtm_config, component
+                opp, account_name, api_key, shared_secret, stored_rtm_config, component
             )
 
     _LOGGER.debug("Finished adding all Remember the milk accounts")
@@ -79,7 +79,7 @@ def setup_opp, config):
 
 
 def _create_instance(
-   .opp, account_name, api_key, shared_secret, token, stored_rtm_config, component
+    opp, account_name, api_key, shared_secret, token, stored_rtm_config, component
 ):
     entity = RememberTheMilk(
         account_name, api_key, shared_secret, token, stored_rtm_config
@@ -100,7 +100,7 @@ def _create_instance(
 
 
 def _register_new_account(
-   .opp, account_name, api_key, shared_secret, stored_rtm_config, component
+    opp, account_name, api_key, shared_secret, stored_rtm_config, component
 ):
     request_id = None
     configurator = opp.components.configurator
@@ -123,7 +123,7 @@ def _register_new_account(
         _LOGGER.debug("Retrieved new token from server")
 
         _create_instance(
-           .opp,
+            opp,
             account_name,
             api_key,
             shared_secret,

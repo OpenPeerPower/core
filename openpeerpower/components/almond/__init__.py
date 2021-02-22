@@ -77,9 +77,9 @@ async def async_setup_opp, config):
 
     if conf[CONF_TYPE] == TYPE_OAUTH2:
         config_flow.AlmondFlowHandler.async_register_implementation(
-           .opp,
+            opp,
             config_entry_oauth2_flow.LocalOAuth2Implementation(
-               .opp,
+                opp,
                 DOMAIN,
                 conf[CONF_CLIENT_ID],
                 conf[CONF_CLIENT_SECRET],
@@ -110,11 +110,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntr
         # OAuth2
         implementation = (
             await config_entry_oauth2_flow.async_get_config_entry_implementation(
-               .opp, entry
+                opp, entry
             )
         )
         oauth_session = config_entry_oauth2_flow.OAuth2Session(
-           .opp, entry, implementation
+            opp, entry, implementation
         )
         auth = AlmondOAuth(entry.data["host"], websession, oauth_session)
 

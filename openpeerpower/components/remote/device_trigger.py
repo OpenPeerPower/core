@@ -24,7 +24,7 @@ async def async_attach_trigger(
 ) -> CALLBACK_TYPE:
     """Listen for state changes based on configuration."""
     return await toggle_entity.async_attach_trigger(
-       .opp, config, action, automation_info
+        opp, config, action, automation_info
     )
 
 

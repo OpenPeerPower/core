@@ -205,7 +205,7 @@ def numeric_state(
     return run_callback_threadsafe(
        .opp.loop,
         async_numeric_state,
-       .opp,
+        opp,
         entity,
         below,
         above,
@@ -315,7 +315,7 @@ def async_numeric_state_from_config(
 
         return all(
             async_numeric_state(
-               .opp, entity_id, below, above, value_template, variables, attribute
+                opp, entity_id, below, above, value_template, variables, attribute
             )
             for entity_id in entity_ids
         )
@@ -686,7 +686,7 @@ async def async_device_from_config(
     if config_validation:
         config = cv.DEVICE_CONDITION_SCHEMA(config)
     platform = await async_get_device_automation_platform(
-       .opp, config[CONF_DOMAIN], "condition"
+        opp, config[CONF_DOMAIN], "condition"
     )
     return cast(
         ConditionCheckerType,
@@ -713,7 +713,7 @@ async def async_validate_condition_config(
         config = cv.DEVICE_CONDITION_SCHEMA(config)
         assert not isinstance(config, Template)
         platform = await async_get_device_automation_platform(
-           .opp, config[CONF_DOMAIN], "condition"
+            opp, config[CONF_DOMAIN], "condition"
         )
         return cast(ConfigType, platform.CONDITION_SCHEMA(config))  # type: ignore
 

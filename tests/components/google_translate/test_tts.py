@@ -38,7 +38,7 @@ async def calls.opp):
 async def setup_internal_url.opp):
     """Set up internal url."""
     await async_process_op_core_config(
-       .opp, {"internal_url": "http://example.local:8123"}
+        opp, {"internal_url": "http://example.local:8123"}
     )
 
 
@@ -53,7 +53,7 @@ async def test_service_say.opp, mock_gtts, calls):
     """Test service call say."""
 
     await async_setup_component(
-       .opp, tts.DOMAIN, {tts.DOMAIN: {"platform": "google_translate"}}
+        opp, tts.DOMAIN, {tts.DOMAIN: {"platform": "google_translate"}}
     )
 
     await opp.services.async_call(
@@ -80,7 +80,7 @@ async def test_service_say_german_config(opp, mock_gtts, calls):
     """Test service call say with german code in the config."""
 
     await async_setup_component(
-       .opp,
+        opp,
         tts.DOMAIN,
         {tts.DOMAIN: {"platform": "google_translate", "language": "de"}},
     )
@@ -135,7 +135,7 @@ async def test_service_say_error(opp, mock_gtts, calls):
     """Test service call say with http response 400."""
     mock_gtts.return_value.write_to_fp.side_effect = gTTSError
     await async_setup_component(
-       .opp, tts.DOMAIN, {tts.DOMAIN: {"platform": "google_translate"}}
+        opp, tts.DOMAIN, {tts.DOMAIN: {"platform": "google_translate"}}
     )
 
     await opp.services.async_call(

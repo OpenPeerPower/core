@@ -19,7 +19,7 @@ class ConfigEntryAuth(pybotvac.OAuthSession):
         """Initialize Neato Botvac Auth."""
         self.opp = opp
         self.session = config_entry_oauth2_flow.OAuth2Session(
-           .opp, config_entry, implementation
+            opp, config_entry, implementation
         )
         super().__init__(self.session.token, vendor=pybotvac.Neato())
 

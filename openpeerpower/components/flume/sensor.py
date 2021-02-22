@@ -186,7 +186,7 @@ def _create_flume_device_coordinator.opp, flume_device):
         )
 
     return DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         # Name of the data. For logging purposes.
         name=flume_device.device_id,

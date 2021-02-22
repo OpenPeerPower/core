@@ -29,7 +29,7 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STARTED,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpower.core import CoreState, Event, HassJob, ServiceCall, callback
+from openpeerpower.core import CoreState, Event, OppJob, ServiceCall, callback
 from openpeerpower.exceptions import OpenPeerPowerError, Unauthorized
 from openpeerpower.helpers import config_validation as cv, event, template
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect, dispatcher_send
@@ -377,7 +377,7 @@ async def _async_setup_discovery(
     This method is a coroutine.
     """
     success: bool = await discovery.async_start(
-       .opp, conf[CONF_DISCOVERY_PREFIX], config_entry
+        opp, conf[CONF_DISCOVERY_PREFIX], config_entry
     )
 
     return success
@@ -443,7 +443,7 @@ async def async_setup_entry.opp, entry):
     conf = _merge_config(entry, conf)
 
    .opp.data[DATA_MQTT] = MQTT(
-       .opp,
+        opp,
         entry,
         conf,
     )
@@ -530,7 +530,7 @@ class Subscription:
 
     topic: str = attr.ib()
     matcher: Any = attr.ib()
-    job: HassJob = attr.ib()
+    job: OppJob = attr.ib()
     qos: int = attr.ib(default=0)
     encoding: str = attr.ib(default="utf-8")
 
@@ -740,7 +740,7 @@ class MQTT:
             raise OpenPeerPowerError("Topic needs to be a string!")
 
         subscription = Subscription(
-            topic, _matcher_for_topic(topic), HassJob(msg_callback), qos, encoding
+            topic, _matcher_for_topic(topic), OppJob(msg_callback), qos, encoding
         )
         self.subscriptions.append(subscription)
         self._matching_subscriptions.cache_clear()
@@ -1045,7 +1045,7 @@ async def websocket_subscribe.opp, connection, msg):
         )
 
     connection.subscriptions[msg["id"]] = await async_subscribe(
-       .opp, msg["topic"], forward_messages
+        opp, msg["topic"], forward_messages
     )
 
     connection.send_message(websocket_api.result_message(msg["id"]))
@@ -1054,7 +1054,7 @@ async def websocket_subscribe.opp, connection, msg):
 @callback
 def async_subscribe_connection_status.opp, connection_status_callback):
     """Subscribe to MQTT connection changes."""
-    connection_status_callback_job = HassJob(connection_status_callback)
+    connection_status_callback_job = OppJob(connection_status_callback)
 
     async def connected():
         task = opp.async_run.opp_job(connection_status_callback_job, True)

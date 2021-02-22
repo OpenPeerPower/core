@@ -35,7 +35,7 @@ async def test_setup_minimum.opp, requests_mock):
     resource = f"http://{google_wifi.DEFAULT_HOST}{google_wifi.ENDPOINT}"
     requests_mock.get(resource, status_code=200)
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {"sensor": {"platform": "google_wifi", "monitored_conditions": ["uptime"]}},
     )
@@ -47,7 +47,7 @@ async def test_setup_get.opp, requests_mock):
     resource = f"http://localhost{google_wifi.ENDPOINT}"
     requests_mock.get(resource, status_code=200)
     assert await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {

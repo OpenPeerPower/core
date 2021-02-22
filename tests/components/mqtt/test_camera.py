@@ -42,7 +42,7 @@ async def test_run_camera_setup_opp, aiohttp_client, mqtt_mock):
     """Test that it fetches the given payload."""
     topic = "test/camera"
     await async_setup_component(
-       .opp,
+        opp,
         "camera",
         {"camera": {"platform": "mqtt", "topic": topic, "name": "Test Camera"}},
     )
@@ -62,63 +62,63 @@ async def test_run_camera_setup_opp, aiohttp_client, mqtt_mock):
 async def test_availability_when_connection_lost.opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_availability_without_topic.opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_default_availability_payload.opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_payload(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_custom_availability_payload.opp, mqtt_mock):
     """Test availability by custom payload with defined topic."""
     await help_test_custom_availability_payload(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_setting_attribute_via_mqtt_json_message.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_via_mqtt_json_message(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_setting_attribute_with_template.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_with_template(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_not_dict.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_not_dict(
-       .opp, mqtt_mock, caplog, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
-       .opp, mqtt_mock, caplog, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_discovery_update_attr.opp, mqtt_mock, caplog):
     """Test update of discovered MQTTAttributes."""
     await help_test_discovery_update_attr(
-       .opp, mqtt_mock, caplog, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, caplog, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -155,7 +155,7 @@ async def test_discovery_update_camera.opp, mqtt_mock, caplog):
     data2 = '{ "name": "Milk", "topic": "test_topic"}'
 
     await help_test_discovery_update(
-       .opp, mqtt_mock, caplog, camera.DOMAIN, data1, data2
+        opp, mqtt_mock, caplog, camera.DOMAIN, data1, data2
     )
 
 
@@ -166,7 +166,7 @@ async def test_discovery_update_unchanged_camera.opp, mqtt_mock, caplog):
         "openpeerpower.components.mqtt.camera.MqttCamera.discovery_update"
     ) as discovery_update:
         await help_test_discovery_update_unchanged(
-           .opp, mqtt_mock, caplog, camera.DOMAIN, data1, discovery_update
+            opp, mqtt_mock, caplog, camera.DOMAIN, data1, discovery_update
         )
 
 
@@ -177,54 +177,54 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
     data2 = '{ "name": "Milk", "topic": "test_topic"}'
 
     await help_test_discovery_broken(
-       .opp, mqtt_mock, caplog, camera.DOMAIN, data1, data2
+        opp, mqtt_mock, caplog, camera.DOMAIN, data1, data2
     )
 
 
 async def test_entity_device_info_with_connection.opp, mqtt_mock):
     """Test MQTT camera device registry integration."""
     await help_test_entity_device_info_with_connection(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_with_identifier.opp, mqtt_mock):
     """Test MQTT camera device registry integration."""
     await help_test_entity_device_info_with_identifier(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_update.opp, mqtt_mock):
     """Test device registry update."""
     await help_test_entity_device_info_update(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_remove.opp, mqtt_mock):
     """Test device registry remove."""
     await help_test_entity_device_info_remove(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_id_update_subscriptions.opp, mqtt_mock):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     await help_test_entity_id_update_subscriptions(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG, ["test_topic"]
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG, ["test_topic"]
     )
 
 
 async def test_entity_id_update_discovery_update.opp, mqtt_mock):
     """Test MQTT discovery update when entity_id is updated."""
     await help_test_entity_id_update_discovery_update(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_debug_info_message.opp, mqtt_mock):
     """Test MQTT debug info."""
     await help_test_entity_debug_info_message(
-       .opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG, "test_topic", b"ON"
+        opp, mqtt_mock, camera.DOMAIN, DEFAULT_CONFIG, "test_topic", b"ON"
     )

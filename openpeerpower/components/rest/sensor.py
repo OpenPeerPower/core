@@ -40,7 +40,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     # ensure it's updating its state.
     if discovery_info is not None:
         conf, coordinator, rest = await async_get_config_and_coordinator(
-           .opp, SENSOR_DOMAIN, discovery_info
+            opp, SENSOR_DOMAIN, discovery_info
         )
     else:
         conf = config

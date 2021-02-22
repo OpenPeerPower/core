@@ -15,7 +15,7 @@ async def test_loading_file.opp, opp_client):
         "os.access", mock.Mock(return_value=True)
     ):
         await async_setup_component(
-           .opp,
+            opp,
             "camera",
             {
                 "camera": {
@@ -48,7 +48,7 @@ async def test_file_not_readable.opp, caplog):
         "os.access", mock.Mock(return_value=False)
     ):
         await async_setup_component(
-           .opp,
+            opp,
             "camera",
             {
                 "camera": {
@@ -89,7 +89,7 @@ async def test_camera_content_type.opp, opp_client):
     }
 
     await async_setup_component(
-       .opp,
+        opp,
         "camera",
         {"camera": [cam_config_jpg, cam_config_png, cam_config_svg, cam_config_noext]},
     )

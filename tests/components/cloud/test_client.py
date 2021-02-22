@@ -32,7 +32,7 @@ async def test_handler_alexa.opp):
    .opp.states.async_set("switch.test2", "on", {"friendly_name": "Test switch 2"})
 
     await mock_cloud(
-       .opp,
+        opp,
         {
             "alexa": {
                 "filter": {"exclude_entities": "switch.test2"},
@@ -86,7 +86,7 @@ async def test_handler_google_actions.opp):
    .opp.states.async_set("group.all_locks", "on", {"friendly_name": "Evil locks"})
 
     await mock_cloud(
-       .opp,
+        opp,
         {
             "google_actions": {
                 "filter": {"exclude_entities": "switch.test2"},

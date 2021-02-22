@@ -301,7 +301,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
 
     # test rejoin
     await async_test_rejoin(
-       .opp, zigpy_shade_device, [cluster_level, cluster_on_off], (1,)
+        opp, zigpy_shade_device, [cluster_level, cluster_on_off], (1,)
     )
     assert.opp.states.get(entity_id).state == STATE_OPEN
 
@@ -322,7 +322,7 @@ async def test_restore_state.opp, zha_device_restored, zigpy_shade_device):
     """Ensure states are restored on startup."""
 
     mock_restore_cache(
-       .opp,
+        opp,
         (
             State(
                 "cover.fakemanufacturer_fakemodel_e769900a_level_on_off_shade",

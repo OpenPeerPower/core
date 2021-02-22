@@ -5,7 +5,7 @@ from aiohttp import hdrs
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PLATFORM, CONF_WEBHOOK_ID
-from openpeerpower.core import HassJob, callback
+from openpeerpower.core import OppJob, callback
 import openpeerpower.helpers.config_validation as cv
 
 # mypy: allow-untyped-defs
@@ -34,7 +34,7 @@ async def _handle_webhook(job, opp, webhook_id, request):
 async def async_attach_trigger.opp, config, action, automation_info):
     """Trigger based on incoming webhooks."""
     webhook_id = config.get(CONF_WEBHOOK_ID)
-    job = HassJob(action)
+    job = OppJob(action)
    .opp.components.webhook.async_register(
         automation_info["domain"],
         automation_info["name"],

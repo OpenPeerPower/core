@@ -294,7 +294,7 @@ async def async_setup_entry.opp, config_entry):
 
     try:
         ambient = AmbientStation(
-           .opp,
+            opp,
             config_entry,
             Client(
                 config_entry.data[CONF_API_KEY],

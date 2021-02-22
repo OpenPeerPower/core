@@ -149,7 +149,7 @@ async def test_config(opp):
 async def test_select_option.opp):
     """Test select_option methods."""
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {DOMAIN: {"test_1": {"options": ["some option", "another option"]}}},
     )
@@ -174,7 +174,7 @@ async def test_select_option.opp):
 async def test_select_next.opp):
     """Test select_next methods."""
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -206,7 +206,7 @@ async def test_select_next.opp):
 async def test_select_previous.opp):
     """Test select_previous methods."""
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -238,7 +238,7 @@ async def test_select_previous.opp):
 async def test_select_first_last.opp):
     """Test select_first and _last methods."""
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -274,7 +274,7 @@ async def test_config_options.opp):
     test_2_options = ["Good Option", "Better Option", "Best Option"]
 
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -310,7 +310,7 @@ async def test_config_options.opp):
 async def test_set_options_service.opp):
     """Test set_options service."""
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -347,7 +347,7 @@ async def test_set_options_service.opp):
 async def test_restore_state.opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-       .opp,
+        opp,
         (
             State("input_select.s1", "last option"),
             State("input_select.s2", "bad option"),
@@ -370,7 +370,7 @@ async def test_restore_state.opp):
 async def test_initial_state_overrules_restore_state.opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-       .opp,
+        opp,
         (
             State("input_select.s1", "last option"),
             State("input_select.s2", "bad option"),
@@ -396,7 +396,7 @@ async def test_initial_state_overrules_restore_state.opp):
 async def test_input_select_context.opp, opp_admin_user):
     """Test that input_select context works."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "input_select",
         {
             "input_select": {
@@ -428,7 +428,7 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
     ent_reg = await entity_registry.async_get_registry.opp)
 
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {

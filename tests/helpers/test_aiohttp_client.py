@@ -15,7 +15,7 @@ def camera_client_fixture.opp, opp_client):
     """Fixture to fetch camera streams."""
     assert.opp.loop.run_until_complete(
         async_setup_component(
-           .opp,
+            opp,
             "camera",
             {
                 "camera": {

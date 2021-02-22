@@ -26,7 +26,7 @@ async def async_setup_entry(
         return DynaliteCover(device, bridge)
 
     async_setup_entry_base(
-       .opp, config_entry, async_add_entities, "cover", cover_from_device
+        opp, config_entry, async_add_entities, "cover", cover_from_device
     )
 
 

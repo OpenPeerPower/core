@@ -65,7 +65,7 @@ async def test_setup_depose_user.opp):
 async def test_login_flow_validates_mfa.opp):
     """Test login flow with mfa enabled."""
    .opp.auth = await auth_manager_from_config(
-       .opp,
+        opp,
         [
             {
                 "type": "insecure_example",

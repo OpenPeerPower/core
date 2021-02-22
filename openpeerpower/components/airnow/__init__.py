@@ -56,7 +56,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     # Setup the Coordinator
     session = async_get_clientsession.opp)
     coordinator = AirNowDataUpdateCoordinator(
-       .opp, session, api_key, latitude, longitude, distance, update_interval
+        opp, session, api_key, latitude, longitude, distance, update_interval
     )
 
     # Sync with Coordinator

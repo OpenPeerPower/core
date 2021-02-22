@@ -80,7 +80,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
 async def test_if_fires_on_state_change.opp, calls, kodi_media_player):
     """Test for turn_on and turn_off triggers firing."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

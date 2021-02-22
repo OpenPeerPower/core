@@ -164,7 +164,7 @@ async def test_validate_input_returns_data.opp):
         "vilfo.Client.get_board_information", return_value=None
     ), patch("vilfo.Client.resolve_mac_address", return_value=None):
         result = await opp.components.vilfo.config_flow.validate_input(
-           .opp, data=mock_data
+            opp, data=mock_data
         )
 
     assert result["title"] == mock_data["host"]
@@ -176,10 +176,10 @@ async def test_validate_input_returns_data.opp):
         "vilfo.Client.get_board_information", return_value=None
     ), patch("vilfo.Client.resolve_mac_address", return_value=mock_mac):
         result2 = await opp.components.vilfo.config_flow.validate_input(
-           .opp, data=mock_data
+            opp, data=mock_data
         )
         result3 = await opp.components.vilfo.config_flow.validate_input(
-           .opp, data=mock_data_with_ip
+            opp, data=mock_data_with_ip
         )
 
     assert result2["title"] == mock_data["host"]

@@ -497,7 +497,7 @@ async def test_component_warn_slow_setup_opp):
 async def test_platform_no_warn_slow.opp):
     """Do not warn for long entity setup time."""
     mock_integration(
-       .opp, MockModule("test_component1", platform_schema=PLATFORM_SCHEMA)
+        opp, MockModule("test_component1", platform_schema=PLATFORM_SCHEMA)
     )
     with patch.object.opp.loop, "call_later") as mock_call:
         result = await setup.async_setup_component.opp, "test_component1", {})
@@ -574,7 +574,7 @@ async def test_parallel_entry_setup_opp):
         return True
 
     mock_integration(
-       .opp,
+        opp,
         MockModule(
             "comp",
             async_setup_entry=mock_async_setup_entry,
@@ -590,7 +590,7 @@ async def test_integration_disabled.opp, caplog):
     """Test we can disable an integration."""
     disabled_reason = "Dependency contains code that breaks Open Peer Power"
     mock_integration(
-       .opp,
+        opp,
         MockModule("test_component1", partial_manifest={"disabled": disabled_reason}),
     )
     result = await setup.async_setup_component.opp, "test_component1", {})

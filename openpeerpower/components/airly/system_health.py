@@ -17,6 +17,6 @@ async def system_health_info.opp):
     """Get info for the info page."""
     return {
         "can_reach_server": system_health.async_check_can_reach_url(
-           .opp, Airly.AIRLY_API_URL
+            opp, Airly.AIRLY_API_URL
         )
     }

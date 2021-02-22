@@ -303,7 +303,7 @@ def get_suggested(schema, key):
 
 
 async def test_option_flow_default_suggested_values(
-   .opp, mqtt_mock, mock_try_connection
+    opp, mqtt_mock, mock_try_connection
 ):
     """Test config flow options has default/suggested values."""
     mock_try_connection.return_value = True

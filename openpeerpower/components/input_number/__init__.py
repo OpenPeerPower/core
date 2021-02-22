@@ -122,7 +122,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         logging.getLogger(f"{__name__}.yaml_collection"), id_manager
     )
     collection.sync_entity_lifecycle(
-       .opp, DOMAIN, DOMAIN, component, yaml_collection, InputNumber.from_yaml
+        opp, DOMAIN, DOMAIN, component, yaml_collection, InputNumber.from_yaml
     )
 
     storage_collection = NumberStorageCollection(
@@ -131,7 +131,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         id_manager,
     )
     collection.sync_entity_lifecycle(
-       .opp, DOMAIN, DOMAIN, component, storage_collection, InputNumber
+        opp, DOMAIN, DOMAIN, component, storage_collection, InputNumber
     )
 
     await yaml_collection.async_load(
@@ -153,7 +153,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         )
 
     openpeerpower.helpers.service.async_register_admin_service(
-       .opp,
+        opp,
         DOMAIN,
         SERVICE_RELOAD,
         reload_service_handler,

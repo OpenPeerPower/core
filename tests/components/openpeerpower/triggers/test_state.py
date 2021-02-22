@@ -39,7 +39,7 @@ async def test_if_fires_on_entity_change.opp.calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -84,7 +84,7 @@ async def test_if_fires_on_entity_change.opp.calls):
 async def test_if_fires_on_entity_change_with_from_filter.opp.calls):
     """Test for firing on entity change with filter."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -107,7 +107,7 @@ async def test_if_fires_on_entity_change_with_from_filter.opp.calls):
 async def test_if_fires_on_entity_change_with_to_filter.opp.calls):
     """Test for firing on entity change with no filter."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -130,7 +130,7 @@ async def test_if_fires_on_entity_change_with_to_filter.opp.calls):
 async def test_if_fires_on_attribute_change_with_to_filter.opp.calls):
     """Test for not firing on attribute change."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -154,7 +154,7 @@ async def test_if_fires_on_attribute_change_with_to_filter.opp.calls):
 async def test_if_fires_on_entity_change_with_both_filters.opp.calls):
     """Test for firing if both filters are a non match."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -178,7 +178,7 @@ async def test_if_fires_on_entity_change_with_both_filters.opp.calls):
 async def test_if_not_fires_if_to_filter_not_match.opp.calls):
     """Test for not firing if to filter is not a match."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -204,7 +204,7 @@ async def test_if_not_fires_if_from_filter_not_match.opp.calls):
    .opp.tates.async_set("test.entity", "bye")
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -228,7 +228,7 @@ async def test_if_not_fires_if_from_filter_not_match.opp.calls):
 async def test_if_not_fires_if_entity_not_match.opp.calls):
     """Test for not firing if entity is not matching."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -249,7 +249,7 @@ async def test_if_action.opp.calls):
     entity_id = "domain.test_entity"
     test_state = "new_state"
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -280,7 +280,7 @@ async def test_if_fails_setup_if_to_boolean_value.opp.calls):
     """Test for setup failure for boolean to."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -299,7 +299,7 @@ async def test_if_fails_setup_if_from_boolean_value.opp.calls):
     """Test for setup failure for boolean from."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -317,7 +317,7 @@ async def test_if_fails_setup_if_from_boolean_value.opp.calls):
 async def test_if_fails_setup_bad_for.opp.calls):
     """Test for setup failure for bad for."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -341,7 +341,7 @@ async def test_if_fails_setup_bad_for.opp.calls):
 async def test_if_not_fires_on_entity_change_with_for.opp.calls):
     """Test for not firing on entity change with for."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -369,7 +369,7 @@ async def test_if_not_fires_on_entity_change_with_for.opp.calls):
 async def test_if_not_fires_on_entities_change_with_for_after_stop.opp.calls):
     """Test for not firing on entity change with for after stop trigger."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -413,7 +413,7 @@ async def test_if_not_fires_on_entities_change_with_for_after_stop.opp.calls):
 async def test_if_fires_on_entity_change_with_for_attribute_change.opp.calls):
     """Test for firing on entity change with for and attribute change."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -450,7 +450,7 @@ async def test_if_fires_on_entity_change_with_for_attribute_change.opp.calls):
 async def test_if_fires_on_entity_change_with_for_multiple_force_update.opp.calls):
     """Test for firing on entity change with for and force update."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -486,7 +486,7 @@ async def test_if_fires_on_entity_change_with_for_multiple_force_update.opp.call
 async def test_if_fires_on_entity_change_with_for.opp.calls):
     """Test for firing on entity change with for."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -512,7 +512,7 @@ async def test_if_fires_on_entity_change_with_for.opp.calls):
 async def test_if_fires_on_entity_change_with_for_without_to.opp.calls):
     """Test for firing on entity change with for."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -549,7 +549,7 @@ async def test_if_fires_on_entity_change_with_for_without_to.opp.calls):
 async def test_if_does_not_fires_on_entity_change_with_for_without_to_2.opp.calls):
     """Test for firing on entity change with for."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -583,7 +583,7 @@ async def test_if_fires_on_entity_creation_and_removal.opp.calls):
     """Test for firing on entity creation and removal, with to/from constraints."""
     # set automations for multiple combinations to/from
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -652,7 +652,7 @@ async def test_if_fires_on_for_condition.opp.calls):
         mock_utcnow.return_value = point1
        .opp.tates.async_set("test.entity", "on")
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -690,7 +690,7 @@ async def test_if_fires_on_for_condition_attribute_change.opp.calls):
         mock_utcnow.return_value = point1
        .opp.tates.async_set("test.entity", "on")
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -732,7 +732,7 @@ async def test_if_fails_setup_for_without_time.opp.calls):
     """Test for setup failure if no time is provided."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -753,7 +753,7 @@ async def test_if_fails_setup_for_without_entity.opp.calls):
     """Test for setup failure if no entity is provided."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -772,7 +772,7 @@ async def test_if_fails_setup_for_without_entity.opp.calls):
 async def test_wait_template_with_trigger.opp.calls):
     """Test using wait template with 'trigger.entity_id'."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -814,7 +814,7 @@ async def test_wait_template_with_trigger.opp.calls):
 async def test_if_fires_on_entities_change_no_overlap.opp.calls):
     """Test for firing on entities change with no overlap."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -856,7 +856,7 @@ async def test_if_fires_on_entities_change_no_overlap.opp.calls):
 async def test_if_fires_on_entities_change_overlap.opp.calls):
     """Test for firing on entities change with overlap."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -909,7 +909,7 @@ async def test_if_fires_on_entities_change_overlap.opp.calls):
 async def test_if_fires_on_change_with_for_template_1.opp.calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -935,7 +935,7 @@ async def test_if_fires_on_change_with_for_template_1.opp.calls):
 async def test_if_fires_on_change_with_for_template_2.opp.calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -961,7 +961,7 @@ async def test_if_fires_on_change_with_for_template_2.opp.calls):
 async def test_if_fires_on_change_with_for_template_3.opp.calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -987,7 +987,7 @@ async def test_if_fires_on_change_with_for_template_3.opp.calls):
 async def test_if_fires_on_change_with_for_template_4.opp.calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -1014,7 +1014,7 @@ async def test_if_fires_on_change_with_for_template_4.opp.calls):
 async def test_if_fires_on_change_from_with_for.opp.calls):
     """Test for firing on change with from/for."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -1043,7 +1043,7 @@ async def test_if_fires_on_change_from_with_for.opp.calls):
 async def test_if_not_fires_on_change_from_with_for.opp.calls):
     """Test for firing on change with from/for."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -1072,7 +1072,7 @@ async def test_if_not_fires_on_change_from_with_for.opp.calls):
 async def test_invalid_for_template_1.opp.calls):
     """Test for invalid for template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -1096,7 +1096,7 @@ async def test_invalid_for_template_1.opp.calls):
 async def test_if_fires_on_entities_change_overlap_for_template.opp.calls):
     """Test for firing on entities change with overlap and for template."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -1158,7 +1158,7 @@ async def test_attribute_if_fires_on_entity_change_with_both_filters.opp.calls):
    .opp.tates.async_set("test.entity", "bla", {"name": "hello"})
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -1185,7 +1185,7 @@ async def test_attribute_if_fires_on_entity_where_attr_stays_constant.opp.calls)
    .opp.tates.async_set("test.entity", "bla", {"name": "hello", "other": "old_value"})
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -1223,7 +1223,7 @@ async def test_attribute_if_not_fires_on_entities_change_with_for_after_stop(
    .opp.tates.async_set("test.entity", "bla", {"name": "hello"})
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -1276,7 +1276,7 @@ async def test_attribute_if_fires_on_entity_change_with_both_filters_boolean(
    .opp.tates.async_set("test.entity", "bla", {"happening": False})
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -1301,7 +1301,7 @@ async def test_attribute_if_fires_on_entity_change_with_both_filters_boolean(
 async def test_variables_priority.opp.calls):
     """Test an externally defined trigger variable is overridden."""
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {

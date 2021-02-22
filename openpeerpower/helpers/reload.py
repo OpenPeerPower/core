@@ -37,7 +37,7 @@ async def async_reload_integration_platforms(
 
     tasks = [
         _resetup_platform(
-           .opp, integration_name, integration_platform, unprocessed_conf
+            opp, integration_name, integration_platform, unprocessed_conf
         )
         for integration_platform in integration_platforms
     ]
@@ -55,7 +55,7 @@ async def _resetup_platform(
     integration = await async_get_integration.opp, integration_platform)
 
     conf = await conf_util.async_process_component_config(
-       .opp, unprocessed_conf, integration
+        opp, unprocessed_conf, integration
     )
 
     if not conf:
@@ -81,7 +81,7 @@ async def _resetup_platform(
     # If its an entity platform, we use the entity_platform
     # async_reset method
     platform = async_get_platform_without_config_entry(
-       .opp, integration_name, integration_platform
+        opp, integration_name, integration_platform
     )
     if platform:
         await _async_reconfig_platform(platform, root_config[integration_platform])
@@ -93,7 +93,7 @@ async def _resetup_platform(
         return
 
     await _async_setup_platform(
-       .opp, integration_name, integration_platform, root_config[integration_platform]
+        opp, integration_name, integration_platform, root_config[integration_platform]
     )
 
 
@@ -106,7 +106,7 @@ async def _async_setup_platform(
     """Platform for the first time when new configuration is added."""
     if integration_platform not in.opp.data:
         await async_setup_component(
-           .opp, integration_platform, {integration_platform: platform_configs}
+            opp, integration_platform, {integration_platform: platform_configs}
         )
         return
 
@@ -134,7 +134,7 @@ async def async_integration_yaml_config(
     integration = await async_get_integration.opp, integration_name)
 
     return await conf_util.async_process_component_config(
-       .opp, await conf_util.async.opp_config_yaml.opp), integration
+        opp, await conf_util.async.opp_config_yaml.opp), integration
     )
 
 

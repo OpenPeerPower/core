@@ -17,7 +17,7 @@ async def test_constructor_loads_info_from_config(opp):
     """Test non-dev mode loads info from SERVERS constant."""
     with patch(.opp_nabucasa.Cloud.start"):
         result = await async_setup_component(
-           .opp,
+            opp,
             "cloud",
             {
                 "http": {},
@@ -111,7 +111,7 @@ async def test_setup_existing_cloud_user.opp, opp_storage):
    .opp_storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": user.id}}
     with patch(.opp_nabucasa.Cloud.start"):
         result = await async_setup_component(
-           .opp,
+            opp,
             "cloud",
             {
                 "http": {},

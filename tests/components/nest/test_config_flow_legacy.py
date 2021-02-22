@@ -36,10 +36,10 @@ async def test_full_flow_implementation.opp):
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     convert_code = AsyncMock(return_value={"access_token": "yoo"})
     config_flow.register_flow_implementation(
-       .opp, "test", "Test", gen_authorize_url, convert_code
+        opp, "test", "Test", gen_authorize_url, convert_code
     )
     config_flow.register_flow_implementation(
-       .opp, "test-other", "Test Other", None, None
+        opp, "test-other", "Test Other", None, None
     )
 
     flow = config_flow.NestFlowHandler()
@@ -64,7 +64,7 @@ async def test_not_pick_implementation_if_only_one.opp):
     """Test we allow picking implementation if we have two."""
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     config_flow.register_flow_implementation(
-       .opp, "test", "Test", gen_authorize_url, None
+        opp, "test", "Test", gen_authorize_url, None
     )
 
     flow = config_flow.NestFlowHandler()
@@ -78,7 +78,7 @@ async def test_abort_if_timeout_generating_auth_url.opp):
     """Test we abort if generating authorize url fails."""
     gen_authorize_url = Mock(side_effect=asyncio.TimeoutError)
     config_flow.register_flow_implementation(
-       .opp, "test", "Test", gen_authorize_url, None
+        opp, "test", "Test", gen_authorize_url, None
     )
 
     flow = config_flow.NestFlowHandler()
@@ -92,7 +92,7 @@ async def test_abort_if_exception_generating_auth_url.opp):
     """Test we abort if generating authorize url blows up."""
     gen_authorize_url = Mock(side_effect=ValueError)
     config_flow.register_flow_implementation(
-       .opp, "test", "Test", gen_authorize_url, None
+        opp, "test", "Test", gen_authorize_url, None
     )
 
     flow = config_flow.NestFlowHandler()
@@ -107,7 +107,7 @@ async def test_verify_code_timeout.opp):
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     convert_code = Mock(side_effect=asyncio.TimeoutError)
     config_flow.register_flow_implementation(
-       .opp, "test", "Test", gen_authorize_url, convert_code
+        opp, "test", "Test", gen_authorize_url, convert_code
     )
 
     flow = config_flow.NestFlowHandler()
@@ -127,7 +127,7 @@ async def test_verify_code_invalid.opp):
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     convert_code = Mock(side_effect=config_flow.CodeInvalid)
     config_flow.register_flow_implementation(
-       .opp, "test", "Test", gen_authorize_url, convert_code
+        opp, "test", "Test", gen_authorize_url, convert_code
     )
 
     flow = config_flow.NestFlowHandler()
@@ -147,7 +147,7 @@ async def test_verify_code_unknown_error(opp):
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     convert_code = Mock(side_effect=config_flow.NestAuthError)
     config_flow.register_flow_implementation(
-       .opp, "test", "Test", gen_authorize_url, convert_code
+        opp, "test", "Test", gen_authorize_url, convert_code
     )
 
     flow = config_flow.NestFlowHandler()
@@ -167,7 +167,7 @@ async def test_verify_code_exception.opp):
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     convert_code = Mock(side_effect=ValueError)
     config_flow.register_flow_implementation(
-       .opp, "test", "Test", gen_authorize_url, convert_code
+        opp, "test", "Test", gen_authorize_url, convert_code
     )
 
     flow = config_flow.NestFlowHandler()
@@ -186,7 +186,7 @@ async def test_step_import.opp):
     """Test that we trigger import when configuring with client."""
     with patch("os.path.isfile", return_value=False):
         assert await async_setup_component(
-           .opp, DOMAIN, {DOMAIN: {"client_id": "bla", "client_secret": "bla"}}
+            opp, DOMAIN, {DOMAIN: {"client_id": "bla", "client_secret": "bla"}}
         )
         await opp.async_block_till_done()
 
@@ -206,7 +206,7 @@ async def test_step_import_with_token_cache.opp):
         "openpeerpower.components.nest.async_setup_entry", return_value=mock_coro(True)
     ):
         assert await async_setup_component(
-           .opp, DOMAIN, {DOMAIN: {"client_id": "bla", "client_secret": "bla"}}
+            opp, DOMAIN, {DOMAIN: {"client_id": "bla", "client_secret": "bla"}}
         )
         await opp.async_block_till_done()
 

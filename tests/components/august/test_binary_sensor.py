@@ -21,7 +21,7 @@ from tests.components.august.mocks import (
 async def test_doorsense.opp):
     """Test creation of a lock with doorsense and bridge."""
     lock_one = await _mock_lock_from_fixture(
-       .opp, "get_lock.online_with_doorsense.json"
+        opp, "get_lock.online_with_doorsense.json"
     )
     await _create_august_with_devices.opp, [lock_one])
 
@@ -96,7 +96,7 @@ async def test_create_doorbell_with_motion.opp):
     """Test creation of a doorbell."""
     doorbell_one = await _mock_doorbell_from_fixture.opp, "get_doorbell.json")
     activities = await _mock_activities_from_fixture(
-       .opp, "get_activity.doorbell_motion.json"
+        opp, "get_activity.doorbell_motion.json"
     )
     await _create_august_with_devices.opp, [doorbell_one], activities=activities)
 

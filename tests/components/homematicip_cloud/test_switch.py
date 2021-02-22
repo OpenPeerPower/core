@@ -17,7 +17,7 @@ from .helper import async_manipulate_test_data, get_and_check_entity_basics
 async def test_manually_configured_platform.opp):
     """Test that we do not set up an access point."""
     assert await async_setup_component(
-       .opp, SWITCH_DOMAIN, {SWITCH_DOMAIN: {"platform": HMIPC_DOMAIN}}
+        opp, SWITCH_DOMAIN, {SWITCH_DOMAIN: {"platform": HMIPC_DOMAIN}}
     )
     assert not.opp.data.get(HMIPC_DOMAIN)
 
@@ -32,7 +32,7 @@ async def test_hmip_switch.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_ON
@@ -69,7 +69,7 @@ async def test_hmip_switch_input.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_ON
@@ -106,7 +106,7 @@ async def test_hmip_switch_measuring.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_ON
@@ -148,7 +148,7 @@ async def test_hmip_group_switch.opp, default_mock_hap_factory):
     mock_hap = await default_mock_hap_factory.async_get_mock_hap(test_groups=["Strom"])
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_ON
@@ -196,7 +196,7 @@ async def test_hmip_multi_switch.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_OFF
@@ -223,7 +223,7 @@ async def test_hmip_multi_switch.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_OFF
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp,
+        opp,
         mock_hap,
         "switch.schaltaktor_verteiler_channel3",
         "Schaltaktor Verteiler Channel3",
@@ -245,7 +245,7 @@ async def test_hmip_wired_multi_switch.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-       .opp, mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_ON

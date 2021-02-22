@@ -126,7 +126,7 @@ def async_describe_events(
     def async_describe_deconz_event(event: Event) -> dict:
         """Describe deCONZ logbook event."""
         deconz_event: Optional[DeconzEvent] = _get_deconz_event_from_device_id(
-           .opp, event.data[ATTR_DEVICE_ID]
+            opp, event.data[ATTR_DEVICE_ID]
         )
 
         action = None

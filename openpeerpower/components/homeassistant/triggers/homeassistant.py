@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.const import CONF_EVENT, CONF_PLATFORM, EVENT_OPENPEERPOWER_STOP
-from openpeerpower.core import HassJob, callback
+from openpeerpower.core import OppJob, callback
 
 # mypy: allow-untyped-defs
 
@@ -20,7 +20,7 @@ TRIGGER_SCHEMA = vol.Schema(
 async def async_attach_trigger.opp, config, action, automation_info):
     """Listen for events based on configuration."""
     event = config.get(CONF_EVENT)
-    job = HassJob(action)
+    job = OppJob(action)
 
     if event == EVENT_SHUTDOWN:
 

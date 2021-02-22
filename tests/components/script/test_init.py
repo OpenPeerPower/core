@@ -150,7 +150,7 @@ async def test_turn_on_off_toggle.opp, toggle):
     else:
         turn_off_step = {"service": "script.turn_off", "entity_id": ENTITY_ID}
     assert await async_setup_component(
-       .opp,
+        opp,
         "script",
         {
             "script": {
@@ -187,7 +187,7 @@ invalid_configs = [
 async def test_setup_with_invalid_configs.opp, value):
     """Test setup with invalid configs."""
     assert await async_setup_component(
-       .opp, "script", {"script": value}
+        opp, "script", {"script": value}
     ), f"Script loaded with wrong config {value}"
 
     assert 0 == len.opp.states.async_entity_ids("script"))
@@ -207,7 +207,7 @@ async def test_reload_service.opp, running):
    .opp.states.async_set("test.script", "off")
 
     assert await async_setup_component(
-       .opp,
+        opp,
         "script",
         {
             "script": {
@@ -255,7 +255,7 @@ async def test_service_descriptions.opp):
     """Test that service descriptions are loaded and reloaded correctly."""
     # Test 1: has "description" but no "fields"
     assert await async_setup_component(
-       .opp,
+        opp,
         "script",
         {
             "script": {
@@ -316,7 +316,7 @@ async def test_shared_context.opp):
    .opp.bus.async_listen(EVENT_SCRIPT_STARTED, run_mock)
 
     assert await async_setup_component(
-       .opp, "script", {"script": {"test": {"sequence": [{"event": event}]}}}
+        opp, "script", {"script": {"test": {"sequence": [{"event": event}]}}}
     )
 
     await opp.services.async_call(
@@ -346,7 +346,7 @@ async def test_shared_context.opp):
 async def test_logging_script_error(opp, caplog):
     """Test logging script error."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "script",
         {"script": {"hello": {"sequence": [{"service": "non.existing"}]}}},
     )
@@ -405,7 +405,7 @@ async def test_async_get_descriptions_script.opp):
 async def test_extraction_functions.opp):
     """Test extraction functions."""
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -478,7 +478,7 @@ async def test_extraction_functions.opp):
 async def test_config_basic.opp):
     """Test passing info in config."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "script",
         {
             "script": {
@@ -505,7 +505,7 @@ async def test_logbook_humanify_script_started_event.opp):
 
     event1, event2 = list(
         logbook.humanify(
-           .opp,
+            opp,
             [
                 MockLazyEventPartialState(
                     EVENT_SCRIPT_STARTED,
@@ -543,7 +543,7 @@ async def test_concurrent_script.opp, concurrently):
     else:
         call_script_2 = {"service": "script.script2"}
     assert await async_setup_component(
-       .opp,
+        opp,
         "script",
         {
             "script": {
@@ -621,7 +621,7 @@ async def test_concurrent_script.opp, concurrently):
 async def test_script_variables.opp, caplog):
     """Test defining scripts."""
     assert await async_setup_component(
-       .opp,
+        opp,
         "script",
         {
             "script": {

@@ -74,7 +74,7 @@ async def async_setup_entry.opp, entry):
         coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             sensor_type
         ] = DataUpdateCoordinator(
-           .opp,
+            opp,
             LOGGER,
             name=f"{entry.data[CONF_ZIP_CODE]} {sensor_type}",
             update_interval=DEFAULT_SCAN_INTERVAL,

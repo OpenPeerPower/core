@@ -18,7 +18,7 @@ from tests.common import async_fire_time_changed
 def mock_conf.opp, cloud_prefs):
     """Mock Google conf."""
     return CloudGoogleConfig(
-       .opp,
+        opp,
         GACTIONS_SCHEMA({}),
         "mock-user-id",
         cloud_prefs,
@@ -44,7 +44,7 @@ async def test_google_update_report_state(mock_conf, opp, cloud_prefs):
 async def test_sync_entities(aioclient_mock, opp, cloud_prefs):
     """Test sync devices."""
     config = CloudGoogleConfig(
-       .opp,
+        opp,
         GACTIONS_SCHEMA({}),
         "mock-user-id",
         cloud_prefs,
@@ -60,11 +60,11 @@ async def test_sync_entities(aioclient_mock, opp, cloud_prefs):
 
 
 async def test_google_update_expose_trigger_sync(
-   .opp, legacy_patchable_time, cloud_prefs
+    opp, legacy_patchable_time, cloud_prefs
 ):
     """Test Google config responds to updating exposed entities."""
     config = CloudGoogleConfig(
-       .opp,
+        opp,
         GACTIONS_SCHEMA({}),
         "mock-user-id",
         cloud_prefs,
@@ -107,7 +107,7 @@ async def test_google_update_expose_trigger_sync(
 async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
     """Test Google config responds to entity registry."""
     config = CloudGoogleConfig(
-       .opp, GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
+        opp, GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
     )
     await config.async_initialize()
     await config.async_connect_agent_user("mock-user-id")
@@ -201,7 +201,7 @@ def test_enabled_requires_valid_sub.opp, mock_expired_cloud_login, cloud_prefs):
     assert.opp.data["cloud"].subscription_expired
 
     config = CloudGoogleConfig(
-       .opp, GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
+        opp, GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
     )
 
     assert not config.enabled

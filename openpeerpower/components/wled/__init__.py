@@ -126,7 +126,7 @@ class WLEDDataUpdateCoordinator(DataUpdateCoordinator[WLEDDevice]):
         self.wled = WLED(host, session=async_get_clientsession.opp))
 
         super().__init__(
-           .opp,
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=SCAN_INTERVAL,

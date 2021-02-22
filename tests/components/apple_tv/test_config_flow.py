@@ -182,7 +182,7 @@ async def test_user_adds_device_with_credentials.opp, dmap_device_with_credentia
 
 
 async def test_user_adds_device_with_ip_filter(
-   .opp, dmap_device_with_credentials, mock_scan
+    opp, dmap_device_with_credentials, mock_scan
 ):
     """Test add device filtering by IP."""
     result = await opp.config_entries.flow.async_init(

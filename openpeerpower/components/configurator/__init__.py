@@ -43,7 +43,7 @@ STATE_CONFIGURED = "configured"
 @bind.opp
 @async_callback
 def async_request_config(
-   .opp,
+    opp,
     name,
     callback=None,
     description=None,

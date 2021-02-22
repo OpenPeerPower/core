@@ -32,7 +32,7 @@ async def test_koogeek_ls1_setup_opp):
     assert entry.unique_id == "homekit-AAAA011111111111-7"
 
     helper = Helper(
-       .opp, "light.koogeek_ls1_20833f", pairing, accessories[0], config_entry
+        opp, "light.koogeek_ls1_20833f", pairing, accessories[0], config_entry
     )
     state = await helper.poll_and_get_state()
 
@@ -65,7 +65,7 @@ async def test_recover_from_failure.opp, utcnow, failure_cls):
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
     helper = Helper(
-       .opp, "light.koogeek_ls1_20833f", pairing, accessories[0], config_entry
+        opp, "light.koogeek_ls1_20833f", pairing, accessories[0], config_entry
     )
 
     # Set light state on fake device to off

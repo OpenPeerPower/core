@@ -100,7 +100,7 @@ async def async_check_sabnzbd(sab_api):
 
 
 async def async_configure_sabnzbd(
-   .opp, config, use_ssl, name=DEFAULT_NAME, api_key=None
+    opp, config, use_ssl, name=DEFAULT_NAME, api_key=None
 ):
     """Try to configure Sabnzbd and request api key if configuration fails."""
 

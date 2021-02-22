@@ -284,7 +284,7 @@ DPI_APPS = [
 async def test_no_clients.opp, aioclient_mock):
     """Test the update_clients function when no clients are found."""
     await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         options={
             CONF_TRACK_CLIENTS: False,
@@ -300,7 +300,7 @@ async def test_no_clients.opp, aioclient_mock):
 async def test_controller_not_client.opp, aioclient_mock):
     """Test that the controller doesn't become a switch."""
     await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         options={CONF_TRACK_CLIENTS: False, CONF_TRACK_DEVICES: False},
         clients_response=[CONTROLLER_HOST],
@@ -317,7 +317,7 @@ async def test_not_admin.opp, aioclient_mock):
     description = deepcopy(DESCRIPTION)
     description[0]["site_role"] = "not admin"
     await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         options={CONF_TRACK_CLIENTS: False, CONF_TRACK_DEVICES: False},
         site_description=description,
@@ -331,7 +331,7 @@ async def test_not_admin.opp, aioclient_mock):
 async def test_switches.opp, aioclient_mock):
     """Test the update_items function with some clients."""
     config_entry = await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         options={
             CONF_BLOCK_CLIENT: [BLOCKED["mac"], UNBLOCKED["mac"]],
@@ -423,7 +423,7 @@ async def test_switches.opp, aioclient_mock):
 async def test_remove_switches.opp, aioclient_mock):
     """Test the update_items function with some clients."""
     config_entry = await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         options={CONF_BLOCK_CLIENT: [UNBLOCKED["mac"]]},
         clients_response=[CLIENT_1, UNBLOCKED],
@@ -457,7 +457,7 @@ async def test_remove_switches.opp, aioclient_mock):
 async def test_block_switches.opp, aioclient_mock):
     """Test the update_items function with some clients."""
     config_entry = await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         options={
             CONF_BLOCK_CLIENT: [BLOCKED["mac"], UNBLOCKED["mac"]],
@@ -529,7 +529,7 @@ async def test_block_switches.opp, aioclient_mock):
 async def test_new_client_discovered_on_block_control.opp, aioclient_mock):
     """Test if 2nd update has a new client."""
     config_entry = await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         options={
             CONF_BLOCK_CLIENT: [BLOCKED["mac"]],
@@ -569,7 +569,7 @@ async def test_new_client_discovered_on_block_control.opp, aioclient_mock):
 async def test_option_block_clients.opp, aioclient_mock):
     """Test the changes to option reflects accordingly."""
     config_entry = await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         options={CONF_BLOCK_CLIENT: [BLOCKED["mac"]]},
         clients_all_response=[BLOCKED, UNBLOCKED],
@@ -612,7 +612,7 @@ async def test_option_block_clients.opp, aioclient_mock):
 async def test_option_remove_switches.opp, aioclient_mock):
     """Test removal of DPI switch when options updated."""
     config_entry = await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         options={
             CONF_TRACK_CLIENTS: False,
@@ -637,7 +637,7 @@ async def test_option_remove_switches.opp, aioclient_mock):
 async def test_new_client_discovered_on_poe_control.opp, aioclient_mock):
     """Test if 2nd update has a new client."""
     config_entry = await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         options={CONF_TRACK_CLIENTS: False, CONF_TRACK_DEVICES: False},
         clients_response=[CLIENT_1],
@@ -696,7 +696,7 @@ async def test_ignore_multiple_poe_clients_on_same_port.opp, aioclient_mock):
     clients will be transparently marked as having POE as well.
     """
     await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         clients_response=POE_SWITCH_CLIENTS,
         devices_response=[DEVICE_1],
@@ -741,7 +741,7 @@ async def test_restoring_client.opp, aioclient_mock):
     )
 
     await setup_unifi_integration(
-       .opp,
+        opp,
         aioclient_mock,
         options={
             CONF_BLOCK_CLIENT: ["random mac"],

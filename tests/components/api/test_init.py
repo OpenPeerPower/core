@@ -516,7 +516,7 @@ async def test_rendering_template_admin.opp, mock_api_client, opp_admin_user):
 
 
 async def test_rendering_template_legacy_user(
-   .opp, mock_api_client, aiohttp_client, legacy_auth
+    opp, mock_api_client, aiohttp_client, legacy_auth
 ):
     """Test rendering a template with legacy API password."""
    .opp.states.async_set("sensor.temperature", 10)

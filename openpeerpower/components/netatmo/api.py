@@ -19,7 +19,7 @@ class ConfigEntryNetatmoAuth(pyatmo.auth.NetatmoOAuth2):
         """Initialize Netatmo Auth."""
         self.opp = opp
         self.session = config_entry_oauth2_flow.OAuth2Session(
-           .opp, config_entry, implementation
+            opp, config_entry, implementation
         )
         super().__init__(token=self.session.token)
 

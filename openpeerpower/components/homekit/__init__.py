@@ -249,7 +249,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     entity_filter = FILTER_SCHEMA(options.get(CONF_FILTER, {}))
 
     homekit = HomeKit(
-       .opp,
+        opp,
         name,
         port,
         ip_address,
@@ -422,7 +422,7 @@ class HomeKit:
 
     def __init__(
         self,
-       .opp,
+        opp,
         name,
         port,
         ip_address,

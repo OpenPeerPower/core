@@ -91,7 +91,7 @@ def mock_deconz_put_request(aioclient_mock, config, path):
 
 
 async def setup_deconz_integration(
-   .opp,
+    opp,
     aioclient_mock=None,
     *,
     config=ENTRY_CONFIG,

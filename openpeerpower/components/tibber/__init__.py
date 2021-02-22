@@ -82,7 +82,7 @@ async def async_setup_entry.opp, entry):
     # have to use discovery to load platform.
    .opp.async_create_task(
         discovery.async_load_platform(
-           .opp, "notify", DOMAIN, {CONF_NAME: DOMAIN}, opp.data[DATA_HASS_CONFIG]
+            opp, "notify", DOMAIN, {CONF_NAME: DOMAIN}, opp.data[DATA_HASS_CONFIG]
         )
     )
     return True

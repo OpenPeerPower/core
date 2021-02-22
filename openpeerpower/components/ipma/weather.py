@@ -128,7 +128,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         return {"new_unique_id": new_unique_id}
 
     await entity_registry.async_migrate_entries(
-       .opp, config_entry.entry_id, _async_migrator
+        opp, config_entry.entry_id, _async_migrator
     )
 
     async_add_entities([IPMAWeather(location, api, config_entry.data)], True)

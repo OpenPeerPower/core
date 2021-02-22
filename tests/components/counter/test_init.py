@@ -197,13 +197,13 @@ async def test_methods_with_config(opp):
 async def test_initial_state_overrules_restore_state.opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-       .opp, (State("counter.test1", "11"), State("counter.test2", "-22"))
+        opp, (State("counter.test1", "11"), State("counter.test2", "-22"))
     )
 
    .opp.state = CoreState.starting
 
     await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -228,7 +228,7 @@ async def test_restore_state_overrules_initial_state.opp):
     attr = {"initial": 6, "minimum": 1, "maximum": 8, "step": 2}
 
     mock_restore_cache(
-       .opp,
+        opp,
         (
             State("counter.test1", "11"),
             State("counter.test2", "-22"),
@@ -239,7 +239,7 @@ async def test_restore_state_overrules_initial_state.opp):
    .opp.state = CoreState.starting
 
     await async_setup_component(
-       .opp, DOMAIN, {DOMAIN: {"test1": {}, "test2": {CONF_INITIAL: 10}, "test3": {}}}
+        opp, DOMAIN, {DOMAIN: {"test1": {}, "test2": {CONF_INITIAL: 10}, "test3": {}}}
     )
 
     state = opp.states.get("counter.test1")
@@ -294,7 +294,7 @@ async def test_counter_context.opp, opp_admin_user):
 async def test_counter_min.opp, opp_admin_user):
     """Test that min works."""
     assert await async_setup_component(
-       .opp, "counter", {"counter": {"test": {"minimum": "0", "initial": "0"}}}
+        opp, "counter", {"counter": {"test": {"minimum": "0", "initial": "0"}}}
     )
 
     state = opp.states.get("counter.test")
@@ -329,7 +329,7 @@ async def test_counter_min.opp, opp_admin_user):
 async def test_counter_max.opp, opp_admin_user):
     """Test that max works."""
     assert await async_setup_component(
-       .opp, "counter", {"counter": {"test": {"maximum": "0", "initial": "0"}}}
+        opp, "counter", {"counter": {"test": {"maximum": "0", "initial": "0"}}}
     )
 
     state = opp.states.get("counter.test")
@@ -364,7 +364,7 @@ async def test_counter_max.opp, opp_admin_user):
 async def test_configure.opp, opp_admin_user):
     """Test that setting values through configure works."""
     assert await async_setup_component(
-       .opp, "counter", {"counter": {"test": {"maximum": "10", "initial": "10"}}}
+        opp, "counter", {"counter": {"test": {"maximum": "10", "initial": "10"}}}
     )
 
     state = opp.states.get("counter.test")

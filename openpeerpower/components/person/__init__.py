@@ -307,10 +307,10 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     )
 
     collection.sync_entity_lifecycle(
-       .opp, DOMAIN, DOMAIN, entity_component, yaml_collection, Person
+        opp, DOMAIN, DOMAIN, entity_component, yaml_collection, Person
     )
     collection.sync_entity_lifecycle(
-       .opp, DOMAIN, DOMAIN, entity_component, storage_collection, Person.from_yaml
+        opp, DOMAIN, DOMAIN, entity_component, storage_collection, Person.from_yaml
     )
 
     await yaml_collection.async_load(
@@ -347,7 +347,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         )
 
     service.async_register_admin_service(
-       .opp, DOMAIN, SERVICE_RELOAD, async_reload_yaml
+        opp, DOMAIN, SERVICE_RELOAD, async_reload_yaml
     )
 
     return True

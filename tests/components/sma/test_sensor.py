@@ -19,7 +19,7 @@ async def test_sma_config(opp):
 
     with assert_setup_component(1):
         assert await async_setup_component(
-           .opp, DOMAIN, {DOMAIN: dict(BASE_CFG, sensors=sensors)}
+            opp, DOMAIN, {DOMAIN: dict(BASE_CFG, sensors=sensors)}
         )
         await opp.async_block_till_done()
 

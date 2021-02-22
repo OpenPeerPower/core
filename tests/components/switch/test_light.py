@@ -9,7 +9,7 @@ from tests.components.switch import common as switch_common
 async def test_default_state.opp):
     """Test light switch default state."""
     await async_setup_component(
-       .opp,
+        opp,
         "light",
         {
             "light": {
@@ -37,7 +37,7 @@ async def test_light_service_calls.opp):
     """Test service calls to light."""
     await async_setup_component.opp, "switch", {"switch": [{"platform": "demo"}]})
     await async_setup_component(
-       .opp,
+        opp,
         "light",
         {"light": [{"platform": "switch", "entity_id": "switch.decorative_lights"}]},
     )
@@ -66,7 +66,7 @@ async def test_switch_service_calls.opp):
     """Test service calls to switch."""
     await async_setup_component.opp, "switch", {"switch": [{"platform": "demo"}]})
     await async_setup_component(
-       .opp,
+        opp,
         "light",
         {"light": [{"platform": "switch", "entity_id": "switch.decorative_lights"}]},
     )

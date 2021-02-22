@@ -473,7 +473,7 @@ async def test_ws_create.opp, opp_ws_client, storage_setup, opp_read_only_user):
 
 
 async def test_ws_create_requires_admin(
-   .opp, opp_ws_client, storage_setup, opp_admin_user, opp_read_only_user
+    opp, opp_ws_client, storage_setup, opp_admin_user, opp_read_only_user
 ):
     """Test creating via WS requires admin."""
    .opp_admin_user.groups = []
@@ -546,7 +546,7 @@ async def test_ws_update.opp, opp_ws_client, storage_setup):
 
 
 async def test_ws_update_require_admin(
-   .opp, opp_ws_client, storage_setup, opp_admin_user
+    opp, opp_ws_client, storage_setup, opp_admin_user
 ):
     """Test updating via WS requires admin."""
    .opp_admin_user.groups = []
@@ -594,7 +594,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
 
 
 async def test_ws_delete_require_admin(
-   .opp, opp_ws_client, storage_setup, opp_admin_user
+    opp, opp_ws_client, storage_setup, opp_admin_user
 ):
     """Test deleting via WS requires admin."""
    .opp_admin_user.groups = []
@@ -663,7 +663,7 @@ async def test_update_invalid_user_id.opp, storage_collection):
 
 
 async def test_update_person_when_user_removed(
-   .opp, storage_setup, opp_read_only_user
+    opp, storage_setup, opp_read_only_user
 ):
     """Update person when user is removed."""
     storage_collection = opp.data[DOMAIN][1]
@@ -708,7 +708,7 @@ async def test_add_user_device_tracker.opp, storage_setup, opp_read_only_user):
     )
 
     await person.async_add_user_device_tracker(
-       .opp, opp_read_only_user.id, "device_tracker.added"
+        opp, opp_read_only_user.id, "device_tracker.added"
     )
 
     assert storage_collection.data[pers["id"]]["device_trackers"] == [
@@ -720,7 +720,7 @@ async def test_add_user_device_tracker.opp, storage_setup, opp_read_only_user):
 async def test_reload.opp, opp_admin_user):
     """Test reloading the YAML config."""
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: [

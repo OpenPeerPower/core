@@ -23,7 +23,7 @@ class ConfigEntrySmappeeApi(api.SmappeeApi):
         self.opp = opp
         self.config_entry = config_entry
         self.session = config_entry_oauth2_flow.OAuth2Session(
-           .opp, config_entry, implementation
+            opp, config_entry, implementation
         )
 
         platform_to_farm = {

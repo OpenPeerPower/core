@@ -323,7 +323,7 @@ def context.opp, setup_comp):
 
    .opp.loop.run_until_complete(
         setup_owntracks(
-           .opp,
+            opp,
             {
                 CONF_MAX_GPS_ACCURACY: 200,
                 CONF_WAYPOINT_IMPORT: True,
@@ -698,7 +698,7 @@ async def test_event_source_type_entry_exit.opp, context):
 
     # owntracks shouldn't send beacon events with acc = 0
     await send_message(
-       .opp, EVENT_TOPIC, build_message({"acc": 1}, REGION_BEACON_ENTER_MESSAGE)
+        opp, EVENT_TOPIC, build_message({"acc": 1}, REGION_BEACON_ENTER_MESSAGE)
     )
 
     # We should be able to enter a beacon zone even inside a gps zone
@@ -711,7 +711,7 @@ async def test_event_source_type_entry_exit.opp, context):
 
     # owntracks shouldn't send beacon events with acc = 0
     await send_message(
-       .opp, EVENT_TOPIC, build_message({"acc": 1}, REGION_BEACON_LEAVE_MESSAGE)
+        opp, EVENT_TOPIC, build_message({"acc": 1}, REGION_BEACON_LEAVE_MESSAGE)
     )
 
     assert_location_source_type.opp, "bluetooth_le")
@@ -959,14 +959,14 @@ async def test_mobile_multiple_async_enter_exit.opp, context):
     # Test race condition
     for _ in range(0, 20):
         async_fire_mqtt_message(
-           .opp, EVENT_TOPIC, json.dumps(MOBILE_BEACON_ENTER_EVENT_MESSAGE)
+            opp, EVENT_TOPIC, json.dumps(MOBILE_BEACON_ENTER_EVENT_MESSAGE)
         )
         async_fire_mqtt_message(
-           .opp, EVENT_TOPIC, json.dumps(MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
+            opp, EVENT_TOPIC, json.dumps(MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
         )
 
     async_fire_mqtt_message(
-       .opp, EVENT_TOPIC, json.dumps(MOBILE_BEACON_ENTER_EVENT_MESSAGE)
+        opp, EVENT_TOPIC, json.dumps(MOBILE_BEACON_ENTER_EVENT_MESSAGE)
     )
 
     await opp.async_block_till_done()
@@ -1242,7 +1242,7 @@ async def test_waypoint_import_block.opp, context):
 async def test_waypoint_import_no_whitelist.opp, setup_comp):
     """Test import of list of waypoints with no whitelist set."""
     await setup_owntracks(
-       .opp,
+        opp,
         {
             CONF_MAX_GPS_ACCURACY: 200,
             CONF_WAYPOINT_IMPORT: True,
@@ -1436,7 +1436,7 @@ async def test_encrypted_payload_topic_key.opp, setup_comp):
 
 
 async def test_encrypted_payload_not_supports_encryption(
-   .opp, setup_comp, not_supports_encryption
+    opp, setup_comp, not_supports_encryption
 ):
     """Test encrypted payload with no supported encryption."""
     await setup_owntracks.opp, {CONF_SECRET: TEST_SECRET_KEY})
@@ -1480,7 +1480,7 @@ async def test_encrypted_payload_wrong_topic_key.opp, setup_comp):
 async def test_encrypted_payload_no_topic_key.opp, setup_comp):
     """Test encrypted payload with no topic key."""
     await setup_owntracks(
-       .opp, {CONF_SECRET: {"owntracks/{}/{}".format(USER, "otherdevice"): "foobar"}}
+        opp, {CONF_SECRET: {"owntracks/{}/{}".format(USER, "otherdevice"): "foobar"}}
     )
     await send_message.opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
     assert.opp.states.get(DEVICE_TRACKER_STATE) is None
@@ -1594,7 +1594,7 @@ async def test_returns_array_friends.opp, opp_client):
 
     # Setup device_trackers
     assert await async_setup_component(
-       .opp,
+        opp,
         "person",
         {
             "person": [

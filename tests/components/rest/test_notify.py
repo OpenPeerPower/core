@@ -17,7 +17,7 @@ async def test_reload_notify.opp):
     respx.get("http://localhost") % 200
 
     assert await async_setup_component(
-       .opp,
+        opp,
         notify.DOMAIN,
         {
             notify.DOMAIN: [

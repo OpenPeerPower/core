@@ -94,7 +94,7 @@ class PlexServer:
         self._use_plex_tv = self._token is not None
         self._version = None
         self.async_update_platforms = Debouncer(
-           .opp,
+            opp,
             _LOGGER,
             cooldown=DEBOUNCE_TIMEOUT,
             immediate=True,

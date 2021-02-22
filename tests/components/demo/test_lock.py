@@ -24,7 +24,7 @@ OPENABLE_LOCK = "lock.openable_lock"
 async def setup_comp.opp):
     """Set up demo component."""
     assert await async_setup_component(
-       .opp, LOCK_DOMAIN, {LOCK_DOMAIN: {"platform": DOMAIN}}
+        opp, LOCK_DOMAIN, {LOCK_DOMAIN: {"platform": DOMAIN}}
     )
     await opp.async_block_till_done()
 

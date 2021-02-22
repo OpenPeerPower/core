@@ -42,7 +42,7 @@ async def test_setup_minimal_config(opp):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         assert await async_setup_component(
-           .opp, pi_hole.DOMAIN, {pi_hole.DOMAIN: [{"host": "pi.hole"}]}
+            opp, pi_hole.DOMAIN, {pi_hole.DOMAIN: [{"host": "pi.hole"}]}
         )
 
     await opp.async_block_till_done()
@@ -100,7 +100,7 @@ async def test_setup_name_config(opp):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         assert await async_setup_component(
-           .opp,
+            opp,
             pi_hole.DOMAIN,
             {pi_hole.DOMAIN: [{"host": "pi.hole", "name": "Custom"}]},
         )
@@ -118,7 +118,7 @@ async def test_switch.opp, caplog):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         assert await async_setup_component(
-           .opp,
+            opp,
             pi_hole.DOMAIN,
             {pi_hole.DOMAIN: [{"host": "pi.hole1", "api_key": "1"}]},
         )
@@ -166,7 +166,7 @@ async def test_disable_service_call.opp):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         assert await async_setup_component(
-           .opp,
+            opp,
             pi_hole.DOMAIN,
             {
                 pi_hole.DOMAIN: [

@@ -425,7 +425,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         )
     # Notify doesn't support config entry setup yet, load with discovery for now
     await discovery.async_load_platform(
-       .opp,
+        opp,
         NOTIFY_DOMAIN,
         DOMAIN,
         {

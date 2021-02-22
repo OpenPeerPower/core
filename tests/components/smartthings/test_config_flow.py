@@ -110,7 +110,7 @@ async def test_entry_created.opp, app, app_oauth_client, location, smartthings_m
 
 
 async def test_entry_created_from_update_event(
-   .opp, app, app_oauth_client, location, smartthings_mock
+    opp, app, app_oauth_client, location, smartthings_mock
 ):
     """Test local webhook, new app, update event creates entry."""
     token = str(uuid4())
@@ -181,7 +181,7 @@ async def test_entry_created_from_update_event(
 
 
 async def test_entry_created_existing_app_new_oauth_client(
-   .opp, app, app_oauth_client, location, smartthings_mock
+    opp, app, app_oauth_client, location, smartthings_mock
 ):
     """Test entry is created with an existing app and generation of a new oauth client."""
     token = str(uuid4())
@@ -252,7 +252,7 @@ async def test_entry_created_existing_app_new_oauth_client(
 
 
 async def test_entry_created_existing_app_copies_oauth_client(
-   .opp, app, location, smartthings_mock
+    opp, app, location, smartthings_mock
 ):
     """Test entry is created with an existing app and copies the oauth client from another entry."""
     token = str(uuid4())
@@ -342,7 +342,7 @@ async def test_entry_created_existing_app_copies_oauth_client(
 
 
 async def test_entry_created_with_cloudhook(
-   .opp, app, app_oauth_client, location, smartthings_mock
+    opp, app, app_oauth_client, location, smartthings_mock
 ):
     """Test cloud, new app, install event creates entry."""
    .opp.config.components.add("cloud")
@@ -430,7 +430,7 @@ async def test_invalid_webhook_aborts.opp):
     """Test flow aborts if webhook is invalid."""
     # Webhook confirmation shown
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"external_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(
@@ -703,7 +703,7 @@ async def test_unknown_error_shows_error(opp, smartthings_mock):
 
 
 async def test_no_available_locations_aborts(
-   .opp, app, app_oauth_client, location, smartthings_mock
+    opp, app, app_oauth_client, location, smartthings_mock
 ):
     """Test select location aborts if no available locations."""
     token = str(uuid4())

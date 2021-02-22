@@ -149,7 +149,7 @@ async def test_no_devices.opp):
 async def test_ineligible_device.opp):
     """Test configuration with devices that do not support cameras."""
     await async_setup_camera(
-       .opp,
+        opp,
         {
             "sdm.devices.traits.Info": {
                 "customName": "My Camera",
@@ -242,7 +242,7 @@ async def test_refresh_expired_stream_token.opp, auth):
         make_stream_url_response(stream_3_expiration, token_num=3),
     ]
     await async_setup_camera(
-       .opp,
+        opp,
         DEVICE_TRAITS,
         auth=auth,
     )
@@ -315,7 +315,7 @@ async def test_stream_response_already_expired.opp, auth):
 async def test_camera_removed.opp, auth):
     """Test case where entities are removed and stream tokens expired."""
     subscriber = await async_setup_camera(
-       .opp,
+        opp,
         DEVICE_TRAITS,
         auth=auth,
     )

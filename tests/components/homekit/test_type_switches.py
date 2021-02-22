@@ -199,7 +199,7 @@ async def test_valve_set_state.opp, hk_driver, events):
 
 
 async def test_vacuum_set_state_with_returnhome_and_start_support(
-   .opp, hk_driver, events
+    opp, hk_driver, events
 ):
     """Test if Vacuum accessory and HA are updated accordingly."""
     entity_id = "vacuum.roomba"
@@ -236,7 +236,7 @@ async def test_vacuum_set_state_with_returnhome_and_start_support(
     # Set from HomeKit
     call_start = async_mock_service.opp, VACUUM_DOMAIN, SERVICE_START)
     call_return_to_base = async_mock_service(
-       .opp, VACUUM_DOMAIN, SERVICE_RETURN_TO_BASE
+        opp, VACUUM_DOMAIN, SERVICE_RETURN_TO_BASE
     )
 
     await opp.async_add_executor_job(acc.char_on.client_update_value, 1)
@@ -257,7 +257,7 @@ async def test_vacuum_set_state_with_returnhome_and_start_support(
 
 
 async def test_vacuum_set_state_without_returnhome_and_start_support(
-   .opp, hk_driver, events
+    opp, hk_driver, events
 ):
     """Test if Vacuum accessory and HA are updated accordingly."""
     entity_id = "vacuum.roomba"

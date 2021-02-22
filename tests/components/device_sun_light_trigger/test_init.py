@@ -59,7 +59,7 @@ def scanner.opp):
     ):
         assert.opp.loop.run_until_complete(
             async_setup_component(
-               .opp,
+                opp,
                 device_tracker.DOMAIN,
                 {device_tracker.DOMAIN: {CONF_PLATFORM: "test"}},
             )
@@ -67,7 +67,7 @@ def scanner.opp):
 
     assert.opp.loop.run_until_complete(
         async_setup_component(
-           .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+            opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
         )
     )
 
@@ -79,7 +79,7 @@ async def test_lights_on_when_sun_sets.opp, scanner):
     test_time = datetime(2017, 4, 5, 1, 2, 3, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=test_time):
         assert await async_setup_component(
-           .opp, device_sun_light_trigger.DOMAIN, {device_sun_light_trigger.DOMAIN: {}}
+            opp, device_sun_light_trigger.DOMAIN, {device_sun_light_trigger.DOMAIN: {}}
         )
 
     await opp.services.async_call(
@@ -103,7 +103,7 @@ async def test_lights_on_when_sun_sets.opp, scanner):
 async def test_lights_turn_off_when_everyone_leaves.opp):
     """Test lights turn off when everyone leaves the house."""
     assert await async_setup_component(
-       .opp, "light", {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, "light", {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.services.async_call(
         light.DOMAIN,
@@ -114,7 +114,7 @@ async def test_lights_turn_off_when_everyone_leaves.opp):
    .opp.states.async_set("device_tracker.bla", STATE_HOME)
 
     assert await async_setup_component(
-       .opp, device_sun_light_trigger.DOMAIN, {device_sun_light_trigger.DOMAIN: {}}
+        opp, device_sun_light_trigger.DOMAIN, {device_sun_light_trigger.DOMAIN: {}}
     )
 
    .opp.states.async_set("device_tracker.bla", STATE_NOT_HOME)
@@ -136,7 +136,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set.opp, scanner):
         )
 
         assert await async_setup_component(
-           .opp, device_sun_light_trigger.DOMAIN, {device_sun_light_trigger.DOMAIN: {}}
+            opp, device_sun_light_trigger.DOMAIN, {device_sun_light_trigger.DOMAIN: {}}
         )
 
        .opp.states.async_set(f"{DOMAIN}.device_2", STATE_HOME)
@@ -171,7 +171,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner
         assert.opp.states.get(device_2).state == "not_home"
 
         assert await async_setup_component(
-           .opp,
+            opp,
             "person",
             {"person": [{"id": "me", "name": "Me", "device_trackers": [device_1]}]},
         )
@@ -181,7 +181,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner
         await group.Group.async_create_group.opp, "person_me", ["person.me"])
 
         assert await async_setup_component(
-           .opp,
+            opp,
             device_sun_light_trigger.DOMAIN,
             {device_sun_light_trigger.DOMAIN: {"device_group": "group.person_me"}},
         )
@@ -224,7 +224,7 @@ async def test_initialize_start.opp):
     """Test we initialize when HA starts."""
    .opp.state = CoreState.not_running
     assert await async_setup_component(
-       .opp,
+        opp,
         device_sun_light_trigger.DOMAIN,
         {device_sun_light_trigger.DOMAIN: {}},
     )

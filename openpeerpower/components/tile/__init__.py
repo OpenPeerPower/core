@@ -64,7 +64,7 @@ async def async_setup_entry.opp, entry):
         coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             tile_uuid
         ] = DataUpdateCoordinator(
-           .opp,
+            opp,
             LOGGER,
             name=tile.name,
             update_interval=DEFAULT_UPDATE_INTERVAL,

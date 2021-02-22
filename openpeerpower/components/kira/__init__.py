@@ -125,7 +125,7 @@ def setup_opp, config):
             module.registerCode(code_tuple, code.get(CONF_CODE))
 
         discovery.load_platform(
-           .opp, platform, DOMAIN, {"name": module_name, "device": device_name}, config
+            opp, platform, DOMAIN, {"name": module_name, "device": device_name}, config
         )
 
     for idx, module_conf in enumerate(sensors):

@@ -58,7 +58,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         return await async_griddy.async_getnow()
 
     coordinator = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name="Griddy getnow",
         update_method=async_update_data,

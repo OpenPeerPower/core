@@ -203,7 +203,7 @@ def test_saving_state_include_domains_globs.opp_recorder):
         {"include": {"domains": "test2", "entity_globs": "*.included_*"}}
     )
     states = _add_entities(
-       .opp, ["test.recorder", "test2.recorder", "test3.included_entity"]
+        opp, ["test.recorder", "test2.recorder", "test3.included_entity"]
     )
     assert len(states) == 2
     assert _state_empty_context.opp, "test2.recorder") == states[0]
@@ -253,7 +253,7 @@ def test_saving_state_exclude_domains_globs.opp_recorder):
         {"exclude": {"domains": "test", "entity_globs": "*.excluded_*"}}
     )
     states = _add_entities(
-       .opp, ["test.recorder", "test2.recorder", "test2.excluded_entity"]
+        opp, ["test.recorder", "test2.recorder", "test2.excluded_entity"]
     )
     assert len(states) == 1
     assert _state_empty_context.opp, "test2.recorder") == states[0]
@@ -285,7 +285,7 @@ def test_saving_state_exclude_domain_glob_include_entity.opp_recorder):
         }
     )
     states = _add_entities(
-       .opp, ["test.recorder", "test2.recorder", "test.excluded_entity"]
+        opp, ["test.recorder", "test2.recorder", "test.excluded_entity"]
     )
     assert len(states) == 3
 
@@ -310,7 +310,7 @@ def test_saving_state_include_domain_glob_exclude_entity.opp_recorder):
         }
     )
     states = _add_entities(
-       .opp, ["test.recorder", "test2.recorder", "test.ok", "test2.included_entity"]
+        opp, ["test.recorder", "test2.recorder", "test.ok", "test2.included_entity"]
     )
     assert len(states) == 1
     assert _state_empty_context.opp, "test.ok") == states[0]
@@ -347,7 +347,7 @@ def test_recorder_setup_failure():
     ):
         setup.side_effect = ImportError("driver not found")
         rec = Recorder(
-           .opp,
+            opp,
             auto_purge=True,
             keep_days=7,
             commit_interval=1,

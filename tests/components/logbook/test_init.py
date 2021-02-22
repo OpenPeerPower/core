@@ -411,7 +411,7 @@ async def test_logbook_describe_event.opp, opp_client):
 
    .opp.config.components.add("fake_integration")
     mock_platform(
-       .opp,
+        opp,
         "fake_integration.logbook",
         Mock(
             async_describe_events=lambda.opp, async_describe_event: async_describe_event(
@@ -465,14 +465,14 @@ async def test_exclude_described_event.opp, opp_client):
 
    .opp.config.components.add("fake_integration")
     mock_platform(
-       .opp,
+        opp,
         "fake_integration.logbook",
         Mock(async_describe_events=async_describe_events),
     )
 
     await opp.async_add_executor_job(init_recorder_component, opp)
     assert await async_setup_component(
-       .opp,
+        opp,
         logbook.DOMAIN,
         {
             logbook.DOMAIN: {
@@ -845,7 +845,7 @@ async def test_logbook_entity_context_id.opp, opp_client):
 
     await opp.async_add_executor_job(
         logbook.log_entry,
-       .opp,
+        opp,
         "mock_name",
         "mock_message",
         "alarm_control_panel",
@@ -856,7 +856,7 @@ async def test_logbook_entity_context_id.opp, opp_client):
 
     await opp.async_add_executor_job(
         logbook.log_entry,
-       .opp,
+        opp,
         "mock_name",
         "mock_message",
         "openpeerpower",
@@ -1002,7 +1002,7 @@ async def test_logbook_entity_context_parent_id.opp, opp_client):
     await opp.async_block_till_done()
 
     logbook.async_log_entry(
-       .opp,
+        opp,
         "mock_name",
         "mock_message",
         "alarm_control_panel",
@@ -1012,7 +1012,7 @@ async def test_logbook_entity_context_parent_id.opp, opp_client):
     await opp.async_block_till_done()
 
     logbook.async_log_entry(
-       .opp,
+        opp,
         "mock_name",
         "mock_message",
         "openpeerpower",
@@ -1053,7 +1053,7 @@ async def test_logbook_entity_context_parent_id.opp, opp_client):
         user_id="485cacf93ef84d25a99ced3126b921d2",
     )
     logbook.async_log_entry(
-       .opp,
+        opp,
         "mock_name",
         "mock_message",
         "alarm_control_panel",
@@ -1134,7 +1134,7 @@ async def test_logbook_context_from_template.opp, opp_client):
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
-       .opp,
+        opp,
         "switch",
         {
             "switch": {
@@ -1220,7 +1220,7 @@ async def test_logbook_entity_matches_only.opp, opp_client):
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
-       .opp,
+        opp,
         "switch",
         {
             "switch": {
@@ -1294,7 +1294,7 @@ async def test_logbook_entity_matches_only_multiple.opp, opp_client):
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
-       .opp,
+        opp,
         "switch",
         {
             "switch": {

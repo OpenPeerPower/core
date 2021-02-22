@@ -113,7 +113,7 @@ def async_sync_geo_coordinator_update_intervals.opp, api_key):
         return
 
     update_interval = async_get_cloud_api_update_interval(
-       .opp, api_key, len(coordinators)
+        opp, api_key, len(coordinators)
     )
 
     for coordinator in coordinators:
@@ -222,7 +222,7 @@ async def async_setup_entry.opp, config_entry):
                 raise UpdateFailed(f"Error while retrieving data: {err}") from err
 
         coordinator = DataUpdateCoordinator(
-           .opp,
+            opp,
             LOGGER,
             name=async_get_geography_id(config_entry.data),
             # We give a placeholder update interval in order to create the coordinator;
@@ -234,7 +234,7 @@ async def async_setup_entry.opp, config_entry):
         )
 
         async_sync_geo_coordinator_update_intervals(
-           .opp, config_entry.data[CONF_API_KEY]
+            opp, config_entry.data[CONF_API_KEY]
         )
 
         # Only geography-based entries have options:
@@ -255,7 +255,7 @@ async def async_setup_entry.opp, config_entry):
                 raise UpdateFailed(f"Error while retrieving data: {err}") from err
 
         coordinator = DataUpdateCoordinator(
-           .opp,
+            opp,
             LOGGER,
             name="Node/Pro data",
             update_interval=DEFAULT_NODE_PRO_UPDATE_INTERVAL,
@@ -340,7 +340,7 @@ async def async_unload_entry.opp, config_entry):
             # Re-calculate the update interval period for any remaining consumers of
             # this API key:
             async_sync_geo_coordinator_update_intervals(
-               .opp, config_entry.data[CONF_API_KEY]
+                opp, config_entry.data[CONF_API_KEY]
             )
 
     return unload_ok

@@ -236,7 +236,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
    .opp.data[DOMAIN][entry.unique_id][
         COORDINATOR_SURVEILLANCE
     ] = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name=f"{entry.unique_id}_surveillance_station",
         update_method=async_coordinator_update_data_surveillance_station,

@@ -71,7 +71,7 @@ async def async_setup_entry(
     # Handle adding paired sensors after HASS startup:
    .opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id].append(
         async_dispatcher_connect(
-           .opp,
+            opp,
             SIGNAL_PAIRED_SENSOR_COORDINATOR_ADDED.format(entry.data[CONF_UID]),
             add_new_paired_sensor,
         )

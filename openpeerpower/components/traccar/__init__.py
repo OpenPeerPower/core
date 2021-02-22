@@ -70,7 +70,7 @@ async def handle_webhook.opp, webhook_id, request):
     device = data[ATTR_ID]
 
     async_dispatcher_send(
-       .opp,
+        opp,
         TRACKER_UPDATE,
         device,
         data[ATTR_LATITUDE],

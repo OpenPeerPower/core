@@ -110,7 +110,7 @@ async def test_setup_api_push_api_data.opp, aioclient_mock):
     """Test setup with API push."""
     with patch.dict(os.environ, MOCK_ENVIRON):
         result = await async_setup_component(
-           .opp, .oppio", {"http": {"server_port": 9999}, .oppio": {}}
+            opp, .oppio", {"http": {"server_port": 9999}, .oppio": {}}
         )
         assert result
 
@@ -124,7 +124,7 @@ async def test_setup_api_push_api_data_server_host.opp, aioclient_mock):
     """Test setup with API push with active server host."""
     with patch.dict(os.environ, MOCK_ENVIRON):
         result = await async_setup_component(
-           .opp,
+            opp,
             .oppio",
             {"http": {"server_port": 9999, "server_host": "127.0.0.1"}, .oppio": {}},
         )

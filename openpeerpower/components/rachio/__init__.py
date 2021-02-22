@@ -76,7 +76,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     # Get the URL of this server
     rachio.webhook_auth = secrets.token_hex()
     webhook_id, webhook_url = await async_get_or_create_registered_webhook_id_and_url(
-       .opp, entry
+        opp, entry
     )
     rachio.webhook_url = webhook_url
 

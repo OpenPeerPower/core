@@ -192,7 +192,7 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_hash
         return
 
     remove_update_signal = async_dispatcher_connect(
-       .opp, TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_hash), discovery_update
+        opp, TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_hash), discovery_update
     )
 
     device_registry = await opp.helpers.device_registry.async_get_registry()

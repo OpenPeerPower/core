@@ -47,7 +47,7 @@ class DeviceDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize the data update coordinator."""
         DataUpdateCoordinator.__init__(
             self,
-           .opp,
+            opp,
             logger,
             name=name,
             update_interval=update_interval,
@@ -77,7 +77,7 @@ def get_data_update_coordinator(
                 ) from exception
 
         config_entry_data[DATA_UPDATE_COORDINATOR] = DeviceDataUpdateCoordinator(
-           .opp,
+            opp,
             _LOGGER,
             api,
             # Name of the data. For logging purposes.

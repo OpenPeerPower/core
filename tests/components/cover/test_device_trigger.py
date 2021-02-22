@@ -232,7 +232,7 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
     assert len(triggers) == 4
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "trigger", trigger
+            opp, "trigger", trigger
         )
         assert capabilities == {"extra_fields": []}
 
@@ -279,7 +279,7 @@ async def test_get_trigger_capabilities_set_pos.opp, device_reg, entity_reg):
     assert len(triggers) == 5
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "trigger", trigger
+            opp, "trigger", trigger
         )
         if trigger["type"] == "position":
             assert capabilities == expected_capabilities
@@ -329,7 +329,7 @@ async def test_get_trigger_capabilities_set_tilt_pos.opp, device_reg, entity_reg
     assert len(triggers) == 5
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "trigger", trigger
+            opp, "trigger", trigger
         )
         if trigger["type"] == "tilt_position":
             assert capabilities == expected_capabilities
@@ -342,7 +342,7 @@ async def test_if_fires_on_state_change.opp, calls):
    .opp.states.async_set("cover.entity", STATE_CLOSED)
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -468,7 +468,7 @@ async def test_if_fires_on_position.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -595,7 +595,7 @@ async def test_if_fires_on_tilt_position.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

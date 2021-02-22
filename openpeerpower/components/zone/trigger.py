@@ -8,7 +8,7 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     CONF_ZONE,
 )
-from openpeerpower.core import CALLBACK_TYPE, HassJob, callback
+from openpeerpower.core import CALLBACK_TYPE, OppJob, callback
 from openpeerpower.helpers import condition, config_validation as cv, location
 from openpeerpower.helpers.event import async_track_state_change_event
 
@@ -34,13 +34,13 @@ TRIGGER_SCHEMA = vol.Schema(
 
 
 async def async_attach_trigger(
-   .opp, config, action, automation_info, *, platform_type: str = "zone"
+    opp, config, action, automation_info, *, platform_type: str = "zone"
 ) -> CALLBACK_TYPE:
     """Listen for state changes based on configuration."""
     entity_id = config.get(CONF_ENTITY_ID)
     zone_entity_id = config.get(CONF_ZONE)
     event = config.get(CONF_EVENT)
-    job = HassJob(action)
+    job = OppJob(action)
 
     @callback
     def zone_automation_listener(zone_event):

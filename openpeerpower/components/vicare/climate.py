@@ -87,7 +87,7 @@ HA_TO_VICARE_PRESET_HEATING = {
 
 
 async def async_setup_platform(
-   .opp, opp_config, async_add_entities, discovery_info=None
+    opp, opp_config, async_add_entities, discovery_info=None
 ):
     """Create the ViCare climate devices."""
     if discovery_info is None:

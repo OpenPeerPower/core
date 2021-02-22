@@ -766,7 +766,7 @@ async def test_setup_entry_bad_token_reauth.opp: OpenPeerPowerType) -> None:
     """Verify a reauth flow when a bad token is provided."""
     client = create_mock_client()
     config_entry = add_test_config_entry(
-       .opp,
+        opp,
         data={CONF_HOST: TEST_HOST, CONF_PORT: TEST_PORT, CONF_TOKEN: "expired_token"},
     )
     client.async_is_auth_required = AsyncMock(return_value=TEST_AUTH_NOT_REQUIRED_RESP)

@@ -116,7 +116,7 @@ async def test_create_and_setup_opp, mock_panel):
     # setup the integration and inspect panel behavior
     assert (
         await async_setup_component(
-           .opp,
+            opp,
             panel.DOMAIN,
             {
                 panel.DOMAIN: {
@@ -269,7 +269,7 @@ async def test_create_and_setup_pro.opp, mock_panel):
     # setup the integration and inspect panel behavior
     assert (
         await async_setup_component(
-           .opp,
+            opp,
             panel.DOMAIN,
             {
                 panel.DOMAIN: {
@@ -464,7 +464,7 @@ async def test_default_options.opp, mock_panel):
     # setup the integration and inspect panel behavior
     assert (
         await async_setup_component(
-           .opp,
+            opp,
             panel.DOMAIN,
             {
                 panel.DOMAIN: {
@@ -635,7 +635,7 @@ async def test_connect_retry.opp, mock_panel):
     # setup the integration and inspect panel behavior
     assert (
         await async_setup_component(
-           .opp,
+            opp,
             panel.DOMAIN,
             {
                 panel.DOMAIN: {

@@ -204,7 +204,7 @@ async def async_setup_opp, config):
        .opp.bus.async_fire(EVENT_AUTOMATION_RELOADED, context=service_call.context)
 
     async_register_admin_service(
-       .opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
+        opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
     return True
@@ -530,7 +530,7 @@ async def _async_process_config(
                     config_block = cast(
                         Dict[str, Any],
                         await async_validate_config_item(
-                           .opp, blueprint_inputs.async_substitute()
+                            opp, blueprint_inputs.async_substitute()
                         ),
                     )
                 except vol.Invalid as err:
@@ -548,7 +548,7 @@ async def _async_process_config(
             initial_state = config_block.get(CONF_INITIAL_STATE)
 
             action_script = Script(
-               .opp,
+                opp,
                 config_block[CONF_ACTION],
                 name,
                 DOMAIN,

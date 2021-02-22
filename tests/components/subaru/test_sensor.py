@@ -28,7 +28,7 @@ async def test_sensors_ev_imperial.opp):
     """Test sensors supporting imperial units."""
    .opp.config.units = IMPERIAL_SYSTEM
     await setup_subaru_integration(
-       .opp,
+        opp,
         vehicle_list=[TEST_VIN_2_EV],
         vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
         vehicle_status=VEHICLE_STATUS_EV,
@@ -44,7 +44,7 @@ async def test_sensors_ev_metric.opp, ev_entry):
 async def test_sensors_missing_vin_data.opp):
     """Test for missing VIN dataset."""
     await setup_subaru_integration(
-       .opp,
+        opp,
         vehicle_list=[TEST_VIN_2_EV],
         vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
         vehicle_status=None,

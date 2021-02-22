@@ -52,7 +52,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     for camera in config[CONF_SOURCE]:
         entities.append(
             ImageProcessingSsocr(
-               .opp, camera[CONF_ENTITY_ID], config, camera.get(CONF_NAME)
+                opp, camera[CONF_ENTITY_ID], config, camera.get(CONF_NAME)
             )
         )
 

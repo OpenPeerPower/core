@@ -27,7 +27,7 @@ def generic_device(name: str):
 async def test_entity_registry.opp: core.OpenPeerPower):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(
-       .opp,
+        opp,
         SWITCH_DOMAIN,
         generic_device("name-1"),
         bond_version={"bondid": "test-hub-id"},
@@ -42,7 +42,7 @@ async def test_entity_registry.opp: core.OpenPeerPower):
 async def test_turn_on_switch.opp: core.OpenPeerPower):
     """Tests that turn on command delegates to API."""
     await setup_platform(
-       .opp, SWITCH_DOMAIN, generic_device("name-1"), bond_device_id="test-device-id"
+        opp, SWITCH_DOMAIN, generic_device("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_turn_on, patch_bond_device_state():
@@ -60,7 +60,7 @@ async def test_turn_on_switch.opp: core.OpenPeerPower):
 async def test_turn_off_switch.opp: core.OpenPeerPower):
     """Tests that turn off command delegates to API."""
     await setup_platform(
-       .opp, SWITCH_DOMAIN, generic_device("name-1"), bond_device_id="test-device-id"
+        opp, SWITCH_DOMAIN, generic_device("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_turn_off, patch_bond_device_state():
@@ -100,5 +100,5 @@ async def test_update_reports_switch_is_off.opp: core.OpenPeerPower):
 async def test_switch_available.opp: core.OpenPeerPower):
     """Tests that available state is updated based on API errors."""
     await help_test_entity_available(
-       .opp, SWITCH_DOMAIN, generic_device("name-1"), "switch.name_1"
+        opp, SWITCH_DOMAIN, generic_device("name-1"), "switch.name_1"
     )

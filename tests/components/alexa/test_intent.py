@@ -34,7 +34,7 @@ def alexa_client(loop, opp, opp_client):
 
     assert loop.run_until_complete(
         async_setup_component(
-           .opp,
+            opp,
             alexa.DOMAIN,
             {
                 # Key is here to verify we allow other keys in config too
@@ -45,7 +45,7 @@ def alexa_client(loop, opp, opp_client):
     )
     assert loop.run_until_complete(
         async_setup_component(
-           .opp,
+            opp,
             "intent_script",
             {
                 "intent_script": {

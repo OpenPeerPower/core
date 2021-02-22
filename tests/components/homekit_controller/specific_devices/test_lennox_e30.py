@@ -27,7 +27,7 @@ async def test_lennox_e30_setup_opp):
     assert climate.unique_id == "homekit-XXXXXXXX-100"
 
     climate_helper = Helper(
-       .opp, "climate.lennox", pairing, accessories[0], config_entry
+        opp, "climate.lennox", pairing, accessories[0], config_entry
     )
     climate_state = await climate_helper.poll_and_get_state()
     assert climate_state.attributes["friendly_name"] == "Lennox"

@@ -76,7 +76,7 @@ async def async_setup_platform.opp, config):
     )
    .opp.http.register_view(
         BotPushReceiver(
-           .opp, config[CONF_ALLOWED_CHAT_IDS], config[CONF_TRUSTED_NETWORKS]
+            opp, config[CONF_ALLOWED_CHAT_IDS], config[CONF_TRUSTED_NETWORKS]
         )
     )
     return True

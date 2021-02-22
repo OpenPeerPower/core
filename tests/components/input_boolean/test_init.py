@@ -89,7 +89,7 @@ async def test_config_options.opp):
     _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -121,7 +121,7 @@ async def test_config_options.opp):
 async def test_restore_state.opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-       .opp,
+        opp,
         (
             State("input_boolean.b1", "on"),
             State("input_boolean.b2", "off"),
@@ -146,13 +146,13 @@ async def test_restore_state.opp):
 async def test_initial_state_overrules_restore_state.opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-       .opp, (State("input_boolean.b1", "on"), State("input_boolean.b2", "off"))
+        opp, (State("input_boolean.b1", "on"), State("input_boolean.b2", "off"))
     )
 
    .opp.state = CoreState.starting
 
     await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {DOMAIN: {"b1": {CONF_INITIAL: False}, "b2": {CONF_INITIAL: True}}},
     )
@@ -169,7 +169,7 @@ async def test_initial_state_overrules_restore_state.opp):
 async def test_input_boolean_context.opp, opp_admin_user):
     """Test that input_boolean context works."""
     assert await async_setup_component(
-       .opp, "input_boolean", {"input_boolean": {"ac": {CONF_INITIAL: True}}}
+        opp, "input_boolean", {"input_boolean": {"ac": {CONF_INITIAL: True}}}
     )
 
     state = opp.states.get("input_boolean.ac")
@@ -197,7 +197,7 @@ async def test_reload.opp, opp_admin_user):
     _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
     assert await async_setup_component(
-       .opp,
+        opp,
         DOMAIN,
         {
             DOMAIN: {

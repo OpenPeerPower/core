@@ -53,7 +53,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
         covers.append(
             CommandCover(
-               .opp,
+                opp,
                 device_config.get(CONF_FRIENDLY_NAME, device_name),
                 device_config[CONF_COMMAND_OPEN],
                 device_config[CONF_COMMAND_CLOSE],
@@ -76,7 +76,7 @@ class CommandCover(CoverEntity):
 
     def __init__(
         self,
-       .opp,
+        opp,
         name,
         command_open,
         command_close,

@@ -131,7 +131,7 @@ async def async_handle_message.opp, message):
         )
 
     intent_response = await intent.async_handle(
-       .opp,
+        opp,
         DOMAIN,
         action,
         {key: {"value": value} for key, value in parameters.items()},

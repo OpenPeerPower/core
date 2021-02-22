@@ -61,7 +61,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
         switches.append(
             TelnetSwitch(
-               .opp,
+                opp,
                 object_id,
                 device_config.get(CONF_RESOURCE),
                 device_config.get(CONF_PORT),
@@ -86,7 +86,7 @@ class TelnetSwitch(SwitchEntity):
 
     def __init__(
         self,
-       .opp,
+        opp,
         object_id,
         resource,
         port,

@@ -194,7 +194,7 @@ async def test_fan.opp, zha_device_joined_restored, zigpy_device):
     cluster.write_attributes.reset_mock()
     with pytest.raises(NotValidPresetModeError):
         await async_set_preset_mode(
-           .opp, entity_id, preset_mode="invalid does not exist"
+            opp, entity_id, preset_mode="invalid does not exist"
         )
     assert len(cluster.write_attributes.mock_calls) == 0
 
@@ -355,7 +355,7 @@ async def test_zha_group_fan_entity.opp, device_fan_1, device_fan_2, coordinator
     new=AsyncMock(side_effect=ZigbeeException),
 )
 async def test_zha_group_fan_entity_failure_state(
-   .opp, device_fan_1, device_fan_2, coordinator, caplog
+    opp, device_fan_1, device_fan_2, coordinator, caplog
 ):
     """Test the fan entity for a ZHA group when writing attributes generates an exception."""
     zha_gateway = get_zha_gateway.opp)
@@ -421,7 +421,7 @@ async def test_zha_group_fan_entity_failure_state(
     ),
 )
 async def test_fan_init(
-   .opp,
+    opp,
     zha_device_joined_restored,
     zigpy_device,
     plug_read,
@@ -444,7 +444,7 @@ async def test_fan_init(
 
 
 async def test_fan_update_entity(
-   .opp,
+    opp,
     zha_device_joined_restored,
     zigpy_device,
 ):

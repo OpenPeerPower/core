@@ -120,7 +120,7 @@ async def test_learn_command.opp):
 async def test_delete_command.opp):
     """Test delete_command."""
     delete_command_calls = async_mock_service(
-       .opp, remote.DOMAIN, SERVICE_DELETE_COMMAND
+        opp, remote.DOMAIN, SERVICE_DELETE_COMMAND
     )
 
     data = {

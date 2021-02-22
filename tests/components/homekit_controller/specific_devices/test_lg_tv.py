@@ -26,7 +26,7 @@ async def test_lg_tv.opp):
     assert entry.unique_id == "homekit-999AAAAAA999-48"
 
     helper = Helper(
-       .opp, "media_player.lg_webos_tv_af80", pairing, accessories[0], config_entry
+        opp, "media_player.lg_webos_tv_af80", pairing, accessories[0], config_entry
     )
     state = await helper.poll_and_get_state()
 

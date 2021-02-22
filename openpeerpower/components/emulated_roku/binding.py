@@ -26,7 +26,7 @@ class EmulatedRoku:
 
     def __init__(
         self,
-       .opp,
+        opp,
         name,
         host_ip,
         listen_port,

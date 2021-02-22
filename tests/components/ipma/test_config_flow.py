@@ -141,7 +141,7 @@ async def test_config_entry_migration.opp):
     ipma_entry2.add_to.opp.opp)
 
     mock_registry(
-       .opp,
+        opp,
         {
             "weather.hometown": entity_registry.RegistryEntry(
                 entity_id="weather.hometown",

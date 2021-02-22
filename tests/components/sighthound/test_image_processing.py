@@ -125,7 +125,7 @@ async def test_process_image.opp, mock_image, mock_detections):
 
 
 async def test_catch_bad_image(
-   .opp, caplog, mock_image, mock_detections, mock_bad_image_data
+    opp, caplog, mock_image, mock_detections, mock_bad_image_data
 ):
     """Process an image."""
     valid_config_save_file = deepcopy(VALID_CONFIG)

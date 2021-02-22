@@ -43,7 +43,7 @@ async def test_websocket_api.opp, integration, multisensor_6, opp_ws_client):
 
 
 async def test_add_node(
-   .opp, integration, client, opp_ws_client, nortek_thermostat_added_event
+    opp, integration, client, opp_ws_client, nortek_thermostat_added_event
 ):
     """Test the add_node websocket command."""
     entry = integration
@@ -99,7 +99,7 @@ async def test_cancel_inclusion_exclusion.opp, integration, client, opp_ws_clien
 
 
 async def test_remove_node(
-   .opp,
+    opp,
     integration,
     client,
    .opp_ws_client,

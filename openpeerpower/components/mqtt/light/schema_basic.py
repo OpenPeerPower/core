@@ -151,7 +151,7 @@ PLATFORM_SCHEMA_BASIC = (
 
 
 async def async_setup_entity_basic(
-   .opp, config, async_add_entities, config_entry, discovery_data=None
+    opp, config, async_add_entities, config_entry, discovery_data=None
 ):
     """Set up a MQTT Light."""
     if CONF_STATE_VALUE_TEMPLATE not in config and CONF_VALUE_TEMPLATE in config:

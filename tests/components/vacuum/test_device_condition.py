@@ -74,7 +74,7 @@ async def test_if_state.opp, calls):
    .opp.states.async_set("vacuum.entity", STATE_DOCKED)
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

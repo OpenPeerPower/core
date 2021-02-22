@@ -104,7 +104,7 @@ class RestoreStateData:
         """Initialize the restore state data class."""
         self.opp: OpenPeerPower = opp
         self.store: Store = Store(
-           .opp, STORAGE_VERSION, STORAGE_KEY, encoder=JSONEncoder
+            opp, STORAGE_VERSION, STORAGE_KEY, encoder=JSONEncoder
         )
         self.last_states: Dict[str, StoredState] = {}
         self.entity_ids: Set[str] = set()

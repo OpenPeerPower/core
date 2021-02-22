@@ -66,7 +66,7 @@ def setup_opp, config):
             continue
         native = coinbase_data.exchange_rates.currency
         load_platform(
-           .opp,
+            opp,
             "sensor",
             DOMAIN,
             {"native_currency": native, "exchange_currency": currency},

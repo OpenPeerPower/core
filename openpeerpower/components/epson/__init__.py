@@ -42,7 +42,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up epson from a config entry."""
     try:
         projector = await validate_projector(
-           .opp, entry.data[CONF_HOST], entry.data[CONF_PORT]
+            opp, entry.data[CONF_HOST], entry.data[CONF_PORT]
         )
     except CannotConnect:
         _LOGGER.warning("Cannot connect to projector %s", entry.data[CONF_HOST])

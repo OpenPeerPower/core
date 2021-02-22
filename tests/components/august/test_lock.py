@@ -104,7 +104,7 @@ async def test_one_lock_operation.opp):
 async def test_one_lock_unknown_state.opp):
     """Test creation of a lock with doorsense and bridge."""
     lock_one = await _mock_lock_from_fixture(
-       .opp,
+        opp,
         "get_lock.online.unknown_state.json",
     )
     await _create_august_with_devices.opp, [lock_one])

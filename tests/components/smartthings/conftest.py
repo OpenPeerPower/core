@@ -65,7 +65,7 @@ async def setup_platform.opp, platform: str, *, devices=None, scenes=None):
         system_options={},
     )
     broker = DeviceBroker(
-       .opp, config_entry, Mock(), Mock(), devices or [], scenes or []
+        opp, config_entry, Mock(), Mock(), devices or [], scenes or []
     )
 
    .opp.data[DOMAIN] = {DATA_BROKERS: {config_entry.entry_id: broker}}
@@ -79,7 +79,7 @@ async def setup_component.opp, config_file, opp_storage):
     """Load the SmartThing component."""
    .opp_storage[STORAGE_KEY] = {"data": config_file, "version": STORAGE_VERSION}
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"external_url": "https://test.local"},
     )
     await async_setup_component.opp, "smartthings", {})
@@ -116,7 +116,7 @@ async def app_fixture.opp, config_file):
     app.description = f".opp.config.location_name} at https://test.local"
     app.single_instance = True
     app.webhook_target_url = webhook.async_generate_url(
-       .opp, opp.data[DOMAIN][CONF_WEBHOOK_ID]
+        opp, opp.data[DOMAIN][CONF_WEBHOOK_ID]
     )
 
     settings = Mock(AppSettings)

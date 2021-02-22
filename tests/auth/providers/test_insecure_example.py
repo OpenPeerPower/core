@@ -18,7 +18,7 @@ def store.opp):
 def provider.opp, store):
     """Mock provider."""
     return insecure_example.ExampleAuthProvider(
-       .opp,
+        opp,
         store,
         {
             "type": "insecure_example",

@@ -68,7 +68,7 @@ TEST_ENTITY_ID = "sensor.test_vehicle_2_odometer"
 
 
 async def setup_subaru_integration(
-   .opp,
+    opp,
     vehicle_list=None,
     vehicle_data=None,
     vehicle_status=None,
@@ -127,7 +127,7 @@ async def setup_subaru_integration(
 async def ev_entry.opp):
     """Create a Subaru entry representing an EV vehicle with full STARLINK subscription."""
     entry = await setup_subaru_integration(
-       .opp,
+        opp,
         vehicle_list=[TEST_VIN_2_EV],
         vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
         vehicle_status=VEHICLE_STATUS_EV,

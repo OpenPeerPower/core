@@ -59,7 +59,7 @@ async def test_deconz_events.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
-       .opp, aioclient_mock, get_state_response=data
+        opp, aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 

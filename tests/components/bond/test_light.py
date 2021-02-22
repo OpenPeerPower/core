@@ -100,7 +100,7 @@ def fireplace_with_light(name: str):
 async def test_fan_entity_registry.opp: core.OpenPeerPower):
     """Tests that fan with light devices are registered in the entity registry."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         ceiling_fan("fan-name"),
         bond_version={"bondid": "test-hub-id"},
@@ -115,7 +115,7 @@ async def test_fan_entity_registry.opp: core.OpenPeerPower):
 async def test_fan_up_light_entity_registry.opp: core.OpenPeerPower):
     """Tests that fan with up light devices are registered in the entity registry."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         up_light_ceiling_fan("fan-name"),
         bond_version={"bondid": "test-hub-id"},
@@ -130,7 +130,7 @@ async def test_fan_up_light_entity_registry.opp: core.OpenPeerPower):
 async def test_fan_down_light_entity_registry.opp: core.OpenPeerPower):
     """Tests that fan with down light devices are registered in the entity registry."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         down_light_ceiling_fan("fan-name"),
         bond_version={"bondid": "test-hub-id"},
@@ -145,7 +145,7 @@ async def test_fan_down_light_entity_registry.opp: core.OpenPeerPower):
 async def test_fireplace_entity_registry.opp: core.OpenPeerPower):
     """Tests that flame fireplace devices are registered in the entity registry."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         fireplace("fireplace-name"),
         bond_version={"bondid": "test-hub-id"},
@@ -160,7 +160,7 @@ async def test_fireplace_entity_registry.opp: core.OpenPeerPower):
 async def test_fireplace_with_light_entity_registry.opp: core.OpenPeerPower):
     """Tests that flame+light devices are registered in the entity registry."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         fireplace_with_light("fireplace-name"),
         bond_version={"bondid": "test-hub-id"},
@@ -177,7 +177,7 @@ async def test_fireplace_with_light_entity_registry.opp: core.OpenPeerPower):
 async def test_light_entity_registry.opp: core.OpenPeerPower):
     """Tests lights are registered in the entity registry."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         light("light-name"),
         bond_version={"bondid": "test-hub-id"},
@@ -196,7 +196,7 @@ async def test_sbb_trust_state.opp: core.OpenPeerPower):
         "bondid": "test-bond-id",
     }
     await setup_platform(
-       .opp, LIGHT_DOMAIN, ceiling_fan("name-1"), bond_version=version, bridge={}
+        opp, LIGHT_DOMAIN, ceiling_fan("name-1"), bond_version=version, bridge={}
     )
 
     device = opp.states.get("light.name_1")
@@ -214,7 +214,7 @@ async def test_trust_state_not_specified.opp: core.OpenPeerPower):
 async def test_trust_state.opp: core.OpenPeerPower):
     """Assumed state should be True if Trust State is False."""
     await setup_platform(
-       .opp, LIGHT_DOMAIN, ceiling_fan("name-1"), props={"trust_state": False}
+        opp, LIGHT_DOMAIN, ceiling_fan("name-1"), props={"trust_state": False}
     )
 
     device = opp.states.get("light.name_1")
@@ -224,7 +224,7 @@ async def test_trust_state.opp: core.OpenPeerPower):
 async def test_no_trust_state.opp: core.OpenPeerPower):
     """Assumed state should be False if Trust State is True."""
     await setup_platform(
-       .opp, LIGHT_DOMAIN, ceiling_fan("name-1"), props={"trust_state": True}
+        opp, LIGHT_DOMAIN, ceiling_fan("name-1"), props={"trust_state": True}
     )
     device = opp.states.get("light.name_1")
     assert device.attributes.get(ATTR_ASSUMED_STATE) is not True
@@ -233,7 +233,7 @@ async def test_no_trust_state.opp: core.OpenPeerPower):
 async def test_turn_on_light.opp: core.OpenPeerPower):
     """Tests that turn on command delegates to API."""
     await setup_platform(
-       .opp, LIGHT_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
+        opp, LIGHT_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_turn_light_on, patch_bond_device_state():
@@ -251,7 +251,7 @@ async def test_turn_on_light.opp: core.OpenPeerPower):
 async def test_turn_off_light.opp: core.OpenPeerPower):
     """Tests that turn off command delegates to API."""
     await setup_platform(
-       .opp, LIGHT_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
+        opp, LIGHT_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_turn_light_off, patch_bond_device_state():
@@ -271,7 +271,7 @@ async def test_turn_off_light.opp: core.OpenPeerPower):
 async def test_brightness_support.opp: core.OpenPeerPower):
     """Tests that a dimmable light should support the brightness feature."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         dimmable_ceiling_fan("name-1"),
         bond_device_id="test-device-id",
@@ -284,7 +284,7 @@ async def test_brightness_support.opp: core.OpenPeerPower):
 async def test_brightness_not_supported.opp: core.OpenPeerPower):
     """Tests that a non-dimmable light should not support the brightness feature."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         ceiling_fan("name-1"),
         bond_device_id="test-device-id",
@@ -297,7 +297,7 @@ async def test_brightness_not_supported.opp: core.OpenPeerPower):
 async def test_turn_on_light_with_brightness.opp: core.OpenPeerPower):
     """Tests that turn on command, on a dimmable light, delegates to API and parses brightness."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         dimmable_ceiling_fan("name-1"),
         bond_device_id="test-device-id",
@@ -320,7 +320,7 @@ async def test_turn_on_light_with_brightness.opp: core.OpenPeerPower):
 async def test_turn_on_up_light.opp: core.OpenPeerPower):
     """Tests that turn on command, on an up light, delegates to API."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         up_light_ceiling_fan("name-1"),
         bond_device_id="test-device-id",
@@ -343,7 +343,7 @@ async def test_turn_on_up_light.opp: core.OpenPeerPower):
 async def test_turn_off_up_light.opp: core.OpenPeerPower):
     """Tests that turn off command, on an up light, delegates to API."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         up_light_ceiling_fan("name-1"),
         bond_device_id="test-device-id",
@@ -366,7 +366,7 @@ async def test_turn_off_up_light.opp: core.OpenPeerPower):
 async def test_turn_on_down_light.opp: core.OpenPeerPower):
     """Tests that turn on command, on a down light, delegates to API."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         down_light_ceiling_fan("name-1"),
         bond_device_id="test-device-id",
@@ -389,7 +389,7 @@ async def test_turn_on_down_light.opp: core.OpenPeerPower):
 async def test_turn_off_down_light.opp: core.OpenPeerPower):
     """Tests that turn off command, on a down light, delegates to API."""
     await setup_platform(
-       .opp,
+        opp,
         LIGHT_DOMAIN,
         down_light_ceiling_fan("name-1"),
         bond_device_id="test-device-id",
@@ -478,7 +478,7 @@ async def test_update_reports_down_light_is_off.opp: core.OpenPeerPower):
 async def test_turn_on_fireplace_with_brightness.opp: core.OpenPeerPower):
     """Tests that turn on command delegates to set flame API."""
     await setup_platform(
-       .opp, LIGHT_DOMAIN, fireplace("name-1"), bond_device_id="test-device-id"
+        opp, LIGHT_DOMAIN, fireplace("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_set_flame, patch_bond_device_state():
@@ -496,7 +496,7 @@ async def test_turn_on_fireplace_with_brightness.opp: core.OpenPeerPower):
 async def test_turn_on_fireplace_without_brightness.opp: core.OpenPeerPower):
     """Tests that turn on command delegates to turn on API."""
     await setup_platform(
-       .opp, LIGHT_DOMAIN, fireplace("name-1"), bond_device_id="test-device-id"
+        opp, LIGHT_DOMAIN, fireplace("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_turn_on, patch_bond_device_state():
@@ -514,7 +514,7 @@ async def test_turn_on_fireplace_without_brightness.opp: core.OpenPeerPower):
 async def test_turn_off_fireplace.opp: core.OpenPeerPower):
     """Tests that turn off command delegates to API."""
     await setup_platform(
-       .opp, LIGHT_DOMAIN, fireplace("name-1"), bond_device_id="test-device-id"
+        opp, LIGHT_DOMAIN, fireplace("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_turn_off, patch_bond_device_state():
@@ -543,7 +543,7 @@ async def test_flame_converted_to_brightness.opp: core.OpenPeerPower):
 async def test_light_available.opp: core.OpenPeerPower):
     """Tests that available state is updated based on API errors."""
     await help_test_entity_available(
-       .opp, LIGHT_DOMAIN, ceiling_fan("name-1"), "light.name_1"
+        opp, LIGHT_DOMAIN, ceiling_fan("name-1"), "light.name_1"
     )
 
 

@@ -37,7 +37,7 @@ async def test_if_fires_on_turn_on_request.opp, calls, mock_entity, mock_device)
     """Test for turn_on and turn_off triggers firing."""
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

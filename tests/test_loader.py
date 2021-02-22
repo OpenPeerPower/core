@@ -17,7 +17,7 @@ async def test_component_dependencies.opp):
     mod_3 = mock_integration.opp, MockModule("mod3", ["mod2"]))
 
     assert {"mod1", "mod2", "mod3"} == await loader._async_component_dependencies(
-       .opp, "mod_3", mod_3, set(), set()
+        opp, "mod_3", mod_3, set(), set()
     )
 
     # Create circular dependency
@@ -26,7 +26,7 @@ async def test_component_dependencies.opp):
     with pytest.raises(loader.CircularDependency):
         print(
             await loader._async_component_dependencies(
-               .opp, "mod_3", mod_3, set(), set()
+                opp, "mod_3", mod_3, set(), set()
             )
         )
 
@@ -36,19 +36,19 @@ async def test_component_dependencies.opp):
     with pytest.raises(loader.IntegrationNotFound):
         print(
             await loader._async_component_dependencies(
-               .opp, "mod_1", mod_1, set(), set()
+                opp, "mod_1", mod_1, set(), set()
             )
         )
 
     # Having an after dependency 2 deps down that is circular
     mod_1 = mock_integration(
-       .opp, MockModule("mod1", partial_manifest={"after_dependencies": ["mod_3"]})
+        opp, MockModule("mod1", partial_manifest={"after_dependencies": ["mod_3"]})
     )
 
     with pytest.raises(loader.CircularDependency):
         print(
             await loader._async_component_dependencies(
-               .opp, "mod_3", mod_3, set(), set()
+                opp, "mod_3", mod_3, set(), set()
             )
         )
 
@@ -140,10 +140,10 @@ async def test_log_warning_custom_component.opp, caplog):
 async def test_custom_integration_missing_version.opp, caplog):
     """Test that we log a warning when custom integrations are missing a version."""
     test_integration_1 = loader.Integration(
-       .opp, "custom_components.test1", None, {"domain": "test1"}
+        opp, "custom_components.test1", None, {"domain": "test1"}
     )
     test_integration_2 = loader.Integration(
-       .opp,
+        opp,
         "custom_components.test2",
         None,
         loader.manifest_from_legacy_module("test2", "custom_components.test2"),
@@ -180,7 +180,7 @@ async def test_no_version_warning_for_none_custom_integrations.opp, caplog):
 async def test_custom_integration_version_not_valid.opp, caplog):
     """Test that we log a warning when custom integrations have a invalid version."""
     test_integration = loader.Integration(
-       .opp, "custom_components.test", None, {"domain": "test", "version": "test"}
+        opp, "custom_components.test", None, {"domain": "test", "version": "test"}
     )
 
     with patch("openpeerpower.loader.async_get_custom_components") as mock_get:
@@ -217,7 +217,7 @@ async def test_get_integration_custom_component.opp, enable_custom_integrations)
 def test_integration_properties.opp):
     """Test integration properties."""
     integration = loader.Integration(
-       .opp,
+        opp,
         "openpeerpower.components.hue",
         None,
         {
@@ -274,7 +274,7 @@ def test_integration_properties.opp):
     assert integration.version == "1.0.0"
 
     integration = loader.Integration(
-       .opp,
+        opp,
         "custom_components.hue",
         None,
         {
@@ -293,7 +293,7 @@ def test_integration_properties.opp):
     assert integration.version is None
 
     integration = loader.Integration(
-       .opp,
+        opp,
         "custom_components.hue",
         None,
         {
@@ -329,7 +329,7 @@ async def test_get_custom_components_internal.opp):
 def _get_test_integration.opp, name, config_flow):
     """Return a generated test integration."""
     return loader.Integration(
-       .opp,
+        opp,
         f"openpeerpower.components.{name}",
         None,
         {
@@ -349,7 +349,7 @@ def _get_test_integration.opp, name, config_flow):
 def _get_test_integration_with_zeroconf_matcher.opp, name, config_flow):
     """Return a generated test integration with a zeroconf matcher."""
     return loader.Integration(
-       .opp,
+        opp,
         f"openpeerpower.components.{name}",
         None,
         {
@@ -368,7 +368,7 @@ def _get_test_integration_with_zeroconf_matcher.opp, name, config_flow):
 def _get_test_integration_with_dhcp_matcher.opp, name, config_flow):
     """Return a generated test integration with a dhcp matcher."""
     return loader.Integration(
-       .opp,
+        opp,
         f"openpeerpower.components.{name}",
         None,
         {
@@ -426,7 +426,7 @@ async def test_get_zeroconf.opp):
     """Verify that custom components with zeroconf are found."""
     test_1_integration = _get_test_integration.opp, "test_1", True)
     test_2_integration = _get_test_integration_with_zeroconf_matcher(
-       .opp, "test_2", True
+        opp, "test_2", True
     )
 
     with patch("openpeerpower.loader.async_get_custom_components") as mock_get:

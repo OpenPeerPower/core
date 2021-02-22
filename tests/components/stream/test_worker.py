@@ -220,7 +220,7 @@ async def test_stream_open_fails.opp):
 async def test_stream_worker_success.opp):
     """Test a short stream that ends and outputs everything correctly."""
     decoded_stream = await async_decode_stream(
-       .opp, PacketSequence(TEST_SEQUENCE_LENGTH)
+        opp, PacketSequence(TEST_SEQUENCE_LENGTH)
     )
     segments = decoded_stream.segments
     # Check number of segments. A segment is only formed when a packet from the next
@@ -390,7 +390,7 @@ async def test_no_video_stream.opp):
     py_av = MockPyAv(video=False)
 
     decoded_stream = await async_decode_stream(
-       .opp, PacketSequence(TEST_SEQUENCE_LENGTH), py_av=py_av
+        opp, PacketSequence(TEST_SEQUENCE_LENGTH), py_av=py_av
     )
     # Note: This failure scenario does not output an end of stream
     segments = decoded_stream.segments

@@ -46,7 +46,7 @@ async def test_config_switch.opp, do_options, read_type):
         device_config.update({})
 
     await base_config_test(
-       .opp,
+        opp,
         device_config,
         device_name,
         SWITCH_DOMAIN,
@@ -85,7 +85,7 @@ async def test_coil_switch.opp, regs, expected):
     """Run test for given config."""
     switch_name = "modbus_test_switch"
     state = await base_test(
-       .opp,
+        opp,
         {
             CONF_NAME: switch_name,
             CALL_TYPE_COIL: 1234,
@@ -132,7 +132,7 @@ async def test_register_switch.opp, regs, expected):
     """Run test for given config."""
     switch_name = "modbus_test_switch"
     state = await base_test(
-       .opp,
+        opp,
         {
             CONF_NAME: switch_name,
             CONF_REGISTER: 1234,
@@ -173,7 +173,7 @@ async def test_register_state_switch.opp, regs, expected):
     """Run test for given config."""
     switch_name = "modbus_test_switch"
     state = await base_test(
-       .opp,
+        opp,
         {
             CONF_NAME: switch_name,
             CONF_REGISTER: 1234,

@@ -152,7 +152,7 @@ def is_callback(func: Callable[..., Any]) -> bool:
 
 
 @enum.unique
-class HassJobType(enum.Enum):
+class OppJobType(enum.Enum):
     """Represent a job type."""
 
     Coroutinefunction = 1
@@ -160,7 +160,7 @@ class HassJobType(enum.Enum):
     Executor = 3
 
 
-class HassJob:
+class OppJob:
     """Represent a job to be run later.
 
     We check the callable type in advance
@@ -173,7 +173,7 @@ class HassJob:
     def __init__(self, target: Callable):
         """Create a job object."""
         if asyncio.iscoroutine(target):
-            raise ValueError("Coroutine not allowed to be passed to HassJob")
+            raise ValueError("Coroutine not allowed to be passed to OppJob")
 
         self.target = target
         self.job_type = _get_callable_job_type(target)
@@ -183,7 +183,7 @@ class HassJob:
         return f"<Job {self.job_type} {self.target}>"
 
 
-def _get_callable_job_type(target: Callable) -> HassJobType:
+def _get_callable_job_type(target: Callable) -> OppJobType:
     """Determine the job type from the callable."""
     # Check for partials to properly determine if coroutine function
     check_target = target
@@ -191,10 +191,10 @@ def _get_callable_job_type(target: Callable) -> HassJobType:
         check_target = check_target.func
 
     if asyncio.iscoroutinefunction(check_target):
-        return HassJobType.Coroutinefunction
+        return OppJobType.Coroutinefunction
     if is_callback(check_target):
-        return HassJobType.Callback
-    return HassJobType.Executor
+        return OppJobType.Callback
+    return OppJobType.Executor
 
 
 class CoreState(enum.Enum):
@@ -354,21 +354,21 @@ class OpenPeerPower:
         if asyncio.iscoroutine(target):
             return self.async_create_task(cast(Coroutine, target))
 
-        return self.async_add.opp_job(HassJob(target), *args)
+        return self.async_add.opp_job(OppJob(target), *args)
 
     @callback
     def async_add.opp_job(
-        self, oppjob: HassJob, *args: Any
+        self, oppjob: OppJob, *args: Any
     ) -> Optional[asyncio.Future]:
-        """Add a HassJob from within the event loop.
+        """Add a OppJob from within the event loop.
 
         This method must be run in the event loop.
-       .oppjob: HassJob to call.
+        oppjob: OppJob to call.
         args: parameters for method to call.
         """
-        if oppjob.job_type == HassJobType.Coroutinefunction:
+        if oppjob.job_type == OppJobType.Coroutinefunction:
             task = self.loop.create_task.oppjob.target(*args))
-        elif oppjob.job_type == HassJobType.Callback:
+        elif oppjob.job_type == OppJobType.Callback:
             self.loop.call_soon.oppjob.target, *args)
             return None
         else:
@@ -422,16 +422,16 @@ class OpenPeerPower:
 
     @callback
     def async_run.opp_job(
-        self, oppjob: HassJob, *args: Any
+        self, oppjob: OppJob, *args: Any
     ) -> Optional[asyncio.Future]:
-        """Run a HassJob from within the event loop.
+        """Run a OppJob from within the event loop.
 
         This method must be run in the event loop.
 
-       .oppjob: HassJob
+        oppjob: OppJob
         args: parameters for method to call.
         """
-        if oppjob.job_type == HassJobType.Callback:
+        if oppjob.job_type == OppJobType.Callback:
            .oppjob.target(*args)
             return None
 
@@ -451,7 +451,7 @@ class OpenPeerPower:
         if asyncio.iscoroutine(target):
             return self.async_create_task(cast(Coroutine, target))
 
-        return self.async_run.opp_job(HassJob(target), *args)
+        return self.async_run.opp_job(OppJob(target), *args)
 
     def block_till_done(self) -> None:
         """Block until all pending work is done."""
@@ -662,7 +662,7 @@ class EventBus:
 
     def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize a new event bus."""
-        self._listeners: Dict[str, List[Tuple[HassJob, Optional[Callable]]]] = {}
+        self._listeners: Dict[str, List[Tuple[OppJob, Optional[Callable]]]] = {}
         self.opp = opp
 
     @callback
@@ -765,12 +765,12 @@ class EventBus:
         if event_filter is not None and not is_callback(event_filter):
             raise OpenPeerPowerError(f"Event filter {event_filter} is not a callback")
         return self._async_listen_filterable_job(
-            event_type, (HassJob(listener), event_filter)
+            event_type, (OppJob(listener), event_filter)
         )
 
     @callback
     def _async_listen_filterable_job(
-        self, event_type: str, filterable_job: Tuple[HassJob, Optional[Callable]]
+        self, event_type: str, filterable_job: Tuple[OppJob, Optional[Callable]]
     ) -> CALLBACK_TYPE:
         self._listeners.setdefault(event_type, []).append(filterable_job)
 
@@ -809,7 +809,7 @@ class EventBus:
 
         This method must be run in the event loop.
         """
-        filterable_job: Optional[Tuple[HassJob, Optional[Callable]]] = None
+        filterable_job: Optional[Tuple[OppJob, Optional[Callable]]] = None
 
         @callback
         def _onetime_listener(event: Event) -> None:
@@ -827,13 +827,13 @@ class EventBus:
             self._async_remove_listener(event_type, filterable_job)
             self.opp.async_run_job(listener, event)
 
-        filterable_job = (HassJob(_onetime_listener), None)
+        filterable_job = (OppJob(_onetime_listener), None)
 
         return self._async_listen_filterable_job(event_type, filterable_job)
 
     @callback
     def _async_remove_listener(
-        self, event_type: str, filterable_job: Tuple[HassJob, Optional[Callable]]
+        self, event_type: str, filterable_job: Tuple[OppJob, Optional[Callable]]
     ) -> None:
         """Remove a listener of a specific event_type.
 
@@ -1243,7 +1243,7 @@ class Service:
         context: Optional[Context] = None,
     ) -> None:
         """Initialize a service."""
-        self.job = HassJob(func)
+        self.job = OppJob(func)
         self.schema = schema
 
 
@@ -1519,9 +1519,9 @@ class ServiceRegistry:
         self, handler: Service, service_call: ServiceCall
     ) -> None:
         """Execute a service."""
-        if handler.job.job_type == HassJobType.Coroutinefunction:
+        if handler.job.job_type == OppJobType.Coroutinefunction:
             await handler.job.target(service_call)
-        elif handler.job.job_type == HassJobType.Callback:
+        elif handler.job.job_type == OppJobType.Callback:
             handler.job.target(service_call)
         else:
             await self.opp.async_add_executor_job(handler.job.target, service_call)

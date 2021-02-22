@@ -99,7 +99,7 @@ async def async_setup_entry.opp, entry):
 
         discovery_prefix = entry.data[CONF_DISCOVERY_PREFIX]
         await discovery.async_start(
-           .opp, discovery_prefix, entry, tasmota_mqtt, async_discover_device
+            opp, discovery_prefix, entry, tasmota_mqtt, async_discover_device
         )
 
    .opp.async_create_task(start_platforms())

@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.const import CONF_EVENT_DATA, CONF_PLATFORM
-from openpeerpower.core import HassJob, callback
+from openpeerpower.core import OppJob, callback
 from openpeerpower.helpers import config_validation as cv, template
 
 # mypy: allow-untyped-defs
@@ -28,7 +28,7 @@ def _schema_value(value):
 
 
 async def async_attach_trigger(
-   .opp, config, action, automation_info, *, platform_type="event"
+    opp, config, action, automation_info, *, platform_type="event"
 ):
     """Listen for events based on configuration."""
     variables = None
@@ -72,7 +72,7 @@ async def async_attach_trigger(
             extra=vol.ALLOW_EXTRA,
         )
 
-    job = HassJob(action)
+    job = OppJob(action)
 
     @callback
     def handle_event(event):

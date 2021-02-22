@@ -192,7 +192,7 @@ async def test_manual.opp):
     ],
 )
 async def test_manual_errors(
-   .opp,
+    opp,
     url,
     error,
 ):
@@ -242,7 +242,7 @@ async def test_manual_already_configured.opp):
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_supervisor_discovery(
-   .opp, supervisor, addon_running, addon_options, get_addon_discovery_info
+    opp, supervisor, addon_running, addon_options, get_addon_discovery_info
 ):
     """Test flow started from Supervisor discovery."""
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -283,7 +283,7 @@ async def test_supervisor_discovery(
     [({"config": ADDON_DISCOVERY_INFO}, asyncio.TimeoutError())],
 )
 async def test_supervisor_discovery_cannot_connect(
-   .opp, supervisor, get_addon_discovery_info
+    opp, supervisor, get_addon_discovery_info
 ):
     """Test Supervisor discovery and cannot connect."""
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -300,7 +300,7 @@ async def test_supervisor_discovery_cannot_connect(
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_clean_discovery_on_user_create(
-   .opp, supervisor, addon_running, addon_options, get_addon_discovery_info
+    opp, supervisor, addon_running, addon_options, get_addon_discovery_info
 ):
     """Test discovery flow is cleaned up when a user flow is finished."""
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -359,7 +359,7 @@ async def test_clean_discovery_on_user_create(
 
 
 async def test_abort_discovery_with_existing_entry(
-   .opp, supervisor, addon_running, addon_options
+    opp, supervisor, addon_running, addon_options
 ):
     """Test discovery flow is aborted if an entry already exists."""
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -382,7 +382,7 @@ async def test_abort_discovery_with_existing_entry(
 
 
 async def test_discovery_addon_not_running(
-   .opp, supervisor, addon_installed, addon_options, set_addon_options, start_addon
+    opp, supervisor, addon_installed, addon_options, set_addon_options, start_addon
 ):
     """Test discovery with add-on already installed but not running."""
     addon_options["device"] = None
@@ -404,7 +404,7 @@ async def test_discovery_addon_not_running(
 
 
 async def test_discovery_addon_not_installed(
-   .opp, supervisor, addon_installed, install_addon, addon_options
+    opp, supervisor, addon_installed, install_addon, addon_options
 ):
     """Test discovery with add-on not installed."""
     addon_installed.return_value["version"] = None
@@ -479,7 +479,7 @@ async def test_not_addon.opp, supervisor):
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_addon_running(
-   .opp,
+    opp,
     supervisor,
     addon_running,
     addon_options,
@@ -556,7 +556,7 @@ async def test_addon_running(
     ],
 )
 async def test_addon_running_failures(
-   .opp,
+    opp,
     supervisor,
     addon_running,
     get_addon_discovery_info,
@@ -582,7 +582,7 @@ async def test_addon_running_failures(
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_addon_running_already_configured(
-   .opp, supervisor, addon_running, get_addon_discovery_info
+    opp, supervisor, addon_running, get_addon_discovery_info
 ):
     """Test that only one unique instance is allowed when add-on is running."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, title=TITLE, unique_id=1234)
@@ -606,7 +606,7 @@ async def test_addon_running_already_configured(
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_addon_installed(
-   .opp,
+    opp,
     supervisor,
     addon_installed,
     addon_options,
@@ -660,7 +660,7 @@ async def test_addon_installed(
     [({"config": ADDON_DISCOVERY_INFO}, HassioAPIError())],
 )
 async def test_addon_installed_start_failure(
-   .opp,
+    opp,
     supervisor,
     addon_installed,
     addon_options,
@@ -721,7 +721,7 @@ async def test_addon_installed_start_failure(
     ],
 )
 async def test_addon_installed_failures(
-   .opp,
+    opp,
     supervisor,
     addon_installed,
     addon_options,
@@ -757,7 +757,7 @@ async def test_addon_installed_failures(
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_addon_installed_already_configured(
-   .opp,
+    opp,
     supervisor,
     addon_installed,
     addon_options,
@@ -794,7 +794,7 @@ async def test_addon_installed_already_configured(
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_addon_not_installed(
-   .opp,
+    opp,
     supervisor,
     addon_installed,
     install_addon,

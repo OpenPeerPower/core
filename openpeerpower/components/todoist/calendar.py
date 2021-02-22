@@ -147,7 +147,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         # Create the custom project and add it to the devices array.
         project_devices.append(
             TodoistProjectDevice(
-               .opp,
+                opp,
                 project,
                 labels,
                 api,
@@ -242,7 +242,7 @@ class TodoistProjectDevice(CalendarEventDevice):
 
     def __init__(
         self,
-       .opp,
+        opp,
         data,
         labels,
         token,

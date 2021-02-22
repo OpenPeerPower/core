@@ -124,7 +124,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     await async_setup_reload_service.opp, "universal", ["media_player"])
 
     player = UniversalMediaPlayer(
-       .opp,
+        opp,
         config.get(CONF_NAME),
         config.get(CONF_CHILDREN),
         config.get(CONF_COMMANDS),
@@ -141,7 +141,7 @@ class UniversalMediaPlayer(MediaPlayerEntity):
 
     def __init__(
         self,
-       .opp,
+        opp,
         name,
         children,
         commands,

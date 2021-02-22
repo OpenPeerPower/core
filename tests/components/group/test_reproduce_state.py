@@ -42,7 +42,7 @@ async def test_reproduce_group.opp):
         await async_reproduce_states.opp, [state], context=context)
 
         fun.assert_called_once_with(
-           .opp,
+            opp,
             [
                 clone_state(state, "light.test1"),
                 clone_state(state, "light.test2"),

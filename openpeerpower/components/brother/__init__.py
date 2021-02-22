@@ -34,7 +34,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     snmp_engine = get_snmp_engine.opp)
 
     coordinator = BrotherDataUpdateCoordinator(
-       .opp, host=host, kind=kind, snmp_engine=snmp_engine
+        opp, host=host, kind=kind, snmp_engine=snmp_engine
     )
     await coordinator.async_refresh()
 
@@ -81,7 +81,7 @@ class BrotherDataUpdateCoordinator(DataUpdateCoordinator):
         self.brother = Brother(host, kind=kind, snmp_engine=snmp_engine)
 
         super().__init__(
-           .opp,
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=SCAN_INTERVAL,

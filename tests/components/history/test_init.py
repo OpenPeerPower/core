@@ -773,7 +773,7 @@ async def test_fetch_period_api_with_use_include_order.opp, opp_client):
     """Test the fetch period view for history with include order."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
-       .opp, "history", {history.DOMAIN: {history.CONF_ORDER: True}}
+        opp, "history", {history.DOMAIN: {history.CONF_ORDER: True}}
     )
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
     client = await opp_client()
@@ -807,7 +807,7 @@ async def test_fetch_period_api_with_include_order.opp, opp_client):
     """Test the fetch period view for history."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
-       .opp,
+        opp,
         "history",
         {
             "history": {
@@ -829,7 +829,7 @@ async def test_fetch_period_api_with_entity_glob_include.opp, opp_client):
     """Test the fetch period view for history."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
-       .opp,
+        opp,
         "history",
         {
             "history": {
@@ -861,7 +861,7 @@ async def test_fetch_period_api_with_entity_glob_exclude.opp, opp_client):
     """Test the fetch period view for history."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
-       .opp,
+        opp,
         "history",
         {
             "history": {
@@ -901,7 +901,7 @@ async def test_fetch_period_api_with_entity_glob_include_and_exclude.opp, opp_cl
     """Test the fetch period view for history."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
-       .opp,
+        opp,
         "history",
         {
             "history": {
@@ -946,7 +946,7 @@ async def test_entity_ids_limit_via_api.opp, opp_client):
     """Test limiting history to entity_ids."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
-       .opp,
+        opp,
         "history",
         {"history": {}},
     )
@@ -976,7 +976,7 @@ async def test_entity_ids_limit_via_api_with_skip_initial_state.opp, opp_client)
     """Test limiting history to entity_ids with skip_initial_state."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
-       .opp,
+        opp,
         "history",
         {"history": {}},
     )

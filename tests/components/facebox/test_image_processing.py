@@ -246,7 +246,7 @@ async def test_process_image_errors.opp, mock_healthybox, mock_image, caplog):
 
 
 async def test_teach_service(
-   .opp, mock_healthybox, mock_image, mock_isfile, mock_open_file, caplog
+    opp, mock_healthybox, mock_image, mock_isfile, mock_open_file, caplog
 ):
     """Test teaching of facebox."""
     await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)

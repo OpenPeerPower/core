@@ -13,7 +13,7 @@ async def async_setup_entry(
 ) -> None:
     """Record the async_add_entities function to add them later when received from Dynalite."""
     async_setup_entry_base(
-       .opp, config_entry, async_add_entities, "switch", DynaliteSwitch
+        opp, config_entry, async_add_entities, "switch", DynaliteSwitch
     )
 
 

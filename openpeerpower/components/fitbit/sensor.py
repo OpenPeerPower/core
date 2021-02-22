@@ -239,7 +239,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         config_file = load_json(config_path)
         if config_file == DEFAULT_CONFIG:
             request_app_setup(
-               .opp, config, add_entities, config_path, discovery_info=None
+                opp, config, add_entities, config_path, discovery_info=None
             )
             return False
     else:

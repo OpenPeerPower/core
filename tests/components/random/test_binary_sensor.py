@@ -13,7 +13,7 @@ async def test_random_binary_sensor_on.opp):
         return_value=1,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             "binary_sensor",
             config,
         )
@@ -33,7 +33,7 @@ async def test_random_binary_sensor_off.opp):
         return_value=False,
     ):
         assert await async_setup_component(
-           .opp,
+            opp,
             "binary_sensor",
             config,
         )

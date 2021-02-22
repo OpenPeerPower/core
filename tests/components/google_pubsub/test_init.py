@@ -147,7 +147,7 @@ async def _setup_opp, filter_config):
 async def test_allowlist.opp, mock_client):
     """Test an allowlist only config."""
     handler_method = await _setup(
-       .opp,
+        opp,
         {
             "include_domains": ["light"],
             "include_entity_globs": ["sensor.included_*"],
@@ -177,7 +177,7 @@ async def test_allowlist.opp, mock_client):
 async def test_denylist.opp, mock_client):
     """Test a denylist only config."""
     handler_method = await _setup(
-       .opp,
+        opp,
         {
             "exclude_domains": ["climate"],
             "exclude_entity_globs": ["sensor.excluded_*"],
@@ -207,7 +207,7 @@ async def test_denylist.opp, mock_client):
 async def test_filtered_allowlist.opp, mock_client):
     """Test an allowlist config with a filtering denylist."""
     handler_method = await _setup(
-       .opp,
+        opp,
         {
             "include_domains": ["light"],
             "include_entity_globs": ["*.included_*"],
@@ -238,7 +238,7 @@ async def test_filtered_allowlist.opp, mock_client):
 async def test_filtered_denylist.opp, mock_client):
     """Test a denylist config with a filtering allowlist."""
     handler_method = await _setup(
-       .opp,
+        opp,
         {
             "include_entities": ["climate.included", "sensor.excluded_test"],
             "exclude_domains": ["climate"],

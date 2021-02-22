@@ -39,7 +39,7 @@ test_async_update_with_timeout_and_recovery = (
 
 
 async def test_switch_registry_state_callback(
-   .opp, pywemo_registry, pywemo_device, wemo_entity
+    opp, pywemo_registry, pywemo_device, wemo_entity
 ):
     """Verify that the switch receives state updates from the registry."""
     # On state.

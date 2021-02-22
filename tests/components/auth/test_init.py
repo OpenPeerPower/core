@@ -242,7 +242,7 @@ async def test_refresh_token_different_client_id.opp, aiohttp_client):
 
 
 async def test_refresh_token_provider_rejected(
-   .opp, aiohttp_client, opp_admin_user, opp_admin_credential
+    opp, aiohttp_client, opp_admin_user, opp_admin_credential
 ):
     """Test that we verify client ID."""
     client = await async_setup_auth.opp, aiohttp_client)
@@ -409,7 +409,7 @@ async def test_ws_sign_path.opp, opp_ws_client, opp_access_token):
     assert result["success"], result
     assert result["result"] == {"path": "hello_world"}
     assert len(mock_sign.mock_calls) == 1
-   .opp, p_refresh_token, path, expires = mock_sign.mock_calls[0][1]
+    opp, p_refresh_token, path, expires = mock_sign.mock_calls[0][1]
     assert p_refresh_token == refresh_token.id
     assert path == "/api/hello"
     assert expires.total_seconds() == 20

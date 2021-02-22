@@ -13,7 +13,7 @@ async def test_reproducing_states.opp, caplog):
 
     # Setup entity for testing
     assert await async_setup_component(
-       .opp,
+        opp,
         "input_text",
         {
             "input_text": {

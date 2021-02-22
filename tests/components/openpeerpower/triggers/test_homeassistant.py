@@ -47,7 +47,7 @@ async def test_if_fires_on_opp.hutdown.opp.
    .opp.tate = CoreState.not_running
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {

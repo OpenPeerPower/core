@@ -52,7 +52,7 @@ async def async_setup_op_cast(
         )
 
         dispatcher.async_dispatcher_send(
-           .opp,
+            opp,
             SIGNAL_HASS_CAST_SHOW_VIEW,
             controller,
             call.data[ATTR_ENTITY_ID],

@@ -33,7 +33,7 @@ ENTITY_HUMIDIFIER = "humidifier.humidifier"
 async def setup_demo_humidifier.opp):
     """Initialize setup demo humidifier."""
     assert await async_setup_component(
-       .opp, DOMAIN, {"humidifier": {"platform": "demo"}}
+        opp, DOMAIN, {"humidifier": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 

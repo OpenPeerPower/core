@@ -192,7 +192,7 @@ class Camera(HomeAccessory, PyhapCamera):
         }
 
         super().__init__(
-           .opp,
+            opp,
             driver,
             name,
             entity_id,

@@ -348,7 +348,7 @@ async def test_reload.opp):
    .opp.states.async_set("sensor.test_2", 45678)
 
     await async_setup_component(
-       .opp,
+        opp,
         "sensor",
         {
             "sensor": {

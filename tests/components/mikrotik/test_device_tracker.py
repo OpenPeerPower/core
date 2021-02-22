@@ -30,7 +30,7 @@ async def test_platform_manually_configured.opp):
     """Test that nothing happens when configuring mikrotik through device tracker platform."""
     assert (
         await async_setup_component(
-           .opp,
+            opp,
             device_tracker.DOMAIN,
             {device_tracker.DOMAIN: {"platform": "mikrotik"}},
         )

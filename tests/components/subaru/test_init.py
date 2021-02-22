@@ -50,7 +50,7 @@ async def test_setup_ev.opp, ev_entry):
 async def test_setup_g2.opp):
     """Test setup with a G2 vehcile ."""
     entry = await setup_subaru_integration(
-       .opp,
+        opp,
         vehicle_list=[TEST_VIN_3_G2],
         vehicle_data=VEHICLE_DATA[TEST_VIN_3_G2],
         vehicle_status=VEHICLE_STATUS_G2,
@@ -63,7 +63,7 @@ async def test_setup_g2.opp):
 async def test_setup_g1.opp):
     """Test setup with a G1 vehicle."""
     entry = await setup_subaru_integration(
-       .opp, vehicle_list=[TEST_VIN_1_G1], vehicle_data=VEHICLE_DATA[TEST_VIN_1_G1]
+        opp, vehicle_list=[TEST_VIN_1_G1], vehicle_data=VEHICLE_DATA[TEST_VIN_1_G1]
     )
     check_entry = opp.config_entries.async_get_entry(entry.entry_id)
     assert check_entry
@@ -73,7 +73,7 @@ async def test_setup_g1.opp):
 async def test_unsuccessful_connect.opp):
     """Test unsuccessful connect due to connectivity."""
     entry = await setup_subaru_integration(
-       .opp,
+        opp,
         connect_effect=SubaruException("Service Unavailable"),
         vehicle_list=[TEST_VIN_2_EV],
         vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
@@ -87,7 +87,7 @@ async def test_unsuccessful_connect.opp):
 async def test_invalid_credentials.opp):
     """Test invalid credentials."""
     entry = await setup_subaru_integration(
-       .opp,
+        opp,
         connect_effect=InvalidCredentials("Invalid Credentials"),
         vehicle_list=[TEST_VIN_2_EV],
         vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
@@ -101,7 +101,7 @@ async def test_invalid_credentials.opp):
 async def test_update_skip_unsubscribed.opp):
     """Test update function skips vehicles without subscription."""
     await setup_subaru_integration(
-       .opp, vehicle_list=[TEST_VIN_1_G1], vehicle_data=VEHICLE_DATA[TEST_VIN_1_G1]
+        opp, vehicle_list=[TEST_VIN_1_G1], vehicle_data=VEHICLE_DATA[TEST_VIN_1_G1]
     )
 
     with patch(MOCK_API_FETCH) as mock_fetch:
@@ -134,7 +134,7 @@ async def test_update_disabled.opp, ev_entry):
 async def test_fetch_failed.opp):
     """Tests when fetch fails."""
     await setup_subaru_integration(
-       .opp,
+        opp,
         vehicle_list=[TEST_VIN_2_EV],
         vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
         vehicle_status=VEHICLE_STATUS_EV,

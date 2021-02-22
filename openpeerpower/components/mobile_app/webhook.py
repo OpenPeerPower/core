@@ -564,7 +564,7 @@ async def webhook_get_config(opp, config_entry, data):
 async def webhook_scan_tag.opp, config_entry, data):
     """Handle a fire event webhook."""
     await tag.async_scan_tag(
-       .opp,
+        opp,
         data["tag_id"],
         config_entry.data[ATTR_DEVICE_ID],
         registration_context(config_entry.data),

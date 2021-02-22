@@ -61,7 +61,7 @@ async def async_setup_entry(
 
     # Connect to receiver
     connect_denonavr = ConnectDenonAVR(
-       .opp,
+        opp,
         entry.data[CONF_HOST],
         DEFAULT_TIMEOUT,
         entry.options.get(CONF_SHOW_ALL_SOURCES, DEFAULT_SHOW_SOURCES),

@@ -488,7 +488,7 @@ async def async_setup_entry.opp, config_entry):
                 continue
 
             values = ZWaveDeviceEntityValues(
-               .opp, schema, value, config, device_config, registry
+                opp, schema, value, config, device_config, registry
             )
 
             # We create a new list and update the reference here so that

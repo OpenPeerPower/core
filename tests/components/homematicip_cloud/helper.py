@@ -50,7 +50,7 @@ def get_and_check_entity_basics.opp, mock_hap, entity_id, entity_name, device_mo
 
 
 async def async_manipulate_test_data(
-   .opp, hmip_device, attribute, new_value, channel=1, fire_device=None
+    opp, hmip_device, attribute, new_value, channel=1, fire_device=None
 ):
     """Set new value on hmip device."""
     if channel == 1:

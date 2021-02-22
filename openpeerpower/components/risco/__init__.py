@@ -49,7 +49,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     coordinator = RiscoDataUpdateCoordinator.opp, risco, scan_interval)
     await coordinator.async_refresh()
     events_coordinator = RiscoEventsDataUpdateCoordinator(
-       .opp, risco, entry.entry_id, 60
+        opp, risco, entry.entry_id, 60
     )
 
     undo_listener = entry.add_update_listener(_update_listener)
@@ -105,7 +105,7 @@ class RiscoDataUpdateCoordinator(DataUpdateCoordinator):
         self.risco = risco
         interval = timedelta(seconds=scan_interval)
         super().__init__(
-           .opp,
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=interval,
@@ -126,11 +126,11 @@ class RiscoEventsDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize global risco data updater."""
         self.risco = risco
         self._store = Store(
-           .opp, LAST_EVENT_STORAGE_VERSION, f"risco_{eid}_last_event_timestamp"
+            opp, LAST_EVENT_STORAGE_VERSION, f"risco_{eid}_last_event_timestamp"
         )
         interval = timedelta(seconds=scan_interval)
         super().__init__(
-           .opp,
+            opp,
             _LOGGER,
             name=f"{DOMAIN}_events",
             update_interval=interval,

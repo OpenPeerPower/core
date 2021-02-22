@@ -19,7 +19,7 @@ async def setup_component.opp):
     with patch.object(hue, "async_setup_entry", return_value=True):
         assert (
             await async_setup_component(
-               .opp,
+                opp,
                 hue.DOMAIN,
                 {},
             )
@@ -28,7 +28,7 @@ async def setup_component.opp):
 
 
 async def test_hue_activate_scene_both_responds(
-   .opp, mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
+    opp, mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
 ):
     """Test that makes both bridges successfully activate a scene."""
 
@@ -54,7 +54,7 @@ async def test_hue_activate_scene_both_responds(
 
 
 async def test_hue_activate_scene_one_responds(
-   .opp, mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
+    opp, mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
 ):
     """Test that makes only one bridge successfully activate a scene."""
 
@@ -80,7 +80,7 @@ async def test_hue_activate_scene_one_responds(
 
 
 async def test_hue_activate_scene_zero_responds(
-   .opp, mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
+    opp, mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
 ):
     """Test that makes no bridge successfully activate a scene."""
 

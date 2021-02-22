@@ -14,7 +14,7 @@ from tests.common import async_fire_mqtt_message
 
 
 async def test_availability_poll_state_once(
-   .opp, mqtt_client_mock, mqtt_mock, setup_tasmota
+    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
 ):
     """Test several entities send a single message to update state."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -28,7 +28,7 @@ async def test_availability_poll_state_once(
     poll_topic_switch = "tasmota_49A3BC/cmnd/STATUS"
 
     async_fire_mqtt_message(
-       .opp,
+        opp,
         f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config",
         json.dumps(config),
     )
@@ -37,7 +37,7 @@ async def test_availability_poll_state_once(
 
     # Device online, verify poll for state
     async_fire_mqtt_message(
-       .opp,
+        opp,
         get_topic_tele_will(config),
         config_get_state_online(config),
     )

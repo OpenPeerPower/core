@@ -372,7 +372,7 @@ async def test_discovery_flow.opp, source: str, discovery_info: dict):
     ],
 )
 async def test_discovered_device_already_configured(
-   .opp, source: str, discovery_info: dict
+    opp, source: str, discovery_info: dict
 ):
     """Test that discovery doesn't setup already configured devices."""
     config_entry = await setup_axis_integration.opp)
@@ -421,7 +421,7 @@ async def test_discovered_device_already_configured(
     ],
 )
 async def test_discovery_flow_updated_configuration(
-   .opp, source: str, discovery_info: dict, expected_port: int
+    opp, source: str, discovery_info: dict, expected_port: int
 ):
     """Test that discovery flow update configuration with new parameters."""
     config_entry = await setup_axis_integration.opp)
@@ -488,7 +488,7 @@ async def test_discovery_flow_updated_configuration(
     ],
 )
 async def test_discovery_flow_ignore_non_axis_device(
-   .opp, source: str, discovery_info: dict
+    opp, source: str, discovery_info: dict
 ):
     """Test that discovery flow ignores devices with non Axis OUI."""
     result = await opp.config_entries.flow.async_init(
@@ -526,7 +526,7 @@ async def test_discovery_flow_ignore_non_axis_device(
     ],
 )
 async def test_discovery_flow_ignore_link_local_address(
-   .opp, source: str, discovery_info: dict
+    opp, source: str, discovery_info: dict
 ):
     """Test that discovery flow ignores devices with link local addresses."""
     result = await opp.config_entries.flow.async_init(

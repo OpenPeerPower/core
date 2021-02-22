@@ -59,9 +59,9 @@ async def async_setup_opp, config):
 
     if CONF_CLIENT_ID in domain_config:
         config_flow.SomfyFlowHandler.async_register_implementation(
-           .opp,
+            opp,
             config_entry_oauth2_flow.LocalOAuth2Implementation(
-               .opp,
+                opp,
                 DOMAIN,
                 config[DOMAIN][CONF_CLIENT_ID],
                 config[DOMAIN][CONF_CLIENT_SECRET],
@@ -83,7 +83,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-           .opp, entry
+            opp, entry
         )
     )
 
@@ -100,7 +100,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         return {dev.id: dev for dev in devices}
 
     coordinator = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name="somfy device update",
         update_method=_update_all_devices,

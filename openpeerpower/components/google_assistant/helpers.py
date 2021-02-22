@@ -43,7 +43,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def _get_entity_and_device(
-   .opp, entity_id
+    opp, entity_id
 ) -> Optional[Tuple[RegistryEntry, DeviceEntry]]:
     """Fetch the entity and device entries for a entity_id."""
     dev_reg, ent_reg = await gather(

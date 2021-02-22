@@ -18,7 +18,7 @@ class OndiloOauth2Implementation(LocalOAuth2Implementation):
     def __init__(self, opp: OpenPeerPower):
         """Just init default class with default values."""
         super().__init__(
-           .opp,
+            opp,
             DOMAIN,
             OAUTH2_CLIENTID,
             OAUTH2_CLIENTSECRET,

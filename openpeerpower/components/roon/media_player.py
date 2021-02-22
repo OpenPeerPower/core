@@ -103,7 +103,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         else:
             # update existing player
             async_dispatcher_send(
-               .opp, f"room_media_player_update_{dev_id}", player_data
+                opp, f"room_media_player_update_{dev_id}", player_data
             )
 
     # start listening for players to be added or changed by the server component

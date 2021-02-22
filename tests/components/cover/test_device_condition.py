@@ -232,7 +232,7 @@ async def test_get_condition_capabilities.opp, device_reg, entity_reg):
     assert len(conditions) == 4
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "condition", condition
+            opp, "condition", condition
         )
         assert capabilities == {"extra_fields": []}
 
@@ -279,7 +279,7 @@ async def test_get_condition_capabilities_set_pos.opp, device_reg, entity_reg):
     assert len(conditions) == 5
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "condition", condition
+            opp, "condition", condition
         )
         if condition["type"] == "is_position":
             assert capabilities == expected_capabilities
@@ -329,7 +329,7 @@ async def test_get_condition_capabilities_set_tilt_pos.opp, device_reg, entity_r
     assert len(conditions) == 5
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "condition", condition
+            opp, "condition", condition
         )
         if condition["type"] == "is_tilt_position":
             assert capabilities == expected_capabilities
@@ -342,7 +342,7 @@ async def test_if_state.opp, calls):
    .opp.states.async_set("cover.entity", STATE_OPEN)
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -458,7 +458,7 @@ async def test_if_position.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -562,7 +562,7 @@ async def test_if_tilt_position.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

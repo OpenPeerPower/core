@@ -67,7 +67,7 @@ async def test_connection_failed_error(mock_error, opp):
     with assert_setup_component(4):
         with patch("pilight.pilight.Client", side_effect=socket.error) as mock_client:
             assert not await async_setup_component(
-               .opp, pilight.DOMAIN, {pilight.DOMAIN: {}}
+                opp, pilight.DOMAIN, {pilight.DOMAIN: {}}
             )
             mock_client.assert_called_once_with(
                 host=pilight.DEFAULT_HOST, port=pilight.DEFAULT_PORT
@@ -81,7 +81,7 @@ async def test_connection_timeout_error(mock_error, opp):
     with assert_setup_component(4):
         with patch("pilight.pilight.Client", side_effect=socket.timeout) as mock_client:
             assert not await async_setup_component(
-               .opp, pilight.DOMAIN, {pilight.DOMAIN: {}}
+                opp, pilight.DOMAIN, {pilight.DOMAIN: {}}
             )
             mock_client.assert_called_once_with(
                 host=pilight.DEFAULT_HOST, port=pilight.DEFAULT_PORT
@@ -137,7 +137,7 @@ async def test_send_code_fail(mock_pilight_error, opp):
     with assert_setup_component(4):
         with patch("pilight.pilight.Client.send_code", side_effect=IOError):
             assert await async_setup_component(
-               .opp, pilight.DOMAIN, {pilight.DOMAIN: {}}
+                opp, pilight.DOMAIN, {pilight.DOMAIN: {}}
             )
 
             # Call with protocol info, should not give error
@@ -160,7 +160,7 @@ async def test_send_code_delay(mock_pilight_error, opp):
     """Try to send proper data with delay afterwards."""
     with assert_setup_component(4):
         assert await async_setup_component(
-           .opp,
+            opp,
             pilight.DOMAIN,
             {pilight.DOMAIN: {pilight.CONF_SEND_DELAY: 5.0}},
         )
@@ -257,7 +257,7 @@ async def test_whitelist_exact_match(mock_debug, opp):
             "unit": [PilightDaemonSim.test_message["message"]["unit"]],
         }
         assert await async_setup_component(
-           .opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
+            opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
         )
 
         await opp.async_start()
@@ -288,7 +288,7 @@ async def test_whitelist_partial_match(mock_debug, opp):
             "id": [PilightDaemonSim.test_message["message"]["id"]],
         }
         assert await async_setup_component(
-           .opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
+            opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
         )
 
         await opp.async_start()
@@ -322,7 +322,7 @@ async def test_whitelist_or_match(mock_debug, opp):
             "id": [PilightDaemonSim.test_message["message"]["id"]],
         }
         assert await async_setup_component(
-           .opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
+            opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
         )
 
         await opp.async_start()
@@ -353,7 +353,7 @@ async def test_whitelist_no_match(mock_debug, opp):
             "id": [PilightDaemonSim.test_message["message"]["id"]],
         }
         assert await async_setup_component(
-           .opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
+            opp, pilight.DOMAIN, {pilight.DOMAIN: {"whitelist": whitelist}}
         )
 
         await opp.async_start()

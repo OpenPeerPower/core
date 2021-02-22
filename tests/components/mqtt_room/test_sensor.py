@@ -53,7 +53,7 @@ async def assert_distance.opp, distance):
 async def test_room_update.opp, mqtt_mock):
     """Test the updating between rooms."""
     assert await async_setup_component(
-       .opp,
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {

@@ -40,7 +40,7 @@ async def test_setup_no_sensors.opp):
     """Test setup with no sensors."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
-           .opp, binary_sensor.DOMAIN, {"binary_sensor": {"platform": "template"}}
+            opp, binary_sensor.DOMAIN, {"binary_sensor": {"platform": "template"}}
         )
 
 
@@ -48,7 +48,7 @@ async def test_setup_invalid_device.opp):
     """Test the setup with invalid devices."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             binary_sensor.DOMAIN,
             {"binary_sensor": {"platform": "template", "sensors": {"foo bar": {}}}},
         )
@@ -58,7 +58,7 @@ async def test_setup_invalid_device_class.opp):
     """Test setup with invalid sensor class."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             binary_sensor.DOMAIN,
             {
                 "binary_sensor": {
@@ -78,7 +78,7 @@ async def test_setup_invalid_missing_template.opp):
     """Test setup with invalid and missing template."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             binary_sensor.DOMAIN,
             {
                 "binary_sensor": {
@@ -93,7 +93,7 @@ async def test_icon_template.opp):
     """Test icon template."""
     with assert_setup_component(1):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             binary_sensor.DOMAIN,
             {
                 "binary_sensor": {
@@ -129,7 +129,7 @@ async def test_entity_picture_template.opp):
     """Test entity_picture template."""
     with assert_setup_component(1):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             binary_sensor.DOMAIN,
             {
                 "binary_sensor": {
@@ -165,7 +165,7 @@ async def test_attribute_templates.opp):
     """Test attribute_templates template."""
     with assert_setup_component(1):
         assert await setup.async_setup_component(
-           .opp,
+            opp,
             binary_sensor.DOMAIN,
             {
                 "binary_sensor": {
@@ -204,7 +204,7 @@ async def test_match_all.opp):
     ) as _update_state:
         with assert_setup_component(1):
             assert await setup.async_setup_component(
-               .opp,
+                opp,
                 binary_sensor.DOMAIN,
                 {
                     "binary_sensor": {
@@ -712,7 +712,7 @@ async def test_invalid_attribute_template.opp, caplog):
    .opp.states.async_set("binary_sensor.test_sensor", "true")
 
     await setup.async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -741,7 +741,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     """Test that an invalid availability keeps the device available."""
 
     await setup.async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -770,7 +770,7 @@ async def test_no_update_template_match_all.opp, caplog):
    .opp.state = CoreState.not_running
 
     await setup.async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -836,7 +836,7 @@ async def test_no_update_template_match_all.opp, caplog):
 async def test_unique_id.opp):
     """Test unique_id option only creates one binary sensor per id."""
     await setup.async_setup_component(
-       .opp,
+        opp,
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {

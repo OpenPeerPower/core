@@ -126,7 +126,7 @@ async def test_no_aid_collision.opp, device_reg, entity_reg):
 
 
 async def test_aid_generation_no_unique_ids_handles_collision(
-   .opp, device_reg, entity_reg
+    opp, device_reg, entity_reg
 ):
     """Test colliding aids is stable."""
     config_entry = MockConfigEntry(domain="test", data={})

@@ -6,7 +6,7 @@ from . import TEST_TOKEN_URL
 
 
 async def run_auth_get_access_token(
-   .opp,
+    opp,
     aioclient_mock,
     expires_in,
     client_id,
@@ -37,7 +37,7 @@ async def test_auth_get_access_token_expired.opp, aioclient_mock):
     refresh_token = "refresher"
 
     await run_auth_get_access_token(
-       .opp,
+        opp,
         aioclient_mock,
         -5,
         client_id,
@@ -71,7 +71,7 @@ async def test_auth_get_access_token_not_expired.opp, aioclient_mock):
     refresh_token = "refresher"
 
     await run_auth_get_access_token(
-       .opp,
+        opp,
         aioclient_mock,
         555,
         client_id,

@@ -7,7 +7,7 @@ import voluptuous as vol
 
 from openpeerpower import exceptions
 from openpeerpower.const import CONF_ATTRIBUTE, CONF_FOR, CONF_PLATFORM, MATCH_ALL
-from openpeerpower.core import CALLBACK_TYPE, HassJob, OpenPeerPower, State, callback
+from openpeerpower.core import CALLBACK_TYPE, OppJob, OpenPeerPower, State, callback
 from openpeerpower.helpers import config_validation as cv, template
 from openpeerpower.helpers.event import (
     Event,
@@ -83,7 +83,7 @@ async def async_attach_trigger(
     match_from_state = process_state_match(from_state)
     match_to_state = process_state_match(to_state)
     attribute = config.get(CONF_ATTRIBUTE)
-    job = HassJob(action)
+    job = OppJob(action)
 
     _variables = {}
     if automation_info:
@@ -182,7 +182,7 @@ async def async_attach_trigger(
             return cur_value == new_value
 
         unsub_track_same[entity] = async_track_same_state(
-           .opp,
+            opp,
             period[entity],
             call_action,
             _check_same_state,

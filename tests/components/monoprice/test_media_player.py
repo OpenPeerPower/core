@@ -165,10 +165,10 @@ async def test_service_calls_with_entity_id.opp):
 
     # Changing media player to new state
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
     )
     await _call_media_player_service(
-       .opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
+        opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
     )
 
     # Saving existing values
@@ -176,10 +176,10 @@ async def test_service_calls_with_entity_id.opp):
 
     # Changing media player to new state
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 1.0}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 1.0}
     )
     await _call_media_player_service(
-       .opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "three"}
+        opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "three"}
     )
 
     # Restoring other media player to its previous state
@@ -209,10 +209,10 @@ async def test_service_calls_with_all_entities.opp):
 
     # Changing media player to new state
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
     )
     await _call_media_player_service(
-       .opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
+        opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
     )
 
     # Saving existing values
@@ -220,10 +220,10 @@ async def test_service_calls_with_all_entities.opp):
 
     # Changing media player to new state
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 1.0}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 1.0}
     )
     await _call_media_player_service(
-       .opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "three"}
+        opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "three"}
     )
 
     # Restoring media player to its previous state
@@ -242,10 +242,10 @@ async def test_service_calls_without_relevant_entities.opp):
 
     # Changing media player to new state
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
     )
     await _call_media_player_service(
-       .opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
+        opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
     )
 
     # Saving existing values
@@ -253,10 +253,10 @@ async def test_service_calls_without_relevant_entities.opp):
 
     # Changing media player to new state
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 1.0}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 1.0}
     )
     await _call_media_player_service(
-       .opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "three"}
+        opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "three"}
     )
 
     # Restoring media player to its previous state
@@ -287,10 +287,10 @@ async def test_update.opp):
 
     # Changing media player to new state
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
     )
     await _call_media_player_service(
-       .opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
+        opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
     )
 
     monoprice.set_source(11, 3)
@@ -312,10 +312,10 @@ async def test_failed_update.opp):
 
     # Changing media player to new state
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
     )
     await _call_media_player_service(
-       .opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
+        opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
     )
 
     monoprice.set_source(11, 3)
@@ -338,10 +338,10 @@ async def test_empty_update.opp):
 
     # Changing media player to new state
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
     )
     await _call_media_player_service(
-       .opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
+        opp, SERVICE_SELECT_SOURCE, {"entity_id": ZONE_1_ID, "source": "one"}
     )
 
     monoprice.set_source(11, 3)
@@ -397,7 +397,7 @@ async def test_select_source.opp):
     await _setup_monoprice.opp, monoprice)
 
     await _call_media_player_service(
-       .opp,
+        opp,
         SERVICE_SELECT_SOURCE,
         {"entity_id": ZONE_1_ID, ATTR_INPUT_SOURCE: "three"},
     )
@@ -405,7 +405,7 @@ async def test_select_source.opp):
 
     # Trying to set unknown source
     await _call_media_player_service(
-       .opp,
+        opp,
         SERVICE_SELECT_SOURCE,
         {"entity_id": ZONE_1_ID, ATTR_INPUT_SOURCE: "no name"},
     )
@@ -445,15 +445,15 @@ async def test_mute_volume.opp):
     await _setup_monoprice.opp, monoprice)
 
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.5}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.5}
     )
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_MUTE, {"entity_id": ZONE_1_ID, "is_volume_muted": False}
+        opp, SERVICE_VOLUME_MUTE, {"entity_id": ZONE_1_ID, "is_volume_muted": False}
     )
     assert not monoprice.zones[11].mute
 
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_MUTE, {"entity_id": ZONE_1_ID, "is_volume_muted": True}
+        opp, SERVICE_VOLUME_MUTE, {"entity_id": ZONE_1_ID, "is_volume_muted": True}
     )
     assert monoprice.zones[11].mute
 
@@ -464,12 +464,12 @@ async def test_volume_up_down.opp):
     await _setup_monoprice.opp, monoprice)
 
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
     )
     assert monoprice.zones[11].volume == 0
 
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID}
+        opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID}
     )
     # should not go below zero
     assert monoprice.zones[11].volume == 0
@@ -478,7 +478,7 @@ async def test_volume_up_down.opp):
     assert monoprice.zones[11].volume == 1
 
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 1.0}
+        opp, SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 1.0}
     )
     assert monoprice.zones[11].volume == 38
 
@@ -487,7 +487,7 @@ async def test_volume_up_down.opp):
     assert monoprice.zones[11].volume == 38
 
     await _call_media_player_service(
-       .opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID}
+        opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID}
     )
     assert monoprice.zones[11].volume == 37
 

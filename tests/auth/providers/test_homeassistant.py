@@ -41,7 +41,7 @@ async def test_not_allow_set_id():
     opp =Mock()
     with pytest.raises(vol.Invalid):
         await auth_provider_from_config(
-           .opp, None, {"type": "openpeerpower", "id": "invalid"}
+            opp, None, {"type": "openpeerpower", "id": "invalid"}
         )
 
 
@@ -111,7 +111,7 @@ async def test_login_flow_validates(data, opp):
     await data.async_save()
 
     provider = opp_auth.HassAuthProvider(
-       .opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
+        opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
     result = await flow.async_step_init()
@@ -212,7 +212,7 @@ async def test_legacy_login_flow_validates(legacy_data, opp):
     await legacy_data.async_save()
 
     provider = opp_auth.HassAuthProvider(
-       .opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
+        opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
     result = await flow.async_step_init()
@@ -287,7 +287,7 @@ async def test_race_condition_in_data_loading.opp):
         await asyncio.sleep(0)
 
     provider = opp_auth.HassAuthProvider(
-       .opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
+        opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
     with patch("openpeerpower.helpers.storage.Store.async_load", new=mock_load):
         task1 = provider.async_validate_login("user", "pass")

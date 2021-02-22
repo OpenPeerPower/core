@@ -121,7 +121,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     icloud_dir = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
 
     account = IcloudAccount(
-       .opp,
+        opp,
         username,
         password,
         icloud_dir,

@@ -170,7 +170,7 @@ async def test_stage_shutdown.opp):
 
 
 async def test_shutdown_calls_block_till_done_after_shutdown_run_callback_threadsafe(
-   .opp,
+    opp,
 ):
     """Ensure shutdown_run_callback_threadsafe is called before the final async_block_till_done."""
     stop_calls = []
@@ -1136,7 +1136,7 @@ async def test_start_taking_too_long(loop, caplog):
 
     try:
         with patch.object(
-           .opp, "async_block_till_done", side_effect=asyncio.TimeoutError
+            opp, "async_block_till_done", side_effect=asyncio.TimeoutError
         ), patch("openpeerpower.core._async_create_timer") as mock_timer:
             await opp.async_start()
 
@@ -1202,7 +1202,7 @@ async def test_service_call_event_contains_original_data.opp):
    .opp.bus.async_listen(EVENT_CALL_SERVICE, callback)
 
     calls = async_mock_service(
-       .opp, "test", "service", vol.Schema({"number": vol.Coerce(int)})
+        opp, "test", "service", vol.Schema({"number": vol.Coerce(int)})
     )
 
     context = op.Context()

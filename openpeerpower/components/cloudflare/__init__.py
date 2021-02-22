@@ -60,7 +60,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
 
     if DOMAIN in config and CONF_API_KEY in config[DOMAIN]:
         persistent_notification.async_create(
-           .opp,
+            opp,
             "Cloudflare integration now requires an API Token. Please go to the integrations page to setup.",
             "Cloudflare Setup",
             "cloudflare_setup",

@@ -118,7 +118,7 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
     assert len(actions) == 3
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "action", action
+            opp, "action", action
         )
         assert capabilities == {"extra_fields": []}
 
@@ -154,7 +154,7 @@ async def test_get_action_capabilities_brightness.opp, device_reg, entity_reg):
     assert len(actions) == 5
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "action", action
+            opp, "action", action
         )
         if action["type"] == "turn_on":
             assert capabilities == expected_capabilities
@@ -193,7 +193,7 @@ async def test_get_action_capabilities_flash.opp, device_reg, entity_reg):
     assert len(actions) == 4
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-           .opp, "action", action
+            opp, "action", action
         )
         if action["type"] == "turn_on":
             assert capabilities == expected_capabilities
@@ -212,7 +212,7 @@ async def test_action.opp, calls):
     ent1, ent2, ent3 = platform.ENTITIES
 
     assert await async_setup_component(
-       .opp,
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

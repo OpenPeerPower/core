@@ -29,7 +29,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     def async_add_insteon_fan_entities(discovery_info=None):
         """Add the Insteon entities for the platform."""
         async_add_insteon_entities(
-           .opp, FAN_DOMAIN, InsteonFanEntity, async_add_entities, discovery_info
+            opp, FAN_DOMAIN, InsteonFanEntity, async_add_entities, discovery_info
         )
 
     signal = f"{SIGNAL_ADD_ENTITIES}_{FAN_DOMAIN}"

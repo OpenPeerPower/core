@@ -17,7 +17,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def _process_time_step(
-   .opp, mock_data, key_state=None, value=None, tariff="discrimination", delta_min=60
+    opp, mock_data, key_state=None, value=None, tariff="discrimination", delta_min=60
 ):
     state = opp.states.get("sensor.test_dst")
     check_valid_state(state, tariff=tariff, value=value, key_attr=key_state)
@@ -29,7 +29,7 @@ async def _process_time_step(
 
 
 async def test_sensor_availability(
-   .opp, caplog, legacy_patchable_time, pvpc_aioclient_mock: AiohttpClientMocker
+    opp, caplog, legacy_patchable_time, pvpc_aioclient_mock: AiohttpClientMocker
 ):
     """Test sensor availability and handling of cloud access."""
    .opp.config.time_zone = timezone("Europe/Madrid")

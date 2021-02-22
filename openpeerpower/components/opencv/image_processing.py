@@ -110,7 +110,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     for camera in config[CONF_SOURCE]:
         entities.append(
             OpenCVImageProcessor(
-               .opp,
+                opp,
                 camera[CONF_ENTITY_ID],
                 camera.get(CONF_NAME),
                 config[CONF_CLASSIFIER],

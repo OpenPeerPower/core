@@ -202,7 +202,7 @@ async def async_setup_media_player_cast.opp: OpenPeerPowerType, info: Chromecast
         return_value=zconf,
     ):
         await async_setup_component(
-           .opp, "cast", {"cast": {"media_player": {"uuid": info.uuid}}}
+            opp, "cast", {"cast": {"media_player": {"uuid": info.uuid}}}
         )
         await opp.async_block_till_done()
 
@@ -438,7 +438,7 @@ async def test_replay_past_chromecasts.opp):
     zconf_2 = get_fake_zconf(host="host2", port=8009)
 
     discover_cast, _, add_dev1 = await async_setup_cast_internal_discovery(
-       .opp, config={"uuid": FakeUUID}
+        opp, config={"uuid": FakeUUID}
     )
 
     with patch(
@@ -474,7 +474,7 @@ async def test_manual_cast_chromecasts_uuid.opp):
 
     # Manual configuration of media player with host "configured_host"
     discover_cast, _, add_dev1 = await async_setup_cast_internal_discovery(
-       .opp, config={"uuid": FakeUUID}
+        opp, config={"uuid": FakeUUID}
     )
     with patch(
         "openpeerpower.components.cast.discovery.ChromeCastZeroconf.get_zeroconf",
@@ -815,7 +815,7 @@ async def test_entity_play_media_cast_invalid.opp, caplog, quick_play_mock):
 
     # Play_media - media_type cast with extra keys
     await common.async_play_media(
-       .opp, "cast", '{"app_id": "abc123", "extra": "data"}', entity_id
+        opp, "cast", '{"app_id": "abc123", "extra": "data"}', entity_id
     )
     assert "Extra keys dict_keys(['extra']) were ignored" in caplog.text
     chromecast.start_app.assert_called_once_with("abc123")
@@ -833,7 +833,7 @@ async def test_entity_play_media_sign_URL.opp: OpenPeerPowerType):
     entity_id = "media_player.speaker"
 
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"external_url": "http://example.com:8123"},
     )
 
@@ -1223,7 +1223,7 @@ async def test_failed_cast_other_url.opp, caplog):
     """Test warning when casting from internal_url fails."""
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             tts.DOMAIN,
             {tts.DOMAIN: {"platform": "demo", "base_url": "http://example.local:8123"}},
         )
@@ -1243,12 +1243,12 @@ async def test_failed_cast_other_url.opp, caplog):
 async def test_failed_cast_internal_url.opp, caplog):
     """Test warning when casting from internal_url fails."""
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component(
-           .opp, tts.DOMAIN, {tts.DOMAIN: {"platform": "demo"}}
+            opp, tts.DOMAIN, {tts.DOMAIN: {"platform": "demo"}}
         )
 
     info = get_fake_chromecast_info()
@@ -1269,12 +1269,12 @@ async def test_failed_cast_internal_url.opp, caplog):
 async def test_failed_cast_external_url.opp, caplog):
     """Test warning when casting from external_url fails."""
     await async_process_op_core_config(
-       .opp,
+        opp,
         {"external_url": "http://example.com:8123"},
     )
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             tts.DOMAIN,
             {tts.DOMAIN: {"platform": "demo", "base_url": "http://example.com:8123"}},
         )
@@ -1298,7 +1298,7 @@ async def test_failed_cast_tts_base_url.opp, caplog):
     """Test warning when casting from tts.base_url fails."""
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component(
-           .opp,
+            opp,
             tts.DOMAIN,
             {tts.DOMAIN: {"platform": "demo", "base_url": "http://example.local:8123"}},
         )
@@ -1346,7 +1346,7 @@ async def test_entry_setup_no_config(opp: OpenPeerPowerType):
 async def test_entry_setup_single_config(opp: OpenPeerPowerType):
     """Test setting up entry and having a single config option."""
     await async_setup_component(
-       .opp, "cast", {"cast": {"media_player": {"uuid": "bla"}}}
+        opp, "cast", {"cast": {"media_player": {"uuid": "bla"}}}
     )
     await opp.async_block_till_done()
 
@@ -1362,7 +1362,7 @@ async def test_entry_setup_single_config(opp: OpenPeerPowerType):
 async def test_entry_setup_list_config(opp: OpenPeerPowerType):
     """Test setting up entry and having multiple config options."""
     await async_setup_component(
-       .opp, "cast", {"cast": {"media_player": [{"uuid": "bla"}, {"uuid": "blu"}]}}
+        opp, "cast", {"cast": {"media_player": [{"uuid": "bla"}, {"uuid": "blu"}]}}
     )
     await opp.async_block_till_done()
 
@@ -1379,7 +1379,7 @@ async def test_entry_setup_list_config(opp: OpenPeerPowerType):
 async def test_entry_setup_platform_not_ready.opp: OpenPeerPowerType):
     """Test failed setting up entry will raise PlatformNotReady."""
     await async_setup_component(
-       .opp, "cast", {"cast": {"media_player": {"uuid": "bla"}}}
+        opp, "cast", {"cast": {"media_player": {"uuid": "bla"}}}
     )
     await opp.async_block_till_done()
 

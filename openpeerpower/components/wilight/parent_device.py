@@ -46,7 +46,7 @@ class WiLightParent:
             # Schedule reconnect after connection has been lost.
             _LOGGER.warning("WiLight %s disconnected", api_device.device_id)
             async_dispatcher_send(
-               .opp, f"wilight_device_available_{api_device.device_id}", False
+                opp, f"wilight_device_available_{api_device.device_id}", False
             )
 
         @callback
@@ -54,7 +54,7 @@ class WiLightParent:
             # Schedule reconnect after connection has been lost.
             _LOGGER.warning("WiLight %s reconnect", api_device.device_id)
             async_dispatcher_send(
-               .opp, f"wilight_device_available_{api_device.device_id}", True
+                opp, f"wilight_device_available_{api_device.device_id}", True
             )
 
         async def connect(api_device):

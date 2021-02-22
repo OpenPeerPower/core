@@ -18,7 +18,7 @@ async def test_open_cover_intent.opp):
     calls = async_mock_service.opp, "cover", SERVICE_OPEN_COVER)
 
     response = await intent.async_handle(
-       .opp, "test", "HassOpenCover", {"name": {"value": "garage door"}}
+        opp, "test", "HassOpenCover", {"name": {"value": "garage door"}}
     )
     await opp.async_block_till_done()
 
@@ -38,7 +38,7 @@ async def test_close_cover_intent.opp):
     calls = async_mock_service.opp, "cover", SERVICE_CLOSE_COVER)
 
     response = await intent.async_handle(
-       .opp, "test", "HassCloseCover", {"name": {"value": "garage door"}}
+        opp, "test", "HassCloseCover", {"name": {"value": "garage door"}}
     )
     await opp.async_block_till_done()
 

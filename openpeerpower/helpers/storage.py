@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 
 @bind.opp
 async def async_migrator(
-   .opp,
+    opp,
     old_path,
     store,
     *,

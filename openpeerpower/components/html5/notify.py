@@ -196,7 +196,7 @@ def get_service.opp, config, discovery_info=None):
         add_manifest_json_key(ATTR_GCM_SENDER_ID, config.get(ATTR_GCM_SENDER_ID))
 
     return HTML5NotificationService(
-       .opp, gcm_api_key, vapid_prv_key, vapid_email, registrations, json_path
+        opp, gcm_api_key, vapid_prv_key, vapid_email, registrations, json_path
     )
 
 

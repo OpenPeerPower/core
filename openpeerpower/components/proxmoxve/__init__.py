@@ -175,7 +175,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         return await opp.async_add_executor_job(poll_api)
 
     coordinator = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name="proxmox_coordinator",
         update_method=async_update_data,

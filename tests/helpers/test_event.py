@@ -59,7 +59,7 @@ async def test_track_point_in_time.opp):
     runs = []
 
     async_track_point_in_utc_time(
-       .opp, callback(lambda x: runs.append(x)), birthday_paulus
+        opp, callback(lambda x: runs.append(x)), birthday_paulus
     )
 
     async_fire_time_changed.opp, before_birthday)
@@ -76,7 +76,7 @@ async def test_track_point_in_time.opp):
     assert len(runs) == 1
 
     async_track_point_in_utc_time(
-       .opp, callback(lambda x: runs.append(x)), birthday_paulus
+        opp, callback(lambda x: runs.append(x)), birthday_paulus
     )
 
     async_fire_time_changed.opp, after_birthday)
@@ -84,7 +84,7 @@ async def test_track_point_in_time.opp):
     assert len(runs) == 2
 
     unsub = async_track_point_in_time(
-       .opp, callback(lambda x: runs.append(x)), birthday_paulus
+        opp, callback(lambda x: runs.append(x)), birthday_paulus
     )
     unsub()
 
@@ -104,13 +104,13 @@ async def test_track_point_in_time_drift_rearm.opp):
     )
 
     async_track_point_in_utc_time(
-       .opp,
+        opp,
         callback(lambda x: specific_runs.append(x)),
         time_that_will_not_match_right_away,
     )
 
     async_fire_time_changed(
-       .opp,
+        opp,
         datetime(now.year + 1, 5, 24, 21, 59, 00, tzinfo=dt_util.UTC),
         fire_all=True,
     )
@@ -118,7 +118,7 @@ async def test_track_point_in_time_drift_rearm.opp):
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-       .opp,
+        opp,
         datetime(now.year + 1, 5, 24, 21, 59, 55, tzinfo=dt_util.UTC),
     )
     await opp.async_block_till_done()
@@ -149,14 +149,14 @@ async def test_track_state_change_from_to_state_match.opp):
         no_to_from_specified_runs.append(1)
 
     async_track_state_change(
-       .opp, "light.Bowl", from_and_to_state_callback, "on", "off"
+        opp, "light.Bowl", from_and_to_state_callback, "on", "off"
     )
     async_track_state_change.opp, "light.Bowl", only_from_state_callback, "on", None)
     async_track_state_change(
-       .opp, "light.Bowl", only_to_state_callback, None, ["off", "standby"]
+        opp, "light.Bowl", only_to_state_callback, None, ["off", "standby"]
     )
     async_track_state_change(
-       .opp, "light.Bowl", match_all_callback, MATCH_ALL, MATCH_ALL
+        opp, "light.Bowl", match_all_callback, MATCH_ALL, MATCH_ALL
     )
     async_track_state_change.opp, "light.Bowl", no_to_from_specified_callback)
 
@@ -313,7 +313,7 @@ async def test_async_track_state_change_filtered.opp):
         raise ValueError
 
     track_single = async_track_state_change_filtered(
-       .opp, TrackStates(False, {"light.bowl"}, None), single_run_callback
+        opp, TrackStates(False, {"light.bowl"}, None), single_run_callback
     )
     assert track_single.listeners == {
         "all": False,
@@ -322,7 +322,7 @@ async def test_async_track_state_change_filtered.opp):
     }
 
     track_multi = async_track_state_change_filtered(
-       .opp, TrackStates(False, {"light.bowl"}, {"switch"}), multiple_run_callback
+        opp, TrackStates(False, {"light.bowl"}, {"switch"}), multiple_run_callback
     )
     assert track_multi.listeners == {
         "all": False,
@@ -331,7 +331,7 @@ async def test_async_track_state_change_filtered.opp):
     }
 
     track_throws = async_track_state_change_filtered(
-       .opp, TrackStates(False, {"light.bowl"}, {"switch"}), callback_that_throws
+        opp, TrackStates(False, {"light.bowl"}, {"switch"}), callback_that_throws
     )
     assert track_throws.listeners == {
         "all": False,
@@ -449,13 +449,13 @@ async def test_async_track_state_change_event.opp):
         raise ValueError
 
     unsub_single = async_track_state_change_event(
-       .opp, ["light.Bowl"], single_run_callback
+        opp, ["light.Bowl"], single_run_callback
     )
     unsub_multi = async_track_state_change_event(
-       .opp, ["light.Bowl", "switch.kitchen"], multiple_run_callback
+        opp, ["light.Bowl", "switch.kitchen"], multiple_run_callback
     )
     unsub_throws = async_track_state_change_event(
-       .opp, ["light.Bowl", "switch.kitchen"], callback_that_throws
+        opp, ["light.Bowl", "switch.kitchen"], callback_that_throws
     )
 
     # Adding state to state machine
@@ -521,10 +521,10 @@ async def test_async_track_state_change_event.opp):
 async def test_async_track_state_change_event_with_empty_list.opp):
     """Test async_track_state_change_event passing an empty list of entities."""
     unsub_single = async_track_state_change_event(
-       .opp, [], ha.callback(lambda event: None)
+        opp, [], ha.callback(lambda event: None)
     )
     unsub_single2 = async_track_state_change_event(
-       .opp, [], ha.callback(lambda event: None)
+        opp, [], ha.callback(lambda event: None)
     )
 
     unsub_single2()
@@ -556,10 +556,10 @@ async def test_async_track_state_added_domain.opp):
 
     unsub_single = async_track_state_added_domain.opp, "light", single_run_callback)
     unsub_multi = async_track_state_added_domain(
-       .opp, ["light", "switch"], multiple_run_callback
+        opp, ["light", "switch"], multiple_run_callback
     )
     unsub_throws = async_track_state_added_domain(
-       .opp, ["light", "switch"], callback_that_throws
+        opp, ["light", "switch"], callback_that_throws
     )
 
     # Adding state to state machine
@@ -616,10 +616,10 @@ async def test_async_track_state_added_domain.opp):
 async def test_async_track_state_added_domain_with_empty_list.opp):
     """Test async_track_state_added_domain passing an empty list of domains."""
     unsub_single = async_track_state_added_domain(
-       .opp, [], ha.callback(lambda event: None)
+        opp, [], ha.callback(lambda event: None)
     )
     unsub_single2 = async_track_state_added_domain(
-       .opp, [], ha.callback(lambda event: None)
+        opp, [], ha.callback(lambda event: None)
     )
 
     unsub_single2()
@@ -629,10 +629,10 @@ async def test_async_track_state_added_domain_with_empty_list.opp):
 async def test_async_track_state_removed_domain_with_empty_list.opp):
     """Test async_track_state_removed_domain passing an empty list of domains."""
     unsub_single = async_track_state_removed_domain(
-       .opp, [], ha.callback(lambda event: None)
+        opp, [], ha.callback(lambda event: None)
     )
     unsub_single2 = async_track_state_removed_domain(
-       .opp, [], ha.callback(lambda event: None)
+        opp, [], ha.callback(lambda event: None)
     )
 
     unsub_single2()
@@ -664,10 +664,10 @@ async def test_async_track_state_removed_domain.opp):
 
     unsub_single = async_track_state_removed_domain.opp, "light", single_run_callback)
     unsub_multi = async_track_state_removed_domain(
-       .opp, ["light", "switch"], multiple_run_callback
+        opp, ["light", "switch"], multiple_run_callback
     )
     unsub_throws = async_track_state_removed_domain(
-       .opp, ["light", "switch"], callback_that_throws
+        opp, ["light", "switch"], callback_that_throws
     )
 
     # Adding state to state machine
@@ -742,7 +742,7 @@ async def test_async_track_state_removed_domain_match_all.opp):
 
     unsub_single = async_track_state_removed_domain.opp, "light", single_run_callback)
     unsub_match_all = async_track_state_removed_domain(
-       .opp, MATCH_ALL, match_all_run_callback
+        opp, MATCH_ALL, match_all_run_callback
     )
    .opp.states.async_set("light.new", "off")
    .opp.states.async_remove("light.new")
@@ -793,7 +793,7 @@ async def test_track_template.opp):
         wildercard_runs.append((old_state, new_state))
 
     async_track_template(
-       .opp, template_condition_var, wildercard_run_callback, {"test": 5}
+        opp, template_condition_var, wildercard_run_callback, {"test": 5}
     )
 
    .opp.states.async_set("switch.test", "on")
@@ -951,7 +951,7 @@ async def test_track_template_result.opp):
         specific_runs.append(int(track_result.result))
 
     async_track_template_result(
-       .opp, [TrackTemplate(template_condition, None)], specific_run_callback
+        opp, [TrackTemplate(template_condition, None)], specific_run_callback
     )
 
     @ha.callback
@@ -962,7 +962,7 @@ async def test_track_template_result.opp):
         )
 
     async_track_template_result(
-       .opp, [TrackTemplate(template_condition, None)], wildcard_run_callback
+        opp, [TrackTemplate(template_condition, None)], wildcard_run_callback
     )
 
     async def wildercard_run_callback(event, updates):
@@ -972,7 +972,7 @@ async def test_track_template_result.opp):
         )
 
     async_track_template_result(
-       .opp,
+        opp,
         [TrackTemplate(template_condition_var, {"test": 5})],
         wildercard_run_callback,
     )
@@ -1045,7 +1045,7 @@ async def test_track_template_result_complex.opp):
    .opp.states.async_set("lock.one", "locked")
 
     info = async_track_template_result(
-       .opp,
+        opp,
         [TrackTemplate(template_complex, None, timedelta(seconds=0))],
         specific_run_callback,
     )
@@ -1199,7 +1199,7 @@ async def test_track_template_result_with_wildcard.opp):
    .opp.states.async_set("cover.office_skylight", "open")
 
     info = async_track_template_result(
-       .opp, [TrackTemplate(template_complex, None)], specific_run_callback
+        opp, [TrackTemplate(template_complex, None)], specific_run_callback
     )
     await opp.async_block_till_done()
 
@@ -1226,7 +1226,7 @@ async def test_track_template_result_with_group.opp):
    .opp.states.async_set("sensor.power_4", 800.8)
 
     assert await async_setup_component(
-       .opp,
+        opp,
         "group",
         {"group": {"power_sensors": "sensor.power_1,sensor.power_2,sensor.power_3"}},
     )
@@ -1247,7 +1247,7 @@ async def test_track_template_result_with_group.opp):
         specific_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp, [TrackTemplate(template_complex, None)], specific_run_callback
+        opp, [TrackTemplate(template_complex, None)], specific_run_callback
     )
     await opp.async_block_till_done()
 
@@ -1304,7 +1304,7 @@ async def test_track_template_result_and_conditional.opp):
         specific_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp, [TrackTemplate(template, None)], specific_run_callback
+        opp, [TrackTemplate(template, None)], specific_run_callback
     )
     await opp.async_block_till_done()
     assert info.listeners == {
@@ -1363,7 +1363,7 @@ async def test_track_template_result_iterator.opp):
         iterator_runs.append(updates.pop().result)
 
     async_track_template_result(
-       .opp,
+        opp,
         [
             TrackTemplate(
                 Template(
@@ -1374,7 +1374,7 @@ async def test_track_template_result_iterator.opp):
                 {% endif %}
             {% endfor %}
             """,
-                   .opp,
+                    opp,
                 ),
                 None,
                 timedelta(seconds=0),
@@ -1396,13 +1396,13 @@ async def test_track_template_result_iterator.opp):
         filter_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp,
+        opp,
         [
             TrackTemplate(
                 Template(
                     """{{ states.sensor|selectattr("state","equalto","on")
                 |join(",", attribute="entity_id") }}""",
-                   .opp,
+                    opp,
                 ),
                 None,
                 timedelta(seconds=0),
@@ -1452,7 +1452,7 @@ async def test_track_template_result_errors.opp, caplog):
         )
 
     async_track_template_result(
-       .opp, [TrackTemplate(template_syntax_error, None)], syntax_error_listener
+        opp, [TrackTemplate(template_syntax_error, None)], syntax_error_listener
     )
     await opp.async_block_till_done()
 
@@ -1472,7 +1472,7 @@ async def test_track_template_result_errors.opp, caplog):
         )
 
     async_track_template_result(
-       .opp,
+        opp,
         [TrackTemplate(template_not_exist, None)],
         not_exist_runs_error_listener,
     )
@@ -1524,7 +1524,7 @@ async def test_static_string.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp, [TrackTemplate(template_refresh, None)], refresh_listener
+        opp, [TrackTemplate(template_refresh, None)], refresh_listener
     )
     await opp.async_block_till_done()
     info.async_refresh()
@@ -1544,7 +1544,7 @@ async def test_track_template_rate_limit.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp,
+        opp,
         [TrackTemplate(template_refresh, None, timedelta(seconds=0.1))],
         refresh_listener,
     )
@@ -1597,7 +1597,7 @@ async def test_track_template_rate_limit_suppress_listener.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp,
+        opp,
         [TrackTemplate(template_refresh, None, timedelta(seconds=0.1))],
         refresh_listener,
     )
@@ -1692,7 +1692,7 @@ async def test_track_template_rate_limit_five.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp,
+        opp,
         [TrackTemplate(template_refresh, None, timedelta(seconds=5))],
         refresh_listener,
     )
@@ -1726,7 +1726,7 @@ async def test_track_template_has_default_rate_limit.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp,
+        opp,
         [TrackTemplate(template_refresh, None)],
         refresh_listener,
     )
@@ -1753,7 +1753,7 @@ async def test_track_template_unavailable_sates_has_default_rate_limit.opp):
    .opp.states.async_set("sensor.zero", "unknown")
     template_refresh = Template(
         "{{ states | selectattr('state', 'in', ['unavailable', 'unknown', 'none']) | list | count }}",
-       .opp,
+        opp,
     )
 
     refresh_runs = []
@@ -1763,7 +1763,7 @@ async def test_track_template_unavailable_sates_has_default_rate_limit.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp,
+        opp,
         [TrackTemplate(template_refresh, None)],
         refresh_listener,
     )
@@ -1802,7 +1802,7 @@ async def test_specifically_referenced_entity_is_not_rate_limited.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp,
+        opp,
         [TrackTemplate(template_refresh, None, timedelta(seconds=5))],
         refresh_listener,
     )
@@ -1844,7 +1844,7 @@ async def test_track_two_templates_with_different_rate_limits.opp):
             refresh_runs[update.template].append(update.result)
 
     info = async_track_template_result(
-       .opp,
+        opp,
         [
             TrackTemplate(template_one, None, timedelta(seconds=0.1)),
             TrackTemplate(template_five, None, timedelta(seconds=5)),
@@ -1904,7 +1904,7 @@ async def test_string.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp, [TrackTemplate(template_refresh, None)], refresh_listener
+        opp, [TrackTemplate(template_refresh, None)], refresh_listener
     )
     await opp.async_block_till_done()
     info.async_refresh()
@@ -1924,7 +1924,7 @@ async def test_track_template_result_refresh_cancel.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp, [TrackTemplate(template_refresh, None)], refresh_listener
+        opp, [TrackTemplate(template_refresh, None)], refresh_listener
     )
     await opp.async_block_till_done()
 
@@ -1952,7 +1952,7 @@ async def test_track_template_result_refresh_cancel.opp):
     refresh_runs = []
 
     info = async_track_template_result(
-       .opp,
+        opp,
         [TrackTemplate(template_refresh, {"value": "duck"})],
         refresh_listener,
     )
@@ -1984,7 +1984,7 @@ async def test_async_track_template_result_multiple_templates.opp):
         refresh_runs.append(updates)
 
     async_track_template_result(
-       .opp,
+        opp,
         [
             TrackTemplate(template_1, None),
             TrackTemplate(template_2, None),
@@ -2041,7 +2041,7 @@ async def test_async_track_template_result_multiple_templates_mixing_domain.opp)
         refresh_runs.append(updates)
 
     async_track_template_result(
-       .opp,
+        opp,
         [
             TrackTemplate(template_1, None),
             TrackTemplate(template_2, None),
@@ -2099,7 +2099,7 @@ async def test_async_track_template_result_raise_on_template_error(opp):
 
     with pytest.raises(TemplateError):
         async_track_template_result(
-           .opp,
+            opp,
             [
                 TrackTemplate(
                     Template(
@@ -2124,7 +2124,7 @@ async def test_track_template_with_time.opp):
         specific_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp, [TrackTemplate(template_complex, None)], specific_run_callback
+        opp, [TrackTemplate(template_complex, None)], specific_run_callback
     )
     await opp.async_block_till_done()
 
@@ -2154,7 +2154,7 @@ async def test_track_template_with_time_default.opp):
         specific_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-       .opp, [TrackTemplate(template_complex, None)], specific_run_callback
+        opp, [TrackTemplate(template_complex, None)], specific_run_callback
     )
     await opp.async_block_till_done()
 
@@ -2196,14 +2196,14 @@ async def test_track_template_with_time_that_leaves_scope.opp):
                 {{ states.binary_sensor.washing_machine.last_updated }}
             {% endif %}
         """,
-           .opp,
+            opp,
         )
 
         def specific_run_callback(event, updates):
             specific_runs.append(updates.pop().result)
 
         info = async_track_template_result(
-           .opp, [TrackTemplate(template_complex, None)], specific_run_callback
+            opp, [TrackTemplate(template_complex, None)], specific_run_callback
         )
         await opp.async_block_till_done()
 
@@ -2275,7 +2275,7 @@ async def test_async_track_template_result_multiple_templates_mixing_listeners.o
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         info = async_track_template_result(
-           .opp,
+            opp,
             [
                 TrackTemplate(template_1, None),
                 TrackTemplate(template_2, None),
@@ -2331,7 +2331,7 @@ async def test_track_same_state_simple_no_trigger.opp):
         callback_runs.append(1)
 
     async_track_same_state(
-       .opp,
+        opp,
         period,
         callback_run_callback,
         callback(lambda _, _2, to_s: to_s.state == "on"),
@@ -2371,7 +2371,7 @@ async def test_track_same_state_simple_trigger_check_funct.opp):
         return True
 
     async_track_same_state(
-       .opp,
+        opp,
         period,
         callback_run_callback,
         entity_ids="light.Bowl",
@@ -2399,7 +2399,7 @@ async def test_track_time_interval.opp):
 
     utc_now = dt_util.utcnow()
     unsub = async_track_time_interval(
-       .opp, callback(lambda x: specific_runs.append(x)), timedelta(seconds=10)
+        opp, callback(lambda x: specific_runs.append(x)), timedelta(seconds=10)
     )
 
     async_fire_time_changed.opp, utc_now + timedelta(seconds=5))
@@ -2430,7 +2430,7 @@ async def test_track_sunrise.opp, legacy_patchable_time):
    .opp.config.latitude = latitude
    .opp.config.longitude = longitude
     assert await async_setup_component(
-       .opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+        opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
     )
 
     # Get next sunrise/sunset
@@ -2456,7 +2456,7 @@ async def test_track_sunrise.opp, legacy_patchable_time):
     offset = timedelta(minutes=30)
     with patch("openpeerpower.util.dt.utcnow", return_value=utc_now):
         unsub2 = async_track_sunrise(
-           .opp, callback(lambda: offset_runs.append(1)), offset
+            opp, callback(lambda: offset_runs.append(1)), offset
         )
 
     # run tests
@@ -2490,7 +2490,7 @@ async def test_track_sunrise_update_location.opp, legacy_patchable_time):
    .opp.config.latitude = 32.87336
    .opp.config.longitude = 117.22743
     assert await async_setup_component(
-       .opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+        opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
     )
 
     # Get next sunrise
@@ -2553,7 +2553,7 @@ async def test_track_sunset.opp, legacy_patchable_time):
    .opp.config.latitude = latitude
    .opp.config.longitude = longitude
     assert await async_setup_component(
-       .opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+        opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
     )
 
     # Get next sunrise/sunset
@@ -2579,7 +2579,7 @@ async def test_track_sunset.opp, legacy_patchable_time):
     offset = timedelta(minutes=30)
     with patch("openpeerpower.util.dt.utcnow", return_value=utc_now):
         unsub2 = async_track_sunset(
-           .opp, callback(lambda: offset_runs.append(1)), offset
+            opp, callback(lambda: offset_runs.append(1)), offset
         )
 
     # Run tests
@@ -2622,28 +2622,28 @@ async def test_async_track_time_change.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_time_change(
-           .opp, callback(lambda x: wildcard_runs.append(x))
+            opp, callback(lambda x: wildcard_runs.append(x))
         )
         unsub_utc = async_track_utc_time_change(
-           .opp, callback(lambda x: specific_runs.append(x)), second=[0, 30]
+            opp, callback(lambda x: specific_runs.append(x)), second=[0, 30]
         )
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 12, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 12, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 1
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 12, 0, 15, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 12, 0, 15, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 2
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 12, 0, 30, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 12, 0, 30, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2653,7 +2653,7 @@ async def test_async_track_time_change.opp):
     unsub_utc()
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 12, 0, 30, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 12, 0, 30, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2674,23 +2674,23 @@ async def test_periodic_task_minute.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_utc_time_change(
-           .opp, callback(lambda x: specific_runs.append(x)), minute="/5", second=0
+            opp, callback(lambda x: specific_runs.append(x)), minute="/5", second=0
         )
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 12, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 12, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 12, 3, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 12, 3, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 12, 5, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 12, 5, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2698,7 +2698,7 @@ async def test_periodic_task_minute.opp):
     unsub()
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 12, 5, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 12, 5, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2718,7 +2718,7 @@ async def test_periodic_task_hour.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_utc_time_change(
-           .opp,
+            opp,
             callback(lambda x: specific_runs.append(x)),
             hour="/2",
             minute=0,
@@ -2726,31 +2726,31 @@ async def test_periodic_task_hour.opp):
         )
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 23, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 23, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 25, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 25, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 25, 1, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 25, 1, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 3
@@ -2758,7 +2758,7 @@ async def test_periodic_task_hour.opp):
     unsub()
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 25, 2, 0, 0, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 25, 2, 0, 0, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 3
@@ -2772,11 +2772,11 @@ async def test_periodic_task_wrong_input.opp):
 
     with pytest.raises(ValueError):
         async_track_utc_time_change(
-           .opp, callback(lambda x: specific_runs.append(x)), hour="/two"
+            opp, callback(lambda x: specific_runs.append(x)), hour="/two"
         )
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 2, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 2, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
@@ -2796,7 +2796,7 @@ async def test_periodic_task_clock_rollback.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_utc_time_change(
-           .opp,
+            opp,
             callback(lambda x: specific_runs.append(x)),
             hour="/2",
             minute=0,
@@ -2804,19 +2804,19 @@ async def test_periodic_task_clock_rollback.opp):
         )
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 23, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 23, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-       .opp,
+        opp,
         datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC),
         fire_all=True,
     )
@@ -2824,7 +2824,7 @@ async def test_periodic_task_clock_rollback.opp):
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-       .opp,
+        opp,
         datetime(now.year + 1, 5, 24, 0, 0, 0, 999999, tzinfo=dt_util.UTC),
         fire_all=True,
     )
@@ -2832,7 +2832,7 @@ async def test_periodic_task_clock_rollback.opp):
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2840,7 +2840,7 @@ async def test_periodic_task_clock_rollback.opp):
     unsub()
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2860,7 +2860,7 @@ async def test_periodic_task_duplicate_time.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_utc_time_change(
-           .opp,
+            opp,
             callback(lambda x: specific_runs.append(x)),
             hour="/2",
             minute=0,
@@ -2868,19 +2868,19 @@ async def test_periodic_task_duplicate_time.opp):
         )
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-       .opp, datetime(now.year + 1, 5, 25, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp, datetime(now.year + 1, 5, 25, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2903,7 +2903,7 @@ async def test_periodic_task_entering_dst.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_time_change(
-           .opp,
+            opp,
             callback(lambda x: specific_runs.append(x)),
             hour=2,
             minute=30,
@@ -2911,25 +2911,25 @@ async def test_periodic_task_entering_dst.opp):
         )
 
     async_fire_time_changed(
-       .opp, timezone.localize(datetime(now.year + 1, 3, 25, 1, 50, 0, 999999))
+        opp, timezone.localize(datetime(now.year + 1, 3, 25, 1, 50, 0, 999999))
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-       .opp, timezone.localize(datetime(now.year + 1, 3, 25, 3, 50, 0, 999999))
+        opp, timezone.localize(datetime(now.year + 1, 3, 25, 3, 50, 0, 999999))
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-       .opp, timezone.localize(datetime(now.year + 1, 3, 26, 1, 50, 0, 999999))
+        opp, timezone.localize(datetime(now.year + 1, 3, 26, 1, 50, 0, 999999))
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-       .opp, timezone.localize(datetime(now.year + 1, 3, 26, 2, 50, 0, 999999))
+        opp, timezone.localize(datetime(now.year + 1, 3, 26, 2, 50, 0, 999999))
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
@@ -2953,7 +2953,7 @@ async def test_periodic_task_leaving_dst.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_time_change(
-           .opp,
+            opp,
             callback(lambda x: specific_runs.append(x)),
             hour=2,
             minute=30,
@@ -2961,7 +2961,7 @@ async def test_periodic_task_leaving_dst.opp):
         )
 
     async_fire_time_changed(
-       .opp,
+        opp,
         timezone.localize(
             datetime(now.year + 1, 10, 28, 2, 5, 0, 999999), is_dst=False
         ),
@@ -2970,7 +2970,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-       .opp,
+        opp,
         timezone.localize(
             datetime(now.year + 1, 10, 28, 2, 55, 0, 999999), is_dst=False
         ),
@@ -2979,7 +2979,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-       .opp,
+        opp,
         timezone.localize(
             datetime(now.year + 2, 10, 28, 2, 45, 0, 999999), is_dst=True
         ),
@@ -2988,7 +2988,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
-       .opp,
+        opp,
         timezone.localize(
             datetime(now.year + 2, 10, 28, 2, 55, 0, 999999), is_dst=True
         ),
@@ -2997,7 +2997,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
-       .opp,
+        opp,
         timezone.localize(
             datetime(now.year + 2, 10, 28, 2, 55, 0, 999999), is_dst=True
         ),
@@ -3073,13 +3073,13 @@ async def test_track_state_change_event_chain_multple_entity.opp):
 
         chained_tracker_unsub.append(
             async_track_state_change_event(
-               .opp, ["light.bowl", "light.top"], chained_single_run_callback
+                opp, ["light.bowl", "light.top"], chained_single_run_callback
             )
         )
 
     tracker_unsub.append(
         async_track_state_change_event(
-           .opp, ["light.bowl", "light.top"], single_run_callback
+            opp, ["light.bowl", "light.top"], single_run_callback
         )
     )
 
@@ -3125,7 +3125,7 @@ async def test_track_state_change_event_chain_single_entity.opp):
 
         chained_tracker_unsub.append(
             async_track_state_change_event(
-               .opp, "light.bowl", chained_single_run_callback
+                opp, "light.bowl", chained_single_run_callback
             )
         )
 
@@ -3281,7 +3281,7 @@ async def test_async_track_entity_registry_updated_event.opp):
 
 
 async def test_async_track_entity_registry_updated_event_with_a_callback_that_throws(
-   .opp,
+    opp,
 ):
     """Test tracking entity registry updates for an entity_id when one callback throws."""
 

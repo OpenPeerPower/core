@@ -45,7 +45,7 @@ async def test_setup_platform.opp, dsmr_connection_fixture):
         return_value=serial_data,
     ):
         assert await async_setup_component(
-           .opp, SENSOR_DOMAIN, {SENSOR_DOMAIN: entry_data}
+            opp, SENSOR_DOMAIN, {SENSOR_DOMAIN: entry_data}
         )
         await opp.async_block_till_done()
 

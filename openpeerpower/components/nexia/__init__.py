@@ -68,7 +68,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         return await opp.async_add_executor_job(nexia_home.update)
 
     coordinator = DataUpdateCoordinator(
-       .opp,
+        opp,
         _LOGGER,
         name="Nexia update",
         update_method=_async_update_data,

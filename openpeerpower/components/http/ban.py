@@ -46,7 +46,7 @@ def setup_bans.opp, app, login_threshold):
     async def ban_startup(app):
         """Initialize bans when app starts up."""
         app[KEY_BANNED_IPS] = await async_load_ip_bans_config(
-           .opp, opp.config.path(IP_BANS_FILE)
+            opp, opp.config.path(IP_BANS_FILE)
         )
 
     app.on_startup.append(ban_startup)

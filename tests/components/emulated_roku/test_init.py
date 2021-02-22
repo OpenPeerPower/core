@@ -13,7 +13,7 @@ async def test_config_required_fields.opp):
     ):
         assert (
             await async_setup_component(
-               .opp,
+                opp,
                 emulated_roku.DOMAIN,
                 {
                     emulated_roku.DOMAIN: {
@@ -40,7 +40,7 @@ async def test_config_already_registered_not_configured.opp):
     ):
         assert (
             await async_setup_component(
-               .opp,
+                opp,
                 emulated_roku.DOMAIN,
                 {
                     emulated_roku.DOMAIN: {

@@ -48,11 +48,11 @@ class TestView(http.OpenPeerPowerView):
 
 
 async def test_registering_view_while_running(
-   .opp, aiohttp_client, aiohttp_unused_port
+    opp, aiohttp_client, aiohttp_unused_port
 ):
     """Test that we can register a view while the server is running."""
     await async_setup_component(
-       .opp, http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: aiohttp_unused_port()}}
+        opp, http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: aiohttp_unused_port()}}
     )
 
     await opp.async_start()
@@ -80,7 +80,7 @@ async def test_proxy_config(opp):
     """Test use_x_forwarded_for must config together with trusted_proxies."""
     assert (
         await async_setup_component(
-           .opp,
+            opp,
             "http",
             {
                 "http": {
@@ -97,7 +97,7 @@ async def test_proxy_config_only_use_xff.opp):
     """Test use_x_forwarded_for must config together with trusted_proxies."""
     assert (
         await async_setup_component(
-           .opp, "http", {"http": {http.CONF_USE_X_FORWARDED_FOR: True}}
+            opp, "http", {"http": {http.CONF_USE_X_FORWARDED_FOR: True}}
         )
         is not True
     )
@@ -107,7 +107,7 @@ async def test_proxy_config_only_trust_proxies.opp):
     """Test use_x_forwarded_for must config together with trusted_proxies."""
     assert (
         await async_setup_component(
-           .opp, "http", {"http": {http.CONF_TRUSTED_PROXIES: ["127.0.0.1"]}}
+            opp, "http", {"http": {http.CONF_TRUSTED_PROXIES: ["127.0.0.1"]}}
         )
         is not True
     )
@@ -133,7 +133,7 @@ async def test_ssl_profile_change_intermediate.opp):
     """Test setting ssl profile to intermediate."""
     assert (
         await async_setup_component(
-           .opp, "http", {"http": {"ssl_profile": "intermediate"}}
+            opp, "http", {"http": {"ssl_profile": "intermediate"}}
         )
         is True
     )
