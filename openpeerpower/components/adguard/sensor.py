@@ -19,7 +19,7 @@ PARALLEL_UPDATES = 4
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up AdGuard Home sensor based on a config entry."""
     adguard =.opp.data[DOMAIN][DATA_ADGUARD_CLIENT]

@@ -176,7 +176,7 @@ def mock_connection_server_error(
 
 
 async def setup_integration(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     aioclient_mock: AiohttpClientMocker,
     host: str = HOST,
     port: str = PORT,

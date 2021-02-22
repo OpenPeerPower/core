@@ -162,7 +162,7 @@ def mock_connection_server_error(
 
 
 async def setup_integration(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     aioclient_mock: AiohttpClientMocker,
     device: str = "roku3",
     app: str = "roku",

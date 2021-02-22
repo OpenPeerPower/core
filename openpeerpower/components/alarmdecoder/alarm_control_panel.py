@@ -41,7 +41,7 @@ ATTR_KEYPRESS = "keypress"
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ):
     """Set up for AlarmDecoder alarm panels."""
     options = entry.options

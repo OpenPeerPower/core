@@ -97,7 +97,7 @@ class LocalOAuth2Implementation(AbstractOAuth2Implementation):
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         domain: str,
         client_id: str,
         client_secret: str,
@@ -341,7 +341,7 @@ class AbstractOAuth2FlowHandler(config_entries.ConfigFlow, metaclass=ABCMeta):
 
 @callback
 def async_register_implementation(
-   .opp: OpenPeerPower, domain: str, implementation: AbstractOAuth2Implementation
+    opp: OpenPeerPower, domain: str, implementation: AbstractOAuth2Implementation
 ) -> None:
     """Register an OAuth2 flow implementation for an integration."""
     if isinstance(implementation, LocalOAuth2Implementation) and not.opp.data.get(
@@ -355,7 +355,7 @@ def async_register_implementation(
 
 
 async def async_get_implementations(
-   .opp: OpenPeerPower, domain: str
+    opp: OpenPeerPower, domain: str
 ) -> Dict[str, AbstractOAuth2Implementation]:
     """Return OAuth2 implementations for specified domain."""
     registered = cast(
@@ -377,7 +377,7 @@ async def async_get_implementations(
 
 
 async def async_get_config_entry_implementation(
-   .opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> AbstractOAuth2Implementation:
     """Return the implementation for this config entry."""
     implementations = await async_get_implementations.opp, config_entry.domain)
@@ -391,7 +391,7 @@ async def async_get_config_entry_implementation(
 
 @callback
 def async_add_implementation_provider(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     provider_domain: str,
     async_provide_implementation: Callable[
         [OpenPeerPower, str], Awaitable[Optional[AbstractOAuth2Implementation]]
@@ -443,7 +443,7 @@ class OAuth2Session:
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         config_entry: config_entries.ConfigEntry,
         implementation: AbstractOAuth2Implementation,
     ):
@@ -487,7 +487,7 @@ class OAuth2Session:
 
 
 async def async_oauth2_request(
-   .opp: OpenPeerPower, token: dict, method: str, url: str, **kwargs: Any
+    opp: OpenPeerPower, token: dict, method: str, url: str, **kwargs: Any
 ) -> client.ClientResponse:
     """Make an OAuth2 authenticated request.
 

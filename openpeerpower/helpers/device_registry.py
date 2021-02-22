@@ -693,7 +693,7 @@ def async_entries_for_config_entry(
 
 @callback
 def async_cleanup(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     dev_reg: DeviceRegistry,
     ent_reg: "entity_registry.EntityRegistry",
 ) -> None:

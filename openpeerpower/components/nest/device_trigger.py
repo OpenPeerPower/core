@@ -38,7 +38,7 @@ async def async_get_nest_device_id.opp: OpenPeerPower, device_id: str) -> str:
 
 
 async def async_get_device_trigger_types(
-   .opp: OpenPeerPower, nest_device_id: str
+    opp: OpenPeerPower, nest_device_id: str
 ) -> List[str]:
     """List event triggers supported for a Nest device."""
     # All devices should have already been loaded so any failures here are
@@ -76,7 +76,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_attach_trigger(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,

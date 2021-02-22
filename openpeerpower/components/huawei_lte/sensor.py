@@ -327,7 +327,7 @@ SENSOR_META: Dict[Union[str, Tuple[str, str]], SensorMeta] = {
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config_entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:

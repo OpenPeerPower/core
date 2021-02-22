@@ -182,7 +182,7 @@ def register_webhook_flow(
 
 
 async def webhook_async_remove_entry(
-   .opp: OpenPeerPowerType, entry: config_entries.ConfigEntry
+    opp: OpenPeerPowerType, entry: config_entries.ConfigEntry
 ) -> None:
     """Remove a webhook config entry."""
     if not entry.data.get("cloudhook") or "cloud" not in.opp.config.components:

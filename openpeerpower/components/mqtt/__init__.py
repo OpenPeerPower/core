@@ -251,7 +251,7 @@ def publish.opp: OpenPeerPowerType, topic, payload, qos=None, retain=None) -> No
 @callback
 @bind.opp
 def async_publish(
-   .opp: OpenPeerPowerType, topic: Any, payload, qos=None, retain=None
+    opp: OpenPeerPowerType, topic: Any, payload, qos=None, retain=None
 ) -> None:
     """Publish message to an MQTT topic."""
     data = _build_publish_data(topic, qos, retain)
@@ -261,7 +261,7 @@ def async_publish(
 
 @bind.opp
 def publish_template(
-   .opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
+    opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
 ) -> None:
     """Publish message to an MQTT topic."""
    .opp.add_job(async_publish_template, opp, topic, payload_template, qos, retain)
@@ -269,7 +269,7 @@ def publish_template(
 
 @bind.opp
 def async_publish_template(
-   .opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
+    opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
 ) -> None:
     """Publish message to an MQTT topic using a template payload."""
     data = _build_publish_data(topic, qos, retain)
@@ -306,7 +306,7 @@ def wrap_msg_callback(msg_callback: MessageCallbackType) -> MessageCallbackType:
 
 @bind.opp
 async def async_subscribe(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     topic: str,
     msg_callback: MessageCallbackType,
     qos: int = DEFAULT_QOS,
@@ -351,7 +351,7 @@ async def async_subscribe(
 
 @bind.opp
 def subscribe(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     topic: str,
     msg_callback: MessageCallbackType,
     qos: int = DEFAULT_QOS,
@@ -370,7 +370,7 @@ def subscribe(
 
 
 async def _async_setup_discovery(
-   .opp: OpenPeerPowerType, conf: ConfigType, config_entry
+    opp: OpenPeerPowerType, conf: ConfigType, config_entry
 ) -> bool:
     """Try to start the discovery of MQTT devices.
 
@@ -540,7 +540,7 @@ class MQTT:
 
     def __init__(
         self,
-       .opp: OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         config_entry,
         conf,
     ) -> None:

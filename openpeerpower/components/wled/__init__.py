@@ -118,7 +118,7 @@ class WLEDDataUpdateCoordinator(DataUpdateCoordinator[WLEDDevice]):
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         *,
         host: str,
     ):

@@ -110,7 +110,7 @@ class MessageT(TypedDict, total=False):
 
 
 async def async_get_service(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config: ConfigType,
     discovery_info: Optional[DiscoveryInfoType] = None,
 ) -> Optional[SlackNotificationService]:
@@ -171,7 +171,7 @@ class SlackNotificationService(BaseNotificationService):
 
     def __init__(
         self,
-       .opp: OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         client: WebClient,
         default_channel: str,
         username: Optional[str],

@@ -99,7 +99,7 @@ def mock_connection(aioclient_mock: AiohttpClientMocker) -> None:
 
 
 async def setup_integration(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     aioclient_mock: AiohttpClientMocker,
     skip_entry_setup: bool = False,
     setup_error: bool = False,

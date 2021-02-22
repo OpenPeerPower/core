@@ -43,7 +43,7 @@ async def test_show_user_form.opp: OpenPeerPowerType) -> None:
 
 
 async def test_cannot_connect(
-   .opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we show user form on connection error."""
     mock_connection_error(aioclient_mock)
@@ -61,7 +61,7 @@ async def test_cannot_connect(
 
 
 async def test_invalid_auth(
-   .opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we show user form on invalid auth."""
     mock_connection_invalid_auth(aioclient_mock)
@@ -79,7 +79,7 @@ async def test_invalid_auth(
 
 
 async def test_unknown_error(
-   .opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we show user form on unknown error."""
     user_input = MOCK_USER_INPUT.copy()
@@ -98,7 +98,7 @@ async def test_unknown_error(
 
 
 async def test_full_reauth_flow_implementation(
-   .opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the manual reauth flow from start to finish."""
     entry = await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
@@ -136,7 +136,7 @@ async def test_full_reauth_flow_implementation(
 
 
 async def test_full_user_flow_implementation(
-   .opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the full manual user flow from start to finish."""
     mock_connection(aioclient_mock)
@@ -165,7 +165,7 @@ async def test_full_user_flow_implementation(
 
 
 async def test_full_user_flow_advanced_options(
-   .opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the full manual user flow with advanced options."""
     mock_connection(aioclient_mock)

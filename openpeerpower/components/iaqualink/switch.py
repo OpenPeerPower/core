@@ -10,7 +10,7 @@ PARALLEL_UPDATES = 0
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up discovered switches."""
     devs = []

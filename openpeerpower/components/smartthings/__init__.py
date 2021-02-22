@@ -268,7 +268,7 @@ class DeviceBroker:
 
     def __init__(
         self,
-       .opp: OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         entry: ConfigEntry,
         token,
         smart_app,

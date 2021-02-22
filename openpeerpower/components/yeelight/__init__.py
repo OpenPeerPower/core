@@ -590,7 +590,7 @@ class YeelightEntity(Entity):
 
 
 async def _async_get_device(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     host: str,
     entry: ConfigEntry,
     capabilities: Optional[dict],

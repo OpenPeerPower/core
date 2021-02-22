@@ -67,7 +67,7 @@ SUPPORT_GROUP_LIGHT = (
 
 
 async def async_setup_platform(
-   .opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ) -> None:
     """Initialize light.group platform."""
     async_add_entities(

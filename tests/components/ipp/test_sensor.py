@@ -13,7 +13,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_sensors(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of the IPP sensors."""
     mock_connection(aioclient_mock)
@@ -82,7 +82,7 @@ async def test_sensors(
 
 
 async def test_disabled_by_default_sensors(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the disabled by default IPP sensors."""
     await init_integration.opp, aioclient_mock)
@@ -98,7 +98,7 @@ async def test_disabled_by_default_sensors(
 
 
 async def test_missing_entry_unique_id(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the unique_id of IPP sensor when printer is missing identifiers."""
     entry = await init_integration.opp, aioclient_mock, uuid=None, unique_id=None)

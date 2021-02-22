@@ -25,7 +25,7 @@ _DEFAULT_TIMEOUT = 10
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower, config_entry: config_entries.ConfigEntry, async_add_entities
+    opp: OpenPeerPower, config_entry: config_entries.ConfigEntry, async_add_entities
 ):
     """Set up the electricity price sensor from config_entry."""
     name = config_entry.data[CONF_NAME]

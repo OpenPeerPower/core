@@ -34,7 +34,7 @@ async def test_config_non_unique_profile.opp: OpenPeerPower) -> None:
 
 
 async def test_config_reauth_profile(
-   .opp: OpenPeerPower, aiohttp_client, aioclient_mock
+    opp: OpenPeerPower, aiohttp_client, aioclient_mock
 ) -> None:
     """Test reauth an existing profile re-creates the config entry."""
    .opp_config = {

@@ -11,7 +11,7 @@ from .const import DOMAIN, LOGGER
 
 
 def async_setup_entry_base(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config_entry: ConfigEntry,
     async_add_entities: Callable,
     platform: str,

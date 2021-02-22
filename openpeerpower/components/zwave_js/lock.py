@@ -44,7 +44,7 @@ SERVICE_CLEAR_LOCK_USERCODE = "clear_lock_usercode"
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up Z-Wave lock from config entry."""
     client: ZwaveClient =.opp.data[DOMAIN][config_entry.entry_id][DATA_CLIENT]

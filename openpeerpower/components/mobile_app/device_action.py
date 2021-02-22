@@ -33,7 +33,7 @@ async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_call_action_from_config(
-   .opp: OpenPeerPower, config: dict, variables: dict, context: Optional[Context]
+    opp: OpenPeerPower, config: dict, variables: dict, context: Optional[Context]
 ) -> None:
     """Execute a device action."""
     webhook_id = webhook_id_from_device_id.opp, config[CONF_DEVICE_ID])

@@ -70,7 +70,7 @@ async def async_setup_opp, config):
 
 
 async def async_get_device_automation_platform(
-   .opp: OpenPeerPower, domain: str, automation_type: str
+    opp: OpenPeerPower, domain: str, automation_type: str
 ) -> ModuleType:
     """Load device automation platform for integration.
 

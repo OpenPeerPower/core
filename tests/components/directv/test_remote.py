@@ -21,7 +21,7 @@ UNAVAILABLE_ENTITY_ID = f"{REMOTE_DOMAIN}.unavailable_client"
 
 
 async def test_setup(
-   .opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test setup with basic config."""
     await setup_integration.opp, aioclient_mock)
@@ -31,7 +31,7 @@ async def test_setup(
 
 
 async def test_unique_id(
-   .opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test unique id."""
     await setup_integration.opp, aioclient_mock)
@@ -49,7 +49,7 @@ async def test_unique_id(
 
 
 async def test_main_services(
-   .opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the different services."""
     await setup_integration.opp, aioclient_mock)

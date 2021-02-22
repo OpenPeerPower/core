@@ -117,7 +117,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 
 async def async_device_setup(
-   .opp: OpenPeerPower, entry: ConfigEntry, device: aioshelly.Device
+    opp: OpenPeerPower, entry: ConfigEntry, device: aioshelly.Device
 ):
     """Set up a device that is online."""
     device_wrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][

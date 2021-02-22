@@ -35,7 +35,7 @@ class InvalidProvider(Exception):
 
 
 async def auth_manager_from_config(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     provider_configs: List[Dict[str, Any]],
     module_configs: List[Dict[str, Any]],
 ) -> AuthManager:
@@ -144,7 +144,7 @@ class AuthManager:
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         store: auth_store.AuthStore,
         providers: _ProviderDict,
         mfa_modules: _MfaModuleDict,

@@ -130,7 +130,7 @@ async def test_state_common.opp: OpenPeerPower, device: DysonDevice) -> None:
 
 @pytest.mark.parametrize("device", [DysonPureHotCoolLink], indirect=True)
 async def test_state_purehotcoollink(
-   .opp: OpenPeerPower, device: DysonPureHotCoolLink
+    opp: OpenPeerPower, device: DysonPureHotCoolLink
 ) -> None:
     """Test common state and attributes of a PureHotCoolLink entity."""
     state =.opp.states.get(ENTITY_ID)
@@ -238,7 +238,7 @@ async def test_state_purehotcool.opp: OpenPeerPower, device: DysonPureHotCool) -
 )
 @pytest.mark.parametrize("device", [DysonPureHotCoolLink], indirect=True)
 async def test_commands_purehotcoollink(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     device: DysonPureHotCoolLink,
     service: str,
     service_data: dict,
@@ -298,7 +298,7 @@ async def test_commands_purehotcoollink(
 )
 @pytest.mark.parametrize("device", [DysonPureHotCool], indirect=True)
 async def test_commands_purehotcool(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     device: DysonPureHotCoolLink,
     service: str,
     service_data: dict,
@@ -328,7 +328,7 @@ async def test_commands_purehotcool(
 )
 @pytest.mark.parametrize("device", [DysonPureHotCool], indirect=True)
 async def test_set_hvac_mode_purehotcool(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     device: DysonPureHotCoolLink,
     hvac_mode: str,
     fan_power: str,

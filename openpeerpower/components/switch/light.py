@@ -35,7 +35,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 
 async def async_setup_platform(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config: ConfigType,
     async_add_entities: Callable[[Sequence[Entity], bool], None],
     discovery_info: Optional[DiscoveryInfoType] = None,

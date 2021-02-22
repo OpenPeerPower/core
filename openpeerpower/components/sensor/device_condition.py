@@ -100,7 +100,7 @@ CONDITION_SCHEMA = vol.All(
 
 
 async def async_get_conditions(
-   .opp: OpenPeerPower, device_id: str
+    opp: OpenPeerPower, device_id: str
 ) -> List[Dict[str, str]]:
     """List device conditions."""
     conditions: List[Dict[str, str]] = []

@@ -500,7 +500,7 @@ class Entity(ABC):
     @callback
     def add_to_platform_start(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         platform: EntityPlatform,
         parallel_updates: Optional[asyncio.Semaphore],
     ) -> None:

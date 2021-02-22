@@ -11,7 +11,7 @@ from .const import DATA_CLIENT, DATA_COORDINATOR, DOMAIN as FIRESERVICEROTA_DOMA
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up FireServiceRota binary sensor based on a config entry."""
 

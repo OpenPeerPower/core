@@ -379,7 +379,7 @@ class OpenPeerPowerHTTP:
 
 
 async def start_http_server_and_save_config(
-   .opp: OpenPeerPower, conf: Dict, server: OpenPeerPowerHTTP
+    opp: OpenPeerPower, conf: Dict, server: OpenPeerPowerHTTP
 ) -> None:
     """Startup the http server and save the config."""
     await server.start()  # type: ignore

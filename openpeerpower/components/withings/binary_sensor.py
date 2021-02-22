@@ -14,7 +14,7 @@ from .common import BaseWithingsSensor, async_create_entities
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:

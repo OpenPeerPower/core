@@ -11,7 +11,7 @@ from .const import DATA_COORDINATOR, DOMAIN, SENSOR_TYPE_RATE, SENSORS_INFO
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ):
     """Set up the sensor platform."""
     coordinator =.opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]

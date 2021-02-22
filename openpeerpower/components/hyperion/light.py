@@ -73,7 +73,7 @@ ICON_EXTERNAL_SOURCE = "mdi:television-ambient-light"
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> bool:
     """Set up a Hyperion platform from config entry."""
 

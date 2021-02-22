@@ -158,7 +158,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> bool:
     """Set up a Firmata board for a config entry."""
     if DOMAIN not in.opp.data:
@@ -205,7 +205,7 @@ async def async_setup_entry(
 
 
 async def async_unload_entry(
-   .opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> None:
     """Shutdown and close a Firmata board for a config entry."""
     _LOGGER.debug("Closing Firmata board %s", config_entry.data[CONF_NAME])

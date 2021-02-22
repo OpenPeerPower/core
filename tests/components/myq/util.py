@@ -15,7 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_init_integration(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     skip_setup: bool = False,
 ) -> MockConfigEntry:
     """Set up the myq integration in Open Peer Power."""

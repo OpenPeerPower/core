@@ -80,7 +80,7 @@ class Trigger:
 
     device_id: str = attr.ib()
     discovery_hash: dict = attr.ib()
-   .opp: OpenPeerPowerType = attr.ib()
+    opp: OpenPeerPowerType = attr.ib()
     remove_update_signal: Callable[[], None] = attr.ib()
     subtype: str = attr.ib()
     tasmota_trigger: TasmotaTrigger = attr.ib()
@@ -263,7 +263,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_attach_trigger(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config: ConfigType,
     action: Callable,
     automation_info: dict,

@@ -23,7 +23,7 @@ from .router import FreeboxRouter
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the sensors."""
     router =.opp.data[DOMAIN][entry.unique_id]

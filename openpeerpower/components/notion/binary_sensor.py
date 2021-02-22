@@ -44,7 +44,7 @@ BINARY_SENSOR_TYPES = {
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ):
     """Set up Notion sensors based on a config entry."""
     coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]

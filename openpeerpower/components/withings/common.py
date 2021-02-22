@@ -475,7 +475,7 @@ class ConfigEntryWithingsApi(AbstractWithingsApi):
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         config_entry: ConfigEntry,
         implementation: AbstractOAuth2Implementation,
     ):
@@ -557,7 +557,7 @@ class DataManager:
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         profile: str,
         api: ConfigEntryWithingsApi,
         user_id: int,
@@ -906,7 +906,7 @@ def get_attribute_unique_id(attribute: WithingsAttribute, user_id: int) -> str:
 
 
 async def async_get_entity_id(
-   .opp: OpenPeerPower, attribute: WithingsAttribute, user_id: int
+    opp: OpenPeerPower, attribute: WithingsAttribute, user_id: int
 ) -> Optional[str]:
     """Get an entity id for a user's attribute."""
     entity_registry: EntityRegistry = (
@@ -1019,7 +1019,7 @@ class BaseWithingsSensor(Entity):
 
 
 async def async_get_data_manager(
-   .opp: OpenPeerPower, config_entry: ConfigEntry
+    opp: OpenPeerPower, config_entry: ConfigEntry
 ) -> DataManager:
     """Get the data manager for a config entry."""
    .opp.data.setdefault(const.DOMAIN, {})
@@ -1052,7 +1052,7 @@ async def async_get_data_manager(
 
 
 def get_data_manager_by_webhook_id(
-   .opp: OpenPeerPower, webhook_id: str
+    opp: OpenPeerPower, webhook_id: str
 ) -> Optional[DataManager]:
     """Get a data manager by it's webhook id."""
     return next(
@@ -1084,7 +1084,7 @@ def async_remove_data_manager.opp: OpenPeerPower, config_entry: ConfigEntry) -> 
 
 
 async def async_create_entities(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
     create_func: Callable[[DataManager, WithingsAttribute], Entity],
     platform: str,

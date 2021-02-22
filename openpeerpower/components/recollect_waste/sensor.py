@@ -48,7 +48,7 @@ def async_get_pickup_type_names(
 
 
 async def async_setup_platform(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config: dict,
     async_add_entities: Callable,
     discovery_info: dict = None,
@@ -68,7 +68,7 @@ async def async_setup_platform(
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up ReCollect Waste sensors based on a config entry."""
     coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]

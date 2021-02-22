@@ -215,7 +215,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
 
 async def _setup_auto_reconnect_logic(
-   .opp: OpenPeerPowerType, cli: APIClient, entry: ConfigEntry, host: str, on_login
+    opp: OpenPeerPowerType, cli: APIClient, entry: ConfigEntry, host: str, on_login
 ):
     """Set up the re-connect logic for the API client."""
 
@@ -284,7 +284,7 @@ async def _setup_auto_reconnect_logic(
 
 
 async def _async_setup_device_registry(
-   .opp: OpenPeerPowerType, entry: ConfigEntry, device_info: DeviceInfo
+    opp: OpenPeerPowerType, entry: ConfigEntry, device_info: DeviceInfo
 ):
     """Set up device registry feature for a particular config entry."""
     sw_version = device_info.esphome_version
@@ -303,7 +303,7 @@ async def _async_setup_device_registry(
 
 
 async def _register_service(
-   .opp: OpenPeerPowerType, entry_data: RuntimeEntryData, service: UserService
+    opp: OpenPeerPowerType, entry_data: RuntimeEntryData, service: UserService
 ):
     service_name = f"{entry_data.device_info.name}_{service.name}"
     schema = {}
@@ -328,7 +328,7 @@ async def _register_service(
 
 
 async def _setup_services(
-   .opp: OpenPeerPowerType, entry_data: RuntimeEntryData, services: List[UserService]
+    opp: OpenPeerPowerType, entry_data: RuntimeEntryData, services: List[UserService]
 ):
     old_services = entry_data.services.copy()
     to_unregister = []
@@ -359,7 +359,7 @@ async def _setup_services(
 
 
 async def _cleanup_instance(
-   .opp: OpenPeerPowerType, entry: ConfigEntry
+    opp: OpenPeerPowerType, entry: ConfigEntry
 ) -> RuntimeEntryData:
     """Cleanup the esphome client if it exists."""
     data: RuntimeEntryData =.opp.data[DOMAIN].pop(entry.entry_id)
@@ -385,7 +385,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
 
 async def platform_async_setup_entry(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     entry: ConfigEntry,
     async_add_entities,
     *,

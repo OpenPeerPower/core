@@ -12,7 +12,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_config_entry_not_ready(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test configuration entry not ready on library error."""
     aioclient_mock.post("http://127.0.0.1:10000/retrieve", exc=aiohttp.ClientError)
@@ -21,7 +21,7 @@ async def test_config_entry_not_ready(
 
 
 async def test_config_entry_empty_reply(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test configuration entry not ready when library returns False."""
     with patch("pyatag.AtagOne.update", return_value=False):
@@ -30,7 +30,7 @@ async def test_config_entry_empty_reply(
 
 
 async def test_unload_config_entry(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the ATAG configuration entry unloading."""
     entry = await init_integration.opp, aioclient_mock)

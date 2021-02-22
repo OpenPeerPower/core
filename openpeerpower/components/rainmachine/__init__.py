@@ -50,7 +50,7 @@ PLATFORMS = ["binary_sensor", "sensor", "switch"]
 
 
 async def async_update_programs_and_zones(
-   .opp: OpenPeerPower, entry: ConfigEntry
+    opp: OpenPeerPower, entry: ConfigEntry
 ) -> None:
     """Update program and zone DataUpdateCoordinators.
 

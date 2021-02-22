@@ -81,7 +81,7 @@ def convert_condition(time, weather):
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType, entry: ConfigType, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigType, async_add_entities
 ) -> None:
     """Set up the NWS weather platform."""
    .opp_data =.opp.data[DOMAIN][entry.entry_id]

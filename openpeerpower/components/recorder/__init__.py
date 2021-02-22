@@ -214,7 +214,7 @@ class Recorder(threading.Thread):
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         auto_purge: bool,
         keep_days: int,
         commit_interval: int,

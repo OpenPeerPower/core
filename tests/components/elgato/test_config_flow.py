@@ -14,7 +14,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_full_user_flow_implementation(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the full manual user flow from start to finish."""
     aioclient_mock.get(
@@ -58,7 +58,7 @@ async def test_full_user_flow_implementation(
 
 
 async def test_full_zeroconf_flow_implementation(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the zeroconf flow from start to finish."""
     aioclient_mock.get(
@@ -93,7 +93,7 @@ async def test_full_zeroconf_flow_implementation(
 
 
 async def test_connection_error(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we show user form on Elgato Key Light connection error."""
     aioclient_mock.get(
@@ -112,7 +112,7 @@ async def test_connection_error(
 
 
 async def test_zeroconf_connection_error(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort zeroconf flow on Elgato Key Light connection error."""
     aioclient_mock.get(
@@ -130,7 +130,7 @@ async def test_zeroconf_connection_error(
 
 
 async def test_user_device_exists_abort(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort zeroconf flow if Elgato Key Light device already configured."""
     await init_integration.opp, aioclient_mock)
@@ -145,7 +145,7 @@ async def test_user_device_exists_abort(
 
 
 async def test_zeroconf_device_exists_abort(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort zeroconf flow if Elgato Key Light device already configured."""
     await init_integration.opp, aioclient_mock)

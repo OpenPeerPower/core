@@ -32,7 +32,7 @@ SUPPORTED_FEATURES = SUPPORT_SET_SPEED | SUPPORT_DIRECTION
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up WiLight lights from a config entry."""
     parent =.opp.data[DOMAIN][entry.entry_id]

@@ -38,7 +38,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config_entry: config_entries.ConfigEntry,
     async_add_entities,
 ):

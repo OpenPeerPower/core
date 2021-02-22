@@ -15,7 +15,7 @@ DEFAULT_COVER_CLASS = DEVICE_CLASS_SHUTTER
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Record the async_add_entities function to add them later when received from Dynalite."""
 

@@ -118,7 +118,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
 
 async def async_remove_obsolete_entities(
-   .opp: OpenPeerPowerType, entry: ConfigEntry, hap: HomematicipHAP
+    opp: OpenPeerPowerType, entry: ConfigEntry, hap: HomematicipHAP
 ):
     """Remove obsolete entities from entity registry."""
 

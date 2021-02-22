@@ -43,7 +43,7 @@ SERVICE_NAMES = {
 
 
 async def async_call_action_from_config(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config: ConfigType,
     variables: TemplateVarsType,
     context: Context,
@@ -77,7 +77,7 @@ async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def _execute_service_based_action(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config: ACTION_SCHEMA,
     variables: TemplateVarsType,
     context: Context,

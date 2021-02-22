@@ -9,7 +9,7 @@ from openpeerpower.util import slugify
 
 
 async def async_setup_scanner(
-   .opp: OpenPeerPowerType, config, async_see, discovery_info=None
+    opp: OpenPeerPowerType, config, async_see, discovery_info=None
 ):
     """Set up the MySensors device scanner."""
     new_devices = mysensors.setup_mysensors_platform(

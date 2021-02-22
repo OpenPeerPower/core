@@ -91,7 +91,7 @@ STORAGE_VERSION = 1
 
 @bind.opp
 def async_active_zone(
-   .opp: OpenPeerPower, latitude: float, longitude: float, radius: int = 0
+    opp: OpenPeerPower, latitude: float, longitude: float, radius: int = 0
 ) -> Optional[State]:
     """Find the active zone for given latitude, longitude.
 
@@ -253,7 +253,7 @@ def _home_conf.opp: OpenPeerPower) -> Dict:
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> bool:
     """Set up zone as config entry."""
     storage_collection = cast(ZoneStorageCollection, opp.data[DOMAIN])
@@ -270,7 +270,7 @@ async def async_setup_entry(
 
 
 async def async_unload_entry(
-   .opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> bool:
     """Will be called once we remove it."""
     return True

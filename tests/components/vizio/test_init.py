@@ -13,7 +13,7 @@ from tests.common import MockConfigEntry
 
 
 async def test_setup_component(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -26,7 +26,7 @@ async def test_setup_component(
 
 
 async def test_tv_load_and_unload(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -50,7 +50,7 @@ async def test_tv_load_and_unload(
 
 
 async def test_speaker_load_and_unload(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:

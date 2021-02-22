@@ -138,7 +138,7 @@ class PairedSensorManager:
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         entry: ConfigEntry,
         client: Client,
         api_lock: asyncio.Lock,

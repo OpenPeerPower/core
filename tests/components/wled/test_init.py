@@ -21,7 +21,7 @@ async def test_config_entry_not_ready(
 
 
 async def test_unload_config_entry(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the WLED configuration entry unloading."""
     entry = await init_integration.opp, aioclient_mock)

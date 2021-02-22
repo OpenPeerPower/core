@@ -146,7 +146,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 
 async def _async_setup_platform(
-   .opp: OpenPeerPowerType, config: ConfigType, async_add_entities
+    opp: OpenPeerPowerType, config: ConfigType, async_add_entities
 ):
     """Set up the cast platform."""
     # Import CEC IGNORE attributes

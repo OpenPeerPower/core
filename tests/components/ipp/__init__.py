@@ -116,7 +116,7 @@ def mock_connection(
 
 
 async def init_integration(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     aioclient_mock: AiohttpClientMocker,
     skip_setup: bool = False,
     host: str = HOST,

@@ -21,7 +21,7 @@ ATTR_LOW_BATTERY = "low_battery"
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:

@@ -99,7 +99,7 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 
 
 async def async_call_action_from_config(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config: ConfigType,
     variables: TemplateVarsType,
     context: Context,
@@ -141,7 +141,7 @@ def async_condition_from_config(config: ConfigType) -> condition.ConditionChecke
 
 
 async def async_attach_trigger(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,
@@ -170,7 +170,7 @@ async def async_attach_trigger(
 
 
 async def _async_get_automations(
-   .opp: OpenPeerPower, device_id: str, automation_templates: List[dict], domain: str
+    opp: OpenPeerPower, device_id: str, automation_templates: List[dict], domain: str
 ) -> List[dict]:
     """List device automations."""
     automations: List[Dict[str, Any]] = []
@@ -197,21 +197,21 @@ async def _async_get_automations(
 
 
 async def async_get_actions(
-   .opp: OpenPeerPower, device_id: str, domain: str
+    opp: OpenPeerPower, device_id: str, domain: str
 ) -> List[dict]:
     """List device actions."""
     return await _async_get_automations.opp, device_id, ENTITY_ACTIONS, domain)
 
 
 async def async_get_conditions(
-   .opp: OpenPeerPower, device_id: str, domain: str
+    opp: OpenPeerPower, device_id: str, domain: str
 ) -> List[Dict[str, str]]:
     """List device conditions."""
     return await _async_get_automations.opp, device_id, ENTITY_CONDITIONS, domain)
 
 
 async def async_get_triggers(
-   .opp: OpenPeerPower, device_id: str, domain: str
+    opp: OpenPeerPower, device_id: str, domain: str
 ) -> List[dict]:
     """List device triggers."""
     return await _async_get_automations.opp, device_id, ENTITY_TRIGGERS, domain)

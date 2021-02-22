@@ -230,7 +230,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
 
 async def on_unload(
-   .opp: OpenPeerPowerType, entry: Union[ConfigEntry, GatewayId], fnct: Callable
+    opp: OpenPeerPowerType, entry: Union[ConfigEntry, GatewayId], fnct: Callable
 ) -> None:
     """Register a callback to be called when entry is unloaded.
 

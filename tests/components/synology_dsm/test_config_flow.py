@@ -382,7 +382,7 @@ async def test_unknown_failed.opp: OpenPeerPowerType, service: MagicMock):
 
 
 async def test_missing_data_after_login(
-   .opp: OpenPeerPowerType, service_failed: MagicMock
+    opp: OpenPeerPowerType, service_failed: MagicMock
 ):
     """Test when we have errors during connection."""
     result = await.opp.config_entries.flow.async_init(
@@ -395,7 +395,7 @@ async def test_missing_data_after_login(
 
 
 async def test_form_ssdp_already_configured(
-   .opp: OpenPeerPowerType, service: MagicMock
+    opp: OpenPeerPowerType, service: MagicMock
 ):
     """Test ssdp abort when the serial number is already configured."""
     await setup.async_setup_component.opp, "persistent_notification", {})

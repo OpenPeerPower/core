@@ -535,7 +535,7 @@ async def test_get_request_host.opp: OpenPeerPower):
 
 
 async def test_get_current_request_url_with_known_host(
-   .opp: OpenPeerPower, current_request
+    opp: OpenPeerPower, current_request
 ):
     """Test getting current request URL with known hosts addresses."""
    .opp.config.api = Mock(use_ssl=False, port=8123, local_ip="127.0.0.1")

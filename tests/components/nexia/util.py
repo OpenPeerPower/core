@@ -13,7 +13,7 @@ from tests.common import MockConfigEntry, load_fixture
 
 
 async def async_init_integration(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     skip_setup: bool = False,
 ) -> MockConfigEntry:
     """Set up the nexia integration in Open Peer Power."""

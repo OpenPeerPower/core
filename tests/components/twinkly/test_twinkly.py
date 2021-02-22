@@ -189,7 +189,7 @@ async def test_unload.opp: OpenPeerPower):
 
 
 async def _create_entries(
-   .opp: OpenPeerPower, client=None
+    opp: OpenPeerPower, client=None
 ) -> Tuple[RegistryEntry, DeviceEntry, ClientMock]:
     client = ClientMock() if client is None else client
 

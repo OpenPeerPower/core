@@ -11,7 +11,7 @@ from .common import ComponentFactory, new_simple_controller_config
 
 
 async def run_sensor_test(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     vera_component_factory: ComponentFactory,
     category: int,
     class_property: str,
@@ -50,7 +50,7 @@ async def run_sensor_test(
 
 
 async def test_temperature_sensor_f(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
 
@@ -68,7 +68,7 @@ async def test_temperature_sensor_f(
 
 
 async def test_temperature_sensor_c(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     await run_sensor_test(
@@ -81,7 +81,7 @@ async def test_temperature_sensor_c(
 
 
 async def test_light_sensor(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     await run_sensor_test(
@@ -95,7 +95,7 @@ async def test_light_sensor(
 
 
 async def test_uv_sensor(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     await run_sensor_test(
@@ -109,7 +109,7 @@ async def test_uv_sensor(
 
 
 async def test_humidity_sensor(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     await run_sensor_test(
@@ -123,7 +123,7 @@ async def test_humidity_sensor(
 
 
 async def test_power_meter_sensor(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     await run_sensor_test(
@@ -137,7 +137,7 @@ async def test_power_meter_sensor(
 
 
 async def test_trippable_sensor(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
 
@@ -155,7 +155,7 @@ async def test_trippable_sensor(
 
 
 async def test_unknown_sensor(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
 
@@ -173,7 +173,7 @@ async def test_unknown_sensor(
 
 
 async def test_scene_controller_sensor(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_device = MagicMock(spec=pv.VeraSensor)  # type: pv.VeraSensor

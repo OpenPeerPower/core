@@ -285,7 +285,7 @@ def get_manual_configuration.opp, config, conf, ihc_controller, controller_id):
 
 
 def autosetup_ihc_products(
-   .opp: OpenPeerPowerType, config, ihc_controller, controller_id
+    opp: OpenPeerPowerType, config, ihc_controller, controller_id
 ):
     """Auto setup of IHC products from the IHC project file."""
     project_xml = ihc_controller.get_project()

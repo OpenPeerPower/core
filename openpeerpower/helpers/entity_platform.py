@@ -45,7 +45,7 @@ class EntityPlatform:
     def __init__(
         self,
         *,
-       .opp: OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         logger: Logger,
         domain: str,
         platform_name: str,
@@ -628,7 +628,7 @@ current_platform: ContextVar[Optional[EntityPlatform]] = ContextVar(
 
 @callback
 def async_get_platforms(
-   .opp: OpenPeerPowerType, integration_name: str
+    opp: OpenPeerPowerType, integration_name: str
 ) -> List[EntityPlatform]:
     """Find existing platforms."""
     if (

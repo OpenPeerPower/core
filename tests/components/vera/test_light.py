@@ -10,7 +10,7 @@ from .common import ComponentFactory, new_simple_controller_config
 
 
 async def test_light(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_device = MagicMock(spec=pv.VeraDimmer)  # type: pv.VeraDimmer

@@ -66,7 +66,7 @@ async def async_get_discoverable_devices.opp):
 
 
 async def async_discover_devices(
-   .opp: OpenPeerPowerType, existing_devices: SmartDevices
+    opp: OpenPeerPowerType, existing_devices: SmartDevices
 ) -> SmartDevices:
     """Get devices through discovery."""
     _LOGGER.debug("Discovering devices")

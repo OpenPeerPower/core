@@ -42,7 +42,7 @@ DEPENDENCIES = ("http",)
 @bind.opp
 @callback
 def async_register_command(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     command_or_handler: Union[str, const.WebSocketCommandHandler],
     handler: Optional[const.WebSocketCommandHandler] = None,
     schema: Optional[vol.Schema] = None,

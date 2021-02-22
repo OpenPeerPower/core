@@ -17,7 +17,7 @@ TRIGGER_SCHEMA = toggle_entity.TRIGGER_SCHEMA.extend(
 
 
 async def async_attach_trigger(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,

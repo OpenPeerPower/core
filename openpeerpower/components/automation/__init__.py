@@ -505,7 +505,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
 
 
 async def _async_process_config(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config: Dict[str, Any],
     component: EntityComponent,
 ) -> bool:

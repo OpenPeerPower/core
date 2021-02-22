@@ -56,7 +56,7 @@ _IZONE_FAN_TO_HA = {
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType, config: ConfigType, async_add_entities
+    opp: OpenPeerPowerType, config: ConfigType, async_add_entities
 ):
     """Initialize an IZone Controller."""
     disco =.opp.data[DATA_DISCOVERY_SERVICE]

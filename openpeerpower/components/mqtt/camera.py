@@ -40,7 +40,7 @@ PLATFORM_SCHEMA = (
 
 
 async def async_setup_platform(
-   .opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Set up MQTT camera through configuration.yaml."""
     await async_setup_reload_service.opp, DOMAIN, PLATFORMS)

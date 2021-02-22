@@ -171,7 +171,7 @@ def expand_entity_ids.opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List
 
 @bind.opp
 def get_entity_ids(
-   .opp: OpenPeerPowerType, entity_id: str, domain_filter: Optional[str] = None
+    opp: OpenPeerPowerType, entity_id: str, domain_filter: Optional[str] = None
 ) -> List[str]:
     """Get members of this group.
 

@@ -42,7 +42,7 @@ def get_astral_location.opp: OpenPeerPowerType) -> astral.Location:
 @callback
 @bind.opp
 def get_astral_event_next(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     event: str,
     utc_point_in_time: Optional[datetime.datetime] = None,
     offset: Optional[datetime.timedelta] = None,
@@ -89,7 +89,7 @@ def get_location_astral_event_next(
 @callback
 @bind.opp
 def get_astral_event_date(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     event: str,
     date: Union[datetime.date, datetime.datetime, None] = None,
 ) -> Optional[datetime.datetime]:
@@ -114,7 +114,7 @@ def get_astral_event_date(
 @callback
 @bind.opp
 def is_up(
-   .opp: OpenPeerPowerType, utc_point_in_time: Optional[datetime.datetime] = None
+    opp: OpenPeerPowerType, utc_point_in_time: Optional[datetime.datetime] = None
 ) -> bool:
     """Calculate if the sun is currently up."""
     if utc_point_in_time is None:

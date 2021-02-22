@@ -17,7 +17,7 @@ from .common import ComponentFactory, new_simple_controller_config
 
 
 async def test_climate(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_device = MagicMock(spec=pv.VeraThermostat)  # type: pv.VeraThermostat
@@ -128,7 +128,7 @@ async def test_climate(
 
 
 async def test_climate_f(
-   .opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_device = MagicMock(spec=pv.VeraThermostat)  # type: pv.VeraThermostat

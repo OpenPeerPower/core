@@ -28,7 +28,7 @@ GH_ZONES = ["radiator", "wet underfloor"]
 
 
 async def async_setup_platform(
-   .opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ) -> None:
     """Set up the Genius Hub climate entities."""
     if discovery_info is None:

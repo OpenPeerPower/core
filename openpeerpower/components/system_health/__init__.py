@@ -25,7 +25,7 @@ INFO_CALLBACK_TIMEOUT = 5
 @bind.opp
 @callback
 def async_register_info(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     domain: str,
     info_callback: Callable[[OpenPeerPower], Dict],
 ):
@@ -58,7 +58,7 @@ async def _register_system_health_platform.opp, integration_domain, platform):
 
 
 async def get_integration_info(
-   .opp: OpenPeerPower, registration: "SystemHealthRegistration"
+    opp: OpenPeerPower, registration: "SystemHealthRegistration"
 ):
     """Get integration system health."""
     try:
@@ -89,7 +89,7 @@ def _format_value(val):
 @websocket_api.async_response
 @websocket_api.websocket_command({vol.Required("type"): "system_health/info"})
 async def handle_info(
-   .opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: Dict
+    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: Dict
 ):
     """Handle an info request via a subscription."""
     registrations: Dict[str, SystemHealthRegistration] =.opp.data[DOMAIN]
@@ -185,7 +185,7 @@ async def handle_info(
 class SystemHealthRegistration:
     """Helper class to track platform registration."""
 
-   .opp: OpenPeerPower
+    opp: OpenPeerPower
     domain: str
     info_callback: Optional[Callable[[OpenPeerPower], Awaitable[Dict]]] = None
     manage_url: Optional[str] = None
@@ -203,7 +203,7 @@ class SystemHealthRegistration:
 
 
 async def async_check_can_reach_url(
-   .opp: OpenPeerPower, url: str, more_info: Optional[str] = None
+    opp: OpenPeerPower, url: str, more_info: Optional[str] = None
 ) -> str:
     """Test if the url can be reached."""
     session = aiohttp_client.async_get_clientsession.opp)

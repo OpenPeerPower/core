@@ -12,7 +12,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_config_entry_not_ready(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the IPP configuration entry not ready."""
     entry = await init_integration.opp, aioclient_mock, conn_error=True)
@@ -20,7 +20,7 @@ async def test_config_entry_not_ready(
 
 
 async def test_unload_config_entry(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the IPP configuration entry unloading."""
     entry = await init_integration.opp, aioclient_mock)

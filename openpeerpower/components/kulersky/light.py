@@ -40,7 +40,7 @@ def check_light(light: pykulersky.Light):
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config_entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:

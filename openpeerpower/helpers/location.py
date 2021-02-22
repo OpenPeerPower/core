@@ -50,7 +50,7 @@ def closest(
 
 
 def find_coordinates(
-   .opp: OpenPeerPowerType, entity_id: str, recursion_history: Optional[list] = None
+    opp: OpenPeerPowerType, entity_id: str, recursion_history: Optional[list] = None
 ) -> Optional[str]:
     """Find the gps coordinates of the entity in the form of '90.000,180.000'."""
     entity_state =.opp.states.get(entity_id)

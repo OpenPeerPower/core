@@ -80,7 +80,7 @@ from tests.common import MockConfigEntry, async_fire_time_changed
 
 
 async def _add_config_entry_to.opp(
-   .opp: OpenPeerPowerType, config_entry: MockConfigEntry
+    opp: OpenPeerPowerType, config_entry: MockConfigEntry
 ) -> None:
     config_entry.add_to.opp.opp)
     assert await.opp.config_entries.async_setup(config_entry.entry_id)
@@ -110,7 +110,7 @@ def _assert_sources_and_volume(attr: Dict[str, Any], vizio_device_class: str) ->
 
 
 def _get_attr_and_assert_base_attr(
-   .opp: OpenPeerPowerType, device_class: str, power_state: str
+    opp: OpenPeerPowerType, device_class: str, power_state: str
 ) -> Dict[str, Any]:
     """Return entity attributes  after asserting name, device class, and power state."""
     attr =.opp.states.get(ENTITY_ID).attributes
@@ -140,7 +140,7 @@ async def _cm_for_test_setup_without_apps(
 
 
 async def _test_setup_tv(
-   .opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
+    opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio TV entity setup."""
     ha_power_state = _get_ha_power_state(vizio_power_state)
@@ -164,7 +164,7 @@ async def _test_setup_tv(
 
 
 async def _test_setup_speaker(
-   .opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
+    opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio Speaker entity setup."""
     ha_power_state = _get_ha_power_state(vizio_power_state)
@@ -201,7 +201,7 @@ async def _test_setup_speaker(
 
 @asynccontextmanager
 async def _cm_for_test_setup_tv_with_apps(
-   .opp: OpenPeerPowerType, device_config: Dict[str, Any], app_config: Dict[str, Any]
+    opp: OpenPeerPowerType, device_config: Dict[str, Any], app_config: Dict[str, Any]
 ) -> None:
     """Context manager to setup test for Vizio TV with support for apps."""
     config_entry = MockConfigEntry(
@@ -251,7 +251,7 @@ async def _test_setup_failure.opp: OpenPeerPowerType, config: str) -> None:
 
 
 async def _test_service(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     domain: str,
     vizio_func_name: str,
     ha_service_name: str,
@@ -281,7 +281,7 @@ async def _test_service(
 
 
 async def test_speaker_on(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -290,7 +290,7 @@ async def test_speaker_on(
 
 
 async def test_speaker_off(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -299,7 +299,7 @@ async def test_speaker_off(
 
 
 async def test_speaker_unavailable(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -308,7 +308,7 @@ async def test_speaker_unavailable(
 
 
 async def test_init_tv_on(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -317,7 +317,7 @@ async def test_init_tv_on(
 
 
 async def test_init_tv_off(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -326,7 +326,7 @@ async def test_init_tv_off(
 
 
 async def test_init_tv_unavailable(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -335,21 +335,21 @@ async def test_init_tv_unavailable(
 
 
 async def test_setup_failure_speaker(
-   .opp: OpenPeerPowerType, vizio_connect: pytest.fixture
+    opp: OpenPeerPowerType, vizio_connect: pytest.fixture
 ) -> None:
     """Test speaker entity setup failure."""
     await _test_setup_failure.opp, MOCK_SPEAKER_CONFIG)
 
 
 async def test_setup_failure_tv(
-   .opp: OpenPeerPowerType, vizio_connect: pytest.fixture
+    opp: OpenPeerPowerType, vizio_connect: pytest.fixture
 ) -> None:
     """Test TV entity setup failure."""
     await _test_setup_failure.opp, MOCK_USER_VALID_TV_CONFIG)
 
 
 async def test_services(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -438,7 +438,7 @@ async def test_services(
 
 
 async def test_options_update(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -460,7 +460,7 @@ async def test_options_update(
 
 
 async def _test_update_availability_switch(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     initial_power_state: Optional[bool],
     final_power_state: Optional[bool],
     caplog: pytest.fixture,
@@ -503,7 +503,7 @@ async def _test_update_availability_switch(
 
 
 async def test_update_unavailable_to_available(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
     caplog: pytest.fixture,
@@ -513,7 +513,7 @@ async def test_update_unavailable_to_available(
 
 
 async def test_update_available_to_unavailable(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
     caplog: pytest.fixture,
@@ -523,7 +523,7 @@ async def test_update_available_to_unavailable(
 
 
 async def test_setup_with_apps(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
@@ -551,7 +551,7 @@ async def test_setup_with_apps(
 
 
 async def test_setup_with_apps_include(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
@@ -569,7 +569,7 @@ async def test_setup_with_apps_include(
 
 
 async def test_setup_with_apps_exclude(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
@@ -587,7 +587,7 @@ async def test_setup_with_apps_exclude(
 
 
 async def test_setup_with_apps_additional_apps_config(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
@@ -663,7 +663,7 @@ def test_invalid_apps_config(opp: OpenPeerPowerType):
 
 
 async def test_setup_with_unknown_app_config(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
@@ -680,7 +680,7 @@ async def test_setup_with_unknown_app_config(
 
 
 async def test_setup_with_no_running_app(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
@@ -697,7 +697,7 @@ async def test_setup_with_no_running_app(
 
 
 async def test_setup_tv_without_mute(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -721,7 +721,7 @@ async def test_setup_tv_without_mute(
 
 
 async def test_apps_update(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,

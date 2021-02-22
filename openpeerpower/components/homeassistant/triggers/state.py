@@ -64,7 +64,7 @@ def TRIGGER_SCHEMA(value: Any) -> dict:  # pylint: disable=invalid-name
 
 
 async def async_attach_trigger(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config,
     action,
     automation_info,

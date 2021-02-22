@@ -33,7 +33,7 @@ SENSORS = {
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
 ):
     """Set up this platform for a specific ConfigEntry(==Gateway)."""
 

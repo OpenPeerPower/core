@@ -136,7 +136,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
 
 def _async_register_services(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     coordinator: NZBGetDataUpdateCoordinator,
 ) -> None:
     """Register integration-level services."""

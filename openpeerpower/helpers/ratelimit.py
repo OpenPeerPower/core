@@ -15,7 +15,7 @@ class KeyedRateLimit:
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
     ):
         """Initialize ratelimit tracker."""
         self.opp =.opp

@@ -46,7 +46,7 @@ def async_load_websocket_api.opp: OpenPeerPower):
     }
 )
 async def websocket_supervisor_event(
-   .opp: OpenPeerPower, connection: ActiveConnection, msg: dict
+    opp: OpenPeerPower, connection: ActiveConnection, msg: dict
 ):
     """Publish events from the Supervisor."""
    .opp.bus.async_fire(EVENT_SUPERVISOR_EVENT, msg[ATTR_DATA])
@@ -65,7 +65,7 @@ async def websocket_supervisor_event(
     }
 )
 async def websocket_supervisor_api(
-   .opp: OpenPeerPower, connection: ActiveConnection, msg: dict
+    opp: OpenPeerPower, connection: ActiveConnection, msg: dict
 ):
     """Websocket handler to call Supervisor API."""
     supervisor: HassIO =.opp.data[DOMAIN]

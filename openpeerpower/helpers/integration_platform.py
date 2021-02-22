@@ -12,7 +12,7 @@ _LOGGER = logging.getLogger(__name__)
 
 @bind.opp
 async def async_process_integration_platforms(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     platform_name: str,
     # Any = platform.
     process_platform: Callable[[OpenPeerPower, str, Any], Awaitable[None]],

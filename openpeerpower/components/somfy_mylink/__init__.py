@@ -151,7 +151,7 @@ def _async_import_options_from_data_if_missing.opp: OpenPeerPower, entry: Config
 
 @callback
 def _async_migrate_entity_config(
-   .opp: OpenPeerPower, entry: ConfigEntry, mylink_status: dict
+    opp: OpenPeerPower, entry: ConfigEntry, mylink_status: dict
 ):
     if CONF_ENTITY_CONFIG not in entry.options:
         return

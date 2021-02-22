@@ -74,7 +74,7 @@ async def test_async_step_import_success.opp: OpenPeerPower) -> None:
 
 
 async def test_async_step_import_success_with_legacy_unique_id(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
 ) -> None:
     """Test import step success with legacy unique id."""
     entity_registry = mock_registry.opp)

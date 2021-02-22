@@ -35,7 +35,7 @@ PLATFORM_SCHEMA = mqtt.MQTT_BASE_PLATFORM_SCHEMA.extend(
 
 
 async def async_setup_platform(
-   .opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Set up MQTT scene through configuration.yaml."""
     await async_setup_reload_service.opp, DOMAIN, PLATFORMS)

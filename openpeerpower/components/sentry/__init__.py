@@ -122,7 +122,7 @@ def get_channel(version: str) -> str:
 
 
 def process_before_send(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     options,
     channel: str,
     huuid: str,

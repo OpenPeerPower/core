@@ -31,7 +31,7 @@ STREAM_EXPIRATION_BUFFER = datetime.timedelta(seconds=30)
 
 
 async def async_setup_sdm_entry(
-   .opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the cameras."""
 

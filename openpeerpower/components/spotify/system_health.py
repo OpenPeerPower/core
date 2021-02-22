@@ -5,7 +5,7 @@ from openpeerpower.core import OpenPeerPower, callback
 
 @callback
 def async_register(
-   .opp: OpenPeerPower, register: system_health.SystemHealthRegistration
+    opp: OpenPeerPower, register: system_health.SystemHealthRegistration
 ) -> None:
     """Register system health callbacks."""
     register.async_register_info(system_health_info)

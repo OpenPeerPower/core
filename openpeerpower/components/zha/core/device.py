@@ -86,7 +86,7 @@ class ZHADevice(LogMixin):
 
     def __init__(
         self,
-       .opp: OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         zigpy_device: zha_typing.ZigpyDeviceType,
         zha_gateway: zha_typing.ZhaGatewayType,
     ):
@@ -286,7 +286,7 @@ class ZHADevice(LogMixin):
     @classmethod
     def new(
         cls,
-       .opp: OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         zigpy_dev: zha_typing.ZigpyDeviceType,
         gateway: zha_typing.ZhaGatewayType,
         restored: bool = False,

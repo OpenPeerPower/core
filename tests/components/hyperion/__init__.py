@@ -118,7 +118,7 @@ def create_mock_client() -> Mock:
 
 
 def add_test_config_entry(
-   .opp: OpenPeerPowerType, data: Optional[Dict[str, Any]] = None
+    opp: OpenPeerPowerType, data: Optional[Dict[str, Any]] = None
 ) -> ConfigEntry:
     """Add a test config entry."""
     config_entry: MockConfigEntry = MockConfigEntry(  # type: ignore[no-untyped-call]
@@ -138,7 +138,7 @@ def add_test_config_entry(
 
 
 async def setup_test_config_entry(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config_entry: Optional[ConfigEntry] = None,
     hyperion_client: Optional[Mock] = None,
 ) -> ConfigEntry:

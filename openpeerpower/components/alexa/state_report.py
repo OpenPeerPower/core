@@ -30,7 +30,7 @@ async def async_enable_proactive_mode.opp, smart_home_config):
 
     @callback
     def extra_significant_check(
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         old_state: str,
         old_attrs: dict,
         old_extra_arg: dict,

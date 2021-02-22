@@ -265,7 +265,7 @@ PLATFORM_SCHEMA = (
 
 
 async def async_setup_platform(
-   .opp: OpenPeerPowerType, async_add_entities, config: ConfigType, discovery_info=None
+    opp: OpenPeerPowerType, async_add_entities, config: ConfigType, discovery_info=None
 ):
     """Set up MQTT climate device through configuration.yaml."""
     await async_setup_reload_service.opp, DOMAIN, PLATFORMS)

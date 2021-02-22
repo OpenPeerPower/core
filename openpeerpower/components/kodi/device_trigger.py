@@ -61,7 +61,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 @callback
 def _attach_trigger(
-   .opp: OpenPeerPower, config: ConfigType, action: AutomationActionType, event_type
+    opp: OpenPeerPower, config: ConfigType, action: AutomationActionType, event_type
 ):
     job = HassJob(action)
 
@@ -78,7 +78,7 @@ def _attach_trigger(
 
 
 async def async_attach_trigger(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,

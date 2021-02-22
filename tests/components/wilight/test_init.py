@@ -51,7 +51,7 @@ async def test_config_entry_not_ready.opp: OpenPeerPowerType) -> None:
 
 
 async def test_unload_config_entry(
-   .opp: OpenPeerPowerType, dummy_device_from_host
+    opp: OpenPeerPowerType, dummy_device_from_host
 ) -> None:
     """Test the WiLight configuration entry unloading."""
     entry = await setup_integration.opp)

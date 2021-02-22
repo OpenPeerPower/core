@@ -234,7 +234,7 @@ class GroupProbe:
 
     @staticmethod
     def determine_entity_domains(
-       .opp: OpenPeerPowerType, group: zha_typing.ZhaGroupType
+        opp: OpenPeerPowerType, group: zha_typing.ZhaGroupType
     ) -> List[str]:
         """Determine the entity domains for this group."""
         entity_domains: List[str] = []

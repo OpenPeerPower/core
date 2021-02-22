@@ -67,7 +67,7 @@ def get_changed_since(
 
 @bind.opp
 async def async_reproduce_state(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     states: Union[State, Iterable[State]],
     *,
     context: Optional[Context] = None,

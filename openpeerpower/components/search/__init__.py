@@ -66,7 +66,7 @@ class Searcher:
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         device_reg: device_registry.DeviceRegistry,
         entity_reg: entity_registry.EntityRegistry,
     ):

@@ -28,7 +28,7 @@ SPEED_RANGE = (1, 99)  # off is not included
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up Z-Wave Fan from Config Entry."""
     client: ZwaveClient =.opp.data[DOMAIN][config_entry.entry_id][DATA_CLIENT]

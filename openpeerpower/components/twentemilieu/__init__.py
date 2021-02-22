@@ -28,7 +28,7 @@ SERVICE_SCHEMA = vol.Schema({vol.Optional(CONF_ID): cv.string})
 
 
 async def _update_twentemilieu(
-   .opp: OpenPeerPowerType, unique_id: Optional[str]
+    opp: OpenPeerPowerType, unique_id: Optional[str]
 ) -> None:
     """Update Twente Milieu."""
     if unique_id is not None:

@@ -29,7 +29,7 @@ CONDITION_SCHEMA = DEVICE_CONDITION_BASE_SCHEMA.extend(
 
 
 async def async_get_conditions(
-   .opp: OpenPeerPower, device_id: str
+    opp: OpenPeerPower, device_id: str
 ) -> List[Dict[str, str]]:
     """List device conditions for Vacuum devices."""
     registry = await entity_registry.async_get_registry.opp)

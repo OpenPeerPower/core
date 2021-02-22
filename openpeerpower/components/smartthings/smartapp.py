@@ -308,7 +308,7 @@ async def unload_smartapp_endpoint.opp: OpenPeerPowerType):
 
 
 async def smartapp_sync_subscriptions(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     auth_token: str,
     location_id: str,
     installed_app_id: str,
@@ -397,7 +397,7 @@ async def smartapp_sync_subscriptions(
 
 
 async def _continue_flow(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     app_id: str,
     location_id: str,
     installed_app_id: str,

@@ -368,7 +368,7 @@ def _categorize_variables(
 
 
 async def migrate_old_unique_ids(
-   .opp: OpenPeerPowerType, platform: str, devices: Optional[List[Any]]
+    opp: OpenPeerPowerType, platform: str, devices: Optional[List[Any]]
 ) -> None:
     """Migrate to new controller-specific unique ids."""
     registry = await async_get_registry.opp)

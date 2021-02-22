@@ -196,7 +196,7 @@ async def async_stop_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 @bind.opp
 @api_data
 async def async_set_addon_options(
-   .opp: OpenPeerPowerType, slug: str, options: dict
+    opp: OpenPeerPowerType, slug: str, options: dict
 ) -> dict:
     """Set add-on options.
 
@@ -209,7 +209,7 @@ async def async_set_addon_options(
 
 @bind.opp
 async def async_get_addon_discovery_info(
-   .opp: OpenPeerPowerType, slug: str
+    opp: OpenPeerPowerType, slug: str
 ) -> Optional[dict]:
     """Return discovery data for an add-on."""
    .oppio =.opp.data[DOMAIN]

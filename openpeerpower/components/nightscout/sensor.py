@@ -21,7 +21,7 @@ DEFAULT_NAME = "Blood Glucose"
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:

@@ -65,7 +65,7 @@ def discover_devices(device_id: int) -> List[Tuple[str, str]]:
 
 
 async def see_device(
-   .opp: OpenPeerPowerType, async_see, mac: str, device_name: str, rssi=None
+    opp: OpenPeerPowerType, async_see, mac: str, device_name: str, rssi=None
 ) -> None:
     """Mark a device as seen."""
     attributes = {}
@@ -108,7 +108,7 @@ def lookup_name(mac: str) -> Optional[str]:
 
 
 async def async_setup_scanner(
-   .opp: OpenPeerPowerType, config: dict, async_see, discovery_info=None
+    opp: OpenPeerPowerType, config: dict, async_see, discovery_info=None
 ):
     """Set up the Bluetooth Scanner."""
     device_id: int = config[CONF_DEVICE_ID]

@@ -120,7 +120,7 @@ async def _create_mock_entry.opp: OpenPeerPowerType) -> MockConfigEntry:
 
 
 async def _init_flow(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     source: str = SOURCE_USER,
     data: Optional[Dict[str, Any]] = None,
 ) -> Any:
@@ -133,7 +133,7 @@ async def _init_flow(
 
 
 async def _configure_flow(
-   .opp: OpenPeerPowerType, result: Dict, user_input: Optional[Dict[str, Any]] = None
+    opp: OpenPeerPowerType, result: Dict, user_input: Optional[Dict[str, Any]] = None
 ) -> Any:
     """Provide input to a flow."""
     user_input = user_input or {}
@@ -376,7 +376,7 @@ async def test_auth_create_token_approval_declined.opp: OpenPeerPowerType) -> No
 
 
 async def test_auth_create_token_when_issued_token_fails(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
 ) -> None:
     """Verify correct behaviour when a token is granted by fails to authenticate."""
     result = await _init_flow.opp)

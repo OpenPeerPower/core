@@ -28,7 +28,7 @@ CLIMATE_ID = f"{CLIMATE}.{DOMAIN}"
 
 
 async def test_climate(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of Atag climate device."""
     with patch("pyatag.entities.Climate.status"):
@@ -45,7 +45,7 @@ async def test_climate(
 
 
 async def test_setting_climate(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test setting the climate device."""
     await init_integration.opp, aioclient_mock)
@@ -81,7 +81,7 @@ async def test_setting_climate(
 
 
 async def test_incorrect_modes(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     aioclient_mock: AiohttpClientMocker,
 ) -> None:
     """Test incorrect values are handled correctly."""
@@ -94,7 +94,7 @@ async def test_incorrect_modes(
 
 
 async def test_update_service(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the updater service is called."""
     await init_integration.opp, aioclient_mock)

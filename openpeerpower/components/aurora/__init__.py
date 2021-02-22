@@ -108,7 +108,7 @@ class AuroraDataUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         name: str,
         polling_interval: int,
         api: str,

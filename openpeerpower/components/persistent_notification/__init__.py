@@ -68,7 +68,7 @@ def dismiss.opp, notification_id):
 @callback
 @bind.opp
 def async_create(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     message: str,
     title: Optional[str] = None,
     notification_id: Optional[str] = None,
@@ -202,7 +202,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
 @callback
 @websocket_api.websocket_command({vol.Required("type"): "persistent_notification/get"})
 def websocket_get_notifications(
-   .opp: OpenPeerPower,
+    opp: OpenPeerPower,
     connection: websocket_api.ActiveConnection,
     msg: Mapping[str, Any],
 ) -> None:

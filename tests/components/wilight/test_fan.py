@@ -55,7 +55,7 @@ def mock_dummy_device_from_host_light_fan():
 
 
 async def test_loading_light_fan(
-   .opp: OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     dummy_device_from_host_light_fan,
 ) -> None:
     """Test the WiLight configuration entry loading."""
@@ -77,7 +77,7 @@ async def test_loading_light_fan(
 
 
 async def test_on_off_fan_state(
-   .opp: OpenPeerPowerType, dummy_device_from_host_light_fan
+    opp: OpenPeerPowerType, dummy_device_from_host_light_fan
 ) -> None:
     """Test the change of state of the fan switches."""
     await setup_integration.opp)
@@ -124,7 +124,7 @@ async def test_on_off_fan_state(
 
 
 async def test_speed_fan_state(
-   .opp: OpenPeerPowerType, dummy_device_from_host_light_fan
+    opp: OpenPeerPowerType, dummy_device_from_host_light_fan
 ) -> None:
     """Test the change of speed of the fan switches."""
     await setup_integration.opp)
@@ -170,7 +170,7 @@ async def test_speed_fan_state(
 
 
 async def test_direction_fan_state(
-   .opp: OpenPeerPowerType, dummy_device_from_host_light_fan
+    opp: OpenPeerPowerType, dummy_device_from_host_light_fan
 ) -> None:
     """Test the change of direction of the fan switches."""
     await setup_integration.opp)

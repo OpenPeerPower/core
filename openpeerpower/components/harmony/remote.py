@@ -55,7 +55,7 @@ HARMONY_CHANGE_CHANNEL_SCHEMA = vol.Schema(
 
 
 async def async_setup_entry(
-   .opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up the Harmony config entry."""
 

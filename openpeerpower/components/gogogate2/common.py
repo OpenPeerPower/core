@@ -35,7 +35,7 @@ class DeviceDataUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         logger: logging.Logger,
         api: AbstractGateApi,
         *,
@@ -58,7 +58,7 @@ class DeviceDataUpdateCoordinator(DataUpdateCoordinator):
 
 
 def get_data_update_coordinator(
-   .opp: OpenPeerPower, config_entry: ConfigEntry
+    opp: OpenPeerPower, config_entry: ConfigEntry
 ) -> DeviceDataUpdateCoordinator:
     """Get an update coordinator."""
    .opp.data.setdefault(DOMAIN, {})

@@ -10,7 +10,7 @@ from .const import DOMAIN, MODE_AUTO, MODE_STORAGE, MODE_YAML
 
 @callback
 def async_register(
-   .opp: OpenPeerPower, register: system_health.SystemHealthRegistration
+    opp: OpenPeerPower, register: system_health.SystemHealthRegistration
 ) -> None:
     """Register system health callbacks."""
     register.async_register_info(system_health_info, "/config/lovelace")

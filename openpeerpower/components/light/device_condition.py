@@ -27,7 +27,7 @@ def async_condition_from_config(
 
 
 async def async_get_conditions(
-   .opp: OpenPeerPower, device_id: str
+    opp: OpenPeerPower, device_id: str
 ) -> List[Dict[str, str]]:
     """List device conditions."""
     return await toggle_entity.async_get_conditions.opp, device_id, DOMAIN)

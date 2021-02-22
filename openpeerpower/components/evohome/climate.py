@@ -74,7 +74,7 @@ STATE_ATTRS_ZONES = ["zoneId", "activeFaults", "setpointStatus", "temperatureSta
 
 
 async def async_setup_platform(
-   .opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ) -> None:
     """Create the evohome Controller, and its Zones, if any."""
     if discovery_info is None:

@@ -40,7 +40,7 @@ async def test_show_zeroconf_confirm_form.opp: OpenPeerPower) -> None:
 
 
 async def test_show_zerconf_form(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test that the zeroconf confirmation form is served."""
     aioclient_mock.get(
@@ -133,7 +133,7 @@ async def test_zeroconf_no_data(
 
 
 async def test_user_device_exists_abort(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort zeroconf flow if WLED device already configured."""
     await init_integration.opp, aioclient_mock)
@@ -149,7 +149,7 @@ async def test_user_device_exists_abort(
 
 
 async def test_zeroconf_device_exists_abort(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort zeroconf flow if WLED device already configured."""
     await init_integration.opp, aioclient_mock)
@@ -165,7 +165,7 @@ async def test_zeroconf_device_exists_abort(
 
 
 async def test_zeroconf_with_mac_device_exists_abort(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort zeroconf flow if WLED device already configured."""
     await init_integration.opp, aioclient_mock)
@@ -185,7 +185,7 @@ async def test_zeroconf_with_mac_device_exists_abort(
 
 
 async def test_full_user_flow_implementation(
-   .opp: OpenPeerPower, aioclient_mock
+    opp: OpenPeerPower, aioclient_mock
 ) -> None:
     """Test the full manual user flow from start to finish."""
     aioclient_mock.get(
@@ -213,7 +213,7 @@ async def test_full_user_flow_implementation(
 
 
 async def test_full_zeroconf_flow_implementation(
-   .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the full manual user flow from start to finish."""
     aioclient_mock.get(

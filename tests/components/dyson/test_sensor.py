@@ -113,7 +113,7 @@ def _async_get_entity_id(sensor_type: str) -> str:
     indirect=["device"],
 )
 async def test_sensors(
-   .opp: OpenPeerPower, device: DysonPureCoolLink, sensors: List[str]
+    opp: OpenPeerPower, device: DysonPureCoolLink, sensors: List[str]
 ) -> None:
     """Test the sensors."""
     # Temperature is given by the device in kelvin
@@ -160,7 +160,7 @@ async def test_sensors_off.opp: OpenPeerPower, device: DysonPureCoolLink) -> Non
     [(METRIC_SYSTEM, TEMP_CELSIUS, 21.9), (IMPERIAL_SYSTEM, TEMP_FAHRENHEIT, 71.3)],
 )
 async def test_temperature(
-   .opp: OpenPeerPower, unit_system: UnitSystem, temp_unit: str, temperature: float
+    opp: OpenPeerPower, unit_system: UnitSystem, temp_unit: str, temperature: float
 ) -> None:
     """Test the temperature sensor in different units."""
    .opp.config.units = unit_system
