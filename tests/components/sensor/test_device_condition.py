@@ -5,8 +5,8 @@ import openpeerpower.components.automation as automation
 from openpeerpower.components.sensor import DOMAIN
 from openpeerpower.components.sensor.device_condition import ENTITY_CONDITIONS
 from openpeerpower.const import CONF_PLATFORM, PERCENTAGE, STATE_UNKNOWN
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -44,7 +44,7 @@ async def test_get_conditions.opp, device_reg, entity_reg):
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -58,7 +58,7 @@ async def test_get_conditions.opp, device_reg, entity_reg):
         )
 
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     expected_conditions = [
         {
@@ -82,7 +82,7 @@ async def test_get_condition_capabilities.opp, device_reg, entity_reg):
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -95,7 +95,7 @@ async def test_get_condition_capabilities.opp, device_reg, entity_reg):
     )
 
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     expected_capabilities = {
         "extra_fields": [
@@ -128,10 +128,10 @@ async def test_get_condition_capabilities_none.opp, device_reg, entity_reg):
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     conditions = [
         {
@@ -164,7 +164,7 @@ async def test_if_state_not_above_below.opp, calls, caplog):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
 
@@ -198,7 +198,7 @@ async def test_if_state_above.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
 
@@ -230,22 +230,22 @@ async def test_if_state_above.opp, calls):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
     assert len(calls) == 0
 
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
    .opp.states.async_set(sensor1.entity_id, 9)
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
    .opp.states.async_set(sensor1.entity_id, 11)
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "event - test_event1"
 
@@ -256,7 +256,7 @@ async def test_if_state_below.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
 
@@ -288,22 +288,22 @@ async def test_if_state_below.opp, calls):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
     assert len(calls) == 0
 
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
    .opp.states.async_set(sensor1.entity_id, 11)
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
    .opp.states.async_set(sensor1.entity_id, 9)
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "event - test_event1"
 
@@ -314,7 +314,7 @@ async def test_if_state_between.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
 
@@ -347,32 +347,32 @@ async def test_if_state_between.opp, calls):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
     assert len(calls) == 0
 
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
    .opp.states.async_set(sensor1.entity_id, 9)
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
    .opp.states.async_set(sensor1.entity_id, 11)
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "event - test_event1"
 
    .opp.states.async_set(sensor1.entity_id, 21)
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
    .opp.states.async_set(sensor1.entity_id, 19)
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "event - test_event1"

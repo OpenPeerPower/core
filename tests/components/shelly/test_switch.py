@@ -18,9 +18,9 @@ async def test_services.opp, coap_wrapper):
    .opp.async_create_task(
        .opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: "switch.test_name_channel_1"},
@@ -28,7 +28,7 @@ async def test_services.opp, coap_wrapper):
     )
     assert.opp.states.get("switch.test_name_channel_1").state == STATE_ON
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "switch.test_name_channel_1"},
@@ -44,20 +44,20 @@ async def test_update.opp, coap_wrapper, monkeypatch):
    .opp.async_create_task(
        .opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     monkeypatch.setattr(coap_wrapper.device.blocks[RELAY_BLOCK_ID], "output", False)
-    await opp..helpers.entity_component.async_update_entity(
+    await.opp.helpers.entity_component.async_update_entity(
         "switch.test_name_channel_1"
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("switch.test_name_channel_1").state == STATE_OFF
 
     monkeypatch.setattr(coap_wrapper.device.blocks[RELAY_BLOCK_ID], "output", True)
-    await opp..helpers.entity_component.async_update_entity(
+    await.opp.helpers.entity_component.async_update_entity(
         "switch.test_name_channel_1"
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("switch.test_name_channel_1").state == STATE_ON
 
 
@@ -69,7 +69,7 @@ async def test_no_relay_blocks.opp, coap_wrapper, monkeypatch):
    .opp.async_create_task(
        .opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("switch.test_name_channel_1") is None
 
 
@@ -81,5 +81,5 @@ async def test_device_mode_roller.opp, coap_wrapper, monkeypatch):
    .opp.async_create_task(
        .opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("switch.test_name_channel_1") is None

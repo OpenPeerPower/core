@@ -10,8 +10,8 @@ from openpeerpower.components.shelly.const import (
     DOMAIN,
     EVENT_SHELLY_CLICK,
 )
-from openpeerpowerr.core import callback as ha_callback
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import callback as ha_callback
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry, async_mock_service, mock_device_registry
 
@@ -96,7 +96,7 @@ async def coap_wrapper.opp):
         data={"sleep_period": 0, "model": "SHSW-25"},
         unique_id="12345678",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     device = Mock(
         blocks=MOCK_BLOCKS,
@@ -108,7 +108,7 @@ async def coap_wrapper.opp):
 
    .opp.data[DOMAIN] = {DATA_CONFIG_ENTRY: {}}
    .opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id] = {}
-    wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][
+    wrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][
         COAP
     ] = ShellyDeviceWrapper.opp, config_entry, device)
 

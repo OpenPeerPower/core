@@ -13,7 +13,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.core import CoreState, State, callback
+from openpeerpower.core import CoreState, State, callback
 
 from tests.common import mock_restore_cache
 from tests.components.rflink.test_init import mock_rflink
@@ -47,7 +47,7 @@ async def test_default_setup.opp, monkeypatch):
     assert create.call_args_list[0][1]["ignore"]
 
     # test default state of light loaded from config
-    light_initial = opp.states.get(f"{DOMAIN}.test")
+    light_initial =.opp.states.get(f"{DOMAIN}.test")
     assert light_initial.state == "off"
     assert light_initial.attributes["assumed_state"]
 
@@ -56,42 +56,42 @@ async def test_default_setup.opp, monkeypatch):
 
     # mock incoming command event for this device
     event_callback({"id": "protocol_0_0", "command": "on"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    light_after_first_command = opp.states.get(f"{DOMAIN}.test")
+    light_after_first_command =.opp.states.get(f"{DOMAIN}.test")
     assert light_after_first_command.state == "on"
     # also after receiving first command state not longer has to be assumed
     assert not light_after_first_command.attributes.get("assumed_state")
 
     # mock incoming command event for this device
     event_callback({"id": "protocol_0_0", "command": "off"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.test").state == "off"
 
     # should respond to group command
     event_callback({"id": "protocol_0_0", "command": "allon"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    light_after_first_command = opp.states.get(f"{DOMAIN}.test")
+    light_after_first_command =.opp.states.get(f"{DOMAIN}.test")
     assert light_after_first_command.state == "on"
 
     # should respond to group command
     event_callback({"id": "protocol_0_0", "command": "alloff"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.test").state == "off"
 
     # test following aliases
     # mock incoming command event for this device alias
     event_callback({"id": "test_alias_0_0", "command": "on"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.test").state == "on"
 
     # test event for new unconfigured sensor
     event_callback({"id": "protocol2_0_1", "command": "on"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.protocol2_0_1").state == "on"
 
@@ -101,7 +101,7 @@ async def test_default_setup.opp, monkeypatch):
             DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(f"{DOMAIN}.test").state == "off"
     assert protocol.send_command_ack.call_args_list[0][0][0] == "protocol_0_0"
     assert protocol.send_command_ack.call_args_list[0][0][1] == "off"
@@ -111,19 +111,19 @@ async def test_default_setup.opp, monkeypatch):
             DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(f"{DOMAIN}.test").state == "on"
     assert protocol.send_command_ack.call_args_list[1][0][1] == "on"
 
     # protocols supporting dimming and on/off should create hybrid light entity
     event_callback({"id": "newkaku_0_1", "command": "off"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.async_create_task(
        .opp.services.async_call(
             DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_0_1"}
         )
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # dimmable should send highest dim level when turning on
     assert protocol.send_command_ack.call_args_list[2][0][1] == "15"
@@ -138,7 +138,7 @@ async def test_default_setup.opp, monkeypatch):
             {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_0_1", ATTR_BRIGHTNESS: 128},
         )
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert protocol.send_command_ack.call_args_list[4][0][1] == "7"
 
@@ -149,7 +149,7 @@ async def test_default_setup.opp, monkeypatch):
             {ATTR_ENTITY_ID: f"{DOMAIN}.dim_test", ATTR_BRIGHTNESS: 128},
         )
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert protocol.send_command_ack.call_args_list[5][0][1] == "7"
 
@@ -183,8 +183,8 @@ async def test_firing_bus_event.opp, monkeypatch):
 
     # test event for new unconfigured sensor
     event_callback({"id": "protocol_0_0", "command": "off"})
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert calls[0].data == {"state": "off", "entity_id": f"{DOMAIN}.test"}
 
@@ -217,7 +217,7 @@ async def test_signal_repetitions.opp, monkeypatch):
     )
 
     # wait for commands and repetitions to finish
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert protocol.send_command_ack.call_count == 2
 
@@ -229,7 +229,7 @@ async def test_signal_repetitions.opp, monkeypatch):
     )
 
     # wait for commands and repetitions to finish
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert protocol.send_command_ack.call_count == 5
 
@@ -237,7 +237,7 @@ async def test_signal_repetitions.opp, monkeypatch):
     event_callback({"id": "protocol_0_2", "command": "off"})
 
     # make sure entity is created before setting state
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.async_create_task(
        .opp.services.async_call(
@@ -246,7 +246,7 @@ async def test_signal_repetitions.opp, monkeypatch):
     )
 
     # wait for commands and repetitions to finish
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert protocol.send_command_ack.call_count == 8
 
@@ -267,14 +267,14 @@ async def test_signal_repetitions_alternation.opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
     )
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test1"}
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert protocol.send_command_ack.call_args_list[0][0][0] == "protocol_0_0"
     assert protocol.send_command_ack.call_args_list[1][0][0] == "protocol_0_1"
@@ -295,11 +295,11 @@ async def test_signal_repetitions_cancelling.opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}, blocking=True
     )
 
@@ -329,13 +329,13 @@ async def test_type_toggle.opp, monkeypatch):
 
     # test sending 'on' command, must set state = 'on'
     event_callback({"id": "toggle_0_0", "command": "on"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.toggle_test").state == "on"
 
     # test sending 'on' command again, must set state = 'off'
     event_callback({"id": "toggle_0_0", "command": "on"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.toggle_test").state == "off"
 
@@ -345,7 +345,7 @@ async def test_type_toggle.opp, monkeypatch):
             DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.toggle_test"}
         )
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.toggle_test").state == "on"
 
@@ -355,7 +355,7 @@ async def test_type_toggle.opp, monkeypatch):
             DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: f"{DOMAIN}.toggle_test"}
         )
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.toggle_test").state == "off"
 
@@ -379,13 +379,13 @@ async def test_group_alias.opp, monkeypatch):
 
     # test sending group command to group alias
     event_callback({"id": "test_group_0_0", "command": "allon"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.test").state == "on"
 
     # test sending group command to group alias
     event_callback({"id": "test_group_0_0", "command": "off"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(f"{DOMAIN}.test").state == "on"
 
@@ -412,13 +412,13 @@ async def test_nogroup_alias.opp, monkeypatch):
 
     # test sending group command to nogroup alias
     event_callback({"id": "test_nogroup_0_0", "command": "allon"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     # should not affect state
     assert.opp.states.get(f"{DOMAIN}.test").state == "off"
 
     # test sending group command to nogroup alias
     event_callback({"id": "test_nogroup_0_0", "command": "on"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     # should affect state
     assert.opp.states.get(f"{DOMAIN}.test").state == "on"
 
@@ -440,13 +440,13 @@ async def test_nogroup_device_id.opp, monkeypatch):
 
     # test sending group command to nogroup
     event_callback({"id": "test_nogroup_0_0", "command": "allon"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     # should not affect state
     assert.opp.states.get(f"{DOMAIN}.test").state == "off"
 
     # test sending group command to nogroup
     event_callback({"id": "test_nogroup_0_0", "command": "on"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     # should affect state
     assert.opp.states.get(f"{DOMAIN}.test").state == "on"
 
@@ -463,7 +463,7 @@ async def test_disable_automatic_add.opp, monkeypatch):
 
     # test event for new unconfigured sensor
     event_callback({"id": "protocol_0_0", "command": "off"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # make sure new device is not added
     assert not.opp.states.get(f"{DOMAIN}.protocol_0_0")
@@ -501,31 +501,31 @@ async def test_restore_state.opp, monkeypatch):
     _, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
 
     # hybrid light must restore brightness
-    state = opp.states.get(f"{DOMAIN}.l1")
+    state =.opp.states.get(f"{DOMAIN}.l1")
     assert state
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 123
 
     # normal light do NOT must restore brightness
-    state = opp.states.get(f"{DOMAIN}.l2")
+    state =.opp.states.get(f"{DOMAIN}.l2")
     assert state
     assert state.state == STATE_ON
     assert not state.attributes.get(ATTR_BRIGHTNESS)
 
     # OFF state also restores (or not)
-    state = opp.states.get(f"{DOMAIN}.l3")
+    state =.opp.states.get(f"{DOMAIN}.l3")
     assert state
     assert state.state == STATE_OFF
 
     # not cached light must default values
-    state = opp.states.get(f"{DOMAIN}.l4")
+    state =.opp.states.get(f"{DOMAIN}.l4")
     assert state
     assert state.state == STATE_OFF
     assert state.attributes[ATTR_BRIGHTNESS] == 255
     assert state.attributes["assumed_state"]
 
     # test coverage for dimmable light
-    state = opp.states.get(f"{DOMAIN}.l5")
+    state =.opp.states.get(f"{DOMAIN}.l5")
     assert state
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 222

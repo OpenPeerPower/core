@@ -17,17 +17,17 @@ from openpeerpower.components.simulated.sensor import (
     DEFAULT_SEED,
 )
 from openpeerpower.const import CONF_FRIENDLY_NAME
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_simulated_sensor_default_config.opp):
     """Test default config."""
     config = {"sensor": {"platform": "simulated"}}
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids()) == 1
-    state = opp.states.get("sensor.simulated")
+    state =.opp.states.get("sensor.simulated")
 
     assert state.attributes.get(CONF_FRIENDLY_NAME) == DEFAULT_NAME
     assert state.attributes.get(CONF_AMP) == DEFAULT_AMP

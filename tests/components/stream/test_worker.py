@@ -31,6 +31,7 @@ from openpeerpower.components.stream.worker import SegmentBuffer, stream_worker
 
 STREAM_SOURCE = "some-stream-source"
 # Formats here are arbitrary, not exercised by tests
+STREAM_OUTPUT_FORMAT = "hls"
 AUDIO_STREAM_FORMAT = "mp3"
 VIDEO_STREAM_FORMAT = "h264"
 VIDEO_FRAME_RATE = 12
@@ -187,7 +188,7 @@ class MockPyAv:
 async def async_decode_stream.opp, packets, py_av=None):
     """Start a stream worker that decodes incoming stream packets into output segments."""
     stream = Stream.opp, STREAM_SOURCE)
-    stream.hls_output()
+    stream.add_provider(STREAM_OUTPUT_FORMAT)
 
     if not py_av:
         py_av = MockPyAv()
@@ -199,7 +200,7 @@ async def async_decode_stream.opp, packets, py_av=None):
     ):
         segment_buffer = SegmentBuffer(stream.outputs)
         stream_worker(STREAM_SOURCE, {}, segment_buffer, threading.Event())
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     return py_av.capture_buffer
 
@@ -207,12 +208,12 @@ async def async_decode_stream.opp, packets, py_av=None):
 async def test_stream_open_fails.opp):
     """Test failure on stream open."""
     stream = Stream.opp, STREAM_SOURCE)
-    stream.hls_output()
+    stream.add_provider(STREAM_OUTPUT_FORMAT)
     with patch("av.open") as av_open:
         av_open.side_effect = av.error.InvalidDataError(-2, "error")
         segment_buffer = SegmentBuffer(stream.outputs)
         stream_worker(STREAM_SOURCE, {}, segment_buffer, threading.Event())
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         av_open.assert_called_once()
 
 
@@ -484,7 +485,7 @@ async def test_stream_stopped_while_decoding.opp):
     worker_wake = threading.Event()
 
     stream = Stream.opp, STREAM_SOURCE)
-    stream.hls_output()
+    stream.add_provider(STREAM_OUTPUT_FORMAT)
 
     py_av = MockPyAv()
     py_av.container.packets = PacketSequence(TEST_SEQUENCE_LENGTH)
@@ -511,7 +512,7 @@ async def test_update_stream_source.opp):
     worker_wake = threading.Event()
 
     stream = Stream.opp, STREAM_SOURCE)
-    stream.hls_output()
+    stream.add_provider(STREAM_OUTPUT_FORMAT)
     # Note that keepalive is not set here.  The stream is "restarted" even though
     # it is not stopping due to failure.
 

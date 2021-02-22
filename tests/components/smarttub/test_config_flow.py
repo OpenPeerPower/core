@@ -7,9 +7,9 @@ from openpeerpower import config_entries
 from openpeerpower.components.smarttub.const import DOMAIN
 
 
-async def test_form.opp, smarttub_api):
+async def test_form.opp):
     """Test we get the form."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -21,7 +21,7 @@ async def test_form.opp, smarttub_api):
         "openpeerpower.components.smarttub.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"email": "test-email", "password": "test-password"},
         )
@@ -32,15 +32,15 @@ async def test_form.opp, smarttub_api):
         "email": "test-email",
         "password": "test-password",
     }
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     mock_setup.assert_called_once()
     mock_setup_entry.assert_called_once()
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {"email": "test-email2", "password": "test-password2"}
     )
     assert result2["type"] == "abort"
@@ -49,13 +49,13 @@ async def test_form.opp, smarttub_api):
 
 async def test_form_invalid_auth.opp, smarttub_api):
     """Test we handle invalid auth."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     smarttub_api.login.side_effect = LoginFailed
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"email": "test-email", "password": "test-password"},
     )

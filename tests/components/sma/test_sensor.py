@@ -1,7 +1,7 @@
 """SMA sensor tests."""
 from openpeerpower.components.sensor import DOMAIN
 from openpeerpower.const import ATTR_UNIT_OF_MEASUREMENT, VOLT
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import assert_setup_component
 
@@ -21,12 +21,12 @@ async def test_sma_config.opp):
         assert await async_setup_component(
            .opp, DOMAIN, {DOMAIN: dict(BASE_CFG, sensors=sensors)}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.current_consumption")
+    state =.opp.states.get("sensor.current_consumption")
     assert state
     assert ATTR_UNIT_OF_MEASUREMENT in state.attributes
     assert "current_consumption" not in state.attributes
 
-    state = opp.states.get("sensor.my_sensor")
+    state =.opp.states.get("sensor.my_sensor")
     assert state

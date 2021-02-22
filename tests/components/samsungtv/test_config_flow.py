@@ -39,7 +39,7 @@ MOCK_SSDP_DATA_NOPREFIX = {
 AUTODETECT_LEGACY = {
     "name": "OpenPeerPower",
     "description": "OpenPeerPower",
-    "id": "op.component.samsung",
+    "id": "ha.component.samsung",
     "method": "legacy",
     "port": None,
     "host": "fake_host",
@@ -101,14 +101,14 @@ def remotews_fixture():
 async def test_user_legacy.opp, remote):
     """Test starting a flow by user."""
     # show form
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "user"
 
     # entry was added
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_USER_DATA
     )
     # legacy tv entry created
@@ -128,14 +128,14 @@ async def test_user_websocket.opp, remotews):
         "openpeerpower.components.samsungtv.bridge.Remote", side_effect=OSError("Boom")
     ):
         # show form
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
         assert result["type"] == "form"
         assert result["step_id"] == "user"
 
         # entry was added
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_USER_DATA
         )
         # legacy tv entry created
@@ -156,7 +156,7 @@ async def test_user_legacy_missing_auth.opp):
         side_effect=AccessDenied("Boom"),
     ), patch("openpeerpower.components.samsungtv.config_flow.socket"):
         # legacy device missing authentication
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
         )
         assert result["type"] == "abort"
@@ -170,7 +170,7 @@ async def test_user_legacy_not_supported.opp):
         side_effect=UnhandledResponse("Boom"),
     ), patch("openpeerpower.components.samsungtv.config_flow.socket"):
         # legacy device not supported
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
         )
         assert result["type"] == "abort"
@@ -189,7 +189,7 @@ async def test_user_websocket_not_supported.opp):
         "openpeerpower.components.samsungtv.config_flow.socket"
     ):
         # websocket device not supported
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
         )
         assert result["type"] == "abort"
@@ -207,7 +207,7 @@ async def test_user_not_successful.opp):
     ), patch(
         "openpeerpower.components.samsungtv.config_flow.socket"
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
         )
         assert result["type"] == "abort"
@@ -225,7 +225,7 @@ async def test_user_not_successful_2.opp):
     ), patch(
         "openpeerpower.components.samsungtv.config_flow.socket"
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
         )
         assert result["type"] == "abort"
@@ -236,13 +236,13 @@ async def test_user_already_configured.opp, remote):
     """Test starting a flow by user when already configured."""
 
     # entry was added
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
     )
     assert result["type"] == "create_entry"
 
     # failed as already configured
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
     )
     assert result["type"] == "abort"
@@ -253,14 +253,14 @@ async def test_ssdp.opp, remote):
     """Test starting a flow from discovery."""
 
     # confirm to add the entry
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "ssdp"}, data=MOCK_SSDP_DATA
     )
     assert result["type"] == "form"
     assert result["step_id"] == "confirm"
 
     # entry was added
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input="whatever"
     )
     assert result["type"] == "create_entry"
@@ -276,14 +276,14 @@ async def test_ssdp_noprefix.opp, remote):
     """Test starting a flow from discovery without prefixes."""
 
     # confirm to add the entry
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "ssdp"}, data=MOCK_SSDP_DATA_NOPREFIX
     )
     assert result["type"] == "form"
     assert result["step_id"] == "confirm"
 
     # entry was added
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input="whatever"
     )
     assert result["type"] == "create_entry"
@@ -303,14 +303,14 @@ async def test_ssdp_legacy_missing_auth.opp):
     ), patch("openpeerpower.components.samsungtv.config_flow.socket"):
 
         # confirm to add the entry
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "ssdp"}, data=MOCK_SSDP_DATA
         )
         assert result["type"] == "form"
         assert result["step_id"] == "confirm"
 
         # missing authentication
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input="whatever"
         )
         assert result["type"] == "abort"
@@ -325,14 +325,14 @@ async def test_ssdp_legacy_not_supported.opp):
     ), patch("openpeerpower.components.samsungtv.config_flow.socket"):
 
         # confirm to add the entry
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "ssdp"}, data=MOCK_SSDP_DATA
         )
         assert result["type"] == "form"
         assert result["step_id"] == "confirm"
 
         # device not supported
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input="whatever"
         )
         assert result["type"] == "abort"
@@ -351,14 +351,14 @@ async def test_ssdp_websocket_not_supported.opp):
         "openpeerpower.components.samsungtv.config_flow.socket"
     ):
         # confirm to add the entry
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "ssdp"}, data=MOCK_SSDP_DATA
         )
         assert result["type"] == "form"
         assert result["step_id"] == "confirm"
 
         # device not supported
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input="whatever"
         )
         assert result["type"] == "abort"
@@ -378,14 +378,14 @@ async def test_ssdp_not_successful.opp):
     ):
 
         # confirm to add the entry
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "ssdp"}, data=MOCK_SSDP_DATA
         )
         assert result["type"] == "form"
         assert result["step_id"] == "confirm"
 
         # device not found
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input="whatever"
         )
         assert result["type"] == "abort"
@@ -405,14 +405,14 @@ async def test_ssdp_not_successful_2.opp):
     ):
 
         # confirm to add the entry
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "ssdp"}, data=MOCK_SSDP_DATA
         )
         assert result["type"] == "form"
         assert result["step_id"] == "confirm"
 
         # device not found
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input="whatever"
         )
         assert result["type"] == "abort"
@@ -423,14 +423,14 @@ async def test_ssdp_already_in_progress.opp, remote):
     """Test starting a flow from discovery twice."""
 
     # confirm to add the entry
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "ssdp"}, data=MOCK_SSDP_DATA
     )
     assert result["type"] == "form"
     assert result["step_id"] == "confirm"
 
     # failed as already in progress
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "ssdp"}, data=MOCK_SSDP_DATA
     )
     assert result["type"] == "abort"
@@ -441,7 +441,7 @@ async def test_ssdp_already_configured.opp, remote):
     """Test starting a flow from discovery when already configured."""
 
     # entry was added
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
     )
     assert result["type"] == "create_entry"
@@ -451,7 +451,7 @@ async def test_ssdp_already_configured.opp, remote):
     assert entry.data[CONF_ID] is None
 
     # failed as already configured
-    result2 = await opp..config_entries.flow.async_init(
+    result2 = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "ssdp"}, data=MOCK_SSDP_DATA
     )
     assert result2["type"] == "abort"
@@ -476,7 +476,7 @@ async def test_autodetect_websocket.opp, remote, remotews):
         remote.__exit__ = Mock(return_value=False)
         remotews.return_value = remote
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
         )
         assert result["type"] == "create_entry"
@@ -502,7 +502,7 @@ async def test_autodetect_websocket_ssl.opp, remote, remotews):
         remote.__exit__ = Mock(return_value=False)
         remotews.return_value = remote
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
         )
         assert result["type"] == "create_entry"
@@ -521,7 +521,7 @@ async def test_autodetect_auth_missing.opp, remote):
         "openpeerpower.components.samsungtv.bridge.Remote",
         side_effect=[AccessDenied("Boom")],
     ) as remote:
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
         )
         assert result["type"] == "abort"
@@ -536,7 +536,7 @@ async def test_autodetect_not_supported.opp, remote):
         "openpeerpower.components.samsungtv.bridge.Remote",
         side_effect=[UnhandledResponse("Boom")],
     ) as remote:
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
         )
         assert result["type"] == "abort"
@@ -548,7 +548,7 @@ async def test_autodetect_not_supported.opp, remote):
 async def test_autodetect_legacy.opp, remote):
     """Test for send key with autodetection of protocol."""
     with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote:
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
         )
         assert result["type"] == "create_entry"
@@ -566,7 +566,7 @@ async def test_autodetect_none.opp, remote, remotews):
         "openpeerpower.components.samsungtv.bridge.SamsungTVWS",
         side_effect=OSError("Boom"),
     ) as remotews:
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_USER_DATA
         )
         assert result["type"] == "abort"

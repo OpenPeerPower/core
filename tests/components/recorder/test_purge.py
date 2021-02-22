@@ -8,14 +8,14 @@ from openpeerpower.components.recorder.const import DATA_INSTANCE
 from openpeerpower.components.recorder.models import Events, RecorderRuns, States
 from openpeerpower.components.recorder.purge import purge_old_data
 from openpeerpower.components.recorder.util import session_scope
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.util import dt as dt_util
 
 from .common import wait_recording_done
 
 
 def test_purge_old_states.opp,.opp_recorder):
     """Test deleting old states."""
-    opp = opp_recorder()
+   .opp =.opp_recorder()
     _add_test_states.opp)
 
     # make sure we start with 6 states
@@ -39,7 +39,7 @@ def test_purge_old_states.opp,.opp_recorder):
 
 def test_purge_old_events.opp,.opp_recorder):
     """Test deleting old events."""
-    opp = opp_recorder()
+   .opp =.opp_recorder()
     _add_test_events.opp)
 
     with session_scope.opp.opp) as session:
@@ -63,7 +63,7 @@ def test_purge_old_events.opp,.opp_recorder):
 
 def test_purge_old_recorder_runs.opp,.opp_recorder):
     """Test deleting old recorder runs keeps current run."""
-    opp = opp_recorder()
+   .opp =.opp_recorder()
     _add_test_recorder_runs.opp)
 
     # make sure we start with 7 recorder runs
@@ -79,7 +79,7 @@ def test_purge_old_recorder_runs.opp,.opp_recorder):
 
 def test_purge_method.opp,.opp_recorder):
     """Test purge method."""
-    opp = opp_recorder()
+   .opp =.opp_recorder()
     service_data = {"keep_days": 4}
     _add_test_events.opp)
     _add_test_states.opp)

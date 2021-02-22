@@ -13,13 +13,13 @@ from smart_meter_texas.const import (
     OD_READ_ENDPOINT,
 )
 
-from openpeerpower.components.openpeerpowerr import (
+from openpeerpower.components.openpeerpower import (
     DOMAIN as HA_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.components.smart_meter_texas.const import DOMAIN
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry, load_fixture
 
@@ -35,21 +35,21 @@ def load_smt_fixture(name):
 async def setup_integration.opp, config_entry, aioclient_mock, **kwargs):
     """Initialize the Smart Meter Texas integration for testing."""
     mock_connection(aioclient_mock, **kwargs)
-    await opp..config_entries.async_setup(config_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(config_entry.entry_id)
+    await.opp.async_block_till_done()
 
 
 async def refresh_data.opp, config_entry, aioclient_mock):
     """Request a DataUpdateCoordinator refresh."""
     mock_connection(aioclient_mock)
     await async_setup_component.opp, HA_DOMAIN, {})
-    await opp..services.async_call(
+    await.opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 def mock_connection(
@@ -98,6 +98,6 @@ def mock_config_entry.opp):
         unique_id="user123",
         data={"username": "user123", "password": "password123"},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     return config_entry

@@ -1,5 +1,5 @@
 """The test for the random number sensor platform."""
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_random_sensor.opp):
@@ -18,9 +18,9 @@ async def test_random_sensor.opp):
         "sensor",
         config,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
 
     assert int(state.state) <= config["sensor"]["maximum"]
     assert int(state.state) >= config["sensor"]["minimum"]

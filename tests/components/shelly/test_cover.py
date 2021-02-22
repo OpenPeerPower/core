@@ -25,18 +25,18 @@ async def test_services.opp, coap_wrapper, monkeypatch):
    .opp.async_create_task(
        .opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, COVER_DOMAIN)
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         COVER_DOMAIN,
         SERVICE_SET_COVER_POSITION,
         {ATTR_ENTITY_ID: "cover.test_name", ATTR_POSITION: 50},
         blocking=True,
     )
-    state = opp.states.get("cover.test_name")
+    state =.opp.states.get("cover.test_name")
     assert state.attributes[ATTR_CURRENT_POSITION] == 50
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         COVER_DOMAIN,
         SERVICE_OPEN_COVER,
         {ATTR_ENTITY_ID: "cover.test_name"},
@@ -44,7 +44,7 @@ async def test_services.opp, coap_wrapper, monkeypatch):
     )
     assert.opp.states.get("cover.test_name").state == STATE_OPENING
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         COVER_DOMAIN,
         SERVICE_CLOSE_COVER,
         {ATTR_ENTITY_ID: "cover.test_name"},
@@ -52,7 +52,7 @@ async def test_services.opp, coap_wrapper, monkeypatch):
     )
     assert.opp.states.get("cover.test_name").state == STATE_CLOSING
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         COVER_DOMAIN,
         SERVICE_STOP_COVER,
         {ATTR_ENTITY_ID: "cover.test_name"},
@@ -68,16 +68,16 @@ async def test_update.opp, coap_wrapper, monkeypatch):
    .opp.async_create_task(
        .opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, COVER_DOMAIN)
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     monkeypatch.setattr(coap_wrapper.device.blocks[ROLLER_BLOCK_ID], "rollerPos", 0)
-    await opp..helpers.entity_component.async_update_entity("cover.test_name")
-    await opp..async_block_till_done()
+    await.opp.helpers.entity_component.async_update_entity("cover.test_name")
+    await.opp.async_block_till_done()
     assert.opp.states.get("cover.test_name").state == STATE_CLOSED
 
     monkeypatch.setattr(coap_wrapper.device.blocks[ROLLER_BLOCK_ID], "rollerPos", 100)
-    await opp..helpers.entity_component.async_update_entity("cover.test_name")
-    await opp..async_block_till_done()
+    await.opp.helpers.entity_component.async_update_entity("cover.test_name")
+    await.opp.async_block_till_done()
     assert.opp.states.get("cover.test_name").state == STATE_OPEN
 
 
@@ -89,5 +89,5 @@ async def test_no_roller_blocks.opp, coap_wrapper, monkeypatch):
    .opp.async_create_task(
        .opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, COVER_DOMAIN)
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("cover.test_name") is None

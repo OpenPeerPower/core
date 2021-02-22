@@ -14,7 +14,7 @@ from openpeerpower.components.smartthings.const import (
     CONF_LOCATION_ID,
     DOMAIN,
 )
-from openpeerpower.config import async_process_op.core_config
+from openpeerpower.config import async_process_ha_core_config
 from openpeerpower.const import (
     CONF_ACCESS_TOKEN,
     CONF_CLIENT_ID,
@@ -30,7 +30,7 @@ from tests.common import MockConfigEntry
 async def test_import_shows_user_step.opp):
     """Test import source shows the user form."""
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "import"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -55,7 +55,7 @@ async def test_entry_created.opp, app, app_oauth_client, location, smartthings_m
     request.refresh_token = refresh_token
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -65,21 +65,21 @@ async def test_entry_created.opp, app, app_oauth_client, location, smartthings_m
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
     assert "component_url" in result["description_placeholders"]
 
     # Enter token and advance to location screen
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "select_location"
 
     # Select location and advance to external auth
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_LOCATION_ID: location.location_id}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP
@@ -90,7 +90,7 @@ async def test_entry_created.opp, app, app_oauth_client, location, smartthings_m
     await smartapp.smartapp_install.opp, request, None, app)
 
     # Finish
-    result = await opp..config_entries.flow.async_configure(result["flow_id"])
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["data"]["app_id"] == app.app_id
     assert result["data"]["installed_app_id"] == installed_app_id
@@ -126,7 +126,7 @@ async def test_entry_created_from_update_event(
     request.refresh_token = refresh_token
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -136,21 +136,21 @@ async def test_entry_created_from_update_event(
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
     assert "component_url" in result["description_placeholders"]
 
     # Enter token and advance to location screen
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "select_location"
 
     # Select location and advance to external auth
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_LOCATION_ID: location.location_id}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP
@@ -161,7 +161,7 @@ async def test_entry_created_from_update_event(
     await smartapp.smartapp_update.opp, request, None, app)
 
     # Finish
-    result = await opp..config_entries.flow.async_configure(result["flow_id"])
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["data"]["app_id"] == app.app_id
     assert result["data"]["installed_app_id"] == installed_app_id
@@ -197,7 +197,7 @@ async def test_entry_created_existing_app_new_oauth_client(
     request.refresh_token = refresh_token
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -207,21 +207,21 @@ async def test_entry_created_existing_app_new_oauth_client(
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
     assert "component_url" in result["description_placeholders"]
 
     # Enter token and advance to location screen
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "select_location"
 
     # Select location and advance to external auth
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_LOCATION_ID: location.location_id}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP
@@ -232,7 +232,7 @@ async def test_entry_created_existing_app_new_oauth_client(
     await smartapp.smartapp_install.opp, request, None, app)
 
     # Finish
-    result = await opp..config_entries.flow.async_configure(result["flow_id"])
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["data"]["app_id"] == app.app_id
     assert result["data"]["installed_app_id"] == installed_app_id
@@ -278,10 +278,10 @@ async def test_entry_created_existing_app_copies_oauth_client(
             CONF_ACCESS_TOKEN: token,
         },
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -291,7 +291,7 @@ async def test_entry_created_existing_app_copies_oauth_client(
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
@@ -300,14 +300,14 @@ async def test_entry_created_existing_app_copies_oauth_client(
     assert result["data_schema"]({}) == {CONF_ACCESS_TOKEN: token}
 
     # Enter token and advance to location screen
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "select_location"
 
     # Select location and advance to external auth
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_LOCATION_ID: location.location_id}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP
@@ -318,7 +318,7 @@ async def test_entry_created_existing_app_copies_oauth_client(
     await smartapp.smartapp_install.opp, request, None, app)
 
     # Finish
-    result = await opp..config_entries.flow.async_configure(result["flow_id"])
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["data"]["app_id"] == app.app_id
     assert result["data"]["installed_app_id"] == installed_app_id
@@ -371,7 +371,7 @@ async def test_entry_created_with_cloudhook(
         await smartapp.setup_smartapp_endpoint.opp)
 
         # Webhook confirmation shown
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -382,21 +382,21 @@ async def test_entry_created_with_cloudhook(
         assert mock_create_cloudhook.call_count == 1
 
         # Advance to PAT screen
-        result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "pat"
         assert "token_url" in result["description_placeholders"]
         assert "component_url" in result["description_placeholders"]
 
         # Enter token and advance to location screen
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {CONF_ACCESS_TOKEN: token}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "select_location"
 
         # Select location and advance to external auth
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {CONF_LOCATION_ID: location.location_id}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP
@@ -407,7 +407,7 @@ async def test_entry_created_with_cloudhook(
         await smartapp.smartapp_install.opp, request, None, app)
 
         # Finish
-        result = await opp..config_entries.flow.async_configure(result["flow_id"])
+        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["data"]["app_id"] == app.app_id
         assert result["data"]["installed_app_id"] == installed_app_id
@@ -429,11 +429,11 @@ async def test_entry_created_with_cloudhook(
 async def test_invalid_webhook_aborts.opp):
     """Test flow aborts if webhook is invalid."""
     # Webhook confirmation shown
-    await async_process_op.core_config(
+    await async_process_ha_core_config(
        .opp,
         {"external_url": "http://example.local:8123"},
     )
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -449,7 +449,7 @@ async def test_invalid_token_shows_error.opp):
     token = "123456789"
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -459,14 +459,14 @@ async def test_invalid_token_shows_error.opp):
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
     assert "component_url" in result["description_placeholders"]
 
     # Enter token
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -486,7 +486,7 @@ async def test_unauthorized_token_shows_error.opp, smartthings_mock):
     )
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -496,14 +496,14 @@ async def test_unauthorized_token_shows_error.opp, smartthings_mock):
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
     assert "component_url" in result["description_placeholders"]
 
     # Enter token
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -523,7 +523,7 @@ async def test_forbidden_token_shows_error.opp, smartthings_mock):
     )
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -533,14 +533,14 @@ async def test_forbidden_token_shows_error.opp, smartthings_mock):
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
     assert "component_url" in result["description_placeholders"]
 
     # Enter token
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -563,7 +563,7 @@ async def test_webhook_problem_shows_error.opp, smartthings_mock):
     smartthings_mock.apps.side_effect = error
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -573,14 +573,14 @@ async def test_webhook_problem_shows_error.opp, smartthings_mock):
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
     assert "component_url" in result["description_placeholders"]
 
     # Enter token
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -602,7 +602,7 @@ async def test_api_error_shows_error.opp, smartthings_mock):
     smartthings_mock.apps.side_effect = error
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -612,14 +612,14 @@ async def test_api_error_shows_error.opp, smartthings_mock):
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
     assert "component_url" in result["description_placeholders"]
 
     # Enter token
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -640,7 +640,7 @@ async def test_unknown_response_error_shows_error.opp, smartthings_mock):
     smartthings_mock.apps.side_effect = error
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -650,14 +650,14 @@ async def test_unknown_response_error_shows_error.opp, smartthings_mock):
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
     assert "component_url" in result["description_placeholders"]
 
     # Enter token
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -674,7 +674,7 @@ async def test_unknown_error_shows_error.opp, smartthings_mock):
     smartthings_mock.apps.side_effect = Exception("Unknown error")
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -684,14 +684,14 @@ async def test_unknown_error_shows_error.opp, smartthings_mock):
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
     assert "component_url" in result["description_placeholders"]
 
     # Enter token
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -713,10 +713,10 @@ async def test_no_available_locations_aborts(
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_LOCATION_ID: location.location_id}
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     # Webhook confirmation shown
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -726,14 +726,14 @@ async def test_no_available_locations_aborts(
     ] == smartapp.get_webhook_url.opp)
 
     # Advance to PAT screen
-    result = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pat"
     assert "token_url" in result["description_placeholders"]
     assert "component_url" in result["description_placeholders"]
 
     # Enter token and advance to location screen
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_ACCESS_TOKEN: token}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

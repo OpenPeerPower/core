@@ -14,8 +14,8 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
 )
-import openpeerpowerr.core as ha
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.core as ha
+import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed
 from tests.components.rflink.test_init import mock_rflink
@@ -51,32 +51,32 @@ async def test_default_setup.opp, monkeypatch):
     assert create.call_args_list[0][1]["ignore"]
 
     # test default state of sensor loaded from config
-    config_sensor = opp.states.get("binary_sensor.test")
+    config_sensor =.opp.states.get("binary_sensor.test")
     assert config_sensor
     assert config_sensor.state == STATE_OFF
     assert config_sensor.attributes["device_class"] == "door"
 
     # test on event for config sensor
     event_callback({"id": "test", "command": "on"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test").state == STATE_ON
 
     # test off event for config sensor
     event_callback({"id": "test", "command": "off"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test").state == STATE_OFF
 
     # test allon event for config sensor
     event_callback({"id": "test", "command": "allon"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test").state == STATE_ON
 
     # test alloff event for config sensor
     event_callback({"id": "test", "command": "alloff"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test").state == STATE_OFF
 
@@ -101,7 +101,7 @@ async def test_entity_availability.opp, monkeypatch):
     disconnect_callback()
 
     # Wait for dispatch events to propagate
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Entity should be unavailable
     assert.opp.states.get("binary_sensor.test").state == STATE_UNAVAILABLE
@@ -110,7 +110,7 @@ async def test_entity_availability.opp, monkeypatch):
     disconnect_callback()
 
     # Wait for dispatch events to propagate
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Entities should be available again
     assert.opp.states.get("binary_sensor.test").state == STATE_OFF
@@ -128,7 +128,7 @@ async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
 
     on_event = {"id": "test2", "command": "on"}
 
-    @op.callback
+    @ha.callback
     def callback(event):
         """Verify event got called."""
         events.append(event)
@@ -138,42 +138,42 @@ async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
     now = dt_util.utcnow()
     # fake time and turn on sensor
     future = now + timedelta(seconds=0)
-    with patch(("openpeerpowerr.helpers.event.dt_util.utcnow"), return_value=future):
+    with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=future):
         async_fire_time_changed.opp, future)
         event_callback(on_event)
-        await opp..async_block_till_done()
-        await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.test2")
+        await.opp.async_block_till_done()
+        await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.test2")
     assert state.state == STATE_ON
     assert len(events) == 1
 
     # fake time and turn on sensor again
     future = now + timedelta(seconds=15)
-    with patch(("openpeerpowerr.helpers.event.dt_util.utcnow"), return_value=future):
+    with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=future):
         async_fire_time_changed.opp, future)
         event_callback(on_event)
-        await opp..async_block_till_done()
-        await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.test2")
+        await.opp.async_block_till_done()
+        await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.test2")
     assert state.state == STATE_ON
     assert len(events) == 2
 
     # fake time and verify sensor still on (de-bounce)
     future = now + timedelta(seconds=35)
-    with patch(("openpeerpowerr.helpers.event.dt_util.utcnow"), return_value=future):
+    with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=future):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
-        await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.test2")
+        await.opp.async_block_till_done()
+        await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.test2")
     assert state.state == STATE_ON
     assert len(events) == 2
 
     # fake time and verify sensor is off
     future = now + timedelta(seconds=45)
-    with patch(("openpeerpowerr.helpers.event.dt_util.utcnow"), return_value=future):
+    with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=future):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
-        await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.test2")
+        await.opp.async_block_till_done()
+        await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.test2")
     assert state.state == STATE_OFF
     assert len(events) == 3

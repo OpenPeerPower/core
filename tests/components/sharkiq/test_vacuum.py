@@ -7,7 +7,7 @@ from unittest.mock import patch
 import pytest
 from sharkiqpy import AylaApi, SharkIqAuthError, SharkIqNotAuthedError, SharkIqVacuum
 
-from openpeerpower.components.openpeerpowerr import SERVICE_UPDATE_ENTITY
+from openpeerpower.components.openpeerpower import SERVICE_UPDATE_ENTITY
 from openpeerpower.components.sharkiq import DOMAIN
 from openpeerpower.components.sharkiq.vacuum import (
     ATTR_ERROR_CODE,
@@ -45,8 +45,8 @@ from openpeerpower.const import (
     ATTR_SUPPORTED_FEATURES,
     STATE_UNAVAILABLE,
 )
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.setup import async_setup_component
 
 from .const import (
     CONFIG,
@@ -120,15 +120,15 @@ async def setup_integration.opp):
     entry = MockConfigEntry(
         domain=DOMAIN, unique_id=TEST_USERNAME, data=CONFIG, entry_id=ENTRY_ID
     )
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
 
 async def test_simple_properties.opp: OpenPeerPower):
     """Test that simple properties work as intended."""
-    state = opp.states.get(VAC_ENTITY_ID)
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    state =.opp.states.get(VAC_ENTITY_ID)
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entity = registry.async_get(VAC_ENTITY_ID)
 
     assert entity
@@ -154,7 +154,7 @@ async def test_initial_attributes(
    .opp: OpenPeerPower, attribute: str, target_value: Any
 ):
     """Test initial config attributes."""
-    state = opp.states.get(VAC_ENTITY_ID)
+    state =.opp.states.get(VAC_ENTITY_ID)
     assert state.attributes.get(attribute) == target_value
 
 
@@ -170,8 +170,8 @@ async def test_initial_attributes(
 async def test_cleaning_states.opp: OpenPeerPower, service: str, target_state: str):
     """Test cleaning states."""
     service_data = {ATTR_ENTITY_ID: VAC_ENTITY_ID}
-    await opp..services.async_call("vacuum", service, service_data, blocking=True)
-    state = opp.states.get(VAC_ENTITY_ID)
+    await.opp.services.async_call("vacuum", service, service_data, blocking=True)
+    state =.opp.states.get(VAC_ENTITY_ID)
     assert state.state == target_state
 
 
@@ -179,10 +179,10 @@ async def test_cleaning_states.opp: OpenPeerPower, service: str, target_state: s
 async def test_fan_speed.opp: OpenPeerPower, fan_speed: str) -> None:
     """Test setting fan speeds."""
     service_data = {ATTR_ENTITY_ID: VAC_ENTITY_ID, ATTR_FAN_SPEED: fan_speed}
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "vacuum", SERVICE_SET_FAN_SPEED, service_data, blocking=True
     )
-    state = opp.states.get(VAC_ENTITY_ID)
+    state =.opp.states.get(VAC_ENTITY_ID)
     assert state.attributes.get(ATTR_FAN_SPEED) == fan_speed
 
 
@@ -199,7 +199,7 @@ async def test_device_properties(
    .opp: OpenPeerPower, device_property: str, target_value: str
 ):
     """Test device properties."""
-    registry = await opp..helpers.device_registry.async_get_registry()
+    registry = await.opp.helpers.device_registry.async_get_registry()
     device = registry.async_get_device({(DOMAIN, "AC000Wxxxxxxxxx")})
     assert getattr(device, device_property) == target_value
 
@@ -208,7 +208,7 @@ async def test_locate.opp):
     """Test that the locate command works."""
     with patch.object(SharkIqVacuum, "async_find_device") as mock_locate:
         data = {ATTR_ENTITY_ID: VAC_ENTITY_ID}
-        await opp..services.async_call("vacuum", SERVICE_LOCATE, data, blocking=True)
+        await.opp.services.async_call("vacuum", SERVICE_LOCATE, data, blocking=True)
         mock_locate.assert_called_once()
 
 
@@ -226,19 +226,19 @@ async def test_coordinator_updates(
    .opp: OpenPeerPower, side_effect: Optional[Exception], success: bool
 ) -> None:
     """Test the update coordinator update functions."""
-    coordinator = opp.data[DOMAIN][ENTRY_ID]
+    coordinator =.opp.data[DOMAIN][ENTRY_ID]
 
-    await async_setup_component.opp, "openpeerpowerr", {})
+    await async_setup_component.opp, "openpeerpower", {})
 
     with patch.object(
         MockShark, "async_update", side_effect=side_effect
     ) as mock_update:
         data = {ATTR_ENTITY_ID: [VAC_ENTITY_ID]}
-        await opp..services.async_call(
-            "openpeerpowerr", SERVICE_UPDATE_ENTITY, data, blocking=True
+        await.opp.services.async_call(
+            "openpeerpower", SERVICE_UPDATE_ENTITY, data, blocking=True
         )
         assert coordinator.last_update_success == success
         mock_update.assert_called_once()
 
-    state = opp.states.get(VAC_ENTITY_ID)
+    state =.opp.states.get(VAC_ENTITY_ID)
     assert (state.state == STATE_UNAVAILABLE) != success

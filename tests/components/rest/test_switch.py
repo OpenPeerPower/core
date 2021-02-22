@@ -3,6 +3,7 @@ import asyncio
 
 import aiohttp
 
+from openpeerpower.components.rest import DOMAIN
 import openpeerpower.components.rest.switch as rest
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
 from openpeerpower.const import (
@@ -16,8 +17,8 @@ from openpeerpower.const import (
     HTTP_NOT_FOUND,
     HTTP_OK,
 )
-from openpeerpowerr.helpers.template import Template
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers.template import Template
+from openpeerpower.setup import async_setup_component
 
 from tests.common import assert_setup_component
 
@@ -34,14 +35,14 @@ PARAMS = None
 
 async def test_setup_missing_config.opp):
     """Test setup with configuration missing required entries."""
-    assert not await rest.async_setup_platform.opp, {CONF_PLATFORM: rest.DOMAIN}, None)
+    assert not await rest.async_setup_platform.opp, {CONF_PLATFORM: DOMAIN}, None)
 
 
 async def test_setup_missing_schema.opp):
     """Test setup with resource missing schema."""
     assert not await rest.async_setup_platform(
        .opp,
-        {CONF_PLATFORM: rest.DOMAIN, CONF_RESOURCE: "localhost"},
+        {CONF_PLATFORM: DOMAIN, CONF_RESOURCE: "localhost"},
         None,
     )
 
@@ -51,7 +52,7 @@ async def test_setup_failed_connect.opp, aioclient_mock):
     aioclient_mock.get("http://localhost", exc=aiohttp.ClientError)
     assert not await rest.async_setup_platform(
        .opp,
-        {CONF_PLATFORM: rest.DOMAIN, CONF_RESOURCE: "http://localhost"},
+        {CONF_PLATFORM: DOMAIN, CONF_RESOURCE: "http://localhost"},
         None,
     )
 
@@ -61,7 +62,7 @@ async def test_setup_timeout.opp, aioclient_mock):
     aioclient_mock.get("http://localhost", exc=asyncio.TimeoutError())
     assert not await rest.async_setup_platform(
        .opp,
-        {CONF_PLATFORM: rest.DOMAIN, CONF_RESOURCE: "http://localhost"},
+        {CONF_PLATFORM: DOMAIN, CONF_RESOURCE: "http://localhost"},
         None,
     )
 
@@ -75,11 +76,12 @@ async def test_setup_minimum.opp, aioclient_mock):
             SWITCH_DOMAIN,
             {
                 SWITCH_DOMAIN: {
-                    CONF_PLATFORM: rest.DOMAIN,
+                    CONF_PLATFORM: DOMAIN,
                     CONF_RESOURCE: "http://localhost",
                 }
             },
         )
+        await.opp.async_block_till_done()
     assert aioclient_mock.call_count == 1
 
 
@@ -92,12 +94,14 @@ async def test_setup_query_params.opp, aioclient_mock):
             SWITCH_DOMAIN,
             {
                 SWITCH_DOMAIN: {
-                    CONF_PLATFORM: rest.DOMAIN,
+                    CONF_PLATFORM: DOMAIN,
                     CONF_RESOURCE: "http://localhost",
                     CONF_PARAMS: {"search": "something"},
                 }
             },
         )
+        await.opp.async_block_till_done()
+
     print(aioclient_mock)
     assert aioclient_mock.call_count == 1
 
@@ -110,7 +114,7 @@ async def test_setup.opp, aioclient_mock):
         SWITCH_DOMAIN,
         {
             SWITCH_DOMAIN: {
-                CONF_PLATFORM: rest.DOMAIN,
+                CONF_PLATFORM: DOMAIN,
                 CONF_NAME: "foo",
                 CONF_RESOURCE: "http://localhost",
                 CONF_HEADERS: {"Content-type": CONTENT_TYPE_JSON},
@@ -119,6 +123,7 @@ async def test_setup.opp, aioclient_mock):
             }
         },
     )
+    await.opp.async_block_till_done()
     assert aioclient_mock.call_count == 1
     assert_setup_component(1, SWITCH_DOMAIN)
 
@@ -132,7 +137,7 @@ async def test_setup_with_state_resource.opp, aioclient_mock):
         SWITCH_DOMAIN,
         {
             SWITCH_DOMAIN: {
-                CONF_PLATFORM: rest.DOMAIN,
+                CONF_PLATFORM: DOMAIN,
                 CONF_NAME: "foo",
                 CONF_RESOURCE: "http://localhost",
                 rest.CONF_STATE_RESOURCE: "http://localhost/state",
@@ -142,6 +147,7 @@ async def test_setup_with_state_resource.opp, aioclient_mock):
             }
         },
     )
+    await.opp.async_block_till_done()
     assert aioclient_mock.call_count == 1
     assert_setup_component(1, SWITCH_DOMAIN)
 
@@ -166,7 +172,7 @@ def _setup_test_switch.opp):
         10,
         True,
     )
-    switch.opp = opp
+    switch.opp =.opp
     return switch, body_on, body_off
 
 

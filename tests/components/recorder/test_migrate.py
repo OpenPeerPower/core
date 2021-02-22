@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import InternalError, OperationalError, ProgrammingError
 from sqlalchemy.pool import StaticPool
 
-from openpeerpowerr.bootstrap import async_setup_component
+from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components.recorder import const, migration, models
 
 from tests.components.recorder import models_original
@@ -34,9 +34,9 @@ async def test_schema_update_calls.opp):
         await async_setup_component(
            .opp, "recorder", {"recorder": {"db_url": "sqlite://"}}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    update.assert_op._calls(
+    update.assert_has_calls(
         [
             call.opp.data[const.DATA_INSTANCE].engine, version + 1, 0)
             for version in range(0, models.SCHEMA_VERSION)
@@ -57,7 +57,7 @@ async def test_schema_migrate.opp):
         await async_setup_component(
            .opp, "recorder", {"recorder": {"db_url": "sqlite://"}}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert setup_run.called
 
 

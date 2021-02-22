@@ -6,6 +6,7 @@ from unittest.mock import patch
 from sqlalchemy.exc import OperationalError
 
 from openpeerpower.components.recorder import (
+    CONF_DB_URL,
     CONFIG_SCHEMA,
     DOMAIN,
     Recorder,
@@ -13,22 +14,53 @@ from openpeerpower.components.recorder import (
     run_information_from_instance,
     run_information_with_session,
 )
-from openpeerpower.components.recorder.const import DATA_INSTANCE
+from openpeerpower.components.recorder.const import DATA_INSTANCE, SQLITE_URL_PREFIX
 from openpeerpower.components.recorder.models import Events, RecorderRuns, States
 from openpeerpower.components.recorder.util import session_scope
-from openpeerpower.const import MATCH_ALL, STATE_LOCKED, STATE_UNLOCKED
-from openpeerpowerr.core import Context, callback
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.const import (
+    EVENT_OPENPEERPOWER_STOP,
+    MATCH_ALL,
+    STATE_LOCKED,
+    STATE_UNLOCKED,
+)
+from openpeerpower.core import Context, CoreState, callback
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt as dt_util
 
-from .common import wait_recording_done
+from .common import async_wait_recording_done, corrupt_db_file, wait_recording_done
 
-from tests.common import fire_time_changed, get_test_home_assistant
+from tests.common import (
+    async_init_recorder_component,
+    fire_time_changed,
+    get_test_open_peer_power,
+)
+
+
+async def test_shutdown_before_startup_finishes.opp):
+    """Test shutdown before recorder starts is clean."""
+
+   .opp.state = CoreState.not_running
+
+    await async_init_recorder_component.opp)
+    await.opp.async_block_till_done()
+
+    session = await.opp.async_add_executor_job.opp.data[DATA_INSTANCE].get_session)
+
+    with patch.object.opp.data[DATA_INSTANCE], "engine"):
+       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+        await.opp.async_block_till_done()
+        await.opp.async_stop()
+
+    run_info = await.opp.async_add_executor_job(run_information_with_session, session)
+
+    assert run_info.run_id == 1
+    assert run_info.start is not None
+    assert run_info.end is not None
 
 
 def test_saving_state.opp,.opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder()
+   .opp =.opp_recorder()
 
     entity_id = "test.recorder"
     state = "restoring_from_db"
@@ -49,7 +81,7 @@ def test_saving_state.opp,.opp_recorder):
 
 def test_saving_state_with_exception.opp,.opp_recorder, caplog):
     """Test saving and restoring a state."""
-    opp = opp_recorder()
+   .opp =.opp_recorder()
 
     entity_id = "test.recorder"
     state = "restoring_from_db"
@@ -87,7 +119,7 @@ def test_saving_state_with_exception.opp,.opp_recorder, caplog):
 
 def test_saving_event.opp,.opp_recorder):
     """Test saving and restoring an event."""
-    opp = opp_recorder()
+   .opp =.opp_recorder()
 
     event_type = "EVENT_TEST"
     event_data = {"test_attr": 5, "test_attr_10": "nice"}
@@ -151,7 +183,7 @@ def _add_events.opp, events):
 def _state_empty_context.opp, entity_id):
     # We don't restore context unless we need it by joining the
     # events table on the event_id for state_changed events
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     state.context = Context(id=None)
     return state
 
@@ -159,7 +191,7 @@ def _state_empty_context.opp, entity_id):
 # pylint: disable=redefined-outer-name,invalid-name
 def test_saving_state_include_domains.opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder({"include": {"domains": "test2"}})
+   .opp =.opp_recorder({"include": {"domains": "test2"}})
     states = _add_entities.opp, ["test.recorder", "test2.recorder"])
     assert len(states) == 1
     assert _state_empty_context.opp, "test2.recorder") == states[0]
@@ -167,7 +199,7 @@ def test_saving_state_include_domains.opp_recorder):
 
 def test_saving_state_include_domains_globs.opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder(
+   .opp =.opp_recorder(
         {"include": {"domains": "test2", "entity_globs": "*.included_*"}}
     )
     states = _add_entities(
@@ -180,7 +212,7 @@ def test_saving_state_include_domains_globs.opp_recorder):
 
 def test_saving_state_incl_entities.opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder({"include": {"entities": "test2.recorder"}})
+   .opp =.opp_recorder({"include": {"entities": "test2.recorder"}})
     states = _add_entities.opp, ["test.recorder", "test2.recorder"])
     assert len(states) == 1
     assert _state_empty_context.opp, "test2.recorder") == states[0]
@@ -188,15 +220,15 @@ def test_saving_state_incl_entities.opp_recorder):
 
 def test_saving_event_exclude_event_type.opp_recorder):
     """Test saving and restoring an event."""
-    opp = opp_recorder(
+   .opp =.opp_recorder(
         {
             "exclude": {
                 "event_types": [
                     "service_registered",
-                    "openpeerpowerr_start",
+                    "openpeerpower_start",
                     "component_loaded",
                     "core_config_updated",
-                    "openpeerpowerr_started",
+                    "openpeerpower_started",
                     "test",
                 ]
             }
@@ -209,7 +241,7 @@ def test_saving_event_exclude_event_type.opp_recorder):
 
 def test_saving_state_exclude_domains.opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder({"exclude": {"domains": "test"}})
+   .opp =.opp_recorder({"exclude": {"domains": "test"}})
     states = _add_entities.opp, ["test.recorder", "test2.recorder"])
     assert len(states) == 1
     assert _state_empty_context.opp, "test2.recorder") == states[0]
@@ -217,7 +249,7 @@ def test_saving_state_exclude_domains.opp_recorder):
 
 def test_saving_state_exclude_domains_globs.opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder(
+   .opp =.opp_recorder(
         {"exclude": {"domains": "test", "entity_globs": "*.excluded_*"}}
     )
     states = _add_entities(
@@ -229,7 +261,7 @@ def test_saving_state_exclude_domains_globs.opp_recorder):
 
 def test_saving_state_exclude_entities.opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder({"exclude": {"entities": "test.recorder"}})
+   .opp =.opp_recorder({"exclude": {"entities": "test.recorder"}})
     states = _add_entities.opp, ["test.recorder", "test2.recorder"])
     assert len(states) == 1
     assert _state_empty_context.opp, "test2.recorder") == states[0]
@@ -237,7 +269,7 @@ def test_saving_state_exclude_entities.opp_recorder):
 
 def test_saving_state_exclude_domain_include_entity.opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder(
+   .opp =.opp_recorder(
         {"include": {"entities": "test.recorder"}, "exclude": {"domains": "test"}}
     )
     states = _add_entities.opp, ["test.recorder", "test2.recorder"])
@@ -246,7 +278,7 @@ def test_saving_state_exclude_domain_include_entity.opp_recorder):
 
 def test_saving_state_exclude_domain_glob_include_entity.opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder(
+   .opp =.opp_recorder(
         {
             "include": {"entities": ["test.recorder", "test.excluded_entity"]},
             "exclude": {"domains": "test", "entity_globs": "*._excluded_*"},
@@ -260,7 +292,7 @@ def test_saving_state_exclude_domain_glob_include_entity.opp_recorder):
 
 def test_saving_state_include_domain_exclude_entity.opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder(
+   .opp =.opp_recorder(
         {"exclude": {"entities": "test.recorder"}, "include": {"domains": "test"}}
     )
     states = _add_entities.opp, ["test.recorder", "test2.recorder", "test.ok"])
@@ -271,7 +303,7 @@ def test_saving_state_include_domain_exclude_entity.opp_recorder):
 
 def test_saving_state_include_domain_glob_exclude_entity.opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder(
+   .opp =.opp_recorder(
         {
             "exclude": {"entities": ["test.recorder", "test2.included_entity"]},
             "include": {"domains": "test", "entity_globs": "*._included_*"},
@@ -287,7 +319,7 @@ def test_saving_state_include_domain_glob_exclude_entity.opp_recorder):
 
 def test_saving_state_and_removing_entity.opp,.opp_recorder):
     """Test saving the state of a removed entity."""
-    opp = opp_recorder()
+   .opp =.opp_recorder()
     entity_id = "lock.mine"
    .opp.states.set(entity_id, STATE_LOCKED)
    .opp.states.set(entity_id, STATE_UNLOCKED)
@@ -308,7 +340,7 @@ def test_saving_state_and_removing_entity.opp,.opp_recorder):
 
 def test_recorder_setup_failure():
     """Test some exceptions."""
-    opp = get_test_home_assistant()
+   .opp = get_test_open_peer_power()
 
     with patch.object(Recorder, "_setup_connection") as setup, patch(
         "openpeerpower.components.recorder.time.sleep"
@@ -360,7 +392,7 @@ def run_tasks_at_time.opp, test_time):
 
 def test_auto_purge.opp_recorder):
     """Test periodic purge alarm scheduling."""
-    opp = opp_recorder()
+   .opp =.opp_recorder()
 
     original_tz = dt_util.DEFAULT_TIME_ZONE
 
@@ -408,7 +440,7 @@ def test_auto_purge.opp_recorder):
 
 def test_saving_sets_old_state.opp_recorder):
     """Test saving sets old state."""
-    opp = opp_recorder()
+   .opp =.opp_recorder()
 
    .opp.states.set("test.one", "on", {})
    .opp.states.set("test.two", "on", {})
@@ -434,7 +466,7 @@ def test_saving_sets_old_state.opp_recorder):
 
 def test_saving_state_with_serializable_data.opp_recorder, caplog):
     """Test saving data that cannot be serialized does not crash."""
-    opp = opp_recorder()
+   .opp =.opp_recorder()
 
    .opp.states.set("test.one", "on", {"fail": CannotSerializeMe()})
     wait_recording_done.opp)
@@ -458,7 +490,7 @@ def test_saving_state_with_serializable_data.opp_recorder, caplog):
 def test_run_information.opp_recorder):
     """Ensure run_information returns expected data."""
     before_start_recording = dt_util.utcnow()
-    opp = opp_recorder()
+   .opp =.opp_recorder()
     run_info = run_information_from_instance.opp)
     assert isinstance(run_info, RecorderRuns)
     assert run_info.closed_incorrect is False
@@ -488,3 +520,52 @@ def test_run_information.opp_recorder):
 
 class CannotSerializeMe:
     """A class that the JSONEncoder cannot serialize."""
+
+
+async def test_database_corruption_while_running.opp, tmpdir, caplog):
+    """Test we can recover from sqlite3 db corruption."""
+
+    def _create_tmpdir_for_test_db():
+        return tmpdir.mkdir("sqlite").join("test.db")
+
+    test_db_file = await.opp.async_add_executor_job(_create_tmpdir_for_test_db)
+    dburl = f"{SQLITE_URL_PREFIX}//{test_db_file}"
+
+    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_DB_URL: dburl}})
+    await.opp.async_block_till_done()
+    caplog.clear()
+
+   .opp.states.async_set("test.lost", "on", {})
+
+    await async_wait_recording_done.opp)
+    await.opp.async_add_executor_job(corrupt_db_file, test_db_file)
+    await async_wait_recording_done.opp)
+
+    # This state will not be recorded because
+    # the database corruption will be discovered
+    # and we will have to rollback to recover
+   .opp.states.async_set("test.one", "off", {})
+    await async_wait_recording_done.opp)
+
+    assert "Unrecoverable sqlite3 database corruption detected" in caplog.text
+    assert "The system will rename the corrupt database file" in caplog.text
+    assert "Connected to recorder database" in caplog.text
+
+    # This state should go into the new database
+   .opp.states.async_set("test.two", "on", {})
+    await async_wait_recording_done.opp)
+
+    def _get_last_state():
+        with session_scope.opp.opp) as session:
+            db_states = list(session.query(States))
+            assert len(db_states) == 1
+            assert db_states[0].event_id > 0
+            return db_states[0].to_native()
+
+    state = await.opp.async_add_executor_job(_get_last_state)
+    assert state.entity_id == "test.two"
+    assert state.state == "on"
+
+   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+    await.opp.async_block_till_done()
+   .opp.stop()

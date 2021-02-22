@@ -11,8 +11,8 @@ from openpeerpower.components.seventeentrack.sensor import (
     CONF_SHOW_DELIVERED,
 )
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import utcnow
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import utcnow
 
 from tests.common import async_fire_time_changed
 
@@ -130,31 +130,31 @@ async def _setup_seventeentrack.opp, config=None, summary_data=None):
 
     ProfileMock.summary_data = summary_data
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def _goto_future.opp, future=None):
     """Move to future."""
     if not future:
         future = utcnow() + datetime.timedelta(minutes=10)
-    with patch("openpeerpowerr.util.utcnow", return_value=future):
+    with patch("openpeerpower.util.utcnow", return_value=future):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
 
 async def test_full_valid_config.opp):
     """Ensure everything starts correctly."""
     assert await async_setup_component.opp, "sensor", VALID_CONFIG_FULL)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
 
 
 async def test_valid_config.opp):
     """Ensure everything starts correctly."""
     assert await async_setup_component.opp, "sensor", VALID_CONFIG_MINIMAL)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
 
 
@@ -233,7 +233,7 @@ async def test_friendly_name_changed.opp):
     await _goto_future.opp)
 
     assert.opp.states.get("sensor.seventeentrack_package_456") is not None
-    entity = opp.data["entity_components"]["sensor"].get_entity(
+    entity =.opp.data["entity_components"]["sensor"].get_entity(
         "sensor.seventeentrack_package_456"
     )
     assert entity.name == "Seventeentrack Package: friendly name 2"

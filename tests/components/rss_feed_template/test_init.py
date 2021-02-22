@@ -3,7 +3,7 @@ from defusedxml import ElementTree
 import pytest
 
 from openpeerpower.const import HTTP_NOT_FOUND
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture

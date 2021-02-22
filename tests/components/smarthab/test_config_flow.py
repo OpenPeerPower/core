@@ -11,7 +11,7 @@ from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -24,11 +24,11 @@ async def test_form.opp):
     ) as mock_setup, patch(
         "openpeerpower.components.smarthab.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_EMAIL: "mock@example.com", CONF_PASSWORD: "test-password"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "mock@example.com"
@@ -42,14 +42,14 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch("pysmarthab.SmartHab.async_login"), patch(
         "pysmarthab.SmartHab.is_logged_in", return_value=False
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_EMAIL: "mock@example.com", CONF_PASSWORD: "test-password"},
         )
@@ -60,7 +60,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_service_error.opp):
     """Test we handle service errors."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -68,7 +68,7 @@ async def test_form_service_error.opp):
         "pysmarthab.SmartHab.async_login",
         side_effect=pysmarthab.RequestFailedException(42),
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_EMAIL: "mock@example.com", CONF_PASSWORD: "test-password"},
         )
@@ -79,7 +79,7 @@ async def test_form_service_error.opp):
 
 async def test_form_unknown_error.opp):
     """Test we handle unknown errors."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -87,7 +87,7 @@ async def test_form_unknown_error.opp):
         "pysmarthab.SmartHab.async_login",
         side_effect=Exception,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_EMAIL: "mock@example.com", CONF_PASSWORD: "test-password"},
         )
@@ -112,10 +112,10 @@ async def test_import.opp):
     ) as mock_setup, patch(
         "openpeerpower.components.smarthab.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=imported_conf
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "mock@example.com"

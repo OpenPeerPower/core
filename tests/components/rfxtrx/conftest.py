@@ -6,7 +6,7 @@ import pytest
 
 from openpeerpower.components import rfxtrx
 from openpeerpower.components.rfxtrx import DOMAIN
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.util.dt import utcnow
 
 from tests.common import MockConfigEntry, async_fire_time_changed
 from tests.components.light.conftest import mock_light_profiles  # noqa
@@ -33,13 +33,13 @@ async def rfxtrx_fixture.opp):
 
         async def _signal_event(packet_id):
             event = rfxtrx.get_rfx_object(packet_id)
-            await opp..async_add_executor_job(
+            await.opp.async_add_executor_job(
                 rfx.event_callback,
                 event,
             )
 
-            await opp..async_block_till_done()
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
+            await.opp.async_block_till_done()
             return event
 
         rfx.signal = _signal_event
@@ -53,11 +53,11 @@ async def rfxtrx_automatic_fixture.opp, rfxtrx):
     entry_data = create_rfx_test_cfg(automatic_add=True, devices={})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
-    await opp..async_start()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
+    await.opp.async_start()
     yield rfxtrx
 
 
@@ -65,13 +65,13 @@ async def rfxtrx_automatic_fixture.opp, rfxtrx):
 async def timestep.opp):
     """Step system time forward."""
 
-    with patch("openpeerpowerr.core.dt_util.utcnow") as mock_utcnow:
+    with patch("openpeerpower.core.dt_util.utcnow") as mock_utcnow:
         mock_utcnow.return_value = utcnow()
 
         async def delay(seconds):
             """Trigger delay in system."""
             mock_utcnow.return_value += timedelta(seconds=seconds)
             async_fire_time_changed.opp, mock_utcnow.return_value)
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
         yield delay

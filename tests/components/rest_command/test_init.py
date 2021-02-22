@@ -5,9 +5,9 @@ import aiohttp
 
 import openpeerpower.components.rest_command as rc
 from openpeerpower.const import CONTENT_TYPE_JSON, CONTENT_TYPE_TEXT_PLAIN
-from openpeerpowerr.setup import setup_component
+from openpeerpower.setup import setup_component
 
-from tests.common import assert_setup_component, get_test_home_assistant
+from tests.common import assert_setup_component, get_test_open_peer_power
 
 
 class TestRestCommandSetup:
@@ -15,7 +15,7 @@ class TestRestCommandSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         self.config = {rc.DOMAIN: {"test_get": {"url": "http://example.com/"}}}
 
@@ -59,7 +59,7 @@ class TestRestCommandComponent:
             }
         }
 
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self):
         """Stop everything that was started."""

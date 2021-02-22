@@ -5,10 +5,10 @@ components. Instead call the service directly.
 """
 from openpeerpower.components.scene import DOMAIN
 from openpeerpower.const import ATTR_ENTITY_ID, ENTITY_MATCH_ALL, SERVICE_TURN_ON
-from openpeerpowerr.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 
-@bind_opp
+@bind.opp
 def activate.opp, entity_id=ENTITY_MATCH_ALL):
     """Activate a scene."""
     data = {}

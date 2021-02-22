@@ -2,7 +2,7 @@
 import datetime
 from unittest.mock import patch
 
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 VALID_CONFIG_MINIMAL = {
     "sensor": {"platform": "rmvtransport", "next_departure": [{"station": "3000010"}]}
@@ -163,9 +163,9 @@ async def test_rmvtransport_min_config.opp):
         return_value=get_departures_mock(),
     ):
         assert await async_setup_component.opp, "sensor", VALID_CONFIG_MINIMAL) is True
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.frankfurt_main_op.ptbahnhof")
+    state =.opp.states.get("sensor.frankfurt_main_hauptbahnhof")
     assert state.state == "7"
     assert state.attributes["departure_time"] == datetime.datetime(2018, 8, 6, 14, 21)
     assert (
@@ -184,9 +184,9 @@ async def test_rmvtransport_name_config.opp):
         return_value=get_departures_mock(),
     ):
         assert await async_setup_component.opp, "sensor", VALID_CONFIG_NAME)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.my_station")
+    state =.opp.states.get("sensor.my_station")
     assert state.attributes["friendly_name"] == "My Station"
 
 
@@ -197,9 +197,9 @@ async def test_rmvtransport_misc_config.opp):
         return_value=get_departures_mock(),
     ):
         assert await async_setup_component.opp, "sensor", VALID_CONFIG_MISC)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.frankfurt_main_op.ptbahnhof")
+    state =.opp.states.get("sensor.frankfurt_main_hauptbahnhof")
     assert state.attributes["friendly_name"] == "Frankfurt (Main) Hauptbahnhof"
     assert state.attributes["line"] == 21
 
@@ -211,9 +211,9 @@ async def test_rmvtransport_dest_config.opp):
         return_value=get_departures_mock(),
     ):
         assert await async_setup_component.opp, "sensor", VALID_CONFIG_DEST)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.frankfurt_main_op.ptbahnhof")
+    state =.opp.states.get("sensor.frankfurt_main_hauptbahnhof")
     assert state.state == "11"
     assert (
         state.attributes["direction"] == "Frankfurt (Main) Hugo-Junkers-Straße/Schleife"
@@ -230,7 +230,7 @@ async def test_rmvtransport_no_departures.opp):
         return_value=get_no_departures_mock(),
     ):
         assert await async_setup_component.opp, "sensor", VALID_CONFIG_MINIMAL)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.frankfurt_main_op.ptbahnhof")
+    state =.opp.states.get("sensor.frankfurt_main_hauptbahnhof")
     assert state.state == "unavailable"

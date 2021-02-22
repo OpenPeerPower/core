@@ -1,5 +1,7 @@
 """Test the SmartTub climate platform."""
 
+import smarttub
+
 from openpeerpower.components.climate.const import (
     ATTR_CURRENT_TEMPERATURE,
     ATTR_HVAC_ACTION,
@@ -22,30 +24,21 @@ from openpeerpower.const import (
     ATTR_TEMPERATURE,
 )
 
+from . import trigger_update
 
-async def test_thermostat(coordinator, spa,.opp, config_entry):
+
+async def test_thermostat_update(spa, setup_entry,.opp):
     """Test the thermostat entity."""
 
-    spa.get_status.return_value = {
-        "heater": "ON",
-        "water": {
-            "temperature": 38,
-        },
-        "setTemperature": 39,
-    }
-    config_entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(config_entry.entry_id)
-    await opp..async_block_till_done()
-
     entity_id = f"climate.{spa.brand}_{spa.model}_thermostat"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state
 
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
 
     spa.get_status.return_value["heater"] = "OFF"
-    await opp..helpers.entity_component.async_update_entity(entity_id)
-    state = opp.states.get(entity_id)
+    await trigger_update.opp)
+    state =.opp.states.get(entity_id)
 
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
 
@@ -57,7 +50,7 @@ async def test_thermostat(coordinator, spa,.opp, config_entry):
     assert state.attributes[ATTR_MAX_TEMP] == DEFAULT_MAX_TEMP
     assert state.attributes[ATTR_MIN_TEMP] == DEFAULT_MIN_TEMP
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: entity_id, ATTR_TEMPERATURE: 37},
@@ -65,10 +58,14 @@ async def test_thermostat(coordinator, spa,.opp, config_entry):
     )
     spa.set_temperature.assert_called_with(37)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_HVAC_MODE: HVAC_MODE_HEAT},
         blocking=True,
     )
     # does nothing
+
+    spa.get_status.side_effect = smarttub.APIError
+    await trigger_update.opp)
+    # should not fail

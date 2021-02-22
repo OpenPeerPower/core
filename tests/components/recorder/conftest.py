@@ -4,13 +4,13 @@ import pytest
 
 from openpeerpower.components.recorder.const import DATA_INSTANCE
 
-from tests.common import get_test_home_assistant, init_recorder_component
+from tests.common import get_test_open_peer_power, init_recorder_component
 
 
 @pytest.fixture
 def.opp_recorder():
     """Open Peer Power fixture with in-memory recorder."""
-    opp = get_test_home_assistant()
+   .opp = get_test_open_peer_power()
 
     def setup_recorder(config=None):
         """Set up with params."""

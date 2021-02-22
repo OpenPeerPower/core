@@ -16,12 +16,12 @@ from openpeerpower.const import (
     STATE_UNKNOWN,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.setup import async_setup_component, setup_component
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.setup import async_setup_component, setup_component
+from openpeerpower.util import dt as dt_util
 
 from tests.common import (
     fire_time_changed,
-    get_test_home_assistant,
+    get_test_open_peer_power,
     init_recorder_component,
 )
 from tests.components.recorder.common import wait_recording_done
@@ -38,7 +38,7 @@ class TestStatisticsSensor(unittest.TestCase):
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.values = [17, 20, 15.2, 5, 3.8, 9.2, 6.7, 14, 6]
         self.count = len(self.values)
         self.min = min(self.values)
@@ -453,7 +453,7 @@ class TestStatisticsSensor(unittest.TestCase):
 
 async def test_reload.opp):
     """Verify we can reload filter sensors."""
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         init_recorder_component,.opp
     )  # force in memory db
 
@@ -470,9 +470,9 @@ async def test_reload.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 
@@ -484,13 +484,13 @@ async def test_reload.opp):
         "statistics/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 

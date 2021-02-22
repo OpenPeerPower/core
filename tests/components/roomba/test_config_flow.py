@@ -79,20 +79,20 @@ async def test_form_user_discovery_and_password_fetch.opp):
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] is None
     assert result["step_id"] == "user"
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: MOCK_IP},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["errors"] is None
     assert result2["step_id"] == "link"
@@ -109,11 +109,11 @@ async def test_form_user_discovery_and_password_fetch.opp):
         "openpeerpower.components.roomba.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result3 = await opp..config_entries.flow.async_configure(
+        result3 = await.opp.config_entries.flow.async_configure(
             result2["flow_id"],
             {},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result3["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result3["title"] == "robot_name"
@@ -134,15 +134,15 @@ async def test_form_user_discovery_skips_known.opp):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     entry = MockConfigEntry(domain=DOMAIN, data=VALID_CONFIG, unique_id="blid")
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] is None
@@ -154,26 +154,26 @@ async def test_form_user_failed_discovery_aborts_already_configured.opp):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     entry = MockConfigEntry(domain=DOMAIN, data=VALID_CONFIG, unique_id="blid")
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery",
         _mocked_failed_discovery,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] is None
     assert result["step_id"] == "manual"
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: MOCK_IP, CONF_BLID: "blid"},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result2["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result2["reason"] == "already_configured"
 
@@ -190,29 +190,29 @@ async def test_form_user_discovery_manual_and_auto_password_fetch.opp):
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] is None
     assert result["step_id"] == "user"
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: None},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["errors"] is None
     assert result2["step_id"] == "manual"
 
-    result3 = await opp..config_entries.flow.async_configure(
+    result3 = await.opp.config_entries.flow.async_configure(
         result2["flow_id"],
         {CONF_HOST: MOCK_IP, CONF_BLID: "blid"},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result3["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result3["errors"] is None
 
@@ -228,11 +228,11 @@ async def test_form_user_discovery_manual_and_auto_password_fetch.opp):
         "openpeerpower.components.roomba.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result4 = await opp..config_entries.flow.async_configure(
+        result4 = await.opp.config_entries.flow.async_configure(
             result3["flow_id"],
             {},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result4["title"] == "myroomba"
@@ -263,29 +263,29 @@ async def test_form_user_discovery_manual_and_auto_password_fetch_but_cannot_con
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] is None
     assert result["step_id"] == "user"
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: None},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["errors"] is None
     assert result2["step_id"] == "manual"
 
-    result3 = await opp..config_entries.flow.async_configure(
+    result3 = await.opp.config_entries.flow.async_configure(
         result2["flow_id"],
         {CONF_HOST: MOCK_IP, CONF_BLID: "blid"},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result3["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result3["errors"] is None
 
@@ -301,11 +301,11 @@ async def test_form_user_discovery_manual_and_auto_password_fetch_but_cannot_con
         "openpeerpower.components.roomba.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result4 = await opp..config_entries.flow.async_configure(
+        result4 = await.opp.config_entries.flow.async_configure(
             result3["flow_id"],
             {},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result4["reason"] == "cannot_connect"
@@ -326,20 +326,20 @@ async def test_form_user_discovery_fails_and_auto_password_fetch.opp):
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery",
         _mocked_failed_discovery,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] is None
     assert result["step_id"] == "manual"
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: MOCK_IP, CONF_BLID: "blid"},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["errors"] is None
 
@@ -355,11 +355,11 @@ async def test_form_user_discovery_fails_and_auto_password_fetch.opp):
         "openpeerpower.components.roomba.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result3 = await opp..config_entries.flow.async_configure(
+        result3 = await.opp.config_entries.flow.async_configure(
             result2["flow_id"],
             {},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result3["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result3["title"] == "myroomba"
@@ -388,20 +388,20 @@ async def test_form_user_discovery_fails_and_password_fetch_fails.opp):
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery",
         _mocked_failed_discovery,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] is None
     assert result["step_id"] == "manual"
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: MOCK_IP, CONF_BLID: "blid"},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["errors"] is None
 
@@ -409,11 +409,11 @@ async def test_form_user_discovery_fails_and_password_fetch_fails.opp):
         "openpeerpower.components.roomba.config_flow.RoombaPassword",
         _mocked_failed_getpassword,
     ):
-        result3 = await opp..config_entries.flow.async_configure(
+        result3 = await.opp.config_entries.flow.async_configure(
             result2["flow_id"],
             {},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.roomba.config_flow.Roomba",
@@ -424,11 +424,11 @@ async def test_form_user_discovery_fails_and_password_fetch_fails.opp):
         "openpeerpower.components.roomba.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result4 = await opp..config_entries.flow.async_configure(
+        result4 = await.opp.config_entries.flow.async_configure(
             result3["flow_id"],
             {CONF_PASSWORD: "password"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result4["title"] == "myroomba"
@@ -460,20 +460,20 @@ async def test_form_user_discovery_fails_and_password_fetch_fails_and_cannot_con
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery",
         _mocked_failed_discovery,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] is None
     assert result["step_id"] == "manual"
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: MOCK_IP, CONF_BLID: "blid"},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["errors"] is None
 
@@ -481,11 +481,11 @@ async def test_form_user_discovery_fails_and_password_fetch_fails_and_cannot_con
         "openpeerpower.components.roomba.config_flow.RoombaPassword",
         _mocked_failed_getpassword,
     ):
-        result3 = await opp..config_entries.flow.async_configure(
+        result3 = await.opp.config_entries.flow.async_configure(
             result2["flow_id"],
             {},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.roomba.config_flow.Roomba",
@@ -496,11 +496,11 @@ async def test_form_user_discovery_fails_and_password_fetch_fails_and_cannot_con
         "openpeerpower.components.roomba.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result4 = await opp..config_entries.flow.async_configure(
+        result4 = await.opp.config_entries.flow.async_configure(
             result3["flow_id"],
             {CONF_PASSWORD: "password"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result4["errors"] == {"base": "cannot_connect"}
@@ -520,20 +520,20 @@ async def test_form_user_discovery_and_password_fetch_gets_connection_refused.op
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] is None
     assert result["step_id"] == "user"
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: MOCK_IP},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["errors"] is None
     assert result2["step_id"] == "link"
@@ -542,11 +542,11 @@ async def test_form_user_discovery_and_password_fetch_gets_connection_refused.op
         "openpeerpower.components.roomba.config_flow.RoombaPassword",
         _mocked_connection_refused_on_getpassword,
     ):
-        result3 = await opp..config_entries.flow.async_configure(
+        result3 = await.opp.config_entries.flow.async_configure(
             result2["flow_id"],
             {},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.roomba.config_flow.Roomba",
@@ -557,11 +557,11 @@ async def test_form_user_discovery_and_password_fetch_gets_connection_refused.op
         "openpeerpower.components.roomba.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result4 = await opp..config_entries.flow.async_configure(
+        result4 = await.opp.config_entries.flow.async_configure(
             result3["flow_id"],
             {CONF_PASSWORD: "password"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result4["title"] == "myroomba"
@@ -589,7 +589,7 @@ async def test_dhcp_discovery_and_roomba_discovery_finds.opp):
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_DHCP},
             data={
@@ -598,7 +598,7 @@ async def test_dhcp_discovery_and_roomba_discovery_finds.opp):
                 HOSTNAME: "iRobot-blid",
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] is None
@@ -617,11 +617,11 @@ async def test_dhcp_discovery_and_roomba_discovery_finds.opp):
         "openpeerpower.components.roomba.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "robot_name"
@@ -649,7 +649,7 @@ async def test_dhcp_discovery_falls_back_to_manual.opp):
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_DHCP},
             data={
@@ -658,26 +658,26 @@ async def test_dhcp_discovery_falls_back_to_manual.opp):
                 HOSTNAME: "iRobot-blid",
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] is None
     assert result["step_id"] == "user"
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["errors"] is None
     assert result2["step_id"] == "manual"
 
-    result3 = await opp..config_entries.flow.async_configure(
+    result3 = await.opp.config_entries.flow.async_configure(
         result2["flow_id"],
         {CONF_HOST: "1.1.1.1", CONF_BLID: "blid"},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result3["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result3["errors"] is None
 
@@ -693,11 +693,11 @@ async def test_dhcp_discovery_falls_back_to_manual.opp):
         "openpeerpower.components.roomba.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result4 = await opp..config_entries.flow.async_configure(
+        result4 = await.opp.config_entries.flow.async_configure(
             result3["flow_id"],
             {},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result4["title"] == "myroomba"
@@ -718,12 +718,12 @@ async def test_dhcp_discovery_with_ignored.opp):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={}, source="ignore")
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_DHCP},
             data={
@@ -732,7 +732,7 @@ async def test_dhcp_discovery_with_ignored.opp):
                 HOSTNAME: "iRobot-blid",
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == "form"
 
@@ -742,12 +742,12 @@ async def test_dhcp_discovery_already_configured_host.opp):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={CONF_HOST: "1.1.1.1"})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_DHCP},
             data={
@@ -756,7 +756,7 @@ async def test_dhcp_discovery_already_configured_host.opp):
                 HOSTNAME: "iRobot-blid",
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
@@ -769,12 +769,12 @@ async def test_dhcp_discovery_already_configured_blid.opp):
     config_entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_BLID: "blid"}, unique_id="blid"
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_DHCP},
             data={
@@ -783,7 +783,7 @@ async def test_dhcp_discovery_already_configured_blid.opp):
                 HOSTNAME: "iRobot-blid",
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
@@ -796,12 +796,12 @@ async def test_dhcp_discovery_not_irobot.opp):
     config_entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_BLID: "blid"}, unique_id="blid"
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_DHCP},
             data={
@@ -810,7 +810,7 @@ async def test_dhcp_discovery_not_irobot.opp):
                 HOSTNAME: "NotiRobot-blid",
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "not_irobot_device"

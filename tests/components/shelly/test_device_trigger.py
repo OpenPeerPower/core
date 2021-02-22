@@ -14,8 +14,8 @@ from openpeerpower.components.shelly.const import (
     EVENT_SHELLY_CLICK,
 )
 from openpeerpower.const import CONF_DEVICE_ID, CONF_DOMAIN, CONF_PLATFORM, CONF_TYPE
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -56,7 +56,7 @@ async def test_get_triggers_for_invalid_device_id.opp, device_reg, coap_wrapper)
     """Test error raised for invalid shelly device_id."""
     assert coap_wrapper
     config_entry = MockConfigEntry(domain=DOMAIN, data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     invalid_device = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -99,7 +99,7 @@ async def test_if_fires_on_click_event.opp, calls, coap_wrapper):
         ATTR_CHANNEL: 1,
     }
    .opp.bus.async_fire(EVENT_SHELLY_CLICK, message)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data["some"] == "test_trigger_single_click"
@@ -133,7 +133,7 @@ async def test_validate_trigger_config_no_device.opp, calls, coap_wrapper):
     )
     message = {CONF_DEVICE_ID: "no_device", ATTR_CLICK_TYPE: "single", ATTR_CHANNEL: 1}
    .opp.bus.async_fire(EVENT_SHELLY_CLICK, message)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data["some"] == "test_trigger_single_click"

@@ -11,8 +11,8 @@ from openpeerpower.components.stream import create_stream
 from openpeerpower.components.stream.const import MAX_SEGMENTS, NUM_PLAYLIST_SEGMENTS
 from openpeerpower.components.stream.core import Segment
 from openpeerpower.const import HTTP_NOT_FOUND
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed
 from tests.components.stream.common import generate_h264_video
@@ -44,8 +44,8 @@ def hls_stream.opp,.opp_client):
     """Create test fixture for creating an HLS client for a stream."""
 
     async def create_client_for_stream(stream):
-        http_client = await opp._client()
-        parsed_url = urlparse(stream.endpoint_url())
+        http_client = await.opp_client()
+        parsed_url = urlparse(stream.endpoint_url("hls"))
         return HlsClient(http_client, parsed_url)
 
     return create_client_for_stream
@@ -91,7 +91,7 @@ async def test_hls_stream.opp, hls_stream, stream_worker_sync):
     stream = create_stream.opp, source)
 
     # Request stream
-    stream.hls_output()
+    stream.add_provider("hls")
     stream.start()
 
     hls_client = await hls_stream(stream)
@@ -132,11 +132,11 @@ async def test_stream_timeout.opp,.opp_client, stream_worker_sync):
     stream = create_stream.opp, source)
 
     # Request stream
-    stream.hls_output()
+    stream.add_provider("hls")
     stream.start()
-    url = stream.endpoint_url()
+    url = stream.endpoint_url("hls")
 
-    http_client = await opp._client()
+    http_client = await.opp_client()
 
     # Fetch playlist
     parsed_url = urlparse(url)
@@ -156,7 +156,7 @@ async def test_stream_timeout.opp,.opp_client, stream_worker_sync):
     # Wait 5 minutes
     future = dt_util.utcnow() + timedelta(minutes=5)
     async_fire_time_changed.opp, future)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Ensure playlist not accessible
     fail_response = await http_client.get(parsed_url.path)
@@ -174,16 +174,8 @@ async def test_stream_timeout_after_stop.opp,.opp_client, stream_worker_sync):
     stream = create_stream.opp, source)
 
     # Request stream
-    stream.hls_output()
+    stream.add_provider("hls")
     stream.start()
-    url = stream.endpoint_url()
-
-    http_client = await opp._client()
-
-    # Fetch playlist
-    parsed_url = urlparse(url)
-    playlist_response = await http_client.get(parsed_url.path)
-    assert playlist_response.status == 200
 
     stream_worker_sync.resume()
     stream.stop()
@@ -192,7 +184,7 @@ async def test_stream_timeout_after_stop.opp,.opp_client, stream_worker_sync):
     # stopped so this is a no-op.
     future = dt_util.utcnow() + timedelta(minutes=5)
     async_fire_time_changed.opp, future)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_stream_ended.opp, stream_worker_sync):
@@ -204,10 +196,12 @@ async def test_stream_ended.opp, stream_worker_sync):
     # Setup demo HLS track
     source = generate_h264_video()
     stream = create_stream.opp, source)
+    track = stream.add_provider("hls")
 
     # Request stream
-    track = stream.hls_output()
+    stream.add_provider("hls")
     stream.start()
+    stream.endpoint_url("hls")
 
     # Run it dead
     while True:
@@ -233,7 +227,7 @@ async def test_stream_keepalive.opp):
     # Setup demo HLS track
     source = "test_stream_keepalive_source"
     stream = create_stream.opp, source)
-    track = stream.hls_output()
+    track = stream.add_provider("hls")
     track.num_segments = 2
     stream.start()
 
@@ -264,12 +258,12 @@ async def test_stream_keepalive.opp):
     stream.stop()
 
 
-async def test_hls_playlist_view_no_output.opp, hls_stream):
+async def test_hls_playlist_view_no_output.opp,.opp_client, hls_stream):
     """Test rendering the hls playlist with no output segments."""
     await async_setup_component.opp, "stream", {"stream": {}})
 
     stream = create_stream.opp, STREAM_SOURCE)
-    stream.hls_output()
+    stream.add_provider("hls")
 
     hls_client = await hls_stream(stream)
 
@@ -284,10 +278,10 @@ async def test_hls_playlist_view.opp, hls_stream, stream_worker_sync):
 
     stream = create_stream.opp, STREAM_SOURCE)
     stream_worker_sync.pause()
-    hls = stream.hls_output()
+    hls = stream.add_provider("hls")
 
     hls.put(Segment(1, SEQUENCE_BYTES, DURATION))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     hls_client = await hls_stream(stream)
 
@@ -296,7 +290,7 @@ async def test_hls_playlist_view.opp, hls_stream, stream_worker_sync):
     assert await resp.text() == make_playlist(sequence=1, segments=[make_segment(1)])
 
     hls.put(Segment(2, SEQUENCE_BYTES, DURATION))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     resp = await hls_client.get("/playlist.m3u8")
     assert resp.status == 200
     assert await resp.text() == make_playlist(
@@ -313,14 +307,14 @@ async def test_hls_max_segments.opp, hls_stream, stream_worker_sync):
 
     stream = create_stream.opp, STREAM_SOURCE)
     stream_worker_sync.pause()
-    hls = stream.hls_output()
+    hls = stream.add_provider("hls")
 
     hls_client = await hls_stream(stream)
 
     # Produce enough segments to overfill the output buffer by one
     for sequence in range(1, MAX_SEGMENTS + 2):
         hls.put(Segment(sequence, SEQUENCE_BYTES, DURATION))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     resp = await hls_client.get("/playlist.m3u8")
     assert resp.status == 200
@@ -358,12 +352,12 @@ async def test_hls_playlist_view_discontinuity.opp, hls_stream, stream_worker_sy
 
     stream = create_stream.opp, STREAM_SOURCE)
     stream_worker_sync.pause()
-    hls = stream.hls_output()
+    hls = stream.add_provider("hls")
 
     hls.put(Segment(1, SEQUENCE_BYTES, DURATION, stream_id=0))
     hls.put(Segment(2, SEQUENCE_BYTES, DURATION, stream_id=0))
     hls.put(Segment(3, SEQUENCE_BYTES, DURATION, stream_id=1))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     hls_client = await hls_stream(stream)
 
@@ -388,7 +382,7 @@ async def test_hls_max_segments_discontinuity.opp, hls_stream, stream_worker_syn
 
     stream = create_stream.opp, STREAM_SOURCE)
     stream_worker_sync.pause()
-    hls = stream.hls_output()
+    hls = stream.add_provider("hls")
 
     hls_client = await hls_stream(stream)
 
@@ -397,7 +391,7 @@ async def test_hls_max_segments_discontinuity.opp, hls_stream, stream_worker_syn
     # Produce enough segments to overfill the output buffer by one
     for sequence in range(1, MAX_SEGMENTS + 2):
         hls.put(Segment(sequence, SEQUENCE_BYTES, DURATION, stream_id=1))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     resp = await hls_client.get("/playlist.m3u8")
     assert resp.status == 200

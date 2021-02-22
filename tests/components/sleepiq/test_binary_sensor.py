@@ -2,7 +2,7 @@
 from unittest.mock import MagicMock
 
 from openpeerpower.components.sleepiq import binary_sensor as sleepiq
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.components.sleepiq.test_init import mock_responses
 

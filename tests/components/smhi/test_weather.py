@@ -24,7 +24,7 @@ from openpeerpower.components.weather import (
     DOMAIN as WEATHER_DOMAIN,
 )
 from openpeerpower.const import TEMP_CELSIUS
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry, load_fixture
 
@@ -33,7 +33,7 @@ _LOGGER = logging.getLogger(__name__)
 TEST_CONFIG = {"name": "test", "longitude": "17.84197", "latitude": "59.32624"}
 
 
-async def test_setup_opp.opp: OpenPeerPower, aioclient_mock) -> None:
+async def test_setup.opp.opp: OpenPeerPower, aioclient_mock) -> None:
     """Test for successfully setting up the smhi platform.
 
     This test are deeper integrated with the core. Since only
@@ -47,13 +47,13 @@ async def test_setup_opp.opp: OpenPeerPower, aioclient_mock) -> None:
 
     entry = MockConfigEntry(domain="smhi", data=TEST_CONFIG)
 
-    await opp..config_entries.async_forward_entry_setup(entry, WEATHER_DOMAIN)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_forward_entry_setup(entry, WEATHER_DOMAIN)
+    await.opp.async_block_till_done()
     assert aioclient_mock.call_count == 1
 
     #  Testing the actual entity state for
     #  deeper testing than normal unity test
-    state = opp.states.get("weather.smhi_test")
+    state =.opp.states.get("weather.smhi_test")
 
     assert state.state == "sunny"
     assert state.attributes[ATTR_SMHI_CLOUDINESS] == 50
@@ -78,7 +78,7 @@ async def test_setup_opp.opp: OpenPeerPower, aioclient_mock) -> None:
 def test_properties_no_data.opp: OpenPeerPower) -> None:
     """Test properties when no API data available."""
     weather = weather_smhi.SmhiWeather("name", "10", "10")
-    weather.opp = opp
+    weather.opp =.opp
 
     assert weather.name == "name"
     assert weather.should_poll is True
@@ -97,7 +97,7 @@ def test_properties_no_data.opp: OpenPeerPower) -> None:
 # pylint: disable=protected-access
 def test_properties_unknown_symbol() -> None:
     """Test behaviour when unknown symbol from API."""
-    opp = Mock()
+   .opp = Mock()
     data = Mock()
     data.temperature = 5
     data.mean_precipitation = 0.5
@@ -140,7 +140,7 @@ def test_properties_unknown_symbol() -> None:
     testdata = [data, data2, data3]
 
     weather = weather_smhi.SmhiWeather("name", "10", "10")
-    weather.opp = opp
+    weather.opp =.opp
     weather._forecasts = testdata
     assert weather.condition is None
     forecast = weather.forecast[0]
@@ -160,7 +160,7 @@ async def test_refresh_weather_forecast_exceeds_retries.opp) -> None:
     ):
 
         weather = weather_smhi.SmhiWeather("name", "17.0022", "62.0022")
-        weather.opp = opp
+        weather.opp =.opp
         weather._fail_count = 2
 
         await weather.async_update()
@@ -171,7 +171,7 @@ async def test_refresh_weather_forecast_exceeds_retries.opp) -> None:
 async def test_refresh_weather_forecast_timeout.opp) -> None:
     """Test timeout exception."""
     weather = weather_smhi.SmhiWeather("name", "17.0022", "62.0022")
-    weather.opp = opp
+    weather.opp =.opp
 
     with patch.object(
        .opp.helpers.event, "async_call_later"
@@ -192,9 +192,9 @@ async def test_refresh_weather_forecast_timeout.opp) -> None:
 async def test_refresh_weather_forecast_exception() -> None:
     """Test any exception."""
 
-    opp = Mock()
+   .opp = Mock()
     weather = weather_smhi.SmhiWeather("name", "17.0022", "62.0022")
-    weather.opp = opp
+    weather.opp =.opp
 
     with patch.object(
        .opp.helpers.event, "async_call_later"
@@ -211,9 +211,9 @@ async def test_refresh_weather_forecast_exception() -> None:
 
 async def test_retry_update():
     """Test retry function of refresh forecast."""
-    opp = Mock()
+   .opp = Mock()
     weather = weather_smhi.SmhiWeather("name", "17.0022", "62.0022")
-    weather.opp = opp
+    weather.opp =.opp
 
     with patch.object(weather, "async_update", AsyncMock()) as update:
         await weather.retry_update(None)

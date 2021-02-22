@@ -6,7 +6,7 @@ from typing import Tuple
 from unittest.mock import MagicMock, patch
 
 from openpeerpower.components import shell_command
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 def mock_process_creator(error: bool = False):
@@ -34,10 +34,10 @@ async def test_executing_service.opp):
             shell_command.DOMAIN,
             {shell_command.DOMAIN: {"test_service": f"date > {path}"}},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        await opp..services.async_call("shell_command", "test_service", blocking=True)
-        await opp..async_block_till_done()
+        await.opp.services.async_call("shell_command", "test_service", blocking=True)
+        await.opp.async_block_till_done()
         assert os.path.isfile(path)
 
 
@@ -72,10 +72,10 @@ async def test_template_render_no_template(mock_call,.opp):
         shell_command.DOMAIN,
         {shell_command.DOMAIN: {"test_service": "ls /bin"}},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call("shell_command", "test_service", blocking=True)
-    await opp..async_block_till_done()
+    await.opp.services.async_call("shell_command", "test_service", blocking=True)
+    await.opp.async_block_till_done()
     cmd = mock_call.mock_calls[0][1][0]
 
     assert mock_call.call_count == 1
@@ -100,9 +100,9 @@ async def test_template_render(mock_call,.opp):
         },
     )
 
-    await opp..services.async_call("shell_command", "test_service", blocking=True)
+    await.opp.services.async_call("shell_command", "test_service", blocking=True)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     cmd = mock_call.mock_calls[0][1]
 
     assert mock_call.call_count == 1
@@ -125,8 +125,8 @@ async def test_subprocess_error(mock_error, mock_call,.opp):
             {shell_command.DOMAIN: {"test_service": f"touch {path}"}},
         )
 
-        await opp..services.async_call("shell_command", "test_service", blocking=True)
-        await opp..async_block_till_done()
+        await.opp.services.async_call("shell_command", "test_service", blocking=True)
+        await.opp.async_block_till_done()
         assert mock_call.call_count == 1
         assert mock_error.call_count == 1
         assert not os.path.isfile(path)
@@ -142,9 +142,9 @@ async def test_stdout_captured(mock_output,.opp):
         {shell_command.DOMAIN: {"test_service": f"echo {test_phrase}"}},
     )
 
-    await opp..services.async_call("shell_command", "test_service", blocking=True)
+    await.opp.services.async_call("shell_command", "test_service", blocking=True)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert mock_output.call_count == 1
     assert test_phrase.encode() + b"\n" == mock_output.call_args_list[0][0][-1]
 
@@ -159,9 +159,9 @@ async def test_stderr_captured(mock_output,.opp):
         {shell_command.DOMAIN: {"test_service": f">&2 echo {test_phrase}"}},
     )
 
-    await opp..services.async_call("shell_command", "test_service", blocking=True)
+    await.opp.services.async_call("shell_command", "test_service", blocking=True)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert mock_output.call_count == 1
     assert test_phrase.encode() + b"\n" == mock_output.call_args_list[0][0][-1]
 
@@ -175,12 +175,12 @@ async def test_do_no_run_forever.opp, caplog):
             shell_command.DOMAIN,
             {shell_command.DOMAIN: {"test_service": "sleep 10000"}},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             shell_command.DOMAIN, "test_service", blocking=True
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert "Timed out" in caplog.text
     assert "sleep 10000" in caplog.text

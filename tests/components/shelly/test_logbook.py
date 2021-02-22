@@ -8,7 +8,7 @@ from openpeerpower.components.shelly.const import (
     EVENT_SHELLY_CLICK,
 )
 from openpeerpower.const import ATTR_DEVICE_ID
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.components.logbook.test_init import MockLazyEventPartialState
 

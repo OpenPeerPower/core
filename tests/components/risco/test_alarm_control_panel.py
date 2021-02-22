@@ -27,7 +27,7 @@ from openpeerpower.const import (
     STATE_ALARM_TRIGGERED,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.helpers.entity_component import async_update_entity
+from openpeerpower.helpers.entity_component import async_update_entity
 
 from .util import TEST_CONFIG, TEST_SITE_UUID, setup_risco
 
@@ -59,12 +59,12 @@ TEST_FULL_HA_TO_RISCO = {
     STATE_ALARM_ARMED_CUSTOM_BYPASS: "D",
 }
 CUSTOM_MAPPING_OPTIONS = {
-    "risco_states_to_op.: TEST_RISCO_TO_HA,
+    "risco_states_to_ha": TEST_RISCO_TO_HA,
     "ha_states_to_risco": TEST_HA_TO_RISCO,
 }
 
 FULL_CUSTOM_MAPPING = {
-    "risco_states_to_op.: TEST_FULL_RISCO_TO_HA,
+    "risco_states_to_ha": TEST_FULL_RISCO_TO_HA,
     "ha_states_to_risco": TEST_FULL_HA_TO_RISCO,
 }
 
@@ -111,10 +111,10 @@ async def test_cannot_connect.opp):
         side_effect=CannotConnectError,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
-        config_entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
-        registry = await opp..helpers.entity_registry.async_get_registry()
+        config_entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
+        registry = await.opp.helpers.entity_registry.async_get_registry()
         assert not registry.async_is_registered(FIRST_ENTITY_ID)
         assert not registry.async_is_registered(SECOND_ENTITY_ID)
 
@@ -127,17 +127,17 @@ async def test_unauthorized.opp):
         side_effect=UnauthorizedError,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
-        config_entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
-        registry = await opp..helpers.entity_registry.async_get_registry()
+        config_entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
+        registry = await.opp.helpers.entity_registry.async_get_registry()
         assert not registry.async_is_registered(FIRST_ENTITY_ID)
         assert not registry.async_is_registered(SECOND_ENTITY_ID)
 
 
 async def test_setup.opp, two_part_alarm):
     """Test entity setup."""
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     assert not registry.async_is_registered(FIRST_ENTITY_ID)
     assert not registry.async_is_registered(SECOND_ENTITY_ID)
@@ -147,7 +147,7 @@ async def test_setup.opp, two_part_alarm):
     assert registry.async_is_registered(FIRST_ENTITY_ID)
     assert registry.async_is_registered(SECOND_ENTITY_ID)
 
-    registry = await opp..helpers.device_registry.async_get_registry()
+    registry = await.opp.helpers.device_registry.async_get_registry()
     device = registry.async_get_device({(DOMAIN, TEST_SITE_UUID + "_0")})
     assert device is not None
     assert device.manufacturer == "Risco"
@@ -160,7 +160,7 @@ async def test_setup.opp, two_part_alarm):
 async def _check_state.opp, alarm, property, state, entity_id, partition_id):
     with patch.object(alarm.partitions[partition_id], property, return_value=True):
         await async_update_entity.opp, entity_id)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert.opp.states.get(entity_id).state == state
 
@@ -242,7 +242,7 @@ async def _test_no_service_call(
 async def _call_alarm_service.opp, service, entity_id, **kwargs):
     data = {"entity_id": entity_id, **kwargs}
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         ALARM_DOMAIN, service, service_data=data, blocking=True
     )
 
@@ -251,7 +251,7 @@ async def test_sets_custom_mapping.opp, two_part_alarm):
     """Test settings the various modes when mapping some states."""
     await setup_risco.opp, [], CUSTOM_MAPPING_OPTIONS)
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entity = registry.async_get(FIRST_ENTITY_ID)
     assert entity.supported_features == EXPECTED_FEATURES
 
@@ -277,7 +277,7 @@ async def test_sets_full_custom_mapping.opp, two_part_alarm):
     """Test settings the various modes when mapping all states."""
     await setup_risco.opp, [], FULL_CUSTOM_MAPPING)
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entity = registry.async_get(FIRST_ENTITY_ID)
     assert (
         entity.supported_features == EXPECTED_FEATURES | SUPPORT_ALARM_ARM_CUSTOM_BYPASS

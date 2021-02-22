@@ -10,7 +10,7 @@ from pysmartthings.device import Status
 from openpeerpower.components.lock import DOMAIN as LOCK_DOMAIN
 from openpeerpower.components.smartthings.const import DOMAIN, SIGNAL_SMARTTHINGS_UPDATE
 from openpeerpower.const import STATE_UNAVAILABLE
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .conftest import setup_platform
 
@@ -19,8 +19,8 @@ async def test_entity_and_device_attributes.opp, device_factory):
     """Test the attributes of the entity are correct."""
     # Arrange
     device = device_factory("Lock_1", [Capability.lock], {Attribute.lock: "unlocked"})
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     # Act
     await setup_platform.opp, LOCK_DOMAIN, devices=[device])
     # Assert
@@ -52,11 +52,11 @@ async def test_lock.opp, device_factory):
     )
     await setup_platform.opp, LOCK_DOMAIN, devices=[device])
     # Act
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LOCK_DOMAIN, "lock", {"entity_id": "lock.lock_1"}, blocking=True
     )
     # Assert
-    state = opp.states.get("lock.lock_1")
+    state =.opp.states.get("lock.lock_1")
     assert state is not None
     assert state.state == "locked"
     assert state.attributes["method"] == "Manual"
@@ -73,11 +73,11 @@ async def test_unlock.opp, device_factory):
     device = device_factory("Lock_1", [Capability.lock], {Attribute.lock: "locked"})
     await setup_platform.opp, LOCK_DOMAIN, devices=[device])
     # Act
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LOCK_DOMAIN, "unlock", {"entity_id": "lock.lock_1"}, blocking=True
     )
     # Assert
-    state = opp.states.get("lock.lock_1")
+    state =.opp.states.get("lock.lock_1")
     assert state is not None
     assert state.state == "unlocked"
 
@@ -91,8 +91,8 @@ async def test_update_from_signal.opp, device_factory):
     # Act
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
-    await opp..async_block_till_done()
-    state = opp.states.get("lock.lock_1")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("lock.lock_1")
     assert state is not None
     assert state.state == "locked"
 
@@ -103,6 +103,6 @@ async def test_unload_config_entry.opp, device_factory):
     device = device_factory("Lock_1", [Capability.lock], {Attribute.lock: "locked"})
     config_entry = await setup_platform.opp, LOCK_DOMAIN, devices=[device])
     # Act
-    await opp..config_entries.async_forward_entry_unload(config_entry, "lock")
+    await.opp.config_entries.async_forward_entry_unload(config_entry, "lock")
     # Assert
     assert.opp.states.get("lock.lock_1").state == STATE_UNAVAILABLE

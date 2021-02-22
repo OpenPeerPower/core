@@ -16,7 +16,7 @@ from openpeerpower.components.sentry.const import (
     DOMAIN,
 )
 from openpeerpower.const import __version__ as current_version
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry
 
@@ -27,7 +27,7 @@ async def test_setup_entry.opp: OpenPeerPower) -> None:
         domain=DOMAIN,
         data={CONF_DSN: "http://public@example.com/1", CONF_ENVIRONMENT: "production"},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.sentry.AioHttpIntegration"
@@ -38,8 +38,8 @@ async def test_setup_entry.opp: OpenPeerPower) -> None:
     ) as sentry_logging_mock, patch(
         "openpeerpower.components.sentry.sentry_sdk"
     ) as sentry_mock:
-        assert await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     # Test CONF_ENVIRONMENT is migrated to entry options
     assert CONF_ENVIRONMENT not in entry.data
@@ -81,15 +81,15 @@ async def test_setup_entry_with_tracing.opp: OpenPeerPower) -> None:
         data={CONF_DSN: "http://public@example.com/1"},
         options={CONF_TRACING: True, CONF_TRACING_SAMPLE_RATE: 0.5},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch("openpeerpower.components.sentry.AioHttpIntegration"), patch(
         "openpeerpower.components.sentry.SqlalchemyIntegration"
     ), patch("openpeerpower.components.sentry.LoggingIntegration"), patch(
         "openpeerpower.components.sentry.sentry_sdk"
     ) as sentry_mock:
-        assert await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     call_args = sentry_mock.init.call_args[1]
     assert set(call_args) == {
@@ -231,7 +231,7 @@ async def test_event_with_platform_context.opp: OpenPeerPower):
             "openpeerpower.components.ironing_robot",
             {"integration": "ironing_robot", "custom_component": "yes"},
         ),
-        ("openpeerpowerr.helpers.network", {"helpers": "network"}),
+        ("openpeerpower.helpers.network", {"helpers": "network"}),
         ("tuyapi.test", {"package": "tuyapi"}),
     ],
 )
@@ -306,13 +306,13 @@ async def test_filter_log_events.opp: OpenPeerPower, logger, options, event):
         ("no", {CONF_EVENT_HANDLED: True}, True),
     ],
 )
-async def test_filter_op.dled_events.opp: OpenPeerPower, handled, options, event):
+async def test_filter_handled_events.opp: OpenPeerPower, handled, options, event):
     """Tests filtering of handled events based on configuration options."""
 
     event_mock = MagicMock()
     event_mock.__iter__ = ["tags"]
     event_mock.__contains__ = lambda _, val: val == "tags"
-    event_mock.tags = {"handled": op.dled}
+    event_mock.tags = {"handled": handled}
 
     result = process_before_send(
        .opp,

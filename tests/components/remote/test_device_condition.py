@@ -7,9 +7,9 @@ import pytest
 import openpeerpower.components.automation as automation
 from openpeerpower.components.remote import DOMAIN
 from openpeerpower.const import CONF_PLATFORM, STATE_OFF, STATE_ON
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import (
     MockConfigEntry,
@@ -43,7 +43,7 @@ def calls.opp):
 async def test_get_conditions.opp, device_reg, entity_reg):
     """Test we get the expected conditions from a remote."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -72,7 +72,7 @@ async def test_get_conditions.opp, device_reg, entity_reg):
 async def test_get_condition_capabilities.opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a remote condition."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -97,7 +97,7 @@ async def test_if_state.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     ent1, ent2, ent3 = platform.ENTITIES
 
@@ -147,20 +147,20 @@ async def test_if_state.opp, calls):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_on event - test_event1"
 
    .opp.states.async_set(ent1.entity_id, STATE_OFF)
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_off event - test_event2"
 
@@ -175,11 +175,11 @@ async def test_if_fires_on_for_condition.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     ent1, ent2, ent3 = platform.ENTITIES
 
-    with patch("openpeerpowerr.core.dt_util.utcnow") as mock_utcnow:
+    with patch("openpeerpower.core.dt_util.utcnow") as mock_utcnow:
         mock_utcnow.return_value = point1
         assert await async_setup_component(
            .opp,
@@ -209,28 +209,28 @@ async def test_if_fires_on_for_condition.opp, calls):
                 ]
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert.opp.states.get(ent1.entity_id).state == STATE_ON
         assert len(calls) == 0
 
        .opp.bus.async_fire("test_event1")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert len(calls) == 0
 
         # Time travel 10 secs into the future
         mock_utcnow.return_value = point2
        .opp.bus.async_fire("test_event1")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert len(calls) == 0
 
        .opp.states.async_set(ent1.entity_id, STATE_OFF)
        .opp.bus.async_fire("test_event1")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert len(calls) == 0
 
         # Time travel 20 secs into the future
         mock_utcnow.return_value = point3
        .opp.bus.async_fire("test_event1")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert len(calls) == 1
         assert calls[0].data["some"] == "is_off event - test_event1"

@@ -3,7 +3,7 @@ import pytest
 
 from openpeerpower.components.rfxtrx import DOMAIN
 from openpeerpower.components.rfxtrx.const import ATTR_EVENT
-from openpeerpowerr.core import State
+from openpeerpower.core import State
 
 from tests.common import MockConfigEntry, mock_restore_cache
 from tests.components.rfxtrx.conftest import create_rfx_test_cfg
@@ -25,12 +25,12 @@ async def test_one.opp, rfxtrx):
     entry_data = create_rfx_test_cfg(devices={"0b1100cd0213c7f230010f71": {}})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.ac_213c7f2_48")
+    state =.opp.states.get("binary_sensor.ac_213c7f2_48")
     assert state
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "AC 213c7f2:48"
@@ -49,23 +49,23 @@ async def test_one_pt2262.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
-    await opp..async_start()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
+    await.opp.async_start()
 
-    state = opp.states.get("binary_sensor.pt2262_22670e")
+    state =.opp.states.get("binary_sensor.pt2262_22670e")
     assert state
     assert state.state == "off"  # probably aught to be unknown
     assert state.attributes.get("friendly_name") == "PT2262 22670e"
 
     await rfxtrx.signal("0913000022670e013970")
-    state = opp.states.get("binary_sensor.pt2262_22670e")
+    state =.opp.states.get("binary_sensor.pt2262_22670e")
     assert state.state == "on"
 
     await rfxtrx.signal("09130000226707013d70")
-    state = opp.states.get("binary_sensor.pt2262_22670e")
+    state =.opp.states.get("binary_sensor.pt2262_22670e")
     assert state.state == "off"
 
 
@@ -76,18 +76,18 @@ async def test_pt2262_unconfigured.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
-    await opp..async_start()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
+    await.opp.async_start()
 
-    state = opp.states.get("binary_sensor.pt2262_22670e")
+    state =.opp.states.get("binary_sensor.pt2262_22670e")
     assert state
     assert state.state == "off"  # probably aught to be unknown
     assert state.attributes.get("friendly_name") == "PT2262 22670e"
 
-    state = opp.states.get("binary_sensor.pt2262_226707")
+    state =.opp.states.get("binary_sensor.pt2262_226707")
     assert state
     assert state.state == "off"  # probably aught to be unknown
     assert state.attributes.get("friendly_name") == "PT2262 226707"
@@ -107,10 +107,10 @@ async def test_state_restore.opp, rfxtrx, state, event):
     entry_data = create_rfx_test_cfg(devices={"0b1100cd0213c7f230010f71": {}})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(entity_id).state == state
 
@@ -126,22 +126,22 @@ async def test_several.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.ac_213c7f2_48")
+    state =.opp.states.get("binary_sensor.ac_213c7f2_48")
     assert state
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "AC 213c7f2:48"
 
-    state = opp.states.get("binary_sensor.ac_118cdea_2")
+    state =.opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "AC 118cdea:2"
 
-    state = opp.states.get("binary_sensor.ac_1118cdea_2")
+    state =.opp.states.get("binary_sensor.ac_1118cdea_2")
     assert state
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "AC 1118cdea:2"
@@ -152,12 +152,12 @@ async def test_discover.opp, rfxtrx_automatic):
     rfxtrx = rfxtrx_automatic
 
     await rfxtrx.signal("0b1100100118cdea02010f70")
-    state = opp.states.get("binary_sensor.ac_118cdea_2")
+    state =.opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
     assert state.state == "on"
 
     await rfxtrx.signal("0b1100100118cdeb02010f70")
-    state = opp.states.get("binary_sensor.ac_118cdeb_2")
+    state =.opp.states.get("binary_sensor.ac_118cdeb_2")
     assert state
     assert state.state == "on"
 
@@ -178,13 +178,13 @@ async def test_off_delay_restore.opp, rfxtrx):
     entry_data = create_rfx_test_cfg(devices={EVENT_AC_118CDEA_2_ON: {"off_delay": 5}})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
-    await opp..async_start()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
+    await.opp.async_start()
 
-    state = opp.states.get("binary_sensor.ac_118cdea_2")
+    state =.opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
     assert state.state == "off"
 
@@ -196,33 +196,33 @@ async def test_off_delay.opp, rfxtrx, timestep):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
-    await opp..async_start()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
+    await.opp.async_start()
 
-    state = opp.states.get("binary_sensor.ac_118cdea_2")
+    state =.opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
     assert state.state == "off"
 
     await rfxtrx.signal("0b1100100118cdea02010f70")
-    state = opp.states.get("binary_sensor.ac_118cdea_2")
+    state =.opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
     assert state.state == "on"
 
     await timestep(4)
-    state = opp.states.get("binary_sensor.ac_118cdea_2")
+    state =.opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
     assert state.state == "on"
 
     await timestep(4)
-    state = opp.states.get("binary_sensor.ac_118cdea_2")
+    state =.opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
     assert state.state == "off"
 
     await rfxtrx.signal("0b1100100118cdea02010f70")
-    state = opp.states.get("binary_sensor.ac_118cdea_2")
+    state =.opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
     assert state.state == "on"
 
@@ -230,12 +230,12 @@ async def test_off_delay.opp, rfxtrx, timestep):
     await rfxtrx.signal("0b1100100118cdea02010f70")
 
     await timestep(4)
-    state = opp.states.get("binary_sensor.ac_118cdea_2")
+    state =.opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
     assert state.state == "on"
 
     await timestep(4)
-    state = opp.states.get("binary_sensor.ac_118cdea_2")
+    state =.opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
     assert state.state == "off"
 
@@ -299,13 +299,13 @@ async def test_pt2262_duplicate_id.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
-    await opp..async_start()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
+    await.opp.async_start()
 
-    state = opp.states.get("binary_sensor.pt2262_22670e")
+    state =.opp.states.get("binary_sensor.pt2262_22670e")
     assert state
     assert state.state == "off"  # probably aught to be unknown
     assert state.attributes.get("friendly_name") == "PT2262 22670e"

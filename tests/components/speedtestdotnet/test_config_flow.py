@@ -33,13 +33,13 @@ def mock_setup():
 
 async def test_flow_works.opp, mock_setup):
     """Test user config."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         speedtestdotnet.DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -51,7 +51,7 @@ async def test_import_fails.opp, mock_setup):
 
     with patch("speedtest.Speedtest") as mock_api:
         mock_api.return_value.get_servers.side_effect = NoMatchedServers
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             speedtestdotnet.DOMAIN,
             context={"source": "import"},
             data={
@@ -69,7 +69,7 @@ async def test_import_success.opp, mock_setup):
     """Test import step is successful if server_id is valid."""
 
     with patch("speedtest.Speedtest"):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             speedtestdotnet.DOMAIN,
             context={"source": "import"},
             data={
@@ -95,17 +95,17 @@ async def test_options.opp):
         data={},
         options={},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch("speedtest.Speedtest") as mock_api:
         mock_api.return_value.get_servers.return_value = MOCK_SERVERS
-        await opp..config_entries.async_setup(entry.entry_id)
+        await.opp.config_entries.async_setup(entry.entry_id)
 
-        result = await opp..config_entries.options.async_init(entry.entry_id)
+        result = await.opp.config_entries.options.async_init(entry.entry_id)
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input={
                 CONF_SERVER_NAME: "Country1 - Sponsor1 - Server1",
@@ -130,8 +130,8 @@ async def test_integration_already_configured.opp):
         data={},
         options={},
     )
-    entry.add_to_opp.opp)
-    result = await opp..config_entries.flow.async_init(
+    entry.add_to.opp.opp)
+    result = await.opp.config_entries.flow.async_init(
         speedtestdotnet.DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

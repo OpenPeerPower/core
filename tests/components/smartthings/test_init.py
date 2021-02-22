@@ -17,11 +17,11 @@ from openpeerpower.components.smartthings.const import (
     SIGNAL_SMARTTHINGS_UPDATE,
     SUPPORTED_PLATFORMS,
 )
-from openpeerpower.config import async_process_op.core_config
+from openpeerpower.config import async_process_ha_core_config
 from openpeerpower.const import HTTP_FORBIDDEN, HTTP_INTERNAL_SERVER_ERROR
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -30,15 +30,15 @@ async def test_migration_creates_new_flow.opp, smartthings_mock, config_entry):
     """Test migration deletes app and creates new flow."""
     assert await async_setup_component.opp, "persistent_notification", {})
     config_entry.version = 1
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     await smartthings.async_migrate_entry.opp, config_entry)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert smartthings_mock.delete_installed_app.call_count == 1
     assert smartthings_mock.delete_app.call_count == 1
     assert not.opp.config_entries.async_entries(DOMAIN)
-    flows = opp.config_entries.flow.async_progress()
+    flows =.opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["handler"] == "smartthings"
     assert flows[0]["context"] == {"source": "import"}
@@ -55,7 +55,7 @@ async def test_unrecoverable_api_errors_create_new_flow(
         not be retrieved/found (likely deleted?)
     """
     assert await async_setup_component.opp, "persistent_notification", {})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     request_info = Mock(real_url="http://example.com")
     smartthings_mock.app.side_effect = ClientResponseError(
         request_info=request_info, history=None, status=401
@@ -66,9 +66,9 @@ async def test_unrecoverable_api_errors_create_new_flow(
     assert not result
 
     # Assert entry was removed and new flow created
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert not.opp.config_entries.async_entries(DOMAIN)
-    flows = opp.config_entries.flow.async_progress()
+    flows =.opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["handler"] == "smartthings"
     assert flows[0]["context"] == {"source": "import"}
@@ -79,7 +79,7 @@ async def test_recoverable_api_errors_raise_not_ready(
    .opp, config_entry, smartthings_mock
 ):
     """Test config entry not ready raised for recoverable API errors."""
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     request_info = Mock(real_url="http://example.com")
     smartthings_mock.app.side_effect = ClientResponseError(
         request_info=request_info, history=None, status=HTTP_INTERNAL_SERVER_ERROR
@@ -93,7 +93,7 @@ async def test_scenes_api_errors_raise_not_ready(
    .opp, config_entry, app, installed_app, smartthings_mock
 ):
     """Test if scenes are unauthorized we continue to load platforms."""
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     request_info = Mock(real_url="http://example.com")
     smartthings_mock.app.return_value = app
     smartthings_mock.installed_app.return_value = installed_app
@@ -106,7 +106,7 @@ async def test_scenes_api_errors_raise_not_ready(
 
 async def test_connection_errors_raise_not_ready.opp, config_entry, smartthings_mock):
     """Test config entry not ready raised for connection errors."""
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     smartthings_mock.app.side_effect = ClientConnectionError()
 
     with pytest.raises(ConfigEntryNotReady):
@@ -117,11 +117,11 @@ async def test_base_url_no_longer_https_does_not_load(
    .opp, config_entry, app, smartthings_mock
 ):
     """Test base_url no longer valid creates a new flow."""
-    await async_process_op.core_config(
+    await async_process_ha_core_config(
        .opp,
         {"external_url": "http://example.local:8123"},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     smartthings_mock.app.return_value = app
 
     # Assert setup returns false
@@ -133,7 +133,7 @@ async def test_unauthorized_installed_app_raises_not_ready(
    .opp, config_entry, app, installed_app, smartthings_mock
 ):
     """Test config entry not ready raised when the app isn't authorized."""
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     installed_app.installed_app_status = InstalledAppStatus.PENDING
 
     smartthings_mock.app.return_value = app
@@ -153,7 +153,7 @@ async def test_scenes_unauthorized_loads_platforms(
     subscription_factory,
 ):
     """Test if scenes are unauthorized we continue to load platforms."""
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     request_info = Mock(real_url="http://example.com")
     smartthings_mock.app.return_value = app
     smartthings_mock.installed_app.return_value = installed_app
@@ -173,7 +173,7 @@ async def test_scenes_unauthorized_loads_platforms(
     with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await smartthings.async_setup_entry.opp, config_entry)
         # Assert platforms loaded
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
 
 
@@ -188,7 +188,7 @@ async def test_config_entry_loads_platforms(
     scene,
 ):
     """Test config entry loads properly and proxies to platforms."""
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     smartthings_mock.app.return_value = app
     smartthings_mock.installed_app.return_value = installed_app
     smartthings_mock.devices.return_value = [device]
@@ -205,7 +205,7 @@ async def test_config_entry_loads_platforms(
     with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await smartthings.async_setup_entry.opp, config_entry)
         # Assert platforms loaded
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
 
 
@@ -220,7 +220,7 @@ async def test_config_entry_loads_unconnected_cloud(
     scene,
 ):
     """Test entry loads during startup when cloud isn't connected."""
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
    .opp.data[DOMAIN][CONF_CLOUDHOOK_URL] = "https://test.cloud"
     smartthings_mock.app.return_value = app
     smartthings_mock.installed_app.return_value = installed_app
@@ -236,7 +236,7 @@ async def test_config_entry_loads_unconnected_cloud(
     smartthings_mock.subscriptions.return_value = subscriptions
     with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await smartthings.async_setup_entry.opp, config_entry)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
 
 
@@ -257,7 +257,7 @@ async def test_unload_entry.opp, config_entry):
         assert connect_disconnect.call_count == 1
         assert config_entry.entry_id not in.opp.data[DOMAIN][DATA_BROKERS]
         # Assert platforms unloaded
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
 
 
@@ -274,7 +274,7 @@ async def test_remove_entry_cloudhook.opp, config_entry, smartthings_mock):
     """Test that the installed app, app, and cloudhook are removed up."""
    .opp.config.components.add("cloud")
     # Arrange
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
    .opp.data[DOMAIN][CONF_CLOUDHOOK_URL] = "https://test.cloud"
     # Act
     with patch.object(
@@ -293,11 +293,11 @@ async def test_remove_entry_cloudhook.opp, config_entry, smartthings_mock):
 async def test_remove_entry_app_in_use.opp, config_entry, smartthings_mock):
     """Test app is not removed if in use by another config entry."""
     # Arrange
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     data = config_entry.data.copy()
     data[CONF_INSTALLED_APP_ID] = str(uuid4())
     entry2 = MockConfigEntry(version=2, domain=DOMAIN, data=data)
-    entry2.add_to_opp.opp)
+    entry2.add_to.opp.opp)
     # Act
     await smartthings.async_remove_entry.opp, config_entry)
     # Assert
@@ -403,7 +403,7 @@ async def test_broker_regenerates_token.opp, config_entry):
     assert config_entry.data[CONF_REFRESH_TOKEN] == token.refresh_token
 
 
-async def test_event_op.dler_dispatches_updated_devices(
+async def test_event_handler_dispatches_updated_devices(
    .opp, config_entry, device_factory, event_request_factory, event_factory
 ):
     """Test the event handler dispatches updated devices."""
@@ -444,8 +444,8 @@ async def test_event_op.dler_dispatches_updated_devices(
     broker.connect()
 
     # pylint:disable=protected-access
-    await broker._event_op.dler(request, None, None)
-    await opp..async_block_till_done()
+    await broker._event_handler(request, None, None)
+    await.opp.async_block_till_done()
 
     assert called
     for device in devices:
@@ -454,7 +454,7 @@ async def test_event_op.dler_dispatches_updated_devices(
     assert devices[3].status.attributes["lock"].data == {"codeId": "1"}
 
 
-async def test_event_op.dler_ignores_other_installed_app(
+async def test_event_handler_ignores_other_installed_app(
    .opp, config_entry, device_factory, event_request_factory
 ):
     """Test the event handler dispatches updated devices."""
@@ -471,13 +471,13 @@ async def test_event_op.dler_ignores_other_installed_app(
     broker.connect()
 
     # pylint:disable=protected-access
-    await broker._event_op.dler(request, None, None)
-    await opp..async_block_till_done()
+    await broker._event_handler(request, None, None)
+    await.opp.async_block_till_done()
 
     assert not called
 
 
-async def test_event_op.dler_fires_button_events(
+async def test_event_handler_fires_button_events(
    .opp, config_entry, device_factory, event_factory, event_request_factory
 ):
     """Test the event handler fires button events."""
@@ -509,7 +509,7 @@ async def test_event_op.dler_fires_button_events(
     broker.connect()
 
     # pylint:disable=protected-access
-    await broker._event_op.dler(request, None, None)
-    await opp..async_block_till_done()
+    await broker._event_handler(request, None, None)
+    await.opp.async_block_till_done()
 
     assert called

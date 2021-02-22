@@ -5,10 +5,10 @@ import logging
 import pytest
 import voluptuous as vol
 
-from openpeerpowerr.bootstrap import async_setup_component
+from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components.mqtt import MQTT_PUBLISH_SCHEMA
 import openpeerpower.components.snips as snips
-from openpeerpowerr.helpers.intent import ServiceIntentHandler, async_register
+from openpeerpower.helpers.intent import ServiceIntentHandler, async_register
 
 from tests.common import async_fire_mqtt_message, async_mock_intent, async_mock_service
 
@@ -52,7 +52,7 @@ async def test_snips_config_feedback_on.opp, mqtt_mock):
        .opp, "snips", {"snips": {"feedback_sounds": True}}
     )
     assert result
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 2
     topic = calls[0].data["topic"]
@@ -70,7 +70,7 @@ async def test_snips_config_feedback_off.opp, mqtt_mock):
        .opp, "snips", {"snips": {"feedback_sounds": False}}
     )
     assert result
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 2
     topic = calls[0].data["topic"]
@@ -86,7 +86,7 @@ async def test_snips_config_no_feedback.opp, mqtt_mock):
     calls = async_mock_service.opp, "snips", "say")
     result = await async_setup_component.opp, "snips", {"snips": {}})
     assert result
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -119,7 +119,7 @@ async def test_snips_intent.opp, mqtt_mock):
     intents = async_mock_intent.opp, "Lights")
 
     async_fire_mqtt_message.opp, "hermes/intent/Lights", payload)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(intents) == 1
     intent = intents[0]
     assert intent.platform == "snips"
@@ -167,7 +167,7 @@ async def test_snips_service_intent.opp, mqtt_mock):
     )
 
     async_fire_mqtt_message.opp, "hermes/intent/Lights", payload)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].domain == "light"
@@ -216,7 +216,7 @@ async def test_snips_intent_with_duration.opp, mqtt_mock):
     intents = async_mock_intent.opp, "SetTimer")
 
     async_fire_mqtt_message.opp, "hermes/intent/SetTimer", payload)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(intents) == 1
     intent = intents[0]
     assert intent.platform == "snips"
@@ -259,7 +259,7 @@ async def test_intent_speech_response.opp, mqtt_mock):
     }
     """
     async_fire_mqtt_message.opp, "hermes/intent/spokenIntent", payload)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     payload = json.loads(calls[0].data["payload"])
@@ -286,7 +286,7 @@ async def test_unknown_intent.opp, caplog, mqtt_mock):
     }
     """
     async_fire_mqtt_message.opp, "hermes/intent/unknownIntent", payload)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert "Received unknown intent unknownIntent" in caplog.text
 
 
@@ -306,7 +306,7 @@ async def test_snips_intent_user.opp, mqtt_mock):
     """
     intents = async_mock_intent.opp, "Lights")
     async_fire_mqtt_message.opp, "hermes/intent/user_ABCDEF123__Lights", payload)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(intents) == 1
     intent = intents[0]
@@ -330,7 +330,7 @@ async def test_snips_intent_username.opp, mqtt_mock):
     """
     intents = async_mock_intent.opp, "Lights")
     async_fire_mqtt_message.opp, "hermes/intent/username:Lights", payload)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(intents) == 1
     intent = intents[0]
@@ -358,7 +358,7 @@ async def test_snips_low_probability.opp, caplog, mqtt_mock):
 
     async_mock_intent.opp, "LightsMaybe")
     async_fire_mqtt_message.opp, "hermes/intent/LightsMaybe", payload)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert "Intent below probaility threshold 0.49 < 0.5" in caplog.text
 
 
@@ -397,7 +397,7 @@ async def test_intent_special_slots.opp, mqtt_mock):
     }
     """
     async_fire_mqtt_message.opp, "hermes/intent/Lights", payload)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].domain == "light"
@@ -410,8 +410,8 @@ async def test_snips_say.opp):
     """Test snips say with invalid config."""
     calls = async_mock_service.opp, "snips", "say", snips.SERVICE_SCHEMA_SAY)
     data = {"text": "Hello"}
-    await opp..services.async_call("snips", "say", data)
-    await opp..async_block_till_done()
+    await.opp.services.async_call("snips", "say", data)
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].domain == "snips"
@@ -426,8 +426,8 @@ async def test_snips_say_action.opp):
     )
 
     data = {"text": "Hello", "intent_filter": ["myIntent"]}
-    await opp..services.async_call("snips", "say_action", data)
-    await opp..async_block_till_done()
+    await.opp.services.async_call("snips", "say_action", data)
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].domain == "snips"
@@ -442,8 +442,8 @@ async def test_snips_say_invalid_config.opp):
 
     data = {"text": "Hello", "badKey": "boo"}
     with pytest.raises(vol.Invalid):
-        await opp..services.async_call("snips", "say", data)
-    await opp..async_block_till_done()
+        await.opp.services.async_call("snips", "say", data)
+    await.opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -457,8 +457,8 @@ async def test_snips_say_action_invalid.opp):
     data = {"text": "Hello", "can_be_enqueued": "notabool"}
 
     with pytest.raises(vol.Invalid):
-        await opp..services.async_call("snips", "say_action", data)
-    await opp..async_block_till_done()
+        await.opp.services.async_call("snips", "say_action", data)
+    await.opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -470,8 +470,8 @@ async def test_snips_feedback_on.opp):
     )
 
     data = {"site_id": "remote"}
-    await opp..services.async_call("snips", "feedback_on", data)
-    await opp..async_block_till_done()
+    await.opp.services.async_call("snips", "feedback_on", data)
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].domain == "snips"
@@ -486,8 +486,8 @@ async def test_snips_feedback_off.opp):
     )
 
     data = {"site_id": "remote"}
-    await opp..services.async_call("snips", "feedback_off", data)
-    await opp..async_block_till_done()
+    await.opp.services.async_call("snips", "feedback_off", data)
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].domain == "snips"
@@ -503,7 +503,7 @@ async def test_snips_feedback_config.opp):
 
     data = {"site_id": "remote", "test": "test"}
     with pytest.raises(vol.Invalid):
-        await opp..services.async_call("snips", "feedback_on", data)
-    await opp..async_block_till_done()
+        await.opp.services.async_call("snips", "feedback_on", data)
+    await.opp.async_block_till_done()
 
     assert len(calls) == 0

@@ -9,7 +9,7 @@ from openpeerpower.components.ssdp import (
     ATTR_UPNP_SERIAL,
 )
 from openpeerpower.const import CONF_HOST, CONF_ID, CONF_NAME
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from tests.common import MockConfigEntry, load_fixture
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -31,7 +31,7 @@ MOCK_SSDP_DISCOVERY_INFO = {
 HOMEKIT_HOST = "192.168.1.161"
 
 MOCK_HOMEKIT_DISCOVERY_INFO = {
-    CONF_NAME: "onn._op.._tcp.local.",
+    CONF_NAME: "onn._hap._tcp.local.",
     CONF_HOST: HOMEKIT_HOST,
     "properties": {
         CONF_ID: "2d:97:da:ee:dc:99",
@@ -177,7 +177,7 @@ async def setup_integration(
     """Set up the Roku integration in Open Peer Power."""
     entry = MockConfigEntry(domain=DOMAIN, unique_id=unique_id, data={CONF_HOST: host})
 
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     if not skip_entry_setup:
         mock_connection(
@@ -190,7 +190,7 @@ async def setup_integration(
             media_state=media_state,
             server_error=server_error,
         )
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     return entry

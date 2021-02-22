@@ -8,7 +8,7 @@ from openpeerpower.components.sigfox.sensor import (
     CONF_API_LOGIN,
     CONF_API_PASSWORD,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 TEST_API_LOGIN = "foo"
 TEST_API_PASSWORD = "ebcd1234"
@@ -36,7 +36,7 @@ async def test_invalid_credentials.opp):
         url = re.compile(API_URL + "devicetypes")
         mock_req.get(url, text="{}", status_code=401)
         assert await async_setup_component.opp, "sensor", VALID_CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == 0
 
 
@@ -53,9 +53,9 @@ async def test_valid_credentials.opp):
         mock_req.get(url3, text=VALID_MESSAGE)
 
         assert await async_setup_component.opp, "sensor", VALID_CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len.opp.states.async_entity_ids()) == 1
-        state = opp.states.get("sensor.sigfox_fake_id")
+        state =.opp.states.get("sensor.sigfox_fake_id")
         assert state.state == "payload"
         assert state.attributes.get("snr") == "50.0"

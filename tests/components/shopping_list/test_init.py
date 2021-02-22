@@ -6,14 +6,14 @@ from openpeerpower.components.websocket_api.const import (
     TYPE_RESULT,
 )
 from openpeerpower.const import HTTP_NOT_FOUND
-from openpeerpowerr.helpers import intent
+from openpeerpower.helpers import intent
 
 
 async def test_add_item.opp, sl_setup):
     """Test adding an item intent."""
 
-    response = await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    response = await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
 
     assert response.speech["plain"]["speech"] == "I've added beer to your shopping list"
@@ -22,17 +22,17 @@ async def test_add_item.opp, sl_setup):
 async def test_recent_items_intent.opp, sl_setup):
     """Test recent items."""
 
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "wine"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "soda"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "soda"}}
     )
 
-    response = await intent.async_op.dle.opp, "test", "OppShoppingListLastItems")
+    response = await intent.async_handle.opp, "test", "HassShoppingListLastItems")
 
     assert (
         response.speech["plain"]["speech"]
@@ -43,14 +43,14 @@ async def test_recent_items_intent.opp, sl_setup):
 async def test_deprecated_api_get_all.opp,.opp_client, sl_setup):
     """Test the API."""
 
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "wine"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.get("/api/shopping_list")
 
     assert resp.status == 200
@@ -65,14 +65,14 @@ async def test_deprecated_api_get_all.opp,.opp_client, sl_setup):
 async def test_ws_get_items.opp,.opp_ws_client, sl_setup):
     """Test get shopping_list items websocket command."""
 
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "wine"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json({"id": 5, "type": "shopping_list/items"})
     msg = await client.receive_json()
@@ -92,17 +92,17 @@ async def test_ws_get_items.opp,.opp_ws_client, sl_setup):
 async def test_deprecated_api_update.opp,.opp_client, sl_setup):
     """Test the API."""
 
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "wine"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
-    beer_id = opp.data["shopping_list"].items[0]["id"]
-    wine_id = opp.data["shopping_list"].items[1]["id"]
+    beer_id =.opp.data["shopping_list"].items[0]["id"]
+    wine_id =.opp.data["shopping_list"].items[1]["id"]
 
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.post(
         f"/api/shopping_list/item/{beer_id}", json={"name": "soda"}
     )
@@ -119,23 +119,23 @@ async def test_deprecated_api_update.opp,.opp_client, sl_setup):
     data = await resp.json()
     assert data == {"id": wine_id, "name": "wine", "complete": True}
 
-    beer, wine = opp.data["shopping_list"].items
+    beer, wine =.opp.data["shopping_list"].items
     assert beer == {"id": beer_id, "name": "soda", "complete": False}
     assert wine == {"id": wine_id, "name": "wine", "complete": True}
 
 
 async def test_ws_update_item.opp,.opp_ws_client, sl_setup):
     """Test update shopping_list item websocket command."""
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "wine"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
-    beer_id = opp.data["shopping_list"].items[0]["id"]
-    wine_id = opp.data["shopping_list"].items[1]["id"]
-    client = await opp._ws_client.opp)
+    beer_id =.opp.data["shopping_list"].items[0]["id"]
+    wine_id =.opp.data["shopping_list"].items[1]["id"]
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -161,7 +161,7 @@ async def test_ws_update_item.opp,.opp_ws_client, sl_setup):
     data = msg["result"]
     assert data == {"id": wine_id, "name": "wine", "complete": True}
 
-    beer, wine = opp.data["shopping_list"].items
+    beer, wine =.opp.data["shopping_list"].items
     assert beer == {"id": beer_id, "name": "soda", "complete": False}
     assert wine == {"id": wine_id, "name": "wine", "complete": True}
 
@@ -169,16 +169,16 @@ async def test_ws_update_item.opp,.opp_ws_client, sl_setup):
 async def test_api_update_fails.opp,.opp_client, sl_setup):
     """Test the API."""
 
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
 
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.post("/api/shopping_list/non_existing", json={"name": "soda"})
 
     assert resp.status == HTTP_NOT_FOUND
 
-    beer_id = opp.data["shopping_list"].items[0]["id"]
+    beer_id =.opp.data["shopping_list"].items[0]["id"]
     resp = await client.post(f"/api/shopping_list/item/{beer_id}", json={"name": 123})
 
     assert resp.status == 400
@@ -186,10 +186,10 @@ async def test_api_update_fails.opp,.opp_client, sl_setup):
 
 async def test_ws_update_item_fail.opp,.opp_ws_client, sl_setup):
     """Test failure of update shopping_list item websocket command."""
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -210,17 +210,17 @@ async def test_ws_update_item_fail.opp,.opp_ws_client, sl_setup):
 async def test_deprecated_api_clear_completed.opp,.opp_client, sl_setup):
     """Test the API."""
 
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "wine"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
-    beer_id = opp.data["shopping_list"].items[0]["id"]
-    wine_id = opp.data["shopping_list"].items[1]["id"]
+    beer_id =.opp.data["shopping_list"].items[0]["id"]
+    wine_id =.opp.data["shopping_list"].items[1]["id"]
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Mark beer as completed
     resp = await client.post(
@@ -231,7 +231,7 @@ async def test_deprecated_api_clear_completed.opp,.opp_client, sl_setup):
     resp = await client.post("/api/shopping_list/clear_completed")
     assert resp.status == 200
 
-    items = opp.data["shopping_list"].items
+    items =.opp.data["shopping_list"].items
     assert len(items) == 1
 
     assert items[0] == {"id": wine_id, "name": "wine", "complete": False}
@@ -239,15 +239,15 @@ async def test_deprecated_api_clear_completed.opp,.opp_client, sl_setup):
 
 async def test_ws_clear_items.opp,.opp_ws_client, sl_setup):
     """Test clearing shopping_list items websocket command."""
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "wine"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
-    beer_id = opp.data["shopping_list"].items[0]["id"]
-    wine_id = opp.data["shopping_list"].items[1]["id"]
-    client = await opp._ws_client.opp)
+    beer_id =.opp.data["shopping_list"].items[0]["id"]
+    wine_id =.opp.data["shopping_list"].items[1]["id"]
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 5,
@@ -261,7 +261,7 @@ async def test_ws_clear_items.opp,.opp_ws_client, sl_setup):
     await client.send_json({"id": 6, "type": "shopping_list/items/clear"})
     msg = await client.receive_json()
     assert msg["success"] is True
-    items = opp.data["shopping_list"].items
+    items =.opp.data["shopping_list"].items
     assert len(items) == 1
     assert items[0] == {"id": wine_id, "name": "wine", "complete": False}
 
@@ -269,7 +269,7 @@ async def test_ws_clear_items.opp,.opp_ws_client, sl_setup):
 async def test_deprecated_api_create.opp,.opp_client, sl_setup):
     """Test the API."""
 
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.post("/api/shopping_list/item", json={"name": "soda"})
 
     assert resp.status == 200
@@ -277,7 +277,7 @@ async def test_deprecated_api_create.opp,.opp_client, sl_setup):
     assert data["name"] == "soda"
     assert data["complete"] is False
 
-    items = opp.data["shopping_list"].items
+    items =.opp.data["shopping_list"].items
     assert len(items) == 1
     assert items[0]["name"] == "soda"
     assert items[0]["complete"] is False
@@ -286,7 +286,7 @@ async def test_deprecated_api_create.opp,.opp_client, sl_setup):
 async def test_deprecated_api_create_fail.opp,.opp_client, sl_setup):
     """Test the API."""
 
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.post("/api/shopping_list/item", json={"name": 1234})
 
     assert resp.status == 400
@@ -295,14 +295,14 @@ async def test_deprecated_api_create_fail.opp,.opp_client, sl_setup):
 
 async def test_ws_add_item.opp,.opp_ws_client, sl_setup):
     """Test adding shopping_list item websocket command."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "shopping_list/items/add", "name": "soda"})
     msg = await client.receive_json()
     assert msg["success"] is True
     data = msg["result"]
     assert data["name"] == "soda"
     assert data["complete"] is False
-    items = opp.data["shopping_list"].items
+    items =.opp.data["shopping_list"].items
     assert len(items) == 1
     assert items[0]["name"] == "soda"
     assert items[0]["complete"] is False
@@ -310,7 +310,7 @@ async def test_ws_add_item.opp,.opp_ws_client, sl_setup):
 
 async def test_ws_add_item_fail.opp,.opp_ws_client, sl_setup):
     """Test adding shopping_list item failure websocket command."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "shopping_list/items/add", "name": 123})
     msg = await client.receive_json()
     assert msg["success"] is False
@@ -319,21 +319,21 @@ async def test_ws_add_item_fail.opp,.opp_ws_client, sl_setup):
 
 async def test_ws_reorder_items.opp,.opp_ws_client, sl_setup):
     """Test reordering shopping_list items websocket command."""
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "wine"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "apple"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "apple"}}
     )
 
-    beer_id = opp.data["shopping_list"].items[0]["id"]
-    wine_id = opp.data["shopping_list"].items[1]["id"]
-    apple_id = opp.data["shopping_list"].items[2]["id"]
+    beer_id =.opp.data["shopping_list"].items[0]["id"]
+    wine_id =.opp.data["shopping_list"].items[1]["id"]
+    apple_id =.opp.data["shopping_list"].items[2]["id"]
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {
             "id": 6,
@@ -398,21 +398,21 @@ async def test_ws_reorder_items.opp,.opp_ws_client, sl_setup):
 
 async def test_ws_reorder_items_failure.opp,.opp_ws_client, sl_setup):
     """Test reordering shopping_list items websocket command."""
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "beer"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "wine"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
-    await intent.async_op.dle(
-       .opp, "test", "OppShoppingListAddItem", {"item": {"value": "apple"}}
+    await intent.async_handle(
+       .opp, "test", "HassShoppingListAddItem", {"item": {"value": "apple"}}
     )
 
-    beer_id = opp.data["shopping_list"].items[0]["id"]
-    wine_id = opp.data["shopping_list"].items[1]["id"]
-    apple_id = opp.data["shopping_list"].items[2]["id"]
+    beer_id =.opp.data["shopping_list"].items[0]["id"]
+    wine_id =.opp.data["shopping_list"].items[1]["id"]
+    apple_id =.opp.data["shopping_list"].items[2]["id"]
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     # Testing sending bad item id.
     await client.send_json(

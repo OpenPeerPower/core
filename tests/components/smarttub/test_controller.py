@@ -4,10 +4,10 @@ import pytest
 import smarttub
 
 from openpeerpower.components.smarttub.controller import SmartTubController
-from openpeerpowerr.helpers.update_coordinator import UpdateFailed
+from openpeerpower.helpers.update_coordinator import UpdateFailed
 
 
-async def test_invalid_credentials.opp, controller, smarttub_api, config_entry):
+async def test_invalid_credentials.opp.controller, smarttub_api, config_entry):
     """Check that we return False if the configured credentials are invalid.
 
     This should mean that the user changed their SmartTub password.

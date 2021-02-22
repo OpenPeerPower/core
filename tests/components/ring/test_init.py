@@ -2,7 +2,7 @@
 from datetime import timedelta
 
 import openpeerpower.components.ring as ring
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import load_fixture
 

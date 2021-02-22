@@ -9,7 +9,7 @@ from openpeerpower.components.ring.config_flow import InvalidAuth
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -26,16 +26,16 @@ async def test_form.opp):
         "openpeerpower.components.ring.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
-            {"username": "hello@openpeerpower.io", "password": "test-password"},
+            {"username": "hello@open-peer-power.io", "password": "test-password"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
-    assert result2["title"] == "hello@openpeerpower.io"
+    assert result2["title"] == "hello@open-peer-power.io"
     assert result2["data"] == {
-        "username": "hello@openpeerpower.io",
+        "username": "hello@open-peer-power.io",
         "token": {"access_token": "mock-token"},
     }
     assert len(mock_setup.mock_calls) == 1
@@ -44,7 +44,7 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -52,9 +52,9 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.ring.config_flow.Auth.fetch_token",
         side_effect=InvalidAuth,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
-            {"username": "hello@openpeerpower.io", "password": "test-password"},
+            {"username": "hello@open-peer-power.io", "password": "test-password"},
         )
 
     assert result2["type"] == "form"

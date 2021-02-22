@@ -17,7 +17,7 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_setup_missing_basic_config.opp):
@@ -25,7 +25,7 @@ async def test_setup_missing_basic_config.opp):
     assert await async_setup_component(
        .opp, binary_sensor.DOMAIN, {"binary_sensor": {"platform": "rest"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -42,7 +42,7 @@ async def test_setup_missing_config.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -61,7 +61,7 @@ async def test_setup_failed_connect.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -80,7 +80,7 @@ async def test_setup_timeout.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -99,7 +99,7 @@ async def test_setup_minimum.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
 
@@ -117,7 +117,7 @@ async def test_setup_minimum_resource_template.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
 
@@ -136,7 +136,7 @@ async def test_setup_duplicate_resource_template.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -164,7 +164,7 @@ async def test_setup_get.opp):
         },
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
 
@@ -192,7 +192,7 @@ async def test_setup_get_digest_auth.opp):
         },
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
 
@@ -220,7 +220,7 @@ async def test_setup_post.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
 
@@ -247,10 +247,10 @@ async def test_setup_get_off.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state = opp.states.get("binary_sensor.foo")
+    state =.opp.states.get("binary_sensor.foo")
     assert state.state == STATE_OFF
 
 
@@ -277,10 +277,10 @@ async def test_setup_get_on.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state = opp.states.get("binary_sensor.foo")
+    state =.opp.states.get("binary_sensor.foo")
     assert state.state == STATE_ON
 
 
@@ -303,26 +303,26 @@ async def test_setup_with_exception.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state = opp.states.get("binary_sensor.foo")
+    state =.opp.states.get("binary_sensor.foo")
     assert state.state == STATE_OFF
 
-    await async_setup_component.opp, "openpeerpowerr", {})
-    await opp..async_block_till_done()
+    await async_setup_component.opp, "openpeerpower", {})
+    await.opp.async_block_till_done()
 
     respx.clear()
     respx.get("http://localhost").mock(side_effect=httpx.RequestError)
-    await opp..services.async_call(
-        "openpeerpowerr",
+    await.opp.services.async_call(
+        "openpeerpower",
         "update_entity",
         {ATTR_ENTITY_ID: ["binary_sensor.foo"]},
         blocking=True,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.foo")
+    state =.opp.states.get("binary_sensor.foo")
     assert state.state == STATE_UNAVAILABLE
 
 
@@ -344,9 +344,9 @@ async def test_reload.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 
@@ -358,13 +358,13 @@ async def test_reload.opp):
         "rest/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "rest",
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.mockreset") is None
     assert.opp.states.get("binary_sensor.rollout")
@@ -386,7 +386,7 @@ async def test_setup_query_params.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
 

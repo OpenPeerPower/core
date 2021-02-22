@@ -21,9 +21,9 @@ from sqlalchemy import (
 )
 from sqlalchemy.ext.declarative import declarative_base
 
-from openpeerpowerr.core import Event, EventOrigin, State, split_entity_id
-from openpeerpowerr.helpers.json import JSONEncoder
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import Event, EventOrigin, State, split_entity_id
+from openpeerpower.helpers.json import JSONEncoder
+import openpeerpower.util.dt as dt_util
 
 # SQLAlchemy Schema
 # pylint: disable=invalid-name

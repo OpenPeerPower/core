@@ -40,7 +40,7 @@ from openpeerpower.components.media_player.const import (
 )
 from openpeerpower.components.roku.const import ATTR_KEYWORD, DOMAIN, SERVICE_SEARCH
 from openpeerpower.components.websocket_api.const import TYPE_RESULT
-from openpeerpower.config import async_process_op.core_config
+from openpeerpower.config import async_process_ha_core_config
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
     SERVICE_MEDIA_NEXT_TRACK,
@@ -61,18 +61,22 @@ from openpeerpower.const import (
     STATE_STANDBY,
     STATE_UNAVAILABLE,
 )
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.util import dt as dt_util
 
 from tests.common import async_fire_time_changed
-from tests.components.roku import UPNP_SERIAL, setup_integration
+from tests.components.roku import NAME_ROKUTV, UPNP_SERIAL, setup_integration
 from tests.test_util.aiohttp import AiohttpClientMocker
 
 MAIN_ENTITY_ID = f"{MP_DOMAIN}.my_roku_3"
 TV_ENTITY_ID = f"{MP_DOMAIN}.58_onn_roku_tv"
 
 TV_HOST = "192.168.1.161"
+TV_LOCATION = "Living room"
+TV_MANUFACTURER = "Onn"
+TV_MODEL = "100005844"
 TV_SERIAL = "YN00H5555555"
+TV_SW_VERSION = "9.2.0"
 
 
 async def test_setup(
@@ -81,7 +85,7 @@ async def test_setup(
     """Test setup with basic config."""
     await setup_integration.opp, aioclient_mock)
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     main = entity_registry.async_get(MAIN_ENTITY_ID)
 
     assert.opp.states.get(MAIN_ENTITY_ID)
@@ -96,7 +100,7 @@ async def test_idle_setup(
     """Test setup with idle device."""
     await setup_integration.opp, aioclient_mock, power=False)
 
-    state = opp.states.get(MAIN_ENTITY_ID)
+    state =.opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_STANDBY
 
 
@@ -113,7 +117,7 @@ async def test_tv_setup(
         unique_id=TV_SERIAL,
     )
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     tv = entity_registry.async_get(TV_ENTITY_ID)
 
     assert.opp.states.get(TV_ENTITY_ID)
@@ -129,21 +133,21 @@ async def test_availability(
     now = dt_util.utcnow()
     future = now + timedelta(minutes=1)
 
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         await setup_integration.opp, aioclient_mock)
 
     with patch(
         "openpeerpower.components.roku.Roku.update", side_effect=RokuError
-    ), patch("openpeerpowerr.util.dt.utcnow", return_value=future):
+    ), patch("openpeerpower.util.dt.utcnow", return_value=future):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert.opp.states.get(MAIN_ENTITY_ID).state == STATE_UNAVAILABLE
 
     future += timedelta(minutes=1)
 
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=future):
+    with patch("openpeerpower.util.dt.utcnow", return_value=future):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert.opp.states.get(MAIN_ENTITY_ID).state == STATE_HOME
 
 
@@ -154,7 +158,7 @@ async def test_supported_features(
     await setup_integration.opp, aioclient_mock)
 
     # Features supported for Rokus
-    state = opp.states.get(MAIN_ENTITY_ID)
+    state =.opp.states.get(MAIN_ENTITY_ID)
     assert (
         SUPPORT_PREVIOUS_TRACK
         | SUPPORT_NEXT_TRACK
@@ -184,7 +188,7 @@ async def test_tv_supported_features(
         unique_id=TV_SERIAL,
     )
 
-    state = opp.states.get(TV_ENTITY_ID)
+    state =.opp.states.get(TV_ENTITY_ID)
     assert (
         SUPPORT_PREVIOUS_TRACK
         | SUPPORT_NEXT_TRACK
@@ -207,7 +211,7 @@ async def test_attributes(
     """Test attributes."""
     await setup_integration.opp, aioclient_mock)
 
-    state = opp.states.get(MAIN_ENTITY_ID)
+    state =.opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_HOME
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_TYPE) is None
@@ -222,7 +226,7 @@ async def test_attributes_app(
     """Test attributes for app."""
     await setup_integration.opp, aioclient_mock, app="netflix")
 
-    state = opp.states.get(MAIN_ENTITY_ID)
+    state =.opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_ON
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_TYPE) == MEDIA_TYPE_APP
@@ -237,7 +241,7 @@ async def test_attributes_app_media_playing(
     """Test attributes for app with playing media."""
     await setup_integration.opp, aioclient_mock, app="pluto", media_state="play")
 
-    state = opp.states.get(MAIN_ENTITY_ID)
+    state =.opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_PLAYING
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_TYPE) == MEDIA_TYPE_APP
@@ -254,7 +258,7 @@ async def test_attributes_app_media_paused(
     """Test attributes for app with paused media."""
     await setup_integration.opp, aioclient_mock, app="pluto", media_state="pause")
 
-    state = opp.states.get(MAIN_ENTITY_ID)
+    state =.opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_PAUSED
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_TYPE) == MEDIA_TYPE_APP
@@ -271,7 +275,7 @@ async def test_attributes_screensaver(
     """Test attributes for app with screensaver."""
     await setup_integration.opp, aioclient_mock, app="screensaver")
 
-    state = opp.states.get(MAIN_ENTITY_ID)
+    state =.opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_IDLE
 
     assert state.attributes.get(ATTR_MEDIA_CONTENT_TYPE) is None
@@ -293,7 +297,7 @@ async def test_tv_attributes(
         unique_id=TV_SERIAL,
     )
 
-    state = opp.states.get(TV_ENTITY_ID)
+    state =.opp.states.get(TV_ENTITY_ID)
     assert state.state == STATE_ON
 
     assert state.attributes.get(ATTR_APP_ID) == "tvinput.dtv"
@@ -304,6 +308,29 @@ async def test_tv_attributes(
     assert state.attributes.get(ATTR_MEDIA_TITLE) == "Airwolf"
 
 
+async def test_tv_device_registry(
+   .opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+) -> None:
+    """Test device registered for Roku TV in the device registry."""
+    await setup_integration(
+       .opp,
+        aioclient_mock,
+        device="rokutv",
+        app="tvinput-dtv",
+        host=TV_HOST,
+        unique_id=TV_SERIAL,
+    )
+
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    reg_device = device_registry.async_get_device(identifiers={(DOMAIN, TV_SERIAL)})
+
+    assert reg_device.model == TV_MODEL
+    assert reg_device.sw_version == TV_SW_VERSION
+    assert reg_device.manufacturer == TV_MANUFACTURER
+    assert reg_device.suggested_area == TV_LOCATION
+    assert reg_device.name == NAME_ROKUTV
+
+
 async def test_services(
    .opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
@@ -311,21 +338,21 @@ async def test_services(
     await setup_integration.opp, aioclient_mock)
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: MAIN_ENTITY_ID}, blocking=True
         )
 
         remote_mock.assert_called_once_with("poweroff")
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: MAIN_ENTITY_ID}, blocking=True
         )
 
         remote_mock.assert_called_once_with("poweron")
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_MEDIA_PAUSE,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID},
@@ -335,7 +362,7 @@ async def test_services(
         remote_mock.assert_called_once_with("play")
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_MEDIA_PLAY,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID},
@@ -345,7 +372,7 @@ async def test_services(
         remote_mock.assert_called_once_with("play")
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_MEDIA_PLAY_PAUSE,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID},
@@ -355,7 +382,7 @@ async def test_services(
         remote_mock.assert_called_once_with("play")
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_MEDIA_NEXT_TRACK,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID},
@@ -365,7 +392,7 @@ async def test_services(
         remote_mock.assert_called_once_with("forward")
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_MEDIA_PREVIOUS_TRACK,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID},
@@ -375,7 +402,7 @@ async def test_services(
         remote_mock.assert_called_once_with("reverse")
 
     with patch("openpeerpower.components.roku.Roku.launch") as launch_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_PLAY_MEDIA,
             {
@@ -389,7 +416,7 @@ async def test_services(
         launch_mock.assert_called_once_with("11")
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_SELECT_SOURCE,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID, ATTR_INPUT_SOURCE: "Home"},
@@ -399,7 +426,7 @@ async def test_services(
         remote_mock.assert_called_once_with("home")
 
     with patch("openpeerpower.components.roku.Roku.launch") as launch_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_SELECT_SOURCE,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID, ATTR_INPUT_SOURCE: "Netflix"},
@@ -409,7 +436,7 @@ async def test_services(
         launch_mock.assert_called_once_with("12")
 
     with patch("openpeerpower.components.roku.Roku.launch") as launch_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_SELECT_SOURCE,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID, ATTR_INPUT_SOURCE: 12},
@@ -433,14 +460,14 @@ async def test_tv_services(
     )
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: TV_ENTITY_ID}, blocking=True
         )
 
         remote_mock.assert_called_once_with("volume_up")
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_VOLUME_DOWN,
             {ATTR_ENTITY_ID: TV_ENTITY_ID},
@@ -450,7 +477,7 @@ async def test_tv_services(
         remote_mock.assert_called_once_with("volume_down")
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_VOLUME_MUTE,
             {ATTR_ENTITY_ID: TV_ENTITY_ID, ATTR_MEDIA_VOLUME_MUTED: True},
@@ -460,7 +487,7 @@ async def test_tv_services(
         remote_mock.assert_called_once_with("volume_mute")
 
     with patch("openpeerpower.components.roku.Roku.tune") as tune_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_PLAY_MEDIA,
             {
@@ -485,7 +512,7 @@ async def test_media_browse.opp, aioclient_mock,.opp_ws_client):
         unique_id=TV_SERIAL,
     )
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json(
         {
@@ -602,7 +629,7 @@ async def test_media_browse.opp, aioclient_mock,.opp_ws_client):
 
 async def test_media_browse_internal.opp, aioclient_mock,.opp_ws_client):
     """Test browsing media with internal url."""
-    await async_process_op.core_config(
+    await async_process_ha_core_config(
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
@@ -618,10 +645,10 @@ async def test_media_browse_internal.opp, aioclient_mock,.opp_ws_client):
         unique_id=TV_SERIAL,
     )
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
-        "openpeerpowerr.helpers.network._get_request_host", return_value="example.local"
+        "openpeerpower.helpers.network._get_request_host", return_value="example.local"
     ):
         await client.send_json(
             {
@@ -669,7 +696,7 @@ async def test_integration_services(
     await setup_integration.opp, aioclient_mock)
 
     with patch("openpeerpower.components.roku.Roku.search") as search_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_SEARCH,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID, ATTR_KEYWORD: "Space Jam"},

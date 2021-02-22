@@ -8,7 +8,7 @@ from openpeerpower.components.risco import (
     UnauthorizedError,
 )
 from openpeerpower.components.risco.const import DOMAIN
-from openpeerpowerr.util import dt
+from openpeerpower.util import dt
 
 from .util import TEST_CONFIG, TEST_SITE_UUID, setup_risco
 from .util import two_zone_alarm  # noqa: F401
@@ -116,11 +116,11 @@ async def test_cannot_connect.opp):
         side_effect=CannotConnectError,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
-        config_entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        config_entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     for id in ENTITY_IDS.values():
         assert not registry.async_is_registered(id)
 
@@ -133,11 +133,11 @@ async def test_unauthorized.opp):
         side_effect=UnauthorizedError,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
-        config_entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        config_entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     for id in ENTITY_IDS.values():
         assert not registry.async_is_registered(id)
 
@@ -145,7 +145,7 @@ async def test_unauthorized.opp):
 def _check_state.opp, category, entity_id):
     event_index = CATEGORIES_TO_EVENTS[category]
     event = TEST_EVENTS[event_index]
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == event.time
     assert state.attributes["category_id"] == event.category_id
     assert state.attributes["category_name"] == event.category_name
@@ -167,7 +167,7 @@ def _check_state.opp, category, entity_id):
 
 async def test_setup.opp, two_zone_alarm):  # noqa: F811
     """Test entity setup."""
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     for id in ENTITY_IDS.values():
         assert not registry.async_is_registered(id)
@@ -195,7 +195,7 @@ async def test_setup.opp, two_zone_alarm):  # noqa: F811
         return_value={LAST_EVENT_TIMESTAMP_KEY: TEST_EVENTS[0].time},
     ):
         async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=65))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         events_mock.assert_awaited_once_with(TEST_EVENTS[0].time, 10)
 
     for category, entity_id in ENTITY_IDS.items():

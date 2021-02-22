@@ -20,11 +20,11 @@ async def test_duplicate_error.opp):
         CONF_SSL: True,
     }
 
-    MockConfigEntry(domain=DOMAIN, unique_id="192.168.1.100", data=conf).add_to_opp(
+    MockConfigEntry(domain=DOMAIN, unique_id="192.168.1.100", data=conf).add_to.opp(
        .opp
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -41,7 +41,7 @@ async def test_invalid_password.opp):
     }
 
     flow = config_flow.RainMachineFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     flow.context = {"source": SOURCE_USER}
 
     with patch(
@@ -67,18 +67,18 @@ async def test_options_flow.opp):
         data=conf,
         options={CONF_ZONE_RUN_TIME: 900},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.rainmachine.async_setup_entry", return_value=True
     ):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_ZONE_RUN_TIME: 600}
         )
 
@@ -89,7 +89,7 @@ async def test_options_flow.opp):
 async def test_show_form.opp):
     """Test that the form is served with no input."""
     flow = config_flow.RainMachineFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     flow.context = {"source": SOURCE_USER}
 
     result = await flow.async_step_user(user_input=None)
@@ -108,7 +108,7 @@ async def test_step_user.opp):
     }
 
     flow = config_flow.RainMachineFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     flow.context = {"source": SOURCE_USER}
 
     with patch(

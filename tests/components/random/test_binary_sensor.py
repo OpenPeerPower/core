@@ -1,7 +1,7 @@
 """The test for the Random binary sensor platform."""
 from unittest.mock import patch
 
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_random_binary_sensor_on.opp):
@@ -17,9 +17,9 @@ async def test_random_binary_sensor_on.opp):
             "binary_sensor",
             config,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test")
+    state =.opp.states.get("binary_sensor.test")
 
     assert state.state == "on"
 
@@ -37,8 +37,8 @@ async def test_random_binary_sensor_off.opp):
             "binary_sensor",
             config,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.test")
+    state =.opp.states.get("binary_sensor.test")
 
     assert state.state == "off"

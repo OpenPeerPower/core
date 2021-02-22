@@ -28,7 +28,7 @@ def spider_fixture() -> Mock:
 async def test_user.opp, spider):
     """Test user config."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -40,10 +40,10 @@ async def test_user.opp, spider):
     ) as mock_setup, patch(
         "openpeerpower.components.spider.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=SPIDER_USER_DATA
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == DOMAIN
@@ -65,12 +65,12 @@ async def test_import.opp, spider):
         "openpeerpower.components.spider.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=SPIDER_USER_DATA,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == DOMAIN
@@ -84,10 +84,10 @@ async def test_import.opp, spider):
 
 async def test_abort_if_already_setup.opp, spider):
     """Test we abort if Spider is already setup."""
-    MockConfigEntry(domain=DOMAIN, data=SPIDER_USER_DATA).add_to_opp.opp)
+    MockConfigEntry(domain=DOMAIN, data=SPIDER_USER_DATA).add_to.opp.opp)
 
     # Should fail, config exist (import)
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=SPIDER_USER_DATA
     )
 
@@ -95,7 +95,7 @@ async def test_abort_if_already_setup.opp, spider):
     assert result["reason"] == "single_instance_allowed"
 
     # Should fail, config exist (flow)
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=SPIDER_USER_DATA
     )
 

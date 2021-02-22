@@ -45,7 +45,7 @@ async def test_smartapp_update_saves_token(
     entry = MockConfigEntry(
         domain=DOMAIN, data={"installed_app_id": str(uuid4()), "app_id": str(uuid4())}
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     app = Mock()
     app.app_id = entry.data["app_id"]
     request = Mock()
@@ -62,7 +62,7 @@ async def test_smartapp_update_saves_token(
 
 async def test_smartapp_uninstall.opp, config_entry):
     """Test the config entry is unloaded when the app is uninstalled."""
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     app = Mock()
     app.app_id = config_entry.data["app_id"]
     request = Mock()
@@ -153,7 +153,7 @@ async def test_smartapp_sync_subscriptions_limit_warning(
     )
 
 
-async def test_smartapp_sync_subscriptions_op.dles_exceptions(
+async def test_smartapp_sync_subscriptions_handles_exceptions(
    .opp, smartthings_mock, device_factory, subscription_factory
 ):
     """Test synchronization does nothing when current."""

@@ -6,8 +6,8 @@ import pytest
 import smarttub
 
 from openpeerpower.components.smarttub.const import DOMAIN
-from openpeerpower.components.smarttub.controller import SmartTubController
 from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -28,6 +28,12 @@ def config_entry(config_data):
     )
 
 
+@pytest.fixture
+async def setup_component.opp):
+    """Set up the component."""
+    assert await async_setup_component.opp, DOMAIN, {}) is True
+
+
 @pytest.fixture(name="spa")
 def mock_spa():
     """Mock a SmartTub.Spa."""
@@ -40,6 +46,7 @@ def mock_spa():
         "setTemperature": 39,
         "water": {"temperature": 38},
         "heater": "ON",
+        "state": "NORMAL",
     }
     return mock_spa
 
@@ -54,7 +61,7 @@ def mock_account(spa):
     return mock_account
 
 
-@pytest.fixture(name="smarttub_api")
+@pytest.fixture(name="smarttub_api", autouse=True)
 def mock_api(account, spa):
     """Mock the SmartTub API."""
 
@@ -68,19 +75,8 @@ def mock_api(account, spa):
 
 
 @pytest.fixture
-async def controller(smarttub_api,.opp, config_entry):
-    """Instantiate controller for testing."""
-
-    controller = SmartTubController.opp)
-    assert len(controller.spas) == 0
-    assert await controller.async_setup_entry(config_entry)
-
-    assert len(controller.spas) > 0
-
-    return controller
-
-
-@pytest.fixture
-async def coordinator(controller):
-    """Provide convenient access to the coordinator via the controller."""
-    return controller.coordinator
+async def setup_entry.opp, config_entry):
+    """Initialize the config entry."""
+    config_entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(config_entry.entry_id)
+    await.opp.async_block_till_done()

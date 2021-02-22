@@ -28,7 +28,7 @@ def mock_controller():
 def init_config_flow.opp):
     """Init a configuration flow."""
     flow = config_flow.SolarEdgeConfigFlow()
-    flow.opp = opp
+    flow.opp =.opp
     return flow
 
 
@@ -79,7 +79,7 @@ async def test_abort_if_already_setup.opp, test_api):
     MockConfigEntry(
         domain="solaredge",
         data={CONF_NAME: DEFAULT_NAME, CONF_SITE_ID: SITE_ID, CONF_API_KEY: API_KEY},
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
     # import: Should fail, same SITE_ID
     result = await flow.async_step_import(

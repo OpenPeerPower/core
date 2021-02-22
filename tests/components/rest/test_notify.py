@@ -2,15 +2,19 @@
 from os import path
 from unittest.mock import patch
 
+import respx
+
 from openpeerpower import config as.opp_config
 import openpeerpower.components.notify as notify
 from openpeerpower.components.rest import DOMAIN
 from openpeerpower.const import SERVICE_RELOAD
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
+@respx.mock
 async def test_reload_notify.opp):
     """Verify we can reload the notify service."""
+    respx.get("http://localhost") % 200
 
     assert await async_setup_component(
        .opp,
@@ -25,7 +29,7 @@ async def test_reload_notify.opp):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.services.has_service(notify.DOMAIN, DOMAIN)
 
@@ -35,13 +39,13 @@ async def test_reload_notify.opp):
         "rest/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert not.opp.services.has_service(notify.DOMAIN, DOMAIN)
     assert.opp.services.has_service(notify.DOMAIN, "rest_reloaded")

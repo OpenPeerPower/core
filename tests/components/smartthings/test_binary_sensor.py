@@ -13,7 +13,7 @@ from openpeerpower.components.binary_sensor import (
 from openpeerpower.components.smartthings import binary_sensor
 from openpeerpower.components.smartthings.const import DOMAIN, SIGNAL_SMARTTHINGS_UPDATE
 from openpeerpower.const import ATTR_FRIENDLY_NAME, STATE_UNAVAILABLE
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .conftest import setup_platform
 
@@ -38,7 +38,7 @@ async def test_entity_state.opp, device_factory):
         "Motion Sensor 1", [Capability.motion_sensor], {Attribute.motion: "inactive"}
     )
     await setup_platform.opp, BINARY_SENSOR_DOMAIN, devices=[device])
-    state = opp.states.get("binary_sensor.motion_sensor_1_motion")
+    state =.opp.states.get("binary_sensor.motion_sensor_1_motion")
     assert state.state == "off"
     assert state.attributes[ATTR_FRIENDLY_NAME] == f"{device.label} {Attribute.motion}"
 
@@ -49,8 +49,8 @@ async def test_entity_and_device_attributes.opp, device_factory):
     device = device_factory(
         "Motion Sensor 1", [Capability.motion_sensor], {Attribute.motion: "inactive"}
     )
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     # Act
     await setup_platform.opp, BINARY_SENSOR_DOMAIN, devices=[device])
     # Assert
@@ -77,8 +77,8 @@ async def test_update_from_signal.opp, device_factory):
     # Act
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
-    await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.motion_sensor_1_motion")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.motion_sensor_1_motion")
     assert state is not None
     assert state.state == "on"
 
@@ -91,7 +91,7 @@ async def test_unload_config_entry.opp, device_factory):
     )
     config_entry = await setup_platform.opp, BINARY_SENSOR_DOMAIN, devices=[device])
     # Act
-    await opp..config_entries.async_forward_entry_unload(config_entry, "binary_sensor")
+    await.opp.config_entries.async_forward_entry_unload(config_entry, "binary_sensor")
     # Assert
     assert (
        .opp.states.get("binary_sensor.motion_sensor_1_motion").state

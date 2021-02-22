@@ -4,7 +4,7 @@ import voluptuous as vol
 
 from openpeerpower.components.sql.sensor import validate_sql_select
 from openpeerpower.const import STATE_UNKNOWN
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_query.opp):
@@ -24,9 +24,9 @@ async def test_query.opp):
     }
 
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.count_tables")
+    state =.opp.states.get("sensor.count_tables")
     assert state.state == "5"
     assert state.attributes["value"] == 5
 
@@ -51,7 +51,7 @@ async def test_invalid_query.opp):
     }
 
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.count_tables")
+    state =.opp.states.get("sensor.count_tables")
     assert state.state == STATE_UNKNOWN

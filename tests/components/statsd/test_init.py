@@ -7,8 +7,8 @@ import voluptuous as vol
 
 import openpeerpower.components.statsd as statsd
 from openpeerpower.const import EVENT_STATE_CHANGED, STATE_OFF, STATE_ON
-import openpeerpowerr.core as ha
-from openpeerpowerr.setup import async_setup_component
+import openpeerpower.core as ha
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture
@@ -39,7 +39,7 @@ async def test_statsd_setup_full.opp):
         assert mock_init.call_args == mock.call(host="host", port=123, prefix="foo")
 
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
 
 
 async def test_statsd_setup_defaults.opp):
@@ -54,7 +54,7 @@ async def test_statsd_setup_defaults.opp):
         assert await async_setup_component.opp, statsd.DOMAIN, config)
 
         assert mock_init.call_count == 1
-        assert mock_init.call_args == mock.call(host="host", port=8125, prefix="opp")
+        assert mock_init.call_args == mock.call(host="host", port=8125, prefix=.opp")
     assert.opp.bus.listen.called
 
 
@@ -67,13 +67,13 @@ async def test_event_listener_defaults.opp, mock_client):
    .opp.bus.listen = MagicMock()
     await async_setup_component.opp, statsd.DOMAIN, config)
     assert.opp.bus.listen.called
-    handler_method = opp.bus.listen.call_args_list[0][0][1]
+    handler_method =.opp.bus.listen.call_args_list[0][0][1]
 
     valid = {"1": 1, "1.0": 1.0, "custom": 3, STATE_ON: 1, STATE_OFF: 0}
     for in_, out in valid.items():
         state = MagicMock(state=in_, attributes={"attribute key": 3.2})
         handler_method(MagicMock(data={"new_state": state}))
-        mock_client.gauge.assert_op._calls(
+        mock_client.gauge.assert_has_calls(
             [mock.call(state.entity_id, out, statsd.DEFAULT_RATE)]
         )
 
@@ -87,7 +87,7 @@ async def test_event_listener_defaults.opp, mock_client):
 
     for invalid in ("foo", "", object):
         handler_method(
-            MagicMock(data={"new_state": op.State("domain.test", invalid, {})})
+            MagicMock(data={"new_state": ha.State("domain.test", invalid, {})})
         )
         assert not mock_client.gauge.called
         assert mock_client.incr.called
@@ -102,13 +102,13 @@ async def test_event_listener_attr_details.opp, mock_client):
    .opp.bus.listen = MagicMock()
     await async_setup_component.opp, statsd.DOMAIN, config)
     assert.opp.bus.listen.called
-    handler_method = opp.bus.listen.call_args_list[0][0][1]
+    handler_method =.opp.bus.listen.call_args_list[0][0][1]
 
     valid = {"1": 1, "1.0": 1.0, STATE_ON: 1, STATE_OFF: 0}
     for in_, out in valid.items():
         state = MagicMock(state=in_, attributes={"attribute key": 3.2})
         handler_method(MagicMock(data={"new_state": state}))
-        mock_client.gauge.assert_op._calls(
+        mock_client.gauge.assert_has_calls(
             [
                 mock.call("%s.state" % state.entity_id, out, statsd.DEFAULT_RATE),
                 mock.call(
@@ -127,7 +127,7 @@ async def test_event_listener_attr_details.opp, mock_client):
 
     for invalid in ("foo", "", object):
         handler_method(
-            MagicMock(data={"new_state": op.State("domain.test", invalid, {})})
+            MagicMock(data={"new_state": ha.State("domain.test", invalid, {})})
         )
         assert not mock_client.gauge.called
         assert mock_client.incr.called

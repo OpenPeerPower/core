@@ -22,7 +22,7 @@ from openpeerpower.const import (
     CONF_PASSWORD,
     CONF_USERNAME,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 VALID_CONFIG = {
     "sensor": {
@@ -152,12 +152,12 @@ class MockSubreddit:
 async def test_setup_with_valid_config.opp):
     """Test the platform setup with Reddit configuration."""
     assert await async_setup_component.opp, "sensor", VALID_CONFIG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.reddit_worldnews")
+    state =.opp.states.get("sensor.reddit_worldnews")
     assert int(state.state) == MOCK_RESULTS_LENGTH
 
-    state = opp.states.get("sensor.reddit_news")
+    state =.opp.states.get("sensor.reddit_news")
     assert int(state.state) == MOCK_RESULTS_LENGTH
 
     assert state.attributes[ATTR_SUBREDDIT] == "news"
@@ -179,5 +179,5 @@ async def test_setup_with_valid_config.opp):
 async def test_setup_with_invalid_config.opp):
     """Test the platform setup with invalid Reddit configuration."""
     assert await async_setup_component.opp, "sensor", INVALID_SORT_BY_CONFIG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert not.opp.states.get("sensor.reddit_worldnews")

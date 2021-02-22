@@ -11,7 +11,7 @@ SHARK_DEVICE_DICT = {
     "sw_version": "devd 1.7 2020-05-13 11:50:36",
     "template_id": 99999,
     "mac": "ffffffffffff",
-    "unique_op.dware_id": None,
+    "unique_hardware_id": None,
     "lan_ip": "192.168.0.123",
     "connected_at": "2020-07-31T08:03:05Z",
     "key": 26517570,

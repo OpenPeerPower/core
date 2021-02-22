@@ -12,7 +12,7 @@ from openpeerpower.components.smappee.const import (
 )
 from openpeerpower.config_entries import SOURCE_USER, SOURCE_ZEROCONF
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers import config_entry_oauth2_flow
 
 from tests.common import MockConfigEntry
 
@@ -22,7 +22,7 @@ CLIENT_SECRET = "5678"
 
 async def test_show_user_form.opp):
     """Test that the user set up form is served."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -33,14 +33,14 @@ async def test_show_user_form.opp):
 
 async def test_show_user_host_form.opp):
     """Test that the host form is served after choosing the local option."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
     assert result["step_id"] == "environment"
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {"environment": ENV_LOCAL}
     )
 
@@ -51,7 +51,7 @@ async def test_show_user_host_form.opp):
 async def test_show_zeroconf_connection_error_form.opp):
     """Test that the zeroconf confirmation form is served."""
     with patch("pysmappee.api.SmappeeLocalApi.logon", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_ZEROCONF},
             data={
@@ -68,7 +68,7 @@ async def test_show_zeroconf_connection_error_form.opp):
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "zeroconf_confirm"
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"host": "1.2.3.4"}
         )
 
@@ -80,20 +80,20 @@ async def test_show_zeroconf_connection_error_form.opp):
 async def test_connection_error.opp):
     """Test we show user form on Smappee connection error."""
     with patch("pysmappee.api.SmappeeLocalApi.logon", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
         )
         assert result["step_id"] == "environment"
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"environment": ENV_LOCAL}
         )
         assert result["step_id"] == ENV_LOCAL
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"host": "1.2.3.4"}
         )
         assert result["reason"] == "cannot_connect"
@@ -102,7 +102,7 @@ async def test_connection_error.opp):
 
 async def test_zeroconf_wrong_mdns.opp):
     """Test we abort if unsupported mDNS name is discovered."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data={
@@ -130,20 +130,20 @@ async def test_full_user_wrong_mdns.opp):
         "pysmappee.api.SmappeeLocalApi.load_instantaneous",
         return_value=[{"key": "phase0ActivePower", "value": 0}],
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
         )
         assert result["step_id"] == "environment"
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"environment": ENV_LOCAL}
         )
         assert result["step_id"] == ENV_LOCAL
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"host": "1.2.3.4"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -167,23 +167,23 @@ async def test_user_device_exists_abort.opp):
             unique_id="1006000212",
             source=SOURCE_USER,
         )
-        config_entry.add_to_opp.opp)
+        config_entry.add_to.opp.opp)
         assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
         )
         assert result["step_id"] == "environment"
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"environment": ENV_LOCAL}
         )
         assert result["step_id"] == ENV_LOCAL
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"host": "1.2.3.4"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -208,11 +208,11 @@ async def test_zeroconf_device_exists_abort.opp):
             unique_id="1006000212",
             source=SOURCE_USER,
         )
-        config_entry.add_to_opp.opp)
+        config_entry.add_to.opp.opp)
 
         assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_ZEROCONF},
             data={
@@ -236,11 +236,11 @@ async def test_cloud_device_exists_abort.opp):
         unique_id="smappeeCloud",
         source=SOURCE_USER,
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -257,11 +257,11 @@ async def test_zeroconf_abort_if_cloud_device_exists.opp):
         unique_id="smappeeCloud",
         source=SOURCE_USER,
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data={
@@ -280,7 +280,7 @@ async def test_zeroconf_abort_if_cloud_device_exists.opp):
 
 async def test_zeroconf_confirm_abort_if_cloud_device_exists.opp):
     """Test we abort zeroconf confirm flow if Smappee Cloud device already configured."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data={
@@ -298,11 +298,11 @@ async def test_zeroconf_confirm_abort_if_cloud_device_exists.opp):
         unique_id="smappeeCloud",
         source=SOURCE_USER,
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-    result = await opp..config_entries.flow.async_configure(result["flow_id"])
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured_device"
@@ -317,15 +317,15 @@ async def test_abort_cloud_flow_if_local_device_exists.opp):
         unique_id="1006000212",
         source=SOURCE_USER,
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {"environment": ENV_CLOUD}
     )
 
@@ -347,11 +347,11 @@ async def test_full_user_flow(
         },
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {"environment": ENV_CLOUD}
     )
     state = config_entry_oauth2_flow._encode_jwt(
@@ -380,7 +380,7 @@ async def test_full_user_flow(
     with patch(
         "openpeerpower.components.smappee.async_setup_entry", return_value=True
     ) as mock_setup:
-        await opp..config_entries.flow.async_configure(result["flow_id"])
+        await.opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert len(mock_setup.mock_calls) == 1
@@ -399,7 +399,7 @@ async def test_full_zeroconf_flow.opp):
     ), patch(
         "openpeerpower.components.smappee.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_ZEROCONF},
             data={
@@ -415,7 +415,7 @@ async def test_full_zeroconf_flow.opp):
         assert result["step_id"] == "zeroconf_confirm"
         assert result["description_placeholders"] == {CONF_SERIALNUMBER: "1006000212"}
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"host": "1.2.3.4"}
         )
 
@@ -423,7 +423,7 @@ async def test_full_zeroconf_flow.opp):
         assert result["title"] == "smappee1006000212"
         assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-        entry = opp.config_entries.async_entries(DOMAIN)[0]
+        entry =.opp.config_entries.async_entries(DOMAIN)[0]
         assert entry.unique_id == "1006000212"
 
 
@@ -440,7 +440,7 @@ async def test_full_user_local_flow.opp):
     ), patch(
         "openpeerpower.components.smappee.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
         )
@@ -448,19 +448,19 @@ async def test_full_user_local_flow.opp):
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["description_placeholders"] is None
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"environment": ENV_LOCAL},
         )
         assert result["step_id"] == ENV_LOCAL
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"host": "1.2.3.4"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == "smappee1006000212"
         assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-        entry = opp.config_entries.async_entries(DOMAIN)[0]
+        entry =.opp.config_entries.async_entries(DOMAIN)[0]
         assert entry.unique_id == "1006000212"

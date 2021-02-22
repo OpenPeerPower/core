@@ -7,8 +7,8 @@ from pytz import timezone
 
 from openpeerpower.components.pvpc_hourly_pricing import ATTR_TARIFF, DOMAIN
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.core import ATTR_NOW, EVENT_TIME_CHANGED
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import ATTR_NOW, EVENT_TIME_CHANGED
+from openpeerpower.setup import async_setup_component
 
 from .conftest import check_valid_state
 
@@ -19,12 +19,12 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 async def _process_time_step(
    .opp, mock_data, key_state=None, value=None, tariff="discrimination", delta_min=60
 ):
-    state = opp.states.get("sensor.test_dst")
+    state =.opp.states.get("sensor.test_dst")
     check_valid_state(state, tariff=tariff, value=value, key_attr=key_state)
 
     mock_data["return_time"] += timedelta(minutes=delta_min)
    .opp.bus.async_fire(EVENT_TIME_CHANGED, {ATTR_NOW: mock_data["return_time"]})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     return state
 
 
@@ -39,9 +39,9 @@ async def test_sensor_availability(
     def mock_now():
         return mock_data["return_time"]
 
-    with patch("openpeerpowerr.util.dt.utcnow", new=mock_now):
+    with patch("openpeerpower.util.dt.utcnow", new=mock_now):
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         caplog.clear()
         assert pvpc_aioclient_mock.call_count == 2
 

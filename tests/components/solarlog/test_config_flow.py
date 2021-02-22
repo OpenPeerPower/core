@@ -17,7 +17,7 @@ HOST = "http://1.1.1.1"
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -32,10 +32,10 @@ async def test_form.opp):
         "openpeerpower.components.solarlog.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {"host": HOST, "name": NAME}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "solarlog_test_1_2_3"
@@ -57,7 +57,7 @@ def mock_controller():
 def init_config_flow.opp):
     """Init a configuration flow."""
     flow = config_flow.SolarLogConfigFlow()
-    flow.opp = opp
+    flow.opp =.opp
     return flow
 
 
@@ -104,7 +104,7 @@ async def test_abort_if_already_setup.opp, test_connect):
     flow = init_config_flow.opp)
     MockConfigEntry(
         domain="solarlog", data={CONF_NAME: NAME, CONF_HOST: HOST}
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
     # Should fail, same HOST different NAME (default)
     result = await flow.async_step_import(

@@ -32,7 +32,7 @@ async def test_setup.opp, requests_mock):
     # We're mocking the load_platform discoveries or else the platforms
     # will be setup during tear down when blocking till done, but the mocks
     # are no longer active.
-    with patch("openpeerpowerr.helpers.discovery.load_platform", MagicMock()):
+    with patch("openpeerpower.helpers.discovery.load_platform", MagicMock()):
         assert sleepiq.setup.opp, CONFIG)
 
 

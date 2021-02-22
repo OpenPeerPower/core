@@ -4,12 +4,12 @@ from unittest.mock import call
 
 from openpeerpower.components.rfxtrx import DOMAIN
 from openpeerpower.components.rfxtrx.const import EVENT_RFXTRX_EVENT
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers.device_registry import (
+from openpeerpower.core import callback
+from openpeerpower.helpers.device_registry import (
     DeviceRegistry,
     async_get_registry as async_get_device_registry,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 from tests.components.rfxtrx.conftest import create_rfx_test_cfg
@@ -73,11 +73,11 @@ async def test_fire_event.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
-    await opp..async_start()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
+    await.opp.async_start()
 
     device_registry: DeviceRegistry = await async_get_device_registry.opp)
 
@@ -131,12 +131,12 @@ async def test_send.opp, rfxtrx):
     entry_data = create_rfx_test_cfg(device="/dev/null", devices={})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(mock_entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(mock_entry.entry_id)
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "rfxtrx", "send", {"event": "0a520802060101ff0f0269"}, blocking=True
     )
 

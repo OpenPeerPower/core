@@ -12,7 +12,7 @@ from openpeerpower.components.media_player.const import (
 )
 from openpeerpower.components.plex.const import PLEX_URI_SCHEME
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.exceptions import OpenPeerPowerError
+from openpeerpower.exceptions import OpenPeerPowerError
 
 from .test_media_player import setup_platform
 
@@ -33,7 +33,7 @@ async def test_plex_play_media(
         "openpeerpower.components.sonos.media_player.play_on_sonos"
     ) as mock_play:
         # Test successful Plex service call
-        assert await opp..services.async_call(
+        assert await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_PLAY_MEDIA,
             {
@@ -54,7 +54,7 @@ async def test_plex_play_media(
         mock_play.side_effect = OpenPeerPowerError
 
         with pytest.raises(OpenPeerPowerError):
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 MP_DOMAIN,
                 SERVICE_PLAY_MEDIA,
                 {
