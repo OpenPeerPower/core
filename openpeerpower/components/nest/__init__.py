@@ -109,7 +109,7 @@ class SignalUpdateCallback:
 
     def __init__(self,.opp: OpenPeerPower):
         """Initialize EventCallback."""
-        self..opp =.opp
+        self.opp = opp
 
     async def async_handle_event(self, event_message: EventMessage):
         """Process an incoming EventMessage."""

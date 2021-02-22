@@ -360,7 +360,7 @@ class AmbientStation:
         """Initialize."""
         self._config_entry = config_entry
         self._entry_setup_complete = False
-        self..opp =.opp
+        self.opp = opp
         self._ws_reconnect_delay = DEFAULT_SOCKET_MIN_RETRY
         self.client = client
         self.stations = {}

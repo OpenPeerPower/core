@@ -110,7 +110,7 @@ class ZHAGateway:
 
     def __init__(self,.opp, config, config_entry):
         """Initialize the gateway."""
-        self..opp =.opp
+        self.opp = opp
         self._config = config
         self._devices = {}
         self._groups = {}

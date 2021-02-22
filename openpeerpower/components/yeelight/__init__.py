@@ -295,7 +295,7 @@ class YeelightScanner:
 
     def __init__(self,.opp: OpenPeerPower):
         """Initialize class."""
-        self..opp =.opp
+        self.opp = opp
         self._seen = {}
         self._callbacks = {}
         self._scan_task = None
@@ -362,7 +362,7 @@ class YeelightDevice:
 
     def __init__(self,.opp, host, config, bulb, capabilities):
         """Initialize device."""
-        self..opp =.opp
+        self.opp = opp
         self._config = config
         self._host = host
         self._bulb_device = bulb

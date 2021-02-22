@@ -185,7 +185,7 @@ class GoogleTravelTimeSensor(Entity):
 
     def __init__(self,.opp, name, api_key, origin, destination, options):
         """Initialize the sensor."""
-        self..opp =.opp
+        self.opp = opp
         self._name = name
         self._options = options
         self._unit_of_measurement = TIME_MINUTES

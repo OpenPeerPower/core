@@ -120,7 +120,7 @@ class Life360Scanner:
 
     def __init__(self,.opp, config, see, apis):
         """Initialize Life360Scanner."""
-        self..opp =.opp
+        self.opp = opp
         self._see = see
         self._max_gps_accuracy = config.get(CONF_MAX_GPS_ACCURACY)
         self._max_update_wait = config.get(CONF_MAX_UPDATE_WAIT)

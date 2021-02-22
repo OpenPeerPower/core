@@ -139,7 +139,7 @@ class ControllerManager:
 
     def __init__(self,.opp, controller):
         """Init the controller manager."""
-        self..opp =.opp
+        self.opp = opp
         self._device_registry = None
         self._entity_registry = None
         self.controller = controller

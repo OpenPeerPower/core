@@ -83,7 +83,7 @@ class XmppNotificationService(BaseNotificationService):
 
     def __init__(self, sender, resource, password, recipient, tls, verify, room,.opp):
         """Initialize the service."""
-        self..opp =.opp
+        self.opp = opp
         self._sender = sender
         self._resource = resource
         self._password = password

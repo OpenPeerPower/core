@@ -75,7 +75,7 @@ class PilightBinarySensor(BinarySensorEntity):
     def __init__(self,.opp, name, variable, payload, on_value, off_value):
         """Initialize the sensor."""
         self._state = False
-        self..opp =.opp
+        self.opp = opp
         self._name = name
         self._variable = variable
         self._payload = payload
@@ -126,7 +126,7 @@ class PilightTriggerSensor(BinarySensorEntity):
     ):
         """Initialize the sensor."""
         self._state = False
-        self..opp =.opp
+        self.opp = opp
         self._name = name
         self._variable = variable
         self._payload = payload
@@ -134,7 +134,7 @@ class PilightTriggerSensor(BinarySensorEntity):
         self._off_value = off_value
         self._reset_delay_sec = rst_dly_sec
         self._delay_after = None
-        self..opp =.opp
+        self.opp = opp
 
        .opp.bus.listen(pilight.EVENT, self._handle_code)
 

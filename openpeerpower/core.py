@@ -663,7 +663,7 @@ class EventBus:
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize a new event bus."""
         self._listeners: Dict[str, List[Tuple[HassJob, Optional[Callable]]]] = {}
-        self..opp =.opp
+        self.opp = opp
 
     @callback
     def async_listeners(self) -> Dict[str, int]:
@@ -1282,7 +1282,7 @@ class ServiceRegistry:
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize a service registry."""
         self._services: Dict[str, Dict[str, Service]] = {}
-        self..opp =.opp
+        self.opp = opp
 
     @property
     def services(self) -> Dict[str, Dict[str, Service]]:

@@ -49,7 +49,7 @@ class TwinklyLight(LightEntity):
     ):
         """Initialize a TwinklyLight entity."""
         self._id = conf.data[CONF_ENTRY_ID]
-        self..opp =.opp
+        self.opp = opp
         self._conf = conf
 
         # Those are saved in the config entry in order to have meaningful values even

@@ -206,7 +206,7 @@ class BluesoundPlayer(MediaPlayerEntity):
     def __init__(self,.opp, host, port=None, name=None, init_callback=None):
         """Initialize the media player."""
         self.host = host
-        self..opp =.opp
+        self.opp = opp
         self.port = port
         self._polling_session = async_get_clientsession.opp)
         self._polling_task = None  # The actual polling task.

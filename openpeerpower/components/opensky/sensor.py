@@ -98,7 +98,7 @@ class OpenSkySensor(Entity):
         self._radius = util_distance.convert(radius, LENGTH_KILOMETERS, LENGTH_METERS)
         self._altitude = altitude
         self._state = 0
-        self..opp =.opp
+        self.opp = opp
         self._name = name
         self._previously_tracked = None
 

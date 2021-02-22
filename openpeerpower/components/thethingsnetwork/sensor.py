@@ -113,7 +113,7 @@ class TtnDataStorage:
     def __init__(self,.opp, app_id, device_id, access_key, values):
         """Initialize the data object."""
         self.data = None
-        self..opp =.opp
+        self.opp = opp
         self._app_id = app_id
         self._device_id = device_id
         self._values = values

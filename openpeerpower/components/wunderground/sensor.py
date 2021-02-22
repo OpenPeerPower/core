@@ -1237,7 +1237,7 @@ class WUndergroundData:
 
     def __init__(self,.opp, api_key, pws_id, lang, latitude, longitude):
         """Initialize the data object."""
-        self..opp =.opp
+        self.opp = opp
         self._api_key = api_key
         self._pws_id = pws_id
         self._lang = f"lang:{lang}"

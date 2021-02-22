@@ -227,7 +227,7 @@ class AugustData(AugustSubscriberMixin):
     def __init__(self,.opp, august_gateway):
         """Init August data object."""
         super().__init__.opp, MIN_TIME_BETWEEN_DETAIL_UPDATES)
-        self..opp =.opp
+        self.opp = opp
         self._august_gateway = august_gateway
         self.activity_stream = None
         self._api = august_gateway.api

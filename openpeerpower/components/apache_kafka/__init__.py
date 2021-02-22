@@ -97,7 +97,7 @@ class KafkaManager:
         """Initialize."""
         self._encoder = DateTimeJSONEncoder()
         self._entities_filter = entities_filter
-        self..opp =.opp
+        self.opp = opp
         ssl_context = ssl_util.client_context()
         self._producer = AIOKafkaProducer(
             loop.opp.loop,

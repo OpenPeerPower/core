@@ -60,7 +60,7 @@ class SpeedtestData:
     def __init__(self,.opp):
         """Initialize the data object."""
         self.data = None
-        self..opp =.opp
+        self.opp = opp
 
     def update(self, now=None):
         """Get the latest data from fast.com."""

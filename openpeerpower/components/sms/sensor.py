@@ -37,7 +37,7 @@ class GSMSignalSensor(Entity):
         name,
     ):
         """Initialize the GSM Signal sensor."""
-        self..opp =.opp
+        self.opp = opp
         self._gateway = gateway
         self._name = name
         self._state = None

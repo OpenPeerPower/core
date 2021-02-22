@@ -78,7 +78,7 @@ class TableHolder:
 
     def __init__(self,.opp, session, host, name):
         """Initialize the table holder."""
-        self..opp =.opp
+        self.opp = opp
         self._session = session
         self._host = host
         self._name = name

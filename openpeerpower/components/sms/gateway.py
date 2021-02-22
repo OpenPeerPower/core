@@ -19,7 +19,7 @@ class Gateway:
     def __init__(self, worker,.opp):
         """Initialize the sms gateway."""
         self._worker = worker
-        self..opp =.opp
+        self.opp = opp
 
     async def init_async(self):
         """Initialize the sms gateway asynchronously."""

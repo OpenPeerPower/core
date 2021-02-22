@@ -765,7 +765,7 @@ class EntityAttributeCache:
 
     def __init__(self,.opp):
         """Init the cache."""
-        self..opp =.opp
+        self.opp = opp
         self._cache = {}
 
     def get(self, entity_id, attribute, event):

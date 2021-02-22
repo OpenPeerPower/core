@@ -18,7 +18,7 @@ class WiLightParent:
     def __init__(self,.opp, config_entry):
         """Initialize the system."""
         self._host = config_entry.data[CONF_HOST]
-        self..opp =.opp
+        self.opp = opp
         self._api = None
 
     @property

@@ -83,7 +83,7 @@ class EcobeeData:
 
     def __init__(self,.opp, entry, api_key, refresh_token):
         """Initialize the Ecobee data object."""
-        self..opp =.opp
+        self.opp = opp
         self._entry = entry
         self.ecobee = Ecobee(
             config={ECOBEE_API_KEY: api_key, ECOBEE_REFRESH_TOKEN: refresh_token}

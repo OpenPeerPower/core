@@ -141,7 +141,7 @@ class Remote:
         encryption_key=None,
     ):
         """Initialize the Remote class."""
-        self..opp =.opp
+        self.opp = opp
 
         self._host = host
         self._port = port

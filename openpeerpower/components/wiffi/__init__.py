@@ -102,7 +102,7 @@ class WiffiIntegrationApi:
 
     def __init__(self,.opp):
         """Initialize the instance."""
-        self..opp =.opp
+        self.opp = opp
         self._server = None
         self._known_devices = {}
         self._periodic_callback = None

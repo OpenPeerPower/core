@@ -11,7 +11,7 @@ class ConnectDenonAVR:
 
     def __init__(self,.opp, host, timeout, show_all_inputs, zone2, zone3):
         """Initialize the class."""
-        self..opp =.opp
+        self.opp = opp
         self._receiver = None
         self._host = host
         self._show_all_inputs = show_all_inputs

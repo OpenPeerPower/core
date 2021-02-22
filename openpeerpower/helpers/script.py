@@ -210,7 +210,7 @@ class _ScriptRun:
         context: Optional[Context],
         log_exceptions: bool,
     ) -> None:
-        self..opp =.opp
+        self.opp = opp
         self._script = script
         self._variables = variables
         self._context = context
@@ -818,7 +818,7 @@ class Script:
                 {"instance": self, "started_before_shutdown": not.opp.is_stopping}
             )
 
-        self..opp =.opp
+        self.opp = opp
         self.sequence = sequence
         template.attach.opp, self.sequence)
         self.name = name

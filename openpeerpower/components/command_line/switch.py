@@ -89,7 +89,7 @@ class CommandSwitch(SwitchEntity):
         timeout,
     ):
         """Initialize the switch."""
-        self..opp =.opp
+        self.opp = opp
         self.entity_id = ENTITY_ID_FORMAT.format(object_id)
         self._name = friendly_name
         self._state = False

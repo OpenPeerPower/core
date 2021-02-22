@@ -86,7 +86,7 @@ class IgnSismologiaFeedEntityManager:
     ):
         """Initialize the Feed Entity Manager."""
 
-        self..opp =.opp
+        self.opp = opp
         self._feed_manager = IgnSismologiaFeedManager(
             self._generate_entity,
             self._update_entity,

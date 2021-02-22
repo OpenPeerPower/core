@@ -88,7 +88,7 @@ class MinecraftServer:
         self,.opp: OpenPeerPowerType, unique_id: str, config_data: ConfigType
     ) -> None:
         """Initialize server instance."""
-        self..opp =.opp
+        self.opp = opp
 
         # Server data
         self.unique_id = unique_id

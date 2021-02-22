@@ -26,7 +26,7 @@ class LiteJetSwitch(SwitchEntity):
 
     def __init__(self,.opp, lj, i, name):
         """Initialize a LiteJet switch."""
-        self..opp =.opp
+        self.opp = opp
         self._lj = lj
         self._index = i
         self._state = False

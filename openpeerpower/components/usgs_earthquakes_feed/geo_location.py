@@ -127,7 +127,7 @@ class UsgsEarthquakesFeedEntityManager:
     ):
         """Initialize the Feed Entity Manager."""
 
-        self..opp =.opp
+        self.opp = opp
         self._feed_manager = UsgsEarthquakeHazardsProgramFeedManager(
             self._generate_entity,
             self._update_entity,

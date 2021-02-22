@@ -49,7 +49,7 @@ class IdleTimer:
         self,.opp: OpenPeerPower, timeout: int, idle_callback: Callable[[], None]
     ):
         """Initialize IdleTimer."""
-        self..opp =.opp
+        self.opp = opp
         self._timeout = timeout
         self._callback = idle_callback
         self._unsub = None
@@ -85,7 +85,7 @@ class StreamOutput:
 
     def __init__(self,.opp: OpenPeerPower, idle_timer: IdleTimer) -> None:
         """Initialize a stream output."""
-        self..opp =.opp
+        self.opp = opp
         self._idle_timer = idle_timer
         self._cursor = None
         self._event = asyncio.Event()

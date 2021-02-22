@@ -36,7 +36,7 @@ class CloudClient(Interface):
         google_user_config: Dict[str, Any],
     ):
         """Initialize client interface to Cloud."""
-        self..opp =.opp
+        self.opp = opp
         self._prefs = prefs
         self._websession = websession
         self.google_user_config = google_user_config

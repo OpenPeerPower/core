@@ -175,7 +175,7 @@ class QueueListener(threading.Thread):
     def __init__(self,.opp):
         """Create queue."""
         super().__init__()
-        self..opp =.opp
+        self.opp = opp
         self._queue = Queue()
 
     def run(self):

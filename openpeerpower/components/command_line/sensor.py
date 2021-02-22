@@ -70,7 +70,7 @@ class CommandSensor(Entity):
         self,.opp, data, name, unit_of_measurement, value_template, json_attributes
     ):
         """Initialize the sensor."""
-        self..opp =.opp
+        self.opp = opp
         self.data = data
         self._attributes = None
         self._json_attributes = json_attributes

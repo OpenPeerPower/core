@@ -656,7 +656,7 @@ class ModuleWrapper:
 
     def __init__(self,.opp: "OpenPeerPower", module: ModuleType) -> None:
         """Initialize the module wrapper."""
-        self..opp =.opp
+        self.opp = opp
         self._module = module
 
     def __getattr__(self, attr: str) -> Any:
@@ -675,7 +675,7 @@ class Components:
 
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize the Components class."""
-        self..opp =.opp
+        self.opp = opp
 
     def __getattr__(self, comp_name: str) -> ModuleWrapper:
         """Fetch a component."""
@@ -701,7 +701,7 @@ class Helpers:
 
     def __init__(self,.opp: OpenPeerPower) -> None:
         """Initialize the Helpers class."""
-        self..opp =.opp
+        self.opp = opp
 
     def __getattr__(self, helper_name: str) -> ModuleWrapper:
         """Fetch a helper."""

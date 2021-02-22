@@ -33,7 +33,7 @@ class KaiterraApiData:
         devices = config[CONF_DEVICES]
         units = config[CONF_PREFERRED_UNITS]
 
-        self..opp =.opp
+        self.opp = opp
         self._api = KaiterraAPIClient(
             session,
             api_key=api_key,

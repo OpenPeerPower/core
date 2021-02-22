@@ -318,7 +318,7 @@ class SynoApi:
 
     def __init__(self,.opp: OpenPeerPowerType, entry: ConfigEntry):
         """Initialize the API wrapper class."""
-        self..opp =.opp
+        self.opp = opp
         self._entry = entry
 
         # DSM APIs

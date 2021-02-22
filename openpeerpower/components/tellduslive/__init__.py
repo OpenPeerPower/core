@@ -140,7 +140,7 @@ class TelldusLiveClient:
         self._known_devices = set()
         self._device_infos = {}
 
-        self..opp =.opp
+        self.opp = opp
         self._config_entry = config_entry
         self._client = session
         self._interval = interval

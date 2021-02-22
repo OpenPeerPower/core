@@ -108,7 +108,7 @@ class GeonetnzVolcanoFeedEntityManager:
 
     def __init__(self,.opp, config_entry, radius_in_km, unit_system):
         """Initialize the Feed Entity Manager."""
-        self..opp =.opp
+        self.opp = opp
         self._config_entry = config_entry
         coordinates = (
             config_entry.data[CONF_LATITUDE],

@@ -1076,7 +1076,7 @@ class ZWaveDeviceEntityValues:
         self,.opp, schema, primary_value, zwave_config, device_config, registry
     ):
         """Initialize the values object with the passed entity schema."""
-        self..opp =.opp
+        self.opp = opp
         self._zwave_config = zwave_config
         self._device_config = device_config
         self._schema = copy.deepcopy(schema)

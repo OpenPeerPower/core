@@ -12,7 +12,7 @@ class ConnectMotionGateway:
 
     def __init__(self,.opp, multicast):
         """Initialize the entity."""
-        self..opp =.opp
+        self.opp = opp
         self._multicast = multicast
         self._gateway_device = None
 

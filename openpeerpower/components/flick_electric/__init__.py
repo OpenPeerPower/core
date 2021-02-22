@@ -57,7 +57,7 @@ class HassFlickAuth(AbstractFlickAuth):
         """Flick authention based on a Open Peer Power entity config."""
         super().__init__(aiohttp_client.async_get_clientsession.opp))
         self._entry = entry
-        self..opp =.opp
+        self.opp = opp
 
     async def _get_entry_token(self):
         # No token saved, generate one

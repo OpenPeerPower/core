@@ -575,7 +575,7 @@ class AllStates:
 
     def __init__(self,.opp: OpenPeerPowerType) -> None:
         """Initialize all states."""
-        self..opp =.opp
+        self.opp = opp
 
     def __getattr__(self, name):
         """Return the domain state."""
@@ -629,7 +629,7 @@ class DomainStates:
 
     def __init__(self,.opp: OpenPeerPowerType, domain: str) -> None:
         """Initialize the domain states."""
-        self..opp =.opp
+        self.opp = opp
         self._domain = domain
 
     def __getattr__(self, name):
@@ -676,7 +676,7 @@ class TemplateState(State):
         self,.opp: OpenPeerPowerType, state: State, collect: bool = True
     ) -> None:
         """Initialize template state."""
-        self..opp =.opp
+        self.opp = opp
         self._state = state
         self._collect = collect
 

@@ -86,7 +86,7 @@ class CommandCover(CoverEntity):
         timeout,
     ):
         """Initialize the cover."""
-        self..opp =.opp
+        self.opp = opp
         self._name = name
         self._state = None
         self._command_open = command_open

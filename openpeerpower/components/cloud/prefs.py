@@ -46,7 +46,7 @@ class CloudPreferences:
 
     def __init__(self,.opp):
         """Initialize cloud prefs."""
-        self..opp =.opp
+        self.opp = opp
         self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
         self._prefs = None
         self._listeners = []

@@ -127,7 +127,7 @@ class RestNotificationService(BaseNotificationService):
     ):
         """Initialize the service."""
         self._resource = resource
-        self..opp =.opp
+        self.opp = opp
         self._method = method.upper()
         self._headers = headers
         self._params = params

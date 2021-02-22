@@ -27,7 +27,7 @@ class HarmonySubscriberMixin:
     def __init__(self,.opp):
         """Initialize an subscriber."""
         super().__init__()
-        self..opp =.opp
+        self.opp = opp
         self._subscriptions = []
 
     @callback

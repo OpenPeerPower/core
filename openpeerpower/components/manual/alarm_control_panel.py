@@ -187,7 +187,7 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
     ):
         """Init the manual alarm panel."""
         self._state = STATE_ALARM_DISARMED
-        self..opp =.opp
+        self.opp = opp
         self._name = name
         if code_template:
             self._code = code_template

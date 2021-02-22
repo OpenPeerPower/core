@@ -114,7 +114,7 @@ class Iperf3Data:
 
     def __init__(self,.opp, host):
         """Initialize the data object."""
-        self..opp =.opp
+        self.opp = opp
         self._host = host
         self.data = {ATTR_DOWNLOAD: None, ATTR_UPLOAD: None, ATTR_VERSION: None}
 

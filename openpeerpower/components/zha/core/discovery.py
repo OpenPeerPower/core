@@ -176,7 +176,7 @@ class GroupProbe:
 
     def initialize(self,.opp: OpenPeerPowerType) -> None:
         """Initialize the group probe."""
-        self..opp =.opp
+        self.opp = opp
         self._unsubs.append(
             async_dispatcher_connect(
                .opp, zha_const.SIGNAL_GROUP_ENTITY_REMOVED, self._reprobe_group

@@ -180,7 +180,7 @@ class SlackNotificationService(BaseNotificationService):
         """Initialize."""
         self._client = client
         self._default_channel = default_channel
-        self..opp =.opp
+        self.opp = opp
         self._icon = icon
         self._username = username
 

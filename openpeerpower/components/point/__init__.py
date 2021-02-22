@@ -167,7 +167,7 @@ class MinutPointClient:
         """Initialize the Minut data object."""
         self._known_devices = set()
         self._known_homes = set()
-        self..opp =.opp
+        self.opp = opp
         self._config_entry = config_entry
         self._is_available = True
         self._client = session

@@ -182,7 +182,7 @@ class InfluxSensor(Entity):
         else:
             self._value_template = None
         self._state = None
-        self..opp =.opp
+        self.opp = opp
 
         if query[CONF_LANGUAGE] == LANGUAGE_FLUX:
             query_clause = query.get(CONF_QUERY)

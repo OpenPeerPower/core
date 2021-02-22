@@ -162,7 +162,7 @@ class SCSGateScenarioSwitch:
         self._name = name
         self._scs_id = scs_id
         self._logger = logger
-        self..opp =.opp
+        self.opp = opp
 
     @property
     def scs_id(self):

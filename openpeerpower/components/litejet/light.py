@@ -30,7 +30,7 @@ class LiteJetLight(LightEntity):
 
     def __init__(self,.opp, lj, i, name):
         """Initialize a LiteJet light."""
-        self..opp =.opp
+        self.opp = opp
         self._lj = lj
         self._index = i
         self._brightness = 0

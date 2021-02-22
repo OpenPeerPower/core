@@ -350,7 +350,7 @@ class SimpliSafeWebsocket:
 
     def __init__(self,.opp, websocket):
         """Initialize."""
-        self..opp =.opp
+        self.opp = opp
         self._websocket = websocket
 
     @staticmethod
@@ -412,7 +412,7 @@ class SimpliSafe:
         """Initialize."""
         self._api = api
         self._emergency_refresh_token_used = False
-        self..opp =.opp
+        self.opp = opp
         self._system_notifications = {}
         self.config_entry = config_entry
         self.coordinator = None

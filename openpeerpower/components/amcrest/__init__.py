@@ -118,7 +118,7 @@ class AmcrestChecker(Http):
 
     def __init__(self,.opp, name, host, port, user, password):
         """Initialize."""
-        self..opp =.opp
+        self.opp = opp
         self._wrap_name = name
         self._wrap_errors = 0
         self._wrap_lock = threading.Lock()

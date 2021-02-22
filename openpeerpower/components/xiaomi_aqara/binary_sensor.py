@@ -202,7 +202,7 @@ class XiaomiMotionSensor(XiaomiBinarySensor):
 
     def __init__(self, device,.opp, xiaomi_hub, config_entry):
         """Initialize the XiaomiMotionSensor."""
-        self..opp =.opp
+        self.opp = opp
         self._no_motion_since = 0
         self._unsub_set_no_motion = None
         if "proto" not in device or int(device["proto"][0:1]) == 1:
@@ -454,7 +454,7 @@ class XiaomiButton(XiaomiBinarySensor):
 
     def __init__(self, device, name, data_key,.opp, xiaomi_hub, config_entry):
         """Initialize the XiaomiButton."""
-        self..opp =.opp
+        self.opp = opp
         self._last_action = None
         super().__init__(device, name, xiaomi_hub, data_key, None, config_entry)
 
@@ -509,7 +509,7 @@ class XiaomiCube(XiaomiBinarySensor):
 
     def __init__(self, device,.opp, xiaomi_hub, config_entry):
         """Initialize the Xiaomi Cube."""
-        self..opp =.opp
+        self.opp = opp
         self._last_action = None
         self._state = False
         if "proto" not in device or int(device["proto"][0:1]) == 1:

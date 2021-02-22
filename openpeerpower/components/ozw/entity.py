@@ -33,7 +33,7 @@ class ZWaveDeviceEntityValues:
 
     def __init__(self,.opp, options, schema, primary_value):
         """Initialize the values object with the passed entity schema."""
-        self..opp =.opp
+        self.opp = opp
         self._entity_created = False
         self._schema = copy.deepcopy(schema)
         self._values = {}

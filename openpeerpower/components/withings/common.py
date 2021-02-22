@@ -480,7 +480,7 @@ class ConfigEntryWithingsApi(AbstractWithingsApi):
         implementation: AbstractOAuth2Implementation,
     ):
         """Initialize object."""
-        self..opp =.opp
+        self.opp = opp
         self._config_entry = config_entry
         self._implementation = implementation
         self.session = OAuth2Session.opp, config_entry, implementation)
@@ -522,7 +522,7 @@ class WebhookUpdateCoordinator:
 
     def __init__(self,.opp: OpenPeerPower, user_id: int) -> None:
         """Initialize the object."""
-        self..opp =.opp
+        self.opp = opp
         self._user_id = user_id
         self._listeners: List[CALLBACK_TYPE] = []
         self.data: MeasurementData = {}
@@ -564,7 +564,7 @@ class DataManager:
         webhook_config: WebhookConfig,
     ):
         """Initialize the data manager."""
-        self..opp =.opp
+        self.opp = opp
         self._api = api
         self._user_id = user_id
         self._profile = profile

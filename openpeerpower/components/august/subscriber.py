@@ -11,7 +11,7 @@ class AugustSubscriberMixin:
     def __init__(self,.opp, update_interval):
         """Initialize an subscriber."""
         super().__init__()
-        self..opp =.opp
+        self.opp = opp
         self._update_interval = update_interval
         self._subscriptions = {}
         self._unsub_interval = None

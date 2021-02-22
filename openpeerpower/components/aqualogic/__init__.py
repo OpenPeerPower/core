@@ -50,7 +50,7 @@ class AquaLogicProcessor(threading.Thread):
     def __init__(self,.opp, host, port):
         """Initialize the data object."""
         super().__init__(daemon=True)
-        self..opp =.opp
+        self.opp = opp
         self._host = host
         self._port = port
         self._shutdown = False

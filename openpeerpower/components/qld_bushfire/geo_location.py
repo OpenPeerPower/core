@@ -88,7 +88,7 @@ class QldBushfireFeedEntityManager:
         self,.opp, add_entities, scan_interval, coordinates, radius_in_km, categories
     ):
         """Initialize the Feed Entity Manager."""
-        self..opp =.opp
+        self.opp = opp
         self._feed_manager = QldBushfireAlertFeedManager(
             self._generate_entity,
             self._update_entity,

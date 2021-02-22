@@ -62,7 +62,7 @@ class FeedManager:
         self._scan_interval = scan_interval
         self._max_entries = max_entries
         self._feed = None
-        self..opp =.opp
+        self.opp = opp
         self._firstrun = True
         self._storage = storage
         self._last_entry_timestamp = None

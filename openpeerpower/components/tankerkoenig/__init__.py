@@ -109,7 +109,7 @@ class TankerkoenigData:
         self.fuel_types = conf[CONF_FUEL_TYPES]
         self.update_interval = conf[CONF_SCAN_INTERVAL]
         self.show_on_map = conf[CONF_SHOW_ON_MAP]
-        self..opp =.opp
+        self.opp = opp
 
     def setup(self, latitude, longitude, radius, additional_stations):
         """Set up the tankerkoenig API.

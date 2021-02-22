@@ -147,7 +147,7 @@ class PairedSensorManager:
         self._api_lock = api_lock
         self._client = client
         self._entry = entry
-        self..opp =.opp
+        self.opp = opp
         self._listeners = []
         self._paired_uids = set()
 

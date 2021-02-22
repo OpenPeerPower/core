@@ -188,7 +188,7 @@ class WemoDiscovery:
 
     def __init__(self,.opp: OpenPeerPower, wemo_dispatcher: WemoDispatcher) -> None:
         """Initialize the WemoDiscovery."""
-        self..opp =.opp
+        self.opp = opp
         self._wemo_dispatcher = wemo_dispatcher
         self._stop = None
         self._scan_delay = 0

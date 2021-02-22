@@ -276,7 +276,7 @@ class DeviceBroker:
         scenes: Iterable,
     ):
         """Create a new instance of the DeviceBroker."""
-        self..opp =.opp
+        self.opp = opp
         self._entry = entry
         self._installed_app_id = entry.data[CONF_INSTALLED_APP_ID]
         self._smart_app = smart_app
