@@ -132,7 +132,7 @@ async def test_update.opp, legacy_patchable_time):
         await.opp.config_entries.async_setup(entry.entry_id)
         await.opp.async_block_till_done()
 
-        pt_data =.opp.data[islamic_prayer_times.DOMAIN]
+        pt_data = opp.data[islamic_prayer_times.DOMAIN]
         assert pt_data.prayer_times_info == PRAYER_TIMES_TIMESTAMPS
 
         future = pt_data.prayer_times_info["Midnight"] + timedelta(days=1, minutes=1)

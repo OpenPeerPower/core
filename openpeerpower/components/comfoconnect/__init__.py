@@ -92,7 +92,7 @@ class ComfoConnectBridge:
         """Initialize the ComfoConnect bridge."""
         self.data = {}
         self.name = name
-        self.opp =.opp
+        self.opp = opp
         self.unique_id = bridge.uuid.hex()
 
         self.comfoconnect = ComfoConnect(

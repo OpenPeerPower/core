@@ -250,7 +250,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             "node removed", lambda event: async_on_node_removed(event["node"])
         )
 
-    platform_task =.opp.async_create_task(start_platforms())
+    platform_task = opp.async_create_task(start_platforms())
    .opp.data[DOMAIN][entry.entry_id][DATA_START_PLATFORM_TASK] = platform_task
 
     return True
@@ -310,7 +310,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     if not unload_ok:
         return False
 
-    info =.opp.data[DOMAIN].pop(entry.entry_id)
+    info = opp.data[DOMAIN].pop(entry.entry_id)
 
     for unsub in info[DATA_UNSUBSCRIBE]:
         unsub()

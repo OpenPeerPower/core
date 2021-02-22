@@ -102,7 +102,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     try:
         # See if the app is already setup. This occurs when there are
         # installs in multiple SmartThings locations (valid use-case)
-        manager =.opp.data[DOMAIN][DATA_MANAGER]
+        manager = opp.data[DOMAIN][DATA_MANAGER]
         smart_app = manager.smartapps.get(entry.data[CONF_APP_ID])
         if not smart_app:
             # Validate and setup the app.
@@ -208,7 +208,7 @@ async def async_get_entry_scenes(entry: ConfigEntry, api):
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
-    broker =.opp.data[DOMAIN][DATA_BROKERS].pop(entry.entry_id, None)
+    broker = opp.data[DOMAIN][DATA_BROKERS].pop(entry.entry_id, None)
     if broker:
         broker.disconnect()
 

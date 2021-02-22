@@ -53,7 +53,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     async def async_discover_sensor(device_id):
         """Discover and add a discovered sensor."""
-        client =.opp.data[POINT_DOMAIN][config_entry.entry_id]
+        client = opp.data[POINT_DOMAIN][config_entry.entry_id]
         async_add_entities(
             (
                 MinutPointBinarySensor(client, device_id, device_class)

@@ -52,7 +52,7 @@ async def async_get_conditions(
         if entry.domain != DOMAIN:
             continue
 
-        state =.opp.states.get(entry.entity_id)
+        state = opp.states.get(entry.entity_id)
 
         conditions.append(
             {
@@ -96,7 +96,7 @@ def async_condition_from_config(
 
     def test_is_state.opp: OpenPeerPower, variables: TemplateVarsType) -> bool:
         """Test if an entity is a certain state."""
-        state =.opp.states.get(config[ATTR_ENTITY_ID])
+        state = opp.states.get(config[ATTR_ENTITY_ID])
         return state and state.attributes.get(attribute) == config[attribute]
 
     return test_is_state
@@ -104,7 +104,7 @@ def async_condition_from_config(
 
 async def async_get_condition_capabilities.opp, config):
     """List condition capabilities."""
-    state =.opp.states.get(config[CONF_ENTITY_ID])
+    state = opp.states.get(config[CONF_ENTITY_ID])
     condition_type = config[CONF_TYPE]
 
     fields = {}

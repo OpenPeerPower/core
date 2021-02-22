@@ -151,7 +151,7 @@ async def async_setup_entry(
     )
    .opp.data[DOMAIN][GATEWAYS_KEY][entry.entry_id] = xiaomi_gateway
 
-    gateway_discovery =.opp.data[DOMAIN].setdefault(
+    gateway_discovery = opp.data[DOMAIN].setdefault(
         LISTENER_KEY,
         XiaomiGatewayDiscovery.opp.add_job, [], entry.data[CONF_INTERFACE]),
     )
@@ -220,7 +220,7 @@ async def async_unload_entry(
         # No gateways left, stop Xiaomi socket
        .opp.data[DOMAIN].pop(GATEWAYS_KEY)
         _LOGGER.debug("Shutting down Xiaomi Gateway Listener")
-        gateway_discovery =.opp.data[DOMAIN].pop(LISTENER_KEY)
+        gateway_discovery = opp.data[DOMAIN].pop(LISTENER_KEY)
         await.opp.async_add_executor_job(gateway_discovery.stop_listen)
 
     return unload_ok
@@ -390,7 +390,7 @@ def _add_gateway_to_schema.opp, schema):
         raise vol.Invalid(f"Unknown gateway sid {sid}")
 
     kwargs = {}
-    xiaomi_data =.opp.data.get(DOMAIN)
+    xiaomi_data = opp.data.get(DOMAIN)
     if xiaomi_data is not None:
         gateways = list(xiaomi_data[GATEWAYS_KEY].values())
 

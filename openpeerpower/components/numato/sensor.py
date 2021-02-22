@@ -26,9 +26,9 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    api =.opp.data[DOMAIN][DATA_API]
+    api = opp.data[DOMAIN][DATA_API]
     sensors = []
-    devices =.opp.data[DOMAIN][CONF_DEVICES]
+    devices = opp.data[DOMAIN][CONF_DEVICES]
     for device in [d for d in devices if CONF_SENSORS in d]:
         device_id = device[CONF_ID]
         ports = device[CONF_SENSORS][CONF_PORTS]

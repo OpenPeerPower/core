@@ -102,7 +102,7 @@ async def setup_and_run.opp(runtime_config: RuntimeConfig) -> int:
     if opp is None:
         return 1
 
-    return await.opp.async_run()
+    return await opp.async_run()
 
 
 def run(runtime_config: RuntimeConfig) -> int:

@@ -111,7 +111,7 @@ async def test_get_devices(eebrightbox_mock, opp):
     assert.opp.states.get("device_tracker.hostname11") is not None
     assert.opp.states.get("device_tracker.hostnameff") is None
 
-    state =.opp.states.get("device_tracker.hostnameaa")
+    state = opp.states.get("device_tracker.hostnameaa")
     assert state.attributes["mac"] == "AA:BB:CC:DD:EE:FF"
     assert state.attributes["ip"] == "192.168.1.10"
     assert state.attributes["port"] == "eth0"

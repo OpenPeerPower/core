@@ -103,7 +103,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Create a gateway."""
     # host, identity, key, allow_tradfri_groups
-    tradfri_data =.opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {}
+    tradfri_data = opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {}
     listeners = tradfri_data[LISTENERS] = []
 
     factory = await APIFactory.init(
@@ -180,7 +180,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         )
     )
     if unload_ok:
-        tradfri_data =.opp.data[DOMAIN].pop(entry.entry_id)
+        tradfri_data = opp.data[DOMAIN].pop(entry.entry_id)
         factory = tradfri_data[FACTORY]
         await factory.shutdown()
         # unsubscribe listeners

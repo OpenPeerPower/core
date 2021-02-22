@@ -180,7 +180,7 @@ async def test_login_view_unknown_error(cloud_client):
 
 async def test_logout_view.opp, cloud_client):
     """Test logging out."""
-    cloud =.opp.data["cloud"] = MagicMock()
+    cloud = opp.data["cloud"] = MagicMock()
     cloud.logout = AsyncMock(return_value=None)
     req = await cloud_client.post("/api/cloud/logout")
     assert req.status == 200
@@ -191,7 +191,7 @@ async def test_logout_view.opp, cloud_client):
 
 async def test_logout_view_request_timeout.opp, cloud_client):
     """Test timeout while logging out."""
-    cloud =.opp.data["cloud"] = MagicMock()
+    cloud = opp.data["cloud"] = MagicMock()
     cloud.logout.side_effect = asyncio.TimeoutError
     req = await cloud_client.post("/api/cloud/logout")
     assert req.status == 502
@@ -199,7 +199,7 @@ async def test_logout_view_request_timeout.opp, cloud_client):
 
 async def test_logout_view_unknown_error(opp, cloud_client):
     """Test unknown error while logging out."""
-    cloud =.opp.data["cloud"] = MagicMock()
+    cloud = opp.data["cloud"] = MagicMock()
     cloud.logout.side_effect = UnknownError
     req = await cloud_client.post("/api/cloud/logout")
     assert req.status == 502
@@ -579,7 +579,7 @@ async def test_disabling_webhook.opp, opp_ws_client, setup_api, mock_cloud_login
 async def test_enabling_remote.opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to enable remote UI."""
     client = await.opp_ws_client.opp)
-    cloud =.opp.data[DOMAIN]
+    cloud = opp.data[DOMAIN]
 
     with patch(.opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
@@ -593,7 +593,7 @@ async def test_enabling_remote.opp, opp_ws_client, setup_api, mock_cloud_login):
 async def test_disabling_remote.opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to disable remote UI."""
     client = await.opp_ws_client.opp)
-    cloud =.opp.data[DOMAIN]
+    cloud = opp.data[DOMAIN]
 
     with patch(.opp_nabucasa.remote.RemoteUI.disconnect") as mock_disconnect:
         await client.send_json({"id": 5, "type": "cloud/remote/disconnect"})
@@ -686,7 +686,7 @@ async def test_enabling_remote_trusted_networks_other(
     )
 
     client = await.opp_ws_client.opp)
-    cloud =.opp.data[DOMAIN]
+    cloud = opp.data[DOMAIN]
 
     with patch(.opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
@@ -747,7 +747,7 @@ async def test_update_google_entity.opp, opp_ws_client, setup_api, mock_cloud_lo
     response = await client.receive_json()
 
     assert response["success"]
-    prefs =.opp.data[DOMAIN].client.prefs
+    prefs = opp.data[DOMAIN].client.prefs
     assert prefs.google_entity_configs["light.kitchen"] == {
         "should_expose": False,
         "override_name": "updated name",
@@ -766,7 +766,7 @@ async def test_update_google_entity.opp, opp_ws_client, setup_api, mock_cloud_lo
     response = await client.receive_json()
 
     assert response["success"]
-    prefs =.opp.data[DOMAIN].client.prefs
+    prefs = opp.data[DOMAIN].client.prefs
     assert prefs.google_entity_configs["light.kitchen"] == {
         "should_expose": None,
         "override_name": "updated name",
@@ -859,7 +859,7 @@ async def test_update_alexa_entity.opp, opp_ws_client, setup_api, mock_cloud_log
     response = await client.receive_json()
 
     assert response["success"]
-    prefs =.opp.data[DOMAIN].client.prefs
+    prefs = opp.data[DOMAIN].client.prefs
     assert prefs.alexa_entity_configs["light.kitchen"] == {"should_expose": False}
 
     await client.send_json(
@@ -873,7 +873,7 @@ async def test_update_alexa_entity.opp, opp_ws_client, setup_api, mock_cloud_log
     response = await client.receive_json()
 
     assert response["success"]
-    prefs =.opp.data[DOMAIN].client.prefs
+    prefs = opp.data[DOMAIN].client.prefs
     assert prefs.alexa_entity_configs["light.kitchen"] == {"should_expose": None}
 
 

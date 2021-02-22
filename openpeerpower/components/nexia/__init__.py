@@ -65,7 +65,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     async def _async_update_data():
         """Fetch data from API endpoint."""
-        return await.opp.async_add_executor_job(nexia_home.update)
+        return await opp.async_add_executor_job(nexia_home.update)
 
     coordinator = DataUpdateCoordinator(
        .opp,

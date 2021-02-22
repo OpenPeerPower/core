@@ -30,7 +30,7 @@ async def test_file_value.opp, entity_reg):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.file1")
+    state = opp.states.get("sensor.file1")
     assert state.state == "21"
 
 
@@ -56,7 +56,7 @@ async def test_file_value_template.opp, entity_reg):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.file2")
+    state = opp.states.get("sensor.file2")
     assert state.state == "26"
 
 
@@ -73,5 +73,5 @@ async def test_file_empty.opp, entity_reg):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.file3")
+    state = opp.states.get("sensor.file3")
     assert state.state == STATE_UNKNOWN

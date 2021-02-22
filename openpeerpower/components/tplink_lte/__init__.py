@@ -111,7 +111,7 @@ async def _setup_lte.opp, lte_config, delay=0):
     host = lte_config[CONF_HOST]
     password = lte_config[CONF_PASSWORD]
 
-    websession =.opp.data[DATA_KEY].websession
+    websession = opp.data[DATA_KEY].websession
     modem = tp_connected.Modem(hostname=host, websession=websession)
 
     modem_data = ModemData(host, modem)
@@ -119,7 +119,7 @@ async def _setup_lte.opp, lte_config, delay=0):
     try:
         await _login.opp, modem_data, password)
     except tp_connected.Error:
-        retry_task =.opp.loop.create_task(_retry_login.opp, modem_data, password))
+        retry_task = opp.loop.create_task(_retry_login.opp, modem_data, password))
 
         @callback
         def cleanup_retry(event):

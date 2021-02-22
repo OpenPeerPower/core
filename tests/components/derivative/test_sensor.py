@@ -32,7 +32,7 @@ async def test_state.opp):
        .opp.states.async_set(entity_id, 1, {}, force_update=True)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.derivative")
+    state = opp.states.get("sensor.derivative")
     assert state is not None
 
     # Testing a energy sensor at 1 kWh for 1hour = 0kW
@@ -71,7 +71,7 @@ async def setup_tests.opp, config, times, values, expected_state):
            .opp.states.async_set(entity_id, value, {}, force_update=True)
             await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.power")
+    state = opp.states.get("sensor.power")
     assert state is not None
 
     assert round(float(state.state), config["sensor"]["round"]) == expected_state
@@ -173,7 +173,7 @@ async def test_data_moving_average_for_discrete_sensor.opp):
             await.opp.async_block_till_done()
 
         if time_window < time < times[-1] - time_window:
-            state =.opp.states.get("sensor.power")
+            state = opp.states.get("sensor.power")
             derivative = round(float(state.state), config["sensor"]["round"])
             # Test that the error is never more than
             # (time_window_in_minutes / true_derivative * 100) = 10% + ε
@@ -209,7 +209,7 @@ async def test_prefix.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.derivative")
+    state = opp.states.get("sensor.derivative")
     assert state is not None
 
     # Testing a power sensor at 1000 Watts for 1hour = 0kW/h
@@ -243,7 +243,7 @@ async def test_suffix.opp):
        .opp.states.async_set(entity_id, 1000, {}, force_update=True)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.derivative")
+    state = opp.states.get("sensor.derivative")
     assert state is not None
 
     # Testing a network speed sensor at 1000 bytes/s over 10s  = 10kbytes/s2

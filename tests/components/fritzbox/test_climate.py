@@ -59,7 +59,7 @@ async def test_setup_opp: OpenPeerPowerType, fritz: Mock):
     fritz().get_devices.return_value = [device]
 
     await setup_fritzbox.opp, MOCK_CONFIG)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
 
     assert state
     assert state.attributes[ATTR_BATTERY_LEVEL] == 23
@@ -87,7 +87,7 @@ async def test_target_temperature_on.opp: OpenPeerPowerType, fritz: Mock):
     device.target_temperature = 127.0
 
     await setup_fritzbox.opp, MOCK_CONFIG)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state
     assert state.attributes[ATTR_TEMPERATURE] == 30
 
@@ -99,7 +99,7 @@ async def test_target_temperature_off.opp: OpenPeerPowerType, fritz: Mock):
     device.target_temperature = 126.5
 
     await setup_fritzbox.opp, MOCK_CONFIG)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state
     assert state.attributes[ATTR_TEMPERATURE] == 0
 
@@ -110,7 +110,7 @@ async def test_update.opp: OpenPeerPowerType, fritz: Mock):
     fritz().get_devices.return_value = [device]
 
     await setup_fritzbox.opp, MOCK_CONFIG)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
 
     assert state
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] == 18
@@ -124,7 +124,7 @@ async def test_update.opp: OpenPeerPowerType, fritz: Mock):
     next_update = dt_util.utcnow() + timedelta(seconds=200)
     async_fire_time_changed.opp, next_update)
     await.opp.async_block_till_done()
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
 
     assert device.update.call_count == 1
     assert state
@@ -278,7 +278,7 @@ async def test_preset_mode_update.opp: OpenPeerPowerType, fritz: Mock):
     fritz().get_devices.return_value = [device]
 
     await setup_fritzbox.opp, MOCK_CONFIG)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
 
     assert state
     assert state.attributes[ATTR_PRESET_MODE] is None
@@ -288,7 +288,7 @@ async def test_preset_mode_update.opp: OpenPeerPowerType, fritz: Mock):
     next_update = dt_util.utcnow() + timedelta(seconds=200)
     async_fire_time_changed.opp, next_update)
     await.opp.async_block_till_done()
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
 
     assert device.update.call_count == 1
     assert state
@@ -299,7 +299,7 @@ async def test_preset_mode_update.opp: OpenPeerPowerType, fritz: Mock):
     next_update = dt_util.utcnow() + timedelta(seconds=200)
     async_fire_time_changed.opp, next_update)
     await.opp.async_block_till_done()
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
 
     assert device.update.call_count == 2
     assert state

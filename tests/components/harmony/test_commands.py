@@ -38,7 +38,7 @@ async def test_async_send_command(mock_hc, opp, mock_write_config):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    data =.opp.data[DOMAIN][entry.entry_id]
+    data = opp.data[DOMAIN][entry.entry_id]
     send_commands_mock = data._client.send_commands
 
     # No device provided
@@ -176,7 +176,7 @@ async def test_async_send_command_custom_delay(mock_hc, opp, mock_write_config):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    data =.opp.data[DOMAIN][entry.entry_id]
+    data = opp.data[DOMAIN][entry.entry_id]
     send_commands_mock = data._client.send_commands
 
     # Tell the TV to play by id
@@ -212,7 +212,7 @@ async def test_change_channel(mock_hc, opp, mock_write_config):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    data =.opp.data[DOMAIN][entry.entry_id]
+    data = opp.data[DOMAIN][entry.entry_id]
     change_channel_mock = data._client.change_channel
 
     # Tell the remote to change channels
@@ -237,7 +237,7 @@ async def test_sync(mock_hc, mock_write_config, opp):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    data =.opp.data[DOMAIN][entry.entry_id]
+    data = opp.data[DOMAIN][entry.entry_id]
     sync_mock = data._client.sync
 
     # Tell the remote to change channels

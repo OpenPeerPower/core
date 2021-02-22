@@ -104,7 +104,7 @@ def automations_with_entity.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component =.opp.data[DOMAIN]
+    component = opp.data[DOMAIN]
 
     return [
         automation_entity.entity_id
@@ -119,7 +119,7 @@ def entities_in_automation.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component =.opp.data[DOMAIN]
+    component = opp.data[DOMAIN]
 
     automation_entity = component.get_entity(entity_id)
 
@@ -135,7 +135,7 @@ def automations_with_device.opp: OpenPeerPower, device_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component =.opp.data[DOMAIN]
+    component = opp.data[DOMAIN]
 
     return [
         automation_entity.entity_id
@@ -150,7 +150,7 @@ def devices_in_automation.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component =.opp.data[DOMAIN]
+    component = opp.data[DOMAIN]
 
     automation_entity = component.get_entity(entity_id)
 

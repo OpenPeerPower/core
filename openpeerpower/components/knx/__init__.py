@@ -265,7 +265,7 @@ class KNXModule:
 
     def __init__(self, opp, config):
         """Initialize of KNX module."""
-        self.opp =.opp
+        self.opp = opp
         self.config = config
         self.connected = False
         self.exposures = []
@@ -477,7 +477,7 @@ class KNXExposeSensor:
 
     def __init__(self, opp, xknx, expose_type, entity_id, attribute, default, address):
         """Initialize of Expose class."""
-        self.opp =.opp
+        self.opp = opp
         self.xknx = xknx
         self.type = expose_type
         self.entity_id = entity_id

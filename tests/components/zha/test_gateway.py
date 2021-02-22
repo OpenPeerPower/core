@@ -224,7 +224,7 @@ async def test_cleaning_up_storage.opp, zigpy_dev_basic, zha_dev_basic, opp_stor
     await.opp.async_block_till_done()
 
     assert.opp_storage["zha.storage"]["data"]["devices"]
-    device =.opp_storage["zha.storage"]["data"]["devices"][0]
+    device = opp_storage["zha.storage"]["data"]["devices"][0]
     assert device["ieee"] == str(zha_dev_basic.ieee)
 
     zha_dev_basic.device.last_seen = time.time() - TOMBSTONE_LIFETIME - 1

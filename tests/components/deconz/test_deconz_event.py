@@ -124,7 +124,7 @@ async def test_deconz_events.opp, aioclient_mock):
 
     await.opp.config_entries.async_unload(config_entry.entry_id)
 
-    states =.opp.states.async_all()
+    states = opp.states.async_all()
     assert len.opp.states.async_all()) == 3
     for state in states:
         assert state.state == STATE_UNAVAILABLE

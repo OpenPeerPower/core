@@ -43,7 +43,7 @@ class DeconzGateway:
 
     def __init__(self, opp, config_entry) -> None:
         """Initialize the system."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
 
         self.api = None

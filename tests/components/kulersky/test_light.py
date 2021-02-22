@@ -73,7 +73,7 @@ async def mock_light.opp, mock_entry):
 
 async def test_init.opp, mock_light):
     """Test platform setup."""
-    state =.opp.states.get("light.bedroom")
+    state = opp.states.get("light.bedroom")
     assert state.state == STATE_OFF
     assert state.attributes == {
         ATTR_FRIENDLY_NAME: "Bedroom",
@@ -169,7 +169,7 @@ async def test_discovery_connection_error(opp, mock_entry):
             await.opp.async_block_till_done()
 
     # Assert entity was not added
-    state =.opp.states.get("light.bedroom")
+    state = opp.states.get("light.bedroom")
     assert state is None
 
 
@@ -189,7 +189,7 @@ async def test_update_exception.opp, mock_light):
         mock_light, "get_color", side_effect=pykulersky.PykulerskyException
     ):
         await.opp.helpers.entity_component.async_update_entity("light.bedroom")
-    state =.opp.states.get("light.bedroom")
+    state = opp.states.get("light.bedroom")
     assert state is not None
     assert state.state == STATE_UNAVAILABLE
 
@@ -265,7 +265,7 @@ async def test_light_update.opp, mock_light):
     """Test KulerSkyLight update."""
     utcnow = dt_util.utcnow()
 
-    state =.opp.states.get("light.bedroom")
+    state = opp.states.get("light.bedroom")
     assert state.state == STATE_OFF
     assert state.attributes == {
         ATTR_FRIENDLY_NAME: "Bedroom",
@@ -282,7 +282,7 @@ async def test_light_update.opp, mock_light):
         async_fire_time_changed.opp, utcnow)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.bedroom")
+    state = opp.states.get("light.bedroom")
     assert state.state == STATE_UNAVAILABLE
     assert state.attributes == {
         ATTR_FRIENDLY_NAME: "Bedroom",
@@ -300,7 +300,7 @@ async def test_light_update.opp, mock_light):
         async_fire_time_changed.opp, utcnow)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.bedroom")
+    state = opp.states.get("light.bedroom")
     assert state.state == STATE_ON
     assert state.attributes == {
         ATTR_FRIENDLY_NAME: "Bedroom",

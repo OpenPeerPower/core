@@ -36,7 +36,7 @@ def setup_opp, config):
     Will automatically load climate platform.
     """
     name = config[DOMAIN][CONF_NAME]
-    modbus_client =.opp.data[MODBUS_DOMAIN][config[DOMAIN][CONF_HUB]]
+    modbus_client = opp.data[MODBUS_DOMAIN][config[DOMAIN][CONF_HUB]]
 
    .opp.data[DOMAIN] = {
         "name": name,

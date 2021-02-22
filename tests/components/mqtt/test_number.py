@@ -66,14 +66,14 @@ async def test_run_number_setup_opp, mqtt_mock):
 
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("number.test_number")
+    state = opp.states.get("number.test_number")
     assert state.state == "10"
 
     async_fire_mqtt_message.opp, topic, "20.5")
 
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("number.test_number")
+    state = opp.states.get("number.test_number")
     assert state.state == "20.5"
 
 
@@ -100,7 +100,7 @@ async def test_run_number_service_optimistic.opp, mqtt_mock):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("number.test_number")
+    state = opp.states.get("number.test_number")
     assert state.state == "3"
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -114,7 +114,7 @@ async def test_run_number_service_optimistic.opp, mqtt_mock):
 
     mqtt_mock.async_publish.assert_called_once_with(topic, "30", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("number.test_number")
+    state = opp.states.get("number.test_number")
     assert state.state == "30"
 
     # Float with no decimal -> integer
@@ -127,7 +127,7 @@ async def test_run_number_service_optimistic.opp, mqtt_mock):
 
     mqtt_mock.async_publish.assert_called_once_with(topic, "42", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("number.test_number")
+    state = opp.states.get("number.test_number")
     assert state.state == "42"
 
     # Float with decimal -> float
@@ -140,7 +140,7 @@ async def test_run_number_service_optimistic.opp, mqtt_mock):
 
     mqtt_mock.async_publish.assert_called_once_with(topic, "42.1", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("number.test_number")
+    state = opp.states.get("number.test_number")
     assert state.state == "42.1"
 
 
@@ -164,7 +164,7 @@ async def test_run_number_service.opp, mqtt_mock):
     await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, state_topic, "32")
-    state =.opp.states.get("number.test_number")
+    state = opp.states.get("number.test_number")
     assert state.state == "32"
 
     await.opp.services.async_call(
@@ -174,7 +174,7 @@ async def test_run_number_service.opp, mqtt_mock):
         blocking=True,
     )
     mqtt_mock.async_publish.assert_called_once_with(cmd_topic, "30", 0, False)
-    state =.opp.states.get("number.test_number")
+    state = opp.states.get("number.test_number")
     assert state.state == "32"
 
 

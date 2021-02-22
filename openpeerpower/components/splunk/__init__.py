@@ -62,7 +62,7 @@ async def async_setup_opp, config):
     name = conf.get(CONF_NAME)
     entity_filter = conf[CONF_FILTER]
 
-    event_collector =.opp_splunk(
+    event_collector = opp_splunk(
         session=async_get_clientsession.opp),
         host=host,
         port=port,

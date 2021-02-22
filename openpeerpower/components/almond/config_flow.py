@@ -118,7 +118,7 @@ class AlmondFlowHandler(config_entry_oauth2_flow.AbstractOAuth2FlowHandler):
             )
 
         return self.async_show_form(
-            step_id=.oppio_confirm",
+            step_id= oppio_confirm",
             description_placeholders={"addon": data["addon"]},
             data_schema=vol.Schema({}),
         )

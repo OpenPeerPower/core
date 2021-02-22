@@ -47,7 +47,7 @@ SOURCE = "gdacs"
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the GDACS Feed platform."""
-    manager =.opp.data[DOMAIN][FEED][entry.entry_id]
+    manager = opp.data[DOMAIN][FEED][entry.entry_id]
 
     @callback
     def async_add_geolocation(feed_manager, integration_id, external_id):

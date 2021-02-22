@@ -17,7 +17,7 @@ async def test_config_flow.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
     await.opp.async_block_till_done()
-    state =.opp.states.get(f"sensor.{DOMAIN}")
+    state = opp.states.get(f"sensor.{DOMAIN}")
     assert state
 
 

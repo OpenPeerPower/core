@@ -127,7 +127,7 @@ async def _init_flow(
     """Initialize a flow."""
     data = data or {}
 
-    return await.opp.config_entries.flow.async_init(
+    return await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": source}, data=data
     )
 

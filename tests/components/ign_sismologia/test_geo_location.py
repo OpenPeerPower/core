@@ -109,10 +109,10 @@ async def test_setup_opp):
             # Collect events.
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 3
 
-            state =.opp.states.get("geo_location.m_5_7_region_1")
+            state = opp.states.get("geo_location.m_5_7_region_1")
             assert state is not None
             assert state.name == "M 5.7 - Region 1"
             assert state.attributes == {
@@ -134,7 +134,7 @@ async def test_setup_opp):
             }
             assert float(state.state) == 15.5
 
-            state =.opp.states.get("geo_location.m_4_6")
+            state = opp.states.get("geo_location.m_4_6")
             assert state is not None
             assert state.name == "M 4.6"
             assert state.attributes == {
@@ -150,7 +150,7 @@ async def test_setup_opp):
             }
             assert float(state.state) == 20.5
 
-            state =.opp.states.get("geo_location.region_3")
+            state = opp.states.get("geo_location.region_3")
             assert state is not None
             assert state.name == "Region 3"
             assert state.attributes == {
@@ -175,7 +175,7 @@ async def test_setup_opp):
             async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 3
 
             # Simulate an update - empty data, but successful update,
@@ -184,7 +184,7 @@ async def test_setup_opp):
             async_fire_time_changed.opp, utcnow + 2 * SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 3
 
             # Simulate an update - empty data, removes all entities
@@ -192,7 +192,7 @@ async def test_setup_opp):
             async_fire_time_changed.opp, utcnow + 3 * SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 0
 
 
@@ -215,7 +215,7 @@ async def test_setup_with_custom_location.opp):
             # Collect events.
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 1
 
             assert mock_feed.call_args == call(

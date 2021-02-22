@@ -76,7 +76,7 @@ async def handle_webhook.opp, webhook_id, request):
         _LOGGER.error("Could not get information from POST <%s>", error)
         return
 
-    camera =.opp.data[PUSH_CAMERA_DATA][webhook_id]
+    camera = opp.data[PUSH_CAMERA_DATA][webhook_id]
 
     if camera.image_field not in data:
         _LOGGER.warning("Webhook call without POST parameter <%s>", camera.image_field)
@@ -103,7 +103,7 @@ class PushCamera(Camera):
         self._current_image = None
         self._image_field = image_field
         self.webhook_id = webhook_id
-        self.webhook_url =.opp.components.webhook.async_generate_url(webhook_id)
+        self.webhook_url = opp.components.webhook.async_generate_url(webhook_id)
 
     async def async_added_to.opp(self):
         """Call when entity is added to.opp."""

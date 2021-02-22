@@ -177,7 +177,7 @@ async def async_setup_opp, config):
         p_id = face.store[g_id].get(service.data[ATTR_PERSON])
 
         camera_entity = service.data[ATTR_CAMERA_ENTITY]
-        camera =.opp.components.camera
+        camera = opp.components.camera
 
         try:
             image = await camera.async_get_image.opp, camera_entity)
@@ -205,7 +205,7 @@ class MicrosoftFaceGroupEntity(Entity):
 
     def __init__(self, opp, api, g_id, name):
         """Initialize person/group entity."""
-        self.opp =.opp
+        self.opp = opp
         self._api = api
         self._id = g_id
         self._name = name
@@ -245,7 +245,7 @@ class MicrosoftFace:
 
     def __init__(self, opp, server_loc, api_key, timeout, entities):
         """Initialize Microsoft Face api."""
-        self.opp =.opp
+        self.opp = opp
         self.websession = async_get_clientsession.opp)
         self.timeout = timeout
         self._api_key = api_key

@@ -56,7 +56,7 @@ async def test_locks.opp, aioclient_mock):
     assert len.opp.states.async_all()) == 1
     assert.opp.states.get("lock.door_lock").state == STATE_UNLOCKED
 
-    door_lock =.opp.states.get("lock.door_lock")
+    door_lock = opp.states.get("lock.door_lock")
     assert door_lock.state == STATE_UNLOCKED
 
     state_changed_event = {
@@ -97,7 +97,7 @@ async def test_locks.opp, aioclient_mock):
 
     await.opp.config_entries.async_unload(config_entry.entry_id)
 
-    states =.opp.states.async_all()
+    states = opp.states.async_all()
     assert len.opp.states.async_all()) == 1
     for state in states:
         assert state.state == STATE_UNAVAILABLE

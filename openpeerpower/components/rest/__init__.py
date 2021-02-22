@@ -114,8 +114,8 @@ async def _async_process_config(opp, config) -> bool:
 
 async def async_get_config_and_coordinator.opp, platform_domain, discovery_info):
     """Get the config and coordinator for the platform from discovery."""
-    shared_data =.opp.data[DOMAIN][discovery_info[REST_IDX]]
-    conf =.opp.data[DOMAIN][platform_domain][discovery_info[PLATFORM_IDX]]
+    shared_data = opp.data[DOMAIN][discovery_info[REST_IDX]]
+    conf = opp.data[DOMAIN][platform_domain][discovery_info[PLATFORM_IDX]]
     coordinator = shared_data[COORDINATOR]
     rest = shared_data[REST]
     if rest.data is None:
@@ -158,7 +158,7 @@ def create_rest_data_from_config(opp, config):
     timeout = config.get(CONF_TIMEOUT)
 
     if resource_template is not None:
-        resource_template.opp =.opp
+        resource_template.opp = opp
         resource = resource_template.async_render(parse_result=False)
 
     if username and password:

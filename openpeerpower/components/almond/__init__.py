@@ -186,7 +186,7 @@ async def _configure_almond_for_ha(
     )
 
     # Create long lived access token
-    access_token =.opp.auth.async_create_access_token(refresh_token)
+    access_token = opp.auth.async_create_access_token(refresh_token)
 
     # Store token in Almond
     try:
@@ -250,7 +250,7 @@ class AlmondAgent(conversation.AbstractConversationAgent):
         self, opp: OpenPeerPower, api: WebAlmondAPI, entry: config_entries.ConfigEntry
     ):
         """Initialize the agent."""
-        self.opp =.opp
+        self.opp = opp
         self.api = api
         self.entry = entry
 

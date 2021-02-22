@@ -124,7 +124,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload Transmission Entry from config_entry."""
-    client =.opp.data[DOMAIN].pop(config_entry.entry_id)
+    client = opp.data[DOMAIN].pop(config_entry.entry_id)
     if client.unsub_timer:
         client.unsub_timer()
 
@@ -171,7 +171,7 @@ class TransmissionClient:
 
     def __init__(self, opp, config_entry):
         """Initialize the Transmission RPC API."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.tm_api = None  # type: transmissionrpc.Client
         self._tm_data = None  # type: TransmissionData
@@ -333,7 +333,7 @@ class TransmissionClient:
     @staticmethod
     async def async_options_updated.opp, entry):
         """Triggered by config entry options updates."""
-        tm_client =.opp.data[DOMAIN][entry.entry_id]
+        tm_client = opp.data[DOMAIN][entry.entry_id]
         tm_client.set_scan_interval(entry.options[CONF_SCAN_INTERVAL])
         await.opp.async_add_executor_job(tm_client.api.update)
 
@@ -343,7 +343,7 @@ class TransmissionData:
 
     def __init__(self, opp, config, api: transmissionrpc.Client):
         """Initialize the Transmission RPC API."""
-        self.opp =.opp
+        self.opp = opp
         self.config = config
         self.data = None  # type: transmissionrpc.Session
         self.available = True  # type: bool

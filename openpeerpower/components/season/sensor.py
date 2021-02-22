@@ -114,7 +114,7 @@ class Season(Entity):
 
     def __init__(self, opp, hemisphere, season_tracking_type, name):
         """Initialize the season."""
-        self.opp =.opp
+        self.opp = opp
         self._name = name
         self.hemisphere = hemisphere
         self.datetime = None

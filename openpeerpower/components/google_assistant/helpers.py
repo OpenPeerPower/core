@@ -93,7 +93,7 @@ class AbstractConfig(ABC):
 
     def __init__(self, opp):
         """Initialize abstract config."""
-        self.opp =.opp
+        self.opp = opp
         self._store = None
         self._google_sync_unsub = {}
         self._local_sdk_active = False
@@ -371,7 +371,7 @@ class GoogleEntity:
 
     def __init__(self, opp: OpenPeerPower, config: AbstractConfig, state: State):
         """Initialize a Google entity."""
-        self.opp =.opp
+        self.opp = opp
         self.config = config
         self.state = state
         self._traits = None

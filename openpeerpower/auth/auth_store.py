@@ -33,11 +33,11 @@ class AuthStore:
 
     def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the auth store."""
-        self.opp =.opp
+        self.opp = opp
         self._users: Optional[Dict[str, models.User]] = None
         self._groups: Optional[Dict[str, models.Group]] = None
         self._perm_lookup: Optional[PermissionLookup] = None
-        self._store =.opp.helpers.storage.Store(
+        self._store = opp.helpers.storage.Store(
             STORAGE_VERSION, STORAGE_KEY, private=True
         )
         self._lock = asyncio.Lock()

@@ -26,7 +26,7 @@ async def test_abort_if_existing_entry.opp):
     MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
 
     flow = config_flow.NetatmoFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await.opp.config_entries.flow.async_init(
         "netatmo", context={"source": config_entries.SOURCE_USER}

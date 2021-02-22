@@ -11,7 +11,7 @@ async def test_maybe_schedule_update.opp, mock_openzwave):
     """Test maybe schedule update."""
     base_entity = node_entity.ZWaveBaseEntity()
     base_entity.entity_id = "zwave.bla"
-    base_entity.opp =.opp
+    base_entity.opp = opp
 
     with patch.object.opp.loop, "call_later") as mock_call_later:
         base_entity._schedule_update()
@@ -59,7 +59,7 @@ async def test_node_event_activated.opp, mock_openzwave):
     assert len(events) == 0
 
     # Add entity to.opp
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "zwave.mock_node"
 
     value = 234
@@ -101,7 +101,7 @@ async def test_scene_activated.opp, mock_openzwave):
     assert len(events) == 0
 
     # Add entity to.opp
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "zwave.mock_node"
 
     scene_id = 123
@@ -147,7 +147,7 @@ async def test_central_scene_activated.opp, mock_openzwave):
     assert len(events) == 0
 
     # Add entity to.opp
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "zwave.mock_node"
 
     scene_id = 1
@@ -198,7 +198,7 @@ async def test_application_version.opp, mock_openzwave):
     )
 
     # Add entity to.opp
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "zwave.mock_node"
 
     # Fire off an added value

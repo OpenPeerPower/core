@@ -332,7 +332,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up from config entry."""
-    router =.opp.data[DOMAIN].routers[config_entry.data[CONF_URL]]
+    router = opp.data[DOMAIN].routers[config_entry.data[CONF_URL]]
     sensors: List[Entity] = []
     for key in SENSOR_KEYS:
         items = router.data.get(key)

@@ -70,18 +70,18 @@ async def test_thermostat.opp):
         assert await async_setup_component.opp, DOMAIN, CONFIG)
         await.opp.async_block_till_done()
 
-    climate =.opp.states.get("climate.my_thermostat")
+    climate = opp.states.get("climate.my_thermostat")
     assert climate is not None
     assert climate.state == "off"
 
-    temperature =.opp.states.get("sensor.my_thermostat_temperature")
+    temperature = opp.states.get("sensor.my_thermostat_temperature")
     assert temperature is not None
     assert temperature.state == "-1.1"
 
-    humidity =.opp.states.get("sensor.my_thermostat_humidity")
+    humidity = opp.states.get("sensor.my_thermostat_humidity")
     assert humidity is not None
     assert humidity.state == "40.4"
 
-    fan =.opp.states.get("binary_sensor.my_thermostat_fan")
+    fan = opp.states.get("binary_sensor.my_thermostat_fan")
     assert fan is not None
     assert fan.state == "on"

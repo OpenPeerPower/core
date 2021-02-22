@@ -34,7 +34,7 @@ DATA_INSTANCES = "entity_components"
 async def async_update_entity.opp: OpenPeerPower, entity_id: str) -> None:
     """Trigger an update for an entity."""
     domain = entity_id.split(".", 1)[0]
-    entity_comp =.opp.data.get(DATA_INSTANCES, {}).get(domain)
+    entity_comp = opp.data.get(DATA_INSTANCES, {}).get(domain)
 
     if entity_comp is None:
         logging.getLogger(__name__).warning(
@@ -72,7 +72,7 @@ class EntityComponent:
     ):
         """Initialize an entity component."""
         self.logger = logger
-        self.opp =.opp
+        self.opp = opp
         self.domain = domain
         self.scan_interval = scan_interval
 

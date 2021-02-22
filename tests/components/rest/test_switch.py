@@ -172,7 +172,7 @@ def _setup_test_switch.opp):
         10,
         True,
     )
-    switch.opp =.opp
+    switch.opp = opp
     return switch, body_on, body_off
 
 

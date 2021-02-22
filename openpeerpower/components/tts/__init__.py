@@ -236,7 +236,7 @@ class SpeechManager:
 
     def __init__(self, opp):
         """Initialize a speech store."""
-        self.opp =.opp
+        self.opp = opp
         self.providers = {}
 
         self.use_cache = DEFAULT_CACHE

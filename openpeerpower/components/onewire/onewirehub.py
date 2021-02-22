@@ -22,7 +22,7 @@ class OneWireHub:
 
     def __init__(self, opp: OpenPeerPowerType):
         """Initialize."""
-        self.opp =.opp
+        self.opp = opp
         self.type: str = None
         self.pi1proxy: Pi1Wire = None
         self.owproxy: protocol._Proxy = None

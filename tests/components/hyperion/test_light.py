@@ -227,7 +227,7 @@ async def test_light_basic_properies.opp: OpenPeerPowerType) -> None:
     client = create_mock_client()
     await setup_test_config_entry.opp, hyperion_client=client)
 
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "on"
     assert entity_state.attributes["brightness"] == 255
@@ -299,7 +299,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     # Simulate a state callback from Hyperion.
     client.adjustment = [{const.KEY_BRIGHTNESS: 50}]
     call_registered_callback(client, "adjustment-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "on"
     assert entity_state.attributes["brightness"] == brightness
@@ -329,7 +329,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     }
 
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["hs_color"] == hs_color
     assert entity_state.attributes["icon"] == hyperion_light.ICON_LIGHTBULB
@@ -359,7 +359,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     )
     client.adjustment = [{const.KEY_BRIGHTNESS: 100}]
     call_registered_callback(client, "adjustment-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["brightness"] == brightness
 
@@ -405,7 +405,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     ]
     client.visible_priority = {const.KEY_COMPONENTID: effect}
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["icon"] == hyperion_light.ICON_EXTERNAL_SOURCE
     assert entity_state.attributes["effect"] == effect
@@ -437,7 +437,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
         const.KEY_OWNER: effect,
     }
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["icon"] == hyperion_light.ICON_EFFECT
     assert entity_state.attributes["effect"] == effect
@@ -466,7 +466,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
         const.KEY_VALUE: {const.KEY_RGB: (0, 0, 255)},
     }
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["hs_color"] == hs_color
     assert entity_state.attributes["icon"] == hyperion_light.ICON_LIGHTBULB
@@ -554,7 +554,7 @@ async def test_light_async_turn_off.opp: OpenPeerPowerType) -> None:
     )
 
     call_registered_callback(client, "components-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["icon"] == hyperion_light.ICON_LIGHTBULB
 
@@ -584,7 +584,7 @@ async def test_light_async_updates_from_hyperion_client(
     brightness = 10
     client.adjustment = [{const.KEY_BRIGHTNESS: brightness}]
     call_registered_callback(client, "adjustment-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["brightness"] == round(255 * (brightness / 100.0))
 
@@ -592,20 +592,20 @@ async def test_light_async_updates_from_hyperion_client(
     bad_brightness = -200
     client.adjustment = [{const.KEY_BRIGHTNESS: bad_brightness}]
     call_registered_callback(client, "adjustment-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["brightness"] == round(255 * (brightness / 100.0))
 
     # Update components.
     client.is_on.return_value = True
     call_registered_callback(client, "components-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "on"
 
     client.is_on.return_value = False
     call_registered_callback(client, "components-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "off"
 
@@ -613,7 +613,7 @@ async def test_light_async_updates_from_hyperion_client(
     client.is_on.return_value = True
     client.visible_priority = {const.KEY_COMPONENTID: const.KEY_COMPONENTID_V4L}
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["icon"] == hyperion_light.ICON_EXTERNAL_SOURCE
     assert entity_state.attributes["hs_color"] == (0.0, 0.0)
@@ -627,7 +627,7 @@ async def test_light_async_updates_from_hyperion_client(
     }
 
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["effect"] == effect
     assert entity_state.attributes["icon"] == hyperion_light.ICON_EFFECT
@@ -641,7 +641,7 @@ async def test_light_async_updates_from_hyperion_client(
     }
 
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["effect"] == hyperion_light.KEY_EFFECT_SOLID
     assert entity_state.attributes["icon"] == hyperion_light.ICON_LIGHTBULB
@@ -651,7 +651,7 @@ async def test_light_async_updates_from_hyperion_client(
     client.visible_priority = None
 
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "off"
 
@@ -659,7 +659,7 @@ async def test_light_async_updates_from_hyperion_client(
     effects = [{const.KEY_NAME: "One"}, {const.KEY_NAME: "Two"}]
     client.effects = effects
     call_registered_callback(client, "effects-update")
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["effect_list"] == [
         hyperion_light.KEY_EFFECT_SOLID
@@ -672,7 +672,7 @@ async def test_light_async_updates_from_hyperion_client(
     # Turn on late, check state, disconnect, ensure it cannot be turned off.
     client.has_loaded_state = False
     call_registered_callback(client, "client-update", {"loaded-state": False})
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "unavailable"
 
@@ -683,7 +683,7 @@ async def test_light_async_updates_from_hyperion_client(
         const.KEY_VALUE: {const.KEY_RGB: rgb},
     }
     call_registered_callback(client, "client-update", {"loaded-state": True})
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "on"
 
@@ -703,7 +703,7 @@ async def test_full_state_loaded_on_start.opp: OpenPeerPowerType) -> None:
 
     await setup_test_config_entry.opp, hyperion_client=client)
 
-    entity_state =.opp.states.get(TEST_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["brightness"] == round(255 * (brightness / 100.0))
     assert entity_state.attributes["effect"] == hyperion_light.KEY_EFFECT_SOLID
@@ -808,7 +808,7 @@ async def test_priority_light_async_updates(
         await setup_test_config_entry.opp, hyperion_client=client)
 
     # == Scenario: Color at HA priority will show light as on.
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "on"
     assert entity_state.attributes["hs_color"] == (0.0, 0.0)
@@ -823,7 +823,7 @@ async def test_priority_light_async_updates(
     client.visible_priority = client.priorities[0]
 
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "off"
 
@@ -839,7 +839,7 @@ async def test_priority_light_async_updates(
     client.visible_priority = client.priorities[0]
 
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "off"
 
@@ -856,7 +856,7 @@ async def test_priority_light_async_updates(
     client.visible_priority = client.priorities[0]
 
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "on"
     assert entity_state.attributes["hs_color"] == (240.0, 33.333)
@@ -869,7 +869,7 @@ async def test_priority_light_async_updates(
     client.visible_priority = None
 
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "off"
 
@@ -885,7 +885,7 @@ async def test_priority_light_async_updates(
     client.visible_priority = client.priorities[0]
 
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "off"
 
@@ -910,7 +910,7 @@ async def test_priority_light_async_updates(
 
     client.visible_priority = client.priorities[0]
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "off"
 
@@ -926,7 +926,7 @@ async def test_priority_light_async_updates(
     ]
     client.visible_priority = None
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "off"
 
@@ -941,7 +941,7 @@ async def test_priority_light_async_updates(
     ]
     client.visible_priority = None
     call_registered_callback(client, "priorities-update")
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "off"
 
@@ -1048,7 +1048,7 @@ async def test_priority_light_prior_color_preserved_after_black(
     client.visible_priority = client.priorities[0]
     call_registered_callback(client, "priorities-update")
 
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "on"
     assert entity_state.attributes["hs_color"] == hs_color
@@ -1078,7 +1078,7 @@ async def test_priority_light_prior_color_preserved_after_black(
     client.visible_priority = client.priorities[0]
     call_registered_callback(client, "priorities-update")
 
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "off"
 
@@ -1108,7 +1108,7 @@ async def test_priority_light_prior_color_preserved_after_black(
     client.visible_priority = client.priorities[0]
     call_registered_callback(client, "priorities-update")
 
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "on"
     assert entity_state.attributes["hs_color"] == hs_color
@@ -1125,6 +1125,6 @@ async def test_priority_light_has_no_external_sources.opp: OpenPeerPowerType) ->
         enabled_by_default_mock.return_value = True
         await setup_test_config_entry.opp, hyperion_client=client)
 
-    entity_state =.opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["effect_list"] == [hyperion_light.KEY_EFFECT_SOLID]

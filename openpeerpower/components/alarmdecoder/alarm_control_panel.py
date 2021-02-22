@@ -46,7 +46,7 @@ async def async_setup_entry(
     """Set up for AlarmDecoder alarm panels."""
     options = entry.options
     arm_options = options.get(OPTIONS_ARM, DEFAULT_ARM_OPTIONS)
-    client =.opp.data[DOMAIN][entry.entry_id][DATA_AD]
+    client = opp.data[DOMAIN][entry.entry_id][DATA_AD]
 
     entity = AlarmDecoderAlarmPanel(
         client=client,

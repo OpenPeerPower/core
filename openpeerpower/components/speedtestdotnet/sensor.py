@@ -21,7 +21,7 @@ from .const import (
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Speedtestdotnet sensors."""
 
-    speedtest_coordinator =.opp.data[DOMAIN]
+    speedtest_coordinator = opp.data[DOMAIN]
 
     entities = []
     for sensor_type in SENSOR_TYPES:

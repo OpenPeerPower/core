@@ -45,7 +45,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (0, 1)
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
 
@@ -59,7 +59,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (0.5, 1)
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0.5)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 50
 
@@ -70,7 +70,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (1, 1)
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 1)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_CLOSED
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
 
@@ -82,7 +82,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == (1,)
 
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", None)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_UNKNOWN
 
 
@@ -112,7 +112,7 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == (0, 1)
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0)
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
@@ -127,7 +127,7 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (0.5, 1)
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0.5)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
@@ -139,7 +139,7 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (1, 1)
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 1)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
@@ -152,11 +152,11 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == (1,)
 
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", None)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert not ha_state.attributes.get(ATTR_CURRENT_TILT_POSITION)
 
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", None)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_UNKNOWN
 
 
@@ -175,7 +175,7 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
 
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 1, channel=4)
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 1, channel=4)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
 
     assert ha_state.state == STATE_CLOSED
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
@@ -190,7 +190,7 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == (0, 4)
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0, channel=4)
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0, channel=4)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
@@ -205,7 +205,7 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (0.5, 4)
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0.5, channel=4)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
@@ -217,7 +217,7 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (1, 4)
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 1, channel=4)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
@@ -230,11 +230,11 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == (4,)
 
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", None, channel=4)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert not ha_state.attributes.get(ATTR_CURRENT_TILT_POSITION)
 
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", None, channel=4)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_UNKNOWN
 
 
@@ -276,7 +276,7 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_primary_shading_level"
     assert hmip_device.mock_calls[-1][2] == {"primaryShadingLevel": 0}
 
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
@@ -299,7 +299,7 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
 
     assert hmip_device.mock_calls[-1][0] == "set_primary_shading_level"
     assert hmip_device.mock_calls[-1][2] == {"primaryShadingLevel": 0.5}
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 50
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
@@ -320,7 +320,7 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
         "secondaryShadingLevel": 1,
     }
 
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_CLOSED
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
@@ -340,11 +340,11 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == ()
 
     await async_manipulate_test_data.opp, hmip_device, "secondaryShadingLevel", None)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert not ha_state.attributes.get(ATTR_CURRENT_TILT_POSITION)
 
     await async_manipulate_test_data.opp, hmip_device, "primaryShadingLevel", None)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_UNKNOWN
 
 
@@ -372,7 +372,7 @@ async def test_hmip_garage_door_tormatic.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "send_door_command"
     assert hmip_device.mock_calls[-1][1] == (DoorCommand.OPEN,)
     await async_manipulate_test_data.opp, hmip_device, "doorState", DoorState.OPEN)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
 
@@ -383,7 +383,7 @@ async def test_hmip_garage_door_tormatic.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "send_door_command"
     assert hmip_device.mock_calls[-1][1] == (DoorCommand.CLOSE,)
     await async_manipulate_test_data.opp, hmip_device, "doorState", DoorState.CLOSED)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_CLOSED
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
 
@@ -419,7 +419,7 @@ async def test_hmip_garage_door_hoermann.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "send_door_command"
     assert hmip_device.mock_calls[-1][1] == (DoorCommand.OPEN,)
     await async_manipulate_test_data.opp, hmip_device, "doorState", DoorState.OPEN)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
 
@@ -430,7 +430,7 @@ async def test_hmip_garage_door_hoermann.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "send_door_command"
     assert hmip_device.mock_calls[-1][1] == (DoorCommand.CLOSE,)
     await async_manipulate_test_data.opp, hmip_device, "doorState", DoorState.CLOSED)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_CLOSED
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
 
@@ -464,7 +464,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (0,)
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
 
@@ -478,7 +478,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (0.5,)
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0.5)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 50
 
@@ -489,7 +489,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 1)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_CLOSED
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
 
@@ -501,7 +501,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == ()
 
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", None)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_UNKNOWN
 
 
@@ -516,7 +516,7 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
        .opp, mock_hap, entity_id, entity_name, device_model
     )
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 1)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
 
     assert ha_state.state == STATE_CLOSED
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
@@ -538,7 +538,7 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == (0,)
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0.5)
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 50
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
@@ -553,7 +553,7 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (0.5,)
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0.5)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 50
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
@@ -565,7 +565,7 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (1,)
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 1)
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 50
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 0

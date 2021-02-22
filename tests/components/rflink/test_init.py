@@ -319,7 +319,7 @@ async def test_race_condition.opp, monkeypatch):
     await.opp.async_block_till_done()
 
     # test  state of new sensor
-    new_sensor =.opp.states.get(f"{domain}.test3")
+    new_sensor = opp.states.get(f"{domain}.test3")
     assert new_sensor
     assert new_sensor.state == "off"
 
@@ -329,7 +329,7 @@ async def test_race_condition.opp, monkeypatch):
     assert tmp_entity not in.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_COMMAND]["test3"]
 
     # test  state of new sensor
-    new_sensor =.opp.states.get(f"{domain}.test3")
+    new_sensor = opp.states.get(f"{domain}.test3")
     assert new_sensor
     assert new_sensor.state == "on"
 

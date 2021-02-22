@@ -721,7 +721,7 @@ class LogRelayHandler(logging.Handler):
     def __init__(self, opp, gateway):
         """Initialize a new LogErrorHandler."""
         super().__init__()
-        self.opp =.opp
+        self.opp = opp
         self.gateway = gateway
 
     def emit(self, record):

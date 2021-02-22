@@ -68,7 +68,7 @@ class MediaExtractor:
 
     def __init__(self, opp, component_config, call_data):
         """Initialize media extractor."""
-        self.opp =.opp
+        self.opp = opp
         self.config = component_config
         self.call_data = call_data
 

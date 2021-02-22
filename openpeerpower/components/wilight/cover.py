@@ -22,7 +22,7 @@ async def async_setup_entry(
     opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up WiLight covers from a config entry."""
-    parent =.opp.data[DOMAIN][entry.entry_id]
+    parent = opp.data[DOMAIN][entry.entry_id]
 
     # Handle a discovered WiLight device.
     entities = []
@@ -96,7 +96,7 @@ class WiLightCover(WiLightDevice, CoverEntity):
 
     async def async_set_cover_position(self, **kwargs):
         """Move the cover to a specific position."""
-        position =.opp_to_wilight_position(kwargs[ATTR_POSITION])
+        position = opp_to_wilight_position(kwargs[ATTR_POSITION])
         await self._client.set_cover_position(self._index, position)
 
     async def async_stop_cover(self, **kwargs):

@@ -134,7 +134,7 @@ class FlowHandler(config_entries.ConfigFlow):
             errors["base"] = "cannot_connect"
 
         return self.async_show_form(
-            step_id=.oppio_confirm",
+            step_id= oppio_confirm",
             description_placeholders={"addon": self.oppio_discovery["addon"]},
             data_schema=vol.Schema(
                 {vol.Optional(CONF_DISCOVERY, default=DEFAULT_DISCOVERY): bool}

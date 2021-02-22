@@ -33,7 +33,7 @@ async def async_setup_entry(
     opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the HomematicIP cover from a config entry."""
-    hap =.opp.data[HMIPC_DOMAIN][config_entry.unique_id]
+    hap = opp.data[HMIPC_DOMAIN][config_entry.unique_id]
     entities = []
     for device in hap.home.devices:
         if isinstance(device, AsyncBlindModule):

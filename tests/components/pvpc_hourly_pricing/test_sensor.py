@@ -19,7 +19,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 async def _process_time_step(
    .opp, mock_data, key_state=None, value=None, tariff="discrimination", delta_min=60
 ):
-    state =.opp.states.get("sensor.test_dst")
+    state = opp.states.get("sensor.test_dst")
     check_valid_state(state, tariff=tariff, value=value, key_attr=key_state)
 
     mock_data["return_time"] += timedelta(minutes=delta_min)

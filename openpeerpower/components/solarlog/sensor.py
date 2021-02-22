@@ -117,7 +117,7 @@ class SolarlogData:
     def __init__(self, opp, api, host):
         """Initialize the data object."""
         self.api = api
-        self.opp =.opp
+        self.opp = opp
         self.host = host
         self.update = Throttle(SCAN_INTERVAL)(self._update)
         self.data = {}

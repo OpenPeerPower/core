@@ -101,7 +101,7 @@ async def test_hmip_add_device.opp, default_mock_hap_factory, hmip_config_entry)
 
     assert len(device_registry.devices) == pre_device_count
     assert len(entity_registry.entities) == pre_entity_count
-    new_hap =.opp.data[HMIPC_DOMAIN][HAPID]
+    new_hap = opp.data[HMIPC_DOMAIN][HAPID]
     assert len(new_hap.hmip_device_by_entity_id) == pre_mapping_count
 
 
@@ -156,7 +156,7 @@ async def test_all_devices_unavailable_when_hap_not_connected(
 
     await async_manipulate_test_data.opp, mock_hap.home, "connected", False)
 
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_UNAVAILABLE
 
 
@@ -180,13 +180,13 @@ async def test_hap_reconnected.opp, default_mock_hap_factory):
 
     await async_manipulate_test_data.opp, mock_hap.home, "connected", False)
 
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_UNAVAILABLE
 
     mock_hap._accesspoint_connected = False  # pylint: disable=protected-access
     await async_manipulate_test_data.opp, mock_hap.home, "connected", True)
     await.opp.async_block_till_done()
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
 

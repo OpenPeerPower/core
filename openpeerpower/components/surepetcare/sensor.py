@@ -34,7 +34,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     entities = []
 
-    spc =.opp.data[DATA_SURE_PETCARE][SPC]
+    spc = opp.data[DATA_SURE_PETCARE][SPC]
 
     for entity in spc.ids:
         sure_type = entity[CONF_TYPE]

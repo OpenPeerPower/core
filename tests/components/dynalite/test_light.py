@@ -29,7 +29,7 @@ def mock_device():
 async def test_light_setup_opp, mock_device):
     """Test a successful setup."""
     await create_entity_from_device.opp, mock_device)
-    entity_state =.opp.states.get("light.name")
+    entity_state = opp.states.get("light.name")
     assert entity_state.attributes[ATTR_FRIENDLY_NAME] == mock_device.name
     assert entity_state.attributes["brightness"] == mock_device.brightness
     assert entity_state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORT_BRIGHTNESS

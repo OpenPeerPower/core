@@ -183,7 +183,7 @@ class GoogleCloudTTSProvider(Provider):
         text_type=DEFAULT_TEXT_TYPE,
     ):
         """Init Google Cloud TTS service."""
-        self.opp =.opp
+        self.opp = opp
         self.name = "Google Cloud TTS"
         self._language = language
         self._gender = gender

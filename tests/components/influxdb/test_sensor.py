@@ -190,7 +190,7 @@ async def _setup_opp, config_ext, queries, expected_sensors):
 
     sensors = []
     for expected_sensor in expected_sensors:
-        state =.opp.states.get(expected_sensor)
+        state = opp.states.get(expected_sensor)
         assert state is not None
         sensors.append(state)
 

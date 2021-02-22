@@ -48,7 +48,7 @@ async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
         if entry.domain != DOMAIN:
             continue
 
-        state =.opp.states.get(entry.entity_id)
+        state = opp.states.get(entry.entity_id)
 
         # We need a state or else we can't populate the HVAC and preset modes.
         if state is None:
@@ -97,7 +97,7 @@ async def async_call_action_from_config(
 
 async def async_get_action_capabilities.opp, config):
     """List action capabilities."""
-    state =.opp.states.get(config[CONF_ENTITY_ID])
+    state = opp.states.get(config[CONF_ENTITY_ID])
     action_type = config[CONF_TYPE]
 
     fields = {}

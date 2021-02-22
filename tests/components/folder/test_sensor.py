@@ -42,7 +42,7 @@ async def test_valid_path.opp):
     assert await async_setup_component.opp, "sensor", config)
     await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == 1
-    state =.opp.states.get("sensor.test_folder")
+    state = opp.states.get("sensor.test_folder")
     assert state.state == "0.0"
     assert state.attributes.get("number_of_files") == 1
 

@@ -80,7 +80,7 @@ async def test_setup_entry_successful.opp):
     assert len(instantiate.mock_calls) == 1
     assert.opp.data[emulated_roku.DOMAIN]
 
-    roku_instance =.opp.data[emulated_roku.DOMAIN]["Emulated Roku Test"]
+    roku_instance = opp.data[emulated_roku.DOMAIN]["Emulated Roku Test"]
 
     assert roku_instance.roku_usn == "Emulated Roku Test"
     assert roku_instance.host_ip == "1.2.3.5"

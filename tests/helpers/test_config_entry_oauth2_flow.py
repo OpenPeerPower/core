@@ -107,7 +107,7 @@ def test_inherit_enforces_domain_set():
 async def test_abort_if_no_implementation.opp, flow_handler):
     """Check flow abort when no implementations."""
     flow = flow_handler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "missing_configuration"
@@ -118,7 +118,7 @@ async def test_abort_if_authorization_timeout.opp, flow_handler, local_impl):
     flow_handler.async_register_implementation.opp, local_impl)
 
     flow = flow_handler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch.object(
         local_impl, "async_generate_authorize_url", side_effect=asyncio.TimeoutError
@@ -134,7 +134,7 @@ async def test_abort_if_no_url_available.opp, flow_handler, local_impl):
     flow_handler.async_register_implementation.opp, local_impl)
 
     flow = flow_handler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch.object(
         local_impl, "async_generate_authorize_url", side_effect=NoURLAvailableError

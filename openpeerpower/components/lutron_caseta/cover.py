@@ -26,7 +26,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """
 
     entities = []
-    data =.opp.data[CASETA_DOMAIN][config_entry.entry_id]
+    data = opp.data[CASETA_DOMAIN][config_entry.entry_id]
     bridge = data[BRIDGE_LEAP]
     bridge_device = data[BRIDGE_DEVICE]
     cover_devices = bridge.get_devices_by_domain(DOMAIN)

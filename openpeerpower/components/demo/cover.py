@@ -65,7 +65,7 @@ class DemoCover(CoverEntity):
         supported_features=None,
     ):
         """Initialize the cover."""
-        self.opp =.opp
+        self.opp = opp
         self._unique_id = unique_id
         self._name = name
         self._position = position

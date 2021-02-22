@@ -190,7 +190,7 @@ async def test_jewish_calendar_sensor(
         dt_util.as_utc(time_zone.localize(result)) if isinstance(result, dt) else result
     )
 
-    sensor_object =.opp.states.get(f"sensor.test_{sensor}")
+    sensor_object = opp.states.get(f"sensor.test_{sensor}")
     assert sensor_object.state == str(result)
 
     if sensor == "holiday":

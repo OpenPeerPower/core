@@ -27,7 +27,7 @@ async def test_simulated_sensor_default_config(opp):
     await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids()) == 1
-    state =.opp.states.get("sensor.simulated")
+    state = opp.states.get("sensor.simulated")
 
     assert state.attributes.get(CONF_FRIENDLY_NAME) == DEFAULT_NAME
     assert state.attributes.get(CONF_AMP) == DEFAULT_AMP

@@ -10,7 +10,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    sab_api_data =.opp.data[DATA_SABNZBD]
+    sab_api_data = opp.data[DATA_SABNZBD]
     sensors = sab_api_data.sensors
     client_name = sab_api_data.name
     async_add_entities(

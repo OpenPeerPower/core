@@ -203,7 +203,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                     if device.entity_id in entity_ids
                 ]
             else:
-                devices =.opp.data[DATA_KEY].values()
+                devices = opp.data[DATA_KEY].values()
 
             update_tasks = []
             for device in devices:

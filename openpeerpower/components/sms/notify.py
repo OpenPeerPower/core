@@ -24,7 +24,7 @@ def get_service.opp, config, discovery_info=None):
         _LOGGER.error("SMS gateway not found, cannot initialize service")
         return
 
-    gateway =.opp.data[DOMAIN][SMS_GATEWAY]
+    gateway = opp.data[DOMAIN][SMS_GATEWAY]
 
     if discovery_info is None:
         number = config[CONF_RECIPIENT]

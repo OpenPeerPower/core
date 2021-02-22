@@ -21,7 +21,7 @@ async def test_default_state.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.christmas_tree_lights")
+    state = opp.states.get("light.christmas_tree_lights")
     assert state is not None
     assert state.state == "unavailable"
     assert state.attributes["supported_features"] == 0

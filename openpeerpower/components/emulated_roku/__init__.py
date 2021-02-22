@@ -94,5 +94,5 @@ async def async_setup_entry.opp, config_entry):
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
     name = entry.data[CONF_NAME]
-    server =.opp.data[DOMAIN].pop(name)
+    server = opp.data[DOMAIN].pop(name)
     return await server.unload()

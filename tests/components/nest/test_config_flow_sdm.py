@@ -39,7 +39,7 @@ class OAuthFixture:
 
     def __init__(self, opp, aiohttp_client, aioclient_mock):
         """Initialize OAuthFixture."""
-        self.opp =.opp
+        self.opp = opp
         self.aiohttp_client = aiohttp_client
         self.aioclient_mock = aioclient_mock
 

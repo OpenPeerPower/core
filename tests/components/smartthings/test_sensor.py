@@ -37,7 +37,7 @@ async def test_entity_state.opp, device_factory):
     """Tests the state attributes properly match the sensor types."""
     device = device_factory("Sensor 1", [Capability.battery], {Attribute.battery: 100})
     await setup_platform.opp, SENSOR_DOMAIN, devices=[device])
-    state =.opp.states.get("sensor.sensor_1_battery")
+    state = opp.states.get("sensor.sensor_1_battery")
     assert state.state == "100"
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == PERCENTAGE
     assert state.attributes[ATTR_FRIENDLY_NAME] == f"{device.label} Battery"
@@ -49,13 +49,13 @@ async def test_entity_three_axis_state.opp, device_factory):
         "Three Axis", [Capability.three_axis], {Attribute.three_axis: [100, 75, 25]}
     )
     await setup_platform.opp, SENSOR_DOMAIN, devices=[device])
-    state =.opp.states.get("sensor.three_axis_x_coordinate")
+    state = opp.states.get("sensor.three_axis_x_coordinate")
     assert state.state == "100"
     assert state.attributes[ATTR_FRIENDLY_NAME] == f"{device.label} X Coordinate"
-    state =.opp.states.get("sensor.three_axis_y_coordinate")
+    state = opp.states.get("sensor.three_axis_y_coordinate")
     assert state.state == "75"
     assert state.attributes[ATTR_FRIENDLY_NAME] == f"{device.label} Y Coordinate"
-    state =.opp.states.get("sensor.three_axis_z_coordinate")
+    state = opp.states.get("sensor.three_axis_z_coordinate")
     assert state.state == "25"
     assert state.attributes[ATTR_FRIENDLY_NAME] == f"{device.label} Z Coordinate"
 
@@ -66,11 +66,11 @@ async def test_entity_three_axis_invalid_state.opp, device_factory):
         "Three Axis", [Capability.three_axis], {Attribute.three_axis: []}
     )
     await setup_platform.opp, SENSOR_DOMAIN, devices=[device])
-    state =.opp.states.get("sensor.three_axis_x_coordinate")
+    state = opp.states.get("sensor.three_axis_x_coordinate")
     assert state.state == STATE_UNKNOWN
-    state =.opp.states.get("sensor.three_axis_y_coordinate")
+    state = opp.states.get("sensor.three_axis_y_coordinate")
     assert state.state == STATE_UNKNOWN
-    state =.opp.states.get("sensor.three_axis_z_coordinate")
+    state = opp.states.get("sensor.three_axis_z_coordinate")
     assert state.state == STATE_UNKNOWN
 
 
@@ -105,7 +105,7 @@ async def test_update_from_signal.opp, device_factory):
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.sensor_1_battery")
+    state = opp.states.get("sensor.sensor_1_battery")
     assert state is not None
     assert state.state == "75"
 

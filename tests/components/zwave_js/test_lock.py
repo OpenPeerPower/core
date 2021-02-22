@@ -20,7 +20,7 @@ SCHLAGE_BE469_LOCK_ENTITY = "lock.touchscreen_deadbolt"
 async def test_door_lock.opp, client, lock_schlage_be469, integration):
     """Test a lock entity with door lock command class."""
     node = lock_schlage_be469
-    state =.opp.states.get(SCHLAGE_BE469_LOCK_ENTITY)
+    state = opp.states.get(SCHLAGE_BE469_LOCK_ENTITY)
 
     assert state
     assert state.state == STATE_UNLOCKED

@@ -235,7 +235,7 @@ ICONS = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation Analog Output from config entry."""
-    entities_to_create =.opp.data[DATA_ZHA][DOMAIN]
+    entities_to_create = opp.data[DATA_ZHA][DOMAIN]
 
     unsub = async_dispatcher_connect(
        .opp,

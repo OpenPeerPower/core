@@ -213,7 +213,7 @@ class TensorFlowImageProcessor(ImageProcessingEntity):
     ):
         """Initialize the TensorFlow entity."""
         model_config = config.get(CONF_MODEL)
-        self.opp =.opp
+        self.opp = opp
         self._camera_entity = camera_entity
         if name:
             self._name = name

@@ -71,7 +71,7 @@ async def async_request_validation.opp, config_entry, august_gateway):
     # instead of using the legacy configurator
     #
     _LOGGER.error("Access token is no longer valid")
-    configurator =.opp.components.configurator
+    configurator = opp.components.configurator
     entry_id = config_entry.entry_id
 
     async def async_august_configuration_validation_callback(data):

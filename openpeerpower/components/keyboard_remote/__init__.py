@@ -73,7 +73,7 @@ class KeyboardRemote:
 
     def __init__(self, opp, config):
         """Create handlers and setup dictionaries to keep track of them."""
-        self.opp =.opp
+        self.opp = opp
         self.handlers_by_name = {}
         self.handlers_by_descriptor = {}
         self.active_handlers_by_descriptor = {}
@@ -214,7 +214,7 @@ class KeyboardRemote:
         def __init__(self, opp, dev_block):
             """Fill configuration data."""
 
-            self.opp =.opp
+            self.opp = opp
 
             key_types = dev_block.get(TYPE)
 

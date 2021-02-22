@@ -183,7 +183,7 @@ class DomainBlueprints:
         logger: logging.Logger,
     ) -> None:
         """Initialize a domain blueprints instance."""
-        self.opp =.opp
+        self.opp = opp
         self.domain = domain
         self.logger = logger
         self._blueprints = {}

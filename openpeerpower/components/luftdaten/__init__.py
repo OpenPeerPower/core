@@ -174,14 +174,14 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload an Luftdaten config entry."""
-    remove_listener =.opp.data[DOMAIN][DATA_LUFTDATEN_LISTENER].pop(
+    remove_listener = opp.data[DOMAIN][DATA_LUFTDATEN_LISTENER].pop(
         config_entry.entry_id
     )
     remove_listener()
 
    .opp.data[DOMAIN][DATA_LUFTDATEN_CLIENT].pop(config_entry.entry_id)
 
-    return await.opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
+    return await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
 
 
 class LuftDatenData:

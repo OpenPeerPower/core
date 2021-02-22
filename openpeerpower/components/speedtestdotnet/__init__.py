@@ -121,7 +121,7 @@ class SpeedTestDataCoordinator(DataUpdateCoordinator):
 
     def __init__(self, opp, config_entry):
         """Initialize the data object."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.api = None
         self.servers = {}

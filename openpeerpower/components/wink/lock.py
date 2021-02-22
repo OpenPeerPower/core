@@ -76,7 +76,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     def service_handle(service):
         """Handle for services."""
         entity_ids = service.data.get("entity_id")
-        all_locks =.opp.data[DOMAIN]["entities"]["lock"]
+        all_locks = opp.data[DOMAIN]["entities"]["lock"]
         locks_to_set = []
         if entity_ids is None:
             locks_to_set = all_locks

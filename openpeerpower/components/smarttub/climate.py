@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up climate entity for the thermostat in the tub."""
 
-    controller =.opp.data[DOMAIN][entry.entry_id][SMARTTUB_CONTROLLER]
+    controller = opp.data[DOMAIN][entry.entry_id][SMARTTUB_CONTROLLER]
 
     entities = [
         SmartTubThermostat(controller.coordinator, spa) for spa in controller.spas

@@ -29,7 +29,7 @@ async def test_registration.opp, opp_client, opp_admin_user):
         )
 
     assert len(add_user_dev_track.mock_calls) == 1
-    assert add_user_dev_track.mock_calls[0][1][1] ==.opp_admin_user.id
+    assert add_user_dev_track.mock_calls[0][1][1] == opp_admin_user.id
     assert add_user_dev_track.mock_calls[0][1][2] == "device_tracker.test_1"
 
     assert resp.status == 201

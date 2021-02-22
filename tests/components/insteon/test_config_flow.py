@@ -201,7 +201,7 @@ async def _import_config(opp, config):
     with patch(PATCH_CONNECTION, new=mock_successful_connection,), patch(
         PATCH_ASYNC_SETUP, return_value=True
     ), patch(PATCH_ASYNC_SETUP_ENTRY, return_value=True):
-        return await.opp.config_entries.flow.async_init(
+        return await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=config
         )
 

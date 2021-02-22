@@ -51,7 +51,7 @@ async def test_default_setup_opp, monkeypatch):
     assert create.call_args_list[0][1]["ignore"]
 
     # test default state of sensor loaded from config
-    config_sensor =.opp.states.get("binary_sensor.test")
+    config_sensor = opp.states.get("binary_sensor.test")
     assert config_sensor
     assert config_sensor.state == STATE_OFF
     assert config_sensor.attributes["device_class"] == "door"
@@ -143,7 +143,7 @@ async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
         event_callback(on_event)
         await.opp.async_block_till_done()
         await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.test2")
+    state = opp.states.get("binary_sensor.test2")
     assert state.state == STATE_ON
     assert len(events) == 1
 
@@ -154,7 +154,7 @@ async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
         event_callback(on_event)
         await.opp.async_block_till_done()
         await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.test2")
+    state = opp.states.get("binary_sensor.test2")
     assert state.state == STATE_ON
     assert len(events) == 2
 
@@ -164,7 +164,7 @@ async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
         await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.test2")
+    state = opp.states.get("binary_sensor.test2")
     assert state.state == STATE_ON
     assert len(events) == 2
 
@@ -174,6 +174,6 @@ async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
         await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.test2")
+    state = opp.states.get("binary_sensor.test2")
     assert state.state == STATE_OFF
     assert len(events) == 3

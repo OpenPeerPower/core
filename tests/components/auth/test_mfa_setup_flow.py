@@ -40,7 +40,7 @@ async def test_ws_setup_depose_mfa.opp, opp_ws_client):
     )
     await.opp.auth.async_link_user(user, cred)
     refresh_token = await.opp.auth.async_create_refresh_token(user, CLIENT_ID)
-    access_token =.opp.auth.async_create_access_token(refresh_token)
+    access_token = opp.auth.async_create_access_token(refresh_token)
 
     client = await.opp_ws_client.opp, access_token)
 

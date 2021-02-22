@@ -32,7 +32,7 @@ class DynaliteBridge:
 
     def __init__(self, opp: OpenPeerPower, config: Dict[str, Any]) -> None:
         """Initialize the system based on host parameter."""
-        self.opp =.opp
+        self.opp = opp
         self.area = {}
         self.async_add_devices = {}
         self.waiting_devices = {}

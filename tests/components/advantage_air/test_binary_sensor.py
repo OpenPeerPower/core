@@ -30,7 +30,7 @@ async def test_binary_sensor_async_setup_entry.opp, aioclient_mock):
 
     # Test First Air Filter
     entity_id = "binary_sensor.ac_one_filter"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_OFF
 
@@ -40,7 +40,7 @@ async def test_binary_sensor_async_setup_entry.opp, aioclient_mock):
 
     # Test Second Air Filter
     entity_id = "binary_sensor.ac_two_filter"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_ON
 
@@ -50,7 +50,7 @@ async def test_binary_sensor_async_setup_entry.opp, aioclient_mock):
 
     # Test First Motion Sensor
     entity_id = "binary_sensor.zone_open_with_sensor_motion"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_ON
 
@@ -60,7 +60,7 @@ async def test_binary_sensor_async_setup_entry.opp, aioclient_mock):
 
     # Test Second Motion Sensor
     entity_id = "binary_sensor.zone_closed_with_sensor_motion"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_OFF
 

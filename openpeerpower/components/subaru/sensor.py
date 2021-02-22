@@ -137,8 +137,8 @@ EV_SENSORS = [
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Subaru sensors by config_entry."""
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][ENTRY_COORDINATOR]
-    vehicle_info =.opp.data[DOMAIN][config_entry.entry_id][ENTRY_VEHICLES]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][ENTRY_COORDINATOR]
+    vehicle_info = opp.data[DOMAIN][config_entry.entry_id][ENTRY_VEHICLES]
     entities = []
     for vin in vehicle_info.keys():
         entities.extend(create_vehicle_sensors(vehicle_info[vin], coordinator))

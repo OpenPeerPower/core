@@ -78,7 +78,7 @@ async def async_setup_opp, config):
 
         # Load data from Supervisor
         if opp.components.oppio.is.oppio():
-            core_info =.opp.components.oppio.get_core_info()
+            core_info = opp.components.oppio.get_core_info()
             newest = core_info["version_latest"]
 
         # Validate version
@@ -103,7 +103,7 @@ async def async_setup_opp, config):
 
         return Updater(update_available, newest, release_notes)
 
-    coordinator =.opp.data[DOMAIN] = update_coordinator.DataUpdateCoordinator[Updater](
+    coordinator = opp.data[DOMAIN] = update_coordinator.DataUpdateCoordinator[Updater](
        .opp,
         _LOGGER,
         name="Open Peer Power update",

@@ -127,7 +127,7 @@ async def setup_integration.opp):
 
 async def test_simple_properties.opp: OpenPeerPower):
     """Test that simple properties work as intended."""
-    state =.opp.states.get(VAC_ENTITY_ID)
+    state = opp.states.get(VAC_ENTITY_ID)
     registry = await.opp.helpers.entity_registry.async_get_registry()
     entity = registry.async_get(VAC_ENTITY_ID)
 
@@ -154,7 +154,7 @@ async def test_initial_attributes(
     opp: OpenPeerPower, attribute: str, target_value: Any
 ):
     """Test initial config attributes."""
-    state =.opp.states.get(VAC_ENTITY_ID)
+    state = opp.states.get(VAC_ENTITY_ID)
     assert state.attributes.get(attribute) == target_value
 
 
@@ -171,7 +171,7 @@ async def test_cleaning_states.opp: OpenPeerPower, service: str, target_state: s
     """Test cleaning states."""
     service_data = {ATTR_ENTITY_ID: VAC_ENTITY_ID}
     await.opp.services.async_call("vacuum", service, service_data, blocking=True)
-    state =.opp.states.get(VAC_ENTITY_ID)
+    state = opp.states.get(VAC_ENTITY_ID)
     assert state.state == target_state
 
 
@@ -182,7 +182,7 @@ async def test_fan_speed.opp: OpenPeerPower, fan_speed: str) -> None:
     await.opp.services.async_call(
         "vacuum", SERVICE_SET_FAN_SPEED, service_data, blocking=True
     )
-    state =.opp.states.get(VAC_ENTITY_ID)
+    state = opp.states.get(VAC_ENTITY_ID)
     assert state.attributes.get(ATTR_FAN_SPEED) == fan_speed
 
 
@@ -226,7 +226,7 @@ async def test_coordinator_updates(
     opp: OpenPeerPower, side_effect: Optional[Exception], success: bool
 ) -> None:
     """Test the update coordinator update functions."""
-    coordinator =.opp.data[DOMAIN][ENTRY_ID]
+    coordinator = opp.data[DOMAIN][ENTRY_ID]
 
     await async_setup_component.opp, "openpeerpower", {})
 
@@ -240,5 +240,5 @@ async def test_coordinator_updates(
         assert coordinator.last_update_success == success
         mock_update.assert_called_once()
 
-    state =.opp.states.get(VAC_ENTITY_ID)
+    state = opp.states.get(VAC_ENTITY_ID)
     assert (state.state == STATE_UNAVAILABLE) != success

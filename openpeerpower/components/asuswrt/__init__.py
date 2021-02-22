@@ -116,7 +116,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up AsusWrt platform."""
 
     # import options from yaml if empty
-    yaml_options =.opp.data.get(DOMAIN, {}).pop("yaml_options", {})
+    yaml_options = opp.data.get(DOMAIN, {}).pop("yaml_options", {})
     if not entry.options and yaml_options:
        .opp.config_entries.async_update_entry(entry, options=yaml_options)
 
@@ -134,7 +134,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         """Close AsusWrt connection on HA Stop."""
         await router.close()
 
-    stop_listener =.opp.bus.async_listen_once(
+    stop_listener = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, async_close_connection
     )
 
@@ -158,7 +158,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     )
     if unload_ok:
        .opp.data[DOMAIN][entry.entry_id]["stop_listener"]()
-        router =.opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
+        router = opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
         await router.close()
 
        .opp.data[DOMAIN].pop(entry.entry_id)
@@ -168,7 +168,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
 async def update_listener.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Update when config_entry options update."""
-    router =.opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
+    router = opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
 
     if router.update_options(entry.options):
         await.opp.config_entries.async_reload(entry.entry_id)

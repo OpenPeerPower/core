@@ -36,7 +36,7 @@ class FreeboxRouter:
 
     def __init__(self, opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
         """Initialize a Freebox router."""
-        self.opp =.opp
+        self.opp = opp
         self._entry = entry
         self._host = entry.data[CONF_HOST]
         self._port = entry.data[CONF_PORT]

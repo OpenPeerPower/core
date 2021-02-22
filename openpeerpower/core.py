@@ -1532,7 +1532,7 @@ class Config:
 
     def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize a new config object."""
-        self.opp =.opp
+        self.opp = opp
 
         self.latitude: float = 0
         self.longitude: float = 0
@@ -1760,7 +1760,7 @@ def _async_create_timer.opp: OpenPeerPower) -> None:
 
         slp_seconds = 1 - (now.microsecond / 10 ** 6)
         target = monotonic() + slp_seconds
-        handle =.opp.loop.call_later(slp_seconds, fire_time_event, target)
+        handle = opp.loop.call_later(slp_seconds, fire_time_event, target)
 
     @callback
     def fire_time_event(target: float) -> None:

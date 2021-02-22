@@ -35,8 +35,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up the Schluter thermostats."""
     if discovery_info is None:
         return
-    session_id =.opp.data[DOMAIN][DATA_SCHLUTER_SESSION]
-    api =.opp.data[DOMAIN][DATA_SCHLUTER_API]
+    session_id = opp.data[DOMAIN][DATA_SCHLUTER_SESSION]
+    api = opp.data[DOMAIN][DATA_SCHLUTER_API]
 
     async def async_update_data():
         try:

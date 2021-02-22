@@ -153,6 +153,6 @@ async def async_setup_entry.opp, config):
 
 async def async_unload_entry.opp, _):
     """Unload a config entry."""
-    bot =.opp.data[DOMAIN].pop(CONF_BOT)
+    bot = opp.data[DOMAIN].pop(CONF_BOT)
     await bot.async_disconnect()
     return True

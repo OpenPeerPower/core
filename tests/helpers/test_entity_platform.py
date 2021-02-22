@@ -229,7 +229,7 @@ async def test_updated_state_used_for_entity_id.opp):
 
     await component.async_add_entities([MockEntityNameFetcher()], True)
 
-    entity_ids =.opp.states.async_entity_ids()
+    entity_ids = opp.states.async_entity_ids()
     assert len(entity_ids) == 1
     assert entity_ids[0] == "test_domain.living_room"
 
@@ -480,7 +480,7 @@ async def test_overriding_name_from_registry.opp):
         [MockEntity(unique_id="1234", name="Device Name")]
     )
 
-    state =.opp.states.get("test_domain.world")
+    state = opp.states.get("test_domain.world")
     assert state is not None
     assert state.name == "Overridden"
 
@@ -533,7 +533,7 @@ async def test_entity_registry_updates_name.opp):
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
-    state =.opp.states.get("test_domain.world")
+    state = opp.states.get("test_domain.world")
     assert state is not None
     assert state.name == "before update"
 
@@ -541,7 +541,7 @@ async def test_entity_registry_updates_name.opp):
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("test_domain.world")
+    state = opp.states.get("test_domain.world")
     assert state.name == "after update"
 
 
@@ -637,7 +637,7 @@ async def test_entity_registry_updates_entity_id.opp):
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
-    state =.opp.states.get("test_domain.world")
+    state = opp.states.get("test_domain.world")
     assert state is not None
     assert state.name == "Some name"
 
@@ -674,7 +674,7 @@ async def test_entity_registry_updates_invalid_entity_id.opp):
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
-    state =.opp.states.get("test_domain.world")
+    state = opp.states.get("test_domain.world")
     assert state is not None
     assert state.name == "Some name"
 
@@ -870,7 +870,7 @@ async def test_override_restored_entities.opp):
         [MockEntity(unique_id="1234", state="on", entity_id="test_domain.world")], True
     )
 
-    state =.opp.states.get("test_domain.world")
+    state = opp.states.get("test_domain.world")
     assert state.state == "on"
 
 

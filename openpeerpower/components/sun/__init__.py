@@ -90,7 +90,7 @@ class Sun(Entity):
 
     def __init__(self, opp):
         """Initialize the sun."""
-        self.opp =.opp
+        self.opp = opp
         self.location = None
         self._state = self.next_rising = self.next_setting = None
         self.next_dawn = self.next_dusk = None

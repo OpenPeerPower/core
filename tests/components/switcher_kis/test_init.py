@@ -68,7 +68,7 @@ async def test_discovery_data_bucket(
 
     await.opp.async_block_till_done()
 
-    device =.opp.data[DOMAIN].get(DATA_DEVICE)
+    device = opp.data[DOMAIN].get(DATA_DEVICE)
     assert device.device_id == DUMMY_DEVICE_ID
     assert device.ip_addr == DUMMY_IP_ADDRESS
     assert device.mac_addr == DUMMY_MAC_ADDRESS

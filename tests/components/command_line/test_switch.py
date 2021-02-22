@@ -35,7 +35,7 @@ async def test_state_none.opp):
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
         await.opp.services.async_call(
@@ -45,7 +45,7 @@ async def test_state_none.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_ON == state.state
 
         await.opp.services.async_call(
@@ -55,7 +55,7 @@ async def test_state_none.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
 
@@ -81,7 +81,7 @@ async def test_state_value.opp):
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
         await.opp.services.async_call(
@@ -91,7 +91,7 @@ async def test_state_value.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_ON == state.state
 
         await.opp.services.async_call(
@@ -101,7 +101,7 @@ async def test_state_value.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
 
@@ -129,7 +129,7 @@ async def test_state_json_value.opp):
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
         await.opp.services.async_call(
@@ -139,7 +139,7 @@ async def test_state_json_value.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_ON == state.state
 
         await.opp.services.async_call(
@@ -149,7 +149,7 @@ async def test_state_json_value.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
 
@@ -174,7 +174,7 @@ async def test_state_code.opp):
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
         await.opp.services.async_call(
@@ -184,7 +184,7 @@ async def test_state_code.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_ON == state.state
 
         await.opp.services.async_call(
@@ -194,7 +194,7 @@ async def test_state_code.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.test")
+        state = opp.states.get("switch.test")
         assert STATE_ON == state.state
 
 

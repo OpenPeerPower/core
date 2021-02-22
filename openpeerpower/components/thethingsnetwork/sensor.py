@@ -39,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up The Things Network Data storage sensors."""
-    ttn =.opp.data.get(DATA_TTN)
+    ttn = opp.data.get(DATA_TTN)
     device_id = config.get(CONF_DEVICE_ID)
     values = config.get(CONF_VALUES)
     app_id = ttn.get(TTN_APP_ID)

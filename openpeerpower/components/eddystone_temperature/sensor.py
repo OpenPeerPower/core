@@ -134,7 +134,7 @@ class Monitor:
 
     def __init__(self, opp, devices, bt_device_id):
         """Construct interface object."""
-        self.opp =.opp
+        self.opp = opp
 
         # List of beacons to monitor
         self.devices = devices

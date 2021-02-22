@@ -69,7 +69,7 @@ class LifxCloudScene(Scene):
 
     def __init__(self, opp, headers, timeout, scene_data):
         """Initialize the scene."""
-        self.opp =.opp
+        self.opp = opp
         self._headers = headers
         self._timeout = timeout
         self._name = scene_data["name"]

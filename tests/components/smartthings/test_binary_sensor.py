@@ -38,7 +38,7 @@ async def test_entity_state.opp, device_factory):
         "Motion Sensor 1", [Capability.motion_sensor], {Attribute.motion: "inactive"}
     )
     await setup_platform.opp, BINARY_SENSOR_DOMAIN, devices=[device])
-    state =.opp.states.get("binary_sensor.motion_sensor_1_motion")
+    state = opp.states.get("binary_sensor.motion_sensor_1_motion")
     assert state.state == "off"
     assert state.attributes[ATTR_FRIENDLY_NAME] == f"{device.label} {Attribute.motion}"
 
@@ -78,7 +78,7 @@ async def test_update_from_signal.opp, device_factory):
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.motion_sensor_1_motion")
+    state = opp.states.get("binary_sensor.motion_sensor_1_motion")
     assert state is not None
     assert state.state == "on"
 

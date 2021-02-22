@@ -58,7 +58,7 @@ class FlowManager(abc.ABC):
         opp: OpenPeerPower,
     ) -> None:
         """Initialize the flow manager."""
-        self.opp =.opp
+        self.opp = opp
         self._initializing: Dict[str, List[asyncio.Future]] = {}
         self._progress: Dict[str, Any] = {}
 

@@ -104,7 +104,7 @@ NEXIA_TO_HA_HVAC_MODE_MAP = {
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up climate for a Nexia device."""
 
-    nexia_data =.opp.data[DOMAIN][config_entry.entry_id]
+    nexia_data = opp.data[DOMAIN][config_entry.entry_id]
     nexia_home = nexia_data[NEXIA_DEVICE]
     coordinator = nexia_data[UPDATE_COORDINATOR]
 

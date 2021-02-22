@@ -253,7 +253,7 @@ class AlexaEntity:
 
     def __init__(self, opp: OpenPeerPower, config: "AbstractConfig", entity: State):
         """Initialize Alexa Entity."""
-        self.opp =.opp
+        self.opp = opp
         self.config = config
         self.entity = entity
         self.entity_conf = config.entity_config.get(entity.entity_id, {})

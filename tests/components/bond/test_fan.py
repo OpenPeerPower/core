@@ -86,7 +86,7 @@ async def test_non_standard_speed_list.opp: core.OpenPeerPower):
         props={"max_speed": 6},
     )
 
-    actual_speeds =.opp.states.get("fan.name_1").attributes[ATTR_SPEED_LIST]
+    actual_speeds = opp.states.get("fan.name_1").attributes[ATTR_SPEED_LIST]
     assert actual_speeds == [
         fan.SPEED_OFF,
         fan.SPEED_LOW,

@@ -100,7 +100,7 @@ async def async_unload_entry.opp, config_entry):
     )
 
     if unload_ok:
-        tibber_connection =.opp.data.get(DOMAIN)
+        tibber_connection = opp.data.get(DOMAIN)
         await tibber_connection.rt_disconnect()
 
     return unload_ok

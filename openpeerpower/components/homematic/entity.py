@@ -199,7 +199,7 @@ class HMHub(Entity):
 
     def __init__(self, opp, homematic, name):
         """Initialize HomeMatic hub."""
-        self.opp =.opp
+        self.opp = opp
         self.entity_id = f"{DOMAIN}.{name.lower()}"
         self._homematic = homematic
         self._variables = {}

@@ -198,7 +198,7 @@ async def test_xiaomi_exceptions.opp, caplog, mock_mirobo_is_on):
     entity_id = await setup_component.opp, entity_name)
 
     def is_available():
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         return state.state != STATE_UNAVAILABLE
 
     # The initial setup has to be done successfully
@@ -232,7 +232,7 @@ async def test_xiaomi_vacuum_services.opp, caplog, mock_mirobo_is_got_error):
     assert "Initializing with host 192.168.1.100 (token 12345...)" in caplog.text
 
     # Check state attributes
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
 
     assert state.state == STATE_ERROR
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 14204
@@ -333,7 +333,7 @@ async def test_xiaomi_specific_services.opp, caplog, mock_mirobo_is_on):
     assert "Initializing with host 192.168.1.100 (token 12345" in caplog.text
 
     # Check state attributes
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == STATE_CLEANING
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 14204
     assert state.attributes.get(ATTR_DO_NOT_DISTURB) == STATE_OFF
@@ -429,7 +429,7 @@ async def test_xiaomi_vacuum_fanspeeds.opp, caplog, mock_mirobo_fanspeeds):
 
     assert "Initializing with host 192.168.1.100 (token 12345" in caplog.text
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes.get(ATTR_FAN_SPEED) == "Silent"
     fanspeeds = state.attributes.get(ATTR_FAN_SPEED_LIST)
     for speed in ["Silent", "Standard", "Medium", "Turbo"]:

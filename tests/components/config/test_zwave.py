@@ -136,7 +136,7 @@ async def test_get_values.opp, client):
 
 async def test_get_groups.opp, client):
     """Test getting groupdata on node."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=2)
     node.groups.associations = "assoc"
     node.groups.associations_instances = "inst"
@@ -162,7 +162,7 @@ async def test_get_groups.opp, client):
 
 async def test_get_groups_nogroups.opp, client):
     """Test getting groupdata on node with no groups."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=2)
 
     network.nodes = {2: node}
@@ -177,7 +177,7 @@ async def test_get_groups_nogroups.opp, client):
 
 async def test_get_groups_nonode.opp, client):
     """Test getting groupdata on nonexisting node."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     network.nodes = {1: 1, 5: 5}
 
     resp = await client.get("/api/zwave/groups/2")
@@ -190,7 +190,7 @@ async def test_get_groups_nonode.opp, client):
 
 async def test_get_config(opp, client):
     """Test getting config on node."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=2)
     value = MockValue(index=12, command_class=const.COMMAND_CLASS_CONFIGURATION)
     value.label = "label"
@@ -224,7 +224,7 @@ async def test_get_config(opp, client):
 
 async def test_get_config_noconfig_node.opp, client):
     """Test getting config on node without config."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=2)
 
     network.nodes = {2: node}
@@ -240,7 +240,7 @@ async def test_get_config_noconfig_node.opp, client):
 
 async def test_get_config_nonode.opp, client):
     """Test getting config on nonexisting node."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     network.nodes = {1: 1, 5: 5}
 
     resp = await client.get("/api/zwave/config/2")
@@ -253,7 +253,7 @@ async def test_get_config_nonode.opp, client):
 
 async def test_get_usercodes_nonode.opp, client):
     """Test getting usercodes on nonexisting node."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     network.nodes = {1: 1, 5: 5}
 
     resp = await client.get("/api/zwave/usercodes/2")
@@ -266,7 +266,7 @@ async def test_get_usercodes_nonode.opp, client):
 
 async def test_get_usercodes.opp, client):
     """Test getting usercodes on node."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=18, command_classes=[const.COMMAND_CLASS_USER_CODE])
     value = MockValue(index=0, command_class=const.COMMAND_CLASS_USER_CODE)
     value.genre = const.GENRE_USER
@@ -286,7 +286,7 @@ async def test_get_usercodes.opp, client):
 
 async def test_get_usercode_nousercode_node.opp, client):
     """Test getting usercodes on node without usercodes."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=18)
 
     network.nodes = {18: node}
@@ -302,7 +302,7 @@ async def test_get_usercode_nousercode_node.opp, client):
 
 async def test_get_usercodes_no_genreuser.opp, client):
     """Test getting usercodes on node missing genre user."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=18, command_classes=[const.COMMAND_CLASS_USER_CODE])
     value = MockValue(index=0, command_class=const.COMMAND_CLASS_USER_CODE)
     value.genre = const.GENRE_SYSTEM
@@ -331,7 +331,7 @@ async def test_save_config_no_network.opp, client):
 
 async def test_save_config(opp, client):
     """Test saving configuration."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
 
     resp = await client.post("/api/zwave/saveconfig")
 
@@ -343,7 +343,7 @@ async def test_save_config(opp, client):
 
 async def test_get_protection_values.opp, client):
     """Test getting protection values on node."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=18, command_classes=[const.COMMAND_CLASS_PROTECTION])
     value = MockValue(
         value_id=123456,
@@ -381,7 +381,7 @@ async def test_get_protection_values.opp, client):
 
 async def test_get_protection_values_nonexisting_node.opp, client):
     """Test getting protection values on node with wrong nodeid."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=18, command_classes=[const.COMMAND_CLASS_PROTECTION])
     value = MockValue(
         value_id=123456,
@@ -411,7 +411,7 @@ async def test_get_protection_values_nonexisting_node.opp, client):
 
 async def test_get_protection_values_without_protectionclass.opp, client):
     """Test getting protection values on node without protectionclass."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=18)
     value = MockValue(value_id=123456, index=0, instance=1)
     network.nodes = {18: node}
@@ -429,7 +429,7 @@ async def test_get_protection_values_without_protectionclass.opp, client):
 
 async def test_set_protection_value.opp, client):
     """Test setting protection value on node."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=18, command_classes=[const.COMMAND_CLASS_PROTECTION])
     value = MockValue(
         value_id=123456,
@@ -460,7 +460,7 @@ async def test_set_protection_value.opp, client):
 
 async def test_set_protection_value_failed.opp, client):
     """Test setting protection value failed on node."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=18, command_classes=[const.COMMAND_CLASS_PROTECTION])
     value = MockValue(
         value_id=123456,
@@ -492,7 +492,7 @@ async def test_set_protection_value_failed.opp, client):
 
 async def test_set_protection_value_nonexisting_node.opp, client):
     """Test setting protection value on nonexisting node."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=17, command_classes=[const.COMMAND_CLASS_PROTECTION])
     value = MockValue(
         value_id=123456,
@@ -524,7 +524,7 @@ async def test_set_protection_value_nonexisting_node.opp, client):
 
 async def test_set_protection_value_missing_class.opp, client):
     """Test setting protection value on node without protectionclass."""
-    network =.opp.data[DATA_NETWORK] = MagicMock()
+    network = opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=17)
     value = MockValue(value_id=123456, index=0, instance=1)
     network.nodes = {17: node}

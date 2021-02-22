@@ -164,7 +164,7 @@ async def test_camera_device.opp):
     await async_setup_camera.opp, DEVICE_TRAITS)
 
     assert len.opp.states.async_all()) == 1
-    camera =.opp.states.get("camera.my_camera")
+    camera = opp.states.get("camera.my_camera")
     assert camera is not None
     assert camera.state == STATE_IDLE
 
@@ -187,7 +187,7 @@ async def test_camera_stream.opp, auth):
     await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
 
     assert len.opp.states.async_all()) == 1
-    cam =.opp.states.get("camera.my_camera")
+    cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
 
@@ -215,7 +215,7 @@ async def test_camera_stream_missing_trait.opp, auth):
     await async_setup_camera.opp, traits, auth=auth)
 
     assert len.opp.states.async_all()) == 1
-    cam =.opp.states.get("camera.my_camera")
+    cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
 
@@ -249,7 +249,7 @@ async def test_refresh_expired_stream_token.opp, auth):
     assert await async_setup_component.opp, "stream", {})
 
     assert len.opp.states.async_all()) == 1
-    cam =.opp.states.get("camera.my_camera")
+    cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
 
@@ -297,7 +297,7 @@ async def test_stream_response_already_expired.opp, auth):
     await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
 
     assert len.opp.states.async_all()) == 1
-    cam =.opp.states.get("camera.my_camera")
+    cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
 
@@ -321,7 +321,7 @@ async def test_camera_removed.opp, auth):
     )
 
     assert len.opp.states.async_all()) == 1
-    cam =.opp.states.get("camera.my_camera")
+    cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
 
@@ -364,7 +364,7 @@ async def test_refresh_expired_stream_failure.opp, auth):
     await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
 
     assert len.opp.states.async_all()) == 1
-    cam =.opp.states.get("camera.my_camera")
+    cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
 

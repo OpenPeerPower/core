@@ -47,7 +47,7 @@ async def test_get_image_http.opp, aiohttp_client):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("media_player.bedroom")
+    state = opp.states.get("media_player.bedroom")
     assert "entity_picture_local" not in state.attributes
 
     client = await aiohttp_client.opp.http.app)
@@ -75,7 +75,7 @@ async def test_get_image_http_remote.opp, aiohttp_client):
         )
         await.opp.async_block_till_done()
 
-        state =.opp.states.get("media_player.bedroom")
+        state = opp.states.get("media_player.bedroom")
         assert "entity_picture_local" in state.attributes
 
         client = await aiohttp_client.opp.http.app)
@@ -98,7 +98,7 @@ async def test_get_async_get_browse_image.opp, aiohttp_client, opp_ws_client):
     )
     await.opp.async_block_till_done()
 
-    entity_comp =.opp.data.get("entity_components", {}).get("media_player")
+    entity_comp = opp.data.get("entity_components", {}).get("media_player")
     assert entity_comp
 
     player = entity_comp.get_entity("media_player.bedroom")

@@ -167,7 +167,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def request_app_setup_opp, config, add_entities, config_path, discovery_info=None):
     """Assist user with configuring the Fitbit dev application."""
-    configurator =.opp.components.configurator
+    configurator = opp.components.configurator
 
     def fitbit_configuration_callback(callback_data):
         """Handle configuration updates."""
@@ -209,7 +209,7 @@ def request_app_setup_opp, config, add_entities, config_path, discovery_info=Non
 
 def request_oauth_completion.opp):
     """Request user complete Fitbit OAuth2 flow."""
-    configurator =.opp.components.configurator
+    configurator = opp.components.configurator
     if "fitbit" in _CONFIGURING:
         configurator.notify_errors(
             _CONFIGURING["fitbit"], "Failed to register, please try again."

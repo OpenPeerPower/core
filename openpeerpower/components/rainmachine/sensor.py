@@ -72,8 +72,8 @@ async def async_setup_entry(
     opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up RainMachine sensors based on a config entry."""
-    controller =.opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id]
-    coordinators =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]
+    controller = opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id]
+    coordinators = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]
 
     @callback
     def async_get_sensor(api_category: str) -> partial:

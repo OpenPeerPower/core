@@ -37,7 +37,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    client =.opp.data[DOMAIN]["client"]
+    client = opp.data[DOMAIN]["client"]
 
     client.set_settable_address(METRIC_KEY_MODE, int)
 

@@ -18,7 +18,7 @@ async def async_setup_entry(
     opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up device tracker for Freebox component."""
-    router =.opp.data[DOMAIN][entry.unique_id]
+    router = opp.data[DOMAIN][entry.unique_id]
     tracked = set()
 
     @callback

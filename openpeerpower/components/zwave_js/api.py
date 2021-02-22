@@ -44,7 +44,7 @@ def websocket_network_status(
 ) -> None:
     """Get the status of the Z-Wave JS network."""
     entry_id = msg[ENTRY_ID]
-    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
     data = {
         "client": {
             "ws_server_url": client.ws_server_url,
@@ -76,7 +76,7 @@ def websocket_node_status(
 ) -> None:
     """Get the status of a Z-Wave JS node."""
     entry_id = msg[ENTRY_ID]
-    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
     node_id = msg[NODE_ID]
     node = client.driver.controller.nodes[node_id]
     data = {
@@ -106,7 +106,7 @@ async def websocket_add_node(
 ) -> None:
     """Add a node to the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
-    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
     controller = client.driver.controller
     include_non_secure = not msg["secure"]
 
@@ -176,7 +176,7 @@ async def websocket_stop_inclusion(
 ) -> None:
     """Cancel adding a node to the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
-    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
     controller = client.driver.controller
     result = await controller.async_stop_inclusion()
     connection.send_result(
@@ -198,7 +198,7 @@ async def websocket_stop_exclusion(
 ) -> None:
     """Cancel removing a node from the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
-    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
     controller = client.driver.controller
     result = await controller.async_stop_exclusion()
     connection.send_result(
@@ -220,7 +220,7 @@ async def websocket_remove_node(
 ) -> None:
     """Remove a node from the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
-    client =.opp.data[DOMAIN][entry_id][DATA_CLIENT]
+    client = opp.data[DOMAIN][entry_id][DATA_CLIENT]
     controller = client.driver.controller
 
     @callback

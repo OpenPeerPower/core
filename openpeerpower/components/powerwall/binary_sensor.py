@@ -24,7 +24,7 @@ from .entity import PowerWallEntity
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the August sensors."""
-    powerwall_data =.opp.data[DOMAIN][config_entry.entry_id]
+    powerwall_data = opp.data[DOMAIN][config_entry.entry_id]
 
     coordinator = powerwall_data[POWERWALL_COORDINATOR]
     site_info = powerwall_data[POWERWALL_API_SITE_INFO]

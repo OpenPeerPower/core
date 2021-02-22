@@ -69,7 +69,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 async def async_http_request.opp, uri):
     """Perform actual request."""
     try:
-        session =.opp.helpers.aiohttp_client.async_get_clientsession.opp)
+        session = opp.helpers.aiohttp_client.async_get_clientsession.opp)
         with async_timeout.timeout(REQUEST_TIMEOUT):
             req = await session.get(uri)
         if req.status != HTTP_OK:

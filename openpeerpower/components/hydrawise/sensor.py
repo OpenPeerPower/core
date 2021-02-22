@@ -26,7 +26,7 @@ WATERING_TIME_ICON = "mdi:water-pump"
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up a sensor for a Hydrawise device."""
-    hydrawise =.opp.data[DATA_HYDRAWISE].data
+    hydrawise = opp.data[DATA_HYDRAWISE].data
 
     sensors = []
     for sensor_type in config.get(CONF_MONITORED_CONDITIONS):

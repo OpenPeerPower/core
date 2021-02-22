@@ -11,7 +11,7 @@ from tests.common import MockConfigEntry
 async def test_abort_already_setup_opp):
     """Test if we abort because component is already setup."""
     flow = config_flow.VeSyncFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     MockConfigEntry(domain=DOMAIN, title="user", data={"user": "pass"}).add_to.opp(
        .opp
     )
@@ -25,7 +25,7 @@ async def test_invalid_login_error(opp):
     """Test if we return error for invalid username and password."""
     test_dict = {CONF_USERNAME: "user", CONF_PASSWORD: "pass"}
     flow = config_flow.VeSyncFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     with patch("pyvesync.vesync.VeSync.login", return_value=False):
         result = await flow.async_step_user(user_input=test_dict)
 
@@ -37,7 +37,7 @@ async def test_config_flow_configuration_yaml.opp):
     """Test config flow with configuration.yaml user input."""
     test_dict = {CONF_USERNAME: "user", CONF_PASSWORD: "pass"}
     flow = config_flow.VeSyncFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     with patch("pyvesync.vesync.VeSync.login", return_value=True):
         result = await flow.async_step_import(test_dict)
 
@@ -48,7 +48,7 @@ async def test_config_flow_configuration_yaml.opp):
 async def test_config_flow_user_input.opp):
     """Test config flow with user input."""
     flow = config_flow.VeSyncFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     with patch("pyvesync.vesync.VeSync.login", return_value=True):

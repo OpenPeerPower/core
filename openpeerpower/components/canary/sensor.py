@@ -57,7 +57,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up Canary sensors based on a config entry."""
-    coordinator: CanaryDataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id][
+    coordinator: CanaryDataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id][
         DATA_COORDINATOR
     ]
     sensors = []

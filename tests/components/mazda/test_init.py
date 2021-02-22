@@ -74,7 +74,7 @@ async def test_update_auth_failure.opp: OpenPeerPower):
     assert len(entries) == 1
     assert entries[0].state == ENTRY_STATE_LOADED
 
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
     with patch(
         "openpeerpower.components.mazda.MazdaAPI.validate_credentials",
         side_effect=MazdaAuthenticationException("Login failed"),

@@ -58,7 +58,7 @@ class AsteriskData:
     def __init__(self, opp, host, port, password, config):
         """Init the Asterisk data object."""
 
-        self.opp =.opp
+        self.opp = opp
         self.config = config
         self.messages = None
         self.cdr = None

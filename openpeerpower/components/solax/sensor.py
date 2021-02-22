@@ -48,7 +48,7 @@ class RealTimeDataEndpoint:
 
     def __init__(self, opp, api):
         """Initialize the sensor."""
-        self.opp =.opp
+        self.opp = opp
         self.api = api
         self.ready = asyncio.Event()
         self.sensors = []

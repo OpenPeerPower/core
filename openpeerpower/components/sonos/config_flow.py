@@ -9,7 +9,7 @@ from .const import DOMAIN
 
 async def _async_has_devices.opp):
     """Return if there are devices that can be discovered."""
-    return await.opp.async_add_executor_job(pysonos.discover)
+    return await opp.async_add_executor_job(pysonos.discover)
 
 
 config_entry_flow.register_discovery_flow(

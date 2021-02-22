@@ -263,7 +263,7 @@ async def async_setup_entry(
     """Set up Yeelight from a config entry."""
     custom_effects = _parse_custom_effects.opp.data[DOMAIN][DATA_CUSTOM_EFFECTS])
 
-    device =.opp.data[DOMAIN][DATA_CONFIG_ENTRIES][config_entry.entry_id][DATA_DEVICE]
+    device = opp.data[DOMAIN][DATA_CONFIG_ENTRIES][config_entry.entry_id][DATA_DEVICE]
     _LOGGER.debug("Adding %s", device.name)
 
     nl_switch_light = device.config.get(CONF_NIGHTLIGHT_SWITCH)

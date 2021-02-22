@@ -30,7 +30,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up an ADS sensor device."""
-    ads_hub =.opp.data.get(ads.DATA_ADS)
+    ads_hub = opp.data.get(ads.DATA_ADS)
 
     ads_var = config[CONF_ADS_VAR]
     ads_type = config[CONF_ADS_TYPE]

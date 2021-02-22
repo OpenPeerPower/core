@@ -165,7 +165,7 @@ def zha_device_restored.opp, zigpy_app_controller, setup_zha, opp_storage):
             }
 
         await setup_zha()
-        zha_gateway =.opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
+        zha_gateway = opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
         return zha_gateway.get_device(zigpy_dev.ieee)
 
     return _zha_device

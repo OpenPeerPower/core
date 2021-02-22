@@ -71,7 +71,7 @@ class PlexServer:
         self, opp, server_config, known_server_id=None, options=None, entry_id=None
     ):
         """Initialize a Plex server instance."""
-        self.opp =.opp
+        self.opp = opp
         self.entry_id = entry_id
         self.active_sessions = {}
         self._plex_account = None

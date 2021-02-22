@@ -120,7 +120,7 @@ async def async_configure_service.opp, data):
     """
     gateway = get_master_gateway.opp)
     if CONF_BRIDGE_ID in data:
-        gateway =.opp.data[DOMAIN][normalize_bridge_id(data[CONF_BRIDGE_ID])]
+        gateway = opp.data[DOMAIN][normalize_bridge_id(data[CONF_BRIDGE_ID])]
 
     field = data.get(SERVICE_FIELD, "")
     entity_id = data.get(SERVICE_ENTITY)
@@ -140,7 +140,7 @@ async def async_refresh_devices_service.opp, data):
     """Refresh available devices from deCONZ."""
     gateway = get_master_gateway.opp)
     if CONF_BRIDGE_ID in data:
-        gateway =.opp.data[DOMAIN][normalize_bridge_id(data[CONF_BRIDGE_ID])]
+        gateway = opp.data[DOMAIN][normalize_bridge_id(data[CONF_BRIDGE_ID])]
 
     gateway.ignore_state_updates = True
     await gateway.api.refresh_state()
@@ -156,7 +156,7 @@ async def async_remove_orphaned_entries_service.opp, data):
     """Remove orphaned deCONZ entries from device and entity registries."""
     gateway = get_master_gateway.opp)
     if CONF_BRIDGE_ID in data:
-        gateway =.opp.data[DOMAIN][normalize_bridge_id(data[CONF_BRIDGE_ID])]
+        gateway = opp.data[DOMAIN][normalize_bridge_id(data[CONF_BRIDGE_ID])]
 
     device_registry, entity_registry = await asyncio.gather(
        .opp.helpers.device_registry.async_get_registry(),

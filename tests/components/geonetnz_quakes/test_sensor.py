@@ -62,11 +62,11 @@ async def test_setup_opp, legacy_patchable_time):
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await.opp.async_block_till_done()
 
-        all_states =.opp.states.async_all()
+        all_states = opp.states.async_all()
         # 3 geolocation and 1 sensor entities
         assert len(all_states) == 4
 
-        state =.opp.states.get("sensor.geonet_nz_quakes_32_87336_117_22743")
+        state = opp.states.get("sensor.geonet_nz_quakes_32_87336_117_22743")
         assert state is not None
         assert int(state.state) == 3
         assert state.name == "GeoNet NZ Quakes (32.87336, -117.22743)"
@@ -84,10 +84,10 @@ async def test_setup_opp, legacy_patchable_time):
         async_fire_time_changed.opp, utcnow + DEFAULT_SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        all_states =.opp.states.async_all()
+        all_states = opp.states.async_all()
         assert len(all_states) == 4
 
-        state =.opp.states.get("sensor.geonet_nz_quakes_32_87336_117_22743")
+        state = opp.states.get("sensor.geonet_nz_quakes_32_87336_117_22743")
         attributes = state.attributes
         assert attributes[ATTR_CREATED] == 1
         assert attributes[ATTR_UPDATED] == 2
@@ -99,7 +99,7 @@ async def test_setup_opp, legacy_patchable_time):
         async_fire_time_changed.opp, utcnow + 2 * DEFAULT_SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        all_states =.opp.states.async_all()
+        all_states = opp.states.async_all()
         assert len(all_states) == 4
 
         # Simulate an update - empty data, removes all entities
@@ -107,9 +107,9 @@ async def test_setup_opp, legacy_patchable_time):
         async_fire_time_changed.opp, utcnow + 3 * DEFAULT_SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        all_states =.opp.states.async_all()
+        all_states = opp.states.async_all()
         assert len(all_states) == 1
 
-        state =.opp.states.get("sensor.geonet_nz_quakes_32_87336_117_22743")
+        state = opp.states.get("sensor.geonet_nz_quakes_32_87336_117_22743")
         attributes = state.attributes
         assert attributes[ATTR_REMOVED] == 3

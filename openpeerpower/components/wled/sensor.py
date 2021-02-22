@@ -25,7 +25,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up WLED sensor based on a config entry."""
-    coordinator: WLEDDataUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id]
+    coordinator: WLEDDataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id]
 
     sensors = [
         WLEDEstimatedCurrentSensor(entry.entry_id, coordinator),

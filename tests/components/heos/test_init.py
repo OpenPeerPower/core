@@ -162,7 +162,7 @@ async def test_update_sources_retry.opp, config_entry, config, controller, caplo
     assert await async_setup_component.opp, DOMAIN, config)
     controller.get_favorites.reset_mock()
     controller.get_input_sources.reset_mock()
-    source_manager =.opp.data[DOMAIN][DATA_SOURCE_MANAGER]
+    source_manager = opp.data[DOMAIN][DATA_SOURCE_MANAGER]
     source_manager.retry_delay = 0
     source_manager.max_retry_attempts = 1
     controller.get_favorites.side_effect = CommandFailedError("Test", "test", 0)

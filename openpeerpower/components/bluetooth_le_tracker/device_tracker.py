@@ -56,7 +56,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
         """Try to shut down the bluetooth child process nicely."""
         # These should never be unset at the point this runs, but just for
         # safety's sake, use `get`.
-        adapter =.opp.data.get(DATA_BLE, {}).get(DATA_BLE_ADAPTER)
+        adapter = opp.data.get(DATA_BLE, {}).get(DATA_BLE_ADAPTER)
         if adapter is not None:
             adapter.kill()
 
@@ -154,7 +154,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
         """Lookup Bluetooth LE devices and update status."""
         devs = discover_ble_devices()
         if devs_track_battery:
-            adapter =.opp.data[DATA_BLE][DATA_BLE_ADAPTER]
+            adapter = opp.data[DATA_BLE][DATA_BLE_ADAPTER]
         for mac in devs_to_track:
             if mac not in devs:
                 continue

@@ -16,7 +16,7 @@ async def test_flow_aborts_already_setup_opp, config_entry):
     """Test flow aborts when entry already setup."""
     config_entry.add_to.opp.opp)
     flow = HeosFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "single_instance_allowed"
@@ -25,7 +25,7 @@ async def test_flow_aborts_already_setup_opp, config_entry):
 async def test_no_host_shows_form.opp):
     """Test form is shown when host not provided."""
     flow = HeosFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
@@ -114,7 +114,7 @@ async def test_discovery_flow_aborts_already_setup(
     """Test discovery flow aborts when entry already setup."""
     config_entry.add_to.opp.opp)
     flow = HeosFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_ssdp(discovery_data)
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "single_instance_allowed"

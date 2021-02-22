@@ -79,7 +79,7 @@ async def _register_panel.opp.addon, data):
     """Init coroutine to register the panel."""
     await opp.components.panel_custom.async_register_panel(
         frontend_url_path=addon,
-        webcomponent_name="opp.-main",
+        webcomponent_name= opp.-main",
         sidebar_title=data[ATTR_TITLE],
         sidebar_icon=data[ATTR_ICON],
         js_url="/api/opp./app/entrypoint.js",

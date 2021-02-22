@@ -26,7 +26,7 @@ async def async_setup_entry.opp, entry, async_add_entities) -> None:
     """Set up TotalConnect alarm panels based on a config entry."""
     alarms = []
 
-    client =.opp.data[DOMAIN][entry.entry_id]
+    client = opp.data[DOMAIN][entry.entry_id]
 
     for location_id, location in client.locations.items():
         location_name = location.location_name

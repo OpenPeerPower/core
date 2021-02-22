@@ -92,7 +92,7 @@ async def test_init.opp, mock_entry):
         await.opp.config_entries.async_setup(mock_entry.entry_id)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("light.ledblue_ccddeeff")
+    state = opp.states.get("light.ledblue_ccddeeff")
     assert state.state == STATE_OFF
     assert state.attributes == {
         ATTR_FRIENDLY_NAME: "LEDBlue-CCDDEEFF",
@@ -100,7 +100,7 @@ async def test_init.opp, mock_entry):
         ATTR_ICON: "mdi:string-lights",
     }
 
-    state =.opp.states.get("light.ledblue_33445566")
+    state = opp.states.get("light.ledblue_33445566")
     assert state.state == STATE_ON
     assert state.attributes == {
         ATTR_FRIENDLY_NAME: "LEDBlue-33445566",
@@ -293,7 +293,7 @@ async def test_light_update.opp, mock_light):
     """Test ZerprocLight update."""
     utcnow = dt_util.utcnow()
 
-    state =.opp.states.get("light.ledblue_ccddeeff")
+    state = opp.states.get("light.ledblue_ccddeeff")
     assert state.state == STATE_OFF
     assert state.attributes == {
         ATTR_FRIENDLY_NAME: "LEDBlue-CCDDEEFF",
@@ -311,7 +311,7 @@ async def test_light_update.opp, mock_light):
             async_fire_time_changed.opp, utcnow)
             await.opp.async_block_till_done()
 
-        state =.opp.states.get("light.ledblue_ccddeeff")
+        state = opp.states.get("light.ledblue_ccddeeff")
         assert state.state == STATE_UNAVAILABLE
         assert state.attributes == {
             ATTR_FRIENDLY_NAME: "LEDBlue-CCDDEEFF",
@@ -328,7 +328,7 @@ async def test_light_update.opp, mock_light):
             async_fire_time_changed.opp, utcnow)
             await.opp.async_block_till_done()
 
-        state =.opp.states.get("light.ledblue_ccddeeff")
+        state = opp.states.get("light.ledblue_ccddeeff")
         assert state.state == STATE_OFF
         assert state.attributes == {
             ATTR_FRIENDLY_NAME: "LEDBlue-CCDDEEFF",
@@ -345,7 +345,7 @@ async def test_light_update.opp, mock_light):
             async_fire_time_changed.opp, utcnow)
             await.opp.async_block_till_done()
 
-        state =.opp.states.get("light.ledblue_ccddeeff")
+        state = opp.states.get("light.ledblue_ccddeeff")
         assert state.state == STATE_ON
         assert state.attributes == {
             ATTR_FRIENDLY_NAME: "LEDBlue-CCDDEEFF",

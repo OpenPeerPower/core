@@ -23,10 +23,10 @@ async def test_sma_config(opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.current_consumption")
+    state = opp.states.get("sensor.current_consumption")
     assert state
     assert ATTR_UNIT_OF_MEASUREMENT in state.attributes
     assert "current_consumption" not in state.attributes
 
-    state =.opp.states.get("sensor.my_sensor")
+    state = opp.states.get("sensor.my_sensor")
     assert state

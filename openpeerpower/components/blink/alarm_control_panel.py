@@ -18,7 +18,7 @@ ICON = "mdi:security"
 
 async def async_setup_entry.opp, config, async_add_entities):
     """Set up the Blink Alarm Control Panels."""
-    data =.opp.data[DOMAIN][config.entry_id]
+    data = opp.data[DOMAIN][config.entry_id]
 
     sync_modules = []
     for sync_name, sync_module in data.sync.items():

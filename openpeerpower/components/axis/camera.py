@@ -26,7 +26,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Axis camera video stream."""
     filter_urllib3_logging()
 
-    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     if not device.api.vapix.params.image_format:
         return

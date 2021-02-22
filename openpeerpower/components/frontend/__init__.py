@@ -189,7 +189,7 @@ def async_register_built_in_panel(
         require_admin,
     )
 
-    panels =.opp.data.setdefault(DATA_PANELS, {})
+    panels = opp.data.setdefault(DATA_PANELS, {})
 
     if not update and panel.frontend_url_path in panels:
         raise ValueError(f"Overwriting panel {panel.frontend_url_path}")
@@ -203,7 +203,7 @@ def async_register_built_in_panel(
 @callback
 def async_remove_panel.opp, frontend_url_path):
     """Remove a built-in panel."""
-    panel =.opp.data.get(DATA_PANELS, {}).pop(frontend_url_path, None)
+    panel = opp.data.get(DATA_PANELS, {}).pop(frontend_url_path, None)
 
     if panel is None:
         _LOGGER.warning("Removing unknown panel %s", frontend_url_path)
@@ -214,9 +214,9 @@ def async_remove_panel.opp, frontend_url_path):
 def add_extra_js_url.opp, url, es5=False):
     """Register extra js or module url to load."""
     key = DATA_EXTRA_JS_URL_ES5 if es5 else DATA_EXTRA_MODULE_URL
-    url_set =.opp.data.get(key)
+    url_set = opp.data.get(key)
     if url_set is None:
-        url_set =.opp.data[key] = set()
+        url_set = opp.data[key] = set()
     url_set.add(url)
 
 
@@ -299,7 +299,7 @@ async def async_setup_opp, config):
         "developer-tools",
         require_admin=True,
         sidebar_title="developer_tools",
-        sidebar_icon=.opp:hammer",
+        sidebar_icon= opp:hammer",
     )
 
     if DATA_EXTRA_MODULE_URL not in.opp.data:
@@ -323,7 +323,7 @@ async def _async_setup_themes.opp, themes):
     """Set up themes data and services."""
    .opp.data[DATA_THEMES] = themes or {}
 
-    store =.opp.data[DATA_THEMES_STORE] =.opp.helpers.storage.Store(
+    store = opp.data[DATA_THEMES_STORE] = opp.helpers.storage.Store(
         THEMES_STORAGE_VERSION, THEMES_STORAGE_KEY
     )
 
@@ -342,8 +342,8 @@ async def _async_setup_themes.opp, themes):
     @callback
     def update_theme_and_fire_event():
         """Update theme_color in manifest."""
-        name =.opp.data[DATA_DEFAULT_THEME]
-        themes =.opp.data[DATA_THEMES]
+        name = opp.data[DATA_DEFAULT_THEME]
+        themes = opp.data[DATA_THEMES]
         MANIFEST_JSON["theme_color"] = DEFAULT_THEME_COLOR
         if name != DEFAULT_THEME:
             MANIFEST_JSON["theme_color"] = themes[name].get(
@@ -424,7 +424,7 @@ class IndexView(web_urldispatcher.AbstractResource):
         """Initialize the frontend view."""
         super().__init__(name="frontend:index")
         self.repo_path = repo_path
-        self.opp =.opp
+        self.opp = opp
         self._template_cache = None
 
     @property

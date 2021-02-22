@@ -174,7 +174,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
             ]
         )
     )
-    track_time_remove_callback =.opp.data[DOMAIN][entry.entry_id][
+    track_time_remove_callback = opp.data[DOMAIN][entry.entry_id][
         "track_time_remove_callback"
     ]
     track_time_remove_callback()

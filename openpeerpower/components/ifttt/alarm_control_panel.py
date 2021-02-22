@@ -103,7 +103,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         """Set the service state as device state attribute."""
         entity_ids = service.data.get(ATTR_ENTITY_ID)
         state = service.data.get(ATTR_STATE)
-        devices =.opp.data[DATA_IFTTT_ALARM]
+        devices = opp.data[DATA_IFTTT_ALARM]
         if entity_ids:
             devices = [d for d in devices if d.entity_id in entity_ids]
 

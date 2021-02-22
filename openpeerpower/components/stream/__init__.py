@@ -103,7 +103,7 @@ class Stream:
 
     def __init__(self, opp, source, options=None):
         """Initialize a stream."""
-        self.opp =.opp
+        self.opp = opp
         self.source = source
         self.options = options
         self.keepalive = False

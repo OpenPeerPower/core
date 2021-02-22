@@ -182,12 +182,12 @@ def filter_turn_off_params(params):
 
 async def async_setup_opp, config):
     """Expose light control via state machine and services."""
-    component =.opp.data[DOMAIN] = EntityComponent(
+    component = opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN, opp, SCAN_INTERVAL
     )
     await component.async_setup(config)
 
-    profiles =.opp.data[DATA_PROFILES] = Profiles.opp)
+    profiles = opp.data[DATA_PROFILES] = Profiles.opp)
     await profiles.async_initialize()
 
     def preprocess_data(data):
@@ -267,12 +267,12 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await.opp.data[DOMAIN].async_setup_entry(entry)
+    return await opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await.opp.data[DOMAIN].async_unload_entry(entry)
+    return await opp.data[DOMAIN].async_unload_entry(entry)
 
 
 def _coerce_none(value: str) -> None:
@@ -339,7 +339,7 @@ class Profiles:
 
     def __init__(self, opp: OpenPeerPowerType):
         """Initialize profiles."""
-        self.opp =.opp
+        self.opp = opp
         self.data: Dict[str, Profile] = {}
 
     def _load_profile_data(self) -> Dict[str, Profile]:

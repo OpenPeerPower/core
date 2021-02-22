@@ -14,7 +14,7 @@ class DemoNotificationService(BaseNotificationService):
 
     def __init__(self, opp):
         """Initialize the service."""
-        self.opp =.opp
+        self.opp = opp
 
     @property
     def targets(self):

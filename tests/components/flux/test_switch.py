@@ -37,7 +37,7 @@ async def test_valid_config(opp):
         },
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("switch.flux")
+    state = opp.states.get("switch.flux")
     assert state
     assert state.state == "off"
 
@@ -59,7 +59,7 @@ async def test_restore_state_last_on.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.flux")
+    state = opp.states.get("switch.flux")
     assert state
     assert state.state == "on"
 
@@ -81,7 +81,7 @@ async def test_restore_state_last_off.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.flux")
+    state = opp.states.get("switch.flux")
     assert state
     assert state.state == "off"
 
@@ -139,7 +139,7 @@ async def test_flux_when_switch_is_off.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -190,7 +190,7 @@ async def test_flux_before_sunrise.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -249,7 +249,7 @@ async def test_flux_before_sunrise_known_location.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -308,7 +308,7 @@ async def test_flux_after_sunrise_before_sunset.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -367,7 +367,7 @@ async def test_flux_after_sunset_before_stop.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -427,7 +427,7 @@ async def test_flux_after_stop_before_sunrise.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -486,7 +486,7 @@ async def test_flux_with_custom_start_stop_times.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -549,7 +549,7 @@ async def test_flux_before_sunrise_stop_next_day.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -615,7 +615,7 @@ async def test_flux_after_sunrise_before_sunset_stop_next_day(
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -681,7 +681,7 @@ async def test_flux_after_sunset_before_midnight_stop_next_day(
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -746,7 +746,7 @@ async def test_flux_after_sunset_after_midnight_stop_next_day(
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -811,7 +811,7 @@ async def test_flux_after_stop_before_sunrise_stop_next_day(
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -871,7 +871,7 @@ async def test_flux_with_custom_colortemps.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -933,7 +933,7 @@ async def test_flux_with_custom_brightness.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -1000,17 +1000,17 @@ async def test_flux_with_multiple_lights.opp, legacy_patchable_time):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
-    state =.opp.states.get(ent2.entity_id)
+    state = opp.states.get(ent2.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
-    state =.opp.states.get(ent3.entity_id)
+    state = opp.states.get(ent3.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
@@ -1076,7 +1076,7 @@ async def test_flux_with_mired.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("color_temp") is None
 
@@ -1133,7 +1133,7 @@ async def test_flux_with_rgb.opp, legacy_patchable_time):
     ent1 = platform.ENTITIES[0]
 
     # Verify initial state of light
-    state =.opp.states.get(ent1.entity_id)
+    state = opp.states.get(ent1.entity_id)
     assert STATE_ON == state.state
     assert state.attributes.get("color_temp") is None
 

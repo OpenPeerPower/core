@@ -105,7 +105,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         "model": config_entry.title,
     }
 
-    braviarc =.opp.data[DOMAIN][config_entry.entry_id][BRAVIARC]
+    braviarc = opp.data[DOMAIN][config_entry.entry_id][BRAVIARC]
 
     ignored_sources = config_entry.options.get(CONF_IGNORED_SOURCES, [])
 

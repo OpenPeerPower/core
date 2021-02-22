@@ -37,7 +37,7 @@ async def test_send_panel_light_on.opp, discovery, device):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state == STATE_ON
 
@@ -55,7 +55,7 @@ async def test_send_panel_light_on_device_timeout.opp, discovery, device):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state == STATE_ON
 
@@ -71,7 +71,7 @@ async def test_send_panel_light_off.opp, discovery, device):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state == STATE_OFF
 
@@ -88,7 +88,7 @@ async def test_send_panel_light_toggle.opp, discovery, device):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state == STATE_ON
 
@@ -100,7 +100,7 @@ async def test_send_panel_light_toggle.opp, discovery, device):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state == STATE_OFF
 
@@ -112,7 +112,7 @@ async def test_send_panel_light_toggle.opp, discovery, device):
         blocking=True,
     )
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state is not None
     assert state.state == STATE_ON
 
@@ -120,5 +120,5 @@ async def test_send_panel_light_toggle.opp, discovery, device):
 async def test_panel_light_name.opp, discovery, device):
     """Test for name property."""
     await async_setup_gree.opp)
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "fake-device-1 Panel Light"

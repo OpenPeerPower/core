@@ -125,7 +125,7 @@ class OpenCVImageProcessor(ImageProcessingEntity):
 
     def __init__(self, opp, camera_entity, name, classifiers):
         """Initialize the OpenCV entity."""
-        self.opp =.opp
+        self.opp = opp
         self._camera_entity = camera_entity
         if name:
             self._name = name

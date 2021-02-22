@@ -9,7 +9,7 @@ ICON = "mdi:toggle-switch"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Smappee Comfort Plugs."""
-    smappee_base =.opp.data[DOMAIN][config_entry.entry_id]
+    smappee_base = opp.data[DOMAIN][config_entry.entry_id]
 
     entities = []
     for service_location in smappee_base.smappee.service_locations.values():

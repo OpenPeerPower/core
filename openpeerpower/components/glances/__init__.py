@@ -91,7 +91,7 @@ class GlancesData:
 
     def __init__(self, opp, config_entry):
         """Initialize the Glances data."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.api = None
         self.unsub_timer = None

@@ -281,7 +281,7 @@ class SolarEdgeDataService:
         self.data = {}
         self.attributes = {}
 
-        self.opp =.opp
+        self.opp = opp
         self.coordinator = None
 
     @callback

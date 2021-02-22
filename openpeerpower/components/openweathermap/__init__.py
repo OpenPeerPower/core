@@ -114,7 +114,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
         )
     )
     if unload_ok:
-        update_listener =.opp.data[DOMAIN][config_entry.entry_id][UPDATE_LISTENER]
+        update_listener = opp.data[DOMAIN][config_entry.entry_id][UPDATE_LISTENER]
         update_listener()
        .opp.data[DOMAIN].pop(config_entry.entry_id)
 

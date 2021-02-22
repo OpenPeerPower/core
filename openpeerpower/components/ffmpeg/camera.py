@@ -35,7 +35,7 @@ class FFmpegCamera(Camera):
         """Initialize a FFmpeg camera."""
         super().__init__()
 
-        self._manager =.opp.data[DATA_FFMPEG]
+        self._manager = opp.data[DATA_FFMPEG]
         self._name = config.get(CONF_NAME)
         self._input = config.get(CONF_INPUT)
         self._extra_arguments = config.get(CONF_EXTRA_ARGUMENTS)

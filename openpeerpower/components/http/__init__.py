@@ -228,7 +228,7 @@ class OpenPeerPowerHTTP:
         app = self.app = web.Application(
             middlewares=[], client_max_size=MAX_CLIENT_SIZE
         )
-        app[KEY_HASS] =.opp
+        app[KEY_HASS] = opp
 
         # Order matters, security filters middle ware needs to go first,
         # forwarded middleware needs to go second.
@@ -248,7 +248,7 @@ class OpenPeerPowerHTTP:
 
         setup_cors(app, cors_origins)
 
-        self.opp =.opp
+        self.opp = opp
         self.ssl_certificate = ssl_certificate
         self.ssl_peer_certificate = ssl_peer_certificate
         self.ssl_key = ssl_key

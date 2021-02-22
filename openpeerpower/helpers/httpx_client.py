@@ -29,10 +29,10 @@ def get_async_client(
     """
     key = DATA_ASYNC_CLIENT if verify_ssl else DATA_ASYNC_CLIENT_NOVERIFY
 
-    client: Optional[httpx.AsyncClient] =.opp.data.get(key)
+    client: Optional[httpx.AsyncClient] = opp.data.get(key)
 
     if client is None:
-        client =.opp.data[key] = create_async_httpx_client.opp, verify_ssl)
+        client = opp.data[key] = create_async_httpx_client.opp, verify_ssl)
 
     return client
 

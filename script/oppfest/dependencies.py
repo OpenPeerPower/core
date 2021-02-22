@@ -65,7 +65,7 @@ class ImportCollector(ast.NodeVisitor):
 
         # self.opp.components.hue.async_create()
         # Name(id=self)
-        #   .Attribute(attr.opp) or .Attribute(attr=.opp)
+        #   .Attribute(attr.opp) or .Attribute(attr= opp)
         #   .Attribute(attr=hue)
         #   .Attribute(attr=async_create)
         if (

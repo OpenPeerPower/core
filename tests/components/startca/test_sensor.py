@@ -57,51 +57,51 @@ async def test_capped_setup_opp, aioclient_mock):
     await async_setup_component.opp, "sensor", {"sensor": config})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.start_ca_usage_ratio")
+    state = opp.states.get("sensor.start_ca_usage_ratio")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == PERCENTAGE
     assert state.state == "76.24"
 
-    state =.opp.states.get("sensor.start_ca_usage")
+    state = opp.states.get("sensor.start_ca_usage")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "304.95"
 
-    state =.opp.states.get("sensor.start_ca_data_limit")
+    state = opp.states.get("sensor.start_ca_data_limit")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "400"
 
-    state =.opp.states.get("sensor.start_ca_used_download")
+    state = opp.states.get("sensor.start_ca_used_download")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "304.95"
 
-    state =.opp.states.get("sensor.start_ca_used_upload")
+    state = opp.states.get("sensor.start_ca_used_upload")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "6.48"
 
-    state =.opp.states.get("sensor.start_ca_used_total")
+    state = opp.states.get("sensor.start_ca_used_total")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "311.43"
 
-    state =.opp.states.get("sensor.start_ca_grace_download")
+    state = opp.states.get("sensor.start_ca_grace_download")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "304.95"
 
-    state =.opp.states.get("sensor.start_ca_grace_upload")
+    state = opp.states.get("sensor.start_ca_grace_upload")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "6.48"
 
-    state =.opp.states.get("sensor.start_ca_grace_total")
+    state = opp.states.get("sensor.start_ca_grace_total")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "311.43"
 
-    state =.opp.states.get("sensor.start_ca_total_download")
+    state = opp.states.get("sensor.start_ca_total_download")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "304.95"
 
-    state =.opp.states.get("sensor.start_ca_total_upload")
+    state = opp.states.get("sensor.start_ca_total_upload")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "6.48"
 
-    state =.opp.states.get("sensor.start_ca_remaining")
+    state = opp.states.get("sensor.start_ca_remaining")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "95.05"
 
@@ -153,51 +153,51 @@ async def test_unlimited_setup_opp, aioclient_mock):
     await async_setup_component.opp, "sensor", {"sensor": config})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.start_ca_usage_ratio")
+    state = opp.states.get("sensor.start_ca_usage_ratio")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == PERCENTAGE
     assert state.state == "0"
 
-    state =.opp.states.get("sensor.start_ca_usage")
+    state = opp.states.get("sensor.start_ca_usage")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "0.0"
 
-    state =.opp.states.get("sensor.start_ca_data_limit")
+    state = opp.states.get("sensor.start_ca_data_limit")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "inf"
 
-    state =.opp.states.get("sensor.start_ca_used_download")
+    state = opp.states.get("sensor.start_ca_used_download")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "0.0"
 
-    state =.opp.states.get("sensor.start_ca_used_upload")
+    state = opp.states.get("sensor.start_ca_used_upload")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "0.0"
 
-    state =.opp.states.get("sensor.start_ca_used_total")
+    state = opp.states.get("sensor.start_ca_used_total")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "0.0"
 
-    state =.opp.states.get("sensor.start_ca_grace_download")
+    state = opp.states.get("sensor.start_ca_grace_download")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "304.95"
 
-    state =.opp.states.get("sensor.start_ca_grace_upload")
+    state = opp.states.get("sensor.start_ca_grace_upload")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "6.48"
 
-    state =.opp.states.get("sensor.start_ca_grace_total")
+    state = opp.states.get("sensor.start_ca_grace_total")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "311.43"
 
-    state =.opp.states.get("sensor.start_ca_total_download")
+    state = opp.states.get("sensor.start_ca_total_download")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "304.95"
 
-    state =.opp.states.get("sensor.start_ca_total_upload")
+    state = opp.states.get("sensor.start_ca_total_upload")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "6.48"
 
-    state =.opp.states.get("sensor.start_ca_remaining")
+    state = opp.states.get("sensor.start_ca_remaining")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_GIGABYTES
     assert state.state == "inf"
 

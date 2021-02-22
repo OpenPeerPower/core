@@ -57,8 +57,8 @@ class HassIODiscovery(OpenPeerPowerView):
 
     def __init__(self, opp: OpenPeerPowerView, oppio):
         """Initialize WebView."""
-        self.opp =.opp
-        self.oppio =.oppio
+        self.opp = opp
+        self.oppio = oppio
 
     async def post(self, request, uuid):
         """Handle new discovery requests."""

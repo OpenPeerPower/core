@@ -70,11 +70,11 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigType):
     """Set up TPLink from a config entry."""
-    config_data =.opp.data[DOMAIN].get(ATTR_CONFIG)
+    config_data = opp.data[DOMAIN].get(ATTR_CONFIG)
 
     # These will contain the initialized devices
-    lights =.opp.data[DOMAIN][CONF_LIGHT] = []
-    switches =.opp.data[DOMAIN][CONF_SWITCH] = []
+    lights = opp.data[DOMAIN][CONF_LIGHT] = []
+    switches = opp.data[DOMAIN][CONF_SWITCH] = []
 
     # Add static devices
     static_devices = SmartDevices()

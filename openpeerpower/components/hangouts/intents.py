@@ -13,7 +13,7 @@ class HelpIntent(intent.IntentHandler):
 
     def __init__(self, opp):
         """Set up the intent."""
-        self.opp =.opp
+        self.opp = opp
 
     async def async_handle(self, intent_obj):
         """Handle the intent."""

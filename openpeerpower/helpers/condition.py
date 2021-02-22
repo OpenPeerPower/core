@@ -229,7 +229,7 @@ def async_numeric_state(
 
     if isinstance(entity, str):
         entity_id = entity
-        entity =.opp.states.get(entity)
+        entity = opp.states.get(entity)
 
         if entity is None:
             raise ConditionError(f"Unknown entity {entity_id}")
@@ -267,7 +267,7 @@ def async_numeric_state(
 
     if below is not None:
         if isinstance(below, str):
-            below_entity =.opp.states.get(below)
+            below_entity = opp.states.get(below)
             if not below_entity or below_entity.state in (
                 STATE_UNAVAILABLE,
                 STATE_UNKNOWN,
@@ -280,7 +280,7 @@ def async_numeric_state(
 
     if above is not None:
         if isinstance(above, str):
-            above_entity =.opp.states.get(above)
+            above_entity = opp.states.get(above)
             if not above_entity or above_entity.state in (
                 STATE_UNAVAILABLE,
                 STATE_UNKNOWN,
@@ -311,7 +311,7 @@ def async_numeric_state_from_config(
     ) -> bool:
         """Test numeric state condition."""
         if value_template is not None:
-            value_template.opp =.opp
+            value_template.opp = opp
 
         return all(
             async_numeric_state(
@@ -339,7 +339,7 @@ def state(
 
     if isinstance(entity, str):
         entity_id = entity
-        entity =.opp.states.get(entity)
+        entity = opp.states.get(entity)
 
         if entity is None:
             raise ConditionError(f"Unknown entity {entity_id}")
@@ -368,7 +368,7 @@ def state(
             isinstance(req_state_value, str)
             and INPUT_ENTITY_ID.match(req_state_value) is not None
         ):
-            state_entity =.opp.states.get(req_state_value)
+            state_entity = opp.states.get(req_state_value)
             if not state_entity:
                 continue
             state_value = state_entity.state
@@ -510,7 +510,7 @@ def async_template_from_config(
 
     def template_if opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate template based if-condition."""
-        value_template.opp =.opp
+        value_template.opp = opp
 
         return async_template.opp, value_template, variables)
 
@@ -536,7 +536,7 @@ def time(
     if after is None:
         after = dt_util.dt.time(0)
     elif isinstance(after, str):
-        after_entity =.opp.states.get(after)
+        after_entity = opp.states.get(after)
         if not after_entity:
             raise ConditionError(
                 f"Error in 'time' condition: The 'after' entity {after} is not available"
@@ -550,7 +550,7 @@ def time(
     if before is None:
         before = dt_util.dt.time(23, 59, 59, 999999)
     elif isinstance(before, str):
-        before_entity =.opp.states.get(before)
+        before_entity = opp.states.get(before)
         if not before_entity:
             raise ConditionError(
                 f"Error in 'time' condition: The 'before' entity {before} is not available"
@@ -613,7 +613,7 @@ def zone(
 
     if isinstance(zone_ent, str):
         zone_ent_id = zone_ent
-        zone_ent =.opp.states.get(zone_ent)
+        zone_ent = opp.states.get(zone_ent)
 
         if zone_ent is None:
             raise ConditionError(f"Unknown zone {zone_ent_id}")
@@ -623,7 +623,7 @@ def zone(
 
     if isinstance(entity, str):
         entity_id = entity
-        entity =.opp.states.get(entity)
+        entity = opp.states.get(entity)
 
         if entity is None:
             raise ConditionError(f"Unknown entity {entity_id}")

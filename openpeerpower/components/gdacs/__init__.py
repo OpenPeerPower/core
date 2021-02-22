@@ -84,7 +84,7 @@ async def async_setup_opp, config):
 async def async_setup_entry.opp, config_entry):
     """Set up the GDACS component as config entry."""
    .opp.data.setdefault(DOMAIN, {})
-    feeds =.opp.data[DOMAIN].setdefault(FEED, {})
+    feeds = opp.data[DOMAIN].setdefault(FEED, {})
 
     radius = config_entry.data[CONF_RADIUS]
     if opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL:
@@ -99,7 +99,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload an GDACS component config entry."""
-    manager =.opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
+    manager = opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
     await manager.async_stop()
     await asyncio.wait(
         [

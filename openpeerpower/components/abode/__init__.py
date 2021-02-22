@@ -242,7 +242,7 @@ async def setup_opp_events.opp):
     if not.opp.data[DOMAIN].polling:
         await.opp.async_add_executor_job.opp.data[DOMAIN].abode.events.start)
 
-   .opp.data[DOMAIN].logout_listener =.opp.bus.async_listen_once(
+   .opp.data[DOMAIN].logout_listener = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, logout
     )
 

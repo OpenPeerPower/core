@@ -32,7 +32,7 @@ class LocalSource(MediaSource):
     def __init__(self, opp: OpenPeerPower):
         """Initialize local source."""
         super().__init__(DOMAIN)
-        self.opp =.opp
+        self.opp = opp
 
     @callback
     def async_full_path(self, source_dir_id, location) -> Path:
@@ -184,7 +184,7 @@ class LocalMediaView(OpenPeerPowerView):
 
     def __init__(self, opp: OpenPeerPower, source: LocalSource):
         """Initialize the media view."""
-        self.opp =.opp
+        self.opp = opp
         self.source = source
 
     async def get(

@@ -149,7 +149,7 @@ async def async_start(
             payload[CONF_PLATFORM] = "mqtt"
 
         if discovery_hash in.opp.data[PENDING_DISCOVERED]:
-            pending =.opp.data[PENDING_DISCOVERED][discovery_hash]["pending"]
+            pending = opp.data[PENDING_DISCOVERED][discovery_hash]["pending"]
             pending.appendleft(payload)
             _LOGGER.info(
                 "Component has already been discovered: %s %s, queuing update",
@@ -167,7 +167,7 @@ async def async_start(
         if discovery_hash in.opp.data[ALREADY_DISCOVERED] or payload:
 
             async def discovery_done(_):
-                pending =.opp.data[PENDING_DISCOVERED][discovery_hash]["pending"]
+                pending = opp.data[PENDING_DISCOVERED][discovery_hash]["pending"]
                 _LOGGER.debug("Pending discovery for %s: %s", discovery_hash, pending)
                 if not pending:
                    .opp.data[PENDING_DISCOVERED][discovery_hash]["unsub"]()
@@ -278,7 +278,7 @@ async def async_start(
                     and result["reason"]
                     in ["already_configured", "single_instance_allowed"]
                 ):
-                    unsub =.opp.data[INTEGRATION_UNSUBSCRIBE].pop(key, None)
+                    unsub = opp.data[INTEGRATION_UNSUBSCRIBE].pop(key, None)
                     if unsub is None:
                         return
                     unsub()

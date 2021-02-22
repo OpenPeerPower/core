@@ -84,7 +84,7 @@ def is_on.opp, entity_id):
 
 async def async_setup_opp, config):
     """Set up the vacuum component."""
-    component =.opp.data[DOMAIN] = EntityComponent(
+    component = opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN, opp, SCAN_INTERVAL
     )
 
@@ -123,12 +123,12 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await.opp.data[DOMAIN].async_setup_entry(entry)
+    return await opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await.opp.data[DOMAIN].async_unload_entry(entry)
+    return await opp.data[DOMAIN].async_unload_entry(entry)
 
 
 class _BaseVacuum(Entity):

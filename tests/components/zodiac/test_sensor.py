@@ -41,7 +41,7 @@ async def test_zodiac_day.opp, now, sign, element, modality):
         assert await async_setup_component.opp, DOMAIN, config)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.zodiac")
+    state = opp.states.get("sensor.zodiac")
     assert state
     assert state.state == sign
     assert state.attributes

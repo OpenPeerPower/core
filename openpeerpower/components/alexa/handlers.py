@@ -1495,7 +1495,7 @@ async def async_api_initialize_camera_stream.opp, config, directive, context):
     """Process a InitializeCameraStreams request."""
     entity = directive.entity
     stream_source = await camera.async_request_stream.opp, entity.entity_id, fmt="hls")
-    camera_image =.opp.states.get(entity.entity_id).attributes[ATTR_ENTITY_PICTURE]
+    camera_image = opp.states.get(entity.entity_id).attributes[ATTR_ENTITY_PICTURE]
 
     try:
         external_url = network.get_url(

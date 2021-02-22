@@ -51,7 +51,7 @@ async def test_default_setup_opp, aioclient_mock):
     }
 
     for name, value in metrics.items():
-        state =.opp.states.get("sensor.foobot_happybot_%s" % name)
+        state = opp.states.get("sensor.foobot_happybot_%s" % name)
         assert state.state == value[0]
         assert state.attributes.get("unit_of_measurement") == value[1]
 

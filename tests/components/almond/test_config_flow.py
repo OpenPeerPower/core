@@ -76,7 +76,7 @@ async def test_abort_if_existing_entry.opp):
     MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
 
     flow = config_flow.AlmondFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

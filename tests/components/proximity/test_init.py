@@ -22,14 +22,14 @@ async def test_proximities.opp):
     proximities = ["home", "work"]
 
     for prox in proximities:
-        state =.opp.states.get(f"proximity.{prox}")
+        state = opp.states.get(f"proximity.{prox}")
         assert state.state == "not set"
         assert state.attributes.get("nearest") == "not set"
         assert state.attributes.get("dir_of_travel") == "not set"
 
        .opp.states.async_set(f"proximity.{prox}", "0")
         await.opp.async_block_till_done()
-        state =.opp.states.get(f"proximity.{prox}")
+        state = opp.states.get(f"proximity.{prox}")
         assert state.state == "0"
 
 
@@ -63,14 +63,14 @@ async def test_proximity.opp):
 
     assert await async_setup_component.opp, DOMAIN, config)
 
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.state == "not set"
     assert state.attributes.get("nearest") == "not set"
     assert state.attributes.get("dir_of_travel") == "not set"
 
    .opp.states.async_set("proximity.home", "0")
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.state == "0"
 
 
@@ -94,7 +94,7 @@ async def test_device_tracker_test1_in_zone.opp):
         {"friendly_name": "test1", "latitude": 2.1, "longitude": 1.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.state == "0"
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "arrived"
@@ -126,7 +126,7 @@ async def test_device_trackers_in_zone.opp):
         {"friendly_name": "test2", "latitude": 2.1, "longitude": 1.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.state == "0"
     assert (state.attributes.get("nearest") == "test1, test2") or (
         state.attributes.get("nearest") == "test2, test1"
@@ -155,7 +155,7 @@ async def test_device_tracker_test1_away.opp):
     )
 
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -184,7 +184,7 @@ async def test_device_tracker_test1_awayfurther.opp):
         {"friendly_name": "test1", "latitude": 20.1, "longitude": 10.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -194,7 +194,7 @@ async def test_device_tracker_test1_awayfurther.opp):
         {"friendly_name": "test1", "latitude": 40.1, "longitude": 20.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "away_from"
 
@@ -222,7 +222,7 @@ async def test_device_tracker_test1_awaycloser.opp):
         {"friendly_name": "test1", "latitude": 40.1, "longitude": 20.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -232,7 +232,7 @@ async def test_device_tracker_test1_awaycloser.opp):
         {"friendly_name": "test1", "latitude": 20.1, "longitude": 10.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "towards"
 
@@ -253,7 +253,7 @@ async def test_all_device_trackers_in_ignored_zone.opp):
 
    .opp.states.async_set("device_tracker.test1", "work", {"friendly_name": "test1"})
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.state == "not set"
     assert state.attributes.get("nearest") == "not set"
     assert state.attributes.get("dir_of_travel") == "not set"
@@ -277,7 +277,7 @@ async def test_device_tracker_test1_no_coordinates.opp):
         "device_tracker.test1", "not_home", {"friendly_name": "test1"}
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "not set"
     assert state.attributes.get("dir_of_travel") == "not set"
 
@@ -317,7 +317,7 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test1.opp):
         {"friendly_name": "test1", "latitude": 20.1, "longitude": 10.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -327,7 +327,7 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test1.opp):
         {"friendly_name": "test2", "latitude": 40.1, "longitude": 20.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -365,7 +365,7 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test2.opp):
         {"friendly_name": "test2", "latitude": 40.1, "longitude": 20.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test2"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -375,7 +375,7 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test2.opp):
         {"friendly_name": "test1", "latitude": 20.1, "longitude": 10.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -408,7 +408,7 @@ async def test_device_tracker_test1_awayfurther_test2_in_ignored_zone.opp):
         {"friendly_name": "test1", "latitude": 20.1, "longitude": 10.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -472,7 +472,7 @@ async def test_device_tracker_test1_awayfurther_test2_first.opp):
    .opp.states.async_set("device_tracker.test1", "work", {"friendly_name": "test1"})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test2"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -500,7 +500,7 @@ async def test_device_tracker_test1_awayfurther_a_bit.opp):
         {"friendly_name": "test1", "latitude": 20.1000001, "longitude": 10.1000001},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -510,7 +510,7 @@ async def test_device_tracker_test1_awayfurther_a_bit.opp):
         {"friendly_name": "test1", "latitude": 20.1000002, "longitude": 10.1000002},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "stationary"
 
@@ -549,7 +549,7 @@ async def test_device_tracker_test1_nearest_after_test2_in_ignored_zone.opp):
         {"friendly_name": "test1", "latitude": 20.1, "longitude": 10.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -559,7 +559,7 @@ async def test_device_tracker_test1_nearest_after_test2_in_ignored_zone.opp):
         {"friendly_name": "test2", "latitude": 10.1, "longitude": 5.1},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test2"
     assert state.attributes.get("dir_of_travel") == "unknown"
 
@@ -569,7 +569,7 @@ async def test_device_tracker_test1_nearest_after_test2_in_ignored_zone.opp):
         {"friendly_name": "test2", "latitude": 12.6, "longitude": 7.6},
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("proximity.home")
+    state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "test1"
     assert state.attributes.get("dir_of_travel") == "unknown"
 

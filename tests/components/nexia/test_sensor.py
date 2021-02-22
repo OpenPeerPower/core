@@ -10,7 +10,7 @@ async def test_create_sensors.opp):
 
     await async_init_integration.opp)
 
-    state =.opp.states.get("sensor.nick_office_temperature")
+    state = opp.states.get("sensor.nick_office_temperature")
     assert state.state == "23"
 
     expected_attributes = {
@@ -25,7 +25,7 @@ async def test_create_sensors.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("sensor.nick_office_zone_setpoint_status")
+    state = opp.states.get("sensor.nick_office_zone_setpoint_status")
     assert state.state == "Permanent Hold"
     expected_attributes = {
         "attribution": "Data provided by mynexia.com",
@@ -37,7 +37,7 @@ async def test_create_sensors.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("sensor.nick_office_zone_status")
+    state = opp.states.get("sensor.nick_office_zone_status")
     assert state.state == "Relieving Air"
 
     expected_attributes = {
@@ -50,7 +50,7 @@ async def test_create_sensors.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("sensor.master_suite_air_cleaner_mode")
+    state = opp.states.get("sensor.master_suite_air_cleaner_mode")
     assert state.state == "auto"
 
     expected_attributes = {
@@ -63,7 +63,7 @@ async def test_create_sensors.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("sensor.master_suite_current_compressor_speed")
+    state = opp.states.get("sensor.master_suite_current_compressor_speed")
     assert state.state == "69.0"
 
     expected_attributes = {
@@ -77,7 +77,7 @@ async def test_create_sensors.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("sensor.master_suite_outdoor_temperature")
+    state = opp.states.get("sensor.master_suite_outdoor_temperature")
     assert state.state == "30.6"
 
     expected_attributes = {
@@ -92,7 +92,7 @@ async def test_create_sensors.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("sensor.master_suite_relative_humidity")
+    state = opp.states.get("sensor.master_suite_relative_humidity")
     assert state.state == "52.0"
 
     expected_attributes = {
@@ -107,7 +107,7 @@ async def test_create_sensors.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("sensor.master_suite_requested_compressor_speed")
+    state = opp.states.get("sensor.master_suite_requested_compressor_speed")
     assert state.state == "69.0"
 
     expected_attributes = {
@@ -121,7 +121,7 @@ async def test_create_sensors.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("sensor.master_suite_system_status")
+    state = opp.states.get("sensor.master_suite_system_status")
     assert state.state == "Cooling"
 
     expected_attributes = {

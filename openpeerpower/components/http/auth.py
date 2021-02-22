@@ -23,10 +23,10 @@ SIGN_QUERY_PARAM = "authSig"
 @callback
 def async_sign_path.opp, refresh_token_id, path, expiration):
     """Sign a path for temporary access without auth header."""
-    secret =.opp.data.get(DATA_SIGN_SECRET)
+    secret = opp.data.get(DATA_SIGN_SECRET)
 
     if secret is None:
-        secret =.opp.data[DATA_SIGN_SECRET] = secrets.token_hex()
+        secret = opp.data[DATA_SIGN_SECRET] = secrets.token_hex()
 
     now = dt_util.utcnow()
     encoded = jwt.encode(
@@ -67,7 +67,7 @@ def setup_auth.opp, app):
 
     async def async_validate_signed_request(request):
         """Validate a signed request."""
-        secret =.opp.data.get(DATA_SIGN_SECRET)
+        secret = opp.data.get(DATA_SIGN_SECRET)
 
         if secret is None:
             return False

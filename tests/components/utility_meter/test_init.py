@@ -53,10 +53,10 @@ async def test_services.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.energy_bill_peak")
+    state = opp.states.get("sensor.energy_bill_peak")
     assert state.state == "2"
 
-    state =.opp.states.get("sensor.energy_bill_offpeak")
+    state = opp.states.get("sensor.energy_bill_offpeak")
     assert state.state == "0"
 
     # Next tariff
@@ -74,10 +74,10 @@ async def test_services.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.energy_bill_peak")
+    state = opp.states.get("sensor.energy_bill_peak")
     assert state.state == "2"
 
-    state =.opp.states.get("sensor.energy_bill_offpeak")
+    state = opp.states.get("sensor.energy_bill_offpeak")
     assert state.state == "1"
 
     # Change tariff
@@ -95,10 +95,10 @@ async def test_services.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.energy_bill_peak")
+    state = opp.states.get("sensor.energy_bill_peak")
     assert state.state == "3"
 
-    state =.opp.states.get("sensor.energy_bill_offpeak")
+    state = opp.states.get("sensor.energy_bill_offpeak")
     assert state.state == "1"
 
     # Reset meters
@@ -106,8 +106,8 @@ async def test_services.opp):
     await.opp.services.async_call(DOMAIN, SERVICE_RESET, data)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.energy_bill_peak")
+    state = opp.states.get("sensor.energy_bill_peak")
     assert state.state == "0"
 
-    state =.opp.states.get("sensor.energy_bill_offpeak")
+    state = opp.states.get("sensor.energy_bill_offpeak")
     assert state.state == "0"

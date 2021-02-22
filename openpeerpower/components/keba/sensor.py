@@ -14,7 +14,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    keba =.opp.data[DOMAIN]
+    keba = opp.data[DOMAIN]
 
     sensors = [
         KebaSensor(

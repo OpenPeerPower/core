@@ -91,7 +91,7 @@ class ZHADevice(LogMixin):
         zha_gateway: zha_typing.ZhaGatewayType,
     ):
         """Initialize the gateway."""
-        self.opp =.opp
+        self.opp = opp
         self._zigpy_device = zigpy_device
         self._zha_gateway = zha_gateway
         self._available = False

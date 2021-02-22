@@ -99,7 +99,7 @@ class RegistrationsView(OpenPeerPowerView):
 
         remote_ui_url = None
         try:
-            remote_ui_url =.opp.components.cloud.async_remote_ui_url()
+            remote_ui_url = opp.components.cloud.async_remote_ui_url()
         except.opp.components.cloud.CloudNotAvailable:
             pass
 

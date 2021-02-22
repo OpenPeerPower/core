@@ -251,7 +251,7 @@ async def test_update_stale.opp, mock_device_tracker_conf):
             )
             await.opp.async_block_till_done()
 
-    assert STATE_HOME ==.opp.states.get("device_tracker.dev1").state
+    assert STATE_HOME == opp.states.get("device_tracker.dev1").state
 
     scanner.leave_home("DEV1")
 
@@ -262,7 +262,7 @@ async def test_update_stale.opp, mock_device_tracker_conf):
         async_fire_time_changed.opp, scan_time)
         await.opp.async_block_till_done()
 
-    assert STATE_NOT_HOME ==.opp.states.get("device_tracker.dev1").state
+    assert STATE_NOT_HOME == opp.states.get("device_tracker.dev1").state
 
 
 async def test_entity_attributes.opp, mock_device_tracker_conf):
@@ -289,7 +289,7 @@ async def test_entity_attributes.opp, mock_device_tracker_conf):
     with assert_setup_component(1, device_tracker.DOMAIN):
         assert await async_setup_component.opp, device_tracker.DOMAIN, TEST_PLATFORM)
 
-    attrs =.opp.states.get(entity_id).attributes
+    attrs = opp.states.get(entity_id).attributes
 
     assert friendly_name == attrs.get(ATTR_FRIENDLY_NAME)
     assert icon == attrs.get(ATTR_ICON)
@@ -418,7 +418,7 @@ async def test_see_state.opp, yaml_devices):
     config = await legacy.async_load_config(yaml_devices, opp, timedelta(seconds=0))
     assert len(config) == 1
 
-    state =.opp.states.get("device_tracker.example_com")
+    state = opp.states.get("device_tracker.example_com")
     attrs = state.attributes
     assert state.state == "Work"
     assert state.object_id == "example_com"
@@ -472,7 +472,7 @@ async def test_see_passive_zone_state.opp, mock_device_tracker_conf):
             )
             await.opp.async_block_till_done()
 
-    state =.opp.states.get("device_tracker.dev1")
+    state = opp.states.get("device_tracker.dev1")
     attrs = state.attributes
     assert STATE_HOME == state.state
     assert state.object_id == "dev1"
@@ -492,7 +492,7 @@ async def test_see_passive_zone_state.opp, mock_device_tracker_conf):
         async_fire_time_changed.opp, scan_time)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("device_tracker.dev1")
+    state = opp.states.get("device_tracker.dev1")
     attrs = state.attributes
     assert STATE_NOT_HOME == state.state
     assert state.object_id == "dev1"
@@ -545,7 +545,7 @@ async def test_async_added_to.opp.opp):
     with patch_yaml_files(files):
         assert await async_setup_component.opp, device_tracker.DOMAIN, {})
 
-    state =.opp.states.get("device_tracker.jk")
+    state = opp.states.get("device_tracker.jk")
     assert state
     assert state.state == "home"
 

@@ -18,7 +18,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[list], None],
 ) -> bool:
     """Set up the ISY994 switch platform."""
-   .opp_isy_data =.opp.data[ISY994_DOMAIN][entry.entry_id]
+   .opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     devices = []
     for node in.opp_isy_data[ISY994_NODES][SWITCH]:
         devices.append(ISYSwitchEntity(node))

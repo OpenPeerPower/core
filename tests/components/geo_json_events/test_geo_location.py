@@ -80,10 +80,10 @@ async def test_setup_opp, legacy_patchable_time):
             # Collect events.
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 3
 
-            state =.opp.states.get("geo_location.title_1")
+            state = opp.states.get("geo_location.title_1")
             assert state is not None
             assert state.name == "Title 1"
             assert state.attributes == {
@@ -96,7 +96,7 @@ async def test_setup_opp, legacy_patchable_time):
             }
             assert round(abs(float(state.state) - 15.5), 7) == 0
 
-            state =.opp.states.get("geo_location.title_2")
+            state = opp.states.get("geo_location.title_2")
             assert state is not None
             assert state.name == "Title 2"
             assert state.attributes == {
@@ -109,7 +109,7 @@ async def test_setup_opp, legacy_patchable_time):
             }
             assert round(abs(float(state.state) - 20.5), 7) == 0
 
-            state =.opp.states.get("geo_location.title_3")
+            state = opp.states.get("geo_location.title_3")
             assert state is not None
             assert state.name == "Title 3"
             assert state.attributes == {
@@ -131,7 +131,7 @@ async def test_setup_opp, legacy_patchable_time):
             async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 3
 
             # Simulate an update - empty data, but successful update,
@@ -140,7 +140,7 @@ async def test_setup_opp, legacy_patchable_time):
             async_fire_time_changed.opp, utcnow + 2 * SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 3
 
             # Simulate an update - empty data, removes all entities
@@ -148,7 +148,7 @@ async def test_setup_opp, legacy_patchable_time):
             async_fire_time_changed.opp, utcnow + 3 * SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 0
 
 
@@ -171,7 +171,7 @@ async def test_setup_with_custom_location.opp):
             # Collect events.
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 1
 
             assert mock_feed.call_args == call((15.1, 25.2), URL, filter_radius=200.0)
@@ -210,7 +210,7 @@ async def test_setup_race_condition.opp, legacy_patchable_time):
             # Collect events.
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 1
             assert len.opp.data[DATA_DISPATCHER][delete_signal]) == 1
             assert len.opp.data[DATA_DISPATCHER][update_signal]) == 1
@@ -220,7 +220,7 @@ async def test_setup_race_condition.opp, legacy_patchable_time):
             async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 0
             assert len.opp.data[DATA_DISPATCHER][delete_signal]) == 0
             assert len.opp.data[DATA_DISPATCHER][update_signal]) == 0
@@ -230,7 +230,7 @@ async def test_setup_race_condition.opp, legacy_patchable_time):
             async_fire_time_changed.opp, utcnow + 2 * SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 1
             assert len.opp.data[DATA_DISPATCHER][delete_signal]) == 1
             assert len.opp.data[DATA_DISPATCHER][update_signal]) == 1
@@ -240,7 +240,7 @@ async def test_setup_race_condition.opp, legacy_patchable_time):
             async_fire_time_changed.opp, utcnow + 3 * SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 1
             assert len.opp.data[DATA_DISPATCHER][delete_signal]) == 1
             assert len.opp.data[DATA_DISPATCHER][update_signal]) == 1
@@ -250,7 +250,7 @@ async def test_setup_race_condition.opp, legacy_patchable_time):
             async_fire_time_changed.opp, utcnow + 4 * SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 0
             # Ensure that delete and update signal targets are now empty.
             assert len.opp.data[DATA_DISPATCHER][delete_signal]) == 0

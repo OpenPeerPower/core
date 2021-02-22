@@ -198,11 +198,11 @@ async def test_climate_local_temp.opp, device_climate):
     thrm_cluster = device_climate.device.endpoints[1].thermostat
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] is None
 
     await send_attributes_report.opp, thrm_cluster, {0: 2100})
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] == 21.0
 
 
@@ -212,43 +212,43 @@ async def test_climate_hvac_action_running_state.opp, device_climate):
     thrm_cluster = device_climate.device.endpoints[1].thermostat
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x001E: Thermostat.RunningMode.Off}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x001C: Thermostat.SystemMode.Auto}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x001E: Thermostat.RunningMode.Cool}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_COOL
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x001E: Thermostat.RunningMode.Heat}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x001E: Thermostat.RunningMode.Off}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x0029: Thermostat.RunningState.Fan_State_On}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_FAN
 
 
@@ -258,61 +258,61 @@ async def test_climate_hvac_action_running_state_zen.opp, device_climate_zen):
     thrm_cluster = device_climate_zen.device.endpoints[1].thermostat
     entity_id = await find_entity_id(DOMAIN, device_climate_zen, opp)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert ATTR_HVAC_ACTION not in state.attributes
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x0029: Thermostat.RunningState.Cool_2nd_Stage_On}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_COOL
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x0029: Thermostat.RunningState.Fan_State_On}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_FAN
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x0029: Thermostat.RunningState.Heat_2nd_Stage_On}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x0029: Thermostat.RunningState.Fan_2nd_Stage_On}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_FAN
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x0029: Thermostat.RunningState.Cool_State_On}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_COOL
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x0029: Thermostat.RunningState.Fan_3rd_Stage_On}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_FAN
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x0029: Thermostat.RunningState.Heat_State_On}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x0029: Thermostat.RunningState.Idle}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x001C: Thermostat.SystemMode.Heat}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
 
 
@@ -322,33 +322,33 @@ async def test_climate_hvac_action_pi_demand.opp, device_climate):
     thrm_cluster = device_climate.device.endpoints[1].thermostat
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
 
     await send_attributes_report.opp, thrm_cluster, {0x0007: 10})
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_COOL
 
     await send_attributes_report.opp, thrm_cluster, {0x0008: 20})
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
 
     await send_attributes_report.opp, thrm_cluster, {0x0007: 0})
     await send_attributes_report.opp, thrm_cluster, {0x0008: 0})
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x001C: Thermostat.SystemMode.Heat}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x001C: Thermostat.SystemMode.Cool}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
 
 
@@ -369,21 +369,21 @@ async def test_hvac_mode.opp, device_climate, sys_mode, hvac_mode):
     thrm_cluster = device_climate.device.endpoints[1].thermostat
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_OFF
 
     await send_attributes_report.opp, thrm_cluster, {0x001C: sys_mode})
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == hvac_mode
 
     await send_attributes_report(
        .opp, thrm_cluster, {0x001C: Thermostat.SystemMode.Off}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_OFF
 
     await send_attributes_report.opp, thrm_cluster, {0x001C: 0xFF})
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == STATE_UNKNOWN
 
 
@@ -406,7 +406,7 @@ async def test_hvac_modes.opp, device_climate_mock, seq_of_op, modes):
         CLIMATE, {"ctrl_seqe_of_oper": seq_of_op}
     )
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert set(state.attributes[ATTR_HVAC_MODES]) == modes
 
 
@@ -449,7 +449,7 @@ async def test_target_temperature(
             blocking=True,
         )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TEMPERATURE] == target_temp
 
 
@@ -489,7 +489,7 @@ async def test_target_temperature_high(
             blocking=True,
         )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] == target_temp
 
 
@@ -529,7 +529,7 @@ async def test_target_temperature_low(
             blocking=True,
         )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_LOW] == target_temp
 
 
@@ -550,7 +550,7 @@ async def test_set_hvac_mode.opp, device_climate, hvac_mode, sys_mode):
     thrm_cluster = device_climate.device.endpoints[1].thermostat
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_OFF
 
     await.opp.services.async_call(
@@ -559,7 +559,7 @@ async def test_set_hvac_mode.opp, device_climate, hvac_mode, sys_mode):
         {ATTR_ENTITY_ID: entity_id, ATTR_HVAC_MODE: hvac_mode},
         blocking=True,
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     if sys_mode is not None:
         assert state.state == hvac_mode
         assert thrm_cluster.write_attributes.call_count == 1
@@ -578,7 +578,7 @@ async def test_set_hvac_mode.opp, device_climate, hvac_mode, sys_mode):
         {ATTR_ENTITY_ID: entity_id, ATTR_HVAC_MODE: HVAC_MODE_OFF},
         blocking=True,
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_OFF
     assert thrm_cluster.write_attributes.call_count == 1
     assert thrm_cluster.write_attributes.call_args[0][0] == {
@@ -592,7 +592,7 @@ async def test_preset_setting.opp, device_climate_sinope):
     entity_id = await find_entity_id(DOMAIN, device_climate_sinope, opp)
     thrm_cluster = device_climate_sinope.device.endpoints[1].thermostat
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
 
     # unsuccessful occupancy change
@@ -607,7 +607,7 @@ async def test_preset_setting.opp, device_climate_sinope):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
     assert thrm_cluster.write_attributes.call_count == 1
     assert thrm_cluster.write_attributes.call_args[0][0] == {"set_occupancy": 0}
@@ -624,7 +624,7 @@ async def test_preset_setting.opp, device_climate_sinope):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_AWAY
     assert thrm_cluster.write_attributes.call_count == 1
     assert thrm_cluster.write_attributes.call_args[0][0] == {"set_occupancy": 0}
@@ -641,7 +641,7 @@ async def test_preset_setting.opp, device_climate_sinope):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_AWAY
     assert thrm_cluster.write_attributes.call_count == 1
     assert thrm_cluster.write_attributes.call_args[0][0] == {"set_occupancy": 1}
@@ -658,7 +658,7 @@ async def test_preset_setting.opp, device_climate_sinope):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
     assert thrm_cluster.write_attributes.call_count == 1
     assert thrm_cluster.write_attributes.call_args[0][0] == {"set_occupancy": 1}
@@ -670,7 +670,7 @@ async def test_preset_setting_invalid.opp, device_climate_sinope):
     entity_id = await find_entity_id(DOMAIN, device_climate_sinope, opp)
     thrm_cluster = device_climate_sinope.device.endpoints[1].thermostat
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
 
     await.opp.services.async_call(
@@ -680,7 +680,7 @@ async def test_preset_setting_invalid.opp, device_climate_sinope):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
     assert thrm_cluster.write_attributes.call_count == 0
 
@@ -691,7 +691,7 @@ async def test_set_temperature_hvac_mode.opp, device_climate):
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
     thrm_cluster = device_climate.device.endpoints[1].thermostat
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_OFF
 
     await.opp.services.async_call(
@@ -705,7 +705,7 @@ async def test_set_temperature_hvac_mode.opp, device_climate):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_HEAT_COOL
     assert thrm_cluster.write_attributes.await_count == 1
     assert thrm_cluster.write_attributes.call_args[0][0] == {
@@ -735,7 +735,7 @@ async def test_set_temperature_heat_cool.opp, device_climate_mock):
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
     thrm_cluster = device_climate.device.endpoints[1].thermostat
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_HEAT_COOL
 
     await.opp.services.async_call(
@@ -745,7 +745,7 @@ async def test_set_temperature_heat_cool.opp, device_climate_mock):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_LOW] == 20.0
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] == 25.0
     assert thrm_cluster.write_attributes.await_count == 0
@@ -761,7 +761,7 @@ async def test_set_temperature_heat_cool.opp, device_climate_mock):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_LOW] == 19.0
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] == 26.0
     assert thrm_cluster.write_attributes.await_count == 2
@@ -791,7 +791,7 @@ async def test_set_temperature_heat_cool.opp, device_climate_mock):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_LOW] == 15.0
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] == 30.0
     assert thrm_cluster.write_attributes.await_count == 2
@@ -825,7 +825,7 @@ async def test_set_temperature_heat.opp, device_climate_mock):
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
     thrm_cluster = device_climate.device.endpoints[1].thermostat
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_HEAT
 
     await.opp.services.async_call(
@@ -839,7 +839,7 @@ async def test_set_temperature_heat.opp, device_climate_mock):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_LOW] is None
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] is None
     assert state.attributes[ATTR_TEMPERATURE] == 20.0
@@ -852,7 +852,7 @@ async def test_set_temperature_heat.opp, device_climate_mock):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_LOW] is None
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] is None
     assert state.attributes[ATTR_TEMPERATURE] == 21.0
@@ -876,7 +876,7 @@ async def test_set_temperature_heat.opp, device_climate_mock):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_LOW] is None
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] is None
     assert state.attributes[ATTR_TEMPERATURE] == 22.0
@@ -908,7 +908,7 @@ async def test_set_temperature_cool.opp, device_climate_mock):
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
     thrm_cluster = device_climate.device.endpoints[1].thermostat
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_COOL
 
     await.opp.services.async_call(
@@ -922,7 +922,7 @@ async def test_set_temperature_cool.opp, device_climate_mock):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_LOW] is None
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] is None
     assert state.attributes[ATTR_TEMPERATURE] == 25.0
@@ -935,7 +935,7 @@ async def test_set_temperature_cool.opp, device_climate_mock):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_LOW] is None
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] is None
     assert state.attributes[ATTR_TEMPERATURE] == 21.0
@@ -959,7 +959,7 @@ async def test_set_temperature_cool.opp, device_climate_mock):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_LOW] is None
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] is None
     assert state.attributes[ATTR_TEMPERATURE] == 22.0
@@ -991,7 +991,7 @@ async def test_set_temperature_wrong_mode.opp, device_climate_mock):
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
     thrm_cluster = device_climate.device.endpoints[1].thermostat
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_DRY
 
     await.opp.services.async_call(
@@ -1001,7 +1001,7 @@ async def test_set_temperature_wrong_mode.opp, device_climate_mock):
         blocking=True,
     )
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_TARGET_TEMP_LOW] is None
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] is None
     assert state.attributes[ATTR_TEMPERATURE] is None
@@ -1014,7 +1014,7 @@ async def test_occupancy_reset.opp, device_climate_sinope):
     entity_id = await find_entity_id(DOMAIN, device_climate_sinope, opp)
     thrm_cluster = device_climate_sinope.device.endpoints[1].thermostat
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
 
     await.opp.services.async_call(
@@ -1025,13 +1025,13 @@ async def test_occupancy_reset.opp, device_climate_sinope):
     )
     thrm_cluster.write_attributes.reset_mock()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_AWAY
 
     await send_attributes_report(
        .opp, thrm_cluster, {"occupied_heating_setpoint": 1950}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
 
 
@@ -1041,26 +1041,26 @@ async def test_fan_mode.opp, device_climate_fan):
     entity_id = await find_entity_id(DOMAIN, device_climate_fan, opp)
     thrm_cluster = device_climate_fan.device.endpoints[1].thermostat
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert set(state.attributes[ATTR_FAN_MODES]) == {FAN_AUTO, FAN_ON}
     assert state.attributes[ATTR_FAN_MODE] == FAN_AUTO
 
     await send_attributes_report(
        .opp, thrm_cluster, {"running_state": Thermostat.RunningState.Fan_State_On}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_FAN_MODE] == FAN_ON
 
     await send_attributes_report(
        .opp, thrm_cluster, {"running_state": Thermostat.RunningState.Idle}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_FAN_MODE] == FAN_AUTO
 
     await send_attributes_report(
        .opp, thrm_cluster, {"running_state": Thermostat.RunningState.Fan_2nd_Stage_On}
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_FAN_MODE] == FAN_ON
 
 
@@ -1085,7 +1085,7 @@ async def test_set_fan_mode.opp, device_climate_fan):
     entity_id = await find_entity_id(DOMAIN, device_climate_fan, opp)
     fan_cluster = device_climate_fan.device.endpoints[1].fan
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_FAN_MODE] == FAN_AUTO
 
     await.opp.services.async_call(

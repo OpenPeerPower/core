@@ -80,7 +80,7 @@ async def async_setup_opp, config):
     async def heating_boost(service):
         """Handle the service call."""
 
-        entity_lookup =.opp.data[DOMAIN]["entity_lookup"]
+        entity_lookup = opp.data[DOMAIN]["entity_lookup"]
         hive_id = entity_lookup.get(service.data[ATTR_ENTITY_ID])
         if not hive_id:
             # log or raise error
@@ -94,7 +94,7 @@ async def async_setup_opp, config):
 
     async def hot_water_boost(service):
         """Handle the service call."""
-        entity_lookup =.opp.data[DOMAIN]["entity_lookup"]
+        entity_lookup = opp.data[DOMAIN]["entity_lookup"]
         hive_id = entity_lookup.get(service.data[ATTR_ENTITY_ID])
         if not hive_id:
             # log or raise error

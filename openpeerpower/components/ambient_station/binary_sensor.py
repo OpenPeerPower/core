@@ -29,7 +29,7 @@ from .const import (
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Ambient PWS binary sensors based on a config entry."""
-    ambient =.opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
+    ambient = opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
 
     binary_sensor_list = []
     for mac_address, station in ambient.stations.items():

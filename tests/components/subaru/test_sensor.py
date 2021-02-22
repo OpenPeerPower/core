@@ -63,5 +63,5 @@ def _assert_data.opp, expected_state):
         ] = expected_state[item[SENSOR_FIELD]]
 
     for sensor in expected_states:
-        actual =.opp.states.get(sensor)
+        actual = opp.states.get(sensor)
         assert actual.state == expected_states[sensor]

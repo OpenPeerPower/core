@@ -120,7 +120,7 @@ async def test_is_on.opp):
 async def test_setup_opp):
     """Test setup method."""
     assert await async_setup_component.opp, alert.DOMAIN, TEST_CONFIG)
-    assert STATE_IDLE ==.opp.states.get(ENTITY_ID).state
+    assert STATE_IDLE == opp.states.get(ENTITY_ID).state
 
 
 async def test_fire.opp, mock_notifier):
@@ -128,7 +128,7 @@ async def test_fire.opp, mock_notifier):
     assert await async_setup_component.opp, alert.DOMAIN, TEST_CONFIG)
    .opp.states.async_set("sensor.test", STATE_ON)
     await.opp.async_block_till_done()
-    assert STATE_ON ==.opp.states.get(ENTITY_ID).state
+    assert STATE_ON == opp.states.get(ENTITY_ID).state
 
 
 async def test_silence.opp, mock_notifier):
@@ -138,15 +138,15 @@ async def test_silence.opp, mock_notifier):
     await.opp.async_block_till_done()
     async_turn_off.opp, ENTITY_ID)
     await.opp.async_block_till_done()
-    assert STATE_OFF ==.opp.states.get(ENTITY_ID).state
+    assert STATE_OFF == opp.states.get(ENTITY_ID).state
 
     # alert should not be silenced on next fire
    .opp.states.async_set("sensor.test", STATE_OFF)
     await.opp.async_block_till_done()
-    assert STATE_IDLE ==.opp.states.get(ENTITY_ID).state
+    assert STATE_IDLE == opp.states.get(ENTITY_ID).state
    .opp.states.async_set("sensor.test", STATE_ON)
     await.opp.async_block_till_done()
-    assert STATE_ON ==.opp.states.get(ENTITY_ID).state
+    assert STATE_ON == opp.states.get(ENTITY_ID).state
 
 
 async def test_reset.opp, mock_notifier):
@@ -156,10 +156,10 @@ async def test_reset.opp, mock_notifier):
     await.opp.async_block_till_done()
     async_turn_off.opp, ENTITY_ID)
     await.opp.async_block_till_done()
-    assert STATE_OFF ==.opp.states.get(ENTITY_ID).state
+    assert STATE_OFF == opp.states.get(ENTITY_ID).state
     async_turn_on.opp, ENTITY_ID)
     await.opp.async_block_till_done()
-    assert STATE_ON ==.opp.states.get(ENTITY_ID).state
+    assert STATE_ON == opp.states.get(ENTITY_ID).state
 
 
 async def test_toggle.opp, mock_notifier):
@@ -167,13 +167,13 @@ async def test_toggle.opp, mock_notifier):
     assert await async_setup_component.opp, alert.DOMAIN, TEST_CONFIG)
    .opp.states.async_set("sensor.test", STATE_ON)
     await.opp.async_block_till_done()
-    assert STATE_ON ==.opp.states.get(ENTITY_ID).state
+    assert STATE_ON == opp.states.get(ENTITY_ID).state
     async_toggle.opp, ENTITY_ID)
     await.opp.async_block_till_done()
-    assert STATE_OFF ==.opp.states.get(ENTITY_ID).state
+    assert STATE_OFF == opp.states.get(ENTITY_ID).state
     async_toggle.opp, ENTITY_ID)
     await.opp.async_block_till_done()
-    assert STATE_ON ==.opp.states.get(ENTITY_ID).state
+    assert STATE_ON == opp.states.get(ENTITY_ID).state
 
 
 async def test_notification_no_done_message.opp):

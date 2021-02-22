@@ -92,7 +92,7 @@ async def test_http_processing_intent.opp, opp_client, opp_admin_user):
 
         async def async_handle(self, intent):
             """Handle the intent."""
-            assert intent.context.user_id ==.opp_admin_user.id
+            assert intent.context.user_id == opp_admin_user.id
             response = intent.create_response()
             response.async_set_speech(
                 "I've ordered a {}!".format(intent.slots["type"]["value"])
@@ -271,5 +271,5 @@ async def test_custom_agent.opp, opp_client, opp_admin_user):
 
     assert len(calls) == 1
     assert calls[0][0] == "Test Text"
-    assert calls[0][1].user_id ==.opp_admin_user.id
+    assert calls[0][1].user_id == opp_admin_user.id
     assert calls[0][2] == "test-conv-id"

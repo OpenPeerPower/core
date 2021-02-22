@@ -114,7 +114,7 @@ class BaseDemoFan(FanEntity):
         speed_list: Optional[List[str]],
     ) -> None:
         """Initialize the entity."""
-        self.opp =.opp
+        self.opp = opp
         self._unique_id = unique_id
         self._supported_features = supported_features
         self._speed = SPEED_OFF

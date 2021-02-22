@@ -123,7 +123,7 @@ def scenes_with_entity.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DATA_PLATFORM not in.opp.data:
         return []
 
-    platform =.opp.data[DATA_PLATFORM]
+    platform = opp.data[DATA_PLATFORM]
 
     return [
         scene_entity.entity_id
@@ -138,7 +138,7 @@ def entities_in_scene.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DATA_PLATFORM not in.opp.data:
         return []
 
-    platform =.opp.data[DATA_PLATFORM]
+    platform = opp.data[DATA_PLATFORM]
 
     entity = platform.entities.get(entity_id)
 
@@ -157,7 +157,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     # Store platform for later.
-    platform =.opp.data[DATA_PLATFORM] = entity_platform.current_platform.get()
+    platform = opp.data[DATA_PLATFORM] = entity_platform.current_platform.get()
 
     async def reload_config(call):
         """Reload the scene config."""
@@ -223,7 +223,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         entities = call.data[CONF_ENTITIES]
 
         for entity_id in snapshot:
-            state =.opp.states.get(entity_id)
+            state = opp.states.get(entity_id)
             if state is None:
                 _LOGGER.warning(
                     "Entity %s does not exist and therefore cannot be snapshotted",
@@ -278,7 +278,7 @@ class OpenPeerPowerScene(Scene):
 
     def __init__(self, opp, scene_config, from_service=False):
         """Initialize the scene."""
-        self.opp =.opp
+        self.opp = opp
         self.scene_config = scene_config
         self.from_service = from_service
 

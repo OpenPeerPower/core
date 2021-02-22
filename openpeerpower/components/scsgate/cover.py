@@ -24,7 +24,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     devices = config.get(CONF_DEVICES)
     covers = []
     logger = logging.getLogger(__name__)
-    scsgate =.opp.data[DOMAIN]
+    scsgate = opp.data[DOMAIN]
 
     if devices:
         for entity_info in devices.values():

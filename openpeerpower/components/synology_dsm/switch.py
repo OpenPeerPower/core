@@ -19,7 +19,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up the Synology NAS switch."""
 
-    api =.opp.data[DOMAIN][entry.unique_id][SYNO_API]
+    api = opp.data[DOMAIN][entry.unique_id][SYNO_API]
 
     entities = []
 

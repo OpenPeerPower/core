@@ -62,7 +62,7 @@ class WirelessTagPlatform:
 
     def __init__(self, opp, api):
         """Designated initializer for wirelesstags platform."""
-        self.opp =.opp
+        self.opp = opp
         self.api = api
         self.tags = {}
         self._local_base_url = None

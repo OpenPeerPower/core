@@ -153,7 +153,7 @@ class RachioIro:
 
     def __init__(self, opp, rachio, data, webhooks):
         """Initialize a Rachio device."""
-        self.opp =.opp
+        self.opp = opp
         self.rachio = rachio
         self._id = data[KEY_ID]
         self.name = data[KEY_NAME]

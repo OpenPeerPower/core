@@ -107,7 +107,7 @@ async def async_unload_entry.opp, config_entry):
 async def daikin_api_setup_opp, host, key, uuid, password):
     """Create a Daikin instance only once."""
 
-    session =.opp.helpers.aiohttp_client.async_get_clientsession()
+    session = opp.helpers.aiohttp_client.async_get_clientsession()
     try:
         with timeout(TIMEOUT):
             device = await Appliance.factory(

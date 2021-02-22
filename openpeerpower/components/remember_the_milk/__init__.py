@@ -103,7 +103,7 @@ def _register_new_account(
    .opp, account_name, api_key, shared_secret, stored_rtm_config, component
 ):
     request_id = None
-    configurator =.opp.components.configurator
+    configurator = opp.components.configurator
     api = Rtm(api_key, shared_secret, "write", None)
     url, frob = api.authenticate_desktop()
     _LOGGER.debug("Sent authentication request to server")

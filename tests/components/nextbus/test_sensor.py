@@ -121,7 +121,7 @@ async def test_verify_valid_state(
         [{"stop_tag": VALID_STOP, "route_tag": VALID_ROUTE}], VALID_AGENCY
     )
 
-    state =.opp.states.get(SENSOR_ID_SHORT)
+    state = opp.states.get(SENSOR_ID_SHORT)
     assert state is not None
     assert state.state == "2019-03-28T21:09:31+00:00"
     assert state.attributes["agency"] == VALID_AGENCY_TITLE
@@ -154,7 +154,7 @@ async def test_message_dict(
 
     await assert_setup_sensor.opp, CONFIG_BASIC)
 
-    state =.opp.states.get(SENSOR_ID_SHORT)
+    state = opp.states.get(SENSOR_ID_SHORT)
     assert state is not None
     assert state.attributes["message"] == "Message"
 
@@ -182,7 +182,7 @@ async def test_message_list(
 
     await assert_setup_sensor.opp, CONFIG_BASIC)
 
-    state =.opp.states.get(SENSOR_ID_SHORT)
+    state = opp.states.get(SENSOR_ID_SHORT)
     assert state is not None
     assert state.attributes["message"] == "Message 1 -- Message 2"
 
@@ -216,7 +216,7 @@ async def test_direction_list(
 
     await assert_setup_sensor.opp, CONFIG_BASIC)
 
-    state =.opp.states.get(SENSOR_ID_SHORT)
+    state = opp.states.get(SENSOR_ID_SHORT)
     assert state is not None
     assert state.state == "2019-03-28T21:09:31+00:00"
     assert state.attributes["agency"] == VALID_AGENCY_TITLE
@@ -234,7 +234,7 @@ async def test_custom_name(
     config["sensor"]["name"] = "Custom Name"
 
     await assert_setup_sensor.opp, config)
-    state =.opp.states.get("sensor.custom_name")
+    state = opp.states.get("sensor.custom_name")
     assert state is not None
 
 
@@ -246,7 +246,7 @@ async def test_no_predictions(
 
     await assert_setup_sensor.opp, CONFIG_BASIC)
 
-    state =.opp.states.get(SENSOR_ID_SHORT)
+    state = opp.states.get(SENSOR_ID_SHORT)
     assert state is not None
     assert state.state == "unknown"
 
@@ -266,7 +266,7 @@ async def test_verify_no_upcoming(
 
     await assert_setup_sensor.opp, CONFIG_BASIC)
 
-    state =.opp.states.get(SENSOR_ID_SHORT)
+    state = opp.states.get(SENSOR_ID_SHORT)
     assert state is not None
     assert state.state == "unknown"
     assert state.attributes["upcoming"] == "No upcoming predictions"

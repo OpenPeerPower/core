@@ -71,7 +71,7 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up OwnTracks entry."""
-    config =.opp.data[DOMAIN]["config"]
+    config = opp.data[DOMAIN]["config"]
     max_gps_accuracy = config.get(CONF_MAX_GPS_ACCURACY)
     waypoint_import = config.get(CONF_WAYPOINT_IMPORT)
     waypoint_whitelist = config.get(CONF_WAYPOINT_WHITELIST)
@@ -105,7 +105,7 @@ async def async_setup_entry.opp, entry):
        .opp.config_entries.async_forward_entry_setup(entry, "device_tracker")
     )
 
-   .opp.data[DOMAIN]["unsub"] =.opp.helpers.dispatcher.async_dispatcher_connect(
+   .opp.data[DOMAIN]["unsub"] = opp.helpers.dispatcher.async_dispatcher_connect(
         DOMAIN, async_handle_message
     )
 
@@ -131,7 +131,7 @@ async def async_remove_entry.opp, entry):
 
 async def async_connect_mqtt.opp, component):
     """Subscribe to MQTT topic."""
-    context =.opp.data[DOMAIN]["context"]
+    context = opp.data[DOMAIN]["context"]
 
     async def async_handle_mqtt_message(msg):
         """Handle incoming OwnTracks message."""
@@ -158,7 +158,7 @@ async def handle_webhook.opp, webhook_id, request):
     iOS sets the "topic" as part of the payload.
     Android does not set a topic but adds headers to the request.
     """
-    context =.opp.data[DOMAIN]["context"]
+    context = opp.data[DOMAIN]["context"]
     topic_base = re.sub("/#$", "", context.mqtt_topic)
 
     try:
@@ -228,7 +228,7 @@ class OwnTracksContext:
         mqtt_topic,
     ):
         """Initialize an OwnTracks context."""
-        self.opp =.opp
+        self.opp = opp
         self.secret = secret
         self.max_gps_accuracy = max_gps_accuracy
         self.mobile_beacons_active = defaultdict(set)
@@ -294,7 +294,7 @@ class OwnTracksContext:
         # Mobile beacons should always be set to the location of the
         # tracking device. I get the device state and make the necessary
         # changes to kwargs.
-        device_tracker_state =.opp.states.get(f"device_tracker.{dev_id}")
+        device_tracker_state = opp.states.get(f"device_tracker.{dev_id}")
 
         if device_tracker_state is not None:
             acc = device_tracker_state.attributes.get(ATTR_GPS_ACCURACY)

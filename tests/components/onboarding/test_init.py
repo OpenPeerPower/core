@@ -78,7 +78,7 @@ async def test_having_owner_finishes_user_step.opp, opp_storage):
     assert onboarding.DOMAIN not in.opp.data
     assert onboarding.async_is_onboarded.opp)
 
-    done =.opp_storage[onboarding.STORAGE_KEY]["data"]["done"]
+    done = opp_storage[onboarding.STORAGE_KEY]["data"]["done"]
     assert onboarding.STEP_USER in done
 
 

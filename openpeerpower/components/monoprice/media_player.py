@@ -65,7 +65,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Monoprice 6-zone amplifier platform."""
     port = config_entry.data[CONF_PORT]
 
-    monoprice =.opp.data[DOMAIN][config_entry.entry_id][MONOPRICE_OBJECT]
+    monoprice = opp.data[DOMAIN][config_entry.entry_id][MONOPRICE_OBJECT]
 
     sources = _get_sources(config_entry)
 
@@ -79,7 +79,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             )
 
     # only call update before add if it's the first run so we can try to detect zones
-    first_run =.opp.data[DOMAIN][config_entry.entry_id][FIRST_RUN]
+    first_run = opp.data[DOMAIN][config_entry.entry_id][FIRST_RUN]
     async_add_entities(entities, first_run)
 
     platform = entity_platform.current_platform.get()

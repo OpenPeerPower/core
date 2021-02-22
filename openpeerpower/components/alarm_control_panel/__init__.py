@@ -48,7 +48,7 @@ ALARM_SERVICE_SCHEMA = make_entity_service_schema({vol.Optional(ATTR_CODE): cv.s
 
 async def async_setup_opp, config):
     """Track states and offer events for sensors."""
-    component =.opp.data[DOMAIN] = EntityComponent(
+    component = opp.data[DOMAIN] = EntityComponent(
         logging.getLogger(__name__), DOMAIN, opp, SCAN_INTERVAL
     )
 
@@ -93,12 +93,12 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await.opp.data[DOMAIN].async_setup_entry(entry)
+    return await opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await.opp.data[DOMAIN].async_unload_entry(entry)
+    return await opp.data[DOMAIN].async_unload_entry(entry)
 
 
 class AlarmControlPanelEntity(Entity):

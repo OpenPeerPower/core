@@ -57,7 +57,7 @@ async def test_sync_message.opp):
         effect_list=LIGHT_EFFECT_LIST,
         effect=LIGHT_EFFECT_LIST[0],
     )
-    light.opp =.opp
+    light.opp = opp
     light.entity_id = "light.demo_light"
     await light.async_update_ha_state()
 
@@ -186,7 +186,7 @@ async def test_sync_in_area(area_on_device, opp, registries):
         effect_list=LIGHT_EFFECT_LIST,
         effect=LIGHT_EFFECT_LIST[0],
     )
-    light.opp =.opp
+    light.opp = opp
     light.entity_id = entity.entity_id
     await light.async_update_ha_state()
 
@@ -279,19 +279,19 @@ async def test_query_message.opp):
         effect_list=LIGHT_EFFECT_LIST,
         effect=LIGHT_EFFECT_LIST[0],
     )
-    light.opp =.opp
+    light.opp = opp
     light.entity_id = "light.demo_light"
     await light.async_update_ha_state()
 
     light2 = DemoLight(
         None, "Another Light", state=True, hs_color=(180, 75), ct=400, brightness=78
     )
-    light2.opp =.opp
+    light2.opp = opp
     light2.entity_id = "light.another_light"
     await light2.async_update_ha_state()
 
     light3 = DemoLight(None, "Color temp Light", state=True, ct=400, brightness=200)
-    light3.opp =.opp
+    light3.opp = opp
     light3.entity_id = "light.color_temp_light"
     await light3.async_update_ha_state()
 
@@ -655,7 +655,7 @@ async def test_unavailable_state_does_sync.opp):
         effect_list=LIGHT_EFFECT_LIST,
         effect=LIGHT_EFFECT_LIST[0],
     )
-    light.opp =.opp
+    light.opp = opp
     light.entity_id = "light.demo_light"
     light._available = False  # pylint: disable=protected-access
     await light.async_update_ha_state()
@@ -749,7 +749,7 @@ async def test_device_class_switch.opp, device_class, google_type):
         assumed=False,
         device_class=device_class,
     )
-    sensor.opp =.opp
+    sensor.opp = opp
     sensor.entity_id = "switch.demo_sensor"
     await sensor.async_update_ha_state()
 
@@ -794,7 +794,7 @@ async def test_device_class_binary_sensor.opp, device_class, google_type):
     sensor = DemoBinarySensor(
         None, "Demo Sensor", state=False, device_class=device_class
     )
-    sensor.opp =.opp
+    sensor.opp = opp
     sensor.entity_id = "binary_sensor.demo_sensor"
     await sensor.async_update_ha_state()
 
@@ -838,7 +838,7 @@ async def test_device_class_binary_sensor.opp, device_class, google_type):
 async def test_device_class_cover.opp, device_class, google_type):
     """Test that a binary entity syncs to the correct device type."""
     sensor = DemoCover(None, opp, "Demo Sensor", device_class=device_class)
-    sensor.opp =.opp
+    sensor.opp = opp
     sensor.entity_id = "cover.demo_sensor"
     await sensor.async_update_ha_state()
 
@@ -883,7 +883,7 @@ async def test_device_class_cover.opp, device_class, google_type):
 async def test_device_media_player.opp, device_class, google_type):
     """Test that a binary entity syncs to the correct device type."""
     sensor = AbstractDemoPlayer("Demo", device_class=device_class)
-    sensor.opp =.opp
+    sensor.opp = opp
     sensor.entity_id = "media_player.demo"
     await sensor.async_update_ha_state()
 
@@ -1165,7 +1165,7 @@ async def test_sync_message_recovery.opp, caplog):
         state=False,
         hs_color=(180, 75),
     )
-    light.opp =.opp
+    light.opp = opp
     light.entity_id = "light.demo_light"
     await light.async_update_ha_state()
 

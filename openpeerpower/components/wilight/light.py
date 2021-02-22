@@ -46,7 +46,7 @@ async def async_setup_entry(
     opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up WiLight lights from a config entry."""
-    parent =.opp.data[DOMAIN][entry.entry_id]
+    parent = opp.data[DOMAIN][entry.entry_id]
 
     # Handle a discovered WiLight device.
     entities = entities_from_discovered_wilight.opp, parent.api)
@@ -161,15 +161,15 @@ class WiLightLightColor(WiLightDevice, LightEntity):
         # Saturation use a range of [0, 100] to control
         if ATTR_BRIGHTNESS in kwargs and ATTR_HS_COLOR in kwargs:
             brightness = kwargs[ATTR_BRIGHTNESS]
-            hue =.opp_to_wilight_hue(kwargs[ATTR_HS_COLOR][0])
-            saturation =.opp_to_wilight_saturation(kwargs[ATTR_HS_COLOR][1])
+            hue = opp_to_wilight_hue(kwargs[ATTR_HS_COLOR][0])
+            saturation = opp_to_wilight_saturation(kwargs[ATTR_HS_COLOR][1])
             await self._client.set_hsb_color(self._index, hue, saturation, brightness)
         elif ATTR_BRIGHTNESS in kwargs and ATTR_HS_COLOR not in kwargs:
             brightness = kwargs[ATTR_BRIGHTNESS]
             await self._client.set_brightness(self._index, brightness)
         elif ATTR_BRIGHTNESS not in kwargs and ATTR_HS_COLOR in kwargs:
-            hue =.opp_to_wilight_hue(kwargs[ATTR_HS_COLOR][0])
-            saturation =.opp_to_wilight_saturation(kwargs[ATTR_HS_COLOR][1])
+            hue = opp_to_wilight_hue(kwargs[ATTR_HS_COLOR][0])
+            saturation = opp_to_wilight_saturation(kwargs[ATTR_HS_COLOR][1])
             await self._client.set_hs_color(self._index, hue, saturation)
         else:
             await self._client.turn_on(self._index)

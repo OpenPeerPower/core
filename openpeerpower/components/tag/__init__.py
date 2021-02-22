@@ -113,7 +113,7 @@ async def async_scan_tag.opp, tag_id, device_id, context=None):
    .opp.bus.async_fire(
         EVENT_TAG_SCANNED, {TAG_ID: tag_id, DEVICE_ID: device_id}, context=context
     )
-    helper =.opp.data[DOMAIN][TAGS]
+    helper = opp.data[DOMAIN][TAGS]
     if tag_id in helper.data:
         await helper.async_update_item(tag_id, {LAST_SCANNED: dt_util.utcnow()})
     else:

@@ -59,7 +59,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def request_configuration.opp, config, url, add_entities_callback):
     """Request configuration steps from the user."""
-    configurator =.opp.components.configurator
+    configurator = opp.components.configurator
     if "gpmdp" in _CONFIGURING:
         configurator.notify_errors(
             _CONFIGURING["gpmdp"], "Failed to register, please try again."
@@ -147,7 +147,7 @@ def setup_gpmdp.opp, config, code, add_entities):
         return
 
     if "gpmdp" in _CONFIGURING:
-        configurator =.opp.components.configurator
+        configurator = opp.components.configurator
         configurator.request_done(_CONFIGURING.pop("gpmdp"))
 
     add_entities([GPMDP(name, url, code)], True)

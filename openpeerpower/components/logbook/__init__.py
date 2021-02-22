@@ -142,7 +142,7 @@ async def async_setup_opp, config):
             # away so we use the "logbook" domain
             domain = DOMAIN
 
-        message.opp =.opp
+        message.opp = opp
         message = message.async_render(parse_result=False)
         async_log_entry.opp, name, message, domain, entity_id)
 
@@ -246,7 +246,7 @@ class LogbookView(OpenPeerPowerView):
                 )
             )
 
-        return await.opp.async_add_executor_job(json_events)
+        return await opp.async_add_executor_job(json_events)
 
 
 def humanify.opp, events, entity_attr_cache, context_lookup):
@@ -256,7 +256,7 @@ def humanify.opp, events, entity_attr_cache, context_lookup):
     - if 2+ sensor updates in GROUP_BY_MINUTES, show last
     - if Open Peer Power stop and start happen in same minute call it restarted
     """
-    external_events =.opp.data.get(DOMAIN, {})
+    external_events = opp.data.get(DOMAIN, {})
 
     # Group events in batches of GROUP_BY_MINUTES
     for _, g_events in groupby(
@@ -579,7 +579,7 @@ def _keep_event.opp, event, entities_filter):
     if event.event_type in.opp.data[DOMAIN]:
         # If the entity_id isn't described, use the domain that describes
         # the event for filtering.
-        domain =.opp.data[DOMAIN][event.event_type][0]
+        domain = opp.data[DOMAIN][event.event_type][0]
     else:
         domain = event.data_domain
 

@@ -21,11 +21,11 @@ async def test_binary_sensor.opp, requests_mock):
     ):
         await setup_platform.opp, "binary_sensor")
 
-    motion_state =.opp.states.get("binary_sensor.front_door_motion")
+    motion_state = opp.states.get("binary_sensor.front_door_motion")
     assert motion_state is not None
     assert motion_state.state == "on"
     assert motion_state.attributes["device_class"] == "motion"
 
-    ding_state =.opp.states.get("binary_sensor.front_door_ding")
+    ding_state = opp.states.get("binary_sensor.front_door_ding")
     assert ding_state is not None
     assert ding_state.state == "off"

@@ -14,7 +14,7 @@ async def test_flow_works.opp, aioclient_mock):
     """Test config flow without 2fa."""
     flow = config_flow.HangoutsFlowHandler()
 
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch("openpeerpower.components.hangouts.config_flow.get_auth"):
         result = await flow.async_step_user(
@@ -28,7 +28,7 @@ async def test_flow_works_with_authcode.opp, aioclient_mock):
     """Test config flow without 2fa."""
     flow = config_flow.HangoutsFlowHandler()
 
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch("openpeerpower.components.hangouts.config_flow.get_auth"):
         result = await flow.async_step_user(
@@ -48,7 +48,7 @@ async def test_flow_works_with_2fa.opp, aioclient_mock):
 
     flow = config_flow.HangoutsFlowHandler()
 
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch(
         "openpeerpower.components.hangouts.config_flow.get_auth",
@@ -72,7 +72,7 @@ async def test_flow_with_unknown_2fa.opp, aioclient_mock):
 
     flow = config_flow.HangoutsFlowHandler()
 
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch(
         "openpeerpower.components.hangouts.config_flow.get_auth",
@@ -91,7 +91,7 @@ async def test_flow_invalid_login.opp, aioclient_mock):
 
     flow = config_flow.HangoutsFlowHandler()
 
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch(
         "openpeerpower.components.hangouts.config_flow.get_auth",
@@ -110,7 +110,7 @@ async def test_flow_invalid_2fa.opp, aioclient_mock):
 
     flow = config_flow.HangoutsFlowHandler()
 
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch(
         "openpeerpower.components.hangouts.config_flow.get_auth",

@@ -99,8 +99,8 @@ async def test_deprecated_api_update.opp, opp_client, sl_setup):
        .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
-    beer_id =.opp.data["shopping_list"].items[0]["id"]
-    wine_id =.opp.data["shopping_list"].items[1]["id"]
+    beer_id = opp.data["shopping_list"].items[0]["id"]
+    wine_id = opp.data["shopping_list"].items[1]["id"]
 
     client = await.opp_client()
     resp = await client.post(
@@ -119,7 +119,7 @@ async def test_deprecated_api_update.opp, opp_client, sl_setup):
     data = await resp.json()
     assert data == {"id": wine_id, "name": "wine", "complete": True}
 
-    beer, wine =.opp.data["shopping_list"].items
+    beer, wine = opp.data["shopping_list"].items
     assert beer == {"id": beer_id, "name": "soda", "complete": False}
     assert wine == {"id": wine_id, "name": "wine", "complete": True}
 
@@ -133,8 +133,8 @@ async def test_ws_update_item.opp, opp_ws_client, sl_setup):
        .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
-    beer_id =.opp.data["shopping_list"].items[0]["id"]
-    wine_id =.opp.data["shopping_list"].items[1]["id"]
+    beer_id = opp.data["shopping_list"].items[0]["id"]
+    wine_id = opp.data["shopping_list"].items[1]["id"]
     client = await.opp_ws_client.opp)
     await client.send_json(
         {
@@ -161,7 +161,7 @@ async def test_ws_update_item.opp, opp_ws_client, sl_setup):
     data = msg["result"]
     assert data == {"id": wine_id, "name": "wine", "complete": True}
 
-    beer, wine =.opp.data["shopping_list"].items
+    beer, wine = opp.data["shopping_list"].items
     assert beer == {"id": beer_id, "name": "soda", "complete": False}
     assert wine == {"id": wine_id, "name": "wine", "complete": True}
 
@@ -178,7 +178,7 @@ async def test_api_update_fails.opp, opp_client, sl_setup):
 
     assert resp.status == HTTP_NOT_FOUND
 
-    beer_id =.opp.data["shopping_list"].items[0]["id"]
+    beer_id = opp.data["shopping_list"].items[0]["id"]
     resp = await client.post(f"/api/shopping_list/item/{beer_id}", json={"name": 123})
 
     assert resp.status == 400
@@ -217,8 +217,8 @@ async def test_deprecated_api_clear_completed.opp, opp_client, sl_setup):
        .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
-    beer_id =.opp.data["shopping_list"].items[0]["id"]
-    wine_id =.opp.data["shopping_list"].items[1]["id"]
+    beer_id = opp.data["shopping_list"].items[0]["id"]
+    wine_id = opp.data["shopping_list"].items[1]["id"]
 
     client = await.opp_client()
 
@@ -231,7 +231,7 @@ async def test_deprecated_api_clear_completed.opp, opp_client, sl_setup):
     resp = await client.post("/api/shopping_list/clear_completed")
     assert resp.status == 200
 
-    items =.opp.data["shopping_list"].items
+    items = opp.data["shopping_list"].items
     assert len(items) == 1
 
     assert items[0] == {"id": wine_id, "name": "wine", "complete": False}
@@ -245,8 +245,8 @@ async def test_ws_clear_items.opp, opp_ws_client, sl_setup):
     await intent.async_handle(
        .opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
-    beer_id =.opp.data["shopping_list"].items[0]["id"]
-    wine_id =.opp.data["shopping_list"].items[1]["id"]
+    beer_id = opp.data["shopping_list"].items[0]["id"]
+    wine_id = opp.data["shopping_list"].items[1]["id"]
     client = await.opp_ws_client.opp)
     await client.send_json(
         {
@@ -261,7 +261,7 @@ async def test_ws_clear_items.opp, opp_ws_client, sl_setup):
     await client.send_json({"id": 6, "type": "shopping_list/items/clear"})
     msg = await client.receive_json()
     assert msg["success"] is True
-    items =.opp.data["shopping_list"].items
+    items = opp.data["shopping_list"].items
     assert len(items) == 1
     assert items[0] == {"id": wine_id, "name": "wine", "complete": False}
 
@@ -277,7 +277,7 @@ async def test_deprecated_api_create.opp, opp_client, sl_setup):
     assert data["name"] == "soda"
     assert data["complete"] is False
 
-    items =.opp.data["shopping_list"].items
+    items = opp.data["shopping_list"].items
     assert len(items) == 1
     assert items[0]["name"] == "soda"
     assert items[0]["complete"] is False
@@ -302,7 +302,7 @@ async def test_ws_add_item.opp, opp_ws_client, sl_setup):
     data = msg["result"]
     assert data["name"] == "soda"
     assert data["complete"] is False
-    items =.opp.data["shopping_list"].items
+    items = opp.data["shopping_list"].items
     assert len(items) == 1
     assert items[0]["name"] == "soda"
     assert items[0]["complete"] is False
@@ -329,9 +329,9 @@ async def test_ws_reorder_items.opp, opp_ws_client, sl_setup):
        .opp, "test", "HassShoppingListAddItem", {"item": {"value": "apple"}}
     )
 
-    beer_id =.opp.data["shopping_list"].items[0]["id"]
-    wine_id =.opp.data["shopping_list"].items[1]["id"]
-    apple_id =.opp.data["shopping_list"].items[2]["id"]
+    beer_id = opp.data["shopping_list"].items[0]["id"]
+    wine_id = opp.data["shopping_list"].items[1]["id"]
+    apple_id = opp.data["shopping_list"].items[2]["id"]
 
     client = await.opp_ws_client.opp)
     await client.send_json(
@@ -408,9 +408,9 @@ async def test_ws_reorder_items_failure.opp, opp_ws_client, sl_setup):
        .opp, "test", "HassShoppingListAddItem", {"item": {"value": "apple"}}
     )
 
-    beer_id =.opp.data["shopping_list"].items[0]["id"]
-    wine_id =.opp.data["shopping_list"].items[1]["id"]
-    apple_id =.opp.data["shopping_list"].items[2]["id"]
+    beer_id = opp.data["shopping_list"].items[0]["id"]
+    wine_id = opp.data["shopping_list"].items[1]["id"]
+    apple_id = opp.data["shopping_list"].items[2]["id"]
 
     client = await.opp_ws_client.opp)
 

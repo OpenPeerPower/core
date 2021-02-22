@@ -28,12 +28,12 @@ async def director_update_data(
     # possibly implement usage of director_token_expiration to start
     # token refresh without waiting for error to occur
     try:
-        director =.opp.data[DOMAIN][entry.entry_id][CONF_DIRECTOR]
+        director = opp.data[DOMAIN][entry.entry_id][CONF_DIRECTOR]
         data = await director.getAllItemVariableValue(var)
     except BadToken:
         _LOGGER.info("Updating Control4 director token")
         await refresh_tokens.opp, entry)
-        director =.opp.data[DOMAIN][entry.entry_id][CONF_DIRECTOR]
+        director = opp.data[DOMAIN][entry.entry_id][CONF_DIRECTOR]
         data = await director.getAllItemVariableValue(var)
     return {key["id"]: key for key in data}
 
@@ -56,7 +56,7 @@ async def refresh_tokens.opp: OpenPeerPower, entry: ConfigEntry):
     director_token_expiry = director_token_dict["token_expiration"]
 
     _LOGGER.debug("Saving new tokens in.opp data")
-    entry_data =.opp.data[DOMAIN][entry.entry_id]
+    entry_data = opp.data[DOMAIN][entry.entry_id]
     entry_data[CONF_ACCOUNT] = account
     entry_data[CONF_DIRECTOR] = director
     entry_data[CONF_DIRECTOR_TOKEN_EXPIRATION] = director_token_expiry

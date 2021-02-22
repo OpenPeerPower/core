@@ -24,7 +24,7 @@ SENSOR_TYPES = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up sensors attached to a Konnected device from a config entry."""
-    data =.opp.data[KONNECTED_DOMAIN]
+    data = opp.data[KONNECTED_DOMAIN]
     device_id = config_entry.data["id"]
     sensors = []
 

@@ -82,7 +82,7 @@ async def validate_configs.opp, entity_configs):
     """Validate that entities exist and ensure templates are ready to use."""
     entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     for entity_id, entity_config in entity_configs.items():
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         if state is None:
             _LOGGER.debug("Entity not found: %s", entity_id)
             continue
@@ -98,7 +98,7 @@ async def validate_configs.opp, entity_configs):
             if isinstance(power_val, str) and is_template_string(power_val):
                 entity_config[CONF_POWER] = Template(power_val, opp)
             elif isinstance(power_val, Template):
-                entity_config[CONF_POWER].opp =.opp
+                entity_config[CONF_POWER].opp = opp
         elif CONF_POWER_ENTITY in entity_config:
             power_val = entity_config[CONF_POWER_ENTITY]
             if opp.states.get(power_val) is None:
@@ -121,7 +121,7 @@ def get_system_unique_id(entity: RegistryEntry):
 def get_plug_devices.opp, entity_configs):
     """Produce list of plug devices from config entities."""
     for entity_id, entity_config in entity_configs.items():
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         if state is None:
             continue
         name = entity_config.get(CONF_NAME, state.name)

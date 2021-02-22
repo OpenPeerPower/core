@@ -31,7 +31,7 @@ def mock_controller():
 def init_config_flow.opp):
     """Init a configuration flow."""
     flow = config_flow.VelbusConfigFlow()
-    flow.opp =.opp
+    flow.opp = opp
     return flow
 
 

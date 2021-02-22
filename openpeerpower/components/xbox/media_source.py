@@ -44,7 +44,7 @@ MEDIA_CLASS_MAP = {
 async def async_get_media_source.opp: OpenPeerPowerType):
     """Set up Xbox media source."""
     entry = opp.config_entries.async_entries(DOMAIN)[0]
-    client =.opp.data[DOMAIN][entry.entry_id]["client"]
+    client = opp.data[DOMAIN][entry.entry_id]["client"]
     return XboxSource.opp, client)
 
 
@@ -78,7 +78,7 @@ class XboxSource(MediaSource):
         """Initialize Xbox source."""
         super().__init__(DOMAIN)
 
-        self.opp: OpenPeerPowerType =.opp
+        self.opp: OpenPeerPowerType = opp
         self.client: XboxLiveClient = client
 
     async def async_resolve_media(self, item: MediaSourceItem) -> PlayMedia:

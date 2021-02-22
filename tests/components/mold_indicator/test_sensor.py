@@ -45,7 +45,7 @@ async def test_setup_opp):
         },
     )
     await.opp.async_block_till_done()
-    moldind =.opp.states.get("sensor.mold_indicator")
+    moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
     assert PERCENTAGE == moldind.attributes.get("unit_of_measurement")
 
@@ -78,7 +78,7 @@ async def test_invalidcalib.opp):
     await.opp.async_block_till_done()
     await.opp.async_start()
     await.opp.async_block_till_done()
-    moldind =.opp.states.get("sensor.mold_indicator")
+    moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
     assert moldind.state == "unavailable"
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
@@ -114,7 +114,7 @@ async def test_invalidhum.opp):
     await.opp.async_block_till_done()
     await.opp.async_start()
     await.opp.async_block_till_done()
-    moldind =.opp.states.get("sensor.mold_indicator")
+    moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
     assert moldind.state == "unavailable"
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
@@ -124,7 +124,7 @@ async def test_invalidhum.opp):
         "test.indoorhumidity", "A", {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
     await.opp.async_block_till_done()
-    moldind =.opp.states.get("sensor.mold_indicator")
+    moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
     assert moldind.state == "unavailable"
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
@@ -134,7 +134,7 @@ async def test_invalidhum.opp):
         "test.indoorhumidity", "10", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
     await.opp.async_block_till_done()
-    moldind =.opp.states.get("sensor.mold_indicator")
+    moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
     assert moldind.state == "unavailable"
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
@@ -159,7 +159,7 @@ async def test_calculation.opp):
     await.opp.async_block_till_done()
     await.opp.async_start()
     await.opp.async_block_till_done()
-    moldind =.opp.states.get("sensor.mold_indicator")
+    moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
 
     # assert dewpoint
@@ -202,7 +202,7 @@ async def test_unknown_sensor.opp):
         "test.indoortemp", STATE_UNKNOWN, {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
     await.opp.async_block_till_done()
-    moldind =.opp.states.get("sensor.mold_indicator")
+    moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
     assert moldind.state == "unavailable"
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
@@ -215,7 +215,7 @@ async def test_unknown_sensor.opp):
         "test.outdoortemp", STATE_UNKNOWN, {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
     await.opp.async_block_till_done()
-    moldind =.opp.states.get("sensor.mold_indicator")
+    moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
     assert moldind.state == "unavailable"
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
@@ -230,7 +230,7 @@ async def test_unknown_sensor.opp):
         {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE},
     )
     await.opp.async_block_till_done()
-    moldind =.opp.states.get("sensor.mold_indicator")
+    moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
     assert moldind.state == "unavailable"
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
@@ -240,7 +240,7 @@ async def test_unknown_sensor.opp):
         "test.indoorhumidity", "20", {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
     await.opp.async_block_till_done()
-    moldind =.opp.states.get("sensor.mold_indicator")
+    moldind = opp.states.get("sensor.mold_indicator")
     assert moldind
     assert moldind.state == "23"
 

@@ -102,8 +102,8 @@ class MyChevyHub(threading.Thread):
         """Initialize MyChevy Hub."""
         super().__init__()
         self._client = client
-        self.opp =.opp
-        self.opp_config =.opp_config
+        self.opp = opp
+        self.opp_config = opp_config
         self.cars = []
         self.status = None
         self.ready = False

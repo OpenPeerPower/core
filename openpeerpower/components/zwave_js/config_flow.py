@@ -146,7 +146,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 user_input={CONF_USE_ADDON: True}
             )
 
-        return self.async_show_form(step_id=.oppio_confirm")
+        return self.async_show_form(step_id= oppio_confirm")
 
     def _async_create_entry_from_vars(self) -> Dict[str, Any]:
         """Return a config entry for the flow."""

@@ -33,9 +33,9 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         """Send signal to entity to have it update state."""
         dispatcher_send.opp, NUMATO_SIGNAL.format(device_id, port), level)
 
-    api =.opp.data[DOMAIN][DATA_API]
+    api = opp.data[DOMAIN][DATA_API]
     binary_sensors = []
-    devices =.opp.data[DOMAIN][CONF_DEVICES]
+    devices = opp.data[DOMAIN][CONF_DEVICES]
     for device in [d for d in devices if CONF_BINARY_SENSORS in d]:
         device_id = device[CONF_ID]
         platform = device[CONF_BINARY_SENSORS]

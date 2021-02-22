@@ -27,7 +27,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up Plum Lightpad dimmer lights and glow rings."""
 
-    plum: Plum =.opp.data[DOMAIN][entry.entry_id]
+    plum: Plum = opp.data[DOMAIN][entry.entry_id]
 
     def setup_entities(device) -> None:
         entities = []

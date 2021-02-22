@@ -84,7 +84,7 @@ async def async_unload_entry.opp, entry):
         )
     )
     if unload_ok:
-        manager =.opp.data[DOMAIN].pop(entry.unique_id)
+        manager = opp.data[DOMAIN].pop(entry.unique_id)
         await manager.disconnect()
 
     return unload_ok
@@ -163,7 +163,7 @@ class AppleTVManager:
     def __init__(self, opp, config_entry):
         """Initialize power manager."""
         self.config_entry = config_entry
-        self.opp =.opp
+        self.opp = opp
         self.atv = None
         self._is_on = not config_entry.options.get(CONF_START_OFF, False)
         self._connection_attempts = 0

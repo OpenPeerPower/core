@@ -27,7 +27,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Discover and configure Somfy covers."""
     reversed_target_ids = config_entry.options.get(CONF_REVERSED_TARGET_IDS, {})
 
-    data =.opp.data[DOMAIN][config_entry.entry_id]
+    data = opp.data[DOMAIN][config_entry.entry_id]
     mylink_status = data[MYLINK_STATUS]
     somfy_mylink = data[DATA_SOMFY_MYLINK]
     cover_list = []

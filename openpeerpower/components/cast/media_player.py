@@ -108,7 +108,7 @@ def _async_create_cast_device.opp: OpenPeerPowerType, info: ChromecastInfo):
         return None
 
     # Found a cast with UUID
-    added_casts =.opp.data[ADDED_CAST_DEVICES_KEY]
+    added_casts = opp.data[ADDED_CAST_DEVICES_KEY]
     if info.uuid in added_casts:
         # Already added this one, the entity will take care of moved hosts
         # itself
@@ -127,7 +127,7 @@ def _async_create_cast_device.opp: OpenPeerPowerType, info: ChromecastInfo):
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Cast from a config entry."""
-    config =.opp.data[CAST_DOMAIN].get("media_player") or {}
+    config = opp.data[CAST_DOMAIN].get("media_player") or {}
     if not isinstance(config, list):
         config = [config]
 
@@ -822,7 +822,7 @@ class DynamicCastGroup:
     def __init__(self, opp, cast_info: ChromecastInfo):
         """Initialize the cast device."""
 
-        self.opp =.opp
+        self.opp = opp
         self._cast_info = cast_info
         self.services = cast_info.services
         self._chromecast: Optional[pychromecast.Chromecast] = None

@@ -22,7 +22,7 @@ async def async_setup_entry(
     opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up AdGuard Home sensor based on a config entry."""
-    adguard =.opp.data[DOMAIN][DATA_ADGUARD_CLIENT]
+    adguard = opp.data[DOMAIN][DATA_ADGUARD_CLIENT]
 
     try:
         version = await adguard.version()

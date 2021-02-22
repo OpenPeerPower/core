@@ -22,7 +22,7 @@ from .entity import ShadeEntity
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the hunter douglas shades sensors."""
 
-    pv_data =.opp.data[DOMAIN][entry.entry_id]
+    pv_data = opp.data[DOMAIN][entry.entry_id]
     room_data = pv_data[PV_ROOM_DATA]
     shade_data = pv_data[PV_SHADE_DATA]
     pv_request = pv_data[PV_API]

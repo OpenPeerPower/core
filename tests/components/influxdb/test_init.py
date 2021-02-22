@@ -127,7 +127,7 @@ async def test_setup_config_full.opp, mock_client, config_ext, get_write_api):
     assert await async_setup_component.opp, influxdb.DOMAIN, config)
     await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
     assert get_write_api(mock_client).call_count == 1
 
 
@@ -260,7 +260,7 @@ async def test_setup_config_ssl(
             await.opp.async_block_till_done()
 
             assert.opp.bus.listen.called
-            assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
+            assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
             assert expected_client_args.items() <= mock_client.call_args.kwargs.items()
 
 
@@ -280,7 +280,7 @@ async def test_setup_minimal_config(opp, mock_client, config_ext, get_write_api)
     assert await async_setup_component.opp, influxdb.DOMAIN, config)
     await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
     assert get_write_api(mock_client).call_count == 1
 
 

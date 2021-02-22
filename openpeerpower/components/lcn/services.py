@@ -55,8 +55,8 @@ class LcnServiceCall:
 
     def __init__(self, opp):
         """Initialize service call."""
-        self.opp =.opp
-        self.connections =.opp.data[DATA_LCN][CONF_CONNECTIONS]
+        self.opp = opp
+        self.connections = opp.data[DATA_LCN][CONF_CONNECTIONS]
 
     def get_device_connection(self, service):
         """Get device connection object."""

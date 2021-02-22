@@ -222,7 +222,7 @@ async def async_unload_entry.opp, entry):
     for component in "camera", "sensor":
         await.opp.config_entries.async_forward_entry_unload(entry, component)
 
-    logi_circle =.opp.data.pop(DATA_LOGI)
+    logi_circle = opp.data.pop(DATA_LOGI)
 
     # Tell API wrapper to close all aiohttp sessions, invalidate WS connections
     # and clear all locally cached tokens

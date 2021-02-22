@@ -69,7 +69,7 @@ def _is_older(version: str) -> bool:
 
 async def _get_services.opp):
     """Get the available services."""
-    services =.opp.data.get(DATA_SERVICES)
+    services = opp.data.get(DATA_SERVICES)
 
     if services is not None:
         return services
@@ -96,7 +96,7 @@ class CloudOAuth2Implementation(config_entry_oauth2_flow.AbstractOAuth2Implement
 
     def __init__(self, opp: OpenPeerPower, service: str):
         """Initialize cloud OAuth2 implementation."""
-        self.opp =.opp
+        self.opp = opp
         self.service = service
 
     @property

@@ -63,7 +63,7 @@ async def test_setup_opp, remote):
     with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote:
         await async_setup_component.opp, SAMSUNGTV_DOMAIN, MOCK_CONFIG)
         await.opp.async_block_till_done()
-        state =.opp.states.get(ENTITY_ID)
+        state = opp.states.get(ENTITY_ID)
 
         # test name and turn_on
         assert state

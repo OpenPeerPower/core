@@ -60,9 +60,9 @@ XBOX_STATE_MAP = {
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Xbox media_player from a config entry."""
-    client: XboxLiveClient =.opp.data[DOMAIN][entry.entry_id]["client"]
-    consoles: SmartglassConsoleList =.opp.data[DOMAIN][entry.entry_id]["consoles"]
-    coordinator: XboxUpdateCoordinator =.opp.data[DOMAIN][entry.entry_id][
+    client: XboxLiveClient = opp.data[DOMAIN][entry.entry_id]["client"]
+    consoles: SmartglassConsoleList = opp.data[DOMAIN][entry.entry_id]["consoles"]
+    coordinator: XboxUpdateCoordinator = opp.data[DOMAIN][entry.entry_id][
         "coordinator"
     ]
 

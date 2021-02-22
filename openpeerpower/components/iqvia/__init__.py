@@ -71,7 +71,7 @@ async def async_setup_entry.opp, entry):
         (TYPE_DISEASE_FORECAST, client.disease.extended),
         (TYPE_DISEASE_INDEX, client.disease.current),
     ]:
-        coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+        coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             sensor_type
         ] = DataUpdateCoordinator(
            .opp,

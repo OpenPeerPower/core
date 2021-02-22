@@ -88,7 +88,7 @@ async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
         if entry.domain != DOMAIN:
             continue
 
-        state =.opp.states.get(entry.entity_id)
+        state = opp.states.get(entry.entity_id)
 
         if state:
             supported_features = state.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
@@ -135,7 +135,7 @@ async def async_get_action_capabilities.opp: OpenPeerPower, config: dict) -> dic
 
     registry = await entity_registry.async_get_registry.opp)
     entry = registry.async_get(config[ATTR_ENTITY_ID])
-    state =.opp.states.get(config[ATTR_ENTITY_ID])
+    state = opp.states.get(config[ATTR_ENTITY_ID])
 
     supported_features = 0
 

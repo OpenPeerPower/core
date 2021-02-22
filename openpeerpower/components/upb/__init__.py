@@ -78,7 +78,7 @@ async def async_unload_entry.opp, config_entry):
     )
 
     if unload_ok:
-        upb =.opp.data[DOMAIN][config_entry.entry_id]["upb"]
+        upb = opp.data[DOMAIN][config_entry.entry_id]["upb"]
         upb.disconnect()
        .opp.data[DOMAIN].pop(config_entry.entry_id)
 

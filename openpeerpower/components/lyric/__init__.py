@@ -84,7 +84,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     client = ConfigEntryLyricClient(session, oauth_session)
 
-    client_id =.opp.data[DOMAIN][CONF_CLIENT_ID]
+    client_id = opp.data[DOMAIN][CONF_CLIENT_ID]
     lyric = Lyric(client, client_id)
 
     async def async_update_data() -> Lyric:

@@ -38,7 +38,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Flexit Platform."""
     modbus_slave = config.get(CONF_SLAVE)
     name = config.get(CONF_NAME)
-    hub =.opp.data[MODBUS_DOMAIN][config.get(CONF_HUB)]
+    hub = opp.data[MODBUS_DOMAIN][config.get(CONF_HUB)]
     add_entities([Flexit(hub, modbus_slave, name)], True)
 
 

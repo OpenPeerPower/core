@@ -107,12 +107,12 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tasmota_dht11_temperature")
+    state = opp.states.get("sensor.tasmota_dht11_temperature")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("sensor.tasmota_dht11_temperature")
+    state = opp.states.get("sensor.tasmota_dht11_temperature")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -120,7 +120,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/SENSOR", '{"DHT11":{"Temperature":20.5}}'
     )
-    state =.opp.states.get("sensor.tasmota_dht11_temperature")
+    state = opp.states.get("sensor.tasmota_dht11_temperature")
     assert state.state == "20.5"
 
     # Test polled state update
@@ -129,7 +129,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"DHT11":{"Temperature":20.0}}}',
     )
-    state =.opp.states.get("sensor.tasmota_dht11_temperature")
+    state = opp.states.get("sensor.tasmota_dht11_temperature")
     assert state.state == "20.0"
 
 
@@ -152,12 +152,12 @@ async def test_nested_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tasmota_tx23_speed_act")
+    state = opp.states.get("sensor.tasmota_tx23_speed_act")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("sensor.tasmota_tx23_speed_act")
+    state = opp.states.get("sensor.tasmota_tx23_speed_act")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -165,7 +165,7 @@ async def test_nested_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/SENSOR", '{"TX23":{"Speed":{"Act":"12.3"}}}'
     )
-    state =.opp.states.get("sensor.tasmota_tx23_speed_act")
+    state = opp.states.get("sensor.tasmota_tx23_speed_act")
     assert state.state == "12.3"
 
     # Test polled state update
@@ -174,7 +174,7 @@ async def test_nested_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"TX23":{"Speed":{"Act":"23.4"}}}}',
     )
-    state =.opp.states.get("sensor.tasmota_tx23_speed_act")
+    state = opp.states.get("sensor.tasmota_tx23_speed_act")
     assert state.state == "23.4"
 
 
@@ -197,12 +197,12 @@ async def test_indexed_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tasmota_energy_totaltariff_1")
+    state = opp.states.get("sensor.tasmota_energy_totaltariff_1")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("sensor.tasmota_energy_totaltariff_1")
+    state = opp.states.get("sensor.tasmota_energy_totaltariff_1")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -210,7 +210,7 @@ async def test_indexed_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/SENSOR", '{"ENERGY":{"TotalTariff":[1.2,3.4]}}'
     )
-    state =.opp.states.get("sensor.tasmota_energy_totaltariff_1")
+    state = opp.states.get("sensor.tasmota_energy_totaltariff_1")
     assert state.state == "3.4"
 
     # Test polled state update
@@ -219,7 +219,7 @@ async def test_indexed_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"ENERGY":{"TotalTariff":[5.6,7.8]}}}',
     )
-    state =.opp.states.get("sensor.tasmota_energy_totaltariff_1")
+    state = opp.states.get("sensor.tasmota_energy_totaltariff_1")
     assert state.state == "7.8"
 
 
@@ -248,12 +248,12 @@ async def test_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -262,7 +262,7 @@ async def test_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
        .opp, "tasmota_49A3BC/tele/STATE", '{"Wifi":{"Signal":20.5}}'
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == "20.5"
 
     # Test polled state update
@@ -272,7 +272,7 @@ async def test_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         '{"StatusSTS":{"Wifi":{"Signal":20.0}}}',
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == "20.0"
 
 
@@ -301,12 +301,12 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -317,7 +317,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
         '{"StatusPRM":{"RestartReason":"Some reason"}}',
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == "Some reason"
 
     # Test polled state update is ignored
@@ -327,13 +327,13 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
         '{"StatusPRM":{"RestartReason":"Another reason"}}',
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == "Some reason"
 
     # Device signals online again
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == "Some reason"
 
     # Test polled state update
@@ -343,7 +343,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
         '{"StatusPRM":{"RestartReason":"Another reason"}}',
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == "Another reason"
 
     # Test polled state update is ignored
@@ -353,7 +353,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
         '{"StatusPRM":{"RestartReason":"Third reason"}}',
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == "Another reason"
 
 
@@ -385,12 +385,12 @@ async def test_restart_time_status_sensor_state_via_mqtt(
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -403,7 +403,7 @@ async def test_restart_time_status_sensor_state_via_mqtt(
         '{"StatusSTS":{"UptimeSec":"3600"}}',
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("sensor.tasmota_status")
+    state = opp.states.get("sensor.tasmota_status")
     assert state.state == "2020-11-11T07:00:00+00:00"
 
 
@@ -432,13 +432,13 @@ async def test_attributes.opp, mqtt_mock, setup_tasmota):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tasmota_dht11_temperature")
+    state = opp.states.get("sensor.tasmota_dht11_temperature")
     assert state.attributes.get("device_class") == "temperature"
     assert state.attributes.get("friendly_name") == "Tasmota DHT11 Temperature"
     assert state.attributes.get("icon") is None
     assert state.attributes.get("unit_of_measurement") == "°C"
 
-    state =.opp.states.get("sensor.tasmota_beer_CarbonDioxide")
+    state = opp.states.get("sensor.tasmota_beer_CarbonDioxide")
     assert state.attributes.get("device_class") is None
     assert state.attributes.get("friendly_name") == "Tasmota Beer CarbonDioxide"
     assert state.attributes.get("icon") == "mdi:molecule-co2"
@@ -464,13 +464,13 @@ async def test_nested_sensor_attributes.opp, mqtt_mock, setup_tasmota):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tasmota_tx23_speed_act")
+    state = opp.states.get("sensor.tasmota_tx23_speed_act")
     assert state.attributes.get("device_class") is None
     assert state.attributes.get("friendly_name") == "Tasmota TX23 Speed Act"
     assert state.attributes.get("icon") is None
     assert state.attributes.get("unit_of_measurement") == "km/h"
 
-    state =.opp.states.get("sensor.tasmota_tx23_dir_avg")
+    state = opp.states.get("sensor.tasmota_tx23_dir_avg")
     assert state.attributes.get("device_class") is None
     assert state.attributes.get("friendly_name") == "Tasmota TX23 Dir Avg"
     assert state.attributes.get("icon") is None
@@ -502,13 +502,13 @@ async def test_indexed_sensor_attributes.opp, mqtt_mock, setup_tasmota):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tasmota_dummy1_temperature_0")
+    state = opp.states.get("sensor.tasmota_dummy1_temperature_0")
     assert state.attributes.get("device_class") == "temperature"
     assert state.attributes.get("friendly_name") == "Tasmota Dummy1 Temperature 0"
     assert state.attributes.get("icon") is None
     assert state.attributes.get("unit_of_measurement") == "°C"
 
-    state =.opp.states.get("sensor.tasmota_dummy2_carbondioxide_1")
+    state = opp.states.get("sensor.tasmota_dummy2_carbondioxide_1")
     assert state.attributes.get("device_class") is None
     assert state.attributes.get("friendly_name") == "Tasmota Dummy2 CarbonDioxide 1"
     assert state.attributes.get("icon") == "mdi:molecule-co2"
@@ -531,7 +531,7 @@ async def test_enable_status_sensor.opp, mqtt_mock, setup_tasmota):
     await.opp.async_block_till_done()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tasmota_signal")
+    state = opp.states.get("sensor.tasmota_signal")
     assert state is None
     entry = entity_reg.async_get("sensor.tasmota_signal")
     assert entry.disabled
@@ -559,12 +559,12 @@ async def test_enable_status_sensor.opp, mqtt_mock, setup_tasmota):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.tasmota_signal")
+    state = opp.states.get("sensor.tasmota_signal")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state =.opp.states.get("sensor.tasmota_signal")
+    state = opp.states.get("sensor.tasmota_signal")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 

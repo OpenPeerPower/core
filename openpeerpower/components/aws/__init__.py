@@ -107,8 +107,8 @@ async def async_setup_entry.opp, entry):
 
     Validate and save sessions per aws credential.
     """
-    config =.opp.data.get(DATA_HASS_CONFIG)
-    conf =.opp.data.get(DATA_CONFIG)
+    config = opp.data.get(DATA_HASS_CONFIG)
+    conf = opp.data.get(DATA_CONFIG)
 
     if entry.source == config_entries.SOURCE_IMPORT:
         if conf is None:

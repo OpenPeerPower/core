@@ -16,7 +16,7 @@ from .const import COORDINATOR, DOMAIN, PUMP_TYPES
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the sensor platform."""
 
-    coordinator =.opp.data[DOMAIN][entry.entry_id][COORDINATOR]
+    coordinator = opp.data[DOMAIN][entry.entry_id][COORDINATOR]
     entities = []
 
     for item_id, item in coordinator.data.items():

@@ -40,7 +40,7 @@ async def async_setup_opp, config):
             return True
 
     logging.getLogger("socketIO-client").addFilter(SocketIONoiseFilter())
-    tables =.opp.data.setdefault(DATA_SISYPHUS, {})
+    tables = opp.data.setdefault(DATA_SISYPHUS, {})
     table_configs = config.get(DOMAIN)
     session = async_get_clientsession.opp)
 

@@ -88,8 +88,8 @@ def _dump_filter(filter_dict, desc, func=lambda x: x):
 
 def setup_scanner.opp, config, see, discovery_info=None):
     """Set up device scanner."""
-    config =.opp.data[DOMAIN]["config"]
-    apis =.opp.data[DOMAIN]["apis"]
+    config = opp.data[DOMAIN]["config"]
+    apis = opp.data[DOMAIN]["apis"]
     Life360Scanner.opp, config, see, apis)
     return True
 

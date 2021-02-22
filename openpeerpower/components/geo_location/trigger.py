@@ -47,7 +47,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
         if not source_match(from_state, source) and not source_match(to_state, source):
             return
 
-        zone_state =.opp.states.get(zone_entity_id)
+        zone_state = opp.states.get(zone_entity_id)
 
         from_match = (
             condition.zone.opp, zone_state, from_state) if from_state else False

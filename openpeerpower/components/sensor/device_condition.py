@@ -113,7 +113,7 @@ async def async_get_conditions(
 
     for entry in entries:
         device_class = DEVICE_CLASS_NONE
-        state =.opp.states.get(entry.entity_id)
+        state = opp.states.get(entry.entity_id)
         unit_of_measurement = (
             state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) if state else None
         )
@@ -163,7 +163,7 @@ def async_condition_from_config(
 
 async def async_get_condition_capabilities.opp, config):
     """List condition capabilities."""
-    state =.opp.states.get(config[CONF_ENTITY_ID])
+    state = opp.states.get(config[CONF_ENTITY_ID])
     unit_of_measurement = (
         state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) if state else None
     )

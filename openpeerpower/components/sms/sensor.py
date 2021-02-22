@@ -13,7 +13,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the GSM Signal Sensor sensor."""
-    gateway =.opp.data[DOMAIN][SMS_GATEWAY]
+    gateway = opp.data[DOMAIN][SMS_GATEWAY]
     entities = []
     imei = await gateway.get_imei_async()
     name = f"gsm_signal_imei_{imei}"

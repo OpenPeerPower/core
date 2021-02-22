@@ -22,7 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 @callback
 def async_setup_ingress_view.opp: OpenPeerPowerType, host: str):
     """Auth setup."""
-    websession =.opp.helpers.aiohttp_client.async_get_clientsession()
+    websession = opp.helpers.aiohttp_client.async_get_clientsession()
 
    .oppio_ingress = HassIOIngress(host, websession)
    .opp.http.register_view.oppio_ingress)

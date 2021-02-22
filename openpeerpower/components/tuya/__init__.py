@@ -81,7 +81,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 def _update_discovery_interval.opp, interval):
-    tuya =.opp.data[DOMAIN].get(TUYA_DATA)
+    tuya = opp.data[DOMAIN].get(TUYA_DATA)
     if not tuya:
         return
 
@@ -93,7 +93,7 @@ def _update_discovery_interval.opp, interval):
 
 
 def _update_query_interval.opp, interval):
-    tuya =.opp.data[DOMAIN].get(TUYA_DATA)
+    tuya = opp.data[DOMAIN].get(TUYA_DATA)
     if not tuya:
         return
 

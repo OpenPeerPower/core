@@ -26,7 +26,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up the SPC binary sensor."""
     if discovery_info is None:
         return
-    api =.opp.data[DATA_API]
+    api = opp.data[DATA_API]
     async_add_entities(
         [
             SpcBinarySensor(zone)

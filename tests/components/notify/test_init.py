@@ -74,7 +74,7 @@ class NotificationService(notify.BaseNotificationService):
 
     def __init__(self, opp):
         """Initialize the service."""
-        self.opp =.opp
+        self.opp = opp
         self.target_list = {"a": 1, "b": 2}
 
     @property

@@ -86,11 +86,11 @@ async def async_setup_platform(
     switches = []
     if CONF_COILS in config:
         for coil in config[CONF_COILS]:
-            hub: ModbusHub =.opp.data[MODBUS_DOMAIN][coil[CONF_HUB]]
+            hub: ModbusHub = opp.data[MODBUS_DOMAIN][coil[CONF_HUB]]
             switches.append(ModbusCoilSwitch(hub, coil))
     if CONF_REGISTERS in config:
         for register in config[CONF_REGISTERS]:
-            hub: ModbusHub =.opp.data[MODBUS_DOMAIN][register[CONF_HUB]]
+            hub: ModbusHub = opp.data[MODBUS_DOMAIN][register[CONF_HUB]]
             switches.append(ModbusRegisterSwitch(hub, register))
 
     async_add_entities(switches)

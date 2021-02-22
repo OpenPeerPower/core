@@ -196,7 +196,7 @@ async def test_setup_services_and_unload_services.opp):
         assert await async_setup_component.opp, HMIPC_DOMAIN, {})
 
     # Check services are created
-    hmipc_services =.opp.services.async_services()[HMIPC_DOMAIN]
+    hmipc_services = opp.services.async_services()[HMIPC_DOMAIN]
     assert len(hmipc_services) == 8
 
     config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
@@ -229,7 +229,7 @@ async def test_setup_two_haps_unload_one_by_one.opp):
 
         assert await async_setup_component.opp, HMIPC_DOMAIN, {})
 
-    hmipc_services =.opp.services.async_services()[HMIPC_DOMAIN]
+    hmipc_services = opp.services.async_services()[HMIPC_DOMAIN]
     assert len(hmipc_services) == 8
 
     config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
@@ -238,7 +238,7 @@ async def test_setup_two_haps_unload_one_by_one.opp):
     await.opp.config_entries.async_unload(config_entries[0].entry_id)
 
     # services still exists
-    hmipc_services =.opp.services.async_services()[HMIPC_DOMAIN]
+    hmipc_services = opp.services.async_services()[HMIPC_DOMAIN]
     assert len(hmipc_services) == 8
 
     # unload the second AP

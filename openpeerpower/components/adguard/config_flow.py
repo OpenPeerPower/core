@@ -45,7 +45,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
     async def _show.oppio_form(self, errors=None):
         """Show the Hass.io confirmation form to the user."""
         return self.async_show_form(
-            step_id=.oppio_confirm",
+            step_id= oppio_confirm",
             description_placeholders={"addon": self.oppio_discovery["addon"]},
             data_schema=vol.Schema({}),
             errors=errors or {},

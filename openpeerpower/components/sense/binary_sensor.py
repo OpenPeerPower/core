@@ -22,11 +22,11 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Sense binary sensor."""
-    data =.opp.data[DOMAIN][config_entry.entry_id][SENSE_DATA]
-    sense_devices_data =.opp.data[DOMAIN][config_entry.entry_id][SENSE_DEVICES_DATA]
+    data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DATA]
+    sense_devices_data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DEVICES_DATA]
     sense_monitor_id = data.sense_monitor_id
 
-    sense_devices =.opp.data[DOMAIN][config_entry.entry_id][
+    sense_devices = opp.data[DOMAIN][config_entry.entry_id][
         SENSE_DISCOVERED_DEVICES_DATA
     ]
     devices = [

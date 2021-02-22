@@ -73,7 +73,7 @@ async def mock_client.opp, opp_client, registrations=None):
         await async_setup_component.opp, "notify", {"notify": {"platform": "html5"}})
         await.opp.async_block_till_done()
 
-    return await.opp_client()
+    return await opp_client()
 
 
 class TestHtml5Notify:

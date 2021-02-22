@@ -24,7 +24,7 @@ class HomematicipAuth:
 
     def __init__(self, opp, config) -> None:
         """Initialize HomematicIP Cloud client registration."""
-        self.opp =.opp
+        self.opp = opp
         self.config = config
         self.auth = None
 
@@ -72,7 +72,7 @@ class HomematicipHAP:
 
     def __init__(self, opp: OpenPeerPowerType, config_entry: ConfigEntry) -> None:
         """Initialize HomematicIP Cloud connection."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.home = None
 

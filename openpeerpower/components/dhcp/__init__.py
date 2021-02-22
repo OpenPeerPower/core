@@ -76,7 +76,7 @@ class WatcherBase:
         """Initialize class."""
         super().__init__()
 
-        self.opp =.opp
+        self.opp = opp
         self._integration_matchers = integration_matchers
         self._address_data = address_data
 

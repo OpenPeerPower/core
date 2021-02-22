@@ -23,7 +23,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     configured_zones = discovery_info[CONF_ZONES]
-    controller =.opp.data[DATA_SATEL]
+    controller = opp.data[DATA_SATEL]
 
     devices = []
 

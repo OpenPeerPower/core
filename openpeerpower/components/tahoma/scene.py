@@ -10,7 +10,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Tahoma scenes."""
     if discovery_info is None:
         return
-    controller =.opp.data[TAHOMA_DOMAIN]["controller"]
+    controller = opp.data[TAHOMA_DOMAIN]["controller"]
     scenes = [
         TahomaScene(scene, controller) for scene in.opp.data[TAHOMA_DOMAIN]["scenes"]
     ]

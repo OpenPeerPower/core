@@ -63,7 +63,7 @@ def get_data_update_coordinator(
     """Get an update coordinator."""
    .opp.data.setdefault(DOMAIN, {})
    .opp.data[DOMAIN].setdefault(config_entry.entry_id, {})
-    config_entry_data =.opp.data[DOMAIN][config_entry.entry_id]
+    config_entry_data = opp.data[DOMAIN][config_entry.entry_id]
 
     if DATA_UPDATE_COORDINATOR not in config_entry_data:
         api = get_api(config_entry.data)

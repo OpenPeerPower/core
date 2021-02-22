@@ -40,7 +40,7 @@ async def test_valid_hostname.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.wake_on_lan")
+    state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0):
@@ -52,7 +52,7 @@ async def test_valid_hostname.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.wake_on_lan")
+        state = opp.states.get("switch.wake_on_lan")
         assert STATE_ON == state.state
 
         await.opp.services.async_call(
@@ -62,7 +62,7 @@ async def test_valid_hostname.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.wake_on_lan")
+        state = opp.states.get("switch.wake_on_lan")
         assert STATE_ON == state.state
 
 
@@ -81,7 +81,7 @@ async def test_valid_hostname_windows.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.wake_on_lan")
+    state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0), patch.object(
@@ -94,7 +94,7 @@ async def test_valid_hostname_windows.opp):
             blocking=True,
         )
 
-    state =.opp.states.get("switch.wake_on_lan")
+    state = opp.states.get("switch.wake_on_lan")
     assert STATE_ON == state.state
 
 
@@ -118,7 +118,7 @@ async def test_broadcast_config_ip_and_port.opp, mock_send_magic_packet):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.wake_on_lan")
+    state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0):
@@ -154,7 +154,7 @@ async def test_broadcast_config_ip.opp, mock_send_magic_packet):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.wake_on_lan")
+    state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0):
@@ -182,7 +182,7 @@ async def test_broadcast_config_port.opp, mock_send_magic_packet):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.wake_on_lan")
+    state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0):
@@ -215,7 +215,7 @@ async def test_off_script.opp):
     await.opp.async_block_till_done()
     calls = async_mock_service.opp, "shell_command", "turn_off_target")
 
-    state =.opp.states.get("switch.wake_on_lan")
+    state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0):
@@ -227,7 +227,7 @@ async def test_off_script.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.wake_on_lan")
+        state = opp.states.get("switch.wake_on_lan")
         assert STATE_ON == state.state
         assert len(calls) == 0
 
@@ -240,7 +240,7 @@ async def test_off_script.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.wake_on_lan")
+        state = opp.states.get("switch.wake_on_lan")
         assert STATE_OFF == state.state
         assert len(calls) == 1
 
@@ -261,7 +261,7 @@ async def test_invalid_hostname_windows.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.wake_on_lan")
+    state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=2):
@@ -273,5 +273,5 @@ async def test_invalid_hostname_windows.opp):
             blocking=True,
         )
 
-        state =.opp.states.get("switch.wake_on_lan")
+        state = opp.states.get("switch.wake_on_lan")
         assert STATE_OFF == state.state

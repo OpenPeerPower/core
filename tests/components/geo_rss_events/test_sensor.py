@@ -76,10 +76,10 @@ async def test_setup_opp, mock_feed):
             # Collect events.
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 1
 
-            state =.opp.states.get("sensor.event_service_any")
+            state = opp.states.get("sensor.event_service_any")
             assert state is not None
             assert state.name == "Event Service Any"
             assert int(state.state) == 2
@@ -97,9 +97,9 @@ async def test_setup_opp, mock_feed):
             async_fire_time_changed.opp, utcnow + geo_rss_events.SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 1
-            state =.opp.states.get("sensor.event_service_any")
+            state = opp.states.get("sensor.event_service_any")
             assert int(state.state) == 2
 
             # Simulate an update - empty data, removes all entities
@@ -107,9 +107,9 @@ async def test_setup_opp, mock_feed):
             async_fire_time_changed.opp, utcnow + 2 * geo_rss_events.SCAN_INTERVAL)
             await.opp.async_block_till_done()
 
-            all_states =.opp.states.async_all()
+            all_states = opp.states.async_all()
             assert len(all_states) == 1
-            state =.opp.states.get("sensor.event_service_any")
+            state = opp.states.get("sensor.event_service_any")
             assert int(state.state) == 0
             assert state.attributes == {
                 ATTR_FRIENDLY_NAME: "Event Service Any",
@@ -138,10 +138,10 @@ async def test_setup_with_categories.opp, mock_feed):
         # Collect events.
         await.opp.async_block_till_done()
 
-        all_states =.opp.states.async_all()
+        all_states = opp.states.async_all()
         assert len(all_states) == 1
 
-        state =.opp.states.get("sensor.event_service_category_1")
+        state = opp.states.get("sensor.event_service_category_1")
         assert state is not None
         assert state.name == "Event Service Category 1"
         assert int(state.state) == 2

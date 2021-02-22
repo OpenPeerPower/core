@@ -110,7 +110,7 @@ def async_get_pollutant_unit(symbol):
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up AirVisual sensors based on a config entry."""
-    coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id]
+    coordinator = opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id]
 
     if config_entry.data[CONF_INTEGRATION_TYPE] in [
         INTEGRATION_TYPE_GEOGRAPHY_COORDS,

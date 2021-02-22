@@ -27,7 +27,7 @@ async def test_scanner_entity_device_tracker.opp):
     await.opp.async_block_till_done()
 
     entity_id = "device_tracker.unnamed_device"
-    entity_state =.opp.states.get(entity_id)
+    entity_state = opp.states.get(entity_id)
     assert entity_state.attributes == {
         ATTR_SOURCE_TYPE: SOURCE_TYPE_ROUTER,
         ATTR_BATTERY_LEVEL: 100,
@@ -37,11 +37,11 @@ async def test_scanner_entity_device_tracker.opp):
     }
     assert entity_state.state == STATE_NOT_HOME
 
-    entity =.opp.data[DOMAIN].get_entity(entity_id)
+    entity = opp.data[DOMAIN].get_entity(entity_id)
     entity.set_connected()
     await.opp.async_block_till_done()
 
-    entity_state =.opp.states.get(entity_id)
+    entity_state = opp.states.get(entity_id)
     assert entity_state.state == STATE_HOME
 
 

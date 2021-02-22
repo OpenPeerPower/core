@@ -26,7 +26,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
 
     # Test multi-setpoint thermostat (node 7 in dump)
     # mode is heat, this should be single setpoint
-    state =.opp.states.get("climate.ct32_thermostat_mode")
+    state = opp.states.get("climate.ct32_thermostat_mode")
     assert state is not None
     assert state.state == HVAC_MODE_HEAT
     assert state.attributes[ATTR_HVAC_MODES] == [
@@ -123,7 +123,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     # resulting in multiple setpoints
     receive_message(climate_msg)
     await.opp.async_block_till_done()
-    state =.opp.states.get("climate.ct32_thermostat_mode")
+    state = opp.states.get("climate.ct32_thermostat_mode")
     assert state is not None
     assert state.state == HVAC_MODE_HEAT_COOL
     assert state.attributes.get(ATTR_TEMPERATURE) is None
@@ -152,7 +152,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert msg["payload"]["ValueIDKey"] == 562950076153874
 
     # Test basic/single-setpoint thermostat (node 16 in dump)
-    state =.opp.states.get("climate.komforthaus_spirit_z_wave_plus_mode")
+    state = opp.states.get("climate.komforthaus_spirit_z_wave_plus_mode")
     assert state is not None
     assert state.state == HVAC_MODE_HEAT
     assert state.attributes[ATTR_HVAC_MODES] == [
@@ -239,7 +239,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert "Received an invalid preset mode: invalid preset mode" in caplog.text
 
     # test thermostat device without a mode commandclass
-    state =.opp.states.get("climate.danfoss_living_connect_z_v1_06_014g0013_heating_1")
+    state = opp.states.get("climate.danfoss_living_connect_z_v1_06_014g0013_heating_1")
     assert state is not None
     assert state.state == HVAC_MODE_HEAT
     assert state.attributes[ATTR_HVAC_MODES] == [
@@ -283,7 +283,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert "does not support setting a mode" in caplog.text
 
     # test thermostat device without a mode commandclass
-    state =.opp.states.get("climate.secure_srt321_zwave_stat_tx_heating_1")
+    state = opp.states.get("climate.secure_srt321_zwave_stat_tx_heating_1")
     assert state is not None
     assert state.state == HVAC_MODE_HEAT
     assert state.attributes[ATTR_HVAC_MODES] == [

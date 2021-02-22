@@ -137,8 +137,8 @@ async def test_find_link_tag.opp, mock_session):
 <!doctype html>
 <html>
   <head>
-    <link rel="redirect_uri" href=.opp://oauth2_redirect">
-    <link rel="other_value" href=.opp://oauth2_redirect">
+    <link rel="redirect_uri" href= opp://oauth2_redirect">
+    <link rel="other_value" href= opp://oauth2_redirect">
     <link rel="redirect_uri" href="/beer">
   </head>
   ...

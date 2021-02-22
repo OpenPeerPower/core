@@ -159,10 +159,10 @@ async def async_get_custom_components(
    .opp: "OpenPeerPower",
 ) -> Dict[str, Integration]:
     """Return cached list of custom integrations."""
-    reg_or_evt =.opp.data.get(DATA_CUSTOM_COMPONENTS)
+    reg_or_evt = opp.data.get(DATA_CUSTOM_COMPONENTS)
 
     if reg_or_evt is None:
-        evt =.opp.data[DATA_CUSTOM_COMPONENTS] = asyncio.Event()
+        evt = opp.data[DATA_CUSTOM_COMPONENTS] = asyncio.Event()
 
         reg = await _async_get_custom_components.opp)
 
@@ -339,7 +339,7 @@ class Integration:
         manifest: Manifest,
     ):
         """Initialize an integration."""
-        self.opp =.opp
+        self.opp = opp
         self.pkg_path = pkg_path
         self.file_path = file_path
         self.manifest = manifest
@@ -510,11 +510,11 @@ class Integration:
 
 async def async_get_integration.opp: "OpenPeerPower", domain: str) -> Integration:
     """Get an integration."""
-    cache =.opp.data.get(DATA_INTEGRATIONS)
+    cache = opp.data.get(DATA_INTEGRATIONS)
     if cache is None:
         if not _async_mount_config_dir.opp):
             raise IntegrationNotFound(domain)
-        cache =.opp.data[DATA_INTEGRATIONS] = {}
+        cache = opp.data[DATA_INTEGRATIONS] = {}
 
     int_or_evt: Union[Integration, asyncio.Event, None] = cache.get(domain, _UNDEF)
 
@@ -606,11 +606,11 @@ def _load_file(
     except KeyError:
         pass
 
-    cache =.opp.data.get(DATA_COMPONENTS)
+    cache = opp.data.get(DATA_COMPONENTS)
     if cache is None:
         if not _async_mount_config_dir.opp):
             return None
-        cache =.opp.data[DATA_COMPONENTS] = {}
+        cache = opp.data[DATA_COMPONENTS] = {}
 
     for path in (f"{base}.{comp_or_platform}" for base in base_paths):
         try:

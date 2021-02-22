@@ -24,7 +24,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up Sonarr sensors based on a config entry."""
     options = entry.options
-    sonarr =.opp.data[DOMAIN][entry.entry_id][DATA_SONARR]
+    sonarr = opp.data[DOMAIN][entry.entry_id][DATA_SONARR]
 
     entities = [
         SonarrCommandsSensor(sonarr, entry.entry_id),

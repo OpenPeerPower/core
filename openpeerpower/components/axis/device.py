@@ -51,7 +51,7 @@ class AxisNetworkDevice:
 
     def __init__(self, opp, config_entry):
         """Initialize the device."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.available = True
 
@@ -165,7 +165,7 @@ class AxisNetworkDevice:
         This is a static method because a class method (bound method),
         can not be used with weak references.
         """
-        device =.opp.data[AXIS_DOMAIN][entry.unique_id]
+        device = opp.data[AXIS_DOMAIN][entry.unique_id]
         device.api.config.host = device.host
         async_dispatcher_send.opp, device.signal_new_address)
 

@@ -76,7 +76,7 @@ class Store:
         """Initialize storage class."""
         self.version = version
         self.key = key
-        self.opp =.opp
+        self.opp = opp
         self._private = private
         self._data: Optional[Dict[str, Any]] = None
         self._unsub_delay_listener: Optional[CALLBACK_TYPE] = None

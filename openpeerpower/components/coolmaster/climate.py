@@ -44,9 +44,9 @@ def _build_entity(coordinator, unit_id, unit, supported_modes, info):
 async def async_setup_entry.opp, config_entry, async_add_devices):
     """Set up the CoolMasterNet climate platform."""
     supported_modes = config_entry.data.get(CONF_SUPPORTED_MODES)
-    info =.opp.data[DOMAIN][config_entry.entry_id][DATA_INFO]
+    info = opp.data[DOMAIN][config_entry.entry_id][DATA_INFO]
 
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
 
     all_devices = [
         _build_entity(coordinator, unit_id, unit, supported_modes, info)

@@ -102,7 +102,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up a Broadlink remote."""
-    device =.opp.data[DOMAIN].devices[config_entry.entry_id]
+    device = opp.data[DOMAIN].devices[config_entry.entry_id]
     remote = BroadlinkRemote(
         device,
         Store.opp, CODE_STORAGE_VERSION, f"broadlink_remote_{device.unique_id}_codes"),

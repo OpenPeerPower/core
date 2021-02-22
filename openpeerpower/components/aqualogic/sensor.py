@@ -49,7 +49,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up the sensor platform."""
     sensors = []
 
-    processor =.opp.data[DOMAIN]
+    processor = opp.data[DOMAIN]
     for sensor_type in config[CONF_MONITORED_CONDITIONS]:
         sensors.append(AquaLogicSensor(processor, sensor_type))
 

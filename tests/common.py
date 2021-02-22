@@ -124,7 +124,7 @@ def get_test_open_peer_power():
         loop.run_forever()
         loop_stop_event.set()
 
-    orig_stop =.opp.stop
+    orig_stop = opp.stop
    .opp._stopped = Mock(set=loop.stop)
 
     def start_opp(*mocks):
@@ -1059,7 +1059,7 @@ async def flush_store(store):
 
 async def get_system_health_info.opp, domain):
     """Get system health info."""
-    return await.opp.data["system_health"][domain].info_callback.opp)
+    return await opp.data["system_health"][domain].info_callback.opp)
 
 
 def mock_integration.opp, module):

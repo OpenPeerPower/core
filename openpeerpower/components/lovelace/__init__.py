@@ -159,7 +159,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
 
         if change_type == collection.CHANGE_ADDED:
 
-            existing =.opp.data[DOMAIN]["dashboards"].get(url_path)
+            existing = opp.data[DOMAIN]["dashboards"].get(url_path)
 
             if existing:
                 _LOGGER.warning(

@@ -201,7 +201,7 @@ async def test_single_available_server.opp, mock_plex_calls):
         assert result["type"] == "create_entry"
 
         server_id = result["data"][CONF_SERVER_IDENTIFIER]
-        mock_plex_server =.opp.data[DOMAIN][SERVERS][server_id]
+        mock_plex_server = opp.data[DOMAIN][SERVERS][server_id]
 
         assert result["title"] == mock_plex_server.friendly_name
         assert result["data"][CONF_SERVER] == mock_plex_server.friendly_name
@@ -257,7 +257,7 @@ async def test_multiple_servers_with_selection(
         assert result["type"] == "create_entry"
 
         server_id = result["data"][CONF_SERVER_IDENTIFIER]
-        mock_plex_server =.opp.data[DOMAIN][SERVERS][server_id]
+        mock_plex_server = opp.data[DOMAIN][SERVERS][server_id]
 
         assert result["title"] == mock_plex_server.friendly_name
         assert result["data"][CONF_SERVER] == mock_plex_server.friendly_name
@@ -315,7 +315,7 @@ async def test_adding_last_unconfigured_server(
         assert result["type"] == "create_entry"
 
         server_id = result["data"][CONF_SERVER_IDENTIFIER]
-        mock_plex_server =.opp.data[DOMAIN][SERVERS][server_id]
+        mock_plex_server = opp.data[DOMAIN][SERVERS][server_id]
 
         assert result["title"] == mock_plex_server.friendly_name
         assert result["data"][CONF_SERVER] == mock_plex_server.friendly_name
@@ -451,7 +451,7 @@ async def test_option_flow_new_users_available.opp, entry, setup_plex_server):
     await.opp.async_block_till_done()
 
     server_id = mock_plex_server.machine_identifier
-    monitored_users =.opp.data[DOMAIN][SERVERS][server_id].option_monitored_users
+    monitored_users = opp.data[DOMAIN][SERVERS][server_id].option_monitored_users
 
     new_users = [x for x in mock_plex_server.accounts if x not in monitored_users]
     assert len(monitored_users) == 1
@@ -654,7 +654,7 @@ async def test_manual_config(opp, mock_plex_calls):
     assert result["type"] == "create_entry"
 
     server_id = result["data"][CONF_SERVER_IDENTIFIER]
-    mock_plex_server =.opp.data[DOMAIN][SERVERS][server_id]
+    mock_plex_server = opp.data[DOMAIN][SERVERS][server_id]
 
     assert result["title"] == mock_plex_server.friendly_name
     assert result["data"][CONF_SERVER] == mock_plex_server.friendly_name
@@ -690,7 +690,7 @@ async def test_manual_config_with_token.opp, mock_plex_calls):
     assert result["type"] == "create_entry"
 
     server_id = result["data"][CONF_SERVER_IDENTIFIER]
-    mock_plex_server =.opp.data[DOMAIN][SERVERS][server_id]
+    mock_plex_server = opp.data[DOMAIN][SERVERS][server_id]
 
     assert result["title"] == mock_plex_server.friendly_name
     assert result["data"][CONF_SERVER] == mock_plex_server.friendly_name
@@ -709,7 +709,7 @@ async def test_setup_with_limited_credentials.opp, entry, setup_plex_server):
 
     assert mock_accounts.called
 
-    plex_server =.opp.data[DOMAIN][SERVERS][mock_plex_server.machine_identifier]
+    plex_server = opp.data[DOMAIN][SERVERS][mock_plex_server.machine_identifier]
     assert len(plex_server.accounts) == 0
     assert plex_server.owner is None
 

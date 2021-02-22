@@ -49,7 +49,7 @@ async def async_setup_opp, config):
     """Activate the Apache Kafka integration."""
     conf = config[DOMAIN]
 
-    kafka =.opp.data[DOMAIN] = KafkaManager(
+    kafka = opp.data[DOMAIN] = KafkaManager(
        .opp,
         conf[CONF_IP_ADDRESS],
         conf[CONF_PORT],

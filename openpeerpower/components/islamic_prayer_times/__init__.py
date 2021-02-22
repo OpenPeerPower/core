@@ -73,7 +73,7 @@ class IslamicPrayerClient:
 
     def __init__(self, opp, config_entry):
         """Initialize the Islamic Prayer client."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.prayer_times_info = {}
         self.available = True

@@ -142,7 +142,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             else:
                 webhook_url = entry.data[CONF_CLOUDHOOK_URL]
         else:
-            webhook_url =.opp.components.webhook.async_generate_url(
+            webhook_url = opp.components.webhook.async_generate_url(
                 entry.data[CONF_WEBHOOK_ID]
             )
 

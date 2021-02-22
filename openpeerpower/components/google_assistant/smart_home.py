@@ -119,7 +119,7 @@ async def async_devices_query.opp, data, payload):
     devices = {}
     for device in payload.get("devices", []):
         devid = device["id"]
-        state =.opp.states.get(devid)
+        state = opp.states.get(devid)
 
        .opp.bus.async_fire(
             EVENT_QUERY_RECEIVED,
@@ -197,7 +197,7 @@ async def handle_devices_execute.opp, data, payload):
                 executions[entity_id].append(execution)
                 continue
 
-            state =.opp.states.get(entity_id)
+            state = opp.states.get(entity_id)
 
             if state is None:
                 results[entity_id] = {

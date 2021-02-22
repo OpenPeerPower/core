@@ -9,7 +9,7 @@ from tests.common import async_get_device_automations, patch
 async def test_get_actions.opp, push_registration):
     """Test we get the expected actions from a mobile_app."""
     webhook_id = push_registration["webhook_id"]
-    device_id =.opp.data[DOMAIN][DATA_DEVICES][webhook_id].id
+    device_id = opp.data[DOMAIN][DATA_DEVICES][webhook_id].id
 
     assert await async_get_device_automations.opp, "action", device_id) == [
         {"domain": DOMAIN, "device_id": device_id, "type": "notify"}

@@ -80,10 +80,10 @@ async def test_unload_config_entry.opp, entry, mock_plex_server):
     assert entry.state == ENTRY_STATE_LOADED
 
     server_id = mock_plex_server.machine_identifier
-    loaded_server =.opp.data[const.DOMAIN][const.SERVERS][server_id]
+    loaded_server = opp.data[const.DOMAIN][const.SERVERS][server_id]
     assert loaded_server == mock_plex_server
 
-    websocket =.opp.data[const.DOMAIN][const.WEBSOCKETS][server_id]
+    websocket = opp.data[const.DOMAIN][const.WEBSOCKETS][server_id]
     await.opp.config_entries.async_unload(entry.entry_id)
     assert websocket.close.called
     assert entry.state == ENTRY_STATE_NOT_LOADED
@@ -97,14 +97,14 @@ async def test_setup_with_photo_session.opp, entry, setup_plex_server):
     assert entry.state == ENTRY_STATE_LOADED
     await.opp.async_block_till_done()
 
-    media_player =.opp.states.get(
+    media_player = opp.states.get(
         "media_player.plex_plex_for_android_tv_shield_android_tv"
     )
     assert media_player.state == STATE_IDLE
 
     await wait_for_debouncer.opp)
 
-    sensor =.opp.states.get("sensor.plex_plex_server_1")
+    sensor = opp.states.get("sensor.plex_plex_server_1")
     assert sensor.state == "0"
 
 

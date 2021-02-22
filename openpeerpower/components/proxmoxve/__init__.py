@@ -172,7 +172,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
             return data
 
-        return await.opp.async_add_executor_job(poll_api)
+        return await opp.async_add_executor_job(poll_api)
 
     coordinator = DataUpdateCoordinator(
        .opp,

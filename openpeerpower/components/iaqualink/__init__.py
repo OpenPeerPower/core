@@ -78,11 +78,11 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     password = entry.data[CONF_PASSWORD]
 
     # These will contain the initialized devices
-    binary_sensors =.opp.data[DOMAIN][BINARY_SENSOR_DOMAIN] = []
-    climates =.opp.data[DOMAIN][CLIMATE_DOMAIN] = []
-    lights =.opp.data[DOMAIN][LIGHT_DOMAIN] = []
-    sensors =.opp.data[DOMAIN][SENSOR_DOMAIN] = []
-    switches =.opp.data[DOMAIN][SWITCH_DOMAIN] = []
+    binary_sensors = opp.data[DOMAIN][BINARY_SENSOR_DOMAIN] = []
+    climates = opp.data[DOMAIN][CLIMATE_DOMAIN] = []
+    lights = opp.data[DOMAIN][LIGHT_DOMAIN] = []
+    sensors = opp.data[DOMAIN][SENSOR_DOMAIN] = []
+    switches = opp.data[DOMAIN][SWITCH_DOMAIN] = []
 
     session = async_get_clientsession.opp)
     aqualink = AqualinkClient(username, password, session)

@@ -303,7 +303,7 @@ async def test_attribute_templates.opp, calls):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("vacuum.test_template_vacuum")
+    state = opp.states.get("vacuum.test_template_vacuum")
     assert state.attributes["test_attribute"] == "It ."
 
    .opp.states.async_set("sensor.test_state", "Works")
@@ -311,7 +311,7 @@ async def test_attribute_templates.opp, calls):
     await.opp.helpers.entity_component.async_update_entity(
         "vacuum.test_template_vacuum"
     )
-    state =.opp.states.get("vacuum.test_template_vacuum")
+    state = opp.states.get("vacuum.test_template_vacuum")
     assert state.attributes["test_attribute"] == "It Works."
 
 
@@ -481,7 +481,7 @@ async def test_set_invalid_fan_speed.opp, calls):
 
 def _verify.opp, expected_state, expected_battery_level):
     """Verify vacuum's state and speed."""
-    state =.opp.states.get(_TEST_VACUUM)
+    state = opp.states.get(_TEST_VACUUM)
     attributes = state.attributes
     assert state.state == expected_state
     assert attributes.get(ATTR_BATTERY_LEVEL) == expected_battery_level

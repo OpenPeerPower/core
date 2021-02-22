@@ -74,7 +74,7 @@ async def async_setup_opp, config):
                 continue
 
             uid = slide["device_id"].replace("slide_", "")
-            slidenew =.opp.data[DOMAIN][SLIDES].setdefault(uid, {})
+            slidenew = opp.data[DOMAIN][SLIDES].setdefault(uid, {})
             slidenew["mac"] = uid
             slidenew["id"] = slide["id"]
             slidenew["name"] = slide["device_name"]

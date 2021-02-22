@@ -17,7 +17,7 @@ async def client.opp, opp_ws_client):
     """Fixture that can interact with the config manager API."""
     with patch.object(config, "SECTIONS", ["core"]):
         assert await async_setup_component.opp, "config", {})
-    return await.opp_ws_client.opp)
+    return await opp_ws_client.opp)
 
 
 async def test_validate_config_ok.opp, opp_client):

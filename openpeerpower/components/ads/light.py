@@ -31,7 +31,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the light platform for ADS."""
-    ads_hub =.opp.data.get(DATA_ADS)
+    ads_hub = opp.data.get(DATA_ADS)
 
     ads_var_enable = config[CONF_ADS_VAR]
     ads_var_brightness = config.get(CONF_ADS_VAR_BRIGHTNESS)

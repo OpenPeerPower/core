@@ -53,7 +53,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Profiler from a config entry."""
 
     lock = asyncio.Lock()
-    domain_data =.opp.data[DOMAIN] = {}
+    domain_data = opp.data[DOMAIN] = {}
 
     async def _async_run_profile(call: ServiceCall):
         async with lock:

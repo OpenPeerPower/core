@@ -330,7 +330,7 @@ async def async_unload_entry.opp, config_entry):
     )
     if unload_ok:
        .opp.data[DOMAIN][DATA_COORDINATOR].pop(config_entry.entry_id)
-        remove_listener =.opp.data[DOMAIN][DATA_LISTENER].pop(config_entry.entry_id)
+        remove_listener = opp.data[DOMAIN][DATA_LISTENER].pop(config_entry.entry_id)
         remove_listener()
 
         if (

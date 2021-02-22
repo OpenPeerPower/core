@@ -39,7 +39,7 @@ class HostSubProcess:
 
     def __init__(self, ip_address, dev_id, opp, config):
         """Initialize the Host pinger."""
-        self.opp =.opp
+        self.opp = opp
         self.ip_address = ip_address
         self.dev_id = dev_id
         self._count = config[CONF_PING_COUNT]
@@ -80,7 +80,7 @@ class HostICMPLib:
 
     def __init__(self, ip_address, dev_id, opp, config):
         """Initialize the Host pinger."""
-        self.opp =.opp
+        self.opp = opp
         self.ip_address = ip_address
         self.dev_id = dev_id
         self._count = config[CONF_PING_COUNT]

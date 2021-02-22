@@ -105,7 +105,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     def start_multiple(service):
         """Service to start multiple zones in sequence."""
         zones_list = []
-        person =.opp.data[DOMAIN_RACHIO][config_entry.entry_id]
+        person = opp.data[DOMAIN_RACHIO][config_entry.entry_id]
         entity_id = service.data[ATTR_ENTITY_ID]
         duration = iter(service.data[ATTR_DURATION])
         default_time = service.data[ATTR_DURATION][0]
@@ -150,7 +150,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 def _create_entities.opp, config_entry):
     entities = []
-    person =.opp.data[DOMAIN_RACHIO][config_entry.entry_id]
+    person = opp.data[DOMAIN_RACHIO][config_entry.entry_id]
     # Fetch the schedule once at startup
     # in order to avoid every zone doing it
     for controller in person.controllers:

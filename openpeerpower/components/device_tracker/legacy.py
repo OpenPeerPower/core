@@ -309,7 +309,7 @@ def async_setup_scanner_platform(
     """
     interval = config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
     update_lock = asyncio.Lock()
-    scanner.opp =.opp
+    scanner.opp = opp
 
     # Initial scan of each mac we also tell about host name for config
     seen: Any = set()
@@ -350,7 +350,7 @@ def async_setup_scanner_platform(
                 },
             }
 
-            zone_home =.opp.states.get.opp.components.zone.ENTITY_ID_HOME)
+            zone_home = opp.states.get.opp.components.zone.ENTITY_ID_HOME)
             if zone_home:
                 kwargs["gps"] = [
                     zone_home.attributes[ATTR_LATITUDE],
@@ -394,7 +394,7 @@ class DeviceTracker:
         devices: Sequence,
     ) -> None:
         """Initialize a device tracker."""
-        self.opp =.opp
+        self.opp = opp
         self.devices = {dev.dev_id: dev for dev in devices}
         self.mac_to_dev = {dev.mac: dev for dev in devices if dev.mac}
         self.consider_home = consider_home
@@ -615,7 +615,7 @@ class Device(RestoreEntity):
         icon: str = None,
     ) -> None:
         """Initialize a device."""
-        self.opp =.opp
+        self.opp = opp
         self.entity_id = f"{DOMAIN}.{dev_id}"
 
         # Timedelta object how long we consider a device home if it is not

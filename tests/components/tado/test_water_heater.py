@@ -8,7 +8,7 @@ async def test_water_heater_create_sensors.opp):
 
     await async_init_integration.opp)
 
-    state =.opp.states.get("water_heater.water_heater")
+    state = opp.states.get("water_heater.water_heater")
     assert state.state == "auto"
 
     expected_attributes = {
@@ -27,7 +27,7 @@ async def test_water_heater_create_sensors.opp):
     # HA changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
-    state =.opp.states.get("water_heater.second_water_heater")
+    state = opp.states.get("water_heater.second_water_heater")
     assert state.state == "heat"
 
     expected_attributes = {

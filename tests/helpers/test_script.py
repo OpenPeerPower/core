@@ -204,7 +204,7 @@ async def test_multiple_runs_no_wait.opp):
 
         calls.append(service)
         logger.debug("simulated service (%s:%s) started", fire, listen)
-        unsub =.opp.bus.async_listen(str(listen), service_done_cb)
+        unsub = opp.bus.async_listen(str(listen), service_done_cb)
        .opp.bus.async_fire(str(fire))
         await service_done.wait()
         unsub()
@@ -235,7 +235,7 @@ async def test_multiple_runs_no_wait.opp):
     # Start script twice in such a way that second run will be started while first run
     # is in the middle of the first service call.
 
-    unsub =.opp.bus.async_listen("1", heard_event_cb)
+    unsub = opp.bus.async_listen("1", heard_event_cb)
     logger.debug("starting 1st script")
    .opp.async_create_task(
         script_obj.async_run(
@@ -2026,9 +2026,9 @@ async def test_script_mode_queued_cancel.opp):
         assert not script_obj.is_running
         assert script_obj.runs == 0
 
-        task1 =.opp.async_create_task(script_obj.async_run(context=Context()))
+        task1 = opp.async_create_task(script_obj.async_run(context=Context()))
         await asyncio.wait_for(wait_started_flag.wait(), 1)
-        task2 =.opp.async_create_task(script_obj.async_run(context=Context()))
+        task2 = opp.async_create_task(script_obj.async_run(context=Context()))
         await asyncio.sleep(0)
 
         assert script_obj.is_running

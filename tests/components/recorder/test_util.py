@@ -39,7 +39,7 @@ def.opp_recorder():
 
 def test_recorder_bad_commit.opp_recorder):
     """Bad _commit should retry 3 times."""
-   .opp =.opp_recorder()
+   .opp = opp_recorder()
 
     def work(session):
         """Bad work."""
@@ -152,7 +152,7 @@ async def test_last_run_was_recently_clean.opp):
     await async_init_recorder_component.opp)
     await.opp.async_block_till_done()
 
-    cursor =.opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
+    cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 
     assert (
         await.opp.async_add_executor_job(util.last_run_was_recently_clean, cursor)
@@ -181,9 +181,9 @@ async def test_last_run_was_recently_clean.opp):
 
 def test_basic_sanity_check.opp_recorder):
     """Test the basic sanity checks with a missing table."""
-   .opp =.opp_recorder()
+   .opp = opp_recorder()
 
-    cursor =.opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
+    cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 
     assert util.basic_sanity_check(cursor) is True
 
@@ -195,9 +195,9 @@ def test_basic_sanity_check.opp_recorder):
 
 def test_combined_checks.opp_recorder, caplog):
     """Run Checks on the open database."""
-   .opp =.opp_recorder()
+   .opp = opp_recorder()
 
-    cursor =.opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
+    cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 
     assert util.run_checks_on_open_db("fake_db_path", cursor, False) is None
     assert "skipped because db_integrity_check was disabled" in caplog.text

@@ -86,7 +86,7 @@ class GarminConnectData:
 
     def __init__(self, opp, client):
         """Initialize."""
-        self.opp =.opp
+        self.opp = opp
         self.client = client
         self.data = None
 

@@ -48,7 +48,7 @@ async def _async_reproduce_state(
     reproduce_options: Optional[Dict[str, Any]] = None,
 ) -> None:
     """Reproduce a single state."""
-    cur_state =.opp.states.get(state.entity_id)
+    cur_state = opp.states.get(state.entity_id)
 
     if cur_state is None:
         _LOGGER.warning("Unable to find entity %s", state.entity_id)

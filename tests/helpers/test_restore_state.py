@@ -33,7 +33,7 @@ async def test_caching_data.opp):
    .opp.data[DATA_RESTORE_STATE_TASK] = None
 
     entity = RestoreEntity()
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "input_boolean.b1"
 
     # Mock that only b1 is present this run
@@ -69,7 +69,7 @@ async def test.opp_starting.opp):
    .opp.data[DATA_RESTORE_STATE_TASK] = None
 
     entity = RestoreEntity()
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "input_boolean.b1"
 
     # Mock that only b1 is present this run
@@ -108,12 +108,12 @@ async def test_dump_data.opp):
     ]
 
     entity = Entity()
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "input_boolean.b0"
     await entity.async_internal_added_to.opp()
 
     entity = RestoreEntity()
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "input_boolean.b1"
     await entity.async_internal_added_to.opp()
 
@@ -181,12 +181,12 @@ async def test_dump_error(opp):
     ]
 
     entity = Entity()
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "input_boolean.b0"
     await entity.async_internal_added_to.opp()
 
     entity = RestoreEntity()
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "input_boolean.b1"
     await entity.async_internal_added_to.opp()
 
@@ -204,7 +204,7 @@ async def test_dump_error(opp):
 async def test_load_error(opp):
     """Test that we cache data."""
     entity = RestoreEntity()
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "input_boolean.b1"
 
     with patch(
@@ -219,7 +219,7 @@ async def test_load_error(opp):
 async def test_state_saved_on_remove.opp):
     """Test that we save entity state on removal."""
     entity = RestoreEntity()
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "input_boolean.b0"
     await entity.async_internal_added_to.opp()
 
@@ -245,7 +245,7 @@ async def test_state_saved_on_remove.opp):
 async def test_restoring_invalid_entity_id.opp, opp_storage):
     """Test restoring invalid entity IDs."""
     entity = RestoreEntity()
-    entity.opp =.opp
+    entity.opp = opp
     entity.entity_id = "test.invalid__entity_id"
     now = dt_util.utcnow().isoformat()
    .opp_storage[STORAGE_KEY] = {

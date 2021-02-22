@@ -83,7 +83,7 @@ async def test_trigger_sensor_value_changed.opp, mock_openzwave):
     await.opp.async_add_executor_job(value_changed, value)
     assert device.invalidate_after is None
 
-    device.opp =.opp
+    device.opp = opp
 
     value.data = True
     await.opp.async_add_executor_job(value_changed, value)

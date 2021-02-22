@@ -28,7 +28,7 @@ class EventManager:
 
     def __init__(self, opp: OpenPeerPower, device: ONVIFCamera, unique_id: str):
         """Initialize event manager."""
-        self.opp: OpenPeerPower =.opp
+        self.opp: OpenPeerPower = opp
         self.device: ONVIFCamera = device
         self.unique_id: str = unique_id
         self.started: bool = False

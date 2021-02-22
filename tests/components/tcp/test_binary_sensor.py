@@ -59,7 +59,7 @@ async def test_state.opp, mock_socket, now):
     assert await async_setup_component.opp, "binary_sensor", TEST_CONFIG)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
 
     assert state
     assert state.state == STATE_OFF
@@ -77,7 +77,7 @@ async def test_state.opp, mock_socket, now):
     async_fire_time_changed.opp, now + timedelta(seconds=45))
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(TEST_ENTITY)
+    state = opp.states.get(TEST_ENTITY)
 
     assert state
     assert state.state == STATE_ON

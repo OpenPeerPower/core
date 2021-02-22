@@ -29,7 +29,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
         )
         return
 
-    data_handler =.opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
+    data_handler = opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
 
     async def get_entities():
         """Retrieve Netatmo entities."""

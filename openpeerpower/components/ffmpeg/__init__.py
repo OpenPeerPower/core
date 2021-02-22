@@ -96,7 +96,7 @@ async def async_get_image(
     extra_cmd: Optional[str] = None,
 ):
     """Get an image from a frame of an RTSP stream."""
-    manager =.opp.data[DATA_FFMPEG]
+    manager = opp.data[DATA_FFMPEG]
     ffmpeg = ImageFrame(manager.binary)
     image = await asyncio.shield(
         ffmpeg.get_image(input_source, output_format=output_format, extra_cmd=extra_cmd)
@@ -109,7 +109,7 @@ class FFmpegManager:
 
     def __init__(self, opp, ffmpeg_bin):
         """Initialize helper."""
-        self.opp =.opp
+        self.opp = opp
         self._cache = {}
         self._bin = ffmpeg_bin
         self._version = None

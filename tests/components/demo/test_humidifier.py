@@ -40,21 +40,21 @@ async def setup_demo_humidifier.opp):
 
 def test_setup_params.opp):
     """Test the initial parameters."""
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_HUMIDITY) == 54
 
 
 def test_default_setup_params.opp):
     """Test the setup with default parameters."""
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_MIN_HUMIDITY) == 0
     assert state.attributes.get(ATTR_MAX_HUMIDITY) == 100
 
 
 async def test_set_target_humidity_bad_attr.opp):
     """Test setting the target humidity without required attribute."""
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_HUMIDITY) == 54
 
     with pytest.raises(vol.Invalid):
@@ -66,13 +66,13 @@ async def test_set_target_humidity_bad_attr.opp):
         )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_HUMIDITY) == 54
 
 
 async def test_set_target_humidity.opp):
     """Test the setting of the target humidity."""
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_HUMIDITY) == 54
 
     await.opp.services.async_call(
@@ -83,7 +83,7 @@ async def test_set_target_humidity.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_HUMIDITY) == 64
 
 
@@ -97,7 +97,7 @@ async def test_set_hold_mode_away.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_HYGROSTAT)
+    state = opp.states.get(ENTITY_HYGROSTAT)
     assert state.attributes.get(ATTR_MODE) == MODE_AWAY
 
 
@@ -111,7 +111,7 @@ async def test_set_hold_mode_eco.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_HYGROSTAT)
+    state = opp.states.get(ENTITY_HYGROSTAT)
     assert state.attributes.get(ATTR_MODE) == MODE_ECO
 
 
@@ -120,13 +120,13 @@ async def test_turn_on.opp):
     await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_OFF
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_ON
 
 
@@ -135,13 +135,13 @@ async def test_turn_off.opp):
     await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_ON
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_OFF
 
 
@@ -150,17 +150,17 @@ async def test_toggle.opp):
     await.opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_ON
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_OFF
 
     await.opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
-    state =.opp.states.get(ENTITY_DEHUMIDIFIER)
+    state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_ON

@@ -40,7 +40,7 @@ async def async_setup_opp, config):
     password = config[DOMAIN].get(CONF_PASSWORD)
     timeout = config[DOMAIN].get(CONF_TIMEOUT)
 
-    session =.opp.helpers.aiohttp_client.async_get_clientsession()
+    session = opp.helpers.aiohttp_client.async_get_clientsession()
 
     result = await _update_google_domains(
        .opp, session, domain, user, password, timeout

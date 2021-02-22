@@ -47,7 +47,7 @@ async def setup_bond_entity(
     ), patch_setup_entry(
         "switch", enabled=patch_platforms
     ):
-        return await.opp.config_entries.async_setup(config_entry.entry_id)
+        return await opp.config_entries.async_setup(config_entry.entry_id)
 
 
 async def setup_platform(

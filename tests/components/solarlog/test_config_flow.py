@@ -57,7 +57,7 @@ def mock_controller():
 def init_config_flow.opp):
     """Init a configuration flow."""
     flow = config_flow.SolarLogConfigFlow()
-    flow.opp =.opp
+    flow.opp = opp
     return flow
 
 

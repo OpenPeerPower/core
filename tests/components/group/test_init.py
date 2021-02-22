@@ -38,7 +38,7 @@ async def test_setup_group_with_mixed_groupable_states.opp):
 
     await.opp.async_block_till_done()
 
-    assert STATE_ON ==.opp.states.get(f"{group.DOMAIN}.person_and_light").state
+    assert STATE_ON == opp.states.get(f"{group.DOMAIN}.person_and_light").state
 
 
 async def test_setup_group_with_a_non_existing_state.opp):
@@ -89,7 +89,7 @@ async def test_monitor_group.opp):
     # Test if group setup in our init mode is ok
     assert test_group.entity_id in.opp.states.async_entity_ids()
 
-    group_state =.opp.states.get(test_group.entity_id)
+    group_state = opp.states.get(test_group.entity_id)
     assert STATE_ON == group_state.state
     assert group_state.attributes.get(group.ATTR_AUTO)
 
@@ -107,7 +107,7 @@ async def test_group_turns_off_if_all_off.opp):
 
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get(test_group.entity_id)
+    group_state = opp.states.get(test_group.entity_id)
     assert STATE_OFF == group_state.state
 
 
@@ -126,7 +126,7 @@ async def test_group_turns_on_if_all_are_off_and_one_turns_on.opp):
    .opp.states.async_set("light.Ceiling", STATE_ON)
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get(test_group.entity_id)
+    group_state = opp.states.get(test_group.entity_id)
     assert STATE_ON == group_state.state
 
 
@@ -145,7 +145,7 @@ async def test_allgroup_stays_off_if_all_are_off_and_one_turns_on.opp):
    .opp.states.async_set("light.Ceiling", STATE_ON)
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get(test_group.entity_id)
+    group_state = opp.states.get(test_group.entity_id)
     assert STATE_OFF == group_state.state
 
 
@@ -164,7 +164,7 @@ async def test_allgroup_turn_on_if_last_turns_on.opp):
    .opp.states.async_set("light.Ceiling", STATE_ON)
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get(test_group.entity_id)
+    group_state = opp.states.get(test_group.entity_id)
     assert STATE_ON == group_state.state
 
 
@@ -286,7 +286,7 @@ async def test_group_being_init_before_first_tracked_state_is_set_to_on.opp):
 
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get(test_group.entity_id)
+    group_state = opp.states.get(test_group.entity_id)
     assert STATE_ON == group_state.state
 
 
@@ -305,7 +305,7 @@ async def test_group_being_init_before_first_tracked_state_is_set_to_off.opp):
 
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get(test_group.entity_id)
+    group_state = opp.states.get(test_group.entity_id)
     assert STATE_OFF == group_state.state
 
 
@@ -354,19 +354,19 @@ async def test_set_assumed_state_based_on_tracked.opp):
        .opp, "init_group", ["light.Bowl", "light.Ceiling", "sensor.no_exist"]
     )
 
-    state =.opp.states.get(test_group.entity_id)
+    state = opp.states.get(test_group.entity_id)
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
    .opp.states.async_set("light.Bowl", STATE_ON, {ATTR_ASSUMED_STATE: True})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(test_group.entity_id)
+    state = opp.states.get(test_group.entity_id)
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
    .opp.states.async_set("light.Bowl", STATE_ON)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(test_group.entity_id)
+    state = opp.states.get(test_group.entity_id)
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
 
@@ -385,7 +385,7 @@ async def test_group_updated_after_device_tracker_zone_change.opp):
 
    .opp.states.async_set("device_tracker.Adam", "cool_state_not_home")
     await.opp.async_block_till_done()
-    assert STATE_NOT_HOME ==.opp.states.get(f"{group.DOMAIN}.peeps").state
+    assert STATE_NOT_HOME == opp.states.get(f"{group.DOMAIN}.peeps").state
 
 
 async def test_is_on.opp):
@@ -482,7 +482,7 @@ async def test_modify_group.opp):
     common.async_set_group.opp, "modify_group", icon="mdi:play")
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get(f"{group.DOMAIN}.modify_group")
+    group_state = opp.states.get(f"{group.DOMAIN}.modify_group")
     assert group_state
 
     assert.opp.states.async_entity_ids() == ["group.modify_group"]
@@ -516,7 +516,7 @@ async def test_setup_opp):
     )
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get(f"{group.DOMAIN}.created_group")
+    group_state = opp.states.get(f"{group.DOMAIN}.created_group")
     assert STATE_ON == group_state.state
     assert {test_group.entity_id, "light.bowl"} == set(
         group_state.attributes["entity_id"]
@@ -525,7 +525,7 @@ async def test_setup_opp):
     assert "mdi:work" == group_state.attributes.get(ATTR_ICON)
     assert 3 == group_state.attributes.get(group.ATTR_ORDER)
 
-    group_state =.opp.states.get(f"{group.DOMAIN}.test_group")
+    group_state = opp.states.get(f"{group.DOMAIN}.test_group")
     assert STATE_UNKNOWN == group_state.state
     assert {"sensor.happy", "hello.world"} == set(group_state.attributes["entity_id"])
     assert group_state.attributes.get(group.ATTR_AUTO) is None
@@ -551,7 +551,7 @@ async def test_service_group_set_group_remove_group.opp):
     common.async_set_group.opp, "user_test_group", name="Test")
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get("group.user_test_group")
+    group_state = opp.states.get("group.user_test_group")
     assert group_state
     assert group_state.attributes[group.ATTR_AUTO]
     assert group_state.attributes["friendly_name"] == "Test"
@@ -559,7 +559,7 @@ async def test_service_group_set_group_remove_group.opp):
     common.async_set_group.opp, "user_test_group", entity_ids=["test.entity_bla1"])
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get("group.user_test_group")
+    group_state = opp.states.get("group.user_test_group")
     assert group_state
     assert group_state.attributes[group.ATTR_AUTO]
     assert group_state.attributes["friendly_name"] == "Test"
@@ -574,7 +574,7 @@ async def test_service_group_set_group_remove_group.opp):
     )
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get("group.user_test_group")
+    group_state = opp.states.get("group.user_test_group")
     assert group_state
     assert group_state.attributes[group.ATTR_AUTO]
     assert group_state.attributes["friendly_name"] == "Test2"
@@ -586,7 +586,7 @@ async def test_service_group_set_group_remove_group.opp):
     common.async_remove.opp, "user_test_group")
     await.opp.async_block_till_done()
 
-    group_state =.opp.states.get("group.user_test_group")
+    group_state = opp.states.get("group.user_test_group")
     assert group_state is None
 
 

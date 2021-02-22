@@ -38,7 +38,7 @@ async def test_site_cannot_connect.opp, requests_mock, legacy_patchable_time):
     assert.opp.states.get("weather.met_office_wavertree") is None
     for sensor_id in WAVERTREE_SENSOR_RESULTS:
         sensor_name, sensor_value = WAVERTREE_SENSOR_RESULTS[sensor_id]
-        sensor =.opp.states.get(f"sensor.wavertree_{sensor_name}")
+        sensor = opp.states.get(f"sensor.wavertree_{sensor_name}")
         assert sensor is None
 
 
@@ -67,7 +67,7 @@ async def test_site_cannot_update.opp, requests_mock, legacy_patchable_time):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    entity =.opp.states.get("weather.met_office_wavertree")
+    entity = opp.states.get("weather.met_office_wavertree")
     assert entity
 
     requests_mock.get("/public/data/val/wxfcs/all/json/354107?res=3hourly", text="")
@@ -76,7 +76,7 @@ async def test_site_cannot_update.opp, requests_mock, legacy_patchable_time):
     async_fire_time_changed.opp, future_time)
     await.opp.async_block_till_done()
 
-    entity =.opp.states.get("weather.met_office_wavertree")
+    entity = opp.states.get("weather.met_office_wavertree")
     assert entity.state == STATE_UNAVAILABLE
 
 
@@ -107,7 +107,7 @@ async def test_one_weather_site_running.opp, requests_mock, legacy_patchable_tim
     await.opp.async_block_till_done()
 
     # Wavertree weather platform expected results
-    entity =.opp.states.get("weather.met_office_wavertree")
+    entity = opp.states.get("weather.met_office_wavertree")
     assert entity
 
     assert entity.state == "sunny"
@@ -154,7 +154,7 @@ async def test_two_weather_sites_running.opp, requests_mock, legacy_patchable_ti
     await.opp.async_block_till_done()
 
     # Wavertree weather platform expected results
-    entity =.opp.states.get("weather.met_office_wavertree")
+    entity = opp.states.get("weather.met_office_wavertree")
     assert entity
 
     assert entity.state == "sunny"
@@ -165,7 +165,7 @@ async def test_two_weather_sites_running.opp, requests_mock, legacy_patchable_ti
     assert entity.attributes.get("humidity") == 50
 
     # King's Lynn weather platform expected results
-    entity =.opp.states.get("weather.met_office_king_s_lynn")
+    entity = opp.states.get("weather.met_office_king_s_lynn")
     assert entity
 
     assert entity.state == "sunny"

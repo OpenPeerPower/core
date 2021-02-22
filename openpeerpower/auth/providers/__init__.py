@@ -45,7 +45,7 @@ class AuthProvider:
         self, opp: OpenPeerPower, store: AuthStore, config: Dict[str, Any]
     ) -> None:
         """Initialize an auth provider."""
-        self.opp =.opp
+        self.opp = opp
         self.store = store
         self.config = config
 
@@ -165,10 +165,10 @@ async def load_auth_provider_module(
     if opp.config.skip_pip or not hasattr(module, "REQUIREMENTS"):
         return module
 
-    processed =.opp.data.get(DATA_REQS)
+    processed = opp.data.get(DATA_REQS)
 
     if processed is None:
-        processed =.opp.data[DATA_REQS] = set()
+        processed = opp.data[DATA_REQS] = set()
     elif provider in processed:
         return module
 

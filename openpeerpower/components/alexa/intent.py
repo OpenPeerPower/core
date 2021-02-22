@@ -222,7 +222,7 @@ class AlexaResponse:
 
     def __init__(self, opp, intent_info):
         """Initialize the response."""
-        self.opp =.opp
+        self.opp = opp
         self.speech = None
         self.card = None
         self.reprompt = None

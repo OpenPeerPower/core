@@ -531,7 +531,7 @@ def test_as_local.opp):
     """Test converting time to local."""
 
    .opp.states.async_set("test.object", "available")
-    last_updated =.opp.states.get("test.object").last_updated
+    last_updated = opp.states.get("test.object").last_updated
     assert template.Template(
         "{{ as_local(states.test.object.last_updated) }}", opp
     ).async_render() == str(dt_util.as_local(last_updated))
@@ -2359,19 +2359,19 @@ async def test_state_attributes.opp):
         "{{ states.sensor.test.object_id }}",
        .opp,
     )
-    assert tpl.async_render() ==.opp.states.get("sensor.test").object_id
+    assert tpl.async_render() == opp.states.get("sensor.test").object_id
 
     tpl = template.Template(
         "{{ states.sensor.test.domain }}",
        .opp,
     )
-    assert tpl.async_render() ==.opp.states.get("sensor.test").domain
+    assert tpl.async_render() == opp.states.get("sensor.test").domain
 
     tpl = template.Template(
         "{{ states.sensor.test.context.id }}",
        .opp,
     )
-    assert tpl.async_render() ==.opp.states.get("sensor.test").context.id
+    assert tpl.async_render() == opp.states.get("sensor.test").context.id
 
     tpl = template.Template(
         "{{ states.sensor.test.state_with_unit }}",

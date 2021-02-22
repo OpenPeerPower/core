@@ -62,7 +62,7 @@ async def async_get_discoverable_devices.opp):
         devs = Discover.discover()
         return devs
 
-    return await.opp.async_add_executor_job(discover)
+    return await opp.async_add_executor_job(discover)
 
 
 async def async_discover_devices(
@@ -134,10 +134,10 @@ def get_static_devices(config_data) -> SmartDevices:
 def add_available_devices.opp, device_type, device_class):
     """Get sysinfo for all devices."""
 
-    devices =.opp.data[TPLINK_DOMAIN][device_type]
+    devices = opp.data[TPLINK_DOMAIN][device_type]
 
     if f"{device_type}_remaining" in.opp.data[TPLINK_DOMAIN]:
-        devices =.opp.data[TPLINK_DOMAIN][f"{device_type}_remaining"]
+        devices = opp.data[TPLINK_DOMAIN][f"{device_type}_remaining"]
 
     entities_ready = []
     devices_unavailable = []

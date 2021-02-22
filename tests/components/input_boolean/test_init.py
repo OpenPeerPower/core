@@ -103,8 +103,8 @@ async def test_config_options.opp):
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
-    state_1 =.opp.states.get("input_boolean.test_1")
-    state_2 =.opp.states.get("input_boolean.test_2")
+    state_1 = opp.states.get("input_boolean.test_1")
+    state_2 = opp.states.get("input_boolean.test_2")
 
     assert state_1 is not None
     assert state_2 is not None
@@ -134,11 +134,11 @@ async def test_restore_state.opp):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"b1": None, "b2": None}})
 
-    state =.opp.states.get("input_boolean.b1")
+    state = opp.states.get("input_boolean.b1")
     assert state
     assert state.state == "on"
 
-    state =.opp.states.get("input_boolean.b2")
+    state = opp.states.get("input_boolean.b2")
     assert state
     assert state.state == "off"
 
@@ -157,11 +157,11 @@ async def test_initial_state_overrules_restore_state.opp):
         {DOMAIN: {"b1": {CONF_INITIAL: False}, "b2": {CONF_INITIAL: True}}},
     )
 
-    state =.opp.states.get("input_boolean.b1")
+    state = opp.states.get("input_boolean.b1")
     assert state
     assert state.state == "off"
 
-    state =.opp.states.get("input_boolean.b2")
+    state = opp.states.get("input_boolean.b2")
     assert state
     assert state.state == "on"
 
@@ -172,7 +172,7 @@ async def test_input_boolean_context.opp, opp_admin_user):
        .opp, "input_boolean", {"input_boolean": {"ac": {CONF_INITIAL: True}}}
     )
 
-    state =.opp.states.get("input_boolean.ac")
+    state = opp.states.get("input_boolean.ac")
     assert state is not None
 
     await.opp.services.async_call(
@@ -183,10 +183,10 @@ async def test_input_boolean_context.opp, opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state2 =.opp.states.get("input_boolean.ac")
+    state2 = opp.states.get("input_boolean.ac")
     assert state2 is not None
     assert state.state != state2.state
-    assert state2.context.user_id ==.opp_admin_user.id
+    assert state2.context.user_id == opp_admin_user.id
 
 
 async def test_reload.opp, opp_admin_user):
@@ -211,9 +211,9 @@ async def test_reload.opp, opp_admin_user):
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
-    state_1 =.opp.states.get("input_boolean.test_1")
-    state_2 =.opp.states.get("input_boolean.test_2")
-    state_3 =.opp.states.get("input_boolean.test_3")
+    state_1 = opp.states.get("input_boolean.test_1")
+    state_2 = opp.states.get("input_boolean.test_2")
+    state_3 = opp.states.get("input_boolean.test_3")
 
     assert state_1 is not None
     assert state_2 is not None
@@ -247,9 +247,9 @@ async def test_reload.opp, opp_admin_user):
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
-    state_1 =.opp.states.get("input_boolean.test_1")
-    state_2 =.opp.states.get("input_boolean.test_2")
-    state_3 =.opp.states.get("input_boolean.test_3")
+    state_1 = opp.states.get("input_boolean.test_1")
+    state_2 = opp.states.get("input_boolean.test_2")
+    state_3 = opp.states.get("input_boolean.test_3")
 
     assert state_1 is None
     assert state_2 is not None
@@ -267,7 +267,7 @@ async def test_reload.opp, opp_admin_user):
 async def test_load_from_storage.opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
-    state =.opp.states.get(f"{DOMAIN}.from_storage")
+    state = opp.states.get(f"{DOMAIN}.from_storage")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_FRIENDLY_NAME) == "from storage"
     assert state.attributes.get(ATTR_EDITABLE)
@@ -277,12 +277,12 @@ async def test_editable_state_attribute.opp, storage_setup):
     """Test editable attribute."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": None}})
 
-    state =.opp.states.get(f"{DOMAIN}.from_storage")
+    state = opp.states.get(f"{DOMAIN}.from_storage")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_FRIENDLY_NAME) == "from storage"
     assert state.attributes.get(ATTR_EDITABLE)
 
-    state =.opp.states.get(f"{DOMAIN}.from_yaml")
+    state = opp.states.get(f"{DOMAIN}.from_yaml")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_EDITABLE)
 
@@ -315,7 +315,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
@@ -327,7 +327,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state =.opp.states.get(input_entity_id)
+    state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 

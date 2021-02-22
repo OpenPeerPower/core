@@ -8,7 +8,7 @@ async def test_automation_scenes.opp):
 
     await async_init_integration.opp)
 
-    state =.opp.states.get("scene.away_short")
+    state = opp.states.get("scene.away_short")
     expected_attributes = {
         "attribution": "Data provided by mynexia.com",
         "description": "When IFTTT activates the automation Upstairs "
@@ -35,7 +35,7 @@ async def test_automation_scenes.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("scene.power_outage")
+    state = opp.states.get("scene.power_outage")
     expected_attributes = {
         "attribution": "Data provided by mynexia.com",
         "description": "When IFTTT activates the automation Upstairs "
@@ -54,7 +54,7 @@ async def test_automation_scenes.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state =.opp.states.get("scene.power_restored")
+    state = opp.states.get("scene.power_restored")
     expected_attributes = {
         "attribution": "Data provided by mynexia.com",
         "description": "When IFTTT activates the automation Upstairs "

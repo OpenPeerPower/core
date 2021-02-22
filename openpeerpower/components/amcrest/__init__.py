@@ -216,7 +216,7 @@ def _start_event_monitor.opp, name, api, event_codes):
     thread = threading.Thread(
         target=_monitor_events,
         name=f"Amcrest {name}",
-        args=.opp, name, api, event_codes),
+        args= opp, name, api, event_codes),
         daemon=True,
     )
     thread.start()

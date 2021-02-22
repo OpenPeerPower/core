@@ -19,7 +19,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up switch platform for ADS."""
-    ads_hub =.opp.data.get(DATA_ADS)
+    ads_hub = opp.data.get(DATA_ADS)
 
     name = config[CONF_NAME]
     ads_var = config[CONF_ADS_VAR]

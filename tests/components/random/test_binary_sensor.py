@@ -19,7 +19,7 @@ async def test_random_binary_sensor_on.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
 
     assert state.state == "on"
 
@@ -39,6 +39,6 @@ async def test_random_binary_sensor_off.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
 
     assert state.state == "off"

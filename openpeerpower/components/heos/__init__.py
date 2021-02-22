@@ -123,13 +123,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
-    controller_manager =.opp.data[DOMAIN][DATA_CONTROLLER_MANAGER]
+    controller_manager = opp.data[DOMAIN][DATA_CONTROLLER_MANAGER]
     await controller_manager.disconnect()
    .opp.data.pop(DOMAIN)
 
     services.remove.opp)
 
-    return await.opp.config_entries.async_forward_entry_unload(
+    return await opp.config_entries.async_forward_entry_unload(
         entry, MEDIA_PLAYER_DOMAIN
     )
 

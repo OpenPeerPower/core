@@ -117,7 +117,7 @@ class MatrixBot:
         commands,
     ):
         """Set up the client."""
-        self.opp =.opp
+        self.opp = opp
 
         self._session_filepath = config_file
         self._auth_tokens = self._get_auth_tokens()

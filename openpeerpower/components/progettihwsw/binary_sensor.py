@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(DOMAIN)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the binary sensors from a config entry."""
-    board_api =.opp.data[DOMAIN][config_entry.entry_id]
+    board_api = opp.data[DOMAIN][config_entry.entry_id]
     input_count = config_entry.data["input_count"]
     binary_sensors = []
 

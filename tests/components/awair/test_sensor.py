@@ -62,7 +62,7 @@ def assert_expected_properties(
 
     entry = registry.async_get(name)
     assert entry.unique_id == unique_id
-    state =.opp.states.get(name)
+    state = opp.states.get(name)
     assert state
     assert state.state == state_value
     for attr, value in attributes.items():

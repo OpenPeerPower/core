@@ -39,7 +39,7 @@ class AsyncTrackStates:
 
     def __init__(self, opp: OpenPeerPowerType) -> None:
         """Initialize a TrackStates block."""
-        self.opp =.opp
+        self.opp = opp
         self.states: List[State] = []
 
     # pylint: disable=attribute-defined-outside-init

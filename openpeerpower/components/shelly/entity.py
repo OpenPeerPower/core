@@ -26,7 +26,7 @@ async def async_setup_entry_attribute_entities(
    .opp, config_entry, async_add_entities, sensors, sensor_class
 ):
     """Set up entities for attributes."""
-    wrapper: ShellyDeviceWrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][
+    wrapper: ShellyDeviceWrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][
         config_entry.entry_id
     ][COAP]
 
@@ -114,7 +114,7 @@ async def async_setup_entry_rest(
    .opp, config_entry, async_add_entities, sensors, sensor_class
 ):
     """Set up entities for REST sensors."""
-    wrapper: ShellyDeviceRestWrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][
+    wrapper: ShellyDeviceRestWrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][
         config_entry.entry_id
     ][REST]
 

@@ -164,7 +164,7 @@ async def async_handle_save_video_service.opp, entry, call):
 
     def _write_video(camera_name, video_path):
         """Call video write."""
-        all_cameras =.opp.data[DOMAIN][entry.entry_id].cameras
+        all_cameras = opp.data[DOMAIN][entry.entry_id].cameras
         if camera_name in all_cameras:
             all_cameras[camera_name].video_to_file(video_path)
 

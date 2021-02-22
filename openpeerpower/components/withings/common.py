@@ -1024,7 +1024,7 @@ async def async_get_data_manager(
     """Get the data manager for a config entry."""
    .opp.data.setdefault(const.DOMAIN, {})
    .opp.data[const.DOMAIN].setdefault(config_entry.entry_id, {})
-    config_entry_data =.opp.data[const.DOMAIN][config_entry.entry_id]
+    config_entry_data = opp.data[const.DOMAIN][config_entry.entry_id]
 
     if const.DATA_MANAGER not in config_entry_data:
         profile = config_entry.data.get(const.PROFILE)

@@ -29,7 +29,7 @@ EVENT_ATTRIBUTES = [
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up sensors for device."""
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][EVENTS_COORDINATOR]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][EVENTS_COORDINATOR]
     sensors = [
         RiscoSensor(coordinator, id, [], name, config_entry.entry_id)
         for id, name in CATEGORIES.items()

@@ -17,7 +17,7 @@ def _handle_errors(func):
     @wraps(func)
     async def send_with_error_handling.opp, connection, msg):
         url_path = msg.get(CONF_URL_PATH)
-        config =.opp.data[DOMAIN]["dashboards"].get(url_path)
+        config = opp.data[DOMAIN]["dashboards"].get(url_path)
 
         if config is None:
             connection.send_error(
@@ -49,7 +49,7 @@ def _handle_errors(func):
 @websocket_api.websocket_command({"type": "lovelace/resources"})
 async def websocket_lovelace_resources.opp, connection, msg):
     """Send Lovelace UI resources over WebSocket configuration."""
-    resources =.opp.data[DOMAIN]["resources"]
+    resources = opp.data[DOMAIN]["resources"]
 
     if not resources.loaded:
         await resources.async_load()

@@ -760,7 +760,7 @@ class ForkedDaapdUpdater:
 
     def __init__(self, opp, api, entry_id):
         """Initialize."""
-        self.opp =.opp
+        self.opp = opp
         self._api = api
         self.websocket_handler = None
         self._all_output_ids = set()

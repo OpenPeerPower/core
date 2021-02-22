@@ -38,7 +38,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     names = {}
     names[IMAGE_ACTIVITY] = config.get(CONF_ACTIVITY_NAME)
     names[IMAGE_AVATAR] = config.get(CONF_AVATAR_NAME)
-    skybell =.opp.data.get(SKYBELL_DOMAIN)
+    skybell = opp.data.get(SKYBELL_DOMAIN)
 
     sensors = []
     for device in skybell.get_devices():

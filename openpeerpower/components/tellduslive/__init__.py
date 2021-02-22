@@ -70,7 +70,7 @@ async def async_setup_entry.opp, entry):
 
    .opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
    .opp.data[CONFIG_ENTRY_IS_SETUP] = set()
-   .opp.data[NEW_CLIENT_TASK] =.opp.loop.create_task(
+   .opp.data[NEW_CLIENT_TASK] = opp.loop.create_task(
         async_new_client.opp, session, entry)
     )
 
@@ -119,7 +119,7 @@ async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
     if not.opp.data[NEW_CLIENT_TASK].done():
        .opp.data[NEW_CLIENT_TASK].cancel()
-    interval_tracker =.opp.data.pop(INTERVAL_TRACKER)
+    interval_tracker = opp.data.pop(INTERVAL_TRACKER)
     interval_tracker()
     await asyncio.wait(
         [

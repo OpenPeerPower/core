@@ -75,7 +75,7 @@ async def async_setup_opp, config) -> bool:
     scan_interval = conf[CONF_SCAN_INTERVAL]
 
     # shared data
-   .opp.data[DOMAIN] =.opp.data[DATA_SURE_PETCARE] = {}
+   .opp.data[DOMAIN] = opp.data[DATA_SURE_PETCARE] = {}
 
     # sure petcare api connection
     try:
@@ -132,7 +132,7 @@ async def async_setup_opp, config) -> bool:
 
     _LOGGER.debug("Devices and Pets to setup: %s", things)
 
-    spc =.opp.data[DATA_SURE_PETCARE][SPC] = SurePetcareAPI.opp, surepy, things)
+    spc = opp.data[DATA_SURE_PETCARE][SPC] = SurePetcareAPI.opp, surepy, things)
 
     # initial update
     await spc.async_update()
@@ -187,7 +187,7 @@ class SurePetcareAPI:
 
     def __init__(self, opp, surepy: SurePetcare, ids: List[Dict[str, Any]]) -> None:
         """Initialize the Sure Petcare object."""
-        self.opp =.opp
+        self.opp = opp
         self.surepy = surepy
         self.ids = ids
         self.states: Dict[str, Any] = {}

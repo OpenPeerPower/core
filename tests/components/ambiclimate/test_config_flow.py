@@ -22,14 +22,14 @@ async def init_config_flow.opp):
     config_flow.register_flow_implementation.opp, "id", "secret")
     flow = config_flow.AmbiclimateFlowHandler()
 
-    flow.opp =.opp
+    flow.opp = opp
     return flow
 
 
 async def test_abort_if_no_implementation_registered.opp):
     """Test we abort if no implementation is registered."""
     flow = config_flow.AmbiclimateFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

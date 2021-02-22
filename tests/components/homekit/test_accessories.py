@@ -76,7 +76,7 @@ async def test_home_accessory.opp, hk_driver):
     acc = HomeAccessory(
        .opp, hk_driver, "Home Accessory", entity_id, 2, {"platform": "isy994"}
     )
-    assert acc.opp ==.opp
+    assert acc.opp == opp
     assert acc.display_name == "Home Accessory"
     assert acc.aid == 2
     assert acc.available is True
@@ -123,7 +123,7 @@ async def test_home_accessory.opp, hk_driver):
     ) as mock_async_update_state:
         await acc.run()
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
        .opp.states.async_remove(entity_id)
@@ -158,7 +158,7 @@ async def test_battery_service.opp, hk_driver, caplog):
     ) as mock_async_update_state:
         await acc.run()
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
     assert acc._char_battery.value == 50
@@ -170,7 +170,7 @@ async def test_battery_service.opp, hk_driver, caplog):
     ) as mock_async_update_state:
        .opp.states.async_set(entity_id, None, {ATTR_BATTERY_LEVEL: 15})
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
     assert acc._char_battery.value == 15
@@ -182,7 +182,7 @@ async def test_battery_service.opp, hk_driver, caplog):
     ) as mock_async_update_state:
        .opp.states.async_set(entity_id, None, {ATTR_BATTERY_LEVEL: "error"})
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
     assert acc._char_battery.value == 15
@@ -198,7 +198,7 @@ async def test_battery_service.opp, hk_driver, caplog):
             entity_id, None, {ATTR_BATTERY_LEVEL: 10, ATTR_BATTERY_CHARGING: True}
         )
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
     with patch(
@@ -214,7 +214,7 @@ async def test_battery_service.opp, hk_driver, caplog):
     ) as mock_async_update_state:
         await acc.run()
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery.value == 10
     assert acc._char_low_battery.value == 1
@@ -255,7 +255,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
     ) as mock_async_update_state:
         await acc.run()
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery.value == 50
     assert acc._char_low_battery.value == 0
@@ -300,7 +300,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
     ) as mock_async_update_state:
         await acc.run()
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery.value == 20
     assert acc._char_low_battery.value == 1
@@ -342,7 +342,7 @@ async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
     ) as mock_async_update_state:
         await acc.run()
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery.value == 100
     assert acc._char_low_battery.value == 0
@@ -354,7 +354,7 @@ async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
        .opp.states.async_set(linked_battery_charging_sensor, STATE_OFF, None)
         await acc.run()
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_charging.value == 0
 
@@ -364,7 +364,7 @@ async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
        .opp.states.async_set(linked_battery_charging_sensor, STATE_ON, None)
         await acc.run()
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_charging.value == 1
 
@@ -407,7 +407,7 @@ async def test_linked_battery_sensor_and_linked_battery_charging_sensor(
     ) as mock_async_update_state:
         await acc.run()
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery.value == 50
     assert acc._char_low_battery.value == 0
@@ -484,7 +484,7 @@ async def test_missing_linked_battery_sensor.opp, hk_driver, caplog):
     ) as mock_async_update_state:
         await acc.run()
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
 
     assert not acc.linked_battery_sensor
@@ -519,7 +519,7 @@ async def test_battery_appears_after_startup.opp, hk_driver, caplog):
     ) as mock_async_update_state:
         await acc.run()
         await.opp.async_block_till_done()
-        state =.opp.states.get(entity_id)
+        state = opp.states.get(entity_id)
         mock_async_update_state.assert_called_with(state)
     assert acc._char_battery is None
 

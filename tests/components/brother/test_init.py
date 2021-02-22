@@ -17,7 +17,7 @@ async def test_async_setup_entry.opp):
     """Test a successful setup entry."""
     await init_integration.opp)
 
-    state =.opp.states.get("sensor.hl_l2340dw_status")
+    state = opp.states.get("sensor.hl_l2340dw_status")
     assert state is not None
     assert state.state != STATE_UNAVAILABLE
     assert state.state == "waiting"

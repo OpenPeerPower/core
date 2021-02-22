@@ -37,7 +37,7 @@ async def async_setup_sdm_entry(
 ) -> None:
     """Set up the sensors."""
 
-    subscriber =.opp.data[DOMAIN][DATA_SUBSCRIBER]
+    subscriber = opp.data[DOMAIN][DATA_SUBSCRIBER]
     try:
         device_manager = await subscriber.async_get_device_manager()
     except GoogleNestException as err:

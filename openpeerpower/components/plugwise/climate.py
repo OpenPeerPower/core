@@ -38,8 +38,8 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Smile Thermostats from a config entry."""
-    api =.opp.data[DOMAIN][config_entry.entry_id]["api"]
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
+    api = opp.data[DOMAIN][config_entry.entry_id]["api"]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
 
     entities = []
     thermostat_classes = [

@@ -151,7 +151,7 @@ async def async_setup_lip.opp, config_entry, lip_devices):
     """Connect to the bridge via Lutron Integration Protocol to watch for pico remotes."""
     host = config_entry.data[CONF_HOST]
     config_entry_id = config_entry.entry_id
-    data =.opp.data[DOMAIN][config_entry_id]
+    data = opp.data[DOMAIN][config_entry_id]
     bridge_device = data[BRIDGE_DEVICE]
     bridge = data[BRIDGE_LEAP]
     lip = LIP()
@@ -281,7 +281,7 @@ def _async_subscribe_pico_remote_events.opp, lip, button_devices_by_id):
 async def async_unload_entry.opp, config_entry):
     """Unload the bridge bridge from a config entry."""
 
-    data =.opp.data[DOMAIN][config_entry.entry_id]
+    data = opp.data[DOMAIN][config_entry.entry_id]
     data[BRIDGE_LEAP].close()
     if data[BRIDGE_LIP]:
         await data[BRIDGE_LIP].async_stop()

@@ -179,7 +179,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         _LOGGER.error("Failed to connect", exc_info=True)
         raise ConfigEntryNotReady from err
 
-    upcloud_data =.opp.data.setdefault(DATA_UPCLOUD, UpCloudHassData())
+    upcloud_data = opp.data.setdefault(DATA_UPCLOUD, UpCloudHassData())
 
     # Handle pre config entry (0.117) scan interval migration to options
     migrated_scan_interval = upcloud_data.scan_interval_migrations.pop(
@@ -239,7 +239,7 @@ async def async_unload_entry.opp, config_entry):
     for domain in CONFIG_ENTRY_DOMAINS:
         await.opp.config_entries.async_forward_entry_unload(config_entry, domain)
 
-    coordinator: UpCloudDataUpdateCoordinator =.opp.data[
+    coordinator: UpCloudDataUpdateCoordinator = opp.data[
         DATA_UPCLOUD
     ].coordinators.pop(config_entry.data[CONF_USERNAME])
     while coordinator.unsub_handlers:

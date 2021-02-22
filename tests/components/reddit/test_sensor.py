@@ -154,10 +154,10 @@ async def test_setup_with_valid_config(opp):
     assert await async_setup_component.opp, "sensor", VALID_CONFIG)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.reddit_worldnews")
+    state = opp.states.get("sensor.reddit_worldnews")
     assert int(state.state) == MOCK_RESULTS_LENGTH
 
-    state =.opp.states.get("sensor.reddit_news")
+    state = opp.states.get("sensor.reddit_news")
     assert int(state.state) == MOCK_RESULTS_LENGTH
 
     assert state.attributes[ATTR_SUBREDDIT] == "news"

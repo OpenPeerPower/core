@@ -193,7 +193,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         """Handle for services."""
         entity_ids = service.data.get("entity_id")
 
-        classifiers =.opp.data[DATA_FACEBOX]
+        classifiers = opp.data[DATA_FACEBOX]
         if entity_ids:
             classifiers = [c for c in classifiers if c.entity_id in entity_ids]
 

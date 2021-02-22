@@ -59,12 +59,12 @@ async def async_setup_entry(
     opp: OpenPeerPowerType, config: ConfigType, async_add_entities
 ):
     """Initialize an IZone Controller."""
-    disco =.opp.data[DATA_DISCOVERY_SERVICE]
+    disco = opp.data[DATA_DISCOVERY_SERVICE]
 
     @callback
     def init_controller(ctrl: Controller):
         """Register the controller device and the containing zones."""
-        conf =.opp.data.get(DATA_CONFIG)  # type: ConfigType
+        conf = opp.data.get(DATA_CONFIG)  # type: ConfigType
 
         # Filter out any entities excluded in the config file
         if conf and ctrl.device_uid in conf[CONF_EXCLUDE]:

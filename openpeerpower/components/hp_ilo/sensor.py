@@ -120,7 +120,7 @@ class HpIloSensor(Entity):
         self.hp_ilo_data = hp_ilo_data
 
         if sensor_value_template is not None:
-            sensor_value_template.opp =.opp
+            sensor_value_template.opp = opp
         self._sensor_value_template = sensor_value_template
 
         self._state = None

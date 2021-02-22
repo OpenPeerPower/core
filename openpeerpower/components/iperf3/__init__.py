@@ -84,7 +84,7 @@ async def async_setup_opp, config):
 
     conf = config[DOMAIN]
     for host in conf[CONF_HOSTS]:
-        data =.opp.data[DOMAIN][host[CONF_HOST]] = Iperf3Data.opp, host)
+        data = opp.data[DOMAIN][host[CONF_HOST]] = Iperf3Data.opp, host)
 
         if not conf[CONF_MANUAL]:
             async_track_time_interval.opp, data.update, conf[CONF_SCAN_INTERVAL])

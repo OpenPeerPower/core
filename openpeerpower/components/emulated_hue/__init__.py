@@ -106,7 +106,7 @@ async def async_setup_opp, yaml_config):
     config = config(opp, yaml_config.get(DOMAIN, {}))
 
     app = web.Application()
-    app[.opp"] =.opp
+    app[.opp"] = opp
 
     # We misunderstood the startup signal. You're not allowed to change
     # anything during startup. Temp workaround.
@@ -185,7 +185,7 @@ class Config:
 
     def __init__(self, opp, conf):
         """Initialize the instance."""
-        self.opp =.opp
+        self.opp = opp
         self.type = conf.get(CONF_TYPE)
         self.numbers = None
         self.cached_states = {}

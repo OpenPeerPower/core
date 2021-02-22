@@ -25,7 +25,7 @@ def mock_device():
 async def test_cover_setup_opp, mock_device):
     """Test a successful setup."""
     await create_entity_from_device.opp, mock_device)
-    entity_state =.opp.states.get("cover.name")
+    entity_state = opp.states.get("cover.name")
     assert entity_state.attributes[ATTR_FRIENDLY_NAME] == mock_device.name
     assert (
         entity_state.attributes["current_position"]
@@ -81,7 +81,7 @@ async def check_cover_position(
     device.is_closed = closed
     update_func(device)
     await.opp.async_block_till_done()
-    entity_state =.opp.states.get("cover.name")
+    entity_state = opp.states.get("cover.name")
     assert entity_state.state == expected
 
 

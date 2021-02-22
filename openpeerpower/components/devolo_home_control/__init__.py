@@ -69,7 +69,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             )
 
     # Listen when EVENT_OPENPEERPOWER_STOP is fired
-   .opp.data[DOMAIN][entry.entry_id]["listener"] =.opp.bus.async_listen_once(
+   .opp.data[DOMAIN][entry.entry_id]["listener"] = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, shutdown
     )
 

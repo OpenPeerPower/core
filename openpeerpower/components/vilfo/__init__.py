@@ -72,7 +72,7 @@ class VilfoRouterData:
     def __init__(self, opp, host, access_token):
         """Initialize."""
         self._vilfo = VilfoClient(host, access_token)
-        self.opp =.opp
+        self.opp = opp
         self.host = host
         self.available = False
         self.firmware_version = None

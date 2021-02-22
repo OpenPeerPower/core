@@ -292,7 +292,7 @@ def setup_opp: OpenPeerPower, base_config):
         if addr in device_aliases:
             addr = device_aliases[addr]
         else:
-            entity =.opp.states.get(addr)
+            entity = opp.states.get(addr)
             _LOGGER.debug("Selecting entity %s", entity)
             if entity is not None:
                 addr = entity.attributes["physical_address"]

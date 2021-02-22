@@ -48,7 +48,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up IPP from a config entry."""
 
-    coordinator =.opp.data[DOMAIN].get(entry.entry_id)
+    coordinator = opp.data[DOMAIN].get(entry.entry_id)
     if not coordinator:
         # Create IPP instance for this entry
         coordinator = IPPDataUpdateCoordinator(

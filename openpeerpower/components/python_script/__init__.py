@@ -107,7 +107,7 @@ def discover_scripts.opp):
         """Handle python script service calls."""
         execute_script.opp, call.service, call.data)
 
-    existing =.opp.services.services.get(DOMAIN, {}).keys()
+    existing = opp.services.services.get(DOMAIN, {}).keys()
     for existing_service in existing:
         if existing_service == SERVICE_RELOAD:
             continue

@@ -75,7 +75,7 @@ class MockClimateEntity(ClimateEntity):
 async def test_sync_turn_on.opp):
     """Test if async turn_on calls sync turn_on."""
     climate = MockClimateEntity()
-    climate.opp =.opp
+    climate.opp = opp
 
     climate.turn_on = MagicMock()
     await climate.async_turn_on()
@@ -86,7 +86,7 @@ async def test_sync_turn_on.opp):
 async def test_sync_turn_off.opp):
     """Test if async turn_off calls sync turn_off."""
     climate = MockClimateEntity()
-    climate.opp =.opp
+    climate.opp = opp
 
     climate.turn_off = MagicMock()
     await climate.async_turn_off()

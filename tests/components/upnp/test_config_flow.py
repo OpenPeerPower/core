@@ -327,7 +327,7 @@ async def test_options_flow.opp: OpenPeerPowerType):
         await.opp.async_block_till_done()
 
         # DataUpdateCoordinator gets a default of 30 seconds for updates.
-        coordinator =.opp.data[DOMAIN][DOMAIN_COORDINATORS][mock_device.udn]
+        coordinator = opp.data[DOMAIN][DOMAIN_COORDINATORS][mock_device.udn]
         assert coordinator.update_interval == timedelta(seconds=DEFAULT_SCAN_INTERVAL)
 
         # Options flow with no input results in form.

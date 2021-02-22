@@ -250,7 +250,7 @@ async def test_setup_get_off.opp):
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state =.opp.states.get("binary_sensor.foo")
+    state = opp.states.get("binary_sensor.foo")
     assert state.state == STATE_OFF
 
 
@@ -280,7 +280,7 @@ async def test_setup_get_on.opp):
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state =.opp.states.get("binary_sensor.foo")
+    state = opp.states.get("binary_sensor.foo")
     assert state.state == STATE_ON
 
 
@@ -306,7 +306,7 @@ async def test_setup_with_exception.opp):
     await.opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    state =.opp.states.get("binary_sensor.foo")
+    state = opp.states.get("binary_sensor.foo")
     assert state.state == STATE_OFF
 
     await async_setup_component.opp, "openpeerpower", {})
@@ -322,7 +322,7 @@ async def test_setup_with_exception.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.foo")
+    state = opp.states.get("binary_sensor.foo")
     assert state.state == STATE_UNAVAILABLE
 
 

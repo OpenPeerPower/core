@@ -355,7 +355,7 @@ async def test_flow_fails_controller_unavailable.opp, aioclient_mock):
 async def test_reauth_flow_update_configuration.opp, aioclient_mock):
     """Verify reauth flow can update controller configuration."""
     config_entry = await setup_unifi_integration.opp, aioclient_mock)
-    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     controller.available = False
 
     result = await.opp.config_entries.flow.async_init(

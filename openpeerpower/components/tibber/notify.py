@@ -15,7 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_get_service.opp, config, discovery_info=None):
     """Get the Tibber notification service."""
-    tibber_connection =.opp.data[TIBBER_DOMAIN]
+    tibber_connection = opp.data[TIBBER_DOMAIN]
     return TibberNotificationService(tibber_connection.send_notification)
 
 

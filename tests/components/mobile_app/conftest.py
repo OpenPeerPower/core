@@ -67,7 +67,7 @@ async def authed_api_client.opp, opp_client):
     """Provide an authenticated client for mobile_app to use."""
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
     await.opp.async_block_till_done()
-    return await.opp_client()
+    return await opp_client()
 
 
 @pytest.fixture(autouse=True)

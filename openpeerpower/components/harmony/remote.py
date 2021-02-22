@@ -59,7 +59,7 @@ async def async_setup_entry(
 ):
     """Set up the Harmony config entry."""
 
-    data =.opp.data[DOMAIN][entry.entry_id]
+    data = opp.data[DOMAIN][entry.entry_id]
 
     _LOGGER.debug("HarmonyData : %s", data)
 

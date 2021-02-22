@@ -275,7 +275,7 @@ async def test_send_command.opp):
         "openpeerpower.components.ps4", ".media_player.PS4Device.async_send_command"
     )
 
-    mock_devices =.opp.data[PS4_DATA].devices
+    mock_devices = opp.data[PS4_DATA].devices
     assert len(mock_devices) == 1
     mock_entity = mock_devices[0]
     assert mock_entity.entity_id == f"media_player.{MOCK_NAME}"

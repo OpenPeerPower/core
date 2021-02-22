@@ -14,7 +14,7 @@ async def test_tracking_home.opp, mock_weather):
     # Test the hourly sensor is disabled by default
     registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state =.opp.states.get("weather.test_home_hourly")
+    state = opp.states.get("weather.test_home_hourly")
     assert state is None
 
     entry = registry.async_get("weather.test_home_hourly")

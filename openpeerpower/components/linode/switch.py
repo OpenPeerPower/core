@@ -30,7 +30,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Linode Node switch."""
-    linode =.opp.data.get(DATA_LINODE)
+    linode = opp.data.get(DATA_LINODE)
     nodes = config.get(CONF_NODES)
 
     dev = []

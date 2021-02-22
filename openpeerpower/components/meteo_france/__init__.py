@@ -80,17 +80,17 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     async def _async_update_data_forecast_forecast():
         """Fetch data from API endpoint."""
-        return await.opp.async_add_executor_job(
+        return await opp.async_add_executor_job(
             client.get_forecast, latitude, longitude
         )
 
     async def _async_update_data_rain():
         """Fetch data from API endpoint."""
-        return await.opp.async_add_executor_job(client.get_rain, latitude, longitude)
+        return await opp.async_add_executor_job(client.get_rain, latitude, longitude)
 
     async def _async_update_data_alert():
         """Fetch data from API endpoint."""
-        return await.opp.async_add_executor_job(
+        return await opp.async_add_executor_job(
             client.get_warning_current_phenomenoms, department, 0, True
         )
 
@@ -184,7 +184,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     if opp.data[DOMAIN][entry.entry_id][COORDINATOR_ALERT]:
 
-        department =.opp.data[DOMAIN][entry.entry_id][
+        department = opp.data[DOMAIN][entry.entry_id][
             COORDINATOR_FORECAST
         ].data.position.get("dept")
        .opp.data[DOMAIN][department] = False

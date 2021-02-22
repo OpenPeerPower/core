@@ -194,7 +194,7 @@ async def test_gps_enter_and_exit_home.opp, geofency_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
     device_name = slugify(GPS_ENTER_HOME["device"])
-    state_name =.opp.states.get(f"device_tracker.{device_name}").state
+    state_name = opp.states.get(f"device_tracker.{device_name}").state
     assert STATE_HOME == state_name
 
     # Exit the Home zone
@@ -202,7 +202,7 @@ async def test_gps_enter_and_exit_home.opp, geofency_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
     device_name = slugify(GPS_EXIT_HOME["device"])
-    state_name =.opp.states.get(f"device_tracker.{device_name}").state
+    state_name = opp.states.get(f"device_tracker.{device_name}").state
     assert STATE_NOT_HOME == state_name
 
     # Exit the Home zone with "Send Current Position" enabled
@@ -214,11 +214,11 @@ async def test_gps_enter_and_exit_home.opp, geofency_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
     device_name = slugify(GPS_EXIT_HOME["device"])
-    current_latitude =.opp.states.get(f"device_tracker.{device_name}").attributes[
+    current_latitude = opp.states.get(f"device_tracker.{device_name}").attributes[
         "latitude"
     ]
     assert NOT_HOME_LATITUDE == current_latitude
-    current_longitude =.opp.states.get(f"device_tracker.{device_name}").attributes[
+    current_longitude = opp.states.get(f"device_tracker.{device_name}").attributes[
         "longitude"
     ]
     assert NOT_HOME_LONGITUDE == current_longitude
@@ -239,7 +239,7 @@ async def test_beacon_enter_and_exit_home.opp, geofency_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
     device_name = slugify(f"beacon_{BEACON_ENTER_HOME['name']}")
-    state_name =.opp.states.get(f"device_tracker.{device_name}").state
+    state_name = opp.states.get(f"device_tracker.{device_name}").state
     assert STATE_HOME == state_name
 
     # Exit the Home zone
@@ -247,7 +247,7 @@ async def test_beacon_enter_and_exit_home.opp, geofency_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
     device_name = slugify(f"beacon_{BEACON_ENTER_HOME['name']}")
-    state_name =.opp.states.get(f"device_tracker.{device_name}").state
+    state_name = opp.states.get(f"device_tracker.{device_name}").state
     assert STATE_NOT_HOME == state_name
 
 
@@ -260,7 +260,7 @@ async def test_beacon_enter_and_exit_car.opp, geofency_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
     device_name = slugify(f"beacon_{BEACON_ENTER_CAR['name']}")
-    state_name =.opp.states.get(f"device_tracker.{device_name}").state
+    state_name = opp.states.get(f"device_tracker.{device_name}").state
     assert STATE_NOT_HOME == state_name
 
     # Exit the Car away from Home zone
@@ -268,7 +268,7 @@ async def test_beacon_enter_and_exit_car.opp, geofency_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
     device_name = slugify(f"beacon_{BEACON_ENTER_CAR['name']}")
-    state_name =.opp.states.get(f"device_tracker.{device_name}").state
+    state_name = opp.states.get(f"device_tracker.{device_name}").state
     assert STATE_NOT_HOME == state_name
 
     # Enter the Car in the Home zone
@@ -279,7 +279,7 @@ async def test_beacon_enter_and_exit_car.opp, geofency_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
     device_name = slugify(f"beacon_{data['name']}")
-    state_name =.opp.states.get(f"device_tracker.{device_name}").state
+    state_name = opp.states.get(f"device_tracker.{device_name}").state
     assert STATE_HOME == state_name
 
     # Exit the Car in the Home zone
@@ -287,7 +287,7 @@ async def test_beacon_enter_and_exit_car.opp, geofency_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
     device_name = slugify(f"beacon_{data['name']}")
-    state_name =.opp.states.get(f"device_tracker.{device_name}").state
+    state_name = opp.states.get(f"device_tracker.{device_name}").state
     assert STATE_HOME == state_name
 
 
@@ -300,7 +300,7 @@ async def test_load_unload_entry.opp, geofency_client, webhook_id):
     await.opp.async_block_till_done()
     assert req.status == HTTP_OK
     device_name = slugify(GPS_ENTER_HOME["device"])
-    state_1 =.opp.states.get(f"device_tracker.{device_name}")
+    state_1 = opp.states.get(f"device_tracker.{device_name}")
     assert STATE_HOME == state_1.state
 
     assert len.opp.data[DOMAIN]["devices"]) == 1
@@ -313,7 +313,7 @@ async def test_load_unload_entry.opp, geofency_client, webhook_id):
     assert await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    state_2 =.opp.states.get(f"device_tracker.{device_name}")
+    state_2 = opp.states.get(f"device_tracker.{device_name}")
     assert state_2 is not None
     assert state_1 is not state_2
 

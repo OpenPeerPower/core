@@ -23,8 +23,8 @@ ATTR_GENERATED_AT = "generated_at"
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Neato camera with config entry."""
     dev = []
-    neato =.opp.data.get(NEATO_LOGIN)
-    mapdata =.opp.data.get(NEATO_MAP_DATA)
+    neato = opp.data.get(NEATO_LOGIN)
+    mapdata = opp.data.get(NEATO_MAP_DATA)
     for robot in.opp.data[NEATO_ROBOTS]:
         if "maps" in robot.traits:
             dev.append(NeatoCleaningMap(neato, robot, mapdata))

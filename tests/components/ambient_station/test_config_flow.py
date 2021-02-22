@@ -51,7 +51,7 @@ async def test_invalid_api_key.opp, mock_aioambient):
     conf = {CONF_API_KEY: "12345abcde12345abcde", CONF_APP_KEY: "67890fghij67890fghij"}
 
     flow = config_flow.AmbientStationFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": SOURCE_USER}
 
     result = await flow.async_step_user(user_input=conf)
@@ -64,7 +64,7 @@ async def test_no_devices.opp, mock_aioambient):
     conf = {CONF_API_KEY: "12345abcde12345abcde", CONF_APP_KEY: "67890fghij67890fghij"}
 
     flow = config_flow.AmbientStationFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": SOURCE_USER}
 
     result = await flow.async_step_user(user_input=conf)
@@ -74,7 +74,7 @@ async def test_no_devices.opp, mock_aioambient):
 async def test_show_form.opp):
     """Test that the form is served with no input."""
     flow = config_flow.AmbientStationFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": SOURCE_USER}
 
     result = await flow.async_step_user(user_input=None)
@@ -92,7 +92,7 @@ async def test_step_import.opp, mock_aioambient):
     conf = {CONF_API_KEY: "12345abcde12345abcde", CONF_APP_KEY: "67890fghij67890fghij"}
 
     flow = config_flow.AmbientStationFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": SOURCE_USER}
 
     result = await flow.async_step_import(import_config=conf)
@@ -113,7 +113,7 @@ async def test_step_user.opp, mock_aioambient):
     conf = {CONF_API_KEY: "12345abcde12345abcde", CONF_APP_KEY: "67890fghij67890fghij"}
 
     flow = config_flow.AmbientStationFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": SOURCE_USER}
 
     result = await flow.async_step_user(user_input=conf)

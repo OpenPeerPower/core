@@ -116,12 +116,12 @@ async def test_icon_template.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test_template_sensor")
+    state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes.get("icon") == ""
 
    .opp.states.async_set("binary_sensor.test_state", "Works")
     await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.test_template_sensor")
+    state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes["icon"] == "mdi:check"
 
 
@@ -152,12 +152,12 @@ async def test_entity_picture_template.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test_template_sensor")
+    state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes.get("entity_picture") == ""
 
    .opp.states.async_set("binary_sensor.test_state", "Works")
     await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.test_template_sensor")
+    state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes["entity_picture"] == "/local/sensor.png"
 
 
@@ -186,13 +186,13 @@ async def test_attribute_templates.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test_template_sensor")
+    state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes.get("test_attribute") == "It ."
    .opp.states.async_set("sensor.test_state", "Works2")
     await.opp.async_block_till_done()
    .opp.states.async_set("sensor.test_state", "Works")
     await.opp.async_block_till_done()
-    state =.opp.states.get("binary_sensor.test_template_sensor")
+    state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes["test_attribute"] == "It Works."
 
 
@@ -254,13 +254,13 @@ async def test_event.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
 
@@ -286,40 +286,40 @@ async def test_template_delay_on.opp):
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
     # check with time changes
    .opp.states.async_set("sensor.test_state", "off")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
    .opp.states.async_set("sensor.test_state", "off")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
 
@@ -346,40 +346,40 @@ async def test_template_delay_off.opp):
    .opp.states.async_set("sensor.test_state", "off")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
     # check with time changes
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
    .opp.states.async_set("sensor.test_state", "off")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
 
@@ -405,40 +405,40 @@ async def test_template_with_templated_delay_on.opp):
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
     future = dt_util.utcnow() + timedelta(seconds=3)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
     # check with time changes
    .opp.states.async_set("sensor.test_state", "off")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
    .opp.states.async_set("sensor.test_state", "off")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
     future = dt_util.utcnow() + timedelta(seconds=3)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
 
@@ -465,40 +465,40 @@ async def test_template_with_templated_delay_off.opp):
    .opp.states.async_set("sensor.test_state", "off")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
     future = dt_util.utcnow() + timedelta(seconds=3)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
     # check with time changes
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
    .opp.states.async_set("sensor.test_state", "off")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
     future = dt_util.utcnow() + timedelta(seconds=3)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
 
@@ -527,27 +527,27 @@ async def test_template_with_delay_on_based_on_input.opp):
    .opp.states.async_set("input_number.delay", 3)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
     future = dt_util.utcnow() + timedelta(seconds=3)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
     # set input to 4 seconds
    .opp.states.async_set("sensor.test_state", "off")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
    .opp.states.async_set("input_number.delay", 4)
@@ -556,21 +556,21 @@ async def test_template_with_delay_on_based_on_input.opp):
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
     future = dt_util.utcnow() + timedelta(seconds=2)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
     future = dt_util.utcnow() + timedelta(seconds=4)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
 
@@ -599,27 +599,27 @@ async def test_template_with_delay_off_based_on_input.opp):
    .opp.states.async_set("input_number.delay", 3)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
    .opp.states.async_set("sensor.test_state", "off")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
     future = dt_util.utcnow() + timedelta(seconds=3)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
     # set input to 4 seconds
    .opp.states.async_set("sensor.test_state", "on")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
    .opp.states.async_set("input_number.delay", 4)
@@ -628,21 +628,21 @@ async def test_template_with_delay_off_based_on_input.opp):
    .opp.states.async_set("sensor.test_state", "off")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
     future = dt_util.utcnow() + timedelta(seconds=2)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
     future = dt_util.utcnow() + timedelta(seconds=4)
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
 
@@ -666,7 +666,7 @@ async def test_available_without_availability_template.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
 
     assert state.state != STATE_UNAVAILABLE
     assert state.attributes[ATTR_DEVICE_CLASS] == "motion"
@@ -701,7 +701,7 @@ async def test_availability_template.opp):
    .opp.states.async_set("sensor.test_state", STATE_ON)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
 
     assert state.state != STATE_UNAVAILABLE
     assert state.attributes[ATTR_DEVICE_CLASS] == "motion"
@@ -884,13 +884,13 @@ async def test_template_validation_error(opp, caplog):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.attributes.get("icon") == ""
 
    .opp.states.async_set("sensor.test_state", "mdi:check")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.attributes.get("icon") == "mdi:check"
 
    .opp.states.async_set("sensor.test_state", "invalid_icon")
@@ -900,5 +900,5 @@ async def test_template_validation_error(opp, caplog):
         "Error validating template result 'invalid_icon' from template"
     )
 
-    state =.opp.states.get("binary_sensor.test")
+    state = opp.states.get("binary_sensor.test")
     assert state.attributes.get("icon") is None

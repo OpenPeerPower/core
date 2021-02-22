@@ -77,7 +77,7 @@ SENSORS = {
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up a OpenUV sensor based on a config entry."""
-    openuv =.opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
+    openuv = opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
 
     sensors = []
     for kind, attrs in SENSORS.items():

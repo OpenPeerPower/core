@@ -10,7 +10,7 @@ async def async_setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    coordinator =.opp.data[DOMAIN][COORDINATOR]
+    coordinator = opp.data[DOMAIN][COORDINATOR]
 
     sensors = []
 

@@ -25,7 +25,7 @@ class StarlineAccount:
 
     def __init__(self, opp: OpenPeerPower, config_entry: ConfigEntry):
         """Initialize StarLine account."""
-        self.opp: OpenPeerPower =.opp
+        self.opp: OpenPeerPower = opp
         self._config_entry: ConfigEntry = config_entry
         self._update_interval: int = DEFAULT_SCAN_INTERVAL
         self._update_obd_interval: int = DEFAULT_SCAN_OBD_INTERVAL

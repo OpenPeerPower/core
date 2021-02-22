@@ -18,8 +18,8 @@ SUPPORT_HVAC = [HVAC_MODE_HEAT]
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the XS1 thermostat platform."""
-    actuators =.opp.data[COMPONENT_DOMAIN][ACTUATORS]
-    sensors =.opp.data[COMPONENT_DOMAIN][SENSORS]
+    actuators = opp.data[COMPONENT_DOMAIN][ACTUATORS]
+    sensors = opp.data[COMPONENT_DOMAIN][SENSORS]
 
     thermostat_entities = []
     for actuator in actuators:

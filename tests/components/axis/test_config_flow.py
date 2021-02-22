@@ -87,7 +87,7 @@ async def test_flow_manual_configuration.opp):
 async def test_manual_configuration_update_configuration.opp):
     """Test that config flow fails on already configured device."""
     config_entry = await setup_axis_integration.opp)
-    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN, context={"source": SOURCE_USER}
@@ -219,7 +219,7 @@ async def test_flow_create_entry_multiple_existing_entries_of_same_model.opp):
 async def test_reauth_flow_update_configuration.opp):
     """Test that config flow fails on already configured device."""
     config_entry = await setup_axis_integration.opp)
-    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     result = await.opp.config_entries.flow.async_init(
         AXIS_DOMAIN,
@@ -540,7 +540,7 @@ async def test_discovery_flow_ignore_link_local_address(
 async def test_option_flow.opp):
     """Test config flow options."""
     config_entry = await setup_axis_integration.opp)
-    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
     assert device.option_stream_profile == DEFAULT_STREAM_PROFILE
     assert device.option_video_source == DEFAULT_VIDEO_SOURCE
 

@@ -266,7 +266,7 @@ async def async_create_default_config(opp: OpenPeerPower) -> bool:
 
     Return if creation was successful.
     """
-    return await.opp.async_add_executor_job(
+    return await opp.async_add_executor_job(
         _write_default_config, opp.config.config_dir
     )
 
@@ -900,10 +900,10 @@ def async_notify_setup_error(
     # pylint: disable=import-outside-toplevel
     from openpeerpower.components import persistent_notification
 
-    errors =.opp.data.get(DATA_PERSISTENT_ERRORS)
+    errors = opp.data.get(DATA_PERSISTENT_ERRORS)
 
     if errors is None:
-        errors =.opp.data[DATA_PERSISTENT_ERRORS] = {}
+        errors = opp.data[DATA_PERSISTENT_ERRORS] = {}
 
     errors[component] = errors.get(component) or display_link
 

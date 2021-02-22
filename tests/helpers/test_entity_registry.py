@@ -164,10 +164,10 @@ async def test_loading_saving_data.opp, registry):
         device_class="mock-device-class",
         disabled_by=entity_registry.DISABLED_HASS,
         original_name="Original Name",
-        original_icon=.opp:original-icon",
+        original_icon= opp:original-icon",
     )
     orig_entry2 = registry.async_update_entity(
-        orig_entry2.entity_id, name="User Name", icon=.opp:user-icon"
+        orig_entry2.entity_id, name="User Name", icon= opp:user-icon"
     )
 
     assert len(registry.entities) == 2
@@ -497,7 +497,7 @@ async def test_update_entity(registry):
 
 async def test_disabled_by(registry):
     """Test that we can disable an entry when we create it."""
-    entry = registry.async_get_or_create("light", "hue", "5678", disabled_by=.opp")
+    entry = registry.async_get_or_create("light", "hue", "5678", disabled_by= opp")
     assert entry.disabled_by == opp"
 
     entry = registry.async_get_or_create(
@@ -556,21 +556,21 @@ async def test_restore_states.opp):
         supported_features=5,
         device_class="mock-device-class",
         original_name="Mock Original Name",
-        original_icon=.opp:original-icon",
+        original_icon= opp:original-icon",
     )
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await.opp.async_block_till_done()
 
-    simple =.opp.states.get("light.simple")
+    simple = opp.states.get("light.simple")
     assert simple is not None
     assert simple.state == STATE_UNAVAILABLE
     assert simple.attributes == {"restored": True, "supported_features": 0}
 
-    disabled =.opp.states.get("light.disabled")
+    disabled = opp.states.get("light.disabled")
     assert disabled is None
 
-    all_info_set =.opp.states.get("light.all_info_set")
+    all_info_set = opp.states.get("light.all_info_set")
     assert all_info_set is not None
     assert all_info_set.state == STATE_UNAVAILABLE
     assert all_info_set.attributes == {

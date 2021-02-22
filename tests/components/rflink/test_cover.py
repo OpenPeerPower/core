@@ -46,7 +46,7 @@ async def test_default_setup_opp, monkeypatch):
     assert create.call_args_list[0][1]["ignore"]
 
     # test default state of cover loaded from config
-    cover_initial =.opp.states.get(f"{DOMAIN}.test")
+    cover_initial = opp.states.get(f"{DOMAIN}.test")
     assert cover_initial.state == STATE_CLOSED
     assert cover_initial.attributes["assumed_state"]
 
@@ -57,7 +57,7 @@ async def test_default_setup_opp, monkeypatch):
     event_callback({"id": "protocol_0_0", "command": "up"})
     await.opp.async_block_till_done()
 
-    cover_after_first_command =.opp.states.get(f"{DOMAIN}.test")
+    cover_after_first_command = opp.states.get(f"{DOMAIN}.test")
     assert cover_after_first_command.state == STATE_OPEN
     # not sure why, but cover have always assumed_state=true
     assert cover_after_first_command.attributes.get("assumed_state")
@@ -72,7 +72,7 @@ async def test_default_setup_opp, monkeypatch):
     event_callback({"id": "protocol_0_0", "command": "allon"})
     await.opp.async_block_till_done()
 
-    cover_after_first_command =.opp.states.get(f"{DOMAIN}.test")
+    cover_after_first_command = opp.states.get(f"{DOMAIN}.test")
     assert cover_after_first_command.state == STATE_OPEN
 
     # should respond to group command
@@ -369,20 +369,20 @@ async def test_restore_state.opp, monkeypatch):
     # setup mocking rflink module
     _, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
 
-    state =.opp.states.get(f"{DOMAIN}.c1")
+    state = opp.states.get(f"{DOMAIN}.c1")
     assert state
     assert state.state == STATE_OPEN
 
-    state =.opp.states.get(f"{DOMAIN}.c2")
+    state = opp.states.get(f"{DOMAIN}.c2")
     assert state
     assert state.state == STATE_CLOSED
 
-    state =.opp.states.get(f"{DOMAIN}.c3")
+    state = opp.states.get(f"{DOMAIN}.c3")
     assert state
     assert state.state == STATE_CLOSED
 
     # not cached cover must default values
-    state =.opp.states.get(f"{DOMAIN}.c4")
+    state = opp.states.get(f"{DOMAIN}.c4")
     assert state
     assert state.state == STATE_CLOSED
     assert state.attributes["assumed_state"]
@@ -426,7 +426,7 @@ async def test_inverted_cover.opp, monkeypatch):
     )
 
     # test default state of cover loaded from config
-    standard_cover =.opp.states.get(f"{DOMAIN}.nonkaku_type_standard")
+    standard_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_standard")
     assert standard_cover.state == STATE_CLOSED
     assert standard_cover.attributes["assumed_state"]
 
@@ -434,7 +434,7 @@ async def test_inverted_cover.opp, monkeypatch):
     event_callback({"id": "nonkaku_device_1", "command": "up"})
     await.opp.async_block_till_done()
 
-    standard_cover =.opp.states.get(f"{DOMAIN}.nonkaku_type_standard")
+    standard_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_standard")
     assert standard_cover.state == STATE_OPEN
     assert standard_cover.attributes.get("assumed_state")
 
@@ -442,7 +442,7 @@ async def test_inverted_cover.opp, monkeypatch):
     event_callback({"id": "nonkaku_device_2", "command": "up"})
     await.opp.async_block_till_done()
 
-    standard_cover =.opp.states.get(f"{DOMAIN}.nonkaku_type_none")
+    standard_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_none")
     assert standard_cover.state == STATE_OPEN
     assert standard_cover.attributes.get("assumed_state")
 
@@ -451,7 +451,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
+    inverted_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
     assert inverted_cover.state == STATE_OPEN
     assert inverted_cover.attributes.get("assumed_state")
 
@@ -460,7 +460,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_standard")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_standard")
     assert inverted_cover.state == STATE_OPEN
     assert inverted_cover.attributes.get("assumed_state")
 
@@ -469,7 +469,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_none")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_none")
     assert inverted_cover.state == STATE_OPEN
     assert inverted_cover.attributes.get("assumed_state")
 
@@ -478,7 +478,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
     assert inverted_cover.state == STATE_OPEN
     assert inverted_cover.attributes.get("assumed_state")
 
@@ -487,7 +487,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    standard_cover =.opp.states.get(f"{DOMAIN}.nonkaku_type_standard")
+    standard_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_standard")
     assert standard_cover.state == STATE_CLOSED
     assert standard_cover.attributes.get("assumed_state")
 
@@ -496,7 +496,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    standard_cover =.opp.states.get(f"{DOMAIN}.nonkaku_type_none")
+    standard_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_none")
     assert standard_cover.state == STATE_CLOSED
     assert standard_cover.attributes.get("assumed_state")
 
@@ -505,7 +505,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
+    inverted_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
     assert inverted_cover.state == STATE_CLOSED
     assert inverted_cover.attributes.get("assumed_state")
 
@@ -514,7 +514,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_standard")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_standard")
     assert inverted_cover.state == STATE_CLOSED
     assert inverted_cover.attributes.get("assumed_state")
 
@@ -523,7 +523,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_none")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_none")
     assert inverted_cover.state == STATE_CLOSED
     assert inverted_cover.attributes.get("assumed_state")
 
@@ -532,7 +532,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
     assert inverted_cover.state == STATE_CLOSED
     assert inverted_cover.attributes.get("assumed_state")
 
@@ -544,7 +544,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
+    inverted_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
     assert inverted_cover.state == STATE_CLOSED
 
     # should respond to group command
@@ -552,7 +552,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
+    inverted_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_inverted")
     assert inverted_cover.state == STATE_OPEN
 
     # should respond to group command
@@ -560,7 +560,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_standard")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_standard")
     assert inverted_cover.state == STATE_CLOSED
 
     # should respond to group command
@@ -568,7 +568,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_standard")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_standard")
     assert inverted_cover.state == STATE_OPEN
 
     # should respond to group command
@@ -576,7 +576,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_none")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_none")
     assert inverted_cover.state == STATE_CLOSED
 
     # should respond to group command
@@ -584,7 +584,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_none")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_none")
     assert inverted_cover.state == STATE_OPEN
 
     # should respond to group command
@@ -592,7 +592,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
     assert inverted_cover.state == STATE_CLOSED
 
     # should respond to group command
@@ -600,7 +600,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await.opp.async_block_till_done()
 
-    inverted_cover =.opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
+    inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
     assert inverted_cover.state == STATE_OPEN
 
     # Sending the close command from HA should result

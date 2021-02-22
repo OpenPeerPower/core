@@ -130,7 +130,7 @@ async def test_login_flow_validates_mfa.opp):
         user, "notify", {"notify_service": "test-notify"}
     )
 
-    provider =.opp.auth.auth_providers[0]
+    provider = opp.auth.auth_providers[0]
 
     result = await.opp.auth.login_flow.async_init((provider.type, provider.id))
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -163,7 +163,7 @@ async def test_login_flow_validates_mfa.opp):
     assert notify_call.domain == "notify"
     assert notify_call.service == "test-notify"
     message = notify_call.data["message"]
-    message.opp =.opp
+    message.opp = opp
     assert MOCK_CODE in message.async_render()
 
     with patch("pyotp.HOTP.verify", return_value=False):
@@ -221,7 +221,7 @@ async def test_login_flow_validates_mfa.opp):
     assert notify_call.domain == "notify"
     assert notify_call.service == "test-notify"
     message = notify_call.data["message"]
-    message.opp =.opp
+    message.opp = opp
     assert MOCK_CODE in message.async_render()
 
     with patch("pyotp.HOTP.verify", return_value=True):
@@ -261,7 +261,7 @@ async def test_setup_user_notify_service.opp):
     assert notify_call.domain == "notify"
     assert notify_call.service == "test1"
     message = notify_call.data["message"]
-    message.opp =.opp
+    message.opp = opp
     assert MOCK_CODE in message.async_render()
 
     with patch("pyotp.HOTP.at", return_value=MOCK_CODE_2):
@@ -278,7 +278,7 @@ async def test_setup_user_notify_service.opp):
     assert notify_call.domain == "notify"
     assert notify_call.service == "test1"
     message = notify_call.data["message"]
-    message.opp =.opp
+    message.opp = opp
     assert MOCK_CODE_2 in message.async_render()
 
     with patch("pyotp.HOTP.verify", return_value=True):
@@ -366,7 +366,7 @@ async def test_not_raise_exception_when_service_not_exist.opp):
         user, "notify", {"notify_service": "invalid-notify"}
     )
 
-    provider =.opp.auth.auth_providers[0]
+    provider = opp.auth.auth_providers[0]
 
     result = await.opp.auth.login_flow.async_init((provider.type, provider.id))
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

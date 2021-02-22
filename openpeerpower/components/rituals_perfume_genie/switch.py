@@ -17,7 +17,7 @@ ICON = "mdi:fan"
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the diffuser switch."""
-    account =.opp.data[DOMAIN][config_entry.entry_id]
+    account = opp.data[DOMAIN][config_entry.entry_id]
     diffusers = await account.get_devices()
 
     entities = []

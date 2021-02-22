@@ -8,7 +8,7 @@ from .irobot_base import IRobotEntity
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the iRobot Roomba vacuum cleaner."""
-    domain_data =.opp.data[DOMAIN][config_entry.entry_id]
+    domain_data = opp.data[DOMAIN][config_entry.entry_id]
     roomba = domain_data[ROOMBA_SESSION]
     blid = domain_data[BLID]
     status = roomba_reported_state(roomba).get("bin", {})

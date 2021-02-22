@@ -40,7 +40,7 @@ class LovelaceConfig(ABC):
 
     def __init__(self, opp, url_path, config):
         """Initialize Lovelace config."""
-        self.opp =.opp
+        self.opp = opp
         if config:
             self.config = {**config, CONF_URL_PATH: url_path}
         else:

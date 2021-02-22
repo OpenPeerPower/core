@@ -58,7 +58,7 @@ class Scanner:
 
     def __init__(self, opp, integration_matchers):
         """Initialize class."""
-        self.opp =.opp
+        self.opp = opp
         self.seen = set()
         self._entries = []
         self._integration_matchers = integration_matchers

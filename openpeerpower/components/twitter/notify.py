@@ -63,7 +63,7 @@ class TwitterNotificationService(BaseNotificationService):
     ):
         """Initialize the service."""
         self.user = username
-        self.opp =.opp
+        self.opp = opp
         self.api = TwitterAPI(
             consumer_key, consumer_secret, access_token_key, access_token_secret
         )

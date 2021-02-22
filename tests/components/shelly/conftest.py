@@ -108,7 +108,7 @@ async def coap_wrapper.opp):
 
    .opp.data[DOMAIN] = {DATA_CONFIG_ENTRY: {}}
    .opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id] = {}
-    wrapper =.opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][
+    wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][
         COAP
     ] = ShellyDeviceWrapper.opp, config_entry, device)
 

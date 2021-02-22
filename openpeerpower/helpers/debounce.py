@@ -24,7 +24,7 @@ class Debouncer:
                    wait <cooldown> until executing next invocation.
         function: optional and can be instantiated later.
         """
-        self.opp =.opp
+        self.opp = opp
         self.logger = logger
         self._function = function
         self.cooldown = cooldown

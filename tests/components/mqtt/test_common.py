@@ -35,14 +35,14 @@ async def help_test_availability_when_connection_lost.opp, mqtt_mock, domain, co
     assert await async_setup_component.opp, domain, config)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
     mqtt_mock.connected = False
     async_dispatcher_send.opp, MQTT_DISCONNECTED)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
 
@@ -52,7 +52,7 @@ async def help_test_availability_without_topic.opp, mqtt_mock, domain, config):
     assert await async_setup_component.opp, domain, config)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
 
@@ -79,30 +79,30 @@ async def help_test_default_availability_payload(
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic", "online")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "availability-topic", "offline")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     if state_topic:
         async_fire_mqtt_message.opp, state_topic, state_message)
 
-        state =.opp.states.get(f"{domain}.test")
+        state = opp.states.get(f"{domain}.test")
         assert state.state == STATE_UNAVAILABLE
 
         async_fire_mqtt_message.opp, "availability-topic", "online")
 
-        state =.opp.states.get(f"{domain}.test")
+        state = opp.states.get(f"{domain}.test")
         assert state.state != STATE_UNAVAILABLE
 
 
@@ -132,42 +132,42 @@ async def help_test_default_availability_list_payload(
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic1", "online")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "availability-topic1", "offline")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic2", "online")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "availability-topic2", "offline")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     if state_topic:
         async_fire_mqtt_message.opp, state_topic, state_message)
 
-        state =.opp.states.get(f"{domain}.test")
+        state = opp.states.get(f"{domain}.test")
         assert state.state == STATE_UNAVAILABLE
 
         async_fire_mqtt_message.opp, "availability-topic1", "online")
 
-        state =.opp.states.get(f"{domain}.test")
+        state = opp.states.get(f"{domain}.test")
         assert state.state != STATE_UNAVAILABLE
 
 
@@ -198,43 +198,43 @@ async def help_test_default_availability_list_payload_all(
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic1", "online")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "availability-topic2", "online")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic2", "offline")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "availability-topic2", "online")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic1", "offline")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "availability-topic1", "online")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
 
@@ -265,36 +265,36 @@ async def help_test_default_availability_list_payload_any(
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic1", "online")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "availability-topic2", "online")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic2", "offline")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "availability-topic1", "offline")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic1", "online")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
@@ -327,7 +327,7 @@ async def help_test_default_availability_list_single(
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state is None
     assert (
         "Invalid config for [sensor.mqtt]: two or more values in the same group of exclusion 'availability'"
@@ -360,30 +360,30 @@ async def help_test_custom_availability_payload(
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic", "good")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "availability-topic", "nogood")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     if state_topic:
         async_fire_mqtt_message.opp, state_topic, state_message)
 
-        state =.opp.states.get(f"{domain}.test")
+        state = opp.states.get(f"{domain}.test")
         assert state.state == STATE_UNAVAILABLE
 
         async_fire_mqtt_message.opp, "availability-topic", "good")
 
-        state =.opp.states.get(f"{domain}.test")
+        state = opp.states.get(f"{domain}.test")
         assert state.state != STATE_UNAVAILABLE
 
 
@@ -417,15 +417,15 @@ async def help_test_discovery_update_availability(
     async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data1)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic1", "online")
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic1", "offline")
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     # Change availability_topic
@@ -434,17 +434,17 @@ async def help_test_discovery_update_availability(
 
     # Verify we are no longer subscribing to the old topic
     async_fire_mqtt_message.opp, "availability-topic1", "online")
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     # Verify we are subscribing to the new topic
     async_fire_mqtt_message.opp, "availability-topic2", "online")
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
     # Verify we are subscribing to the new topic
     async_fire_mqtt_message.opp, "availability-topic3", "offline")
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     # Change availability_topic
@@ -453,17 +453,17 @@ async def help_test_discovery_update_availability(
 
     # Verify we are no longer subscribing to the old topic
     async_fire_mqtt_message.opp, "availability-topic2", "online")
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     # Verify we are no longer subscribing to the old topic
     async_fire_mqtt_message.opp, "availability-topic3", "online")
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     # Verify we are subscribing to the new topic
     async_fire_mqtt_message.opp, "availability-topic4", "online")
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
 
@@ -485,7 +485,7 @@ async def help_test_setting_attribute_via_mqtt_json_message(
     await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "attr-topic", '{ "val": "100" }')
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
 
     assert state.attributes.get("val") == "100"
 
@@ -509,7 +509,7 @@ async def help_test_setting_attribute_with_template.opp, mqtt_mock, domain, conf
     async_fire_mqtt_message(
        .opp, "attr-topic", json.dumps({"Timer1": {"Arm": 0, "Time": "22:18"}})
     )
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
 
     assert state.attributes.get("Arm") == 0
     assert state.attributes.get("Time") == "22:18"
@@ -533,7 +533,7 @@ async def help_test_update_with_json_attrs_not_dict(
     await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "attr-topic", '[ "list", "of", "things"]')
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
 
     assert state.attributes.get("val") is None
     assert "JSON result was not a dictionary" in caplog.text
@@ -558,7 +558,7 @@ async def help_test_update_with_json_attrs_bad_JSON(
 
     async_fire_mqtt_message.opp, "attr-topic", "This is not JSON")
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.attributes.get("val") is None
     assert "Erroneous JSON: This is not JSON" in caplog.text
 
@@ -579,7 +579,7 @@ async def help_test_discovery_update_attr.opp, mqtt_mock, caplog, domain, config
     async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data1)
     await.opp.async_block_till_done()
     async_fire_mqtt_message.opp, "attr-topic1", '{ "val": "100" }')
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.attributes.get("val") == "100"
 
     # Change json_attributes_topic
@@ -588,12 +588,12 @@ async def help_test_discovery_update_attr.opp, mqtt_mock, caplog, domain, config
 
     # Verify we are no longer subscribing to the old topic
     async_fire_mqtt_message.opp, "attr-topic1", '{ "val": "50" }')
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.attributes.get("val") == "100"
 
     # Verify we are subscribing to the new topic
     async_fire_mqtt_message.opp, "attr-topic2", '{ "val": "75" }')
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.attributes.get("val") == "75"
 
 
@@ -612,14 +612,14 @@ async def help_test_discovery_removal.opp, mqtt_mock, caplog, domain, data):
     async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state is not None
     assert state.name == "test"
 
     async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", "")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state is None
 
 
@@ -640,7 +640,7 @@ async def help_test_discovery_update(
     async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", discovery_data1)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.beer")
+    state = opp.states.get(f"{domain}.beer")
     assert state is not None
     assert state.name == "Beer"
 
@@ -648,7 +648,7 @@ async def help_test_discovery_update(
         for (mqtt_messages, expected_state, attributes) in state_data1:
             for (topic, data) in mqtt_messages:
                 async_fire_mqtt_message.opp, topic, data)
-            state =.opp.states.get(f"{domain}.beer")
+            state = opp.states.get(f"{domain}.beer")
             if expected_state:
                 assert state.state == expected_state
             if attributes:
@@ -658,7 +658,7 @@ async def help_test_discovery_update(
     async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", discovery_data2)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.beer")
+    state = opp.states.get(f"{domain}.beer")
     assert state is not None
     assert state.name == "Milk"
 
@@ -666,14 +666,14 @@ async def help_test_discovery_update(
         for (mqtt_messages, expected_state, attributes) in state_data2:
             for (topic, data) in mqtt_messages:
                 async_fire_mqtt_message.opp, topic, data)
-            state =.opp.states.get(f"{domain}.beer")
+            state = opp.states.get(f"{domain}.beer")
             if expected_state:
                 assert state.state == expected_state
             if attributes:
                 for (attr, value) in attributes:
                     assert state.attributes.get(attr) == value
 
-    state =.opp.states.get(f"{domain}.milk")
+    state = opp.states.get(f"{domain}.milk")
     assert state is None
 
 
@@ -687,7 +687,7 @@ async def help_test_discovery_update_unchanged(
     async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data1)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.beer")
+    state = opp.states.get(f"{domain}.beer")
     assert state is not None
     assert state.name == "Beer"
 
@@ -702,16 +702,16 @@ async def help_test_discovery_broken.opp, mqtt_mock, caplog, domain, data1, data
     async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data1)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.beer")
+    state = opp.states.get(f"{domain}.beer")
     assert state is None
 
     async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data2)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.milk")
+    state = opp.states.get(f"{domain}.milk")
     assert state is not None
     assert state.name == "Milk"
-    state =.opp.states.get(f"{domain}.beer")
+    state = opp.states.get(f"{domain}.beer")
     assert state is None
 
 
@@ -843,7 +843,7 @@ async def help_test_entity_id_update_subscriptions(
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state is not None
     assert mqtt_mock.async_subscribe.call_count == len(topics)
     for topic in topics:
@@ -853,10 +853,10 @@ async def help_test_entity_id_update_subscriptions(
     registry.async_update_entity(f"{domain}.test", new_entity_id=f"{domain}.milk")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state is None
 
-    state =.opp.states.get(f"{domain}.milk")
+    state = opp.states.get(f"{domain}.milk")
     assert state is not None
     for topic in topics:
         mqtt_mock.async_subscribe.assert_any_call(topic, ANY, ANY, ANY)
@@ -882,11 +882,11 @@ async def help_test_entity_id_update_discovery_update(
     await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, topic, "online")
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, topic, "offline")
-    state =.opp.states.get(f"{domain}.test")
+    state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     ent_registry.async_update_entity(f"{domain}.test", new_entity_id=f"{domain}.milk")
@@ -899,7 +899,7 @@ async def help_test_entity_id_update_discovery_update(
     assert len.opp.states.async_entity_ids(domain)) == 1
 
     async_fire_mqtt_message.opp, f"{topic}_2", "online")
-    state =.opp.states.get(f"{domain}.milk")
+    state = opp.states.get(f"{domain}.milk")
     assert state.state != STATE_UNAVAILABLE
 
 

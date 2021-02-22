@@ -74,7 +74,7 @@ async def async_update_options.opp: OpenPeerPower, config_entry: ConfigEntry):
 
 async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     """Unload a config entry."""
-    api: "WiffiIntegrationApi" =.opp.data[DOMAIN][config_entry.entry_id]
+    api: "WiffiIntegrationApi" = opp.data[DOMAIN][config_entry.entry_id]
     await api.server.close_server()
 
     unload_ok = all(
@@ -86,7 +86,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
         )
     )
     if unload_ok:
-        api =.opp.data[DOMAIN].pop(config_entry.entry_id)
+        api = opp.data[DOMAIN].pop(config_entry.entry_id)
         api.shutdown()
 
     return unload_ok

@@ -180,7 +180,7 @@ async def test_car.opp, requests_mock_car_disabled_response):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     assert sensor.state == "30"
     assert sensor.attributes.get("unit_of_measurement") == TIME_MINUTES
     assert sensor.attributes.get(ATTR_ATTRIBUTION) is None
@@ -242,7 +242,7 @@ async def test_traffic_mode_enabled.opp, requests_mock_credentials_check):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     # Test traffic mode enabled
     assert sensor.attributes.get(ATTR_DURATION) != sensor.attributes.get(
         ATTR_DURATION_IN_TRAFFIC
@@ -269,7 +269,7 @@ async def test_imperial.opp, requests_mock_car_disabled_response):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     assert sensor.attributes.get(ATTR_DISTANCE) == 14.852635608048994
 
 
@@ -301,7 +301,7 @@ async def test_route_mode_shortest.opp, requests_mock_credentials_check):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     assert sensor.attributes.get(ATTR_DISTANCE) == 18.388
 
 
@@ -333,7 +333,7 @@ async def test_route_mode_fastest.opp, requests_mock_credentials_check):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     assert sensor.attributes.get(ATTR_DISTANCE) == 23.381
 
 
@@ -357,7 +357,7 @@ async def test_truck.opp, requests_mock_truck_response):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     _assert_truck_sensor(sensor)
 
 
@@ -389,7 +389,7 @@ async def test_public_transport.opp, requests_mock_credentials_check):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     assert sensor.state == "89"
     assert sensor.attributes.get("unit_of_measurement") == TIME_MINUTES
 
@@ -440,7 +440,7 @@ async def test_public_transport_time_table.opp, requests_mock_credentials_check)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     assert sensor.state == "80"
     assert sensor.attributes.get("unit_of_measurement") == TIME_MINUTES
 
@@ -491,7 +491,7 @@ async def test_pedestrian.opp, requests_mock_credentials_check):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     assert sensor.state == "211"
     assert sensor.attributes.get("unit_of_measurement") == TIME_MINUTES
 
@@ -543,7 +543,7 @@ async def test_bicycle.opp, requests_mock_credentials_check):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     assert sensor.state == "55"
     assert sensor.attributes.get("unit_of_measurement") == TIME_MINUTES
 
@@ -607,14 +607,14 @@ async def test_location_zone.opp, requests_mock_truck_response, legacy_patchable
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await.opp.async_block_till_done()
 
-        sensor =.opp.states.get("sensor.test")
+        sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
         async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        sensor =.opp.states.get("sensor.test")
+        sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
 
@@ -649,14 +649,14 @@ async def test_location_sensor(
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await.opp.async_block_till_done()
 
-        sensor =.opp.states.get("sensor.test")
+        sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
         async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        sensor =.opp.states.get("sensor.test")
+        sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
 
@@ -700,14 +700,14 @@ async def test_location_person(
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await.opp.async_block_till_done()
 
-        sensor =.opp.states.get("sensor.test")
+        sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
         async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        sensor =.opp.states.get("sensor.test")
+        sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
 
@@ -751,14 +751,14 @@ async def test_location_device_tracker(
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await.opp.async_block_till_done()
 
-        sensor =.opp.states.get("sensor.test")
+        sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
         async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        sensor =.opp.states.get("sensor.test")
+        sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
 
 
@@ -786,7 +786,7 @@ async def test_location_device_tracker_added_after_update(
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await.opp.async_block_till_done()
 
-        sensor =.opp.states.get("sensor.test")
+        sensor = opp.states.get("sensor.test")
         assert len(caplog.records) == 2
         assert "Unable to find entity" in caplog.text
         caplog.clear()
@@ -813,7 +813,7 @@ async def test_location_device_tracker_added_after_update(
         async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
         await.opp.async_block_till_done()
 
-        sensor =.opp.states.get("sensor.test")
+        sensor = opp.states.get("sensor.test")
         _assert_truck_sensor(sensor)
         assert len(caplog.records) == 0
 
@@ -855,7 +855,7 @@ async def test_location_device_tracker_in_zone(
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     _assert_truck_sensor(sensor)
     assert ", getting zone location" in caplog.text
 
@@ -995,7 +995,7 @@ async def test_attribution.opp, requests_mock_credentials_check):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     assert (
         sensor.attributes.get(ATTR_ATTRIBUTION)
         == "With the support of HERE Technologies. All information is provided without warranty of any kind."
@@ -1119,7 +1119,7 @@ async def test_arrival.opp, requests_mock_credentials_check):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     assert sensor.state == "80"
 
 
@@ -1157,7 +1157,7 @@ async def test_departure.opp, requests_mock_credentials_check):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await.opp.async_block_till_done()
 
-    sensor =.opp.states.get("sensor.test")
+    sensor = opp.states.get("sensor.test")
     assert sensor.state == "80"
 
 

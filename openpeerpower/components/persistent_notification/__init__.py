@@ -119,7 +119,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
         attr = {}
         if title is not None:
             try:
-                title.opp =.opp
+                title.opp = opp
                 title = title.async_render(parse_result=False)
             except TemplateError as ex:
                 _LOGGER.error("Error rendering title %s: %s", title, ex)
@@ -129,7 +129,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
             attr[ATTR_FRIENDLY_NAME] = title
 
         try:
-            message.opp =.opp
+            message.opp = opp
             message = message.async_render(parse_result=False)
         except TemplateError as ex:
             _LOGGER.error("Error rendering message %s: %s", message, ex)

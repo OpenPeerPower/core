@@ -10,7 +10,7 @@ from .const import DATA_UPDATED, DOMAIN, SENSOR_TYPES
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Glances sensors."""
 
-    client =.opp.data[DOMAIN][config_entry.entry_id]
+    client = opp.data[DOMAIN][config_entry.entry_id]
     name = config_entry.data[CONF_NAME]
     dev = []
 

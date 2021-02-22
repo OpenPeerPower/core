@@ -28,7 +28,7 @@ async def test_attributes.opp):
     """Test the binary sensor attributes are correct."""
     await setup_platform.opp, BINARY_SENSOR_DOMAIN)
 
-    state =.opp.states.get("binary_sensor.front_door")
+    state = opp.states.get("binary_sensor.front_door")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
     assert state.attributes.get(ATTR_DEVICE_ID) == "RF:01430030"

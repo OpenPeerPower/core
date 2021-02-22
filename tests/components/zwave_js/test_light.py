@@ -19,7 +19,7 @@ EATON_RF9640_ENTITY = "light.allloaddimmer"
 async def test_light.opp, client, bulb_6_multi_color, integration):
     """Test the light entity."""
     node = bulb_6_multi_color
-    state =.opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
+    state = opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
 
     assert state
     assert state.state == STATE_OFF
@@ -79,7 +79,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     )
     node.receive_event(event)
 
-    state =.opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
+    state = opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 255
     assert state.attributes[ATTR_COLOR_TEMP] == 370
@@ -224,7 +224,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     node.receive_event(green_event)
     node.receive_event(blue_event)
 
-    state =.opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
+    state = opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 255
     assert state.attributes[ATTR_COLOR_TEMP] == 370
@@ -346,7 +346,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     node.receive_event(warm_white_event)
     node.receive_event(cold_white_event)
 
-    state =.opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
+    state = opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 255
     assert state.attributes[ATTR_COLOR_TEMP] == 170
@@ -397,7 +397,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
 
 async def test_v4_dimmer_light.opp, client, eaton_rf9640_dimmer, integration):
     """Test a light that supports MultiLevelSwitch CommandClass version 4."""
-    state =.opp.states.get(EATON_RF9640_ENTITY)
+    state = opp.states.get(EATON_RF9640_ENTITY)
 
     assert state
     assert state.state == STATE_ON

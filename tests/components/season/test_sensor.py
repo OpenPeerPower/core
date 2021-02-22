@@ -78,7 +78,7 @@ async def test_season_northern_hemisphere.opp, type, day, expected):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.season")
+    state = opp.states.get("sensor.season")
     assert state
     assert state.state == expected
 
@@ -97,7 +97,7 @@ async def test_season_southern_hemisphere.opp, type, day, expected):
         assert await async_setup_component.opp, "sensor", config)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.season")
+    state = opp.states.get("sensor.season")
     assert state
     assert state.state == expected
 
@@ -111,7 +111,7 @@ async def test_season_equator.opp):
         assert await async_setup_component.opp, "sensor", HEMISPHERE_EQUATOR)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.season")
+    state = opp.states.get("sensor.season")
     assert state
     assert state.state == STATE_UNKNOWN
 

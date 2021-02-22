@@ -111,7 +111,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     # regenmaschine can load multiple controllers at once, but we only grab the one
     # we loaded above:
-    controller =.opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id] = next(
+    controller = opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id] = next(
         iter(client.controllers.values())
     )
 
@@ -142,7 +142,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         DATA_RESTRICTIONS_UNIVERSAL,
         DATA_ZONES,
     ]:
-        coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+        coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             api_category
         ] = DataUpdateCoordinator(
            .opp,
@@ -177,7 +177,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     )
     if unload_ok:
        .opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
-        cancel_listener =.opp.data[DOMAIN][DATA_LISTENER].pop(entry.entry_id)
+        cancel_listener = opp.data[DOMAIN][DATA_LISTENER].pop(entry.entry_id)
         cancel_listener()
 
     return unload_ok

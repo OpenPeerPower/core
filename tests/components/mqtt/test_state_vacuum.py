@@ -86,7 +86,7 @@ async def test_default_supported_features.opp, mqtt_mock):
        .opp, vacuum.DOMAIN, {vacuum.DOMAIN: DEFAULT_CONFIG}
     )
     await.opp.async_block_till_done()
-    entity =.opp.states.get("vacuum.mqtttest")
+    entity = opp.states.get("vacuum.mqtttest")
     entity_features = entity.attributes.get(mqttvacuum.CONF_SUPPORTED_FEATURES, 0)
     assert sorted(services_to_strings(entity_features, SERVICE_TO_STRING)) == sorted(
         ["start", "stop", "return_home", "battery", "status", "clean_spot"]
@@ -237,7 +237,7 @@ async def test_status.opp, mqtt_mock):
         "fan_speed": "max"
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state =.opp.states.get("vacuum.mqtttest")
+    state = opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_CLEANING
     assert state.attributes.get(ATTR_BATTERY_LEVEL) == 54
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-50"
@@ -250,7 +250,7 @@ async def test_status.opp, mqtt_mock):
     }"""
 
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state =.opp.states.get("vacuum.mqtttest")
+    state = opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_DOCKED
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-charging-60"
     assert state.attributes.get(ATTR_BATTERY_LEVEL) == 61
@@ -274,7 +274,7 @@ async def test_no_fan_vacuum.opp, mqtt_mock):
         "state": "cleaning"
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state =.opp.states.get("vacuum.mqtttest")
+    state = opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_CLEANING
     assert state.attributes.get(ATTR_FAN_SPEED) is None
     assert state.attributes.get(ATTR_FAN_SPEED_LIST) is None
@@ -287,7 +287,7 @@ async def test_no_fan_vacuum.opp, mqtt_mock):
         "fan_speed": "max"
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state =.opp.states.get("vacuum.mqtttest")
+    state = opp.states.get("vacuum.mqtttest")
 
     assert state.state == STATE_CLEANING
     assert state.attributes.get(ATTR_FAN_SPEED) is None
@@ -302,7 +302,7 @@ async def test_no_fan_vacuum.opp, mqtt_mock):
     }"""
 
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state =.opp.states.get("vacuum.mqtttest")
+    state = opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_DOCKED
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-charging-60"
     assert state.attributes.get(ATTR_BATTERY_LEVEL) == 61
@@ -320,7 +320,7 @@ async def test_status_invalid_json.opp, mqtt_mock):
     await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "vacuum/state", '{"asdfasas false}')
-    state =.opp.states.get("vacuum.mqtttest")
+    state = opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_UNKNOWN
 
 

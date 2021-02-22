@@ -146,7 +146,7 @@ class ApnsNotificationService(BaseNotificationService):
 
     def __init__(self, opp, app_name, topic, sandbox, cert_file):
         """Initialize APNS application."""
-        self.opp =.opp
+        self.opp = opp
         self.app_name = app_name
         self.sandbox = sandbox
         self.certificate = cert_file

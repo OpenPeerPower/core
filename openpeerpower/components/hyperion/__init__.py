@@ -218,7 +218,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         registry = await async_get_registry.opp)
         running_instances: Set[int] = set()
         stopped_instances: Set[int] = set()
-        existing_instances =.opp.data[DOMAIN][config_entry.entry_id][
+        existing_instances = opp.data[DOMAIN][config_entry.entry_id][
             CONF_INSTANCE_CLIENTS
         ]
         server_id = cast(str, config_entry.unique_id)
@@ -315,7 +315,7 @@ async def async_unload_entry(
         )
     )
     if unload_ok and config_entry.entry_id in.opp.data[DOMAIN]:
-        config_data =.opp.data[DOMAIN].pop(config_entry.entry_id)
+        config_data = opp.data[DOMAIN].pop(config_entry.entry_id)
         for func in config_data[CONF_ON_UNLOAD]:
             func()
 

@@ -37,7 +37,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    tankerkoenig =.opp.data[DOMAIN]
+    tankerkoenig = opp.data[DOMAIN]
 
     async def async_update_data():
         """Fetch data from API endpoint."""

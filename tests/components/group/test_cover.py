@@ -95,7 +95,7 @@ async def setup_comp.opp, config_count):
 @pytest.mark.parametrize("config_count", [(CONFIG_ATTRIBUTES, 1)])
 async def test_attributes.opp, setup_comp):
     """Test handling of state attributes."""
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_CLOSED
     assert state.attributes[ATTR_FRIENDLY_NAME] == DEFAULT_NAME
     assert state.attributes[ATTR_ENTITY_ID] == [
@@ -113,7 +113,7 @@ async def test_attributes.opp, setup_comp):
    .opp.states.async_set(DEMO_COVER, STATE_OPEN, {ATTR_SUPPORTED_FEATURES: 11})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 11
@@ -128,7 +128,7 @@ async def test_attributes.opp, setup_comp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 15
@@ -139,7 +139,7 @@ async def test_attributes.opp, setup_comp):
    .opp.states.async_set(DEMO_TILT, STATE_OPEN, {ATTR_SUPPORTED_FEATURES: 112})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 127
@@ -154,7 +154,7 @@ async def test_attributes.opp, setup_comp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 255
@@ -170,7 +170,7 @@ async def test_attributes.opp, setup_comp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_ASSUMED_STATE] is True
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 244
@@ -181,7 +181,7 @@ async def test_attributes.opp, setup_comp):
    .opp.states.async_remove(DEMO_COVER_POS)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 240
@@ -196,7 +196,7 @@ async def test_attributes.opp, setup_comp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_ASSUMED_STATE] is True
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 128
@@ -207,7 +207,7 @@ async def test_attributes.opp, setup_comp):
    .opp.states.async_set(DEMO_TILT, STATE_CLOSED)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_CLOSED
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 0
@@ -217,7 +217,7 @@ async def test_attributes.opp, setup_comp):
    .opp.states.async_set(DEMO_TILT, STATE_CLOSED, {ATTR_ASSUMED_STATE: True})
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.attributes[ATTR_ASSUMED_STATE] is True
 
 
@@ -234,7 +234,7 @@ async def test_cover_that_only_supports_tilt_removed.opp, setup_comp):
         STATE_OPEN,
         {ATTR_SUPPORTED_FEATURES: 128, ATTR_CURRENT_TILT_POSITION: 60},
     )
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_FRIENDLY_NAME] == DEFAULT_NAME
     assert state.attributes[ATTR_ENTITY_ID] == [
@@ -261,7 +261,7 @@ async def test_open_covers.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
 
@@ -282,7 +282,7 @@ async def test_close_covers.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_CLOSED
     assert state.attributes[ATTR_CURRENT_POSITION] == 0
 
@@ -303,7 +303,7 @@ async def test_toggle_covers.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
 
     # Toggle will close covers
@@ -315,7 +315,7 @@ async def test_toggle_covers.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_CLOSED
     assert state.attributes[ATTR_CURRENT_POSITION] == 0
 
@@ -332,7 +332,7 @@ async def test_toggle_covers.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
 
@@ -358,7 +358,7 @@ async def test_stop_covers.opp, setup_comp):
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
 
@@ -381,7 +381,7 @@ async def test_set_cover_position.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 50
 
@@ -401,7 +401,7 @@ async def test_open_tilts.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
@@ -421,7 +421,7 @@ async def test_close_tilts.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
@@ -440,7 +440,7 @@ async def test_toggle_tilts.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
@@ -457,7 +457,7 @@ async def test_toggle_tilts.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
@@ -472,7 +472,7 @@ async def test_toggle_tilts.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
@@ -498,7 +498,7 @@ async def test_stop_tilts.opp, setup_comp):
     async_fire_time_changed.opp, future)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 60
 
@@ -519,7 +519,7 @@ async def test_set_tilt_positions.opp, setup_comp):
         async_fire_time_changed.opp, future)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(COVER_GROUP)
+    state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 80
 

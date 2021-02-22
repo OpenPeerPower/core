@@ -18,9 +18,9 @@ def async_register(
 
 async def system_health_info.opp: OpenPeerPower):
     """Get info for the info page."""
-    info =.opp.components.oppio.get_info()
-    host_info =.opp.components.oppio.get_host_info()
-    supervisor_info =.opp.components.oppio.get_supervisor_info()
+    info = opp.components.oppio.get_info()
+    host_info = opp.components.oppio.get_host_info()
+    supervisor_info = opp.components.oppio.get_supervisor_info()
 
     if supervisor_info.get("healthy"):
         healthy = True
@@ -52,7 +52,7 @@ async def system_health_info.opp: OpenPeerPower):
     }
 
     if info.get(.oppos") is not None:
-        os_info =.opp.components.oppio.get_os_info()
+        os_info = opp.components.oppio.get_os_info()
         information["board"] = os_info.get("board")
 
     information["supervisor_api"] = system_health.async_check_can_reach_url(

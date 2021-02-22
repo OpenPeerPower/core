@@ -49,7 +49,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         update_interval=DEFAULT_SCAN_INTERVAL,
     )
 
-    metoffice.opp_data =.opp.data.setdefault(DOMAIN, {})
+    metoffice.opp_data = opp.data.setdefault(DOMAIN, {})
     metoffice.opp_data[entry.entry_id] = {
         METOFFICE_DATA: metoffice_data,
         METOFFICE_COORDINATOR: metoffice_coordinator,

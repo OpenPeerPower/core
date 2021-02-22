@@ -44,7 +44,7 @@ async def test_default_setup_opp, monkeypatch):
     assert create.call_args_list[0][1]["ignore"]
 
     # test default state of sensor loaded from config
-    config_sensor =.opp.states.get("sensor.test")
+    config_sensor = opp.states.get("sensor.test")
     assert config_sensor
     assert config_sensor.state == "unknown"
     assert config_sensor.attributes[ATTR_UNIT_OF_MEASUREMENT] == TEMP_CELSIUS
@@ -64,7 +64,7 @@ async def test_default_setup_opp, monkeypatch):
     await.opp.async_block_till_done()
 
     # test  state of new sensor
-    new_sensor =.opp.states.get("sensor.test2")
+    new_sensor = opp.states.get("sensor.test2")
     assert new_sensor
     assert new_sensor.state == "0"
     assert new_sensor.attributes[ATTR_UNIT_OF_MEASUREMENT] == TEMP_CELSIUS
@@ -146,7 +146,7 @@ async def test_aliases.opp, monkeypatch):
     event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
 
     # test default state of sensor loaded from config
-    config_sensor =.opp.states.get("sensor.test_02")
+    config_sensor = opp.states.get("sensor.test_02")
     assert config_sensor
     assert config_sensor.state == "unknown"
 
@@ -162,7 +162,7 @@ async def test_aliases.opp, monkeypatch):
     await.opp.async_block_till_done()
 
     # test  state of new sensor
-    updated_sensor =.opp.states.get("sensor.test_02")
+    updated_sensor = opp.states.get("sensor.test_02")
     assert updated_sensor
     assert updated_sensor.state == "65"
     assert updated_sensor.attributes[ATTR_UNIT_OF_MEASUREMENT] == PERCENTAGE
@@ -188,11 +188,11 @@ async def test_race_condition.opp, monkeypatch):
     await.opp.async_block_till_done()
 
     # test  state of new sensor
-    updated_sensor =.opp.states.get("sensor.test3")
+    updated_sensor = opp.states.get("sensor.test3")
     assert updated_sensor
 
     # test  state of new sensor
-    new_sensor =.opp.states.get(f"{DOMAIN}.test3")
+    new_sensor = opp.states.get(f"{DOMAIN}.test3")
     assert new_sensor
     assert new_sensor.state == "ok"
 
@@ -202,6 +202,6 @@ async def test_race_condition.opp, monkeypatch):
     assert tmp_entity not in.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR]["test3"]
 
     # test  state of new sensor
-    new_sensor =.opp.states.get(f"{DOMAIN}.test3")
+    new_sensor = opp.states.get(f"{DOMAIN}.test3")
     assert new_sensor
     assert new_sensor.state == "ko"

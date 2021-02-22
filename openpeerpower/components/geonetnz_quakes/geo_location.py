@@ -35,7 +35,7 @@ SOURCE = "geonetnz_quakes"
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the GeoNet NZ Quakes Feed platform."""
-    manager =.opp.data[DOMAIN][FEED][entry.entry_id]
+    manager = opp.data[DOMAIN][FEED][entry.entry_id]
 
     @callback
     def async_add_geolocation(feed_manager, integration_id, external_id):

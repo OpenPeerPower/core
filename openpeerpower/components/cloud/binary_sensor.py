@@ -16,7 +16,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up the cloud binary sensors."""
     if discovery_info is None:
         return
-    cloud =.opp.data[DOMAIN]
+    cloud = opp.data[DOMAIN]
 
     async_add_entities([CloudRemoteBinary(cloud)])
 

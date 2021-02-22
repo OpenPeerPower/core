@@ -53,8 +53,8 @@ class NetatmoDataHandler:
 
     def __init__(self, opp: OpenPeerPower, entry: ConfigEntry):
         """Initialize self."""
-        self.opp =.opp
-        self._auth =.opp.data[DOMAIN][entry.entry_id][AUTH]
+        self.opp = opp
+        self._auth = opp.data[DOMAIN][entry.entry_id][AUTH]
         self.listeners: List[CALLBACK_TYPE] = []
         self._data_classes: Dict = {}
         self.data = {}

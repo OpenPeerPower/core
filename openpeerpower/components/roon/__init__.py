@@ -33,5 +33,5 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    roonserver =.opp.data[DOMAIN].pop(entry.entry_id)
+    roonserver = opp.data[DOMAIN].pop(entry.entry_id)
     return await roonserver.async_reset()

@@ -13,7 +13,7 @@ from .const import DATA_COORDINATOR, DOMAIN
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the sensor platform."""
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
 
     entities = []
 

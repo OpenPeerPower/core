@@ -193,7 +193,7 @@ async def test_process_image.opp, mock_healthybox, mock_image):
         await.opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get(VALID_ENTITY_ID)
+    state = opp.states.get(VALID_ENTITY_ID)
     assert state.state == "1"
     assert state.attributes.get("matched_faces") == MATCHED_FACES
     assert state.attributes.get("total_matched_faces") == 1
@@ -230,7 +230,7 @@ async def test_process_image_errors.opp, mock_healthybox, mock_image, caplog):
         await.opp.async_block_till_done()
         assert "ConnectionError: Is facebox running?" in caplog.text
 
-    state =.opp.states.get(VALID_ENTITY_ID)
+    state = opp.states.get(VALID_ENTITY_ID)
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get("faces") == []
     assert state.attributes.get("matched_faces") == {}
@@ -326,5 +326,5 @@ async def test_setup_platform_with_name.opp, mock_healthybox):
     await async_setup_component.opp, ip.DOMAIN, valid_config_named)
     await.opp.async_block_till_done()
     assert.opp.states.get(named_entity_id)
-    state =.opp.states.get(named_entity_id)
+    state = opp.states.get(named_entity_id)
     assert state.attributes.get(CONF_FRIENDLY_NAME) == MOCK_NAME

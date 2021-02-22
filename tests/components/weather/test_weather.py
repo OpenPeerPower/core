@@ -27,7 +27,7 @@ async def test_attributes.opp):
    .opp.config.units = METRIC_SYSTEM
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("weather.demo_weather_south")
+    state = opp.states.get("weather.demo_weather_south")
     assert state is not None
 
     assert state.state == "sunny"
@@ -63,7 +63,7 @@ async def test_temperature_convert.opp):
    .opp.config.units = METRIC_SYSTEM
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("weather.demo_weather_north")
+    state = opp.states.get("weather.demo_weather_north")
     assert state is not None
 
     assert state.state == "rainy"

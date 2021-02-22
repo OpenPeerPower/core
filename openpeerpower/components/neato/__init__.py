@@ -130,7 +130,7 @@ class NeatoHub:
 
     def __init__(self, opp: OpenPeerPowerType, neato: Account):
         """Initialize the Neato hub."""
-        self.opp: OpenPeerPowerType =.opp
+        self.opp: OpenPeerPowerType = opp
         self.my_neato: Account = neato
 
     @Throttle(timedelta(minutes=1))

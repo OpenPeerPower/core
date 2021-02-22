@@ -41,7 +41,7 @@ async def test_invalid_password.opp):
     }
 
     flow = config_flow.RainMachineFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": SOURCE_USER}
 
     with patch(
@@ -89,7 +89,7 @@ async def test_options_flow.opp):
 async def test_show_form.opp):
     """Test that the form is served with no input."""
     flow = config_flow.RainMachineFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": SOURCE_USER}
 
     result = await flow.async_step_user(user_input=None)
@@ -108,7 +108,7 @@ async def test_step_user.opp):
     }
 
     flow = config_flow.RainMachineFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.context = {"source": SOURCE_USER}
 
     with patch(

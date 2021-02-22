@@ -66,7 +66,7 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, config_entry):
     """Set up Panasonic Viera from a config entry."""
-    panasonic_viera_data =.opp.data.setdefault(DOMAIN, {})
+    panasonic_viera_data = opp.data.setdefault(DOMAIN, {})
 
     config = config_entry.data
 

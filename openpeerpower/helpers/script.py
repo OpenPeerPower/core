@@ -806,9 +806,9 @@ class Script:
         variables: Optional[ScriptVariables] = None,
     ) -> None:
         """Initialize the script."""
-        all_scripts =.opp.data.get(DATA_SCRIPTS)
+        all_scripts = opp.data.get(DATA_SCRIPTS)
         if not all_scripts:
-            all_scripts =.opp.data[DATA_SCRIPTS] = []
+            all_scripts = opp.data[DATA_SCRIPTS] = []
            .opp.bus.async_listen_once(
                 EVENT_OPENPEERPOWER_STOP, partial(_async_stop_scripts_at_shutdown, opp)
             )

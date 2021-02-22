@@ -169,7 +169,7 @@ async def test_light.opp, mock_gateway, api_factory):
     )
     await setup_integration.opp)
 
-    lamp_1 =.opp.states.get("light.tradfri_light_0")
+    lamp_1 = opp.states.get("light.tradfri_light_0")
     assert lamp_1 is not None
     assert lamp_1.state == "on"
     assert lamp_1.attributes["brightness"] == 100
@@ -279,7 +279,7 @@ async def test_turn_on(
     await.opp.async_block_till_done()
 
     # Check that the state is correct.
-    states =.opp.states.get(f"light.tradfri_light_{device_id}")
+    states = opp.states.get(f"light.tradfri_light_{device_id}")
     for result, value in expected_result.items():
         if result == "state":
             assert states.state == value
@@ -324,7 +324,7 @@ async def test_turn_off.opp, mock_gateway, api_factory):
     await.opp.async_block_till_done()
 
     # Check that the state is correct.
-    states =.opp.states.get("light.tradfri_light_0")
+    states = opp.states.get("light.tradfri_light_0")
     assert states.state == "off"
 
 
@@ -348,11 +348,11 @@ async def test_group.opp, mock_gateway, api_factory):
     mock_gateway.mock_groups.append(mock_group(state, 1))
     await setup_integration.opp)
 
-    group =.opp.states.get("light.tradfri_group_0")
+    group = opp.states.get("light.tradfri_group_0")
     assert group is not None
     assert group.state == "off"
 
-    group =.opp.states.get("light.tradfri_group_1")
+    group = opp.states.get("light.tradfri_group_1")
     assert group is not None
     assert group.state == "on"
     assert group.attributes["brightness"] == 100

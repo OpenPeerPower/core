@@ -41,7 +41,7 @@ DEVICE_CLASS = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up a Axis binary sensor."""
-    device =.opp.data[AXIS_DOMAIN][config_entry.unique_id]
+    device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     @callback
     def async_add_sensor(event_id):

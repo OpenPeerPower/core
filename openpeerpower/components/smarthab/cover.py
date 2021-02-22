@@ -23,7 +23,7 @@ SCAN_INTERVAL = timedelta(seconds=60)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up SmartHab covers from a config entry."""
-    hub =.opp.data[DOMAIN][config_entry.entry_id][DATA_HUB]
+    hub = opp.data[DOMAIN][config_entry.entry_id][DATA_HUB]
 
     entities = (
         SmartHabCover(cover)

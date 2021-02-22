@@ -45,7 +45,7 @@ class TelegramNotificationService(BaseNotificationService):
     def __init__(self, opp, chat_id):
         """Initialize the service."""
         self._chat_id = chat_id
-        self.opp =.opp
+        self.opp = opp
 
     def send_message(self, message="", **kwargs):
         """Send a message to a user."""

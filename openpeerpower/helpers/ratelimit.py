@@ -18,7 +18,7 @@ class KeyedRateLimit:
         opp: OpenPeerPower,
     ):
         """Initialize ratelimit tracker."""
-        self.opp =.opp
+        self.opp = opp
         self._last_triggered: Dict[Hashable, datetime] = {}
         self._rate_limit_timers: Dict[Hashable, asyncio.TimerHandle] = {}
 

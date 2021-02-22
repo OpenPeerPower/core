@@ -45,7 +45,7 @@ async def test_cover_async_setup_entry.opp, aioclient_mock):
 
     # Test Cover Zone Entity
     entity_id = "cover.zone_open_without_sensor"
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state
     assert state.state == STATE_OPEN
     assert state.attributes.get("device_class") == DEVICE_CLASS_DAMPER

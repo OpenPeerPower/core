@@ -26,7 +26,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the SRP Energy Usage sensor."""
     # API object stored here by __init__.py
     is_time_of_use = False
-    api =.opp.data[SRP_ENERGY_DOMAIN]
+    api = opp.data[SRP_ENERGY_DOMAIN]
     if entry and entry.data:
         is_time_of_use = entry.data["is_tou"]
 

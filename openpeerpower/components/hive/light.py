@@ -23,7 +23,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    hive =.opp.data[DOMAIN].get(DATA_HIVE)
+    hive = opp.data[DOMAIN].get(DATA_HIVE)
     devices = hive.devices.get("light")
     entities = []
     if devices:

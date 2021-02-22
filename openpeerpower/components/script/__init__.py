@@ -94,7 +94,7 @@ def scripts_with_entity.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component =.opp.data[DOMAIN]
+    component = opp.data[DOMAIN]
 
     return [
         script_entity.entity_id
@@ -109,7 +109,7 @@ def entities_in_script.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component =.opp.data[DOMAIN]
+    component = opp.data[DOMAIN]
 
     script_entity = component.get_entity(entity_id)
 
@@ -125,7 +125,7 @@ def scripts_with_device.opp: OpenPeerPower, device_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component =.opp.data[DOMAIN]
+    component = opp.data[DOMAIN]
 
     return [
         script_entity.entity_id
@@ -140,7 +140,7 @@ def devices_in_script.opp: OpenPeerPower, entity_id: str) -> List[str]:
     if DOMAIN not in.opp.data:
         return []
 
-    component =.opp.data[DOMAIN]
+    component = opp.data[DOMAIN]
 
     script_entity = component.get_entity(entity_id)
 

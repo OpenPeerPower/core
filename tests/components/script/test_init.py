@@ -338,7 +338,7 @@ async def test_shared_context.opp):
     assert args[0].context == context
 
     # Ensure the script state shares the same context
-    state =.opp.states.get("script.test")
+    state = opp.states.get("script.test")
     assert state is not None
     assert state.context == context
 
@@ -491,7 +491,7 @@ async def test_config_basic.opp):
         },
     )
 
-    test_script =.opp.states.get("script.test_script")
+    test_script = opp.states.get("script.test_script")
     assert test_script.name == "Script Name"
     assert test_script.attributes["icon"] == "mdi:party"
 

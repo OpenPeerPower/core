@@ -144,7 +144,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
            .opp, _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
         ),
     )
-    nws.opp_data =.opp.data.setdefault(DOMAIN, {})
+    nws.opp_data = opp.data.setdefault(DOMAIN, {})
     nws.opp_data[entry.entry_id] = {
         NWS_DATA: nws_data,
         COORDINATOR_OBSERVATION: coordinator_observation,

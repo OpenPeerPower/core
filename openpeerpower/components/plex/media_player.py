@@ -80,7 +80,7 @@ def _async_add_entities.opp, registry, async_add_entities, server_id, new_entiti
     """Set up Plex media_player entities."""
     _LOGGER.debug("New entities: %s", new_entities)
     entities = []
-    plexserver =.opp.data[PLEX_DOMAIN][SERVERS][server_id]
+    plexserver = opp.data[PLEX_DOMAIN][SERVERS][server_id]
     for entity_params in new_entities:
         plex_mp = PlexMediaPlayer(plexserver, **entity_params)
         entities.append(plex_mp)

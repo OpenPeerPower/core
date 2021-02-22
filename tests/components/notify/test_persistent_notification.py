@@ -17,9 +17,9 @@ async def test_async_send_message.opp: OpenPeerPower):
     )
     await.opp.async_block_till_done()
 
-    entity_ids =.opp.states.async_entity_ids(pn.DOMAIN)
+    entity_ids = opp.states.async_entity_ids(pn.DOMAIN)
     assert len(entity_ids) == 1
 
-    state =.opp.states.get(entity_ids[0])
+    state = opp.states.get(entity_ids[0])
     assert state.attributes.get("message") == "Hello"
     assert state.attributes.get("title") == "Test notification"

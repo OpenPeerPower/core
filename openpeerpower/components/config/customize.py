@@ -30,14 +30,14 @@ class CustomizeConfigView(EditKeyBasedConfigView):
 
     def _get_value(self, opp, data, config_key):
         """Get value."""
-        customize =.opp.data.get(DATA_CUSTOMIZE, {}).get(config_key) or {}
+        customize = opp.data.get(DATA_CUSTOMIZE, {}).get(config_key) or {}
         return {"global": customize, "local": data.get(config_key, {})}
 
     def _write_value(self, opp, data, config_key, new_value):
         """Set value."""
         data[config_key] = new_value
 
-        state =.opp.states.get(config_key)
+        state = opp.states.get(config_key)
         state_attributes = dict(state.attributes)
         state_attributes.update(new_value)
        .opp.states.async_set(config_key, state.state, state_attributes)

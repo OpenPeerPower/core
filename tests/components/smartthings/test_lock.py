@@ -56,7 +56,7 @@ async def test_lock.opp, device_factory):
         LOCK_DOMAIN, "lock", {"entity_id": "lock.lock_1"}, blocking=True
     )
     # Assert
-    state =.opp.states.get("lock.lock_1")
+    state = opp.states.get("lock.lock_1")
     assert state is not None
     assert state.state == "locked"
     assert state.attributes["method"] == "Manual"
@@ -77,7 +77,7 @@ async def test_unlock.opp, device_factory):
         LOCK_DOMAIN, "unlock", {"entity_id": "lock.lock_1"}, blocking=True
     )
     # Assert
-    state =.opp.states.get("lock.lock_1")
+    state = opp.states.get("lock.lock_1")
     assert state is not None
     assert state.state == "unlocked"
 
@@ -92,7 +92,7 @@ async def test_update_from_signal.opp, device_factory):
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await.opp.async_block_till_done()
-    state =.opp.states.get("lock.lock_1")
+    state = opp.states.get("lock.lock_1")
     assert state is not None
     assert state.state == "locked"
 

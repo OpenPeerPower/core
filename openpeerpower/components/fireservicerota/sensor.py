@@ -16,7 +16,7 @@ async def async_setup_entry(
     opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up FireServiceRota sensor based on a config entry."""
-    client =.opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
+    client = opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
 
     async_add_entities([IncidentsSensor(client)])
 

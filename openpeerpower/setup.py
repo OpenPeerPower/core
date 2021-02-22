@@ -51,12 +51,12 @@ async def async_setup_component(
     if domain in.opp.config.components:
         return True
 
-    setup_tasks =.opp.data.setdefault(DATA_SETUP, {})
+    setup_tasks = opp.data.setdefault(DATA_SETUP, {})
 
     if domain in setup_tasks:
         return await setup_tasks[domain]  # type: ignore
 
-    task = setup_tasks[domain] =.opp.async_create_task(
+    task = setup_tasks[domain] = opp.async_create_task(
         _async_setup_component.opp, domain, config)
     )
 
@@ -78,14 +78,14 @@ async def _async_process_dependencies(
     }
 
     after_dependencies_tasks = {}
-    to_be_loaded =.opp.data.get(DATA_SETUP_DONE, {})
+    to_be_loaded = opp.data.get(DATA_SETUP_DONE, {})
     for dep in integration.after_dependencies:
         if (
             dep not in dependencies_tasks
             and dep in to_be_loaded
             and dep not in.opp.config.components
         ):
-            after_dependencies_tasks[dep] =.opp.loop.create_task(
+            after_dependencies_tasks[dep] = opp.loop.create_task(
                 to_be_loaded[dep].wait()
             )
 
@@ -187,7 +187,7 @@ async def _async_setup_component(
         # Entity components have their own warning
         warn_task = None
     else:
-        warn_task =.opp.loop.call_later(
+        warn_task = opp.loop.call_later(
             SLOW_SETUP_WARNING,
             _LOGGER.warning,
             "Setup of %s is taking over %s seconds.",
@@ -201,7 +201,7 @@ async def _async_setup_component(
         elif hasattr(component, "setup"):
             # This should not be replaced with.opp.async_add_executor_job because
             # we don't want to track this task in case it blocks startup.
-            task =.opp.loop.run_in_executor(
+            task = opp.loop.run_in_executor(
                 None, component.setup, opp, processed_config  # type: ignore
             )
         else:
@@ -328,10 +328,10 @@ async def async_process_deps_reqs(
 
     Module is a Python module of either a component or platform.
     """
-    processed =.opp.data.get(DATA_DEPS_REQS)
+    processed = opp.data.get(DATA_DEPS_REQS)
 
     if processed is None:
-        processed =.opp.data[DATA_DEPS_REQS] = set()
+        processed = opp.data[DATA_DEPS_REQS] = set()
     elif integration.domain in processed:
         return
 
@@ -377,4 +377,4 @@ def async_when_setup(
         unsub()  # type: ignore
         await when_setup()
 
-    unsub =.opp.bus.async_listen(EVENT_COMPONENT_LOADED, loaded_event)
+    unsub = opp.bus.async_listen(EVENT_COMPONENT_LOADED, loaded_event)

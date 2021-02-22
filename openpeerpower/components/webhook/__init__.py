@@ -30,7 +30,7 @@ SCHEMA_WS_LIST = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
 @bind.opp
 def async_register.opp, domain, name, webhook_id, handler):
     """Register a webhook."""
-    handlers =.opp.data.setdefault(DOMAIN, {})
+    handlers = opp.data.setdefault(DOMAIN, {})
 
     if webhook_id in handlers:
         raise ValueError("Handler is already defined!")
@@ -42,7 +42,7 @@ def async_register.opp, domain, name, webhook_id, handler):
 @bind.opp
 def async_unregister.opp, webhook_id):
     """Remove a webhook."""
-    handlers =.opp.data.setdefault(DOMAIN, {})
+    handlers = opp.data.setdefault(DOMAIN, {})
     handlers.pop(webhook_id, None)
 
 
@@ -71,7 +71,7 @@ def async_generate_path(webhook_id):
 @bind.opp
 async def async_handle_webhook.opp, webhook_id, request):
     """Handle a webhook."""
-    handlers =.opp.data.setdefault(DOMAIN, {})
+    handlers = opp.data.setdefault(DOMAIN, {})
     webhook = handlers.get(webhook_id)
 
     # Always respond successfully to not give away if a hook exists or not.
@@ -133,7 +133,7 @@ class WebhookView(OpenPeerPowerView):
 @callback
 def websocket_list.opp, connection, msg):
     """Return a list of webhooks."""
-    handlers =.opp.data.setdefault(DOMAIN, {})
+    handlers = opp.data.setdefault(DOMAIN, {})
     result = [
         {"webhook_id": webhook_id, "domain": info["domain"], "name": info["name"]}
         for webhook_id, info in handlers.items()

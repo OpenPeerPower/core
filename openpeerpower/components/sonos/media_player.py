@@ -272,7 +272,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     if DATA_SONOS not in.opp.data:
        .opp.data[DATA_SONOS] = SonosData()
 
-    config =.opp.data[SONOS_DOMAIN].get("media_player", {})
+    config = opp.data[SONOS_DOMAIN].get("media_player", {})
     _LOGGER.debug("Reached async_setup_entry, config=%s", config)
 
     advertise_addr = config.get(CONF_ADVERTISE_ADDR)
@@ -280,7 +280,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         pysonos.config.EVENT_ADVERTISE_IP = advertise_addr
 
     def _stop_discovery(event):
-        data =.opp.data[DATA_SONOS]
+        data = opp.data[DATA_SONOS]
         if data.discovery_thread:
             data.discovery_thread.stop()
             data.discovery_thread = None
@@ -326,7 +326,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                         _LOGGER.warning("Failed to initialize '%s'", host)
 
             _LOGGER.debug("Tested all hosts")
-           .opp.data[DATA_SONOS].hosts_heartbeat =.opp.helpers.event.call_later(
+           .opp.data[DATA_SONOS].hosts_heartbeat = opp.helpers.event.call_later(
                 DISCOVERY_INTERVAL, _discovery
             )
         else:

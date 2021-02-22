@@ -92,7 +92,7 @@ async def test_thermostat_off.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -134,7 +134,7 @@ async def test_thermostat_heat.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
@@ -174,7 +174,7 @@ async def test_thermostat_cool.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_COOL
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_COOL
@@ -215,7 +215,7 @@ async def test_thermostat_heatcool.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT_COOL
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_COOL
@@ -262,7 +262,7 @@ async def test_thermostat_eco_off.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT_COOL
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_COOL
@@ -309,7 +309,7 @@ async def test_thermostat_eco_on.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT_COOL
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_COOL
@@ -353,7 +353,7 @@ async def test_thermostat_eco_heat_only.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -384,7 +384,7 @@ async def test_thermostat_set_hvac_mode.opp, auth):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -400,7 +400,7 @@ async def test_thermostat_set_hvac_mode.opp, auth):
     }
 
     # Local state does not reflect the update
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -425,7 +425,7 @@ async def test_thermostat_set_hvac_mode.opp, auth):
     await subscriber.async_receive_event(event)
     await.opp.async_block_till_done()  # Process dispatch/update signal
 
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -449,7 +449,7 @@ async def test_thermostat_set_hvac_mode.opp, auth):
     await subscriber.async_receive_event(event)
     await.opp.async_block_till_done()  # Process dispatch/update signal
 
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
@@ -470,7 +470,7 @@ async def test_thermostat_invalid_hvac_mode.opp, auth):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -504,7 +504,7 @@ async def test_thermostat_set_eco_preset.opp, auth):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -522,7 +522,7 @@ async def test_thermostat_set_eco_preset.opp, auth):
     }
 
     # Local state does not reflect the update
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -550,7 +550,7 @@ async def test_thermostat_set_eco_preset.opp, auth):
     await subscriber.async_receive_event(event)
     await.opp.async_block_till_done()  # Process dispatch/update signal
 
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -586,7 +586,7 @@ async def test_thermostat_set_cool.opp, auth):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_COOL
 
@@ -619,7 +619,7 @@ async def test_thermostat_set_heat.opp, auth):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT
 
@@ -653,7 +653,7 @@ async def test_thermostat_set_heat_cool.opp, auth):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT_COOL
 
@@ -691,7 +691,7 @@ async def test_thermostat_fan_off.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -730,7 +730,7 @@ async def test_thermostat_fan_on.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_FAN_ONLY
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -766,7 +766,7 @@ async def test_thermostat_cool_with_fan.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_COOL
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -802,7 +802,7 @@ async def test_thermostat_set_fan.opp, auth):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_FAN_ONLY
     assert thermostat.attributes[ATTR_FAN_MODE] == FAN_ON
@@ -838,7 +838,7 @@ async def test_thermostat_fan_empty.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -881,7 +881,7 @@ async def test_thermostat_invalid_fan_mode.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_FAN_ONLY
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -922,7 +922,7 @@ async def test_thermostat_set_hvac_fan_only.opp, auth):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_FAN_MODE] == FAN_OFF
@@ -972,7 +972,7 @@ async def test_thermostat_target_temp.opp, auth):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT
     assert thermostat.attributes[ATTR_TEMPERATURE] == 23.0
@@ -1003,7 +1003,7 @@ async def test_thermostat_target_temp.opp, auth):
     await subscriber.async_receive_event(event)
     await.opp.async_block_till_done()  # Process dispatch/update signal
 
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT_COOL
     assert thermostat.attributes[ATTR_TARGET_TEMP_LOW] == 22.0
@@ -1021,7 +1021,7 @@ async def test_thermostat_missing_mode_traits.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -1058,7 +1058,7 @@ async def test_thermostat_missing_temperature_trait.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -1092,7 +1092,7 @@ async def test_thermostat_unexpected_hvac_status.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert ATTR_HVAC_ACTION not in thermostat.attributes
@@ -1126,7 +1126,7 @@ async def test_thermostat_missing_set_point.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT_COOL
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -1160,7 +1160,7 @@ async def test_thermostat_unexepected_hvac_mode.opp):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -1197,7 +1197,7 @@ async def test_thermostat_invalid_set_preset_mode.opp, auth):
     )
 
     assert len.opp.states.async_all()) == 1
-    thermostat =.opp.states.get("climate.my_thermostat")
+    thermostat = opp.states.get("climate.my_thermostat")
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_PRESET_MODE] == PRESET_NONE

@@ -258,7 +258,7 @@ def async_track_state_change_event(
     if not entity_ids:
         return _remove_empty_listener
 
-    entity_callbacks =.opp.data.setdefault(TRACK_STATE_CHANGE_CALLBACKS, {})
+    entity_callbacks = opp.data.setdefault(TRACK_STATE_CHANGE_CALLBACKS, {})
 
     if TRACK_STATE_CHANGE_LISTENER not in.opp.data:
 
@@ -283,7 +283,7 @@ def async_track_state_change_event(
                         "Error while processing state change for %s", entity_id
                     )
 
-       .opp.data[TRACK_STATE_CHANGE_LISTENER] =.opp.bus.async_listen(
+       .opp.data[TRACK_STATE_CHANGE_LISTENER] = opp.bus.async_listen(
             EVENT_STATE_CHANGED,
             _async_state_change_dispatcher,
             event_filter=_async_state_change_filter,
@@ -322,7 +322,7 @@ def _async_remove_indexed_listeners(
     job: HassJob,
 ) -> None:
     """Remove a listener."""
-    callbacks =.opp.data[data_key]
+    callbacks = opp.data[data_key]
 
     for storage_key in storage_keys:
         callbacks[storage_key].remove(job)
@@ -348,7 +348,7 @@ def async_track_entity_registry_updated_event(
     if not entity_ids:
         return _remove_empty_listener
 
-    entity_callbacks =.opp.data.setdefault(TRACK_ENTITY_REGISTRY_UPDATED_CALLBACKS, {})
+    entity_callbacks = opp.data.setdefault(TRACK_ENTITY_REGISTRY_UPDATED_CALLBACKS, {})
 
     if TRACK_ENTITY_REGISTRY_UPDATED_LISTENER not in.opp.data:
 
@@ -375,7 +375,7 @@ def async_track_entity_registry_updated_event(
                         entity_id,
                     )
 
-       .opp.data[TRACK_ENTITY_REGISTRY_UPDATED_LISTENER] =.opp.bus.async_listen(
+       .opp.data[TRACK_ENTITY_REGISTRY_UPDATED_LISTENER] = opp.bus.async_listen(
             EVENT_ENTITY_REGISTRY_UPDATED,
             _async_entity_registry_updated_dispatcher,
             event_filter=_async_entity_registry_updated_filter,
@@ -431,7 +431,7 @@ def async_track_state_added_domain(
     if not domains:
         return _remove_empty_listener
 
-    domain_callbacks =.opp.data.setdefault(TRACK_STATE_ADDED_DOMAIN_CALLBACKS, {})
+    domain_callbacks = opp.data.setdefault(TRACK_STATE_ADDED_DOMAIN_CALLBACKS, {})
 
     if TRACK_STATE_ADDED_DOMAIN_LISTENER not in.opp.data:
 
@@ -448,7 +448,7 @@ def async_track_state_added_domain(
 
             _async_dispatch_domain_event.opp, event, domain_callbacks)
 
-       .opp.data[TRACK_STATE_ADDED_DOMAIN_LISTENER] =.opp.bus.async_listen(
+       .opp.data[TRACK_STATE_ADDED_DOMAIN_LISTENER] = opp.bus.async_listen(
             EVENT_STATE_CHANGED,
             _async_state_change_dispatcher,
             event_filter=_async_state_change_filter,
@@ -484,7 +484,7 @@ def async_track_state_removed_domain(
     if not domains:
         return _remove_empty_listener
 
-    domain_callbacks =.opp.data.setdefault(TRACK_STATE_REMOVED_DOMAIN_CALLBACKS, {})
+    domain_callbacks = opp.data.setdefault(TRACK_STATE_REMOVED_DOMAIN_CALLBACKS, {})
 
     if TRACK_STATE_REMOVED_DOMAIN_LISTENER not in.opp.data:
 
@@ -501,7 +501,7 @@ def async_track_state_removed_domain(
 
             _async_dispatch_domain_event.opp, event, domain_callbacks)
 
-       .opp.data[TRACK_STATE_REMOVED_DOMAIN_LISTENER] =.opp.bus.async_listen(
+       .opp.data[TRACK_STATE_REMOVED_DOMAIN_LISTENER] = opp.bus.async_listen(
             EVENT_STATE_CHANGED,
             _async_state_change_dispatcher,
             event_filter=_async_state_change_filter,
@@ -544,7 +544,7 @@ class _TrackStateChangeFiltered:
         action: Callable[[Event], Any],
     ):
         """Handle removal / refresh of tracker init."""
-        self.opp =.opp
+        self.opp = opp
         self._action = action
         self._listeners: Dict[str, Callable] = {}
         self._last_track_states: TrackStates = track_states
@@ -785,11 +785,11 @@ class _TrackTemplateResultInfo:
         action: Callable,
     ):
         """Handle removal / refresh of tracker init."""
-        self.opp =.opp
+        self.opp = opp
         self._job = HassJob(action)
 
         for track_template_ in track_templates:
-            track_template_.template.opp =.opp
+            track_template_.template.opp = opp
         self._track_templates = track_templates
 
         self._last_result: Dict[Template, Union[str, TemplateError]] = {}
@@ -1124,7 +1124,7 @@ def async_track_same_state(
     )
 
     if entity_ids == MATCH_ALL:
-        async_remove_state_for_cancel =.opp.bus.async_listen(
+        async_remove_state_for_cancel = opp.bus.async_listen(
             EVENT_STATE_CHANGED, state_for_cancel_listener
         )
     else:
@@ -1194,13 +1194,13 @@ def async_track_point_in_utc_time(
         if delta > 0:
             _LOGGER.debug("Called %f seconds too early, rearming", delta)
 
-            cancel_callback =.opp.loop.call_later(delta, run_action)
+            cancel_callback = opp.loop.call_later(delta, run_action)
             return
 
        .opp.async_run.opp_job(job, utc_point_in_time)
 
     delta = utc_point_in_time.timestamp() - time.time()
-    cancel_callback =.opp.loop.call_later(delta, run_action)
+    cancel_callback = opp.loop.call_later(delta, run_action)
 
     @callback
     def unsub_point_in_time_listener() -> None:

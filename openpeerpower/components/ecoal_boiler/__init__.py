@@ -82,7 +82,7 @@ CONFIG_SCHEMA = vol.Schema(
 def setup_opp, opp_config):
     """Set up global ECoalController instance same for sensors and switches."""
 
-    conf =.opp_config[DOMAIN]
+    conf = opp_config[DOMAIN]
     host = conf[CONF_HOST]
     username = conf[CONF_USERNAME]
     passwd = conf[CONF_PASSWORD]

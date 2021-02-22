@@ -92,7 +92,7 @@ async def test_sensors(
         await.opp.config_entries.async_setup(entry.entry_id)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.wled_rgb_light_estimated_current")
+    state = opp.states.get("sensor.wled_rgb_light_estimated_current")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:power"
     assert state.attributes.get(ATTR_LED_COUNT) == 30
@@ -105,7 +105,7 @@ async def test_sensors(
     assert entry
     assert entry.unique_id == "aabbccddeeff_estimated_current"
 
-    state =.opp.states.get("sensor.wled_rgb_light_uptime")
+    state = opp.states.get("sensor.wled_rgb_light_uptime")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:clock-outline"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) is None
@@ -115,7 +115,7 @@ async def test_sensors(
     assert entry
     assert entry.unique_id == "aabbccddeeff_uptime"
 
-    state =.opp.states.get("sensor.wled_rgb_light_free_memory")
+    state = opp.states.get("sensor.wled_rgb_light_free_memory")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:memory"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == DATA_BYTES
@@ -125,7 +125,7 @@ async def test_sensors(
     assert entry
     assert entry.unique_id == "aabbccddeeff_free_heap"
 
-    state =.opp.states.get("sensor.wled_rgb_light_wifi_signal")
+    state = opp.states.get("sensor.wled_rgb_light_wifi_signal")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:wifi"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == PERCENTAGE
@@ -135,7 +135,7 @@ async def test_sensors(
     assert entry
     assert entry.unique_id == "aabbccddeeff_wifi_signal"
 
-    state =.opp.states.get("sensor.wled_rgb_light_wifi_rssi")
+    state = opp.states.get("sensor.wled_rgb_light_wifi_rssi")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:wifi"
     assert (
@@ -148,7 +148,7 @@ async def test_sensors(
     assert entry
     assert entry.unique_id == "aabbccddeeff_wifi_rssi"
 
-    state =.opp.states.get("sensor.wled_rgb_light_wifi_channel")
+    state = opp.states.get("sensor.wled_rgb_light_wifi_channel")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:wifi"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) is None
@@ -158,7 +158,7 @@ async def test_sensors(
     assert entry
     assert entry.unique_id == "aabbccddeeff_wifi_channel"
 
-    state =.opp.states.get("sensor.wled_rgb_light_wifi_bssid")
+    state = opp.states.get("sensor.wled_rgb_light_wifi_bssid")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:wifi"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) is None
@@ -187,7 +187,7 @@ async def test_disabled_by_default_sensors(
     await init_integration.opp, aioclient_mock)
     registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state is None
 
     entry = registry.async_get(entity_id)

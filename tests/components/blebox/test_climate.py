@@ -60,7 +60,7 @@ async def test_init(saunabox, opp, config):
     entry = await async_setup_entity.opp, config, entity_id)
     assert entry.unique_id == "BleBox-saunaBox-1afe34db9437-thermostat"
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.name == "saunaBox-thermostat"
 
     supported_features = state.attributes[ATTR_SUPPORTED_FEATURES]
@@ -102,7 +102,7 @@ async def test_update(saunabox, opp, config):
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
     await async_setup_entity.opp, config, entity_id)
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
     assert state.attributes[ATTR_TEMPERATURE] == 64.3
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] == 40.9
@@ -135,7 +135,7 @@ async def test_on_when_below_desired(saunabox, opp, config):
         blocking=True,
     )
     feature_mock.async_off.assert_not_called()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
 
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
     assert state.attributes[ATTR_TEMPERATURE] == 64.8
@@ -170,7 +170,7 @@ async def test_on_when_above_desired(saunabox, opp, config):
         blocking=True,
     )
     feature_mock.async_off.assert_not_called()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
 
     assert state.attributes[ATTR_TEMPERATURE] == 23.4
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] == 28.7
@@ -205,7 +205,7 @@ async def test_off(saunabox, opp, config):
         blocking=True,
     )
     feature_mock.async_on.assert_not_called()
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
 
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
     assert state.attributes[ATTR_TEMPERATURE] == 29.8
@@ -239,7 +239,7 @@ async def test_set_thermo(saunabox, opp, config):
         {"entity_id": entity_id, ATTR_TEMPERATURE: 43.21},
         blocking=True,
     )
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
 
     assert state.attributes[ATTR_TEMPERATURE] == 29.2
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] == 29.1

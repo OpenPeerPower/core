@@ -135,7 +135,7 @@ async def async_send_changereport_message(
     message.set_endpoint_full(token, endpoint)
 
     message_serialized = message.serialize()
-    session =.opp.helpers.aiohttp_client.async_get_clientsession()
+    session = opp.helpers.aiohttp_client.async_get_clientsession()
 
     try:
         with async_timeout.timeout(DEFAULT_TIMEOUT):
@@ -203,7 +203,7 @@ async def async_send_add_or_update_message.opp, config, entity_ids):
     )
 
     message_serialized = message.serialize()
-    session =.opp.helpers.aiohttp_client.async_get_clientsession()
+    session = opp.helpers.aiohttp_client.async_get_clientsession()
 
     return await session.post(
         config.endpoint, headers=headers, json=message_serialized, allow_redirects=True
@@ -236,7 +236,7 @@ async def async_send_delete_message.opp, config, entity_ids):
     )
 
     message_serialized = message.serialize()
-    session =.opp.helpers.aiohttp_client.async_get_clientsession()
+    session = opp.helpers.aiohttp_client.async_get_clientsession()
 
     return await session.post(
         config.endpoint, headers=headers, json=message_serialized, allow_redirects=True
@@ -266,7 +266,7 @@ async def async_send_doorbell_event_message.opp, config, alexa_entity):
     message.set_endpoint_full(token, endpoint)
 
     message_serialized = message.serialize()
-    session =.opp.helpers.aiohttp_client.async_get_clientsession()
+    session = opp.helpers.aiohttp_client.async_get_clientsession()
 
     try:
         with async_timeout.timeout(DEFAULT_TIMEOUT):

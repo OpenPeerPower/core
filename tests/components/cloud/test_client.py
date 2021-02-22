@@ -48,7 +48,7 @@ async def test_handler_alexa.opp):
     )
 
     mock_cloud_prefs.opp)
-    cloud =.opp.data["cloud"]
+    cloud = opp.data["cloud"]
 
     resp = await cloud.client.async_alexa_message(
         test_alexa.get_new_request("Alexa.Discovery", "Discover")
@@ -68,7 +68,7 @@ async def test_handler_alexa.opp):
 async def test_handler_alexa_disabled.opp, mock_cloud_fixture):
     """Test handler Alexa when user has disabled it."""
     mock_cloud_fixture._prefs[PREF_ENABLE_ALEXA] = False
-    cloud =.opp.data["cloud"]
+    cloud = opp.data["cloud"]
 
     resp = await cloud.client.async_alexa_message(
         test_alexa.get_new_request("Alexa.Discovery", "Discover")
@@ -102,7 +102,7 @@ async def test_handler_google_actions.opp):
     )
 
     mock_cloud_prefs.opp)
-    cloud =.opp.data["cloud"]
+    cloud = opp.data["cloud"]
 
     reqid = "5711642932632160983"
     data = {"requestId": reqid, "inputs": [{"intent": "action.devices.SYNC"}]}
@@ -140,7 +140,7 @@ async def test_handler_google_actions_disabled.opp, mock_cloud_fixture):
     reqid = "5711642932632160983"
     data = {"requestId": reqid, "inputs": [{"intent": "action.devices.SYNC"}]}
 
-    cloud =.opp.data["cloud"]
+    cloud = opp.data["cloud"]
     resp = await cloud.client.async_google_message(data)
 
     assert resp["requestId"] == reqid
@@ -152,7 +152,7 @@ async def test_webhook_msg.opp, caplog):
     with patch(.opp_nabucasa.Cloud.start"):
         setup = await async_setup_component.opp, "cloud", {"cloud": {}})
         assert setup
-    cloud =.opp.data["cloud"]
+    cloud = opp.data["cloud"]
 
     await cloud.client.prefs.async_initialize()
     await cloud.client.prefs.async_update(
@@ -224,7 +224,7 @@ async def test_webhook_msg.opp, caplog):
 
 async def test_google_config_expose_entity.opp, mock_cloud_setup, mock_cloud_login):
     """Test Google config exposing entity method uses latest config."""
-    cloud_client =.opp.data[DOMAIN].client
+    cloud_client = opp.data[DOMAIN].client
     state = State("light.kitchen", "on")
     gconf = await cloud_client.get_google_config()
 
@@ -239,7 +239,7 @@ async def test_google_config_expose_entity.opp, mock_cloud_setup, mock_cloud_log
 
 async def test_google_config_should_2fa.opp, mock_cloud_setup, mock_cloud_login):
     """Test Google config disabling 2FA method uses latest config."""
-    cloud_client =.opp.data[DOMAIN].client
+    cloud_client = opp.data[DOMAIN].client
     gconf = await cloud_client.get_google_config()
     state = State("light.kitchen", "on")
 

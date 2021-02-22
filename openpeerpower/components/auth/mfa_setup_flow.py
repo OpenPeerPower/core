@@ -68,7 +68,7 @@ def websocket_setup_mfa(
 
     async def async_setup_flow(msg):
         """Return a setup flow for mfa auth module."""
-        flow_manager =.opp.data[DATA_SETUP_FLOW_MGR]
+        flow_manager = opp.data[DATA_SETUP_FLOW_MGR]
 
         flow_id = msg.get("flow_id")
         if flow_id is not None:
@@ -79,7 +79,7 @@ def websocket_setup_mfa(
             return
 
         mfa_module_id = msg.get("mfa_module_id")
-        mfa_module =.opp.auth.get_auth_mfa_module(mfa_module_id)
+        mfa_module = opp.auth.get_auth_mfa_module(mfa_module_id)
         if mfa_module is None:
             connection.send_message(
                 websocket_api.error_message(

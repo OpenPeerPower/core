@@ -31,7 +31,7 @@ BANNED_IPS = ["200.201.202.203", "100.64.0.2"]
 BANNED_IPS_WITH_SUPERVISOR = BANNED_IPS + [SUPERVISOR_IP]
 
 
-@pytest.fixture(name=.oppio_env")
+@pytest.fixture(name= oppio_env")
 def.oppio_env_fixture():
     """Fixture to inject.oppio env."""
     with patch.dict(os.environ, {"HASSIO": "127.0.0.1"}), patch(
@@ -54,7 +54,7 @@ def gethostbyaddr_mock():
 async def test_access_from_banned_ip.opp, aiohttp_client):
     """Test accessing to server from banned IP. Both trusted and not."""
     app = web.Application()
-    app[.opp"] =.opp
+    app[.opp"] = opp
     setup_bans.opp, app, 5)
     set_real_ip = mock_real_ip(app)
 
@@ -83,7 +83,7 @@ async def test_access_from_supervisor_ip(
 ):
     """Test accessing to server from supervisor IP."""
     app = web.Application()
-    app[.opp"] =.opp
+    app[.opp"] = opp
 
     async def unauth_handler(request):
         """Return a mock web response."""
@@ -139,7 +139,7 @@ async def test_ip_bans_file_creation.opp, aiohttp_client):
     notification_calls = async_mock_service.opp, "persistent_notification", "create")
 
     app = web.Application()
-    app[.opp"] =.opp
+    app[.opp"] = opp
 
     async def unauth_handler(request):
         """Return a mock web response."""
@@ -182,7 +182,7 @@ async def test_ip_bans_file_creation.opp, aiohttp_client):
 async def test_failed_login_attempts_counter.opp, aiohttp_client):
     """Testing if failed login attempts counter increased."""
     app = web.Application()
-    app[.opp"] =.opp
+    app[.opp"] = opp
 
     async def auth_handler(request):
         """Return 200 status code."""

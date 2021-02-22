@@ -50,7 +50,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the raspihats switch devices."""
-    I2CHatSwitch.I2C_HATS_MANAGER =.opp.data[I2C_HATS_MANAGER]
+    I2CHatSwitch.I2C_HATS_MANAGER = opp.data[I2C_HATS_MANAGER]
     switches = []
     i2c_hat_configs = config.get(CONF_I2C_HATS)
     for i2c_hat_config in i2c_hat_configs:

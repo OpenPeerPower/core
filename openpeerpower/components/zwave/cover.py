@@ -62,7 +62,7 @@ class ZwaveRollershutter(ZWaveDeviceEntity, CoverEntity):
     def __init__(self, opp, values, invert_buttons, invert_percent):
         """Initialize the Z-Wave rollershutter."""
         ZWaveDeviceEntity.__init__(self, values, DOMAIN)
-        self._network =.opp.data[DATA_NETWORK]
+        self._network = opp.data[DATA_NETWORK]
         self._open_id = None
         self._close_id = None
         self._current_position = None

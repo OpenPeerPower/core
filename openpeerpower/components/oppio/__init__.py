@@ -336,10 +336,10 @@ async def async_setup_opp.config):
    .opp.ttp.register_view(OppIOView(host, websession))
 
     await opp.components.panel_custom.async_register_panel(
-        frontend_url_path="opp.",
-        webcomponent_name="opp.-main",
+        frontend_url_path= opp.",
+        webcomponent_name= opp.-main",
         sidebar_title="Supervisor",
-        sidebar_icon="opp.penpeerpower",
+        sidebar_icon= opp.penpeerpower",
         js_url="/api/opp./app/entrypoint.js",
         embed_iframe=True,
         require_admin=True,

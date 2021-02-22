@@ -94,7 +94,7 @@ async def zha_client.opp, opp_ws_client, device_switch, device_groupable):
 
     # load the ZHA API
     async_load_api.opp)
-    return await.opp_ws_client.opp)
+    return await opp_ws_client.opp)
 
 
 async def test_device_clusters.opp, zha_client):
@@ -362,7 +362,7 @@ async def test_remove_group(zha_client):
 async def app_controller.opp, setup_zha):
     """Fixture for zigpy Application Controller."""
     await setup_zha()
-    controller =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY].application_controller
+    controller = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY].application_controller
     p1 = patch.object(controller, "permit")
     p2 = patch.object(controller, "permit_with_key", new=AsyncMock())
     with p1, p2:

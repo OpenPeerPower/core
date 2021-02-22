@@ -26,7 +26,7 @@ async def test_query.opp):
     assert await async_setup_component.opp, "sensor", config)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.count_tables")
+    state = opp.states.get("sensor.count_tables")
     assert state.state == "5"
     assert state.attributes["value"] == 5
 
@@ -53,5 +53,5 @@ async def test_invalid_query.opp):
     assert await async_setup_component.opp, "sensor", config)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.count_tables")
+    state = opp.states.get("sensor.count_tables")
     assert state.state == STATE_UNKNOWN

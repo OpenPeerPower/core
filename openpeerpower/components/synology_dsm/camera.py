@@ -30,7 +30,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up the Synology NAS cameras."""
 
-    data =.opp.data[DOMAIN][entry.unique_id]
+    data = opp.data[DOMAIN][entry.unique_id]
     api = data[SYNO_API]
 
     if SynoSurveillanceStation.CAMERA_API_KEY not in api.dsm.apis:

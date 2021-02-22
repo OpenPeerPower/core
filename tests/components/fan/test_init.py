@@ -40,7 +40,7 @@ def test_fanentity():
 async def test_async_fanentity.opp):
     """Test async fan entity methods."""
     fan = BaseFan()
-    fan.opp =.opp
+    fan.opp = opp
     assert fan.state == "off"
     assert len(fan.speed_list) == 0
     assert len(fan.preset_modes) == 0

@@ -247,7 +247,7 @@ class APISpaceApiView(OpenPeerPowerView):
     @staticmethod
     def get_sensor_data.opp, spaceapi, sensor):
         """Get data from a sensor."""
-        sensor_state =.opp.states.get(sensor)
+        sensor_state = opp.states.get(sensor)
         if not sensor_state:
             return None
         sensor_data = {ATTR_NAME: sensor_state.name, ATTR_VALUE: sensor_state.state}
@@ -277,7 +277,7 @@ class APISpaceApiView(OpenPeerPowerView):
             pass
 
         state_entity = spaceapi["state"][ATTR_ENTITY_ID]
-        space_state =.opp.states.get(state_entity)
+        space_state = opp.states.get(state_entity)
 
         if space_state is not None:
             state = {

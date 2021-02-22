@@ -79,7 +79,7 @@ async def _initialize.opp: OpenPeerPower) -> None:
     if DATA_FUNCTIONS in.opp.data:
         return
 
-    functions =.opp.data[DATA_FUNCTIONS] = {}
+    functions = opp.data[DATA_FUNCTIONS] = {}
 
     async def process_platform(
         opp: OpenPeerPower, component_name: str, platform: Any
@@ -128,7 +128,7 @@ class SignificantlyChangedChecker:
         extra_significant_check: Optional[ExtraCheckTypeFunc] = None,
     ) -> None:
         """Test if an entity has significantly changed."""
-        self.opp =.opp
+        self.opp = opp
         self.last_approved_entities: Dict[str, Tuple[State, Any]] = {}
         self.extra_significant_check = extra_significant_check
 

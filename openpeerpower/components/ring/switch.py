@@ -26,7 +26,7 @@ SKIP_UPDATES_DELAY = timedelta(seconds=5)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Create the switches for the Ring devices."""
-    devices =.opp.data[DOMAIN][config_entry.entry_id]["devices"]
+    devices = opp.data[DOMAIN][config_entry.entry_id]["devices"]
     switches = []
 
     for device in devices["stickup_cams"]:

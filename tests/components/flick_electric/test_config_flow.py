@@ -14,7 +14,7 @@ CONF = {CONF_USERNAME: "test-username", CONF_PASSWORD: "test-password"}
 
 
 async def _flow_submit.opp):
-    return await.opp.config_entries.flow.async_init(
+    return await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data=CONF,

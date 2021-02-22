@@ -171,7 +171,7 @@ async def _async_update_powerwall_data(
 ):
     """Fetch updated powerwall data."""
     try:
-        return await.opp.async_add_executor_job(_fetch_powerwall_data, power_wall)
+        return await opp.async_add_executor_job(_fetch_powerwall_data, power_wall)
     except PowerwallUnreachableError as err:
         raise UpdateFailed("Unable to fetch data from powerwall") from err
     except MissingAttributeError as err:

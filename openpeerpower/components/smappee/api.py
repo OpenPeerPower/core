@@ -20,7 +20,7 @@ class ConfigEntrySmappeeApi(api.SmappeeApi):
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
     ):
         """Initialize Smappee Auth."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.session = config_entry_oauth2_flow.OAuth2Session(
            .opp, config_entry, implementation

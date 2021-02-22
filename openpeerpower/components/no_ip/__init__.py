@@ -60,7 +60,7 @@ async def async_setup_opp, config):
 
     auth_str = base64.b64encode(f"{user}:{password}".encode("utf-8"))
 
-    session =.opp.helpers.aiohttp_client.async_get_clientsession()
+    session = opp.helpers.aiohttp_client.async_get_clientsession()
 
     result = await _update_no_ip.opp, session, domain, auth_str, timeout)
 

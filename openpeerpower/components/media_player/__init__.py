@@ -209,7 +209,7 @@ def _rename_keys(**keys):
 
 async def async_setup_opp, config):
     """Track states and offer events for media_players."""
-    component =.opp.data[DOMAIN] = EntityComponent(
+    component = opp.data[DOMAIN] = EntityComponent(
         logging.getLogger(__name__), DOMAIN, opp, SCAN_INTERVAL
     )
 
@@ -344,12 +344,12 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry."""
-    return await.opp.data[DOMAIN].async_setup_entry(entry)
+    return await opp.data[DOMAIN].async_setup_entry(entry)
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-    return await.opp.data[DOMAIN].async_unload_entry(entry)
+    return await opp.data[DOMAIN].async_unload_entry(entry)
 
 
 class MediaPlayerEntity(Entity):
@@ -991,7 +991,7 @@ async def websocket_handle_thumbnail.opp, connection, msg):
 
     Async friendly.
     """
-    component =.opp.data[DOMAIN]
+    component = opp.data[DOMAIN]
     player = component.get_entity(msg["entity_id"])
 
     if player is None:
@@ -1046,7 +1046,7 @@ async def websocket_browse_media.opp, connection, msg):
 
     To use, media_player integrations can implement MediaPlayerEntity.async_browse_media()
     """
-    component =.opp.data[DOMAIN]
+    component = opp.data[DOMAIN]
     player: Optional[MediaPlayerDevice] = component.get_entity(msg["entity_id"])
 
     if player is None:

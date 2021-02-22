@@ -134,7 +134,7 @@ async def async_send_message(
             """Initialize the Jabber Bot."""
             super().__init__(sender, password)
 
-            self.loop =.opp.loop
+            self.loop = opp.loop
 
             self.force_starttls = use_tls
             self.use_ipv6 = False

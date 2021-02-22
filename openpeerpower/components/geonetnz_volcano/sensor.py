@@ -33,7 +33,7 @@ ATTR_LAST_UPDATE_SUCCESSFUL = "feed_last_update_successful"
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up the GeoNet NZ Volcano Feed platform."""
-    manager =.opp.data[DOMAIN][FEED][entry.entry_id]
+    manager = opp.data[DOMAIN][FEED][entry.entry_id]
 
     @callback
     def async_add_sensor(feed_manager, external_id, unit_system):

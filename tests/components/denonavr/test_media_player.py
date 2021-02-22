@@ -75,7 +75,7 @@ async def setup_denonavr.opp):
     await.opp.config_entries.async_setup(mock_entry.entry_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(ENTITY_ID)
+    state = opp.states.get(ENTITY_ID)
 
     assert state
     assert state.name == TEST_NAME

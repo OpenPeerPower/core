@@ -174,7 +174,7 @@ async def test_float.opp):
         SWITCH_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_SWITCH}, blocking=True
     )
 
-    switch =.opp.states.get(ENTITY_SWITCH)
+    switch = opp.states.get(ENTITY_SWITCH)
     assert switch.state == STATE_ON
 
     plug_it = emulated_kasa.get_plug_devices.opp, config)
@@ -217,7 +217,7 @@ async def test_switch_power.opp):
         SWITCH_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_SWITCH}, blocking=True
     )
 
-    switch =.opp.states.get(ENTITY_SWITCH)
+    switch = opp.states.get(ENTITY_SWITCH)
     assert switch.state == STATE_ON
     power = switch.attributes[ATTR_CURRENT_POWER_W]
     assert power == 100
@@ -280,7 +280,7 @@ async def test_template.opp):
         blocking=True,
     )
 
-    fan =.opp.states.get(ENTITY_FAN)
+    fan = opp.states.get(ENTITY_FAN)
     assert fan.state == STATE_ON
 
     # Fan low:
@@ -338,9 +338,9 @@ async def test_sensor.opp):
     )
    .opp.states.async_set(ENTITY_SENSOR, 35)
 
-    light =.opp.states.get(ENTITY_LIGHT)
+    light = opp.states.get(ENTITY_LIGHT)
     assert light.state == STATE_ON
-    sensor =.opp.states.get(ENTITY_SENSOR)
+    sensor = opp.states.get(ENTITY_SENSOR)
     assert sensor.state == "35"
 
     # light
@@ -389,7 +389,7 @@ async def test_sensor_state.opp):
 
    .opp.states.async_set(ENTITY_SENSOR, 35)
 
-    sensor =.opp.states.get(ENTITY_SENSOR)
+    sensor = opp.states.get(ENTITY_SENSOR)
     assert sensor.state == "35"
 
     # sensor
@@ -462,13 +462,13 @@ async def test_multiple_devices.opp):
     )
 
     # All of them should now be on
-    switch =.opp.states.get(ENTITY_SWITCH)
+    switch = opp.states.get(ENTITY_SWITCH)
     assert switch.state == STATE_ON
-    light =.opp.states.get(ENTITY_LIGHT)
+    light = opp.states.get(ENTITY_LIGHT)
     assert light.state == STATE_ON
-    sensor =.opp.states.get(ENTITY_SENSOR)
+    sensor = opp.states.get(ENTITY_SENSOR)
     assert sensor.state == "35"
-    fan =.opp.states.get(ENTITY_FAN)
+    fan = opp.states.get(ENTITY_FAN)
     assert fan.state == STATE_ON
 
     plug_it = emulated_kasa.get_plug_devices.opp, config)

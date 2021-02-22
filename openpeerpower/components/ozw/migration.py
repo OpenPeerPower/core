@@ -46,7 +46,7 @@ CC_ID_LABELS = {
 async def async_get_migration_data.opp):
     """Return dict with ozw side migration info."""
     data = {}
-    nodes_values =.opp.data[DOMAIN][NODES_VALUES]
+    nodes_values = opp.data[DOMAIN][NODES_VALUES]
     ozw_config_entries = opp.config_entries.async_entries(DOMAIN)
     config_entry = ozw_config_entries[0]  # ozw only has a single config entry
     ent_reg = await async_get_entity_registry.opp)

@@ -52,9 +52,9 @@ async def async_get_integration_with_requirements(
     if opp.config.skip_pip:
         return integration
 
-    cache =.opp.data.get(DATA_INTEGRATIONS_WITH_REQS)
+    cache = opp.data.get(DATA_INTEGRATIONS_WITH_REQS)
     if cache is None:
-        cache =.opp.data[DATA_INTEGRATIONS_WITH_REQS] = {}
+        cache = opp.data[DATA_INTEGRATIONS_WITH_REQS] = {}
 
     int_or_evt: Union[Integration, asyncio.Event, None, UndefinedType] = cache.get(
         domain, UNDEFINED
@@ -115,9 +115,9 @@ async def async_process_requirements(
     This method is a coroutine. It will raise RequirementsNotFound
     if an requirement can't be satisfied.
     """
-    pip_lock =.opp.data.get(DATA_PIP_LOCK)
+    pip_lock = opp.data.get(DATA_PIP_LOCK)
     if pip_lock is None:
-        pip_lock =.opp.data[DATA_PIP_LOCK] = asyncio.Lock()
+        pip_lock = opp.data[DATA_PIP_LOCK] = asyncio.Lock()
 
     kwargs = pip_kwargs.opp.config.config_dir)
 

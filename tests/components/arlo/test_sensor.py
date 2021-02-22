@@ -86,7 +86,7 @@ def platform_setup():
 def sensor_with.opp_data(default_sensor, opp):
     """Create a sensor with async_dispatcher_connected mocked."""
    .opp.data = {}
-    default_sensor.opp =.opp
+    default_sensor.opp = opp
     return default_sensor
 
 

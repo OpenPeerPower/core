@@ -20,7 +20,7 @@ async def test_sensor.opp, config_entry, aioclient_mock):
     """Test that the sensor is setup."""
     await setup_integration.opp, config_entry, aioclient_mock)
     await refresh_data.opp, config_entry, aioclient_mock)
-    meter =.opp.states.get(TEST_ENTITY_ID)
+    meter = opp.states.get(TEST_ENTITY_ID)
 
     assert meter
     assert meter.state == "9751.212"
@@ -30,7 +30,7 @@ async def test_name.opp, config_entry, aioclient_mock):
     """Test sensor name property."""
     await setup_integration.opp, config_entry, aioclient_mock)
     await refresh_data.opp, config_entry, aioclient_mock)
-    meter =.opp.states.get(TEST_ENTITY_ID)
+    meter = opp.states.get(TEST_ENTITY_ID)
 
     assert meter.name == f"{ELECTRIC_METER} 123456789"
 
@@ -39,7 +39,7 @@ async def test_attributes.opp, config_entry, aioclient_mock):
     """Test meter attributes."""
     await setup_integration.opp, config_entry, aioclient_mock)
     await refresh_data.opp, config_entry, aioclient_mock)
-    meter =.opp.states.get(TEST_ENTITY_ID)
+    meter = opp.states.get(TEST_ENTITY_ID)
 
     assert meter.attributes[METER_NUMBER] == "123456789"
     assert meter.attributes[ESIID] == "12345678901234567"

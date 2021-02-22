@@ -29,7 +29,7 @@ async def _async_reproduce_state(
     reproduce_options: Optional[Dict[str, Any]] = None,
 ) -> None:
     """Reproduce a single state."""
-    cur_state =.opp.states.get(state.entity_id)
+    cur_state = opp.states.get(state.entity_id)
 
     # Return if we can't find entity
     if cur_state is None:

@@ -87,7 +87,7 @@ async def test_setup_api_panel.opp, aioclient_mock):
         result = await async_setup_component.opp, .oppio", {})
         assert result
 
-    panels =.opp.data[frontend.DATA_PANELS]
+    panels = opp.data[frontend.DATA_PANELS]
 
     assert panels.get(.oppio").to_response() == {
         "component_name": "custom",

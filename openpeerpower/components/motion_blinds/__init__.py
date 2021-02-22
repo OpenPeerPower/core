@@ -54,7 +54,7 @@ async def async_setup_entry(
        .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_motion_multicast)
 
     # Connect to motion gateway
-    multicast =.opp.data[DOMAIN][KEY_MULTICAST_LISTENER]
+    multicast = opp.data[DOMAIN][KEY_MULTICAST_LISTENER]
     connect_gateway_class = ConnectMotionGateway.opp, multicast)
     if not await connect_gateway_class.async_connect_gateway(host, key):
         raise ConfigEntryNotReady
@@ -134,7 +134,7 @@ async def async_unload_entry(
     if len.opp.data[DOMAIN]) == 1:
         # No motion gateways left, stop Motion multicast
         _LOGGER.debug("Shutting down Motion Listener")
-        multicast =.opp.data[DOMAIN].pop(KEY_MULTICAST_LISTENER)
+        multicast = opp.data[DOMAIN].pop(KEY_MULTICAST_LISTENER)
         await.opp.async_add_executor_job(multicast.Stop_listen)
 
     return unload_ok

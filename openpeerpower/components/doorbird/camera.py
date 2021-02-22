@@ -28,7 +28,7 @@ _TIMEOUT = 15  # seconds
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the DoorBird camera platform."""
     config_entry_id = config_entry.entry_id
-    config_data =.opp.data[DOMAIN][config_entry_id]
+    config_data = opp.data[DOMAIN][config_entry_id]
     doorstation = config_data[DOOR_STATION]
     doorstation_info = config_data[DOOR_STATION_INFO]
     device = doorstation.device

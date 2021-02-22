@@ -33,7 +33,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
     """Set up Minecraft Server from a config entry."""
-    domain_data =.opp.data.setdefault(DOMAIN, {})
+    domain_data = opp.data.setdefault(DOMAIN, {})
 
     # Create and store server instance.
     unique_id = config_entry.unique_id
@@ -61,7 +61,7 @@ async def async_unload_entry(
 ) -> bool:
     """Unload Minecraft Server config entry."""
     unique_id = config_entry.unique_id
-    server =.opp.data[DOMAIN][unique_id]
+    server = opp.data[DOMAIN][unique_id]
 
     # Unload platforms.
     await asyncio.gather(

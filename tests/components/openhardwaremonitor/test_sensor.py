@@ -22,15 +22,15 @@ async def test_setup_opp, requests_mock):
     await async_setup_component.opp, "sensor", config)
     await.opp.async_block_till_done()
 
-    entities =.opp.states.async_entity_ids("sensor")
+    entities = opp.states.async_entity_ids("sensor")
     assert len(entities) == 38
 
-    state =.opp.states.get("sensor.test_pc_intel_core_i7_7700_temperatures_cpu_core_1")
+    state = opp.states.get("sensor.test_pc_intel_core_i7_7700_temperatures_cpu_core_1")
 
     assert state is not None
     assert state.state == "31.0"
 
-    state =.opp.states.get("sensor.test_pc_intel_core_i7_7700_temperatures_cpu_core_2")
+    state = opp.states.get("sensor.test_pc_intel_core_i7_7700_temperatures_cpu_core_2")
 
     assert state is not None
     assert state.state == "30.0"

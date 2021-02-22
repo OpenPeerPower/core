@@ -357,7 +357,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None or DATA_NETWORK not in.opp.data:
         return False
 
-    device =.opp.data[DATA_DEVICES].get(discovery_info[const.DISCOVERY_DEVICE])
+    device = opp.data[DATA_DEVICES].get(discovery_info[const.DISCOVERY_DEVICE])
     if device is None:
         return False
 
@@ -444,7 +444,7 @@ async def async_setup_entry.opp, config_entry):
         options.addOption("NetworkKey", config[CONF_NETWORK_KEY])
 
     await.opp.async_add_executor_job(options.lock)
-    network =.opp.data[DATA_NETWORK] = ZWaveNetwork(options, autostart=False)
+    network = opp.data[DATA_NETWORK] = ZWaveNetwork(options, autostart=False)
    .opp.data[DATA_DEVICES] = {}
    .opp.data[DATA_ENTITY_VALUES] = []
 
@@ -493,7 +493,7 @@ async def async_setup_entry.opp, config_entry):
 
             # We create a new list and update the reference here so that
             # the list can be safely iterated over in the main thread
-            new_values =.opp.data[DATA_ENTITY_VALUES] + [values]
+            new_values = opp.data[DATA_ENTITY_VALUES] + [values]
            .opp.data[DATA_ENTITY_VALUES] = new_values
 
     platform = EntityPlatform(
@@ -556,14 +556,14 @@ async def async_setup_entry.opp, config_entry):
             if not key.startswith(f"{node_id}-"):
                 continue
 
-            entity =.opp.data[DATA_DEVICES][key]
+            entity = opp.data[DATA_DEVICES][key]
             _LOGGER.debug(
                 "Removing Entity - value: %s - entity_id: %s", key, entity.entity_id
             )
            .opp.add_job(entity.node_removed())
             del.opp.data[DATA_DEVICES][key]
 
-        entity =.opp.data[DATA_DEVICES][node_key]
+        entity = opp.data[DATA_DEVICES][node_key]
        .opp.add_job(entity.node_removed())
         del.opp.data[DATA_DEVICES][node_key]
 
@@ -669,12 +669,12 @@ async def async_setup_entry.opp, config_entry):
         # We want to rename the device, the node entity,
         # and all the contained entities
         node_key = f"node-{node_id}"
-        entity =.opp.data[DATA_DEVICES][node_key]
+        entity = opp.data[DATA_DEVICES][node_key]
         await entity.node_renamed(update_ids)
         for key in list.opp.data[DATA_DEVICES]):
             if not key.startswith(f"{node_id}-"):
                 continue
-            entity =.opp.data[DATA_DEVICES][key]
+            entity = opp.data[DATA_DEVICES][key]
             await entity.value_renamed(update_ids)
 
     async def rename_value(service):
@@ -690,7 +690,7 @@ async def async_setup_entry.opp, config_entry):
         )
         update_ids = service.data.get(const.ATTR_UPDATE_IDS)
         value_key = f"{node_id}-{value_id}"
-        entity =.opp.data[DATA_DEVICES][value_key]
+        entity = opp.data[DATA_DEVICES][value_key]
         await entity.value_renamed(update_ids)
 
     def set_poll_intensity(service):

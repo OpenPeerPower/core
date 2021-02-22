@@ -127,7 +127,7 @@ class Monitor(threading.Thread):
         """Construct interface object."""
         threading.Thread.__init__(self)
         self.daemon = False
-        self.opp =.opp
+        self.opp = opp
         self.mac = mac
         self.name = name
         self.data = {"temp": STATE_UNKNOWN, "humid": STATE_UNKNOWN}

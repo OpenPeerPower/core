@@ -33,7 +33,7 @@ FIXTURE_DATA = load_fixture(HOME_JSON)
 
 def get_and_check_entity_basics.opp, mock_hap, entity_id, entity_name, device_model):
     """Get and test basic device."""
-    ha_state =.opp.states.get(entity_id)
+    ha_state = opp.states.get(entity_id)
     assert ha_state is not None
     if device_model:
         assert ha_state.attributes[ATTR_MODEL_TYPE] == device_model
@@ -81,7 +81,7 @@ class HomeFactory:
         hmip_config_entry: config_entries.ConfigEntry,
     ):
         """Initialize the Factory."""
-        self.opp =.opp
+        self.opp = opp
         self.mock_connection = mock_connection
         self.hmip_config_entry = hmip_config_entry
 

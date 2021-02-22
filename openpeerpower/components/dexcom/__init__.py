@@ -53,7 +53,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     async def async_update_data():
         try:
-            return await.opp.async_add_executor_job(dexcom.get_current_glucose_reading)
+            return await opp.async_add_executor_job(dexcom.get_current_glucose_reading)
         except SessionError as error:
             raise UpdateFailed(error) from error
 

@@ -119,7 +119,7 @@ def is_on.opp, entity_id):
         # Integration not setup yet, it cannot be on
         return False
 
-    state =.opp.states.get(entity_id)
+    state = opp.states.get(entity_id)
 
     if state is not None:
         return state.state in.opp.data[REG_KEY].on_off_mapping
@@ -177,7 +177,7 @@ def get_entity_ids(
 
     Async friendly.
     """
-    group =.opp.states.get(entity_id)
+    group = opp.states.get(entity_id)
 
     if not group or ATTR_ENTITY_ID not in group.attributes:
         return []
@@ -211,10 +211,10 @@ def groups_with_entity.opp: OpenPeerPowerType, entity_id: str) -> List[str]:
 
 async def async_setup_opp, config):
     """Set up all groups found defined in the configuration."""
-    component =.opp.data.get(DOMAIN)
+    component = opp.data.get(DOMAIN)
 
     if component is None:
-        component =.opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp)
+        component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp)
 
    .opp.data[REG_KEY] = GroupIntegrationRegistry()
 
@@ -435,7 +435,7 @@ class Group(Entity):
 
         This Object has factory function for creation.
         """
-        self.opp =.opp
+        self.opp = opp
         self._name = name
         self._state = None
         self._icon = icon
@@ -487,7 +487,7 @@ class Group(Entity):
         """
         if order is None:
            .opp.data.setdefault(GROUP_ORDER, 0)
-            order =.opp.data[GROUP_ORDER]
+            order = opp.data[GROUP_ORDER]
             # Keep track of the group order without iterating
             # every state in the state machine every time
             # we setup a new group
@@ -508,10 +508,10 @@ class Group(Entity):
         )
 
         # If called before the platform async_setup is called (test cases)
-        component =.opp.data.get(DOMAIN)
+        component = opp.data.get(DOMAIN)
 
         if component is None:
-            component =.opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp)
+            component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp)
 
         await component.async_add_entities([group])
 

@@ -58,7 +58,7 @@ def.oppio_noauth_client.oppio_stubs, opp, aiohttp_client):
 @pytest.fixture
 async def.oppio_client_supervisor.opp, aiohttp_client, oppio_stubs):
     """Return an authenticated HTTP client."""
-    access_token =.opp.auth.async_create_access_token.oppio_stubs)
+    access_token = opp.auth.async_create_access_token.oppio_stubs)
     return await aiohttp_client(
        .opp.http.app,
         headers={"Authorization": f"Bearer {access_token}"},
@@ -72,7 +72,7 @@ def.oppio_handler.opp, aioclient_mock):
     async def get_client_session():
         return.opp.helpers.aiohttp_client.async_get_clientsession()
 
-    websession =.opp.loop.run_until_complete(get_client_session())
+    websession = opp.loop.run_until_complete(get_client_session())
 
     with patch.dict(os.environ, {"HASSIO_TOKEN": HASSIO_TOKEN}):
         yield HassIO.opp.loop, websession, "127.0.0.1")

@@ -65,7 +65,7 @@ async def async_setup_platform(
 
     entities = []
     for entity in discovery_info[CONF_CLIMATES]:
-        hub: ModbusHub =.opp.data[MODBUS_DOMAIN][discovery_info[CONF_NAME]]
+        hub: ModbusHub = opp.data[MODBUS_DOMAIN][discovery_info[CONF_NAME]]
         count = entity[CONF_DATA_COUNT]
         data_type = entity[CONF_DATA_TYPE]
         name = entity[CONF_NAME]

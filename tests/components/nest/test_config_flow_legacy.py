@@ -12,7 +12,7 @@ from tests.common import mock_coro
 async def test_abort_if_no_implementation_registered.opp):
     """Test we abort if no implementation is registered."""
     flow = config_flow.NestFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_init()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -22,7 +22,7 @@ async def test_abort_if_no_implementation_registered.opp):
 async def test_abort_if_single_instance_allowed.opp):
     """Test we abort if Nest is already setup."""
     flow = config_flow.NestFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_init()
@@ -43,7 +43,7 @@ async def test_full_flow_implementation.opp):
     )
 
     flow = config_flow.NestFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_init()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
@@ -68,7 +68,7 @@ async def test_not_pick_implementation_if_only_one.opp):
     )
 
     flow = config_flow.NestFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_init()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "link"
@@ -82,7 +82,7 @@ async def test_abort_if_timeout_generating_auth_url.opp):
     )
 
     flow = config_flow.NestFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_init()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "authorize_url_timeout"
@@ -96,7 +96,7 @@ async def test_abort_if_exception_generating_auth_url.opp):
     )
 
     flow = config_flow.NestFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_init()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "unknown_authorize_url_generation"
@@ -111,7 +111,7 @@ async def test_verify_code_timeout.opp):
     )
 
     flow = config_flow.NestFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_init()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "link"
@@ -131,7 +131,7 @@ async def test_verify_code_invalid.opp):
     )
 
     flow = config_flow.NestFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_init()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "link"
@@ -151,7 +151,7 @@ async def test_verify_code_unknown_error(opp):
     )
 
     flow = config_flow.NestFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_init()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "link"
@@ -171,7 +171,7 @@ async def test_verify_code_exception.opp):
     )
 
     flow = config_flow.NestFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     result = await flow.async_step_init()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "link"

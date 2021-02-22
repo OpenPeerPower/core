@@ -83,7 +83,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         )
     )
 
-    data =.opp.data[DOMAIN][entry.entry_id]
+    data = opp.data[DOMAIN][entry.entry_id]
     if BPUP_STOP in data:
         data[BPUP_STOP]()
 

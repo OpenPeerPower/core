@@ -93,7 +93,7 @@ async def test_devices(
     finally:
         zha_channels.ChannelPool.async_new_entity = orig_new_entity
 
-    entity_ids =.opp_disable_services.states.async_entity_ids()
+    entity_ids = opp_disable_services.states.async_entity_ids()
     await.opp_disable_services.async_block_till_done()
     zha_entity_ids = {
         ent for ent in entity_ids if ent.split(".")[0] in zha_const.COMPONENTS

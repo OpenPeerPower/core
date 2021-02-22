@@ -141,7 +141,7 @@ async def test_fetch_failed.opp):
         fetch_effect=SubaruException("403 Error"),
     )
 
-    test_entity =.opp.states.get(TEST_ENTITY_ID)
+    test_entity = opp.states.get(TEST_ENTITY_ID)
     assert test_entity.state == "unavailable"
 
 

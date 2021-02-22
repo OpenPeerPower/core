@@ -101,7 +101,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
 
-    device =.opp.data[DOMAIN][entry.unique_id]
+    device = opp.data[DOMAIN][entry.unique_id]
     platforms = ["camera"]
 
     if device.capabilities.events and device.events.started:

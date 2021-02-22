@@ -58,7 +58,7 @@ async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
             }
         )
 
-        state =.opp.states.get(entry.entity_id)
+        state = opp.states.get(entry.entity_id)
         if state:
             features = state.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
             if features & (SUPPORT_OPEN):

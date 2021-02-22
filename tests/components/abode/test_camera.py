@@ -21,7 +21,7 @@ async def test_attributes.opp):
     """Test the camera attributes are correct."""
     await setup_platform.opp, CAMERA_DOMAIN)
 
-    state =.opp.states.get("camera.test_cam")
+    state = opp.states.get("camera.test_cam")
     assert state.state == STATE_IDLE
 
 

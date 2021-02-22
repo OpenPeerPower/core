@@ -42,7 +42,7 @@ async def async_setup_opp, config):
     auth_token = conf.get(CONF_ACCESS_TOKEN)
     update_interval = conf[CONF_SCAN_INTERVAL]
 
-    session =.opp.helpers.aiohttp_client.async_get_clientsession()
+    session = opp.helpers.aiohttp_client.async_get_clientsession()
 
     result = await _update_freedns.opp, session, url, auth_token)
 

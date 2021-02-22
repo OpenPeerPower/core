@@ -513,7 +513,7 @@ async def test_options_add_device.opp):
     assert entry.data["devices"]["0b1100cd0213c7f230010f71"]["signal_repetitions"] == 5
     assert "delay_off" not in entry.data["devices"]["0b1100cd0213c7f230010f71"]
 
-    state =.opp.states.get("binary_sensor.ac_213c7f2_48")
+    state = opp.states.get("binary_sensor.ac_213c7f2_48")
     assert state
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "AC 213c7f2:48"
@@ -605,7 +605,7 @@ async def test_options_add_remove_device.opp):
     assert entry.data["devices"]["0b1100cd0213c7f230010f71"]["signal_repetitions"] == 5
     assert entry.data["devices"]["0b1100cd0213c7f230010f71"]["off_delay"] == 4
 
-    state =.opp.states.get("binary_sensor.ac_213c7f2_48")
+    state = opp.states.get("binary_sensor.ac_213c7f2_48")
     assert state
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "AC 213c7f2:48"
@@ -636,7 +636,7 @@ async def test_options_add_remove_device.opp):
 
     assert "0b1100cd0213c7f230010f71" not in entry.data["devices"]
 
-    state =.opp.states.get("binary_sensor.ac_213c7f2_48")
+    state = opp.states.get("binary_sensor.ac_213c7f2_48")
     assert not state
 
 
@@ -663,43 +663,43 @@ async def test_options_replace_sensor_device.opp):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_f0_04_rssi_numeric"
     )
     assert state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_f0_04_battery_numeric"
     )
     assert state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_f0_04_humidity"
     )
     assert state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_f0_04_humidity_status"
     )
     assert state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_f0_04_temperature"
     )
     assert state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_23_04_rssi_numeric"
     )
     assert state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_23_04_battery_numeric"
     )
     assert state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_23_04_humidity"
     )
     assert state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_23_04_humidity_status"
     )
     assert state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_23_04_temperature"
     )
     assert state
@@ -779,23 +779,23 @@ async def test_options_replace_sensor_device.opp):
     assert entry
     assert entry.device_id == new_device
 
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_23_04_rssi_numeric"
     )
     assert not state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_23_04_battery_numeric"
     )
     assert not state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_23_04_humidity"
     )
     assert not state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_23_04_humidity_status"
     )
     assert not state
-    state =.opp.states.get(
+    state = opp.states.get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_23_04_temperature"
     )
     assert not state
@@ -830,17 +830,17 @@ async def test_options_replace_control_device.opp):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.ac_118cdea_2")
+    state = opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
-    state =.opp.states.get("sensor.ac_118cdea_2_rssi_numeric")
+    state = opp.states.get("sensor.ac_118cdea_2_rssi_numeric")
     assert state
-    state =.opp.states.get("switch.ac_118cdea_2")
+    state = opp.states.get("switch.ac_118cdea_2")
     assert state
-    state =.opp.states.get("binary_sensor.ac_1118cdea_2")
+    state = opp.states.get("binary_sensor.ac_1118cdea_2")
     assert state
-    state =.opp.states.get("sensor.ac_1118cdea_2_rssi_numeric")
+    state = opp.states.get("sensor.ac_1118cdea_2_rssi_numeric")
     assert state
-    state =.opp.states.get("switch.ac_1118cdea_2")
+    state = opp.states.get("switch.ac_1118cdea_2")
     assert state
 
     device_registry = await async_get_device_registry.opp)
@@ -902,11 +902,11 @@ async def test_options_replace_control_device.opp):
     assert entry
     assert entry.device_id == new_device
 
-    state =.opp.states.get("binary_sensor.ac_1118cdea_2")
+    state = opp.states.get("binary_sensor.ac_1118cdea_2")
     assert not state
-    state =.opp.states.get("sensor.ac_1118cdea_2_rssi_numeric")
+    state = opp.states.get("sensor.ac_1118cdea_2_rssi_numeric")
     assert not state
-    state =.opp.states.get("switch.ac_1118cdea_2")
+    state = opp.states.get("switch.ac_1118cdea_2")
     assert not state
 
 
@@ -934,11 +934,11 @@ async def test_options_remove_multiple_devices.opp):
     await.opp.config_entries.async_setup(entry.entry_id)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.ac_213c7f2_48")
+    state = opp.states.get("binary_sensor.ac_213c7f2_48")
     assert state
-    state =.opp.states.get("binary_sensor.ac_118cdea_2")
+    state = opp.states.get("binary_sensor.ac_118cdea_2")
     assert state
-    state =.opp.states.get("binary_sensor.ac_1118cdea_2")
+    state = opp.states.get("binary_sensor.ac_1118cdea_2")
     assert state
 
     device_registry = await async_get_device_registry.opp)
@@ -973,11 +973,11 @@ async def test_options_remove_multiple_devices.opp):
 
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("binary_sensor.ac_213c7f2_48")
+    state = opp.states.get("binary_sensor.ac_213c7f2_48")
     assert not state
-    state =.opp.states.get("binary_sensor.ac_118cdea_2")
+    state = opp.states.get("binary_sensor.ac_118cdea_2")
     assert not state
-    state =.opp.states.get("binary_sensor.ac_1118cdea_2")
+    state = opp.states.get("binary_sensor.ac_1118cdea_2")
     assert state
 
 
@@ -1056,7 +1056,7 @@ async def test_options_add_and_configure_device.opp):
     assert entry.data["devices"]["0913000022670e013970"]["signal_repetitions"] == 5
     assert entry.data["devices"]["0913000022670e013970"]["off_delay"] == 9
 
-    state =.opp.states.get("binary_sensor.pt2262_22670e")
+    state = opp.states.get("binary_sensor.pt2262_22670e")
     assert state
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "PT2262 22670e"

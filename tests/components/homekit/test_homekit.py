@@ -500,7 +500,7 @@ async def test_homekit_start.opp, hk_driver, device_reg):
 
    .opp.states.async_set("light.demo", "on")
    .opp.states.async_set("light.demo2", "on")
-    state =.opp.states.async_all()[0]
+    state = opp.states.async_all()[0]
 
     with patch(f"{PATH_HOMEKIT}.HomeKit.add_bridge_accessory") as mock_add_acc, patch(
         f"{PATH_HOMEKIT}.show_setup_message"
@@ -672,7 +672,7 @@ async def test_homekit_reset_accessories.opp, mock_zeroconf):
     ):
         await async_init_entry.opp, entry)
 
-        aid =.opp.data[DOMAIN][entry.entry_id][
+        aid = opp.data[DOMAIN][entry.entry_id][
             AID_STORAGE
         ].get_or_allocate_aid_for_entity_id(entity_id)
         homekit.bridge.accessories = {aid: "acc"}

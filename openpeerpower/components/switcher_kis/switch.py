@@ -86,7 +86,7 @@ async def async_setup_platform(
                 COMMAND_ON, service_call.data[CONF_TIMER_MINUTES]
             )
 
-    device_data =.opp.data[DOMAIN][DATA_DEVICE]
+    device_data = opp.data[DOMAIN][DATA_DEVICE]
     async_add_entities([SwitcherControl.opp.data[DOMAIN][DATA_DEVICE])])
 
     platform = entity_platform.current_platform.get()

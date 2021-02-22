@@ -24,7 +24,7 @@ GDC_COVER_ENTITY = "cover.aeon_labs_garage_door_controller_gen5"
 async def test_window_cover.opp, client, chain_actuator_zws12, integration):
     """Test the cover entity."""
     node = chain_actuator_zws12
-    state =.opp.states.get(WINDOW_COVER_ENTITY)
+    state = opp.states.get(WINDOW_COVER_ENTITY)
 
     assert state
     assert state.state == "closed"
@@ -193,7 +193,7 @@ async def test_window_cover.opp, client, chain_actuator_zws12, integration):
     node.receive_event(event)
     client.async_send_command.reset_mock()
 
-    state =.opp.states.get(WINDOW_COVER_ENTITY)
+    state = opp.states.get(WINDOW_COVER_ENTITY)
     assert state.state == "open"
 
     # Test closing
@@ -295,7 +295,7 @@ async def test_window_cover.opp, client, chain_actuator_zws12, integration):
     )
     node.receive_event(event)
 
-    state =.opp.states.get(WINDOW_COVER_ENTITY)
+    state = opp.states.get(WINDOW_COVER_ENTITY)
     assert state.state == "closed"
 
 
@@ -303,7 +303,7 @@ async def test_motor_barrier_cover.opp, client, gdc_zw062, integration):
     """Test the cover entity."""
     node = gdc_zw062
 
-    state =.opp.states.get(GDC_COVER_ENTITY)
+    state = opp.states.get(GDC_COVER_ENTITY)
     assert state
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_GARAGE
 
@@ -338,7 +338,7 @@ async def test_motor_barrier_cover.opp, client, gdc_zw062, integration):
     }
 
     # state doesn't change until currentState value update is received
-    state =.opp.states.get(GDC_COVER_ENTITY)
+    state = opp.states.get(GDC_COVER_ENTITY)
     assert state.state == STATE_CLOSED
 
     client.async_send_command.reset_mock()
@@ -372,7 +372,7 @@ async def test_motor_barrier_cover.opp, client, gdc_zw062, integration):
     }
 
     # state doesn't change until currentState value update is received
-    state =.opp.states.get(GDC_COVER_ENTITY)
+    state = opp.states.get(GDC_COVER_ENTITY)
     assert state.state == STATE_CLOSED
 
     client.async_send_command.reset_mock()
@@ -397,7 +397,7 @@ async def test_motor_barrier_cover.opp, client, gdc_zw062, integration):
     )
     node.receive_event(event)
 
-    state =.opp.states.get(GDC_COVER_ENTITY)
+    state = opp.states.get(GDC_COVER_ENTITY)
     assert state.state == STATE_OPENING
 
     # Barrier sends an opened state
@@ -420,7 +420,7 @@ async def test_motor_barrier_cover.opp, client, gdc_zw062, integration):
     )
     node.receive_event(event)
 
-    state =.opp.states.get(GDC_COVER_ENTITY)
+    state = opp.states.get(GDC_COVER_ENTITY)
     assert state.state == STATE_OPEN
 
     # Barrier sends a closing state
@@ -443,7 +443,7 @@ async def test_motor_barrier_cover.opp, client, gdc_zw062, integration):
     )
     node.receive_event(event)
 
-    state =.opp.states.get(GDC_COVER_ENTITY)
+    state = opp.states.get(GDC_COVER_ENTITY)
     assert state.state == STATE_CLOSING
 
     # Barrier sends a closed state
@@ -466,7 +466,7 @@ async def test_motor_barrier_cover.opp, client, gdc_zw062, integration):
     )
     node.receive_event(event)
 
-    state =.opp.states.get(GDC_COVER_ENTITY)
+    state = opp.states.get(GDC_COVER_ENTITY)
     assert state.state == STATE_CLOSED
 
     # Barrier sends a stopped state
@@ -489,5 +489,5 @@ async def test_motor_barrier_cover.opp, client, gdc_zw062, integration):
     )
     node.receive_event(event)
 
-    state =.opp.states.get(GDC_COVER_ENTITY)
+    state = opp.states.get(GDC_COVER_ENTITY)
     assert state.state == STATE_UNKNOWN

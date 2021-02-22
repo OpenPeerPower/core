@@ -46,7 +46,7 @@ async def test_min_sensor.opp):
        .opp.states.async_set(entity_id, value)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_min")
+    state = opp.states.get("sensor.test_min")
 
     assert str(float(MIN_VALUE)) == state.state
     assert entity_ids[2] == state.attributes.get("min_entity_id")
@@ -76,7 +76,7 @@ async def test_max_sensor.opp):
        .opp.states.async_set(entity_id, value)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_max")
+    state = opp.states.get("sensor.test_max")
 
     assert str(float(MAX_VALUE)) == state.state
     assert entity_ids[2] == state.attributes.get("min_entity_id")
@@ -106,7 +106,7 @@ async def test_mean_sensor.opp):
        .opp.states.async_set(entity_id, value)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_mean")
+    state = opp.states.get("sensor.test_mean")
 
     assert str(float(MEAN)) == state.state
     assert MIN_VALUE == state.attributes.get("min_value")
@@ -137,7 +137,7 @@ async def test_mean_1_digit_sensor.opp):
        .opp.states.async_set(entity_id, value)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_mean")
+    state = opp.states.get("sensor.test_mean")
 
     assert str(float(MEAN_1_DIGIT)) == state.state
     assert MIN_VALUE == state.attributes.get("min_value")
@@ -168,7 +168,7 @@ async def test_mean_4_digit_sensor.opp):
        .opp.states.async_set(entity_id, value)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_mean")
+    state = opp.states.get("sensor.test_mean")
 
     assert str(float(MEAN_4_DIGITS)) == state.state
     assert MIN_VALUE == state.attributes.get("min_value")
@@ -198,7 +198,7 @@ async def test_median_sensor.opp):
        .opp.states.async_set(entity_id, value)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_median")
+    state = opp.states.get("sensor.test_median")
 
     assert str(float(MEDIAN)) == state.state
     assert MIN_VALUE == state.attributes.get("min_value")
@@ -227,7 +227,7 @@ async def test_not_enough_sensor_value.opp):
    .opp.states.async_set(entity_ids[0], STATE_UNKNOWN)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_max")
+    state = opp.states.get("sensor.test_max")
     assert STATE_UNKNOWN == state.state
     assert state.attributes.get("min_entity_id") is None
     assert state.attributes.get("min_value") is None
@@ -238,7 +238,7 @@ async def test_not_enough_sensor_value.opp):
    .opp.states.async_set(entity_ids[1], VALUES[1])
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_max")
+    state = opp.states.get("sensor.test_max")
     assert STATE_UNKNOWN != state.state
     assert entity_ids[1] == state.attributes.get("min_entity_id")
     assert VALUES[1] == state.attributes.get("min_value")
@@ -248,7 +248,7 @@ async def test_not_enough_sensor_value.opp):
    .opp.states.async_set(entity_ids[2], STATE_UNKNOWN)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_max")
+    state = opp.states.get("sensor.test_max")
     assert STATE_UNKNOWN != state.state
     assert entity_ids[1] == state.attributes.get("min_entity_id")
     assert VALUES[1] == state.attributes.get("min_value")
@@ -258,7 +258,7 @@ async def test_not_enough_sensor_value.opp):
    .opp.states.async_set(entity_ids[1], STATE_UNAVAILABLE)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_max")
+    state = opp.states.get("sensor.test_max")
     assert STATE_UNKNOWN == state.state
     assert state.attributes.get("min_entity_id") is None
     assert state.attributes.get("min_value") is None
@@ -287,7 +287,7 @@ async def test_different_unit_of_measurement.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
 
     assert str(float(VALUES[0])) == state.state
     assert state.attributes.get("unit_of_measurement") == TEMP_CELSIUS
@@ -297,7 +297,7 @@ async def test_different_unit_of_measurement.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
 
     assert STATE_UNKNOWN == state.state
     assert state.attributes.get("unit_of_measurement") == "ERR"
@@ -307,7 +307,7 @@ async def test_different_unit_of_measurement.opp):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
 
     assert STATE_UNKNOWN == state.state
     assert state.attributes.get("unit_of_measurement") == "ERR"
@@ -332,7 +332,7 @@ async def test_last_sensor.opp):
     for entity_id, value in dict(zip(entity_ids, VALUES)).items():
        .opp.states.async_set(entity_id, value)
         await.opp.async_block_till_done()
-        state =.opp.states.get("sensor.test_last")
+        state = opp.states.get("sensor.test_last")
         assert str(float(value)) == state.state
         assert entity_id == state.attributes.get("last_entity_id")
 

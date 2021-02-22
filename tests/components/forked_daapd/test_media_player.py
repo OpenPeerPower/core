@@ -355,7 +355,7 @@ async def test_unload_config_entry.opp, config_entry, mock_api_object):
 
 def test_master_state.opp, mock_api_object):
     """Test master state attributes."""
-    state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.state == STATE_PAUSED
     assert state.attributes[ATTR_FRIENDLY_NAME] == "forked-daapd server"
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORTED_FEATURES
@@ -404,7 +404,7 @@ async def _service_call(
 ):
     if additional_service_data is None:
         additional_service_data = {}
-    return await.opp.services.async_call(
+    return await opp.services.async_call(
         MP_DOMAIN,
         service,
         service_data={ATTR_ENTITY_ID: entity_name, **additional_service_data},
@@ -415,7 +415,7 @@ async def _service_call(
 async def test_zone.opp, mock_api_object):
     """Test zone attributes and methods."""
     zone_entity_name = TEST_ZONE_ENTITY_NAMES[0]
-    state =.opp.states.get(zone_entity_name)
+    state = opp.states.get(zone_entity_name)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "forked-daapd output (kitchen)"
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORTED_FEATURES_ZONE
     assert state.state == STATE_ON
@@ -506,14 +506,14 @@ async def test_bunch_of_stuff_master.opp, get_request_return_values, mock_api_ob
        .opp, TEST_MASTER_ENTITY_NAME, SERVICE_SHUFFLE_SET, {ATTR_MEDIA_SHUFFLE: False}
     )
     # stop player and run more stuff
-    state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.2
     get_request_return_values["player"] = SAMPLE_PLAYER_STOPPED
     updater_update = mock_api_object.start_websocket_handler.call_args[0][2]
     await updater_update(["player"])
     await.opp.async_block_till_done()
     # mute from volume==0
-    state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0
     await _service_call(
        .opp,
@@ -552,7 +552,7 @@ async def test_bunch_of_stuff_master.opp, get_request_return_values, mock_api_ob
 
 async def test_async_play_media_from_paused.opp, mock_api_object):
     """Test async play media from paused."""
-    initial_state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
        .opp,
         TEST_MASTER_ENTITY_NAME,
@@ -562,7 +562,7 @@ async def test_async_play_media_from_paused.opp, mock_api_object):
             ATTR_MEDIA_CONTENT_ID: "somefile.mp3",
         },
     )
-    state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.state == initial_state.state
     assert state.last_updated > initial_state.last_updated
 
@@ -576,7 +576,7 @@ async def test_async_play_media_from_stopped(
     get_request_return_values["player"] = SAMPLE_PLAYER_STOPPED
     await updater_update(["player"])
     await.opp.async_block_till_done()
-    initial_state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
        .opp,
         TEST_MASTER_ENTITY_NAME,
@@ -586,14 +586,14 @@ async def test_async_play_media_from_stopped(
             ATTR_MEDIA_CONTENT_ID: "somefile.mp3",
         },
     )
-    state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.state == initial_state.state
     assert state.last_updated > initial_state.last_updated
 
 
 async def test_async_play_media_unsupported.opp, mock_api_object):
     """Test async play media on unsupported media type."""
-    initial_state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
        .opp,
         TEST_MASTER_ENTITY_NAME,
@@ -603,7 +603,7 @@ async def test_async_play_media_unsupported.opp, mock_api_object):
             ATTR_MEDIA_CONTENT_ID: "wontwork.mp4",
         },
     )
-    state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.last_updated == initial_state.last_updated
 
 
@@ -611,7 +611,7 @@ async def test_async_play_media_tts_timeout.opp, mock_api_object):
     """Test async play media with TTS timeout."""
     mock_api_object.add_to_queue.side_effect = None
     with patch("openpeerpower.components.forked_daapd.media_player.TTS_TIMEOUT", 0):
-        initial_state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+        initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
         await _service_call(
            .opp,
             TEST_MASTER_ENTITY_NAME,
@@ -621,7 +621,7 @@ async def test_async_play_media_tts_timeout.opp, mock_api_object):
                 ATTR_MEDIA_CONTENT_ID: "somefile.mp3",
             },
         )
-        state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+        state = opp.states.get(TEST_MASTER_ENTITY_NAME)
         assert state.state == initial_state.state
         assert state.last_updated > initial_state.last_updated
 
@@ -646,7 +646,7 @@ async def test_clear_source.opp, mock_api_object):
         SERVICE_SELECT_SOURCE,
         {ATTR_INPUT_SOURCE: SOURCE_NAME_CLEAR},
     )
-    state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.attributes[ATTR_INPUT_SOURCE] == SOURCE_NAME_DEFAULT
 
 
@@ -686,7 +686,7 @@ async def test_librespot_java_stuff(
    .opp, get_request_return_values, mock_api_object, pipe_control_api_object
 ):
     """Test options update and librespot-java stuff."""
-    state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.attributes[ATTR_INPUT_SOURCE] == "librespot-java (pipe)"
     # call some basic services
     await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_STOP)
@@ -704,14 +704,14 @@ async def test_librespot_java_stuff(
         SERVICE_SELECT_SOURCE,
         {ATTR_INPUT_SOURCE: SOURCE_NAME_DEFAULT},
     )
-    state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.attributes[ATTR_INPUT_SOURCE] == SOURCE_NAME_DEFAULT
     # test pipe getting queued externally changes source
     get_request_return_values["queue"] = SAMPLE_QUEUE_PIPE
     updater_update = mock_api_object.start_websocket_handler.call_args[0][2]
     await updater_update(["queue"])
     await.opp.async_block_till_done()
-    state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.attributes[ATTR_INPUT_SOURCE] == "librespot-java (pipe)"
     # test title and album not reversed when data_kind not url
     assert state.attributes[ATTR_MEDIA_TITLE] == "librespot-java"
@@ -720,7 +720,7 @@ async def test_librespot_java_stuff(
 
 async def test_librespot_java_play_media.opp, pipe_control_api_object):
     """Test play media with librespot-java pipe."""
-    initial_state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
        .opp,
         TEST_MASTER_ENTITY_NAME,
@@ -730,7 +730,7 @@ async def test_librespot_java_play_media.opp, pipe_control_api_object):
             ATTR_MEDIA_CONTENT_ID: "somefile.mp3",
         },
     )
-    state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+    state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.state == initial_state.state
     assert state.last_updated > initial_state.last_updated
 
@@ -742,7 +742,7 @@ async def test_librespot_java_play_media_pause_timeout.opp, pipe_control_api_obj
     with patch(
         "openpeerpower.components.forked_daapd.media_player.CALLBACK_TIMEOUT", 0
     ):
-        initial_state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+        initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
         await _service_call(
            .opp,
             TEST_MASTER_ENTITY_NAME,
@@ -752,14 +752,14 @@ async def test_librespot_java_play_media_pause_timeout.opp, pipe_control_api_obj
                 ATTR_MEDIA_CONTENT_ID: "somefile.mp3",
             },
         )
-        state =.opp.states.get(TEST_MASTER_ENTITY_NAME)
+        state = opp.states.get(TEST_MASTER_ENTITY_NAME)
         assert state.state == initial_state.state
         assert state.last_updated > initial_state.last_updated
 
 
 async def test_unsupported_update.opp, mock_api_object):
     """Test unsupported update type."""
-    last_updated =.opp.states.get(TEST_MASTER_ENTITY_NAME).last_updated
+    last_updated = opp.states.get(TEST_MASTER_ENTITY_NAME).last_updated
     updater_update = mock_api_object.start_websocket_handler.call_args[0][2]
     await updater_update(["config"])
     await.opp.async_block_till_done()

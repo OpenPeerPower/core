@@ -418,7 +418,7 @@ def _merge_config(entry, conf):
 
 async def async_setup_entry.opp, entry):
     """Load a config entry."""
-    conf =.opp.data.get(DATA_MQTT_CONFIG)
+    conf = opp.data.get(DATA_MQTT_CONFIG)
 
     # Config entry was created because user had configuration.yaml entry
     # They removed that, so remove entry.
@@ -549,7 +549,7 @@ class MQTT:
         # should be able to optionally rely on MQTT.
         import paho.mqtt.client as mqtt  # pylint: disable=import-outside-toplevel
 
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.conf = conf
         self.subscriptions: List[Subscription] = []
@@ -581,9 +581,9 @@ class MQTT:
         This is a static method because a class method (bound method), can not be used with weak references.
         Causes for this is config entry options changing.
         """
-        self =.opp.data[DATA_MQTT]
+        self = opp.data[DATA_MQTT]
 
-        conf =.opp.data.get(DATA_MQTT_CONFIG)
+        conf = opp.data.get(DATA_MQTT_CONFIG)
         if conf is None:
             conf = CONFIG_SCHEMA({DOMAIN: dict(entry.data)})[DOMAIN]
 
@@ -1057,12 +1057,12 @@ def async_subscribe_connection_status.opp, connection_status_callback):
     connection_status_callback_job = HassJob(connection_status_callback)
 
     async def connected():
-        task =.opp.async_run.opp_job(connection_status_callback_job, True)
+        task = opp.async_run.opp_job(connection_status_callback_job, True)
         if task:
             await task
 
     async def disconnected():
-        task =.opp.async_run.opp_job(connection_status_callback_job, False)
+        task = opp.async_run.opp_job(connection_status_callback_job, False)
         if task:
             await task
 

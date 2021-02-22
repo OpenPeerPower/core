@@ -20,7 +20,7 @@ class OndiloClient(Ondilo):
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
     ):
         """Initialize Ondilo ICO Auth."""
-        self.opp =.opp
+        self.opp = opp
         self.config_entry = config_entry
         self.session = config_entry_oauth2_flow.OAuth2Session(
            .opp, config_entry, implementation

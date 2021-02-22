@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Perform the setup for Xiaomi devices."""
     entities = []
-    gateway =.opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
+    gateway = opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
     for device in gateway.devices["light"]:
         model = device["model"]
         if model in ["gateway", "gateway.v3"]:

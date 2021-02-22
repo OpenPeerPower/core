@@ -20,8 +20,8 @@ TYPE_GATEWAY = "gateway"
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Perform the setup for Motion Blinds."""
     entities = []
-    motion_gateway =.opp.data[DOMAIN][config_entry.entry_id][KEY_GATEWAY]
-    coordinator =.opp.data[DOMAIN][config_entry.entry_id][KEY_COORDINATOR]
+    motion_gateway = opp.data[DOMAIN][config_entry.entry_id][KEY_GATEWAY]
+    coordinator = opp.data[DOMAIN][config_entry.entry_id][KEY_COORDINATOR]
 
     for blind in motion_gateway.device_list.values():
         entities.append(MotionSignalStrengthSensor(coordinator, blind, TYPE_BLIND))

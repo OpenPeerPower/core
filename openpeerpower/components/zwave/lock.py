@@ -167,7 +167,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     async_dispatcher_connect.opp, "zwave_new_lock", async_add_lock)
 
-    network =.opp.data[const.DATA_NETWORK]
+    network = opp.data[const.DATA_NETWORK]
 
     def set_usercode(service):
         """Set the usercode to index X on the lock."""

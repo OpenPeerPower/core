@@ -142,7 +142,7 @@ async def test_setup_configuration.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("weather.hometown")
+    state = opp.states.get("weather.hometown")
     assert state.state == "rainy"
 
     data = state.attributes
@@ -164,7 +164,7 @@ async def test_setup_config_flow.opp):
         await.opp.config_entries.async_forward_entry_setup(entry, WEATHER_DOMAIN)
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("weather.hometown")
+    state = opp.states.get("weather.hometown")
     assert state.state == "rainy"
 
     data = state.attributes
@@ -189,7 +189,7 @@ async def test_daily_forecast.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("weather.hometown")
+    state = opp.states.get("weather.hometown")
     assert state.state == "rainy"
 
     forecast = state.attributes.get(ATTR_FORECAST)[0]
@@ -215,7 +215,7 @@ async def test_hourly_forecast.opp):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("weather.hometown")
+    state = opp.states.get("weather.hometown")
     assert state.state == "rainy"
 
     forecast = state.attributes.get(ATTR_FORECAST)[0]

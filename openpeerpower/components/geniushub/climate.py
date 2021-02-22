@@ -34,7 +34,7 @@ async def async_setup_platform(
     if discovery_info is None:
         return
 
-    broker =.opp.data[DOMAIN]["broker"]
+    broker = opp.data[DOMAIN]["broker"]
 
     async_add_entities(
         [

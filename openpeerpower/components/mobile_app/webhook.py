@@ -150,7 +150,7 @@ async def handle_webhook(
     if webhook_id in.opp.data[DOMAIN][DATA_DELETED_IDS]:
         return Response(status=410)
 
-    config_entry =.opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id]
+    config_entry = opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id]
 
     device_name = config_entry.data[ATTR_DEVICE_NAME]
 
@@ -259,7 +259,7 @@ async def webhook_fire_event.opp, config_entry, data):
 @validate_schema({vol.Required(ATTR_CAMERA_ENTITY_ID): cv.string})
 async def webhook_stream_camera.opp, config_entry, data):
     """Handle a request to HLS-stream a camera."""
-    camera =.opp.states.get(data[ATTR_CAMERA_ENTITY_ID])
+    camera = opp.states.get(data[ATTR_CAMERA_ENTITY_ID])
 
     if camera is None:
         return webhook_response(
@@ -552,7 +552,7 @@ async def webhook_get_config(opp, config_entry, data):
         resp[CONF_CLOUDHOOK_URL] = config_entry.data[CONF_CLOUDHOOK_URL]
 
     try:
-        resp[CONF_REMOTE_UI_URL] =.opp.components.cloud.async_remote_ui_url()
+        resp[CONF_REMOTE_UI_URL] = opp.components.cloud.async_remote_ui_url()
     except.opp.components.cloud.CloudNotAvailable:
         pass
 

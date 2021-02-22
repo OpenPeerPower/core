@@ -37,7 +37,7 @@ async def test_entity_state.opp, device_factory):
     await setup_platform.opp, FAN_DOMAIN, devices=[device])
 
     # Dimmer 1
-    state =.opp.states.get("fan.fan_1")
+    state = opp.states.get("fan.fan_1")
     assert state.state == "on"
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORT_SET_SPEED
     assert state.attributes[ATTR_SPEED] == SPEED_MEDIUM
@@ -87,7 +87,7 @@ async def test_turn_off.opp, device_factory):
         "fan", "turn_off", {"entity_id": "fan.fan_1"}, blocking=True
     )
     # Assert
-    state =.opp.states.get("fan.fan_1")
+    state = opp.states.get("fan.fan_1")
     assert state is not None
     assert state.state == "off"
 
@@ -106,7 +106,7 @@ async def test_turn_on.opp, device_factory):
         "fan", "turn_on", {ATTR_ENTITY_ID: "fan.fan_1"}, blocking=True
     )
     # Assert
-    state =.opp.states.get("fan.fan_1")
+    state = opp.states.get("fan.fan_1")
     assert state is not None
     assert state.state == "on"
 
@@ -128,7 +128,7 @@ async def test_turn_on_with_speed.opp, device_factory):
         blocking=True,
     )
     # Assert
-    state =.opp.states.get("fan.fan_1")
+    state = opp.states.get("fan.fan_1")
     assert state is not None
     assert state.state == "on"
     assert state.attributes[ATTR_SPEED] == SPEED_HIGH
@@ -151,7 +151,7 @@ async def test_set_speed.opp, device_factory):
         blocking=True,
     )
     # Assert
-    state =.opp.states.get("fan.fan_1")
+    state = opp.states.get("fan.fan_1")
     assert state is not None
     assert state.state == "on"
     assert state.attributes[ATTR_SPEED] == SPEED_HIGH
@@ -171,7 +171,7 @@ async def test_update_from_signal.opp, device_factory):
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await.opp.async_block_till_done()
-    state =.opp.states.get("fan.fan_1")
+    state = opp.states.get("fan.fan_1")
     assert state is not None
     assert state.state == "on"
 

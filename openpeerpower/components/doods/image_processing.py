@@ -118,7 +118,7 @@ class Doods(ImageProcessingEntity):
 
     def __init__(self, opp, camera_entity, name, doods, detector, config):
         """Initialize the DOODS entity."""
-        self.opp =.opp
+        self.opp = opp
         self._camera_entity = camera_entity
         if name:
             self._name = name

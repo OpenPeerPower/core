@@ -912,7 +912,7 @@ def _verify(
     expected_preset_mode,
 ):
     """Verify fan's state, speed and osc."""
-    state =.opp.states.get(_TEST_FAN)
+    state = opp.states.get(_TEST_FAN)
     attributes = state.attributes
     assert state.state == str(expected_state)
     assert attributes.get(ATTR_SPEED) == expected_speed

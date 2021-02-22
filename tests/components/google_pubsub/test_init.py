@@ -82,7 +82,7 @@ async def test_minimal_config(opp, mock_client):
     assert await async_setup_component.opp, google_pubsub.DOMAIN, config)
     await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
     assert mock_client.PublisherClient.from_service_account_json.call_count == 1
     assert (
         mock_client.PublisherClient.from_service_account_json.call_args[0][0] == "path"
@@ -109,7 +109,7 @@ async def test_full_config(opp, mock_client):
     assert await async_setup_component.opp, google_pubsub.DOMAIN, config)
     await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
     assert mock_client.PublisherClient.from_service_account_json.call_count == 1
     assert (
         mock_client.PublisherClient.from_service_account_json.call_args[0][0] == "path"

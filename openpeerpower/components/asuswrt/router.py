@@ -103,7 +103,7 @@ class AsusWrtRouter:
 
     def __init__(self, opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
         """Initialize a AsusWrt router."""
-        self.opp =.opp
+        self.opp = opp
         self._entry = entry
 
         self._api: AsusWrt = None

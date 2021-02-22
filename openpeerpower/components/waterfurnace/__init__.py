@@ -73,7 +73,7 @@ class WaterFurnaceData(threading.Thread):
     def __init__(self, opp, client):
         """Initialize the data object."""
         super().__init__()
-        self.opp =.opp
+        self.opp = opp
         self.client = client
         self.unit = self.client.gwid
         self.data = None

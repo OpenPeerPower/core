@@ -46,14 +46,14 @@ def setup_opp, config):
 
         title = feedconfig.get("title")
         if title is not None:
-            title.opp =.opp
+            title.opp = opp
 
         items = feedconfig.get("items")
         for item in items:
             if "title" in item:
-                item["title"].opp =.opp
+                item["title"].opp = opp
             if "description" in item:
-                item["description"].opp =.opp
+                item["description"].opp = opp
 
         rss_view = RssView(url, requires_auth, title, items)
        .opp.http.register_view(rss_view)

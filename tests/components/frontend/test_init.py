@@ -70,13 +70,13 @@ async def mock_http_client.opp, aiohttp_client, frontend):
 @pytest.fixture
 async def themes_ws_client.opp, opp_ws_client, frontend_themes):
     """Start the Open Peer Power HTTP component."""
-    return await.opp_ws_client.opp)
+    return await opp_ws_client.opp)
 
 
 @pytest.fixture
 async def ws_client.opp, opp_ws_client, frontend):
     """Start the Open Peer Power HTTP component."""
-    return await.opp_ws_client.opp)
+    return await opp_ws_client.opp)
 
 
 @pytest.fixture

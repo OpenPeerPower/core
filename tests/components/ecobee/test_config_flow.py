@@ -19,7 +19,7 @@ from tests.common import MockConfigEntry, mock_coro
 async def test_abort_if_already_setup_opp):
     """Test we abort if ecobee is already setup."""
     flow = config_flow.EcobeeFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
 
@@ -32,7 +32,7 @@ async def test_abort_if_already_setup_opp):
 async def test_user_step_without_user_input.opp):
     """Test expected result if user step is called."""
     flow = config_flow.EcobeeFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.opp.data[DATA_ECOBEE_CONFIG] = {}
 
     result = await flow.async_step_user()
@@ -43,7 +43,7 @@ async def test_user_step_without_user_input.opp):
 async def test_pin_request_succeeds.opp):
     """Test expected result if pin request succeeds."""
     flow = config_flow.EcobeeFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.opp.data[DATA_ECOBEE_CONFIG] = {}
 
     with patch("openpeerpower.components.ecobee.config_flow.Ecobee") as mock_ecobee:
@@ -61,7 +61,7 @@ async def test_pin_request_succeeds.opp):
 async def test_pin_request_fails.opp):
     """Test expected result if pin request fails."""
     flow = config_flow.EcobeeFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.opp.data[DATA_ECOBEE_CONFIG] = {}
 
     with patch("openpeerpower.components.ecobee.config_flow.Ecobee") as mock_ecobee:
@@ -78,7 +78,7 @@ async def test_pin_request_fails.opp):
 async def test_token_request_succeeds.opp):
     """Test expected result if token request succeeds."""
     flow = config_flow.EcobeeFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.opp.data[DATA_ECOBEE_CONFIG] = {}
 
     with patch("openpeerpower.components.ecobee.config_flow.Ecobee") as mock_ecobee:
@@ -103,7 +103,7 @@ async def test_token_request_succeeds.opp):
 async def test_token_request_fails.opp):
     """Test expected result if token request fails."""
     flow = config_flow.EcobeeFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.opp.data[DATA_ECOBEE_CONFIG] = {}
 
     with patch("openpeerpower.components.ecobee.config_flow.Ecobee") as mock_ecobee:
@@ -126,7 +126,7 @@ async def test_token_request_fails.opp):
 async def test_import_flow_triggered_but_no_ecobee_conf.opp):
     """Test expected result if import flow triggers but ecobee.conf doesn't exist."""
     flow = config_flow.EcobeeFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.opp.data[DATA_ECOBEE_CONFIG] = {}
 
     result = await flow.async_step_import(import_data=None)
@@ -140,7 +140,7 @@ async def test_import_flow_triggered_with_ecobee_conf_and_valid_data_and_valid_t
 ):
     """Test expected result if import flow triggers and ecobee.conf exists with valid tokens."""
     flow = config_flow.EcobeeFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     MOCK_ECOBEE_CONF = {ECOBEE_API_KEY: None, ECOBEE_REFRESH_TOKEN: None}
 
@@ -166,7 +166,7 @@ async def test_import_flow_triggered_with_ecobee_conf_and_valid_data_and_valid_t
 async def test_import_flow_triggered_with_ecobee_conf_and_invalid_data.opp):
     """Test expected result if import flow triggers and ecobee.conf exists with invalid data."""
     flow = config_flow.EcobeeFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.opp.data[DATA_ECOBEE_CONFIG] = {CONF_API_KEY: "test-api-key"}
 
     MOCK_ECOBEE_CONF = {}
@@ -190,7 +190,7 @@ async def test_import_flow_triggered_with_ecobee_conf_and_valid_data_and_stale_t
 ):
     """Test expected result if import flow triggers and ecobee.conf exists with stale tokens."""
     flow = config_flow.EcobeeFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     flow.opp.data[DATA_ECOBEE_CONFIG] = {CONF_API_KEY: "test-api-key"}
 
     MOCK_ECOBEE_CONF = {ECOBEE_API_KEY: None, ECOBEE_REFRESH_TOKEN: None}

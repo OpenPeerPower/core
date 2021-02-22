@@ -7,8 +7,8 @@ from .const import DOMAIN
 
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Velbus binary sensor based on config_entry."""
-    cntrl =.opp.data[DOMAIN][entry.entry_id]["cntrl"]
-    modules_data =.opp.data[DOMAIN][entry.entry_id]["binary_sensor"]
+    cntrl = opp.data[DOMAIN][entry.entry_id]["cntrl"]
+    modules_data = opp.data[DOMAIN][entry.entry_id]["binary_sensor"]
     entities = []
     for address, channel in modules_data:
         module = cntrl.get_module(address)

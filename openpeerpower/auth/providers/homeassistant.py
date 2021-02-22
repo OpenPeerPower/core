@@ -58,8 +58,8 @@ class Data:
 
     def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the user data store."""
-        self.opp =.opp
-        self._store =.opp.helpers.storage.Store(
+        self.opp = opp
+        self._store = opp.helpers.storage.Store(
             STORAGE_VERSION, STORAGE_KEY, private=True
         )
         self._data: Optional[Dict[str, Any]] = None

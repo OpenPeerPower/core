@@ -194,7 +194,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         user_data = tokens.pop(USER_DATA, None)
         return (tokens, user_data)
 
-    store =.opp.helpers.storage.Store(STORAGE_VER, STORAGE_KEY)
+    store = opp.helpers.storage.Store(STORAGE_VER, STORAGE_KEY)
     tokens, user_data = await load_auth_tokens(store)
 
     client_v2 = evohomeasync2.EvohomeClient(
@@ -385,7 +385,7 @@ class EvoBroker:
 
     def __init__(self, opp, client, client_v1, store, params) -> None:
         """Initialize the evohome client and its data structure."""
-        self.opp =.opp
+        self.opp = opp
         self.client = client
         self.client_v1 = client_v1
         self._store = store

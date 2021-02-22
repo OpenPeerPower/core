@@ -39,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up an Arlo IP Camera."""
-    arlo =.opp.data[DATA_ARLO]
+    arlo = opp.data[DATA_ARLO]
 
     cameras = []
     for camera in arlo.cameras:
@@ -57,7 +57,7 @@ class ArloCam(Camera):
         self._camera = camera
         self._name = self._camera.name
         self._motion_status = False
-        self._ffmpeg =.opp.data[DATA_FFMPEG]
+        self._ffmpeg = opp.data[DATA_FFMPEG]
         self._ffmpeg_arguments = device_info.get(CONF_FFMPEG_ARGUMENTS)
         self._last_refresh = None
         self.attrs = {}

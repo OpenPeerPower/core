@@ -68,7 +68,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
         if entry.domain != DOMAIN:
             continue
 
-        state =.opp.states.get(entry.entity_id)
+        state = opp.states.get(entry.entity_id)
 
         # Add triggers for each entity that belongs to this integration
         triggers.append(

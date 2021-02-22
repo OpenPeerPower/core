@@ -84,7 +84,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up the UPnP/IGD sensors."""
     udn = config_entry.data[CONFIG_ENTRY_UDN]
-    device: Device =.opp.data[DOMAIN][DOMAIN_DEVICES][udn]
+    device: Device = opp.data[DOMAIN][DOMAIN_DEVICES][udn]
 
     update_interval_sec = config_entry.options.get(
         CONFIG_ENTRY_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL

@@ -62,7 +62,7 @@ async def test_setup_entry.opp: OpenPeerPower):
         assert config_entry.entry_id in.opp.data[huisbaasje.DOMAIN]
 
         # Assert entities are loaded
-        entities =.opp.states.async_entity_ids("sensor")
+        entities = opp.states.async_entity_ids("sensor")
         assert len(entities) == 14
 
         # Assert mocks are called
@@ -101,7 +101,7 @@ async def test_setup_entry_error(opp: OpenPeerPower):
         assert huisbaasje.DOMAIN not in.opp.data
 
         # Assert entities are not loaded
-        entities =.opp.states.async_entity_ids("sensor")
+        entities = opp.states.async_entity_ids("sensor")
         assert len(entities) == 0
 
         # Assert mocks are called
@@ -138,13 +138,13 @@ async def test_unload_entry.opp: OpenPeerPower):
         assert await.opp.config_entries.async_setup(config_entry.entry_id)
         await.opp.async_block_till_done()
         assert config_entry.state == ENTRY_STATE_LOADED
-        entities =.opp.states.async_entity_ids("sensor")
+        entities = opp.states.async_entity_ids("sensor")
         assert len(entities) == 14
 
         # Unload config entry
         await.opp.config_entries.async_unload(config_entry.entry_id)
         assert config_entry.state == ENTRY_STATE_NOT_LOADED
-        entities =.opp.states.async_entity_ids("sensor")
+        entities = opp.states.async_entity_ids("sensor")
         assert len(entities) == 14
         for entity in entities:
             assert.opp.states.get(entity).state == STATE_UNAVAILABLE
@@ -152,7 +152,7 @@ async def test_unload_entry.opp: OpenPeerPower):
         # Remove config entry
         await.opp.config_entries.async_remove(config_entry.entry_id)
         await.opp.async_block_till_done()
-        entities =.opp.states.async_entity_ids("sensor")
+        entities = opp.states.async_entity_ids("sensor")
         assert len(entities) == 0
 
         # Assert mocks are called

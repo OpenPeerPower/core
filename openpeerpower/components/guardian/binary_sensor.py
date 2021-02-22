@@ -48,7 +48,7 @@ async def async_setup_entry(
     @callback
     def add_new_paired_sensor(uid: str) -> None:
         """Add a new paired sensor."""
-        coordinator =.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+        coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             API_SENSOR_PAIRED_SENSOR_STATUS
         ][uid]
 

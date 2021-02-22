@@ -13,7 +13,7 @@ async def async_setup_entry.opp, entry, async_add_entities) -> None:
     """Set up TotalConnect device sensors based on a config entry."""
     sensors = []
 
-    client_locations =.opp.data[DOMAIN][entry.entry_id].locations
+    client_locations = opp.data[DOMAIN][entry.entry_id].locations
 
     for location_id, location in client_locations.items():
         for zone_id, zone in location.zones.items():

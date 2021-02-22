@@ -71,7 +71,7 @@ class Searcher:
         entity_reg: entity_registry.EntityRegistry,
     ):
         """Search results."""
-        self.opp =.opp
+        self.opp = opp
         self._device_reg = device_reg
         self._entity_reg = entity_reg
         self.results = defaultdict(set)

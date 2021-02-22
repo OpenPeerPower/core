@@ -63,7 +63,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up ozw from a config entry."""
-    ozw_data =.opp.data[DOMAIN][entry.entry_id] = {}
+    ozw_data = opp.data[DOMAIN][entry.entry_id] = {}
     ozw_data[DATA_UNSUBSCRIBE] = []
 
     data_nodes = {}
@@ -323,7 +323,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
         unsubscribe_listener()
 
     if entry.data.get(CONF_USE_ADDON):
-        async_stop_mqtt_client =.opp.data[DOMAIN][entry.entry_id][
+        async_stop_mqtt_client = opp.data[DOMAIN][entry.entry_id][
             DATA_STOP_MQTT_CLIENT
         ]
         await async_stop_mqtt_client()

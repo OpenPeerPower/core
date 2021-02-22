@@ -43,7 +43,7 @@ async def async_get_device_trigger_types(
     """List event triggers supported for a Nest device."""
     # All devices should have already been loaded so any failures here are
     # "shouldn't happen" cases
-    subscriber =.opp.data[DOMAIN][DATA_SUBSCRIBER]
+    subscriber = opp.data[DOMAIN][DATA_SUBSCRIBER]
     device_manager = await subscriber.async_get_device_manager()
     nest_device = device_manager.devices.get(nest_device_id)
     if not nest_device:

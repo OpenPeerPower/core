@@ -33,9 +33,9 @@ SPEECH_TYPE_SSML = "ssml"
 @bind.opp
 def async_register.opp: OpenPeerPowerType, handler: IntentHandler) -> None:
     """Register an intent with Open Peer Power."""
-    intents =.opp.data.get(DATA_KEY)
+    intents = opp.data.get(DATA_KEY)
     if intents is None:
-        intents =.opp.data[DATA_KEY] = {}
+        intents = opp.data[DATA_KEY] = {}
 
     assert handler.intent_type is not None, "intent_type cannot be None"
 
@@ -57,7 +57,7 @@ async def async_handle(
     context: Optional[Context] = None,
 ) -> IntentResponse:
     """Handle an intent."""
-    handler: IntentHandler =.opp.data.get(DATA_KEY, {}).get(intent_type)
+    handler: IntentHandler = opp.data.get(DATA_KEY, {}).get(intent_type)
 
     if handler is None:
         raise UnknownIntent(f"Unknown intent {intent_type}")
@@ -107,7 +107,7 @@ def async_match_state(
 ) -> State:
     """Find a state that matches the name."""
     if states is None:
-        states =.opp.states.async_all()
+        states = opp.states.async_all()
 
     state = _fuzzymatch(name, states, lambda state: state.name)
 
@@ -230,7 +230,7 @@ class Intent:
         context: Context,
     ) -> None:
         """Initialize an intent."""
-        self.opp =.opp
+        self.opp = opp
         self.platform = platform
         self.intent_type = intent_type
         self.slots = slots

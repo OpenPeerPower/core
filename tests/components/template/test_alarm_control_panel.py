@@ -58,49 +58,49 @@ async def test_template_state_text.opp):
    .opp.states.async_set("alarm_control_panel.test", STATE_ALARM_ARMED_HOME)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     assert state.state == STATE_ALARM_ARMED_HOME
 
    .opp.states.async_set("alarm_control_panel.test", STATE_ALARM_ARMED_AWAY)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     assert state.state == STATE_ALARM_ARMED_AWAY
 
    .opp.states.async_set("alarm_control_panel.test", STATE_ALARM_ARMED_NIGHT)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     assert state.state == STATE_ALARM_ARMED_NIGHT
 
    .opp.states.async_set("alarm_control_panel.test", STATE_ALARM_ARMING)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     assert state.state == STATE_ALARM_ARMING
 
    .opp.states.async_set("alarm_control_panel.test", STATE_ALARM_DISARMED)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     assert state.state == STATE_ALARM_DISARMED
 
    .opp.states.async_set("alarm_control_panel.test", STATE_ALARM_PENDING)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     assert state.state == STATE_ALARM_PENDING
 
    .opp.states.async_set("alarm_control_panel.test", STATE_ALARM_TRIGGERED)
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     assert state.state == STATE_ALARM_TRIGGERED
 
    .opp.states.async_set("alarm_control_panel.test", "invalid_state")
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     assert state.state == "unknown"
 
 
@@ -144,7 +144,7 @@ async def test_optimistic_states.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     await.opp.async_block_till_done()
     assert state.state == "unknown"
 
@@ -152,28 +152,28 @@ async def test_optimistic_states.opp):
        .opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     await.opp.async_block_till_done()
     assert state.state == STATE_ALARM_ARMED_AWAY
 
     await common.async_alarm_arm_home(
        .opp, entity_id="alarm_control_panel.test_template_panel"
     )
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     await.opp.async_block_till_done()
     assert state.state == STATE_ALARM_ARMED_HOME
 
     await common.async_alarm_arm_night(
        .opp, entity_id="alarm_control_panel.test_template_panel"
     )
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     await.opp.async_block_till_done()
     assert state.state == STATE_ALARM_ARMED_NIGHT
 
     await common.async_alarm_disarm(
        .opp, entity_id="alarm_control_panel.test_template_panel"
     )
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     await.opp.async_block_till_done()
     assert state.state == STATE_ALARM_DISARMED
 
@@ -206,7 +206,7 @@ async def test_no_action_scripts.opp):
        .opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     await.opp.async_block_till_done()
     assert state.state == STATE_ALARM_ARMED_AWAY
 
@@ -214,7 +214,7 @@ async def test_no_action_scripts.opp):
        .opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     await.opp.async_block_till_done()
     assert state.state == STATE_ALARM_ARMED_AWAY
 
@@ -222,7 +222,7 @@ async def test_no_action_scripts.opp):
        .opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     await.opp.async_block_till_done()
     assert state.state == STATE_ALARM_ARMED_AWAY
 
@@ -230,7 +230,7 @@ async def test_no_action_scripts.opp):
        .opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     await.opp.async_block_till_done()
     assert state.state == STATE_ALARM_ARMED_AWAY
 
@@ -404,7 +404,7 @@ async def test_name.opp):
     await.opp.async_start()
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("alarm_control_panel.test_template_panel")
+    state = opp.states.get("alarm_control_panel.test_template_panel")
     assert state is not None
 
     assert state.attributes.get("friendly_name") == "Template Alarm Panel"

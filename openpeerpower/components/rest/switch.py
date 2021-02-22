@@ -79,11 +79,11 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         auth = aiohttp.BasicAuth(username, password=password)
 
     if is_on_template is not None:
-        is_on_template.opp =.opp
+        is_on_template.opp = opp
     if body_on is not None:
-        body_on.opp =.opp
+        body_on.opp = opp
     if body_off is not None:
-        body_off.opp =.opp
+        body_off.opp = opp
     timeout = config.get(CONF_TIMEOUT)
 
     try:

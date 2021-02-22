@@ -12,7 +12,7 @@ async def test_openpeerpower_location_exists() -> None:
     """Test if Open Peer Power location exists it should return True."""
     opp =Mock()
     flow = config_flow.SmhiFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     with patch.object(flow, "_check_location", return_value=True):
         # Test exists
        .opp.config.location_name = "Home"
@@ -33,7 +33,7 @@ async def test_name_in_configuration_exists() -> None:
     """Test if home location exists in configuration."""
     opp =Mock()
     flow = config_flow.SmhiFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     # Test exists
    .opp.config.location_name = "Home"
@@ -69,7 +69,7 @@ async def test_show_config_form() -> None:
     """Test show configuration form."""
     opp =Mock()
     flow = config_flow.SmhiFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await flow._show_config_form()
 
@@ -81,7 +81,7 @@ async def test_show_config_form_default_values() -> None:
     """Test show configuration form."""
     opp =Mock()
     flow = config_flow.SmhiFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     result = await flow._show_config_form(name="test", latitude="65", longitude="17")
 
@@ -96,7 +96,7 @@ async def test_flow_with_home_location.opp) -> None:
     then it should return a form with default values
     """
     flow = config_flow.SmhiFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch.object(flow, "_check_location", return_value=True):
        .opp.config.location_name = "Home"
@@ -115,7 +115,7 @@ async def test_flow_show_form() -> None:
     """
     opp =Mock()
     flow = config_flow.SmhiFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     # Test show form when Open Peer Power config exists and
     # home is already configured, then new config is allowed
@@ -154,7 +154,7 @@ async def test_flow_show_form_name_exists() -> None:
     """
     opp =Mock()
     flow = config_flow.SmhiFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
     test_data = {"name": "home", CONF_LONGITUDE: "0", CONF_LATITUDE: "0"}
     # Test show form when Open Peer Power config exists and
     # home is already configured, then new config is allowed
@@ -183,7 +183,7 @@ async def test_flow_entry_created_from_user_input() -> None:
     """
     opp =Mock()
     flow = config_flow.SmhiFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     test_data = {"name": "home", CONF_LONGITUDE: "0", CONF_LATITUDE: "0"}
 
@@ -217,7 +217,7 @@ async def test_flow_entry_created_user_input_faulty() -> None:
     """
     opp =Mock()
     flow = config_flow.SmhiFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     test_data = {"name": "home", CONF_LONGITUDE: "0", CONF_LATITUDE: "0"}
 
@@ -246,7 +246,7 @@ async def test_check_location_correct() -> None:
     """Test check location when correct input."""
     opp =Mock()
     flow = config_flow.SmhiFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch.object(
         config_flow.aiohttp_client, "async_get_clientsession"
@@ -259,7 +259,7 @@ async def test_check_location_faulty() -> None:
     """Test check location when faulty input."""
     opp =Mock()
     flow = config_flow.SmhiFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     with patch.object(
         config_flow.aiohttp_client, "async_get_clientsession"

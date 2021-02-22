@@ -85,7 +85,7 @@ async def async_setup_entry.opp, config_entry):
     Will automatically load components to support devices found on the network.
     """
 
-    zha_data =.opp.data.setdefault(DATA_ZHA, {})
+    zha_data = opp.data.setdefault(DATA_ZHA, {})
     config = zha_data.get(DATA_ZHA_CONFIG, {})
 
     for component in COMPONENTS:
@@ -134,7 +134,7 @@ async def async_unload_entry.opp, config_entry):
     GROUP_PROBE.cleanup()
     api.async_unload_api.opp)
 
-    dispatchers =.opp.data[DATA_ZHA].get(DATA_ZHA_DISPATCHERS, [])
+    dispatchers = opp.data[DATA_ZHA].get(DATA_ZHA_DISPATCHERS, [])
     for unsub_dispatcher in dispatchers:
         unsub_dispatcher()
 
@@ -147,7 +147,7 @@ async def async_unload_entry.opp, config_entry):
 async def async_load_entities.opp: OpenPeerPowerType) -> None:
     """Load entities after integration was setup."""
     await.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY].async_initialize_devices_and_entities()
-    to_setup =.opp.data[DATA_ZHA][DATA_ZHA_PLATFORM_LOADED]
+    to_setup = opp.data[DATA_ZHA][DATA_ZHA_PLATFORM_LOADED]
     results = await asyncio.gather(*to_setup, return_exceptions=True)
     for res in results:
         if isinstance(res, Exception):
@@ -167,7 +167,7 @@ async def async_migrate_entry(
             CONF_DEVICE: {CONF_DEVICE_PATH: config_entry.data[CONF_USB_PATH]},
         }
 
-        baudrate =.opp.data[DATA_ZHA].get(DATA_ZHA_CONFIG, {}).get(CONF_BAUDRATE)
+        baudrate = opp.data[DATA_ZHA].get(DATA_ZHA_CONFIG, {}).get(CONF_BAUDRATE)
         if data[CONF_RADIO_TYPE] != RadioType.deconz and baudrate in BAUD_RATES:
             data[CONF_DEVICE][CONF_BAUDRATE] = baudrate
 

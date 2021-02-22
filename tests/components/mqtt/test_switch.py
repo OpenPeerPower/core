@@ -60,18 +60,18 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", "1")
 
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "state-topic", "0")
 
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
 
@@ -99,7 +99,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         )
         await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -109,7 +109,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "command-topic", "beer on", 2, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_ON
 
     await common.async_turn_off.opp, "switch.test")
@@ -117,7 +117,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     mqtt_mock.async_publish.assert_called_once_with(
         "command-topic", "beer off", 2, False
     )
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
 
@@ -140,17 +140,17 @@ async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
     async_fire_mqtt_message.opp, "state-topic", '{"val":"beer on"}')
 
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "state-topic", '{"val":"beer off"}')
 
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
 
@@ -224,18 +224,18 @@ async def test_custom_state_payload.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", "HIGH")
 
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "state-topic", "LOW")
 
-    state =.opp.states.get("switch.test")
+    state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
 

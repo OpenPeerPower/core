@@ -115,7 +115,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     # Shutdown a harmony remote for removal
-    data =.opp.data[DOMAIN][entry.entry_id]
+    data = opp.data[DOMAIN][entry.entry_id]
     await data.shutdown()
 
     if unload_ok:

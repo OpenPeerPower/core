@@ -63,9 +63,9 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
 async def async_setup_legacy_entry.opp, entry, async_add_entities):
     """Set up a Nest binary sensor based on a config entry."""
-    nest =.opp.data[DATA_NEST]
+    nest = opp.data[DATA_NEST]
 
-    discovery_info =.opp.data.get(DATA_NEST_CONFIG, {}).get(CONF_BINARY_SENSORS, {})
+    discovery_info = opp.data.get(DATA_NEST_CONFIG, {}).get(CONF_BINARY_SENSORS, {})
 
     # Add all available binary sensors if no Nest binary sensor config is set
     if discovery_info == {}:

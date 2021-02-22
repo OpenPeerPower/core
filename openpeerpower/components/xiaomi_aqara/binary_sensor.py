@@ -29,7 +29,7 @@ ATTR_DENSITY = "Density"
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Perform the setup for Xiaomi devices."""
     entities = []
-    gateway =.opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
+    gateway = opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]
     for entity in gateway.devices["binary_sensor"]:
         model = entity["model"]
         if model in ["motion", "sensor_motion", "sensor_motion.aq2"]:

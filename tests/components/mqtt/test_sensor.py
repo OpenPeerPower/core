@@ -69,7 +69,7 @@ async def test_setting_sensor_value_via_mqtt_message.opp, mqtt_mock):
     await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "test-topic", "100")
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
 
     assert state.state == "100"
     assert state.attributes.get("unit_of_measurement") == "fav unit"
@@ -93,13 +93,13 @@ async def test_setting_sensor_value_expires_availability_topic.opp, mqtt_mock, c
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic", "online")
 
     # State should be unavailable since expire_after is defined and > 0
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert state.state == STATE_UNAVAILABLE
 
     await expires_helper.opp, mqtt_mock, caplog)
@@ -124,7 +124,7 @@ async def test_setting_sensor_value_expires.opp, mqtt_mock, caplog):
     await.opp.async_block_till_done()
 
     # State should be unavailable since expire_after is defined and > 0
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert state.state == STATE_UNAVAILABLE
 
     await expires_helper.opp, mqtt_mock, caplog)
@@ -140,7 +140,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
         await.opp.async_block_till_done()
 
     # Value was set correctly.
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert state.state == "100"
 
     # Time jump +3s
@@ -149,7 +149,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
     await.opp.async_block_till_done()
 
     # Value is not yet expired
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert state.state == "100"
 
     # Next message resets timer
@@ -159,7 +159,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
         await.opp.async_block_till_done()
 
     # Value was updated correctly.
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert state.state == "101"
 
     # Time jump +3s
@@ -168,7 +168,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
     await.opp.async_block_till_done()
 
     # Value is not yet expired
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert state.state == "101"
 
     # Time jump +2s
@@ -177,7 +177,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
     await.opp.async_block_till_done()
 
     # Value is expired now
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert state.state == STATE_UNAVAILABLE
 
 
@@ -199,7 +199,7 @@ async def test_setting_sensor_value_via_mqtt_json_message.opp, mqtt_mock):
     await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "test-topic", '{ "val": "100" }')
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
 
     assert state.state == "100"
 
@@ -350,7 +350,7 @@ async def test_invalid_device_class.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test")
+    state = opp.states.get("sensor.test")
     assert state is None
 
 
@@ -373,9 +373,9 @@ async def test_valid_device_class.opp, mqtt_mock):
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("sensor.test_1")
+    state = opp.states.get("sensor.test_1")
     assert state.attributes["device_class"] == "temperature"
-    state =.opp.states.get("sensor.test_2")
+    state = opp.states.get("sensor.test_2")
     assert "device_class" not in state.attributes
 
 

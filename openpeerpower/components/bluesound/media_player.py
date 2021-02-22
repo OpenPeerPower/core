@@ -188,7 +188,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 if player.entity_id in entity_ids
             ]
         else:
-            target_players =.opp.data[DATA_BLUESOUND]
+            target_players = opp.data[DATA_BLUESOUND]
 
         for player in target_players:
             await getattr(player, method["method"])(**params)

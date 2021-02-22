@@ -25,7 +25,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-    data =.opp.data[LUPUSEC_DOMAIN]
+    data = opp.data[LUPUSEC_DOMAIN]
 
     alarm_devices = [LupusecAlarm(data, data.lupusec.get_alarm())]
 

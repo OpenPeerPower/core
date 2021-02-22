@@ -42,8 +42,8 @@ async def async_get_system_info.opp: OpenPeerPowerType) -> Dict[str, Any]:
 
     # Enrich with Supervisor information
     if opp.components.oppio.is.oppio():
-        info =.opp.components.oppio.get_info()
-        host =.opp.components.oppio.get_host_info()
+        info = opp.components.oppio.get_info()
+        host = opp.components.oppio.get_host_info()
 
         info_object["supervisor"] = info.get("supervisor")
         info_object["host_os"] = host.get("operating_system")

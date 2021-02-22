@@ -99,7 +99,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         )
     )
     if unload_ok:
-        router =.opp.data[DOMAIN].pop(entry.unique_id)
+        router = opp.data[DOMAIN].pop(entry.unique_id)
         await router.close()
 
     return unload_ok

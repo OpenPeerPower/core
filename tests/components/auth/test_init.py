@@ -27,7 +27,7 @@ async def async_setup_user_refresh_token.opp):
     )
     user.credentials.append(credential)
 
-    return await.opp.auth.async_create_refresh_token(
+    return await opp.auth.async_create_refresh_token(
         user, CLIENT_ID, credential=credential
     )
 

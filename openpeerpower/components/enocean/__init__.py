@@ -39,7 +39,7 @@ async def async_setup_entry(
    .opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Set up an EnOcean dongle for the given entry."""
-    enocean_data =.opp.data.setdefault(DATA_ENOCEAN, {})
+    enocean_data = opp.data.setdefault(DATA_ENOCEAN, {})
     usb_dongle = EnOceanDongle.opp, config_entry.data[CONF_DEVICE])
     await usb_dongle.async_setup()
     enocean_data[ENOCEAN_DONGLE] = usb_dongle
@@ -50,7 +50,7 @@ async def async_setup_entry(
 async def async_unload_entry.opp, config_entry):
     """Unload ENOcean config entry."""
 
-    enocean_dongle =.opp.data[DATA_ENOCEAN][ENOCEAN_DONGLE]
+    enocean_dongle = opp.data[DATA_ENOCEAN][ENOCEAN_DONGLE]
     enocean_dongle.unload()
    .opp.data.pop(DATA_ENOCEAN)
 

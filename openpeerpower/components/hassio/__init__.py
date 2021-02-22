@@ -141,8 +141,8 @@ async def async_get_addon_info.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio =.opp.data[DOMAIN]
-    return await.oppio.get_addon_info(slug)
+   .oppio = opp.data[DOMAIN]
+    return await oppio.get_addon_info(slug)
 
 
 @bind.opp
@@ -152,9 +152,9 @@ async def async_install_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio =.opp.data[DOMAIN]
+   .oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/install"
-    return await.oppio.send_command(command, timeout=None)
+    return await oppio.send_command(command, timeout=None)
 
 
 @bind.opp
@@ -164,9 +164,9 @@ async def async_uninstall_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio =.opp.data[DOMAIN]
+   .oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/uninstall"
-    return await.oppio.send_command(command, timeout=60)
+    return await oppio.send_command(command, timeout=60)
 
 
 @bind.opp
@@ -176,9 +176,9 @@ async def async_start_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio =.opp.data[DOMAIN]
+   .oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/start"
-    return await.oppio.send_command(command, timeout=60)
+    return await oppio.send_command(command, timeout=60)
 
 
 @bind.opp
@@ -188,9 +188,9 @@ async def async_stop_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio =.opp.data[DOMAIN]
+   .oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/stop"
-    return await.oppio.send_command(command, timeout=60)
+    return await oppio.send_command(command, timeout=60)
 
 
 @bind.opp
@@ -202,9 +202,9 @@ async def async_set_addon_options(
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio =.opp.data[DOMAIN]
+   .oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/options"
-    return await.oppio.send_command(command, payload=options)
+    return await oppio.send_command(command, payload=options)
 
 
 @bind.opp
@@ -212,7 +212,7 @@ async def async_get_addon_discovery_info(
     opp: OpenPeerPowerType, slug: str
 ) -> Optional[dict]:
     """Return discovery data for an add-on."""
-   .oppio =.opp.data[DOMAIN]
+   .oppio = opp.data[DOMAIN]
     data = await.oppio.retrieve_discovery_messages()
     discovered_addons = data[ATTR_DISCOVERY]
     return next((addon for addon in discovered_addons if addon["addon"] == slug), None)
@@ -298,13 +298,13 @@ async def async_setup_opp, config):
     async_load_websocket_api.opp)
 
     host = os.environ["HASSIO"]
-    websession =.opp.helpers.aiohttp_client.async_get_clientsession()
-   .opp.data[DOMAIN] =.oppio = HassIO.opp.loop, websession, host)
+    websession = opp.helpers.aiohttp_client.async_get_clientsession()
+   .opp.data[DOMAIN] = oppio = HassIO.opp.loop, websession, host)
 
     if not await.oppio.is_connected():
         _LOGGER.warning("Not connected with Hass.io / system too busy!")
 
-    store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+    store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
     data = await store.async_load()
 
     if data is None:
@@ -336,10 +336,10 @@ async def async_setup_opp, config):
    .opp.http.register_view(HassIOView(host, websession))
 
     await.opp.components.panel_custom.async_register_panel(
-        frontend_url_path=.oppio",
-        webcomponent_name=.oppio-main",
+        frontend_url_path= oppio",
+        webcomponent_name= oppio-main",
         sidebar_title="Supervisor",
-        sidebar_icon=.opp:open-peer-power",
+        sidebar_icon= opp:open-peer-power",
         js_url="/api.oppio/app/entrypoint.js",
         embed_iframe=True,
         require_admin=True,

@@ -227,10 +227,10 @@ async def async_unload_entry.opp, entry: config_entries.ConfigEntry):
     for cleanup_callback in.opp.data[DOMAIN][DATA_CLEANUP_CALLBACKS]:
         cleanup_callback()
 
-    listener =.opp.data[DOMAIN][DATA_LISTENER]
+    listener = opp.data[DOMAIN][DATA_LISTENER]
     listener()
 
-    rfx_object =.opp.data[DOMAIN][DATA_RFXOBJECT]
+    rfx_object = opp.data[DOMAIN][DATA_RFXOBJECT]
     await.opp.async_add_executor_job(rfx_object.close_connection)
 
    .opp.data.pop(DOMAIN)
@@ -341,7 +341,7 @@ async def async_setup_internal.opp, entry: config_entries.ConfigEntry):
         """Close connection with RFXtrx."""
         rfx_object.close_connection()
 
-    listener =.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown_rfxtrx)
+    listener = opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown_rfxtrx)
 
    .opp.data[DOMAIN][DATA_LISTENER] = listener
    .opp.data[DOMAIN][DATA_RFXOBJECT] = rfx_object

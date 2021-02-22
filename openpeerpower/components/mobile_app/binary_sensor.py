@@ -59,7 +59,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             CONF_NAME
         ] = f"{config_entry.data[ATTR_DEVICE_NAME]} {data[ATTR_SENSOR_NAME]}"
 
-        device =.opp.data[DOMAIN][DATA_DEVICES][data[CONF_WEBHOOK_ID]]
+        device = opp.data[DOMAIN][DATA_DEVICES][data[CONF_WEBHOOK_ID]]
 
         async_add_entities([MobileAppBinarySensor(data, device, config_entry)])
 

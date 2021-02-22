@@ -53,7 +53,7 @@ class LircInterface(threading.Thread):
         threading.Thread.__init__(self)
         self.daemon = True
         self.stopped = threading.Event()
-        self.opp =.opp
+        self.opp = opp
 
     def run(self):
         """Run the loop of the LIRC interface thread."""

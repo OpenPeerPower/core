@@ -18,7 +18,7 @@ class ActiveConnection:
     def __init__(self, logger, opp, send_message, user, refresh_token):
         """Initialize an active connection."""
         self.logger = logger
-        self.opp =.opp
+        self.opp = opp
         self.send_message = send_message
         self.user = user
         if refresh_token:

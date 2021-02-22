@@ -24,8 +24,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    name =.opp.data[DOMAIN]["name"]
-    state_proxy =.opp.data[DOMAIN]["state_proxy"]
+    name = opp.data[DOMAIN]["name"]
+    state_proxy = opp.data[DOMAIN]["state_proxy"]
 
     sensors = [
         ValloxProfileSensor(

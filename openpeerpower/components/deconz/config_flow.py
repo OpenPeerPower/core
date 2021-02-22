@@ -249,7 +249,7 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             return await self._create_entry()
 
         return self.async_show_form(
-            step_id=.oppio_confirm",
+            step_id= oppio_confirm",
             description_placeholders={"addon": self.oppio_discovery["addon"]},
         )
 

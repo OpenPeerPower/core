@@ -31,7 +31,7 @@ async def async_setup_entry(
     opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up Toon sensors based on a config entry."""
-    coordinator =.opp.data[DOMAIN][entry.entry_id]
+    coordinator = opp.data[DOMAIN][entry.entry_id]
 
     sensors = [
         ToonElectricityMeterDeviceSensor(coordinator, key=key)

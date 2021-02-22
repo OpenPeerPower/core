@@ -123,7 +123,7 @@ def setup_opp, config):
 
     def _render_service_value(service, key):
         value = service.data[key]
-        value.opp =.opp
+        value.opp = opp
         return value.async_render(parse_result=False)
 
     def put_file(service):

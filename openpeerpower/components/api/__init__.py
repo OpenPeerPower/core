@@ -128,7 +128,7 @@ class APIEventStream(OpenPeerPowerView):
         response.content_type = "text/event-stream"
         await response.prepare(request)
 
-        unsub_stream =.opp.bus.async_listen(MATCH_ALL, forward_events)
+        unsub_stream = opp.bus.async_listen(MATCH_ALL, forward_events)
 
         try:
             _LOGGER.debug("STREAM %s ATTACHED", id(stop_obj))
@@ -269,7 +269,7 @@ class APIEntityStateView(OpenPeerPowerView):
         attributes = data.get("attributes")
         force_update = data.get("force_update", False)
 
-        is_new_state =.opp.states.get(entity_id) is None
+        is_new_state = opp.states.get(entity_id) is None
 
         # Write state
        .opp.states.async_set(

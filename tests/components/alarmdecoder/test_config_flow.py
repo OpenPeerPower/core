@@ -402,7 +402,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
 async def test_one_device_allowed.opp, protocol, connection):
     """Test that only one AlarmDecoder device is allowed."""
     flow = config_flow.AlarmDecoderFlowHandler()
-    flow.opp =.opp
+    flow.opp = opp
 
     MockConfigEntry(
         domain=DOMAIN,

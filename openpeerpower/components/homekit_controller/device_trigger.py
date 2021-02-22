@@ -183,7 +183,7 @@ TRIGGER_FINDERS = {
 async def async_setup_triggers_for_entry.opp: OpenPeerPower, config_entry):
     """Triggers aren't entities as they have no state, but we still need to set them up for a config entry."""
     hkid = config_entry.data["AccessoryPairingID"]
-    conn =.opp.data[KNOWN_DEVICES][hkid]
+    conn = opp.data[KNOWN_DEVICES][hkid]
 
     @callback
     def async_add_service(service):
@@ -232,7 +232,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
     if device_id not in.opp.data.get(TRIGGERS, {}):
         return []
 
-    device =.opp.data[TRIGGERS][device_id]
+    device = opp.data[TRIGGERS][device_id]
 
     triggers = []
 
@@ -260,5 +260,5 @@ async def async_attach_trigger(
     config = TRIGGER_SCHEMA(config)
 
     device_id = config[CONF_DEVICE_ID]
-    device =.opp.data[TRIGGERS][device_id]
+    device = opp.data[TRIGGERS][device_id]
     return await device.async_attach_trigger(config, action, automation_info)

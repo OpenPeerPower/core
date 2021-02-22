@@ -66,7 +66,7 @@ async def setup_platform.opp, config_entry, config):
 async def test_state_attributes.opp, config_entry, config, controller):
     """Tests the state attributes."""
     await setup_platform.opp, config_entry, config)
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.state == STATE_IDLE
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.25
     assert not state.attributes[ATTR_MEDIA_VOLUME_MUTED]
@@ -96,7 +96,7 @@ async def test_state_attributes.opp, config_entry, config, controller):
     assert ATTR_INPUT_SOURCE not in state.attributes
     assert (
         state.attributes[ATTR_INPUT_SOURCE_LIST]
-        ==.opp.data[DOMAIN][DATA_SOURCE_MANAGER].source_list
+        == opp.data[DOMAIN][DATA_SOURCE_MANAGER].source_list
     )
 
 
@@ -111,7 +111,7 @@ async def test_updates_from_signals.opp, config_entry, config, controller, favor
         const.SIGNAL_PLAYER_EVENT, 2, const.EVENT_PLAYER_STATE_CHANGED
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.state == STATE_IDLE
 
     # Test player_update standard events
@@ -121,7 +121,7 @@ async def test_updates_from_signals.opp, config_entry, config, controller, favor
     )
     await.opp.async_block_till_done()
 
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.state == STATE_PLAYING
 
     # Test player_update progress events
@@ -133,7 +133,7 @@ async def test_updates_from_signals.opp, config_entry, config, controller, favor
         const.EVENT_PLAYER_NOW_PLAYING_PROGRESS,
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_MEDIA_POSITION_UPDATED_AT] is not None
     assert state.attributes[ATTR_MEDIA_DURATION] == 360
     assert state.attributes[ATTR_MEDIA_POSITION] == 1
@@ -156,7 +156,7 @@ async def test_updates_from_connection_event(
     player.available = True
     player.heos.dispatcher.send(const.SIGNAL_HEOS_EVENT, const.EVENT_CONNECTED)
     await event.wait()
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.state == STATE_IDLE
     assert controller.load_players.call_count == 1
 
@@ -167,7 +167,7 @@ async def test_updates_from_connection_event(
     player.available = False
     player.heos.dispatcher.send(const.SIGNAL_HEOS_EVENT, const.EVENT_DISCONNECTED)
     await event.wait()
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.state == STATE_UNAVAILABLE
     assert controller.load_players.call_count == 0
 
@@ -179,7 +179,7 @@ async def test_updates_from_connection_event(
     player.available = True
     player.heos.dispatcher.send(const.SIGNAL_HEOS_EVENT, const.EVENT_CONNECTED)
     await event.wait()
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.state == STATE_IDLE
     assert controller.load_players.call_count == 1
     assert "Unable to refresh players" in caplog.text
@@ -203,9 +203,9 @@ async def test_updates_from_sources_updated(
         const.SIGNAL_CONTROLLER_EVENT, const.EVENT_SOURCES_CHANGED, {}
     )
     await event.wait()
-    source_list =.opp.data[DOMAIN][DATA_SOURCE_MANAGER].source_list
+    source_list = opp.data[DOMAIN][DATA_SOURCE_MANAGER].source_list
     assert len(source_list) == 2
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_INPUT_SOURCE_LIST] == source_list
 
 
@@ -290,9 +290,9 @@ async def test_updates_from_user_changed.opp, config_entry, config, controller):
         const.SIGNAL_CONTROLLER_EVENT, const.EVENT_USER_CHANGED, None
     )
     await event.wait()
-    source_list =.opp.data[DOMAIN][DATA_SOURCE_MANAGER].source_list
+    source_list = opp.data[DOMAIN][DATA_SOURCE_MANAGER].source_list
     assert len(source_list) == 1
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_INPUT_SOURCE_LIST] == source_list
 
 
@@ -477,7 +477,7 @@ async def test_select_favorite.opp, config_entry, config, controller, favorites)
         const.SIGNAL_PLAYER_EVENT, player.player_id, const.EVENT_PLAYER_STATE_CHANGED
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_INPUT_SOURCE] == favorite.name
 
 
@@ -501,7 +501,7 @@ async def test_select_radio_favorite.opp, config_entry, config, controller, favo
         const.SIGNAL_PLAYER_EVENT, player.player_id, const.EVENT_PLAYER_STATE_CHANGED
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_INPUT_SOURCE] == favorite.name
 
 
@@ -549,7 +549,7 @@ async def test_select_input_source(
         const.SIGNAL_PLAYER_EVENT, player.player_id, const.EVENT_PLAYER_STATE_CHANGED
     )
     await.opp.async_block_till_done()
-    state =.opp.states.get("media_player.test_player")
+    state = opp.states.get("media_player.test_player")
     assert state.attributes[ATTR_INPUT_SOURCE] == input_source.name
 
 

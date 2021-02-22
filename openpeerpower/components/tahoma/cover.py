@@ -54,7 +54,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Tahoma covers."""
     if discovery_info is None:
         return
-    controller =.opp.data[TAHOMA_DOMAIN]["controller"]
+    controller = opp.data[TAHOMA_DOMAIN]["controller"]
     devices = []
     for device in.opp.data[TAHOMA_DOMAIN]["devices"]["cover"]:
         devices.append(TahomaCover(device, controller))

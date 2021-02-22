@@ -75,9 +75,9 @@ ATTR_ZONE = "zone"
 async def async_setup_entry.opp, entry, async_add_entities):
     """Set up Neato vacuum with config entry."""
     dev = []
-    neato =.opp.data.get(NEATO_LOGIN)
-    mapdata =.opp.data.get(NEATO_MAP_DATA)
-    persistent_maps =.opp.data.get(NEATO_PERSISTENT_MAPS)
+    neato = opp.data.get(NEATO_LOGIN)
+    mapdata = opp.data.get(NEATO_MAP_DATA)
+    persistent_maps = opp.data.get(NEATO_PERSISTENT_MAPS)
     for robot in.opp.data[NEATO_ROBOTS]:
         dev.append(NeatoConnectedVacuum(neato, robot, mapdata, persistent_maps))
 

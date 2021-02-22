@@ -148,7 +148,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         )
     )
 
-    config =.opp.data[DOMAIN][DATA_NEST_CONFIG]
+    config = opp.data[DOMAIN][DATA_NEST_CONFIG]
 
     session = config_entry_oauth2_flow.OAuth2Session.opp, entry, implementation)
     auth = api.AsyncConfigEntryAuth(
@@ -212,7 +212,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
         # Legacy API
         return True
     _LOGGER.debug("Stopping nest subscriber")
-    subscriber =.opp.data[DOMAIN][DATA_SUBSCRIBER]
+    subscriber = opp.data[DOMAIN][DATA_SUBSCRIBER]
     subscriber.stop_async()
     unload_ok = all(
         await asyncio.gather(

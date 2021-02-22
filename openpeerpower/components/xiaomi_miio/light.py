@@ -130,7 +130,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     entities = []
 
     if config_entry.data[CONF_FLOW_TYPE] == CONF_GATEWAY:
-        gateway =.opp.data[DOMAIN][config_entry.entry_id][CONF_GATEWAY]
+        gateway = opp.data[DOMAIN][config_entry.entry_id][CONF_GATEWAY]
         # Gateway light
         if gateway.model not in [
             GATEWAY_MODEL_AC_V1,
@@ -236,7 +236,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 if dev.entity_id in entity_ids
             ]
         else:
-            target_devices =.opp.data[DATA_KEY].values()
+            target_devices = opp.data[DATA_KEY].values()
 
         update_tasks = []
         for target_device in target_devices:
