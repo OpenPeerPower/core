@@ -16,7 +16,7 @@ DEFAULT_BRAND = "Agent DVR by ispyconnect.com"
 FORWARDS = ["alarm_control_panel", "camera"]
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Old way to set up integrations."""
     return True
 

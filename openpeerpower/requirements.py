@@ -34,7 +34,7 @@ class RequirementsNotFound(OpenPeerPowerError):
 
 
 async def async_get_integration_with_requirements(
-    opp. OpenPeerPower, domain: str, done: Optional[Set[str]] = None
+    opp.OpenPeerPower, domain: str, done: Optional[Set[str]] = None
 ) -> Integration:
     """Get an integration with all requirements installed, including the dependencies.
 
@@ -47,7 +47,7 @@ async def async_get_integration_with_requirements(
     else:
         done.add(domain)
 
-    integration = await async_get_integration.opp, domain)
+    integration = await async_get_integration(opp, domain)
 
     if opp.config.skip_pip:
         return integration
@@ -77,7 +77,7 @@ async def async_get_integration_with_requirements(
 
     if integration.requirements:
         await async_process_requirements(
-            opp. integration.domain, integration.requirements
+            opp.integration.domain, integration.requirements
         )
 
     deps_to_check = [
@@ -97,7 +97,7 @@ async def async_get_integration_with_requirements(
     if deps_to_check:
         await asyncio.gather(
             *[
-                async_get_integration_with_requirements.opp, dep, done)
+                async_get_integration_with_requirements(opp, dep, done)
                 for dep in deps_to_check
             ]
         )
@@ -108,7 +108,7 @@ async def async_get_integration_with_requirements(
 
 
 async def async_process_requirements(
-    opp. OpenPeerPower, name: str, requirements: List[str]
+    opp: OpenPeerPower, name: str, requirements: List[str]
 ) -> None:
     """Install the requirements for a component or platform.
 

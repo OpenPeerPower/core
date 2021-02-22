@@ -430,7 +430,7 @@ def get_state.opp, utc_point_in_time, entity_id, run=None):
     return states[0] if states else None
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the history hooks."""
     conf = config.get(DOMAIN, {})
 
@@ -502,7 +502,7 @@ class HistoryPeriodView(OpenPeerPowerView):
 
         minimal_response = "minimal_response" in request.query
 
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
 
         if (
             not include_start_time_state

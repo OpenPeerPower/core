@@ -353,7 +353,7 @@ class FibaroController:
                 pass
 
 
-def setup_opp, base_config):
+def setup(opp, base_config):
     """Set up the Fibaro Component."""
     gateways = base_config[DOMAIN][CONF_GATEWAYS]
     opp.data[FIBARO_CONTROLLERS] = {}

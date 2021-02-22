@@ -30,7 +30,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config) -> bool:
+async def async_setup(opp, config) -> bool:
     """Set up the SmartHab platform."""
 
     opp.data.setdefault(DOMAIN, {})

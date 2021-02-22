@@ -89,7 +89,7 @@ class AbodeSystem:
         self.logout_listener = None
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up Abode integration."""
     if DOMAIN not in config:
         return True

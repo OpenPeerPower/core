@@ -58,7 +58,7 @@ def server_id_valid(server_id):
     return True
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Import integration from config."""
     if DOMAIN in config:
         opp.async_create_task(

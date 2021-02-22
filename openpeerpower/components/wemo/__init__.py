@@ -78,7 +78,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up for WeMo devices."""
     opp.data[DOMAIN] = {
         "config": config.get(DOMAIN, {}),

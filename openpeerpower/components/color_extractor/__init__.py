@@ -59,7 +59,7 @@ def _get_color(file_handler) -> tuple:
     return color
 
 
-async def async_setup_opp, opp_config):
+async def async_setup(opp, opp_config):
     """Set up services for color_extractor integration."""
 
     async def async_handle_service(service_call):

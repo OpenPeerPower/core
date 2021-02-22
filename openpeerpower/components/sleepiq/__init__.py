@@ -30,7 +30,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the SleepIQ component.
 
     Will automatically load sensor components to support

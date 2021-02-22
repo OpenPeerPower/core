@@ -146,7 +146,7 @@ def daemonize() -> None:
     # redirect standard file descriptors to devnull
     infd = open(os.devnull)
     outfd = open(os.devnull, "a+")
-    sys stdou.flush()
+    sys.stdout.flush()
     sys.stderr.flush()
     os.dup2(infd.fileno(), sys.stdin.fileno())
     os.dup2(outfd.fileno(), sys.stdout.fileno())

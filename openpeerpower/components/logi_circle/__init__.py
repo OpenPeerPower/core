@@ -89,7 +89,7 @@ LOGI_CIRCLE_SERVICE_RECORD = CAMERA_SERVICE_SCHEMA.extend(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up configured Logi Circle component."""
     if DOMAIN not in config:
         return True

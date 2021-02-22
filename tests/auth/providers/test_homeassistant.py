@@ -38,7 +38,7 @@ async def test_validating_password_invalid_user(data, opp):
 
 async def test_not_allow_set_id():
     """Test we are not allowed to set an ID in config."""
-    opp.=Mock()
+   opp = Mock()
     with pytest.raises(vol.Invalid):
         await auth_provider_from_config(
             opp. None, {"type": "openpeerpower", "id": "invalid"}

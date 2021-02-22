@@ -40,7 +40,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Emoncms history component."""
     conf = config[DOMAIN]
     whitelist = conf.get(CONF_WHITELIST)

@@ -77,7 +77,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Egardia platform."""
 
     conf = config[DOMAIN]

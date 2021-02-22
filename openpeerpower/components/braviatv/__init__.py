@@ -10,7 +10,7 @@ from .const import BRAVIARC, DOMAIN, UNDO_UPDATE_LISTENER
 PLATFORMS = ["media_player"]
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Bravia TV component."""
     return True
 

@@ -58,7 +58,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the triggers to control lights based on device presence."""
     conf = config[DOMAIN]
     disable_turn_off = conf[CONF_DISABLE_TURN_OFF]

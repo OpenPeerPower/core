@@ -365,7 +365,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     return True
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up Z-Wave components."""
     if DOMAIN not in config:
         return True

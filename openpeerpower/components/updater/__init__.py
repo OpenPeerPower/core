@@ -50,7 +50,7 @@ class Updater:
         self.newest_version = newest_version
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the updater component."""
     if "dev" in current_version:
         # This component only makes sense in release versions

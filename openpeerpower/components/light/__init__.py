@@ -180,7 +180,7 @@ def filter_turn_off_params(params):
     return {k: v for k, v in params.items() if k in (ATTR_TRANSITION, ATTR_FLASH)}
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Expose light control via state machine and services."""
     component = opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN, opp, SCAN_INTERVAL

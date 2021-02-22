@@ -5,7 +5,7 @@ from . import open_peer_power_cast
 from .const import DOMAIN
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Cast component."""
     conf = config.get(DOMAIN)
 

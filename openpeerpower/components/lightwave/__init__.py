@@ -58,7 +58,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Try to start embedded Lightwave broker."""
     host = config[DOMAIN][CONF_HOST]
     lwlink = LWLink(host)

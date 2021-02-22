@@ -151,7 +151,7 @@ def.opp(loop, load_registries, opp_storage, request):
         orig_exception_handler(loop, context)
 
     exceptions = []
-    opp.=loop.run_until_complete(async_test_open_peer_power(loop, load_registries))
+   opp = loop.run_until_complete(async_test_open_peer_power(loop, load_registries))
     orig_exception_handler = loop.get_exception_handler()
     loop.set_exception_handler(exc_handle)
 

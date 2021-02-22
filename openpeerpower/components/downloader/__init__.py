@@ -41,7 +41,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Listen for download events to download files."""
     download_path = config[DOMAIN][CONF_DOWNLOAD_DIR]
 

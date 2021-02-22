@@ -32,7 +32,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up AquaLogic platform."""
     host = config[DOMAIN][CONF_HOST]
     port = config[DOMAIN][CONF_PORT]

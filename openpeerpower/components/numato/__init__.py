@@ -117,7 +117,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Initialize the numato integration.
 
     Discovers available Numato devices and loads the binary_sensor, sensor and

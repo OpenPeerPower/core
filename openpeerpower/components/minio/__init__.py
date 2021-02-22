@@ -77,7 +77,7 @@ BUCKET_KEY_FILE_SCHEMA = BUCKET_KEY_SCHEMA.extend(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up MinioClient and event listeners."""
     conf = config[DOMAIN]
 

@@ -54,7 +54,7 @@ def is_on.opp, entity_id):
     return.opp.states.is_state(entity_id, STATE_ON)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Track states and offer events for switches."""
     component = opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN, opp, SCAN_INTERVAL

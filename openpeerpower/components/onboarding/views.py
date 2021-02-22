@@ -21,7 +21,7 @@ from .const import (
 )
 
 
-async def async_setup_opp, data, store):
+async def async_setup(opp, data, store):
     """Set up the onboarding view."""
     opp.http.register_view(OnboardingView(data, store))
     opp.http.register_view(UserOnboardingView(data, store))
@@ -94,7 +94,7 @@ class UserOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle user creation, area creation."""
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
 
         async with self._lock:
             if self._async_is_done():
@@ -148,7 +148,7 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
 
     async def post(self, request):
         """Handle finishing core config step."""
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
 
         async with self._lock:
             if self._async_is_done():
@@ -185,7 +185,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle token creation."""
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
         refresh_token_id = request[KEY_HASS_REFRESH_TOKEN_ID]
 
         async with self._lock:

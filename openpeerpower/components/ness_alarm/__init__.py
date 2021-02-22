@@ -78,7 +78,7 @@ SERVICE_SCHEMA_AUX = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Ness Alarm platform."""
 
     conf = config[DOMAIN]

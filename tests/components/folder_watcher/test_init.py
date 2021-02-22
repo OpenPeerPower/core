@@ -40,7 +40,7 @@ def test_event():
         "openpeerpower.components.folder_watcher.PatternMatchingEventHandler",
         MockPatternMatchingEventHandler,
     ):
-        opp.=Mock()
+       opp = Mock()
         handler = folder_watcher.create_event_handler(["*"], opp)
         handler.on_created(
             Mock(is_directory=False, src_path="/hello/world.txt", event_type="created")

@@ -68,7 +68,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Watson IoT Platform component."""
 
     conf = config[DOMAIN]

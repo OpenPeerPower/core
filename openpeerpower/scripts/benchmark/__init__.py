@@ -45,7 +45,7 @@ def run(args):
 
 async def run_benchmark(bench):
     """Run a benchmark."""
-    opp.=core.OpenPeerPower()
+   opp = core.OpenPeerPower()
     runtime = await bench.opp)
     print(f"Benchmark {bench.__name__} done in {runtime}s")
     await opp.async_stop()

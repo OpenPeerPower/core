@@ -130,7 +130,7 @@ def request_done.opp, request_id):
     ).result()
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the configurator component."""
     return True
 

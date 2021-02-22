@@ -97,7 +97,7 @@ async def async_new_client.opp, session, entry):
     await client.update()
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Telldus Live component."""
     if DOMAIN not in config:
         return True

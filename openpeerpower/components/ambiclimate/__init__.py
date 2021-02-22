@@ -20,7 +20,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up Ambiclimate components."""
     if DOMAIN not in config:
         return True

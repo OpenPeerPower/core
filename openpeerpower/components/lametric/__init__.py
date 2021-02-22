@@ -27,7 +27,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the LaMetricManager."""
     _LOGGER.debug("Setting up LaMetric platform")
     conf = config[DOMAIN]

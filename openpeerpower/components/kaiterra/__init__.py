@@ -53,7 +53,7 @@ KAITERRA_SCHEMA = vol.Schema(
 CONFIG_SCHEMA = vol.Schema({DOMAIN: KAITERRA_SCHEMA}, extra=vol.ALLOW_EXTRA)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Kaiterra components."""
 
     conf = config[DOMAIN]

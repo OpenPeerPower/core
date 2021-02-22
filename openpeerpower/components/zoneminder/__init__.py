@@ -50,7 +50,7 @@ SET_RUN_STATE_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the ZoneMinder component."""
 
     opp.data[DOMAIN] = {}

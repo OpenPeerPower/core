@@ -91,7 +91,7 @@ def _async_fixup_sensor_id.opp, config_entry, sensor_id):
     )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Luftdaten component."""
     opp.data[DOMAIN] = {}
     opp.data[DOMAIN][DATA_LUFTDATEN_CLIENT] = {}

@@ -21,7 +21,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the PCA switch platform."""
 
     for platform in ELV_PLATFORMS:

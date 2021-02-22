@@ -6,7 +6,7 @@ from .const import DOMAIN
 from .server import RoonServer
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Roon platform."""
     opp.data[DOMAIN] = {}
     return True

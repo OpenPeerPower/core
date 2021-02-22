@@ -62,7 +62,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up is called when Open Peer Power is loading our component."""
     dominos = Dominos.opp, config)
 

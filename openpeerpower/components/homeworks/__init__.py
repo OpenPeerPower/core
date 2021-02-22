@@ -63,7 +63,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, base_config):
+def setup(opp, base_config):
     """Start Homeworks controller."""
 
     def hw_callback(msg_type, values):

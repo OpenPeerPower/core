@@ -64,7 +64,7 @@ def create_stream.opp, stream_source, options=None):
     return stream
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up stream."""
     # Set log level to error for libav
     logging.getLogger("libav").setLevel(logging.ERROR)

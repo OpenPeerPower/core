@@ -30,7 +30,7 @@ PUSH_UPDATE = "econet.push_update"
 INTERVAL = timedelta(minutes=60)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the EcoNet component."""
     opp.data[DOMAIN] = {}
     opp.data[DOMAIN][API_CLIENT] = {}

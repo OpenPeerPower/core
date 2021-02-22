@@ -40,7 +40,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up an Arlo component."""
     conf = config[DOMAIN]
     username = conf[CONF_USERNAME]

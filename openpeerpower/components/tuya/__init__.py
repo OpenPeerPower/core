@@ -104,7 +104,7 @@ def _update_query_interval.opp, interval):
         _LOGGER.warning(ex)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Tuya integration."""
 
     conf = config.get(DOMAIN)

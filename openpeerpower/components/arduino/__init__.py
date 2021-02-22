@@ -21,7 +21,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Arduino component."""
     _LOGGER.warning(
         "The %s integration has been deprecated. Please move your "

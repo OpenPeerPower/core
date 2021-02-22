@@ -13,7 +13,7 @@ _LOGGER = logging.getLogger(__name__)
 DOMAIN = "orangepi_gpio"
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Orange Pi GPIO component."""
 
     def cleanup_gpio(event):

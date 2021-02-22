@@ -411,7 +411,7 @@ def async_log_exception(
     ex: Exception,
     domain: str,
     config: Dict,
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     link: Optional[str] = None,
 ) -> None:
     """Log an error for configuration validation.
@@ -676,7 +676,7 @@ def _recursive_merge(conf: Dict[str, Any], package: Dict[str, Any]) -> Union[boo
 
 
 async def merge_packages_config(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     config: Dict,
     packages: Dict[str, Any],
     _log_pkg_error: Callable = _log_pkg_error,
@@ -742,7 +742,7 @@ async def merge_packages_config(
 
 
 async def async_process_component_config(
-    opp. OpenPeerPower, config: ConfigType, integration: Integration
+    opp: OpenPeerPower, config: ConfigType, integration: Integration
 ) -> Optional[ConfigType]:
     """Check component configuration and return processed configuration.
 

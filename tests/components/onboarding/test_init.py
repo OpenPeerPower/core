@@ -39,7 +39,7 @@ async def test_setup_views_if_not_onboarded.opp):
 
 async def test_is_onboarded():
     """Test the is onboarded function."""
-    opp.=Mock()
+   opp = Mock()
     opp.data = {}
 
     assert onboarding.async_is_onboarded.opp)
@@ -53,7 +53,7 @@ async def test_is_onboarded():
 
 async def test_is_user_onboarded():
     """Test the is onboarded function."""
-    opp.=Mock()
+   opp = Mock()
     opp.data = {}
 
     assert onboarding.async_is_user_onboarded.opp)

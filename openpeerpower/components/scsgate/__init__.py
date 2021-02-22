@@ -27,7 +27,7 @@ SCSGATE_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the SCSGate component."""
     device = config[DOMAIN][CONF_DEVICE]
     scsgate = None

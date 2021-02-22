@@ -51,7 +51,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Foursquare component."""
     config = config[DOMAIN]
 

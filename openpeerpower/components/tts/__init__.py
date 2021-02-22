@@ -107,7 +107,7 @@ SCHEMA_SERVICE_SAY = vol.Schema(
 SCHEMA_SERVICE_CLEAR_CACHE = vol.Schema({})
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up TTS."""
     tts = SpeechManager.opp)
 

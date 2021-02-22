@@ -68,7 +68,7 @@ CENTICELSIUS = "C-100"
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up ZHA from config."""
     opp.data[DATA_ZHA] = {}
 

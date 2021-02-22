@@ -72,7 +72,7 @@ TAHOMA_TYPES = {
 }
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Activate Tahoma component."""
 
     conf = config[DOMAIN]

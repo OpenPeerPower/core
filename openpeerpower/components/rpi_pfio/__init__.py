@@ -8,7 +8,7 @@ DOMAIN = "rpi_pfio"
 DATA_PFIO_LISTENER = "pfio_listener"
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Raspberry PI PFIO component."""
     pifacedigital = PFIO.PiFaceDigital()
     opp.data[DATA_PFIO_LISTENER] = PFIO.InputEventListener(chip=pifacedigital)

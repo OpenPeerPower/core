@@ -218,7 +218,7 @@ PULSE_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the IHC platform."""
     conf = config.get(DOMAIN)
     for index, controller_conf in enumerate(conf):

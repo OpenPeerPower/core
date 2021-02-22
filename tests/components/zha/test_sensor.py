@@ -277,7 +277,7 @@ async def test_temp_uom(
     if restore:
         core_rs(entity_id, uom, state=(expected - 2))
 
-    opp.=await opp_ms(
+   opp = await opp_ms(
         CONF_UNIT_SYSTEM_METRIC if uom == TEMP_CELSIUS else CONF_UNIT_SYSTEM_IMPERIAL
     )
 

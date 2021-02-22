@@ -160,7 +160,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Repetier Server component."""
     opp.data[REPETIER_API] = {}
 

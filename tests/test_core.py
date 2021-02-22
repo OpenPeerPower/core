@@ -53,7 +53,7 @@ def test_split_entity_id():
 
 def test_async_add_opp_job_schedule_callback():
     """Test that we schedule coroutines and add jobs to the job pool."""
-    opp.= MagicMock()
+   opp =  MagicMock()
     job = MagicMock()
 
     op.OpenPeerPower.async_add_opp_job.opp, op.OppJob(op.callback(job)))
@@ -64,7 +64,7 @@ def test_async_add_opp_job_schedule_callback():
 
 def test_async_add_opp_job_schedule_partial_callback():
     """Test that we schedule partial coros and add jobs to the job pool."""
-    opp.= MagicMock()
+   opp =  MagicMock()
     job = MagicMock()
     partial = functools.partial(op.callback(job))
 
@@ -76,7 +76,7 @@ def test_async_add_opp_job_schedule_partial_callback():
 
 def test_async_add_opp_job_schedule_coroutinefunction(loop):
     """Test that we schedule coroutines and add jobs to the job pool."""
-    opp.= MagicMock(loop=MagicMock(wraps=loop))
+   opp =  MagicMock(loop=MagicMock(wraps=loop))
 
     async def job():
         pass
@@ -89,7 +89,7 @@ def test_async_add_opp_job_schedule_coroutinefunction(loop):
 
 def test_async_add_opp_job_schedule_partial_coroutinefunction(loop):
     """Test that we schedule partial coros and add jobs to the job pool."""
-    opp.= MagicMock(loop=MagicMock(wraps=loop))
+   opp =  MagicMock(loop=MagicMock(wraps=loop))
 
     async def job():
         pass
@@ -104,7 +104,7 @@ def test_async_add_opp_job_schedule_partial_coroutinefunction(loop):
 
 def test_async_add_job_add_opp_threaded_job_to_pool():
     """Test that we schedule coroutines and add jobs to the job pool."""
-    opp.= MagicMock()
+   opp =  MagicMock()
 
     def job():
         pass
@@ -117,7 +117,7 @@ def test_async_add_job_add_opp_threaded_job_to_pool():
 
 def test_async_create_task_schedule_coroutine(loop):
     """Test that we schedule coroutines and add jobs to the job pool."""
-    opp.= MagicMock(loop=MagicMock(wraps=loop))
+   opp =  MagicMock(loop=MagicMock(wraps=loop))
 
     async def job():
         pass
@@ -130,7 +130,7 @@ def test_async_create_task_schedule_coroutine(loop):
 
 def test_async_run_opp_job_calls_callback():
     """Test that the callback annotation is respected."""
-    opp.= MagicMock()
+   opp =  MagicMock()
     calls = []
 
     def job():
@@ -143,7 +143,7 @@ def test_async_run_opp_job_calls_callback():
 
 def test_async_run_opp_job_delegates_non_async():
     """Test that the callback annotation is respected."""
-    opp.= MagicMock()
+   opp =  MagicMock()
     calls = []
 
     def job():
@@ -854,7 +854,7 @@ async def test_serviceregistry_callback_service_raise_exception.opp):
 
 def test_config_defaults():
     """Test config defaults."""
-    opp.= Mock()
+   opp =  Mock()
     config = op.config(opp)
     assert config(opp is.opp
     assert config.latitude == 0
@@ -1009,7 +1009,7 @@ async def test_bad_timezone_raises_value_error(opp):
 @patch("openpeerpower.core.monotonic")
 def test_create_timer(mock_monotonic, loop):
     """Test create timer."""
-    opp.= MagicMock()
+   opp =  MagicMock()
     funcs = []
     orig_callback = op.callback
 
@@ -1061,7 +1061,7 @@ def test_create_timer(mock_monotonic, loop):
 @patch("openpeerpower.core.monotonic")
 def test_timer_out_of_sync(mock_monotonic, loop):
     """Test create timer."""
-    opp.= MagicMock()
+   opp =  MagicMock()
     funcs = []
     orig_callback = op.callback
 
@@ -1113,7 +1113,7 @@ def test_timer_out_of_sync(mock_monotonic, loop):
 
 async def test_opp_start_starts_the_timer(loop):
     """Test when opp starts, it starts the timer."""
-    opp.= op.OpenPeerPower()
+   opp =  op.OpenPeerPower()
 
     try:
         with patch("openpeerpower.core._async_create_timer") as mock_timer:
@@ -1131,7 +1131,7 @@ async def test_opp_start_starts_the_timer(loop):
 
 async def test_start_taking_too_long(loop, caplog):
     """Test when async_start takes too long."""
-    opp.= op.OpenPeerPower()
+   opp =  op.OpenPeerPower()
     caplog.set_level(logging.WARNING)
 
     try:
@@ -1152,7 +1152,7 @@ async def test_start_taking_too_long(loop, caplog):
 
 async def test_track_task_functions(loop):
     """Test function to start/stop track task and initial state."""
-    opp.= op.OpenPeerPower()
+   opp =  op.OpenPeerPower()
     try:
         assert.opp._track_task
 

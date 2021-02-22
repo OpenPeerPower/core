@@ -530,7 +530,7 @@ async def async_service_temperature_set(
     entity: ClimateEntity, service: ServiceDataType
 ) -> None:
     """Handle set temperature service."""
-    opp.=entity.opp
+   opp = entity.opp
     kwargs = {}
 
     for value, temp in service.data.items():

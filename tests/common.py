@@ -79,7 +79,7 @@ def threadsafe_callback_factory(func):
     @ft.wraps(func)
     def threadsafe(*args, **kwargs):
         """Call func threadsafe."""
-        opp.=args[0]
+       opp = args[0]
         return run_callback_threadsafe(
             opp.loop, ft.partial(func, *args, **kwargs)
         ).result()
@@ -96,7 +96,7 @@ def threadsafe_coroutine_factory(func):
     @ft.wraps(func)
     def threadsafe(*args, **kwargs):
         """Call func threadsafe."""
-        opp.=args[0]
+       opp = args[0]
         return asyncio.run_coroutine_threadsafe(
             func(*args, **kwargs), opp.loop
         ).result()
@@ -113,7 +113,7 @@ def get_test_open_peer_power():
     """Return a Open Peer Power object pointing at test config directory."""
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    opp.=loop.run_until_complete(async_test_open_peer_power(loop))
+   opp = loop.run_until_complete(async_test_open_peer_power(loop))
 
     loop_stop_event = threading.Event()
 
@@ -148,7 +148,7 @@ def get_test_open_peer_power():
 # pylint: disable=protected-access
 async def async_test_open_peer_power(loop, load_registries=True):
     """Return a Open Peer Power object pointing at test config dir."""
-    opp.= op.OpenPeerPower()
+   opp =  op.OpenPeerPower()
     store = auth_store.AuthStore.opp)
     opp.auth = auth.AuthManager.opp, store, {}, {})
     ensure_auth_manager_loaded.opp.auth)

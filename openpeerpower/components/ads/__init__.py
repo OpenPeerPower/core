@@ -77,7 +77,7 @@ SCHEMA_SERVICE_WRITE_DATA_BY_NAME = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the ADS component."""
 
     conf = config[DOMAIN]

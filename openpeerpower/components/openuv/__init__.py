@@ -42,7 +42,7 @@ TOPIC_UPDATE = f"{DOMAIN}_data_update"
 PLATFORMS = ["binary_sensor", "sensor"]
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the OpenUV component."""
     opp.data[DOMAIN] = {DATA_CLIENT: {}, DATA_LISTENER: {}}
     return True

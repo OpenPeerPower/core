@@ -34,7 +34,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Linode component."""
     conf = config[DOMAIN]
     access_token = conf.get(CONF_ACCESS_TOKEN)

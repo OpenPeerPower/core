@@ -63,7 +63,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the rpi_camera integration."""
     config_domain = config[DOMAIN]
     opp.data[DOMAIN] = {

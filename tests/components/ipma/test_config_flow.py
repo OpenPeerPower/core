@@ -14,7 +14,7 @@ from tests.common import MockConfigEntry, mock_registry
 
 async def test_show_config_form():
     """Test show configuration form."""
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.IpmaFlowHandler()
     flow.opp = opp
 
@@ -26,7 +26,7 @@ async def test_show_config_form():
 
 async def test_show_config_form_default_values():
     """Test show configuration form."""
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.IpmaFlowHandler()
     flow.opp = opp
 
@@ -59,7 +59,7 @@ async def test_flow_show_form():
 
     Test when the form should show when no configurations exists
     """
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.IpmaFlowHandler()
     flow.opp = opp
 
@@ -75,7 +75,7 @@ async def test_flow_entry_created_from_user_input():
 
     Test when the form should show when no configurations exists
     """
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.IpmaFlowHandler()
     flow.opp = opp
 
@@ -104,7 +104,7 @@ async def test_flow_entry_config_entry_already_exists():
     Test when the form should show when user puts existing name
     in the config gui. Then the form should show with error
     """
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.IpmaFlowHandler()
     flow.opp = opp
 

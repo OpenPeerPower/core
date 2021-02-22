@@ -23,7 +23,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Melissa Climate component."""
     conf = config[DOMAIN]
     username = conf.get(CONF_USERNAME)

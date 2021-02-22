@@ -44,7 +44,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Vultr component."""
     api_key = config[DOMAIN].get(CONF_API_KEY)
 

@@ -209,7 +209,7 @@ def groups_with_entity.opp: OpenPeerPowerType, entity_id: str) -> List[str]:
     return groups
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up all groups found defined in the configuration."""
     component = opp.data.get(DOMAIN)
 

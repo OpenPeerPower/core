@@ -47,7 +47,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Import the Mikrotik component from config."""
 
     if DOMAIN in config:

@@ -67,7 +67,7 @@ class TorqueReceiveDataView(OpenPeerPowerView):
     @callback
     def get(self, request):
         """Handle Torque data request."""
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
         data = request.query
 
         if self.email is not None and self.email != data[SENSOR_EMAIL_FIELD]:

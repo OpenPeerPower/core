@@ -6,7 +6,7 @@ from openpeerpower.const import EVENT_OPENPEERPOWER_START, EVENT_OPENPEERPOWER_S
 DOMAIN = "bbb_gpio"
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the BeagleBone Black GPIO component."""
     # pylint: disable=import-error
 

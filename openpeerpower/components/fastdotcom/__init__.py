@@ -35,7 +35,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Fast.com component."""
     conf = config[DOMAIN]
     data = opp.data[DOMAIN] = SpeedtestData.opp)

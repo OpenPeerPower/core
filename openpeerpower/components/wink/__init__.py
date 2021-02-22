@@ -280,7 +280,7 @@ def _request_oauth_completion.opp, config):
     )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Wink component."""
 
     if opp.data.get(DOMAIN) is None:
@@ -688,7 +688,7 @@ class WinkAuthCallbackView(OpenPeerPowerView):
     @callback
     def get(self, request):
         """Finish OAuth callback request."""
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
         data = request.query
 
         response_message = """Wink has been successfully authorized!

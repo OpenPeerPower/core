@@ -155,7 +155,7 @@ async def test_minio_listen.opp, caplog, minio_client_event):
 
 async def test_queue_listener():
     """Tests QueueListener firing events on Open Peer Power event bus."""
-    opp.=MagicMock()
+   opp = MagicMock()
 
     queue_listener = QueueListener.opp)
     queue_listener.start()

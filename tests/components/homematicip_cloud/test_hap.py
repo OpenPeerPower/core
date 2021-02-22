@@ -73,7 +73,7 @@ async def test_auth_auth_check_and_register_with_exception.opp):
 
 async def test_hap_setup_works():
     """Test a successful setup of a accesspoint."""
-    opp.=Mock()
+   opp = Mock()
     entry = Mock()
     home = Mock()
     entry.data = {HMIPC_HAPID: "ABC123", HMIPC_AUTHTOKEN: "123", HMIPC_NAME: "hmip"}
@@ -95,7 +95,7 @@ async def test_hap_setup_works():
 
 async def test_hap_setup_connection_error():
     """Test a failed accesspoint setup."""
-    opp.=Mock()
+   opp = Mock()
     entry = Mock()
     entry.data = {HMIPC_HAPID: "ABC123", HMIPC_AUTHTOKEN: "123", HMIPC_NAME: "hmip"}
     hap = HomematicipHAP.opp, entry)

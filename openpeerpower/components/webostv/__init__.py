@@ -78,7 +78,7 @@ SERVICE_TO_METHOD = {
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the LG WebOS TV platform."""
     opp.data[DOMAIN] = {}
 

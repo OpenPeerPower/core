@@ -30,7 +30,7 @@ _LOGGER = logging.getLogger(__name__)
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the STIEBEL ELTRON unit.
 
     Will automatically load climate platform.

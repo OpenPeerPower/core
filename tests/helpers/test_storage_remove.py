@@ -14,7 +14,7 @@ async def test_removing_while_delay_in_progress(tmpdir):
     """Test removing while delay in progress."""
 
     loop = asyncio.get_event_loop()
-    opp.=await async_test_open_peer_power(loop)
+   opp = await async_test_open_peer_power(loop)
 
     test_dir = await opp.async_add_executor_job(tmpdir.mkdir, "storage")
 

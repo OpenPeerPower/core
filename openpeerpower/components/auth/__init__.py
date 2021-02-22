@@ -189,7 +189,7 @@ def create_auth_code(
     return.opp.data[DOMAIN](client_id, credential_or_user)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Component to allow users to login."""
     store_result, retrieve_result = _create_auth_code_store()
 
@@ -239,7 +239,7 @@ class TokenView(OpenPeerPowerView):
     @log_invalid_auth
     async def post(self, request):
         """Grant a token."""
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
         data = await request.post()
 
         grant_type = data.get("grant_type")
@@ -393,7 +393,7 @@ class LinkUserView(OpenPeerPowerView):
     @RequestDataValidator(vol.Schema({"code": str, "client_id": str}))
     async def post(self, request, data):
         """Link a user."""
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
         user = request[.opp_user"]
 
         credentials = self._retrieve_credentials(

@@ -34,7 +34,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the SPC component."""
 
     async def async_upate_callback(spc_object):

@@ -78,7 +78,7 @@ async def async_setup_opp(
     runtime_config: "RuntimeConfig",
 ) -> Optional[core.OpenPeerPower]:
     """Set up Open Peer Power."""
-    opp.= core.OpenPeerPower()
+   opp =  core.OpenPeerPower()
     opp.config.config_dir = runtime_config.config_dir
 
     async_enable_logging(
@@ -146,7 +146,7 @@ async def async_setup_opp(
         safe_mode = True
         old_config = opp.config
 
-        opp.= core.OpenPeerPower()
+       opp =  core.OpenPeerPower()
         opp.config.skip_pip = old_config.skip_pip
         opp.config.internal_url = old_config.internal_url
         opp.config.external_url = old_config.external_url

@@ -468,7 +468,7 @@ def get_influx_connection(conf, test_write=False, test_read=False):
     return InfluxClient(databases, write_v1, query_v1, close_v1)
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the InfluxDB component."""
     conf = config[DOMAIN]
     try:

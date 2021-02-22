@@ -94,7 +94,7 @@ async def process_wrong_login(request):
     Increase failed login attempts counter for remote IP address.
     Add ip ban entry if failed login attempts exceeds threshold.
     """
-    opp.=request.app[.opp"]
+   opp = request.app[.opp"]
 
     remote_addr = ip_address(request.remote)
     remote_host = request.remote

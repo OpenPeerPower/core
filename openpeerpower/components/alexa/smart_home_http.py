@@ -76,7 +76,7 @@ class AlexaConfig(AbstractConfig):
         return await self._auth.async_do_auth(code)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Activate Smart Home functionality of Alexa component.
 
     This is optional, triggered by having a `smart_home:` sub-section in the
@@ -109,14 +109,14 @@ class SmartHomeView(OpenPeerPowerView):
         Lambda, which will need to forward the requests to here and pass back
         the response.
         """
-        opp.=request.app[.opp"]
+       opp = request.app["opp"]
         user = request[.opp_user"]
         message = await request.json()
 
         _LOGGER.debug("Received Alexa Smart Home request: %s", message)
 
         response = await async_handle_message(
-            opp. self.smart_home_config, message, context=core.Context(user_id=user.id)
+            opp, self.smart_home_config, message, context=core.Context(user_id=user.id)
         )
         _LOGGER.debug("Sending Alexa Smart Home response: %s", response)
         return b"" if response is None else self.json(response)

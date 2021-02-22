@@ -18,7 +18,7 @@ SERVICE_BROWSE_URL_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Listen for browse_url events."""
 
     opp.services.register(

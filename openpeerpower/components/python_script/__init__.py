@@ -76,7 +76,7 @@ class ScriptError(OpenPeerPowerError):
     """When a script error occurs."""
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Initialize the Python script component."""
     path = opp.config.path(FOLDER)
 

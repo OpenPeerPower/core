@@ -31,7 +31,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the BloomSky component."""
     api_key = config[DOMAIN][CONF_API_KEY]
 

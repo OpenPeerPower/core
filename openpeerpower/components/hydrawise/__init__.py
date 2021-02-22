@@ -77,7 +77,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Hunter Hydrawise component."""
     conf = config[DOMAIN]
     access_token = conf[CONF_ACCESS_TOKEN]

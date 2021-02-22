@@ -36,7 +36,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, base_config):
+def setup(opp, base_config):
     """Set up the Lutron component."""
     opp.data[LUTRON_BUTTONS] = []
     opp.data[LUTRON_CONTROLLER] = None

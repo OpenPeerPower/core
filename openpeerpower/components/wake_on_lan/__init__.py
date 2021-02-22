@@ -23,7 +23,7 @@ WAKE_ON_LAN_SEND_MAGIC_PACKET_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the wake on LAN component."""
 
     async def send_magic_packet(call):

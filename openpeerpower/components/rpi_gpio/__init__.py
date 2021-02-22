@@ -7,7 +7,7 @@ DOMAIN = "rpi_gpio"
 PLATFORMS = ["binary_sensor", "cover", "switch"]
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Raspberry PI GPIO component."""
 
     def cleanup_gpio(event):

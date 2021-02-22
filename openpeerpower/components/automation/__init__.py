@@ -160,7 +160,7 @@ def devices_in_automation.opp: OpenPeerPower, entity_id: str) -> List[str]:
     return list(automation_entity.referenced_devices)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the automation."""
     opp.data[DOMAIN] = component = EntityComponent(LOGGER, DOMAIN, opp)
 

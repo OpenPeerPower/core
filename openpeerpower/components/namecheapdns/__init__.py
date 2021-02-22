@@ -32,7 +32,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Initialize the namecheap DNS component."""
     host = config[DOMAIN][CONF_HOST]
     domain = config[DOMAIN][CONF_DOMAIN]

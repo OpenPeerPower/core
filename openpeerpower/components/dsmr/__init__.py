@@ -8,7 +8,7 @@ from openpeerpower.core import OpenPeerPower
 from .const import DATA_LISTENER, DATA_TASK, DOMAIN, PLATFORMS
 
 
-async def async_setup_opp, config: dict):
+async def async_setup(opp, config: dict):
     """Set up the DSMR platform."""
     return True
 

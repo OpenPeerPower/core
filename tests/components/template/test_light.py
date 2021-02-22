@@ -25,7 +25,7 @@ _STATE_AVAILABILITY_BOOLEAN = "availability_boolean.state"
 class TestTemplateLight:
     """Test the Template light."""
 
-    opp.=None
+   opp = None
     calls = None
     # pylint: disable=invalid-name
 

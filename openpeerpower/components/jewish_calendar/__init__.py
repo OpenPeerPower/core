@@ -96,7 +96,7 @@ def get_unique_prefix(
     return f"{prefix}"
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Jewish Calendar component."""
     name = config[DOMAIN][CONF_NAME]
     language = config[DOMAIN][CONF_LANGUAGE]

@@ -417,7 +417,7 @@ class PlexAuthorizationCallbackView(OpenPeerPowerView):
 
     async def get(self, request):
         """Receive authorization confirmation."""
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
         await opp.config_entries.flow.async_configure(
             flow_id=request.query["flow_id"], user_input=None
         )

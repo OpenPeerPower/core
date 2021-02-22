@@ -61,7 +61,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Create the ViCare component."""
     conf = config[DOMAIN]
     params = {"token_file":.opp.config.path(STORAGE_DIR, "vicare_token.save")}

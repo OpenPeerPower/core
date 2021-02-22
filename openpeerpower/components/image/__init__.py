@@ -182,7 +182,7 @@ class ImageServeView(OpenPeerPowerView):
         if image_info is None:
             raise web.HTTPNotFound()
 
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
         target_file = self.image_folder / image_id / f"{width}x{height}"
 
         if not target_file.is_file():

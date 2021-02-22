@@ -81,7 +81,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up AWS component."""
     opp.data[DATA_HASS_CONFIG] = config
 

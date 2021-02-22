@@ -10,7 +10,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["climate", "sensor"]
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up smarttub component."""
 
     opp.data.setdefault(DOMAIN, {})

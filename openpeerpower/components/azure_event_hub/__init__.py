@@ -59,7 +59,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, yaml_config):
+async def async_setup(opp, yaml_config):
     """Activate Azure EH component."""
     config = yaml_config[DOMAIN]
     if config.get(CONF_EVENT_HUB_CON_STRING):

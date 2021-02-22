@@ -131,7 +131,7 @@ DISCONNECT_LTE_SCHEMA = vol.Schema({vol.Optional(ATTR_HOST): cv.string})
 class ModemData:
     """Class for modem state."""
 
-    opp.=attr.ib()
+   opp = attr.ib()
     host = attr.ib()
     modem = attr.ib()
 
@@ -171,7 +171,7 @@ class LTEData:
         return next(iter(self.modem_data.values()))
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up Netgear LTE component."""
     if DATA_KEY not in.opp.data:
         websession = async_create_clientsession(

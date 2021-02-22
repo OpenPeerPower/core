@@ -236,7 +236,7 @@ def _frontend_root(dev_repo_path):
     return.opp_frontend.where()
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the serving of the frontend."""
     await async_setup_frontend_storage.opp)
     opp.components.websocket_api.async_register_command(websocket_get_panels)
@@ -490,7 +490,7 @@ class IndexView(web_urldispatcher.AbstractResource):
 
     async def get(self, request: web.Request) -> web.Response:
         """Serve the index page for panel pages."""
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
 
         if not.opp.components.onboarding.async_is_onboarded():
             return web.Response(status=302, headers={"location": "/onboarding.html"})

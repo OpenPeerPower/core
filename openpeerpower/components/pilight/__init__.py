@@ -58,7 +58,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Pilight component."""
 
     host = config[DOMAIN][CONF_HOST]

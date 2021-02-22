@@ -45,12 +45,12 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Activate the Apache Kafka integration."""
     conf = config[DOMAIN]
 
     kafka = opp.data[DOMAIN] = KafkaManager(
-        opp.
+        opp,
         conf[CONF_IP_ADDRESS],
         conf[CONF_PORT],
         conf[CONF_TOPIC],
@@ -85,7 +85,7 @@ class KafkaManager:
 
     def __init__(
         self,
-        opp.
+        opp,
         ip_address,
         port,
         topic,

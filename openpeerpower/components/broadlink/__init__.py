@@ -13,7 +13,7 @@ class BroadlinkData:
     platforms: dict = field(default_factory=dict)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Broadlink integration."""
     opp.data[DOMAIN] = BroadlinkData()
     return True

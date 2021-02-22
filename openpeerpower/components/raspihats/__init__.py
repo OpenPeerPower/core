@@ -29,7 +29,7 @@ I2C_HAT_NAMES = [
 I2C_HATS_MANAGER = "I2CH_MNG"
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the raspihats component."""
     opp.data[I2C_HATS_MANAGER] = I2CHatsManager()
 

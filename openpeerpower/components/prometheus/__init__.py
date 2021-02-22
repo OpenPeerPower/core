@@ -77,7 +77,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Activate Prometheus component."""
     opp.http.register_view(PrometheusView(prometheus_client))
 

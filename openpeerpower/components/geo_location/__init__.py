@@ -25,7 +25,7 @@ ENTITY_ID_FORMAT = DOMAIN + ".{}"
 SCAN_INTERVAL = timedelta(seconds=60)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Geolocation component."""
     component = opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN, opp, SCAN_INTERVAL

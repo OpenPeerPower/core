@@ -57,7 +57,7 @@ PLATFORM_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the scenes."""
     component = opp.data[DOMAIN] = EntityComponent(
         logging.getLogger(__name__), DOMAIN, opp

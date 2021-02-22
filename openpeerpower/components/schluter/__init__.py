@@ -31,7 +31,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Schluter component."""
     _LOGGER.debug("Starting setup of schluter")
 

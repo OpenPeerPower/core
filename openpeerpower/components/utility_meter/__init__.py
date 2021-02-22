@@ -58,7 +58,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up an Utility Meter."""
     component = EntityComponent(_LOGGER, DOMAIN, opp)
     opp.data[DATA_UTILITY] = {}

@@ -294,7 +294,7 @@ def load_data(
     return None
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Telegram bot component."""
     if not config[DOMAIN]:
         return False

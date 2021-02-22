@@ -56,7 +56,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Initialize OwnTracks component."""
     opp.data[DOMAIN] = {"config": config[DOMAIN], "devices": {}, "unsub": None}
     if not.opp.config_entries.async_entries(DOMAIN):

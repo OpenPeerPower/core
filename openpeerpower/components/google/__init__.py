@@ -199,7 +199,7 @@ def do_authentication.opp, opp_config, config):
     return True
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Google platform."""
     if DATA_INDEX not in.opp.data:
         opp.data[DATA_INDEX] = {}

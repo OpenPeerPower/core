@@ -154,7 +154,7 @@ CONFIG_SCHEMA = vol.Schema(
 DOMAINS = ["switch", "sensor", "light", "binary_sensor", "cover"]
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the RFXtrx component."""
     if DOMAIN not in config:
         return True

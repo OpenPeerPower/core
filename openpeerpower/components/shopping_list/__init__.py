@@ -54,7 +54,7 @@ SCHEMA_WEBSOCKET_CLEAR_ITEMS = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Initialize the shopping list."""
 
     if DOMAIN not in config:
@@ -258,7 +258,7 @@ class ClearCompletedItemsView(http.OpenPeerPowerView):
 
     async def post(self, request):
         """Retrieve if API is running."""
-        opp.=request.app[.opp"]
+       opp = request.app[.opp"]
         await opp.data[DOMAIN].async_clear_completed()
         opp.bus.async_fire(EVENT)
         return self.json_message("Cleared completed items.")

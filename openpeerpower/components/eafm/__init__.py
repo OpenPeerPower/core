@@ -3,7 +3,7 @@
 from .const import DOMAIN
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up devices."""
     opp.data[DOMAIN] = {}
     return True

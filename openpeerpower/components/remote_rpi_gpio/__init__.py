@@ -13,7 +13,7 @@ DEFAULT_PULL_MODE = "UP"
 DOMAIN = "remote_rpi_gpio"
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Raspberry Pi Remote GPIO component."""
     return True
 

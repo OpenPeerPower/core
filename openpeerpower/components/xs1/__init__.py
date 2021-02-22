@@ -46,7 +46,7 @@ XS1_COMPONENTS = ["climate", "sensor", "switch"]
 UPDATE_LOCK = asyncio.Lock()
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up XS1 Component."""
     _LOGGER.debug("Initializing XS1")
 

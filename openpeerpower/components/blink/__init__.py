@@ -59,7 +59,7 @@ def _reauth_flow_wrapper.opp, data):
     )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up a Blink component."""
     opp.data[DOMAIN] = {}
     return True

@@ -14,7 +14,7 @@ from tests.common import assert_setup_component, get_test_open_peer_power
 class TestTrendBinarySensor:
     """Test the Trend sensor."""
 
-    opp.=None
+   opp = None
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""

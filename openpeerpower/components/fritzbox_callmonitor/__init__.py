@@ -21,7 +21,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the fritzbox_callmonitor integration."""
     return True
 

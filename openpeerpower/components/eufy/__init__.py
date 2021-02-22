@@ -51,7 +51,7 @@ EUFY_DISPATCH = {
 }
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up Eufy devices."""
 
     if CONF_USERNAME in config[DOMAIN] and CONF_PASSWORD in config[DOMAIN]:

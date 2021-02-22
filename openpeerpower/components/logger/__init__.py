@@ -47,7 +47,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the logger component."""
     opp.data[DOMAIN] = {}
     logging.setLoggerClass(_get_logger_class.opp.data[DOMAIN]))

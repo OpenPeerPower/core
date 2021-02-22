@@ -34,7 +34,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the MQTT state feed."""
     conf = config.get(DOMAIN)
     publish_filter = convert_include_exclude_filter(conf)

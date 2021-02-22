@@ -72,7 +72,7 @@ SERVICE_SCHEMA_SEND_MESSAGE = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Matrix bot component."""
     config = config[DOMAIN]
 

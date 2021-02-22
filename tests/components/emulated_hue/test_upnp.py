@@ -35,7 +35,7 @@ class MockTransport:
 class TestEmulatedHue(unittest.TestCase):
     """Test the emulated Hue component."""
 
-    opp.=None
+   opp = None
 
     @classmethod
     def setUpClass(cls):

@@ -33,7 +33,7 @@ CONFIG_SCHEMA = vol.Schema(
 LUPUSEC_PLATFORMS = ["alarm_control_panel", "binary_sensor", "switch"]
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up Lupusec component."""
     conf = config[DOMAIN]
     username = conf[CONF_USERNAME]

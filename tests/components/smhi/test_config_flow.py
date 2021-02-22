@@ -10,7 +10,7 @@ from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE
 # pylint: disable=protected-access
 async def test_openpeerpower_location_exists() -> None:
     """Test if Open Peer Power location exists it should return True."""
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.SmhiFlowHandler()
     flow.opp = opp
     with patch.object(flow, "_check_location", return_value=True):
@@ -31,7 +31,7 @@ async def test_openpeerpower_location_exists() -> None:
 
 async def test_name_in_configuration_exists() -> None:
     """Test if home location exists in configuration."""
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.SmhiFlowHandler()
     flow.opp = opp
 
@@ -67,7 +67,7 @@ def test_smhi_locations.opp) -> None:
 
 async def test_show_config_form() -> None:
     """Test show configuration form."""
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.SmhiFlowHandler()
     flow.opp = opp
 
@@ -79,7 +79,7 @@ async def test_show_config_form() -> None:
 
 async def test_show_config_form_default_values() -> None:
     """Test show configuration form."""
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.SmhiFlowHandler()
     flow.opp = opp
 
@@ -113,7 +113,7 @@ async def test_flow_show_form() -> None:
 
     Test when the form should show when no configurations exists
     """
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.SmhiFlowHandler()
     flow.opp = opp
 
@@ -152,7 +152,7 @@ async def test_flow_show_form_name_exists() -> None:
 
     Test when the form should show when no configurations exists
     """
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.SmhiFlowHandler()
     flow.opp = opp
     test_data = {"name": "home", CONF_LONGITUDE: "0", CONF_LATITUDE: "0"}
@@ -181,7 +181,7 @@ async def test_flow_entry_created_from_user_input() -> None:
 
     Test when the form should show when no configurations exists
     """
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.SmhiFlowHandler()
     flow.opp = opp
 
@@ -215,7 +215,7 @@ async def test_flow_entry_created_user_input_faulty() -> None:
     Test when the form should show when user puts faulty location
     in the config gui. Then the form should show with error
     """
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.SmhiFlowHandler()
     flow.opp = opp
 
@@ -244,7 +244,7 @@ async def test_flow_entry_created_user_input_faulty() -> None:
 
 async def test_check_location_correct() -> None:
     """Test check location when correct input."""
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.SmhiFlowHandler()
     flow.opp = opp
 
@@ -257,7 +257,7 @@ async def test_check_location_correct() -> None:
 
 async def test_check_location_faulty() -> None:
     """Test check location when faulty input."""
-    opp.=Mock()
+   opp = Mock()
     flow = config_flow.SmhiFlowHandler()
     flow.opp = opp
 

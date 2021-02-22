@@ -50,7 +50,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, base_config):
+async def async_setup(opp, base_config):
     """Set up the Supla component."""
 
     server_confs = base_config[DOMAIN][CONF_SERVERS]

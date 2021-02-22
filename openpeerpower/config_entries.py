@@ -24,7 +24,7 @@ import openpeerpower.util.uuid as uuid_util
 _LOGGER = logging.getLogger(__name__)
 
 SOURCE_DISCOVERY = "discovery"
-SOURCE_HASSIO = oppio"
+SOURCE_OPPIO = oppio"
 SOURCE_HOMEKIT = "homekit"
 SOURCE_IMPORT = "import"
 SOURCE_INTEGRATION_DISCOVERY = "integration_discovery"
@@ -202,7 +202,7 @@ class ConfigEntry:
 
     async def async_setup(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         *,
         integration: Optional[loader.Integration] = None,
         tries: int = 0,
@@ -291,7 +291,7 @@ class ConfigEntry:
             self.state = ENTRY_STATE_SETUP_ERROR
 
     async def async_unload(
-        self, opp: OpenPeerPower, *, integration: Optional[loader.Integration] = None
+            self.opp: OpenPeerPower, *, integration: Optional[loader.Integration] = None
     ) -> bool:
         """Unload an entry.
 
@@ -357,7 +357,7 @@ class ConfigEntry:
             return
 
         try:
-            integration = await loader.async_get_integration opp, self.domain)
+            integration = await loader.async_get_integration(opp, self.domain)
         except loader.IntegrationNotFound:
             # The integration was likely a custom_component
             # that was uninstalled, or an integration

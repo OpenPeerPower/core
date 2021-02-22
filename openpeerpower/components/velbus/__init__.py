@@ -25,7 +25,7 @@ CONFIG_SCHEMA = vol.Schema(
 COMPONENT_TYPES = ["switch", "sensor", "binary_sensor", "cover", "climate", "light"]
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Velbus platform."""
     # Import from the configuration file if needed
     if DOMAIN not in config:

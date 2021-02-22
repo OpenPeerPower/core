@@ -64,7 +64,7 @@ CONFIG_SCHEMA = vol.Schema(
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Almond component."""
     opp.data[DOMAIN] = {}
 

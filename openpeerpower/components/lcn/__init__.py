@@ -47,7 +47,7 @@ from .services import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the LCN component."""
     opp.data[DATA_LCN] = {}
 

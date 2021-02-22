@@ -446,7 +446,7 @@ async def test_new_event_sends_signal.opp):
 
 async def test_shutdown():
     """Successful shutdown."""
-    opp.=Mock()
+   opp = Mock()
     entry = Mock()
     entry.data = ENTRY_CONFIG
 

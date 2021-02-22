@@ -39,7 +39,7 @@ CONFIG_SCHEMA = vol.Schema(
 N26_COMPONENTS = ["sensor", "switch"]
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up N26 Component."""
     acc_list = config[DOMAIN]
 

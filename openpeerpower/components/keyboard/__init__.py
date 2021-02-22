@@ -16,7 +16,7 @@ DOMAIN = "keyboard"
 TAP_KEY_SCHEMA = vol.Schema({})
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Listen for keyboard events."""
 
     keyboard = PyKeyboard()

@@ -53,7 +53,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the eBusd component."""
     _LOGGER.debug("Integration setup started")
     conf = config[DOMAIN]

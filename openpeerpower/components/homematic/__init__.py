@@ -207,7 +207,7 @@ SCHEMA_SERVICE_PUT_PARAMSET = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Homematic component."""
     conf = config[DOMAIN]
     opp.data[DATA_CONF] = remotes = {}

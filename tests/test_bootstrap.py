@@ -108,7 +108,7 @@ async def test_setup_after_deps_all_present.opp):
     order = []
 
     def gen_domain_setup(domain):
-        async def async_setup_opp, config):
+        async def async_setup(opp, config):
             order.append(domain)
             return True
 
@@ -155,7 +155,7 @@ async def test_setup_after_deps_in_stage_1_ignored.opp):
     order = []
 
     def gen_domain_setup(domain):
-        async def async_setup_opp, config):
+        async def async_setup(opp, config):
             order.append(domain)
             return True
 
@@ -201,7 +201,7 @@ async def test_setup_after_deps_via_platform.opp):
     after_dep_event = asyncio.Event()
 
     def gen_domain_setup(domain):
-        async def async_setup_opp, config):
+        async def async_setup(opp, config):
             if domain == "after_dep_of_platform_int":
                 await after_dep_event.wait()
 
@@ -250,7 +250,7 @@ async def test_setup_after_deps_not_trigger_load.opp):
     order = []
 
     def gen_domain_setup(domain):
-        async def async_setup_opp, config):
+        async def async_setup(opp, config):
             order.append(domain)
             return True
 
@@ -289,7 +289,7 @@ async def test_setup_after_deps_not_present.opp):
     order = []
 
     def gen_domain_setup(domain):
-        async def async_setup_opp, config):
+        async def async_setup(opp, config):
             order.append(domain)
             return True
 
@@ -379,7 +379,7 @@ async def test_setup_opp(
         "openpeerpower.config.async_opp_config_yaml",
         return_value={"browser": {}, "frontend": {}},
     ), patch.object(bootstrap, "LOG_SLOW_STARTUP_INTERVAL", 5000):
-        opp.= await bootstrap.async_setup_opp(
+       opp =  await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=verbose,
@@ -462,7 +462,7 @@ async def test_setup_opp_invalid_yaml(
     with patch(
         "openpeerpower.config.async_opp_config_yaml", side_effect=OpenPeerPowerError
     ):
-        opp.= await bootstrap.async_setup_opp(
+       opp =  await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=False,
@@ -518,7 +518,7 @@ async def test_setup_opp_safe_mode(
         "openpeerpower.config_entries.ConfigEntries.async_domains",
         return_value=["browser"],
     ):
-        opp.= await bootstrap.async_setup_opp(
+       opp =  await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=False,
@@ -551,7 +551,7 @@ async def test_setup_opp_invalid_core_config(
         "openpeerpower.config.async_opp_config_yaml",
         return_value={"openpeerpower": {"non-existing": 1}},
     ):
-        opp.= await bootstrap.async_setup_opp(
+       opp =  await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=False,
@@ -591,7 +591,7 @@ async def test_setup_safe_mode_if_no_frontend(
             "person": {"invalid": True},
         },
     ):
-        opp.= await bootstrap.async_setup_opp(
+       opp =  await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=verbose,

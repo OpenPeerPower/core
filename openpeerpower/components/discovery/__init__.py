@@ -120,7 +120,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Start a discovery service."""
 
     logger = logging.getLogger(__name__)

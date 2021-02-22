@@ -150,7 +150,7 @@ def devices_in_script.opp: OpenPeerPower, entity_id: str) -> List[str]:
     return list(script_entity.script.referenced_devices)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Load the scripts from the configuration."""
     opp.data[DOMAIN] = component = EntityComponent(_LOGGER, DOMAIN, opp)
 

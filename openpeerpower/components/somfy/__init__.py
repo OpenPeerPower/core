@@ -51,7 +51,7 @@ CONFIG_SCHEMA = vol.Schema(
 SOMFY_COMPONENTS = ["climate", "cover", "sensor", "switch"]
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Somfy component."""
     opp.data[DOMAIN] = {}
     domain_config = config.get(DOMAIN, {})

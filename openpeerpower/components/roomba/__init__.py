@@ -13,7 +13,7 @@ from .const import BLID, COMPONENTS, CONF_BLID, CONF_CONTINUOUS, DOMAIN, ROOMBA_
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the roomba environment."""
     opp.data.setdefault(DOMAIN, {})
     return True

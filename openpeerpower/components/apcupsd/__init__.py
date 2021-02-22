@@ -34,7 +34,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Use config values to set up a function enabling status retrieval."""
     conf = config[DOMAIN]
     host = conf[CONF_HOST]

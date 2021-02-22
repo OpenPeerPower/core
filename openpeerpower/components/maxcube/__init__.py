@@ -46,7 +46,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Establish connection to MAX! Cube."""
 
     if DATA_KEY not in.opp.data:

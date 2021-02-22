@@ -39,7 +39,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up for the Asterisk Voicemail box."""
     conf = config.get(DOMAIN)
 

@@ -89,7 +89,7 @@ SENSORS = (
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Nextcloud integration."""
     # Fetch Nextcloud Monitor api data
     conf = config[DOMAIN]

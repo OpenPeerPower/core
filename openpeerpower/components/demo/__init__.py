@@ -37,7 +37,7 @@ COMPONENTS_WITH_DEMO_PLATFORM = [
 ]
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the demo environment."""
     if DOMAIN not in config:
         return True

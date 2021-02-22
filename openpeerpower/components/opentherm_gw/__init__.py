@@ -108,7 +108,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the OpenTherm Gateway component."""
     if not.opp.config_entries.async_entries(DOMAIN) and DOMAIN in config:
         conf = config[DOMAIN]

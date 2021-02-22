@@ -42,7 +42,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the emulated roku component."""
     conf = config.get(DOMAIN)
 

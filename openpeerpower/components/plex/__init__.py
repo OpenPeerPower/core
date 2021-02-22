@@ -50,7 +50,7 @@ from .services import async_setup_services
 _LOGGER = logging.getLogger(__package__)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the Plex component."""
     opp.data.setdefault(
         PLEX_DOMAIN,

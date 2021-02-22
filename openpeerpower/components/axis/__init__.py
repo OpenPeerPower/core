@@ -13,7 +13,7 @@ from .device import AxisNetworkDevice
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Old way to set up Axis devices."""
     return True
 

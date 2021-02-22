@@ -40,7 +40,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Skybell component."""
     conf = config[DOMAIN]
     username = conf.get(CONF_USERNAME)

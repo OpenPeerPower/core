@@ -4,6 +4,6 @@ from .const import TEST  # noqa: F401
 DOMAIN = "test_package"
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Mock a successful setup."""
     return True

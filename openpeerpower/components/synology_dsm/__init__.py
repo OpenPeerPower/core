@@ -102,7 +102,7 @@ ATTRIBUTION = "Data provided by Synology"
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up Synology DSM sensors from legacy config file."""
 
     conf = config.get(DOMAIN)

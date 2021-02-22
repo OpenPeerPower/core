@@ -225,7 +225,7 @@ class BaseNotificationService:
         )
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the notify services."""
     opp.data.setdefault(NOTIFY_SERVICES, {})
 

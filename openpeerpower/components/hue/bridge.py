@@ -82,7 +82,7 @@ class HueBridge:
     async def async_setup(self, tries=0):
         """Set up a phue bridge based on host parameter."""
         host = self.host
-        opp.=self.opp
+       opp = self.opp
 
         bridge = aiohue.Bridge(
             host,

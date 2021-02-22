@@ -93,7 +93,7 @@ UPDATE_LEAF_SCHEMA = vol.Schema({vol.Required(ATTR_VIN): cv.string})
 START_CHARGE_LEAF_SCHEMA = vol.Schema({vol.Required(ATTR_VIN): cv.string})
 
 
-def setup_opp, config):
+def setup(opp, config):
     """Set up the Nissan Leaf component."""
 
     async def async_handle_update(service):

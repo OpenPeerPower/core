@@ -50,7 +50,7 @@ def mock_handlers():
 class TestSetup:
     """Test the bootstrap utils."""
 
-    opp.= None
+   opp =  None
     backup_cache = None
 
     # pylint: disable=invalid-name, no-self-use
@@ -277,7 +277,7 @@ class TestSetup:
         """Test component setup while waiting for lock is not set up twice."""
         result = []
 
-        async def async_setup_opp, config):
+        async def async_setup(opp, config):
             """Tracking Setup."""
             result.append(1)
 

@@ -53,7 +53,7 @@ CONFIG_SCHEMA = vol.Schema(
 SERVICE_FFMPEG_SCHEMA = vol.Schema({vol.Optional(ATTR_ENTITY_ID): cv.entity_ids})
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the FFmpeg component."""
     conf = config.get(DOMAIN, {})
 

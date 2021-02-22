@@ -165,7 +165,7 @@ def is_cloudhook_request(request):
     return isinstance(request, MockRequest)
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Initialize the Open Peer Power cloud."""
     # Process configs
     if DOMAIN in config:

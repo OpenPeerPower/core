@@ -216,7 +216,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up for Homekit devices."""
     map_storage = opp.data[ENTITY_MAP] = EntityMapStorage.opp)
     await map_storage.async_initialize()

@@ -53,7 +53,7 @@ _SERVICE_MAP = {
 }
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Check connectivity and version of KEBA charging station."""
     host = config[DOMAIN][CONF_HOST]
     rfid = config[DOMAIN][CONF_RFID]

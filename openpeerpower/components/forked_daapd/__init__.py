@@ -4,7 +4,7 @@ from openpeerpower.components.media_player import DOMAIN as MP_DOMAIN
 from .const import DOMAIN, HASS_DATA_REMOVE_LISTENERS_KEY, HASS_DATA_UPDATER_KEY
 
 
-async def async_setup_opp, config):
+async def async_setup(opp, config):
     """Set up the forked-daapd component."""
     return True
 
