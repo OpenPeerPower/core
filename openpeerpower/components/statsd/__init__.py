@@ -16,7 +16,7 @@ CONF_VALUE_MAP = "value_mapping"
 
 DEFAULT_HOST = "localhost"
 DEFAULT_PORT = 8125
-DEFAULT_PREFIX = .opp"
+DEFAULT_PREFIX = opp"
 DEFAULT_RATE = 1
 DOMAIN = "statsd"
 
@@ -39,7 +39,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the StatsD component."""
 
     conf = config[DOMAIN]

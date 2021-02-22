@@ -20,7 +20,7 @@ def mock_device():
     return create_mock_device("switch", DynalitePresetSwitchDevice)
 
 
-async def test_switch_setup.opp, mock_device):
+async def test_switch_setup_opp, mock_device):
     """Test a successful setup."""
     await create_entity_from_device.opp, mock_device)
     entity_state =.opp.states.get("switch.name")

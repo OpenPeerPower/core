@@ -92,7 +92,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Melnor RainCloud component."""
     conf = config[DOMAIN]
     username = conf.get(CONF_USERNAME)

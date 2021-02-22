@@ -9,7 +9,7 @@ from .const import DOMAIN
 PLATFORMS = ["light"]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Zerproc platform."""
    .opp.async_create_task(
        .opp.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_IMPORT})

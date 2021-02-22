@@ -13,7 +13,7 @@ from .const import DOMAIN
 PLATFORMS = ["switch", "binary_sensor"]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the ProgettiHWSW Automation component."""
    .opp.data[DOMAIN] = {}
 

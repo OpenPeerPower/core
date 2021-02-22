@@ -94,7 +94,7 @@ SET_ZONE_OVERRIDE_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Create a Genius Hub system."""
    .opp.data[DOMAIN] = {}
 

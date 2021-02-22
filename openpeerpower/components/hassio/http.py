@@ -59,7 +59,7 @@ class HassIOView(OpenPeerPowerView):
         self, request: web.Request, path: str
     ) -> Union[web.Response, web.StreamResponse]:
         """Route data to Hass.io."""
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
         if _need_auth.opp, path) and not request[KEY_AUTHENTICATED]:
             return web.Response(status=HTTP_UNAUTHORIZED)
 

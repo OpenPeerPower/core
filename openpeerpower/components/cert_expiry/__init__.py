@@ -18,7 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(hours=12)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Platform setup, do nothing."""
     return True
 

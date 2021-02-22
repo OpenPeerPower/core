@@ -26,7 +26,7 @@ PLATFORMS = ["sensor", "binary_sensor"]
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the PoolSense component."""
     # Make sure coordinator is initialized.
    .opp.data.setdefault(DOMAIN, {})

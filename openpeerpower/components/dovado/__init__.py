@@ -36,7 +36,7 @@ CONFIG_SCHEMA = vol.Schema(
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Dovado component."""
 
    .opp.data[DOMAIN] = DovadoData(

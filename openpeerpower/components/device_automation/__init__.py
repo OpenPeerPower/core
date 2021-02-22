@@ -46,7 +46,7 @@ TYPES = {
 }
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up device automation."""
    .opp.components.websocket_api.async_register_command(
         websocket_device_automation_list_actions

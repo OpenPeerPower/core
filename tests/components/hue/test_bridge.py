@@ -13,7 +13,7 @@ from openpeerpower.components.hue.const import (
 from openpeerpower.exceptions import ConfigEntryNotReady
 
 
-async def test_bridge_setup.opp):
+async def test_bridge_setup_opp):
     """Test a successful setup."""
     entry = Mock()
     api = Mock(initialize=AsyncMock())
@@ -78,7 +78,7 @@ async def test_reset_if_entry_had_wrong_auth.opp):
     assert await hue_bridge.async_reset()
 
 
-async def test_reset_unloads_entry_if_setup.opp):
+async def test_reset_unloads_entry_if_setup_opp):
     """Test calling reset while the entry has been setup."""
     entry = Mock()
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}

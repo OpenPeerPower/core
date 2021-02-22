@@ -70,7 +70,7 @@ WEBHOOK_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp,.opp_config):
+async def async_setup_opp,.opp_config):
     """Set up the Geofency component."""
     config =.opp_config.get(DOMAIN, {})
     mobile_beacons = config.get(CONF_MOBILE_BEACONS, [])

@@ -212,7 +212,7 @@ async def test_setup_core_push_timezone.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-1][2]["timezone"] == "America/New_York"
 
 
-async def test_setup.oppio_no_additional_data.opp, aioclient_mock):
+async def test_setup_oppio_no_additional_data.opp, aioclient_mock):
     """Test setup with API push default data."""
     with patch.dict(os.environ, MOCK_ENVIRON), patch.dict(
         os.environ, {"HASSIO_TOKEN": "123456"}

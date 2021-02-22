@@ -25,7 +25,7 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 PLATFORMS = ["sensor"]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Flu Near You component."""
    .opp.data[DOMAIN] = {DATA_COORDINATOR: {}}
     return True

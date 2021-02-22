@@ -128,7 +128,7 @@ async def test.oppio_confirm.opp, mock_try_connection, mock_finish_setup):
         context={"source": .oppio"},
     )
     assert result["type"] == "form"
-    assert result["step_id"] == .oppio_confirm"
+    assert result["step_id"] == oppio_confirm"
     assert result["description_placeholders"] == {"addon": "Mock Addon"}
 
     result = await.opp.config_entries.flow.async_configure(

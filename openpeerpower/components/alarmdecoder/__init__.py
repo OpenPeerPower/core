@@ -39,7 +39,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["alarm_control_panel", "sensor", "binary_sensor"]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up for the AlarmDecoder devices."""
     return True
 

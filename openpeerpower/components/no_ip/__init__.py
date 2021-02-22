@@ -51,7 +51,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Initialize the NO-IP component."""
     domain = config[DOMAIN].get(CONF_DOMAIN)
     user = config[DOMAIN].get(CONF_USERNAME)

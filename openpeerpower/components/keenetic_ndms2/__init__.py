@@ -23,7 +23,7 @@ from .router import KeeneticRouter
 PLATFORMS = [device_tracker.DOMAIN, binary_sensor.DOMAIN]
 
 
-async def async_setup.opp: OpenPeerPower, _config: Config) -> bool:
+async def async_setup_opp: OpenPeerPower, _config: Config) -> bool:
     """Set up configured entries."""
    .opp.data.setdefault(DOMAIN, {})
     return True

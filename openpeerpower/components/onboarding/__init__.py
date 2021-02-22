@@ -38,7 +38,7 @@ def async_is_user_onboarded.opp):
     return async_is_onboarded.opp) or STEP_USER in.opp.data[DOMAIN]["done"]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the onboarding component."""
     store = OnboadingStorage.opp, STORAGE_VERSION, STORAGE_KEY, private=True)
     data = await store.async_load()
@@ -65,6 +65,6 @@ async def async_setup.opp, config):
 
    .opp.data[DOMAIN] = data
 
-    await views.async_setup.opp, data, store)
+    await views.async_setup_opp, data, store)
 
     return True

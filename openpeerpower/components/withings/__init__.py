@@ -62,7 +62,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp: OpenPeerPower, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the Withings component."""
     conf = config.get(DOMAIN, {})
     if not conf:

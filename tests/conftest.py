@@ -151,7 +151,7 @@ def.opp(loop, load_registries,.opp_storage, request):
         orig_exception_handler(loop, context)
 
     exceptions = []
-   .opp = loop.run_until_complete(async_test_open_peer_power(loop, load_registries))
+    opp =loop.run_until_complete(async_test_open_peer_power(loop, load_registries))
     orig_exception_handler = loop.get_exception_handler()
     loop.set_exception_handler(exc_handle)
 
@@ -243,7 +243,7 @@ async def.opp_access_token.opp,.opp_admin_user,.opp_admin_credential):
     """Return an access token to access Open Peer Power."""
     await opp.auth.async_link_user.opp_admin_user,.opp_admin_credential)
 
-    refresh_token = await opp..auth.async_create_refresh_token(
+    refresh_token = await opp.auth.async_create_refresh_token(
        .opp_admin_user, CLIENT_ID, credential.opp_admin_credential
     )
     return.opp.auth.async_create_access_token(refresh_token)

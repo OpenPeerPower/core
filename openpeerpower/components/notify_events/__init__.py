@@ -12,7 +12,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the notify_events component."""
 
    .opp.data[DOMAIN] = config[DOMAIN]

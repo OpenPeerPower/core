@@ -139,7 +139,7 @@ async def test_update_state_adds_entities_with_update_before_add_false.opp):
 async def test_set_scan_interval_via_platform(mock_track,.opp):
     """Test the setting of the scan interval via platform."""
 
-    def platform_setup.opp, config, add_entities, discovery_info=None):
+    def platform_setup_opp, config, add_entities, discovery_info=None):
         """Test the platform setup."""
         add_entities([MockEntity(should_poll=True)])
 
@@ -174,7 +174,7 @@ async def test_adding_entities_with_generator_and_thread_callback.opp):
     await component.async_add_entities(create_entity(i) for i in range(2))
 
 
-async def test_platform_warn_slow_setup.opp):
+async def test_platform_warn_slow_setup_opp):
     """Warn we log when platform setup takes a long time."""
     platform = MockPlatform()
 
@@ -197,7 +197,7 @@ async def test_platform_warn_slow_setup.opp):
         assert mock_call().cancel.called
 
 
-async def test_platform_error_slow_setup.opp, caplog):
+async def test_platform_error_slow_setup_opp, caplog):
     """Don't block startup more than SLOW_SETUP_MAX_WAIT."""
     with patch.object(entity_platform, "SLOW_SETUP_MAX_WAIT", 0):
         called = []
@@ -588,7 +588,7 @@ async def test_setup_entry_platform_not_ready.opp, caplog):
     assert len(mock_call_later.mock_calls) == 1
 
 
-async def test_reset_cancels_retry_setup.opp):
+async def test_reset_cancels_retry_setup_opp):
     """Test that resetting a platform will cancel scheduled a setup retry."""
     async_setup_entry = Mock(side_effect=PlatformNotReady)
     platform = MockPlatform(async_setup_entry=async_setup_entry)
@@ -874,7 +874,7 @@ async def test_override_restored_entities.opp):
     assert state.state == "on"
 
 
-async def test_platform_with_no_setup.opp, caplog):
+async def test_platform_with_no_setup_opp, caplog):
     """Test setting up a platform that does not support setup."""
     entity_platform = MockEntityPlatform(
        .opp, domain="mock-integration", platform_name="mock-platform", platform=None

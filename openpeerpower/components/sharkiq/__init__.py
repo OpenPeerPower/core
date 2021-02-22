@@ -22,7 +22,7 @@ class CannotConnect(exceptions.OpenPeerPowerError):
     """Error to indicate we cannot connect."""
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the sharkiq environment."""
    .opp.data.setdefault(DOMAIN, {})
     return True

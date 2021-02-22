@@ -32,7 +32,7 @@ def setup_namecheapdns.opp, aioclient_mock):
     )
 
 
-async def test_setup.opp, aioclient_mock):
+async def test_setup_opp, aioclient_mock):
     """Test setup works if update passes."""
     aioclient_mock.get(
         namecheapdns.UPDATE_URL,

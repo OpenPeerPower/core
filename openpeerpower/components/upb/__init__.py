@@ -20,7 +20,7 @@ from .const import (
 UPB_PLATFORMS = ["light", "scene"]
 
 
-async def async_setup.opp: OpenPeerPower,.opp_config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPower,.opp_config: ConfigType) -> bool:
     """Set up the UPB platform."""
     return True
 

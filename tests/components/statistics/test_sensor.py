@@ -38,7 +38,7 @@ class TestStatisticsSensor(unittest.TestCase):
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_open_peer_power()
+        self opp =get_test_open_peer_power()
         self.values = [17, 20, 15.2, 5, 3.8, 9.2, 6.7, 14, 6]
         self.count = len(self.values)
         self.min = min(self.values)

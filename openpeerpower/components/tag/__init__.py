@@ -87,7 +87,7 @@ class TagStorageCollection(collection.StorageCollection):
         return data
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Tag component."""
    .opp.data[DOMAIN] = {}
     id_manager = TagIDManager()
@@ -99,7 +99,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
     await storage_collection.async_load()
     collection.StorageCollectionWebsocket(
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
-    ).async_setup.opp)
+    ).async_setup_opp)
 
     return True
 

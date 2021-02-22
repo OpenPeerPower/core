@@ -16,7 +16,7 @@ from openpeerpower.helpers.data_entry_flow import (
 from openpeerpower.loader import async_get_config_flows
 
 
-async def async_setup.opp):
+async def async_setup_opp):
     """Enable the Open Peer Power views."""
    .opp.http.register_view(ConfigManagerEntryIndexView)
    .opp.http.register_view(ConfigManagerEntryResourceView)
@@ -46,7 +46,7 @@ class ConfigManagerEntryIndexView(OpenPeerPowerView):
 
     async def get(self, request):
         """List available config entries."""
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
 
         return self.json(
             [entry_json(entry) for entry in.opp.config_entries.async_entries()]
@@ -64,7 +64,7 @@ class ConfigManagerEntryResourceView(OpenPeerPowerView):
         if not request[.opp_user"].is_admin:
             raise Unauthorized(config_entry_id=entry_id, permission="remove")
 
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
 
         try:
             result = await.opp.config_entries.async_remove(entry_id)
@@ -85,7 +85,7 @@ class ConfigManagerEntryResourceReloadView(OpenPeerPowerView):
         if not request[.opp_user"].is_admin:
             raise Unauthorized(config_entry_id=entry_id, permission="remove")
 
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
 
         try:
             result = await.opp.config_entries.async_reload(entry_id)
@@ -168,7 +168,7 @@ class ConfigManagerAvailableFlowView(OpenPeerPowerView):
 
     async def get(self, request):
         """List available flow handlers."""
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
         return self.json(await async_get_config_flows.opp))
 
 

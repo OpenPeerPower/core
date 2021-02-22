@@ -103,7 +103,7 @@ def get_zeroconf_info_mock(macaddress):
     return mock_zc_info
 
 
-async def test_setup.opp, mock_zeroconf):
+async def test_setup_opp, mock_zeroconf):
     """Test configured options for a device are loaded via config entry."""
     with patch.object(
        .opp.config_entries.flow, "async_init"

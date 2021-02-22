@@ -158,7 +158,7 @@ class MqttLightTemplate(MqttEntity, LightEntity, RestoreEntity):
         """(Re)Subscribe to topics."""
         for tpl in self._templates.values():
             if tpl is not None:
-                tpl.opp = self.opp
+                tpl opp =self.opp
 
         last_state = await self.async_get_last_state()
 

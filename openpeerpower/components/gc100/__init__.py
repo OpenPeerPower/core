@@ -26,7 +26,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 # pylint: disable=no-member
-def setup.opp, base_config):
+def setup_opp, base_config):
     """Set up the gc100 component."""
     config = base_config[DOMAIN]
     host = config[CONF_HOST]

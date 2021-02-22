@@ -38,7 +38,7 @@ def flow_handler.opp):
 
 async def test_setup_provide_implementation.opp):
     """Test that we provide implementations."""
-    account_link.async_setup.opp)
+    account_link.async_setup_opp)
 
     with patch(
         "openpeerpower.components.cloud.account_link._get_services",

@@ -100,7 +100,7 @@ DEFAULT_FAN_SPEED_AWAY = 25
 DEFAULT_FAN_SPEED_BOOST = 65
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the client and boot the platforms."""
     conf = config[DOMAIN]
     host = conf.get(CONF_HOST)

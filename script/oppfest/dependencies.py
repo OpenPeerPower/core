@@ -74,7 +74,7 @@ class ImportCollector(ast.NodeVisitor):
             and (
                 (
                     isinstance(node.value.value, ast.Name)
-                    and node.value.value.id == .opp"
+                    and node.value.value.id == opp"
                 )
                 or (
                     isinstance(node.value.value, ast.Attribute)

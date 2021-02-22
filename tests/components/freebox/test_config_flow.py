@@ -93,7 +93,7 @@ async def test_link.opp, connect):
     assert result["data"][CONF_PORT] == PORT
 
 
-async def test_abort_if_already_setup.opp):
+async def test_abort_if_already_setup_opp):
     """Test we abort if component is already setup."""
     MockConfigEntry(
         domain=DOMAIN, data={CONF_HOST: HOST, CONF_PORT: PORT}, unique_id=HOST

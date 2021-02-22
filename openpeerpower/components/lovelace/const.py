@@ -11,7 +11,7 @@ from openpeerpower.util import slugify
 DOMAIN = "lovelace"
 EVENT_LOVELACE_UPDATED = "lovelace_updated"
 
-DEFAULT_ICON = .opp:view-dashboard"
+DEFAULT_ICON = opp:view-dashboard"
 
 MODE_YAML = "yaml"
 MODE_STORAGE = "storage"

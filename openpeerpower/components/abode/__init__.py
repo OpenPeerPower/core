@@ -89,7 +89,7 @@ class AbodeSystem:
         self.logout_listener = None
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up Abode integration."""
     if DOMAIN not in config:
         return True
@@ -143,8 +143,8 @@ async def async_setup_entry.opp, config_entry):
            .opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
-    await setup.opp_events.opp)
-    await.opp.async_add_executor_job(setup.opp_services,.opp)
+    await setup_opp_events.opp)
+    await.opp.async_add_executor_job(setup_opp_services,.opp)
     await.opp.async_add_executor_job(setup_abode_events,.opp)
 
     return True
@@ -174,7 +174,7 @@ async def async_unload_entry.opp, config_entry):
     return True
 
 
-def setup.opp_services.opp):
+def setup_opp_services.opp):
     """Open Peer Power services."""
 
     def change_setting(call):
@@ -228,7 +228,7 @@ def setup.opp_services.opp):
     )
 
 
-async def setup.opp_events.opp):
+async def setup_opp_events.opp):
     """Open Peer Power start and stop callbacks."""
 
     def logout(event):

@@ -4,7 +4,7 @@ from datetime import datetime as dt
 
 from setuptools import find_packages, setup
 
-import openpeerpower.const as.opp_const
+import openpeerpower.const as opp_const
 
 PROJECT_NAME = "Open Peer Power"
 PROJECT_PACKAGE_NAME = "openpeerpower"
@@ -21,7 +21,7 @@ PYPI_URL = f"https://pypi.python.org/pypi/{PROJECT_PACKAGE_NAME}"
 GITHUB_PATH = f"{PROJECT_GITHUB_USERNAME}/{PROJECT_GITHUB_REPOSITORY}"
 GITHUB_URL = f"https://github.com/{GITHUB_PATH}"
 
-DOWNLOAD_URL = f"{GITHUB_URL}/archive/.opp_const.__version__}.zip"
+DOWNLOAD_URL = f"{GITHUB_URL}/archive/ opp_const.__version__}.zip"
 PROJECT_URLS = {
     "Bug Reports": f"{GITHUB_URL}/issues",
     "Dev Docs": "https://developers.openpeerpower.io/",
@@ -56,11 +56,11 @@ REQUIRES = [
     "yarl==1.6.3",
 ]
 
-MIN_PY_VERSION = ".".join(map(str,.opp.onst.REQUIRED_PYTHON_VER))
+MIN_PY_VERSION = ".".join(map(str, opp_const.REQUIRED_PYTHON_VER))
 
 setup(
     name=PROJECT_PACKAGE_NAME,
-    version.opp_const.__version__,
+    version opp_const.__version__,
     url=PROJECT_URL,
     download_url=DOWNLOAD_URL,
     project_urls=PROJECT_URLS,
@@ -72,5 +72,5 @@ setup(
     install_requires=REQUIRES,
     python_requires=f">={MIN_PY_VERSION}",
     test_suite="tests",
-    entry_points={"console_scripts": [.opp = openpeerpower.__main__:main"]},
+    entry_points={"console_scripts": ["opp = openpeerpower.__main__:main"]},
 )

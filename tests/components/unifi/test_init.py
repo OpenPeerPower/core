@@ -23,7 +23,7 @@ async def test_successful_config_entry.opp, aioclient_mock):
     assert.opp.data[UNIFI_DOMAIN]
 
 
-async def test_controller_fail_setup.opp):
+async def test_controller_fail_setup_opp):
     """Test that a failed setup still stores controller."""
     with patch("openpeerpower.components.unifi.UniFiController") as mock_controller:
         mock_controller.return_value.async_setup = AsyncMock(return_value=False)

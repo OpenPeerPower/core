@@ -168,7 +168,7 @@ def _async_get_entries_by_name(current_entries):
     return {entry.data.get(CONF_NAME, BRIDGE_NAME): entry for entry in current_entries}
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the HomeKit from yaml."""
    .opp.data.setdefault(DOMAIN, {})
 

@@ -27,7 +27,7 @@ from .const import (
 from .coordinator import RuckusUnleashedDataUpdateCoordinator
 
 
-async def async_setup.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up the Ruckus Unleashed component."""
    .opp.data[DOMAIN] = {}
     return True

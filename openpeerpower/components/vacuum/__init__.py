@@ -82,7 +82,7 @@ def is_on.opp, entity_id):
     return.opp.states.is_state(entity_id, STATE_ON)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the vacuum component."""
     component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL

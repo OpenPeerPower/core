@@ -54,7 +54,7 @@ async def test.oppio.opp):
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-    assert result["step_id"] == .oppio_confirm"
+    assert result["step_id"] == oppio_confirm"
 
     with patch(
         "openpeerpower.components.almond.async_setup_entry", return_value=True

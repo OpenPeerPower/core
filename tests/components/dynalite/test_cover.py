@@ -22,7 +22,7 @@ def mock_device():
     return mock_dev
 
 
-async def test_cover_setup.opp, mock_device):
+async def test_cover_setup_opp, mock_device):
     """Test a successful setup."""
     await create_entity_from_device.opp, mock_device)
     entity_state =.opp.states.get("cover.name")

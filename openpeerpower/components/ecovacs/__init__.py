@@ -39,7 +39,7 @@ ECOVACS_API_DEVICEID = "".join(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Ecovacs component."""
     _LOGGER.debug("Creating new Ecovacs component")
 

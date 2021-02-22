@@ -187,7 +187,7 @@ def parse_mapping(mapping, parents=None):
                 yield (val, pad_physical_address(cur))
 
 
-def setup.opp: OpenPeerPower, base_config):
+def setup_opp: OpenPeerPower, base_config):
     """Set up the CEC capability."""
 
     # Parse configuration into a dict of device name to physical address

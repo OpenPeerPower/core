@@ -19,7 +19,7 @@ from . import MOCK_CONFIG, FritzDeviceSwitchMock
 from tests.common import MockConfigEntry
 
 
-async def test_setup.opp: OpenPeerPowerType, fritz: Mock):
+async def test_setup_opp: OpenPeerPowerType, fritz: Mock):
     """Test setup of integration."""
     assert await async_setup_component.opp, FB_DOMAIN, MOCK_CONFIG)
     await.opp.async_block_till_done()

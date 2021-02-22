@@ -40,7 +40,7 @@ ATTR_UPNP_PRESENTATION_URL = "presentationURL"
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the SSDP integration."""
 
     async def initialize(_):

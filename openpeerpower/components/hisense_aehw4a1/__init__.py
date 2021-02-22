@@ -43,7 +43,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Hisense AEH-W4A1 integration."""
     conf = config.get(DOMAIN)
    .opp.data[DOMAIN] = {}

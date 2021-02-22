@@ -86,7 +86,7 @@ def is_closed.opp, entity_id):
     return.opp.states.is_state(entity_id, STATE_CLOSED)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Track states and offer events for covers."""
     component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL

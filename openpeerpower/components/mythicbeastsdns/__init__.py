@@ -35,7 +35,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Initialize the Mythic Beasts component."""
     domain = config[DOMAIN][CONF_DOMAIN]
     password = config[DOMAIN][CONF_PASSWORD]

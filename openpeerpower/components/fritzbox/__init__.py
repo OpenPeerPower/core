@@ -57,7 +57,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the AVM Fritz!Box integration."""
     if DOMAIN in config:
         for entry_config in config[DOMAIN][CONF_DEVICES]:

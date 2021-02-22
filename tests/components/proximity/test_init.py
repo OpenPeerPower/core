@@ -33,7 +33,7 @@ async def test_proximities.opp):
         assert state.state == "0"
 
 
-async def test_proximities_setup.opp):
+async def test_proximities_setup_opp):
     """Test a list of proximities with missing devices."""
     config = {
         "proximity": {

@@ -101,7 +101,7 @@ CONFIG_SCHEMA = vol.Schema(
 ATTR_EMULATED_HUE_NAME = "emulated_hue_name"
 
 
-async def async_setup.opp, yaml_config):
+async def async_setup_opp, yaml_config):
     """Activate the emulated_hue component."""
     config = Config.opp, yaml_config.get(DOMAIN, {}))
 

@@ -195,7 +195,7 @@ class LogErrorHandler(logging.Handler):
             self.opp.bus.fire(EVENT_SYSTEM_LOG, entry.to_dict())
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the logger component."""
     conf = config.get(DOMAIN)
     if conf is None:

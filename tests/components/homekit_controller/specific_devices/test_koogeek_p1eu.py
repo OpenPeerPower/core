@@ -7,7 +7,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_koogeek_p1eu_setup.opp):
+async def test_koogeek_p1eu_setup_opp):
     """Test that a Koogeek P1EU can be correctly setup in HA."""
     accessories = await setup_accessories_from_file.opp, "koogeek_p1eu.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)

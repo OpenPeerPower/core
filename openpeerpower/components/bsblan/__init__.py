@@ -16,7 +16,7 @@ from .const import CONF_PASSKEY, DATA_BSBLAN_CLIENT, DOMAIN
 SCAN_INTERVAL = timedelta(seconds=30)
 
 
-async def async_setup.opp: OpenPeerPower, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the BSB-Lan component."""
     return True
 

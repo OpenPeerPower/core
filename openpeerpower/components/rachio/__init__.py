@@ -26,7 +26,7 @@ SUPPORTED_DOMAINS = ["switch", "binary_sensor"]
 CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the rachio component from YAML."""
 
    .opp.data.setdefault(DOMAIN, {})

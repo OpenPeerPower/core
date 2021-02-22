@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["sensor"]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Old way of setting up the srp_energy component."""
     return True
 

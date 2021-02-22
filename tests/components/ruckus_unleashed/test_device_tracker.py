@@ -114,7 +114,7 @@ async def test_restoring_clients.opp):
     assert device.state == STATE_NOT_HOME
 
 
-async def test_client_device_setup.opp):
+async def test_client_device_setup_opp):
     """Test a client device is created."""
     await init_integration.opp)
 

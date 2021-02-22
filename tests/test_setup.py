@@ -56,7 +56,7 @@ class TestSetup:
     # pylint: disable=invalid-name, no-self-use
     def setup_method(self, method):
         """Set up the test."""
-        self.opp = get_test_open_peer_power()
+        self opp =get_test_open_peer_power()
 
     def teardown_method(self, method):
         """Clean up."""
@@ -277,7 +277,7 @@ class TestSetup:
         """Test component setup while waiting for lock is not set up twice."""
         result = []
 
-        async def async_setup.opp, config):
+        async def async_setup_opp, config):
             """Tracking Setup."""
             result.append(1)
 
@@ -322,7 +322,7 @@ class TestSetup:
     def test_component_exception_setup(self):
         """Test component that raises exception during setup."""
 
-        def exception_setup.opp, config):
+        def exception_setup_opp, config):
             """Raise exception."""
             raise Exception("fail!")
 
@@ -334,7 +334,7 @@ class TestSetup:
     def test_component_setup_with_validation_and_dependency(self):
         """Test all config is passed to dependencies."""
 
-        def config_check_setup.opp, config):
+        def config_check_setup_opp, config):
             """Test that config is passed in."""
             if config.get("comp_a", {}).get("valid", False):
                 return True
@@ -441,13 +441,13 @@ class TestSetup:
         """Test all init work done till start."""
         call_order = []
 
-        def component1_setup.opp, config):
+        def component1_setup_opp, config):
             """Set up mock component."""
             discovery.discover.opp, "test_component2", {}, "test_component2", {})
             discovery.discover.opp, "test_component3", {}, "test_component3", {})
             return True
 
-        def component_track_setup.opp, config):
+        def component_track_setup_opp, config):
             """Set up mock component."""
             call_order.append(1)
             return True
@@ -477,7 +477,7 @@ class TestSetup:
         assert call_order == [1, 1, 2]
 
 
-async def test_component_warn_slow_setup.opp):
+async def test_component_warn_slow_setup_opp):
     """Warn we log when a component setup takes a long time."""
     mock_integration.opp, MockModule("test_component1"))
     with patch.object.opp.loop, "call_later") as mock_call:
@@ -505,7 +505,7 @@ async def test_platform_no_warn_slow.opp):
         assert len(mock_call.mock_calls) == 0
 
 
-async def test_platform_error_slow_setup.opp, caplog):
+async def test_platform_error_slow_setup_opp, caplog):
     """Don't block startup more than SLOW_SETUP_MAX_WAIT."""
 
     with patch.object(setup, "SLOW_SETUP_MAX_WAIT", 1):
@@ -531,7 +531,7 @@ async def test_when_setup_already_loaded.opp):
         """Mock callback."""
         calls.append(component)
 
-    setup.async_when_setup.opp, "test", mock_callback)
+    setup.async_when_setup_opp, "test", mock_callback)
     await opp.async_block_till_done()
     assert calls == []
 
@@ -546,7 +546,7 @@ async def test_when_setup_already_loaded.opp):
     assert calls == ["test"]
 
     # Should be called right away
-    setup.async_when_setup.opp, "test", mock_callback)
+    setup.async_when_setup_opp, "test", mock_callback)
     await opp.async_block_till_done()
     assert calls == ["test", "test"]
 
@@ -559,7 +559,7 @@ async def test_setup_import_blows_up.opp):
         assert not await setup.async_setup_component.opp, "sun", {})
 
 
-async def test_parallel_entry_setup.opp):
+async def test_parallel_entry_setup_opp):
     """Test config entries are set up in parallel."""
     MockConfigEntry(domain="comp", data={"value": 1}).add_to_opp.opp)
     MockConfigEntry(domain="comp", data={"value": 2}).add_to_opp.opp)

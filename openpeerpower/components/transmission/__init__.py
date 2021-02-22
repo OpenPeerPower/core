@@ -98,7 +98,7 @@ CONFIG_SCHEMA = vol.Schema(
 PLATFORMS = ["sensor", "switch"]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Import the Transmission Component from config."""
     if DOMAIN in config:
         for entry in config[DOMAIN]:

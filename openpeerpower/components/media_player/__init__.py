@@ -207,7 +207,7 @@ def _rename_keys(**keys):
     return rename
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Track states and offer events for media_players."""
     component =.opp.data[DOMAIN] = EntityComponent(
         logging.getLogger(__name__), DOMAIN,.opp, SCAN_INTERVAL

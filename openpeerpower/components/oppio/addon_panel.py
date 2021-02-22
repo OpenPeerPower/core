@@ -68,7 +68,7 @@ class OppIOAddonPanel(OpenPeerPowerView):
     async def get_panels(self):
         """Return panels add-on info data."""
         try:
-            data = await self opp..get_ingress_panels()
+            data = await self opp.get_ingress_panels()
             return data[ATTR_PANELS]
         except OppioAPIError as err:
             _LOGGER.error("Can't read panel info: %s", err)

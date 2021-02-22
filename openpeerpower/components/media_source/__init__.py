@@ -32,7 +32,7 @@ def generate_media_source_id(domain: str, identifier: str) -> str:
     return uri
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the media_source component."""
    .opp.data[DOMAIN] = {}
    .opp.components.websocket_api.async_register_command(websocket_browse_media)
@@ -40,7 +40,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
    .opp.components.frontend.async_register_built_in_panel(
         "media-browser", "media_browser", .opp:play-box-multiple"
     )
-    local_source.async_setup.opp)
+    local_source.async_setup_opp)
     await async_process_integration_platforms(
        .opp, DOMAIN, _process_media_source_platform
     )

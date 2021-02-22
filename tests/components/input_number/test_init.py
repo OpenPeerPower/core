@@ -28,7 +28,7 @@ from tests.common import mock_restore_cache
 
 
 @pytest.fixture
-def storage_setup.opp,.opp_storage):
+def storage_setup_opp,.opp_storage):
     """Storage setup."""
 
     async def _storage(items=None, config=None):

@@ -49,7 +49,7 @@ class PS4Data:
         self.protocol = None
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the PS4 Component."""
    .opp.data[PS4_DATA] = PS4Data()
 

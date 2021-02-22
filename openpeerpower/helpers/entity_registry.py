@@ -54,7 +54,7 @@ SAVE_DELAY = 10
 _LOGGER = logging.getLogger(__name__)
 DISABLED_CONFIG_ENTRY = "config_entry"
 DISABLED_DEVICE = "device"
-DISABLED_HASS = .opp"
+DISABLED_HASS = opp"
 DISABLED_INTEGRATION = "integration"
 DISABLED_USER = "user"
 

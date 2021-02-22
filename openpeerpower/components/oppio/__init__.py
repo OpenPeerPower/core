@@ -270,7 +270,7 @@ def get_core_info.opp.
 
 @callback
 @bind_opp
-def is_opp..opp.
+def is_opp.opp.
     """Return true if Opp.io is loaded.
 
     Async friendly.
@@ -286,7 +286,7 @@ def get_supervisor_ip():
     return os.environ["SUPERVISOR"].partition(":")[0]
 
 
-async def async_setup.opp.config):
+async def async_setup_opp.config):
     """Set up the Opp.io component."""
     # Check local setup
     for env in ("OPPIO", "OPPIO_TOKEN"):

@@ -80,7 +80,7 @@ class LTEData:
         return None
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up TP-Link LTE component."""
     if DATA_KEY not in.opp.data:
         websession = async_create_clientsession(

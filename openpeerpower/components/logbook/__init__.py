@@ -124,7 +124,7 @@ def async_log_entry.opp, name, message, domain=None, entity_id=None, context=Non
    .opp.bus.async_fire(EVENT_LOGBOOK_ENTRY, data, context=context)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Logbook setup."""
    .opp.data[DOMAIN] = {}
 
@@ -228,7 +228,7 @@ class LogbookView(OpenPeerPowerView):
             if end_day is None:
                 return self.json_message("Invalid end_time", HTTP_BAD_REQUEST)
 
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
 
         entity_matches_only = "entity_matches_only" in request.query
 

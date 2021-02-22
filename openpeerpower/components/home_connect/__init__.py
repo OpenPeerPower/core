@@ -35,7 +35,7 @@ CONFIG_SCHEMA = vol.Schema(
 PLATFORMS = ["binary_sensor", "light", "sensor", "switch"]
 
 
-async def async_setup.opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up Home Connect component."""
    .opp.data[DOMAIN] = {}
 

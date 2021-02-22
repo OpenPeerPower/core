@@ -124,7 +124,7 @@ async def async_configure_sabnzbd(
         async_request_configuration.opp, config, base_url, web_root)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the SABnzbd component."""
 
     async def sabnzbd_discovered(service, info):

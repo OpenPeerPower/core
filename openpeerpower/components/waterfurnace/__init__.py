@@ -35,7 +35,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup.opp, base_config):
+def setup_opp, base_config):
     """Set up waterfurnace platform."""
 
     config = base_config.get(DOMAIN)

@@ -102,7 +102,7 @@ CONFIG_SCHEMA = vol.Schema(
 RELOAD_SERVICE_SCHEMA = vol.Schema({})
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up an input datetime."""
     component = EntityComponent(_LOGGER, DOMAIN,.opp)
     id_manager = collection.IDManager()
@@ -130,7 +130,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
     collection.StorageCollectionWebsocket(
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
-    ).async_setup.opp)
+    ).async_setup_opp)
 
     async def reload_service_handler(service_call: ServiceCallType) -> None:
         """Reload yaml entities."""

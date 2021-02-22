@@ -117,7 +117,7 @@ async def test_is_on.opp):
     assert not alert.is_on.opp, ENTITY_ID)
 
 
-async def test_setup.opp):
+async def test_setup_opp):
     """Test setup method."""
     assert await async_setup_component.opp, alert.DOMAIN, TEST_CONFIG)
     assert STATE_IDLE ==.opp.states.get(ENTITY_ID).state

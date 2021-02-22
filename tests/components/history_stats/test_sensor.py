@@ -25,7 +25,7 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_open_peer_power()
+        self opp =get_test_open_peer_power()
         self.addCleanup(self.opp.stop)
 
     def test_setup(self):

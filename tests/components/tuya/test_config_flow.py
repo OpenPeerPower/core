@@ -114,7 +114,7 @@ async def test_import.opp, tuya):
     assert not result["result"].unique_id
 
 
-async def test_abort_if_already_setup.opp, tuya):
+async def test_abort_if_already_setup_opp, tuya):
     """Test we abort if Tuya is already setup."""
     MockConfigEntry(domain=DOMAIN, data=TUYA_USER_DATA).add_to.opp.opp)
 

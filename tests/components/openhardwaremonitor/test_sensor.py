@@ -4,7 +4,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import load_fixture
 
 
-async def test_setup.opp, requests_mock):
+async def test_setup_opp, requests_mock):
     """Test for successfully setting up the platform."""
     config = {
         "sensor": {

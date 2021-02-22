@@ -9,7 +9,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import patch_yaml_files
 
 
-async def test_setup.opp):
+async def test_setup_opp):
     """Test we can discover scripts."""
     scripts = [
         "/some/config/dir/python_scripts/hello.py",

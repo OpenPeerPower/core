@@ -46,7 +46,7 @@ def filter_log_records(caplog: LogCaptureFixture) -> List[logging.LogRecord]:
     ]
 
 
-async def test_setup.opp: OpenPeerPowerType, caplog: LogCaptureFixture):
+async def test_setup_opp: OpenPeerPowerType, caplog: LogCaptureFixture):
     """Test setup slack notify."""
     config = DEFAULT_CONFIG
 

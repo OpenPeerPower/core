@@ -21,7 +21,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Unify Circuit component."""
     webhooks = config[DOMAIN][CONF_WEBHOOK]
 

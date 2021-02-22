@@ -184,7 +184,7 @@ class WirelessTagPlatform:
             )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Wireless Sensor Tag component."""
     conf = config[DOMAIN]
     username = conf.get(CONF_USERNAME)

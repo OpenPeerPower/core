@@ -212,7 +212,7 @@ class TotpSetupFlow(SetupFlow):
             errors["base"] = "invalid_code"
 
         else:
-           .opp = self._auth_module.opp
+            opp =self._auth_module.opp
             (
                 self._ota_secret,
                 self._url,

@@ -92,7 +92,7 @@ def load_codes(path):
     return codes
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the KIRA component."""
     sensors = config.get(DOMAIN, {}).get(CONF_SENSORS, [])
     remotes = config.get(DOMAIN, {}).get(CONF_REMOTES, [])

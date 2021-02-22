@@ -30,7 +30,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up a config entry."""
    .opp.data[DOMAIN] = {}
     if DOMAIN not in config:

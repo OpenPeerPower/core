@@ -222,7 +222,7 @@ def _start_event_monitor.opp, name, api, event_codes):
     thread.start()
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Amcrest IP Camera component."""
    .opp.data.setdefault(DATA_AMCREST, {DEVICES: {}, CAMERAS: []})
 

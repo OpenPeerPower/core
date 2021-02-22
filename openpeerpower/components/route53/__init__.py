@@ -39,7 +39,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Route53 component."""
     domain = config[DOMAIN][CONF_DOMAIN]
     records = config[DOMAIN][CONF_RECORDS]

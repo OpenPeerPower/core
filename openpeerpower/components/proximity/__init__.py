@@ -96,7 +96,7 @@ def setup_proximity_component.opp, name, config):
     return True
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Get the zones and offsets from configuration.yaml."""
     for zone, proximity_config in config[DOMAIN].items():
         setup_proximity_component.opp, zone, proximity_config)

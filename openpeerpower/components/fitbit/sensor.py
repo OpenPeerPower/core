@@ -165,7 +165,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def request_app_setup.opp, config, add_entities, config_path, discovery_info=None):
+def request_app_setup_opp, config, add_entities, config_path, discovery_info=None):
     """Assist user with configuring the Fitbit dev application."""
     configurator =.opp.components.configurator
 
@@ -244,7 +244,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             return False
     else:
         save_json(config_path, DEFAULT_CONFIG)
-        request_app_setup.opp, config, add_entities, config_path, discovery_info=None)
+        request_app_setup_opp, config, add_entities, config_path, discovery_info=None)
         return False
 
     if "fitbit" in _CONFIGURING:
@@ -349,7 +349,7 @@ class FitbitAuthCallbackView(OpenPeerPowerView):
     @callback
     def get(self, request):
         """Finish OAuth callback request."""
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
         data = request.query
 
         response_message = """Fitbit has been successfully authorized!

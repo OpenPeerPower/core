@@ -55,11 +55,11 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-DATA_CORE_INFO = .oppio_core_info"
-DATA_HOST_INFO = .oppio_host_info"
-DATA_INFO = .oppio_info"
-DATA_OS_INFO = .oppio_os_info"
-DATA_SUPERVISOR_INFO = .oppio_supervisor_info"
+DATA_CORE_INFO = oppio_core_info"
+DATA_HOST_INFO = oppio_host_info"
+DATA_INFO = oppio_info"
+DATA_OS_INFO = oppio_os_info"
+DATA_SUPERVISOR_INFO = oppio_supervisor_info"
 HASSIO_UPDATE_INTERVAL = timedelta(minutes=55)
 
 SERVICE_ADDON_START = "addon_start"
@@ -286,7 +286,7 @@ def get_supervisor_ip():
     return os.environ["SUPERVISOR"].partition(":")[0]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Hass.io component."""
     # Check local setup
     for env in ("HASSIO", "HASSIO_TOKEN"):

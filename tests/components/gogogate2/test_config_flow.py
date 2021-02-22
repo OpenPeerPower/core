@@ -77,7 +77,7 @@ async def test_auth_fail(
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_homekit_unique_id_already_setup.opp):
+async def test_form_homekit_unique_id_already_setup_opp):
     """Test that we abort from homekit if gogogate2 is already setup."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
@@ -109,7 +109,7 @@ async def test_form_homekit_unique_id_already_setup.opp):
     assert result["type"] == RESULT_TYPE_ABORT
 
 
-async def test_form_homekit_ip_address_already_setup.opp):
+async def test_form_homekit_ip_address_already_setup_opp):
     """Test that we abort from homekit if gogogate2 is already setup."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 

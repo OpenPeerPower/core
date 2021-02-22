@@ -54,7 +54,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp: OpenPeerPower, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the Toon components."""
     if DOMAIN not in config:
         return True

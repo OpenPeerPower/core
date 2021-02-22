@@ -23,7 +23,7 @@ from .const import DATA_CLIENT, DATA_COORDINATOR, DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up the OVO Energy components."""
     return True
 

@@ -309,7 +309,7 @@ async def test_import.opp: OpenPeerPowerType, service: MagicMock):
     assert result["data"][CONF_VOLUMES] == ["volume_1"]
 
 
-async def test_abort_if_already_setup.opp: OpenPeerPowerType, service: MagicMock):
+async def test_abort_if_already_setup_opp: OpenPeerPowerType, service: MagicMock):
     """Test we abort if the account is already setup."""
     MockConfigEntry(
         domain=DOMAIN,

@@ -44,7 +44,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Establish connection with Daikin."""
     if DOMAIN not in config:
         return True
@@ -104,7 +104,7 @@ async def async_unload_entry.opp, config_entry):
     return True
 
 
-async def daikin_api_setup.opp, host, key, uuid, password):
+async def daikin_api_setup_opp, host, key, uuid, password):
     """Create a Daikin instance only once."""
 
     session =.opp.helpers.aiohttp_client.async_get_clientsession()

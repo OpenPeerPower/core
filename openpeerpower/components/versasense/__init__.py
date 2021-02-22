@@ -30,7 +30,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the versasense component."""
     session = aiohttp_client.async_get_clientsession.opp)
     consumer = pyv.Consumer(config[DOMAIN]["host"], session)

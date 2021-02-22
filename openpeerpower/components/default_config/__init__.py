@@ -9,7 +9,7 @@ from openpeerpower.setup import async_setup_component
 DOMAIN = "default_config"
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Initialize default configuration."""
     if av is None:
         return True

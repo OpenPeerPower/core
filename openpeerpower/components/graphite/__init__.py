@@ -39,7 +39,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Graphite feeder."""
     conf = config[DOMAIN]
     host = conf.get(CONF_HOST)

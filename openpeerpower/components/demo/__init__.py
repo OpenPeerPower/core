@@ -37,7 +37,7 @@ COMPONENTS_WITH_DEMO_PLATFORM = [
 ]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the demo environment."""
     if DOMAIN not in config:
         return True
@@ -136,7 +136,7 @@ async def async_setup.opp, config):
 
     async def demo_start_listener(_event):
         """Finish set up."""
-        await finish_setup.opp, config)
+        await finish_setup_opp, config)
 
    .opp.bus.async_listen(EVENT_OPENPEERPOWER_START, demo_start_listener)
 
@@ -153,7 +153,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def finish_setup.opp, config):
+async def finish_setup_opp, config):
     """Finish set up once demo platforms are set up."""
     switches = None
     lights = None

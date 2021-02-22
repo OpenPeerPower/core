@@ -112,7 +112,7 @@ def register_device.opp, api_key, name, device_id, device_ids, device_names):
    .opp.services.register(DOMAIN, f"{name}send_tasker", send_tasker_service)
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Join services."""
     for device in config[DOMAIN]:
         api_key = device.get(CONF_API_KEY)

@@ -13,7 +13,7 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 
 
 @pytest.fixture
-def tag_setup.opp,.opp_storage):
+def tag_setup_opp,.opp_storage):
     """Tag setup."""
 
     async def _storage(items=None):

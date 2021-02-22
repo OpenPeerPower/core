@@ -202,7 +202,7 @@ async def test_options_flow.opp, config_entry):
     ) as mock_get_request:
         mock_get_request.return_value = SAMPLE_CONFIG
         config_entry.add_to.opp.opp)
-        await config_entry.async_setup.opp)
+        await config_entry.async_setup_opp)
         await.opp.async_block_till_done()
 
         result = await.opp.config_entries.options.async_init(config_entry.entry_id)

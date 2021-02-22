@@ -21,7 +21,7 @@ SCAN_INTERVAL = timedelta(seconds=30)
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup.opp: OpenPeerPower, config: Config):
+async def async_setup_opp: OpenPeerPower, config: Config):
     """Set up the Brother component."""
     return True
 

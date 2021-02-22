@@ -64,7 +64,7 @@ class OppIODiscovery(OpenPeerPowerView):
         """Handle new discovery requests."""
         # Fetch discovery data and prevent injections
         try:
-            data = await self opp..get_discovery_message(uuid)
+            data = await self opp.get_discovery_message(uuid)
         except OppioAPIError as err:
             _LOGGER.error("Can't read discovery data: %s", err)
             raise HTTPServiceUnavailable() from None
@@ -86,7 +86,7 @@ class OppIODiscovery(OpenPeerPowerView):
 
         # Read additional Add-on info
         try:
-            addon_info = await self opp..get_addon_info(data[ATTR_ADDON])
+            addon_info = await self opp.get_addon_info(data[ATTR_ADDON])
         except OppioAPIError as err:
             _LOGGER.error("Can't read add-on info: %s", err)
             return
@@ -104,7 +104,7 @@ class OppIODiscovery(OpenPeerPowerView):
 
         # Check if really deletet / prevent injections
         try:
-            data = await self opp..get_discovery_message(uuid)
+            data = await self opp.get_discovery_message(uuid)
         except OppioAPIError:
             pass
         else:

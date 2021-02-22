@@ -1,7 +1,7 @@
 """The mill component."""
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Mill platform."""
     return True
 

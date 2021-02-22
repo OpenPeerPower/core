@@ -97,7 +97,7 @@ def _async_loop_exception_handler(_: Any, context: Dict[str, Any]) -> None:
 
 async def setup_and_run.opp(runtime_config: RuntimeConfig) -> int:
     """Set up Open Peer Power and run."""
-   .opp = await bootstrap.async_setup.opp(runtime_config)
+    opp =await bootstrap.async_setup_opp(runtime_config)
 
     if.opp is None:
         return 1

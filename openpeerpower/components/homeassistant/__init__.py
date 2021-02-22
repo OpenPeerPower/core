@@ -32,7 +32,7 @@ SERVICE_SET_LOCATION = "set_location"
 SCHEMA_UPDATE_ENTITY = vol.Schema({ATTR_ENTITY_ID: cv.entity_ids})
 
 
-async def async_setup.opp: ha.OpenPeerPower, config: dict) -> bool:
+async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
     """Set up general services related to Open Peer Power."""
 
     async def async_handle_turn_service(service):

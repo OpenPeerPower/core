@@ -20,7 +20,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp: OpenPeerPowerType, config: OrderedDict) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: OrderedDict) -> bool:
     """Set up songpal environment."""
     conf = config.get(DOMAIN)
     if conf is None:

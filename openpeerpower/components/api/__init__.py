@@ -56,7 +56,7 @@ STREAM_PING_PAYLOAD = "ping"
 STREAM_PING_INTERVAL = 50  # seconds
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Register the API with the HTTP interface."""
    .opp.http.register_view(APIStatusView)
    .opp.http.register_view(APIEventStream)
@@ -99,7 +99,7 @@ class APIEventStream(OpenPeerPowerView):
         """Provide a streaming interface for the event bus."""
         if not request[.opp_user"].is_admin:
             raise Unauthorized()
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
         stop_obj = object()
         to_write = asyncio.Queue()
 
@@ -182,7 +182,7 @@ class APIDiscoveryView(OpenPeerPowerView):
 
     async def get(self, request):
         """Get discovery information."""
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
         uuid = await.opp.helpers.instance_id.async_get()
         system_info = await async_get_system_info.opp)
 
@@ -255,7 +255,7 @@ class APIEntityStateView(OpenPeerPowerView):
         """Update state of entity."""
         if not request[.opp_user"].is_admin:
             raise Unauthorized(entity_id=entity_id)
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
         try:
             data = await request.json()
         except ValueError:
@@ -368,7 +368,7 @@ class APIDomainServicesView(OpenPeerPowerView):
 
         Returns a list of changed states.
         """
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
         body = await request.text()
         try:
             data = json.loads(body) if body else None

@@ -27,7 +27,7 @@ def setup_fixture.opp):
    .opp.config.longitude = 18.98583
 
 
-async def test_setup.opp):
+async def test_setup_opp):
     """Test the setup."""
     config = {
         "binary_sensor": [

@@ -23,7 +23,7 @@ from tests.common import CLIENT_ID, MockUser, ensure_auth_manager_loaded, flush_
 @pytest.fixture
 def mock.opp(loop):
     """Open Peer Power mock with minimum amount of data set to make it work with auth."""
-   .opp = Mock()
+    opp =Mock()
    .opp.config.skip_pip = True
     return.opp
 

@@ -55,7 +55,7 @@ def _generate_mock_feed_entry(external_id, title, distance_to_home, coordinates)
     return feed_entry
 
 
-async def test_setup.opp, legacy_patchable_time):
+async def test_setup_opp, legacy_patchable_time):
     """Test the general setup of the platform."""
     # Set up some mock feed entries for this test.
     mock_entry_1 = _generate_mock_feed_entry("1234", "Title 1", 15.5, (-31.0, 150.0))

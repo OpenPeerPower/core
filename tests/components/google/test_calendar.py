@@ -77,7 +77,7 @@ def get_calendar_info(calendar):
 
 
 @pytest.fixture(autouse=True)
-def mock_google_setup.opp, test_calendar):
+def mock_google_setup_opp, test_calendar):
     """Mock the google set up functions."""
    .opp.loop.run_until_complete(async_setup_component.opp, "group", {"group": {}}))
     calendar = get_calendar_info(test_calendar)

@@ -292,7 +292,7 @@ The following persons point at invalid users:
     return filtered
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     """Set up the person component."""
     entity_component = EntityComponent(_LOGGER, DOMAIN,.opp)
     id_manager = collection.IDManager()
@@ -322,7 +322,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
 
     collection.StorageCollectionWebsocket(
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
-    ).async_setup.opp, create_list=False)
+    ).async_setup_opp, create_list=False)
 
     websocket_api.async_register_command.opp, ws_list_person)
 

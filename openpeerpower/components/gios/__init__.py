@@ -15,7 +15,7 @@ from .const import CONF_STATION_ID, DOMAIN, SCAN_INTERVAL
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup.opp: OpenPeerPower, config: Config) -> bool:
+async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     """Set up configured GIOS."""
     return True
 

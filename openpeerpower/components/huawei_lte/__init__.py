@@ -476,7 +476,7 @@ async def async_unload_entry(
     return True
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up Huawei LTE component."""
 
     # dicttoxml (used by huawei-lte-api) has uselessly verbose INFO level.

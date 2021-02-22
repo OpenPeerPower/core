@@ -30,7 +30,7 @@ CONTENT_TYPE_NONE = "none"
 SCAN_INTERVAL = timedelta(seconds=30)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Track states and offer events for mailboxes."""
     mailboxes = []
    .opp.components.frontend.async_register_built_in_panel(

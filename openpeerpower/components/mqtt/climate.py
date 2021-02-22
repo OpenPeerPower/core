@@ -354,7 +354,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
             value_templates[key] = lambda value: value
         if CONF_VALUE_TEMPLATE in config:
             value_template = config.get(CONF_VALUE_TEMPLATE)
-            value_template.opp = self.opp
+            value_template opp =self.opp
             value_templates = {
                 key: value_template.async_render_with_possible_json_value
                 for key in VALUE_TEMPLATE_KEYS
@@ -362,7 +362,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
         for key in VALUE_TEMPLATE_KEYS & config.keys():
             tpl = config[key]
             value_templates[key] = tpl.async_render_with_possible_json_value
-            tpl.opp = self.opp
+            tpl opp =self.opp
         self._value_templates = value_templates
 
         command_templates = {}
@@ -371,7 +371,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
         for key in COMMAND_TEMPLATE_KEYS & config.keys():
             tpl = config[key]
             command_templates[key] = tpl.async_render_with_possible_json_value
-            tpl.opp = self.opp
+            tpl opp =self.opp
         self._command_templates = command_templates
 
     async def _subscribe_topics(self):

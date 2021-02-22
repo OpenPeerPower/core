@@ -56,7 +56,7 @@ def mock_tellduslive(supports_local_api, authorize):
         yield Session, tellduslive_supports_local_api
 
 
-async def test_abort_if_already_setup.opp):
+async def test_abort_if_already_setup_opp):
     """Test we abort if TelldusLive is already setup."""
     flow = init_config_flow.opp)
 

@@ -18,7 +18,7 @@ from . import get_device
 from tests.common import mock_device_registry, mock_registry
 
 
-async def test_device_setup.opp):
+async def test_device_setup_opp):
     """Test a successful setup."""
     device = get_device("Office")
 

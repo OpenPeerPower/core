@@ -65,7 +65,7 @@ CONFIG_SCHEMA = vol.Schema(
 LUTRON_CASETA_COMPONENTS = ["light", "switch", "cover", "scene", "fan", "binary_sensor"]
 
 
-async def async_setup.opp, base_config):
+async def async_setup_opp, base_config):
     """Set up the Lutron component."""
 
    .opp.data.setdefault(DOMAIN, {})

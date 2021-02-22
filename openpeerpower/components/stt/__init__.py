@@ -34,7 +34,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup.opp: OpenPeerPowerType, config):
+async def async_setup_opp: OpenPeerPowerType, config):
     """Set up STT."""
     providers = {}
 

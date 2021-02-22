@@ -340,7 +340,7 @@ def test_saving_state_and_removing_entity.opp,.opp_recorder):
 
 def test_recorder_setup_failure():
     """Test some exceptions."""
-   .opp = get_test_open_peer_power()
+    opp =get_test_open_peer_power()
 
     with patch.object(Recorder, "_setup_connection") as setup, patch(
         "openpeerpower.components.recorder.time.sleep"
@@ -368,7 +368,7 @@ async def test_defaults_set.opp):
     """Test the config defaults are set."""
     recorder_config = None
 
-    async def mock_setup.opp, config):
+    async def mock_setup_opp, config):
         """Mock setup."""
         nonlocal recorder_config
         recorder_config = config["recorder"]

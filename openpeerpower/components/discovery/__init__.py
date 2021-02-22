@@ -30,11 +30,11 @@ SERVICE_DAIKIN = "daikin"
 SERVICE_DLNA_DMR = "dlna_dmr"
 SERVICE_ENIGMA2 = "enigma2"
 SERVICE_FREEBOX = "freebox"
-SERVICE_HASS_IOS_APP = .opp_ios"
-SERVICE_HASSIO = .oppio"
+SERVICE_HASS_IOS_APP = opp_ios"
+SERVICE_HASSIO = oppio"
 SERVICE_HEOS = "heos"
 SERVICE_KONNECTED = "konnected"
-SERVICE_MOBILE_APP = .opp_mobile_app"
+SERVICE_MOBILE_APP = opp_mobile_app"
 SERVICE_NETGEAR = "netgear_router"
 SERVICE_OCTOPRINT = "octoprint"
 SERVICE_SABNZBD = "sabnzbd"
@@ -120,7 +120,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Start a discovery service."""
 
     logger = logging.getLogger(__name__)

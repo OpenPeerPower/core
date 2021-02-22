@@ -34,7 +34,7 @@ async def _await_cancel(task):
         pass
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     """Set up the component."""
    .opp.data[DOMAIN_DATA_ENTRIES] = {}
    .opp.data[DOMAIN_DATA_TASKS] = {}

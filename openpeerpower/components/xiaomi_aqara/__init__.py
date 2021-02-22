@@ -67,7 +67,7 @@ SERVICE_SCHEMA_REMOVE_DEVICE = vol.Schema(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Xiaomi component."""
 
     def play_ringtone_service(call):

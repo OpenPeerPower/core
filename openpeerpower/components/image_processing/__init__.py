@@ -68,7 +68,7 @@ PLATFORM_SCHEMA = cv.PLATFORM_SCHEMA.extend(
 PLATFORM_SCHEMA_BASE = cv.PLATFORM_SCHEMA_BASE.extend(PLATFORM_SCHEMA.schema)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the image processing."""
     component = EntityComponent(_LOGGER, DOMAIN,.opp, SCAN_INTERVAL)
 

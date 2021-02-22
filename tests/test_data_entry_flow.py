@@ -239,7 +239,7 @@ async def test_finish_callback_change_result_type.opp):
 
 async def test_external_step.opp, manager):
     """Test external step logic."""
-    manager.opp = opp
+    manager opp =opp
 
     @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
@@ -287,7 +287,7 @@ async def test_external_step.opp, manager):
 
 async def test_show_progress.opp, manager):
     """Test show progress logic."""
-    manager.opp = opp
+    manager opp =opp
 
     @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):

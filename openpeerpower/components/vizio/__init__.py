@@ -41,7 +41,7 @@ CONFIG_SCHEMA = vol.Schema(
 PLATFORMS = ["media_player"]
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Component setup, run import config flow for each entry in config."""
     if DOMAIN in config:
         for entry in config[DOMAIN]:

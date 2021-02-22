@@ -490,7 +490,7 @@ async def test_modify_group.opp):
     assert group_state.attributes.get(ATTR_FRIENDLY_NAME) == "friendly_name"
 
 
-async def test_setup.opp):
+async def test_setup_opp):
     """Test setup method."""
    .opp.states.async_set("light.Bowl", STATE_ON)
    .opp.states.async_set("light.Ceiling", STATE_OFF)

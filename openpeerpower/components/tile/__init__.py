@@ -23,7 +23,7 @@ DEFAULT_UPDATE_INTERVAL = timedelta(minutes=2)
 CONF_SHOW_INACTIVE = "show_inactive"
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Tile component."""
    .opp.data[DOMAIN] = {DATA_COORDINATOR: {}, DATA_TILE: {}}
     return True

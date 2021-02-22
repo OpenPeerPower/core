@@ -38,7 +38,7 @@ def base_unique_id(latitude, longitude):
     return f"{latitude}_{longitude}"
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the National Weather Service (NWS) component."""
     return True
 

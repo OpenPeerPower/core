@@ -81,7 +81,7 @@ async def test_full_config.opp, mock_client):
     assert mock_client.start.called_once
 
 
-async def _setup.opp, filter_config):
+async def _setup_opp, filter_config):
     """Shared set up for filtering tests."""
     config = {apache_kafka.DOMAIN: {"filter": filter_config}}
     config[apache_kafka.DOMAIN].update(MIN_CONFIG)

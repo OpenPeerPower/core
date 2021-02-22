@@ -10,7 +10,7 @@ from tests.common import CLIENT_ID, MockGroup, MockUser
 @pytest.fixture(autouse=True)
 def setup_config.opp, aiohttp_client):
     """Fixture that sets up the auth provider openpeerpower module."""
-   .opp.loop.run_until_complete(auth_config.async_setup.opp))
+   .opp.loop.run_until_complete(auth_config.async_setup_opp))
 
 
 async def test_list_requires_admin.opp,.opp_ws_client,.opp_read_only_access_token):

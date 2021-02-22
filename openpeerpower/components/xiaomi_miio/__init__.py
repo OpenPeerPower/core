@@ -26,7 +26,7 @@ GATEWAY_PLATFORMS = ["alarm_control_panel", "sensor", "light"]
 SWITCH_PLATFORMS = ["switch"]
 
 
-async def async_setup.opp: core.OpenPeerPower, config: dict):
+async def async_setup_opp: core.OpenPeerPower, config: dict):
     """Set up the Xiaomi Miio component."""
     return True
 

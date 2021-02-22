@@ -82,7 +82,7 @@ def _async_configured_emails.opp):
     }
 
 
-async def async_setup.opp, base_config):
+async def async_setup_opp, base_config):
     """Set up of Tesla component."""
 
     def _update_entry(email, data=None, options=None):

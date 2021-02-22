@@ -26,7 +26,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Hue platform."""
 
     async def hue_activate_scene(call, skip_reload=True):

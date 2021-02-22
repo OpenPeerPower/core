@@ -37,7 +37,7 @@ _LOGGER = logging.getLogger(__name__)
 
 ERROR_LOG_FILENAME = "open-peer-power.log"
 
-#.opp.data key for logging information.
+# opp.data key for logging information.
 DATA_LOGGING = "logging"
 
 LOG_SLOW_STARTUP_INTERVAL = 60
@@ -66,7 +66,7 @@ STAGE_1_INTEGRATIONS = {
     # To provide account link implementations
     "cloud",
     # Ensure supervisor is available
-    .oppio",
+    "oppio",
     # Get the frontend up and running as soon
     # as possible so problem integrations can
     # be removed
@@ -74,11 +74,11 @@ STAGE_1_INTEGRATIONS = {
 }
 
 
-async def async_setup.opp(
+async def async_setup_opp(
     runtime_config: "RuntimeConfig",
 ) -> Optional[core.OpenPeerPower]:
     """Set up Open Peer Power."""
-   .opp = core.OpenPeerPower()
+    opp = core.OpenPeerPower()
    .opp.config.config_dir = runtime_config.config_dir
 
     async_enable_logging(
@@ -146,7 +146,7 @@ async def async_setup.opp(
         safe_mode = True
         old_config =.opp.config
 
-       .opp = core.OpenPeerPower()
+        opp = core.OpenPeerPower()
        .opp.config.skip_pip = old_config.skip_pip
        .opp.config.internal_url = old_config.internal_url
        .opp.config.external_url = old_config.external_url

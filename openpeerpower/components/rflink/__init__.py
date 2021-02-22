@@ -118,7 +118,7 @@ def identify_event_type(event):
     return "unknown"
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Rflink component."""
     # Allow entities to register themselves by device_id to be looked up when
     # new rflink events arrive to be handled

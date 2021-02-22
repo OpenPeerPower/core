@@ -45,7 +45,7 @@ DEFAULT_CONFIG = {
 }
 
 
-async def test_run_number_setup.opp, mqtt_mock):
+async def test_run_number_setup_opp, mqtt_mock):
     """Test that it fetches the given payload."""
     topic = "test/number"
     await async_setup_component(

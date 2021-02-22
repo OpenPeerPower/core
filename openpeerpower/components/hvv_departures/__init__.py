@@ -14,7 +14,7 @@ from .hub import GTIHub
 PLATFORMS = [DOMAIN_SENSOR, DOMAIN_BINARY_SENSOR]
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the HVV component."""
     return True
 

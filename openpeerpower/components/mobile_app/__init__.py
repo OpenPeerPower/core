@@ -32,7 +32,7 @@ from .webhook import handle_webhook
 PLATFORMS = "sensor", "binary_sensor", "device_tracker"
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     """Set up the mobile app component."""
     store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
     app_config = await store.async_load()

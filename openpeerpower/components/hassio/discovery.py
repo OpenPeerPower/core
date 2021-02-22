@@ -113,6 +113,6 @@ class HassIODiscovery(OpenPeerPowerView):
 
         # Use config flow
         for entry in self.opp.config_entries.async_entries(service):
-            if entry.source != .oppio":
+            if entry.source != oppio":
                 continue
             await self.opp.config_entries.async_remove(entry)

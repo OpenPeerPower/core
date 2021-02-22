@@ -36,7 +36,7 @@ UPDATE_FIELDS = {
 }
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Image integration."""
     image_dir = pathlib.Path.opp.config.path(DOMAIN))
    .opp.data[DOMAIN] = storage_collection = ImageStorageCollection.opp, image_dir)
@@ -47,7 +47,7 @@ async def async_setup.opp: OpenPeerPower, config: dict):
         DOMAIN,
         CREATE_FIELDS,
         UPDATE_FIELDS,
-    ).async_setup.opp, create_create=False)
+    ).async_setup_opp, create_create=False)
 
    .opp.http.register_view(ImageUploadView)
    .opp.http.register_view(ImageServeView(image_dir, storage_collection))
@@ -182,7 +182,7 @@ class ImageServeView(OpenPeerPowerView):
         if image_info is None:
             raise web.HTTPNotFound()
 
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
         target_file = self.image_folder / image_id / f"{width}x{height}"
 
         if not target_file.is_file():

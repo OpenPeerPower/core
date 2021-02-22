@@ -81,7 +81,7 @@ class TestHtml5Notify:
 
     def test_get_service_with_no_json(self):
         """Test empty json file."""
-       .opp = MagicMock()
+        opp =MagicMock()
 
         m = mock_open()
         with patch("openpeerpower.util.json.open", m, create=True):
@@ -92,7 +92,7 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_dismissing_message(self, mock_wp):
         """Test dismissing message."""
-       .opp = MagicMock()
+        opp =MagicMock()
 
         data = {"device": SUBSCRIPTION_1}
 
@@ -120,7 +120,7 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_sending_message(self, mock_wp):
         """Test sending message."""
-       .opp = MagicMock()
+        opp =MagicMock()
 
         data = {"device": SUBSCRIPTION_1}
 
@@ -150,7 +150,7 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_gcm_key_include(self, mock_wp):
         """Test if the gcm_key is only included for GCM endpoints."""
-       .opp = MagicMock()
+        opp =MagicMock()
 
         data = {"chrome": SUBSCRIPTION_1, "firefox": SUBSCRIPTION_2}
 
@@ -181,7 +181,7 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_fcm_key_include(self, mock_wp):
         """Test if the FCM header is included."""
-       .opp = MagicMock()
+        opp =MagicMock()
 
         data = {"chrome": SUBSCRIPTION_5}
 
@@ -206,7 +206,7 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_fcm_send_with_unknown_priority(self, mock_wp):
         """Test if the gcm_key is only included for GCM endpoints."""
-       .opp = MagicMock()
+        opp =MagicMock()
 
         data = {"chrome": SUBSCRIPTION_5}
 
@@ -231,7 +231,7 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_fcm_no_targets(self, mock_wp):
         """Test if the gcm_key is only included for GCM endpoints."""
-       .opp = MagicMock()
+        opp =MagicMock()
 
         data = {"chrome": SUBSCRIPTION_5}
 
@@ -256,7 +256,7 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_fcm_additional_data(self, mock_wp):
         """Test if the gcm_key is only included for GCM endpoints."""
-       .opp = MagicMock()
+        opp =MagicMock()
 
         data = {"chrome": SUBSCRIPTION_5}
 

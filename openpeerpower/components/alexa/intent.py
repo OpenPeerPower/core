@@ -35,7 +35,7 @@ class CardType(enum.Enum):
 
 
 @callback
-def async_setup.opp):
+def async_setup_opp):
     """Activate Alexa component."""
    .opp.http.register_view(AlexaIntentsView)
 
@@ -62,7 +62,7 @@ class AlexaIntentsView(http.OpenPeerPowerView):
 
     async def post(self, request):
         """Handle Alexa."""
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
         message = await request.json()
 
         _LOGGER.debug("Received Alexa request: %s", message)

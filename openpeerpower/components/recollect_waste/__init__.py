@@ -22,7 +22,7 @@ DEFAULT_UPDATE_INTERVAL = timedelta(days=1)
 PLATFORMS = ["sensor"]
 
 
-async def async_setup.opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the RainMachine component."""
    .opp.data[DOMAIN] = {DATA_COORDINATOR: {}, DATA_LISTENER: {}}
     return True

@@ -125,7 +125,7 @@ def async_sync_geo_coordinator_update_intervals.opp, api_key):
         coordinator.update_interval = update_interval
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the AirVisual component."""
    .opp.data[DOMAIN] = {DATA_COORDINATOR: {}, DATA_LISTENER: {}}
     return True

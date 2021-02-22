@@ -682,7 +682,7 @@ async def test_reload.opp):
     assert.opp.states.get("light.outside_patio_lights_g") is not None
 
 
-async def test_reload_with_platform_not_setup.opp):
+async def test_reload_with_platform_not_setup_opp):
     """Test the ability to reload lights."""
    .opp.states.async_set("light.bowl", STATE_ON)
     await async_setup_component(
@@ -724,7 +724,7 @@ async def test_reload_with_platform_not_setup.opp):
     assert.opp.states.get("light.outside_patio_lights_g") is not None
 
 
-async def test_reload_with_base_integration_platform_not_setup.opp):
+async def test_reload_with_base_integration_platform_not_setup_opp):
     """Test the ability to reload lights."""
     assert await async_setup_component(
        .opp,

@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["binary_sensor"]
 
 
-async def async_setup.opp: OpenPeerPower, config):
+async def async_setup_opp: OpenPeerPower, config):
     """Set up the Goal Zero Yeti component."""
 
    .opp.data[DOMAIN] = {}

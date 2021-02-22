@@ -187,7 +187,7 @@ async def test_search_failed.opp, client_empty):
     assert result["errors"] == {CONF_CITY: "empty"}
 
 
-async def test_abort_if_already_setup.opp, client_single):
+async def test_abort_if_already_setup_opp, client_single):
     """Test we abort if already setup."""
     MockConfigEntry(
         domain=DOMAIN,

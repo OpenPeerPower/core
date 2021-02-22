@@ -51,7 +51,7 @@ class TriggerSource:
 
     def __init__(self, connection, aid, triggers):
         """Initialize a set of triggers for a device."""
-        self..opp = connection.opp
+        self. opp =connection.opp
         self._connection = connection
         self._aid = aid
         self._triggers = {}

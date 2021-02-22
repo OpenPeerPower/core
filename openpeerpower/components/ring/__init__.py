@@ -28,7 +28,7 @@ DEFAULT_ENTITY_NAMESPACE = "ring"
 PLATFORMS = ("binary_sensor", "light", "sensor", "switch", "camera")
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Ring component."""
     if DOMAIN not in config:
         return True

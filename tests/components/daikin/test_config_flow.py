@@ -72,7 +72,7 @@ async def test_user.opp, mock_daikin):
     assert result["data"][KEY_MAC] == MAC
 
 
-async def test_abort_if_already_setup.opp, mock_daikin):
+async def test_abort_if_already_setup_opp, mock_daikin):
     """Test we abort if Daikin is already setup."""
     MockConfigEntry(domain="daikin", unique_id=MAC).add_to.opp.opp)
     result = await.opp.config_entries.flow.async_init(

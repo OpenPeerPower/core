@@ -325,7 +325,7 @@ async def test_invalid_config.opp, mock_client, config_ext, get_write_api):
     assert not await async_setup_component.opp, influxdb.DOMAIN, config)
 
 
-async def _setup.opp, mock_influx_client, config_ext, get_write_api):
+async def _setup_opp, mock_influx_client, config_ext, get_write_api):
     """Prepare client for next test and return event handler method."""
     config = {
         "influxdb": {
@@ -364,7 +364,7 @@ async def test_event_listener(
    .opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener."""
-    handler_method = await _setup.opp, mock_client, config_ext, get_write_api)
+    handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
 
     # map of HA State to valid influxdb [state, value] fields
     valid = {
@@ -450,7 +450,7 @@ async def test_event_listener_no_units(
    .opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener for missing units."""
-    handler_method = await _setup.opp, mock_client, config_ext, get_write_api)
+    handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
 
     for unit in (None, ""):
         if unit:
@@ -504,7 +504,7 @@ async def test_event_listener_inf(
    .opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener with large or invalid numbers."""
-    handler_method = await _setup.opp, mock_client, config_ext, get_write_api)
+    handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
 
     attrs = {"bignumstring": "9" * 999, "nonumstring": "nan"}
     state = MagicMock(
@@ -553,7 +553,7 @@ async def test_event_listener_states(
    .opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener against ignored states."""
-    handler_method = await _setup.opp, mock_client, config_ext, get_write_api)
+    handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
 
     for state_state in (1, "unknown", "", "unavailable"):
         state = MagicMock(
@@ -639,7 +639,7 @@ async def test_event_listener_denylist(
     """Test the event listener against a denylist."""
     config = {"exclude": {"entities": ["fake.denylisted"]}, "include": {}}
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
     write_api = get_write_api(mock_client)
 
     tests = [
@@ -673,7 +673,7 @@ async def test_event_listener_denylist_domain(
     """Test the event listener against a domain denylist."""
     config = {"exclude": {"domains": ["another_fake"]}, "include": {}}
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
     write_api = get_write_api(mock_client)
 
     tests = [
@@ -707,7 +707,7 @@ async def test_event_listener_denylist_glob(
     """Test the event listener against a glob denylist."""
     config = {"exclude": {"entity_globs": ["*.excluded_*"]}, "include": {}}
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
     write_api = get_write_api(mock_client)
 
     tests = [
@@ -741,7 +741,7 @@ async def test_event_listener_allowlist(
     """Test the event listener against an allowlist."""
     config = {"include": {"entities": ["fake.included"]}, "exclude": {}}
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
     write_api = get_write_api(mock_client)
 
     tests = [
@@ -775,7 +775,7 @@ async def test_event_listener_allowlist_domain(
     """Test the event listener against a domain allowlist."""
     config = {"include": {"domains": ["fake"]}, "exclude": {}}
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
     write_api = get_write_api(mock_client)
 
     tests = [
@@ -809,7 +809,7 @@ async def test_event_listener_allowlist_glob(
     """Test the event listener against a glob allowlist."""
     config = {"include": {"entity_globs": ["*.included_*"]}, "exclude": {}}
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
     write_api = get_write_api(mock_client)
 
     tests = [
@@ -854,7 +854,7 @@ async def test_event_listener_filtered_allowlist(
         },
     }
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
     write_api = get_write_api(mock_client)
 
     tests = [
@@ -896,7 +896,7 @@ async def test_event_listener_filtered_denylist(
         "exclude": {"domains": ["another_fake"], "entity_globs": "*.excluded_*"},
     }
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
     write_api = get_write_api(mock_client)
 
     tests = [
@@ -931,7 +931,7 @@ async def test_event_listener_invalid_type(
    .opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener when an attribute has an invalid type."""
-    handler_method = await _setup.opp, mock_client, config_ext, get_write_api)
+    handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
 
     # map of HA State to valid influxdb [state, value] fields
     valid = {
@@ -1007,7 +1007,7 @@ async def test_event_listener_default_measurement(
     """Test the event listener with a default measurement."""
     config = {"default_measurement": "state"}
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
 
     state = MagicMock(
         state=1,
@@ -1057,7 +1057,7 @@ async def test_event_listener_unit_of_measurement_field(
     """Test the event listener for unit of measurement field."""
     config = {"override_measurement": "state"}
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
 
     attrs = {"unit_of_measurement": "foobars"}
     state = MagicMock(
@@ -1108,7 +1108,7 @@ async def test_event_listener_tags_attributes(
     """Test the event listener when some attributes should be tags."""
     config = {"tags_attributes": ["friendly_fake"]}
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
 
     attrs = {"friendly_fake": "tag_str", "field_fake": "field_str"}
     state = MagicMock(
@@ -1171,7 +1171,7 @@ async def test_event_listener_component_override_measurement(
         "component_config_domain": {"climate": {"override_measurement": "hvac"}},
     }
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
 
     test_components = [
         {"domain": "sensor", "id": "fake_humidity", "res": "humidity"},
@@ -1238,7 +1238,7 @@ async def test_event_listener_component_measurement_attr(
         "component_config_domain": {"climate": {"override_measurement": "hvac"}},
     }
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
 
     test_components = [
         {
@@ -1313,7 +1313,7 @@ async def test_event_listener_ignore_attributes(
         },
     }
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
 
     test_components = [
         {
@@ -1393,7 +1393,7 @@ async def test_event_listener_ignore_attributes_overlapping_entities(
         "component_config_domain": {"sensor": {"ignore_attributes": ["ignore"]}},
     }
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
 
     state = MagicMock(
         state=1,
@@ -1444,7 +1444,7 @@ async def test_event_listener_scheduled_write(
     """Test the event listener retries after a write failure."""
     config = {"max_retries": 1}
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
 
     state = MagicMock(
         state=1,
@@ -1495,7 +1495,7 @@ async def test_event_listener_backlog_full(
    .opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener drops old events when backlog gets full."""
-    handler_method = await _setup.opp, mock_client, config_ext, get_write_api)
+    handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
 
     state = MagicMock(
         state=1,
@@ -1543,7 +1543,7 @@ async def test_event_listener_attribute_name_conflict(
    .opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener when an attribute conflicts with another field."""
-    handler_method = await _setup.opp, mock_client, config_ext, get_write_api)
+    handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
 
     attrs = {"value": "value_str"}
     state = MagicMock(
@@ -1665,7 +1665,7 @@ async def test_invalid_inputs_error(
     But Influx is an external service so there may be edge cases that
     haven't been encountered yet.
     """
-    handler_method = await _setup.opp, mock_client, config_ext, get_write_api)
+    handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
 
     write_api = get_write_api(mock_client)
     write_api.side_effect = test_exception
@@ -1760,7 +1760,7 @@ async def test_precision(
         "precision": precision,
     }
     config.update(config_ext)
-    handler_method = await _setup.opp, mock_client, config, get_write_api)
+    handler_method = await _setup_opp, mock_client, config, get_write_api)
 
     value = "1.9"
     attrs = {

@@ -25,7 +25,7 @@ def mock_responses(mock, single=False):
     )
 
 
-async def test_setup.opp, requests_mock):
+async def test_setup_opp, requests_mock):
     """Test the setup."""
     mock_responses(requests_mock)
 
@@ -33,7 +33,7 @@ async def test_setup.opp, requests_mock):
     # will be setup during tear down when blocking till done, but the mocks
     # are no longer active.
     with patch("openpeerpower.helpers.discovery.load_platform", MagicMock()):
-        assert sleepiq.setup.opp, CONFIG)
+        assert sleepiq.setup_opp, CONFIG)
 
 
 async def test_setup_login_failed.opp, requests_mock):
@@ -45,7 +45,7 @@ async def test_setup_login_failed.opp, requests_mock):
         json=load_fixture("sleepiq-login-failed.json"),
     )
 
-    response = sleepiq.setup.opp, CONFIG)
+    response = sleepiq.setup_opp, CONFIG)
     assert not response
 
 

@@ -123,7 +123,7 @@ class FlowManager(abc.ABC):
         if not flow:
             self._initializing[handler].remove(init_done)
             raise UnknownFlow("Flow was not created")
-        flow.opp = self.opp
+        flow opp =self.opp
         flow.handler = handler
         flow.flow_id = uuid.uuid4().hex
         flow.context = context

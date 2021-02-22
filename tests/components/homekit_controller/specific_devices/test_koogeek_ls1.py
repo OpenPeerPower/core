@@ -20,7 +20,7 @@ from tests.components.homekit_controller.common import (
 LIGHT_ON = ("lightbulb", "on")
 
 
-async def test_koogeek_ls1_setup.opp):
+async def test_koogeek_ls1_setup_opp):
     """Test that a Koogeek LS1 can be correctly setup in HA."""
     accessories = await setup_accessories_from_file.opp, "koogeek_ls1.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)

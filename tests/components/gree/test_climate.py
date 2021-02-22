@@ -88,7 +88,7 @@ async def test_discovery_called_once.opp, discovery, device):
     assert discovery.call_count == 1
 
 
-async def test_discovery_setup.opp, discovery, device):
+async def test_discovery_setup_opp, discovery, device):
     """Test setup of platform."""
     MockDevice1 = build_device_mock(
         name="fake-device-1", ipAddress="1.1.1.1", mac="aabbcc112233"

@@ -51,7 +51,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp: OpenPeerPower, config: Dict) -> bool:
+async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
     """Set up the component."""
    .opp.data.setdefault(DOMAIN, {})
 

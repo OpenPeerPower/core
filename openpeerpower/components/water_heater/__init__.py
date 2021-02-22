@@ -90,7 +90,7 @@ SET_OPERATION_MODE_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up water_heater devices."""
     component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
@@ -307,7 +307,7 @@ async def async_service_away_mode(entity, service):
 
 async def async_service_temperature_set(entity, service):
     """Handle set temperature service."""
-   .opp = entity.opp
+    opp =entity.opp
     kwargs = {}
 
     for value, temp in service.data.items():

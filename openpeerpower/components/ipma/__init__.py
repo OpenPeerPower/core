@@ -7,7 +7,7 @@ from .const import DOMAIN  # noqa: F401
 DEFAULT_NAME = "ipma"
 
 
-async def async_setup.opp: OpenPeerPower, config: Config) -> bool:
+async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     """Set up configured IPMA."""
     return True
 

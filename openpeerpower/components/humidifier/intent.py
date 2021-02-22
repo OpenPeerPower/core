@@ -38,7 +38,7 @@ class HumidityHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
         """Handle the.opp intent."""
-       .opp = intent_obj.opp
+        opp =intent_obj.opp
         slots = self.async_validate_slots(intent_obj.slots)
         state =.opp.helpers.intent.async_match_state(
             slots["name"]["value"],.opp.states.async_all(DOMAIN)
@@ -82,7 +82,7 @@ class SetModeHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
         """Handle the.opp intent."""
-       .opp = intent_obj.opp
+        opp =intent_obj.opp
         slots = self.async_validate_slots(intent_obj.slots)
         state =.opp.helpers.intent.async_match_state(
             slots["name"]["value"],

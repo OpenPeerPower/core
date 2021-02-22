@@ -9,7 +9,7 @@ from .const import DOMAIN, SUPPORTED_PLATFORMS
 from .onewirehub import CannotConnect, OneWireHub
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up 1-Wire integrations."""
     return True
 

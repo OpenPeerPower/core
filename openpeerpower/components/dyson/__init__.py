@@ -38,7 +38,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Dyson parent component."""
     _LOGGER.info("Creating new Dyson component")
 

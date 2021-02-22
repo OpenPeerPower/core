@@ -36,7 +36,7 @@ async def test_abort_if_no_implementation_registered.opp):
     assert result["reason"] == "missing_configuration"
 
 
-async def test_abort_if_already_setup.opp):
+async def test_abort_if_already_setup_opp):
     """Test we abort if Ambiclimate is already setup."""
     flow = await init_config_flow.opp)
 
@@ -101,7 +101,7 @@ async def test_abort_invalid_code.opp):
     assert result["reason"] == "access_token"
 
 
-async def test_already_setup.opp):
+async def test_already_setup_opp):
     """Test when already setup."""
     config_flow.register_flow_implementation.opp, None, None)
     flow = await init_config_flow.opp)

@@ -24,7 +24,7 @@ from openpeerpower.exceptions import ConfigEntryNotReady
 from .helper import HAPID, HAPPIN
 
 
-async def test_auth_setup.opp):
+async def test_auth_setup_opp):
     """Test auth setup for client registration."""
     config = {HMIPC_HAPID: "ABC123", HMIPC_PIN: "123", HMIPC_NAME: "hmip"}
     hmip_auth = HomematicipAuth.opp, config)
@@ -73,7 +73,7 @@ async def test_auth_auth_check_and_register_with_exception.opp):
 
 async def test_hap_setup_works():
     """Test a successful setup of a accesspoint."""
-   .opp = Mock()
+    opp =Mock()
     entry = Mock()
     home = Mock()
     entry.data = {HMIPC_HAPID: "ABC123", HMIPC_AUTHTOKEN: "123", HMIPC_NAME: "hmip"}
@@ -95,7 +95,7 @@ async def test_hap_setup_works():
 
 async def test_hap_setup_connection_error():
     """Test a failed accesspoint setup."""
-   .opp = Mock()
+    opp =Mock()
     entry = Mock()
     entry.data = {HMIPC_HAPID: "ABC123", HMIPC_AUTHTOKEN: "123", HMIPC_NAME: "hmip"}
     hap = HomematicipHAP.opp, entry)
@@ -108,7 +108,7 @@ async def test_hap_setup_connection_error():
     assert not.opp.config_entries.flow.async_init.mock_calls
 
 
-async def test_hap_reset_unloads_entry_if_setup.opp, default_mock_hap_factory):
+async def test_hap_reset_unloads_entry_if_setup_opp, default_mock_hap_factory):
     """Test calling reset while the entry has been setup."""
     mock_hap = await default_mock_hap_factory.async_get_mock_hap()
     assert.opp.data[HMIPC_DOMAIN][HAPID] == mock_hap

@@ -38,7 +38,7 @@ def setup_no_ip.opp, aioclient_mock):
     )
 
 
-async def test_setup.opp, aioclient_mock):
+async def test_setup_opp, aioclient_mock):
     """Test setup works if update passes."""
     aioclient_mock.get(UPDATE_URL, params={"hostname": DOMAIN}, text="nochg 0.0.0.0")
 

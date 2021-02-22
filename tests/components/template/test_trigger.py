@@ -112,7 +112,7 @@ async def test_if_fires_on_change_str_crazy.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_not_fires_when_true_at_setup.opp, calls):
+async def test_if_not_fires_when_true_at_setup_opp, calls):
     """Test for not firing during startup."""
     assert await async_setup_component(
        .opp,

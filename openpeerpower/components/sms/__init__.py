@@ -19,7 +19,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Configure Gammu state machine."""
    .opp.data.setdefault(DOMAIN, {})
     sms_config = config.get(DOMAIN, {})

@@ -67,7 +67,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config) -> bool:
+async def async_setup_opp, config) -> bool:
     """Initialize the Sure Petcare component."""
     conf = config[DOMAIN]
 

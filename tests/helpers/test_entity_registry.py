@@ -192,9 +192,9 @@ async def test_loading_saving_data.opp, registry):
     assert new_entry2.supported_features == 5
     assert new_entry2.device_class == "mock-device-class"
     assert new_entry2.name == "User Name"
-    assert new_entry2.icon == .opp:user-icon"
+    assert new_entry2.icon == opp:user-icon"
     assert new_entry2.original_name == "Original Name"
-    assert new_entry2.original_icon == .opp:original-icon"
+    assert new_entry2.original_icon == opp:original-icon"
 
 
 def test_generate_entity_considers_registered_entities(registry):
@@ -272,7 +272,7 @@ async def test_loading_extra_values.opp,.opp_storage):
     assert entry_without_name.name is None
     assert not entry_with_name.disabled
 
-    entry_disabled.opp = registry.async_get_or_create(
+    entry_disabled opp =registry.async_get_or_create(
         "test", "super_platform", "disabled.opp"
     )
     entry_disabled_user = registry.async_get_or_create(
@@ -378,7 +378,7 @@ async def test_migration.opp):
         config_entry=mock_config,
     )
     assert entry.name == "Test Name"
-    assert entry.disabled_by == .opp"
+    assert entry.disabled_by == opp"
     assert entry.config_entry_id == "test-config-id"
 
 
@@ -498,12 +498,12 @@ async def test_update_entity(registry):
 async def test_disabled_by(registry):
     """Test that we can disable an entry when we create it."""
     entry = registry.async_get_or_create("light", "hue", "5678", disabled_by=.opp")
-    assert entry.disabled_by == .opp"
+    assert entry.disabled_by == opp"
 
     entry = registry.async_get_or_create(
         "light", "hue", "5678", disabled_by="integration"
     )
-    assert entry.disabled_by == .opp"
+    assert entry.disabled_by == opp"
 
     entry2 = registry.async_get_or_create("light", "hue", "1234")
     assert entry2.disabled_by is None

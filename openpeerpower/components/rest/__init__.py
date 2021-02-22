@@ -43,7 +43,7 @@ PLATFORMS = ["binary_sensor", "notify", "sensor", "switch"]
 COORDINATOR_AWARE_PLATFORMS = [SENSOR_DOMAIN, BINARY_SENSOR_DOMAIN]
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the rest platforms."""
     component = EntityComponent(_LOGGER, DOMAIN,.opp)
     _async_setup_shared_data.opp)

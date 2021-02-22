@@ -85,7 +85,7 @@ class TestHelpersEntity:
         """Set up things to be run when tests are started."""
         self.entity = entity.Entity()
         self.entity.entity_id = "test.overwrite_hidden_true"
-        self.opp = self.entity.opp = get_test_open_peer_power()
+        self opp =self.entity opp =get_test_open_peer_power()
         self.entity.schedule_update_ha_state()
         self.opp.block_till_done()
 

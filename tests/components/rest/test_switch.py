@@ -106,7 +106,7 @@ async def test_setup_query_params.opp, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
 
-async def test_setup.opp, aioclient_mock):
+async def test_setup_opp, aioclient_mock):
     """Test setup with valid configuration."""
     aioclient_mock.get("http://localhost", status=HTTP_OK)
     assert await async_setup_component(

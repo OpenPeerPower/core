@@ -10,7 +10,7 @@ from tests.common import get_test_open_peer_power, init_recorder_component
 @pytest.fixture
 def.opp_recorder():
     """Open Peer Power fixture with in-memory recorder."""
-   .opp = get_test_open_peer_power()
+    opp =get_test_open_peer_power()
 
     def setup_recorder(config=None):
         """Set up with params."""

@@ -69,7 +69,7 @@ class EVBinarySensorConfig:
         self.device_class = device_class
 
 
-def setup.opp, base_config):
+def setup_opp, base_config):
     """Set up the mychevy component."""
     config = base_config.get(DOMAIN)
 

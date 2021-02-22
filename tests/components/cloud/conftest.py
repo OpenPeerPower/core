@@ -32,7 +32,7 @@ async def cloud_prefs.opp):
 
 
 @pytest.fixture
-async def mock_cloud_setup.opp):
+async def mock_cloud_setup_opp):
     """Set up the cloud."""
     await mock_cloud.opp)
 

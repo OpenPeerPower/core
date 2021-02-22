@@ -112,7 +112,7 @@ CONFIG_SCHEMA = vol.Schema({DOMAIN: {cv.string: PLANT_SCHEMA}}, extra=vol.ALLOW_
 ENABLE_LOAD_HISTORY = False
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Plant component."""
     component = EntityComponent(_LOGGER, DOMAIN,.opp)
 

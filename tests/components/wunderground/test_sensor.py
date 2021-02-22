@@ -60,7 +60,7 @@ INVALID_URL = (
 )
 
 
-async def test_setup.opp, aioclient_mock):
+async def test_setup_opp, aioclient_mock):
     """Test that the component is loaded."""
     aioclient_mock.get(URL, text=load_fixture("wunderground-valid.json"))
 

@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 CONF_RATE = "rate"
 DEFAULT_HOST = "localhost"
 DEFAULT_PORT = 8125
-DEFAULT_PREFIX = .opp"
+DEFAULT_PREFIX = opp"
 DEFAULT_RATE = 1
 DOMAIN = "datadog"
 
@@ -41,7 +41,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Datadog component."""
 
     conf = config[DOMAIN]

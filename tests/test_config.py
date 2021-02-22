@@ -225,7 +225,7 @@ async def _compute_state.opp, config):
 
     entity = Entity()
     entity.entity_id = "test.test"
-    entity.opp = opp
+    entity opp =opp
     entity.schedule_update_op.state()
 
     await opp.async_block_till_done()
@@ -419,7 +419,7 @@ async def test_updating_configuration.opp,.opp_storage):
     await config_util.async_process_op_core_config(
        .opp, {"allowlist_external_dirs": "/etc"}
     )
-    await opp..config.async_update(latitude=50)
+    await opp.config.async_update(latitude=50)
 
     new_core_data = copy.deepcopy(core_data)
     new_core_data["data"]["latitude"] = 50

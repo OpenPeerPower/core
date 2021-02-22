@@ -54,7 +54,7 @@ async def test_depose_user.opp):
     assert len(auth_module._data) == 0
 
 
-async def test_is_user_setup.opp):
+async def test_is_user_setup_opp):
     """Test is user setup."""
     auth_module = await auth_mfa_module_from_config(
        .opp,

@@ -22,7 +22,7 @@ EVENT_BUTTON = "smartthings.button"
 SIGNAL_SMARTTHINGS_UPDATE = "smartthings_update"
 SIGNAL_SMARTAPP_PREFIX = "smartthings_smartap_"
 
-SETTINGS_INSTANCE_ID = .oppInstanceId"
+SETTINGS_INSTANCE_ID = oppInstanceId"
 
 SUBSCRIPTION_WARNING_LIMIT = 40
 

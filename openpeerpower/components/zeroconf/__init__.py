@@ -134,7 +134,7 @@ class HaZeroconf(Zeroconf):
     ha_close = Zeroconf.close
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up Zeroconf and make Open Peer Power discoverable."""
     zc_config = config.get(DOMAIN, {})
     zc_args = {}

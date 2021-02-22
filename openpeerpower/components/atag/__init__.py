@@ -24,7 +24,7 @@ DOMAIN = "atag"
 PLATFORMS = [CLIMATE, WATER_HEATER, SENSOR]
 
 
-async def async_setup.opp: OpenPeerPower, config):
+async def async_setup_opp: OpenPeerPower, config):
     """Set up the Atag component."""
     return True
 

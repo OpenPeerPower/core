@@ -95,7 +95,7 @@ async def test_unknown_error.opp, mock_garmin_connect):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_abort_if_already_setup.opp, mock_garmin_connect):
+async def test_abort_if_already_setup_opp, mock_garmin_connect):
     """Test abort if already setup."""
     entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONF, unique_id=MOCK_CONF[CONF_ID])
     entry.add_to.opp.opp)

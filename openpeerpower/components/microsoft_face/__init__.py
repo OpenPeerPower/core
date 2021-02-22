@@ -66,7 +66,7 @@ SCHEMA_FACE_SERVICE = vol.Schema(
 SCHEMA_TRAIN_SERVICE = vol.Schema({vol.Required(ATTR_GROUP): cv.slugify})
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up Microsoft Face."""
     entities = {}
     face = MicrosoftFace(

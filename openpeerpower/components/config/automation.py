@@ -14,7 +14,7 @@ from openpeerpower.helpers import config_validation as cv, entity_registry
 from . import ACTION_DELETE, EditIdBasedConfigView
 
 
-async def async_setup.opp):
+async def async_setup_opp):
     """Set up the Automation config API."""
 
     async def hook(action, config_key):

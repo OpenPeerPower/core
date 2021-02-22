@@ -8,7 +8,7 @@ from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
 from tests.common import MockConfigEntry
 
 
-async def test_abort_already_setup.opp):
+async def test_abort_already_setup_opp):
     """Test if we abort because component is already setup."""
     flow = config_flow.VeSyncFlowHandler()
     flow.opp =.opp

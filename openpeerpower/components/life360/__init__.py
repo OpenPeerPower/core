@@ -147,7 +147,7 @@ LIFE360_SCHEMA = vol.All(
 CONFIG_SCHEMA = vol.Schema({DOMAIN: LIFE360_SCHEMA}, extra=vol.ALLOW_EXTRA)
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up integration."""
     conf = config.get(DOMAIN, LIFE360_SCHEMA({}))
    .opp.data[DOMAIN] = {"config": conf, "apis": {}}

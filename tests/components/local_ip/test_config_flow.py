@@ -21,7 +21,7 @@ async def test_config_flow.opp):
     assert state
 
 
-async def test_already_setup.opp):
+async def test_already_setup_opp):
     """Test we abort if already setup."""
     MockConfigEntry(
         domain=DOMAIN,

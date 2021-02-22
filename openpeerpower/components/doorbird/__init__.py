@@ -41,7 +41,7 @@ _LOGGER = logging.getLogger(__name__)
 
 API_URL = f"/api/{DOMAIN}"
 
-CONF_CUSTOM_URL = .opp_url_override"
+CONF_CUSTOM_URL = opp_url_override"
 
 RESET_DEVICE_FAVORITES = "doorbird_reset_favorites"
 
@@ -70,7 +70,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the DoorBird component."""
    .opp.data.setdefault(DOMAIN, {})
 
@@ -354,7 +354,7 @@ class DoorBirdRequestView(OpenPeerPowerView):
 
     async def get(self, request, event):
         """Respond to requests from the device."""
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
 
         token = request.query.get("token")
 

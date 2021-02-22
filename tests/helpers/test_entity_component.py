@@ -104,7 +104,7 @@ async def test_setup_does_discovery(mock_setup_component, mock_setup,.opp):
 async def test_set_scan_interval_via_config(mock_track,.opp):
     """Test the setting of the scan interval via configuration."""
 
-    def platform_setup.opp, config, add_entities, discovery_info=None):
+    def platform_setup_opp, config, add_entities, discovery_info=None):
         """Test the platform setup."""
         add_entities([MockEntity(should_poll=True)])
 
@@ -124,7 +124,7 @@ async def test_set_scan_interval_via_config(mock_track,.opp):
 async def test_set_entity_namespace_via_config.opp):
     """Test setting an entity namespace."""
 
-    def platform_setup.opp, config, add_entities, discovery_info=None):
+    def platform_setup_opp, config, add_entities, discovery_info=None):
         """Test the platform setup."""
         add_entities([MockEntity(name="beer"), MockEntity(name=None)])
 

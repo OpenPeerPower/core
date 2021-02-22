@@ -6,7 +6,7 @@ from openpeerpower.components.my import URL_PATH
 from openpeerpower.setup import async_setup_component
 
 
-async def test_setup.opp):
+async def test_setup_opp):
     """Test setup."""
     with mock.patch(
         "openpeerpower.components.frontend.async_register_built_in_panel"

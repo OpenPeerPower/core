@@ -36,7 +36,7 @@ DATA_LAST_SENSOR_PAIR_DUMP = "last_sensor_pair_dump"
 PLATFORMS = ["binary_sensor", "sensor", "switch"]
 
 
-async def async_setup.opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Elexa Guardian component."""
    .opp.data[DOMAIN] = {
         DATA_CLIENT: {},

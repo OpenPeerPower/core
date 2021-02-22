@@ -27,7 +27,7 @@ CONFIG_SCHEMA = vol.Schema(
 SOMA_COMPONENTS = ["cover", "sensor"]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Soma component."""
     if DOMAIN not in config:
         return True

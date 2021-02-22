@@ -124,7 +124,7 @@ async def async_register_panel(
     )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Initialize custom panel."""
     if DOMAIN not in config:
         return True

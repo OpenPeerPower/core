@@ -18,7 +18,7 @@ import openpeerpower.util.dt as dt_util
 from tests.common import assert_setup_component, async_fire_time_changed
 
 
-async def test_setup.opp):
+async def test_setup_opp):
     """Test the setup."""
     config = {
         "binary_sensor": {

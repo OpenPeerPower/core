@@ -35,7 +35,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Initialize the FreeDNS component."""
     conf = config[DOMAIN]
     url = conf.get(CONF_URL)

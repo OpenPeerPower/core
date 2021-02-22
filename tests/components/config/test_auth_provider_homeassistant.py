@@ -10,7 +10,7 @@ from tests.common import CLIENT_ID, MockUser
 @pytest.fixture(autouse=True)
 async def setup_config.opp, local_auth):
     """Fixture that sets up the auth provider ."""
-    await auth_ha.async_setup.opp)
+    await auth_ha.async_setup_opp)
 
 
 @pytest.fixture

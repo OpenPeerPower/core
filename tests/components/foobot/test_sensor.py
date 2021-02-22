@@ -29,7 +29,7 @@ VALID_CONFIG = {
 }
 
 
-async def test_default_setup.opp, aioclient_mock):
+async def test_default_setup_opp, aioclient_mock):
     """Test the default setup."""
     aioclient_mock.get(
         re.compile("api.foobot.io/v2/owner/.*"),

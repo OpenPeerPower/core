@@ -187,7 +187,7 @@ class MqttAttributes(Entity):
         """(Re)Subscribe to topics."""
         attr_tpl = self._attributes_config.get(CONF_JSON_ATTRS_TEMPLATE)
         if attr_tpl is not None:
-            attr_tpl.opp = self.opp
+            attr_tpl opp =self.opp
 
         @callback
         @log_messages(self.opp, self.entity_id)
@@ -363,12 +363,12 @@ class MqttDiscoveryUpdate(Entity):
         self._discovery_data = discovery_data
         self._discovery_update = discovery_update
         self._remove_signal = None
-        self._removed_from.opp = False
+        self._removed_from opp =False
 
     async def async_added_to.opp(self) -> None:
         """Subscribe to discovery updates."""
         await super().async_added_to.opp()
-        self._removed_from.opp = False
+        self._removed_from opp =False
         discovery_hash = (
             self._discovery_data[ATTR_DISCOVERY_HASH] if self._discovery_data else None
         )
@@ -456,7 +456,7 @@ class MqttDiscoveryUpdate(Entity):
         if self._discovery_data and not self._removed_from.opp:
             debug_info.remove_entity_data(self.opp, self.entity_id)
             clear_discovery_hash(self.opp, self._discovery_data[ATTR_DISCOVERY_HASH])
-            self._removed_from.opp = True
+            self._removed_from opp =True
 
         if self._remove_signal:
             self._remove_signal()

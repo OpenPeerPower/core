@@ -15,7 +15,7 @@ from openpeerpower.helpers.typing import OpenPeerPowerType
 from .const import CONF_MYDEVOLO, DOMAIN, GATEWAY_SERIAL_PATTERN, PLATFORMS
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Get all devices and add them to.opp."""
     return True
 

@@ -33,7 +33,7 @@ _LOGGER = logging.getLogger(__name__)
 TEST_CONFIG = {"name": "test", "longitude": "17.84197", "latitude": "59.32624"}
 
 
-async def test_setup.opp.opp: OpenPeerPower, aioclient_mock) -> None:
+async def test_setup_opp.opp: OpenPeerPower, aioclient_mock) -> None:
     """Test for successfully setting up the smhi platform.
 
     This test are deeper integrated with the core. Since only
@@ -97,7 +97,7 @@ def test_properties_no_data.opp: OpenPeerPower) -> None:
 # pylint: disable=protected-access
 def test_properties_unknown_symbol() -> None:
     """Test behaviour when unknown symbol from API."""
-   .opp = Mock()
+    opp =Mock()
     data = Mock()
     data.temperature = 5
     data.mean_precipitation = 0.5
@@ -192,7 +192,7 @@ async def test_refresh_weather_forecast_timeout.opp) -> None:
 async def test_refresh_weather_forecast_exception() -> None:
     """Test any exception."""
 
-   .opp = Mock()
+    opp =Mock()
     weather = weather_smhi.SmhiWeather("name", "17.0022", "62.0022")
     weather.opp =.opp
 
@@ -211,7 +211,7 @@ async def test_refresh_weather_forecast_exception() -> None:
 
 async def test_retry_update():
     """Test retry function of refresh forecast."""
-   .opp = Mock()
+    opp =Mock()
     weather = weather_smhi.SmhiWeather("name", "17.0022", "62.0022")
     weather.opp =.opp
 

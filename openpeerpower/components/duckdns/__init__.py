@@ -40,7 +40,7 @@ CONFIG_SCHEMA = vol.Schema(
 SERVICE_TXT_SCHEMA = vol.Schema({vol.Required(ATTR_TXT): vol.Any(None, cv.string)})
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Initialize the DuckDNS component."""
     domain = config[DOMAIN][CONF_DOMAIN]
     token = config[DOMAIN][CONF_ACCESS_TOKEN]

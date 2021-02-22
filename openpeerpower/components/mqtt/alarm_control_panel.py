@@ -141,9 +141,9 @@ class MqttAlarm(MqttEntity, alarm.AlarmControlPanelEntity):
         self._config = config
         value_template = self._config.get(CONF_VALUE_TEMPLATE)
         if value_template is not None:
-            value_template.opp = self.opp
+            value_template opp =self.opp
         command_template = self._config[CONF_COMMAND_TEMPLATE]
-        command_template.opp = self.opp
+        command_template opp =self.opp
 
     async def _subscribe_topics(self):
         """(Re)Subscribe to topics."""

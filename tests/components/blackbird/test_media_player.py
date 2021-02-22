@@ -177,7 +177,7 @@ class TestBlackbirdMediaPlayer(unittest.TestCase):
     def setUp(self):
         """Set up the test case."""
         self.blackbird = MockBlackbird()
-        self.opp = tests.common.get_test_open_peer_power()
+        self opp =tests.common.get_test_open_peer_power()
         self.opp.start()
         # Note, source dictionary is unsorted!
         with mock.patch(
@@ -201,7 +201,7 @@ class TestBlackbirdMediaPlayer(unittest.TestCase):
             )
             self.opp.block_till_done()
         self.media_player = self.opp.data[DATA_BLACKBIRD]["/dev/ttyUSB0-3"]
-        self.media_player.opp = self.opp
+        self.media_player opp =self.opp
         self.media_player.entity_id = "media_player.zone_3"
         self.addCleanup(self.tear_down_cleanup)
 

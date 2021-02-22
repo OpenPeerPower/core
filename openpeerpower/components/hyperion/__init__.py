@@ -101,7 +101,7 @@ async def async_create_connect_hyperion_client(
     return hyperion_client
 
 
-async def async_setup.opp: OpenPeerPower, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up Hyperion component."""
    .opp.data[DOMAIN] = {}
     return True

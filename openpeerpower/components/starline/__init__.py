@@ -19,7 +19,7 @@ from .const import (
 )
 
 
-async def async_setup.opp: OpenPeerPower, config: Config) -> bool:
+async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     """Set up configured StarLine."""
     return True
 

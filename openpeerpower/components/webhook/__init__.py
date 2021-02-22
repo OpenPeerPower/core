@@ -102,7 +102,7 @@ async def async_handle_webhook.opp, webhook_id, request):
         return Response(status=HTTP_OK)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Initialize the webhook component."""
    .opp.http.register_view(WebhookView)
    .opp.components.websocket_api.async_register_command(
@@ -122,7 +122,7 @@ class WebhookView(OpenPeerPowerView):
     async def _handle(self, request: Request, webhook_id):
         """Handle webhook call."""
         _LOGGER.debug("Handling webhook %s payload for %s", request.method, webhook_id)
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
         return await async_handle_webhook.opp, webhook_id, request)
 
     head = _handle

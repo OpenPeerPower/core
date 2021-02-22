@@ -14,7 +14,7 @@ SCHEMA_WS_DELETE = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
 )
 
 
-async def async_setup.opp):
+async def async_setup_opp):
     """Enable the Open Peer Power views."""
    .opp.components.websocket_api.async_register_command(
         WS_TYPE_LIST, websocket_list, SCHEMA_WS_LIST

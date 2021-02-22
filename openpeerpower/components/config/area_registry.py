@@ -34,7 +34,7 @@ SCHEMA_WS_UPDATE = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
 )
 
 
-async def async_setup.opp):
+async def async_setup_opp):
     """Enable the Area Registry views."""
    .opp.components.websocket_api.async_register_command(
         WS_TYPE_LIST, websocket_list_areas, SCHEMA_WS_LIST

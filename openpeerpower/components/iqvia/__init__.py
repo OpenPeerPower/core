@@ -35,7 +35,7 @@ DEFAULT_SCAN_INTERVAL = timedelta(minutes=30)
 PLATFORMS = ["sensor"]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the IQVIA component."""
    .opp.data[DOMAIN] = {DATA_COORDINATOR: {}}
     return True

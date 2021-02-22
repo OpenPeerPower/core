@@ -73,7 +73,7 @@ async def test_import.opp, test_api):
     assert result["data"][CONF_API_KEY] == API_KEY
 
 
-async def test_abort_if_already_setup.opp, test_api):
+async def test_abort_if_already_setup_opp, test_api):
     """Test we abort if the site_id is already setup."""
     flow = init_config_flow.opp)
     MockConfigEntry(

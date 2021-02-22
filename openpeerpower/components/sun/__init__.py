@@ -72,7 +72,7 @@ _PHASE_UPDATES = {
 }
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Track the state of the sun."""
     if config.get(CONF_ELEVATION) is not None:
         _LOGGER.warning(

@@ -35,12 +35,12 @@ class MockTransport:
 class TestEmulatedHue(unittest.TestCase):
     """Test the emulated Hue component."""
 
-   .opp = None
+    opp =None
 
     @classmethod
     def setUpClass(cls):
         """Set up the class."""
-        cls.opp =.opp = get_test_open_peer_power()
+        cls.opp = opp =get_test_open_peer_power()
 
         setup.setup_component(
            .opp,

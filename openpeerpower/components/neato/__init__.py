@@ -47,7 +47,7 @@ CONFIG_SCHEMA = vol.Schema(
 PLATFORMS = ["camera", "vacuum", "switch", "sensor"]
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up the Neato component."""
    .opp.data[NEATO_DOMAIN] = {}
 

@@ -37,7 +37,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Dweet.io component."""
     conf = config[DOMAIN]
     name = conf.get(CONF_NAME)

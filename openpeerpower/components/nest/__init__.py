@@ -71,7 +71,7 @@ CONFIG_SCHEMA = vol.Schema(
 PLATFORMS = ["sensor", "camera", "climate"]
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up Nest components with dispatch between old/new flows."""
    .opp.data[DOMAIN] = {}
 

@@ -9,7 +9,7 @@ from .common import get_data_update_coordinator
 from .const import DEVICE_TYPE_GOGOGATE2
 
 
-async def async_setup.opp: OpenPeerPower, base_config: dict) -> bool:
+async def async_setup_opp: OpenPeerPower, base_config: dict) -> bool:
     """Set up for Gogogate2 controllers."""
     return True
 

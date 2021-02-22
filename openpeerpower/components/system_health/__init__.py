@@ -40,7 +40,7 @@ def async_register_info(
     SystemHealthRegistration.opp, domain).async_register_info(info_callback)
 
 
-async def async_setup.opp: OpenPeerPower, config: ConfigType):
+async def async_setup_opp: OpenPeerPower, config: ConfigType):
     """Set up the System Health component."""
    .opp.components.websocket_api.async_register_command(handle_info)
    .opp.data.setdefault(DOMAIN, {})

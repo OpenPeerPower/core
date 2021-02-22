@@ -184,7 +184,7 @@ SERVICE_KNX_EVENT_REGISTER_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the KNX component."""
     try:
        .opp.data[DOMAIN] = KNXModule.opp, config)
@@ -251,7 +251,7 @@ async def async_setup.opp, config):
             *[platform.async_reset() for platform in async_get_platforms.opp, DOMAIN)]
         )
 
-        await async_setup.opp, config)
+        await async_setup_opp, config)
 
     async_register_admin_service(
        .opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})

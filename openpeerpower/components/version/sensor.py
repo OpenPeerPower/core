@@ -76,7 +76,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     if source == "pypi":
         haversion = VersionData(PyPiVersion.opp.loop, session, branch))
-    elif source == .oppio":
+    elif source == oppio":
         haversion = VersionData(HassioVersion.opp.loop, session, branch, image))
     elif source == "docker":
         haversion = VersionData(DockerVersion.opp.loop, session, branch, image))

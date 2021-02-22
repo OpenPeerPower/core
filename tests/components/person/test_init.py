@@ -46,7 +46,7 @@ def storage_collection.opp):
 
 
 @pytest.fixture
-def storage_setup.opp,.opp_storage,.opp_admin_user):
+def storage_setup_opp,.opp_storage,.opp_admin_user):
     """Storage setup."""
    .opp_storage[DOMAIN] = {
         "key": DOMAIN,
@@ -65,7 +65,7 @@ def storage_setup.opp,.opp_storage,.opp_admin_user):
     assert.opp.loop.run_until_complete(async_setup_component.opp, DOMAIN, {}))
 
 
-async def test_minimal_setup.opp):
+async def test_minimal_setup_opp):
     """Test minimal config with only name."""
     config = {DOMAIN: {"id": "1234", "name": "test person"}}
     assert await async_setup_component.opp, DOMAIN, config)

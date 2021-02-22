@@ -78,7 +78,7 @@ CONFIG_SCHEMA = vol.Schema(
 SERVICE_SCHEMA = vol.Schema({vol.Optional(ATTR_HOST, default=None): cv.string})
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the iperf3 component."""
    .opp.data[DOMAIN] = {}
 

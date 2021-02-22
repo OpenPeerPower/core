@@ -138,7 +138,7 @@ class Thermostat(HomeAccessory):
         """Initialize a Thermostat accessory object."""
         super().__init__(*args, category=CATEGORY_THERMOSTAT)
         self._unit = self.opp.config.units.temperature_unit
-        self.hc_homekit_to.opp = None
+        self.hc_homekit_to opp =None
         self.hc.opp_to_homekit = None
         hc_min_temp, hc_max_temp = self.get_temperature_range()
 
@@ -378,7 +378,7 @@ class Thermostat(HomeAccessory):
         # the Open Peer Power spec
         #
         # HVAC_MODE_HEAT_COOL: The device supports heating/cooling to a range
-        self.hc_homekit_to.opp = {
+        self.hc_homekit_to opp ={
             c: s
             for s, c in HC_HASS_TO_HOMEKIT.items()
             if (

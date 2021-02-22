@@ -87,7 +87,7 @@ SERVICE_SCHEMA_FEEDBACK = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Activate Snips component."""
 
     @callback

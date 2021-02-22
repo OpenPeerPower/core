@@ -12,7 +12,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Mycroft component."""
    .opp.data[DOMAIN] = config[DOMAIN][CONF_HOST]
     discovery.load_platform.opp, "notify", DOMAIN, {}, config)

@@ -225,7 +225,7 @@ def _get_camera_from_entity_id.opp, entity_id):
     return camera
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the camera component."""
     component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
@@ -625,7 +625,7 @@ async def websocket_update_prefs.opp, connection, msg):
 
 async def async_handle_snapshot_service(camera, service):
     """Handle snapshot services calls."""
-   .opp = camera.opp
+    opp =camera.opp
     filename = service.data[ATTR_FILENAME]
     filename.opp =.opp
 
@@ -656,7 +656,7 @@ async def async_handle_play_stream_service(camera, service_call):
     fmt = service_call.data[ATTR_FORMAT]
     url = await _async_stream_endpoint_url(camera.opp, camera, fmt)
 
-   .opp = camera.opp
+    opp =camera.opp
     data = {
         ATTR_MEDIA_CONTENT_ID: f"{get_url.opp)}{url}",
         ATTR_MEDIA_CONTENT_TYPE: FORMAT_CONTENT_TYPE[fmt],
@@ -725,7 +725,7 @@ async def async_handle_record_service(camera, call):
     if not stream:
         raise OpenPeerPowerError(f"{camera.entity_id} does not support record service")
 
-   .opp = camera.opp
+    opp =camera.opp
     filename = call.data[CONF_FILENAME]
     filename.opp =.opp
     video_path = filename.async_render(variables={ATTR_ENTITY_ID: camera})

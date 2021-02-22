@@ -26,7 +26,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["sensor", "weather"]
 
 
-async def async_setup.opp: OpenPeerPower, config: Config) -> bool:
+async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     """Set up configured AccuWeather."""
    .opp.data.setdefault(DOMAIN, {})
     return True

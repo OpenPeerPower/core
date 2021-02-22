@@ -10,7 +10,7 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 @pytest.fixture
 def client.opp,.opp_ws_client):
     """Fixture that can interact with the config manager API."""
-   .opp.loop.run_until_complete(device_registry.async_setup.opp))
+   .opp.loop.run_until_complete(device_registry.async_setup_opp))
     yield.opp.loop.run_until_complete.opp_ws_client.opp))
 
 

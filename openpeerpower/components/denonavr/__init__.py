@@ -37,7 +37,7 @@ SERVICE_TO_METHOD = {
 }
 
 
-def setup.opp: core.OpenPeerPower, config: dict):
+def setup_opp: core.OpenPeerPower, config: dict):
     """Set up the denonavr platform."""
 
     def service_handler(service):

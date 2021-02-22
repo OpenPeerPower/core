@@ -76,7 +76,7 @@ class TestFFmpegSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_open_peer_power()
+        self opp =get_test_open_peer_power()
 
     def teardown_method(self):
         """Stop everything that was started."""

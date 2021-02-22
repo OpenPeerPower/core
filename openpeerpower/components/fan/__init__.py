@@ -117,7 +117,7 @@ def is_on.opp, entity_id: str) -> bool:
     return state.state == STATE_ON
 
 
-async def async_setup.opp, config: dict):
+async def async_setup_opp, config: dict):
     """Expose fan control via statemachine and services."""
     component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL

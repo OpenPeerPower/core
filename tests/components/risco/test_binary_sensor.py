@@ -47,7 +47,7 @@ async def test_unauthorized.opp):
         assert not registry.async_is_registered(SECOND_ENTITY_ID)
 
 
-async def test_setup.opp, two_zone_alarm):  # noqa: F811
+async def test_setup_opp, two_zone_alarm):  # noqa: F811
     """Test entity setup."""
     registry = await.opp.helpers.entity_registry.async_get_registry()
 

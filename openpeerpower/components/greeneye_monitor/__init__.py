@@ -117,7 +117,7 @@ COMPONENT_SCHEMA = vol.Schema(
 CONFIG_SCHEMA = vol.Schema({DOMAIN: COMPONENT_SCHEMA}, extra=vol.ALLOW_EXTRA)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the GreenEye Monitor component."""
     monitors = Monitors()
    .opp.data[DATA_GREENEYE_MONITOR] = monitors

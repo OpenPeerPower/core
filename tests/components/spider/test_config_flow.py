@@ -82,7 +82,7 @@ async def test_import.opp, spider):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_abort_if_already_setup.opp, spider):
+async def test_abort_if_already_setup_opp, spider):
     """Test we abort if Spider is already setup."""
     MockConfigEntry(domain=DOMAIN, data=SPIDER_USER_DATA).add_to.opp.opp)
 

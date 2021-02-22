@@ -42,7 +42,7 @@ SIGNAL_DISCONNECTED = "apple_tv_disconnected"
 PLATFORMS = [MP_DOMAIN, REMOTE_DOMAIN]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Apple TV integration."""
     return True
 

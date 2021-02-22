@@ -181,7 +181,7 @@ def do_authentication.opp,.opp_config, config):
 
         storage = Storage.opp.config.path(TOKEN_FILE))
         storage.put(credentials)
-        do_setup.opp,.opp_config, config)
+        do_setup_opp,.opp_config, config)
         listener()
        .opp.components.persistent_notification.create(
             (
@@ -199,7 +199,7 @@ def do_authentication.opp,.opp_config, config):
     return True
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Google platform."""
     if DATA_INDEX not in.opp.data:
        .opp.data[DATA_INDEX] = {}
@@ -216,7 +216,7 @@ def setup.opp, config):
         if not check_correct_scopes(token_file):
             do_authentication.opp, config, conf)
         else:
-            do_setup.opp, config, conf)
+            do_setup_opp, config, conf)
 
     return True
 
@@ -318,7 +318,7 @@ def setup_services.opp,.opp_config, track_new_found_calendars, calendar_service)
     return True
 
 
-def do_setup.opp,.opp_config, config):
+def do_setup_opp,.opp_config, config):
     """Run the setup after we have everything configured."""
     # Load calendars the user has configured
    .opp.data[DATA_INDEX] = load_config.opp.config.path(YAML_DEVICES))

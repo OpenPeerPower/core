@@ -291,7 +291,7 @@ async def test_remove_entry.opp, manager):
     ]
 
     # Setup entry
-    await entry.async_setup.opp)
+    await entry.async_setup_opp)
     await opp.async_block_till_done()
 
     # Check entity state got added
@@ -345,7 +345,7 @@ async def test_remove_entry_handles_callback_error.opp, manager):
     # Check all config entries exist
     assert [item.entry_id for item in manager.async_entries()] == ["test1"]
     # Setup entry
-    await entry.async_setup.opp)
+    await entry.async_setup_opp)
     await opp.async_block_till_done()
 
     # Remove entry
@@ -799,7 +799,7 @@ async def test_setup_raise_not_ready.opp, caplog):
     mock_entity_platform.opp, "config_flow.test", None)
 
     with patch("openpeerpower.helpers.event.async_call_later") as mock_call:
-        await entry.async_setup.opp)
+        await entry.async_setup_opp)
 
     assert len(mock_call.mock_calls) == 1
     assert "Config entry 'test_title' for test integration not ready yet" in caplog.text
@@ -825,7 +825,7 @@ async def test_setup_retrying_during_unload.opp):
     mock_entity_platform.opp, "config_flow.test", None)
 
     with patch("openpeerpower.helpers.event.async_call_later") as mock_call:
-        await entry.async_setup.opp)
+        await entry.async_setup_opp)
 
     assert entry.state == config_entries.ENTRY_STATE_SETUP_RETRY
     assert len(mock_call.return_value.mock_calls) == 0
@@ -1225,7 +1225,7 @@ async def test_init_custom_integration.opp):
             "openpeerpower.loader.async_get_integration",
             return_value=integration,
         ):
-            await opp..config_entries.flow.async_init("bla")
+            await opp.config_entries.flow.async_init("bla")
 
 
 async def test_support_entry_unload.opp):
@@ -1915,7 +1915,7 @@ async def test_partial_flows_hidden.opp, manager):
 async def test_async_setup_init_entry.opp):
     """Test a config entry being initialized during integration setup."""
 
-    async def mock_async_setup.opp, config):
+    async def mock_async_setup_opp, config):
         """Mock setup."""
        .opp.async_create_task(
            .opp.config_entries.flow.async_init(
@@ -1962,7 +1962,7 @@ async def test_async_setup_update_entry.opp):
     entry = MockConfigEntry(domain="comp", data={"value": "initial"})
     entry.add_to_opp.opp)
 
-    async def mock_async_setup.opp, config):
+    async def mock_async_setup_opp, config):
         """Mock setup."""
        .opp.async_create_task(
            .opp.config_entries.flow.async_init(

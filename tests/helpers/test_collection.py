@@ -272,7 +272,7 @@ async def test_storage_collection_websocket.opp,.opp_ws_client):
         "test_item",
         {vol.Required("name"): str, vol.Required("immutable_string"): str},
         {vol.Optional("name"): str},
-    ).async_setup.opp)
+    ).async_setup_opp)
 
     client = await.opp_ws_client.opp)
 

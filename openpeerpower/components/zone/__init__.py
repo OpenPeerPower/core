@@ -176,7 +176,7 @@ class ZoneStorageCollection(collection.StorageCollection):
         return {**data, **update_data}
 
 
-async def async_setup.opp: OpenPeerPower, config: Dict) -> bool:
+async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
     """Set up configured zones as well as Open Peer Power zone if necessary."""
     component = entity_component.EntityComponent(_LOGGER, DOMAIN,.opp)
     id_manager = collection.IDManager()
@@ -204,7 +204,7 @@ async def async_setup.opp: OpenPeerPower, config: Dict) -> bool:
 
     collection.StorageCollectionWebsocket(
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
-    ).async_setup.opp)
+    ).async_setup_opp)
 
     async def reload_service_handler(service_call: ServiceCall) -> None:
         """Remove all zones and load new ones from config."""

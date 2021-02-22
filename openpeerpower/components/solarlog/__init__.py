@@ -3,7 +3,7 @@ from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.helpers.typing import OpenPeerPowerType
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Component setup, do nothing."""
     return True
 

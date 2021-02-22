@@ -16,7 +16,7 @@ from .errors import FileAlreadyExists
 
 
 @callback
-def async_setup.opp: OpenPeerPower):
+def async_setup_opp: OpenPeerPower):
     """Set up the websocket API."""
     websocket_api.async_register_command.opp, ws_list_blueprints)
     websocket_api.async_register_command.opp, ws_import_blueprint)

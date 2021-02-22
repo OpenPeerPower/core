@@ -69,7 +69,7 @@ CONFIG_SCHEMA = vol.Schema(
 DEVICE_SERIAL_SCHEMA = vol.Schema({vol.Required(ATTR_DEVICE_SERIAL): cv.string})
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Verisure component."""
     global HUB  # pylint: disable=global-statement
     HUB = VerisureHub(config[DOMAIN])

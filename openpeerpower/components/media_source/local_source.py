@@ -17,7 +17,7 @@ from .models import BrowseMediaSource, MediaSource, MediaSourceItem, PlayMedia
 
 
 @callback
-def async_setup.opp: OpenPeerPower):
+def async_setup_opp: OpenPeerPower):
     """Set up local media source."""
     source = LocalSource.opp)
    .opp.data[DOMAIN][DOMAIN] = source

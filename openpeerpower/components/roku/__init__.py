@@ -38,7 +38,7 @@ SCAN_INTERVAL = timedelta(seconds=15)
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup.opp: OpenPeerPowerType, config: Dict) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
     """Set up the Roku integration."""
    .opp.data.setdefault(DOMAIN, {})
     return True

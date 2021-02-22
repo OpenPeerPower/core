@@ -37,7 +37,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the IDTECK proximity card component."""
     conf = config[DOMAIN]
     for unit in conf:

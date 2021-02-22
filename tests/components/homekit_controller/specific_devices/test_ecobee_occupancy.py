@@ -11,7 +11,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_ecobee_occupancy_setup.opp):
+async def test_ecobee_occupancy_setup_opp):
     """Test that an Ecbobee occupancy sensor be correctly setup in HA."""
     accessories = await setup_accessories_from_file.opp, "ecobee_occupancy.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)

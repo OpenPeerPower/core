@@ -51,7 +51,7 @@ async def test_import.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_abort_if_already_setup.opp):
+async def test_abort_if_already_setup_opp):
     """Test abort if the account is already setup."""
     MockConfigEntry(
         domain=DOMAIN,

@@ -241,7 +241,7 @@ def device_name_for_push_id.opp, push_id):
     return None
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the iOS component."""
     conf = config.get(DOMAIN)
 
@@ -335,7 +335,7 @@ class iOSIdentifyDeviceView(OpenPeerPowerView):
         except ValueError:
             return self.json_message("Invalid JSON", HTTP_BAD_REQUEST)
 
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
 
         # Commented for now while iOS app is getting frequent updates
         # try:

@@ -34,7 +34,7 @@ class TestFeedreaderComponent(unittest.TestCase):
 
     def setUp(self):
         """Initialize values for this testcase class."""
-        self.opp = get_test_open_peer_power()
+        self opp =get_test_open_peer_power()
         self.addCleanup(self.tear_down_cleanup)
 
     def tear_down_cleanup(self):

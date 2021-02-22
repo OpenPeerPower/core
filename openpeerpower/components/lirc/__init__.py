@@ -19,7 +19,7 @@ EVENT_IR_COMMAND_RECEIVED = "ir_command_received"
 ICON = "mdi:remote"
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the LIRC capability."""
     # blocking=True gives unexpected behavior (multiple responses for 1 press)
     # also by not blocking, we allow.opp to shut down the thread gracefully

@@ -33,7 +33,7 @@ DEFAULT_SCAN_INTERVAL = timedelta(minutes=1)
 CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 
-async def async_setup.opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Notion component."""
    .opp.data[DOMAIN] = {DATA_COORDINATOR: {}}
     return True

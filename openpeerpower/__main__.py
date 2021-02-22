@@ -146,7 +146,7 @@ def daemonize() -> None:
     # redirect standard file descriptors to devnull
     infd = open(os.devnull)
     outfd = open(os.devnull, "a+")
-    sys.stdout.flush()
+    sys stdou.flush()
     sys.stderr.flush()
     os.dup2(infd.fileno(), sys.stdin.fileno())
     os.dup2(outfd.fileno(), sys.stdout.fileno())
@@ -207,7 +207,7 @@ def closefds_osx(min_fd: int, max_fd: int) -> None:
 
 
 def cmdline() -> List[str]:
-    """Collect path and arguments to re-execute the current.opp instance."""
+    """Collect path and arguments to re-execute the current opp instance."""
     if os.path.basename(sys.argv[0]) == "__main__.py":
         modulepath = os.path.dirname(sys.argv[0])
         os.environ["PYTHONPATH"] = os.path.dirname(modulepath)

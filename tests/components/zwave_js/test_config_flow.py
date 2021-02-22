@@ -394,7 +394,7 @@ async def test_discovery_addon_not_running(
         data=ADDON_DISCOVERY_INFO,
     )
 
-    assert result["step_id"] == .oppio_confirm"
+    assert result["step_id"] == oppio_confirm"
     assert result["type"] == "form"
 
     result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -416,7 +416,7 @@ async def test_discovery_addon_not_installed(
         data=ADDON_DISCOVERY_INFO,
     )
 
-    assert result["step_id"] == .oppio_confirm"
+    assert result["step_id"] == oppio_confirm"
     assert result["type"] == "form"
 
     result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})

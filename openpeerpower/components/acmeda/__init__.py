@@ -11,7 +11,7 @@ CONF_HUBS = "hubs"
 PLATFORMS = ["cover", "sensor"]
 
 
-async def async_setup.opp: core.OpenPeerPower, config: dict):
+async def async_setup_opp: core.OpenPeerPower, config: dict):
     """Set up the Rollease Acmeda Automate component."""
     return True
 

@@ -16,7 +16,7 @@ from tests.common import async_fire_time_changed, mock_coro
 SERVICE = "yamaha"
 SERVICE_COMPONENT = "media_player"
 
-SERVICE_NO_PLATFORM = .opp_ios"
+SERVICE_NO_PLATFORM = opp_ios"
 SERVICE_NO_PLATFORM_COMPONENT = "ios"
 SERVICE_INFO = {"key": "value"}  # Can be anything
 

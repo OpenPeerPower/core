@@ -15,7 +15,7 @@ from .const import DOMAIN
 PLATFORMS = ["sensor"]
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Coronavirus component."""
     # Make sure coordinator is initialized.
     await get_coordinator.opp)

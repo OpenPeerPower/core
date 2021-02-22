@@ -29,7 +29,7 @@ GOALFEED_AUTH_ENDPOINT = "https://goalfeed.ca/feed/auth"
 GOALFEED_APP_ID = "bfd4ed98c1ff22c04074"
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Goalfeed component."""
     conf = config[DOMAIN]
     username = conf.get(CONF_USERNAME)

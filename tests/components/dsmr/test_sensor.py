@@ -62,7 +62,7 @@ async def test_setup_platform.opp, dsmr_connection_fixture):
     assert entry.data == {**entry_data, **serial_data}
 
 
-async def test_default_setup.opp, dsmr_connection_fixture):
+async def test_default_setup_opp, dsmr_connection_fixture):
     """Test the default setup."""
     (connection_factory, transport, protocol) = dsmr_connection_fixture
 

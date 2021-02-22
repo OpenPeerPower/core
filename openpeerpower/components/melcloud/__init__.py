@@ -39,7 +39,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigEntry):
+async def async_setup_opp: OpenPeerPowerType, config: ConfigEntry):
     """Establish connection with MELCloud."""
     if DOMAIN not in config:
         return True
@@ -59,7 +59,7 @@ async def async_setup.opp: OpenPeerPowerType, config: ConfigEntry):
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Establish connection with MELClooud."""
     conf = entry.data
-    mel_devices = await mel_devices_setup.opp, conf[CONF_TOKEN])
+    mel_devices = await mel_devices_setup_opp, conf[CONF_TOKEN])
    .opp.data.setdefault(DOMAIN, {}).update({entry.entry_id: mel_devices})
     for platform in PLATFORMS:
        .opp.async_create_task(
@@ -142,7 +142,7 @@ class MelCloudDevice:
         return _device_info
 
 
-async def mel_devices_setup.opp, token) -> List[MelCloudDevice]:
+async def mel_devices_setup_opp, token) -> List[MelCloudDevice]:
     """Query connected devices from MELCloud."""
     session =.opp.helpers.aiohttp_client.async_get_clientsession()
     try:

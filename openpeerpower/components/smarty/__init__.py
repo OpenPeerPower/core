@@ -35,7 +35,7 @@ RPM = "rpm"
 SIGNAL_UPDATE_SMARTY = "smarty_update"
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the smarty environment."""
 
     conf = config[DOMAIN]

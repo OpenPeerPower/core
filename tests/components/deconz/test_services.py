@@ -78,7 +78,7 @@ SWITCH = {
 }
 
 
-async def test_service_setup.opp):
+async def test_service_setup_opp):
     """Verify service setup works."""
     assert DECONZ_SERVICES not in.opp.data
     with patch(

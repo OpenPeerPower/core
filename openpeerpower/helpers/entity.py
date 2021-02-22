@@ -518,7 +518,7 @@ class Entity(ABC):
     @callback
     def add_to_platform_abort(self) -> None:
         """Abort adding an entity to a platform."""
-        self.opp = None
+        self opp =None
         self.platform = None
         self.parallel_updates = None
         self._added = False

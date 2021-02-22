@@ -523,7 +523,7 @@ async def test_flow.oppio_discovery.opp):
         context={"source": SOURCE_HASSIO},
     )
     assert result["type"] == RESULT_TYPE_FORM
-    assert result["step_id"] == .oppio_confirm"
+    assert result["step_id"] == oppio_confirm"
     assert result["description_placeholders"] == {"addon": "Mock Addon"}
 
     with patch(

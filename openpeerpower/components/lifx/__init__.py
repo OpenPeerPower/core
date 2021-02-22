@@ -27,7 +27,7 @@ CONFIG_SCHEMA = vol.Schema(
 DATA_LIFX_MANAGER = "lifx_manager"
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the LIFX component."""
     conf = config.get(DOMAIN)
 

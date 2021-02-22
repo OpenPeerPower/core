@@ -68,7 +68,7 @@ def is_on.opp: OpenPeerPowerType, entity_id: str) -> bool:
     return.opp.states.is_state(entity_id, STATE_ON)
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Track states and offer events for remotes."""
     component =.opp.data[DOMAIN] = EntityComponent(
         _LOGGER, DOMAIN,.opp, SCAN_INTERVAL

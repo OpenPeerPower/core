@@ -24,7 +24,7 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 DEFAULT_UPDATE_RATE = 120
 
 
-async def async_setup.opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the nexia component from YAML."""
 
    .opp.data.setdefault(DOMAIN, {})

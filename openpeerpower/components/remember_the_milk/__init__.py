@@ -47,7 +47,7 @@ SERVICE_SCHEMA_CREATE_TASK = vol.Schema(
 SERVICE_SCHEMA_COMPLETE_TASK = vol.Schema({vol.Required(CONF_ID): cv.string})
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Remember the milk component."""
     component = EntityComponent(_LOGGER, DOMAIN,.opp)
 

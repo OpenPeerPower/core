@@ -52,7 +52,7 @@ async def test_abort_if_no_implementation_registered.opp):
     assert result["reason"] == "no_flows"
 
 
-async def test_abort_if_already_setup.opp):
+async def test_abort_if_already_setup_opp):
     """Test we abort if Point is already setup."""
     flow = init_config_flow.opp)
 

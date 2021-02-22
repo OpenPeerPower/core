@@ -208,7 +208,7 @@ WINK_COMPONENTS = [
 WINK_HUBS = []
 
 
-def _request_app_setup.opp, config):
+def _request_app_setup_opp, config):
     """Assist user with configuring the Wink dev application."""
    .opp.data[DOMAIN]["configurator"] = True
     configurator =.opp.components.configurator
@@ -217,7 +217,7 @@ def _request_app_setup.opp, config):
         """Handle configuration updates."""
         _config_path =.opp.config.path(WINK_CONFIG_FILE)
         if not os.path.isfile(_config_path):
-            setup.opp, config)
+            setup_opp, config)
             return
 
         client_id = callback_data.get(CONF_CLIENT_ID).strip()
@@ -227,7 +227,7 @@ def _request_app_setup.opp, config):
                 _config_path,
                 {CONF_CLIENT_ID: client_id, CONF_CLIENT_SECRET: client_secret},
             )
-            setup.opp, config)
+            setup_opp, config)
             return
         error_msg = "Your input was invalid. Please try again."
         _configurator =.opp.data[DOMAIN]["configuring"][DOMAIN]
@@ -269,7 +269,7 @@ def _request_oauth_completion.opp, config):
 
     def wink_configuration_callback(callback_data):
         """Call setup again."""
-        setup.opp, config)
+        setup_opp, config)
 
     start_url = f"{get_url.opp)}{WINK_AUTH_START}"
 
@@ -280,7 +280,7 @@ def _request_oauth_completion.opp, config):
     )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Wink component."""
 
     if.opp.data.get(DOMAIN) is None:
@@ -323,12 +323,12 @@ def setup.opp, config):
         if os.path.isfile(config_path):
             config_file = load_json(config_path)
             if config_file == DEFAULT_CONFIG:
-                _request_app_setup.opp, config)
+                _request_app_setup_opp, config)
                 return True
             # else move on because the user modified the file
         else:
             save_json(config_path, DEFAULT_CONFIG)
-            _request_app_setup.opp, config)
+            _request_app_setup_opp, config)
             return True
 
         if DOMAIN in.opp.data[DOMAIN]["configuring"]:
@@ -688,7 +688,7 @@ class WinkAuthCallbackView(OpenPeerPowerView):
     @callback
     def get(self, request):
         """Finish OAuth callback request."""
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
         data = request.query
 
         response_message = """Wink has been successfully authorized!

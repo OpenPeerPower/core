@@ -69,7 +69,7 @@ RE_ASCII = re.compile(r"\033\[[^m]*m")
 YAML_CONFIG_FILE = "configuration.yaml"
 VERSION_FILE = ".HA_VERSION"
 CONFIG_DIR_NAME = ".openpeerpower"
-DATA_CUSTOMIZE = .opp_customize"
+DATA_CUSTOMIZE = opp_customize"
 
 GROUP_CONFIG_PATH = "groups.yaml"
 AUTOMATION_CONFIG_PATH = "automations.yaml"
@@ -528,7 +528,7 @@ async def async_process_ha_core_config.opp: OpenPeerPower, config: Dict) -> None
             hac.media_dirs = {"local":.opp.config.path("media")}
 
     # Init whitelist external dir
-    hac.allowlist_external_dirs = .opp.config.path("www"), *hac.media_dirs.values()}
+    hac.allowlist_external_dirs = opp.config.path("www"), *hac.media_dirs.values()}
     if CONF_ALLOWLIST_EXTERNAL_DIRS in config:
         hac.allowlist_external_dirs.update(set(config[CONF_ALLOWLIST_EXTERNAL_DIRS]))
 

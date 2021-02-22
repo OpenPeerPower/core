@@ -201,7 +201,7 @@ async def setup_unifi_integration(
     return config_entry
 
 
-async def test_controller_setup.opp, aioclient_mock):
+async def test_controller_setup_opp, aioclient_mock):
     """Successful setup."""
     with patch(
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_setup",
@@ -279,7 +279,7 @@ async def test_controller_unknown_error.opp):
     assert.opp.data[UNIFI_DOMAIN] == {}
 
 
-async def test_reset_after_successful_setup.opp, aioclient_mock):
+async def test_reset_after_successful_setup_opp, aioclient_mock):
     """Calling reset when the entry has been setup."""
     config_entry = await setup_unifi_integration.opp, aioclient_mock)
     controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]

@@ -101,7 +101,7 @@ SERVICE_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up for Envisalink devices."""
     conf = config.get(DOMAIN)
 

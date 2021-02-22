@@ -46,7 +46,7 @@ class MfaFlowManager(data_entry_flow.FlowManager):
         return result
 
 
-async def async_setup.opp):
+async def async_setup_opp):
     """Init mfa setup flow manager."""
    .opp.data[DATA_SETUP_FLOW_MGR] = MfaFlowManager.opp)
 

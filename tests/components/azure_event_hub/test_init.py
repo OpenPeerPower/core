@@ -94,7 +94,7 @@ async def test_full_config.opp):
     assert await async_setup_component.opp, azure_event_hub.DOMAIN, config)
 
 
-async def _setup.opp, mock_call_later, filter_config):
+async def _setup_opp, mock_call_later, filter_config):
     """Shared set up for filtering tests."""
     config = {azure_event_hub.DOMAIN: {"filter": filter_config}}
     config[azure_event_hub.DOMAIN].update(MIN_CONFIG)

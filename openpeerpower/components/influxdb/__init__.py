@@ -468,14 +468,14 @@ def get_influx_connection(conf, test_write=False, test_read=False):
     return InfluxClient(databases, write_v1, query_v1, close_v1)
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the InfluxDB component."""
     conf = config[DOMAIN]
     try:
         influx = get_influx_connection(conf, test_write=True)
     except ConnectionError as exc:
         _LOGGER.error(RETRY_MESSAGE, exc)
-        event_helper.call_later.opp, RETRY_INTERVAL, lambda _: setup.opp, config))
+        event_helper.call_later.opp, RETRY_INTERVAL, lambda _: setup_opp, config))
         return True
 
     event_to_json = _generate_event_to_json(conf)

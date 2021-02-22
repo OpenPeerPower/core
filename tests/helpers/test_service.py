@@ -161,7 +161,7 @@ class TestServiceHelpers(unittest.TestCase):
 
     def setUp(self):  # pylint: disable=invalid-name
         """Set up things to be run when tests are started."""
-        self.opp = get_test_open_peer_power()
+        self opp =get_test_open_peer_power()
         self.calls = mock_service(self.opp, "test_domain", "test_service")
 
     def tearDown(self):  # pylint: disable=invalid-name

@@ -51,7 +51,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Splunk component."""
     conf = config[DOMAIN]
     host = conf.get(CONF_HOST)

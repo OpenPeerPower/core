@@ -130,7 +130,7 @@ class QSToggleEntity(QSEntity):
         self.opp.data[DOMAIN].devices.set_value(self.qsid, 0)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Qwiskswitch component setup."""
 
     # Add cmd's to in /&listen packets will fire events

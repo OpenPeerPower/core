@@ -7,7 +7,7 @@ from . import get_device
 from tests.common import mock_device_registry, mock_registry
 
 
-async def test_a1_sensor_setup.opp):
+async def test_a1_sensor_setup_opp):
     """Test a successful e-Sensor setup."""
     device = get_device("Bedroom")
     mock_api = device.get_mock_api()
@@ -90,7 +90,7 @@ async def test_a1_sensor_update.opp):
     }
 
 
-async def test_rm_pro_sensor_setup.opp):
+async def test_rm_pro_sensor_setup_opp):
     """Test a successful RM pro sensor setup."""
     device = get_device("Office")
     mock_api = device.get_mock_api()
@@ -161,7 +161,7 @@ async def test_rm_mini3_no_sensor.opp):
     assert len(sensors) == 0
 
 
-async def test_rm4_pro_hts2_sensor_setup.opp):
+async def test_rm4_pro_hts2_sensor_setup_opp):
     """Test a successful RM4 pro sensor setup with HTS2 cable."""
     device = get_device("Garage")
     mock_api = device.get_mock_api()

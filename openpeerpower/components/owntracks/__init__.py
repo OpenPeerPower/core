@@ -56,7 +56,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Initialize OwnTracks component."""
    .opp.data[DOMAIN] = {"config": config[DOMAIN], "devices": {}, "unsub": None}
     if not.opp.config_entries.async_entries(DOMAIN):
@@ -95,7 +95,7 @@ async def async_setup_entry.opp, entry):
 
    .opp.data[DOMAIN]["context"] = context
 
-    async_when_setup.opp, "mqtt", async_connect_mqtt)
+    async_when_setup_opp, "mqtt", async_connect_mqtt)
 
    .opp.components.webhook.async_register(
         DOMAIN, "OwnTracks", webhook_id, handle_webhook

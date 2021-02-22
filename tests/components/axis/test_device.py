@@ -296,7 +296,7 @@ async def setup_axis_integration.opp, config=ENTRY_CONFIG, options=ENTRY_OPTIONS
     return config_entry
 
 
-async def test_device_setup.opp):
+async def test_device_setup_opp):
     """Successful setup."""
     with patch(
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_setup",
@@ -446,7 +446,7 @@ async def test_new_event_sends_signal.opp):
 
 async def test_shutdown():
     """Successful shutdown."""
-   .opp = Mock()
+    opp =Mock()
     entry = Mock()
     entry.data = ENTRY_CONFIG
 

@@ -10,7 +10,7 @@ from openpeerpower.const import (
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 
-async def test_capped_setup.opp, aioclient_mock):
+async def test_capped_setup_opp, aioclient_mock):
     """Test the default setup."""
     config = {
         "platform": "startca",
@@ -106,7 +106,7 @@ async def test_capped_setup.opp, aioclient_mock):
     assert state.state == "95.05"
 
 
-async def test_unlimited_setup.opp, aioclient_mock):
+async def test_unlimited_setup_opp, aioclient_mock):
     """Test the default setup."""
     config = {
         "platform": "startca",

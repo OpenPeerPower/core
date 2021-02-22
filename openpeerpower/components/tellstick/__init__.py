@@ -80,7 +80,7 @@ def _discover.opp, config, component_name, found_tellcore_devices):
     )
 
 
-def setup.opp, config):
+def setup_opp, config):
     """Set up the Tellstick component."""
 
     conf = config.get(DOMAIN, {})

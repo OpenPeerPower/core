@@ -132,7 +132,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up the MySensors component."""
     if DOMAIN not in config or bool.opp.config_entries.async_entries(DOMAIN)):
         return True
@@ -195,7 +195,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
                 for platform in SUPPORTED_PLATFORMS_WITH_ENTRY_SUPPORT
             ]
         )
-        await finish_setup.opp, entry, gateway)
+        await finish_setup_opp, entry, gateway)
 
    .opp.async_create_task(finish())
 

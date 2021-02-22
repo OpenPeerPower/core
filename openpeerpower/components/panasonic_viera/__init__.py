@@ -49,7 +49,7 @@ CONFIG_SCHEMA = vol.Schema(
 PLATFORMS = [MEDIA_PLAYER_DOMAIN]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up Panasonic Viera from configuration.yaml."""
     if DOMAIN not in config:
         return True

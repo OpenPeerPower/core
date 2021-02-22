@@ -42,7 +42,7 @@ async def test_calling_intent.opp):
     assert intent.context is context
 
 
-async def test_register_before_setup.opp):
+async def test_register_before_setup_opp):
     """Test calling an intent from a conversation."""
     intents = async_mock_intent.opp, "OrderBeer")
 

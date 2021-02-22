@@ -44,7 +44,7 @@ SERVICE_REFRESH_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up the AdGuard Home components."""
     return True
 

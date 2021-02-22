@@ -271,7 +271,7 @@ class DumpView(OpenPeerPowerView):
 
     async def get(self, request: web.Request, config_entry_id: str) -> web.Response:
         """Dump the state of Z-Wave."""
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
 
         if config_entry_id not in.opp.data[DOMAIN]:
             raise web_exceptions.HTTPBadRequest

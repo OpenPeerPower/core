@@ -46,7 +46,7 @@ async def _update_twentemilieu(
             async_dispatcher_send.opp, DATA_UPDATE, uid)
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up the Twente Milieu components."""
 
     async def update(call) -> None:

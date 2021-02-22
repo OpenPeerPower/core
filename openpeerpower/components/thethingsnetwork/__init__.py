@@ -29,7 +29,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Initialize of The Things Network component."""
     conf = config[DOMAIN]
     app_id = conf.get(CONF_APP_ID)

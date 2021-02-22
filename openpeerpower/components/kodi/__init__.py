@@ -29,7 +29,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["media_player"]
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Kodi integration."""
    .opp.data.setdefault(DOMAIN, {})
     return True

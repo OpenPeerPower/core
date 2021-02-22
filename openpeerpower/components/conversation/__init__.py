@@ -51,7 +51,7 @@ def async_set_agent.opp: core.OpenPeerPower, agent: AbstractConversationAgent):
    .opp.data[DATA_AGENT] = agent
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Register the process service."""
    .opp.data[DATA_CONFIG] = config
 
@@ -130,7 +130,7 @@ class ConversationProcessView(http.OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Send a request for processing."""
-       .opp = request.app[.opp"]
+        opp =request.app[.opp"]
 
         try:
             intent_result = await _async_converse(

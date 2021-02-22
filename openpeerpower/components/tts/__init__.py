@@ -107,7 +107,7 @@ SCHEMA_SERVICE_SAY = vol.Schema(
 SCHEMA_SERVICE_CLEAR_CACHE = vol.Schema({})
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up TTS."""
     tts = SpeechManager.opp)
 
@@ -287,7 +287,7 @@ class SpeechManager:
     @callback
     def async_register_engine(self, engine, provider, config):
         """Register a TTS provider."""
-        provider.opp = self.opp
+        provider opp =self.opp
         if provider.name is None:
             provider.name = engine
         self.providers[engine] = provider

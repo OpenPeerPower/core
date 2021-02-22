@@ -72,7 +72,7 @@ async def test_load_oppio.opp):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_empty_setup.opp):
+async def test_empty_setup_opp):
     """Test an empty set up loads the core."""
     await bootstrap.async_from_config_dict({},.opp)
     for domain in bootstrap.CORE_INTEGRATIONS:
@@ -108,7 +108,7 @@ async def test_setup_after_deps_all_present.opp):
     order = []
 
     def gen_domain_setup(domain):
-        async def async_setup.opp, config):
+        async def async_setup_opp, config):
             order.append(domain)
             return True
 
@@ -155,7 +155,7 @@ async def test_setup_after_deps_in_stage_1_ignored.opp):
     order = []
 
     def gen_domain_setup(domain):
-        async def async_setup.opp, config):
+        async def async_setup_opp, config):
             order.append(domain)
             return True
 
@@ -201,7 +201,7 @@ async def test_setup_after_deps_via_platform.opp):
     after_dep_event = asyncio.Event()
 
     def gen_domain_setup(domain):
-        async def async_setup.opp, config):
+        async def async_setup_opp, config):
             if domain == "after_dep_of_platform_int":
                 await after_dep_event.wait()
 
@@ -250,7 +250,7 @@ async def test_setup_after_deps_not_trigger_load.opp):
     order = []
 
     def gen_domain_setup(domain):
-        async def async_setup.opp, config):
+        async def async_setup_opp, config):
             order.append(domain)
             return True
 
@@ -289,7 +289,7 @@ async def test_setup_after_deps_not_present.opp):
     order = []
 
     def gen_domain_setup(domain):
-        async def async_setup.opp, config):
+        async def async_setup_opp, config):
             order.append(domain)
             return True
 

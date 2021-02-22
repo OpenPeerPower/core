@@ -26,7 +26,7 @@ def mock_device():
     return create_mock_device("light", DynaliteChannelLightDevice)
 
 
-async def test_light_setup.opp, mock_device):
+async def test_light_setup_opp, mock_device):
     """Test a successful setup."""
     await create_entity_from_device.opp, mock_device)
     entity_state =.opp.states.get("light.name")

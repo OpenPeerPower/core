@@ -19,7 +19,7 @@ ADVANTAGE_AIR_PLATFORMS = ["climate", "cover", "binary_sensor", "sensor", "switc
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up Advantage Air integration."""
    .opp.data[DOMAIN] = {}
     return True

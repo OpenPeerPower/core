@@ -21,7 +21,7 @@ PLATFORMS = ["media_player"]
 LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Philips TV component."""
    .opp.data[DOMAIN] = {}
     return True

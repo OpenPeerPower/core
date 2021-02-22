@@ -56,7 +56,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp: OpenPeerPowerType, config: ConfigType) -> None:
+async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> None:
     """Set up the Aqualink component."""
     conf = config.get(DOMAIN)
 

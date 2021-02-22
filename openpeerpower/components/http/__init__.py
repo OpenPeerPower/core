@@ -125,7 +125,7 @@ class ApiConfig:
         self.use_ssl = use_ssl
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the HTTP API and debug interface."""
     conf = config.get(DOMAIN)
 

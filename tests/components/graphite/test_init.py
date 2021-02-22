@@ -23,7 +23,7 @@ class TestGraphite(unittest.TestCase):
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_open_peer_power()
+        self opp =get_test_open_peer_power()
         self.gf = graphite.GraphiteFeeder(self.opp, "foo", 123, "ha")
 
     def teardown_method(self, method):
@@ -62,7 +62,7 @@ class TestGraphite(unittest.TestCase):
 
     def test_subscribe(self):
         """Test the subscription."""
-        fake.opp = mock.MagicMock()
+        fake opp =mock.MagicMock()
         gf = graphite.GraphiteFeeder(fake.opp, "foo", 123, "ha")
         fake.opp.bus.listen_once.has_calls(
             [

@@ -117,7 +117,7 @@ class MqttLock(MqttEntity, LockEntity):
 
         value_template = self._config.get(CONF_VALUE_TEMPLATE)
         if value_template is not None:
-            value_template.opp = self.opp
+            value_template opp =self.opp
 
     async def _subscribe_topics(self):
         """(Re)Subscribe to topics."""

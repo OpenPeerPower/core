@@ -35,7 +35,7 @@ CONFIG_SCHEMA = vol.Schema(
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup.opp: OpenPeerPower, config: ConfigType) -> bool:
+async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the Remote Python Debugger component."""
     conf = config[DOMAIN]
 

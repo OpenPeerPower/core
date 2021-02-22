@@ -26,7 +26,7 @@ async def test_mqtt_abort_invalid_topic.opp, mqtt_mock):
     assert result["reason"] == "invalid_discovery_info"
 
 
-async def test_mqtt_setup.opp, mqtt_mock) -> None:
+async def test_mqtt_setup_opp, mqtt_mock) -> None:
     """Test we can finish a config flow through MQTT with custom prefix."""
     discovery_info = Message("", "", 0, False, subscribed_topic="custom_prefix/123/#")
     result = await.opp.config_entries.flow.async_init(
@@ -42,7 +42,7 @@ async def test_mqtt_setup.opp, mqtt_mock) -> None:
     }
 
 
-async def test_user_setup.opp, mqtt_mock):
+async def test_user_setup_opp, mqtt_mock):
     """Test we can finish a config flow."""
     result = await.opp.config_entries.flow.async_init(
         "tasmota", context={"source": "user"}

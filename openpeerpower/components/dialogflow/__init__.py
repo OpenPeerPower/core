@@ -24,7 +24,7 @@ class DialogFlowError(OpenPeerPowerError):
     """Raised when a DialogFlow error happens."""
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Dialogflow component."""
     return True
 

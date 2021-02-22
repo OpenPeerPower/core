@@ -36,7 +36,7 @@ class TestVultrSwitchSetup(unittest.TestCase):
 
     def setUp(self):
         """Init values for this testcase class."""
-        self.opp = get_test_open_peer_power()
+        self opp =get_test_open_peer_power()
         self.configs = [
             {CONF_SUBSCRIPTION: "576965", CONF_NAME: "A Server"},
             {CONF_SUBSCRIPTION: "123456", CONF_NAME: "Failed Server"},

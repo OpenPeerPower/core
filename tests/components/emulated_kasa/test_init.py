@@ -144,7 +144,7 @@ def nested_value(ndict, *keys):
     return nested_value(ndict[key], *keys[1:])
 
 
-async def test_setup.opp):
+async def test_setup_opp):
     """Test that devices are reported correctly."""
     with patch(
         "sense_energy.SenseLink",
@@ -439,7 +439,7 @@ async def test_multiple_devices.opp):
         "sense_energy.SenseLink",
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
-        assert await emulated_kasa.async_setup.opp, CONFIG) is True
+        assert await emulated_kasa.async_setup_opp, CONFIG) is True
     await.opp.async_block_till_done()
     await emulated_kasa.validate_configs.opp, config)
 

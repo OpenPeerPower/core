@@ -248,7 +248,7 @@ async def test_history_time.opp):
             assert "18.0" == state.state
 
 
-async def test_setup.opp):
+async def test_setup_opp):
     """Test if filter attributes are inherited."""
     config = {
         "sensor": {

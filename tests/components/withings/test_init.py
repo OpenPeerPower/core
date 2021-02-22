@@ -111,7 +111,7 @@ async def test_async_setup_no_config.opp: OpenPeerPower) -> None:
     """Test method."""
    .opp.async_create_task = MagicMock()
 
-    await async_setup.opp, {})
+    await async_setup_opp, {})
 
    .opp.async_create_task.assert_not_called()
 

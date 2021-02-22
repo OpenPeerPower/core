@@ -12,7 +12,7 @@ def config_fixture():
     return {DOMAIN: {}}
 
 
-async def test_basic_setup.opp, config):
+async def test_basic_setup_opp, config):
     """Test component setup creates entry from config."""
     assert await async_setup_component.opp, DOMAIN, config)
     await.opp.async_block_till_done()

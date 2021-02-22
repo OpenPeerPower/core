@@ -1,6 +1,6 @@
 """Hass.io const variables."""
 
-DOMAIN = .oppio"
+DOMAIN = oppio"
 
 ATTR_ADDON = "addon"
 ATTR_ADDONS = "addons"

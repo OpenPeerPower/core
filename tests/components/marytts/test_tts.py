@@ -21,7 +21,7 @@ class TestTTSMaryTTSPlatform:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_open_peer_power()
+        self opp =get_test_open_peer_power()
 
         asyncio.run_coroutine_threadsafe(
             async_process_ha_core_config(

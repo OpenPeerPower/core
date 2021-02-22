@@ -114,7 +114,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Volvo On Call component."""
     session = async_get_clientsession.opp)
 

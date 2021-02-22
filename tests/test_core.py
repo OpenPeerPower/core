@@ -721,7 +721,7 @@ async def test_serviceregistry_call_with_blocking_done_in_time.opp):
     assert registered_events[0].data["domain"] == "test_domain"
     assert registered_events[0].data["service"] == "register_calls"
 
-    assert await opp..services.async_call(
+    assert await opp.services.async_call(
         "test_domain", "REGISTER_CALLS", blocking=True
     )
     assert len(calls) == 1
@@ -730,7 +730,7 @@ async def test_serviceregistry_call_with_blocking_done_in_time.opp):
 async def test_serviceregistry_call_non_existing_with_blocking.opp):
     """Test non-existing with blocking."""
     with pytest.raises(op.ServiceNotFound):
-        await opp..services.async_call("test_domain", "i_do_not_exist", blocking=True)
+        await opp.services.async_call("test_domain", "i_do_not_exist", blocking=True)
 
 
 async def test_serviceregistry_async_service.opp):
@@ -743,7 +743,7 @@ async def test_serviceregistry_async_service.opp):
 
    .opp.services.async_register("test_domain", "register_calls", service_handler)
 
-    assert await opp..services.async_call(
+    assert await opp.services.async_call(
         "test_domain", "REGISTER_CALLS", blocking=True
     )
     assert len(calls) == 1
@@ -762,7 +762,7 @@ async def test_serviceregistry_async_service_partial.opp):
     )
     await opp.async_block_till_done()
 
-    assert await opp..services.async_call(
+    assert await opp.services.async_call(
         "test_domain", "REGISTER_CALLS", blocking=True
     )
     assert len(calls) == 1
@@ -779,7 +779,7 @@ async def test_serviceregistry_callback_service.opp):
 
    .opp.services.async_register("test_domain", "register_calls", service_handler)
 
-    assert await opp..services.async_call(
+    assert await opp.services.async_call(
         "test_domain", "REGISTER_CALLS", blocking=True
     )
     assert len(calls) == 1
@@ -810,7 +810,7 @@ async def test_serviceregistry_service_that_not_exists.opp):
     assert len(calls_remove) == 0
 
     with pytest.raises(ServiceNotFound):
-        await opp..services.async_call("test_do_not", "exist", {})
+        await opp.services.async_call("test_do_not", "exist", {})
 
 
 async def test_serviceregistry_async_service_raise_exception.opp):
@@ -823,12 +823,12 @@ async def test_serviceregistry_async_service_raise_exception.opp):
    .opp.services.async_register("test_domain", "register_calls", service_handler)
 
     with pytest.raises(ValueError):
-        assert await opp..services.async_call(
+        assert await opp.services.async_call(
             "test_domain", "REGISTER_CALLS", blocking=True
         )
 
     # Non-blocking service call never throw exception
-    await opp..services.async_call("test_domain", "REGISTER_CALLS", blocking=False)
+    await opp.services.async_call("test_domain", "REGISTER_CALLS", blocking=False)
     await opp.async_block_till_done()
 
 
@@ -843,7 +843,7 @@ async def test_serviceregistry_callback_service_raise_exception.opp):
    .opp.services.async_register("test_domain", "register_calls", service_handler)
 
     with pytest.raises(ValueError):
-        assert await opp..services.async_call(
+        assert await opp.services.async_call(
             "test_domain", "REGISTER_CALLS", blocking=True
         )
 
@@ -894,7 +894,7 @@ def test_config_as_dict():
     """Test as dict."""
     config = op.Config(None)
     config.config_dir = "/test/ha-config"
-    config.opp = MagicMock()
+    config opp =MagicMock()
     type(config.opp.state).value = PropertyMock(return_value="RUNNING")
     expected = {
         "latitude": 0,
@@ -1184,7 +1184,7 @@ async def test_service_executed_with_subservices.opp):
 
    .opp.services.async_register("test", "outer", handle_outer)
 
-    await opp..services.async_call("test", "outer", blocking=True, context=context)
+    await opp.services.async_call("test", "outer", blocking=True, context=context)
 
     assert len(calls) == 4
     assert [call.service for call in calls] == ["outer", "inner", "inner", "outer"]
@@ -1206,7 +1206,7 @@ async def test_service_call_event_contains_original_data.opp):
     )
 
     context = op.Context()
-    await opp..services.async_call(
+    await opp.services.async_call(
         "test", "service", {"number": "23"}, blocking=True, context=context
     )
     await opp.async_block_till_done()
@@ -1252,7 +1252,7 @@ async def test_async_functions_with_callback.opp):
 
    .opp.services.async_register("test_domain", "test_service", service_handler)
 
-    await opp..services.async_call("test_domain", "test_service", blocking=True)
+    await opp.services.async_call("test_domain", "test_service", blocking=True)
     assert len(runs) == 3
 
 

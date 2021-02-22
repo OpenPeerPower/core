@@ -29,7 +29,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the Twilio component."""
     if DOMAIN not in config:
         return True

@@ -171,7 +171,7 @@ class GroupProbe:
 
     def __init__(self):
         """Initialize instance."""
-        self..opp = None
+        self. opp =None
         self._unsubs = []
 
     def initialize(self,.opp: OpenPeerPowerType) -> None:

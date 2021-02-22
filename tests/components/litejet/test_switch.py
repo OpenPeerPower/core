@@ -24,7 +24,7 @@ class TestLiteJetSwitch(unittest.TestCase):
     @mock.patch("openpeerpower.components.litejet.LiteJet")
     def setup_method(self, method, mock_pylitejet):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_open_peer_power()
+        self opp =get_test_open_peer_power()
         self.opp.start()
 
         self.switch_pressed_callbacks = {}

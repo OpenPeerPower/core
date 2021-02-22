@@ -48,7 +48,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp: OpenPeerPower, config: dict):
+async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the emulated_kasa component."""
     conf = config.get(DOMAIN)
     if not conf:

@@ -573,7 +573,7 @@ async def test_call_service.opp, hk_driver, events):
 def test_home_bridge(hk_driver):
     """Test HomeBridge class."""
     bridge = HomeBridge(.opp", hk_driver, BRIDGE_NAME)
-    assert bridge.opp == .opp"
+    assert bridge.opp == opp"
     assert bridge.display_name == BRIDGE_NAME
     assert bridge.category == 2  # Category.BRIDGE
     assert len(bridge.services) == 1

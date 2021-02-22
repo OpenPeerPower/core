@@ -52,7 +52,7 @@ async def test_successful_config_entry.opp):
     }
 
 
-async def test_hub_fail_setup.opp):
+async def test_hub_fail_setup_opp):
     """Test that a failed setup will not store the hub."""
     entry = MockConfigEntry(
         domain=mikrotik.DOMAIN,

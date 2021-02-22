@@ -206,7 +206,7 @@ async def test.oppio_confirm.opp, aioclient_mock):
         context={"source": .oppio"},
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-    assert result["step_id"] == .oppio_confirm"
+    assert result["step_id"] == oppio_confirm"
     assert result["description_placeholders"] == {"addon": "AdGuard Home Addon"}
 
     result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -235,5 +235,5 @@ async def test.oppio_connection_error.opp, aioclient_mock):
     result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-    assert result["step_id"] == .oppio_confirm"
+    assert result["step_id"] == oppio_confirm"
     assert result["errors"] == {"base": "cannot_connect"}

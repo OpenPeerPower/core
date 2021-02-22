@@ -165,7 +165,7 @@ def is_cloudhook_request(request):
     return isinstance(request, MockRequest)
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Initialize the Open Peer Power cloud."""
     # Process configs
     if DOMAIN in config:
@@ -228,8 +228,8 @@ async def async_setup.opp, config):
     cloud.iot.register_on_connect(_on_connect)
 
     await cloud.start()
-    await http_api.async_setup.opp)
+    await http_api.async_setup_opp)
 
-    account_link.async_setup.opp)
+    account_link.async_setup_opp)
 
     return True

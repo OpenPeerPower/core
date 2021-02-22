@@ -21,7 +21,7 @@ from tests.common import MockConfigEntry
 
 
 @pytest.fixture
-def storage_setup.opp,.opp_storage):
+def storage_setup_opp,.opp_storage):
     """Storage setup."""
 
     async def _storage(items=None, config=None):
@@ -67,7 +67,7 @@ async def test_setup_no_zones_still_adds_home_zone.opp):
     assert not state.attributes.get("passive", False)
 
 
-async def test_setup.opp):
+async def test_setup_opp):
     """Test a successful setup."""
     info = {
         "name": "Test Zone",
@@ -490,7 +490,7 @@ async def test_import_config_entry.opp):
     assert state.attributes[ATTR_ICON] == "mdi:from-config-entry"
 
 
-async def test_zone_empty_setup.opp):
+async def test_zone_empty_setup_opp):
     """Set up zone with empty config."""
     assert await setup.async_setup_component.opp, DOMAIN, {"zone": {}})
 

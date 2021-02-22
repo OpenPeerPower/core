@@ -183,7 +183,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup.opp, config):
+async def async_setup_opp, config):
     """Set up the IP Webcam component."""
 
     webcams =.opp.data[DATA_IP_WEBCAM] = {}
