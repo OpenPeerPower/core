@@ -4,7 +4,7 @@ from unittest.mock import AsyncMock, patch
 from pytest import fixture
 from surepy import SurePetcare
 
-from openpeerpowerr.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 
 @fixture

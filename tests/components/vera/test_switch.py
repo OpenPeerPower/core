@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pyvera as pv
 
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from .common import ComponentFactory, new_simple_controller_config
 
@@ -31,26 +31,26 @@ async def test_switch(
 
     assert.opp.states.get(entity_id).state == "off"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "switch",
         "turn_on",
         {"entity_id": entity_id},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     vera_device.switch_on.assert_called()
     vera_device.is_switched_on.return_value = True
     update_callback(vera_device)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == "on"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "switch",
         "turn_off",
         {"entity_id": entity_id},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     vera_device.switch_off.assert_called()
     vera_device.is_switched_on.return_value = False
     update_callback(vera_device)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == "off"

@@ -16,7 +16,7 @@ from tests.components.twinkly import TEST_MODEL, ClientMock
 
 async def test_invalid_host.opp):
     """Test the failure when invalid host provided."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         TWINKLY_DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -24,7 +24,7 @@ async def test_invalid_host.opp):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_ENTRY_HOST: "dummy"},
     )
@@ -38,7 +38,7 @@ async def test_success_flow.opp):
     """Test that an entity is created when the flow completes."""
     client = ClientMock()
     with patch("twinkly_client.TwinklyClient", return_value=client):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             TWINKLY_DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
 
@@ -46,7 +46,7 @@ async def test_success_flow.opp):
         assert result["step_id"] == "user"
         assert result["errors"] == {}
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_ENTRY_HOST: "dummy"},
         )

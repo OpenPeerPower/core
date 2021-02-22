@@ -19,13 +19,13 @@ from openpeerpower.components.switcher_kis.switch import (
     SERVICE_TURN_ON_WITH_TIMER_NAME,
 )
 from openpeerpower.const import CONF_ENTITY_ID
-from openpeerpowerr.core import Context, callback
-from openpeerpowerr.exceptions import UnknownUser
-from openpeerpowerr.helpers.config_validation import time_period_str
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_connect
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt
+from openpeerpower.core import Context, callback
+from openpeerpower.exceptions import UnknownUser
+from openpeerpower.helpers.config_validation import time_period_str
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt
 
 from .consts import (
     DUMMY_AUTO_OFF_SET,
@@ -66,9 +66,9 @@ async def test_discovery_data_bucket(
     """Test the event send with the updated device."""
     assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    device = opp.data[DOMAIN].get(DATA_DEVICE)
+    device =.opp.data[DOMAIN].get(DATA_DEVICE)
     assert device.device_id == DUMMY_DEVICE_ID
     assert device.ip_addr == DUMMY_IP_ADDRESS
     assert device.mac_addr == DUMMY_MAC_ADDRESS
@@ -90,11 +90,11 @@ async def test_set_auto_off_service(
     """Test the set_auto_off service."""
     assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.services.has_service(DOMAIN, SERVICE_SET_AUTO_OFF_NAME)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_SET_AUTO_OFF_NAME,
         {CONF_ENTITY_ID: SWITCH_ENTITY_ID, CONF_AUTO_OFF: DUMMY_AUTO_OFF_SET},
@@ -103,7 +103,7 @@ async def test_set_auto_off_service(
     )
 
     with raises(UnknownUser) as unknown_user_exc:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_SET_AUTO_OFF_NAME,
             {CONF_ENTITY_ID: SWITCH_ENTITY_ID, CONF_AUTO_OFF: DUMMY_AUTO_OFF_SET},
@@ -116,13 +116,13 @@ async def test_set_auto_off_service(
     with patch(
         "openpeerpower.components.switcher_kis.switch.SwitcherV2Api.set_auto_shutdown"
     ) as mock_set_auto_shutdown:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_SET_AUTO_OFF_NAME,
             {CONF_ENTITY_ID: SWITCH_ENTITY_ID, CONF_AUTO_OFF: DUMMY_AUTO_OFF_SET},
         )
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         mock_set_auto_shutdown.assert_called_once_with(
             time_period_str(DUMMY_AUTO_OFF_SET)
@@ -138,11 +138,11 @@ async def test_turn_on_with_timer_service(
     """Test the set_auto_off service."""
     assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.services.has_service(DOMAIN, SERVICE_TURN_ON_WITH_TIMER_NAME)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_TURN_ON_WITH_TIMER_NAME,
         {CONF_ENTITY_ID: SWITCH_ENTITY_ID, CONF_TIMER_MINUTES: DUMMY_TIMER_MINUTES_SET},
@@ -151,7 +151,7 @@ async def test_turn_on_with_timer_service(
     )
 
     with raises(UnknownUser) as unknown_user_exc:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_TURN_ON_WITH_TIMER_NAME,
             {
@@ -167,7 +167,7 @@ async def test_turn_on_with_timer_service(
     with patch(
         "openpeerpower.components.switcher_kis.switch.SwitcherV2Api.control_device"
     ) as mock_control_device:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_TURN_ON_WITH_TIMER_NAME,
             {
@@ -176,7 +176,7 @@ async def test_turn_on_with_timer_service(
             },
         )
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         mock_control_device.assert_called_once_with(
             COMMAND_ON, int(DUMMY_TIMER_MINUTES_SET)
@@ -189,7 +189,7 @@ async def test_signal_dispatcher(
     """Test signal dispatcher dispatching device updates every 4 seconds."""
     assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     @callback
     def verify_update_data(device: SwitcherV2Device) -> None:

@@ -65,9 +65,9 @@ async def test_missing_optional_config.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, None, None, None, None)
 
@@ -91,9 +91,9 @@ async def test_missing_value_template_config.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -117,9 +117,9 @@ async def test_missing_turn_on_config.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -143,9 +143,9 @@ async def test_missing_turn_off_config.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -167,9 +167,9 @@ async def test_invalid_config.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -203,6 +203,7 @@ async def test_templates_with_entities.opp, calls):
                             "preset_mode_template": "{{ states('input_select.preset_mode') }}",
                             "oscillating_template": "{{ states('input_select.osc') }}",
                             "direction_template": "{{ states('input_select.direction') }}",
+                            "speed_count": "3",
                             "set_percentage": {
                                 "service": "script.fans_set_speed",
                                 "data_template": {"percentage": "{{ percentage }}"},
@@ -215,9 +216,9 @@ async def test_templates_with_entities.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_OFF, None, 0, None, None, None)
 
@@ -225,24 +226,24 @@ async def test_templates_with_entities.opp, calls):
    .opp.states.async_set(_SPEED_INPUT_SELECT, SPEED_MEDIUM)
    .opp.states.async_set(_OSC_INPUT, "True")
    .opp.states.async_set(_DIRECTION_INPUT_SELECT, DIRECTION_FORWARD)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
 
    .opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 33)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     _verify.opp, STATE_ON, SPEED_LOW, 33, True, DIRECTION_FORWARD, None)
 
    .opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 66)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     _verify.opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
 
    .opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 100)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     _verify.opp, STATE_ON, SPEED_HIGH, 100, True, DIRECTION_FORWARD, None)
 
    .opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, "dog")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     _verify.opp, STATE_ON, None, 0, True, DIRECTION_FORWARD, None)
 
 
@@ -269,34 +270,34 @@ async def test_templates_with_entities_and_invalid_percentage.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
 
    .opp.states.async_set("sensor.percentage", "33")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, SPEED_LOW, 33, None, None, None)
 
    .opp.states.async_set("sensor.percentage", "invalid")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, 0, None, None, None)
 
    .opp.states.async_set("sensor.percentage", "5000")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, 0, None, None, None)
 
    .opp.states.async_set("sensor.percentage", "100")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
    .opp.states.async_set("sensor.percentage", "0")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
 
@@ -325,29 +326,29 @@ async def test_templates_with_entities_and_preset_modes.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, None, None, None, None)
 
    .opp.states.async_set("sensor.preset_mode", "invalid")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, None, None, None, None)
 
    .opp.states.async_set("sensor.preset_mode", "auto")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, "auto", None, None, None, "auto")
 
    .opp.states.async_set("sensor.preset_mode", "smart")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, "smart", None, None, None, "smart")
 
    .opp.states.async_set("sensor.preset_mode", "invalid")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     _verify.opp, STATE_ON, None, None, None, None, None)
 
 
@@ -372,9 +373,9 @@ async def test_template_with_unavailable_entities.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
     assert.opp.states.get(_TEST_FAN).state == STATE_OFF
 
 
@@ -402,9 +403,9 @@ async def test_template_with_unavailable_parameters.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, 0, None, None, None)
 
@@ -434,20 +435,20 @@ async def test_availability_template_with_entities.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     # When template returns true..
    .opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Device State should not be unavailable
     assert.opp.states.get(_TEST_FAN).state != STATE_UNAVAILABLE
 
     # When Availability template returns false
    .opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # device state should be unavailable
     assert.opp.states.get(_TEST_FAN).state == STATE_UNAVAILABLE
@@ -476,9 +477,9 @@ async def test_templates_with_valid_values.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
 
@@ -506,9 +507,9 @@ async def test_templates_invalid_values.opp, calls):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     _verify.opp, STATE_OFF, None, 0, None, None, None)
 
@@ -539,9 +540,9 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("fan.test_fan").state != STATE_UNAVAILABLE
 
@@ -646,6 +647,46 @@ async def test_set_percentage.opp, calls):
     assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 50
 
     _verify.opp, STATE_ON, SPEED_MEDIUM, 50, None, None, None)
+
+
+async def test_increase_decrease_speed.opp, calls):
+    """Test set valid increase and derease speed."""
+    await _register_components.opp)
+
+    # Turn on fan
+    await common.async_turn_on.opp, _TEST_FAN)
+
+    # Set fan's percentage speed to 100
+    await common.async_set_percentage.opp, _TEST_FAN, 100)
+
+    # verify
+    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 100
+
+    _verify.opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
+
+    # Set fan's percentage speed to 66
+    await common.async_decrease_speed.opp, _TEST_FAN)
+    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 66
+
+    _verify.opp, STATE_ON, SPEED_MEDIUM, 66, None, None, None)
+
+    # Set fan's percentage speed to 33
+    await common.async_decrease_speed.opp, _TEST_FAN)
+    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 33
+
+    _verify.opp, STATE_ON, SPEED_LOW, 33, None, None, None)
+
+    # Set fan's percentage speed to 0
+    await common.async_decrease_speed.opp, _TEST_FAN)
+    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 0
+
+    _verify.opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
+
+    # Set fan's percentage speed to 33
+    await common.async_increase_speed.opp, _TEST_FAN)
+    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 33
+
+    _verify.opp, STATE_ON, SPEED_LOW, 33, None, None, None)
 
 
 async def test_set_invalid_speed_from_initial_stage.opp, calls):
@@ -871,7 +912,7 @@ def _verify(
     expected_preset_mode,
 ):
     """Verify fan's state, speed and osc."""
-    state = opp.states.get(_TEST_FAN)
+    state =.opp.states.get(_TEST_FAN)
     attributes = state.attributes
     assert state.state == str(expected_state)
     assert attributes.get(ATTR_SPEED) == expected_speed
@@ -1012,9 +1053,9 @@ async def _register_components.opp, speed_list=None, preset_modes=None):
             {"fan": {"platform": "template", "fans": {"test_fan": test_fan_config}}},
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
 
 async def test_unique_id.opp):
@@ -1055,8 +1096,8 @@ async def test_unique_id.opp):
         },
     )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

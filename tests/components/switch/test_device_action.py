@@ -7,8 +7,8 @@ from openpeerpower.components.device_automation import (
 )
 from openpeerpower.components.switch import DOMAIN
 from openpeerpower.const import CONF_PLATFORM, STATE_OFF, STATE_ON
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -40,7 +40,7 @@ def calls.opp):
 async def test_get_actions.opp, device_reg, entity_reg):
     """Test we get the expected actions from a switch."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -76,7 +76,7 @@ async def test_action.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     ent1, ent2, ent3 = platform.ENTITIES
 
@@ -115,30 +115,30 @@ async def test_action.opp, calls):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_OFF
 
    .opp.bus.async_fire("test_event1")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_OFF
 
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
 
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
 
    .opp.bus.async_fire("test_event3")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_OFF
 
    .opp.bus.async_fire("test_event3")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON

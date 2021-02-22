@@ -5,14 +5,14 @@ from unittest.mock import AsyncMock, Mock, patch
 from aiohttp.client_exceptions import ClientError
 
 from openpeerpower.components import system_health
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import get_system_health_info, mock_platform
 
 
 async def gather_system_health_info.opp,.opp_ws_client):
     """Gather all info."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     resp = await client.send_json({"id": 6, "type": "system_health/info"})
 
@@ -46,10 +46,10 @@ async def gather_system_health_info.opp,.opp_ws_client):
 
 async def test_info_endpoint_return_info.opp,.opp_ws_client):
     """Test that the info endpoint works."""
-    assert await async_setup_component.opp, "openpeerpowerr", {})
+    assert await async_setup_component.opp, "openpeerpower", {})
 
     with patch(
-        "openpeerpower.components.openpeerpowerr.system_health.system_health_info",
+        "openpeerpower.components.openpeerpower.system_health.system_health_info",
         return_value={"hello": True},
     ):
         assert await async_setup_component.opp, "system_health", {})
@@ -57,7 +57,7 @@ async def test_info_endpoint_return_info.opp,.opp_ws_client):
     data = await gather_system_health_info.opp,.opp_ws_client)
 
     assert len(data) == 1
-    data = data["openpeerpowerr"]
+    data = data["openpeerpower"]
     assert data == {"info": {"hello": True}}
 
 

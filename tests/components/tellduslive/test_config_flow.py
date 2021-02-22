@@ -22,7 +22,7 @@ from tests.common import MockConfigEntry, mock_coro
 def init_config_flow.opp, side_effect=None):
     """Init a configuration flow."""
     flow = config_flow.FlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     if side_effect:
         flow._get_auth_url = Mock(side_effect=side_effect)
     return flow
@@ -243,7 +243,7 @@ async def test_abort_if_exception_generating_auth_url.opp, mock_tellduslive):
 
 async def test_discovery_already_configured.opp, mock_tellduslive):
     """Test abort if already configured fires from discovery."""
-    MockConfigEntry(domain="tellduslive", data={"host": "some-host"}).add_to_opp.opp)
+    MockConfigEntry(domain="tellduslive", data={"host": "some-host"}).add_to.opp.opp)
     flow = init_config_flow.opp)
     flow.context = {"source": SOURCE_DISCOVERY}
 

@@ -11,7 +11,7 @@ from openpeerpower.components.twinkly.const import (
     CONF_ENTRY_NAME,
     DOMAIN as TWINKLY_DOMAIN,
 )
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry
 from tests.components.twinkly import TEST_HOST, TEST_MODEL, TEST_NAME_ORIGINAL

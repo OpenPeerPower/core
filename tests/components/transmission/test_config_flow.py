@@ -89,13 +89,13 @@ def transmission_setup_fixture():
 def init_config_flow.opp):
     """Init a configuration flow."""
     flow = config_flow.TransmissionFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     return flow
 
 
 async def test_flow_user_config.opp, api):
     """Test user config."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         transmission.DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -104,7 +104,7 @@ async def test_flow_user_config.opp, api):
 
 async def test_flow_required_fields.opp, api):
     """Test with required fields only."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         transmission.DOMAIN,
         context={"source": "user"},
         data={CONF_NAME: NAME, CONF_HOST: HOST, CONF_PORT: PORT},
@@ -119,7 +119,7 @@ async def test_flow_required_fields.opp, api):
 
 async def test_flow_all_provided.opp, api):
     """Test with all provided."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         transmission.DOMAIN, context={"source": "user"}, data=MOCK_ENTRY
     )
 
@@ -203,11 +203,11 @@ async def test_host_already_configured.opp, api):
         data=MOCK_ENTRY,
         options={CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     mock_entry_unique_name = MOCK_ENTRY.copy()
     mock_entry_unique_name[CONF_NAME] = "Transmission 1"
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         transmission.DOMAIN, context={"source": "user"}, data=mock_entry_unique_name
     )
     assert result["type"] == "abort"
@@ -216,7 +216,7 @@ async def test_host_already_configured.opp, api):
     mock_entry_unique_port = MOCK_ENTRY.copy()
     mock_entry_unique_port[CONF_PORT] = 9092
     mock_entry_unique_port[CONF_NAME] = "Transmission 2"
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         transmission.DOMAIN, context={"source": "user"}, data=mock_entry_unique_port
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -224,7 +224,7 @@ async def test_host_already_configured.opp, api):
     mock_entry_unique_host = MOCK_ENTRY.copy()
     mock_entry_unique_host[CONF_HOST] = "192.168.1.101"
     mock_entry_unique_host[CONF_NAME] = "Transmission 3"
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         transmission.DOMAIN, context={"source": "user"}, data=mock_entry_unique_host
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -237,11 +237,11 @@ async def test_name_already_configured.opp, api):
         data=MOCK_ENTRY,
         options={CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     mock_entry = MOCK_ENTRY.copy()
     mock_entry[CONF_HOST] = "0.0.0.0"
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         transmission.DOMAIN, context={"source": "user"}, data=mock_entry
     )
 

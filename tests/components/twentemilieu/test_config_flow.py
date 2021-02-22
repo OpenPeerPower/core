@@ -24,7 +24,7 @@ FIXTURE_USER_INPUT = {
 async def test_show_set_form.opp):
     """Test that the setup form is served."""
     flow = config_flow.TwenteMilieuFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     result = await flow.async_step_user(user_input=None)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -38,7 +38,7 @@ async def test_connection_error.opp, aioclient_mock):
     )
 
     flow = config_flow.TwenteMilieuFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     result = await flow.async_step_user(user_input=FIXTURE_USER_INPUT)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -55,7 +55,7 @@ async def test_invalid_address.opp, aioclient_mock):
     )
 
     flow = config_flow.TwenteMilieuFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     result = await flow.async_step_user(user_input=FIXTURE_USER_INPUT)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -65,7 +65,7 @@ async def test_invalid_address.opp, aioclient_mock):
 
 async def test_address_already_set_up.opp, aioclient_mock):
     """Test we abort if address has already been set up."""
-    MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT, title="12345").add_to_opp(
+    MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT, title="12345").add_to.opp(
        .opp
     )
 
@@ -76,7 +76,7 @@ async def test_address_already_set_up.opp, aioclient_mock):
     )
 
     flow = config_flow.TwenteMilieuFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     result = await flow.async_step_user(user_input=FIXTURE_USER_INPUT)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -92,7 +92,7 @@ async def test_full_flow_implementation.opp, aioclient_mock):
     )
 
     flow = config_flow.TwenteMilieuFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     result = await flow.async_step_user(user_input=None)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"

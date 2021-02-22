@@ -6,19 +6,19 @@ from unittest.mock import patch
 from openpeerpower import config as.opp_config, setup
 from openpeerpower.components.trend import DOMAIN
 from openpeerpower.const import SERVICE_RELOAD
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
-from tests.common import assert_setup_component, get_test_home_assistant
+from tests.common import assert_setup_component, get_test_open_peer_power
 
 
 class TestTrendBinarySensor:
     """Test the Trend sensor."""
 
-    opp = None
+   .opp = None
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self, method):
         """Stop everything that was started."""
@@ -70,7 +70,7 @@ class TestTrendBinarySensor:
 
         now = dt_util.utcnow()
         for val in [10, 0, 20, 30]:
-            with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+            with patch("openpeerpower.util.dt.utcnow", return_value=now):
                 self.opp.states.set("sensor.test_state", val)
             self.opp.block_till_done()
             now += timedelta(seconds=2)
@@ -80,7 +80,7 @@ class TestTrendBinarySensor:
 
         # have to change state value, otherwise sample will lost
         for val in [0, 30, 1, 0]:
-            with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+            with patch("openpeerpower.util.dt.utcnow", return_value=now):
                 self.opp.states.set("sensor.test_state", val)
             self.opp.block_till_done()
             now += timedelta(seconds=2)
@@ -112,7 +112,7 @@ class TestTrendBinarySensor:
 
         now = dt_util.utcnow()
         for val in [30, 20, 30, 10]:
-            with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+            with patch("openpeerpower.util.dt.utcnow", return_value=now):
                 self.opp.states.set("sensor.test_state", val)
             self.opp.block_till_done()
             now += timedelta(seconds=2)
@@ -121,7 +121,7 @@ class TestTrendBinarySensor:
         assert state.state == "on"
 
         for val in [30, 0, 45, 50]:
-            with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+            with patch("openpeerpower.util.dt.utcnow", return_value=now):
                 self.opp.states.set("sensor.test_state", val)
             self.opp.block_till_done()
             now += timedelta(seconds=2)
@@ -389,7 +389,7 @@ async def test_reload.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 
@@ -401,13 +401,13 @@ async def test_reload.opp):
         "trend/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 

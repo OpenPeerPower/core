@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 
 import openpeerpower.components.time_date.sensor as time_date
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 ORIG_TZ = dt_util.DEFAULT_TIME_ZONE
 
@@ -21,19 +21,19 @@ async def test_intervals.opp):
     """Test timing intervals of sensors."""
     device = time_date.TimeDateSensor.opp, "time")
     now = dt_util.utc_from_timestamp(45.5)
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         next_time = device.get_next_interval()
     assert next_time == dt_util.utc_from_timestamp(60)
 
     device = time_date.TimeDateSensor.opp, "beat")
     now = dt_util.parse_datetime("2020-11-13 00:00:29+01:00")
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         next_time = device.get_next_interval()
     assert next_time == dt_util.parse_datetime("2020-11-13 00:01:26.4+01:00")
 
     device = time_date.TimeDateSensor.opp, "date_time")
     now = dt_util.utc_from_timestamp(1495068899)
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         next_time = device.get_next_interval()
     assert next_time == dt_util.utc_from_timestamp(1495068900)
 
@@ -122,7 +122,7 @@ async def test_timezone_intervals.opp):
 
     device = time_date.TimeDateSensor.opp, "date")
     now = dt_util.utc_from_timestamp(50000)
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         next_time = device.get_next_interval()
     # start of local day in EST was 18000.0
     # so the second day was 18000 + 86400
@@ -133,7 +133,7 @@ async def test_timezone_intervals.opp):
     dt_util.set_default_time_zone(new_tz)
     now = dt_util.parse_datetime("2017-11-13 19:47:19-07:00")
     device = time_date.TimeDateSensor.opp, "date")
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         next_time = device.get_next_interval()
     assert next_time.timestamp() == dt_util.as_timestamp("2017-11-14 00:00:00-07:00")
 
@@ -143,29 +143,29 @@ async def test_timezone_intervals.opp):
     dt_util.set_default_time_zone(new_tz)
 
     now = dt_util.parse_datetime("2020-03-29 00:00+01:00")
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         next_time = device.get_next_interval()
     assert next_time.timestamp() == dt_util.as_timestamp("2020-03-30 00:00+02:00")
 
     now = dt_util.parse_datetime("2020-03-29 03:00+02:00")
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         next_time = device.get_next_interval()
     assert next_time.timestamp() == dt_util.as_timestamp("2020-03-30 00:00+02:00")
 
     # Leaving DST
     now = dt_util.parse_datetime("2020-10-25 00:00+02:00")
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         next_time = device.get_next_interval()
     assert next_time.timestamp() == dt_util.as_timestamp("2020-10-26 00:00:00+01:00")
 
     now = dt_util.parse_datetime("2020-10-25 23:59+01:00")
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         next_time = device.get_next_interval()
     assert next_time.timestamp() == dt_util.as_timestamp("2020-10-26 00:00:00+01:00")
 
 
 @patch(
-    "openpeerpowerr.util.dt.utcnow",
+    "openpeerpower.util.dt.utcnow",
     return_value=dt_util.parse_datetime("2017-11-14 02:47:19-00:00"),
 )
 async def test_timezone_intervals_empty_parameter.opp):

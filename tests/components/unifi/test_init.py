@@ -4,7 +4,7 @@ from unittest.mock import AsyncMock, Mock, patch
 from openpeerpower.components import unifi
 from openpeerpower.components.unifi import async_flatten_entry_data
 from openpeerpower.components.unifi.const import CONF_CONTROLLER, DOMAIN as UNIFI_DOMAIN
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .test_controller import CONTROLLER_DATA, ENTRY_CONFIG, setup_unifi_integration
 
@@ -40,12 +40,12 @@ async def test_controller_no_mac.opp):
         unique_id="1",
         version=1,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     mock_registry = Mock()
     with patch(
         "openpeerpower.components.unifi.UniFiController"
     ) as mock_controller, patch(
-        "openpeerpowerr.helpers.device_registry.async_get_registry",
+        "openpeerpower.helpers.device_registry.async_get_registry",
         return_value=mock_coro(mock_registry),
     ):
         mock_controller.return_value.async_setup = AsyncMock(return_value=True)

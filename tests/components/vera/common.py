@@ -11,8 +11,8 @@ from openpeerpower.components.vera.const import (
     CONF_LEGACY_UNIQUE_ID,
     DOMAIN,
 )
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -146,16 +146,16 @@ class ComponentFactory:
 
         # Setup Open Peer Power.
         assert await async_setup_component.opp, DOMAIN,.opp_config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         # Setup component through config flow.
         if controller_config.config_source == ConfigSource.CONFIG_FLOW:
-            await opp..config_entries.flow.async_init(
+            await.opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": config_entries.SOURCE_USER},
                 data=component_config,
             )
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
         # Setup component directly from config entry.
         if controller_config.config_source == ConfigSource.CONFIG_ENTRY:
@@ -165,10 +165,10 @@ class ComponentFactory:
                 options=controller_config.options,
                 unique_id="12345",
             )
-            entry.add_to_opp.opp)
+            entry.add_to.opp.opp)
 
-            await opp..config_entries.async_setup(entry.entry_id)
-            await opp..async_block_till_done()
+            await.opp.config_entries.async_setup(entry.entry_id)
+            await.opp.async_block_till_done()
 
         update_callback = (
             controller.register.call_args_list[0][0][1]

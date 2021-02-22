@@ -12,7 +12,7 @@ from openpeerpower.const import (
     CONF_SSL,
     CONF_USERNAME,
 )
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .consts import HOST, MACS, PASSWORD, PORT, USE_SSL, USERNAME
 
@@ -36,7 +36,7 @@ async def test_services_registered.opp: OpenPeerPowerType):
                 CONF_MAC: MACS[0],
             },
         )
-        entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(entry.entry_id)
+        entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(entry.entry_id)
         for service in SERVICES:
             assert.opp.services.has_service(DOMAIN, service)

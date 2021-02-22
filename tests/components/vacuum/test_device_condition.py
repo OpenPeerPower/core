@@ -8,8 +8,8 @@ from openpeerpower.components.vacuum import (
     STATE_DOCKED,
     STATE_RETURNING,
 )
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -43,7 +43,7 @@ def calls.opp):
 async def test_get_conditions.opp, device_reg, entity_reg):
     """Test we get the expected conditions from a vacuum."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -119,14 +119,14 @@ async def test_if_state.opp, calls):
     )
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_docked - event - test_event2"
 
    .opp.states.async_set("vacuum.entity", STATE_CLEANING)
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_cleaning - event - test_event1"
 
@@ -134,6 +134,6 @@ async def test_if_state.opp, calls):
    .opp.states.async_set("vacuum.entity", STATE_RETURNING)
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[2].data["some"] == "is_cleaning - event - test_event1"

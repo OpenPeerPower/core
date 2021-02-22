@@ -10,10 +10,10 @@ from uvcclient import camera, nvr
 
 from openpeerpower.components.camera import SUPPORT_STREAM
 from openpeerpower.components.uvc import camera as uvc
-from openpeerpowerr.exceptions import PlatformNotReady
-from openpeerpowerr.setup import setup_component
+from openpeerpower.exceptions import PlatformNotReady
+from openpeerpower.setup import setup_component
 
-from tests.common import get_test_home_assistant
+from tests.common import get_test_open_peer_power
 
 
 class TestUVCSetup(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestUVCSetup(unittest.TestCase):
 
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.addCleanup(self.opp.stop)
 
     @mock.patch("uvcclient.nvr.UVCRemote")
@@ -56,7 +56,7 @@ class TestUVCSetup(unittest.TestCase):
 
         assert mock_remote.call_count == 1
         assert mock_remote.call_args == mock.call("foo", 123, "secret", ssl=False)
-        mock_uvc.assert_op._calls(
+        mock_uvc.assert_has_calls(
             [
                 mock.call(mock_remote.return_value, "id1", "Front", "bar"),
                 mock.call(mock_remote.return_value, "id2", "Back", "bar"),
@@ -81,7 +81,7 @@ class TestUVCSetup(unittest.TestCase):
 
         assert mock_remote.call_count == 1
         assert mock_remote.call_args == mock.call("foo", 7080, "secret", ssl=False)
-        mock_uvc.assert_op._calls(
+        mock_uvc.assert_has_calls(
             [
                 mock.call(mock_remote.return_value, "id1", "Front", "ubnt"),
                 mock.call(mock_remote.return_value, "id2", "Back", "ubnt"),
@@ -106,7 +106,7 @@ class TestUVCSetup(unittest.TestCase):
 
         assert mock_remote.call_count == 1
         assert mock_remote.call_args == mock.call("foo", 7080, "secret", ssl=False)
-        mock_uvc.assert_op._calls(
+        mock_uvc.assert_has_calls(
             [
                 mock.call(mock_remote.return_value, "one", "Front", "ubnt"),
                 mock.call(mock_remote.return_value, "two", "Back", "ubnt"),

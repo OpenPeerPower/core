@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pyvera as pv
 
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from .common import ComponentFactory, new_simple_controller_config
 
@@ -23,9 +23,9 @@ async def test_scene(
         controller_config=new_simple_controller_config(scenes=(vera_scene,)),
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "scene",
         "turn_on",
         {"entity_id": entity_id},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()

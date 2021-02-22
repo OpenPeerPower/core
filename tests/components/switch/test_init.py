@@ -4,7 +4,7 @@ import pytest
 from openpeerpower import core
 from openpeerpower.components import switch
 from openpeerpower.const import CONF_PLATFORM
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.components.switch import common
 
@@ -23,7 +23,7 @@ async def test_methods.opp, entities):
     assert await async_setup_component(
        .opp, switch.DOMAIN, {switch.DOMAIN: {CONF_PLATFORM: "test"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert switch.is_on.opp, switch_1.entity_id)
     assert not switch.is_on.opp, switch_2.entity_id)
     assert not switch.is_on.opp, switch_3.entity_id)
@@ -53,12 +53,12 @@ async def test_switch_context.opp, entities,.opp_admin_user):
     """Test that switch context works."""
     assert await async_setup_component.opp, "switch", {"switch": {"platform": "test"}})
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.ac")
+    state =.opp.states.get("switch.ac")
     assert state is not None
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "switch",
         "toggle",
         {"entity_id": state.entity_id},
@@ -66,10 +66,10 @@ async def test_switch_context.opp, entities,.opp_admin_user):
         core.Context(user_id.opp_admin_user.id),
     )
 
-    state2 = opp.states.get("switch.ac")
+    state2 =.opp.states.get("switch.ac")
     assert state2 is not None
     assert state.state != state2.state
-    assert state2.context.user_id == opp_admin_user.id
+    assert state2.context.user_id ==.opp_admin_user.id
 
 
 def test_deprecated_base_class(caplog):

@@ -12,7 +12,7 @@ from openpeerpower.components.vera import (
     DOMAIN,
 )
 from openpeerpower.config_entries import ENTRY_STATE_NOT_LOADED
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from .common import ComponentFactory, ConfigSource, new_simple_controller_config
 
@@ -40,7 +40,7 @@ async def test_init(
         ),
     )
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     entry1 = entity_registry.async_get(entity1_id)
     assert entry1
     assert entry1.unique_id == "vera_first_serial_1"
@@ -67,7 +67,7 @@ async def test_init_from_file(
         ),
     )
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
     entry1 = entity_registry.async_get(entity1_id)
     assert entry1
     assert entry1.unique_id == "vera_first_serial_1"
@@ -117,7 +117,7 @@ async def test_multiple_controllers_with_legacy_one(
         ),
     )
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entry1 = entity_registry.async_get(entity1_id)
     assert entry1
@@ -142,11 +142,11 @@ async def test_unload(
        .opp.opp, controller_config=new_simple_controller_config()
     )
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert entries
 
     for config_entry in entries:
-        assert await opp..config_entries.async_unload(config_entry.entry_id)
+        assert await.opp.config_entries.async_unload(config_entry.entry_id)
         assert config_entry.state == ENTRY_STATE_NOT_LOADED
 
 
@@ -170,9 +170,9 @@ async def test_async_setup_entry_error(
         options={},
         unique_id="12345",
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    assert not await opp..config_entries.async_setup(entry.entry_id)
+    assert not await.opp.config_entries.async_setup(entry.entry_id)
 
 
 @pytest.mark.parametrize(
@@ -241,7 +241,7 @@ async def test_exclude_and_light_ids(
     update_callback(vera_device2)
     update_callback(vera_device3)
     update_callback(vera_device4)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(entity_id1) is None
     assert.opp.states.get(entity_id2) is not None

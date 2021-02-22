@@ -6,8 +6,8 @@ import pytest
 from transmissionrpc.error import TransmissionError
 
 from openpeerpower.components import transmission
-from openpeerpowerr.exceptions import ConfigEntryNotReady
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry, mock_coro
 
@@ -77,7 +77,7 @@ async def test_successful_config_entry.opp, api):
     """Test that configured transmission is configured successfully."""
 
     entry = MOCK_ENTRY
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     assert await transmission.async_setup_entry.opp, entry) is True
     assert entry.options == {
@@ -91,7 +91,7 @@ async def test_setup_failed.opp):
     """Test transmission failed due to an error."""
 
     entry = MOCK_ENTRY
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     # test connection error raising ConfigEntryNotReady
     with patch(
@@ -113,7 +113,7 @@ async def test_setup_failed.opp):
 async def test_unload_entry.opp, api):
     """Test removing transmission client."""
     entry = MOCK_ENTRY
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch.object(
        .opp.config_entries, "async_forward_entry_unload", return_value=mock_coro(True)

@@ -13,7 +13,7 @@ from openpeerpower.components.unifi.const import (
     CONF_TRACK_DEVICES,
     DOMAIN as UNIFI_DOMAIN,
 )
-from openpeerpowerr.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .test_controller import setup_unifi_integration
 
@@ -76,26 +76,26 @@ async def test_sensors.opp, aioclient_mock):
         },
         clients_response=CLIENTS,
     )
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 6
 
-    wired_client_rx = opp.states.get("sensor.wired_client_name_rx")
+    wired_client_rx =.opp.states.get("sensor.wired_client_name_rx")
     assert wired_client_rx.state == "1234.0"
 
-    wired_client_tx = opp.states.get("sensor.wired_client_name_tx")
+    wired_client_tx =.opp.states.get("sensor.wired_client_name_tx")
     assert wired_client_tx.state == "5678.0"
 
-    wired_client_uptime = opp.states.get("sensor.wired_client_name_uptime")
+    wired_client_uptime =.opp.states.get("sensor.wired_client_name_uptime")
     assert wired_client_uptime.state == "2020-09-14T14:41:45+00:00"
 
-    wireless_client_rx = opp.states.get("sensor.wireless_client_name_rx")
+    wireless_client_rx =.opp.states.get("sensor.wireless_client_name_rx")
     assert wireless_client_rx.state == "1234.0"
 
-    wireless_client_tx = opp.states.get("sensor.wireless_client_name_tx")
+    wireless_client_tx =.opp.states.get("sensor.wireless_client_name_tx")
     assert wireless_client_tx.state == "5678.0"
 
-    wireless_client_uptime = opp.states.get("sensor.wireless_client_name_uptime")
+    wireless_client_uptime =.opp.states.get("sensor.wireless_client_name_uptime")
     assert wireless_client_uptime.state == "2020-09-14T14:41:45+00:00"
 
     clients = deepcopy(CLIENTS)
@@ -105,16 +105,16 @@ async def test_sensors.opp, aioclient_mock):
     clients[1]["uptime"] = 1600180860
 
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": clients}
-    controller.api.message_op.dler(event)
-    await opp..async_block_till_done()
+    controller.api.message_handler(event)
+    await.opp.async_block_till_done()
 
-    wireless_client_rx = opp.states.get("sensor.wireless_client_name_rx")
+    wireless_client_rx =.opp.states.get("sensor.wireless_client_name_rx")
     assert wireless_client_rx.state == "2345.0"
 
-    wireless_client_tx = opp.states.get("sensor.wireless_client_name_tx")
+    wireless_client_tx =.opp.states.get("sensor.wireless_client_name_tx")
     assert wireless_client_tx.state == "6789.0"
 
-    wireless_client_uptime = opp.states.get("sensor.wireless_client_name_uptime")
+    wireless_client_uptime =.opp.states.get("sensor.wireless_client_name_uptime")
     assert wireless_client_uptime.state == "2020-09-15T14:41:00+00:00"
 
    .opp.config_entries.async_update_entry(
@@ -124,18 +124,18 @@ async def test_sensors.opp, aioclient_mock):
             CONF_ALLOW_UPTIME_SENSORS: False,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    wireless_client_rx = opp.states.get("sensor.wireless_client_name_rx")
+    wireless_client_rx =.opp.states.get("sensor.wireless_client_name_rx")
     assert wireless_client_rx is None
 
-    wireless_client_tx = opp.states.get("sensor.wireless_client_name_tx")
+    wireless_client_tx =.opp.states.get("sensor.wireless_client_name_tx")
     assert wireless_client_tx is None
 
-    wired_client_uptime = opp.states.get("sensor.wired_client_name_uptime")
+    wired_client_uptime =.opp.states.get("sensor.wired_client_name_uptime")
     assert wired_client_uptime is None
 
-    wireless_client_uptime = opp.states.get("sensor.wireless_client_name_uptime")
+    wireless_client_uptime =.opp.states.get("sensor.wireless_client_name_uptime")
     assert wireless_client_uptime is None
 
    .opp.config_entries.async_update_entry(
@@ -145,18 +145,18 @@ async def test_sensors.opp, aioclient_mock):
             CONF_ALLOW_UPTIME_SENSORS: True,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    wireless_client_rx = opp.states.get("sensor.wireless_client_name_rx")
+    wireless_client_rx =.opp.states.get("sensor.wireless_client_name_rx")
     assert wireless_client_rx.state == "2345.0"
 
-    wireless_client_tx = opp.states.get("sensor.wireless_client_name_tx")
+    wireless_client_tx =.opp.states.get("sensor.wireless_client_name_tx")
     assert wireless_client_tx.state == "6789.0"
 
-    wireless_client_uptime = opp.states.get("sensor.wireless_client_name_uptime")
+    wireless_client_uptime =.opp.states.get("sensor.wireless_client_name_uptime")
     assert wireless_client_uptime.state == "2020-09-15T14:41:00+00:00"
 
-    wired_client_uptime = opp.states.get("sensor.wired_client_name_uptime")
+    wired_client_uptime =.opp.states.get("sensor.wired_client_name_uptime")
     assert wired_client_uptime.state == "2020-09-14T14:41:45+00:00"
 
     # Try to add the sensors again, using a signal
@@ -173,7 +173,7 @@ async def test_sensors.opp, aioclient_mock):
         devices_connected,
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 6
 
@@ -189,48 +189,48 @@ async def test_remove_sensors.opp, aioclient_mock):
         },
         clients_response=CLIENTS,
     )
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 6
     assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
-    wired_client_rx = opp.states.get("sensor.wired_client_name_rx")
+    wired_client_rx =.opp.states.get("sensor.wired_client_name_rx")
     assert wired_client_rx is not None
-    wired_client_tx = opp.states.get("sensor.wired_client_name_tx")
+    wired_client_tx =.opp.states.get("sensor.wired_client_name_tx")
     assert wired_client_tx is not None
 
-    wired_client_uptime = opp.states.get("sensor.wired_client_name_uptime")
+    wired_client_uptime =.opp.states.get("sensor.wired_client_name_uptime")
     assert wired_client_uptime is not None
 
-    wireless_client_rx = opp.states.get("sensor.wireless_client_name_rx")
+    wireless_client_rx =.opp.states.get("sensor.wireless_client_name_rx")
     assert wireless_client_rx is not None
-    wireless_client_tx = opp.states.get("sensor.wireless_client_name_tx")
+    wireless_client_tx =.opp.states.get("sensor.wireless_client_name_tx")
     assert wireless_client_tx is not None
 
-    wireless_client_uptime = opp.states.get("sensor.wireless_client_name_uptime")
+    wireless_client_uptime =.opp.states.get("sensor.wireless_client_name_uptime")
     assert wireless_client_uptime is not None
 
     controller.api.websocket._data = {
         "meta": {"message": MESSAGE_CLIENT_REMOVED},
         "data": [CLIENTS[0]],
     }
-    controller.api.session_op.dler(SIGNAL_DATA)
-    await opp..async_block_till_done()
+    controller.api.session_handler(SIGNAL_DATA)
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 3
     assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
 
-    wired_client_rx = opp.states.get("sensor.wired_client_name_rx")
+    wired_client_rx =.opp.states.get("sensor.wired_client_name_rx")
     assert wired_client_rx is None
-    wired_client_tx = opp.states.get("sensor.wired_client_name_tx")
+    wired_client_tx =.opp.states.get("sensor.wired_client_name_tx")
     assert wired_client_tx is None
 
-    wired_client_uptime = opp.states.get("sensor.wired_client_name_uptime")
+    wired_client_uptime =.opp.states.get("sensor.wired_client_name_uptime")
     assert wired_client_uptime is None
 
-    wireless_client_rx = opp.states.get("sensor.wireless_client_name_rx")
+    wireless_client_rx =.opp.states.get("sensor.wireless_client_name_rx")
     assert wireless_client_rx is not None
-    wireless_client_tx = opp.states.get("sensor.wireless_client_name_tx")
+    wireless_client_tx =.opp.states.get("sensor.wireless_client_name_tx")
     assert wireless_client_tx is not None
 
-    wireless_client_uptime = opp.states.get("sensor.wireless_client_name_uptime")
+    wireless_client_uptime =.opp.states.get("sensor.wireless_client_name_uptime")
     assert wireless_client_uptime is not None

@@ -17,7 +17,7 @@ from openpeerpower.const import (
     DATA_GIGABYTES,
 )
 
-from tests.common import get_test_home_assistant, load_fixture
+from tests.common import get_test_open_peer_power, load_fixture
 from tests.components.vultr.test_init import VALID_CONFIG
 
 
@@ -33,7 +33,7 @@ class TestVultrSensorSetup(unittest.TestCase):
 
     def setUp(self):
         """Initialize values for this testcase class."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.configs = [
             {
                 CONF_NAME: vultr.DEFAULT_NAME,

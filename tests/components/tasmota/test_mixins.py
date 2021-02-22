@@ -32,7 +32,7 @@ async def test_availability_poll_state_once(
         f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Device online, verify poll for state
@@ -41,10 +41,10 @@ async def test_availability_poll_state_once(
         get_topic_tele_will(config),
         config_get_state_online(config),
     )
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
-    mqtt_mock.async_publish.assert_op._calls(
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
+    mqtt_mock.async_publish.assert_has_calls(
         [
             call(poll_topic_relay, poll_payload_relay, 0, False),
             call(poll_topic_switch, poll_payload_switch, 0, False),

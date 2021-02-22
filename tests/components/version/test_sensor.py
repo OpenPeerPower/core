@@ -1,7 +1,7 @@
 """The test for the version sensor platform."""
 from unittest.mock import patch
 
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 MOCK_VERSION = "10.0"
 
@@ -19,8 +19,8 @@ async def test_version.opp):
 
     with patch("openpeerpower.const.__version__", MOCK_VERSION):
         assert await async_setup_component.opp, "sensor", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
 
     assert state.state == "10.0"

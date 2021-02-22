@@ -11,9 +11,9 @@ from openpeerpower.components.light import (
     ATTR_WHITE_VALUE,
 )
 from openpeerpower.const import STATE_OFF, STATE_ON, STATE_UNAVAILABLE
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
-from tests.common import assert_setup_component, get_test_home_assistant
+from tests.common import assert_setup_component, get_test_open_peer_power
 from tests.components.light import common
 
 _LOGGER = logging.getLogger(__name__)
@@ -25,13 +25,13 @@ _STATE_AVAILABILITY_BOOLEAN = "availability_boolean.state"
 class TestTemplateLight:
     """Test the Template light."""
 
-    opp = None
+   .opp = None
     calls = None
     # pylint: disable=invalid-name
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.calls = []
 
         @callback
@@ -1107,20 +1107,20 @@ async def test_available_template_with_entities.opp):
             }
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     # When template returns true..
    .opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Device State should not be unavailable
     assert.opp.states.get("light.test_template_light").state != STATE_UNAVAILABLE
 
     # When Availability template returns false
    .opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # device state should be unavailable
     assert.opp.states.get("light.test_template_light").state == STATE_UNAVAILABLE
@@ -1158,9 +1158,9 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
         },
     )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("light.test_template_light").state != STATE_UNAVAILABLE
     assert ("UndefinedError: 'x' is undefined") in caplog.text
@@ -1202,8 +1202,8 @@ async def test_unique_id.opp):
         },
     )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

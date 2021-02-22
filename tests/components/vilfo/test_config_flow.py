@@ -12,7 +12,7 @@ async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
     mock_mac = "FF-00-00-00-00-00"
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -25,11 +25,11 @@ async def test_form.opp):
     ) as mock_setup, patch(
         "openpeerpower.components.vilfo.async_setup_entry"
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "testadmin.vilfo.com", CONF_ACCESS_TOKEN: "test-token"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "testadmin.vilfo.com"
@@ -44,7 +44,7 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -54,7 +54,7 @@ async def test_form_invalid_auth.opp):
         "vilfo.Client.get_board_information",
         side_effect=vilfo.exceptions.AuthenticationException,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "testadmin.vilfo.com", "access_token": "test-token"},
         )
@@ -65,14 +65,14 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch("vilfo.Client.ping", side_effect=vilfo.exceptions.VilfoException), patch(
         "vilfo.Client.resolve_mac_address"
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "testadmin.vilfo.com", "access_token": "test-token"},
         )
@@ -83,7 +83,7 @@ async def test_form_cannot_connect.opp):
     with patch("vilfo.Client.ping", side_effect=vilfo.exceptions.VilfoException), patch(
         "vilfo.Client.resolve_mac_address"
     ):
-        result3 = await opp..config_entries.flow.async_configure(
+        result3 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "testadmin.vilfo.com", "access_token": "test-token"},
         )
@@ -94,7 +94,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_wrong_host.opp):
     """Test we handle wrong host errors."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data={"host": "this is an invalid hostname", "access_token": "test-token"},
@@ -105,7 +105,7 @@ async def test_form_wrong_host.opp):
 
 async def test_form_already_configured.opp):
     """Test that we handle already configured exceptions appropriately."""
-    first_flow_result1 = await opp..config_entries.flow.async_init(
+    first_flow_result1 = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -113,12 +113,12 @@ async def test_form_already_configured.opp):
         "vilfo.Client.get_board_information",
         return_value=None,
     ), patch("vilfo.Client.resolve_mac_address", return_value=None):
-        first_flow_result2 = await opp..config_entries.flow.async_configure(
+        first_flow_result2 = await.opp.config_entries.flow.async_configure(
             first_flow_result1["flow_id"],
             {CONF_HOST: "testadmin.vilfo.com", CONF_ACCESS_TOKEN: "test-token"},
         )
 
-    second_flow_result1 = await opp..config_entries.flow.async_init(
+    second_flow_result1 = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -126,7 +126,7 @@ async def test_form_already_configured.opp):
         "vilfo.Client.get_board_information",
         return_value=None,
     ), patch("vilfo.Client.resolve_mac_address", return_value=None):
-        second_flow_result2 = await opp..config_entries.flow.async_configure(
+        second_flow_result2 = await.opp.config_entries.flow.async_configure(
             second_flow_result1["flow_id"],
             {CONF_HOST: "testadmin.vilfo.com", CONF_ACCESS_TOKEN: "test-token"},
         )
@@ -138,7 +138,7 @@ async def test_form_already_configured.opp):
 
 async def test_form_unexpected_exception.opp):
     """Test that we handle unexpected exceptions."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -146,7 +146,7 @@ async def test_form_unexpected_exception.opp):
         "openpeerpower.components.vilfo.config_flow.VilfoClient",
     ) as mock_client:
         mock_client.return_value.ping = Mock(side_effect=Exception)
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "testadmin.vilfo.com", "access_token": "test-token"},
         )
@@ -163,7 +163,7 @@ async def test_validate_input_returns_data.opp):
     with patch("vilfo.Client.ping", return_value=None), patch(
         "vilfo.Client.get_board_information", return_value=None
     ), patch("vilfo.Client.resolve_mac_address", return_value=None):
-        result = await opp..components.vilfo.config_flow.validate_input(
+        result = await.opp.components.vilfo.config_flow.validate_input(
            .opp, data=mock_data
         )
 
@@ -175,10 +175,10 @@ async def test_validate_input_returns_data.opp):
     with patch("vilfo.Client.ping", return_value=None), patch(
         "vilfo.Client.get_board_information", return_value=None
     ), patch("vilfo.Client.resolve_mac_address", return_value=mock_mac):
-        result2 = await opp..components.vilfo.config_flow.validate_input(
+        result2 = await.opp.components.vilfo.config_flow.validate_input(
            .opp, data=mock_data
         )
-        result3 = await opp..components.vilfo.config_flow.validate_input(
+        result3 = await.opp.components.vilfo.config_flow.validate_input(
            .opp, data=mock_data_with_ip
         )
 

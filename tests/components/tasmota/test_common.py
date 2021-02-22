@@ -114,14 +114,14 @@ async def help_test_availability_when_connection_lost(
         f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
            .opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     # Device online
     async_fire_mqtt_message(
@@ -130,25 +130,25 @@ async def help_test_availability_when_connection_lost(
         config_get_state_online(config),
     )
 
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
     # Disconnected from MQTT server -> state changed to unavailable
     mqtt_mock.connected = False
-    await opp..async_add_executor_job(mqtt_client_mock.on_disconnect, None, None, 0)
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
-    state = opp.states.get(f"{domain}.{entity_id}")
+    await.opp.async_add_executor_job(mqtt_client_mock.on_disconnect, None, None, 0)
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     # Reconnected to MQTT server -> state still unavailable
     mqtt_mock.connected = True
-    await opp..async_add_executor_job(mqtt_client_mock.on_connect, None, None, None, 0)
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
-    state = opp.states.get(f"{domain}.{entity_id}")
+    await.opp.async_add_executor_job(mqtt_client_mock.on_connect, None, None, None, 0)
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     # Receive LWT again
@@ -157,7 +157,7 @@ async def help_test_availability_when_connection_lost(
         get_topic_tele_will(config),
         config_get_state_online(config),
     )
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
 
@@ -178,16 +178,16 @@ async def help_test_availability(
         f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
            .opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message(
@@ -196,7 +196,7 @@ async def help_test_availability(
         config_get_state_online(config),
     )
 
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message(
@@ -205,7 +205,7 @@ async def help_test_availability(
         config_get_state_offline(config),
     )
 
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
 
@@ -244,40 +244,40 @@ async def help_test_availability_discovery_update(
     assert online1 != online2
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config1[CONF_MAC]}/config", data1)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
            .opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, availability_topic1, online1)
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, availability_topic1, offline1)
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     # Change availability settings
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config2[CONF_MAC]}/config", data2)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify we are no longer subscribing to the old topic or payload
     async_fire_mqtt_message.opp, availability_topic1, online1)
     async_fire_mqtt_message.opp, availability_topic1, online2)
     async_fire_mqtt_message.opp, availability_topic2, online1)
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     # Verify we are subscribing to the new topic
     async_fire_mqtt_message.opp, availability_topic2, online2)
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
 
@@ -300,14 +300,14 @@ async def help_test_availability_poll_state(
         f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
            .opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Device online, verify poll for state
@@ -316,26 +316,26 @@ async def help_test_availability_poll_state(
         get_topic_tele_will(config),
         config_get_state_online(config),
     )
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     mqtt_mock.async_publish.assert_called_once_with(poll_topic, poll_payload, 0, False)
     mqtt_mock.async_publish.reset_mock()
 
     # Disconnected from MQTT server
     mqtt_mock.connected = False
-    await opp..async_add_executor_job(mqtt_client_mock.on_disconnect, None, None, 0)
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(mqtt_client_mock.on_disconnect, None, None, 0)
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     assert not mqtt_mock.async_publish.called
 
     # Reconnected to MQTT server
     mqtt_mock.connected = True
-    await opp..async_add_executor_job(mqtt_client_mock.on_connect, None, None, None, 0)
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(mqtt_client_mock.on_connect, None, None, None, 0)
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     assert not mqtt_mock.async_publish.called
 
     # Device online, verify poll for state
@@ -344,9 +344,9 @@ async def help_test_availability_poll_state(
         get_topic_tele_will(config),
         config_get_state_online(config),
     )
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     mqtt_mock.async_publish.assert_called_once_with(poll_topic, poll_payload, 0, False)
 
 
@@ -363,22 +363,22 @@ async def help_test_discovery_removal(
     name="Test",
 ):
     """Test removal of discovered entity."""
-    device_reg = await opp..helpers.device_registry.async_get_registry()
-    entity_reg = await opp..helpers.entity_registry.async_get_registry()
+    device_reg = await.opp.helpers.device_registry.async_get_registry()
+    entity_reg = await.opp.helpers.entity_registry.async_get_registry()
 
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     assert config1[CONF_MAC] == config2[CONF_MAC]
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config1[CONF_MAC]}/config", data1)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     if sensor_config1:
         async_fire_mqtt_message(
            .opp,
             f"{DEFAULT_PREFIX}/{config1[CONF_MAC]}/sensors",
             json.dumps(sensor_config1),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     # Verify device and entity registry entries are created
     device_entry = device_reg.async_get_device(set(), {("mac", config1[CONF_MAC])})
@@ -387,19 +387,19 @@ async def help_test_discovery_removal(
     assert entity_entry is not None
 
     # Verify state is added
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state is not None
     assert state.name == name
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config2[CONF_MAC]}/config", data2)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     if sensor_config1:
         async_fire_mqtt_message(
            .opp,
             f"{DEFAULT_PREFIX}/{config2[CONF_MAC]}/sensors",
             json.dumps(sensor_config2),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     # Verify entity registry entries are cleared
     device_entry = device_reg.async_get_device(set(), {("mac", config2[CONF_MAC])})
@@ -408,7 +408,7 @@ async def help_test_discovery_removal(
     assert entity_entry is None
 
     # Verify state is removed
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state is None
 
 
@@ -435,33 +435,33 @@ async def help_test_discovery_update_unchanged(
     data2 = json.dumps(config2)
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config", data1)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
            .opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state is not None
     assert state.name == name
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config", data1)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
            .opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert not discovery_update.called
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config", data2)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert discovery_update.called
 
@@ -470,28 +470,28 @@ async def help_test_discovery_device_remove(
    .opp, mqtt_mock, domain, unique_id, config, sensor_config=None
 ):
     """Test domain entity is removed when device is removed."""
-    device_reg = await opp..helpers.device_registry.async_get_registry()
-    entity_reg = await opp..helpers.entity_registry.async_get_registry()
+    device_reg = await.opp.helpers.device_registry.async_get_registry()
+    entity_reg = await.opp.helpers.entity_registry.async_get_registry()
 
     config = copy.deepcopy(config)
 
     data = json.dumps(config)
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
            .opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     device = device_reg.async_get_device(set(), {("mac", config[CONF_MAC])})
     assert device is not None
     assert entity_reg.async_get_entity_id(domain, "tasmota", unique_id)
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config", "")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     device = device_reg.async_get_device(set(), {("mac", config[CONF_MAC])})
     assert device is None
@@ -502,7 +502,7 @@ async def help_test_entity_id_update_subscriptions(
    .opp, mqtt_mock, domain, config, topics=None, sensor_config=None, entity_id="test"
 ):
     """Test MQTT subscriptions are managed when entity_id is updated."""
-    entity_reg = await opp..helpers.entity_registry.async_get_registry()
+    entity_reg = await.opp.helpers.entity_registry.async_get_registry()
 
     config = copy.deepcopy(config)
     data = json.dumps(config)
@@ -510,20 +510,20 @@ async def help_test_entity_id_update_subscriptions(
     mqtt_mock.async_subscribe.reset_mock()
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
            .opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     if not topics:
         topics = [get_topic_tele_state(config), get_topic_tele_will(config)]
     assert len(topics) > 0
 
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state is not None
     assert mqtt_mock.async_subscribe.call_count == len(topics)
     for topic in topics:
@@ -533,12 +533,12 @@ async def help_test_entity_id_update_subscriptions(
     entity_reg.async_update_entity(
         f"{domain}.{entity_id}", new_entity_id=f"{domain}.milk"
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state is None
 
-    state = opp.states.get(f"{domain}.milk")
+    state =.opp.states.get(f"{domain}.milk")
     assert state is not None
     for topic in topics:
         mqtt_mock.async_subscribe.assert_any_call(topic, ANY, ANY, ANY)
@@ -548,7 +548,7 @@ async def help_test_entity_id_update_discovery_update(
    .opp, mqtt_mock, domain, config, sensor_config=None, entity_id="test"
 ):
     """Test MQTT discovery update after entity_id is updated."""
-    entity_reg = await opp..helpers.entity_registry.async_get_registry()
+    entity_reg = await.opp.helpers.entity_registry.async_get_registry()
 
     config = copy.deepcopy(config)
     data = json.dumps(config)
@@ -556,37 +556,37 @@ async def help_test_entity_id_update_discovery_update(
     topic = get_topic_tele_will(config)
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
            .opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, topic, config_get_state_online(config))
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, topic, config_get_state_offline(config))
-    state = opp.states.get(f"{domain}.{entity_id}")
+    state =.opp.states.get(f"{domain}.{entity_id}")
     assert state.state == STATE_UNAVAILABLE
 
     entity_reg.async_update_entity(
         f"{domain}.{entity_id}", new_entity_id=f"{domain}.milk"
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(f"{domain}.milk")
 
     assert config[CONF_PREFIX][PREFIX_TELE] != "tele2"
     config[CONF_PREFIX][PREFIX_TELE] = "tele2"
     data = json.dumps(config)
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(domain)) == 1
 
     topic = get_topic_tele_will(config)
     async_fire_mqtt_message.opp, topic, config_get_state_online(config))
-    state = opp.states.get(f"{domain}.milk")
+    state =.opp.states.get(f"{domain}.milk")
     assert state.state != STATE_UNAVAILABLE

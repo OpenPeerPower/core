@@ -38,7 +38,7 @@ async def test_attributes.opp):
         return_value=RESPONSE_DISARMED,
     ) as mock_request:
         await setup_platform.opp, ALARM_DOMAIN)
-        state = opp.states.get(ENTITY_ID)
+        state =.opp.states.get(ENTITY_ID)
         assert state.state == STATE_ALARM_DISARMED
         mock_request.assert_called_once()
         assert state.attributes.get(ATTR_FRIENDLY_NAME) == "test"
@@ -52,14 +52,14 @@ async def test_arm_home_success.opp):
         side_effect=responses,
     ):
         await setup_platform.opp, ALARM_DOMAIN)
-        assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
+        assert STATE_ALARM_DISARMED ==.opp.states.get(ENTITY_ID).state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             ALARM_DOMAIN, SERVICE_ALARM_ARM_HOME, DATA, blocking=True
         )
 
-        await opp..async_block_till_done()
-        assert STATE_ALARM_ARMED_HOME == opp.states.get(ENTITY_ID).state
+        await.opp.async_block_till_done()
+        assert STATE_ALARM_ARMED_HOME ==.opp.states.get(ENTITY_ID).state
 
 
 async def test_arm_home_failure.opp):
@@ -70,15 +70,15 @@ async def test_arm_home_failure.opp):
         side_effect=responses,
     ):
         await setup_platform.opp, ALARM_DOMAIN)
-        assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
+        assert STATE_ALARM_DISARMED ==.opp.states.get(ENTITY_ID).state
 
         with pytest.raises(Exception) as e:
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 ALARM_DOMAIN, SERVICE_ALARM_ARM_HOME, DATA, blocking=True
             )
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
         assert f"{e.value}" == "TotalConnect failed to arm home test."
-        assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
+        assert STATE_ALARM_DISARMED ==.opp.states.get(ENTITY_ID).state
 
 
 async def test_arm_away_success.opp):
@@ -89,13 +89,13 @@ async def test_arm_away_success.opp):
         side_effect=responses,
     ):
         await setup_platform.opp, ALARM_DOMAIN)
-        assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
+        assert STATE_ALARM_DISARMED ==.opp.states.get(ENTITY_ID).state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             ALARM_DOMAIN, SERVICE_ALARM_ARM_AWAY, DATA, blocking=True
         )
-        await opp..async_block_till_done()
-        assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state
+        await.opp.async_block_till_done()
+        assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(ENTITY_ID).state
 
 
 async def test_arm_away_failure.opp):
@@ -106,15 +106,15 @@ async def test_arm_away_failure.opp):
         side_effect=responses,
     ):
         await setup_platform.opp, ALARM_DOMAIN)
-        assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
+        assert STATE_ALARM_DISARMED ==.opp.states.get(ENTITY_ID).state
 
         with pytest.raises(Exception) as e:
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 ALARM_DOMAIN, SERVICE_ALARM_ARM_AWAY, DATA, blocking=True
             )
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
         assert f"{e.value}" == "TotalConnect failed to arm away test."
-        assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
+        assert STATE_ALARM_DISARMED ==.opp.states.get(ENTITY_ID).state
 
 
 async def test_disarm_success.opp):
@@ -125,13 +125,13 @@ async def test_disarm_success.opp):
         side_effect=responses,
     ):
         await setup_platform.opp, ALARM_DOMAIN)
-        assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state
+        assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(ENTITY_ID).state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             ALARM_DOMAIN, SERVICE_ALARM_DISARM, DATA, blocking=True
         )
-        await opp..async_block_till_done()
-        assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
+        await.opp.async_block_till_done()
+        assert STATE_ALARM_DISARMED ==.opp.states.get(ENTITY_ID).state
 
 
 async def test_disarm_failure.opp):
@@ -142,12 +142,12 @@ async def test_disarm_failure.opp):
         side_effect=responses,
     ):
         await setup_platform.opp, ALARM_DOMAIN)
-        assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state
+        assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(ENTITY_ID).state
 
         with pytest.raises(Exception) as e:
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 ALARM_DOMAIN, SERVICE_ALARM_DISARM, DATA, blocking=True
             )
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
         assert f"{e.value}" == "TotalConnect failed to disarm test."
-        assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state
+        assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(ENTITY_ID).state

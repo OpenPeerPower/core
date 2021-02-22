@@ -16,8 +16,8 @@ from openpeerpower.components.uk_transport.sensor import (
     CONF_API_APP_KEY,
     UkTransportSensor,
 )
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.dt import now
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.dt import now
 
 from tests.common import load_fixture
 
@@ -49,9 +49,9 @@ async def test_bus.opp):
         uri = re.compile(UkTransportSensor.TRANSPORT_API_URL_BASE + "*")
         mock_req.get(uri, text=load_fixture("uk_transport_bus.json"))
         assert await async_setup_component.opp, "sensor", VALID_CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    bus_state = opp.states.get("sensor.next_bus_to_wantage")
+    bus_state =.opp.states.get("sensor.next_bus_to_wantage")
     assert None is not bus_state
     assert f"Next bus to {BUS_DIRECTION}" == bus_state.name
     assert BUS_ATCOCODE == bus_state.attributes[ATTR_ATCOCODE]
@@ -68,14 +68,14 @@ async def test_bus.opp):
 async def test_train.opp):
     """Test for operational uk_transport sensor with proper attributes."""
     with requests_mock.Mocker() as mock_req, patch(
-        "openpeerpowerr.util.dt.now", return_value=now().replace(hour=13)
+        "openpeerpower.util.dt.now", return_value=now().replace(hour=13)
     ):
         uri = re.compile(UkTransportSensor.TRANSPORT_API_URL_BASE + "*")
         mock_req.get(uri, text=load_fixture("uk_transport_train.json"))
         assert await async_setup_component.opp, "sensor", VALID_CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    train_state = opp.states.get("sensor.next_train_to_WAT")
+    train_state =.opp.states.get("sensor.next_train_to_WAT")
     assert None is not train_state
     assert f"Next train to {TRAIN_DESTINATION_NAME}" == train_state.name
     assert TRAIN_STATION_CODE == train_state.attributes[ATTR_STATION_CODE]

@@ -19,21 +19,21 @@ async def test_device_remove(
     mac = config["mac"]
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify device entry is created
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
     assert device_entry is not None
 
     device_reg.async_remove_device(device_entry.id)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify device entry is removed
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
     assert device_entry is None
 
     # Verify retained discovery topic has been cleared
-    mqtt_mock.async_publish.assert_op._calls(
+    mqtt_mock.async_publish.assert_has_calls(
         [
             call(f"tasmota/discovery/{mac}/config", "", 0, True),
             call(f"tasmota/discovery/{mac}/sensors", "", 0, True),
@@ -47,7 +47,7 @@ async def test_device_remove_non_tasmota_device(
 ):
     """Test removing a non Tasmota device through device registry."""
     config_entry = MockConfigEntry(domain="test")
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     mac = "12:34:56:AB:CD:EF"
     device_entry = device_reg.async_get_or_create(
@@ -57,7 +57,7 @@ async def test_device_remove_non_tasmota_device(
     assert device_entry is not None
 
     device_reg.async_remove_device(device_entry.id)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify device entry is removed
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -71,7 +71,7 @@ async def test_device_remove_stale_tasmota_device(
    .opp, device_reg,.opp_ws_client, mqtt_mock, setup_tasmota
 ):
     """Test removing a stale (undiscovered) Tasmota device through device registry."""
-    config_entry = opp.config_entries.async_entries("tasmota")[0]
+    config_entry =.opp.config_entries.async_entries("tasmota")[0]
 
     mac = "12:34:56:AB:CD:EF"
     device_entry = device_reg.async_get_or_create(
@@ -81,7 +81,7 @@ async def test_device_remove_stale_tasmota_device(
     assert device_entry is not None
 
     device_reg.async_remove_device(device_entry.id)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify device entry is removed
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -89,7 +89,7 @@ async def test_device_remove_stale_tasmota_device(
 
     # Verify retained discovery topic has been cleared
     mac = mac.replace(":", "")
-    mqtt_mock.async_publish.assert_op._calls(
+    mqtt_mock.async_publish.assert_has_calls(
         [
             call(f"tasmota/discovery/{mac}/config", "", 0, True),
             call(f"tasmota/discovery/{mac}/sensors", "", 0, True),
@@ -106,13 +106,13 @@ async def test_tasmota_ws_remove_discovered_device(
     mac = config["mac"]
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify device entry is created
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
     assert device_entry is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "tasmota/device/remove", "device_id": device_entry.id}
     )
@@ -132,13 +132,13 @@ async def test_tasmota_ws_remove_discovered_device_twice(
     mac = config["mac"]
 
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify device entry is created
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
     assert device_entry is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "tasmota/device/remove", "device_id": device_entry.id}
     )
@@ -159,7 +159,7 @@ async def test_tasmota_ws_remove_non_tasmota_device(
 ):
     """Test Tasmota websocket device removal of device belonging to other domain."""
     config_entry = MockConfigEntry(domain="test")
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
@@ -167,7 +167,7 @@ async def test_tasmota_ws_remove_non_tasmota_device(
     )
     assert device_entry is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "tasmota/device/remove", "device_id": device_entry.id}
     )

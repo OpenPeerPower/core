@@ -37,11 +37,11 @@ from openpeerpower.const import (
     EVENT_STATE_CHANGED,
     SERVICE_RELOAD,
 )
-from openpeerpowerr.core import Context, CoreState
-from openpeerpowerr.exceptions import Unauthorized
-from openpeerpowerr.helpers import config_validation as cv, entity_registry
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.core import Context, CoreState
+from openpeerpower.exceptions import Unauthorized
+from openpeerpower.helpers import config_validation as cv, entity_registry
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.dt import utcnow
 
 from tests.common import async_fire_time_changed
 
@@ -107,14 +107,14 @@ async def test_config_options.opp):
     }
 
     assert await async_setup_component.opp, "timer", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert count_start + 3 == len.opp.states.async_entity_ids())
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state_1 = opp.states.get("timer.test_1")
-    state_2 = opp.states.get("timer.test_2")
-    state_3 = opp.states.get("timer.test_3")
+    state_1 =.opp.states.get("timer.test_1")
+    state_2 =.opp.states.get("timer.test_2")
+    state_3 =.opp.states.get("timer.test_3")
 
     assert state_1 is not None
     assert state_2 is not None
@@ -141,7 +141,7 @@ async def test_methods_and_events.opp):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
-    state = opp.states.get("timer.test1")
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_IDLE
 
@@ -174,12 +174,12 @@ async def test_methods_and_events.opp):
     expectedEvents = 0
     for step in steps:
         if step["call"] is not None:
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 DOMAIN, step["call"], {CONF_ENTITY_ID: "timer.test1"}
             )
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
-        state = opp.states.get("timer.test1")
+        state =.opp.states.get("timer.test1")
         assert state
         if step["state"] is not None:
             assert state.state == step["state"]
@@ -196,7 +196,7 @@ async def test_wait_till_timer_expires.opp):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
-    state = opp.states.get("timer.test1")
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_IDLE
 
@@ -211,12 +211,12 @@ async def test_wait_till_timer_expires.opp):
    .opp.bus.async_listen(EVENT_TIMER_FINISHED, fake_event_listener)
    .opp.bus.async_listen(EVENT_TIMER_CANCELLED, fake_event_listener)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_START, {CONF_ENTITY_ID: "timer.test1"}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("timer.test1")
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_ACTIVE
 
@@ -224,9 +224,9 @@ async def test_wait_till_timer_expires.opp):
     assert len(results) == 1
 
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=10))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("timer.test1")
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_IDLE
 
@@ -240,7 +240,7 @@ async def test_no_initial_state_and_no_restore_state.opp):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
-    state = opp.states.get("timer.test1")
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_IDLE
 
@@ -264,14 +264,14 @@ async def test_config_reload.opp,.opp_admin_user,.opp_read_only_user):
     }
 
     assert await async_setup_component.opp, "timer", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state_1 = opp.states.get("timer.test_1")
-    state_2 = opp.states.get("timer.test_2")
-    state_3 = opp.states.get("timer.test_3")
+    state_1 =.opp.states.get("timer.test_1")
+    state_2 =.opp.states.get("timer.test_2")
+    state_3 =.opp.states.get("timer.test_3")
 
     assert state_1 is not None
     assert state_2 is not None
@@ -304,25 +304,25 @@ async def test_config_reload.opp,.opp_admin_user,.opp_read_only_user):
         },
     ):
         with pytest.raises(Unauthorized):
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 DOMAIN,
                 SERVICE_RELOAD,
                 blocking=True,
                 context=Context(user_id.opp_read_only_user.id),
             )
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
-    state_1 = opp.states.get("timer.test_1")
-    state_2 = opp.states.get("timer.test_2")
-    state_3 = opp.states.get("timer.test_3")
+    state_1 =.opp.states.get("timer.test_1")
+    state_2 =.opp.states.get("timer.test_2")
+    state_3 =.opp.states.get("timer.test_3")
 
     assert state_1 is None
     assert state_2 is not None
@@ -347,7 +347,7 @@ async def test_timer_restarted_event.opp):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
-    state = opp.states.get("timer.test1")
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_IDLE
 
@@ -363,44 +363,44 @@ async def test_timer_restarted_event.opp):
    .opp.bus.async_listen(EVENT_TIMER_FINISHED, fake_event_listener)
    .opp.bus.async_listen(EVENT_TIMER_CANCELLED, fake_event_listener)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_START, {CONF_ENTITY_ID: "timer.test1"}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("timer.test1")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_ACTIVE
 
     assert results[-1].event_type == EVENT_TIMER_STARTED
     assert len(results) == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_START, {CONF_ENTITY_ID: "timer.test1"}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("timer.test1")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_ACTIVE
 
     assert results[-1].event_type == EVENT_TIMER_RESTARTED
     assert len(results) == 2
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_PAUSE, {CONF_ENTITY_ID: "timer.test1"}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("timer.test1")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_PAUSED
 
     assert results[-1].event_type == EVENT_TIMER_PAUSED
     assert len(results) == 3
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_START, {CONF_ENTITY_ID: "timer.test1"}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("timer.test1")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_ACTIVE
 
@@ -414,7 +414,7 @@ async def test_state_changed_when_timer_restarted.opp):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
-    state = opp.states.get("timer.test1")
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_IDLE
 
@@ -426,22 +426,22 @@ async def test_state_changed_when_timer_restarted.opp):
 
    .opp.bus.async_listen(EVENT_STATE_CHANGED, fake_event_listener)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_START, {CONF_ENTITY_ID: "timer.test1"}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("timer.test1")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_ACTIVE
 
     assert results[-1].event_type == EVENT_STATE_CHANGED
     assert len(results) == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_START, {CONF_ENTITY_ID: "timer.test1"}
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("timer.test1")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_ACTIVE
 
@@ -452,7 +452,7 @@ async def test_state_changed_when_timer_restarted.opp):
 async def test_load_from_storage.opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
-    state = opp.states.get(f"{DOMAIN}.timer_from_storage")
+    state =.opp.states.get(f"{DOMAIN}.timer_from_storage")
     assert state.state == STATUS_IDLE
     assert state.attributes.get(ATTR_FRIENDLY_NAME) == "timer from storage"
     assert state.attributes.get(ATTR_EDITABLE)
@@ -462,12 +462,12 @@ async def test_editable_state_attribute.opp, storage_setup):
     """Test editable attribute."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": None}})
 
-    state = opp.states.get(f"{DOMAIN}.{DOMAIN}_from_storage")
+    state =.opp.states.get(f"{DOMAIN}.{DOMAIN}_from_storage")
     assert state.state == STATUS_IDLE
     assert state.attributes.get(ATTR_FRIENDLY_NAME) == "timer from storage"
     assert state.attributes.get(ATTR_EDITABLE)
 
-    state = opp.states.get(f"{DOMAIN}.from_yaml")
+    state =.opp.states.get(f"{DOMAIN}.from_yaml")
     assert not state.attributes.get(ATTR_EDITABLE)
     assert state.state == STATUS_IDLE
 
@@ -476,7 +476,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": None}})
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -500,12 +500,12 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     timer_entity_id = f"{DOMAIN}.{DOMAIN}_{timer_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state = opp.states.get(timer_entity_id)
+    state =.opp.states.get(timer_entity_id)
     assert state is not None
     from_reg = ent_reg.async_get_entity_id(DOMAIN, DOMAIN, timer_id)
     assert from_reg == timer_entity_id
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{timer_id}"}
@@ -513,7 +513,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state = opp.states.get(timer_entity_id)
+    state =.opp.states.get(timer_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, timer_id) is None
 
@@ -527,11 +527,11 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     timer_entity_id = f"{DOMAIN}.{DOMAIN}_{timer_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state = opp.states.get(timer_entity_id)
+    state =.opp.states.get(timer_entity_id)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "timer from storage"
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, timer_id) == timer_entity_id
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json(
         {
@@ -544,7 +544,7 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state = opp.states.get(timer_entity_id)
+    state =.opp.states.get(timer_entity_id)
     assert state.attributes[ATTR_DURATION] == _format_timedelta(cv.time_period(33))
 
 
@@ -556,11 +556,11 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     timer_entity_id = f"{DOMAIN}.{timer_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state = opp.states.get(timer_entity_id)
+    state =.opp.states.get(timer_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, timer_id) is None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json(
         {
@@ -573,7 +573,7 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state = opp.states.get(timer_entity_id)
+    state =.opp.states.get(timer_entity_id)
     assert state.state == STATUS_IDLE
     assert state.attributes[ATTR_DURATION] == _format_timedelta(cv.time_period(42))
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, timer_id) == timer_entity_id
@@ -587,12 +587,12 @@ async def test_setup_no_config.opp,.opp_admin_user):
     with patch(
         "openpeerpower.config.load_yaml_config_file", autospec=True, return_value={}
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert count_start == len.opp.states.async_entity_ids())

@@ -21,7 +21,7 @@ from openpeerpower.components.unifi_direct.device_tracker import (
     get_scanner,
 )
 from openpeerpower.const import CONF_HOST, CONF_PASSWORD, CONF_PLATFORM, CONF_USERNAME
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import assert_setup_component, load_fixture, mock_component
 
@@ -32,7 +32,7 @@ scanner_path = "openpeerpower.components.unifi_direct.device_tracker.UnifiDevice
 def setup_comp.opp):
     """Initialize components."""
     mock_component.opp, "zone")
-    yaml_devices = opp.config.path(YAML_DEVICES)
+    yaml_devices =.opp.config.path(YAML_DEVICES)
     yield
     if os.path.isfile(yaml_devices):
         os.remove(yaml_devices)

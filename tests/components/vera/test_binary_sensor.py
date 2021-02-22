@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pyvera as pv
 
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from .common import ComponentFactory, new_simple_controller_config
 
@@ -28,10 +28,10 @@ async def test_binary_sensor(
 
     vera_device.is_tripped = False
     update_callback(vera_device)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == "off"
 
     vera_device.is_tripped = True
     update_callback(vera_device)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == "on"

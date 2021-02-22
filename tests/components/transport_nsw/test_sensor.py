@@ -1,7 +1,7 @@
 """The tests for the Transport NSW (AU) sensor platform."""
 from unittest.mock import patch
 
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 VALID_CONFIG = {
     "sensor": {
@@ -32,8 +32,8 @@ def get_departuresMock(_stop_id, route, destination, api_key):
 async def test_transportnsw_config(mocked_get_departures,.opp):
     """Test minimal TransportNSW configuration."""
     assert await async_setup_component.opp, "sensor", VALID_CONFIG)
-    await opp..async_block_till_done()
-    state = opp.states.get("sensor.next_bus")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("sensor.next_bus")
     assert state.state == "16"
     assert state.attributes["stop_id"] == "209516"
     assert state.attributes["route"] == "199"

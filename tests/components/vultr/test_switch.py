@@ -20,7 +20,7 @@ from openpeerpower.components.vultr import (
 )
 from openpeerpower.const import CONF_NAME, CONF_PLATFORM
 
-from tests.common import get_test_home_assistant, load_fixture
+from tests.common import get_test_open_peer_power, load_fixture
 from tests.components.vultr.test_init import VALID_CONFIG
 
 
@@ -36,7 +36,7 @@ class TestVultrSwitchSetup(unittest.TestCase):
 
     def setUp(self):
         """Init values for this testcase class."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.configs = [
             {CONF_SUBSCRIPTION: "576965", CONF_NAME: "A Server"},
             {CONF_SUBSCRIPTION: "123456", CONF_NAME: "Failed Server"},
@@ -129,13 +129,13 @@ class TestVultrSwitchSetup(unittest.TestCase):
         with patch(
             "vultr.Vultr.server_list",
             return_value=json.loads(load_fixture("vultr_server_list.json")),
-        ), patch("vultr.Vultr.server_op.t") as mock_op.t:
+        ), patch("vultr.Vultr.server_halt") as mock_halt:
             for device in self.DEVICES:
                 if device.name == "A Server":
                     device.turn_off()
 
         # Turn off
-        assert mock_op.t.call_count == 1
+        assert mock_halt.call_count == 1
 
     def test_invalid_switch_config(self):
         """Test config type failures."""

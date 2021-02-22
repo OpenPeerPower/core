@@ -46,14 +46,14 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == STATE_UNKNOWN
     assert (
         state.attributes["supported_features"]
@@ -70,7 +70,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/tele/SENSOR",
         '{"Shutter1":{"Position":54,"Direction":-1}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closing"
     assert state.attributes["current_position"] == 54
 
@@ -79,21 +79,21 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/tele/SENSOR",
         '{"Shutter1":{"Position":100,"Direction":1}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "opening"
     assert state.attributes["current_position"] == 100
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/SENSOR", '{"Shutter1":{"Position":0,"Direction":0}}'
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closed"
     assert state.attributes["current_position"] == 0
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/SENSOR", '{"Shutter1":{"Position":1,"Direction":0}}'
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 1
 
@@ -102,7 +102,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/tele/SENSOR",
         '{"Shutter1":{"Position":100,"Direction":0}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 100
 
@@ -112,7 +112,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"Shutter1":{"Position":54,"Direction":-1}}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closing"
     assert state.attributes["current_position"] == 54
 
@@ -121,7 +121,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"Shutter1":{"Position":100,"Direction":1}}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "opening"
     assert state.attributes["current_position"] == 100
 
@@ -130,7 +130,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"Shutter1":{"Position":0,"Direction":0}}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closed"
     assert state.attributes["current_position"] == 0
 
@@ -139,7 +139,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"Shutter1":{"Position":1,"Direction":0}}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 1
 
@@ -148,7 +148,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"Shutter1":{"Position":100,"Direction":0}}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 100
 
@@ -158,7 +158,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/RESULT",
         '{"Shutter1":{"Position":54,"Direction":-1}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closing"
     assert state.attributes["current_position"] == 54
 
@@ -167,21 +167,21 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/RESULT",
         '{"Shutter1":{"Position":100,"Direction":1}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "opening"
     assert state.attributes["current_position"] == 100
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Shutter1":{"Position":0,"Direction":0}}'
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closed"
     assert state.attributes["current_position"] == 0
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Shutter1":{"Position":1,"Direction":0}}'
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 1
 
@@ -190,7 +190,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/stat/RESULT",
         '{"Shutter1":{"Position":100,"Direction":0}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 100
 
@@ -208,14 +208,14 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == STATE_UNKNOWN
     assert (
         state.attributes["supported_features"]
@@ -232,7 +232,7 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         "tasmota_49A3BC/tele/SENSOR",
         '{"Shutter1":{"Position":54,"Direction":-1}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "opening"
     assert state.attributes["current_position"] == 46
 
@@ -241,21 +241,21 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         "tasmota_49A3BC/tele/SENSOR",
         '{"Shutter1":{"Position":100,"Direction":1}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closing"
     assert state.attributes["current_position"] == 0
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/SENSOR", '{"Shutter1":{"Position":0,"Direction":0}}'
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 100
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/SENSOR", '{"Shutter1":{"Position":99,"Direction":0}}'
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 1
 
@@ -264,7 +264,7 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         "tasmota_49A3BC/tele/SENSOR",
         '{"Shutter1":{"Position":100,"Direction":0}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closed"
     assert state.attributes["current_position"] == 0
 
@@ -274,7 +274,7 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"Shutter1":{"Position":54,"Direction":-1}}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "opening"
     assert state.attributes["current_position"] == 46
 
@@ -283,7 +283,7 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"Shutter1":{"Position":100,"Direction":1}}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closing"
     assert state.attributes["current_position"] == 0
 
@@ -292,7 +292,7 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"Shutter1":{"Position":0,"Direction":0}}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 100
 
@@ -301,7 +301,7 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"Shutter1":{"Position":99,"Direction":0}}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 1
 
@@ -310,7 +310,7 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"Shutter1":{"Position":100,"Direction":0}}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closed"
     assert state.attributes["current_position"] == 0
 
@@ -320,7 +320,7 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         "tasmota_49A3BC/stat/RESULT",
         '{"Shutter1":{"Position":54,"Direction":-1}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "opening"
     assert state.attributes["current_position"] == 46
 
@@ -329,21 +329,21 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         "tasmota_49A3BC/stat/RESULT",
         '{"Shutter1":{"Position":100,"Direction":1}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closing"
     assert state.attributes["current_position"] == 0
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Shutter1":{"Position":0,"Direction":0}}'
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 100
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/stat/RESULT", '{"Shutter1":{"Position":1,"Direction":0}}'
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "open"
     assert state.attributes["current_position"] == 99
 
@@ -352,14 +352,14 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
         "tasmota_49A3BC/stat/RESULT",
         '{"Shutter1":{"Position":100,"Direction":0}}',
     )
-    state = opp.states.get("cover.tasmota_cover_1")
+    state =.opp.states.get("cover.tasmota_cover_1")
     assert state.state == "closed"
     assert state.attributes["current_position"] == 0
 
 
 async def call_service.opp, entity_id, service, **kwargs):
     """Call a fan service."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         service,
         {"entity_id": entity_id, **kwargs},
@@ -380,13 +380,13 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("cover.test_cover_1")
+    state =.opp.states.get("cover.test_cover_1")
     assert state.state == STATE_UNKNOWN
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Close the cover and verify MQTT message is sent
@@ -397,7 +397,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     mqtt_mock.async_publish.reset_mock()
 
     # Tasmota is not optimistic, the state should still be unknown
-    state = opp.states.get("cover.test_cover_1")
+    state =.opp.states.get("cover.test_cover_1")
     assert state.state == STATE_UNKNOWN
 
     # Open the cover and verify MQTT message is sent
@@ -443,13 +443,13 @@ async def test_sending_mqtt_commands_inverted.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("cover.test_cover_1")
+    state =.opp.states.get("cover.test_cover_1")
     assert state.state == STATE_UNKNOWN
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Close the cover and verify MQTT message is sent
@@ -460,7 +460,7 @@ async def test_sending_mqtt_commands_inverted.opp, mqtt_mock, setup_tasmota):
     mqtt_mock.async_publish.reset_mock()
 
     # Tasmota is not optimistic, the state should still be unknown
-    state = opp.states.get("cover.test_cover_1")
+    state =.opp.states.get("cover.test_cover_1")
     assert state.state == STATE_UNKNOWN
 
     # Open the cover and verify MQTT message is sent

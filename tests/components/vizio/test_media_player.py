@@ -47,8 +47,8 @@ from openpeerpower.components.vizio.const import (
     VIZIO_SCHEMA,
 )
 from openpeerpower.const import ATTR_ENTITY_ID, STATE_OFF, STATE_ON, STATE_UNAVAILABLE
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.util import dt as dt_util
 
 from .const import (
     ADDITIONAL_APP_CONFIG,
@@ -79,15 +79,15 @@ from .const import (
 from tests.common import MockConfigEntry, async_fire_time_changed
 
 
-async def _add_config_entry_to_opp(
+async def _add_config_entry_to.opp(
    .opp: OpenPeerPowerType, config_entry: MockConfigEntry
 ) -> None:
-    config_entry.add_to_opp.opp)
-    assert await opp..config_entries.async_setup(config_entry.entry_id)
-    await opp..async_block_till_done()
+    config_entry.add_to.opp.opp)
+    assert await.opp.config_entries.async_setup(config_entry.entry_id)
+    await.opp.async_block_till_done()
 
 
-def _get_op.power_state(vizio_power_state: Optional[bool]) -> str:
+def _get_ha_power_state(vizio_power_state: Optional[bool]) -> str:
     """Return HA power state given Vizio power state."""
     if vizio_power_state:
         return STATE_ON
@@ -113,7 +113,7 @@ def _get_attr_and_assert_base_attr(
    .opp: OpenPeerPowerType, device_class: str, power_state: str
 ) -> Dict[str, Any]:
     """Return entity attributes  after asserting name, device class, and power state."""
-    attr = opp.states.get(ENTITY_ID).attributes
+    attr =.opp.states.get(ENTITY_ID).attributes
     assert attr["friendly_name"] == NAME
     assert attr["device_class"] == device_class
 
@@ -143,7 +143,7 @@ async def _test_setup_tv(
    .opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio TV entity setup."""
-    ha_power_state = _get_op.power_state(vizio_power_state)
+    ha_power_state = _get_ha_power_state(vizio_power_state)
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -155,7 +155,7 @@ async def _test_setup_tv(
         {"volume": int(MAX_VOLUME[VIZIO_DEVICE_CLASS_TV] / 2), "mute": "Off"},
         vizio_power_state,
     ):
-        await _add_config_entry_to_opp.opp, config_entry)
+        await _add_config_entry_to.opp.opp, config_entry)
 
         attr = _get_attr_and_assert_base_attr.opp, DEVICE_CLASS_TV, ha_power_state)
         if ha_power_state == STATE_ON:
@@ -167,7 +167,7 @@ async def _test_setup_speaker(
    .opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio Speaker entity setup."""
-    ha_power_state = _get_op.power_state(vizio_power_state)
+    ha_power_state = _get_ha_power_state(vizio_power_state)
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -188,7 +188,7 @@ async def _test_setup_speaker(
         with patch(
             "openpeerpower.components.vizio.media_player.VizioAsync.get_current_app_config",
         ) as service_call:
-            await _add_config_entry_to_opp.opp, config_entry)
+            await _add_config_entry_to.opp.opp, config_entry)
 
             attr = _get_attr_and_assert_base_attr(
                .opp, DEVICE_CLASS_SPEAKER, ha_power_state
@@ -216,7 +216,7 @@ async def _cm_for_test_setup_tv_with_apps(
             "openpeerpower.components.vizio.media_player.VizioAsync.get_current_app_config",
             return_value=AppConfig(**app_config),
         ):
-            await _add_config_entry_to_opp.opp, config_entry)
+            await _add_config_entry_to.opp.opp, config_entry)
 
             attr = _get_attr_and_assert_base_attr.opp, DEVICE_CLASS_TV, STATE_ON)
             assert (
@@ -246,7 +246,7 @@ async def _test_setup_failure.opp: OpenPeerPowerType, config: str) -> None:
         return_value=False,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=config, unique_id=UNIQUE_ID)
-        await _add_config_entry_to_opp.opp, config_entry)
+        await _add_config_entry_to.opp.opp, config_entry)
         assert len.opp.states.async_entity_ids(MP_DOMAIN)) == 0
 
 
@@ -268,7 +268,7 @@ async def _test_service(
     with patch(
         f"openpeerpower.components.vizio.media_player.VizioAsync.{vizio_func_name}"
     ) as service_call:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             domain,
             ha_service_name,
             service_data=service_data,
@@ -444,7 +444,7 @@ async def test_options_update(
 ) -> None:
     """Test when config entry update event fires."""
     await _test_setup_speaker.opp, True)
-    config_entry = opp.config_entries.async_entries(DOMAIN)[0]
+    config_entry =.opp.config_entries.async_entries(DOMAIN)[0]
     assert config_entry.options
     new_options = config_entry.options.copy()
     updated_options = {CONF_VOLUME_STEP: VOLUME_STEP}
@@ -469,7 +469,7 @@ async def _test_update_availability_switch(
     future_interval = timedelta(minutes=1)
 
     # Setup device as if time is right now
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    with patch("openpeerpower.util.dt.utcnow", return_value=now):
         await _test_setup_speaker.opp, initial_power_state)
 
     # Clear captured logs so that only availability state changes are captured for
@@ -482,11 +482,11 @@ async def _test_update_availability_switch(
         with patch(
             "openpeerpower.components.vizio.media_player.VizioAsync.get_power_state",
             return_value=final_power_state,
-        ), patch("openpeerpowerr.util.dt.utcnow", return_value=future), patch(
-            "openpeerpowerr.util.utcnow", return_value=future
+        ), patch("openpeerpower.util.dt.utcnow", return_value=future), patch(
+            "openpeerpower.util.utcnow", return_value=future
         ):
             async_fire_time_changed.opp, future)
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
             if final_power_state is None:
                 assert.opp.states.get(ENTITY_ID).state == STATE_UNAVAILABLE
             else:
@@ -532,7 +532,7 @@ async def test_setup_with_apps(
     async with _cm_for_test_setup_tv_with_apps(
        .opp, MOCK_USER_VALID_TV_CONFIG, CURRENT_APP_CONFIG
     ):
-        attr = opp.states.get(ENTITY_ID).attributes
+        attr =.opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
         assert CURRENT_APP in attr["source_list"]
         assert attr["source"] == CURRENT_APP
@@ -560,7 +560,7 @@ async def test_setup_with_apps_include(
     async with _cm_for_test_setup_tv_with_apps(
        .opp, MOCK_TV_WITH_INCLUDE_CONFIG, CURRENT_APP_CONFIG
     ):
-        attr = opp.states.get(ENTITY_ID).attributes
+        attr =.opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + [CURRENT_APP]), attr)
         assert CURRENT_APP in attr["source_list"]
         assert attr["source"] == CURRENT_APP
@@ -578,7 +578,7 @@ async def test_setup_with_apps_exclude(
     async with _cm_for_test_setup_tv_with_apps(
        .opp, MOCK_TV_WITH_EXCLUDE_CONFIG, CURRENT_APP_CONFIG
     ):
-        attr = opp.states.get(ENTITY_ID).attributes
+        attr =.opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + [CURRENT_APP]), attr)
         assert CURRENT_APP in attr["source_list"]
         assert attr["source"] == CURRENT_APP
@@ -598,7 +598,7 @@ async def test_setup_with_apps_additional_apps_config(
         MOCK_TV_WITH_ADDITIONAL_APPS_CONFIG,
         ADDITIONAL_APP_CONFIG["config"],
     ):
-        attr = opp.states.get(ENTITY_ID).attributes
+        attr =.opp.states.get(ENTITY_ID).attributes
         assert attr["source_list"].count(CURRENT_APP) == 1
         _assert_source_list_with_apps(
             list(
@@ -643,7 +643,7 @@ async def test_setup_with_apps_additional_apps_config(
     ) as service_call1, patch(
         "openpeerpower.components.vizio.media_player.VizioAsync.launch_app_config"
     ) as service_call2:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_SELECT_SOURCE,
             service_data={ATTR_ENTITY_ID: ENTITY_ID, ATTR_INPUT_SOURCE: "_"},
@@ -672,7 +672,7 @@ async def test_setup_with_unknown_app_config(
     async with _cm_for_test_setup_tv_with_apps(
        .opp, MOCK_USER_VALID_TV_CONFIG, UNKNOWN_APP_CONFIG
     ):
-        attr = opp.states.get(ENTITY_ID).attributes
+        attr =.opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
         assert attr["source"] == UNKNOWN_APP
         assert attr["app_name"] == UNKNOWN_APP
@@ -689,7 +689,7 @@ async def test_setup_with_no_running_app(
     async with _cm_for_test_setup_tv_with_apps(
        .opp, MOCK_USER_VALID_TV_CONFIG, vars(AppConfig())
     ):
-        attr = opp.states.get(ENTITY_ID).attributes
+        attr =.opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
         assert attr["source"] == "CAST"
         assert "app_id" not in attr
@@ -712,7 +712,7 @@ async def test_setup_tv_without_mute(
         {"volume": int(MAX_VOLUME[VIZIO_DEVICE_CLASS_TV] / 2)},
         STATE_ON,
     ):
-        await _add_config_entry_to_opp.opp, config_entry)
+        await _add_config_entry_to.opp.opp, config_entry)
 
         attr = _get_attr_and_assert_base_attr.opp, DEVICE_CLASS_TV, STATE_ON)
         _assert_sources_and_volume(attr, VIZIO_DEVICE_CLASS_TV)
@@ -736,7 +736,7 @@ async def test_apps_update(
         ):
             # Check source list, remove TV inputs, and verify that the integration is
             # using the default APPS list
-            sources = opp.states.get(ENTITY_ID).attributes["source_list"]
+            sources =.opp.states.get(ENTITY_ID).attributes["source_list"]
             apps = list(set(sources) - set(INPUT_LIST))
             assert len(apps) == len(APPS)
 
@@ -745,9 +745,9 @@ async def test_apps_update(
                 return_value=APP_LIST,
             ):
                 async_fire_time_changed.opp, dt_util.now() + timedelta(days=2))
-                await opp..async_block_till_done()
+                await.opp.async_block_till_done()
                 # Check source list, remove TV inputs, and verify that the integration is
                 # now using the APP_LIST list
-                sources = opp.states.get(ENTITY_ID).attributes["source_list"]
+                sources =.opp.states.get(ENTITY_ID).attributes["source_list"]
                 apps = list(set(sources) - set(INPUT_LIST))
                 assert len(apps) == len(APP_LIST)

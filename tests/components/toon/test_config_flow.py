@@ -5,18 +5,18 @@ from toonapi import Agreement, ToonError
 
 from openpeerpower import data_entry_flow
 from openpeerpower.components.toon.const import CONF_AGREEMENT, CONF_MIGRATE, DOMAIN
-from openpeerpower.config import async_process_op.core_config
+from openpeerpower.config import async_process_ha_core_config
 from openpeerpower.config_entries import SOURCE_IMPORT, SOURCE_USER
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.helpers import config_entry_oauth2_flow
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import config_entry_oauth2_flow
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
 
 async def setup_component.opp):
     """Set up Toon component."""
-    await async_process_op.core_config(
+    await async_process_ha_core_config(
        .opp,
         {"external_url": "https://example.com"},
     )
@@ -27,12 +27,12 @@ async def setup_component.opp):
             DOMAIN,
             {DOMAIN: {CONF_CLIENT_ID: "client", CONF_CLIENT_SECRET: "secret"}},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
 
 async def test_abort_if_no_configuration.opp):
     """Test abort if no app is configured."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -46,7 +46,7 @@ async def test_full_flow_implementation(
     """Test registering an integration and finishing flow works."""
     await setup_component.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -62,7 +62,7 @@ async def test_full_flow_implementation(
         },
     )
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"], {"implementation": "eneco"}
     )
 
@@ -91,7 +91,7 @@ async def test_full_flow_implementation(
     )
 
     with patch("toonapi.Toon.agreements", return_value=[Agreement(agreement_id=123)]):
-        result3 = await opp..config_entries.flow.async_configure(result["flow_id"])
+        result3 = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result3["data"]["auth_implementation"] == "eneco"
     assert result3["data"]["agreement_id"] == 123
@@ -109,7 +109,7 @@ async def test_no_agreements(
 ):
     """Test abort when there are no displays."""
     await setup_component.opp)
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -121,7 +121,7 @@ async def test_no_agreements(
             "redirect_uri": "https://example.com/auth/external/callback",
         },
     )
-    await opp..config_entries.flow.async_configure(
+    await.opp.config_entries.flow.async_configure(
         result["flow_id"], {"implementation": "eneco"}
     )
 
@@ -138,7 +138,7 @@ async def test_no_agreements(
     )
 
     with patch("toonapi.Toon.agreements", return_value=[]):
-        result3 = await opp..config_entries.flow.async_configure(result["flow_id"])
+        result3 = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result3["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result3["reason"] == "no_agreements"
@@ -149,7 +149,7 @@ async def test_multiple_agreements(
 ):
     """Test abort when there are no displays."""
     await setup_component.opp)
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -161,7 +161,7 @@ async def test_multiple_agreements(
             "redirect_uri": "https://example.com/auth/external/callback",
         },
     )
-    await opp..config_entries.flow.async_configure(
+    await.opp.config_entries.flow.async_configure(
         result["flow_id"], {"implementation": "eneco"}
     )
 
@@ -182,12 +182,12 @@ async def test_multiple_agreements(
         "toonapi.Toon.agreements",
         return_value=[Agreement(agreement_id=1), Agreement(agreement_id=2)],
     ):
-        result3 = await opp..config_entries.flow.async_configure(result["flow_id"])
+        result3 = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
         assert result3["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result3["step_id"] == "agreement"
 
-        result4 = await opp..config_entries.flow.async_configure(
+        result4 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], {CONF_AGREEMENT: "None None, None"}
         )
         assert result4["data"]["auth_implementation"] == "eneco"
@@ -199,8 +199,8 @@ async def test_agreement_already_set_up(
 ):
     """Test showing display form again if display already exists."""
     await setup_component.opp)
-    MockConfigEntry(domain=DOMAIN, unique_id=123).add_to_opp.opp)
-    result = await opp..config_entries.flow.async_init(
+    MockConfigEntry(domain=DOMAIN, unique_id=123).add_to.opp.opp)
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -212,7 +212,7 @@ async def test_agreement_already_set_up(
             "redirect_uri": "https://example.com/auth/external/callback",
         },
     )
-    await opp..config_entries.flow.async_configure(
+    await.opp.config_entries.flow.async_configure(
         result["flow_id"], {"implementation": "eneco"}
     )
 
@@ -229,7 +229,7 @@ async def test_agreement_already_set_up(
     )
 
     with patch("toonapi.Toon.agreements", return_value=[Agreement(agreement_id=123)]):
-        result3 = await opp..config_entries.flow.async_configure(result["flow_id"])
+        result3 = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
         assert result3["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result3["reason"] == "already_configured"
@@ -240,7 +240,7 @@ async def test_toon_abort(
 ):
     """Test we abort on Toon error."""
     await setup_component.opp)
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     # pylint: disable=protected-access
@@ -251,7 +251,7 @@ async def test_toon_abort(
             "redirect_uri": "https://example.com/auth/external/callback",
         },
     )
-    await opp..config_entries.flow.async_configure(
+    await.opp.config_entries.flow.async_configure(
         result["flow_id"], {"implementation": "eneco"}
     )
 
@@ -268,7 +268,7 @@ async def test_toon_abort(
     )
 
     with patch("toonapi.Toon.agreements", side_effect=ToonError):
-        result2 = await opp..config_entries.flow.async_configure(result["flow_id"])
+        result2 = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result2["reason"] == "connection_error"
@@ -280,7 +280,7 @@ async def test_import.opp, current_request_with_host):
 
     # Setting up the component without entries, should already have triggered
     # it. Hence, expect this to throw an already_in_progress.
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_IMPORT}
     )
 
@@ -293,15 +293,15 @@ async def test_import_migration(
 ):
     """Test if importing step with migration works."""
     old_entry = MockConfigEntry(domain=DOMAIN, unique_id=123, version=1)
-    old_entry.add_to_opp.opp)
+    old_entry.add_to.opp.opp)
 
     await setup_component.opp)
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].version == 1
 
-    flows = opp.config_entries.flow.async_progress()
+    flows =.opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["context"][CONF_MIGRATE] == old_entry.entry_id
 
@@ -313,7 +313,7 @@ async def test_import_migration(
             "redirect_uri": "https://example.com/auth/external/callback",
         },
     )
-    await opp..config_entries.flow.async_configure(
+    await.opp.config_entries.flow.async_configure(
         flows[0]["flow_id"], {"implementation": "eneco"}
     )
 
@@ -330,10 +330,10 @@ async def test_import_migration(
     )
 
     with patch("toonapi.Toon.agreements", return_value=[Agreement(agreement_id=123)]):
-        result = await opp..config_entries.flow.async_configure(flows[0]["flow_id"])
+        result = await.opp.config_entries.flow.async_configure(flows[0]["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].version == 2

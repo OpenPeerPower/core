@@ -5,6 +5,7 @@ from unittest.mock import AsyncMock, patch
 from openpeerpower.components.upnp.const import (
     CONFIG_ENTRY_ST,
     CONFIG_ENTRY_UDN,
+    DISCOVERY_HOSTNAME,
     DISCOVERY_LOCATION,
     DISCOVERY_NAME,
     DISCOVERY_ST,
@@ -14,8 +15,8 @@ from openpeerpower.components.upnp.const import (
     DOMAIN,
 )
 from openpeerpower.components.upnp.device import Device
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.setup import async_setup_component
 
 from .mock_device import MockDevice
 
@@ -35,6 +36,7 @@ async def test_async_setup_entry_default.opp: OpenPeerPowerType):
             DISCOVERY_UDN: mock_device.udn,
             DISCOVERY_UNIQUE_ID: mock_device.unique_id,
             DISCOVERY_USN: mock_device.usn,
+            DISCOVERY_HOSTNAME: mock_device.hostname,
         }
     ]
     entry = MockConfigEntry(
@@ -56,12 +58,12 @@ async def test_async_setup_entry_default.opp: OpenPeerPowerType):
         # initialisation of component, no device discovered
         async_discover.return_value = []
         await async_setup_component.opp, "upnp", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         # loading of config_entry, device discovered
         async_discover.return_value = discoveries
-        entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(entry.entry_id) is True
+        entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(entry.entry_id) is True
 
         # ensure device is stored/used
         async_create_device.assert_called_with.opp, discoveries[0][DISCOVERY_LOCATION])
@@ -83,6 +85,7 @@ async def test_sync_setup_entry_multiple_discoveries.opp: OpenPeerPowerType):
             DISCOVERY_UDN: mock_device_0.udn,
             DISCOVERY_UNIQUE_ID: mock_device_0.unique_id,
             DISCOVERY_USN: mock_device_0.usn,
+            DISCOVERY_HOSTNAME: mock_device_0.hostname,
         },
         {
             DISCOVERY_LOCATION: location_1,
@@ -91,6 +94,7 @@ async def test_sync_setup_entry_multiple_discoveries.opp: OpenPeerPowerType):
             DISCOVERY_UDN: mock_device_1.udn,
             DISCOVERY_UNIQUE_ID: mock_device_1.unique_id,
             DISCOVERY_USN: mock_device_1.usn,
+            DISCOVERY_HOSTNAME: mock_device_1.hostname,
         },
     ]
     entry = MockConfigEntry(
@@ -112,12 +116,12 @@ async def test_sync_setup_entry_multiple_discoveries.opp: OpenPeerPowerType):
         # initialisation of component, no device discovered
         async_discover.return_value = []
         await async_setup_component.opp, "upnp", config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         # loading of config_entry, device discovered
         async_discover.return_value = discoveries
-        entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(entry.entry_id) is True
+        entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(entry.entry_id) is True
 
         # ensure device is stored/used
         async_create_device.assert_called_with.opp, discoveries[1][DISCOVERY_LOCATION])

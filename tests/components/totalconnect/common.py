@@ -5,7 +5,7 @@ from total_connect_client import TotalConnectClient
 
 from openpeerpower.components.totalconnect import DOMAIN
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -110,7 +110,7 @@ async def setup_platform.opp, platform):
         domain=DOMAIN,
         data={CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"},
     )
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
     responses = [RESPONSE_AUTHENTICATE, RESPONSE_DISARMED]
 
@@ -125,6 +125,6 @@ async def setup_platform.opp, platform):
     ):
         assert await async_setup_component.opp, DOMAIN, {})
         assert mock_request.call_count == 2
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     return mock_entry

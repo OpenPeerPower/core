@@ -51,11 +51,11 @@ async def test_attributes_on_off.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.attributes.get("effect_list") is None
     assert state.attributes.get("min_mireds") is None
     assert state.attributes.get("max_mireds") is None
@@ -75,11 +75,11 @@ async def test_attributes_dimmer_tuya.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.attributes.get("effect_list") is None
     assert state.attributes.get("min_mireds") is None
     assert state.attributes.get("max_mireds") is None
@@ -98,11 +98,11 @@ async def test_attributes_dimmer.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.attributes.get("effect_list") is None
     assert state.attributes.get("min_mireds") is None
     assert state.attributes.get("max_mireds") is None
@@ -124,11 +124,11 @@ async def test_attributes_ct.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.attributes.get("effect_list") is None
     assert state.attributes.get("min_mireds") == 153
     assert state.attributes.get("max_mireds") == 500
@@ -151,11 +151,11 @@ async def test_attributes_ct_reduced.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.attributes.get("effect_list") is None
     assert state.attributes.get("min_mireds") == 200
     assert state.attributes.get("max_mireds") == 380
@@ -177,11 +177,11 @@ async def test_attributes_rgb.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.attributes.get("effect_list") == [
         "None",
         "Wake up",
@@ -209,11 +209,11 @@ async def test_attributes_rgbw.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.attributes.get("effect_list") == [
         "None",
         "Wake up",
@@ -245,11 +245,11 @@ async def test_attributes_rgbww.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.attributes.get("effect_list") == [
         "None",
         "Wake up",
@@ -283,11 +283,11 @@ async def test_attributes_rgbww_reduced.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.attributes.get("effect_list") == [
         "None",
         "Wake up",
@@ -320,33 +320,33 @@ async def test_controlling_state_via_mqtt_on_off.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"OFF"}')
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"OFF"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
 
@@ -362,36 +362,36 @@ async def test_controlling_state_via_mqtt_ct.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"OFF"}')
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Dimmer":50}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 127.5
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("color_temp") == 300
 
@@ -399,7 +399,7 @@ async def test_controlling_state_via_mqtt_ct.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Color":"255,128"}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("color_temp") == 300
     assert state.attributes.get("brightness") == 127.5
@@ -417,43 +417,43 @@ async def test_controlling_state_via_mqtt_rgbww.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"OFF"}')
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Dimmer":50}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 127.5
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Color":"255,128,0"}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("rgb_color") == (255, 128, 0)
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","White":50}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("white_value") == 127.5
     # Setting white > 0 should clear the color
@@ -462,14 +462,14 @@ async def test_controlling_state_via_mqtt_rgbww.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("color_temp") == 300
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","White":0}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     # Setting white to 0 should clear the white_value and color_temp
     assert not state.attributes.get("white_value")
@@ -478,18 +478,18 @@ async def test_controlling_state_via_mqtt_rgbww.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Scheme":3}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("effect") == "Cycle down"
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"OFF"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
 
@@ -506,50 +506,50 @@ async def test_controlling_state_via_mqtt_rgbww_hex.opp, mqtt_mock, setup_tasmot
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"OFF"}')
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Dimmer":50}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 127.5
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Color":"FF8000"}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("rgb_color") == (255, 128, 0)
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Color":"00FF800000"}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("rgb_color") == (0, 255, 128)
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","White":50}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("white_value") == 127.5
     # Setting white > 0 should clear the color
@@ -558,14 +558,14 @@ async def test_controlling_state_via_mqtt_rgbww_hex.opp, mqtt_mock, setup_tasmot
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("color_temp") == 300
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","White":0}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     # Setting white to 0 should clear the white_value and color_temp
     assert not state.attributes.get("white_value")
@@ -574,18 +574,18 @@ async def test_controlling_state_via_mqtt_rgbww_hex.opp, mqtt_mock, setup_tasmot
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Scheme":3}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("effect") == "Cycle down"
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"OFF"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
 
@@ -602,43 +602,43 @@ async def test_controlling_state_via_mqtt_rgbww_tuya.opp, mqtt_mock, setup_tasmo
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"OFF"}')
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Dimmer":50}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 127.5
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Color":"255,128,0"}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("rgb_color") == (255, 128, 0)
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","White":50}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("white_value") == 127.5
     # Setting white > 0 should clear the color
@@ -647,14 +647,14 @@ async def test_controlling_state_via_mqtt_rgbww_tuya.opp, mqtt_mock, setup_tasmo
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("color_temp") == 300
 
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","White":0}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     # Setting white to 0 should clear the white_value and color_temp
     assert not state.attributes.get("white_value")
@@ -663,18 +663,18 @@ async def test_controlling_state_via_mqtt_rgbww_tuya.opp, mqtt_mock, setup_tasmo
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Scheme":3}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("effect") == "Cycle down"
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"ON"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"OFF"}')
 
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
 
@@ -690,13 +690,13 @@ async def test_sending_mqtt_commands_on_off.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Turn the light on and verify MQTT message is sent
@@ -707,7 +707,7 @@ async def test_sending_mqtt_commands_on_off.opp, mqtt_mock, setup_tasmota):
     mqtt_mock.async_publish.reset_mock()
 
     # Tasmota is not optimistic, the state should still be off
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     # Turn the light off and verify MQTT message is sent
@@ -731,13 +731,13 @@ async def test_sending_mqtt_commands_rgbww_tuya.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Turn the light on and verify MQTT message is sent
@@ -748,7 +748,7 @@ async def test_sending_mqtt_commands_rgbww_tuya.opp, mqtt_mock, setup_tasmota):
     mqtt_mock.async_publish.reset_mock()
 
     # Tasmota is not optimistic, the state should still be off
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     # Turn the light off and verify MQTT message is sent
@@ -777,13 +777,13 @@ async def test_sending_mqtt_commands_rgbww.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Turn the light on and verify MQTT message is sent
@@ -794,7 +794,7 @@ async def test_sending_mqtt_commands_rgbww.opp, mqtt_mock, setup_tasmota):
     mqtt_mock.async_publish.reset_mock()
 
     # Tasmota is not optimistic, the state should still be off
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     # Turn the light off and verify MQTT message is sent
@@ -861,13 +861,13 @@ async def test_sending_mqtt_commands_power_unlinked.opp, mqtt_mock, setup_tasmot
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Turn the light on and verify MQTT message is sent
@@ -878,7 +878,7 @@ async def test_sending_mqtt_commands_power_unlinked.opp, mqtt_mock, setup_tasmot
     mqtt_mock.async_publish.reset_mock()
 
     # Tasmota is not optimistic, the state should still be off
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     # Turn the light off and verify MQTT message is sent
@@ -911,13 +911,13 @@ async def test_transition.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Dim the light from 0->100: Speed should be 4*2=8
@@ -964,7 +964,7 @@ async def test_transition.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Dimmer":50}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 127.5
 
@@ -982,7 +982,7 @@ async def test_transition.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Dimmer":100}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 255
 
@@ -1002,7 +1002,7 @@ async def test_transition.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/tele/STATE",
         '{"POWER":"ON","Dimmer":50, "Color":"0,255,0"}',
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 127.5
     assert state.attributes.get("rgb_color") == (0, 255, 0)
@@ -1023,7 +1023,7 @@ async def test_transition.opp, mqtt_mock, setup_tasmota):
         "tasmota_49A3BC/tele/STATE",
         '{"POWER":"ON","Dimmer":100, "Color":"0,255,0"}',
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 255
     assert state.attributes.get("rgb_color") == (0, 255, 0)
@@ -1042,7 +1042,7 @@ async def test_transition.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Dimmer":50, "CT":153}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 127.5
     assert state.attributes.get("color_temp") == 153
@@ -1061,7 +1061,7 @@ async def test_transition.opp, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(
        .opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","Dimmer":50, "CT":500}'
     )
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("brightness") == 127.5
     assert state.attributes.get("color_temp") == 500
@@ -1090,13 +1090,13 @@ async def test_transition_fixed.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state.state == STATE_OFF
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     mqtt_mock.async_publish.reset_mock()
 
     # Dim the light from 0->100: Speed should be 4*2=8
@@ -1162,11 +1162,11 @@ async def test_relay_as_light.opp, mqtt_mock, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state is None
-    state = opp.states.get("light.test")
+    state =.opp.states.get("light.test")
     assert state is not None
 
 
@@ -1179,16 +1179,16 @@ async def _test_split_light.opp, mqtt_mock, config, num_lights, num_switches):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids("switch")) == num_switches
     assert len.opp.states.async_entity_ids("light")) == num_lights
 
-    lights = opp.states.async_entity_ids("light")
+    lights =.opp.states.async_entity_ids("light")
     for idx, entity in enumerate(lights):
         mqtt_mock.async_publish.reset_mock()
         # Turn the light on and verify MQTT message is sent
@@ -1251,16 +1251,16 @@ async def _test_unlinked_light.opp, mqtt_mock, config, num_switches):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids("switch")) == num_switches
     assert len.opp.states.async_entity_ids("light")) == num_lights
 
-    lights = opp.states.async_entity_ids("light")
+    lights =.opp.states.async_entity_ids("light")
     for idx, entity in enumerate(lights):
         mqtt_mock.async_publish.reset_mock()
         # Turn the light on and verify MQTT message is sent
@@ -1322,8 +1322,8 @@ async def test_discovery_update_reconfigure_light(
 
     # Simple dimmer
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config", data1)
-    await opp..async_block_till_done()
-    state = opp.states.get("light.test")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.test")
     assert (
         state.attributes.get("supported_features")
         == SUPPORT_BRIGHTNESS | SUPPORT_TRANSITION
@@ -1331,8 +1331,8 @@ async def test_discovery_update_reconfigure_light(
 
     # Reconfigure as RGB light
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config", data2)
-    await opp..async_block_till_done()
-    state = opp.states.get("light.test")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("light.test")
     assert (
         state.attributes.get("supported_features")
         == SUPPORT_BRIGHTNESS | SUPPORT_COLOR | SUPPORT_EFFECT | SUPPORT_TRANSITION

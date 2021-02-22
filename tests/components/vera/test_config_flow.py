@@ -6,8 +6,8 @@ from requests.exceptions import RequestException
 from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components.vera import CONF_CONTROLLER, CONF_LEGACY_UNIQUE_ID, DOMAIN
 from openpeerpower.const import CONF_EXCLUDE, CONF_LIGHTS, CONF_SOURCE
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.data_entry_flow import RESULT_TYPE_CREATE_ENTRY, RESULT_TYPE_FORM
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.data_entry_flow import RESULT_TYPE_CREATE_ENTRY, RESULT_TYPE_FORM
 
 from tests.common import MockConfigEntry, mock_registry
 
@@ -20,13 +20,13 @@ async def test_async_step_user_success.opp: OpenPeerPower) -> None:
         controller.serial_number = "serial_number_0"
         vera_controller_class_mock.return_value = controller
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
         assert result["type"] == RESULT_TYPE_FORM
         assert result["step_id"] == config_entries.SOURCE_USER
 
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_CONTROLLER: "http://127.0.0.1:123/",
@@ -45,7 +45,7 @@ async def test_async_step_user_success.opp: OpenPeerPower) -> None:
         }
         assert result["result"].unique_id == controller.serial_number
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert entries
 
 
@@ -57,7 +57,7 @@ async def test_async_step_import_success.opp: OpenPeerPower) -> None:
         controller.serial_number = "serial_number_1"
         vera_controller_class_mock.return_value = controller
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_CONTROLLER: "http://127.0.0.1:123/"},
@@ -88,7 +88,7 @@ async def test_async_step_import_success_with_legacy_unique_id(
         controller.serial_number = "serial_number_1"
         vera_controller_class_mock.return_value = controller
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_CONTROLLER: "http://127.0.0.1:123/"},
@@ -111,7 +111,7 @@ async def test_async_step_finish_error.opp: OpenPeerPower) -> None:
         controller.refresh_data = MagicMock(side_effect=RequestException())
         vera_controller_class_mock.return_value = controller
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_CONTROLLER: "http://127.0.0.1:123/"},
@@ -133,15 +133,15 @@ async def test_options.opp):
         data={CONF_CONTROLLER: "http://127.0.0.1/"},
         options={CONF_LIGHTS: [1, 2, 3]},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    result = await opp..config_entries.options.async_init(
+    result = await.opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}, data=None
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_LIGHTS: "1,2;3  4 5_6bb7",

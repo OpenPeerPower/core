@@ -35,7 +35,7 @@ from openpeerpower.const import (
     CONF_VERIFY_SSL,
     CONTENT_TYPE_JSON,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -169,7 +169,7 @@ async def setup_unifi_integration(
         unique_id="1",
         version=1,
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     if known_wireless_clients:
        .opp.data[UNIFI_WIRELESS_CLIENTS].update_data(
@@ -192,8 +192,8 @@ async def setup_unifi_integration(
         )
 
     with patch.object(aiounifi.websocket.WSClient, "start", return_value=True):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-    await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+    await.opp.async_block_till_done()
 
     if config_entry.entry_id not in.opp.data[UNIFI_DOMAIN]:
         return None
@@ -208,7 +208,7 @@ async def test_controller_setup.opp, aioclient_mock):
         return_value=True,
     ) as forward_entry_setup:
         config_entry = await setup_unifi_integration.opp, aioclient_mock)
-        controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+        controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     entry = controller.config_entry
     assert len(forward_entry_setup.mock_calls) == len(SUPPORTED_PLATFORMS)
@@ -244,7 +244,7 @@ async def test_controller_mac.opp, aioclient_mock):
     config_entry = await setup_unifi_integration(
        .opp, aioclient_mock, clients_response=[CONTROLLER_HOST]
     )
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     assert controller.mac == CONTROLLER_HOST["mac"]
 
 
@@ -282,12 +282,12 @@ async def test_controller_unknown_error.opp):
 async def test_reset_after_successful_setup.opp, aioclient_mock):
     """Calling reset when the entry has been setup."""
     config_entry = await setup_unifi_integration.opp, aioclient_mock)
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     assert len(controller.listeners) == 6
 
     result = await controller.async_reset()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert result is True
     assert len(controller.listeners) == 0
@@ -298,7 +298,7 @@ async def test_wireless_client_event_calls_update_wireless_devices(
 ):
     """Call update_wireless_devices method when receiving wireless client event."""
     config_entry = await setup_unifi_integration.opp, aioclient_mock)
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     with patch(
         "openpeerpower.components.unifi.controller.UniFiController.update_wireless_clients",
@@ -315,7 +315,7 @@ async def test_wireless_client_event_calls_update_wireless_devices(
                 }
             ],
         }
-        controller.api.session_op.dler("data")
+        controller.api.session_handler("data")
 
         assert wireless_clients_mock.assert_called_once
 

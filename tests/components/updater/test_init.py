@@ -4,8 +4,8 @@ from unittest.mock import patch
 import pytest
 
 from openpeerpower.components import updater
-from openpeerpowerr.helpers.update_coordinator import UpdateFailed
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers.update_coordinator import UpdateFailed
+from openpeerpower.setup import async_setup_component
 
 from tests.common import mock_component
 
@@ -13,7 +13,7 @@ NEW_VERSION = "10000.0"
 MOCK_VERSION = "10.0"
 MOCK_DEV_VERSION = "10.0.dev0"
 MOCK_HUUID = "abcdefg"
-MOCK_RESPONSE = {"version": "0.15", "release-notes": "https://openpeerpower.io"}
+MOCK_RESPONSE = {"version": "0.15", "release-notes": "https://open-peer-power.io"}
 MOCK_CONFIG = {updater.DOMAIN: {"reporting": True}}
 RELEASE_NOTES = "test release notes"
 
@@ -38,7 +38,7 @@ def mock_get_newest_version_fixture():
 @pytest.fixture(name="mock_get_uuid", autouse=True)
 def mock_get_uuid_fixture():
     """Fixture to mock get_uuid."""
-    with patch("openpeerpowerr.helpers.instance_id.async_get") as mock:
+    with patch("openpeerpower.helpers.instance_id.async_get") as mock:
         yield mock
 
 
@@ -50,7 +50,7 @@ async def test_new_version_shows_entity_true(
 
     assert await async_setup_component.opp, updater.DOMAIN, {updater.DOMAIN: {}})
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.is_state("binary_sensor.updater", "on")
     assert (
        .opp.states.get("binary_sensor.updater").attributes["newest_version"]
@@ -71,7 +71,7 @@ async def test_same_version_shows_entity_false(
 
     assert await async_setup_component.opp, updater.DOMAIN, {updater.DOMAIN: {}})
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.is_state("binary_sensor.updater", "off")
     assert (
@@ -89,7 +89,7 @@ async def test_disable_reporting.opp, mock_get_uuid, mock_get_newest_version):
     assert await async_setup_component(
        .opp, updater.DOMAIN, {updater.DOMAIN: {"reporting": False}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.is_state("binary_sensor.updater", "off")
     await updater.get_newest_version.opp, MOCK_HUUID, MOCK_CONFIG)
@@ -103,7 +103,7 @@ async def test_get_newest_version_no_analytics_when_no_huuid.opp, aioclient_mock
     aioclient_mock.post(updater.UPDATER_URL, json=MOCK_RESPONSE)
 
     with patch(
-        "openpeerpowerr.helpers.system_info.async_get_system_info", side_effect=Exception
+        "openpeerpower.helpers.system_info.async_get_system_info", side_effect=Exception
     ):
         res = await updater.get_newest_version.opp, None, False)
         assert res == (MOCK_RESPONSE["version"], MOCK_RESPONSE["release-notes"])
@@ -114,7 +114,7 @@ async def test_get_newest_version_analytics_when_huuid.opp, aioclient_mock):
     aioclient_mock.post(updater.UPDATER_URL, json=MOCK_RESPONSE)
 
     with patch(
-        "openpeerpowerr.helpers.system_info.async_get_system_info",
+        "openpeerpower.helpers.system_info.async_get_system_info",
         return_value={"fake": "bla"},
     ):
         res = await updater.get_newest_version.opp, MOCK_HUUID, False)
@@ -126,7 +126,7 @@ async def test_error_fetching_new_version_bad_json.opp, aioclient_mock):
     aioclient_mock.post(updater.UPDATER_URL, text="not json")
 
     with patch(
-        "openpeerpowerr.helpers.system_info.async_get_system_info",
+        "openpeerpower.helpers.system_info.async_get_system_info",
         return_value={"fake": "bla"},
     ), pytest.raises(UpdateFailed):
         await updater.get_newest_version.opp, MOCK_HUUID, False)
@@ -143,23 +143,23 @@ async def test_error_fetching_new_version_invalid_response.opp, aioclient_mock):
     )
 
     with patch(
-        "openpeerpowerr.helpers.system_info.async_get_system_info",
+        "openpeerpower.helpers.system_info.async_get_system_info",
         return_value={"fake": "bla"},
     ), pytest.raises(UpdateFailed):
         await updater.get_newest_version.opp, MOCK_HUUID, False)
 
 
-async def test_new_version_shows_entity_after_hour_oppio(
+async def test_new_version_shows_entity_after_hour.oppio(
    .opp, mock_get_uuid, mock_get_newest_version
 ):
-    """Test if binary sensor gets updated if new version is available / Opp.io."""
+    """Test if binary sensor gets updated if new version is available / Hass.io."""
     mock_get_uuid.return_value = MOCK_HUUID
-    mock_component.opp, "oppio")
-   .opp.data["oppio_core_info"] = {"version_latest": "999.0"}
+    mock_component.opp, .oppio")
+   .opp.data[.oppio_core_info"] = {"version_latest": "999.0"}
 
     assert await async_setup_component.opp, updater.DOMAIN, {updater.DOMAIN: {}})
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.is_state("binary_sensor.updater", "on")
     assert (

@@ -26,7 +26,7 @@ from openpeerpower.const import (
     CONF_PORT,
     CONF_TYPE,
 )
-from openpeerpowerr.util import slugify
+from openpeerpower.util import slugify
 
 NAME = "Vizio"
 NAME2 = "Vizio2"

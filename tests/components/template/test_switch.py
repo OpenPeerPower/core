@@ -12,8 +12,8 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
 )
-from openpeerpowerr.core import CoreState, State
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import CoreState, State
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     assert_setup_component,
@@ -55,20 +55,20 @@ async def test_template_state_text.opp):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_state", STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.state == STATE_ON
 
    .opp.states.async_set("switch.test_state", STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.state == STATE_OFF
 
 
@@ -98,11 +98,11 @@ async def test_template_state_boolean_on.opp):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.state == STATE_ON
 
 
@@ -132,11 +132,11 @@ async def test_template_state_boolean_off.opp):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.state == STATE_OFF
 
 
@@ -169,17 +169,17 @@ async def test_icon_template.opp):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.attributes.get("icon") == ""
 
    .opp.states.async_set("switch.test_state", STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.attributes["icon"] == "mdi:check"
 
 
@@ -212,17 +212,17 @@ async def test_entity_picture_template.opp):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.attributes.get("entity_picture") == ""
 
    .opp.states.async_set("switch.test_state", STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.attributes["entity_picture"] == "/local/switch.png"
 
 
@@ -252,9 +252,9 @@ async def test_template_syntax_error.opp):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -285,9 +285,9 @@ async def test_invalid_name_does_not_create.opp):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -306,9 +306,9 @@ async def test_invalid_switch_does_not_create.opp):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -320,9 +320,9 @@ async def test_no_switches_does_not_create.opp):
            .opp, "switch", {"switch": {"platform": "template"}}
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -353,9 +353,9 @@ async def test_missing_on_does_not_create.opp):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -386,9 +386,9 @@ async def test_missing_off_does_not_create.opp):
             },
         )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -415,17 +415,17 @@ async def test_on_action.opp, calls):
         },
     )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_state", STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.state == STATE_OFF
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: "switch.test_template_switch"},
@@ -456,23 +456,23 @@ async def test_on_action_optimistic.opp, calls):
         },
     )
 
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_template_switch", STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.state == STATE_OFF
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: "switch.test_template_switch"},
         blocking=True,
     )
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert len(calls) == 1
     assert state.state == STATE_ON
 
@@ -499,17 +499,17 @@ async def test_off_action.opp, calls):
         },
     )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_state", STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.state == STATE_ON
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "switch.test_template_switch"},
@@ -540,23 +540,23 @@ async def test_off_action_optimistic.opp, calls):
         },
     )
 
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_template_switch", STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert state.state == STATE_ON
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "switch.test_template_switch"},
         blocking=True,
     )
 
-    state = opp.states.get("switch.test_template_switch")
+    state =.opp.states.get("switch.test_template_switch")
     assert len(calls) == 1
     assert state.state == STATE_OFF
 
@@ -593,13 +593,13 @@ async def test_restore_state.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.s1")
+    state =.opp.states.get("switch.s1")
     assert state
     assert state.state == STATE_ON
 
-    state = opp.states.get("switch.s2")
+    state =.opp.states.get("switch.s2")
     assert state
     assert state.state == STATE_OFF
 
@@ -630,17 +630,17 @@ async def test_available_template_with_entities.opp):
         },
     )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set("availability_state.state", STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("switch.test_template_switch").state != STATE_UNAVAILABLE
 
    .opp.states.async_set("availability_state.state", STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("switch.test_template_switch").state == STATE_UNAVAILABLE
 
@@ -671,9 +671,9 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
         },
     )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("switch.test_template_switch").state != STATE_UNAVAILABLE
     assert ("UndefinedError: 'x' is undefined") in caplog.text
@@ -717,8 +717,8 @@ async def test_unique_id.opp):
         },
     )
 
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

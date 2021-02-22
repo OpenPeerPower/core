@@ -15,7 +15,7 @@ PASSWORD = "password"
 async def test_user.opp):
     """Test user config."""
     # no data provided so show the form
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -27,7 +27,7 @@ async def test_user.opp):
         "openpeerpower.components.totalconnect.config_flow.TotalConnectClient.TotalConnectClient"
     ) as client_mock:
         client_mock.return_value.is_valid_credentials.return_value = True
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -42,7 +42,7 @@ async def test_import.opp):
         "openpeerpower.components.totalconnect.config_flow.TotalConnectClient.TotalConnectClient"
     ) as client_mock:
         client_mock.return_value.is_valid_credentials.return_value = True
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -57,14 +57,14 @@ async def test_abort_if_already_setup.opp):
         domain=DOMAIN,
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
         unique_id=USERNAME,
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
     # Should fail, same USERNAME (import)
     with patch(
         "openpeerpower.components.totalconnect.config_flow.TotalConnectClient.TotalConnectClient"
     ) as client_mock:
         client_mock.return_value.is_valid_credentials.return_value = True
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -78,7 +78,7 @@ async def test_abort_if_already_setup.opp):
         "openpeerpower.components.totalconnect.config_flow.TotalConnectClient.TotalConnectClient"
     ) as client_mock:
         client_mock.return_value.is_valid_credentials.return_value = True
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -94,7 +94,7 @@ async def test_login_failed.opp):
         "openpeerpower.components.totalconnect.config_flow.TotalConnectClient.TotalConnectClient"
     ) as client_mock:
         client_mock.return_value.is_valid_credentials.return_value = False
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},

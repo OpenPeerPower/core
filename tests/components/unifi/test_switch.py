@@ -16,7 +16,7 @@ from openpeerpower.components.unifi.const import (
     DOMAIN as UNIFI_DOMAIN,
 )
 from openpeerpower.components.unifi.switch import POE_SWITCH
-from openpeerpowerr.helpers import entity_registry
+from openpeerpower.helpers import entity_registry
 
 from .test_controller import (
     CONTROLLER_HOST,
@@ -308,7 +308,7 @@ async def test_controller_not_client.opp, aioclient_mock):
     )
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
-    cloudkey = opp.states.get("switch.cloud_key")
+    cloudkey =.opp.states.get("switch.cloud_key")
     assert cloudkey is None
 
 
@@ -344,11 +344,11 @@ async def test_switches.opp, aioclient_mock):
         dpigroup_response=DPI_GROUPS,
         dpiapp_response=DPI_APPS,
     )
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 4
 
-    switch_1 = opp.states.get("switch.poe_client_1")
+    switch_1 =.opp.states.get("switch.poe_client_1")
     assert switch_1 is not None
     assert switch_1.state == "on"
     assert switch_1.attributes["power"] == "2.56"
@@ -356,18 +356,18 @@ async def test_switches.opp, aioclient_mock):
     assert switch_1.attributes["port"] == 1
     assert switch_1.attributes["poe_mode"] == "auto"
 
-    switch_4 = opp.states.get("switch.poe_client_4")
+    switch_4 =.opp.states.get("switch.poe_client_4")
     assert switch_4 is None
 
-    blocked = opp.states.get("switch.block_client_1")
+    blocked =.opp.states.get("switch.block_client_1")
     assert blocked is not None
     assert blocked.state == "off"
 
-    unblocked = opp.states.get("switch.block_client_2")
+    unblocked =.opp.states.get("switch.block_client_2")
     assert unblocked is not None
     assert unblocked.state == "on"
 
-    dpi_switch = opp.states.get("switch.block_media_streaming")
+    dpi_switch =.opp.states.get("switch.block_media_streaming")
     assert dpi_switch is not None
     assert dpi_switch.state == "on"
 
@@ -377,7 +377,7 @@ async def test_switches.opp, aioclient_mock):
         f"https://{controller.host}:1234/api/s/{controller.site}/cmd/stamgr",
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN, "turn_off", {"entity_id": "switch.block_client_1"}, blocking=True
     )
     assert aioclient_mock.call_count == 11
@@ -386,7 +386,7 @@ async def test_switches.opp, aioclient_mock):
         "cmd": "block-sta",
     }
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN, "turn_on", {"entity_id": "switch.block_client_1"}, blocking=True
     )
     assert aioclient_mock.call_count == 12
@@ -401,7 +401,7 @@ async def test_switches.opp, aioclient_mock):
         f"https://{controller.host}:1234/api/s/{controller.site}/rest/dpiapp/5f976f62e3c58f018ec7e17d",
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         "turn_off",
         {"entity_id": "switch.block_media_streaming"},
@@ -410,7 +410,7 @@ async def test_switches.opp, aioclient_mock):
     assert aioclient_mock.call_count == 13
     assert aioclient_mock.mock_calls[12][2] == {"enabled": False}
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN,
         "turn_on",
         {"entity_id": "switch.block_media_streaming"},
@@ -429,28 +429,28 @@ async def test_remove_switches.opp, aioclient_mock):
         clients_response=[CLIENT_1, UNBLOCKED],
         devices_response=[DEVICE_1],
     )
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
-    poe_switch = opp.states.get("switch.poe_client_1")
+    poe_switch =.opp.states.get("switch.poe_client_1")
     assert poe_switch is not None
 
-    block_switch = opp.states.get("switch.block_client_2")
+    block_switch =.opp.states.get("switch.block_client_2")
     assert block_switch is not None
 
     controller.api.websocket._data = {
         "meta": {"message": MESSAGE_CLIENT_REMOVED},
         "data": [CLIENT_1, UNBLOCKED],
     }
-    controller.api.session_op.dler(SIGNAL_DATA)
-    await opp..async_block_till_done()
+    controller.api.session_handler(SIGNAL_DATA)
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
-    poe_switch = opp.states.get("switch.poe_client_1")
+    poe_switch =.opp.states.get("switch.poe_client_1")
     assert poe_switch is None
 
-    block_switch = opp.states.get("switch.block_client_2")
+    block_switch =.opp.states.get("switch.block_client_2")
     assert block_switch is None
 
 
@@ -467,15 +467,15 @@ async def test_block_switches.opp, aioclient_mock):
         clients_response=[UNBLOCKED],
         clients_all_response=[BLOCKED],
     )
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
-    blocked = opp.states.get("switch.block_client_1")
+    blocked =.opp.states.get("switch.block_client_1")
     assert blocked is not None
     assert blocked.state == "off"
 
-    unblocked = opp.states.get("switch.block_client_2")
+    unblocked =.opp.states.get("switch.block_client_2")
     assert unblocked is not None
     assert unblocked.state == "on"
 
@@ -483,11 +483,11 @@ async def test_block_switches.opp, aioclient_mock):
         "meta": {"message": MESSAGE_EVENT},
         "data": [EVENT_BLOCKED_CLIENT_UNBLOCKED],
     }
-    controller.api.session_op.dler(SIGNAL_DATA)
-    await opp..async_block_till_done()
+    controller.api.session_handler(SIGNAL_DATA)
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
-    blocked = opp.states.get("switch.block_client_1")
+    blocked =.opp.states.get("switch.block_client_1")
     assert blocked is not None
     assert blocked.state == "on"
 
@@ -495,11 +495,11 @@ async def test_block_switches.opp, aioclient_mock):
         "meta": {"message": MESSAGE_EVENT},
         "data": [EVENT_BLOCKED_CLIENT_BLOCKED],
     }
-    controller.api.session_op.dler(SIGNAL_DATA)
-    await opp..async_block_till_done()
+    controller.api.session_handler(SIGNAL_DATA)
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
-    blocked = opp.states.get("switch.block_client_1")
+    blocked =.opp.states.get("switch.block_client_1")
     assert blocked is not None
     assert blocked.state == "off"
 
@@ -507,7 +507,7 @@ async def test_block_switches.opp, aioclient_mock):
         f"https://{controller.host}:1234/api/s/{controller.site}/cmd/stamgr",
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN, "turn_off", {"entity_id": "switch.block_client_1"}, blocking=True
     )
     assert aioclient_mock.call_count == 11
@@ -516,7 +516,7 @@ async def test_block_switches.opp, aioclient_mock):
         "cmd": "block-sta",
     }
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN, "turn_on", {"entity_id": "switch.block_client_1"}, blocking=True
     )
     assert aioclient_mock.call_count == 12
@@ -538,19 +538,19 @@ async def test_new_client_discovered_on_block_control.opp, aioclient_mock):
             CONF_DPI_RESTRICTIONS: False,
         },
     )
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
-    blocked = opp.states.get("switch.block_client_1")
+    blocked =.opp.states.get("switch.block_client_1")
     assert blocked is None
 
     controller.api.websocket._data = {
         "meta": {"message": "sta:sync"},
         "data": [BLOCKED],
     }
-    controller.api.session_op.dler(SIGNAL_DATA)
-    await opp..async_block_till_done()
+    controller.api.session_handler(SIGNAL_DATA)
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
@@ -558,11 +558,11 @@ async def test_new_client_discovered_on_block_control.opp, aioclient_mock):
         "meta": {"message": MESSAGE_EVENT},
         "data": [EVENT_BLOCKED_CLIENT_CONNECTED],
     }
-    controller.api.session_op.dler(SIGNAL_DATA)
-    await opp..async_block_till_done()
+    controller.api.session_handler(SIGNAL_DATA)
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 1
-    blocked = opp.states.get("switch.block_client_1")
+    blocked =.opp.states.get("switch.block_client_1")
     assert blocked is not None
 
 
@@ -581,7 +581,7 @@ async def test_option_block_clients.opp, aioclient_mock):
         config_entry,
         options={CONF_BLOCK_CLIENT: [BLOCKED["mac"], UNBLOCKED["mac"]]},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 1
 
     # Remove the second switch again
@@ -589,7 +589,7 @@ async def test_option_block_clients.opp, aioclient_mock):
         config_entry,
         options={CONF_BLOCK_CLIENT: [BLOCKED["mac"]]},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 1
 
     # Enable one and remove another one
@@ -597,7 +597,7 @@ async def test_option_block_clients.opp, aioclient_mock):
         config_entry,
         options={CONF_BLOCK_CLIENT: [UNBLOCKED["mac"]]},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
     # Remove one
@@ -605,7 +605,7 @@ async def test_option_block_clients.opp, aioclient_mock):
         config_entry,
         options={CONF_BLOCK_CLIENT: []},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
 
@@ -630,7 +630,7 @@ async def test_option_remove_switches.opp, aioclient_mock):
         config_entry,
         options={CONF_DPI_RESTRICTIONS: False, CONF_POE_CLIENTS: False},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
 
@@ -643,7 +643,7 @@ async def test_new_client_discovered_on_poe_control.opp, aioclient_mock):
         clients_response=[CLIENT_1],
         devices_response=[DEVICE_1],
     )
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+    controller =.opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 1
 
@@ -651,8 +651,8 @@ async def test_new_client_discovered_on_poe_control.opp, aioclient_mock):
         "meta": {"message": "sta:sync"},
         "data": [CLIENT_2],
     }
-    controller.api.session_op.dler(SIGNAL_DATA)
-    await opp..async_block_till_done()
+    controller.api.session_handler(SIGNAL_DATA)
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 1
 
@@ -660,18 +660,18 @@ async def test_new_client_discovered_on_poe_control.opp, aioclient_mock):
         "meta": {"message": MESSAGE_EVENT},
         "data": [EVENT_CLIENT_2_CONNECTED],
     }
-    controller.api.session_op.dler(SIGNAL_DATA)
-    await opp..async_block_till_done()
+    controller.api.session_handler(SIGNAL_DATA)
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
-    switch_2 = opp.states.get("switch.poe_client_2")
+    switch_2 =.opp.states.get("switch.poe_client_2")
     assert switch_2 is not None
 
     aioclient_mock.put(
         f"https://{controller.host}:1234/api/s/{controller.site}/rest/device/mock-id",
     )
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN, "turn_off", {"entity_id": "switch.poe_client_1"}, blocking=True
     )
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
@@ -680,7 +680,7 @@ async def test_new_client_discovered_on_poe_control.opp, aioclient_mock):
         "port_overrides": [{"port_idx": 1, "portconf_id": "1a1", "poe_mode": "off"}]
     }
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         SWITCH_DOMAIN, "turn_on", {"entity_id": "switch.poe_client_1"}, blocking=True
     )
     assert aioclient_mock.call_count == 12
@@ -704,8 +704,8 @@ async def test_ignore_multiple_poe_clients_on_same_port.opp, aioclient_mock):
 
     assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 3
 
-    switch_1 = opp.states.get("switch.poe_client_1")
-    switch_2 = opp.states.get("switch.poe_client_2")
+    switch_1 =.opp.states.get("switch.poe_client_1")
+    switch_2 =.opp.states.get("switch.poe_client_2")
     assert switch_1 is None
     assert switch_2 is None
 
@@ -755,5 +755,5 @@ async def test_restoring_client.opp, aioclient_mock):
 
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
-    device_1 = opp.states.get("switch.client_1")
+    device_1 =.opp.states.get("switch.client_1")
     assert device_1 is not None

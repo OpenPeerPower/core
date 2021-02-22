@@ -8,7 +8,7 @@ async def test_air_con.opp):
 
     await async_init_integration.opp)
 
-    state = opp.states.get("climate.air_conditioning")
+    state =.opp.states.get("climate.air_conditioning")
     assert state.state == "cool"
 
     expected_attributes = {
@@ -37,7 +37,7 @@ async def test_heater.opp):
 
     await async_init_integration.opp)
 
-    state = opp.states.get("climate.baseboard_heater")
+    state =.opp.states.get("climate.baseboard_heater")
     assert state.state == "heat"
 
     expected_attributes = {
@@ -64,7 +64,7 @@ async def test_smartac_with_swing.opp):
 
     await async_init_integration.opp)
 
-    state = opp.states.get("climate.air_conditioning_with_swing")
+    state =.opp.states.get("climate.air_conditioning_with_swing")
     assert state.state == "auto"
 
     expected_attributes = {
